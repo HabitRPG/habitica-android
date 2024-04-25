@@ -87,18 +87,23 @@ class ChallengeRepositoryImpl(
         challenge: Challenge,
         addedTaskList: List<Task>,
     ) {
-        when {
+        val savedTasks: List<Task>? = when {
             addedTaskList.count() == 1 ->
-                apiClient.createChallengeTask(
+                listOf(apiClient.createChallengeTask(
                     challenge.id ?: "",
                     addedTaskList[0],
-                )
-
-            addedTaskList.count() > 1 ->
+                )).filterNotNull()
+            else ->
                 apiClient.createChallengeTasks(
                     challenge.id ?: "",
                     addedTaskList,
                 )
+        }
+        if (savedTasks != null) {
+            savedTasks.forEach {
+                it.ownerID = challenge.id ?: ""
+            }
+            localRepository.save(savedTasks)
         }
     }
 
@@ -122,11 +127,14 @@ class ChallengeRepositoryImpl(
         updatedTaskList: List<Task>,
         removedTaskList: List<String>,
     ): Challenge? {
-        updatedTaskList
-            .map { localRepository.getUnmanagedCopy(it) }
-            .forEach { task ->
+        val savedTasks = updatedTaskList
+            .map { localRepository.getUnmanagedCopy(it) }.mapNotNull { task ->
                 apiClient.updateTask(task.id ?: "", task)
             }
+        if (savedTasks.isNotEmpty()) {
+            savedTasks.forEach { it.ownerID = challenge.id ?: "" }
+            localRepository.save(savedTasks)
+        }
 
         removedTaskList.forEach { task ->
             apiClient.deleteTask(task)

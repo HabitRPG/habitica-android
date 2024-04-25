@@ -71,3 +71,4 @@ fastlane/metadata/android/*/changelogs/
 /Habitica/alpha
 output-metadata.json
 /Habitica/jacoco.exec
+*.dm
