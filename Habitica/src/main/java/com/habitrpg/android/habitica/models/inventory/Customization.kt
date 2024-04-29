@@ -51,6 +51,9 @@ open class Customization : RealmObject(), BaseObject {
         userSize: String?,
         hairColor: String?,
     ): String? {
+        if (this.type == "hair" && this.category == "color") {
+            return "icon_color_hair_bangs_1_$identifier"
+        }
         return "icon_" + (getImageName(userSize, hairColor) ?: return null)
     }
 

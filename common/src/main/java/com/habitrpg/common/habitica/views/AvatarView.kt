@@ -250,8 +250,10 @@ class AvatarView : FrameLayout {
 
         var backgroundName = avatar.preferences?.background
         if (!preview.isNullOrEmpty()) {
-            layerMap[preview?.keys?.first()] = preview?.values?.first()
-            if (resetHasAttributes) hasBackground = true
+            for ((key, value) in preview ?: emptyMap()) {
+                layerMap[key] = value
+                if (resetHasAttributes && key == LayerType.BACKGROUND) hasBackground = true
+            }
         } else if (showBackground && backgroundName?.isNotEmpty() == true) {
             backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
             layerMap[LayerType.BACKGROUND] = "background_$backgroundName"

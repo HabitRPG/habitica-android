@@ -183,3 +183,28 @@ fun Date.formatForLocale(): String {
 
     return dateFormatter.format(this)
 }
+
+fun Date.getImpreciseRemainingString(res: Resources): String {
+    return time.getImpreciseRemainingString(res)
+}
+
+fun Long.getImpreciseRemainingString(res: Resources): String {
+    var diff = (this - Date().time).toDuration(DurationUnit.MILLISECONDS)
+
+    val diffDays = diff.toInt(DurationUnit.DAYS)
+    if (diffDays > 0) {
+        return res.getQuantityString(R.plurals.x_days, diffDays, diffDays)
+    }
+    diff -= diffDays.toDuration(DurationUnit.DAYS)
+    val diffHours = diff.toInt(DurationUnit.HOURS)
+    if (diffHours > 0) {
+        return res.getQuantityString(R.plurals.x_hours, diffHours, diffHours)
+    }
+    diff -= diffHours.toDuration(DurationUnit.HOURS)
+    val diffMinutes = diff.toInt(DurationUnit.MINUTES)
+    return if (diffMinutes > 0) {
+        res.getQuantityString(R.plurals.x_minutes, diffMinutes, diffMinutes)
+    } else {
+        res.getQuantityString(R.plurals.x_minutes, 1, 1)
+    }
+}

@@ -212,17 +212,18 @@ class PurchaseDialog(
                 }
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
-        } else if (shopItem.event?.end != null) {
+        } else if (shopItem.availableUntil != null) {
+            val endDate = shopItem.availableUntil
             limitedTextViewJob?.cancel()
             limitedTextViewJob =
                 MainScope().launch(Dispatchers.Main) {
                     limitedTextView.visibility = View.VISIBLE
-                    while (shopItem.event?.end?.after(Date()) == true) {
-                        limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
-                        val diff = (shopItem.event?.end?.time ?: 0) - Date().time
+                    while (endDate?.after(Date()) == true) {
+                        limitedTextView.text = context.getString(R.string.available_for, endDate.getShortRemainingString())
+                        val diff = endDate.time - Date().time
                         delay(1.toDuration(if (diff < (60 * 60 * 1000)) DurationUnit.SECONDS else DurationUnit.MINUTES))
                     }
-                    if (shopItem.event?.end?.before(Date()) == true) {
+                    if (endDate?.before(Date()) == true) {
                         limitedTextView.text = context.getString(R.string.no_longer_available)
                         limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
                         limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))

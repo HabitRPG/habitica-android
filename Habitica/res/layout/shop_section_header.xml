@@ -1,100 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp">
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="0dp"
+        android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Caption2"
-            tools:text="Section Header"
-            android:textColor="?textColorSecondary"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp">
+
         <TextView
-            android:id="@+id/switches_in_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingVertical="1dp"
-            android:textColor="?tintedUiDetails"
-            style="@style/Caption2"
-            tools:text="Switches in X"
-            android:visibility="gone"
-            tools:visibility="visible" />
+                android:id="@+id/label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Caption2"
+                tools:text="Section Header"
+                android:textColor="?textColorSecondary"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp" />
+
+        <TextView
+                android:id="@+id/switches_in_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?tintedUiDetails"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                style="@style/Caption2"
+                tools:text="Switches in X"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="16dp" />
+
         <Spinner
-            android:id="@+id/class_selection_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="bottom"
-            tools:visibility="visible"
-            />
+                android:id="@+id/class_selection_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="bottom"
+                tools:visibility="gone" />
     </LinearLayout>
-        <TextView
+
+    <TextView
             android:id="@+id/headerNotesView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="12sp"
             android:textColor="@color/text_quad"
-            tools:text="@string/class_gear_disclaimer"/>
+            tools:text="@string/class_gear_disclaimer" />
 
     <LinearLayout
-        android:id="@+id/change_class_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/layout_rounded_bg_window"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginVertical="@dimen/spacing_medium"
-        android:visibility="gone"
-        android:baselineAligned="false"
-        android:clipToOutline="true">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:id="@+id/change_class_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="13dp"
-            android:layout_marginVertical="8dp"
-            android:layout_gravity="center">
-            <TextView
-                android:id="@+id/change_class_label"
-                android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/layout_rounded_bg_window"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="@dimen/spacing_medium"
+            android:visibility="gone"
+            android:baselineAligned="false"
+            android:clipToOutline="true">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                tools:text="Change class to Warrior"
-                android:textColor="?textColorPrimary"
-                style="@style/Body1"
-                android:layout_marginBottom="1dp"/>
+                android:orientation="vertical"
+                android:layout_marginStart="13dp"
+                android:layout_marginVertical="8dp"
+                android:layout_gravity="center">
+
             <TextView
-                android:id="@+id/change_class_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@string/unlock_gear_and_skills"
-                android:textColor="?textColorSecondary"
-                style="@style/Body2"/>
+                    android:id="@+id/change_class_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Change class to Warrior"
+                    android:textColor="?textColorPrimary"
+                    style="@style/Body1"
+                    android:layout_marginBottom="1dp" />
+
+            <TextView
+                    android:id="@+id/change_class_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/unlock_gear_and_skills"
+                    android:textColor="?textColorSecondary"
+                    style="@style/Body2" />
         </LinearLayout>
+
         <FrameLayout
-            android:layout_width="59dp"
-            android:layout_height="73dp"
-            android:background="@color/offset_background_30">
+                android:layout_width="59dp"
+                android:layout_height="73dp"
+                android:background="@color/offset_background_30">
+
             <com.habitrpg.android.habitica.ui.views.CurrencyView
-                android:id="@+id/change_class_currency_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                style="@style/Body1"
-                app:currency="gems"/>
+                    android:id="@+id/change_class_currency_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    style="@style/Body1"
+                    app:currency="gems" />
         </FrameLayout>
     </LinearLayout>
 </LinearLayout>

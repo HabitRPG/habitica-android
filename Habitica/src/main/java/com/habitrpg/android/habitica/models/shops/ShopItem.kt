@@ -23,7 +23,7 @@ open class ShopItem : RealmObject(), BaseObject {
     @SerializedName("class")
     var imageName: String? = null
         get() {
-            return if (field != null) {
+            val name = if (field != null) {
                 if (field!!.contains(" ")) {
                     field!!.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
                 } else {
@@ -31,6 +31,11 @@ open class ShopItem : RealmObject(), BaseObject {
                 }
             } else {
                 "shop_$key"
+            }
+            return if (purchaseType == "customization") {
+                "icon_$name"
+            } else {
+                name
             }
         }
 
@@ -54,6 +59,7 @@ open class ShopItem : RealmObject(), BaseObject {
     @SerializedName("lvl")
     var level: Int? = null
     var event: ItemEvent? = null
+    @SerializedName("end")
     var endDate: Date? = null
 
     val availableUntil: Date?

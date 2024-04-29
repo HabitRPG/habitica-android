@@ -138,6 +138,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                 is ShopCategory -> {
                     val sectionHolder = holder as? SectionViewHolder ?: return
                     sectionHolder.bind(obj.text)
+                    sectionHolder.bind(obj.endDate)
                     if (gearCategories.contains(obj)) {
                         context?.let { context ->
                             val adapter =

@@ -11,10 +11,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.getImpreciseRemainingString
 import com.habitrpg.android.habitica.extensions.getTranslatedAnimalType
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.views.CurrencyView
+import java.util.Date
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val label: TextView = itemView.findViewById(R.id.label)
@@ -82,6 +84,19 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 section.ownedCount,
                 section.totalCount,
             )
+    }
+
+    fun bind(endDate: Date?) {
+        if (endDate != null) {
+            switchesInLabel?.visibility = View.VISIBLE
+            if (endDate.time < Date().time) {
+                switchesInLabel?.text = context.getString(R.string.tap_to_reload)
+            } else {
+                switchesInLabel?.text = context.getString(R.string.switches_in_x, endDate.getImpreciseRemainingString(context.resources))
+            }
+        } else {
+            switchesInLabel?.visibility = View.GONE
+        }
     }
 
     var spinnerAdapter: ArrayAdapter<CharSequence>? = null

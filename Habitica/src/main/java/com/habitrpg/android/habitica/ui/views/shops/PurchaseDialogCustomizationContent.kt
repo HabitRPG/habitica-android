@@ -58,8 +58,22 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
             }
         layerName?.let {
             layerMap[it] = shopItem.imageName?.replace("shop_", "")?.replace("icon_", "")
+            if (path.contains("color")) {
+                val hairColor = shopItem.key.split("_").last()
+                if ((user.preferences?.hair?.base ?: 0) > 0) {
+                    layerMap[AvatarView.LayerType.HAIR_BASE] = "hair_base_" + user.preferences?.hair?.base + "_" + hairColor
+                }
+                if ((user.preferences?.hair?.bangs ?: 0) > 0) {
+                    layerMap[AvatarView.LayerType.HAIR_BANGS] = "hair_bangs_" + user.preferences?.hair?.bangs + "_" + hairColor
+                }
+                if ((user.preferences?.hair?.mustache ?: 0) > 0) {
+                    layerMap[AvatarView.LayerType.HAIR_MUSTACHE] = "hair_mustache_" + user.preferences?.hair?.mustache + "_" + hairColor
+                }
+                if ((user.preferences?.hair?.beard ?: 0) > 0) {
+                    layerMap[AvatarView.LayerType.HAIR_BEARD] = "hair_beard_" + user.preferences?.hair?.beard + "_" + hairColor
+                }
+            }
         }
-
         binding.avatarView.setAvatar(user, layerMap)
     }
 }

@@ -321,8 +321,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         lifecycleScope.launchCatching({
             binding?.recyclerView?.state = RecyclerViewState.FAILED
         }) {
-            val shop1 = inventoryRepository.retrieveShopInventory(shopUrl) ?: return@launchCatching
-            when (shop1.identifier) {
+            val newShop = inventoryRepository.retrieveShopInventory(shopUrl) ?: return@launchCatching
+            when (newShop.identifier) {
                 Shop.MARKET -> {
                     val user = userViewModel.user.value
                     val specialCategory = ShopCategory()
@@ -335,21 +335,26 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     }
                     specialCategory.items.add(item)
                     specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
-                    shop1.categories.add(specialCategory)
+                    newShop.categories.add(specialCategory)
                 }
                 Shop.TIME_TRAVELERS_SHOP -> {
-                    formatTimeTravelersShop(shop1)
+                    formatTimeTravelersShop(newShop)
                 }
                 Shop.SEASONAL_SHOP -> {
-                    shop1.categories.sortWith(
+                    newShop.categories.sortWith(
                         compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
-                            .thenByDescending { it.items.firstOrNull()?.event?.end }
+                            .thenByDescending { it.items.firstOrNull()?.availableUntil }
                             .thenBy { it.items.firstOrNull()?.locked },
                     )
                 }
             }
-            shop = shop1
-            adapter?.setShop(shop1)
+            newShop.categories.forEach { category ->
+                if (category.endDate == null) {
+                    category.endDate = category.items.firstOrNull { it.availableUntil != null }?.availableUntil
+                }
+            }
+            shop = newShop
+            adapter?.setShop(newShop)
             binding?.refreshLayout?.isRefreshing = false
         }
     }

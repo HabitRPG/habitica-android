@@ -165,7 +165,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    implementation "androidx.core:core-splashscreen:1.1.0-alpha02"
+    implementation "androidx.core:core-splashscreen:1.1.0-rc01"
 
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "io.mockk:mockk-android:$mockk_version"

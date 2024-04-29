@@ -281,7 +281,7 @@ class ComposeAvatarCustomizationFragment :
                 .combine(currentFilter) { customizations, filter -> Pair(customizations, filter) }
                 .combine(ownedCustomizations) { pair, ownedCustomizations ->
                     val ownedKeys = ownedCustomizations.map { it.key }
-                    return@combine Pair(pair.first.filter { ownedKeys.contains(it.identifier) || (it.price ?: 0) == 0 }, pair.second)
+                    return@combine Pair(pair.first.filter { ownedKeys.contains(it.identifier) || ((it.price ?: 0) == 0 && type != "background") }, pair.second)
                 }
                 .map { (customizations, filter) ->
                     var displayedCustomizations = customizations
@@ -488,6 +488,7 @@ private fun AvatarCustomizationView(
                             Modifier
                                 .padding(4.dp)
                                 .border(if (activeCustomization == customization.identifier) 2.dp else 0.dp, if (activeCustomization == customization.identifier) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
+                                .size(76.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .clickable {
                                     onSelect(customization)
@@ -498,7 +499,7 @@ private fun AvatarCustomizationView(
                             Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                         } else {
                             PixelArtView(
-                                imageName = customization.getImageName(userSize, hairColor),
+                                imageName = customization.getIconName(userSize, hairColor),
                                 Modifier.size(68.dp),
                             )
                         }
