@@ -129,7 +129,7 @@
     <color name="yellow_00">#26221C</color>
     <color name="orange_00">#26201C</color>
 
-    <color name="brand_sub_text">#B3432874</color>
+    <color name="brand_sub_text">@color/brand_300</color>
     <color name="maroon_sub_text">#AB6565</color>
     <color name="red_sub_text">#AB6570</color>
     <color name="orange_sub_text">#AB8165</color>

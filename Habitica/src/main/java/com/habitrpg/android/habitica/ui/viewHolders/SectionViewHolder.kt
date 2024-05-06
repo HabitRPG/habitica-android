@@ -56,9 +56,9 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         try {
             val stringID =
                 context.resources.getIdentifier("section$title", "string", context.packageName)
-            this.label.text = context.getString(stringID)
+            this.label.text = context.getString(stringID).uppercase()
         } catch (e: Exception) {
-            this.label.text = title
+            this.label.text = title.uppercase()
         }
     }
 

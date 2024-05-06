@@ -1510,6 +1510,10 @@
     <string name="switches_in_x">Switches in %s</string>
     <string name="tap_to_reload">Refresh for new items</string>
     <string name="monthly_backgrounds">Monthly Backgrounds</string>
+    <string name="winter">Winter</string>
+    <string name="spring">Spring</string>
+    <string name="summer">Summer</string>
+    <string name="fall">Fall</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

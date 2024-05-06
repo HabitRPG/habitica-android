@@ -36,4 +36,8 @@ open class WorldState : RealmObject(), BaseObject {
         }
         return null
     }
+
+    fun getCurrentSeason(): String? {
+        return events.firstOrNull { it?.season != null }?.season ?: currentEvent?.season
+    }
 }

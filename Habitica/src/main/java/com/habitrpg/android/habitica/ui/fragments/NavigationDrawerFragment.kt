@@ -160,11 +160,11 @@ class NavigationDrawerFragment : DialogFragment() {
                 .combine(
                     inventoryRepository.getAvailableLimitedItems(),
                 ) { state, items -> Pair(state, items) }
-                .collect { pair ->
-                    val gearEvent = pair.first.events.firstOrNull { it.gear }
+                .collect { (worldState, items) ->
+                    val gearEvent = worldState.events.firstOrNull { it.gear }
                     createUpdatingJob("seasonal", {
                         if (gearEvent?.isValid == false) return@createUpdatingJob false
-                        gearEvent?.isCurrentlyActive == true || pair.second.isNotEmpty()
+                        gearEvent?.isCurrentlyActive == true || items.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
                         if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) {
@@ -175,7 +175,7 @@ class NavigationDrawerFragment : DialogFragment() {
                             1.toDuration(DurationUnit.MINUTES)
                         }
                     }) {
-                        updateSeasonalMenuEntries(gearEvent, pair.second)
+                        updateSeasonalMenuEntries(gearEvent, items)
                     }
 
                     val event = configManager.getBirthdayEvent()
@@ -193,6 +193,21 @@ class NavigationDrawerFragment : DialogFragment() {
                         item.isVisible = false
                         adapter.updateItem(item)
                         (activity as? MainActivity)?.showBirthdayIcon = false
+                    }
+
+                    val season = worldState.getCurrentSeason()
+                    if (season != null) {
+                        getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL)?.let { seasonalItem ->
+                            val seasonID = when (season) {
+                                "winter" -> R.string.winter
+                                "spring" -> R.string.spring
+                                "summer" -> R.string.summer
+                                "fall" -> R.string.fall
+                                else -> R.string.open
+                            }
+                            seasonalItem.pillText = requireContext().getString(seasonID)
+                            adapter.updateItem(seasonalItem)
+                        }
                     }
                 }
         }
@@ -257,7 +272,7 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItem(market)
 
         val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return
-        shop.pillText = context?.getString(R.string.open)
+        shop.subtitle = gearEvent?.end?.getRemainingString(requireContext().resources)
         adapter.updateItem(shop)
     }
 

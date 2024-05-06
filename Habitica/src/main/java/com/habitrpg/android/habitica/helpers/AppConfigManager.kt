@@ -145,6 +145,7 @@ class AppConfigManager(contentRepository: ContentRepository?) :
         return promo
     }
 
+
     fun knownIssues(): List<Map<String, String>> {
         val type = object : TypeToken<List<Map<String, String>>>() {}.type
         return Gson().fromJson(remoteConfig.getString("knownIssues"), type)
