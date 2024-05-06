@@ -57,9 +57,9 @@ fun HabiticaColors.contentBackgroundFor(task: Task?): Color {
 @Composable
 fun HabiticaColors.pixelArtBackground(hasIcon: Boolean): Color {
     return if (isSystemInDarkTheme()) {
-        colorResource(if (hasIcon) R.color.gray_200 else R.color.gray_5)
+        colorResource(if (hasIcon) R.color.gray_50 else R.color.gray_5)
     } else {
-        colorResource(if (hasIcon) R.color.content_background else R.color.content_background_offset)
+        colorResource(if (hasIcon) R.color.window_background else R.color.content_background_offset)
     }
 }
 

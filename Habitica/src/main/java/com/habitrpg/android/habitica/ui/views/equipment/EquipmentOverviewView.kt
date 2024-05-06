@@ -50,11 +50,11 @@ fun OverviewItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
             modifier
-                .width(70.dp),
+                .width(76.dp),
     ) {
         Box(
             Modifier
-                .size(70.dp)
+                .size(76.dp)
                 .clip(MaterialTheme.shapes.small)
                 .background(HabiticaTheme.colors.pixelArtBackground(hasIcon)),
             contentAlignment = Alignment.Center,
@@ -66,7 +66,7 @@ fun OverviewItem(
                     imageName = iconName,
                     modifier =
                         Modifier
-                            .size(70.dp),
+                            .size(76.dp),
                 )
             } else {
                 Image(painterResource(R.drawable.empty_slot), null)
@@ -75,7 +75,7 @@ fun OverviewItem(
         Text(
             text,
             style = HabiticaTheme.typography.caption2,
-            color = colorResource(R.color.text_ternary),
+            color = colorResource(R.color.text_secondary),
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 4.dp),
         )
@@ -297,7 +297,7 @@ fun AvatarCustomizationOverviewView(
 fun EquipmentOverviewItemPreview() {
     Column(Modifier.width(320.dp)) {
         Row(
-            modifier = Modifier.background(colorResource(id = R.color.equipment_overview_background)),
+            modifier = Modifier.background(colorResource(id = R.color.equipment_column_background)),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             OverviewItem("Main-Hand", "shop_weapon_warrior_1")

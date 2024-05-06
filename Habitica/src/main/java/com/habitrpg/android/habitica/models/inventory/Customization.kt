@@ -54,7 +54,8 @@ open class Customization : RealmObject(), BaseObject {
         if (this.type == "hair" && this.category == "color") {
             return "icon_color_hair_bangs_1_$identifier"
         }
-        return "icon_" + (getImageName(userSize, hairColor) ?: return null)
+        val name = (getImageName(userSize, hairColor) ?: return null)
+        return if (!name.startsWith("icon_")) "icon_$name" else name
     }
 
     fun getImageName(

@@ -28,7 +28,7 @@
                 android:id="@+id/switches_in_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?tintedUiDetails"
+                android:textColor="?textColorTintedSecondary"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
                 style="@style/Caption2"

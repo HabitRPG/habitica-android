@@ -104,7 +104,7 @@
 
     <style name="Caption2">
         <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.04</item>
     </style>
 

@@ -90,7 +90,7 @@ class CustomizationViewModel : ViewModel() {
     var type: String? = null
     var category: String? = null
 
-    val customizations = mutableStateListOf<Customization>()
+    val items = mutableStateListOf<Any>()
     val activeCustomization = mutableStateOf<String?>(null)
 
     val userSize = mutableStateOf("slim")
@@ -170,7 +170,7 @@ class ComposeAvatarCustomizationFragment :
                     val hairColor by viewModel.hairColor
                     val activeCustomization by viewModel.activeCustomization
                     val avatar by userViewModel.user.observeAsState()
-                    AvatarCustomizationView(avatar = avatar, configManager = configManager, viewModel.customizations, userSize, hairColor, type, stringResource(viewModel.typeNameId), activeCustomization) { customization ->
+                    AvatarCustomizationView(avatar = avatar, configManager = configManager, viewModel.items, userSize, hairColor, type, stringResource(viewModel.typeNameId), activeCustomization) { customization ->
                         lifecycleScope.launchCatching {
                             if (customization.identifier?.isNotBlank() != true) {
                                 userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
@@ -281,12 +281,12 @@ class ComposeAvatarCustomizationFragment :
                 .combine(currentFilter) { customizations, filter -> Pair(customizations, filter) }
                 .combine(ownedCustomizations) { pair, ownedCustomizations ->
                     val ownedKeys = ownedCustomizations.map { it.key }
-                    return@combine Pair(pair.first.filter { ownedKeys.contains(it.identifier) || ((it.price ?: 0) == 0 && type != "background") }, pair.second)
+                    return@combine Pair(pair.first.filter { ownedKeys.contains(it.identifier) || ((it.price ?: 0) == 0 && (type != "background" || it.identifier.isNullOrEmpty())) }, pair.second)
                 }
                 .map { (customizations, filter) ->
                     var displayedCustomizations = customizations
                     if (filter.isFiltering) {
-                        displayedCustomizations = mutableListOf<Customization>()
+                        displayedCustomizations = mutableListOf()
                         for (customization in customizations) {
                             if (shouldSkip(filter, customization)) continue
                             displayedCustomizations.add(customization)
@@ -299,8 +299,20 @@ class ComposeAvatarCustomizationFragment :
                     }
                 }
                 .collect { customizations ->
-                    viewModel.customizations.clear()
-                    viewModel.customizations.addAll(customizations)
+                    viewModel.items.clear()
+                    if (type == "background") {
+                        var lastSection = ""
+                        customizations.forEach { background ->
+                            val section = if (background.customizationSet?.startsWith("20") == true) requireContext().getString(R.string.monthly_backgrounds) else background.customizationSetName ?: ""
+                            if (section != lastSection && background.customizationSet != "incentiveBackgrounds") {
+                                viewModel.items.add(section)
+                                lastSection = section
+                            }
+                            viewModel.items.add(background)
+                        }
+                    } else {
+                        viewModel.items.addAll(customizations)
+                    }
                 }
         }
     }
@@ -433,7 +445,7 @@ class ComposeAvatarCustomizationFragment :
 private fun AvatarCustomizationView(
     avatar: Avatar?,
     configManager: AppConfigManager,
-    customizations: List<Customization>,
+    items: List<Any>,
     userSize: String,
     hairColor: String?,
     type: String?,
@@ -480,29 +492,40 @@ private fun AvatarCustomizationView(
                     modifier = Modifier.padding(10.dp),
                 )
             }
-            if (customizations.size > 1) {
-                items(customizations) { customization ->
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier =
+            if (items.size > 1) {
+                items(items, span = { item -> if (item is Customization) GridItemSpan(1) else GridItemSpan(3) }) { item ->
+                    if (item is Customization) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier =
                             Modifier
                                 .padding(4.dp)
-                                .border(if (activeCustomization == customization.identifier) 2.dp else 0.dp, if (activeCustomization == customization.identifier) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
+                                .border(if (activeCustomization == item.identifier) 2.dp else 0.dp, if (activeCustomization == item.identifier) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
                                 .size(76.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .clickable {
-                                    onSelect(customization)
+                                    onSelect(item)
                                 }
                                 .background(colorResource(id = R.color.window_background)),
-                    ) {
-                        if (customization.identifier.isNullOrBlank() || customization.identifier == "0") {
-                            Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
-                        } else {
-                            PixelArtView(
-                                imageName = customization.getIconName(userSize, hairColor),
-                                Modifier.size(68.dp),
-                            )
+                        ) {
+                            if (item.identifier.isNullOrBlank() || item.identifier == "0") {
+                                Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
+                            } else {
+                                PixelArtView(
+                                    imageName = item.getIconName(userSize, hairColor),
+                                    Modifier.size(68.dp),
+                                )
+                            }
                         }
+                    } else if (item is String) {
+                        Text(
+                            item.uppercase(),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colorResource(id = R.color.text_ternary),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(10.dp).padding(top = 16.dp),
+                        )
                     }
                 }
             }
@@ -510,21 +533,23 @@ private fun AvatarCustomizationView(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier =
-                        Modifier.padding(top = 40.dp).clickable {
+                        Modifier.padding(top = 56.dp).clickable {
                             MainNavigationController.navigate(R.id.customizationsShopFragment)
                         },
                 ) {
                     Image(
                         painterResource(if (type == "backgrounds") R.drawable.customization_background else R.drawable.customization_mix),
                         null,
-                        modifier = Modifier.padding(bottom = 12.dp),
+                        modifier = Modifier.padding(bottom = 16.dp),
                     )
-                    if (customizations.size <= 1) {
-                        Text(stringResource(R.string.customizations_no_owned), fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = colorResource(R.color.text_secondary))
-                        Text(stringResource(R.string.customization_shop_check_out), fontSize = 13.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+                    if (items.size <= 1) {
+                        Text(stringResource(R.string.customizations_no_owned), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
+                            modifier = Modifier.padding(bottom = 2.dp))
+                        Text(stringResource(R.string.customization_shop_check_out), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
                     } else {
-                        Text(stringResource(R.string.looking_for_more), fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = colorResource(R.color.text_secondary))
-                        Text(stringResource(R.string.customization_shop_more), fontSize = 13.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+                        Text(stringResource(R.string.looking_for_more), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
+                            modifier = Modifier.padding(bottom = 2.dp))
+                        Text(stringResource(R.string.customization_shop_more), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
                     }
                 }
             }

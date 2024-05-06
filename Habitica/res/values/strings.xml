@@ -1509,6 +1509,7 @@
     <string name="customization_shop_check_out">Head over to the Customization Shop to browse the many ways you can customize your avatar!</string>
     <string name="switches_in_x">Switches in %s</string>
     <string name="tap_to_reload">Refresh for new items</string>
+    <string name="monthly_backgrounds">Monthly Backgrounds</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
