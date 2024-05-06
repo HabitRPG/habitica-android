@@ -7,11 +7,14 @@
         android:orientation="vertical">
 
     <LinearLayout
+            android:id="@+id/header_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
 
         <TextView
                 android:id="@+id/label"
@@ -20,9 +23,7 @@
                 android:layout_weight="1"
                 style="@style/Caption2"
                 tools:text="Section Header"
-                android:textColor="?textColorSecondary"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp" />
+                android:textColor="?textColorSecondary" />
 
         <TextView
                 android:id="@+id/switches_in_label"
@@ -34,9 +35,7 @@
                 style="@style/Caption2"
                 tools:text="Switches in X"
                 android:visibility="gone"
-                tools:visibility="visible"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="16dp" />
+                tools:visibility="visible" />
 
         <Spinner
                 android:id="@+id/class_selection_spinner"
