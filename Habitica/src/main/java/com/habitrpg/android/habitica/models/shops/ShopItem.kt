@@ -32,7 +32,7 @@ open class ShopItem : RealmObject(), BaseObject {
             } else {
                 "shop_$key"
             }
-            return if (purchaseType == "customization") {
+            return if (purchaseType == "customization" && name?.startsWith("icon_") == false) {
                 "icon_$name"
             } else {
                 name

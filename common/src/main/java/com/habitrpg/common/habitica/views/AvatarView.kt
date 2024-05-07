@@ -15,6 +15,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.constraintlayout.helper.widget.Layer
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil.dispose
@@ -156,7 +157,8 @@ class AvatarView : FrameLayout {
 
         numberLayersInProcess.set(layerMap.size)
 
-        for ((layerKey, layerName) in layerMap) {
+        for (layerKey in LAYER_ORDER) {
+            val layerName = layerMap[layerKey] ?: continue
             val layerNumber = i++
 
             val imageView =
@@ -249,15 +251,16 @@ class AvatarView : FrameLayout {
         }
 
         var backgroundName = avatar.preferences?.background
+        if (showBackground && backgroundName?.isNotEmpty() == true) {
+            backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
+            layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
+            if (resetHasAttributes) hasBackground = true
+        }
         if (!preview.isNullOrEmpty()) {
             for ((key, value) in preview ?: emptyMap()) {
                 layerMap[key] = value
                 if (resetHasAttributes && key == LayerType.BACKGROUND) hasBackground = true
             }
-        } else if (showBackground && backgroundName?.isNotEmpty() == true) {
-            backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
-            layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
-            if (resetHasAttributes) hasBackground = true
         }
 
         if (showSleeping && avatar.sleep) {
@@ -367,12 +370,11 @@ class AvatarView : FrameLayout {
 
             if (hair != null) {
                 val hairColor = hair.color
-
-                if (hair.isAvailable(hair.base)) {
-                    layerMap[LayerType.HAIR_BASE] = "hair_base_" + hair.base + "_" + hairColor
-                }
                 if (hair.isAvailable(hair.bangs)) {
                     layerMap[LayerType.HAIR_BANGS] = "hair_bangs_" + hair.bangs + "_" + hairColor
+                }
+                if (hair.isAvailable(hair.base)) {
+                    layerMap[LayerType.HAIR_BASE] = "hair_base_" + hair.base + "_" + hairColor
                 }
                 if (hair.isAvailable(hair.mustache)) {
                     layerMap[LayerType.HAIR_MUSTACHE] = "hair_mustache_" + hair.mustache + "_" + hairColor
@@ -572,5 +574,31 @@ class AvatarView : FrameLayout {
         private val FULL_HERO_RECT = Rect(0, 0, 140, 147)
         private val COMPACT_HERO_RECT = Rect(0, 0, 114, 114)
         private val HERO_ONLY_RECT = Rect(0, 0, 90, 90)
+
+        private val LAYER_ORDER = listOf<LayerType>(
+            LayerType.BACKGROUND,
+            LayerType.MOUNT_BODY,
+            LayerType.CHAIR,
+            LayerType.BACK,
+            LayerType.SKIN,
+            LayerType.SHIRT,
+            LayerType.ARMOR,
+            LayerType.HEAD_0,
+            LayerType.HAIR_BANGS,
+            LayerType.HAIR_BASE,
+            LayerType.HAIR_MUSTACHE,
+            LayerType.HAIR_BEARD,
+            LayerType.BODY,
+            LayerType.EYEWEAR,
+            LayerType.VISUAL_BUFF,
+            LayerType.HEAD,
+            LayerType.HEAD_ACCESSORY,
+            LayerType.HAIR_FLOWER,
+            LayerType.SHIELD,
+            LayerType.WEAPON,
+            LayerType.MOUNT_HEAD,
+            LayerType.ZZZ,
+            LayerType.PET,
+        )
     }
 }
