@@ -72,3 +72,4 @@ fastlane/metadata/android/*/changelogs/
 output-metadata.json
 /Habitica/jacoco.exec
 *.dm
+/fastlane/upload_slack.py

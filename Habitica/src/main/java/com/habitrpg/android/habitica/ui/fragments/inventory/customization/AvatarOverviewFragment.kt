@@ -148,7 +148,11 @@ open class AvatarOverviewFragment :
         type: String,
         category: String?,
     ) {
-        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarEquipment(type, category ?: ""))
+        if (appConfigManager.enableCustomizationShop()) {
+            MainNavigationController.navigate(AvatarOverviewFragmentDirections.openComposeAvatarEquipment(type, category ?: ""))
+        } else {
+            MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarEquipment(type, category ?: ""))
+        }
     }
 
     private fun displayEquipmentFragment(

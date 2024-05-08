@@ -115,6 +115,9 @@
             android:id="@+id/openEquipmentDetail"
             app:destination="@id/equipmentDetailFragment" />
         <action
+                android:id="@+id/openComposeAvatarEquipment"
+                app:destination="@id/composeAvatarEquipmentFragment" />
+        <action
             android:id="@+id/openAvatarEquipment"
             app:destination="@id/avatarEquipmentFragment" />
     </fragment>
@@ -128,6 +131,17 @@
         <argument
             android:name="category"
             app:argType="string" />
+    </fragment>
+    <fragment
+            android:id="@+id/composeAvatarEquipmentFragment"
+            android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.ComposeAvatarEquipmentFragment"
+            android:label="@string/sidebar_avatar" >
+        <argument
+                android:name="type"
+                app:argType="string" />
+        <argument
+                android:name="category"
+                app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/equipmentOverviewFragment"
