@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,6 +72,10 @@ class AvatarEquipmentFragment :
                 inventoryRepository.purchaseItem("gear", equipment.key ?: "", 1)
                 userRepository.retrieveUser(forced = true)
             }
+        }
+        adapter.onShowPurchaseDialog = { item ->
+            val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
+            dialog.show()
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }

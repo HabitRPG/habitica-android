@@ -6,6 +6,7 @@ buildscript {
     ext {
         min_sdk = 21
         target_sdk = 34
+        wearos_target_sdk = 33
         app_version_name = ''
         app_version_code = 0
 

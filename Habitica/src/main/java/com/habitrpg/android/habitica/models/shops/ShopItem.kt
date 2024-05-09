@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
 import io.realm.RealmList
@@ -232,6 +233,17 @@ open class ShopItem : RealmObject(), BaseObject {
                 // TODO: Needs a way to be translated.
                 item.notes = "Get all three Backgrounds in this bundle."
             }
+            return item
+        }
+
+        fun fromAnimalEquipment(equipment: Equipment?): ShopItem {
+            val item = ShopItem()
+            item.key = equipment?.key ?: ""
+            item.text = equipment?.text
+            item.currency = "gems"
+            item.value = 2
+            item.purchaseType = "gear"
+            item.imageName = equipment?.key
             return item
         }
     }

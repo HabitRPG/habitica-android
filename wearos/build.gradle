@@ -21,8 +21,8 @@ android {
     defaultConfig {
         applicationId "com.habitrpg.android.habitica"
         minSdk 26
-        targetSdk target_sdk
-        compileSdk 34
+        targetSdk wearos_target_sdk
+        compileSdk target_sdk
         versionCode app_version_code + 1
         versionName "${app_version_name}w"
         buildConfigField "String", "TESTING_LEVEL", "\"production\""

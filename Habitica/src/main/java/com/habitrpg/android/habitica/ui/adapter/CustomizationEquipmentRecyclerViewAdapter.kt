@@ -13,10 +13,13 @@ import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationBinding
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.common.habitica.views.PixelArtView
 
 class CustomizationEquipmentRecyclerViewAdapter :
@@ -36,6 +39,7 @@ class CustomizationEquipmentRecyclerViewAdapter :
 
     var onSelect: ((Equipment) -> Unit)? = null
     var onUnlock: ((Equipment) -> Unit)? = null
+    var onShowPurchaseDialog: ((ShopItem) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -125,42 +129,11 @@ class CustomizationEquipmentRecyclerViewAdapter :
                     equipment?.value
                 }
             if (equipment?.owned != true && (itemValue ?: 0.0) > 0.0) {
-                val dialogContent = LinearLayout(itemView.context)
-                DialogPurchaseCustomizationBinding.inflate(
-                    LayoutInflater.from(itemView.context),
-                    dialogContent,
+                onShowPurchaseDialog?.invoke(
+                    ShopItem.fromAnimalEquipment(
+                        equipment
+                    ),
                 )
-
-                val imageView = dialogContent.findViewById<PixelArtView>(R.id.imageView)
-                imageView.loadImage("shop_" + this.equipment?.key)
-
-                val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
-                priceLabel?.text = itemValue.toString()
-
-                (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(
-                    HabiticaIconsHelper.imageOfGem(),
-                )
-
-                val dialog = HabiticaAlertDialog(itemView.context)
-                dialog.addButton(R.string.purchase_button, true) { _, _ ->
-                    gemBalance?.let {
-                        if ((itemValue ?: 0.0) > it) {
-                            MainNavigationController.navigate(
-                                R.id.gemPurchaseActivity,
-                                bundleOf(Pair("openSubscription", false)),
-                            )
-                            return@addButton
-                        }
-                    }
-
-                    equipment?.let {
-                        onUnlock?.invoke(it)
-                    }
-                }
-                dialog.setTitle(R.string.purchase_customization)
-                dialog.setAdditionalContentView(dialogContent)
-                dialog.addButton(R.string.reward_dialog_dismiss, false)
-                dialog.show()
                 return
             }
 
