@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,7 +77,7 @@ fun GroupPlanMemberList(
                     member,
                     role,
                     onMemberClicked,
-                    configManager,
+                    configManager = configManager,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                 )
             }
@@ -90,8 +90,8 @@ fun MemberItem(
     member: Member,
     role: String,
     onMemberClicked: (String) -> Unit,
-    configManager: AppConfigManager,
     modifier: Modifier = Modifier,
+    configManager: AppConfigManager? = null,
 ) {
     Box(
         modifier
@@ -232,5 +232,5 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 private fun Preview(
     @PreviewParameter(MemberProvider::class) member: Member,
 ) {
-    MemberItem(member = member, role = "Manager", onMemberClicked = {}, AppConfigManager(null))
+    MemberItem(member = member, role = "Manager", onMemberClicked = {})
 }

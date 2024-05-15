@@ -29,8 +29,8 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
@@ -116,7 +117,7 @@ fun AppHeaderView(
     onAvatarClicked: (() -> Unit)? = null,
     onMemberRowClicked: () -> Unit,
     onClassSelectionClicked: () -> Unit,
-    configManager: AppConfigManager,
+    configManager: AppConfigManager? = null,
 ) {
     val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
     Column(modifier) {
@@ -191,7 +192,7 @@ fun AppHeaderView(
                     } else if (user?.hasClass == false && isMyProfile && !isPlayerOptedOutOfClass) {
                         HabiticaButton(
                             background = HabiticaTheme.colors.basicButtonColor(),
-                            color = MaterialTheme.colors.onPrimary,
+                            color = MaterialTheme.colorScheme.onPrimary,
                             onClick = {
                                 onClassSelectionClicked()
                             },
@@ -431,8 +432,7 @@ private fun Preview(
                     .background(HabiticaTheme.colors.contentBackground)
                     .padding(8.dp),
             onMemberRowClicked = { },
-            onClassSelectionClicked = { },
-            configManager = AppConfigManager(null),
+            onClassSelectionClicked = { }
         )
     }
 }

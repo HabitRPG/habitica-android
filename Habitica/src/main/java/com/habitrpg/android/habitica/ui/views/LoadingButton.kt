@@ -25,14 +25,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ButtonElevation
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,7 +76,7 @@ fun LoadingButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     type: LoadingButtonType = LoadingButtonType.NORMAL,
-    elevation: ButtonElevation? = ButtonDefaults.elevation(0.dp),
+    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     shape: Shape = MaterialTheme.shapes.medium,
     border: BorderStroke? = null,
     colors: ButtonColors? = null,
@@ -88,16 +88,16 @@ fun LoadingButton(
     val colorStyle =
         if (type == LoadingButtonType.DESTRUCTIVE) {
             ButtonDefaults.buttonColors(
-                backgroundColor = HabiticaTheme.colors.errorBackground,
+                containerColor = HabiticaTheme.colors.errorBackground,
                 contentColor = Color.White,
-                disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
+                disabledContainerColor = HabiticaTheme.colors.offsetBackground,
                 disabledContentColor = HabiticaTheme.colors.textQuad,
             )
         } else {
             ButtonDefaults.buttonColors(
-                backgroundColor = HabiticaTheme.colors.tintedUiSub,
+                containerColor = HabiticaTheme.colors.tintedUiSub,
                 contentColor = Color.White,
-                disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
+                disabledContainerColor = HabiticaTheme.colors.offsetBackground,
                 disabledContentColor = HabiticaTheme.colors.textQuad,
             )
         }
@@ -108,7 +108,7 @@ fun LoadingButton(
                 when (state) {
                     LoadingButtonState.FAILED -> HabiticaTheme.colors.errorBackground
                     LoadingButtonState.SUCCESS -> Color.Transparent
-                    else -> colorStyle.backgroundColor(enabled = state != LoadingButtonState.DISABLED).value
+                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContainerColor else colorStyle.containerColor
                 },
             animationSpec = colorSpec,
         )
@@ -118,7 +118,7 @@ fun LoadingButton(
                 when (state) {
                     LoadingButtonState.FAILED -> Color.White
                     LoadingButtonState.SUCCESS -> if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
-                    else -> colorStyle.contentColor(enabled = state != LoadingButtonState.DISABLED).value
+                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContentColor else colorStyle.disabledContainerColor
                 },
             animationSpec = colorSpec,
         )
@@ -134,9 +134,9 @@ fun LoadingButton(
 
     val buttonColors =
         ButtonDefaults.buttonColors(
-            backgroundColor = backgroundColor.value,
+            containerColor = backgroundColor.value,
             contentColor = contentColor.value,
-            disabledBackgroundColor = backgroundColor.value,
+            disabledContainerColor = backgroundColor.value,
             disabledContentColor = contentColor.value,
         )
     Button(
@@ -235,9 +235,9 @@ private fun Preview() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier =
-            Modifier
-                .width(200.dp)
-                .padding(8.dp),
+        Modifier
+            .width(200.dp)
+            .padding(8.dp),
     ) {
         LoadingButton(state, {
             scope.launch {
@@ -263,7 +263,7 @@ private fun Preview() {
             {},
             colors =
                 ButtonDefaults.buttonColors(
-                    backgroundColor = HabiticaTheme.colors.successBackground,
+                    containerColor = HabiticaTheme.colors.successBackground,
                     contentColor = Color.White,
                 ),
             content = {

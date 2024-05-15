@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Divider
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,7 +54,7 @@ fun PartySeekingListItem(
     isInvited: Boolean = false,
     showHeader: Boolean = false,
     showExtendedInfo: Boolean = true,
-    configManager: AppConfigManager,
+    configManager: AppConfigManager? = null,
     onInvite: (Member) -> Unit,
 ) {
     Column(
@@ -214,5 +214,5 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 private fun Preview(
     @PreviewParameter(MemberProvider::class) data: Member,
 ) {
-    PartySeekingListItem(user = data, onInvite = {}, configManager = AppConfigManager(null))
+    PartySeekingListItem(user = data, onInvite = {})
 }

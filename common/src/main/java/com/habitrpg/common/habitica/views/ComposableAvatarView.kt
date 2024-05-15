@@ -9,7 +9,7 @@ import com.habitrpg.shared.habitica.models.Avatar
 @Composable
 fun ComposableAvatarView(
     avatar: Avatar?,
-    configManager: AppConfigManager,
+    configManager: AppConfigManager?,
     modifier: Modifier = Modifier,
 ) {
     AndroidView(

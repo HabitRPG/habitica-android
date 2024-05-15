@@ -104,7 +104,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesRemoteConfigManager(contentRepository: ContentRepository?): AppConfigManager {
+    fun providesRemoteConfigManager(contentRepository: ContentRepository): AppConfigManager {
         return AppConfigManager(contentRepository)
     }
 

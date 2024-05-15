@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -37,13 +39,13 @@ import kotlinx.coroutines.launch
 
 // Extension for Activity
 fun Activity.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
-    val viewGroup = this.findViewById(android.R.id.content) as ViewGroup
+    val viewGroup: ViewGroup = this.findViewById(android.R.id.content)
     addContentToView(viewGroup, content)
 }
 
 // Extension for Fragment
 fun Fragment.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
-    val viewGroup = requireActivity().findViewById(android.R.id.content) as ViewGroup
+    val viewGroup: ViewGroup = requireActivity().findViewById(android.R.id.content)
     addContentToView(viewGroup, content)
 }
 
@@ -63,7 +65,7 @@ private fun addContentToView(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BottomSheetWrapper(
     parent: ViewGroup,
@@ -72,7 +74,7 @@ private fun BottomSheetWrapper(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState =
-        rememberModalBottomSheetState(ModalBottomSheetValue.Hidden, skipHalfExpanded = true)
+        rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var isSheetOpened by remember { mutableStateOf(false) }
 
     val systemUiController = rememberSystemUiController()
@@ -83,12 +85,13 @@ private fun BottomSheetWrapper(
     }
 
     val radius = 20.dp
-    ModalBottomSheetLayout(
-        sheetBackgroundColor = Color.Transparent,
+    ModalBottomSheet(
+        {},
+        containerColor = Color.Transparent,
         scrimColor = colorResource(R.color.content_background).copy(alpha = 0.5f),
         sheetState = modalBottomSheetState,
-        sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
-        sheetContent = {
+        shape = RoundedCornerShape(topStart = radius, topEnd = radius),
+        content = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
@@ -115,7 +118,7 @@ private fun BottomSheetWrapper(
                 }
             }
         },
-    ) {}
+    )
 
     BackHandler {
         coroutineScope.launch {
@@ -126,7 +129,7 @@ private fun BottomSheetWrapper(
     // Take action based on hidden state
     LaunchedEffect(modalBottomSheetState.currentValue) {
         when (modalBottomSheetState.currentValue) {
-            ModalBottomSheetValue.Hidden -> {
+            SheetValue.Hidden -> {
                 when {
                     isSheetOpened -> {
                         systemUiController.setStatusBarColor(statusBarColor, darkIcons = false)

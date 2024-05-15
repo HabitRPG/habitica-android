@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +39,7 @@ fun SegmentedControl(
     onItemSelection: (selectedItemIndex: Int) -> Unit,
 ) {
     val selectedIndex = remember { mutableIntStateOf(defaultSelectedItemIndex) }
-    val color = MaterialTheme.colors.primary
+    val color = MaterialTheme.colorScheme.primary
     Row(
         modifier = Modifier,
     ) {
@@ -52,12 +52,12 @@ fun SegmentedControl(
                                 Modifier
                                     .width(itemWidth)
                                     .offset(0.dp, 0.dp)
-                                    .zIndex(if (selectedIndex.value == 0) 1f else 0f)
+                                    .zIndex(if (selectedIndex.intValue == 0) 1f else 0f)
                             } else {
                                 Modifier
                                     .wrapContentSize()
                                     .offset(0.dp, 0.dp)
-                                    .zIndex(if (selectedIndex.value == 0) 1f else 0f)
+                                    .zIndex(if (selectedIndex.intValue == 0) 1f else 0f)
                             }
                         }
 
@@ -66,18 +66,18 @@ fun SegmentedControl(
                                 Modifier
                                     .width(itemWidth)
                                     .offset((-1 * index).dp, 0.dp)
-                                    .zIndex(if (selectedIndex.value == index) 1f else 0f)
+                                    .zIndex(if (selectedIndex.intValue == index) 1f else 0f)
                             } else {
                                 Modifier
                                     .wrapContentSize()
                                     .offset((-1 * index).dp, 0.dp)
-                                    .zIndex(if (selectedIndex.value == index) 1f else 0f)
+                                    .zIndex(if (selectedIndex.intValue == index) 1f else 0f)
                             }
                         }
                     },
                 onClick = {
-                    selectedIndex.value = index
-                    onItemSelection(selectedIndex.value)
+                    selectedIndex.intValue = index
+                    onItemSelection(selectedIndex.intValue)
                 },
                 shape =
                     when (index) {
@@ -115,32 +115,32 @@ fun SegmentedControl(
                 border =
                     BorderStroke(
                         1.dp,
-                        if (selectedIndex.value == index) {
+                        if (selectedIndex.intValue == index) {
                             color
                         } else {
                             color.copy(alpha = 0.75f)
                         },
                     ),
                 colors =
-                    if (selectedIndex.value == index) {
+                    if (selectedIndex.intValue == index) {
                         /**
                          * selected colors
                          */
                         ButtonDefaults.outlinedButtonColors(
-                            backgroundColor = color,
+                            containerColor = color,
                         )
                     } else {
                         /**
                          * not selected colors
                          */
-                        ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent)
+                        ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent)
                     },
             ) {
                 Text(
                     text = item,
                     fontWeight = FontWeight.Normal,
                     color =
-                        if (selectedIndex.value == index) {
+                        if (selectedIndex.intValue == index) {
                             Color.White
                         } else {
                             color.copy(alpha = 0.9f)

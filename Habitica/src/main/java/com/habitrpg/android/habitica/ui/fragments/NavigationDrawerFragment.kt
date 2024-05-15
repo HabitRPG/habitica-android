@@ -273,6 +273,16 @@ class NavigationDrawerFragment : DialogFragment() {
 
         val shop = getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL) ?: return
         shop.subtitle = gearEvent?.end?.getRemainingString(requireContext().resources)
+        if (!configManager.enableCustomizationShop()) {
+            shop.pillText = context?.getString(R.string.open)
+            if (gearEvent?.isCurrentlyActive == true) {
+                shop.isVisible = true
+                shop.subtitle =
+                    context?.getString(R.string.open_for, gearEvent.end?.getShortRemainingString())
+            } else {
+                shop.isVisible = false
+            }
+        }
         adapter.updateItem(shop)
     }
 

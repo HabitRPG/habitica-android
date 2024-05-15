@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,7 +62,7 @@ fun UserRow(
                 "@$username",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                color = color ?: MaterialTheme.colors.primary,
+                color = color ?: MaterialTheme.colorScheme.primary,
             )
             if (extraContent != null) {
                 extraContent()

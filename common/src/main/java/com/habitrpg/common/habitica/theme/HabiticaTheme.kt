@@ -1,19 +1,18 @@
 package com.habitrpg.common.habitica.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Shapes
-import androidx.compose.material.Typography
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.themeadapter.material.createMdcTheme
+import com.google.accompanist.themeadapter.material3.createMdc3Theme
 
 @Composable
 fun HabiticaTheme(
@@ -22,65 +21,64 @@ fun HabiticaTheme(
     val context = LocalContext.current
     val layoutDirection = LocalLayoutDirection.current
     val (colors, _, _) =
-        createMdcTheme(
+        createMdc3Theme(
             context = context,
             layoutDirection = layoutDirection,
             setTextColors = true,
         )
     MaterialTheme(
-        colors = colors ?: MaterialTheme.colors,
+        colorScheme = colors ?: MaterialTheme.colorScheme,
         typography =
             Typography(
-                defaultFontFamily = FontFamily.Default,
-                h1 =
+                displayLarge =
                     TextStyle(
                         fontWeight = FontWeight.Medium,
                         fontSize = 20.sp,
                         letterSpacing = (0.05).sp,
                     ),
-                h2 =
+                displayMedium =
                     TextStyle(
                         fontWeight = FontWeight.Normal,
                         fontSize = 28.sp,
                         letterSpacing = (0.05).sp,
                     ),
-                subtitle1 =
+                titleLarge =
                     TextStyle(
                         fontWeight = FontWeight.Medium,
                         fontSize = 16.sp,
                     ),
-                subtitle2 =
+                titleMedium =
                     TextStyle(
                         fontWeight = FontWeight.Normal,
                         fontSize = 16.sp,
                         letterSpacing = 0.1.sp,
                     ),
-                body1 =
+                bodyLarge =
                     TextStyle(
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
                         letterSpacing = 0.35.sp,
                         lineHeight = 16.sp,
                     ),
-                body2 =
+                bodyMedium =
                     TextStyle(
                         fontWeight = FontWeight.Normal,
                         fontSize = 14.sp,
                         letterSpacing = 0.2.sp,
                         lineHeight = 16.sp,
                     ),
-                button =
+                labelMedium =
                     TextStyle(
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
                         letterSpacing = 1.25.sp,
                     ),
-                caption =
+                labelSmall =
                     TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp,
                     ),
-                overline =
+                titleSmall =
                     TextStyle(
                         fontWeight = FontWeight.Medium,
                         fontSize = 10.sp,
@@ -98,7 +96,7 @@ fun HabiticaTheme(
 }
 
 val Typography.caption1
-    get() = caption
+    get() = labelMedium
 val Typography.caption2
     get() =
         TextStyle(

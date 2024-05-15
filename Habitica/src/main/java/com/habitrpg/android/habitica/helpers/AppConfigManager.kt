@@ -17,14 +17,14 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
 import java.util.Date
 
-class AppConfigManager(contentRepository: ContentRepository?) :
+class AppConfigManager(contentRepository: ContentRepository) :
     com.habitrpg.common.habitica.helpers.AppConfigManager() {
     private var worldState: WorldState? = null
 
     init {
         try {
             MainScope().launchCatching {
-                contentRepository?.getWorldState()?.collect {
+                contentRepository.getWorldState().collect {
                     worldState = it
                 }
             }
@@ -190,7 +190,7 @@ class AppConfigManager(contentRepository: ContentRepository?) :
     }
 
     fun enableCustomizationShop(): Boolean {
-        if (BuildConfig.DEBUG) return false
+        if (BuildConfig.DEBUG) return true
         return remoteConfig.getBoolean("enableCustomizationShop")
     }
 }

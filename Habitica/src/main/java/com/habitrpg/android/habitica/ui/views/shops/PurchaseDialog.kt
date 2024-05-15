@@ -85,6 +85,8 @@ class PurchaseDialog(
     private var purchaseCardAction: ((ShopItem) -> Unit)? = null
     var onShopNeedsRefresh: ((ShopItem) -> Unit)? = null
 
+    private var gemsLeft = 0
+
     private var shopItem: ShopItem = item
         set(value) {
             field = value
@@ -307,7 +309,7 @@ class PurchaseDialog(
 
         if ("gems" == shopItem.purchaseType) {
             val maxGems = user.purchased?.plan?.totalNumberOfGems ?: 0
-            val gemsLeft = user.purchased?.plan?.numberOfGemsLeft
+            gemsLeft = user.purchased?.plan?.numberOfGemsLeft ?: 0
             if (maxGems > 0) {
                 limitedTextView.text = context.getString(R.string.gems_left_max, gemsLeft, maxGems)
             } else {
@@ -347,8 +349,7 @@ class PurchaseDialog(
 
     private fun onBuyButtonClicked() {
         if (shopItem.isValid && !shopItem.locked) {
-            val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
-            if ((gemsLeft == 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, purchaseQuantity)) {
+            if ((gemsLeft > 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, purchaseQuantity)) {
                 MainScope().launch(Dispatchers.Main) {
                     remainingPurchaseQuantity { quantity ->
                         if (quantity >= 0) {
