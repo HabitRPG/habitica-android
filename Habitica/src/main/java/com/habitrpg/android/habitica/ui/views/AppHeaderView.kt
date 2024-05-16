@@ -107,6 +107,19 @@ fun getTranslatedClassName(
     }
 }
 
+fun getTranslatedClassNamePlural(
+    resources: Resources,
+    className: String?,
+): String {
+    return when (className) {
+        Stats.HEALER -> resources.getString(R.string.healers)
+        Stats.ROGUE -> resources.getString(R.string.rogues)
+        Stats.WARRIOR -> resources.getString(R.string.warriors)
+        Stats.MAGE -> resources.getString(R.string.mages)
+        else -> resources.getString(R.string.warriors)
+    }
+}
+
 @Composable
 fun AppHeaderView(
     user: Avatar?,

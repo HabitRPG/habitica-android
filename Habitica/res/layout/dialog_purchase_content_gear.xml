@@ -109,4 +109,18 @@
         android:textColor="@color/text_ternary"
         android:layout_marginTop="@dimen/spacing_medium"
         android:gravity="center_horizontal"/>
+
+
+    <TextView
+            android:id="@+id/class_disclaimer_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="9dp"
+            android:textColor="@color/text_secondary"
+            android:background="@drawable/layout_rounded_bg_window"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:visibility="gone"
+            style="@style/Caption2"/>
 </merge>

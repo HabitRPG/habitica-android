@@ -38,6 +38,8 @@ import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
+import com.habitrpg.android.habitica.ui.views.getTranslatedClassNamePlural
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
@@ -151,6 +153,19 @@ class PurchaseDialog(
                 }
             }
 
+            val userLvl = user?.stats?.lvl ?: 0
+            if (shopItem.habitClass != null && (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
+                val classDisclaimerView = contentView.findViewById<TextView>(R.id.class_disclaimer_view)
+                val className = getTranslatedClassNamePlural(context.resources, shopItem.habitClass ?: "")
+                classDisclaimerView.text =
+                    if (userLvl >= 10) {
+                        context.getString(R.string.class_equipment_shop_dialog_new, className)
+                    } else {
+                        context.getString(R.string.insufficient_level_equipment_dialog_new, className)
+                    }
+                classDisclaimerView.visibility = View.VISIBLE
+            }
+
             amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
 
             contentView.setItem(shopItem)
@@ -204,17 +219,7 @@ class PurchaseDialog(
 
     private fun setLimitedTextView() {
         if (user == null) return
-        val userLvl = user?.stats?.lvl ?: 0
-        if (shopItem.habitClass != null && shopItem.habitClass != "special" && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
-            limitedTextView.text =
-                if (userLvl >= 10) {
-                    context.getString(R.string.class_equipment_shop_dialog)
-                } else {
-                    context.getString(R.string.insufficient_level_equipment_dialog)
-                }
-            limitedTextView.visibility = View.VISIBLE
-            limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
-        } else if (shopItem.availableUntil != null) {
+        if (shopItem.availableUntil != null) {
             val endDate = shopItem.availableUntil
             limitedTextViewJob?.cancel()
             limitedTextViewJob =
