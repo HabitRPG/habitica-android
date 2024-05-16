@@ -420,8 +420,10 @@ class PurchaseDialog(
             observable = { inventoryRepository.purchaseQuest(shopItem.key) }
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
-        } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds" || shopItem.purchaseType == "customizationSet") {
+        } else if (shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds") {
             observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
+        } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "customizationSet") {
+            observable = { userRepository.unlockPath(item.path ?: item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "card") {
@@ -473,9 +475,7 @@ class PurchaseDialog(
             )
             inventoryRepository.retrieveInAppRewards()
             userRepository.retrieveUser(forced = true)
-            if (item.isTypeGear || item.currency == "hourglasses" || item.key == "gem") {
-                onShopNeedsRefresh?.invoke(item)
-            }
+            onShopNeedsRefresh?.invoke(item)
         }
     }
 

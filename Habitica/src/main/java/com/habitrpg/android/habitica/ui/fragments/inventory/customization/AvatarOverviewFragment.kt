@@ -231,7 +231,7 @@ fun AvatarOverviewView(
             ) {
                 Text(
                     stringResource(R.string.avatar_size),
-                    style = HabiticaTheme.typography.subtitle2,
+                    style = HabiticaTheme.typography.titleMedium,
                     color = HabiticaTheme.colors.textSecondary,
                 )
                 Spacer(modifier = Modifier.weight(1f))
@@ -263,13 +263,13 @@ fun AvatarOverviewView(
             ) {
                 Text(
                     stringResource(R.string.equipped),
-                    style = HabiticaTheme.typography.subtitle2,
+                    style = HabiticaTheme.typography.titleSmall,
                     color = HabiticaTheme.colors.textSecondary,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     stringResource(R.string.equip_automatically),
-                    style = HabiticaTheme.typography.body2,
+                    style = HabiticaTheme.typography.bodyMedium,
                     color = HabiticaTheme.colors.textPrimary,
                 )
                 Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
@@ -287,13 +287,13 @@ fun AvatarOverviewView(
             ) {
                 Text(
                     stringResource(R.string.costume),
-                    style = HabiticaTheme.typography.subtitle2,
+                    style = HabiticaTheme.typography.titleSmall,
                     color = HabiticaTheme.colors.textSecondary,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     stringResource(R.string.wear_costume),
-                    style = HabiticaTheme.typography.body2,
+                    style = HabiticaTheme.typography.bodyMedium,
                     color = HabiticaTheme.colors.textPrimary,
                 )
                 Switch(checked = user?.preferences?.costume == true, onCheckedChange = {

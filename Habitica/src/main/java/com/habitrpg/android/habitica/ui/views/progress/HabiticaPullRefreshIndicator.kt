@@ -10,13 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.pullrefresh.PullRefreshState
-import androidx.compose.material3.pullrefresh.pullRefresh
-import androidx.compose.material3.pullrefresh.pullRefreshIndicatorTransform
-import androidx.compose.material3.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,16 +24,15 @@ import androidx.compose.ui.unit.dp
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
-import java.lang.Float.min
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabiticaPullRefreshIndicator(
     isInitial: Boolean,
     isRefreshing: Boolean,
-    state: PullRefreshState,
+    state: PullToRefreshState,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colors.surface,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
     scale: Boolean = true,
 ) {
     AnimatedVisibility(
@@ -50,11 +47,9 @@ fun HabiticaPullRefreshIndicator(
     if (!isInitial) {
         Surface(
             modifier =
-                modifier
-                    .pullRefreshIndicatorTransform(state, scale),
+                modifier,
             shape = CircleShape,
             color = backgroundColor,
-            elevation = if (isRefreshing) 6.dp else (min(1f, state.progress * 2) * 6f).dp,
         ) {
             AnimatedVisibility(
                 visible = isRefreshing || state.progress > 0f,
@@ -70,19 +65,19 @@ fun HabiticaPullRefreshIndicator(
                         Modifier
                             .border(1.dp, HabiticaTheme.colors.windowBackground, CircleShape)
                             .padding(4.dp)
-                            .background(MaterialTheme.colors.surface, CircleShape),
+                            .background(MaterialTheme.colorScheme.surface, CircleShape),
                 )
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun Preview() {
-    val state = rememberPullRefreshState(refreshing = true, onRefresh = { })
-    Box(Modifier.pullRefresh(state)) {
+    val state = rememberPullToRefreshState()
+    Box(Modifier) {
         LazyColumn {
         }
         HabiticaPullRefreshIndicator(isInitial = false, isRefreshing = true, state = state)

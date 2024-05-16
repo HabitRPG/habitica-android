@@ -135,7 +135,7 @@ private fun IsAssignedIndicator(
             label = "isAssigned",
             transitionSpec = { tween(450, easing = FastOutLinearInEasing) },
         ) {
-            if (it) MaterialTheme.colors.primary else colorResource(id = R.color.transparent)
+            if (it) MaterialTheme.colorScheme.primary else colorResource(id = R.color.transparent)
         }
     val color =
         transition.animateColor(
@@ -149,7 +149,7 @@ private fun IsAssignedIndicator(
             label = "isAssigned",
             transitionSpec = { tween(450, easing = FastOutLinearInEasing) },
         ) {
-            if (it) MaterialTheme.colors.primary else colorResource(id = R.color.text_dimmed)
+            if (it) MaterialTheme.colorScheme.primary else colorResource(id = R.color.text_dimmed)
         }
     Image(
         painterResource(R.drawable.ic_close_white_24dp),

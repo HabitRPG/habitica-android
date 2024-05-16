@@ -20,13 +20,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScaffoldState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
@@ -97,8 +92,6 @@ class BirthdayActivity : BaseActivity() {
     @Inject
     lateinit var configManager: AppConfigManager
 
-    val scaffoldState: ScaffoldState =
-        ScaffoldState(DrawerState(DrawerValue.Closed), SnackbarHostState())
     private val isPurchasing = mutableStateOf(false)
     private val price = mutableStateOf("")
     private val hasGryphatrice = mutableStateOf(false)
@@ -113,7 +106,6 @@ class BirthdayActivity : BaseActivity() {
         setContent {
             HabiticaTheme {
                 BirthdayActivityView(
-                    scaffoldState,
                     isPurchasing.value,
                     hasGryphatrice.value,
                     hasEquipped.value,
@@ -236,7 +228,6 @@ fun BirthdayTitle(text: String) {
 
 @Composable
 fun BirthdayActivityView(
-    scaffoldState: ScaffoldState,
     isPurchasing: Boolean,
     hasGryphatrice: Boolean,
     hasEquipped: Boolean,
@@ -264,7 +255,6 @@ fun BirthdayActivityView(
     }
 
     Scaffold(
-        scaffoldState = scaffoldState,
     ) { padding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -289,7 +279,7 @@ fun BirthdayActivityView(
                     MainNavigationController.navigateBack()
                 },
                 colors = ButtonDefaults.textButtonColors(contentColor = textColor),
-                elevation = ButtonDefaults.elevation(0.dp, 0.dp),
+                elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
                 modifier = Modifier.align(Alignment.Start),
             ) {
                 Image(
@@ -637,7 +627,6 @@ fun FourFreeItem(
 @Preview(device = Devices.PIXEL_4, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun Preview() {
-    val scaffoldState = rememberScaffoldState()
-    BirthdayActivityView(scaffoldState, true, false, false, "", Date(), Date(), {
+    BirthdayActivityView(true, false, false, "", Date(), Date(), {
     }, {}) {}
 }

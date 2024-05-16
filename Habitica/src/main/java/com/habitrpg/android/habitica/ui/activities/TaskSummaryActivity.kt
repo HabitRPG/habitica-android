@@ -147,7 +147,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         MainNavigationController.navigateBack()
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = darkestColor),
-                    elevation = ButtonDefaults.elevation(0.dp, 0.dp),
+                    elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
                 ) {
                     Image(
                         painterResource(R.drawable.arrow_back),

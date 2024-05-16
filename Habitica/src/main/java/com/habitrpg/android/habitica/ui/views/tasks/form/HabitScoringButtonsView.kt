@@ -148,7 +148,7 @@ private fun Preview() {
     val selectedDown = remember { mutableStateOf(false) }
     Box(
         Modifier
-            .background(MaterialTheme.colors.background)
+            .background(MaterialTheme.colorScheme.background)
             .width(300.dp)
             .padding(8.dp),
     ) {

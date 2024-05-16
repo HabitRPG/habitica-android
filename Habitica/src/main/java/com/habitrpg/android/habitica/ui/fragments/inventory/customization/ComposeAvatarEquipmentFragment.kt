@@ -123,8 +123,10 @@ class ComposeAvatarEquipmentFragment :
                     val avatar by userViewModel.user.observeAsState()
                     AvatarEquipmentView(avatar = avatar, configManager = configManager, viewModel.items, viewModel.type, stringResource(viewModel.typeNameId), activeEquipment) { equipment ->
                         lifecycleScope.launchCatching {
-                            if (equipment.key?.isNotBlank() != true) {
-                                inventoryRepository.equip(viewModel.type ?: "", activeEquipment ?: "")
+                            if (equipment.key?.isNotBlank() != true && equipment.key != activeEquipment) {
+                                inventoryRepository.equip(
+                                    if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
+                                    activeEquipment ?: "")
                             } else {
                                 inventoryRepository.equip(
                                     equipment.type ?: "",
@@ -247,7 +249,7 @@ private fun AvatarEquipmentView(
                 )
             }
             if (items.size > 1) {
-                items(items, span = { item -> if (item is Customization) GridItemSpan(1) else GridItemSpan(3) }) { item ->
+                items(items, span = { item -> if (item is Equipment) GridItemSpan(1) else GridItemSpan(3) }) { item ->
                     if (item is Equipment) {
                         Box(
                             contentAlignment = Alignment.Center,

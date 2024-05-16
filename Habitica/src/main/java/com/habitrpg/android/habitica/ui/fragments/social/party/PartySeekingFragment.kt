@@ -21,11 +21,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.pullrefresh.pullRefresh
-import androidx.compose.material3.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +34,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -176,7 +178,7 @@ fun InviteButton(
                 type = LoadingButtonType.DESTRUCTIVE,
                 colors =
                     ButtonDefaults.buttonColors(
-                        backgroundColor = HabiticaTheme.colors.errorBackground,
+                        containerColor = HabiticaTheme.colors.errorBackground,
                         contentColor = Color.White,
                     ),
                 modifier = modifier,
@@ -201,7 +203,7 @@ fun InviteButton(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PartySeekingView(
     viewModel: PartySeekingViewModel,
@@ -209,23 +211,33 @@ fun PartySeekingView(
 ) {
     val pageData = viewModel.seekingUsers.collectAsLazyPagingItems()
     val refreshing by viewModel.isRefreshing
-    val pullRefreshState = rememberPullRefreshState(refreshing, { pageData.refresh() })
+    val pullRefreshState = rememberPullToRefreshState()
+    if (pullRefreshState.isRefreshing) {
+        LaunchedEffect(true) {
+            pageData.refresh()
+        }
+    }
+    if (!refreshing) {
+        LaunchedEffect(true) {
+            pullRefreshState.endRefresh()
+        }
+    }
     val scope = rememberCoroutineScope()
 
     Box(
         modifier =
-            modifier
-                .fillMaxSize()
-                .pullRefresh(pullRefreshState),
+        modifier
+            .fillMaxSize()
+            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         LazyColumn {
             item {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = 36.dp, bottom = 14.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 36.dp, bottom = 14.dp),
                 ) {
                     Text(
                         stringResource(R.string.find_more_members),
@@ -241,9 +253,9 @@ fun PartySeekingView(
                             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
                             color = HabiticaTheme.colors.textSecondary,
                             modifier =
-                                Modifier
-                                    .width(320.dp)
-                                    .align(alignment = Alignment.CenterHorizontally),
+                            Modifier
+                                .width(320.dp)
+                                .align(alignment = Alignment.CenterHorizontally),
                         )
                         Image(
                             painterResource(R.drawable.looking_for_party_empty),
@@ -257,9 +269,9 @@ fun PartySeekingView(
                             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
                             color = HabiticaTheme.colors.textSecondary,
                             modifier =
-                                Modifier
-                                    .width(320.dp)
-                                    .align(alignment = Alignment.CenterHorizontally),
+                            Modifier
+                                .width(320.dp)
+                                .align(alignment = Alignment.CenterHorizontally),
                         )
                     }
                 }
@@ -276,9 +288,9 @@ fun PartySeekingView(
                     isInvited = viewModel.inviteStates[item.id]?.first ?: false,
                     configManager = viewModel.configManager,
                     modifier =
-                        Modifier
-                            .animateItemPlacement()
-                            .padding(horizontal = 14.dp),
+                    Modifier
+                        .animateItemPlacement()
+                        .padding(horizontal = 14.dp),
                 ) { member ->
                     scope.launchCatching({
                         viewModel.inviteStates[member.id] = Pair(false, LoadingButtonState.FAILED)
@@ -337,9 +349,9 @@ fun PartySeekingView(
                     item {
                         Box(
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(12.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
                             contentAlignment = Alignment.Center,
                         ) {
                             HabiticaCircularProgressView(indicatorSize = 32.dp)
@@ -350,12 +362,17 @@ fun PartySeekingView(
                 else -> {}
             }
         }
-        HabiticaPullRefreshIndicator(
-            pageData.itemCount == 0,
-            refreshing,
-            pullRefreshState,
-            Modifier.align(Alignment.TopCenter),
-        )
+        PullToRefreshContainer(modifier = Modifier.align(Alignment.TopCenter),
+            state = pullRefreshState,
+            indicator = {
+                HabiticaPullRefreshIndicator(
+                    pageData.itemCount == 0,
+                    refreshing,
+                    it,
+                    Modifier.align(Alignment.TopCenter),
+                )
+            })
+
     }
 }
 

@@ -107,12 +107,12 @@ fun LabeledBar(
         }
         Column(modifier = Modifier.padding(start = animatedPadding.value)) {
             LinearProgressIndicator(
-                progress = (animatedValue / cleanedMaxValue).toFloat(),
-                Modifier
+                progress = { (animatedValue / cleanedMaxValue).toFloat() },
+                modifier = Modifier
                     .fillMaxWidth()
                     .clip(CircleShape)
                     .height(barHeight),
-                backgroundColor = barColor,
+                trackColor = barColor,
                 color = color,
             )
             AnimatedVisibility(visible = !displayCompact) {

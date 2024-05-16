@@ -174,6 +174,8 @@ class ComposeAvatarCustomizationFragment :
                         lifecycleScope.launchCatching {
                             if (customization.identifier?.isNotBlank() != true) {
                                 userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
+                            } else if (customization.identifier == activeCustomization && customization.type == "hair" && customization.category != "color") {
+                                userRepository.useCustomization(type ?: "", category, "0")
                             } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
                                 userRepository.unlockPath(customization)
                                 userRepository.retrieveUser(false, true, true)
@@ -290,6 +292,15 @@ class ComposeAvatarCustomizationFragment :
                         for (customization in customizations) {
                             if (shouldSkip(filter, customization)) continue
                             displayedCustomizations.add(customization)
+                        }
+                    }
+                    if (type == "background") {
+                        displayedCustomizations = displayedCustomizations.sortedBy {
+                            when (it.customizationSet) {
+                                "incentiveBackgrounds" -> 2
+                                "timeTravelersBackground" -> 1
+                                else -> 0
+                            }
                         }
                     }
                     if (!filter.ascending) {
@@ -538,7 +549,7 @@ private fun AvatarCustomizationView(
                         },
                 ) {
                     Image(
-                        painterResource(if (type == "backgrounds") R.drawable.customization_background else R.drawable.customization_mix),
+                        painterResource(if (type == "background") R.drawable.customization_background else R.drawable.customization_mix),
                         null,
                         modifier = Modifier.padding(bottom = 16.dp),
                     )
