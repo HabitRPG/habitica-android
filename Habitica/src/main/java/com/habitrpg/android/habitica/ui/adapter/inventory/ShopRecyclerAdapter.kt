@@ -14,12 +14,14 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.models.shops.EmptyShopCategory
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.viewHolders.EmptyShopSectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
@@ -89,8 +91,11 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         items.clear()
         items.add(shop)
         for (category in shop.categories) {
-            if (category.items.size > 0) {
-                items.add(category)
+            items.add(category)
+            if (category.items.isEmpty()) {
+                items.add(EmptyShopCategory(category.identifier, context))
+
+            } else {
                 for (item in category.items) {
                     item.categoryIdentifier = category.identifier
                     items.add(item)
@@ -115,6 +120,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                 }
                 viewHolder
             }
+            4 -> EmptyShopSectionViewHolder(parent.inflate(R.layout.shop_section_empty))
 
             else -> {
                 val view = parent.inflate(R.layout.row_shopitem)
@@ -212,6 +218,8 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                     itemHolder.isCompleted = completedQuests.contains(obj.key)
                 }
 
+                is EmptyShopCategory -> (holder as? EmptyShopSectionViewHolder)?.bind(obj)
+
                 is String -> (holder as? EmptyStateViewHolder)?.text = obj
                 is Pair<*, *> ->
                     (holder as? ArmoireGearViewHolder)?.bind(
@@ -264,7 +272,8 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
             is Shop -> 0
             is ShopCategory -> 1
             is Pair<*, *> -> 3
-            is ShopItem -> 4
+            is EmptyShopCategory -> 4
+            is ShopItem -> 5
             else -> 2
         }
 

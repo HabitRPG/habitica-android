@@ -176,7 +176,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             layoutManager?.spanSizeLookup =
                 object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
-                        return if ((adapter?.getItemViewType(position) ?: 0) < 4) {
+                        return if ((adapter?.getItemViewType(position) ?: 0) < 5) {
                             layoutManager?.spanCount ?: 1
                         } else {
                             1

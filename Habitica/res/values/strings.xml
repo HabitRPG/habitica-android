@@ -1515,6 +1515,11 @@
     <string name="summer">Summer</string>
     <string name="fall">Fall</string>
     <string name="animal_tails">Animal Tails</string>
+    <string name="you_own_all_items">You own all of these items</string>
+    <string name="try_on_next_month">You can try them on by customizing your avatar. Be sure to check back later for next month’s options!</string>
+    <string name="try_on_next_season">You can try them on by customizing your avatar. Be sure to check back later for next season’s options!</string>
+    <string name="try_on_customize">"You can try them on by customizing your avatar. "</string>
+    <string name="try_on_equipment">"You can try them on by Equipment. Be sure to check back later for next month’s options! "</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
