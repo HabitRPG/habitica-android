@@ -121,7 +121,9 @@ class LoginViewModel
                 // the app access to the account, but the user can fix this.
                 // Forward the user to an activity in Google Play services.
                 val intent = e.intent
-                recoverFromPlayServicesErrorResult.launch(intent)
+                if (intent != null) {
+                    recoverFromPlayServicesErrorResult.launch(intent)
+                }
                 return
             }
         }

@@ -380,6 +380,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 newCategory.items.add(item)
             }
         }
+        val mysterySetCategory = newCategories.find { it.identifier == "mystery_sets" } ?: ShopCategory()
+        if (mysterySetCategory.identifier.isEmpty()) {
+            mysterySetCategory.identifier = "mystery_sets"
+            mysterySetCategory.text = getString(R.string.mystery_sets)
+            newCategories.add(mysterySetCategory)
+        }
         shop.categories = newCategories
         return shop
     }

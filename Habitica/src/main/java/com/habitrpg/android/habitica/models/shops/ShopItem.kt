@@ -55,6 +55,7 @@ open class ShopItem : RealmObject(), BaseObject {
 
     @SerializedName("klass")
     var habitClass: String? = null
+    var specialClass: String? = null
     var previous: String? = null
 
     @SerializedName("lvl")

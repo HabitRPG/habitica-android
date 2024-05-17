@@ -8,7 +8,7 @@ class EmptyShopCategory(categoryIdentifier: String, context: Context?) {
     val description: String
     init {
         val stringId = when (categoryIdentifier) {
-            "background" -> R.string.try_on_next_month
+            "backgrounds" -> R.string.try_on_next_month
             "color" -> R.string.try_on_next_season
             "skin" -> R.string.try_on_next_season
             "mystery_sets" -> R.string.try_on_equipment

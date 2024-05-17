@@ -154,9 +154,9 @@ class PurchaseDialog(
             }
 
             val userLvl = user?.stats?.lvl ?: 0
-            if (shopItem.habitClass != null && (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
+            if (shopItem.habitClass != null && shopItem.specialClass != null && (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.specialClass) {
                 val classDisclaimerView = contentView.findViewById<TextView>(R.id.class_disclaimer_view)
-                val className = getTranslatedClassNamePlural(context.resources, shopItem.habitClass ?: "")
+                val className = getTranslatedClassNamePlural(context.resources, shopItem.specialClass ?: "")
                 classDisclaimerView.text =
                     if (userLvl >= 10) {
                         context.getString(R.string.class_equipment_shop_dialog_new, className)
