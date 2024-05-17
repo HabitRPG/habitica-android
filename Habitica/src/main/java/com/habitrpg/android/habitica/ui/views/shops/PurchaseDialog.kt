@@ -153,19 +153,6 @@ class PurchaseDialog(
                 }
             }
 
-            val userLvl = user?.stats?.lvl ?: 0
-            if (shopItem.habitClass != null && shopItem.specialClass != null && (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.specialClass) {
-                val classDisclaimerView = contentView.findViewById<TextView>(R.id.class_disclaimer_view)
-                val className = getTranslatedClassNamePlural(context.resources, shopItem.specialClass ?: "")
-                classDisclaimerView.text =
-                    if (userLvl >= 10) {
-                        context.getString(R.string.class_equipment_shop_dialog_new, className)
-                    } else {
-                        context.getString(R.string.insufficient_level_equipment_dialog_new, className)
-                    }
-                classDisclaimerView.visibility = View.VISIBLE
-            }
-
             amountErrorLabel = contentView.findViewById(R.id.amount_error_label)
 
             contentView.setItem(shopItem)
@@ -219,6 +206,20 @@ class PurchaseDialog(
 
     private fun setLimitedTextView() {
         if (user == null) return
+
+        val userLvl = user?.stats?.lvl ?: 0
+        if (shopItem.habitClass != null && shopItem.specialClass != null && (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.specialClass) {
+            val classDisclaimerView = contentView.findViewById<TextView>(R.id.class_disclaimer_view)
+            val className = getTranslatedClassNamePlural(context.resources, shopItem.specialClass ?: "")
+            classDisclaimerView.text =
+                if (userLvl >= 10) {
+                    context.getString(R.string.class_equipment_shop_dialog_new, className)
+                } else {
+                    context.getString(R.string.insufficient_level_equipment_dialog_new, className)
+                }
+            classDisclaimerView.visibility = View.VISIBLE
+        }
+
         if (shopItem.availableUntil != null) {
             val endDate = shopItem.availableUntil
             limitedTextViewJob?.cancel()

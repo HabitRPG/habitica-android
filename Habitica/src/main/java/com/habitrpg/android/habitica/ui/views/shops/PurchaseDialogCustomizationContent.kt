@@ -73,6 +73,11 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
                     layerMap[AvatarView.LayerType.HAIR_BEARD] = "hair_beard_" + user.preferences?.hair?.beard + "_" + hairColor
                 }
             }
+
+            if (path.contains("hair")) {
+                layerMap[AvatarView.LayerType.HEAD] = ""
+                layerMap[AvatarView.LayerType.HEAD_ACCESSORY] = ""
+            }
         }
         binding.avatarView.setAvatar(user, layerMap)
     }
