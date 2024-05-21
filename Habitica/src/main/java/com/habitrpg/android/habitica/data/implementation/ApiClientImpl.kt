@@ -77,7 +77,6 @@ class ApiClientImpl(
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
-    // I think we don't need the ApiClientImpl anymore we could just use ApiService
     private lateinit var apiService: ApiService
 
     private fun <T> processResponse(habitResponse: HabitResponse<T>): T? {

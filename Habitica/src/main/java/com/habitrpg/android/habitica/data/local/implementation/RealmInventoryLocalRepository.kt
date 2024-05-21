@@ -152,6 +152,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
                 it.items?.food?.forEach { items[it.key + "-" + it.itemType] = it }
                 it.items?.hatchingPotions?.forEach { items[it.key + "-" + it.itemType] = it }
                 it.items?.quests?.forEach { items[it.key + "-" + it.itemType] = it }
+                it.items?.special?.forEach { items[it.key + "-" + it.itemType] = it }
                 if (includeZero) {
                     items
                 } else {

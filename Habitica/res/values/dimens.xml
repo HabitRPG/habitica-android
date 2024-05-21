@@ -80,7 +80,7 @@
     <dimen name="shopitem_image_size">68dp</dimen>
     <dimen name="shop_scene_height">124dp</dimen>
     <dimen name="currency_icon_size">24dp</dimen>
-    <dimen name="shopitem_dialog_content_inset">24dp</dimen>
+    <dimen name="shopitem_dialog_content_inset">20dp</dimen>
     <dimen name="reward_width">84dp</dimen>
     <dimen name="task_min_height">60dp</dimen>
 

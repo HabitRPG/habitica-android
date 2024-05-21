@@ -91,7 +91,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             cardSelectedResult.launch(intent)
         }
         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.onShowPurchaseDialog = { item, isPinned ->
-            val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
+            val dialog = PurchaseDialog(requireContext(), item)
             dialog.isPinned = isPinned
             dialog.onShopNeedsRefresh = {
                 viewModel.refreshData { }

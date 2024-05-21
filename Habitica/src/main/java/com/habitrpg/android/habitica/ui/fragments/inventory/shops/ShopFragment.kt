@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
@@ -55,6 +56,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     internal val hourglasses = mutableStateOf<Double?>(null)
     private val gems = mutableStateOf<Double?>(null)
     private val gold = mutableStateOf<Double?>(null)
+
+    @Inject
+    lateinit var contentRepository: ContentRepository
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -134,8 +138,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     val dialog =
                         PurchaseDialog(
                             requireContext(),
-                            userRepository,
-                            inventoryRepository,
                             item,
                             mainActivity,
                         )
@@ -213,22 +215,20 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             gold.value = it?.stats?.gp ?: 0.0
         }
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            socialRepository.getGroup(Group.TAVERN_ID)
-                .filter { it?.hasActiveQuest == true }
-                .filter { group -> group?.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
-                .filter { group -> group?.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
-                .collect {
-                    adapter?.shopSpriteSuffix = "_" + it?.quest?.key
-                }
-        }
-
         view.post { setGridSpanCount(view.width) }
 
         lifecycleScope.launchCatching {
             inventoryRepository.getOwnedItems()
                 .collect { adapter?.setOwnedItems(it) }
         }
+
+        lifecycleScope.launchCatching {
+            contentRepository.getWorldState()
+                .collect {
+                    adapter?.shopSpriteSuffix = it.findNpcImageSuffix()
+                }
+        }
+
         lifecycleScope.launchCatching {
             inventoryRepository.getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }

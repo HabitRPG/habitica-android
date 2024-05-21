@@ -53,6 +53,7 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationEquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -66,6 +67,7 @@ import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.shared.habitica.models.Avatar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AvatarEquipmentViewModel : ViewModel() {
@@ -129,7 +131,7 @@ class ComposeAvatarEquipmentFragment :
                                     activeEquipment ?: "")
                             } else {
                                 inventoryRepository.equip(
-                                    equipment.type ?: "",
+                                    if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
                                     equipment.key ?: "",
                                 )
                             }
@@ -165,11 +167,12 @@ class ComposeAvatarEquipmentFragment :
         val type = viewModel.type ?: return
         lifecycleScope.launchCatching {
             inventoryRepository.getEquipmentType(type, viewModel.category ?: "")
-                .combine(inventoryRepository.getOwnedEquipment(type), ::Pair)
+                .combine(inventoryRepository.getOwnedEquipment(type).map { it.map { owned -> owned.key } }, ::Pair)
                 .collect { (equipment, ownedEquipment) ->
                     viewModel.items.clear()
+                    viewModel.items.add(Equipment())
                     viewModel.items.addAll(equipment.filter {
-                        ownedEquipment.firstOrNull { owned -> owned.key == it.key } != null
+                        ownedEquipment.contains(it.key)
                     })
                 }
         }
@@ -264,7 +267,7 @@ private fun AvatarEquipmentView(
                                 }
                                 .background(colorResource(id = R.color.window_background)),
                         ) {
-                            if (item.key.isNullOrBlank() || item.key == "0") {
+                            if (item.key.isNullOrBlank() || item.key == "0" || item.key?.endsWith("_0") == true) {
                                 Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                             } else {
                                 PixelArtView(

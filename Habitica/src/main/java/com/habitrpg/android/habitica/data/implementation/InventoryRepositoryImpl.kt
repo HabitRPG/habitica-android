@@ -313,6 +313,7 @@ class InventoryRepositoryImpl(
         val copiedUser = localRepository.getUnmanagedCopy(foundUser)
         if (buyResponse.items != null) {
             copiedUser.items = buyResponse.items
+            copiedUser.items?.setItemTypes()
         }
         if (buyResponse.hp != null) {
             copiedUser.stats?.hp = buyResponse.hp

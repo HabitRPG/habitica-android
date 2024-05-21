@@ -23,9 +23,13 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.interactors.InsufficientGemsUseCase
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
@@ -49,7 +53,11 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.internal.managers.ViewComponentManager
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -64,11 +72,13 @@ import kotlin.time.toDuration
 
 class PurchaseDialog(
     context: Context,
-    private val userRepository: UserRepository,
-    private val inventoryRepository: InventoryRepository,
     val item: ShopItem,
     private val parentActivity: AppCompatActivity? = null,
 ) : HabiticaAlertDialog(context) {
+    private val inventoryRepository: InventoryRepository
+    private val userRepository: UserRepository
+    private val soundManager: SoundManager
+
     private val customHeader: View by lazy {
         DialogPurchaseShopitemHeaderBinding.inflate(context.layoutInflater).root
     }
@@ -168,7 +178,24 @@ class PurchaseDialog(
         }
     }
 
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface InsufficientGemsDialogEntryPoint {
+        fun inventoryRepository(): InventoryRepository
+        fun userRepository(): UserRepository
+        fun soundManager(): SoundManager
+    }
+
     init {
+        val hiltEntryPoint =
+            EntryPointAccessors.fromApplication(
+                context,
+                InsufficientGemsDialogEntryPoint::class.java,
+            )
+        inventoryRepository = hiltEntryPoint.inventoryRepository()
+        userRepository = hiltEntryPoint.userRepository()
+        soundManager = hiltEntryPoint.soundManager()
+
         findSnackBarActivity(context)?.let {
             (it as? Activity)?.let { activity -> setOwnerActivity(activity) }
         }
@@ -401,7 +428,6 @@ class PurchaseDialog(
     }
 
     private fun buyItem(quantity: Int) {
-        val application = ownerActivity?.application as? HabiticaBaseApplication
         FirebaseAnalytics.getInstance(context).logEvent(
             "item_purchased",
             bundleOf(
@@ -455,34 +481,42 @@ class PurchaseDialog(
             observable = { inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity) }
         }
         lifecycleScope.launchCatching {
-            observable()
-            val text =
-                snackbarText[0].ifBlank {
-                    if (shopItem.text?.isNotBlank() == true) {
-                        context.getString(R.string.successful_purchase, shopItem.text)
-                    } else {
-                        context.getString(R.string.purchased)
-                    }
-                }
-            val rightTextColor =
-                when (item.currency) {
-                    "gold" -> ContextCompat.getColor(context, R.color.yellow_5)
-                    "gems" -> ContextCompat.getColor(context, R.color.green_10)
-                    "hourglasses" -> ContextCompat.getColor(context, R.color.brand_300)
-                    else -> 0
-                }
-            val a = (application?.currentActivity?.get() ?: getActivity() ?: ownerActivity)
-            (a as? SnackbarActivity)?.showSnackbar(
-                content = text,
-                rightIcon = priceLabel.compoundDrawables[0],
-                rightTextColor = rightTextColor,
-                rightText = "-" + priceLabel.text,
-                isCelebratory = true,
-            )
-            inventoryRepository.retrieveInAppRewards()
-            userRepository.retrieveUser(forced = true)
-            onShopNeedsRefresh?.invoke(item)
+            val result = observable()
+            if (result != null) {
+                showPurchaseSuccess(snackbarText)
+            }
         }
+    }
+
+    private suspend fun showPurchaseSuccess(snackbarText: Array<String>) {
+        val application = ownerActivity?.application as? HabiticaBaseApplication
+        soundManager.loadAndPlayAudio(SoundManager.SOUND_REWARD)
+        val text =
+            snackbarText[0].ifBlank {
+                if (shopItem.text?.isNotBlank() == true) {
+                    context.getString(R.string.successful_purchase, shopItem.text)
+                } else {
+                    context.getString(R.string.purchased)
+                }
+            }
+        val rightTextColor =
+            when (item.currency) {
+                "gold" -> ContextCompat.getColor(context, R.color.yellow_5)
+                "gems" -> ContextCompat.getColor(context, R.color.green_10)
+                "hourglasses" -> ContextCompat.getColor(context, R.color.brand_300)
+                else -> 0
+            }
+        val a = (application?.currentActivity?.get() ?: getActivity() ?: ownerActivity)
+        (a as? SnackbarActivity)?.showSnackbar(
+            content = text,
+            rightIcon = priceLabel.compoundDrawables[0],
+            rightTextColor = rightTextColor,
+            rightText = "-" + priceLabel.text,
+            isCelebratory = true,
+        )
+        inventoryRepository.retrieveInAppRewards()
+        userRepository.retrieveUser(forced = true)
+        onShopNeedsRefresh?.invoke(item)
     }
 
     private fun displayPurchaseConfirmationDialog(quantity: Int) {

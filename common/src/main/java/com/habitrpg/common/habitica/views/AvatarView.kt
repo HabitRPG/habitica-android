@@ -410,7 +410,7 @@ class AvatarView : FrameLayout {
                         when {
                             hasMount -> PointF(13.0f, 12.0f)
                             hasPet -> PointF(13.0f, 24.5f + 12.0f)
-                            else -> PointF(13.0f, 28.0f + 12.0f)
+                            else -> PointF(13.0f, 24.0f + 12.0f)
                         }
                     } else if (showBackground) {
                         // compact hero box

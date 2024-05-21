@@ -166,7 +166,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             val padding = 16.dpToPx(context)
             binding.buttonsWrapper.setPadding(padding, padding, padding, 0)
             binding.dialogContainer.setPadding(0, binding.dialogContainer.paddingTop, 0, padding)
-            binding.contentView.setPadding(binding.contentView.paddingStart, 0, binding.contentView.paddingEnd, 30.dpToPx(context))
+            binding.contentView.setPadding(padding, 0, padding, 30.dpToPx(context))
         } else {
             binding.scrollingSeparator.visibility = View.GONE
             binding.buttonsWrapper.orientation = LinearLayout.VERTICAL

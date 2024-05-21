@@ -4,8 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/shopitem_dialog_content_inset"
-    android:paddingEnd="@dimen/shopitem_dialog_content_inset"
     android:gravity="center_horizontal"
     tools:parentTag="LinearLayout"
     tools:orientation="vertical">
@@ -122,5 +120,6 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:visibility="gone"
+            tools:visibility="visible"
             style="@style/Caption2"/>
 </merge>
