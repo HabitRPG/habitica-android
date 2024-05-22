@@ -541,28 +541,7 @@ private fun AvatarCustomizationView(
                 }
             }
             item(span = { GridItemSpan(3) }) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier =
-                        Modifier.padding(top = 56.dp).clickable {
-                            MainNavigationController.navigate(R.id.customizationsShopFragment)
-                        },
-                ) {
-                    Image(
-                        painterResource(if (type == "background") R.drawable.customization_background else R.drawable.customization_mix),
-                        null,
-                        modifier = Modifier.padding(bottom = 16.dp),
-                    )
-                    if (items.size <= 1) {
-                        Text(stringResource(R.string.customizations_no_owned), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
-                            modifier = Modifier.padding(bottom = 2.dp))
-                        Text(stringResource(R.string.customization_shop_check_out), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
-                    } else {
-                        Text(stringResource(R.string.looking_for_more), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
-                            modifier = Modifier.padding(bottom = 2.dp))
-                        Text(stringResource(R.string.customization_shop_more), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
-                    }
-                }
+                EmptyFooter(type, items.size <= 1)
             }
         }
     }

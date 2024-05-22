@@ -170,7 +170,9 @@ class ComposeAvatarEquipmentFragment :
                 .combine(inventoryRepository.getOwnedEquipment(type).map { it.map { owned -> owned.key } }, ::Pair)
                 .collect { (equipment, ownedEquipment) ->
                     viewModel.items.clear()
-                    viewModel.items.add(Equipment())
+                    val blank = Equipment()
+                    blank.key = "${type}_base_0"
+                    viewModel.items.add(blank)
                     viewModel.items.addAll(equipment.filter {
                         ownedEquipment.contains(it.key)
                     })
@@ -271,7 +273,7 @@ private fun AvatarEquipmentView(
                                 Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                             } else {
                                 PixelArtView(
-                                    imageName = item.key,
+                                    imageName = "icon_" + item.key,
                                     Modifier.size(68.dp),
                                 )
                             }
@@ -289,31 +291,40 @@ private fun AvatarEquipmentView(
                 }
             }
             item(span = { GridItemSpan(3) }) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier =
-                    Modifier.padding(top = 56.dp).clickable {
-                        MainNavigationController.navigate(R.id.customizationsShopFragment)
-                    },
-                ) {
-                    Image(
-                        painterResource(if (type == "backgrounds") R.drawable.customization_background else R.drawable.customization_mix),
-                        null,
-                        modifier = Modifier.padding(bottom = 16.dp),
-                    )
-                    if (items.size <= 1) {
-                        Text(
-                            stringResource(R.string.customizations_no_owned), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
-                            modifier = Modifier.padding(bottom = 2.dp))
-                        Text(stringResource(R.string.customization_shop_check_out), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
-                    } else {
-                        Text(
-                            stringResource(R.string.looking_for_more), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
-                            modifier = Modifier.padding(bottom = 2.dp))
-                        Text(stringResource(R.string.customization_shop_more), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
-                    }
-                }
+                EmptyFooter(type, items.size <= 1)
             }
+        }
+    }
+}
+
+@Composable
+internal fun EmptyFooter(type: String?, hasItems: Boolean) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier =
+        Modifier
+            .padding(top = 56.dp)
+            .clickable {
+                MainNavigationController.navigate(R.id.customizationsShopFragment)
+            },
+    ) {
+        Image(
+            painterResource(if (type == "backgrounds") R.drawable.customization_background else R.drawable.customization_mix),
+            null,
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
+        if (!hasItems) {
+            Text(
+                stringResource(R.string.customizations_no_owned), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
+                modifier = Modifier.padding(bottom = 2.dp)
+            )
+            Text(stringResource(R.string.customization_shop_check_out), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+        } else {
+            Text(
+                stringResource(R.string.looking_for_more), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
+                modifier = Modifier.padding(bottom = 2.dp)
+            )
+            Text(stringResource(R.string.customization_shop_more), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
         }
     }
 }
