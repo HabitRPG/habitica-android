@@ -269,7 +269,7 @@ private fun AvatarEquipmentView(
                                 }
                                 .background(colorResource(id = R.color.window_background)),
                         ) {
-                            if (item.key.isNullOrBlank() || item.key == "0" || item.key?.endsWith("_0") == true) {
+                            if (item.key.isNullOrBlank() || item.key == "0" || item.key?.endsWith("_0") == true || item.key == "none") {
                                 Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                             } else {
                                 PixelArtView(

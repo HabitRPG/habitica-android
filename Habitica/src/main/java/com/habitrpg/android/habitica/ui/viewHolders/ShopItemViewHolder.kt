@@ -75,8 +75,13 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         val isLimited = item.isLimited || item.availableUntil != null
         if (numberOwned > 0) {
             binding.itemDetailIndicator.text = numberOwned.toString()
-            binding.itemDetailIndicator.background =
-                AppCompatResources.getDrawable(context, R.drawable.pill_bg_gray)
+            if (isLimited) {
+                binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_purple_300)
+                binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.white))
+            } else {
+                binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_gray)
+                binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+            }
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (item.locked) {
             binding.itemDetailIndicator.background =
