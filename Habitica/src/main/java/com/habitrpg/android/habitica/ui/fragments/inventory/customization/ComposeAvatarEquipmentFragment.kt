@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,8 +39,11 @@ import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
@@ -273,7 +277,7 @@ private fun AvatarEquipmentView(
                                 Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                             } else {
                                 PixelArtView(
-                                    imageName = "icon_" + item.key,
+                                    imageName = "shop_" + item.key,
                                     Modifier.size(68.dp),
                                 )
                             }
@@ -291,7 +295,7 @@ private fun AvatarEquipmentView(
                 }
             }
             item(span = { GridItemSpan(3) }) {
-                EmptyFooter(type, items.size <= 1)
+                EmptyFooter(type, items.size > 1)
             }
         }
     }
@@ -318,13 +322,33 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                 stringResource(R.string.customizations_no_owned), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
                 modifier = Modifier.padding(bottom = 2.dp)
             )
-            Text(stringResource(R.string.customization_shop_check_out), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+            Text(buildAnnotatedString {
+                val original = stringResource(id = R.string.customization_shop_check_out)
+                val customizationShopName = stringResource(id = R.string.customization_shop)
+                val first = original.substring(0, original.indexOf(customizationShopName))
+                val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
+                append(first)
+                withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
+                    append(customizationShopName)
+                }
+                append(second)
+            }, fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
         } else {
             Text(
                 stringResource(R.string.looking_for_more), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
                 modifier = Modifier.padding(bottom = 2.dp)
             )
-            Text(stringResource(R.string.customization_shop_more), fontSize = 14.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+            Text(buildAnnotatedString {
+                val original = stringResource(id = R.string.customization_shop_more)
+                val customizationShopName = stringResource(id = R.string.customization_shop)
+                val first = original.substring(0, original.indexOf(customizationShopName))
+                val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
+                append(first)
+                withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
+                    append(customizationShopName)
+                }
+                append(second)
+            }, fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
         }
     }
 }

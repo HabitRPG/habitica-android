@@ -89,14 +89,9 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (isLimited) {
             if (numberOwned == 0) {
-                binding.itemDetailIndicator.background =
-                    BitmapDrawable(
-                        context.resources,
-                        HabiticaIconsHelper.imageOfItemIndicatorLimited(),
-                    )
+                binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.shop_limited)
             } else {
-                binding.itemDetailIndicator.background =
-                    AppCompatResources.getDrawable(context, R.drawable.pill_bg_purple_300)
+                binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_purple_300)
             }
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }

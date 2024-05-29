@@ -277,6 +277,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/brand_300" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="@string/content_provider"

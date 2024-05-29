@@ -176,6 +176,8 @@ class ComposeAvatarCustomizationFragment :
                                 userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
                             } else if (customization.identifier == activeCustomization && customization.type == "hair" && customization.category != "color") {
                                 userRepository.useCustomization(type ?: "", category, "0")
+                            } else if (customization.identifier == activeCustomization && customization.type == "chair") {
+                                userRepository.useCustomization(type ?: "", category, "none")
                             } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
                                 userRepository.unlockPath(customization)
                                 userRepository.retrieveUser(false, true, true)
@@ -357,7 +359,7 @@ class ComposeAvatarCustomizationFragment :
                 "skin" -> prefs?.skin
                 "shirt" -> prefs?.shirt
                 "background" -> prefs?.background
-                "chair" -> prefs?.chair
+                "chair" -> prefs?.chair?.replace("chair_", "")
                 "hair" ->
                     when (this.category) {
                         "bangs" -> prefs?.hair?.bangs.toString()
@@ -519,7 +521,7 @@ private fun AvatarCustomizationView(
                                 }
                                 .background(colorResource(id = R.color.window_background)),
                         ) {
-                            if (item.identifier.isNullOrBlank() || item.identifier == "0") {
+                            if (item.identifier.isNullOrBlank() || item.identifier == "0" || item.identifier == "none") {
                                 Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                             } else {
                                 PixelArtView(
@@ -541,7 +543,7 @@ private fun AvatarCustomizationView(
                 }
             }
             item(span = { GridItemSpan(3) }) {
-                EmptyFooter(type, items.size <= 1)
+                EmptyFooter(type, items.size > 1)
             }
         }
     }
