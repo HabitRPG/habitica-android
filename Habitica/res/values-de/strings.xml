@@ -729,7 +729,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="complete">Erledigen</string>
     <string name="reject">Ablehnen</string>
     <string name="accept">Akzeptieren</string>
-    <string name="equip_automatically">Neue Ausrüstung automatisch anziehen</string>
+    <string name="equip_automatically">Neues automatisch anziehen</string>
     <string name="leave_challenges">Herausforderung verlassen</string>
     <string name="keep_challenges">Herausforderungen behalten</string>
     <string name="inviteFriendDescription">Du hast einen Freund oder Freunde eingeladen, die Dich auf Deinem Abenteuer begleiten!</string>

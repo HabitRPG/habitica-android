@@ -42,6 +42,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
     var armoireItem: ShopItem? = null
 
     var changeClassEvents: ((String) -> Unit)? = null
+    var emptySectionClickedEvents: ((String) -> Unit)? = null
 
     var shopSpriteSuffix: String? = null
         set(value) {
@@ -93,7 +94,6 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
             items.add(category)
             if (category.items.isEmpty()) {
                 items.add(EmptyShopCategory(category.identifier, context))
-
             } else {
                 for (item in category.items) {
                     item.categoryIdentifier = category.identifier
@@ -217,7 +217,12 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                     itemHolder.isCompleted = completedQuests.contains(obj.key)
                 }
 
-                is EmptyShopCategory -> (holder as? EmptyShopSectionViewHolder)?.bind(obj)
+                is EmptyShopCategory -> {
+                    (holder as? EmptyShopSectionViewHolder)?.bind(obj)
+                    (holder as? EmptyShopSectionViewHolder)?.onClicked = {
+                        emptySectionClickedEvents?.invoke(obj.categoryIdentifier)
+                    }
+                }
 
                 is String -> (holder as? EmptyStateViewHolder)?.text = obj
                 is Pair<*, *> ->

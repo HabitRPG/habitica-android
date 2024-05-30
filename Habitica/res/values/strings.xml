@@ -1527,6 +1527,8 @@
     <string name="warriors">Warriors</string>
     <string name="mages">Mages</string>
     <string name="customization_shop">Customization Shop</string>
+    <string name="equipment">Equipment</string>
+    <string name="customizing_your_avatar">customizing your avatar</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

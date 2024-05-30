@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
@@ -23,7 +24,6 @@ import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
@@ -36,10 +36,10 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -159,6 +159,34 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             adapter?.changeClassEvents = {
                 showClassChangeDialog(it)
+            }
+            adapter?.emptySectionClickedEvents = {
+                if (shopIdentifier == Shop.CUSTOMIZATIONS) {
+                    var navigationID = R.id.ComposeAvatarCustomizationFragment
+                    var type = ""
+                    var category: String? = null
+                    if (it == "color") {
+                        type = "hair"
+                        category = "color"
+                    } else if (it == "facialHair") {
+                        type = "hair"
+                        category = "beard"
+                    } else if (it == "base") {
+                        type = "hair"
+                        category = "base"
+                    } else if (it == "animalEars") {
+                        navigationID = R.id.composeAvatarEquipmentFragment
+                        category = "headAccessory"
+                    } else if (it == "animalTails") {
+                        navigationID = R.id.composeAvatarEquipmentFragment
+                        category = "back"
+                    } else if (it == "backgrounds") {
+                        category = "background"
+                    }
+                    MainNavigationController.navigate(navigationID, bundleOf("category" to category, "type" to type))
+                } else if (shopIdentifier == Shop.TIME_TRAVELERS_SHOP) {
+                    MainNavigationController.navigate(R.id.equipmentOverviewFragment)
+                }
             }
 
             lifecycleScope.launchCatching {
@@ -337,9 +365,11 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
                     newShop.categories.add(specialCategory)
                 }
+
                 Shop.TIME_TRAVELERS_SHOP -> {
                     formatTimeTravelersShop(newShop)
                 }
+
                 Shop.SEASONAL_SHOP -> {
                     newShop.categories.sortWith(
                         compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
