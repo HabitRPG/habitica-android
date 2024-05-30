@@ -313,7 +313,7 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
             },
     ) {
         Image(
-            painterResource(if (type == "backgrounds") R.drawable.customization_background else R.drawable.customization_mix),
+            painterResource(if (type == "background") R.drawable.customization_background else R.drawable.customization_mix),
             null,
             modifier = Modifier.padding(bottom = 16.dp),
         )

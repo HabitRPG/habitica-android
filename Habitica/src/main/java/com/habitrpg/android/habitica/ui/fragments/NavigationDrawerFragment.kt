@@ -17,7 +17,9 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -652,8 +654,10 @@ class NavigationDrawerFragment : DialogFragment() {
         // set UP the drawer's list view with items and click listener
 
         lifecycleScope.launchCatching {
-            viewModel.getNotificationCount().collect {
-                setNotificationsCount(it)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getNotificationCount().collect {
+                    setNotificationsCount(it)
+                }
             }
         }
         lifecycleScope.launchCatching {
