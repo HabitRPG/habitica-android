@@ -37,7 +37,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
     var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
     private val items: MutableList<Any> = ArrayList()
-    private var shopIdentifier: String? = null
+    internal var shopIdentifier: String? = null
     private var ownedItems: Map<String, OwnedItem> = HashMap()
     var armoireItem: ShopItem? = null
 
@@ -87,7 +87,6 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         if (shop == null) {
             return
         }
-        shopIdentifier = shop.identifier
         items.clear()
         items.add(shop)
         for (category in shop.categories) {

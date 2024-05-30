@@ -1,7 +1,5 @@
-New in 4.3.7:
-- Experience and level should update automatically after finishing a Quest
-- Shop banners should now show properly during seasonal events
-- Fixed an issue that would prevent the creation of new Challenges
-- Fixed an issue with Settings not properly displaying selected changes
-- Adjusted the conditions for when a review prompt will show
-- Various other bug fixes and improvements
+New in 4.4:
+- Support for upcoming events and content 
+- Updated avatar customization interface to support new events and content
+- Updated push notification library to work with new standards in Firebase Cloud Messaging
+- Other various bug fixes and interface improvements

@@ -354,6 +354,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
             }
             shop = newShop
+            adapter?.shopIdentifier = shopIdentifier
             adapter?.setShop(newShop)
             binding?.refreshLayout?.isRefreshing = false
         }
