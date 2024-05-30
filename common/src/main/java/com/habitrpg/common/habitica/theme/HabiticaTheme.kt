@@ -53,6 +53,11 @@ fun HabiticaTheme(
                         fontSize = 16.sp,
                         letterSpacing = 0.1.sp,
                     ),
+                titleSmall =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                    ),
                 bodyLarge =
                     TextStyle(
                         fontWeight = FontWeight.Medium,
@@ -77,12 +82,6 @@ fun HabiticaTheme(
                     TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp,
-                    ),
-                titleSmall =
-                    TextStyle(
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 10.sp,
-                        letterSpacing = 1.5.sp,
                     ),
             ),
         shapes =

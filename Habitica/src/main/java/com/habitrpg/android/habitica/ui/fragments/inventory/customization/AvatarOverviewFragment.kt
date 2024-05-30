@@ -262,7 +262,7 @@ fun AvatarOverviewView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    stringResource(R.string.equipped),
+                    stringResource(R.string.equipped).uppercase(),
                     style = HabiticaTheme.typography.titleSmall,
                     color = HabiticaTheme.colors.textSecondary,
                 )
@@ -271,6 +271,7 @@ fun AvatarOverviewView(
                     stringResource(R.string.equip_automatically),
                     style = HabiticaTheme.typography.bodyMedium,
                     color = HabiticaTheme.colors.textPrimary,
+                    modifier = Modifier.padding(end = 6.dp)
                 )
                 Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
                     userViewModel.updateUser("preferences.autoEquip", it)
@@ -286,7 +287,7 @@ fun AvatarOverviewView(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    stringResource(R.string.costume),
+                    stringResource(R.string.costume).uppercase(),
                     style = HabiticaTheme.typography.titleSmall,
                     color = HabiticaTheme.colors.textSecondary,
                 )
@@ -295,6 +296,7 @@ fun AvatarOverviewView(
                     stringResource(R.string.wear_costume),
                     style = HabiticaTheme.typography.bodyMedium,
                     color = HabiticaTheme.colors.textPrimary,
+                    modifier = Modifier.padding(end = 6.dp),
                 )
                 Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
                     userViewModel.updateUser("preferences.costume", it)
