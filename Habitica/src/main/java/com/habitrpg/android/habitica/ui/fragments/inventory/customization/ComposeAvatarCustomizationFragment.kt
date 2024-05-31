@@ -344,7 +344,7 @@ class ComposeAvatarCustomizationFragment :
     fun updateUser(user: User?) {
         if (user == null) return
         this.updateActiveCustomization(user)
-        ownedCustomizations.value = user.purchased?.customizations?.filter { it.type == this.type && it.purchased } ?: emptyList()
+        ownedCustomizations.value = user.purchased?.customizations?.filter { it.type == this.type && (it.category.isNullOrEmpty() || it.category == this.category) && it.purchased } ?: emptyList()
         viewModel.userSize.value = user.preferences?.size ?: "slim"
         viewModel.hairColor.value = user.preferences?.hair?.color
     }
