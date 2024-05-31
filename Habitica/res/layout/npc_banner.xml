@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:showIn="@layout/shop_header">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:parentTag="android.widget.RelativeLayout"
+        tools:showIn="@layout/shop_header">
 
     <ImageView
-        android:id="@+id/backgroundView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/shop_height" />
+            android:id="@+id/backgroundView"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_height="@dimen/shop_height" />
 
     <ImageView
-        android:id="@+id/sceneView"
-        android:layout_width="match_parent"
-            android:scaleType="fitStart"
-        android:layout_height="@dimen/shop_scene_height" />
+            android:id="@+id/sceneView"
+            android:layout_width="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_height="@dimen/shop_scene_height" />
 </merge>

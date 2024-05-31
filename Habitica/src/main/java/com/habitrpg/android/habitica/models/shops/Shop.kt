@@ -19,6 +19,7 @@ class Shop {
                 SEASONAL_SHOP -> R.string.seasonalShop_owner
                 TIME_TRAVELERS_SHOP -> R.string.timetravelers_owner
                 CUSTOMIZATIONS -> R.string.customizations_owner
+                "customizationsShop" -> R.string.customizations_owner
                 else -> R.string.market_owner
             }
 
