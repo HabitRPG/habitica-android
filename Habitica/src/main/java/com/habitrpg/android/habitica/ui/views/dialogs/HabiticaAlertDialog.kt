@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHabiticaBaseBinding
@@ -80,6 +81,12 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             } else {
                 MainScope()
             }
+        }
+
+    var titleTextViewVisibility: Boolean
+        get() = binding.titleTextView.isVisible
+        set(value) {
+            binding.titleTextView.isVisible = value
         }
 
     init {

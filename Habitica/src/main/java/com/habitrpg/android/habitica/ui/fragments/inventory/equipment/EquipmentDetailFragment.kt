@@ -22,6 +22,7 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -116,7 +117,9 @@ class EquipmentDetailFragment :
 
         type?.let { type ->
             lifecycleScope.launchCatching {
-                inventoryRepository.getOwnedEquipment(type).collect { adapter.data = it }
+                inventoryRepository.getOwnedEquipment(type)
+                    .map { it.sortedBy { equipment -> equipment.text } }
+                    .collect { adapter.data = it }
             }
         }
     }

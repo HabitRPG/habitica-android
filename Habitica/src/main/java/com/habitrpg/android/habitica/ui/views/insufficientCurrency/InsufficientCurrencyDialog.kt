@@ -25,6 +25,7 @@ abstract class InsufficientCurrencyDialog(context: Context) : HabiticaAlertDialo
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(getLayoutID(), null)
         setAdditionalContentView(view)
+        titleTextViewVisibility = false
 
         imageView = view.findViewById(R.id.imageView)
         textView = view.findViewById(R.id.textView)

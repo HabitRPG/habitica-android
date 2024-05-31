@@ -118,6 +118,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             }
             binding?.promoComposeView?.isVisible = true
         }
+        loadInventory()
 
         Analytics.sendNavigationEvent("gem screen")
     }

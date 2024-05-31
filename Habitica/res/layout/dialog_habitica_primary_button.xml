@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     style="@style/HabiticaButton.Primary"
-    tools:text="Test">
+    android:paddingTop="@dimen/spacing_medium"
+    android:paddingBottom="@dimen/spacing_medium"
+    tools:text="Tesqweqwe qweqwe qweq eqweq weqwe qweqweqw eqwe qwe qweqweq qwe qweq weq w qweq weqw eqwe qwe qwe qwet">
 </Button>
