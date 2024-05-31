@@ -139,7 +139,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         val obj = getItem(position)
         if (obj != null) {
             when (obj) {
-                is Shop -> (holder as? ShopHeaderViewHolder)?.bind(obj, shopSpriteSuffix)
+                is Shop -> (holder as? ShopHeaderViewHolder)?.bind(obj, shopIdentifier ?: obj.identifier, shopSpriteSuffix)
                 is ShopCategory -> {
                     val sectionHolder = holder as? SectionViewHolder ?: return
                     sectionHolder.bind(obj.text)
@@ -334,10 +334,11 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
 
         fun bind(
             shop: Shop,
+            identifier: String,
             shopSpriteSuffix: String?,
         ) {
             binding.npcBannerView.shopSpriteSuffix = shopSpriteSuffix
-            binding.npcBannerView.identifier = shop.identifier
+            binding.npcBannerView.identifier = identifier
 
             binding.descriptionView.text = shop.notes.fromHtml()
             binding.namePlate.setText(shop.npcNameResource)

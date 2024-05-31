@@ -25,7 +25,7 @@ class EmptyShopCategory(val categoryIdentifier: String, context: Context?) {
             for (word in words) {
                 val index = spannable.indexOf(word)
                 if (index >= 0) {
-                    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.brand_400)), index, index + word.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+                    spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.text_brand_neon)), index, index + word.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
                 }
             }
             description = spannable

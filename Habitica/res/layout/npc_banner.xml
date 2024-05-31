@@ -12,6 +12,7 @@
 
     <ImageView
         android:id="@+id/sceneView"
-        android:layout_width="375dp"
+        android:layout_width="match_parent"
+            android:scaleType="fitStart"
         android:layout_height="@dimen/shop_scene_height" />
 </merge>

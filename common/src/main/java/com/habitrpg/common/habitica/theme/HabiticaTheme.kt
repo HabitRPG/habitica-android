@@ -55,7 +55,7 @@ fun HabiticaTheme(
                     ),
                 titleSmall =
                     TextStyle(
-                        fontWeight = FontWeight.Normal,
+                        fontWeight = FontWeight.SemiBold,
                         fontSize = 14.sp,
                     ),
                 bodyLarge =

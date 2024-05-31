@@ -164,7 +164,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 if (shopIdentifier == Shop.CUSTOMIZATIONS) {
                     var navigationID = R.id.ComposeAvatarCustomizationFragment
                     var type = ""
-                    var category: String? = null
+                    var category = ""
                     if (it == "color") {
                         type = "hair"
                         category = "color"
@@ -176,12 +176,16 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         category = "base"
                     } else if (it == "animalEars") {
                         navigationID = R.id.composeAvatarEquipmentFragment
-                        category = "headAccessory"
+                        type = "headAccessory"
+                        category = "animal"
                     } else if (it == "animalTails") {
                         navigationID = R.id.composeAvatarEquipmentFragment
-                        category = "back"
+                        type = "back"
+                        category = "animal"
                     } else if (it == "backgrounds") {
-                        category = "background"
+                        type = "background"
+                    } else {
+                        type = it
                     }
                     MainNavigationController.navigate(navigationID, bundleOf("category" to category, "type" to type))
                 } else if (shopIdentifier == Shop.TIME_TRAVELERS_SHOP) {
