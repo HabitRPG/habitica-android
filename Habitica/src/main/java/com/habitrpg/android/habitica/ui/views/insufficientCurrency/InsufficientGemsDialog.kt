@@ -91,10 +91,10 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
                 purchaseTextView.text = "4"
                 PurchaseTypes.PURCHASE_4_GEMS
             }
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launchCatching {
             val sku =
                 purchaseHandler.getInAppPurchaseSKU(gemSku)
-                    ?: return@launch
+                    ?: return@launchCatching
             withContext(Dispatchers.Main) {
                 purchaseButton?.text = sku.oneTimePurchaseOfferDetails?.formattedPrice
                 contentView.findViewById<ProgressBar>(R.id.loading_indicator).isVisible = false

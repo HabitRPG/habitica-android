@@ -49,6 +49,12 @@ android {
     buildTypes {
         release {
         }
+        create("debugIAP") {
+            initWith(buildTypes["debug"])
+            isMinifyEnabled = false
+            isJniDebuggable = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
     }
 
     compileOptions {

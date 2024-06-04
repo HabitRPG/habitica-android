@@ -1529,6 +1529,8 @@
     <string name="customization_shop">Customization Shop</string>
     <string name="equipment">Equipment</string>
     <string name="customizing_your_avatar">customizing your avatar</string>
+    <string name="error">Error</string>
+    <string name="error_loading_gems">There was an error loading gems</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

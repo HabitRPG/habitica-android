@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
@@ -34,6 +35,7 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -132,12 +134,31 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     }
 
     private fun loadInventory() {
+        if (binding?.gems4View?.sku == null) {
+            binding?.loadingIndicator?.setContent {
+                HabiticaCircularProgressView()
+            }
+            binding?.loadingIndicator?.isVisible = true
+            binding?.gemPurchaseOptions?.isVisible = false
+        }
         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
             val skus = purchaseHandler.getAllGemSKUs()
             withContext(Dispatchers.Main) {
+                if (skus.isEmpty()) {
+                    binding?.loadingIndicator?.isVisible = false
+                    binding?.gemPurchaseOptions?.isVisible = false
+                    val dialog = HabiticaAlertDialog(requireActivity())
+                    dialog.setTitle(getString(R.string.error))
+                    dialog.setMessage(getString(R.string.error_loading_gems))
+                    dialog.addCloseButton()
+                    dialog.show()
+                    return@withContext
+                }
                 for (sku in skus) {
                     updateButtonLabel(sku)
                 }
+                binding?.loadingIndicator?.isVisible = false
+                binding?.gemPurchaseOptions?.isVisible = true
             }
         }
     }

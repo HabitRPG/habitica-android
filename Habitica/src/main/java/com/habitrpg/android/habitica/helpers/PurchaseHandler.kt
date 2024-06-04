@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.asFlow
 import com.android.billingclient.api.AcknowledgePurchaseParams
@@ -22,6 +23,7 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
+import com.google.api.Billing
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -56,7 +58,7 @@ class PurchaseHandler(
     private val apiClient: ApiClient,
     private val userViewModel: MainUserViewModel,
 ) : PurchasesUpdatedListener, PurchasesResponseListener {
-    private val billingClient =
+    private var billingClient =
         BillingClient.newBuilder(context).setListener(this).enablePendingPurchases().build()
 
     override fun onPurchasesUpdated(
@@ -160,6 +162,7 @@ class PurchaseHandler(
             return
         }
         billingClientState = BillingClientState.CONNECTING
+        billingClient = BillingClient.newBuilder(context).setListener(this).enablePendingPurchases().build()
         billingClient.startConnection(
             object : BillingClientStateListener {
                 override fun onBillingSetupFinished(billingResult: BillingResult) {
@@ -172,34 +175,42 @@ class PurchaseHandler(
                         }
 
                         BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
-                            retryListening()
+                            CoroutineScope(Dispatchers.IO).launchCatching {
+                                retryListening()
+                            }
                         }
 
                         BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> {
-                            retryListening()
+                            CoroutineScope(Dispatchers.IO).launchCatching {
+                                retryListening()
+                            }
+                        }
+
+                        BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
+                            billingClientState = BillingClientState.UNAVAILABLE
                         }
 
                         else -> {
-                            billingClientState = BillingClientState.UNAVAILABLE
+                            billingClientState = BillingClientState.DISCONNECTED
                         }
                     }
                 }
 
                 override fun onBillingServiceDisconnected() {
                     billingClientState = BillingClientState.DISCONNECTED
-                    retryListening()
+                    CoroutineScope(Dispatchers.IO).launchCatching {
+                        retryListening()
+                    }
                 }
             },
         )
     }
 
-    private fun retryListening() {
+    private suspend fun retryListening() {
         listeningRetryCount += 1
-        CoroutineScope(Dispatchers.IO).launchCatching {
-            // try again after 30 seconds
-            delay(30.seconds)
-            startListening()
-        }
+        // try again after 30 seconds
+        delay(20.seconds)
+        startListening()
     }
 
     fun stopListening() {
@@ -260,8 +271,9 @@ class PurchaseHandler(
         type: String,
         skus: List<String>,
     ): List<ProductDetails>? {
-        retryUntil {
-            if (billingClientState == BillingClientState.DISCONNECTED) {
+        retryUntil(8, initialDelay = 500, maxDelay = 2000) {
+            if (billingClient.connectionState == BillingClient.ConnectionState.DISCONNECTED ||
+                billingClient.connectionState == BillingClient.ConnectionState.CLOSED) {
                 startListening()
             }
             billingClientState.canMaybePurchase && billingClient.isReady
@@ -276,6 +288,15 @@ class PurchaseHandler(
             withContext(Dispatchers.IO) {
                 billingClient.queryProductDetails(params)
             }
+        if (skuDetailsResult.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
+            FirebaseCrashlytics.getInstance().recordException(
+                Throwable(
+                    "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}",
+                ),
+            )
+            return null
+        }
         return skuDetailsResult.productDetailsList
     }
 
