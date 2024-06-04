@@ -262,6 +262,7 @@ class PurchaseDialog(
                 }
         } else if (shopItem.locked) {
             buyLabel.text = context.getString(R.string.locked)
+            priceLabel.visibility = View.GONE
             limitedTextView.visibility = View.GONE
             if (shopItem.isTypeGear && shopItem.key.last().toString().toIntOrNull() != null) {
                 val previousKey = "${shopItem.key.dropLast(1)}${(shopItem.key.last().toString().toIntOrNull() ?: 1) - 1}"
@@ -377,6 +378,9 @@ class PurchaseDialog(
     }
 
     private fun onBuyButtonClicked() {
+        if (shopItem.locked) {
+            return
+        }
         if (shopItem.isValid && !shopItem.locked) {
             if ((gemsLeft > 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, purchaseQuantity)) {
                 MainScope().launch(Dispatchers.Main) {
