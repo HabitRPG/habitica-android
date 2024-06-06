@@ -377,7 +377,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 Shop.SEASONAL_SHOP -> {
                     newShop.categories.sortWith(
                         compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
-                            .thenByDescending { it.items.firstOrNull()?.availableUntil }
+                            .thenByDescending { if (it.identifier == "quests") 10000 else findReleaseYear(it.items.firstOrNull()?.key ?: "") }
                             .thenBy { it.items.firstOrNull()?.locked },
                     )
                 }
@@ -391,6 +391,15 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.shopIdentifier = shopIdentifier
             adapter?.setShop(newShop)
             binding?.refreshLayout?.isRefreshing = false
+        }
+    }
+
+    private fun findReleaseYear(key: String): Int {
+        val result = key.filter { it.isDigit() }
+        return if (result.isEmpty()) {
+            2014
+        } else {
+            result.toInt()
         }
     }
 

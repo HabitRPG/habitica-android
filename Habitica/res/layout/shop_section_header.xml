@@ -39,8 +39,10 @@
                 android:src="@drawable/shop_header_sparkle" />
         </LinearLayout>
         <View
+                android:id="@+id/divider"
                 android:layout_width="wrap_content"
                 android:layout_height="3dp"
+                android:visibility="gone"
             android:background="#EA8C31" />
 
         <TextView
@@ -83,17 +85,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_arrow_drop_down_10dp"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:src="@drawable/ic_arrow_drop_down_10dp" />
         </LinearLayout>
         <Spinner
                 android:id="@+id/class_selection_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
-                android:visibility="gone"
-                android:layout_gravity="bottom"
-                tools:visibility="gone" />
+                android:visibility="invisible" />
     </FrameLayout>
     </LinearLayout>
 
