@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="9dp"
+                android:paddingVertical="6dp"
                 android:gravity="center_vertical">
             <ImageView
                     android:layout_width="wrap_content"
@@ -29,8 +29,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                style="@style/Body1"
-                tools:text="Section Header"
+                style="@style/SectionTitleText"
+                tools:text="BACKGROUNDS"
                 android:gravity="center"
                 android:textColor="@color/white" />
         <ImageView
@@ -53,10 +53,10 @@
                 android:background="@drawable/shop_header_time_background"
                 android:layout_marginHorizontal="3dp"
                 android:layout_marginBottom="3dp"
-                android:paddingVertical="6dp"
+                android:paddingVertical="4dp"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
-                style="@style/Body1"
+            style="@style/SectionTitleText"
                 tools:text="Switches in X"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -70,16 +70,17 @@
             android:layout_marginHorizontal="3dp"
             android:paddingStart="12dp"
             android:paddingEnd="3dp"
-            android:paddingVertical="6dp">
+            android:paddingVertical="3dp">
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+            android:gravity="center_vertical">
             <TextView
                     android:id="@+id/class_name_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                style="@style/Body1"
+                style="@style/SectionTitleText"
                 />
             <ImageView
                     android:layout_width="wrap_content"

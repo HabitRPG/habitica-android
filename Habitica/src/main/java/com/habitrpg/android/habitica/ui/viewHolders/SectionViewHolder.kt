@@ -123,7 +123,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             "healer" -> {
                 classSelectionButton?.background = AppCompatResources.getDrawable(context, R.drawable.shop_header_healer_background)
                 classSelectionLabel?.text = context.getString(R.string.healer)
-                textColor = R.color.yellow_1
+                textColor = R.color.darkbrown
             }
             "rogue" -> {
                 classSelectionButton?.background = AppCompatResources.getDrawable(context, R.drawable.shop_header_rogue_background)

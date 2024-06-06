@@ -56,6 +56,14 @@
         <item name="android:textColor">?textColorSecondary</item>
     </style>
 
+    <style name="SectionTitleText">
+        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
     <!-- Body -->
     <style name="Body1">
         <item name="android:fontFamily">@string/font_family_medium</item>
