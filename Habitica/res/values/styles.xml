@@ -54,7 +54,7 @@
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
-        <item name="android:textColorLink">@color/brand_400</item>
+        <item name="android:textColorLink">@color/text_brand_neon</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:windowTranslucentStatus">false</item>
 

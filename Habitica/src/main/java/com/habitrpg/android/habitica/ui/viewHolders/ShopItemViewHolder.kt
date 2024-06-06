@@ -120,7 +120,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.itemDetailIndicator.layoutParams = layoutParams
         }
 
-        binding.priceLabel.isLocked = item.locked || !canBuy
+        binding.priceLabel.isLocked = item.locked || (!canBuy && item.currency == "gold")
     }
 
     override fun onClick(view: View) {

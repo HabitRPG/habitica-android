@@ -8,10 +8,16 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,8 +28,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
@@ -34,6 +42,7 @@ import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.SegmentedControl
@@ -42,6 +51,8 @@ import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.views.ComposableAvatarView
+import com.habitrpg.shared.habitica.models.Avatar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
@@ -78,27 +89,48 @@ open class AvatarOverviewFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        hidesToolbar = true
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding?.composeView?.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 HabiticaTheme {
-                    AvatarOverviewView(
-                        userViewModel,
-                        showCustomization,
-                        !showCustomization,
-                        battleGearWeapon.value?.twoHanded == true,
-                        costumeWeapon.value?.twoHanded == true,
-                        { type, category ->
-                            displayCustomizationFragment(type, category)
-                        },
-                        { type, category ->
-                            displayAvatarEquipmentFragment(type, category)
-                        },
-                        { type, equipped, isCostume ->
-                            displayEquipmentFragment(type, equipped, isCostume)
-                        },
-                    )
+                    val avatar by userViewModel.user.observeAsState()
+                    Column {
+
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
+                            ComposableAvatarView(
+                                avatar = avatar,
+                                configManager = appConfigManager,
+                                modifier =
+                                Modifier
+                                    .padding(vertical = 24.dp)
+                                    .size(140.dp, 147.dp),
+                            )
+                            Box(
+                                Modifier
+                                    .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                                    .fillMaxWidth()
+                                    .height(22.dp),
+                            )
+                        }
+                        AvatarOverviewView(
+                            userViewModel,
+                            showCustomization,
+                            !showCustomization,
+                            battleGearWeapon.value?.twoHanded == true,
+                            costumeWeapon.value?.twoHanded == true,
+                            { type, category ->
+                                displayCustomizationFragment(type, category)
+                            },
+                            { type, category ->
+                                displayAvatarEquipmentFragment(type, category)
+                            },
+                            { type, equipped, isCostume ->
+                                displayEquipmentFragment(type, equipped, isCostume)
+                            },
+                        )
+                    }
                 }
             }
         }
@@ -169,6 +201,12 @@ open class AvatarOverviewFragment :
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_share_avatar, menu)
+
+        mainActivity?.toolbar?.let {
+            val color = ContextCompat.getColor(requireContext(), R.color.window_background)
+            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color)
+            requireActivity().window.statusBarColor = color
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

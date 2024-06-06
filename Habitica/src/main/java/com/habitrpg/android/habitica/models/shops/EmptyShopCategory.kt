@@ -7,12 +7,12 @@ import android.text.style.ForegroundColorSpan
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 
-class EmptyShopCategory(val categoryIdentifier: String, context: Context?) {
+class EmptyShopCategory(val categoryIdentifier: String, val shopIdentifier: String?, context: Context?) {
     val title: String = context?.getString(R.string.you_own_all_items) ?: ""
     val description: Spannable
     init {
         val stringId = when (categoryIdentifier) {
-            "backgrounds" -> R.string.try_on_next_month
+            "backgrounds" -> if (shopIdentifier == Shop.CUSTOMIZATIONS) R.string.try_on_next_month else R.string.try_on_customize
             "color" -> R.string.try_on_next_season
             "skin" -> R.string.try_on_next_season
             "mystery_sets" -> R.string.try_on_equipment

@@ -4,46 +4,97 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginHorizontal="12dp">
 
     <LinearLayout
-            android:id="@+id/header_layout"
+            android:id="@+id/header_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp">
-
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+        android:background="@drawable/shop_category_header_background"
+            android:layout_marginBottom="@dimen/spacing_large">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="9dp"
+                android:gravity="center_vertical">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                android:src="@drawable/shop_header_sparkle" />
         <TextView
                 android:id="@+id/label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                style="@style/Caption2"
+                style="@style/Body1"
                 tools:text="Section Header"
-                android:textColor="?textColorSecondary" />
+                android:gravity="center"
+                android:textColor="@color/white" />
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shop_header_sparkle" />
+        </LinearLayout>
+        <View
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"
+            android:background="#EA8C31" />
 
         <TextView
                 android:id="@+id/switches_in_label"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?textColorTintedSecondary"
-                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:background="@drawable/shop_header_time_background"
+                android:layout_marginHorizontal="3dp"
+                android:layout_marginBottom="3dp"
+                android:paddingVertical="6dp"
+                android:gravity="center"
                 android:layout_gravity="center_vertical"
-                style="@style/Caption2"
+                style="@style/Body1"
                 tools:text="Switches in X"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
+    <FrameLayout
+            android:id="@+id/class_selection_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="3dp"
+            android:layout_marginHorizontal="3dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="3dp"
+            android:paddingVertical="6dp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:id="@+id/class_name_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                style="@style/Body1"
+                />
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_drop_down_10dp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+        </LinearLayout>
         <Spinner
                 android:id="@+id/class_selection_spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="10dp"
                 android:visibility="gone"
                 android:layout_gravity="bottom"
                 tools:visibility="gone" />
+    </FrameLayout>
     </LinearLayout>
 
     <TextView

@@ -5,7 +5,10 @@ import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
@@ -26,6 +29,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -93,7 +97,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         for (category in shop.categories) {
             items.add(category)
             if (category.items.isEmpty()) {
-                items.add(EmptyShopCategory(category.identifier, context))
+                items.add(EmptyShopCategory(category.identifier, shopIdentifier, context))
             } else {
                 for (item in category.items) {
                     item.categoryIdentifier = category.identifier
@@ -144,6 +148,11 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                     val sectionHolder = holder as? SectionViewHolder ?: return
                     sectionHolder.bind(obj.text)
                     sectionHolder.bind(obj.endDate)
+                    (sectionHolder.headerContainer.layoutParams as? LinearLayout.LayoutParams)?.topMargin = if (position > 1) {
+                        40.dpToPx(context)
+                    } else {
+                        16.dpToPx(context)
+                    }
                     if (gearCategories.contains(obj)) {
                         context?.let { context ->
                             val adapter =
@@ -160,6 +169,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                         gearCategories[holder.selectedItem].identifier
                                 }
                             }
+                            sectionHolder.setSelectedClass(selectedGearCategory)
                             if (user?.stats?.habitClass != obj.identifier && obj.identifier != "none") {
                                 if (user?.hasClass == true) {
                                     sectionHolder.switchClassButton?.setOnClickListener {
@@ -199,13 +209,20 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                 } else {
                                     sectionHolder.switchClassButton?.visibility = View.GONE
                                 }
+                                sectionHolder.notesView?.visibility = View.VISIBLE
+                                sectionHolder.notesView?.text = context.getString(
+                                    R.string.class_gear_disclaimer
+                                )
                             } else {
                                 sectionHolder.switchClassButton?.visibility = View.GONE
+                                sectionHolder.notesView?.visibility = View.GONE
                             }
                         }
+                        sectionHolder.divider?.visibility = View.VISIBLE
                     } else {
                         sectionHolder.spinnerAdapter = null
                         sectionHolder.notesView?.visibility = View.GONE
+                        sectionHolder.divider?.isVisible = obj.endDate != null
                     }
                 }
 
