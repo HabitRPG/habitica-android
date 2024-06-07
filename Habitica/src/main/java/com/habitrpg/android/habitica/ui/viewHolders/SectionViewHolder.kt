@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import java.util.Date
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val headerContainer: LinearLayout = itemView.findViewById(R.id.header_container)
+    val headerContainer: LinearLayout? = itemView.findViewById(R.id.header_container)
     private val label: TextView = itemView.findViewById(R.id.label)
     private val switchesInLabel: TextView? = itemView.findViewById(R.id.switches_in_label)
     private val selectionSpinner: Spinner? = itemView.findViewById(R.id.class_selection_spinner)
