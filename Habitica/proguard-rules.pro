@@ -133,3 +133,4 @@
 
 -keepattributes Signature
 -keep class kotlin.coroutines.Continuation
+-dontwarn com.habitrpg.android.habitica.extensions.ViewGroupExt

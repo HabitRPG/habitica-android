@@ -44,7 +44,6 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
     init {
         setView(binding.root)
         this.setButton(BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
-            saveChanges()
         }
         this.setButton(BUTTON_NEUTRAL, context.getString(R.string.action_cancel)) { _, _ ->
             this.dismiss()
@@ -54,7 +53,7 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
     private fun saveChanges() {
         getButton(BUTTON_POSITIVE).isEnabled = false
         lifecycleScope.launchCatching {
-            userRepository.bulkAllocatePoints(
+            val result = userRepository.bulkAllocatePoints(
                 binding.strengthSliderView.currentValue,
                 binding.intelligenceSliderView.currentValue,
                 binding.constitutionSliderView.currentValue,
@@ -93,6 +92,13 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
         binding.perceptionSliderView.allocateAction = {
             checkRedistribution(binding.perceptionSliderView)
             updateTitle()
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        getButton(BUTTON_POSITIVE).setOnClickListener {
+            saveChanges()
         }
     }
 
