@@ -247,7 +247,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings =
             FirebaseRemoteConfigSettings.Builder()
-                .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
+                .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 1800)
                 .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)

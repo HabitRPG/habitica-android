@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.HitType
@@ -74,6 +75,7 @@ class PurchaseDialog(
     private val inventoryRepository: InventoryRepository
     private val userRepository: UserRepository
     private val soundManager: SoundManager
+    private val configManager: AppConfigManager
 
     private val customHeader: View by lazy {
         DialogPurchaseShopitemHeaderBinding.inflate(context.layoutInflater).root
@@ -176,21 +178,23 @@ class PurchaseDialog(
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
-    interface InsufficientGemsDialogEntryPoint {
+    interface PurchaseDialogEntryPoint {
         fun inventoryRepository(): InventoryRepository
         fun userRepository(): UserRepository
         fun soundManager(): SoundManager
+        fun configManager(): AppConfigManager
     }
 
     init {
         val hiltEntryPoint =
             EntryPointAccessors.fromApplication(
                 context,
-                InsufficientGemsDialogEntryPoint::class.java,
+                PurchaseDialogEntryPoint::class.java,
             )
         inventoryRepository = hiltEntryPoint.inventoryRepository()
         userRepository = hiltEntryPoint.userRepository()
         soundManager = hiltEntryPoint.soundManager()
+        configManager = hiltEntryPoint.configManager()
 
         findSnackBarActivity(context)?.let {
             (it as? Activity)?.let { activity -> setOwnerActivity(activity) }
@@ -455,7 +459,11 @@ class PurchaseDialog(
         } else if (shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds") {
             observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
         } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "customizationSet") {
-            observable = { userRepository.unlockPath(item.path ?: item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
+            if (configManager.enableCustomizationShop()) {
+                observable = { userRepository.unlockPath(item.path ?: item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
+            } else {
+                observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
+            }
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "card") {

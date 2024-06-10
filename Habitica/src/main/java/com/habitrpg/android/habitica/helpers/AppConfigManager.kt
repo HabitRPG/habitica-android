@@ -190,7 +190,6 @@ class AppConfigManager(contentRepository: ContentRepository) :
     }
 
     fun enableCustomizationShop(): Boolean {
-        if (BuildConfig.DEBUG) return true
         return remoteConfig.getBoolean("enableCustomizationShop")
     }
 }
