@@ -63,6 +63,14 @@ Submit a new Beta Build to Google Play
 
 Deploy a new version to the Google Play
 
+### android upload_to_slack
+
+```sh
+[bundle exec] fastlane android upload_to_slack
+```
+
+Upload the latest output APK to slack
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

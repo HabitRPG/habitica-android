@@ -74,7 +74,7 @@ class AvatarEquipmentFragment :
             }
         }
         adapter.onShowPurchaseDialog = { item ->
-            val dialog = PurchaseDialog(requireContext(), item)
+            val dialog = PurchaseDialog(requireContext(), item, mainActivity)
             dialog.show()
         }
         return super.onCreateView(inflater, container, savedInstanceState)
