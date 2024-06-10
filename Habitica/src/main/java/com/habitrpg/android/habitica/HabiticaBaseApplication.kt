@@ -23,7 +23,10 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.Wearable
 import com.google.firebase.installations.FirebaseInstallations
+import com.google.firebase.remoteconfig.ConfigUpdate
+import com.google.firebase.remoteconfig.ConfigUpdateListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.gu.toolargetool.TooLargeTool
 import com.habitrpg.android.habitica.data.ApiClient
@@ -252,6 +255,15 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()
+        remoteConfig.addOnConfigUpdateListener(object : ConfigUpdateListener {
+
+            override fun onUpdate(configUpdate: ConfigUpdate) {
+                remoteConfig.activate()
+            }
+
+            override fun onError(error: FirebaseRemoteConfigException) {
+            }
+        })
     }
 
     private fun setupNotifications() {

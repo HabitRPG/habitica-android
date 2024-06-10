@@ -445,15 +445,15 @@ class NavigationDrawerFragment : DialogFragment() {
                     context.getString(R.string.questShop),
                 ),
             )
-            if (configManager.enableCustomizationShop()) {
-                items.add(
-                    HabiticaDrawerItem(
-                        R.id.customizationsShopFragment,
-                        SIDEBAR_SHOPS_CUSTOMIZATIONS,
-                        context.getString(R.string.customizations),
-                    ),
-                )
-            }
+            val customizationShopItem = HabiticaDrawerItem(
+                R.id.customizationsShopFragment,
+                SIDEBAR_SHOPS_CUSTOMIZATIONS,
+                context.getString(R.string.customizations),
+            )
+            customizationShopItem.isVisible = configManager.enableCustomizationShop()
+            items.add(
+                customizationShopItem
+            )
             val seasonalShopEntry =
                 HabiticaDrawerItem(
                     R.id.seasonalShopFragment,
@@ -587,6 +587,11 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(item)
         }
         adapter.updateItems(items)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getItemWithIdentifier(SIDEBAR_SHOPS_CUSTOMIZATIONS)?.isVisible = configManager.enableCustomizationShop()
     }
 
     fun setSelection(
