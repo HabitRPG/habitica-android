@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.EmptyItemBinding
 import com.habitrpg.common.habitica.databinding.FailedItemBinding

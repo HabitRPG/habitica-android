@@ -8,12 +8,11 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
-import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType

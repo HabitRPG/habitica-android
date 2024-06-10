@@ -69,7 +69,7 @@
 -keep class com.habitrpg.android.habitica.** { *; }
 -keep class com.habitrpg.common.habitica.** { *; }
 -keep class com.habitrpg.shared.habitica.** { *; }
-
+-keep class com.habitrpg.android.habitica.extensions.ViewGroupExt
 #realm
 -keep class io.realm.annotations.RealmModule
 -keep @io.realm.annotations.RealmModule class *
@@ -133,4 +133,3 @@
 
 -keepattributes Signature
 -keep class kotlin.coroutines.Continuation
--dontwarn com.habitrpg.android.habitica.extensions.ViewGroupExt

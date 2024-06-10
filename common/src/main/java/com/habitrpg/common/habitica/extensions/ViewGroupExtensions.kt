@@ -1,10 +1,9 @@
 @file:JvmName("ViewGroupExt")
 
-package com.habitrpg.android.habitica.extensions
+package com.habitrpg.common.habitica.extensions
 
 import android.view.View
 import android.view.ViewGroup
-import com.habitrpg.common.habitica.extensions.layoutInflater
 
 fun ViewGroup.inflate(
     layoutId: Int,

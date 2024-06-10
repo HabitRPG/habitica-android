@@ -315,6 +315,9 @@ class ApiClientImpl(
                 .responseBodyConverter(ErrorResponse::class.java, arrayOfNulls(0), retrofitAdapter)
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
+        } catch (e: JsonSyntaxException) {
+            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            ErrorResponse()
         } catch (e: IOException) {
             Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()

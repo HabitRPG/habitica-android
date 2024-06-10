@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AchievementChallengeItemBinding
 import com.habitrpg.android.habitica.databinding.AchievementQuestItemBinding
 import com.habitrpg.android.habitica.databinding.AchievementSectionHeaderBinding
-import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
