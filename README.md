@@ -24,8 +24,6 @@ If you Watch this repository, GitHub will send you an email every time we publis
 
 ## Contributing
 
-For an introduction to the technologies used and how the software is organized, refer to [Contributing to Habitica](http://habitica.wikia.com/wiki/Contributing_to_Habitica#Coders_.28Web_.26_Mobile.29) - "Coders (Web & Mobile)" section.
-
 Thank you very much [to all contributors](https://github.com/HabitRPG/habitrpg-android/graphs/contributors).
 
 #### How mobile releases work
