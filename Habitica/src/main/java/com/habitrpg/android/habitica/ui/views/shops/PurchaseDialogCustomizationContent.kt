@@ -78,6 +78,11 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
                 layerMap[AvatarView.LayerType.HEAD] = ""
                 layerMap[AvatarView.LayerType.HEAD_ACCESSORY] = ""
             }
+
+            if (path.contains("shirt")) {
+                layerMap[AvatarView.LayerType.ARMOR] = ""
+                layerMap[AvatarView.LayerType.BODY] = ""
+            }
         }
         binding.avatarView.setAvatar(user, layerMap)
     }
