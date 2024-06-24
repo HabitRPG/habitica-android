@@ -62,9 +62,21 @@ class ArmoireActivity : BaseActivity() {
 
     override fun getLayoutResId(): Int = R.layout.activity_armoire
 
+    private var hasUsedExtraArmoire = false
+
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityArmoireBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("hasUsedExtraArmoire", hasUsedExtraArmoire)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        hasUsedExtraArmoire = savedInstanceState.getBoolean("hasUsedExtraArmoire")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -185,6 +197,10 @@ class ArmoireActivity : BaseActivity() {
     }
 
     private fun giveUserArmoire(): Boolean {
+        if (hasUsedExtraAmoire) {
+            return false
+        }
+        hasUsedExtraAmoire = true
         binding.iconWrapper.post {
             binding.iconView.bitmap = null
             Animations.circularHide(binding.iconWrapper)
