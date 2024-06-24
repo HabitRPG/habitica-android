@@ -179,15 +179,22 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
             }
 
             var hatchPrice = 0
+            var canBuy = true
             if (!hasEgg) {
                 hatchPrice += getItemPrice(pet, egg, hasUnlockedEgg)
+                if (pet.type == "quest" && !hasUnlockedEgg) {
+                    canBuy = false
+                }
             }
 
             if (!hasPotion) {
                 hatchPrice += getItemPrice(pet, potion, hasUnlockedPotion)
+                if (pet.type == "quest" && !hasUnlockedPotion) {
+                    canBuy = false
+                }
             }
 
-            if (hatchPrice > 0) {
+            if (hatchPrice > 0 && canBuy) {
                 val binding = DialogHatchPetButtonBinding.inflate(layoutInflater)
                 binding.currencyView.value = hatchPrice.toDouble()
                 binding.currencyView.currency = "gems"
