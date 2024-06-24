@@ -111,7 +111,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/layout_rounded_bg_window"
-            android:layout_marginHorizontal="12dp"
             android:layout_marginVertical="@dimen/spacing_medium"
             android:visibility="gone"
             android:baselineAligned="false"
