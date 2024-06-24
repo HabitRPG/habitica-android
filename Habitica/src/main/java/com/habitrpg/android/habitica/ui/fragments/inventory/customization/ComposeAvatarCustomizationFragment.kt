@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,12 +35,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.colorResource
@@ -466,9 +471,6 @@ private fun AvatarCustomizationView(
     activeCustomization: String?,
     onSelect: (Customization) -> Unit,
 ) {
-    val nestedScrollInterop = rememberNestedScrollInteropConnection()
-    val totalWidth = LocalConfiguration.current.screenWidthDp.dp
-    val horizontalPadding = (totalWidth - (84.dp * 3)) / 2
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
             ComposableAvatarView(
@@ -486,12 +488,22 @@ private fun AvatarCustomizationView(
                     .height(22.dp),
             )
         }
+        val nestedScrollInterop = rememberNestedScrollInteropConnection()
+        val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+        var gridWidth by remember { mutableStateOf(screenWidth) }
+        val horizontalPadding = (gridWidth - (84.dp * 3)) / 2
+        val density = LocalDensity.current
         LazyVerticalGrid(
             columns = GridCells.Adaptive(76.dp),
             horizontalArrangement = Arrangement.Center,
             contentPadding = PaddingValues(horizontal = horizontalPadding),
             modifier =
                 Modifier
+                    .onGloballyPositioned {
+                        gridWidth = with(density) {
+                            it.size.width.toDp()
+                        }
+                    }
                     .nestedScroll(nestedScrollInterop)
                     .background(colorResource(R.color.content_background)),
         ) {

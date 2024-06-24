@@ -13,6 +13,7 @@ import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -235,63 +236,64 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 userQuestStatus = it
             }
         }
+        val drawerLayout = findViewById<ViewGroup>(R.id.drawer_layout)
+        if (drawerLayout is DrawerLayout) {
+            drawerFragment =
+                supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
+            drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout, notificationsViewModel)
 
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        drawerFragment =
-            supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
-        drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout, notificationsViewModel)
+            drawerToggle =
+                object : ActionBarDrawerToggle(
+                    this,
+                    drawerLayout,
+                    R.string.navigation_drawer_open,
+                    R.string.navigation_drawer_close,
+                ) {}
+            // Set the drawer toggle as the DrawerListener
+            drawerToggle?.let { drawerLayout.addDrawerListener(it) }
+            drawerLayout.addDrawerListener(
+                object : DrawerLayout.DrawerListener {
+                    private var isOpeningDrawer: Boolean? = null
 
-        drawerToggle =
-            object : ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close,
-            ) {}
-        // Set the drawer toggle as the DrawerListener
-        drawerToggle?.let { drawerLayout.addDrawerListener(it) }
-        drawerLayout.addDrawerListener(
-            object : DrawerLayout.DrawerListener {
-                private var isOpeningDrawer: Boolean? = null
-
-                override fun onDrawerSlide(
-                    drawerView: View,
-                    slideOffset: Float,
-                ) {
-                    if (!isUsingNightModeResources()) {
-                        if (slideOffset < 0.5f && isOpeningDrawer == null) {
-                            window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
-                            isOpeningDrawer = true
-                        } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
-                            window.updateStatusBarColor(
-                                getThemeColor(R.attr.headerBackgroundColor),
-                                true,
-                            )
-                            isOpeningDrawer = false
+                    override fun onDrawerSlide(
+                        drawerView: View,
+                        slideOffset: Float,
+                    ) {
+                        if (!isUsingNightModeResources()) {
+                            if (slideOffset < 0.5f && isOpeningDrawer == null) {
+                                window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                                isOpeningDrawer = true
+                            } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
+                                window.updateStatusBarColor(
+                                    getThemeColor(R.attr.headerBackgroundColor),
+                                    true,
+                                )
+                                isOpeningDrawer = false
+                            }
                         }
                     }
-                }
 
-                override fun onDrawerOpened(drawerView: View) {
-                    hideKeyboard()
-                    if (!isUsingNightModeResources()) {
-                        window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                    override fun onDrawerOpened(drawerView: View) {
+                        hideKeyboard()
+                        if (!isUsingNightModeResources()) {
+                            window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                        }
+                        isOpeningDrawer = null
+                        drawerFragment?.updatePromo()
                     }
-                    isOpeningDrawer = null
-                    drawerFragment?.updatePromo()
-                }
 
-                override fun onDrawerClosed(drawerView: View) {
-                    if (!isUsingNightModeResources()) {
-                        window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
+                    override fun onDrawerClosed(drawerView: View) {
+                        if (!isUsingNightModeResources()) {
+                            window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
+                        }
+                        isOpeningDrawer = null
                     }
-                    isOpeningDrawer = null
-                }
 
-                override fun onDrawerStateChanged(newState: Int) {
-                }
-            },
-        )
+                    override fun onDrawerStateChanged(newState: Int) {
+                    }
+                },
+            )
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)

@@ -197,10 +197,10 @@ class ArmoireActivity : BaseActivity() {
     }
 
     private fun giveUserArmoire(): Boolean {
-        if (hasUsedExtraAmoire) {
+        if (hasUsedExtraArmoire) {
             return false
         }
-        hasUsedExtraAmoire = true
+        hasUsedExtraArmoire = true
         binding.iconWrapper.post {
             binding.iconView.bitmap = null
             Animations.circularHide(binding.iconWrapper)
