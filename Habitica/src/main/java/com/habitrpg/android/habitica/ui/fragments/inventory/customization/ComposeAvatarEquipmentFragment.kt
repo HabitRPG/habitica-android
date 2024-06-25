@@ -133,7 +133,7 @@ class ComposeAvatarEquipmentFragment :
                     val avatar by userViewModel.user.observeAsState()
                     AvatarEquipmentView(avatar = avatar, configManager = configManager, viewModel.items, viewModel.type, stringResource(viewModel.typeNameId), activeEquipment) { equipment ->
                         lifecycleScope.launchCatching {
-                            if (equipment.key?.isNotBlank() != true && equipment.key != activeEquipment) {
+                            if ((equipment.key?.isNotBlank() != true || equipment.key?.endsWith("_0") == true) && equipment.key != activeEquipment) {
                                 inventoryRepository.equip(
                                     if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
                                     activeEquipment ?: "")
