@@ -112,7 +112,7 @@ class PurchaseDialog(
 
             val contentView: PurchaseDialogContent
             when {
-                shopItem.isTypeItem -> contentView = PurchaseDialogItemContent(context)
+                shopItem.isTypeItem || shopItem.isTypeSpecial || shopItem.isTypeBundle -> contentView = PurchaseDialogItemContent(context)
                 shopItem.isTypeQuest -> {
                     contentView = PurchaseDialogQuestContent(context)
                     MainScope().launch(ExceptionHandler.coroutine()) {

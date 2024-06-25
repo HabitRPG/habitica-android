@@ -125,6 +125,7 @@ object MarkdownParser {
     private fun processMarkdown(input: String): String {
         var processedInput = preprocessMarkdownLinks(input)
         processedInput = preprocessImageMarkdown(processedInput)
+        processedInput = preprocessHtmlTags(processedInput)
         return processedInput
     }
 
@@ -154,13 +155,20 @@ object MarkdownParser {
         while (matcher.find()) {
             val linkText = matcher.group(1)
             val url = matcher.group(2)
-            val sanitizedUrl = url.replace(Regex("\\s"), "")
+            val sanitizedUrl = url?.replace(Regex("\\s"), "")
             val correctedLink = "[$linkText]($sanitizedUrl)"
             matcher.appendReplacement(sb, Matcher.quoteReplacement(correctedLink))
         }
         matcher.appendTail(sb)
 
         return sb.toString()
+    }
+
+    val brRegex = Regex("<br>")
+    private fun preprocessHtmlTags(markdown: String): String {
+        return markdown.replace(brRegex) {
+            "\n"
+        }
     }
 
     fun parseMarkdownAsync(

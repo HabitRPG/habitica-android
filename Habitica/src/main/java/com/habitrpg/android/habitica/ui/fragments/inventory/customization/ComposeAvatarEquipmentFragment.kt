@@ -137,7 +137,7 @@ class ComposeAvatarEquipmentFragment :
                                 inventoryRepository.equip(
                                     if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
                                     activeEquipment ?: "")
-                            } else {
+                            } else if (equipment.key?.contains("base_0") == false) {
                                 inventoryRepository.equip(
                                     if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
                                     equipment.key ?: "",

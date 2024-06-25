@@ -111,7 +111,6 @@ class MainNotificationsManager : NotificationsManager {
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                         Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
                         Notification.Type.LOGIN_INCENTIVE.type -> true
-                        Notification.Type.NEW_MYSTERY_ITEMS.type -> true
                         Notification.Type.FIRST_DROP.type -> true
                         else -> false
                     }

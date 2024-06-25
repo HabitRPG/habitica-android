@@ -74,6 +74,12 @@ open class ShopItem : RealmObject(), BaseObject {
     val isTypeItem: Boolean
         get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType
 
+    val isTypeSpecial: Boolean
+        get() = "special" == purchaseType
+
+    val isTypeBundle: Boolean
+        get() = "bundles" == purchaseType
+
     val isTypeQuest: Boolean
         get() = "quests" == purchaseType
 
