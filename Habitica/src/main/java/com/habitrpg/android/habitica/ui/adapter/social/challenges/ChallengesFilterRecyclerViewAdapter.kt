@@ -19,7 +19,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ChallengeViewHolder {
         val view =
             LayoutInflater.from(parent.context)
@@ -29,7 +29,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) :
 
     override fun onBindViewHolder(
         holder: ChallengeViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bind(entries[position], checkedEntries)
     }
@@ -43,7 +43,7 @@ class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) :
 
         fun bind(
             group: Group,
-            checkedEntries: MutableList<Group>,
+            checkedEntries: MutableList<Group>
         ) {
             binding.root.text = group.name
             binding.root.isChecked = checkedEntries.contains(group)

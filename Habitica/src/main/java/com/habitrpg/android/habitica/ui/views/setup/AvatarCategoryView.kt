@@ -24,7 +24,7 @@ class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(
                 attrs,
                 R.styleable.AvatarCategoryView,
                 0,
-                0,
+                0
             )
 
         textView.text = a.getText(R.styleable.AvatarCategoryView_categoryTitle)

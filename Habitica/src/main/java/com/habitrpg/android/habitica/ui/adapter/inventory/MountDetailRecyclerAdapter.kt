@@ -27,7 +27,7 @@ class MountDetailRecyclerAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): androidx.recyclerview.widget.RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
@@ -36,7 +36,7 @@ class MountDetailRecyclerAdapter :
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         when (val obj = this.itemList[position]) {
             is StableSection -> (holder as? SectionViewHolder)?.bind(obj)
@@ -44,7 +44,7 @@ class MountDetailRecyclerAdapter :
                 (holder as? MountViewHolder)?.bind(
                     obj,
                     ownedMounts?.get(obj.key)?.owned == true,
-                    currentMount,
+                    currentMount
                 )
         }
     }

@@ -12,12 +12,12 @@ class SimpleSpinnerAdapter(context: Context, resource: Int) : ArrayAdapter<CharS
     context,
     resource,
     R.id.textView,
-    context.resources.getTextArray(resource),
+    context.resources.getTextArray(resource)
 ) {
     override fun getDropDownView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup,
+        parent: ViewGroup
     ): View {
         val view = parent.inflate(R.layout.spinner_item, false)
         (view as? TextView)?.text = getItem(position)
@@ -27,7 +27,7 @@ class SimpleSpinnerAdapter(context: Context, resource: Int) : ArrayAdapter<CharS
     override fun getView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup,
+        parent: ViewGroup
     ): View {
         val view = convertView ?: parent.inflate(android.R.layout.simple_spinner_item, false)
         (view as? TextView)?.text = getItem(position)

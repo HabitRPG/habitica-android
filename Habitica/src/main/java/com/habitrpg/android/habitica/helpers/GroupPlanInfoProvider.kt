@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 interface GroupPlanInfoProvider {
     fun assignedTextForTask(
         resources: Resources,
-        assignedUsers: List<String>,
+        assignedUsers: List<String>
     ): String
 
     fun canScoreTask(task: Task): Boolean

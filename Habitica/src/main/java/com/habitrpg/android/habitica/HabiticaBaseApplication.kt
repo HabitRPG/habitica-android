@@ -159,8 +159,8 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         val configuration: Configuration = resources.configuration
         val languageHelper = LanguageHelper(sharedPrefs.getString("language", "en"))
         if (if (SDK_INT >= Build.VERSION_CODES.N) {
-                configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
-            } else {
+            configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
+        } else {
                 @Suppress("DEPRECATION")
                 configuration.locale != languageHelper.locale
             }
@@ -214,7 +214,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     override fun openOrCreateDatabase(
         name: String,
         mode: Int,
-        factory: SQLiteDatabase.CursorFactory?,
+        factory: SQLiteDatabase.CursorFactory?
     ): SQLiteDatabase {
         return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
     }
@@ -223,13 +223,13 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         name: String,
         mode: Int,
         factory: SQLiteDatabase.CursorFactory?,
-        errorHandler: DatabaseErrorHandler?,
+        errorHandler: DatabaseErrorHandler?
     ): SQLiteDatabase {
         return super.openOrCreateDatabase(
             getDatabasePath(name).absolutePath,
             mode,
             factory,
-            errorHandler,
+            errorHandler
         )
     }
 
@@ -297,7 +297,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onActivityCreated(
         p0: Activity,
-        p1: Bundle?,
+        p1: Bundle?
     ) {
     }
 
@@ -306,7 +306,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onActivitySaveInstanceState(
         p0: Activity,
-        p1: Bundle,
+        p1: Bundle
     ) {
     }
 
@@ -344,7 +344,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         private fun startActivity(
             activityClass: Class<*>,
-            context: Context,
+            context: Context
         ) {
             val intent = Intent(context, activityClass)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

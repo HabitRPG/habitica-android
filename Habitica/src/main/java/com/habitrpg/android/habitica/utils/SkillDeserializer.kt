@@ -12,7 +12,7 @@ class SkillDeserializer : JsonDeserializer<List<Skill>> {
     override fun deserialize(
         json: JsonElement,
         type: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): List<Skill> {
         val jsonObject = json.asJsonObject
         val skills = ArrayList<Skill>()

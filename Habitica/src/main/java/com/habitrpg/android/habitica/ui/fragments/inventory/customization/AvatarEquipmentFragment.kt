@@ -38,7 +38,7 @@ class AvatarEquipmentFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -54,7 +54,7 @@ class AvatarEquipmentFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
         adapter.onSelect = { equipment ->
@@ -63,7 +63,7 @@ class AvatarEquipmentFragment :
             lifecycleScope.launchCatching {
                 inventoryRepository.equip(
                     if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
-                    key,
+                    key
                 )
             }
         }
@@ -82,7 +82,7 @@ class AvatarEquipmentFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)

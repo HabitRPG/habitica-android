@@ -84,7 +84,7 @@ class RealmUserLocalRepository(realm: Realm) :
 
     override fun saveUser(
         user: User,
-        overrideExisting: Boolean,
+        overrideExisting: Boolean
     ) {
         if (realm.isClosed) return
         val oldUser =
@@ -108,7 +108,7 @@ class RealmUserLocalRepository(realm: Realm) :
 
     private fun removeOldTags(
         userId: String,
-        onlineTags: List<Tag>,
+        onlineTags: List<Tag>
     ) {
         val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
         val tagsToDelete = tags.filterNot { onlineTags.contains(it) }

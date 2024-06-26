@@ -9,7 +9,7 @@ object NumberAbbreviator {
         context: Context?,
         number: Float,
         numberOfDecimals: Int = 2,
-        minForAbbrevation: Int = 0,
+        minForAbbrevation: Int = 0
     ): String {
         return abbreviate(context, number.toDouble(), numberOfDecimals, minForAbbrevation)
     }
@@ -18,7 +18,7 @@ object NumberAbbreviator {
         context: Context?,
         number: Double,
         numberOfDecimals: Int = 2,
-        minForAbbrevation: Int = 0,
+        minForAbbrevation: Int = 0
     ): String {
         val decimalCount = if (number != 0.0 && number > -1 && number < 1 && numberOfDecimals == 0) 2 else numberOfDecimals
         val absNumber = abs(number)

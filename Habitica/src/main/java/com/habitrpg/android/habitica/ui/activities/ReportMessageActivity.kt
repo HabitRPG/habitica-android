@@ -61,7 +61,7 @@ class ReportMessageActivity : BaseActivity() {
                     @SuppressLint("SwitchIntDef")
                     override fun onStateChanged(
                         bottomSheet: View,
-                        newState: Int,
+                        newState: Int
                     ) {
                         when (newState) {
                             BottomSheetBehavior.STATE_HIDDEN -> finish()
@@ -72,11 +72,11 @@ class ReportMessageActivity : BaseActivity() {
 
                     override fun onSlide(
                         bottomSheet: View,
-                        slideOffset: Float,
+                        slideOffset: Float
                     ) {
                         // no op
                     }
-                },
+                }
             )
 
         val args = navArgs<ReportMessageActivityArgs>().value
@@ -103,12 +103,12 @@ class ReportMessageActivity : BaseActivity() {
             lifecycleScope.launch(
                 ExceptionHandler.coroutine {
                     isReporting = false
-                },
+                }
             ) {
                 socialRepository.flagMessage(
                     messageID ?: "",
                     binding.additionalInfoEdittext.text.toString(),
-                    groupID,
+                    groupID
                 )
                 finish()
             }

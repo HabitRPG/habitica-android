@@ -47,7 +47,7 @@ class UserModule {
     fun providesTaskAlarmManager(
         @ApplicationContext context: Context,
         taskRepository: TaskRepository,
-        authenticationHandler: AuthenticationHandler,
+        authenticationHandler: AuthenticationHandler
     ): TaskAlarmManager {
         return TaskAlarmManager(context, taskRepository, authenticationHandler)
     }
@@ -57,6 +57,6 @@ class UserModule {
     fun providesUserViewModel(
         authenticationHandler: AuthenticationHandler,
         userRepository: UserRepository,
-        socialRepository: SocialRepository,
+        socialRepository: SocialRepository
     ) = MainUserViewModel(authenticationHandler, userRepository, socialRepository)
 }

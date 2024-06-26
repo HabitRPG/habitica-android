@@ -16,7 +16,7 @@ class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
         directTargetChild: View,
         target: View,
         axes: Int,
-        type: Int,
+        type: Int
     ): Boolean {
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL
     }
@@ -28,7 +28,7 @@ class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
         dx: Int,
         dy: Int,
         consumed: IntArray,
-        type: Int,
+        type: Int
     ) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
         child.translationY =
@@ -39,7 +39,7 @@ class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
         coordinatorLayout: CoordinatorLayout,
         child: V,
         target: View,
-        type: Int,
+        type: Int
     ) {
         super.onStopNestedScroll(coordinatorLayout, child, target, type)
         if (child.translationY != 0f && child.translationY != child.height.toFloat()) {

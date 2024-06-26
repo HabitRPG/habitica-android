@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
+import com.habitrpg.common.habitica.extensions.inflate
 
 class PartyMemberRecyclerViewAdapter : BaseRecyclerViewAdapter<Member, GroupMemberViewHolder>() {
     var leaderID: String? = null
@@ -14,14 +14,14 @@ class PartyMemberRecyclerViewAdapter : BaseRecyclerViewAdapter<Member, GroupMemb
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): GroupMemberViewHolder {
         return GroupMemberViewHolder(parent.inflate(R.layout.party_member))
     }
 
     override fun onBindViewHolder(
         holder: GroupMemberViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bind(data[position], leaderID, null)
         holder.onClickEvent = {

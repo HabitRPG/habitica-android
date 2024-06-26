@@ -27,13 +27,13 @@ interface UserRepository : BaseRepository {
 
     suspend fun updateUser(
         key: String,
-        value: Any?,
+        value: Any?
     ): User?
 
     suspend fun retrieveUser(
         withTasks: Boolean = false,
         forced: Boolean = false,
-        overrideExisting: Boolean = false,
+        overrideExisting: Boolean = false
     ): User?
 
     suspend fun revive(): Equipment?
@@ -49,12 +49,12 @@ interface UserRepository : BaseRepository {
     suspend fun useSkill(
         key: String,
         target: String?,
-        taskId: String,
+        taskId: String
     ): SkillResponse?
 
     suspend fun useSkill(
         key: String,
-        target: String?,
+        target: String?
     ): SkillResponse?
 
     suspend fun disableClasses(): User?
@@ -63,7 +63,7 @@ interface UserRepository : BaseRepository {
 
     suspend fun unlockPath(
         path: String,
-        price: Int,
+        price: Int
     ): UnlockResponse?
 
     suspend fun unlockPath(customization: Customization): UnlockResponse?
@@ -94,18 +94,18 @@ interface UserRepository : BaseRepository {
 
     suspend fun updateLoginName(
         newLoginName: String,
-        password: String? = null,
+        password: String? = null
     ): User?
 
     suspend fun updateEmail(
         newEmail: String,
-        password: String,
+        password: String
     ): Void?
 
     suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String,
+        newPasswordConfirmation: String
     ): Void?
 
     suspend fun verifyUsername(username: String): VerifyUsernameResponse?
@@ -116,13 +116,13 @@ interface UserRepository : BaseRepository {
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int,
+        perception: Int
     ): Stats?
 
     suspend fun useCustomization(
         type: String,
         category: String?,
-        identifier: String,
+        identifier: String
     ): User?
 
     suspend fun retrieveAchievements(): List<Achievement>?

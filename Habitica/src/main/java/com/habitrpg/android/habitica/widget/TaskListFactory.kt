@@ -26,7 +26,7 @@ abstract class TaskListFactory internal constructor(
     private val listItemResId: Int,
     private val listItemTextResId: Int,
     val taskRepository: TaskRepository,
-    val userRepository: UserRepository,
+    val userRepository: UserRepository
 ) : RemoteViewsService.RemoteViewsFactory {
     private val job = SupervisorJob()
 
@@ -86,7 +86,7 @@ abstract class TaskListFactory internal constructor(
             remoteView.setInt(
                 R.id.checkbox_background,
                 "setBackgroundResource",
-                task.lightTaskColor,
+                task.lightTaskColor
             )
             val fillInIntent = Intent()
             fillInIntent.putExtra(TaskListWidgetProvider.TASK_ID_ITEM, task.id)

@@ -69,7 +69,7 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun getContentView(layoutResId: Int? = getLayoutResId()): View {
         return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
             layoutResId ?: 0,
-            null,
+            null
         )
     }
 
@@ -104,7 +104,7 @@ abstract class BaseActivity : AppCompatActivity() {
             notificationsManager.displayNotificationEvents.collect {
                 if (ShowNotificationInteractor(
                         this@BaseActivity,
-                        lifecycleScope,
+                        lifecycleScope
                     ).handleNotification(it)
                 ) {
                     lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -145,7 +145,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     internal open fun loadTheme(
         sharedPreferences: SharedPreferences,
-        forced: Boolean = false,
+        forced: Boolean = false
     ) {
         val theme = forcedTheme ?: sharedPreferences.getString("theme_name", "purple")
         if (theme != currentTheme || forced) {
@@ -160,7 +160,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal_Dark
                         "blue" -> R.style.MainAppTheme_Blue_Dark
                         else -> R.style.MainAppTheme_Dark
-                    },
+                    }
                 )
             } else {
                 setTheme(
@@ -173,7 +173,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal
                         "blue" -> R.style.MainAppTheme_Blue
                         else -> R.style.MainAppTheme
-                    },
+                    }
                 )
             }
         }
@@ -237,7 +237,7 @@ abstract class BaseActivity : AppCompatActivity() {
         errorCount: Int,
         title: String?,
         message: String,
-        isFromUserInput: Boolean,
+        isFromUserInput: Boolean
     ) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(title)
@@ -246,7 +246,7 @@ abstract class BaseActivity : AppCompatActivity() {
             android.R.string.ok,
             isPrimary = true,
             isDestructive = false,
-            function = null,
+            function = null
         )
         alert.enqueue()
     }
@@ -257,13 +257,13 @@ abstract class BaseActivity : AppCompatActivity() {
     fun shareContent(
         identifier: String,
         message: String?,
-        image: Bitmap? = null,
+        image: Bitmap? = null
     ) {
         Analytics.sendEvent(
             "shared",
             EventCategory.BEHAVIOUR,
             HitType.EVENT,
-            mapOf("identifier" to identifier),
+            mapOf("identifier" to identifier)
         )
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "image/*"
@@ -281,7 +281,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
                     contentValues.put(
                         MediaStore.MediaColumns.RELATIVE_PATH,
-                        Environment.DIRECTORY_PICTURES,
+                        Environment.DIRECTORY_PICTURES
                     )
                     uri =
                         resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)

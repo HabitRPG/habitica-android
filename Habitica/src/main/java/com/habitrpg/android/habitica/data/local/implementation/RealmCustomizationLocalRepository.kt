@@ -14,7 +14,7 @@ class RealmCustomizationLocalRepository(realm: Realm) :
     override fun getCustomizations(
         type: String,
         category: String?,
-        onlyAvailable: Boolean,
+        onlyAvailable: Boolean
     ): Flow<List<Customization>> {
         var query =
             realm.where(Customization::class.java)

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
@@ -48,7 +47,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     fun bind(
         item: ShopItem,
         canBuy: Boolean,
-        numberOwned: Int,
+        numberOwned: Int
     ) {
         this.item = item
         binding.buyButton.visibility = View.VISIBLE

@@ -13,7 +13,7 @@ class SocialAuthenticationDeserializer : JsonDeserializer<SocialAuthentication> 
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): SocialAuthentication {
         val authentication = SocialAuthentication()
         val obj = json.asJsonObject

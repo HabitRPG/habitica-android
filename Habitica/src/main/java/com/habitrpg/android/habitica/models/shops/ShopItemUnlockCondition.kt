@@ -18,7 +18,7 @@ open class ShopItemUnlockCondition : RealmObject(), BaseObject {
                 if (incentiveThreshold != null) {
                     context.getString(
                         R.string.login_incentive_count,
-                        incentiveThreshold,
+                        incentiveThreshold
                     )
                 } else {
                     context.getString(R.string.login_incentive)
@@ -35,7 +35,7 @@ open class ShopItemUnlockCondition : RealmObject(), BaseObject {
                 if (incentiveThreshold != null) {
                     context.getString(
                         R.string.login_incentive_short_count,
-                        incentiveThreshold,
+                        incentiveThreshold
                     )
                 } else {
                     context.getString(R.string.login_incentive_short)

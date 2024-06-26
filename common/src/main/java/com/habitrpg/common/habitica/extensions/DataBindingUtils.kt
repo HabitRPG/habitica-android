@@ -19,7 +19,7 @@ import java.util.Date
 
 fun PixelArtView.loadImage(
     imageName: String?,
-    imageFormat: String? = null,
+    imageFormat: String? = null
 ) {
     val shouldLoadImage = DataBindingUtils.existsAsImage(imageName)
     if (shouldLoadImage && imageName != null) {
@@ -52,7 +52,7 @@ fun PixelArtView.loadImage(
                 tag = null
                 setImageDrawable(null)
                 bitmap = null
-            },
+            }
         )
     } else {
         tag = null
@@ -65,7 +65,7 @@ object DataBindingUtils {
     fun loadImage(
         context: Context,
         imageName: String,
-        imageResult: (Drawable) -> Unit,
+        imageResult: (Drawable) -> Unit
     ) {
         loadImage(context, imageName, null, imageResult)
     }
@@ -75,7 +75,7 @@ object DataBindingUtils {
         imageName: String,
         imageFormat: String?,
         imageResult: (Drawable) -> Unit,
-        imageError: () -> Unit = { },
+        imageError: () -> Unit = { }
     ) {
         val request =
             ImageRequest.Builder(context)
@@ -88,7 +88,7 @@ object DataBindingUtils {
                     },
                     onError = {
                         imageError()
-                    },
+                    }
                 )
                 .build()
         context.imageLoader.enqueue(request)
@@ -96,7 +96,7 @@ object DataBindingUtils {
 
     fun getFullFilename(
         imageName: String,
-        imageFormat: String? = null,
+        imageFormat: String? = null
     ): String {
         val name =
             when {
@@ -115,7 +115,7 @@ object DataBindingUtils {
 
     fun setRoundedBackground(
         view: View,
-        color: Int,
+        color: Int
     ) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
         drawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
@@ -140,7 +140,7 @@ object DataBindingUtils {
 
         override fun applyTransformation(
             interpolatedTime: Float,
-            t: Transformation,
+            t: Transformation
         ) {
             layoutParams.weight = initializeWeight + (targetWeight - initializeWeight) * interpolatedTime
 

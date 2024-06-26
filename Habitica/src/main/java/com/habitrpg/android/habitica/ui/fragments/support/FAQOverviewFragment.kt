@@ -55,7 +55,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentFaqOverviewBinding {
         return FragmentFaqOverviewBinding.inflate(inflater, container, false)
     }
@@ -70,7 +70,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         try {
             mainActivity?.packageManager?.getPackageInfo(
                 mainActivity?.packageName ?: "",
-                0,
+                0
             )?.versionName
                 ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
@@ -83,7 +83,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
             @Suppress("DEPRECATION")
             mainActivity?.packageManager?.getPackageInfo(
                 mainActivity?.packageName ?: "",
-                0,
+                0
             )?.versionCode
                 ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
@@ -94,7 +94,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         hidesToolbar = true
         showsBackButton = true
@@ -103,7 +103,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -119,25 +119,25 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         }
 
         binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHeartLarge(),
+            HabiticaIconsHelper.imageOfHeartLarge()
         )
         binding?.experienceSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfExperienceReward(),
+            HabiticaIconsHelper.imageOfExperienceReward()
         )
         binding?.manaSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfMagicLarge(),
+            HabiticaIconsHelper.imageOfMagicLarge()
         )
         binding?.goldSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGoldReward(),
+            HabiticaIconsHelper.imageOfGoldReward()
         )
         binding?.gemsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGem(),
+            HabiticaIconsHelper.imageOfGem()
         )
         binding?.hourglassesSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHourglassLarge(),
+            HabiticaIconsHelper.imageOfHourglassLarge()
         )
         binding?.statsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfStats(),
+            HabiticaIconsHelper.imageOfStats()
         )
 
         binding?.contribTierSection?.findViewById<ImageView>(R.id.icon_view)
@@ -164,7 +164,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
             clickableSpan,
             startIndex,
             endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         binding?.moreHelpTextView?.text = spannableString
@@ -188,7 +188,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         SupportFaqItemBinding.inflate(
                             context.layoutInflater,
                             binding?.faqLinearLayout,
-                            true,
+                            true
                         )
                     binding.textView.text = article.question
                     binding.root.setOnClickListener {
@@ -215,8 +215,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         getString(
                             R.string.version_info,
                             versionName,
-                            versionCode,
-                        ),
+                            versionCode
+                        )
                 )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
@@ -235,16 +235,16 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                             (
                                 user.stats?.habitClass
                                     ?: "None"
-                            )
+                                )
                         }
-                    ),
+                        )
                 ) +
                 newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
                 newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
                 newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
                 newLine +
                 Uri.encode(
-                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0),
+                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
                 )
         }
 
@@ -277,7 +277,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.WRAP_CONTENT,
                         FrameLayout.LayoutParams.WRAP_CONTENT,
-                        Gravity.CENTER,
+                        Gravity.CENTER
                     )
                 container.addView(label, params)
                 container.isVisible = false
@@ -287,7 +287,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     12.dpToPx(context),
                     0,
                     12.dpToPx(context),
-                    if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context),
+                    if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context)
                 )
                 val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
                 container.setPadding(0, padding, 0, padding)

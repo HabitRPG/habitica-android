@@ -45,7 +45,7 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int,
+        flags: Int
     ) {
         dest.writeString(id)
         dest.writeString(text)

@@ -27,7 +27,7 @@ interface NotificationsManager {
 
     fun dismissTaskNotification(
         context: Context,
-        task: Task,
+        task: Task
     )
 }
 
@@ -60,7 +60,7 @@ class MainNotificationsManager : NotificationsManager {
 
     override fun dismissTaskNotification(
         context: Context,
-        task: Task,
+        task: Task
     ) {
         NotificationManagerCompat.from(context).cancel(task.id.hashCode())
     }

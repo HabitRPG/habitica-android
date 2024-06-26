@@ -23,7 +23,7 @@ class ChallengeTasksRecyclerViewAdapter(
     newContext: Context,
     userID: String,
     private val openTaskDisabled: Boolean,
-    private val taskActionsDisabled: Boolean,
+    private val taskActionsDisabled: Boolean
 ) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>(TaskType.HABIT, viewModel, layoutResource, newContext, userID) {
     val taskList: MutableList<Task>
         get() = content?.map { t -> t }?.toMutableList() ?: mutableListOf()
@@ -45,7 +45,7 @@ class ChallengeTasksRecyclerViewAdapter(
 
     fun addTaskUnder(
         taskToAdd: Task,
-        taskAbove: Task?,
+        taskAbove: Task?
     ): Int {
         val position = content?.indexOfFirst { t -> t.id == taskAbove?.id } ?: 0
 
@@ -69,7 +69,7 @@ class ChallengeTasksRecyclerViewAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): BindableViewHolder<Task> {
         val viewHolder: BindableViewHolder<Task> =
             when (viewType) {
@@ -121,7 +121,7 @@ class ChallengeTasksRecyclerViewAdapter(
 
     inner class AddItemViewHolder internal constructor(
         itemView: View,
-        private val callback: ((Task) -> Unit)?,
+        private val callback: ((Task) -> Unit)?
     ) : BindableViewHolder<Task>(itemView) {
         private val addBtn: Button = itemView.findViewById(R.id.btn_add_task)
         private var newTask: Task? = null
@@ -134,7 +134,7 @@ class ChallengeTasksRecyclerViewAdapter(
         override fun bind(
             data: Task,
             position: Int,
-            displayMode: String,
+            displayMode: String
         ) {
             this.newTask = data
             addBtn.text = data.text
@@ -147,7 +147,7 @@ class ChallengeTasksRecyclerViewAdapter(
         override fun bind(
             data: Task,
             position: Int,
-            displayMode: String,
+            displayMode: String
         ) {
             dividerName.text = data.text
         }

@@ -39,7 +39,7 @@ internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogConte
     private fun configureFieldsForValue(
         labelView: TextView?,
         valueTextView: TextView?,
-        value: Int,
+        value: Int
     ) {
         valueTextView?.text = "+$value"
         if (value == 0) {

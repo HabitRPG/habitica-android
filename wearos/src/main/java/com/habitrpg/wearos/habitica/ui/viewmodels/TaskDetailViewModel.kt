@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskDetailViewModel
-    @Inject
-    constructor(
-        savedStateHandle: SavedStateHandle,
-        taskRepository: TaskRepository,
-        userRepository: UserRepository,
-        exceptionBuilder: ExceptionHandlerBuilder,
-        appStateManager: AppStateManager,
-    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-        val taskID = savedStateHandle.get<String>("task_id")
-        val task = taskRepository.getTask(taskID).asLiveData()
-    }
+@Inject
+constructor(
+    savedStateHandle: SavedStateHandle,
+    taskRepository: TaskRepository,
+    userRepository: UserRepository,
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+    val taskID = savedStateHandle.get<String>("task_id")
+    val task = taskRepository.getTask(taskID).asLiveData()
+}

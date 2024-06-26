@@ -35,7 +35,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         lifecycleScope.launchCatching {
             inventoryRepository.retrieveInAppRewards()
@@ -45,7 +45,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,8 +65,8 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             binding?.recyclerView?.setBackgroundColor(
                 ContextCompat.getColor(
                     it,
-                    R.color.content_background,
-                ),
+                    R.color.content_background
+                )
             )
         }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -145,13 +145,13 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                     userRepository.useSkill(
                         selectedCard?.key ?: "",
                         "member",
-                        it.data?.getStringExtra("member_id") ?: "",
+                        it.data?.getStringExtra("member_id") ?: ""
                     )
                     val activity = (activity as? MainActivity) ?: return@launchCatching
                     HabiticaSnackbar.showSnackbar(
                         activity.snackbarContainer,
                         context?.getString(R.string.sent_card, selectedCard?.text),
-                        HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                        HabiticaSnackbar.SnackbarDisplayType.BLUE
                     )
                 }
             }
@@ -161,7 +161,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         fun newInstance(
             context: Context?,
             classType: TaskType,
-            showCustomRewards: Boolean,
+            showCustomRewards: Boolean
         ): RewardsRecyclerviewFragment {
             val fragment = RewardsRecyclerviewFragment()
             fragment.taskType = classType
@@ -173,8 +173,8 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                     ArrayList(
                         listOf(
                             context.getString(R.string.tutorial_rewards_1),
-                            context.getString(R.string.tutorial_rewards_2),
-                        ),
+                            context.getString(R.string.tutorial_rewards_2)
+                        )
                     )
             }
             fragment.tutorialCanBeDeferred = false

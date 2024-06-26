@@ -36,12 +36,12 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         var fromX: Int,
         var fromY: Int,
         var toX: Int,
-        var toY: Int,
+        var toY: Int
     )
 
     private class ChangeInfo private constructor(
         var oldHolder: RecyclerView.ViewHolder?,
-        var newHolder: RecyclerView.ViewHolder?,
+        var newHolder: RecyclerView.ViewHolder?
     ) {
         var fromX: Int = 0
         var fromY: Int = 0
@@ -54,7 +54,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
             fromX: Int,
             fromY: Int,
             toX: Int,
-            toY: Int,
+            toY: Int
         ) : this(oldHolder, newHolder) {
             this.fromX = fromX
             this.fromY = fromY
@@ -72,7 +72,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                     ", toX=" + toX +
                     ", toY=" + toY +
                     '}'.toString()
-            )
+                )
         }
     }
 
@@ -107,7 +107,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                                 moveInfo.fromX,
                                 moveInfo.fromY,
                                 moveInfo.toX,
-                                moveInfo.toY,
+                                moveInfo.toY
                             )
                         }
                     }
@@ -197,7 +197,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                     removeAnimations.remove(holder)
                     dispatchFinishedWhenDone()
                 }
-            },
+            }
         ).start()
     }
 
@@ -229,7 +229,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                         addAnimations.remove(holder)
                         dispatchFinishedWhenDone()
                     }
-                },
+                }
             ).start()
     }
 
@@ -238,7 +238,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         fromX: Int,
         fromY: Int,
         toX: Int,
-        toY: Int,
+        toY: Int
     ): Boolean {
         var newFromX = fromX
         var newFromY = fromY
@@ -269,7 +269,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         fromX: Int,
         fromY: Int,
         toX: Int,
-        toY: Int,
+        toY: Int
     ) {
         val view = holder.itemView
         val deltaX = toX - fromX
@@ -307,7 +307,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                     moveAnimations.remove(holder)
                     dispatchFinishedWhenDone()
                 }
-            },
+            }
         ).start()
     }
 
@@ -317,7 +317,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         fromX: Int,
         fromY: Int,
         toX: Int,
-        toY: Int,
+        toY: Int
     ): Boolean {
         if (oldHolder === newHolder) {
             // Don't know how to run change animations when the same view holder is re-used.
@@ -355,7 +355,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         if (view != null) {
             val oldViewAnim =
                 view.animate().setDuration(
-                    changeDuration,
+                    changeDuration
                 )
             changeInfo.oldHolder?.let { changeAnimations.add(it) }
             oldViewAnim.translationX((changeInfo.toX - changeInfo.fromX).toFloat())
@@ -375,7 +375,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                         changeInfo.oldHolder?.let { changeAnimations.add(it) }
                         dispatchFinishedWhenDone()
                     }
-                },
+                }
             ).start()
         }
         if (newView != null) {
@@ -397,14 +397,14 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                             changeInfo.newHolder?.let { changeAnimations.add(it) }
                             dispatchFinishedWhenDone()
                         }
-                    },
+                    }
                 ).start()
         }
     }
 
     private fun endChangeAnimation(
         infoList: MutableList<ChangeInfo>,
-        item: RecyclerView.ViewHolder,
+        item: RecyclerView.ViewHolder
     ) {
         for (i in infoList.indices.reversed()) {
             val changeInfo = infoList[i]
@@ -427,7 +427,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
 
     private fun endChangeAnimationIfNecessary(
         changeInfo: ChangeInfo,
-        item: RecyclerView.ViewHolder?,
+        item: RecyclerView.ViewHolder?
     ): Boolean {
         var oldItem = false
         when {
@@ -536,7 +536,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                 movesList.isNotEmpty() ||
                 additionsList.isNotEmpty() ||
                 changesList.isNotEmpty()
-        )
+            )
     }
 
     /**
@@ -659,7 +659,7 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
      */
     override fun canReuseUpdatedViewHolder(
         viewHolder: RecyclerView.ViewHolder,
-        payloads: List<Any>,
+        payloads: List<Any>
     ): Boolean {
         return payloads.isNotEmpty() || super.canReuseUpdatedViewHolder(viewHolder, payloads)
     }

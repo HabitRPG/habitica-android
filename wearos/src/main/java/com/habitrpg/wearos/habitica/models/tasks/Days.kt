@@ -16,7 +16,7 @@ open class Days() : Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int,
+        flags: Int
     ) {
         dest.writeByte(if (m) 1.toByte() else 0.toByte())
         dest.writeByte(if (t) 1.toByte() else 0.toByte())

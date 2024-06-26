@@ -44,7 +44,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
                     context.getString(
                         R.string.inbox_messages_title,
                         oldMessages.size,
-                        data["senderName"],
+                        data["senderName"]
                     )
                 } else {
                     context.getString(R.string.inbox_messages_title_nosender, oldMessages.size)
@@ -60,8 +60,8 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
                 notification.setContentTitle(
                     context.getString(
                         R.string.inbox_messages_title_single,
-                        data["senderName"],
-                    ),
+                        data["senderName"]
+                    )
                 )
         }
         return notification
@@ -79,7 +79,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
 
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>,
+        data: Map<String, String>
     ) {
         super.setNotificationActions(notificationId, data)
         val senderID = data["replyTo"] ?: return
@@ -100,14 +100,14 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
                 context,
                 senderID.hashCode(),
                 intent,
-                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
 
         val action: NotificationCompat.Action =
             NotificationCompat.Action.Builder(
                 R.drawable.ic_send_grey_600_24dp,
                 context.getString(R.string.reply),
-                replyPendingIntent,
+                replyPendingIntent
             )
                 .addRemoteInput(remoteInput)
                 .build()

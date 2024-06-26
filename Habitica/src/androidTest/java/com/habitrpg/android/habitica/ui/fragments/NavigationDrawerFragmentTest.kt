@@ -27,9 +27,9 @@ class NavigationDrawerScreen : Screen<NavigationDrawerScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-            itemType(::SectionHeaderItem)
-            itemType(::MainItem)
-        })
+                itemType(::SectionHeaderItem)
+                itemType(::MainItem)
+            })
 }
 
 @LargeTest

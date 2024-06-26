@@ -41,7 +41,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
 
     fun setAvatarWithPreview(
         user: User,
-        shopItem: ShopItem,
+        shopItem: ShopItem
     ) {
         val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
         val path = shopItem.unlockPath ?: shopItem.path ?: ""

@@ -23,7 +23,7 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent,
+        intent: Intent
     ) {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED) {
             return
@@ -32,8 +32,8 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
             taskAlarmManager.scheduleAllSavedAlarms(
                 sharedPreferences.getBoolean(
                     "preventDailyReminder",
-                    false,
-                ),
+                    false
+                )
             )
         }
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")

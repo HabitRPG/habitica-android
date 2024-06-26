@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 @Composable
 fun BuffIcon(
     buffed: Boolean?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     if (buffed == true) {
         Image(HabiticaIconsHelper.imageOfBuffIcon().asImageBitmap(), null, modifier = modifier)

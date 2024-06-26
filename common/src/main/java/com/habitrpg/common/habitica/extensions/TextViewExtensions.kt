@@ -33,7 +33,7 @@ fun TextView.handleUrlClicks(onClicked: ((String) -> Unit)? = null) {
                     },
                     getSpanStart(it),
                     getSpanEnd(it),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
                 )
                 // remove old URLSpan
                 removeSpan(it)

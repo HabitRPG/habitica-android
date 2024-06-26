@@ -32,7 +32,7 @@ class DeviceCommunicationService : WearableListenerService() {
 
     private fun openActivity(
         event: MessageEvent,
-        activityClass: Class<*>,
+        activityClass: Class<*>
     ) {
         val intent = Intent(this, activityClass)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -55,7 +55,7 @@ class DeviceCommunicationService : WearableListenerService() {
         messageClient.sendMessage(
             event.sourceNodeId,
             "/auth",
-            "${hostConfig.userID}:${hostConfig.apiKey}".toByteArray(),
+            "${hostConfig.userID}:${hostConfig.apiKey}".toByteArray()
         )
     }
 }

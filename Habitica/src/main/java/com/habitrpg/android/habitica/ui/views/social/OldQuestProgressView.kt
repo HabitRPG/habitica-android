@@ -36,7 +36,7 @@ class OldQuestProgressView : LinearLayout {
 
     fun setData(
         quest: QuestContent,
-        progress: QuestProgress?,
+        progress: QuestProgress?
     ) {
         binding.collectionContainer.removeAllViews()
         if (quest.isBossQuest) {
@@ -69,7 +69,7 @@ class OldQuestProgressView : LinearLayout {
                     collectBinding.nameView.text = contentCollect.text
                     collectBinding.valueView.set(
                         collect.count.toDouble(),
-                        contentCollect.count.toDouble(),
+                        contentCollect.count.toDouble()
                     )
                     collectBinding.valueView.barHeight = 5.dpToPx(context)
                 }

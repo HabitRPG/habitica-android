@@ -40,7 +40,7 @@ class NumberAbbreviatorTest : StringSpec({
         Triple(40.2412, "40", 0),
         Triple(0.5, "0.5", 0),
         Triple(0.328, "0.32", 0),
-        Triple(-0.99, "-0.99", 0),
+        Triple(-0.99, "-0.99", 0)
     ) { (input, output, decimals) ->
         NumberAbbreviator.abbreviate(mockContext, input, decimals) shouldBe output
     }

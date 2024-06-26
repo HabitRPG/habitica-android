@@ -15,7 +15,7 @@ class WorldStateSerialization : JsonDeserializer<WorldState> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?,
+        context: JsonDeserializationContext?
     ): WorldState {
         val state = WorldState()
         val obj = json?.asJsonObject ?: return state

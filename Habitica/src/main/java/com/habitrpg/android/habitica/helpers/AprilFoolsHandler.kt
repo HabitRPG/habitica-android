@@ -8,7 +8,7 @@ class AprilFoolsHandler {
 
         fun handle(
             name: String?,
-            endDate: Date?,
+            endDate: Date?
         ) {
             if (endDate != null) {
                 this.eventEnd = endDate

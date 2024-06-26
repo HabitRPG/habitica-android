@@ -20,7 +20,7 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentNewsBinding {
         return FragmentNewsBinding.inflate(inflater, container, false)
     }
@@ -28,7 +28,7 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -37,7 +37,7 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         val webSettings = binding?.newsWebview?.settings

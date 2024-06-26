@@ -4,7 +4,7 @@ enum class Frequency(val value: String) {
     WEEKLY("weekly"),
     DAILY("daily"),
     MONTHLY("monthly"),
-    YEARLY("yearly"),
+    YEARLY("yearly")
     ;
 
     companion object {

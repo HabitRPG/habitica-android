@@ -64,7 +64,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "sync",
                 getString(R.string.sync_data),
                 SettingsItem.Types.BUTTON,
-                null,
+                null
             ) {
                 viewModel.resyncData()
             },
@@ -72,7 +72,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "logout",
                 getString(R.string.logout),
                 SettingsItem.Types.BUTTON,
-                null,
+                null
             ) {
                 showLogoutConfirmation()
             },
@@ -80,16 +80,16 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "spacer",
                 getString(R.string.settings),
                 SettingsItem.Types.SPACER,
-                null,
+                null
             ) {
             },
             SettingsItem(
                 "footer",
                 getString(R.string.version_info, versionName, versionCode),
                 SettingsItem.Types.FOOTER,
-                null,
+                null
             ) {
-            },
+            }
         )
     }
 

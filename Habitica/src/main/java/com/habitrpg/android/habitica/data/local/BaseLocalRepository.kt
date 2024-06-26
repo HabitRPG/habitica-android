@@ -15,7 +15,7 @@ interface BaseLocalRepository {
 
     fun <T : BaseMainObject> modify(
         obj: T,
-        transaction: (T) -> Unit,
+        transaction: (T) -> Unit
     )
 
     fun <T : BaseObject> getLiveObject(obj: T): T?

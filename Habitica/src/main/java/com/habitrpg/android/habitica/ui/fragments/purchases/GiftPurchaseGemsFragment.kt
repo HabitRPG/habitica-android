@@ -28,7 +28,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentGiftGemPurchaseBinding {
         return FragmentGiftGemPurchaseBinding.inflate(inflater, container, false)
     }
@@ -64,7 +64,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String,
+        price: String
     ) {
         val matchingView: GemPurchaseOptionsView? =
             when (sku.productId) {

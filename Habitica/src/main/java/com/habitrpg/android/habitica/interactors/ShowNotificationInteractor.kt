@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 class ShowNotificationInteractor(
     private val activity: Activity,
-    private val lifecycleScope: LifecycleCoroutineScope,
+    private val lifecycleScope: LifecycleCoroutineScope
 ) {
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
@@ -41,7 +41,7 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> showAchievementDialog(notification)
@@ -52,12 +52,12 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -> showAchievementDialog(notification)
@@ -65,12 +65,12 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -> showAchievementDialog(notification)
@@ -79,18 +79,18 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
@@ -102,7 +102,7 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type ->
                 showAchievementDialog(
-                    notification,
+                    notification
                 )
 
             Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
@@ -152,7 +152,7 @@ class ShowNotificationInteractor(
             (activity as? SnackbarActivity)?.showSnackbar(
                 title = notificationData?.message,
                 content = nextUnlockText,
-                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE
             )
         }
     }

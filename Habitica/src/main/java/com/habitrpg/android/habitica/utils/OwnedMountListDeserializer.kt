@@ -11,7 +11,7 @@ class OwnedMountListDeserializer : JsonDeserializer<List<OwnedMount>> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?,
+        context: JsonDeserializationContext?
     ): List<OwnedMount> {
         val ownedItems = RealmList<OwnedMount>()
         val entrySet = json?.asJsonObject?.entrySet()

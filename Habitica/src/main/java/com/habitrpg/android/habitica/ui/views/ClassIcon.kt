@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 fun ClassIcon(
     className: String?,
     hasClass: Boolean,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     if (hasClass) {
         val icon =

@@ -5,5 +5,5 @@ enum class AppTestingLevel {
     PARTNERS,
     ALPHA,
     BETA,
-    PRODUCTION,
+    PRODUCTION
 }

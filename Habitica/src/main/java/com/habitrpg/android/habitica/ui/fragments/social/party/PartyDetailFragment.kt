@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -42,6 +41,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.android.habitica.ui.views.social.PartySeekingListItem
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -60,14 +60,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     val viewModel: PartyViewModel by viewModels(
-        ownerProducer = { parentFragment as Fragment },
+        ownerProducer = { parentFragment as Fragment }
     )
 
     override var binding: FragmentPartyDetailBinding? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentPartyDetailBinding {
         return FragmentPartyDetailBinding.inflate(inflater, container, false)
     }
@@ -94,7 +94,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.refreshLayout?.setOnRefreshListener { this.refreshParty() }
@@ -117,7 +117,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     parentFragmentManager.popBackStack()
                     MainNavigationController.navigate(
                         R.id.partyFragment,
-                        bundleOf(Pair("partyID", user?.party?.id)),
+                        bundleOf(Pair("partyID", user?.party?.id))
                     )
                 }
             }
@@ -136,7 +136,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         val state =
                             viewModel.pendingInviteStates.getOrDefault(
                                 invitedMember.id,
-                                LoadingButtonState.CONTENT,
+                                LoadingButtonState.CONTENT
                             )
                         PartySeekingListItem(
                             user = invitedMember,
@@ -147,7 +147,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                             configManager = appConfigManager,
                             onInvite = {
                                 viewModel.rescindInvite(invitedMember)
-                            },
+                            }
                         )
                     }
                 }
@@ -235,7 +235,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 requireContext().resources.getQuantityString(
                     R.plurals.items_pending,
                     collectedItems ?: 0,
-                    collectedItems ?: 0,
+                    collectedItems ?: 0
                 )
         }
 
@@ -255,7 +255,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                                 getString(
                                     R.string.invitation_title,
                                     member.displayName,
-                                    groupName,
+                                    groupName
                                 )
                         }
                     }
@@ -305,15 +305,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questParticipationView?.setTextColor(
                 ContextCompat.getColor(
                     it,
-                    R.color.text_ternary,
-                ),
+                    R.color.text_ternary
+                )
             )
         }
         if (viewModel.isQuestActive) {
             binding?.questProgressView?.visibility = View.VISIBLE
             binding?.questProgressView?.setData(
                 questContent,
-                viewModel.getGroupData().value?.quest?.progress,
+                viewModel.getGroupData().value?.quest?.progress
             )
 
             val questParticipants = viewModel.getGroupData().value?.quest?.members
@@ -329,8 +329,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     binding?.questParticipationView?.setTextColor(
                         ContextCompat.getColor(
                             it,
-                            R.color.red_10,
-                        ),
+                            R.color.red_10
+                        )
                     )
                 }
                 binding?.questImageWrapper?.alpha = 0.5f
@@ -362,7 +362,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         view?.tag = member.id
                         view
                     }
-                ) ?: return@forEachIndexed
+                    ) ?: return@forEachIndexed
             val viewHolder = GroupMemberViewHolder(memberView)
             viewHolder.bind(member, leaderID ?: "", viewModel.user.value?.id)
             viewHolder.onClickEvent = {
@@ -382,7 +382,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun showSendMessageToUserDialog(
         userID: String,
-        username: String,
+        username: String
     ) {
         val factory = LayoutInflater.from(context)
         val newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null)
@@ -401,7 +401,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     HabiticaSnackbar.showSnackbar(
                         it1,
                         String.format(getString(R.string.profile_message_sent_to), username),
-                        HabiticaSnackbar.SnackbarDisplayType.NORMAL,
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
                     )
                 }
             }
@@ -409,7 +409,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
         addMessageDialog?.addButton(
             android.R.string.cancel,
-            false,
+            false
         ) { _, _ -> activity?.dismissKeyboard() }
         addMessageDialog?.setAdditionalContentView(newMessageView)
         addMessageDialog?.show()
@@ -417,7 +417,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun showTransferOwnerShipDialog(
         userID: String,
-        displayName: String,
+        displayName: String
     ) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.transfer, true) { _, _ ->
@@ -427,7 +427,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     HabiticaSnackbar.showSnackbar(
                         it1,
                         String.format(getString(R.string.transferred_ownership), displayName),
-                        HabiticaSnackbar.SnackbarDisplayType.NORMAL,
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
                     )
                 }
             }
@@ -438,15 +438,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         dialog?.setMessage(
             context?.getString(
                 R.string.transfer_ownership_confirm_message,
-                displayName,
-            ),
+                displayName
+            )
         )
         dialog?.show()
     }
 
     private fun showRemoveMemberDialog(
         userID: String,
-        displayName: String,
+        displayName: String
     ) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.remove, true) { _, _ ->
@@ -456,7 +456,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     HabiticaSnackbar.showSnackbar(
                         it1,
                         String.format(getString(R.string.removed_member), displayName),
-                        HabiticaSnackbar.SnackbarDisplayType.NORMAL,
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
                     )
                     binding?.membersWrapper?.findViewWithTag<View>(userID)?.let { memberView ->
                         binding?.membersWrapper?.removeView(memberView)
@@ -515,7 +515,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.addButton(
                         R.string.leave_challenges_delete_tasks,
                         false,
-                        isDestructive = true,
+                        isDestructive = true
                     ) { _, _ ->
                         viewModel.leaveGroup(groupChallenges, false) {
                             parentFragmentManager.popBackStack()
@@ -531,7 +531,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.addButton(
                         R.string.leave,
                         isPrimary = true,
-                        isDestructive = true,
+                        isDestructive = true
                     ) { _, _ ->
                         viewModel.leaveGroup(groupChallenges, false) {
                             if (isAdded) {

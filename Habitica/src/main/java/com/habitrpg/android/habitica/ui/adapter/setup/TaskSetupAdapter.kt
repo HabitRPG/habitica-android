@@ -27,14 +27,14 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): TaskViewHolder {
         return TaskViewHolder(parent.inflate(R.layout.task_setup_item))
     }
 
     override fun onBindViewHolder(
         holder: TaskViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bind(this.taskList[position], this.checkedList[position])
     }
@@ -61,13 +61,13 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
                 VectorDrawableCompat.create(context.resources, R.drawable.ic_check_white_18dp, null)
             icon?.setTintWith(
                 ContextCompat.getColor(context, R.color.brand_100),
-                PorterDuff.Mode.MULTIPLY,
+                PorterDuff.Mode.MULTIPLY
             )
         }
 
         fun bind(
             taskGroup: List<String>,
-            isChecked: Boolean?,
+            isChecked: Boolean?
         ) {
             this.taskGroup = taskGroup
             this.isChecked = isChecked
@@ -79,14 +79,14 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
                 this.textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
                 textView.background.setTintWith(
                     ContextCompat.getColor(context, R.color.white),
-                    PorterDuff.Mode.MULTIPLY,
+                    PorterDuff.Mode.MULTIPLY
                 )
                 textView.setTextColor(ContextCompat.getColor(context, R.color.brand_100))
             } else {
                 this.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                 textView.background.setTintWith(
                     ContextCompat.getColor(context, R.color.brand_100),
-                    PorterDuff.Mode.MULTIPLY,
+                    PorterDuff.Mode.MULTIPLY
                 )
                 textView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }

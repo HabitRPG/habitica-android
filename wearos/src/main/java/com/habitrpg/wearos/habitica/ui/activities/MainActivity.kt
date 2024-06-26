@@ -55,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     AppCompatResources.getDrawable(this, R.drawable.icon_plus),
                     ContextCompat.getColor(this, R.color.watch_purple_100),
                     ContextCompat.getColor(this, R.color.black),
-                    true,
+                    true
                 ) {
                     openTaskFormActivity()
                 },
@@ -64,7 +64,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     getString(R.string.dailies),
                     AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
                     ContextCompat.getColor(this, R.color.watch_purple_200),
-                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                    ContextCompat.getColor(this, R.color.watch_purple_700)
                 ) {
                     openTasklist(TaskType.DAILY)
                 },
@@ -73,7 +73,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     getString(R.string.todos),
                     AppCompatResources.getDrawable(this, R.drawable.icon_todos),
                     ContextCompat.getColor(this, R.color.watch_purple_200),
-                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                    ContextCompat.getColor(this, R.color.watch_purple_700)
                 ) {
                     openTasklist(TaskType.TODO)
                 },
@@ -82,7 +82,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     getString(R.string.habits),
                     AppCompatResources.getDrawable(this, R.drawable.icon_habits),
                     ContextCompat.getColor(this, R.color.watch_purple_200),
-                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                    ContextCompat.getColor(this, R.color.watch_purple_700)
                 ) {
                     openTasklist(TaskType.HABIT)
                 },
@@ -91,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     getString(R.string.stats),
                     AppCompatResources.getDrawable(this, R.drawable.icon_stats),
                     ContextCompat.getColor(this, R.color.watch_purple_200),
-                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                    ContextCompat.getColor(this, R.color.watch_purple_700)
                 ) {
                     openStatsActivity()
                 },
@@ -100,7 +100,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     getString(R.string.avatar),
                     AppCompatResources.getDrawable(this, R.drawable.icon_avatar),
                     ContextCompat.getColor(this, R.color.watch_purple_200),
-                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                    ContextCompat.getColor(this, R.color.watch_purple_700)
                 ) {
                     openAvatarActivity()
                 },
@@ -109,10 +109,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     getString(R.string.settings),
                     AppCompatResources.getDrawable(this, R.drawable.icon_settings),
                     ContextCompat.getColor(this, R.color.watch_purple_200),
-                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                    ContextCompat.getColor(this, R.color.watch_purple_700)
                 ) {
                     openSettingsActivity()
-                },
+                }
             )
         lifecycleScope.launch {
             viewModel.user

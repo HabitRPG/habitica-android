@@ -41,8 +41,8 @@ class SubscriptionDetailsView : LinearLayout {
         binding.heartIcon.setImageDrawable(
             BitmapDrawable(
                 context.resources,
-                HabiticaIconsHelper.imageOfHeartLightBg(),
-            ),
+                HabiticaIconsHelper.imageOfHeartLightBg()
+            )
         )
     }
 
@@ -83,7 +83,7 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.subscriptionDurationTextView.text =
                     resources.getString(
                         R.string.ending_on,
-                        DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()),
+                        DateFormat.getDateInstance().format(plan.dateTerminated ?: Date())
                     )
         }
 

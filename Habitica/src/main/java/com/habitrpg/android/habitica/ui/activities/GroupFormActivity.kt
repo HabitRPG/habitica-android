@@ -97,7 +97,7 @@ class GroupFormActivity : BaseActivity() {
         bundle.putString("groupType", groupType)
         bundle.putString(
             "description",
-            MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text.toString()),
+            MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text.toString())
         )
         bundle.putBoolean("leaderOnlyChallenges", binding.leaderCreateChallengeSwitch.isChecked)
         bundle.putString("leader", this.groupLeader)

@@ -75,7 +75,7 @@ open class TaskRecyclerViewFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -126,7 +126,7 @@ open class TaskRecyclerViewFragment :
                         RewardsRecyclerViewAdapter(
                             null,
                             R.layout.reward_item_card,
-                            viewModel,
+                            viewModel
                         )
 
                     else -> null
@@ -160,7 +160,7 @@ open class TaskRecyclerViewFragment :
         recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
         recyclerAdapter?.adventureGuideOpenEvents = {
             MainNavigationController.navigate(
-                R.id.adventureGuideActivity,
+                R.id.adventureGuideActivity
             )
         }
 
@@ -181,7 +181,7 @@ open class TaskRecyclerViewFragment :
 
     private fun scoreChecklistItem(
         task: Task,
-        item: ChecklistItem,
+        item: ChecklistItem
     ) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
@@ -190,7 +190,7 @@ open class TaskRecyclerViewFragment :
 
     private fun handleTaskResult(
         result: TaskScoringResult,
-        value: Int,
+        value: Int
     ) {
         if (taskType == TaskType.REWARD) {
             (activity as? MainActivity)?.let { activity ->
@@ -201,7 +201,7 @@ open class TaskRecyclerViewFragment :
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
                     ContextCompat.getColor(activity, R.color.yellow_10),
                     "-$value",
-                    HabiticaSnackbar.SnackbarDisplayType.DROP,
+                    HabiticaSnackbar.SnackbarDisplayType.DROP
                 )
             }
         } else {
@@ -243,7 +243,7 @@ open class TaskRecyclerViewFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
@@ -258,7 +258,7 @@ open class TaskRecyclerViewFragment :
             object : ItemTouchHelper.Callback() {
                 override fun onSelectedChanged(
                     viewHolder: RecyclerView.ViewHolder?,
-                    actionState: Int,
+                    actionState: Int
                 ) {
                     super.onSelectedChanged(viewHolder, actionState)
                     if (viewHolder == null || viewHolder.bindingAdapterPosition == NO_POSITION) return
@@ -272,36 +272,36 @@ open class TaskRecyclerViewFragment :
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
                 ): Boolean {
                     recyclerAdapter?.notifyItemMoved(
                         viewHolder.bindingAdapterPosition,
-                        target.bindingAdapterPosition,
+                        target.bindingAdapterPosition
                     )
                     return true
                 }
 
                 override fun onSwiped(
                     viewHolder: RecyclerView.ViewHolder,
-                    direction: Int,
+                    direction: Int
                 ) { // no-on
                 }
 
                 // defines the enabled move directions in each state (idle, swiping, dragging).
                 override fun getMovementFlags(
                     recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
+                    viewHolder: RecyclerView.ViewHolder
                 ): Int {
                     return if ((
-                            recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
-                                ?: 0
+                        recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
+                            ?: 0
                         ) != 0
                     ) {
                         makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                     } else {
                         makeFlag(
                             ItemTouchHelper.ACTION_STATE_DRAG,
-                            ItemTouchHelper.DOWN or ItemTouchHelper.UP,
+                            ItemTouchHelper.DOWN or ItemTouchHelper.UP
                         )
                     }
                 }
@@ -312,7 +312,7 @@ open class TaskRecyclerViewFragment :
 
                 override fun clearView(
                     recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
+                    viewHolder: RecyclerView.ViewHolder
                 ) {
                     super.clearView(recyclerView, viewHolder)
                     binding?.refreshLayout?.isEnabled = true
@@ -328,7 +328,7 @@ open class TaskRecyclerViewFragment :
 
                 private fun updateTaskInRepository(
                     validTaskId: String?,
-                    viewHolder: RecyclerView.ViewHolder,
+                    viewHolder: RecyclerView.ViewHolder
                 ) {
                     if (validTaskId != null) {
                         var newPosition = viewHolder.bindingAdapterPosition
@@ -340,7 +340,7 @@ open class TaskRecyclerViewFragment :
                                     (
                                         recyclerAdapter?.data?.get(newPosition + 1)?.position
                                             ?: newPosition
-                                    ) - 1
+                                        ) - 1
                                 }
                         }
                         // Factor in if adventure guide is shown.
@@ -351,7 +351,7 @@ open class TaskRecyclerViewFragment :
                             taskRepository.updateTaskPosition(
                                 taskType,
                                 validTaskId,
-                                newPosition,
+                                newPosition
                             )
                         }
                     }
@@ -375,7 +375,7 @@ open class TaskRecyclerViewFragment :
             object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(
                     recyclerView: RecyclerView,
-                    newState: Int,
+                    newState: Int
                 ) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -383,7 +383,7 @@ open class TaskRecyclerViewFragment :
                             (activity as? MainActivity)?.isAppBarExpanded ?: false
                     }
                 }
-            },
+            }
         )
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -427,12 +427,12 @@ open class TaskRecyclerViewFragment :
                 dialog.setMessage(
                     it.getString(
                         R.string.broken_challenge_description,
-                        taskCount,
-                    ),
+                        taskCount
+                    )
                 )
                 dialog.addButton(
                     it.getString(R.string.keep_x_tasks, taskCount),
-                    true,
+                    true
                 ) { _, _ ->
                     if (!task.isValid) return@addButton
                     lifecycleScope.launch {
@@ -443,7 +443,7 @@ open class TaskRecyclerViewFragment :
                 dialog.addButton(
                     it.getString(R.string.delete_x_tasks, taskCount),
                     isPrimary = false,
-                    isDestructive = true,
+                    isDestructive = true
                 ) { _, _ ->
                     if (!task.isValid) return@addButton
                     lifecycleScope.launch {
@@ -465,7 +465,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_habits_filtered),
                             getString(R.string.empty_description_habits_filtered),
-                            R.drawable.icon_habits,
+                            R.drawable.icon_habits
                         )
                     }
 
@@ -473,7 +473,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_dailies_filtered),
                             getString(R.string.empty_description_dailies_filtered),
-                            R.drawable.icon_dailies,
+                            R.drawable.icon_dailies
                         )
                     }
 
@@ -481,7 +481,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_todos_filtered),
                             getString(R.string.empty_description_todos_filtered),
-                            R.drawable.icon_todos,
+                            R.drawable.icon_todos
                         )
                     }
 
@@ -489,7 +489,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_rewards_filtered),
                             null,
-                            R.drawable.icon_rewards,
+                            R.drawable.icon_rewards
                         )
                     }
 
@@ -501,7 +501,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_habits),
                             getString(R.string.empty_description_habits),
-                            R.drawable.icon_habits,
+                            R.drawable.icon_habits
                         )
                     }
 
@@ -509,7 +509,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_dailies),
                             getString(R.string.empty_description_dailies),
-                            R.drawable.icon_dailies,
+                            R.drawable.icon_dailies
                         )
                     }
 
@@ -517,7 +517,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_todos),
                             getString(R.string.empty_description_todos),
-                            R.drawable.icon_todos,
+                            R.drawable.icon_todos
                         )
                     }
 
@@ -525,7 +525,7 @@ open class TaskRecyclerViewFragment :
                         EmptyItem(
                             getString(R.string.empty_title_rewards),
                             null,
-                            R.drawable.icon_rewards,
+                            R.drawable.icon_rewards
                         )
                     }
 
@@ -536,7 +536,7 @@ open class TaskRecyclerViewFragment :
 
     private fun scoreTask(
         task: Task,
-        direction: TaskDirection,
+        direction: TaskDirection
     ) {
         viewModel.scoreTask(task, direction) { result, value ->
             handleTaskResult(result, value)
@@ -584,7 +584,7 @@ open class TaskRecyclerViewFragment :
                     TaskType.TODO ->
                         viewModel.setActiveFilter(
                             TaskType.TODO,
-                            Task.FILTER_ACTIVE,
+                            Task.FILTER_ACTIVE
                         )
 
                     TaskType.DAILY -> {
@@ -604,8 +604,8 @@ open class TaskRecyclerViewFragment :
 
     private fun openTaskForm(task: Task) {
         if (Date().time - (
-                TasksFragment.lastTaskFormOpen?.time
-                    ?: 0
+            TasksFragment.lastTaskFormOpen?.time
+                ?: 0
             ) < 2000 || !task.isValid
         ) {
             return
@@ -636,7 +636,7 @@ open class TaskRecyclerViewFragment :
 
         fun newInstance(
             context: Context?,
-            classType: TaskType,
+            classType: TaskType
         ): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
             fragment.taskType = classType
@@ -651,7 +651,7 @@ open class TaskRecyclerViewFragment :
                                 context.getString(R.string.tutorial_habits_1),
                                 context.getString(R.string.tutorial_habits_2),
                                 context.getString(R.string.tutorial_habits_3),
-                                context.getString(R.string.tutorial_habits_4),
+                                context.getString(R.string.tutorial_habits_4)
                             )
                     }
 
@@ -660,7 +660,7 @@ open class TaskRecyclerViewFragment :
                         tutorialTexts =
                             listOf(
                                 context.getString(R.string.tutorial_dailies_1),
-                                context.getString(R.string.tutorial_dailies_2),
+                                context.getString(R.string.tutorial_dailies_2)
                             )
                     }
 
@@ -669,7 +669,7 @@ open class TaskRecyclerViewFragment :
                         tutorialTexts =
                             listOf(
                                 context.getString(R.string.tutorial_todos_1),
-                                context.getString(R.string.tutorial_todos_2),
+                                context.getString(R.string.tutorial_todos_2)
                             )
                     }
 
@@ -678,7 +678,7 @@ open class TaskRecyclerViewFragment :
                         tutorialTexts =
                             listOf(
                                 context.getString(R.string.tutorial_rewards_1),
-                                context.getString(R.string.tutorial_rewards_2),
+                                context.getString(R.string.tutorial_rewards_2)
                             )
                     }
                 }

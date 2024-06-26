@@ -43,11 +43,11 @@ object ToolbarColorHelper {
         toolbar: Toolbar,
         activity: Activity?,
         iconColor: Int? = null,
-        backgroundColor: Int? = null,
+        backgroundColor: Int? = null
     ) {
         if (activity == null) return
         toolbar.setBackgroundColor(
-            backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor),
+            backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor)
         )
         val toolbarIconsColor = iconColor ?: activity.getThemeColor(R.attr.headerTextColor)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -81,7 +81,7 @@ object ToolbarColorHelper {
     private fun colorizeChild(
         innerView: View,
         toolbarIconsColor: Int,
-        colorFilter: PorterDuffColorFilter,
+        colorFilter: PorterDuffColorFilter
     ) {
         if (innerView is ActionMenuItemView) {
             innerView.setTextColor(toolbarIconsColor)
@@ -103,7 +103,7 @@ object ToolbarColorHelper {
      */
     private fun setOverflowButtonColor(
         activity: Activity,
-        color: Int,
+        color: Int
     ) {
         val overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description)
         activity.window.decorView.waitForLayout {
@@ -111,7 +111,7 @@ object ToolbarColorHelper {
             findViewsWithText(
                 outViews,
                 overflowDescription,
-                View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION,
+                View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION
             )
             if (outViews.isEmpty()) {
                 return@waitForLayout

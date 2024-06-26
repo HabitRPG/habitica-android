@@ -53,7 +53,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
             widgetId =
                 extras.getInt(
                     AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID
                 )
         }
 
@@ -101,7 +101,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
                 AppWidgetManager.ACTION_APPWIDGET_UPDATE,
                 null,
                 this,
-                HabitButtonWidgetProvider::class.java,
+                HabitButtonWidgetProvider::class.java
             )
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
         sendBroadcast(intent)

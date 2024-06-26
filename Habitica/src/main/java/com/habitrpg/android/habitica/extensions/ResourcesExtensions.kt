@@ -10,7 +10,7 @@ import java.util.Locale
 
 fun Resources.forceLocale(
     activity: BaseActivity,
-    locale: Locale,
+    locale: Locale
 ) {
     Locale.setDefault(locale)
     val configuration = Configuration()

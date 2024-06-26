@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     enum class State {
         INITIAL,
-        OTHER,
+        OTHER
     }
 
     override val viewModel: LoginViewModel by viewModels()
@@ -80,7 +80,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     private val recoverFromPlayServicesErrorResult =
         registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
+            ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode != Activity.RESULT_CANCELED) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)

@@ -9,7 +9,7 @@ class HeaderTaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
         title: String,
         showDone: Boolean,
-        isDisconnected: Boolean,
+        isDisconnected: Boolean
     ) {
         binding.header.textView.text = title
         binding.doneView.isVisible = showDone

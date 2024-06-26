@@ -21,20 +21,20 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 attrs,
                 R.styleable.SubscriptionOptionView,
                 0,
-                0,
+                0
             )
 
         if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {
             binding.descriptionTextView.text =
                 context.getString(
                     R.string.subscription_duration_norenew,
-                    a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                    a.getText(R.styleable.SubscriptionOptionView_recurringText)
                 )
         } else {
             binding.descriptionTextView.text =
                 context.getString(
                     R.string.subscription_duration,
-                    a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                    a.getText(R.styleable.SubscriptionOptionView_recurringText)
                 )
         }
 
@@ -82,8 +82,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             binding.descriptionTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.text_brand,
-                ),
+                    R.color.text_brand
+                )
             )
         } else {
             binding.wrapper.setBackgroundResource(R.drawable.subscription_type_box_bg)
@@ -92,22 +92,22 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             binding.gemCapTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.text_secondary,
-                ),
+                    R.color.text_secondary
+                )
             )
             binding.hourglassTextView.setBackgroundResource(R.drawable.pill_bg_gray)
             binding.hourglassTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.text_secondary,
-                ),
+                    R.color.text_secondary
+                )
             )
             binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
             binding.descriptionTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.text_ternary,
-                ),
+                    R.color.text_ternary
+                )
             )
         }
         val horizontalPadding = resources.getDimension(R.dimen.pill_horizontal_padding).toInt()
@@ -116,13 +116,13 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             horizontalPadding,
             verticalPadding,
             horizontalPadding,
-            verticalPadding,
+            verticalPadding
         )
         binding.hourglassTextView.setPadding(
             horizontalPadding,
             verticalPadding,
             horizontalPadding,
-            verticalPadding,
+            verticalPadding
         )
     }
 }

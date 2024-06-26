@@ -14,7 +14,7 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): List<Tag> {
         val tags = RealmList<Tag>()
         var databaseTags: List<Tag>
@@ -54,7 +54,7 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
 
     private fun alreadyContainsTag(
         list: List<Tag>,
-        idToCheck: String,
+        idToCheck: String
     ): Boolean {
         for (t in list) {
             if (t.id == idToCheck) {

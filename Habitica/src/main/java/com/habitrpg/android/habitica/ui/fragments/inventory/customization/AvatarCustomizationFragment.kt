@@ -57,7 +57,7 @@ class AvatarCustomizationFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -84,7 +84,7 @@ class AvatarCustomizationFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
         adapter.onCustomizationSelected = { customization ->
@@ -98,7 +98,7 @@ class AvatarCustomizationFragment :
                     userRepository.useCustomization(
                         customization.type ?: "",
                         customization.category,
-                        customization.identifier ?: "",
+                        customization.identifier ?: ""
                     )
                 }
             }
@@ -119,7 +119,7 @@ class AvatarCustomizationFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -165,7 +165,7 @@ class AvatarCustomizationFragment :
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_customizations, menu)
@@ -223,7 +223,7 @@ class AvatarCustomizationFragment :
                                 displayedCustomizations.reversed()
                             } else {
                                 displayedCustomizations
-                            },
+                            }
                         )
                     } else {
                         adapter.setCustomizations(
@@ -231,7 +231,7 @@ class AvatarCustomizationFragment :
                                 customizations.reversed()
                             } else {
                                 customizations
-                            },
+                            }
                         )
                     }
                 }
@@ -249,7 +249,7 @@ class AvatarCustomizationFragment :
     private fun shouldSkip(
         filter: CustomizationFilter,
         ownedCustomizations: List<OwnedCustomization>,
-        customization: Customization,
+        customization: Customization
     ): Boolean {
         return if (filter.onlyPurchased && ownedCustomizations.find { it.key == customization.identifier } == null) {
             true
@@ -353,7 +353,7 @@ class AvatarCustomizationFragment :
     private fun configureMonthFilterButton(
         button: CheckBox,
         value: Int,
-        filter: CustomizationFilter,
+        filter: CustomizationFilter
     ) {
         val identifier = value.toString().padStart(2, '0')
         button.isChecked = filter.months.contains(identifier)

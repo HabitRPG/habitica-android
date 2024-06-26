@@ -19,7 +19,7 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.SpacerViewHolder
 class SettingsAdapter : BaseAdapter<SettingsItem>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> FooterViewHolder(RowFooterBinding.inflate(parent.context.layoutInflater, parent, false).root)
@@ -31,7 +31,7 @@ class SettingsAdapter : BaseAdapter<SettingsItem>() {
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         when (holder) {
             is SettingsViewHolder -> {
@@ -104,7 +104,7 @@ data class SettingsItem(
     val title: String,
     val type: Types,
     var value: Any?,
-    val onTap: () -> Unit,
+    val onTap: () -> Unit
 ) {
     enum class Types {
         BUTTON,
@@ -112,6 +112,6 @@ data class SettingsItem(
         SPACER,
         TOGGLE,
         HEADER,
-        FOOTER,
+        FOOTER
     }
 }

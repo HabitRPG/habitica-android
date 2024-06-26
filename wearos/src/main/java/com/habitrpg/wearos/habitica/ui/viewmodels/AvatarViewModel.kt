@@ -9,17 +9,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AvatarViewModel
-    @Inject
-    constructor(
-        userRepository: UserRepository,
-        taskRepository: TaskRepository,
-        exceptionBuilder: ExceptionHandlerBuilder,
-        appStateManager: AppStateManager,
-    ) : BaseViewModel(
-            userRepository,
-            taskRepository,
-            exceptionBuilder,
-            appStateManager,
-        ) {
-        var user = userRepository.getUser()
-    }
+@Inject
+constructor(
+    userRepository: UserRepository,
+    taskRepository: TaskRepository,
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
+) : BaseViewModel(
+    userRepository,
+    taskRepository,
+    exceptionBuilder,
+    appStateManager
+) {
+    var user = userRepository.getUser()
+}

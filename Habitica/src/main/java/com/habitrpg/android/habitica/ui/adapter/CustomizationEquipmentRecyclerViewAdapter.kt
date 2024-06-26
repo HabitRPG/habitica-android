@@ -3,24 +3,13 @@ package com.habitrpg.android.habitica.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
-import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationBinding
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.MainNavigationController
-import com.habitrpg.common.habitica.views.AvatarView
-import com.habitrpg.common.habitica.views.PixelArtView
 
 class CustomizationEquipmentRecyclerViewAdapter :
     androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
@@ -43,7 +32,7 @@ class CustomizationEquipmentRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         val viewID: Int = R.layout.customization_grid_item
 
@@ -53,7 +42,7 @@ class CustomizationEquipmentRecyclerViewAdapter :
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         (holder as EquipmentViewHolder).bind(equipmentList[position])
     }
@@ -113,7 +102,7 @@ class CustomizationEquipmentRecyclerViewAdapter :
                 binding.wrapper.background =
                     ContextCompat.getDrawable(
                         itemView.context,
-                        R.drawable.layout_rounded_bg_window_tint_border,
+                        R.drawable.layout_rounded_bg_window_tint_border
                     )
             } else {
                 binding.wrapper.background =
@@ -132,7 +121,7 @@ class CustomizationEquipmentRecyclerViewAdapter :
                 onShowPurchaseDialog?.invoke(
                     ShopItem.fromAnimalEquipment(
                         equipment
-                    ),
+                    )
                 )
                 return
             }

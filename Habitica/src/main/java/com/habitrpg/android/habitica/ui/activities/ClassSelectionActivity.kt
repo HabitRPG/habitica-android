@@ -153,7 +153,7 @@ class ClassSelectionActivity : BaseActivity() {
 
     private fun makeUser(
         preferences: Preferences,
-        outfit: Outfit,
+        outfit: Outfit
     ): User {
         val user = User()
         user.preferences = preferences
@@ -169,20 +169,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.yellow_100,
-            ),
+                R.color.yellow_100
+            )
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.dark_brown,
-            ),
+                R.color.dark_brown
+            )
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_yellow_10)
         updateButtonBackgrounds(
             binding.healerButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border),
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border)
         )
     }
 
@@ -192,20 +192,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.blue_10,
-            ),
+                R.color.blue_10
+            )
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white,
-            ),
+                R.color.white
+            )
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.mageButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border),
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border)
         )
     }
 
@@ -215,20 +215,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.brand_200,
-            ),
+                R.color.brand_200
+            )
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white,
-            ),
+                R.color.white
+            )
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.rogueButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border),
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border)
         )
     }
 
@@ -238,26 +238,26 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.maroon_50,
-            ),
+                R.color.maroon_50
+            )
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white,
-            ),
+                R.color.white
+            )
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.warriorButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border),
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border)
         )
     }
 
     private fun updateButtonBackgrounds(
         selectedButton: TextView,
-        background: Drawable?,
+        background: Drawable?
     ) {
         val deselectedBackground =
             ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window)

@@ -19,7 +19,7 @@ open class RemindersItem() : Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int,
+        flags: Int
     ) {
         dest.writeString(id)
         dest.writeString(startDate)

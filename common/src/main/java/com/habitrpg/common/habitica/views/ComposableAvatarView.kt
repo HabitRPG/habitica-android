@@ -10,7 +10,7 @@ import com.habitrpg.shared.habitica.models.Avatar
 fun ComposableAvatarView(
     avatar: Avatar?,
     configManager: AppConfigManager?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     AndroidView(
         modifier = modifier, // Occupy the max size in the Compose UI tree
@@ -23,6 +23,6 @@ fun ComposableAvatarView(
             if (avatar != null) {
                 view.setAvatar(avatar)
             }
-        },
+        }
     )
 }

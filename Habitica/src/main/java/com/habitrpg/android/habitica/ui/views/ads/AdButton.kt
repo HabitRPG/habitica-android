@@ -23,130 +23,130 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 class AdButton
-    @JvmOverloads
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-    ) : LinearLayout(context, attrs) {
-        var state: State = State.READY
-            set(value) {
-                field = value
-                updateViews()
-            }
-
-        enum class State {
-            EMPTY,
-            READY,
-            LOADING,
-            UNAVAILABLE,
+@JvmOverloads
+constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : LinearLayout(context, attrs) {
+    var state: State = State.READY
+        set(value) {
+            field = value
+            updateViews()
         }
 
-        private var updateJob: Job? = null
-        private var nextAdDate: Date? = null
-        private val binding = AdButtonBinding.inflate(context.layoutInflater, this)
+    enum class State {
+        EMPTY,
+        READY,
+        LOADING,
+        UNAVAILABLE
+    }
 
-        private var activeBackgroundRes: Int = R.drawable.ad_button_background
+    private var updateJob: Job? = null
+    private var nextAdDate: Date? = null
+    private val binding = AdButtonBinding.inflate(context.layoutInflater, this)
 
-        var text: String = ""
-            set(value) {
-                field = value
-                updateViews()
-            }
+    private var activeBackgroundRes: Int = R.drawable.ad_button_background
 
-        init {
-            context.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.AdButton,
-                0,
-                0,
-            )?.let { attributes ->
-                text = attributes.getString(R.styleable.AdButton_text) ?: ""
-                binding.currencyView.currency = attributes.getString(R.styleable.AdButton_currency)
-                activeBackgroundRes =
-                    attributes.getResourceId(
-                        R.styleable.AdButton_activeBackground,
-                        R.drawable.ad_button_background,
-                    )
-                binding.textView.setTextColor(
-                    attributes.getColor(
-                        R.styleable.AdButton_textColor,
-                        ContextCompat.getColor(context, R.color.white),
-                    ),
+    var text: String = ""
+        set(value) {
+            field = value
+            updateViews()
+        }
+
+    init {
+        context.theme?.obtainStyledAttributes(
+            attrs,
+            R.styleable.AdButton,
+            0,
+            0
+        )?.let { attributes ->
+            text = attributes.getString(R.styleable.AdButton_text) ?: ""
+            binding.currencyView.currency = attributes.getString(R.styleable.AdButton_currency)
+            activeBackgroundRes =
+                attributes.getResourceId(
+                    R.styleable.AdButton_activeBackground,
+                    R.drawable.ad_button_background
                 )
-            }
-            binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
-            binding.currencyView.value = 0.0
-            if (binding.currencyView.currency?.isNotBlank() != true) {
-                binding.currencyView.visibility = View.GONE
-            }
-            gravity = Gravity.CENTER
-            state = State.READY
+            binding.textView.setTextColor(
+                attributes.getColor(
+                    R.styleable.AdButton_textColor,
+                    ContextCompat.getColor(context, R.color.white)
+                )
+            )
         }
-
-        private fun updateViews() {
-            when (state) {
-                State.READY -> {
-                    binding.loadingIndicator.visibility = GONE
-                    binding.textView.text = text
-                    binding.textView.alpha = 1.0f
-                    binding.textView.visibility = VISIBLE
-                    binding.currencyView.visibility = VISIBLE
-                    setBackgroundResource(activeBackgroundRes)
-                }
-
-                State.UNAVAILABLE -> {
-                    binding.loadingIndicator.visibility = GONE
-                    binding.textView.text =
-                        context.getString(
-                            R.string.available_in,
-                            nextAdDate?.getShortRemainingString() ?: "",
-                        )
-                    binding.textView.alpha = 0.75f
-                    binding.textView.visibility = VISIBLE
-                    binding.currencyView.visibility = GONE
-                    setBackgroundResource(R.drawable.ad_button_background_disabled)
-                }
-
-                State.EMPTY -> {
-                    binding.loadingIndicator.visibility = GONE
-                    binding.textView.visibility = GONE
-                    binding.currencyView.visibility = GONE
-                }
-
-                State.LOADING -> {
-                    binding.loadingIndicator.visibility = VISIBLE
-                    binding.textView.visibility = GONE
-                    binding.currencyView.visibility = GONE
-                }
-            }
-            isEnabled = state == State.READY
+        binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
+        binding.currencyView.value = 0.0
+        if (binding.currencyView.currency?.isNotBlank() != true) {
+            binding.currencyView.visibility = View.GONE
         }
+        gravity = Gravity.CENTER
+        state = State.READY
+    }
 
-        fun updateForAdType(
-            type: AdType,
-            lifecycleScope: LifecycleCoroutineScope,
-        ) {
-            if (updateJob?.isActive == true) {
-                updateJob?.cancel()
+    private fun updateViews() {
+        when (state) {
+            State.READY -> {
+                binding.loadingIndicator.visibility = GONE
+                binding.textView.text = text
+                binding.textView.alpha = 1.0f
+                binding.textView.visibility = VISIBLE
+                binding.currencyView.visibility = VISIBLE
+                setBackgroundResource(activeBackgroundRes)
             }
-            nextAdDate = AdHandler.nextAdAllowedDate(type)
-            if (nextAdDate?.after(Date()) == true) {
-                updateJob =
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        while (nextAdDate?.after(Date()) == true) {
-                            val remaining =
+
+            State.UNAVAILABLE -> {
+                binding.loadingIndicator.visibility = GONE
+                binding.textView.text =
+                    context.getString(
+                        R.string.available_in,
+                        nextAdDate?.getShortRemainingString() ?: ""
+                    )
+                binding.textView.alpha = 0.75f
+                binding.textView.visibility = VISIBLE
+                binding.currencyView.visibility = GONE
+                setBackgroundResource(R.drawable.ad_button_background_disabled)
+            }
+
+            State.EMPTY -> {
+                binding.loadingIndicator.visibility = GONE
+                binding.textView.visibility = GONE
+                binding.currencyView.visibility = GONE
+            }
+
+            State.LOADING -> {
+                binding.loadingIndicator.visibility = VISIBLE
+                binding.textView.visibility = GONE
+                binding.currencyView.visibility = GONE
+            }
+        }
+        isEnabled = state == State.READY
+    }
+
+    fun updateForAdType(
+        type: AdType,
+        lifecycleScope: LifecycleCoroutineScope
+    ) {
+        if (updateJob?.isActive == true) {
+            updateJob?.cancel()
+        }
+        nextAdDate = AdHandler.nextAdAllowedDate(type)
+        if (nextAdDate?.after(Date()) == true) {
+            updateJob =
+                lifecycleScope.launch(Dispatchers.Main) {
+                    while (nextAdDate?.after(Date()) == true) {
+                        val remaining =
+                            (
                                 (
-                                    (
-                                        nextAdDate?.time
-                                            ?: 0L
+                                    nextAdDate?.time
+                                        ?: 0L
                                     ) - Date().time
                                 ).toDuration(DurationUnit.MILLISECONDS)
-                            state = if (remaining.isNegative()) State.READY else State.UNAVAILABLE
-                            updateViews()
-                            delay(1.toDuration(remaining.getMinuteOrSeconds()))
-                        }
-                        state = State.READY
+                        state = if (remaining.isNegative()) State.READY else State.UNAVAILABLE
+                        updateViews()
+                        delay(1.toDuration(remaining.getMinuteOrSeconds()))
                     }
-            }
+                    state = State.READY
+                }
         }
     }
+}

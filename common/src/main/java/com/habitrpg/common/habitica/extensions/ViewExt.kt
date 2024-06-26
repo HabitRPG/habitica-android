@@ -12,7 +12,7 @@ fun View.setScaledPadding(
     left: Int,
     top: Int,
     right: Int,
-    bottom: Int,
+    bottom: Int
 ) {
     this.setPadding(left.dpToPx(context), top.dpToPx(context), right.dpToPx(context), bottom.dpToPx(context))
 }
@@ -25,7 +25,7 @@ inline fun View.waitForLayout(crossinline f: View.() -> Unit) =
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
                     f()
                 }
-            },
+            }
         )
     }
 
@@ -38,7 +38,7 @@ inline fun View.afterMeasured(crossinline f: View.() -> Unit) {
                     f()
                 }
             }
-        },
+        }
     )
 }
 

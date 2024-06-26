@@ -43,7 +43,7 @@ class EquipmentDetailFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -57,7 +57,7 @@ class EquipmentDetailFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         adapter.onEquip = {
             lifecycleScope.launchCatching {
@@ -79,7 +79,7 @@ class EquipmentDetailFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -96,7 +96,7 @@ class EquipmentDetailFragment :
             EmptyItem(
                 getString(R.string.empty_title),
                 getString(R.string.empty_equipment_description),
-                null,
+                null
             ) {
                 MainNavigationController.navigate(R.id.marketFragment)
             }
@@ -110,8 +110,8 @@ class EquipmentDetailFragment :
         binding?.recyclerView?.addItemDecoration(
             DividerItemDecoration(
                 activity,
-                DividerItemDecoration.VERTICAL,
-            ),
+                DividerItemDecoration.VERTICAL
+            )
         )
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 

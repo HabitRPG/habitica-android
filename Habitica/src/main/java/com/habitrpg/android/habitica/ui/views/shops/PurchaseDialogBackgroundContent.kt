@@ -24,7 +24,7 @@ class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(
 
     fun setAvatarWithBackgroundPreview(
         avatar: Avatar,
-        item: ShopItem,
+        item: ShopItem
     ) {
         val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
         layerMap[AvatarView.LayerType.BACKGROUND] = item.imageName?.removePrefix("icon_")

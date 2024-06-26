@@ -9,7 +9,7 @@ import java.util.UUID
 open class ChecklistItem(
     var id: String? = UUID.randomUUID().toString(),
     var text: String? = null,
-    var completed: Boolean = false,
+    var completed: Boolean = false
 ) : Parcelable {
     var position: Int = 0
 
@@ -19,7 +19,7 @@ open class ChecklistItem(
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int,
+        flags: Int
     ) {
         dest.writeString(id)
         dest.writeString(text)

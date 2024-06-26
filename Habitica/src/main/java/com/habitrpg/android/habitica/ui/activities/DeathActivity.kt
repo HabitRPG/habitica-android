@@ -89,7 +89,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                 getString(
                     R.string.faint_loss_description,
                     (user?.stats?.lvl ?: 2).toInt() - 1,
-                    user?.stats?.gp?.toInt(),
+                    user?.stats?.gp?.toInt()
                 ).fromHtml()
         }
 
@@ -138,7 +138,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                                 binding.subscriberBenefitUsedView.text =
                                     getString(
                                         R.string.subscriber_benefit_used_faint,
-                                        midnight.getShortRemainingString(),
+                                        midnight.getShortRemainingString()
                                     )
                                 delay(1000L)
                             }
@@ -155,7 +155,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                         Analytics.sendEvent(
                             "View death sub CTA",
                             EventCategory.BEHAVIOUR,
-                            HitType.EVENT,
+                            HitType.EVENT
                         )
                         val subscriptionBottomSheet =
                             EventOutcomeSubscriptionBottomSheetFragment().apply {
@@ -164,7 +164,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                             }
                         subscriptionBottomSheet.show(
                             supportFragmentManager,
-                            EventOutcomeSubscriptionBottomSheetFragment.TAG,
+                            EventOutcomeSubscriptionBottomSheetFragment.TAG
                         )
                     }
                 }
@@ -182,9 +182,9 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(60.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
                     ) {
                         CircularProgressIndicator()
                     }
@@ -192,42 +192,42 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(60.dp)
-                                .clickable {
-                                    isUsingBenefit = true
-                                    Analytics.sendEvent(
-                                        "second chance perk",
-                                        EventCategory.BEHAVIOUR,
-                                        HitType.EVENT,
-                                    )
-                                    sharedPreferences.edit {
-                                        putLong("last_sub_revive", Date().time)
-                                    }
-                                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                        userRepository.updateUser("stats.hp", 1)
-                                        MainScope().launchCatching {
-                                            delay(1000)
-                                            (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let { activity ->
-                                                HabiticaSnackbar.showSnackbar(
-                                                    activity.snackbarContainer(),
-                                                    getString(R.string.subscriber_benefit_success_faint),
-                                                    HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
-                                                    isSubscriberBenefit = true,
-                                                    duration = 2500,
-                                                )
-                                            }
+                        Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                            .clickable {
+                                isUsingBenefit = true
+                                Analytics.sendEvent(
+                                    "second chance perk",
+                                    EventCategory.BEHAVIOUR,
+                                    HitType.EVENT
+                                )
+                                sharedPreferences.edit {
+                                    putLong("last_sub_revive", Date().time)
+                                }
+                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                    userRepository.updateUser("stats.hp", 1)
+                                    MainScope().launchCatching {
+                                        delay(1000)
+                                        (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let { activity ->
+                                            HabiticaSnackbar.showSnackbar(
+                                                activity.snackbarContainer(),
+                                                getString(R.string.subscriber_benefit_success_faint),
+                                                HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
+                                                isSubscriberBenefit = true,
+                                                duration = 2500
+                                            )
                                         }
-                                        finish()
                                     }
-                                },
+                                    finish()
+                                }
+                            }
                     ) {
                         Text(
                             stringResource(R.string.subscriber_button_faint),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
-                            textAlign = TextAlign.Center,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
@@ -246,7 +246,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                             HabiticaSnackbar.showSnackbar(
                                 activity.snackbarContainer(),
                                 getString(R.string.revive_broken_equipment, brokenItem.text),
-                                HabiticaSnackbar.SnackbarDisplayType.BLACK,
+                                HabiticaSnackbar.SnackbarDisplayType.BLACK
                             )
                         }
                     }
@@ -272,7 +272,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
             binding.confettiContainer,
             14,
             BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
-            5000,
+            5000
         )
             .setInitialRotationRange(0, 200)
             .setScaleRange(0.5f, 0.8f)
@@ -283,7 +283,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                 binding.root.width / 2,
                 positionArray[1] + (binding.heartView.height / 2),
                 3,
-                6000,
+                6000
             )
     }
 

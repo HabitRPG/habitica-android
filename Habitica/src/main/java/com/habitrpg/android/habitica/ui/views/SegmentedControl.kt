@@ -36,115 +36,115 @@ fun SegmentedControl(
     useFixedWidth: Boolean = false,
     itemWidth: Dp = 120.dp,
     cornerRadius: Int = 10,
-    onItemSelection: (selectedItemIndex: Int) -> Unit,
+    onItemSelection: (selectedItemIndex: Int) -> Unit
 ) {
     val selectedIndex = remember { mutableIntStateOf(defaultSelectedItemIndex) }
     val color = MaterialTheme.colorScheme.primary
     Row(
-        modifier = Modifier,
+        modifier = Modifier
     ) {
         items.forEachIndexed { index, item ->
             OutlinedButton(
                 modifier =
-                    when (index) {
-                        0 -> {
-                            if (useFixedWidth) {
-                                Modifier
-                                    .width(itemWidth)
-                                    .offset(0.dp, 0.dp)
-                                    .zIndex(if (selectedIndex.intValue == 0) 1f else 0f)
-                            } else {
-                                Modifier
-                                    .wrapContentSize()
-                                    .offset(0.dp, 0.dp)
-                                    .zIndex(if (selectedIndex.intValue == 0) 1f else 0f)
-                            }
+                when (index) {
+                    0 -> {
+                        if (useFixedWidth) {
+                            Modifier
+                                .width(itemWidth)
+                                .offset(0.dp, 0.dp)
+                                .zIndex(if (selectedIndex.intValue == 0) 1f else 0f)
+                        } else {
+                            Modifier
+                                .wrapContentSize()
+                                .offset(0.dp, 0.dp)
+                                .zIndex(if (selectedIndex.intValue == 0) 1f else 0f)
                         }
+                    }
 
-                        else -> {
-                            if (useFixedWidth) {
-                                Modifier
-                                    .width(itemWidth)
-                                    .offset((-1 * index).dp, 0.dp)
-                                    .zIndex(if (selectedIndex.intValue == index) 1f else 0f)
-                            } else {
-                                Modifier
-                                    .wrapContentSize()
-                                    .offset((-1 * index).dp, 0.dp)
-                                    .zIndex(if (selectedIndex.intValue == index) 1f else 0f)
-                            }
+                    else -> {
+                        if (useFixedWidth) {
+                            Modifier
+                                .width(itemWidth)
+                                .offset((-1 * index).dp, 0.dp)
+                                .zIndex(if (selectedIndex.intValue == index) 1f else 0f)
+                        } else {
+                            Modifier
+                                .wrapContentSize()
+                                .offset((-1 * index).dp, 0.dp)
+                                .zIndex(if (selectedIndex.intValue == index) 1f else 0f)
                         }
-                    },
+                    }
+                },
                 onClick = {
                     selectedIndex.intValue = index
                     onItemSelection(selectedIndex.intValue)
                 },
                 shape =
-                    when (index) {
-                        /**
-                         * left outer button
-                         */
-                        0 ->
-                            RoundedCornerShape(
-                                topStartPercent = cornerRadius,
-                                topEndPercent = 0,
-                                bottomStartPercent = cornerRadius,
-                                bottomEndPercent = 0,
-                            )
-                        /**
-                         * right outer button
-                         */
-                        items.size - 1 ->
-                            RoundedCornerShape(
-                                topStartPercent = 0,
-                                topEndPercent = cornerRadius,
-                                bottomStartPercent = 0,
-                                bottomEndPercent = cornerRadius,
-                            )
-                        /**
-                         * middle button
-                         */
-                        else ->
-                            RoundedCornerShape(
-                                topStartPercent = 0,
-                                topEndPercent = 0,
-                                bottomStartPercent = 0,
-                                bottomEndPercent = 0,
-                            )
-                    },
-                border =
-                    BorderStroke(
-                        1.dp,
-                        if (selectedIndex.intValue == index) {
-                            color
-                        } else {
-                            color.copy(alpha = 0.75f)
-                        },
-                    ),
-                colors =
-                    if (selectedIndex.intValue == index) {
-                        /**
-                         * selected colors
-                         */
-                        ButtonDefaults.outlinedButtonColors(
-                            containerColor = color,
+                when (index) {
+                    /**
+                     * left outer button
+                     */
+                    0 ->
+                        RoundedCornerShape(
+                            topStartPercent = cornerRadius,
+                            topEndPercent = 0,
+                            bottomStartPercent = cornerRadius,
+                            bottomEndPercent = 0
                         )
+                    /**
+                     * right outer button
+                     */
+                    items.size - 1 ->
+                        RoundedCornerShape(
+                            topStartPercent = 0,
+                            topEndPercent = cornerRadius,
+                            bottomStartPercent = 0,
+                            bottomEndPercent = cornerRadius
+                        )
+                    /**
+                     * middle button
+                     */
+                    else ->
+                        RoundedCornerShape(
+                            topStartPercent = 0,
+                            topEndPercent = 0,
+                            bottomStartPercent = 0,
+                            bottomEndPercent = 0
+                        )
+                },
+                border =
+                BorderStroke(
+                    1.dp,
+                    if (selectedIndex.intValue == index) {
+                        color
                     } else {
-                        /**
-                         * not selected colors
-                         */
-                        ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent)
-                    },
+                        color.copy(alpha = 0.75f)
+                    }
+                ),
+                colors =
+                if (selectedIndex.intValue == index) {
+                    /**
+                     * selected colors
+                     */
+                    ButtonDefaults.outlinedButtonColors(
+                        containerColor = color
+                    )
+                } else {
+                    /**
+                     * not selected colors
+                     */
+                    ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent)
+                }
             ) {
                 Text(
                     text = item,
                     fontWeight = FontWeight.Normal,
                     color =
-                        if (selectedIndex.intValue == index) {
-                            Color.White
-                        } else {
-                            color.copy(alpha = 0.9f)
-                        },
+                    if (selectedIndex.intValue == index) {
+                        Color.White
+                    } else {
+                        color.copy(alpha = 0.9f)
+                    }
                 )
             }
         }

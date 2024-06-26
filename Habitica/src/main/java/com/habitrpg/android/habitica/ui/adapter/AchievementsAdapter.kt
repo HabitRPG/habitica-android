@@ -8,10 +8,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AchievementChallengeItemBinding
 import com.habitrpg.android.habitica.databinding.AchievementQuestItemBinding
 import com.habitrpg.android.habitica.databinding.AchievementSectionHeaderBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
@@ -21,7 +21,7 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> SectionViewHolder(parent.inflate(R.layout.achievement_section_header))
@@ -33,14 +33,14 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         parent.inflate(R.layout.achievement_grid_item)
                     } else {
                         parent.inflate(R.layout.achievement_list_item)
-                    },
+                    }
                 )
         }
     }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         when (val entry = entries[position]) {
             is Achievement -> (holder as? AchievementViewHolder)?.bind(entry)

@@ -52,7 +52,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentQuestDetailBinding {
         return FragmentQuestDetailBinding.inflate(inflater, container, false)
     }
@@ -67,7 +67,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -75,7 +75,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -150,7 +150,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         // We need to do this, because the quest description can contain markdown AND HTML.
         binding?.descriptionView?.setText(
             MarkdownParser.parseMarkdown(questContent.notes).toHtml().fromHtml(),
-            TextView.BufferType.SPANNABLE,
+            TextView.BufferType.SPANNABLE
         )
 
         binding?.questScrollImageView?.loadImage("inventory_quest_scroll_" + questContent.key)
@@ -180,8 +180,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_ternary,
-                                ),
+                                    R.color.text_ternary
+                                )
                             )
                         }
 
@@ -190,8 +190,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_green,
-                                ),
+                                    R.color.text_green
+                                )
                             )
                         }
 
@@ -200,8 +200,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_red,
-                                ),
+                                    R.color.text_red
+                                )
                             )
                         }
                     }

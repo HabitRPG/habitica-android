@@ -33,7 +33,7 @@ class GuidelinesActivity : BaseActivity() {
             object : Callback {
                 override fun onFailure(
                     call: Call,
-                    e: IOException,
+                    e: IOException
                 ) {
                     ExceptionHandler.reportError(e)
                 }
@@ -41,7 +41,7 @@ class GuidelinesActivity : BaseActivity() {
                 @Throws(IOException::class)
                 override fun onResponse(
                     call: Call,
-                    response: Response,
+                    response: Response
                 ) {
                     val `in` = response.body?.byteStream()
                     val reader = BufferedReader(InputStreamReader(`in`))
@@ -52,7 +52,7 @@ class GuidelinesActivity : BaseActivity() {
                         findViewById<TextView>(R.id.text_view).setMarkdown(text)
                     }
                 }
-            },
+            }
         )
     }
 

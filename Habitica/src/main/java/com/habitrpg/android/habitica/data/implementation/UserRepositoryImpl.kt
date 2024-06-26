@@ -40,7 +40,7 @@ class UserRepositoryImpl(
     apiClient: ApiClient,
     authenticationHandler: AuthenticationHandler,
     private val taskRepository: TaskRepository,
-    private val appConfigManager: AppConfigManager,
+    private val appConfigManager: AppConfigManager
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
     companion object {
         private var lastReadNotification: String? = null
@@ -65,7 +65,7 @@ class UserRepositoryImpl(
 
     private suspend fun updateUser(
         userID: String,
-        updateData: Map<String, Any?>,
+        updateData: Map<String, Any?>
     ): User? {
         val networkUser = apiClient.updateUser(updateData) ?: return null
         val oldUser = localRepository.getUser(userID).firstOrNull()
@@ -75,7 +75,7 @@ class UserRepositoryImpl(
     private suspend fun updateUser(
         userID: String,
         key: String,
-        value: Any?,
+        value: Any?
     ): User? {
         return updateUser(userID, mapOf(key to value))
     }
@@ -86,7 +86,7 @@ class UserRepositoryImpl(
 
     override suspend fun updateUser(
         key: String,
-        value: Any?,
+        value: Any?
     ): User? {
         return updateUser(currentUserID, key, value)
     }
@@ -95,7 +95,7 @@ class UserRepositoryImpl(
     override suspend fun retrieveUser(
         withTasks: Boolean,
         forced: Boolean,
-        overrideExisting: Boolean,
+        overrideExisting: Boolean
     ): User? {
         // Only retrieve again after 3 minutes or it's forced.
         if (forced || lastSync == null || Date().time - (lastSync?.time ?: 0) > 180000) {
@@ -164,7 +164,7 @@ class UserRepositoryImpl(
     override suspend fun useSkill(
         key: String,
         target: String?,
-        taskId: String,
+        taskId: String
     ): SkillResponse? {
         val response = apiClient.useSkill(key, target ?: "", taskId) ?: return null
         val user = getLiveUser() ?: return response
@@ -178,7 +178,7 @@ class UserRepositoryImpl(
 
     override suspend fun useSkill(
         key: String,
-        target: String?,
+        target: String?
     ): SkillResponse? {
         val response = apiClient.useSkill(key, target ?: "") ?: return null
         val user = getLiveUser() ?: return response
@@ -203,7 +203,7 @@ class UserRepositoryImpl(
 
     override suspend fun unlockPath(
         path: String,
-        price: Int,
+        price: Int
     ): UnlockResponse? {
         val unlockResponse = apiClient.unlockPath(path) ?: return null
         val user = localRepository.getUser(currentUserID).firstOrNull() ?: return unlockResponse
@@ -284,7 +284,7 @@ class UserRepositoryImpl(
 
     override suspend fun updateLoginName(
         newLoginName: String,
-        password: String?,
+        password: String?
     ): User? {
         if (!password.isNullOrEmpty()) {
             apiClient.updateLoginName(newLoginName.trim(), password.trim())
@@ -303,13 +303,13 @@ class UserRepositoryImpl(
 
     override suspend fun updateEmail(
         newEmail: String,
-        password: String,
+        password: String
     ) = apiClient.updateEmail(newEmail.trim(), password)
 
     override suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String,
+        newPasswordConfirmation: String
     ) = apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override suspend fun allocatePoint(stat: Attribute): Stats? {
@@ -343,14 +343,14 @@ class UserRepositoryImpl(
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int,
+        perception: Int
     ): Stats? {
         val stats =
             apiClient.bulkAllocatePoints(
                 strength,
                 intelligence,
                 constitution,
-                perception,
+                perception
             ) ?: return null
         val user = getLiveUser()
         if (user != null) {
@@ -391,7 +391,7 @@ class UserRepositoryImpl(
     override suspend fun useCustomization(
         type: String,
         category: String?,
-        identifier: String,
+        identifier: String
     ): User? {
         if (appConfigManager.enableLocalChanges()) {
             val liveUser = getLiveUser()
@@ -466,7 +466,7 @@ class UserRepositoryImpl(
         localRepository.save(
             members.map {
                 GroupMembership(it.id, id)
-            },
+            }
         )
         members.let { localRepository.save(members) }
         return team
@@ -494,7 +494,7 @@ class UserRepositoryImpl(
 
     private fun mergeUser(
         oldUser: User?,
-        newUser: User,
+        newUser: User
     ): User {
         if (oldUser == null || !oldUser.isValid) {
             return oldUser ?: newUser

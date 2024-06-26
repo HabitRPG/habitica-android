@@ -11,7 +11,7 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun getTasks(
         taskType: TaskType,
         userID: String,
-        includedGroupIDs: Array<String>,
+        includedGroupIDs: Array<String>
     ): Flow<List<Task>>
 
     fun getTasks(userId: String): Flow<List<Task>>
@@ -19,7 +19,7 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun saveTasks(
         ownerID: String,
         tasksOrder: TasksOrder,
-        tasks: TaskList,
+        tasks: TaskList
     )
 
     fun deleteTask(taskID: String)
@@ -30,17 +30,17 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun markTaskCompleted(
         taskId: String,
-        isCompleted: Boolean,
+        isCompleted: Boolean
     )
 
     fun swapTaskPosition(
         firstPosition: Int,
-        secondPosition: Int,
+        secondPosition: Int
     )
 
     fun getTaskAtPosition(
         taskType: String,
-        position: Int,
+        position: Int
     ): Flow<Task>
 
     fun updateIsdue(daily: TaskList): TaskList
@@ -49,7 +49,7 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun saveCompletedTodos(
         userId: String,
-        tasks: MutableCollection<Task>,
+        tasks: MutableCollection<Task>
     )
 
     fun getErroredTasks(userID: String): Flow<List<Task>>
@@ -58,6 +58,6 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun getTasksForChallenge(
         challengeID: String?,
-        userID: String?,
+        userID: String?
     ): Flow<List<Task>>
 }

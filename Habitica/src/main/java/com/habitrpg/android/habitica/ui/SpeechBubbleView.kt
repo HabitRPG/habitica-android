@@ -20,7 +20,7 @@ class SpeechBubbleView(context: Context, attrs: AttributeSet) :
                 attrs,
                 R.styleable.SpeechBubbleView,
                 0,
-                0,
+                0
             )
 
         binding.namePlate.text = attributes.getString(R.styleable.SpeechBubbleView_namePlate)

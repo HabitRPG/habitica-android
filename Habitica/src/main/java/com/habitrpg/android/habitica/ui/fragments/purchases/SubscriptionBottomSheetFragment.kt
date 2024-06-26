@@ -58,7 +58,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBottomsheetSubscriptionBinding.inflate(layoutInflater)
         return binding.root
@@ -66,7 +66,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -119,7 +119,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                     updateButtonLabel(
                         sku,
                         sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
-                            ?: "",
+                            ?: ""
                     )
                 }
                 subscriptions
@@ -136,7 +136,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String,
+        price: String
     ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {

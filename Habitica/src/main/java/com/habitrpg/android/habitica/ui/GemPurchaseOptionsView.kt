@@ -19,7 +19,7 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
                 attrs,
                 R.styleable.GemPurchaseOptionsView,
                 0,
-                0,
+                0
             )
 
         binding.gemAmount.text = a.getText(R.styleable.GemPurchaseOptionsView_gemAmount)

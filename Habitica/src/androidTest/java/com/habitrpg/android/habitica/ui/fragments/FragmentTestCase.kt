@@ -9,7 +9,7 @@ import io.github.kakaocup.kakao.screen.Screen
 import org.junit.Before
 
 abstract class FragmentTestCase<F : Fragment, VB : ViewBinding, S : Screen<S>>(
-    val shouldLaunchFragment: Boolean = true,
+    val shouldLaunchFragment: Boolean = true
 ) : HabiticaTestCase() {
     lateinit var scenario: FragmentScenario<F>
     lateinit var fragment: F

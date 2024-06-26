@@ -26,7 +26,7 @@ class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
 
     fun configure(
         egg: String,
-        hatchingPotion: String,
+        hatchingPotion: String
     ) {
         eggView?.loadImage("Pet_Egg_$egg")
         hatchingPotionView?.loadImage("Pet_HatchingPotion_$hatchingPotion")

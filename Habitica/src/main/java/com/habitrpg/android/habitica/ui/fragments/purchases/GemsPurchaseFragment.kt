@@ -49,7 +49,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentGemPurchaseBinding {
         return FragmentGemPurchaseBinding.inflate(inflater, container, false)
     }
@@ -67,7 +67,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -114,7 +114,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
                         Modifier
                             .padding(horizontal = 20.dp)
                             .clip(HabiticaTheme.shapes.medium)
-                            .padding(bottom = 20.dp),
+                            .padding(bottom = 20.dp)
                     )
                 }
             }
@@ -174,7 +174,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             }
         if (matchingView != null) {
             matchingView.setPurchaseButtonText(
-                sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
+                sku.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
             )
             matchingView.sku = sku
         }

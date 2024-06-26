@@ -52,7 +52,7 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
 
         view.setDecoration(
             ContextCompat.getDrawable(context, R.drawable.survey_art_left),
-            ContextCompat.getDrawable(context, R.drawable.survey_art_right),
+            ContextCompat.getDrawable(context, R.drawable.survey_art_right)
         )
 
         view.binding.button.backgroundTintList =
@@ -67,7 +67,7 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
     override fun menuOnNavigation(context: Context) {
         MainNavigationController.navigate(
             R.id.promoWebFragment,
-            PromoWebFragmentArgs.Builder(url ?: "").build().toBundle(),
+            PromoWebFragmentArgs.Builder(url ?: "").build().toBundle()
         )
     }
 
@@ -79,7 +79,7 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
 
     override fun configureGemView(
         binding: PurchaseGemViewBinding,
-        regularAmount: Int,
+        regularAmount: Int
     ) {
     }
 

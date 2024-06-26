@@ -50,7 +50,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentSubscriptionBinding {
         return FragmentSubscriptionBinding.inflate(inflater, container, false)
     }
@@ -75,7 +75,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -86,7 +86,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         binding?.giftSubscriptionButton?.setOnClickListener {
             context?.let { context ->
                 showGiftSubscriptionDialog(
-                    context,
+                    context
                 )
             }
         }
@@ -124,7 +124,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                         Modifier
                             .padding(horizontal = 20.dp)
                             .clip(HabiticaTheme.shapes.medium)
-                            .padding(bottom = 10.dp),
+                            .padding(bottom = 10.dp)
                     )
                 }
             }
@@ -163,7 +163,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                     updateButtonLabel(
                         sku,
                         sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
-                            ?: "",
+                            ?: ""
                     )
                 }
                 subscriptions.minByOrNull {
@@ -178,7 +178,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String,
+        price: String
     ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
@@ -291,7 +291,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             {
                 binding?.scrollView?.smoothScrollTo(0, binding?.subscriptionOptions?.top ?: 0)
             },
-            500,
+            500
         )
     }
 
