@@ -345,7 +345,10 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                     }
                     append(second)
                 },
-                fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = colorResource(R.color.text_ternary),
+                textAlign = TextAlign.Center
             )
         } else {
             Text(
@@ -367,7 +370,10 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                     }
                     append(second)
                 },
-                fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = colorResource(R.color.text_ternary),
+                textAlign = TextAlign.Center
             )
         }
     }
