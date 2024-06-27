@@ -109,6 +109,9 @@ class PreferencesFragment :
         serverUrlPreference?.summary =
             preferenceManager.sharedPreferences?.getString("server_url", "")
 
+        val clearDatabasePreference = findPreference("clear_database") as? Preference
+        clearDatabasePreference?.isVisible = false
+
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference?.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
@@ -215,12 +218,23 @@ class PreferencesFragment :
                 )
                 reloadContent(true)
             }
+
+
+            "clear_database" -> {
+                context?.let { context ->
+                    HabiticaBaseApplication.deleteDatabase(context)
+                    lifecycleScope.launchCatching {
+                        userRepository.retrieveUser(true, true)
+                        reloadContent(true)
+                    }
+                }
+            }
         }
         return super.onPreferenceTreeClick(preference)
     }
 
     private fun reloadContent(withConfirmation: Boolean) {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             contentRepository.retrieveContent(true)
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
@@ -583,6 +597,9 @@ class PreferencesFragment :
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
             taskListPreference?.isVisible = true
+
+            val clearDatabasePreference = findPreference("clear_database") as? Preference
+            clearDatabasePreference?.isVisible = true
         }
     }
 }

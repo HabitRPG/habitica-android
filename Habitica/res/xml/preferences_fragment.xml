@@ -404,5 +404,10 @@
             android:entries="@array/server_urls"
             android:entryValues="@array/server_urls"
             android:layout="@layout/preference_child_summary" />
+        <Preference
+                android:key="clear_database"
+                android:title="@string/clear_database"
+                android:layout="@layout/preference_child_summary"
+                app:isPreferenceVisible="false"/>
     </PreferenceCategory>
 </PreferenceScreen>

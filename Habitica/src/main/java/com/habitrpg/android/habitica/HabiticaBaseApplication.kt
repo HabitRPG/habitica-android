@@ -318,12 +318,16 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             return context.applicationContext as? HabiticaBaseApplication
         }
 
+        fun deleteDatabase(context: Context) {
+            val realm = Realm.getDefaultInstance()
+            getInstance(context)?.deleteDatabase(realm.path)
+            realm.close()
+        }
+
         fun logout(context: Context) {
             MainScope().launchCatching {
                 getInstance(context)?.pushNotificationManager?.removePushDeviceUsingStoredToken()
-                val realm = Realm.getDefaultInstance()
-                getInstance(context)?.deleteDatabase(realm.path)
-                realm.close()
+                deleteDatabase(context)
                 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
                 val useReminder = preferences.getBoolean("use_reminder", false)
                 val reminderTime = preferences.getString("reminder_time", "19:00")
