@@ -18,7 +18,7 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): ChatMessage {
         val message = ChatMessage()
         val obj = json.asJsonObject
@@ -52,7 +52,7 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
                     message.contributor =
                         context.deserialize<ContributorInfo>(
                             obj.get("contributor"),
-                            ContributorInfo::class.java,
+                            ContributorInfo::class.java
                         )
                 } else {
                     val contributor = ContributorInfo()

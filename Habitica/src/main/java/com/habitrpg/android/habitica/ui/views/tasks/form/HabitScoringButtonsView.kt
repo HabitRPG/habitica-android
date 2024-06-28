@@ -48,23 +48,23 @@ fun HabitScoringSelector(
     selectedDown: Boolean,
     onSelectUp: () -> Unit,
     onSelectDown: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(30.dp, Alignment.CenterHorizontally),
-        modifier = modifier,
+        modifier = modifier
     ) {
         HabitScoringSelection(
             selected = selectedUp,
             icon = painterResource(id = R.drawable.habit_plus),
             text = stringResource(R.string.positive_habit_form),
-            onSelect = onSelectUp,
+            onSelect = onSelectUp
         )
         HabitScoringSelection(
             selected = selectedDown,
             icon = painterResource(id = R.drawable.habit_minus),
             text = stringResource(R.string.negative_habit_form),
-            onSelect = onSelectDown,
+            onSelect = onSelectDown
         )
     }
 }
@@ -75,7 +75,7 @@ private fun HabitScoringSelection(
     icon: Painter,
     text: String,
     onSelect: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val selectedState = updateTransition(selected)
     val context = LocalContext.current
@@ -95,39 +95,39 @@ private fun HabitScoringSelection(
             } else {
                 Color(
                     context.getThemeColor(
-                        R.attr.textColorTintedSecondary,
-                    ),
+                        R.attr.textColorTintedSecondary
+                    )
                 )
             }
         }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = modifier,
+        modifier = modifier
     ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier =
-                Modifier
-                    .padding(horizontal = 12.dp)
-                    .size(34.dp)
-                    .border(
-                        1.dp,
-                        borderColor.value,
-                        CircleShape,
-                    )
-                    .clip(CircleShape)
-                    .clickable { onSelect() },
+            Modifier
+                .padding(horizontal = 12.dp)
+                .size(34.dp)
+                .border(
+                    1.dp,
+                    borderColor.value,
+                    CircleShape
+                )
+                .clip(CircleShape)
+                .clickable { onSelect() }
         ) {
             this@Column.AnimatedVisibility(
                 selected,
                 enter = scaleIn(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
-                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
+                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium))
             ) {
                 Box(
                     Modifier
                         .size(32.dp)
-                        .background(HabiticaTheme.colors.tintedUiMain, CircleShape),
+                        .background(HabiticaTheme.colors.tintedUiMain, CircleShape)
                 )
             }
             Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
@@ -136,7 +136,7 @@ private fun HabitScoringSelection(
             text,
             fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
             fontSize = 14.sp,
-            color = textColor.value,
+            color = textColor.value
         )
     }
 }
@@ -150,14 +150,14 @@ private fun Preview() {
         Modifier
             .background(MaterialTheme.colorScheme.background)
             .width(300.dp)
-            .padding(8.dp),
+            .padding(8.dp)
     ) {
         HabitScoringSelector(
             selectedUp.value,
             selectedDown.value,
             { selectedUp.value = !selectedUp.value },
             { selectedDown.value = !selectedDown.value },
-            Modifier.align(Alignment.Center),
+            Modifier.align(Alignment.Center)
         )
     }
 }

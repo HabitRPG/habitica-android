@@ -33,13 +33,13 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
 
     abstract fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         Analytics.sendNavigationEvent(this.javaClass.simpleName)
 
@@ -63,7 +63,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
                         mainActivity.displayTutorialStep(
                             step,
                             tutorialTexts,
-                            tutorialCanBeDeferred,
+                            tutorialCanBeDeferred
                         )
                     }
                 }

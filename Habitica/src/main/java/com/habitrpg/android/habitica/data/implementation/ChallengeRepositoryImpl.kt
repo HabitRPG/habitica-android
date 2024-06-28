@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 class ChallengeRepositoryImpl(
     localRepository: ChallengeLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler,
+    authenticationHandler: AuthenticationHandler
 ) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, authenticationHandler),
     ChallengeRepository {
     override fun isChallengeMember(challengeID: String): Flow<Boolean> {
@@ -25,7 +25,7 @@ class ChallengeRepositoryImpl(
 
     override suspend fun reportChallenge(
         challengeid: String,
-        updateData: Map<String, String>,
+        updateData: Map<String, String>
     ): Void? {
         return apiClient.reportChallenge(challengeid, updateData)
     }
@@ -85,18 +85,20 @@ class ChallengeRepositoryImpl(
 
     private suspend fun addChallengeTasks(
         challenge: Challenge,
-        addedTaskList: List<Task>,
+        addedTaskList: List<Task>
     ) {
         val savedTasks: List<Task>? = when {
             addedTaskList.count() == 1 ->
-                listOf(apiClient.createChallengeTask(
-                    challenge.id ?: "",
-                    addedTaskList[0],
-                )).filterNotNull()
+                listOf(
+                    apiClient.createChallengeTask(
+                        challenge.id ?: "",
+                        addedTaskList[0]
+                    )
+                ).filterNotNull()
             else ->
                 apiClient.createChallengeTasks(
                     challenge.id ?: "",
-                    addedTaskList,
+                    addedTaskList
                 )
         }
         if (savedTasks != null) {
@@ -109,7 +111,7 @@ class ChallengeRepositoryImpl(
 
     override suspend fun createChallenge(
         challenge: Challenge,
-        taskList: List<Task>,
+        taskList: List<Task>
     ): Challenge? {
         challenge.tasksOrder = getTaskOrders(taskList)
 
@@ -125,7 +127,7 @@ class ChallengeRepositoryImpl(
         fullTaskList: List<Task>,
         addedTaskList: List<Task>,
         updatedTaskList: List<Task>,
-        removedTaskList: List<String>,
+        removedTaskList: List<String>
     ): Challenge? {
         val savedTasks = updatedTaskList
             .map { localRepository.getUnmanagedCopy(it) }.mapNotNull { task ->
@@ -166,7 +168,7 @@ class ChallengeRepositoryImpl(
 
     override suspend fun retrieveChallenges(
         page: Int,
-        memberOnly: Boolean,
+        memberOnly: Boolean
     ): List<Challenge>? {
         val challenges = apiClient.getUserChallenges(page, memberOnly)
         if (challenges != null) {
@@ -177,7 +179,7 @@ class ChallengeRepositoryImpl(
 
     override suspend fun leaveChallenge(
         challenge: Challenge,
-        keepTasks: String,
+        keepTasks: String
     ): Void? {
         apiClient.leaveChallenge(challenge.id ?: "", LeaveChallengeBody(keepTasks))
         localRepository.setParticipating(currentUserID, challenge.id ?: "", false)

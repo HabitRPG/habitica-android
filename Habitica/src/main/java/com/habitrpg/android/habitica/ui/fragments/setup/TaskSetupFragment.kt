@@ -30,7 +30,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentSetupTasksBinding {
         return FragmentSetupTasksBinding.inflate(inflater, container, false)
     }
@@ -42,7 +42,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,8 +60,8 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         binding?.heartIcon?.setImageDrawable(
             BitmapDrawable(
                 resources,
-                HabiticaIconsHelper.imageOfHeartLightBg(),
-            ),
+                HabiticaIconsHelper.imageOfHeartLightBg()
+            )
         )
     }
 
@@ -69,7 +69,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         super.onResume()
         if (context != null) {
             binding?.speechBubble?.animateText(
-                context?.getString(R.string.task_setup_description) ?: "",
+                context?.getString(R.string.task_setup_description) ?: ""
             )
         }
     }
@@ -97,7 +97,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                 listOf(getString(R.string.setup_group_teams), TYPE_TEAMS),
                 listOf(getString(R.string.setup_group_chores), TYPE_CHORES),
                 listOf(getString(R.string.setup_group_creativity), TYPE_CREATIVITY),
-                listOf(getString(R.string.setuP_group_other), TYPE_OTHER),
+                listOf(getString(R.string.setuP_group_other), TYPE_OTHER)
             )
 
         this.tasks =
@@ -110,7 +110,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                     TaskType.HABIT,
                     getString(R.string.setup_task_exercise_1),
                     true,
-                    false,
+                    false
                 ),
                 listOf(TYPE_EXERCISE, TaskType.DAILY, getString(R.string.setup_task_exercise_2)),
                 listOf(TYPE_EXERCISE, TaskType.TODO, getString(R.string.setup_task_exercise_3)),
@@ -119,7 +119,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                     TaskType.HABIT,
                     getString(R.string.setup_task_healthWellness_1),
                     true,
-                    true,
+                    true
                 ),
                 listOf(TYPE_HEALTH, TaskType.DAILY, getString(R.string.setup_task_healthWellness_2)),
                 listOf(TYPE_HEALTH, TaskType.TODO, getString(R.string.setup_task_healthWellness_3)),
@@ -128,7 +128,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                     TaskType.HABIT,
                     getString(R.string.setup_task_school_1),
                     true,
-                    true,
+                    true
                 ),
                 listOf(TYPE_SCHOOL, TaskType.DAILY, getString(R.string.setup_task_school_2)),
                 listOf(TYPE_SCHOOL, TaskType.TODO, getString(R.string.setup_task_school_3)),
@@ -140,7 +140,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                     TaskType.HABIT,
                     getString(R.string.setup_task_chores_1),
                     true,
-                    false,
+                    false
                 ),
                 listOf(TYPE_CHORES, TaskType.DAILY, getString(R.string.setup_task_chores_2)),
                 listOf(TYPE_CHORES, TaskType.TODO, getString(R.string.setup_task_chores_3)),
@@ -149,10 +149,10 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                     TaskType.HABIT,
                     getString(R.string.setup_task_creativity_1),
                     true,
-                    false,
+                    false
                 ),
                 listOf(TYPE_CREATIVITY, TaskType.DAILY, getString(R.string.setup_task_creativity_2)),
-                listOf(TYPE_CREATIVITY, TaskType.TODO, getString(R.string.setup_task_creativity_3)),
+                listOf(TYPE_CREATIVITY, TaskType.TODO, getString(R.string.setup_task_creativity_3))
             )
     }
 
@@ -173,7 +173,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                             task[1] as? TaskType,
                             task[2] as? String,
                             task[3] as? Boolean,
-                            task[4] as? Boolean,
+                            task[4] as? Boolean
                         )
                     } else {
                         this.makeTaskObject(task[1] as? TaskType, task[2] as? String, null, null)
@@ -187,8 +187,8 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                 getString(R.string.setup_task_habit_1),
                 true,
                 false,
-                getString(R.string.setup_task_habit_1_notes),
-            ),
+                getString(R.string.setup_task_habit_1_notes)
+            )
         )
         tasks.add(
             makeTaskObject(
@@ -196,8 +196,8 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                 getString(R.string.setup_task_habit_2),
                 false,
                 true,
-                getString(R.string.setup_task_habit_2_notes),
-            ),
+                getString(R.string.setup_task_habit_2_notes)
+            )
         )
         tasks.add(
             makeTaskObject(
@@ -205,8 +205,8 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                 getString(R.string.setup_task_reward),
                 null,
                 null,
-                getString(R.string.setup_task_reward_notes),
-            ),
+                getString(R.string.setup_task_reward_notes)
+            )
         )
         tasks.add(
             makeTaskObject(
@@ -214,8 +214,8 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                 getString(R.string.setup_task_join_habitica),
                 null,
                 null,
-                getString(R.string.setup_task_join_habitica_notes),
-            ),
+                getString(R.string.setup_task_join_habitica_notes)
+            )
         )
         return tasks
     }
@@ -225,7 +225,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         text: String?,
         up: Boolean?,
         down: Boolean?,
-        notes: String? = null,
+        notes: String? = null
     ): Task {
         val task = Task()
         task.id = UUID.randomUUID().toString()

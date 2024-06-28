@@ -32,8 +32,8 @@ class TaskListScreen : Screen<TaskListScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-            itemType(::TaskItem)
-        })
+                itemType(::TaskItem)
+            })
 }
 
 internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewFragment, FragmentRefreshRecyclerviewBinding, TaskListScreen>(false) {

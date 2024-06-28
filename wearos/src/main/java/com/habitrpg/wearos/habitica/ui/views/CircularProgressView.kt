@@ -15,7 +15,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 
 class CircularProgressView(
     context: Context?,
-    attrs: AttributeSet?,
+    attrs: AttributeSet?
 ) : View(context, attrs) {
     private val ovalSpace = RectF()
     private var ovalSize = (resources.displayMetrics.heightPixels / 2)
@@ -27,7 +27,7 @@ class CircularProgressView(
             attrs,
             R.styleable.CircularProgressView,
             0,
-            0,
+            0
         )
     private val offset = attributes?.getDimension(R.styleable.CircularProgressView_offset, 0f)?.toInt()
     private val backgroundArcColor = attributes?.getColor(R.styleable.CircularProgressView_backgroundArcColor, 0) ?: Color.GRAY
@@ -67,7 +67,7 @@ class CircularProgressView(
         left: Int,
         top: Int,
         right: Int,
-        bottom: Int,
+        bottom: Int
     ) {
         super.onLayout(changed, left, top, right, bottom)
         offset?.let { ovalSize = (height / 2) - it }
@@ -82,7 +82,7 @@ class CircularProgressView(
             horizontalCenter - ovalSize,
             verticalCenter - ovalSize,
             horizontalCenter + ovalSize,
-            verticalCenter + ovalSize,
+            verticalCenter + ovalSize
         )
     }
 
@@ -97,7 +97,7 @@ class CircularProgressView(
 
     fun setPercentageValues(
         currentValue: Float,
-        maxValue: Float,
+        maxValue: Float
     ) {
         currentPercentage = currentValue
         percentageDivider = maxValue
@@ -105,14 +105,14 @@ class CircularProgressView(
 
     fun animateProgress(
         startValue: Float = 0f,
-        animationDuration: Long = 1000,
+        animationDuration: Long = 1000
     ) {
         val currentPercent = currentPercentage
         val valuesHolder =
             PropertyValuesHolder.ofFloat(
                 PERCENTAGE_VALUE_HOLDER,
                 startValue,
-                currentPercent,
+                currentPercent
             )
 
         val animator =

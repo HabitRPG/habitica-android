@@ -10,7 +10,7 @@ class BooleanAsIntAdapter : TypeAdapter<Boolean>() {
     @Throws(IOException::class)
     override fun write(
         out: JsonWriter,
-        value: Boolean?,
+        value: Boolean?
     ) {
         if (value == null) {
             out.nullValue()

@@ -16,11 +16,11 @@ class InsufficientHourglassesDialog(context: Context) : InsufficientCurrencyDial
 
         addButton(
             R.string.get_hourglasses,
-            true,
+            true
         ) { _, _ ->
             MainNavigationController.navigate(
                 R.id.gemPurchaseActivity,
-                bundleOf(Pair("openSubscription", true)),
+                bundleOf(Pair("openSubscription", true))
             )
         }
         addCloseButton()

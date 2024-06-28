@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getImpreciseRemainingString
 import com.habitrpg.android.habitica.extensions.getTranslatedAnimalType
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.views.CurrencyView
+import com.habitrpg.common.habitica.extensions.inflate
 import java.util.Date
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -55,7 +55,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long,
+                    id: Long
                 ) {
                     spinnerSelectionChanged?.invoke()
                 }
@@ -79,7 +79,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             } else {
                 context.getString(
                     R.string.mount_category,
-                    getTranslatedAnimalType(context, section.key),
+                    getTranslatedAnimalType(context, section.key)
                 )
             }
         if (section.key == "special") {
@@ -92,7 +92,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.context.getString(
                 R.string.pet_ownership_fraction,
                 section.ownedCount,
-                section.totalCount,
+                section.totalCount
             )
     }
 

@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.databinding.SetupCustomizationItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.setTintWith
 
 internal class CustomizationSetupAdapter :
@@ -29,14 +29,14 @@ internal class CustomizationSetupAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): CustomizationViewHolder {
         return CustomizationViewHolder(parent.inflate(R.layout.setup_customization_item))
     }
 
     override fun onBindViewHolder(
         holder: CustomizationViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bind(customizationList[position])
     }
@@ -62,13 +62,13 @@ internal class CustomizationSetupAdapter :
                     SetupCustomizationRepository.SUBCATEGORY_BANGS -> Integer.parseInt(customization.key) == prefs.hair?.bangs
                     SetupCustomizationRepository.SUBCATEGORY_PONYTAIL ->
                         Integer.parseInt(
-                            customization.key,
+                            customization.key
                         ) == prefs.hair?.base
 
                     SetupCustomizationRepository.SUBCATEGORY_COLOR -> customization.key == prefs.hair?.color
                     SetupCustomizationRepository.SUBCATEGORY_FLOWER ->
                         Integer.parseInt(
-                            customization.key,
+                            customization.key
                         ) == prefs.hair?.flower
 
                     else -> false
@@ -80,7 +80,7 @@ internal class CustomizationSetupAdapter :
                     SetupCustomizationRepository.SUBCATEGORY_GLASSES -> customization.key == this.user?.items?.gear?.equipped?.eyeWear || "eyewear_base_0" == this.user?.items?.gear?.equipped?.eyeWear && customization.key.isEmpty()
                     SetupCustomizationRepository.SUBCATEGORY_FLOWER ->
                         Integer.parseInt(
-                            customization.key,
+                            customization.key
                         ) == prefs.hair?.flower
 
                     SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR -> "chair_" + customization.key == prefs.chair || customization.key == prefs.chair || customization.key == "none" && prefs.chair == null
@@ -108,21 +108,21 @@ internal class CustomizationSetupAdapter :
             when {
                 customization.drawableId != null ->
                     binding.imageView.setImageResource(
-                        customization.drawableId ?: 0,
+                        customization.drawableId ?: 0
                     )
 
                 customization.colorId != null -> {
                     val drawable =
                         ContextCompat.getDrawable(
                             itemView.context,
-                            R.drawable.setup_customization_circle,
+                            R.drawable.setup_customization_circle
                         )
                     drawable?.setTintWith(
                         ContextCompat.getColor(
                             itemView.context,
-                            customization.colorId ?: 0,
+                            customization.colorId ?: 0
                         ),
-                        PorterDuff.Mode.MULTIPLY,
+                        PorterDuff.Mode.MULTIPLY
                     )
                     binding.imageView.setImageDrawable(drawable)
                 }
@@ -142,16 +142,16 @@ internal class CustomizationSetupAdapter :
                     binding.textView.setTextColor(
                         ContextCompat.getColor(
                             itemView.context,
-                            R.color.white,
-                        ),
+                            R.color.white
+                        )
                     )
                 } else {
                     binding.imageView.setBackgroundResource(R.drawable.setup_customization_bg)
                     binding.textView.setTextColor(
                         ContextCompat.getColor(
                             itemView.context,
-                            R.color.white_50_alpha,
-                        ),
+                            R.color.white_50_alpha
+                        )
                     )
                 }
             }

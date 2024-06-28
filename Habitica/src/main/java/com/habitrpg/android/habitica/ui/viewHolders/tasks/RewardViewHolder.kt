@@ -18,14 +18,14 @@ class RewardViewHolder(
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?,
+    assignedTextProvider: GroupPlanInfoProvider?
 ) : BaseTaskViewHolder(
-        itemView,
-        scoreTaskFunc,
-        openTaskFunc,
-        brokenTaskFunc,
-        assignedTextProvider,
-    ) {
+    itemView,
+    scoreTaskFunc,
+    openTaskFunc,
+    brokenTaskFunc,
+    assignedTextProvider
+) {
     private val binding = RewardItemCardBinding.bind(itemView)
 
     init {
@@ -41,7 +41,7 @@ class RewardViewHolder(
 
     override fun setDisabled(
         openTaskDisabled: Boolean,
-        taskActionsDisabled: Boolean,
+        taskActionsDisabled: Boolean
     ) {
         super.setDisabled(openTaskDisabled, taskActionsDisabled)
         binding.buyButton.isEnabled = !taskActionsDisabled
@@ -52,7 +52,7 @@ class RewardViewHolder(
         position: Int,
         canBuy: Boolean,
         displayMode: String,
-        ownerID: String?,
+        ownerID: String?
     ) {
         this.task = reward
         streakTextView.visibility = View.GONE
@@ -65,11 +65,11 @@ class RewardViewHolder(
                 HabiticaIconsHelper.imageOfLocked(
                     ContextCompat.getColor(context, R.color.gray_1_30),
                     10,
-                    12,
+                    12
                 ).toDrawable(context.resources),
                 null,
                 null,
-                null,
+                null
             )
             binding.priceLabel.compoundDrawablePadding = 2.dpToPx(context)
         } else {
@@ -80,14 +80,14 @@ class RewardViewHolder(
             binding.priceLabel.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.reward_buy_button_text,
-                ),
+                    R.color.reward_buy_button_text
+                )
             )
             binding.buyButton.setBackgroundColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.reward_buy_button_bg,
-                ),
+                    R.color.reward_buy_button_bg
+                )
             )
         } else {
             binding.goldIcon.alpha = 0.6f
@@ -96,10 +96,10 @@ class RewardViewHolder(
                 ColorUtils.setAlphaComponent(
                     ContextCompat.getColor(
                         context,
-                        R.color.offset_background,
+                        R.color.offset_background
                     ),
-                    127,
-                ),
+                    127
+                )
             )
         }
     }

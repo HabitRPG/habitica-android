@@ -19,7 +19,7 @@ interface UserLocalRepository : BaseLocalRepository {
 
     fun saveUser(
         user: User,
-        overrideExisting: Boolean = true,
+        overrideExisting: Boolean = true
     )
 
     fun saveMessages(messages: List<ChatMessage>)

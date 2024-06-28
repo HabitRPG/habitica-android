@@ -21,7 +21,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): List<Customization> {
         val jsonObject = json.asJsonObject
         val customizations = RealmList<Customization>()
@@ -47,8 +47,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                                 customization.type,
                                 customization.category,
                                 customization.identifier,
-                                nestedObject.get(customization.identifier).asJsonObject,
-                            ),
+                                nestedObject.get(customization.identifier).asJsonObject
+                            )
                         )
                         nestedObject.remove(customization.identifier)
                     }
@@ -63,8 +63,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                             type,
                             null,
                             key,
-                            value.asJsonObject,
-                        ),
+                            value.asJsonObject
+                        )
                     )
                 }
             }
@@ -77,8 +77,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                             "hair",
                             key,
                             key1,
-                            value1.asJsonObject,
-                        ),
+                            value1.asJsonObject
+                        )
                     )
                 }
             }
@@ -94,8 +94,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                                 customization.customizationSet ?: "",
                                 keyList.indexOf(customization.customizationSet),
                                 customization.identifier,
-                                nestedObject.get(customization.identifier).asJsonObject,
-                            ),
+                                nestedObject.get(customization.identifier).asJsonObject
+                            )
                         )
                         nestedObject.remove(customization.identifier)
                     }
@@ -110,8 +110,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                             key,
                             keyList.indexOf(key),
                             key1,
-                            value1.asJsonObject,
-                        ),
+                            value1.asJsonObject
+                        )
                     )
                 }
             }
@@ -127,7 +127,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         type: String?,
         category: String?,
         key: String?,
-        entry: JsonObject,
+        entry: JsonObject
     ): Customization {
         var customization = existingCustomizaion
         if (customization == null) {
@@ -174,7 +174,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         setName: String,
         setCount: Int,
         key: String?,
-        entry: JsonObject,
+        entry: JsonObject
     ): Customization {
         var customization = existingCustomization
 
@@ -208,9 +208,9 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
 
             else -> {
                 val readableSetName = "SET ${setCount + 1}: ${
-                    getMonthName(
-                        setName.substring(11, 13).toInt() - 1,
-                    )
+                getMonthName(
+                    setName.substring(11, 13).toInt() - 1
+                )
                 } ${setName.substring(13, 17)}"
                 customization.customizationSetName = readableSetName
                 customization.customizationSet =

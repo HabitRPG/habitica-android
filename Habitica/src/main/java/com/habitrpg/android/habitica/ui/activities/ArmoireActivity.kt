@@ -162,7 +162,7 @@ class ArmoireActivity : BaseActivity() {
                 }
             subscriptionBottomSheet.show(
                 supportFragmentManager,
-                EventOutcomeSubscriptionBottomSheetFragment.TAG,
+                EventOutcomeSubscriptionBottomSheetFragment.TAG
             )
         }
 
@@ -244,7 +244,7 @@ class ArmoireActivity : BaseActivity() {
                 buyResponse.armoire["type"] ?: "",
                 buyResponse.armoire["dropKey"] ?: "",
                 buyResponse.armoire["dropText"] ?: "",
-                buyResponse.armoire["value"] ?: "",
+                buyResponse.armoire["value"] ?: ""
             )
             hasAnimatedChanges = false
             gold = null
@@ -287,7 +287,7 @@ class ArmoireActivity : BaseActivity() {
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
             },
-            500,
+            500
         )
 
         binding.iconView.startAnimation(Animations.bobbingAnimation())
@@ -319,13 +319,13 @@ class ArmoireActivity : BaseActivity() {
 
     private fun createParticles(
         container: FrameLayout,
-        resource: Int,
+        resource: Int
     ) {
         ParticleSystem(
             container,
             30,
             ContextCompat.getDrawable(this, resource),
-            6000,
+            6000
         )
             .setRotationSpeed(144f)
             .setScaleRange(1.0f, 1.6f)
@@ -338,7 +338,7 @@ class ArmoireActivity : BaseActivity() {
         type: String,
         key: String,
         text: String,
-        value: String? = "",
+        value: String? = ""
     ) {
         binding.titleView.text =
             text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }

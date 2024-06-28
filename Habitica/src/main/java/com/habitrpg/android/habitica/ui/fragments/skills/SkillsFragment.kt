@@ -44,7 +44,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRecyclerviewBinding {
         return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -52,7 +52,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         adapter = SkillsRecyclerViewAdapter()
         adapter?.onUseSkill = { onSkillSelected(it) }
@@ -64,7 +64,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.user.observe(viewLifecycleOwner) { user ->
@@ -118,7 +118,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     private fun displaySkillResult(
         usedSkill: Skill?,
-        response: SkillResponse,
+        response: SkillResponse
     ) {
         if (!isAdded) return
         adapter?.mana = response.user?.stats?.mp ?: 0.0
@@ -127,7 +127,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             showSnackbar(
                 activity.snackbarContainer,
                 context?.getString(R.string.used_skill_without_mana, usedSkill.text),
-                HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                HabiticaSnackbar.SnackbarDisplayType.BLUE
             )
         } else {
             context?.let {
@@ -138,7 +138,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
                     ContextCompat.getColor(it, R.color.blue_10),
                     "-" + usedSkill?.mana,
-                    HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                    HabiticaSnackbar.SnackbarDisplayType.BLUE
                 )
             }
         }
@@ -153,7 +153,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
                     ContextCompat.getColor(activity, R.color.green_10),
                     "+%.01f".format(response.damage),
-                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                 )
             }
         }
@@ -178,7 +178,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     private fun useSkill(
         skill: Skill?,
-        taskId: String? = null,
+        taskId: String? = null
     ) {
         if (skill == null) {
             return

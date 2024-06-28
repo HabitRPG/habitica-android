@@ -7,6 +7,6 @@ interface CustomizationLocalRepository : ContentLocalRepository {
     fun getCustomizations(
         type: String,
         category: String?,
-        onlyAvailable: Boolean,
+        onlyAvailable: Boolean
     ): Flow<List<Customization>>
 }

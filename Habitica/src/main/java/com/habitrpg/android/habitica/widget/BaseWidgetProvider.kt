@@ -39,28 +39,28 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetId: Int,
-        newOptions: Bundle,
+        newOptions: Bundle
     ) {
         this.context = context
         val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
 
         appWidgetManager.partiallyUpdateAppWidget(
             appWidgetId,
-            sizeRemoteViews(context, options, appWidgetId),
+            sizeRemoteViews(context, options, appWidgetId)
         )
 
         super.onAppWidgetOptionsChanged(
             context,
             appWidgetManager,
             appWidgetId,
-            newOptions,
+            newOptions
         )
     }
 
     fun sizeRemoteViews(
         context: Context?,
         options: Bundle,
-        widgetId: Int,
+        widgetId: Int
     ): RemoteViews {
         this.context = context
         val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
@@ -78,7 +78,7 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
 
     protected fun showToastForTaskDirection(
         context: Context,
-        data: TaskScoringResult?,
+        data: TaskScoringResult?
     ) {
         if (data != null) {
             val pair =
@@ -86,7 +86,7 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
                     data.experienceDelta,
                     data.healthDelta,
                     data.goldDelta,
-                    data.manaDelta,
+                    data.manaDelta
                 )
             val toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG)
             toast.show()
@@ -99,7 +99,7 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         remoteViews: RemoteViews,
         widgetId: Int,
         columns: Int,
-        rows: Int,
+        rows: Int
     ): RemoteViews
 
     override fun onEnabled(context: Context) {
@@ -110,13 +110,13 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
             "widgets",
             EventCategory.BEHAVIOUR,
             HitType.CREATE_WIDGET,
-            additionalData,
+            additionalData
         )
     }
 
     override fun onDeleted(
         context: Context,
-        appWidgetIds: IntArray,
+        appWidgetIds: IntArray
     ) {
         val additionalData = HashMap<String, Any>()
         additionalData["identifier"] = this.javaClass.simpleName
@@ -124,7 +124,7 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
             "widgets",
             EventCategory.BEHAVIOUR,
             HitType.REMOVE_WIDGET,
-            additionalData,
+            additionalData
         )
         super.onDeleted(context, appWidgetIds)
     }

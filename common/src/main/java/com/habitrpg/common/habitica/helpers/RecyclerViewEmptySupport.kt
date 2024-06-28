@@ -9,10 +9,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.EmptyItemBinding
 import com.habitrpg.common.habitica.databinding.FailedItemBinding
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
@@ -21,14 +21,14 @@ data class EmptyItem(
     var text: String? = null,
     var iconResource: Int? = null,
     var tintedIcon: Boolean = true,
-    var onButtonTap: (() -> Unit)? = null,
+    var onButtonTap: (() -> Unit)? = null
 )
 
 enum class RecyclerViewState {
     LOADING,
     EMPTY,
     DISPLAYING_DATA,
-    FAILED,
+    FAILED
 }
 
 class FailedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -54,9 +54,9 @@ class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             binding.emptyIconView.setColorFilter(
                 ContextCompat.getColor(
                     itemView.context,
-                    R.color.text_dimmed,
+                    R.color.text_dimmed
                 ),
-                android.graphics.PorterDuff.Mode.MULTIPLY,
+                android.graphics.PorterDuff.Mode.MULTIPLY
             )
         }
         emptyItem?.iconResource?.let { binding.emptyIconView.setImageResource(it) }
@@ -85,7 +85,7 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> {
@@ -114,7 +114,7 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         if (holder is EmptyViewHolder) {
             holder.bind(emptyItem)

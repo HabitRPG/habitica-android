@@ -74,7 +74,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
 
     override fun onMeasure(
         widthMeasureSpec: Int,
-        heightMeasureSpec: Int,
+        heightMeasureSpec: Int
     ) {
         this.viewWidth = MeasureSpec.getSize(widthMeasureSpec)
         this.setMeasuredDimension(viewWidth, viewHeight)
@@ -89,7 +89,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
         l: Int,
         t: Int,
         r: Int,
-        b: Int,
+        b: Int
     ) {
         super.onLayout(changed, l, t, r, b)
         updateStarLayoutParams()
@@ -102,7 +102,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     private fun generateStars(
         largeCount: Int,
         mediumCount: Int,
-        smallCount: Int,
+        smallCount: Int
     ) {
         removeStarViews()
         repeat((0 until largeCount).count()) { generateStar(2) }

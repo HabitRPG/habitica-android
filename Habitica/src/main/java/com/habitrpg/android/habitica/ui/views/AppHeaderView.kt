@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
@@ -80,8 +79,8 @@ fun UserLevelText(user: Avatar) {
                 user.stats?.lvl ?: 0,
                 getTranslatedClassName(
                     LocalContext.current.resources,
-                    user.stats?.habitClass,
-                ),
+                    user.stats?.habitClass
+                )
             )
         } else {
             stringResource(id = R.string.user_level, user.stats?.lvl ?: 0)
@@ -90,13 +89,13 @@ fun UserLevelText(user: Avatar) {
         text,
         fontSize = 12.sp,
         fontWeight = FontWeight.SemiBold,
-        color = colorResource(R.color.text_primary),
+        color = colorResource(R.color.text_primary)
     )
 }
 
 fun getTranslatedClassName(
     resources: Resources,
-    className: String?,
+    className: String?
 ): String {
     return when (className) {
         Stats.HEALER -> resources.getString(R.string.healer)
@@ -109,7 +108,7 @@ fun getTranslatedClassName(
 
 fun getTranslatedClassNamePlural(
     resources: Resources,
-    className: String?,
+    className: String?
 ): String {
     return when (className) {
         Stats.HEALER -> resources.getString(R.string.healers)
@@ -130,7 +129,7 @@ fun AppHeaderView(
     onAvatarClicked: (() -> Unit)? = null,
     onMemberRowClicked: () -> Unit,
     onClassSelectionClicked: () -> Unit,
-    configManager: AppConfigManager? = null,
+    configManager: AppConfigManager? = null
 ) {
     val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
     Column(modifier) {
@@ -143,7 +142,7 @@ fun AppHeaderView(
                     .padding(end = 16.dp)
                     .clickable {
                         onAvatarClicked?.invoke()
-                    },
+                    }
             )
             val animationValue =
                 animateFloatAsState(targetValue = if (teamPlan != null) 1f else 0f).value
@@ -151,8 +150,8 @@ fun AppHeaderView(
                 Column(
                     Modifier.padding(
                         bottom = (animationValue * 48f).dp,
-                        end = (animationValue * 80f).dp,
-                    ),
+                        end = (animationValue * 80f).dp
+                    )
                 ) {
                     LabeledBar(
                         icon = HabiticaIconsHelper.imageOfHeartLightBg(),
@@ -161,7 +160,7 @@ fun AppHeaderView(
                         value = user?.stats?.hp ?: 0.0,
                         maxValue = user?.stats?.maxHealth?.toDouble() ?: 0.0,
                         displayCompact = teamPlan != null,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f)
                     )
                     LabeledBar(
                         icon = HabiticaIconsHelper.imageOfExperience(),
@@ -172,7 +171,7 @@ fun AppHeaderView(
                         displayCompact = teamPlan != null,
                         abbreviateValue = false,
                         abbreviateMax = false,
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f)
                     )
                     if (user?.hasClass == true) {
                         LabeledBar(
@@ -185,11 +184,11 @@ fun AppHeaderView(
                             abbreviateValue = false,
                             abbreviateMax = false,
                             modifier =
-                                Modifier
-                                    .weight(1f)
-                                    .clickable {
-                                        MainNavigationController.navigate(R.id.skillsFragment)
-                                    },
+                            Modifier
+                                .weight(1f)
+                                .clickable {
+                                    MainNavigationController.navigate(R.id.skillsFragment)
+                                }
                         )
                     } else if ((user?.stats?.lvl ?: 0) < 10) {
                         LabeledBar(
@@ -200,7 +199,7 @@ fun AppHeaderView(
                             maxValue = 1.0,
                             displayCompact = teamPlan != null,
                             disabled = true,
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(1f)
                         )
                     } else if (user?.hasClass == false && isMyProfile && !isPlayerOptedOutOfClass) {
                         HabiticaButton(
@@ -211,11 +210,11 @@ fun AppHeaderView(
                             },
                             contentPadding = PaddingValues(0.dp),
                             fontSize = 14.sp,
-                            modifier = Modifier.height(28.dp),
+                            modifier = Modifier.height(28.dp)
                         ) {
                             Text(
                                 text = stringResource(R.string.choose_class),
-                                color = HabiticaTheme.colors.basicTextColor(),
+                                color = HabiticaTheme.colors.basicTextColor()
                             )
                         }
                     } else {
@@ -227,34 +226,34 @@ fun AppHeaderView(
                     visible = teamPlan != null,
                     enter = slideInHorizontally { animWidth } + fadeIn(),
                     exit = slideOutHorizontally { animWidth } + fadeOut(),
-                    modifier = Modifier.align(Alignment.TopEnd),
+                    modifier = Modifier.align(Alignment.TopEnd)
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier =
-                            Modifier
-                                .padding(start = 12.dp)
-                                .width(72.dp)
-                                .height(48.dp)
-                                .clip(MaterialTheme.shapes.medium)
-                                .background(
-                                    colorResource(R.color.window_background),
+                        Modifier
+                            .padding(start = 12.dp)
+                            .width(72.dp)
+                            .height(48.dp)
+                            .clip(MaterialTheme.shapes.medium)
+                            .background(
+                                colorResource(R.color.window_background)
+                            )
+                            .clickable {
+                                MainNavigationController.navigate(
+                                    R.id.guildFragment,
+                                    bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1)
                                 )
-                                .clickable {
-                                    MainNavigationController.navigate(
-                                        R.id.guildFragment,
-                                        bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1),
-                                    )
-                                },
+                            }
                     ) {
                         Image(
                             painterResource(R.drawable.icon_chat),
                             null,
                             colorFilter =
-                                ColorFilter.tint(
-                                    colorResource(R.color.text_ternary),
-                                ),
+                            ColorFilter.tint(
+                                colorResource(R.color.text_ternary)
+                            )
                         )
                     }
                 }
@@ -263,61 +262,61 @@ fun AppHeaderView(
                     visible = teamPlan != null,
                     enter = slideInVertically { animHeight } + fadeIn(),
                     exit = slideOutVertically { animHeight } + fadeOut(),
-                    modifier = Modifier.align(Alignment.BottomCenter),
+                    modifier = Modifier.align(Alignment.BottomCenter)
                 ) {
                     AnimatedContent(
                         targetState = teamPlanMembers?.filter { it.id != user?.id },
                         transitionSpec = {
                             ContentTransform(
                                 targetContentEnter =
-                                    fadeIn(
-                                        animationSpec =
-                                            tween(
-                                                200,
-                                                easing = FastOutSlowInEasing,
-                                            ),
-                                    ) + slideInVertically { height -> height },
-                                initialContentExit = fadeOut(animationSpec = tween(200)) + slideOutVertically { height -> -height },
+                                fadeIn(
+                                    animationSpec =
+                                    tween(
+                                        200,
+                                        easing = FastOutSlowInEasing
+                                    )
+                                ) + slideInVertically { height -> height },
+                                initialContentExit = fadeOut(animationSpec = tween(200)) + slideOutVertically { height -> -height }
                             )
-                        },
+                        }
                     ) { members ->
                         Row(
                             horizontalArrangement =
-                                Arrangement.spacedBy(
-                                    12.dp,
-                                    Alignment.CenterHorizontally,
-                                ),
+                            Arrangement.spacedBy(
+                                12.dp,
+                                Alignment.CenterHorizontally
+                            ),
                             verticalAlignment = Alignment.CenterVertically,
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(40.dp)
-                                    .width(72.dp)
-                                    .clip(MaterialTheme.shapes.medium)
-                                    .background(
-                                        colorResource(R.color.window_background),
-                                    )
-                                    .padding(start = 12.dp, end = 12.dp)
-                                    .clickable {
-                                        onMemberRowClicked()
-                                    },
+                            Modifier
+                                .fillMaxWidth()
+                                .height(40.dp)
+                                .width(72.dp)
+                                .clip(MaterialTheme.shapes.medium)
+                                .background(
+                                    colorResource(R.color.window_background)
+                                )
+                                .padding(start = 12.dp, end = 12.dp)
+                                .clickable {
+                                    onMemberRowClicked()
+                                }
                         ) {
                             for (member in members
                                 ?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }
                                 ?.take(6) ?: emptyList()) {
                                 Box(
                                     modifier =
-                                        Modifier
-                                            .clip(CircleShape)
-                                            .size(26.dp)
-                                            .padding(end = 6.dp, top = 4.dp),
+                                    Modifier
+                                        .clip(CircleShape)
+                                        .size(26.dp)
+                                        .padding(end = 6.dp, top = 4.dp)
                                 ) {
                                     ComposableAvatarView(
                                         avatar = member,
                                         configManager,
                                         Modifier
                                             .size(64.dp)
-                                            .requiredSize(64.dp),
+                                            .requiredSize(64.dp)
                                     )
                                 }
                             }
@@ -328,12 +327,12 @@ fun AppHeaderView(
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.defaultMinSize(minHeight = 28.dp),
+            modifier = Modifier.defaultMinSize(minHeight = 28.dp)
         ) {
             ClassIcon(
                 className = user?.stats?.habitClass,
                 hasClass = user?.hasClass ?: false,
-                modifier = Modifier.padding(4.dp),
+                modifier = Modifier.padding(4.dp)
             )
             user?.let { UserLevelText(it) }
             Spacer(Modifier.weight(1f))
@@ -343,12 +342,12 @@ fun AppHeaderView(
                         "hourglasses",
                         user.hourglassCount.toDouble(),
                         modifier =
-                            Modifier
-                                .padding(end = 12.dp)
-                                .clickable {
-                                    MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
-                                },
-                        decimals = 0,
+                        Modifier
+                            .padding(end = 12.dp)
+                            .clickable {
+                                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                            },
+                        decimals = 0
                     )
                 }
                 CurrencyText(
@@ -356,16 +355,16 @@ fun AppHeaderView(
                     user.stats?.gp ?: 0.0,
                     modifier = Modifier.padding(end = 12.dp),
                     decimals = 0,
-                    minForAbbreviation = 10000,
+                    minForAbbreviation = 10000
                 )
                 CurrencyText(
                     "gems",
                     user.gemCount.toDouble(),
                     modifier =
-                        Modifier.clickable {
-                            MainNavigationController.navigate(R.id.gemPurchaseActivity)
-                        },
-                    decimals = 0,
+                    Modifier.clickable {
+                        MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                    },
+                    decimals = 0
                 )
             }
         }
@@ -434,16 +433,16 @@ private class UserProvider : PreviewParameterProvider<Pair<User, TeamPlan?>> {
 @Composable
 @Preview
 private fun Preview(
-    @PreviewParameter(UserProvider::class) data: Pair<User, TeamPlan>,
+    @PreviewParameter(UserProvider::class) data: Pair<User, TeamPlan>
 ) {
     HabiticaTheme {
         AppHeaderView(
             data.first,
             teamPlan = data.second,
             modifier =
-                Modifier
-                    .background(HabiticaTheme.colors.contentBackground)
-                    .padding(8.dp),
+            Modifier
+                .background(HabiticaTheme.colors.contentBackground)
+                .padding(8.dp),
             onMemberRowClicked = { },
             onClassSelectionClicked = { }
         )

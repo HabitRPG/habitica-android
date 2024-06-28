@@ -23,7 +23,7 @@ import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter(
     private val layoutResource: Int,
-    val viewModel: TasksViewModel,
+    val viewModel: TasksViewModel
 ) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     private var unfilteredData: List<Task>? = null
     override var showAdventureGuide = false
@@ -63,7 +63,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         val binding =
             AdventureGuideMenuBannerBinding.inflate(parent.context.layoutInflater, parent, false)
@@ -72,7 +72,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         val item = getItem(position)
         if (item != null && holder is BaseTaskViewHolder) {
@@ -110,7 +110,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 
     private fun getContentView(
         parent: ViewGroup,
-        layoutResource: Int,
+        layoutResource: Int
     ): View =
         LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
@@ -137,7 +137,7 @@ class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
             BitmapDrawable(itemView.resources, HabiticaIconsHelper.imageOfGold()),
             null,
             null,
-            null,
+            null
         )
         itemView.findViewById<TextView>(R.id.gold_textview).compoundDrawablePadding =
             4.dpToPx(itemView.context)

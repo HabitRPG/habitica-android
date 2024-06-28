@@ -57,7 +57,7 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
                 binding.strengthSliderView.currentValue,
                 binding.intelligenceSliderView.currentValue,
                 binding.constitutionSliderView.currentValue,
-                binding.perceptionSliderView.currentValue,
+                binding.perceptionSliderView.currentValue
             )
             dismiss()
         }
@@ -129,7 +129,7 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
 
     private fun getSliderWithHigherValue(
         firstSlider: StatsSliderView?,
-        secondSlider: StatsSliderView?,
+        secondSlider: StatsSliderView?
     ): StatsSliderView? {
         return if ((firstSlider?.currentValue ?: 0) > (secondSlider?.currentValue ?: 0)) {
             firstSlider
@@ -147,8 +147,8 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
             binding.titleView.setBackgroundColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.disabled_background,
-                ),
+                    R.color.disabled_background
+                )
             )
         }
 

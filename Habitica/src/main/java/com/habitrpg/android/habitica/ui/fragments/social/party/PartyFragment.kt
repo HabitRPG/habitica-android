@@ -36,7 +36,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
@@ -44,7 +44,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -53,14 +53,14 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(
-            viewLifecycleOwner,
+            viewLifecycleOwner
         ) {
             updateGroupUI(it)
         }
@@ -107,7 +107,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         val group = viewModel.getGroupData().value

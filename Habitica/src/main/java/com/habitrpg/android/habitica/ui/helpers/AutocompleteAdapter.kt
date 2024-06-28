@@ -9,13 +9,13 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.ui.views.UsernameLabel
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.helpers.EmojiMap
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import java.util.Date
@@ -25,7 +25,7 @@ class AutocompleteAdapter(
     val socialRepository: SocialRepository? = null,
     var autocompleteContext: String? = null,
     var groupID: String? = null,
-    val remoteAutocomplete: Boolean = false,
+    val remoteAutocomplete: Boolean = false
 ) : BaseAdapter(), Filterable {
     var chatMessages: List<ChatMessage> = arrayListOf()
     private var userResults: List<FindUsernameResult> = arrayListOf()
@@ -88,7 +88,7 @@ class AutocompleteAdapter(
 
             override fun publishResults(
                 contraint: CharSequence?,
-                results: FilterResults?,
+                results: FilterResults?
             ) {
                 if (results != null && results.count > 0) {
                     notifyDataSetChanged()
@@ -102,7 +102,7 @@ class AutocompleteAdapter(
     override fun getView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup?,
+        parent: ViewGroup?
     ): View {
         return if (isAutocompletingUsers) {
             val view = parent?.inflate(R.layout.autocomplete_username)
@@ -127,7 +127,7 @@ class AutocompleteAdapter(
             userResults.getOrNull(position)
         } else {
             emojiResults.getOrNull(
-                position,
+                position
             )
         }
     }

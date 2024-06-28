@@ -16,7 +16,7 @@ class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
     companion object {
         fun show(
             context: FragmentActivity,
-            titleID: Int,
+            titleID: Int
         ): HabiticaProgressDialog {
             return show(context, context.getString(titleID))
         }
@@ -24,7 +24,7 @@ class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
         fun show(
             context: FragmentActivity,
             title: String?,
-            dialogWidth: Int = 300,
+            dialogWidth: Int = 300
         ): HabiticaProgressDialog {
             val dialog = HabiticaProgressDialog(context)
             val composeView = ComposeView(context)

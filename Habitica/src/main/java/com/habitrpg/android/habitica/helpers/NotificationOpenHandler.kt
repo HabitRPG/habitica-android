@@ -13,7 +13,7 @@ class NotificationOpenHandler {
     companion object {
         fun handleOpenedByNotification(
             identifier: String,
-            intent: Intent,
+            intent: Intent
         ) {
             MainScope().launch(context = Dispatchers.Main) {
                 when (identifier) {
@@ -22,13 +22,13 @@ class NotificationOpenHandler {
                     PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
                     PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY ->
                         openGuildDetailScreen(
-                            intent.getStringExtra("groupID"),
+                            intent.getStringExtra("groupID")
                         )
 
                     PushNotificationManager.RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY ->
                         openPrivateMessageScreen(
                             intent.getStringExtra("replyToUUID"),
-                            intent.getStringExtra("replyToUsername"),
+                            intent.getStringExtra("replyToUsername")
                         )
 
                     PushNotificationManager.CHANGE_USERNAME_PUSH_NOTIFICATION_KEY -> openSettingsScreen()
@@ -36,13 +36,13 @@ class NotificationOpenHandler {
                     PushNotificationManager.CHAT_MENTION_NOTIFICATION_KEY ->
                         handleChatMessage(
                             intent.getStringExtra("type"),
-                            intent.getStringExtra("groupID"),
+                            intent.getStringExtra("groupID")
                         )
 
                     PushNotificationManager.GROUP_ACTIVITY_NOTIFICATION_KEY ->
                         handleChatMessage(
                             intent.getStringExtra("type"),
-                            intent.getStringExtra("groupID"),
+                            intent.getStringExtra("groupID")
                         )
 
                     PushNotificationManager.G1G1_PROMO_KEY -> openGiftOneGetOneInfoScreen()
@@ -58,18 +58,18 @@ class NotificationOpenHandler {
         private fun openSubscriptionScreen() {
             MainNavigationController.navigate(
                 R.id.gemPurchaseActivity,
-                bundleOf(Pair("openSubscription", true)),
+                bundleOf(Pair("openSubscription", true))
             )
         }
 
         private fun openPrivateMessageScreen(
             userID: String?,
-            userName: String?,
+            userName: String?
         ) {
             if (userID != null && userName != null) {
                 MainNavigationController.navigate(
                     R.id.inboxMessageListFragment,
-                    bundleOf("userID" to userID, "username" to userName),
+                    bundleOf("userID" to userID, "username" to userName)
                 )
             } else {
                 MainNavigationController.navigate(R.id.inboxFragment)
@@ -80,7 +80,7 @@ class NotificationOpenHandler {
             val tabToOpen = if (isChatNotification) 1 else 0
             MainNavigationController.navigate(
                 R.id.partyFragment,
-                bundleOf("tabToOpen" to tabToOpen),
+                bundleOf("tabToOpen" to tabToOpen)
             )
         }
 
@@ -106,7 +106,7 @@ class NotificationOpenHandler {
 
         private fun handleChatMessage(
             type: String?,
-            groupID: String?,
+            groupID: String?
         ) {
             when (type) {
                 "party" -> openPartyScreen()

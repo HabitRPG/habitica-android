@@ -84,44 +84,44 @@ import kotlin.time.toDuration
 
 @HiltViewModel
 class PartySeekingViewModel
-    @Inject
-    constructor(
-        userRepository: UserRepository,
-        userViewModel: MainUserViewModel,
-        val socialRepository: SocialRepository,
-        val configManager: AppConfigManager,
-    ) : BaseViewModel(userRepository, userViewModel) {
-        val isRefreshing = mutableStateOf(false)
-        val seekingUsers: Flow<PagingData<Member>>
-        val inviteStates = mutableStateMapOf<String, Pair<Boolean, LoadingButtonState>>()
+@Inject
+constructor(
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val socialRepository: SocialRepository,
+    val configManager: AppConfigManager
+) : BaseViewModel(userRepository, userViewModel) {
+    val isRefreshing = mutableStateOf(false)
+    val seekingUsers: Flow<PagingData<Member>>
+    val inviteStates = mutableStateMapOf<String, Pair<Boolean, LoadingButtonState>>()
 
-        init {
-            seekingUsers =
-                Pager(
-                    config =
-                        PagingConfig(
-                            pageSize = 30,
-                            prefetchDistance = 10,
-                        ),
-                    pagingSourceFactory = {
-                        PartySeekingPagingSource(socialRepository)
-                    },
-                ).flow.cachedIn(viewModelScope)
-        }
-
-        suspend fun inviteUser(member: Member): InviteResponse? {
-            return socialRepository.inviteToGroup(
-                "party",
-                mapOf(
-                    "uuids" to listOf(member.id),
+    init {
+        seekingUsers =
+            Pager(
+                config =
+                PagingConfig(
+                    pageSize = 30,
+                    prefetchDistance = 10
                 ),
-            )?.firstOrNull()
-        }
-
-        suspend fun rescindInvite(member: Member): Member? {
-            return socialRepository.removeMemberFromGroup("party", member.id)?.firstOrNull()
-        }
+                pagingSourceFactory = {
+                    PartySeekingPagingSource(socialRepository)
+                }
+            ).flow.cachedIn(viewModelScope)
     }
+
+    suspend fun inviteUser(member: Member): InviteResponse? {
+        return socialRepository.inviteToGroup(
+            "party",
+            mapOf(
+                "uuids" to listOf(member.id)
+            )
+        )?.firstOrNull()
+    }
+
+    suspend fun rescindInvite(member: Member): Member? {
+        return socialRepository.removeMemberFromGroup("party", member.id)?.firstOrNull()
+    }
+}
 
 @AndroidEntryPoint
 class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
@@ -131,7 +131,7 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentComposeBinding {
         return FragmentComposeBinding.inflate(inflater)
     }
@@ -139,7 +139,7 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding?.composeView?.setContent {
@@ -162,14 +162,14 @@ fun InviteButton(
     state: LoadingButtonState,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isAlreadyInvited: Boolean = false,
+    isAlreadyInvited: Boolean = false
 ) {
     AnimatedContent(
         transitionSpec = {
             fadeIn(animationSpec = tween(220, delayMillis = 90)) togetherWith
                 fadeOut(animationSpec = tween(90))
         },
-        targetState = isAlreadyInvited,
+        targetState = isAlreadyInvited
     ) { isInvited ->
         if (isInvited) {
             LoadingButton(
@@ -177,14 +177,14 @@ fun InviteButton(
                 onClick = onClick,
                 type = LoadingButtonType.DESTRUCTIVE,
                 colors =
-                    ButtonDefaults.buttonColors(
-                        containerColor = HabiticaTheme.colors.errorBackground,
-                        contentColor = Color.White,
-                    ),
+                ButtonDefaults.buttonColors(
+                    containerColor = HabiticaTheme.colors.errorBackground,
+                    contentColor = Color.White
+                ),
                 modifier = modifier,
                 successContent = {
                     Text(stringResource(R.string.rescinded))
-                },
+                }
             ) {
                 Text(stringResource(R.string.rescind_invite))
             }
@@ -195,7 +195,7 @@ fun InviteButton(
                 modifier = modifier,
                 successContent = {
                     Text(stringResource(R.string.invited))
-                },
+                }
             ) {
                 Text(stringResource(R.string.send_invite))
             }
@@ -207,7 +207,7 @@ fun InviteButton(
 @Composable
 fun PartySeekingView(
     viewModel: PartySeekingViewModel,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val pageData = viewModel.seekingUsers.collectAsLazyPagingItems()
     val refreshing by viewModel.isRefreshing
@@ -237,14 +237,14 @@ fun PartySeekingView(
                     modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(top = 36.dp, bottom = 14.dp),
+                        .padding(top = 36.dp, bottom = 14.dp)
                 ) {
                     Text(
                         stringResource(R.string.find_more_members),
                         color = HabiticaTheme.colors.textPrimary,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(bottom = 4.dp),
+                        modifier = Modifier.padding(bottom = 4.dp)
                     )
                     if (pageData.itemCount == 0 && pageData.loadState.refresh is LoadState.NotLoading && pageData.loadState.append is LoadState.NotLoading) {
                         Text(
@@ -255,12 +255,12 @@ fun PartySeekingView(
                             modifier =
                             Modifier
                                 .width(320.dp)
-                                .align(alignment = Alignment.CenterHorizontally),
+                                .align(alignment = Alignment.CenterHorizontally)
                         )
                         Image(
                             painterResource(R.drawable.looking_for_party_empty),
                             null,
-                            modifier = Modifier.padding(top = 50.dp),
+                            modifier = Modifier.padding(top = 50.dp)
                         )
                     } else {
                         Text(
@@ -271,26 +271,26 @@ fun PartySeekingView(
                             modifier =
                             Modifier
                                 .width(320.dp)
-                                .align(alignment = Alignment.CenterHorizontally),
+                                .align(alignment = Alignment.CenterHorizontally)
                         )
                     }
                 }
             }
             items(
-                pageData.itemCount,
+                pageData.itemCount
             ) {
                 val item = pageData[it] ?: return@items
                 PartySeekingListItem(
                     user = item,
                     inviteState =
-                        viewModel.inviteStates[item.id]?.second
-                            ?: LoadingButtonState.CONTENT,
+                    viewModel.inviteStates[item.id]?.second
+                        ?: LoadingButtonState.CONTENT,
                     isInvited = viewModel.inviteStates[item.id]?.first ?: false,
                     configManager = viewModel.configManager,
                     modifier =
                     Modifier
                         .animateItemPlacement()
-                        .padding(horizontal = 14.dp),
+                        .padding(horizontal = 14.dp)
                 ) { member ->
                     scope.launchCatching({
                         viewModel.inviteStates[member.id] = Pair(false, LoadingButtonState.FAILED)
@@ -303,7 +303,7 @@ fun PartySeekingView(
                                 viewModel.rescindInvite(member)
                             } else {
                                 viewModel.inviteUser(
-                                    member,
+                                    member
                                 )
                             }
                         if (response != null) {
@@ -328,10 +328,10 @@ fun PartySeekingView(
                     item {
                         Column(
                             modifier =
-                                Modifier
-                                    .fillParentMaxSize(),
+                            Modifier
+                                .fillParentMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
+                            verticalArrangement = Arrangement.Center
                         ) {
                             HabiticaCircularProgressView()
                         }
@@ -352,7 +352,7 @@ fun PartySeekingView(
                             Modifier
                                 .fillMaxWidth()
                                 .padding(12.dp),
-                            contentAlignment = Alignment.Center,
+                            contentAlignment = Alignment.Center
                         ) {
                             HabiticaCircularProgressView(indicatorSize = 32.dp)
                         }
@@ -362,22 +362,23 @@ fun PartySeekingView(
                 else -> {}
             }
         }
-        PullToRefreshContainer(modifier = Modifier.align(Alignment.TopCenter),
+        PullToRefreshContainer(
+            modifier = Modifier.align(Alignment.TopCenter),
             state = pullRefreshState,
             indicator = {
                 HabiticaPullRefreshIndicator(
                     pageData.itemCount == 0,
                     refreshing,
                     it,
-                    Modifier.align(Alignment.TopCenter),
+                    Modifier.align(Alignment.TopCenter)
                 )
-            })
-
+            }
+        )
     }
 }
 
 class PartySeekingPagingSource(
-    private val repository: SocialRepository,
+    private val repository: SocialRepository
 ) : PagingSource<Int, Member>() {
     override fun getRefreshKey(state: PagingState<Int, Member>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -394,7 +395,7 @@ class PartySeekingPagingSource(
             LoadResult.Page(
                 data = response ?: emptyList(),
                 prevKey = if (page == 0) null else page.minus(1),
-                nextKey = if ((response?.size ?: 0) < 30) null else page.plus(1),
+                nextKey = if ((response?.size ?: 0) < 30) null else page.plus(1)
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

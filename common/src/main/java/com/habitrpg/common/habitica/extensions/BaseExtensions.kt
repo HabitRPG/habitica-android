@@ -13,7 +13,7 @@ import kotlin.time.toDuration
 fun runDelayed(
     interval: Long,
     timeUnit: DurationUnit,
-    function: () -> Unit,
+    function: () -> Unit
 ) {
     MainScope().launchCatching {
         delay(interval.toDuration(timeUnit))

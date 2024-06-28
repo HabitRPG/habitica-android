@@ -18,14 +18,14 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         // Get all ids
         val thisWidget =
             ComponentName(
                 context,
-                AddTaskWidgetProvider::class.java,
+                AddTaskWidgetProvider::class.java
             )
         val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -33,7 +33,7 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
             appWidgetManager.partiallyUpdateAppWidget(
                 widgetId,
-                sizeRemoteViews(context, options, widgetId),
+                sizeRemoteViews(context, options, widgetId)
             )
         }
     }
@@ -42,7 +42,7 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
         remoteViews: RemoteViews,
         widgetId: Int,
         columns: Int,
-        rows: Int,
+        rows: Int
     ): RemoteViews {
         val selectedTaskType = getSelectedTaskType(widgetId)
         var addText: String? = ""
@@ -78,8 +78,8 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
         return TaskType.from(
             preferences?.getString(
                 "add_task_widget_$widgetId",
-                TaskType.HABIT.value,
-            ),
+                TaskType.HABIT.value
+            )
         ) ?: TaskType.HABIT
     }
 }

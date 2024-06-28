@@ -41,7 +41,7 @@ class QuestCompletedDialogContent : LinearLayout {
         binding.titleTextView.setText(questContent.text.fromHtml(), TextView.BufferType.SPANNABLE)
         binding.notesTextView.setText(
             questContent.completion.fromHtml(),
-            TextView.BufferType.SPANNABLE,
+            TextView.BufferType.SPANNABLE
         )
         binding.imageView.loadImage("quest_" + questContent.key)
 
@@ -69,7 +69,7 @@ class QuestCompletedDialogContent : LinearLayout {
                     inflater?.inflate(
                         R.layout.row_quest_reward_imageview,
                         binding.rewardsList,
-                        false,
+                        false
                     ) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
@@ -85,7 +85,7 @@ class QuestCompletedDialogContent : LinearLayout {
                     inflater?.inflate(
                         R.layout.row_quest_reward_imageview,
                         binding.rewardsList,
-                        false,
+                        false
                     ) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
@@ -100,7 +100,7 @@ class QuestCompletedDialogContent : LinearLayout {
     private fun addRewardsRow(
         inflater: LayoutInflater?,
         item: QuestDropItem,
-        containerView: ViewGroup?,
+        containerView: ViewGroup?
     ) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
         val imageView = view?.findViewById(R.id.imageView) as? PixelArtView

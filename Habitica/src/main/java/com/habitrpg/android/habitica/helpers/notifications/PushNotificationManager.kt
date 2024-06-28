@@ -18,7 +18,7 @@ import java.io.IOException
 class PushNotificationManager(
     var apiClient: ApiClient,
     private val sharedPreferences: SharedPreferences,
-    private val context: Context,
+    private val context: Context
 ) {
     var refreshedToken: String = ""
         set(value) {
@@ -136,7 +136,7 @@ class PushNotificationManager(
         fun displayNotification(
             remoteMessage: RemoteMessage,
             context: Context,
-            pushNotificationManager: PushNotificationManager? = null,
+            pushNotificationManager: PushNotificationManager? = null
         ) {
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
 
@@ -148,7 +148,7 @@ class PushNotificationManager(
                         "receive notification",
                         EventCategory.BEHAVIOUR,
                         HitType.EVENT,
-                        additionalData,
+                        additionalData
                     )
                 }
 
@@ -156,7 +156,7 @@ class PushNotificationManager(
                 val localNotification =
                     notificationFactory.build(
                         remoteMessageIdentifier,
-                        context,
+                        context
                     )
                 localNotification.setExtras(remoteMessage.data)
                 val notification = remoteMessage.notification
@@ -164,13 +164,13 @@ class PushNotificationManager(
                     localNotification.notifyLocally(
                         notification.title ?: remoteMessage.data["title"],
                         notification.body ?: remoteMessage.data["body"],
-                        remoteMessage.data,
+                        remoteMessage.data
                     )
                 } else {
                     localNotification.notifyLocally(
                         remoteMessage.data["title"],
                         remoteMessage.data["body"],
-                        remoteMessage.data,
+                        remoteMessage.data
                     )
                 }
             }

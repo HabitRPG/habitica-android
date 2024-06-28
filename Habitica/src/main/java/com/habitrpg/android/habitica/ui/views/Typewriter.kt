@@ -50,7 +50,7 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
             hiddenSpan,
             0,
             stringBuilder?.length ?: 0,
-            Spannable.SPAN_INCLUSIVE_EXCLUSIVE,
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE
         )
         index = 0
 

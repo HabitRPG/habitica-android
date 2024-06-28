@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 class DailiesRecyclerViewHolder(layoutResource: Int, viewModel: TasksViewModel) : RealmBaseTasksRecyclerViewAdapter(layoutResource, viewModel) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             DailyViewHolder(
@@ -23,7 +23,7 @@ class DailiesRecyclerViewHolder(layoutResource: Int, viewModel: TasksViewModel) 
                         task ->
                     brokenTaskEvents?.invoke(task)
                 },
-                viewModel,
+                viewModel
             )
         } else {
             super.onCreateViewHolder(parent, viewType)

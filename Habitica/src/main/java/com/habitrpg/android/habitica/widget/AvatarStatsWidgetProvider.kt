@@ -41,7 +41,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                 context.applicationContext,
                 showBackground = true,
                 showMount = true,
-                showPet = true,
+                showPet = true
             )
 
         MainScope().launchCatching {
@@ -55,7 +55,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         if (!this::avatarView.isInitialized) {
@@ -64,7 +64,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                     context.applicationContext,
                     showBackground = true,
                     showMount = true,
-                    showPet = true,
+                    showPet = true
                 )
         }
         this.appWidgetManager = appWidgetManager
@@ -85,7 +85,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         remoteViews: RemoteViews,
         widgetId: Int,
         columns: Int,
-        rows: Int,
+        rows: Int
     ): RemoteViews {
         showAvatar[widgetId] = columns > 3
         if (showAvatar[widgetId] == true) {
@@ -130,11 +130,11 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
             remoteViews.setImageViewBitmap(
                 R.id.ic_hp_header,
-                HabiticaIconsHelper.imageOfHeartLightBg(),
+                HabiticaIconsHelper.imageOfHeartLightBg()
             )
             remoteViews.setImageViewBitmap(
                 R.id.ic_exp_header,
-                HabiticaIconsHelper.imageOfExperience(),
+                HabiticaIconsHelper.imageOfExperience()
             )
             remoteViews.setImageViewBitmap(R.id.ic_mp_header, HabiticaIconsHelper.imageOfMagic())
 
@@ -142,31 +142,31 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                 R.id.hp_bar,
                 stats.maxHealth ?: 0,
                 currentHealth.toInt(),
-                false,
+                false
             )
             remoteViews.setProgressBar(
                 R.id.exp_bar,
                 stats.toNextLevel ?: 0,
                 stats.exp?.toInt() ?: 0,
-                false,
+                false
             )
             remoteViews.setProgressBar(R.id.mp_bar, stats.maxMP ?: 0, stats.mp?.toInt() ?: 0, false)
             remoteViews.setViewVisibility(
                 R.id.mp_wrapper,
                 if (showManaBar[widgetId] != true || stats.habitClass == null || (
-                        stats.lvl
-                            ?: 0
+                    stats.lvl
+                        ?: 0
                     ) < 10 || user.preferences?.disableClasses == true
                 ) {
                     View.GONE
                 } else {
                     View.VISIBLE
-                },
+                }
             )
 
             remoteViews.setTextViewText(
                 R.id.gold_tv,
-                NumberAbbreviator.abbreviate(context, stats.gp ?: 0.0),
+                NumberAbbreviator.abbreviate(context, stats.gp ?: 0.0)
             )
             remoteViews.setTextViewText(R.id.gems_tv, (user.balance * 4).toInt().toString())
             val hourGlassCount = user.hourglassCount
@@ -176,7 +176,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             } else {
                 remoteViews.setImageViewBitmap(
                     R.id.hourglass_icon,
-                    HabiticaIconsHelper.imageOfHourglass(),
+                    HabiticaIconsHelper.imageOfHourglass()
                 )
                 remoteViews.setViewVisibility(R.id.hourglass_icon, View.VISIBLE)
                 remoteViews.setTextViewText(R.id.hourglasses_tv, hourGlassCount.toString())
@@ -186,7 +186,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             remoteViews.setImageViewBitmap(R.id.gold_icon, HabiticaIconsHelper.imageOfGold())
             remoteViews.setTextViewText(
                 R.id.lvl_tv,
-                context.getString(R.string.user_level, user.stats?.lvl ?: 0),
+                context.getString(R.string.user_level, user.stats?.lvl ?: 0)
             )
 
             if (showAvatar[widgetId] == true) {
@@ -203,7 +203,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                     context,
                     0,
                     openAppIntent,
-                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
                 )
             remoteViews.setOnClickPendingIntent(android.R.id.background, openApp)
 

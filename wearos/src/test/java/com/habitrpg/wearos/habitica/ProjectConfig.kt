@@ -32,7 +32,7 @@ object ProjectConfig : AbstractProjectConfig() {
                 override fun isMainThread(): Boolean {
                     return true
                 }
-            },
+            }
         )
     }
 

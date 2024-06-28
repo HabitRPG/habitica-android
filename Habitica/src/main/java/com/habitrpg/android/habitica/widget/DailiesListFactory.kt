@@ -11,13 +11,13 @@ class DailiesListFactory(
     context: Context,
     intent: Intent,
     taskRepository: TaskRepository,
-    userRepository: UserRepository,
+    userRepository: UserRepository
 ) : TaskListFactory(
-        context,
-        intent,
-        TaskType.DAILY,
-        R.layout.widget_dailies_list_row,
-        R.id.dailies_text,
-        taskRepository,
-        userRepository,
-    )
+    context,
+    intent,
+    TaskType.DAILY,
+    R.layout.widget_dailies_list_row,
+    R.id.dailies_text,
+    taskRepository,
+    userRepository
+)

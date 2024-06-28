@@ -10,7 +10,7 @@ fun Animal.getTranslatedType(c: Context?): String? {
 
 fun getTranslatedAnimalType(
     c: Context?,
-    type: String?,
+    type: String?
 ): String? {
     if (c == null) {
         return type

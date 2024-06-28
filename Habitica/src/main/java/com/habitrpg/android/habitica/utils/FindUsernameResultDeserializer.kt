@@ -14,7 +14,7 @@ class FindUsernameResultDeserializer : JsonDeserializer<FindUsernameResult> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): FindUsernameResult {
         val obj = json.asJsonObject
 
@@ -24,7 +24,7 @@ class FindUsernameResultDeserializer : JsonDeserializer<FindUsernameResult> {
             result.contributor =
                 context.deserialize<ContributorInfo>(
                     obj.get("contributor"),
-                    ContributorInfo::class.java,
+                    ContributorInfo::class.java
                 )
         }
         if (obj.has("auth")) {

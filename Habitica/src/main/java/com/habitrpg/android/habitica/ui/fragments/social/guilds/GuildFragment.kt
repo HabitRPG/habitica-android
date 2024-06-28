@@ -36,7 +36,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
@@ -44,7 +44,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -53,7 +53,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -103,7 +103,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         if (this.mainActivity != null) {
             if (viewModel.isMember) {
@@ -182,7 +182,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int,
+                    positionOffsetPixels: Int
                 ) {
                     if (position == 1) {
                         chatFragment?.setNavigatedToFragment()
@@ -194,7 +194,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         chatFragment?.setNavigatedToFragment()
                     }
                 }
-            },
+            }
         )
 
         tabLayout?.let {

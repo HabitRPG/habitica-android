@@ -9,10 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillListItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.loadImage
 import io.realm.RealmList
@@ -45,14 +45,14 @@ class SkillsRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): SkillViewHolder {
         return SkillViewHolder(parent.inflate(R.layout.skill_list_item))
     }
 
     override fun onBindViewHolder(
         holder: SkillViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bind(skillList[position])
     }
@@ -81,9 +81,9 @@ class SkillsRecyclerViewAdapter :
                     HabiticaIconsHelper.imageOfLocked(
                         ContextCompat.getColor(
                             context,
-                            R.color.text_dimmed,
-                        ),
-                    ),
+                            R.color.text_dimmed
+                        )
+                    )
                 )
         }
 
@@ -105,23 +105,23 @@ class SkillsRecyclerViewAdapter :
                     binding.priceLabel.setTextColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.brand_500,
-                        ),
+                            R.color.brand_500
+                        )
                     )
                 } else {
                     binding.priceLabel.setTextColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.color_accent,
-                        ),
+                            R.color.color_accent
+                        )
                     )
                 }
                 binding.buttonIconView.setImageDrawable(null)
                 binding.buttonWrapper.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.offset_background,
-                    ),
+                        R.color.offset_background
+                    )
                 )
                 binding.buttonIconView.alpha = 1.0f
                 binding.priceLabel.alpha = 1.0f
@@ -132,15 +132,15 @@ class SkillsRecyclerViewAdapter :
                     binding.priceLabel.setTextColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.blue_500,
-                        ),
+                            R.color.blue_500
+                        )
                     )
                 } else {
                     binding.priceLabel.setTextColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.blue_10,
-                        ),
+                            R.color.blue_10
+                        )
                     )
                 }
                 binding.buttonIconView.setImageDrawable(magicDrawable)
@@ -149,8 +149,8 @@ class SkillsRecyclerViewAdapter :
                     binding.buttonWrapper.setBackgroundColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.offset_background,
-                        ),
+                            R.color.offset_background
+                        )
                     )
                     binding.buttonIconView.alpha = 0.3f
                     binding.priceLabel.alpha = 0.3f
@@ -158,8 +158,8 @@ class SkillsRecyclerViewAdapter :
                     binding.buttonWrapper.setBackgroundColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.blue_500_24,
-                        ),
+                            R.color.blue_500_24
+                        )
                     )
                     binding.buttonIconView.alpha = 1.0f
                     binding.priceLabel.alpha = 1.0f
@@ -168,14 +168,14 @@ class SkillsRecyclerViewAdapter :
                     binding.buttonWrapper.setBackgroundColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.offset_background,
-                        ),
+                            R.color.offset_background
+                        )
                     )
                     binding.skillText.setTextColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.text_dimmed,
-                        ),
+                            R.color.text_dimmed
+                        )
                     )
                     binding.skillText.text = context.getString(R.string.skill_unlocks_at, skill.lvl)
                     binding.skillNotes.visibility = View.GONE

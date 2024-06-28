@@ -5,28 +5,28 @@ expect class PlatformLogger() {
 
     fun logDebug(
         tag: String,
-        message: String,
+        message: String
     )
 
     fun logInfo(
         tag: String,
-        message: String,
+        message: String
     )
 
     fun logWarning(
         tag: String,
-        message: String,
+        message: String
+    )
+
+    fun logError(
+        tag: String,
+        message: String
     )
 
     fun logError(
         tag: String,
         message: String,
-    )
-
-    fun logError(
-        tag: String,
-        message: String,
-        exception: Throwable,
+        exception: Throwable
     )
 }
 
@@ -34,7 +34,7 @@ enum class LogLevel {
     ERROR,
     INFO,
     WARNING,
-    DEBUG,
+    DEBUG
 }
 
 class HLogger {
@@ -47,7 +47,7 @@ class HLogger {
         fun log(
             level: LogLevel,
             tag: String,
-            message: String,
+            message: String
         ) {
             if (!enabled) return
             when (level) {
@@ -61,7 +61,7 @@ class HLogger {
         fun logException(
             tag: String,
             message: String,
-            exception: Throwable? = null,
+            exception: Throwable? = null
         ) {
             if (!enabled) return
             exception?.let {

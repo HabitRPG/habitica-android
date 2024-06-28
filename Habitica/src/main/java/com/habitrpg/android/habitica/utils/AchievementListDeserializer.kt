@@ -11,7 +11,7 @@ class AchievementListDeserializer : JsonDeserializer<List<Achievement?>> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?,
+        context: JsonDeserializationContext?
     ): List<Achievement?> {
         val achievements = mutableListOf<Achievement>()
         for (categoryEntry in json?.asJsonObject?.entrySet() ?: emptySet()) {

@@ -46,86 +46,86 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun BirthdayBanner(
     endDate: Date,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier
             .fillMaxWidth()
             .clickable {
                 MainNavigationController.navigate(R.id.birthdayActivity)
-            },
+            }
     ) {
         Column(Modifier.fillMaxWidth()) {
             Box(
                 contentAlignment = Alignment.CenterStart,
                 modifier =
-                    Modifier
-                        .height(67.dp)
-                        .fillMaxWidth()
-                        .background(colorResource(R.color.brand_100)),
+                Modifier
+                    .height(67.dp)
+                    .fillMaxWidth()
+                    .background(colorResource(R.color.brand_100))
             ) {
                 Row(
-                    Modifier.align(Alignment.CenterEnd),
+                    Modifier.align(Alignment.CenterEnd)
                 ) {
                     Image(
                         painterResource(R.drawable.birthday_menu_gems),
                         null,
                         modifier =
-                            Modifier
-                                .align(Alignment.Top)
-                                .offset((40).dp),
+                        Modifier
+                            .align(Alignment.Top)
+                            .offset((40).dp)
                     )
                     PixelArtView(
                         imageName = "stable_Pet-Gryphatrice-Jubilant",
                         Modifier
                             .requiredSize(104.dp)
                             .scale(-1f, 1f)
-                            .offset((-30).dp),
+                            .offset((-30).dp)
                     )
                 }
                 Column(
                     verticalArrangement =
-                        Arrangement.spacedBy(
-                            2.dp,
-                            Alignment.CenterVertically,
-                        ),
-                    modifier = Modifier.padding(start = 8.dp),
+                    Arrangement.spacedBy(
+                        2.dp,
+                        Alignment.CenterVertically
+                    ),
+                    modifier = Modifier.padding(start = 8.dp)
                 ) {
                     Image(
                         painterResource(R.drawable.birthday_menu_text),
-                        null,
+                        null
                     )
                     Text(
                         stringResource(R.string.exclusive_items_await),
                         color = colorResource(R.color.yellow_100),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(start = 2.dp),
+                        modifier = Modifier.padding(start = 2.dp)
                     )
                 }
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(33.dp)
-                        .background(colorResource(R.color.brand_300))
-                        .padding(horizontal = 10.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(33.dp)
+                    .background(colorResource(R.color.brand_300))
+                    .padding(horizontal = 10.dp)
             ) {
                 TimeRemainingText(
                     endDate,
                     R.string.ends_in_x,
                     color = colorResource(R.color.yellow_50),
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Bold
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
                     stringResource(R.string.see_more).uppercase(),
                     color = colorResource(R.color.white),
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
@@ -136,11 +136,11 @@ fun BirthdayBanner(
 private fun buildString(
     value: Int,
     endDate: Date,
-    formatString: Int,
+    formatString: Int
 ): String {
     return stringResource(
         formatString,
-        endDate.getShortRemainingString(),
+        endDate.getShortRemainingString()
     ).uppercase()
 }
 
@@ -150,7 +150,7 @@ fun TimeRemainingText(
     formatString: Int,
     color: Color,
     fontSize: TextUnit,
-    fontWeight: FontWeight,
+    fontWeight: FontWeight
 ) {
     var value by remember { mutableIntStateOf(0) }
     LaunchedEffect(value) {
@@ -168,6 +168,6 @@ fun TimeRemainingText(
         buildString(value = value, endDate = endDate, formatString = formatString),
         color = color,
         fontSize = fontSize,
-        fontWeight = fontWeight,
+        fontWeight = fontWeight
     )
 }

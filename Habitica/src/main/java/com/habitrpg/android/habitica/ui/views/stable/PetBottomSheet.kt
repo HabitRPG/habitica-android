@@ -88,7 +88,7 @@ private fun getFoodPainter(petColor: String): ImageBitmap {
             "White" -> R.drawable.feed_white
             "Zombie" -> R.drawable.feed_zombie
             else -> R.drawable.feed_base
-        },
+        }
     )
 }
 
@@ -102,7 +102,7 @@ fun PetBottomSheet(
     onEquip: ((String) -> Unit)?,
     onFeed: (suspend (Pet, Food?) -> FeedResponse?)?,
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val coroutineScope = rememberCoroutineScope()
@@ -118,33 +118,33 @@ fun PetBottomSheet(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(horizontal = 22.dp),
+        modifier = modifier.padding(horizontal = 22.dp)
     ) {
         Text(
             pet.text ?: "",
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
-            color = HabiticaTheme.colors.textTertiary,
+            color = HabiticaTheme.colors.textTertiary
         )
         Box(
             modifier =
-                Modifier
-                    .padding(top = 9.dp, bottom = 16.dp)
-                    .fillMaxWidth()
-                    .height(124.dp)
-                    .clip(HabiticaTheme.shapes.medium),
+            Modifier
+                .padding(top = 9.dp, bottom = 16.dp)
+                .fillMaxWidth()
+                .height(124.dp)
+                .clip(HabiticaTheme.shapes.medium)
         ) {
             BackgroundScene()
 
             this@Column.AnimatedVisibility(
                 visible = showFeedResponse,
                 modifier =
-                    Modifier
-                        .offset(y = 90.dp)
-                        .align(Alignment.TopCenter)
-                        .zIndex(4f),
+                Modifier
+                    .offset(y = 90.dp)
+                    .align(Alignment.TopCenter)
+                    .zIndex(4f),
                 enter = fadeIn(),
-                exit = fadeOut(),
+                exit = fadeOut()
             ) {
                 Text(
                     feedMessage,
@@ -152,31 +152,31 @@ fun PetBottomSheet(
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center,
                     modifier =
-                        Modifier
-                            .padding(horizontal = 8.dp)
-                            .background(
-                                HabiticaTheme.colors.windowBackground,
-                                HabiticaTheme.shapes.medium,
-                            )
-                            .padding(8.dp, 3.dp)
-                            .alpha(0.65f),
+                    Modifier
+                        .padding(horizontal = 8.dp)
+                        .background(
+                            HabiticaTheme.colors.windowBackground,
+                            HabiticaTheme.shapes.medium
+                        )
+                        .padding(8.dp, 3.dp)
+                        .alpha(0.65f)
                 )
             }
 
             this@Column.AnimatedVisibility(
                 visible = showFeedResponse,
                 modifier =
-                    Modifier
-                        .offset(y = 6.dp)
-                        .align(Alignment.TopCenter)
-                        .zIndex(4f),
+                Modifier
+                    .offset(y = 6.dp)
+                    .align(Alignment.TopCenter)
+                    .zIndex(4f),
                 enter = fadeIn() + scaleIn(),
-                exit = fadeOut(),
+                exit = fadeOut()
             ) {
                 val progressAnimation =
                     animateFloatAsState(
                         targetValue = feedValue / 50f,
-                        animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing),
+                        animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing)
                     )
                 val scale = (sin((progressAnimation.value - oldFeedValue) * 120) * 0.02f)
                 LinearProgressIndicator(
@@ -184,14 +184,14 @@ fun PetBottomSheet(
                     color = HabiticaTheme.colors.successColor,
                     strokeCap = StrokeCap.Round,
                     modifier =
-                        Modifier
-                            .width(200.dp)
-                            .scale(1.0f + scale)
-                            .background(
-                                HabiticaTheme.colors.windowBackground,
-                                HabiticaTheme.shapes.medium,
-                            )
-                            .padding(3.dp),
+                    Modifier
+                        .width(200.dp)
+                        .scale(1.0f + scale)
+                        .background(
+                            HabiticaTheme.colors.windowBackground,
+                            HabiticaTheme.shapes.medium
+                        )
+                        .padding(3.dp)
                 )
             }
 
@@ -204,77 +204,77 @@ fun PetBottomSheet(
                     initialValue = regularPosition,
                     targetValue = highJump,
                     animationSpec =
-                        infiniteRepeatable(
-                            animation =
-                                keyframes {
-                                    durationMillis = 800
-                                    regularPosition at 0 using FastOutSlowInEasing
-                                    lowJump at 50 using LinearOutSlowInEasing
-                                    regularPosition at 100 using LinearOutSlowInEasing
-                                    regularPosition at 300 using FastOutSlowInEasing
-                                    midJump at 400 using LinearOutSlowInEasing
-                                    regularPosition at 550 using LinearOutSlowInEasing
-                                    regularPosition at 800
-                                },
-                            RepeatMode.Restart,
-                            StartOffset(1500),
-                        ),
-                    label = "animalPosition",
+                    infiniteRepeatable(
+                        animation =
+                        keyframes {
+                            durationMillis = 800
+                            regularPosition at 0 using FastOutSlowInEasing
+                            lowJump at 50 using LinearOutSlowInEasing
+                            regularPosition at 100 using LinearOutSlowInEasing
+                            regularPosition at 300 using FastOutSlowInEasing
+                            midJump at 400 using LinearOutSlowInEasing
+                            regularPosition at 550 using LinearOutSlowInEasing
+                            regularPosition at 800
+                        },
+                        RepeatMode.Restart,
+                        StartOffset(1500)
+                    ),
+                    label = "animalPosition"
                 )
             } else if (isAnimalFlying(pet)) {
                 infiniteTransition.animateFloat(
                     initialValue = 24f,
                     targetValue = 16f,
                     animationSpec =
-                        infiniteRepeatable(
-                            tween(
-                                2500,
-                                easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f),
-                            ),
-                            RepeatMode.Reverse,
+                    infiniteRepeatable(
+                        tween(
+                            2500,
+                            easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f)
                         ),
-                    label = "animalPosition",
+                        RepeatMode.Reverse
+                    ),
+                    label = "animalPosition"
                 )
             } else {
                 infiniteTransition.animateFloat(
                     initialValue = regularPosition,
                     targetValue = highJump,
                     animationSpec =
-                        infiniteRepeatable(
-                            animation =
-                                keyframes {
-                                    durationMillis = 6000
-                                    regularPosition at 0 using LinearOutSlowInEasing
-                                    highJump at 150 using LinearOutSlowInEasing
-                                    regularPosition at 300 using FastOutSlowInEasing
-                                    regularPosition at 1800 using FastOutSlowInEasing
-                                    lowJump at 1850 using LinearOutSlowInEasing
-                                    regularPosition at 1900 using LinearOutSlowInEasing
-                                    regularPosition at 2100 using FastOutSlowInEasing
-                                    lowJump at 2200 using LinearOutSlowInEasing
-                                    regularPosition at 2350 using LinearOutSlowInEasing
-                                    regularPosition at 6000
-                                },
-                            RepeatMode.Restart,
-                            StartOffset(1500),
-                        ),
-                    label = "animalPosition",
+                    infiniteRepeatable(
+                        animation =
+                        keyframes {
+                            durationMillis = 6000
+                            regularPosition at 0 using LinearOutSlowInEasing
+                            highJump at 150 using LinearOutSlowInEasing
+                            regularPosition at 300 using FastOutSlowInEasing
+                            regularPosition at 1800 using FastOutSlowInEasing
+                            lowJump at 1850 using LinearOutSlowInEasing
+                            regularPosition at 1900 using LinearOutSlowInEasing
+                            regularPosition at 2100 using FastOutSlowInEasing
+                            lowJump at 2200 using LinearOutSlowInEasing
+                            regularPosition at 2350 using LinearOutSlowInEasing
+                            regularPosition at 6000
+                        },
+                        RepeatMode.Restart,
+                        StartOffset(1500)
+                    ),
+                    label = "animalPosition"
                 )
             }
             PixelArtView(
                 imageName = "stable_Pet-${pet.animal}-${pet.color}",
                 modifier =
-                    Modifier
-                        .offset(0.dp, position.dp)
-                        .size(68.dp)
-                        .align(Alignment.TopCenter)
-                        .zIndex(2f),
+                Modifier
+                    .offset(0.dp, position.dp)
+                    .size(68.dp)
+                    .align(Alignment.TopCenter)
+                    .zIndex(2f)
             )
         }
         if (canRaiseToMount) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(bottom = 16.dp),
+                modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 val context = LocalContext.current
                 HabiticaButton(
@@ -300,14 +300,14 @@ fun PetBottomSheet(
                         onDismiss()
                     },
                     modifier =
-                        Modifier
-                            .weight(1.0f)
-                            .heightIn(min = 101.dp),
+                    Modifier
+                        .weight(1.0f)
+                        .heightIn(min = 101.dp)
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         PixelArtView(
                             ImageBitmap.imageResource(R.drawable.feed_saddle),
-                            modifier = Modifier.size(64.dp, 50.dp),
+                            modifier = Modifier.size(64.dp, 50.dp)
                         )
                         Text(stringResource(id = R.string.use_saddle))
                     }
@@ -333,14 +333,14 @@ fun PetBottomSheet(
                         }
                     },
                     modifier =
-                        Modifier
-                            .weight(1.0f)
-                            .heightIn(min = 101.dp),
+                    Modifier
+                        .weight(1.0f)
+                        .heightIn(min = 101.dp)
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         PixelArtView(
                             getFoodPainter(pet.color),
-                            modifier = Modifier.size(64.dp, 50.dp),
+                            modifier = Modifier.size(64.dp, 50.dp)
                         )
                         Text(stringResource(id = R.string.feed))
                     }
@@ -359,12 +359,12 @@ fun PetBottomSheet(
                         SharePetUseCase.RequestValues(
                             pet.key,
                             "",
-                            context,
-                        ),
+                            context
+                        )
                     )
                 }
                 onDismiss()
-            },
+            }
         ) {
             Text(stringResource(id = R.string.share))
         }
@@ -375,7 +375,7 @@ fun PetBottomSheet(
             onClick = {
                 onEquip?.invoke(pet.key)
                 onDismiss()
-            },
+            }
         ) {
             if (isCurrentPet) {
                 Text(stringResource(id = R.string.unequip))
@@ -389,7 +389,7 @@ fun PetBottomSheet(
 fun isAnimalFlying(pet: Pet): Boolean {
     if (listOf(
             "FlyingPig",
-            "Bee",
+            "Bee"
         ).contains(pet.animal)
     ) {
         return true
@@ -399,6 +399,6 @@ fun isAnimalFlying(pet: Pet): Boolean {
         "Cupid",
         "Fairy",
         "SolarSystem",
-        "Vampire",
+        "Vampire"
     ).contains(pet.color)
 }

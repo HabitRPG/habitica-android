@@ -24,7 +24,7 @@ class SkillTasksRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): TaskViewHolder {
         val view =
             LayoutInflater.from(parent.context)
@@ -34,7 +34,7 @@ class SkillTasksRecyclerViewAdapter :
 
     override fun onBindViewHolder(
         holder: TaskViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bindHolder(data[position])
     }
@@ -62,8 +62,8 @@ class SkillTasksRecyclerViewAdapter :
             binding.rightBorderView.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    task.lightTaskColor,
-                ),
+                    task.lightTaskColor
+                )
             )
         }
 

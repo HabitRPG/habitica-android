@@ -56,7 +56,7 @@ class StarView : AppCompatImageView {
                     blinkIndex++
                     runBlink()
                 }
-            },
+            }
         )
         try {
             animator.start()

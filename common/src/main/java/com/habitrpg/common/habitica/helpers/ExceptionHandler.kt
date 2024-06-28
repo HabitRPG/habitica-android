@@ -44,12 +44,12 @@ class ExceptionHandler {
 fun CoroutineScope.launchCatching(
     errorHandler: ((Throwable) -> Unit)? = null,
     context: CoroutineContext = EmptyCoroutineContext,
-    function: suspend CoroutineScope.() -> Unit,
+    function: suspend CoroutineScope.() -> Unit
 ) {
     launch(
         ExceptionHandler.coroutine {
             errorHandler?.invoke(it)
         } + context,
-        block = function,
+        block = function
     )
 }

@@ -8,35 +8,35 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.inflate
 
 class HabiticaClassArrayAdapter(context: Context, resource: Int, objects: List<CharSequence>) :
     ArrayAdapter<CharSequence>(context, resource, R.id.textView, objects) {
     override fun getDropDownView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup?,
+        parent: ViewGroup?
     ): View =
         createView(
             position,
-            convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false),
+            convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false)
         )
 
     override fun getView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup,
+        parent: ViewGroup
     ): View =
         createView(
             position,
-            convertView ?: parent.inflate(R.layout.class_spinner_dropdown_item_selected, false),
+            convertView ?: parent.inflate(R.layout.class_spinner_dropdown_item_selected, false)
         )
 
     private fun createView(
         position: Int,
-        row: View?,
+        row: View?
     ): View {
         val textView: TextView? = row?.findViewById(R.id.textView)
         val imageView: ImageView? = row?.findViewById(R.id.classIconView)

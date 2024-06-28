@@ -78,8 +78,8 @@ class MaintenanceActivity : BaseActivity() {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    "https://play.google.com/store/apps/details?id=$appPackageName".toUri(),
-                ),
+                    "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
+                )
             )
         }
     }

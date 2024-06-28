@@ -51,7 +51,7 @@ import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 fun TaskDifficultySelector(
     selected: TaskDifficulty,
     onSelect: (TaskDifficulty) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier.fillMaxWidth()) {
         for (difficulty in TaskDifficulty.values())
@@ -59,13 +59,13 @@ fun TaskDifficultySelector(
                 value = difficulty,
                 selected = selected == difficulty,
                 icon =
-                    HabiticaIconsHelper.imageOfTaskDifficultyStars(
-                        colorResource(R.color.white).toArgb(),
-                        difficulty.value,
-                        true,
-                    ).asImageBitmap(),
+                HabiticaIconsHelper.imageOfTaskDifficultyStars(
+                    colorResource(R.color.white).toArgb(),
+                    difficulty.value,
+                    true
+                ).asImageBitmap(),
                 text = stringResource(difficulty.nameRes),
-                onSelect = onSelect,
+                onSelect = onSelect
             )
     }
 }
@@ -77,7 +77,7 @@ private fun TaskDifficultySelection(
     icon: ImageBitmap,
     text: String,
     onSelect: (TaskDifficulty) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val selectedState = updateTransition(selected)
     val context = LocalContext.current
@@ -92,39 +92,39 @@ private fun TaskDifficultySelection(
             } else {
                 Color(
                     context.getThemeColor(
-                        R.attr.textColorTintedSecondary,
-                    ),
+                        R.attr.textColorTintedSecondary
+                    )
                 )
             }
         }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
-        modifier = modifier,
+        modifier = modifier
     ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier =
-                Modifier
-                    .size(57.dp)
-                    .background(
-                        Color(
-                            LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset),
-                        ),
-                        MaterialTheme.shapes.medium,
-                    )
-                    .clip(MaterialTheme.shapes.medium)
-                    .clickable { onSelect(value) },
+            Modifier
+                .size(57.dp)
+                .background(
+                    Color(
+                        LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)
+                    ),
+                    MaterialTheme.shapes.medium
+                )
+                .clip(MaterialTheme.shapes.medium)
+                .clickable { onSelect(value) }
         ) {
             this@Column.AnimatedVisibility(
                 selected,
                 enter = scaleIn(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
-                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
+                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium))
             ) {
                 Box(
                     Modifier
                         .size(57.dp)
-                        .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium),
+                        .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
                 )
             }
             Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
@@ -133,7 +133,7 @@ private fun TaskDifficultySelection(
             text,
             fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
             fontSize = 14.sp,
-            color = textColor.value,
+            color = textColor.value
         )
     }
 }
@@ -145,7 +145,7 @@ private class DifficultyProvider : PreviewParameterProvider<TaskDifficulty> {
 @Preview
 @Composable
 private fun TaskDifficultySelectorPreview(
-    @PreviewParameter(DifficultyProvider::class) difficulty: TaskDifficulty,
+    @PreviewParameter(DifficultyProvider::class) difficulty: TaskDifficulty
 ) {
     val selected = remember { mutableStateOf(difficulty) }
     TaskDifficultySelector(selected.value, { selected.value = it }, Modifier.width(300.dp))

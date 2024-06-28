@@ -51,7 +51,7 @@ class HabiticaAccountDialog(private var thisContext: Context) :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         viewBinding = DialogHabiticaAccountBinding.inflate(layoutInflater)
         return binding.root
@@ -59,7 +59,7 @@ class HabiticaAccountDialog(private var thisContext: Context) :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -89,7 +89,7 @@ class HabiticaAccountDialog(private var thisContext: Context) :
         val lp =
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
             )
         input.layoutParams = lp
         val alertDialog = HabiticaAlertDialog(requireContext())
@@ -142,13 +142,13 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                     p0: CharSequence?,
                     p1: Int,
                     p2: Int,
-                    p3: Int,
+                    p3: Int
                 ) {
                     binding.confirmActionTextview.setTextColor(
                         ContextCompat.getColor(
                             thisContext,
-                            R.color.gray_300,
-                        ),
+                            R.color.gray_300
+                        )
                     )
                     binding.confirmActionTextview.alpha = .4f
                 }
@@ -157,13 +157,13 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                     p0: CharSequence?,
                     p1: Int,
                     p2: Int,
-                    p3: Int,
+                    p3: Int
                 ) {
                     if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
                         if ((
-                                user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
-                                    context?.getString(
-                                        R.string.reset_caps,
+                            user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
+                                context?.getString(
+                                        R.string.reset_caps
                                     )
                             ) ||
                             user?.authentication?.hasPassword == true
@@ -171,8 +171,8 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                             binding.confirmActionTextview.setTextColor(
                                 ContextCompat.getColor(
                                     thisContext,
-                                    R.color.red_100,
-                                ),
+                                    R.color.red_100
+                                )
                             )
                             binding.confirmActionTextview.alpha = 1.0f
                         }
@@ -180,8 +180,8 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                         binding.confirmActionTextview.setTextColor(
                             ContextCompat.getColor(
                                 thisContext,
-                                R.color.gray_300,
-                            ),
+                                R.color.gray_300
+                            )
                         )
                         binding.confirmActionTextview.alpha = .4f
                     }
@@ -189,7 +189,7 @@ class HabiticaAccountDialog(private var thisContext: Context) :
 
                 override fun afterTextChanged(p0: Editable?) {
                 }
-            },
+            }
         )
 
         binding.confirmActionTextview.setOnClickListener {
@@ -226,13 +226,13 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                     p0: CharSequence?,
                     p1: Int,
                     p2: Int,
-                    p3: Int,
+                    p3: Int
                 ) {
                     binding.confirmActionTextview.setTextColor(
                         ContextCompat.getColor(
                             thisContext,
-                            R.color.gray_300,
-                        ),
+                            R.color.gray_300
+                        )
                     )
                     binding.confirmActionTextview.alpha = .4f
                 }
@@ -241,13 +241,13 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                     p0: CharSequence?,
                     p1: Int,
                     p2: Int,
-                    p3: Int,
+                    p3: Int
                 ) {
                     if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
                         if ((
-                                user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
-                                    context?.getString(
-                                        R.string.delete_caps,
+                            user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
+                                context?.getString(
+                                        R.string.delete_caps
                                     )
                             ) ||
                             user?.authentication?.hasPassword == true
@@ -255,8 +255,8 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                             binding.confirmActionTextview.setTextColor(
                                 ContextCompat.getColor(
                                     thisContext,
-                                    R.color.red_100,
-                                ),
+                                    R.color.red_100
+                                )
                             )
                             binding.confirmActionTextview.alpha = 1.0f
                         }
@@ -264,8 +264,8 @@ class HabiticaAccountDialog(private var thisContext: Context) :
                         binding.confirmActionTextview.setTextColor(
                             ContextCompat.getColor(
                                 thisContext,
-                                R.color.gray_300,
-                            ),
+                                R.color.gray_300
+                            )
                         )
                         binding.confirmActionTextview.alpha = .4f
                     }
@@ -273,7 +273,7 @@ class HabiticaAccountDialog(private var thisContext: Context) :
 
                 override fun afterTextChanged(p0: Editable?) {
                 }
-            },
+            }
         )
         binding.confirmActionTextview.setOnClickListener {
             val confirmationString = binding.confirmationInputEdittext.text.toString()

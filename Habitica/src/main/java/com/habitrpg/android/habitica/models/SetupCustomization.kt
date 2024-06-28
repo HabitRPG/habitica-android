@@ -13,7 +13,7 @@ class SetupCustomization {
         fun createSize(
             key: String,
             drawableId: Int,
-            text: String,
+            text: String
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -27,7 +27,7 @@ class SetupCustomization {
 
         fun createShirt(
             key: String,
-            drawableId: Int,
+            drawableId: Int
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -40,7 +40,7 @@ class SetupCustomization {
 
         fun createSkin(
             key: String,
-            colorId: Int?,
+            colorId: Int?
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -52,7 +52,7 @@ class SetupCustomization {
 
         fun createHairColor(
             key: String,
-            colorId: Int?,
+            colorId: Int?
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -65,7 +65,7 @@ class SetupCustomization {
 
         fun createHairBangs(
             key: String,
-            drawableId: Int?,
+            drawableId: Int?
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -78,7 +78,7 @@ class SetupCustomization {
 
         fun createHairPonytail(
             key: String,
-            drawableId: Int?,
+            drawableId: Int?
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -91,7 +91,7 @@ class SetupCustomization {
 
         fun createGlasses(
             key: String,
-            drawableId: Int?,
+            drawableId: Int?
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -104,7 +104,7 @@ class SetupCustomization {
 
         fun createFlower(
             key: String,
-            drawableId: Int?,
+            drawableId: Int?
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
@@ -117,7 +117,7 @@ class SetupCustomization {
 
         fun createWheelchair(
             key: String,
-            drawableId: Int?,
+            drawableId: Int?
         ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key

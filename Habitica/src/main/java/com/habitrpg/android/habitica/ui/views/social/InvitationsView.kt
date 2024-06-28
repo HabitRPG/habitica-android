@@ -19,60 +19,60 @@ import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.launch
 
 class InvitationsView
-    @JvmOverloads
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0,
-    ) : LinearLayout(context, attrs, defStyleAttr) {
-        var acceptCall: ((String) -> Unit)? = null
-        var rejectCall: ((String) -> Unit)? = null
-        var getLeader: (suspend (String) -> Member?)? = null
+@JvmOverloads
+constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
+    var acceptCall: ((String) -> Unit)? = null
+    var rejectCall: ((String) -> Unit)? = null
+    var getLeader: (suspend (String) -> Member?)? = null
 
-        init {
-            orientation = VERTICAL
-        }
+    init {
+        orientation = VERTICAL
+    }
 
-        fun setInvitations(invitations: List<GenericInvitation>) {
-            removeAllViews()
-            for (invitation in invitations) {
-                val leaderID = invitation.inviter
-                val binding = ViewInvitationBinding.inflate(context.layoutInflater, this, true)
-                binding.groupleaderTextView.movementMethod = LinkMovementMethod.getInstance()
+    fun setInvitations(invitations: List<GenericInvitation>) {
+        removeAllViews()
+        for (invitation in invitations) {
+            val leaderID = invitation.inviter
+            val binding = ViewInvitationBinding.inflate(context.layoutInflater, this, true)
+            binding.groupleaderTextView.movementMethod = LinkMovementMethod.getInstance()
 
-                findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
-                    leaderID?.let {
-                        val leader = getLeader?.invoke(it) ?: return@launch
-                        binding.groupleaderAvatarView.setAvatar(leader)
-                        binding.groupleaderTextView.setMarkdown(
-                            context.getString(
-                                R.string.invitation_title,
-                                "[${leader.formattedUsername}](https://habitica.com/profile/$leaderID)",
-                                invitation.name,
-                            ),
+            findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
+                leaderID?.let {
+                    val leader = getLeader?.invoke(it) ?: return@launch
+                    binding.groupleaderAvatarView.setAvatar(leader)
+                    binding.groupleaderTextView.setMarkdown(
+                        context.getString(
+                            R.string.invitation_title,
+                            "[${leader.formattedUsername}](https://habitica.com/profile/$leaderID)",
+                            invitation.name
                         )
-                    }
+                    )
                 }
+            }
 
-                binding.root.setOnClickListener {
-                    leaderID?.let { id ->
-                        it.flash()
-                        HapticFeedbackManager.tap(it)
-                        val profileDirections = MainNavDirections.openProfileActivity(id)
-                        MainNavigationController.navigate(profileDirections)
-                    }
+            binding.root.setOnClickListener {
+                leaderID?.let { id ->
+                    it.flash()
+                    HapticFeedbackManager.tap(it)
+                    val profileDirections = MainNavDirections.openProfileActivity(id)
+                    MainNavigationController.navigate(profileDirections)
                 }
+            }
 
-                binding.acceptButton.setOnClickListener {
-                    binding.root.flash()
-                    HapticFeedbackManager.tap(it)
-                    invitation.id?.let { it1 -> acceptCall?.invoke(it1) }
-                }
-                binding.rejectButton.setOnClickListener {
-                    binding.root.flash()
-                    HapticFeedbackManager.tap(it)
-                    invitation.id?.let { it1 -> rejectCall?.invoke(it1) }
-                }
+            binding.acceptButton.setOnClickListener {
+                binding.root.flash()
+                HapticFeedbackManager.tap(it)
+                invitation.id?.let { it1 -> acceptCall?.invoke(it1) }
+            }
+            binding.rejectButton.setOnClickListener {
+                binding.root.flash()
+                HapticFeedbackManager.tap(it)
+                invitation.id?.let { it1 -> rejectCall?.invoke(it1) }
             }
         }
     }
+}

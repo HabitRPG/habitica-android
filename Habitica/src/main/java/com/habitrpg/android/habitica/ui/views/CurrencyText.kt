@@ -26,7 +26,7 @@ fun CurrencyText(
     fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
-    animated: Boolean = true,
+    animated: Boolean = true
 ) {
     CurrencyText(
         currency = currency,
@@ -35,7 +35,7 @@ fun CurrencyText(
         fontSize,
         decimals,
         minForAbbreviation,
-        animated,
+        animated
     )
 }
 
@@ -47,13 +47,13 @@ fun CurrencyText(
     fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
-    animated: Boolean = true,
+    animated: Boolean = true
 ) {
     val animatedValue =
         if (animated) {
             animateFloatAsState(
                 targetValue = value.toFloat(),
-                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
+                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
             ).value
         } else {
             value.toFloat()
@@ -68,14 +68,14 @@ fun CurrencyText(
         Text(
             NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbreviation),
             color =
-                when (currency) {
-                    "gold" -> colorResource(R.color.text_gold)
-                    "gems" -> colorResource(R.color.text_green)
-                    "hourglasses" -> colorResource(R.color.text_brand)
-                    else -> colorResource(R.color.text_primary)
-                },
+            when (currency) {
+                "gold" -> colorResource(R.color.text_gold)
+                "gems" -> colorResource(R.color.text_green)
+                "hourglasses" -> colorResource(R.color.text_brand)
+                else -> colorResource(R.color.text_primary)
+            },
             fontSize = fontSize,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.SemiBold
         )
     }
 }

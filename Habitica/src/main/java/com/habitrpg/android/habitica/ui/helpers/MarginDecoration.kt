@@ -15,7 +15,7 @@ class MarginDecoration(context: Context?, private var noMarginViewTypes: Set<Int
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State,
+        state: RecyclerView.State
     ) {
         val position = parent.getChildAdapterPosition(view)
         val viewType: Int? = parent.adapter?.getItemViewType(position)

@@ -44,7 +44,7 @@ fun AssignedView(
     onUndoClick: (String) -> Unit,
     configManager: AppConfigManager,
     modifier: Modifier = Modifier,
-    showEditButton: Boolean = false,
+    showEditButton: Boolean = false
 ) {
     Column(modifier.fillMaxWidth()) {
         val rowModifier =
@@ -52,7 +52,7 @@ fun AssignedView(
                 .padding(vertical = 4.dp)
                 .background(
                     backgroundColor,
-                    MaterialTheme.shapes.medium,
+                    MaterialTheme.shapes.medium
                 )
                 .heightIn(min = 66.dp)
                 .padding(start = 16.dp)
@@ -64,9 +64,9 @@ fun AssignedView(
                 avatar = assignable.avatar,
                 modifier = rowModifier,
                 mainContentModifier =
-                    Modifier
-                        .padding(vertical = 12.dp)
-                        .heightIn(min = 24.dp),
+                Modifier
+                    .padding(vertical = 12.dp)
+                    .heightIn(min = 24.dp),
                 color = color,
                 extraContent = {
                     completedAt[assignable.id]?.let { CompletedAt(completedAt = it) }
@@ -78,39 +78,39 @@ fun AssignedView(
                             UndoTaskCompletion(
                                 Modifier.clickable {
                                     assignable.id?.let { it1 -> onUndoClick(it1) }
-                                },
+                                }
                             )
                         }
                     }
-                },
+                }
             )
         }
         if (showEditButton) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier =
-                    Modifier
-                        .clickable {
-                            onEditClick()
-                        }
-                        .padding(vertical = 4.dp)
-                        .background(
-                            backgroundColor,
-                            MaterialTheme.shapes.medium,
-                        )
-                        .padding(15.dp, 12.dp)
-                        .heightIn(min = 24.dp)
-                        .fillMaxWidth(),
+                Modifier
+                    .clickable {
+                        onEditClick()
+                    }
+                    .padding(vertical = 4.dp)
+                    .background(
+                        backgroundColor,
+                        MaterialTheme.shapes.medium
+                    )
+                    .padding(15.dp, 12.dp)
+                    .heightIn(min = 24.dp)
+                    .fillMaxWidth()
             ) {
                 Image(
                     painterResource(R.drawable.edit),
                     null,
-                    colorFilter = ColorFilter.tint(color),
+                    colorFilter = ColorFilter.tint(color)
                 )
                 Text(
                     stringResource(R.string.edit_assignees),
                     color = color,
-                    modifier = Modifier.padding(start = 4.dp),
+                    modifier = Modifier.padding(start = 4.dp)
                 )
             }
         }
@@ -123,25 +123,25 @@ fun UndoTaskCompletion(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier =
-            modifier
-                .width(51.dp)
-                .heightIn(min = 66.dp)
-                .fillMaxHeight()
-                .background(HabiticaTheme.colors.contentBackgroundOffset),
+        modifier
+            .width(51.dp)
+            .heightIn(min = 66.dp)
+            .fillMaxHeight()
+            .background(HabiticaTheme.colors.contentBackgroundOffset)
     ) {
         Image(
             painterResource(R.drawable.checkmark),
             null,
             contentScale = ContentScale.None,
             modifier =
-                Modifier
-                    .size(24.dp)
-                    .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.small),
+            Modifier
+                .size(24.dp)
+                .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.small)
         )
         Text(
             stringResource(R.string.undo),
             fontSize = 12.sp,
-            color = HabiticaTheme.colors.textSecondary,
+            color = HabiticaTheme.colors.textSecondary
         )
     }
 }

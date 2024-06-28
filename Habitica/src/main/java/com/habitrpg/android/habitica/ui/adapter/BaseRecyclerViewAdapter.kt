@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.models.BaseMainObject
 
 open class DiffCallback<T : BaseMainObject>(
     protected val oldList: List<BaseMainObject>,
-    protected val newList: List<BaseMainObject>,
+    protected val newList: List<BaseMainObject>
 ) :
     DiffUtil.Callback() {
     override fun getOldListSize(): Int {
@@ -19,14 +19,14 @@ open class DiffCallback<T : BaseMainObject>(
 
     override fun areItemsTheSame(
         oldItemPosition: Int,
-        newItemPosition: Int,
+        newItemPosition: Int
     ): Boolean {
         return oldList[oldItemPosition].primaryIdentifier == newList[newItemPosition].primaryIdentifier
     }
 
     override fun areContentsTheSame(
         oldItemPosition: Int,
-        newItemPosition: Int,
+        newItemPosition: Int
     ): Boolean {
         val oldItem = oldList[oldItemPosition]
         val newItem = newList[newItemPosition]
@@ -38,7 +38,7 @@ abstract class BaseRecyclerViewAdapter<T : BaseMainObject, VH : RecyclerView.Vie
     RecyclerView.Adapter<VH>() {
     open fun getDiffCallback(
         oldList: List<T>,
-        newList: List<T>,
+        newList: List<T>
     ): DiffCallback<T>? {
         return null
     }

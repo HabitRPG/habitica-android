@@ -13,7 +13,7 @@ class QuestCollectDeserializer : JsonDeserializer<RealmList<QuestCollect>> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): RealmList<QuestCollect> {
         val items = RealmList<QuestCollect>()
 

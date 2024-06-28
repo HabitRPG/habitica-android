@@ -23,12 +23,12 @@ val completedTimeFormat: DateFormat =
 
 @Composable
 fun CompletedAt(
-    completedAt: Date?,
+    completedAt: Date?
 ) {
     val completedToday = completedAt?.time?.let { DateUtils.isToday(it) } ?: false
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(top = 4.dp),
+        modifier = Modifier.padding(top = 4.dp)
     ) {
         Image(painterResource(R.drawable.completed), null)
         Text(
@@ -39,15 +39,15 @@ fun CompletedAt(
                         completedTimeFormatToday.format(it)
                     } else {
                         completedTimeFormat.format(
-                            it,
+                            it
                         )
                     }
                 }
-                    ?: "",
+                    ?: ""
             ),
             fontSize = 14.sp,
             color = if (completedToday) colorResource(R.color.green_10) else colorResource(R.color.text_secondary),
-            modifier = Modifier.padding(start = 4.dp),
+            modifier = Modifier.padding(start = 4.dp)
         )
     }
 }

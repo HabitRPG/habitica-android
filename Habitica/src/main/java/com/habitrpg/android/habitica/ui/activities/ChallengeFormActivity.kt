@@ -155,8 +155,8 @@ class ChallengeFormActivity : BaseActivity() {
                         delay(500L)
                         MainNavigationController.navigate(
                             ChallengesOverviewFragmentDirections.openChallengeDetail(
-                                challengeId ?: "",
-                            ),
+                                challengeId ?: ""
+                            )
                         )
                     }
                 }
@@ -232,7 +232,7 @@ class ChallengeFormActivity : BaseActivity() {
             this,
             "",
             openTaskDisabled = false,
-            taskActionsDisabled = true,
+            taskActionsDisabled = true
         ).also { challengeTasks = it }
 
         challengeTasks.onTaskOpen = {
@@ -376,7 +376,7 @@ class ChallengeFormActivity : BaseActivity() {
                     adapterView: AdapterView<*>,
                     view: View?,
                     i: Int,
-                    l: Long,
+                    l: Long
                 ) {
                     checkPrizeAndMinimumForTavern()
                 }
@@ -410,12 +410,12 @@ class ChallengeFormActivity : BaseActivity() {
                 androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
                 override fun onInterceptTouchEvent(
                     rv: androidx.recyclerview.widget.RecyclerView,
-                    e: MotionEvent,
+                    e: MotionEvent
                 ): Boolean {
                     // Stop only scrolling.
                     return rv.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
                 }
-            },
+            }
         )
         binding.createChallengeTaskList.adapter = challengeTasks
         binding.createChallengeTaskList.layoutManager =
@@ -457,7 +457,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun openNewTaskActivity(
         type: TaskType?,
-        task: Task?,
+        task: Task?
     ) {
         val bundle = Bundle()
 
@@ -513,13 +513,13 @@ class ChallengeFormActivity : BaseActivity() {
             taskList,
             ArrayList(addedTasks.values),
             ArrayList(updatedTasks.values),
-            ArrayList(removedTasks.keys),
+            ArrayList(removedTasks.keys)
         )
     }
 
     private fun addOrUpdateTaskInList(
         task: Task,
-        isExistingTask: Boolean = false,
+        isExistingTask: Boolean = false
     ) {
         if (!challengeTasks.replaceTask(task)) {
             val taskAbove =
@@ -557,7 +557,7 @@ class ChallengeFormActivity : BaseActivity() {
         override fun getView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup,
+            parent: ViewGroup
         ): View {
             val checkedTextView = super.getView(position, convertView, parent) as? TextView
             checkedTextView?.text = getItem(position)?.name
@@ -567,7 +567,7 @@ class ChallengeFormActivity : BaseActivity() {
         override fun getDropDownView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup,
+            parent: ViewGroup
         ): View {
             val checkedTextView =
                 super.getDropDownView(position, convertView, parent) as? AppCompatCheckedTextView

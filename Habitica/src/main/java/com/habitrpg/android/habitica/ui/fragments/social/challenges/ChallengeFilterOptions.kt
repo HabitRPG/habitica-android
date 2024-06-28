@@ -5,5 +5,5 @@ import com.habitrpg.android.habitica.models.social.Group
 data class ChallengeFilterOptions(
     var showByGroups: List<Group>,
     var showOwned: Boolean = false,
-    var notOwned: Boolean = false,
+    var notOwned: Boolean = false
 )

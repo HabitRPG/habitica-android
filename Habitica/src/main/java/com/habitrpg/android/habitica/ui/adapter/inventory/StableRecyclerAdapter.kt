@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -23,6 +22,7 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmen
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.views.PixelArtView
@@ -88,7 +88,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 (
                     ownedItems["Saddle-food"]?.numberOwned
                         ?: 0
-                ) > 0
+                    ) > 0
             } else {
                 false
             }
@@ -107,7 +107,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
@@ -121,7 +121,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         when (val item = this.itemList[position]) {
             "header" -> (holder as? StableHeaderViewHolder)?.bind()
@@ -148,7 +148,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                                 potionCount,
                                 ownedItems?.get(item.animal + "-eggs") != null,
                                 ownedItems?.get(item.color + "-hatchingPotions") != null,
-                                ownedMounts?.containsKey(item.key) == true,
+                                ownedMounts?.containsKey(item.key) == true
                             )
                         } else {
                             (holder as? PetViewHolder)?.bind(
@@ -161,7 +161,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                                 ownedItems?.get(item.animal + "-eggs") != null,
                                 ownedItems?.get(item.color + "-hatchingPotions") != null,
                                 ownedMounts?.containsKey(item.key) == true,
-                                currentPet,
+                                currentPet
                             )
                         }
                     } else if (item is Mount) {
@@ -188,8 +188,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             if (isIndividualAnimal) {
                 if (item is Pet) {
                     if ((
-                            ownedPets?.get(item.key)?.trained
-                                ?: 0
+                        ownedPets?.get(item.key)?.trained
+                            ?: 0
                         ) <= 0 && eggCount(item) > 0 && potionCount(item) > 0
                     ) {
                         22
@@ -226,8 +226,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.root.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    R.color.window_background,
-                ),
+                    R.color.window_background
+                )
             )
         }
 
@@ -275,7 +275,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 context.getString(
                     R.string.pet_ownership_fraction,
                     item.numberOwned,
-                    item.totalNumber,
+                    item.totalNumber
                 )
             this.ownedTextView.background =
                 ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_shopitem_price)
@@ -295,7 +295,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 this.ownedTextView.background =
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.layout_rounded_bg_animalitem_complete,
+                        R.drawable.layout_rounded_bg_animalitem_complete
                     )
                 this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
@@ -312,16 +312,16 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         StableFragmentDirections.openPetDetail(
                             animal.animal,
                             animal.type ?: "",
-                            color,
-                        ),
+                            color
+                        )
                     )
                 } else {
                     MainNavigationController.navigate(
                         StableFragmentDirections.openMountDetail(
                             animal.animal,
                             animal.type ?: "",
-                            color,
-                        ),
+                            color
+                        )
                     )
                 }
             }

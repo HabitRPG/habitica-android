@@ -31,7 +31,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
@@ -43,7 +43,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -52,7 +52,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -74,7 +74,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_challenges, menu)

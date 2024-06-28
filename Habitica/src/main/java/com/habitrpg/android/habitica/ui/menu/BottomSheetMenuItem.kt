@@ -13,12 +13,12 @@ class BottomSheetMenuItem(
     private val title: String,
     private val isDestructive: Boolean = false,
     private val currency: String? = null,
-    private val price: Double = 0.0,
+    private val price: Double = 0.0
 ) {
     fun inflate(
         context: Context,
         inflater: LayoutInflater,
-        contentView: ViewGroup,
+        contentView: ViewGroup
     ): View {
         val binding = MenuBottomSheetItemBinding.inflate(inflater, contentView, false)
         binding.textView.text = this.title

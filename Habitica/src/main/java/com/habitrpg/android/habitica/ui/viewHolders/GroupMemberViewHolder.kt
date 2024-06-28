@@ -60,7 +60,7 @@ class GroupMemberViewHolder(itemView: View) :
     fun bind(
         user: Member,
         leaderID: String?,
-        userID: String?,
+        userID: String?
     ) {
         binding.avatarView.setAvatar(user)
         this.leaderID = leaderID
@@ -90,7 +90,7 @@ class GroupMemberViewHolder(itemView: View) :
                 itemView.context.getString(
                     R.string.user_level_with_class,
                     user.stats?.lvl,
-                    getTranslatedClassName(itemView.context.resources, user.stats?.habitClass),
+                    getTranslatedClassName(itemView.context.resources, user.stats?.habitClass)
                 )
         } else {
             binding.sublineTextview.text =

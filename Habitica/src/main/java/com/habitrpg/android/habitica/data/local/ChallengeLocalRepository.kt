@@ -17,25 +17,25 @@ interface ChallengeLocalRepository : BaseLocalRepository {
     fun setParticipating(
         userID: String,
         challengeID: String,
-        isParticipating: Boolean,
+        isParticipating: Boolean
     )
 
     fun saveChallenges(
         challenges: List<Challenge>,
         clearChallenges: Boolean,
         memberOnly: Boolean,
-        userID: String,
+        userID: String
     )
 
     fun getChallengeMembership(
         userId: String,
-        id: String,
+        id: String
     ): Flow<ChallengeMembership>
 
     fun getChallengeMemberships(userId: String): Flow<List<ChallengeMembership>>
 
     fun isChallengeMember(
         userID: String,
-        challengeID: String,
+        challengeID: String
     ): Flow<Boolean>
 }

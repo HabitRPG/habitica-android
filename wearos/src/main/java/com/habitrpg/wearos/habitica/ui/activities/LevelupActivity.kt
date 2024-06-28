@@ -30,7 +30,7 @@ class LevelupActivity : BaseActivity<ActivityLevelupBinding, LevelupViewModel>()
                 CoroutineExceptionHandler { _, _ ->
                     stopAnimatingProgress()
                     binding.continueButton.isEnabled = true
-                },
+                }
             ) {
                 finish()
             }
@@ -50,19 +50,19 @@ class LevelupActivity : BaseActivity<ActivityLevelupBinding, LevelupViewModel>()
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
             },
-            500,
+            500
         )
     }
 
     private fun createParticles(
         container: FrameLayout,
-        resource: Int,
+        resource: Int
     ) {
         ParticleSystem(
             container,
             20,
             ContextCompat.getDrawable(this, resource),
-            6000,
+            6000
         )
             .setRotationSpeed(144f)
             .setScaleRange(1.0f, 1.6f)

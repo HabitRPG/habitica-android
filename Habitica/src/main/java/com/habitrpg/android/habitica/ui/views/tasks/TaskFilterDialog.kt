@@ -33,7 +33,7 @@ import java.util.UUID
 class TaskFilterDialog(
     context: Context,
     private val repository: TagRepository,
-    private val showTags: Boolean,
+    private val showTags: Boolean
 ) : HabiticaBottomSheetDialog(context) {
     lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
@@ -134,24 +134,24 @@ class TaskFilterDialog(
             ColorStateList(
                 arrayOf(
                     intArrayOf(-android.R.attr.state_checked), // disabled
-                    intArrayOf(android.R.attr.state_checked), // enabled
+                    intArrayOf(android.R.attr.state_checked) // enabled
                 ),
                 intArrayOf(
                     Color.LTGRAY, // disabled
-                    context.getThemeColor(R.attr.colorAccent), // enabled
-                ),
+                    context.getThemeColor(R.attr.colorAccent) // enabled
+                )
             )
         val leftPadding =
             TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 12f,
-                context.resources.displayMetrics,
+                context.resources.displayMetrics
             ).toInt()
         val verticalPadding =
             TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 8f,
-                context.resources.displayMetrics,
+                context.resources.displayMetrics
             ).toInt()
         sortTagPositions()
         for (tag in tags) {
@@ -171,7 +171,7 @@ class TaskFilterDialog(
                     tagCheckbox.paddingLeft + leftPadding,
                     verticalPadding,
                     tagCheckbox.paddingRight,
-                    verticalPadding,
+                    verticalPadding
                 )
                 tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
@@ -260,7 +260,7 @@ class TaskFilterDialog(
     private fun createTagEditView(
         inflater: LayoutInflater,
         index: Int,
-        tag: Tag,
+        tag: Tag
     ) {
         if (tag.id.isBlank()) {
             // This is a title tag ("Challenge", "Group", "Your Tags", etc)
@@ -278,8 +278,8 @@ class TaskFilterDialog(
                 editBinding.editText.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.disabled_background,
-                    ),
+                        R.color.disabled_background
+                    )
                 )
                 editBinding.deleteButton.isEnabled = false
                 editBinding.deleteButton.alpha = .50f
@@ -291,8 +291,8 @@ class TaskFilterDialog(
                 editBinding.editText.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_secondary,
-                    ),
+                        R.color.text_secondary
+                    )
                 )
                 editBinding.editText.addTextChangedListener(
                     OnChangeTextWatcher { s, _, _, _ ->
@@ -307,7 +307,7 @@ class TaskFilterDialog(
                             editedTags[changedTag.id] = changedTag
                         }
                         tags[index] = changedTag
-                    },
+                    }
                 )
                 editBinding.deleteButton.setOnClickListener {
                     deletedTags.add(tag.id)
@@ -380,7 +380,7 @@ class TaskFilterDialog(
     }
 
     private fun onCheckedChanged(
-        @IdRes checkedId: Int,
+        @IdRes checkedId: Int
     ) {
         val newFilter =
             when (checkedId) {
@@ -471,7 +471,7 @@ class TaskFilterDialog(
                 context.getThemeColor(R.attr.colorAccent)
             } else {
                 ContextCompat.getColor(context, R.color.text_dimmed)
-            },
+            }
         )
     }
 }

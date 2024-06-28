@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CanHatchItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -18,6 +17,7 @@ import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
@@ -67,7 +67,7 @@ class PetDetailRecyclerAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): androidx.recyclerview.widget.RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
@@ -77,7 +77,7 @@ class PetDetailRecyclerAdapter :
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         when (val obj = this.itemList[position]) {
             is StableSection -> {
@@ -95,7 +95,7 @@ class PetDetailRecyclerAdapter :
                         potionCount,
                         ownedItems?.get(obj.animal + "-eggs") != null,
                         ownedItems?.get(obj.color + "-hatchingPotions") != null,
-                        ownedMounts?.containsKey(obj.key) == true,
+                        ownedMounts?.containsKey(obj.key) == true
                     )
                 } else {
                     (holder as? PetViewHolder)?.bind(
@@ -108,7 +108,7 @@ class PetDetailRecyclerAdapter :
                         ownedItems?.get(obj.animal + "-eggs") != null,
                         ownedItems?.get(obj.color + "-hatchingPotions") != null,
                         ownedMounts?.containsKey(obj.key) == true,
-                        currentPet,
+                        currentPet
                     )
                 }
             }
@@ -122,8 +122,8 @@ class PetDetailRecyclerAdapter :
         } else {
             val pet = itemList[position] as Pet
             if ((
-                    ownedPets?.get(pet.key)?.trained
-                        ?: 0
+                ownedPets?.get(pet.key)?.trained
+                    ?: 0
                 ) <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0
             ) {
                 2
@@ -156,7 +156,7 @@ class PetDetailRecyclerAdapter :
                 (
                     ownedItems["Saddle-food"]?.numberOwned
                         ?: 0
-                ) > 0
+                    ) > 0
             } else {
                 false
             }
@@ -165,7 +165,7 @@ class PetDetailRecyclerAdapter :
 
     class CanHatchViewHolder(
         parent: ViewGroup,
-        private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?,
+        private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
     ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.can_hatch_item)),
         View.OnClickListener {
         private var binding = CanHatchItemBinding.bind(itemView)
@@ -187,7 +187,7 @@ class PetDetailRecyclerAdapter :
             potionCount: Int,
             hasUnlockedEgg: Boolean,
             hasUnlockedPotion: Boolean,
-            hasMount: Boolean,
+            hasMount: Boolean
         ) {
             this.animal = item
             this.eggCount = eggCount
@@ -216,7 +216,7 @@ class PetDetailRecyclerAdapter :
                         potionCount,
                         hasUnlockedEgg,
                         hasUnlockedPotion,
-                        hasMount,
+                        hasMount
                     )
                     dialog.show()
                 }

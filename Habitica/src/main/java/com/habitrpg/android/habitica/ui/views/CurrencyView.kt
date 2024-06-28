@@ -39,7 +39,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 attrs,
                 R.styleable.CurrencyView,
                 0,
-                0,
+                0
             )
         val fallBackLight = !context.isUsingNightModeResources()
         lightBackground =
@@ -111,13 +111,13 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                     drawable,
                     null,
                     null,
-                    null,
+                    null
                 )
                 val padding =
                     TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP,
                         6f,
-                        context.resources.displayMetrics,
+                        context.resources.displayMetrics
                     ).toInt()
                 compoundDrawablePadding = padding
                 this.gravity = Gravity.CENTER_VERTICAL
@@ -135,7 +135,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 context,
                 value,
                 decimals,
-                minForAbbrevation = minForAbbrevation,
+                minForAbbrevation = minForAbbrevation
             )
     }
 

@@ -37,7 +37,7 @@ fun HabiticaCircularProgressView(
     animate: Boolean = true,
     indicatorSize: Dp = 100.dp,
     animationDuration: Int = 4000,
-    strokeWidth: Dp = 8.dp,
+    strokeWidth: Dp = 8.dp
 ) {
     val rotateAnimation: State<Float>
     if (animate) {
@@ -48,13 +48,13 @@ fun HabiticaCircularProgressView(
                 initialValue = 0f,
                 targetValue = 1080f,
                 animationSpec =
-                    infiniteRepeatable(
-                        animation =
-                            tween(
-                                durationMillis = animationDuration,
-                                easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f),
-                            ),
-                    ),
+                infiniteRepeatable(
+                    animation =
+                    tween(
+                        durationMillis = animationDuration,
+                        easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f)
+                    )
+                )
             )
     } else {
         rotateAnimation = remember { mutableFloatStateOf(0f) }
@@ -69,20 +69,20 @@ fun HabiticaCircularProgressView(
                 colorResource(R.color.background_yellow),
                 colorResource(R.color.background_green),
                 colorResource(R.color.background_blue),
-                colorResource(R.color.background_brand),
-            ),
+                colorResource(R.color.background_brand)
+            )
         )
     Canvas(
         modifier =
-            modifier
-                .rotate(-90f)
-                .size(size = indicatorSize - (strokeWidth * 2))
-                .padding(strokeWidth / 2),
+        modifier
+            .rotate(-90f)
+            .size(size = indicatorSize - (strokeWidth * 2))
+            .padding(strokeWidth / 2)
     ) {
         rotate(rotateAnimation.value) {
             drawCircle(
                 brush = brush,
-                style = Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round),
+                style = Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round)
             )
         }
         if (partialDisplay < 1f) {
@@ -91,7 +91,7 @@ fun HabiticaCircularProgressView(
                 startAngle = (360f * partialDisplay),
                 sweepAngle = 360f - (360f * partialDisplay),
                 useCenter = true,
-                style = Stroke(width = strokeWidth.toPx() * 1.4f, cap = StrokeCap.Square, join = StrokeJoin.Miter, miter = 2f),
+                style = Stroke(width = strokeWidth.toPx() * 1.4f, cap = StrokeCap.Square, join = StrokeJoin.Miter, miter = 2f)
             )
         }
     }
@@ -103,7 +103,7 @@ private fun Preview() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
     ) {
         HabiticaCircularProgressView()
         HabiticaCircularProgressView(indicatorSize = 40.dp, strokeWidth = 5.dp)

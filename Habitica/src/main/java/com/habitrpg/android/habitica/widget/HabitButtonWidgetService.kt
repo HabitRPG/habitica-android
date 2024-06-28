@@ -46,7 +46,7 @@ class HabitButtonWidgetService : Service() {
     override fun onStartCommand(
         intent: Intent,
         flags: Int,
-        startId: Int,
+        startId: Int
     ): Int {
         this.appWidgetManager = AppWidgetManager.getInstance(this)
         val thisWidget = ComponentName(this, HabitButtonWidgetProvider::class.java)
@@ -73,7 +73,7 @@ class HabitButtonWidgetService : Service() {
             val builder = SpannableStringBuilder(parsedText)
             remoteViews.setTextViewText(
                 R.id.habit_title,
-                builder.substring(0, min(builder.length, 70)),
+                builder.substring(0, min(builder.length, 70))
             )
 
             if (task.up != true) {
@@ -84,11 +84,11 @@ class HabitButtonWidgetService : Service() {
                 remoteViews.setInt(
                     R.id.btnPlus,
                     "setBackgroundColor",
-                    ContextCompat.getColor(context, task.lightTaskColor),
+                    ContextCompat.getColor(context, task.lightTaskColor)
                 )
                 remoteViews.setOnClickPendingIntent(
                     R.id.btnPlusWrapper,
-                    getPendingIntent(task.id, TaskDirection.UP.text, taskMapping[task.id]!!),
+                    getPendingIntent(task.id, TaskDirection.UP.text, taskMapping[task.id]!!)
                 )
             }
             if (task.down != true) {
@@ -99,11 +99,11 @@ class HabitButtonWidgetService : Service() {
                 remoteViews.setInt(
                     R.id.btnMinus,
                     "setBackgroundColor",
-                    ContextCompat.getColor(context, task.mediumTaskColor),
+                    ContextCompat.getColor(context, task.mediumTaskColor)
                 )
                 remoteViews.setOnClickPendingIntent(
                     R.id.btnMinusWrapper,
-                    getPendingIntent(task.id, TaskDirection.DOWN.text, taskMapping[task.id]!!),
+                    getPendingIntent(task.id, TaskDirection.DOWN.text, taskMapping[task.id]!!)
                 )
             }
             if (taskMapping[task.id] != null) {
@@ -133,7 +133,7 @@ class HabitButtonWidgetService : Service() {
     private fun getPendingIntent(
         taskId: String?,
         direction: String,
-        widgetId: Int,
+        widgetId: Int
     ): PendingIntent {
         val taskIntent = Intent(context, HabitButtonWidgetProvider::class.java)
         taskIntent.action = HabitButtonWidgetProvider.HABIT_ACTION
@@ -144,7 +144,7 @@ class HabitButtonWidgetService : Service() {
             context,
             widgetId + direction.hashCode(),
             taskIntent,
-            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
         )
     }
 }

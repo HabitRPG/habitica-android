@@ -33,7 +33,7 @@ class EllipsisTextView : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
         context,
         attrs,
-        defStyle,
+        defStyle
     )
 
     fun addEllipsesListener(listener: EllipsisListener?) {
@@ -55,7 +55,7 @@ class EllipsisTextView : AppCompatTextView {
         l: Int,
         t: Int,
         r: Int,
-        b: Int,
+        b: Int
     ) {
         super.layout(l, t, r, b)
 

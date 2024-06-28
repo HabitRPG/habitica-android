@@ -42,7 +42,7 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
     override fun deserialize(
         jsonElement: JsonElement,
         type: Type,
-        jsonDeserializationContext: JsonDeserializationContext,
+        jsonDeserializationContext: JsonDeserializationContext
     ): Date? {
         var element = jsonElement
         if (element.isJsonArray) {
@@ -78,7 +78,7 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
     override fun serialize(
         src: Date?,
         typeOfSrc: Type,
-        context: JsonSerializationContext,
+        context: JsonSerializationContext
     ): JsonElement {
         return if (src == null) {
             JsonPrimitive("")

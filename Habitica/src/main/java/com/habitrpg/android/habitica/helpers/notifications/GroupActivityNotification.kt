@@ -62,13 +62,13 @@ class GroupActivityNotification(context: Context, identifier: String?) :
         return NotificationCompat.MessagingStyle.Message(
             messageText,
             timestamp.time,
-            sender,
+            sender
         )
     }
 
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>,
+        data: Map<String, String>
     ) {
         super.setNotificationActions(notificationId, data)
         val groupID = data["groupID"] ?: return
@@ -89,14 +89,14 @@ class GroupActivityNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 intent,
-                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
 
         val action: NotificationCompat.Action =
             NotificationCompat.Action.Builder(
                 R.drawable.ic_send_grey_600_24dp,
                 context.getString(R.string.reply),
-                replyPendingIntent,
+                replyPendingIntent
             )
                 .addRemoteInput(remoteInput)
                 .build()

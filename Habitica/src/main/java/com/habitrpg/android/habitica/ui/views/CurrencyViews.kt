@@ -59,7 +59,7 @@ class CurrencyViews : LinearLayout {
                 attrs,
                 R.styleable.CurrencyViews,
                 0,
-                0,
+                0
             )
         setupViews()
         val fallBackLight = !context.isUsingNightModeResources()
@@ -77,7 +77,7 @@ class CurrencyViews : LinearLayout {
             TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 12f,
-                context.resources.displayMetrics,
+                context.resources.displayMetrics
             ).toInt()
         setupView(hourglassTextView, margin)
         setupView(goldTextView, margin)
@@ -86,7 +86,7 @@ class CurrencyViews : LinearLayout {
 
     private fun setupView(
         view: CurrencyView,
-        margin: Int,
+        margin: Int
     ) {
         this.addView(view)
         view.textSize = 12f

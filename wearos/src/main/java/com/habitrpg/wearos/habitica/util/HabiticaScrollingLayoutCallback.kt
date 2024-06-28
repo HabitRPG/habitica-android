@@ -12,7 +12,7 @@ class HabiticaScrollingLayoutCallback : WearableLinearLayoutManager.LayoutCallba
 
     override fun onLayoutFinished(
         child: View,
-        parent: RecyclerView,
+        parent: RecyclerView
     ) {
         child.apply {
             // Figure out % progress from top to bottom

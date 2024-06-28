@@ -33,12 +33,12 @@ fun HabiticaPullRefreshIndicator(
     state: PullToRefreshState,
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    scale: Boolean = true,
+    scale: Boolean = true
 ) {
     AnimatedVisibility(
         visible = isInitial && isRefreshing,
         enter = fadeIn(),
-        exit = fadeOut(),
+        exit = fadeOut()
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             HabiticaCircularProgressView(Modifier)
@@ -47,14 +47,14 @@ fun HabiticaPullRefreshIndicator(
     if (!isInitial) {
         Surface(
             modifier =
-                modifier,
+            modifier,
             shape = CircleShape,
-            color = backgroundColor,
+            color = backgroundColor
         ) {
             AnimatedVisibility(
                 visible = isRefreshing || state.progress > 0f,
                 enter = fadeIn(),
-                exit = fadeOut(),
+                exit = fadeOut()
             ) {
                 HabiticaCircularProgressView(
                     partialDisplay = if (isRefreshing) 1f else state.progress,
@@ -62,10 +62,10 @@ fun HabiticaPullRefreshIndicator(
                     indicatorSize = 40.dp,
                     strokeWidth = 6.dp,
                     modifier =
-                        Modifier
-                            .border(1.dp, HabiticaTheme.colors.windowBackground, CircleShape)
-                            .padding(4.dp)
-                            .background(MaterialTheme.colorScheme.surface, CircleShape),
+                    Modifier
+                        .border(1.dp, HabiticaTheme.colors.windowBackground, CircleShape)
+                        .padding(4.dp)
+                        .background(MaterialTheme.colorScheme.surface, CircleShape)
                 )
             }
         }

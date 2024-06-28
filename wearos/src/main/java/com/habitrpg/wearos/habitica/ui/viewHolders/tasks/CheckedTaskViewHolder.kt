@@ -25,8 +25,8 @@ abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) 
                 ColorStateList.valueOf(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.gray_300,
-                    ),
+                        R.color.gray_300
+                    )
                 )
         } else {
             checkbox.setImageDrawable(null)
@@ -37,8 +37,8 @@ abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) 
                 ColorStateList.valueOf(
                     ContextCompat.getColor(
                         itemView.context,
-                        data.extraLightTaskColor,
-                    ),
+                        data.extraLightTaskColor
+                    )
                 )
         }
     }

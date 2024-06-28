@@ -126,7 +126,7 @@ class AppConfigManager(contentRepository: ContentRepository) :
                     getHabiticaPromotionFromKey(
                         event.promo ?: event.eventKey ?: "",
                         event.start,
-                        event.end,
+                        event.end
                     )
                 if (thisPromo != null) {
                     promo = thisPromo
@@ -144,7 +144,6 @@ class AppConfigManager(contentRepository: ContentRepository) :
         }
         return promo
     }
-
 
     fun knownIssues(): List<Map<String, String>> {
         val type = object : TypeToken<List<Map<String, String>>>() {}.type

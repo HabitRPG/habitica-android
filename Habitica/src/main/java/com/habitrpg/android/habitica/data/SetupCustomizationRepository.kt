@@ -6,13 +6,13 @@ import com.habitrpg.android.habitica.models.user.User
 interface SetupCustomizationRepository {
     fun getCustomizations(
         type: String,
-        user: User,
+        user: User
     ): List<SetupCustomization>
 
     fun getCustomizations(
         type: String,
         subtype: String?,
-        user: User,
+        user: User
     ): List<SetupCustomization>
 
     companion object {

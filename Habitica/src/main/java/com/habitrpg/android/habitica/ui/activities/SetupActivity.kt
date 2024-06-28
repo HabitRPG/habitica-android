@@ -68,7 +68,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             binding.viewPager.adapter == null || binding.viewPager.currentItem == (
                 binding.viewPager.adapter?.count
                     ?: 0
-            ) - 1
+                ) - 1
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_setup
@@ -114,7 +114,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.setSystemBarsAppearance(
                     0,
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                 )
             } else {
                 @Suppress("DEPRECATION")
@@ -184,7 +184,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             leftDrawable,
             null,
             null,
-            null,
+            null
         )
     }
 
@@ -204,7 +204,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     override fun onPageScrolled(
         position: Int,
         positionOffset: Float,
-        positionOffsetPixels: Int,
+        positionOffsetPixels: Int
     ) =
         Unit
 
@@ -261,7 +261,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     private fun confirmNames(
         displayName: String,
-        username: String,
+        username: String
     ) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser("profile.name", displayName)
@@ -300,7 +300,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
         override fun instantiateItem(
             container: ViewGroup,
-            position: Int,
+            position: Int
         ): Any {
             val item = super.instantiateItem(container, position)
             when (item) {

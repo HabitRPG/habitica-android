@@ -106,7 +106,7 @@ open class HabiticaTestCase : TestCase() {
 
     internal fun <T> loadJsonFile(
         s: String,
-        type: Type,
+        type: Type
     ): T {
         val userStream = javaClass.classLoader?.getResourceAsStream("$s.json")
         return gson.fromJson(gson.newJsonReader(InputStreamReader(userStream)), type)
@@ -138,7 +138,7 @@ open class HabiticaTestCase : TestCase() {
     private fun <P, C> assign(
         it: KCallable<*>,
         obj: C,
-        value: P,
+        value: P
     ) {
         if ((it as KMutableProperty1<C, P>).javaField!!.get(obj) == null) {
             it.set(obj, value)

@@ -26,7 +26,7 @@ class UserStatComputer {
 
     fun computeClassBonus(
         equipmentList: List<Equipment>?,
-        user: Avatar,
+        user: Avatar
     ): List<StatsRow> {
         val skillRows = ArrayList<StatsRow>()
 

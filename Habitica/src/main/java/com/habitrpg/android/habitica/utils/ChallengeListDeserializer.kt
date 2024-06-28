@@ -13,7 +13,7 @@ class ChallengeListDeserializer : JsonDeserializer<List<Challenge>> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): List<Challenge> {
         val challenges = RealmList<Challenge>()
 

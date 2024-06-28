@@ -19,7 +19,7 @@ class TimeTravelersShopFragment : ShopFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         shopIdentifier = Shop.TIME_TRAVELERS_SHOP
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -27,7 +27,7 @@ class TimeTravelersShopFragment : ShopFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         initializeCurrencyViews()
@@ -45,7 +45,7 @@ class TimeTravelersShopFragment : ShopFragment() {
                     activity?.supportFragmentManager?.let {
                         subscriptionBottomSheet.show(
                             it,
-                            SubscriptionBottomSheetFragment.TAG,
+                            SubscriptionBottomSheetFragment.TAG
                         )
                     }
                 }

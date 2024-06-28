@@ -15,7 +15,7 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentPromoInfoBinding {
         return FragmentPromoInfoBinding.inflate(inflater, container, false)
     }
@@ -26,7 +26,7 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -34,7 +34,7 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         val promo = configManager.activePromo()

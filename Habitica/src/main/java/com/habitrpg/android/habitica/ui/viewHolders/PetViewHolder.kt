@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -18,6 +17,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.stable.PetBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
@@ -25,7 +25,7 @@ class PetViewHolder(
     parent: ViewGroup,
     private val onEquip: ((String) -> Unit)?,
     private val onFeed: (suspend (Pet, Food?) -> FeedResponse?)?,
-    private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?,
+    private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)),
     View.OnClickListener {
     private var hasMount: Boolean = false
@@ -58,7 +58,7 @@ class PetViewHolder(
         hasUnlockedEgg: Boolean,
         hasUnlockedPotion: Boolean,
         hasMount: Boolean,
-        currentPet: String?,
+        currentPet: String?
     ) {
         this.animal = item
         this.trained = trained
@@ -105,7 +105,7 @@ class PetViewHolder(
                 if (trained == 0 && canRaiseToMount) {
                     BitmapDrawable(
                         resources,
-                        it.toBitmap().extractAlpha(),
+                        it.toBitmap().extractAlpha()
                     )
                 } else {
                     it
@@ -129,7 +129,7 @@ class PetViewHolder(
                 } else {
                     context
                 } as Activity
-            ).showAsBottomSheet {
+                ).showAsBottomSheet {
                 PetBottomSheet(
                     pet,
                     trained,
@@ -138,7 +138,7 @@ class PetViewHolder(
                     ownsSaddles,
                     onEquip,
                     onFeed,
-                    it,
+                    it
                 )
             }
         }
@@ -157,7 +157,7 @@ class PetViewHolder(
                     potionCount,
                     hasUnlockedEgg,
                     hasUnlockedPotion,
-                    hasMount,
+                    hasMount
                 )
                 dialog.show()
             }

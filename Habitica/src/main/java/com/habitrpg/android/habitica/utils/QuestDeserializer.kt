@@ -16,7 +16,7 @@ class QuestDeserializer : JsonDeserializer<Quest> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): Quest {
         val obj = json.asJsonObject
         val quest = Quest()

@@ -18,7 +18,7 @@ class ScoreTaskLocallyInteractor {
 
         private fun calculateDelta(
             task: Task,
-            direction: TaskDirection,
+            direction: TaskDirection
         ): Double {
             val currentValue =
                 when {
@@ -35,7 +35,7 @@ class ScoreTaskLocallyInteractor {
                     nextDelta *= 1 + (
                         task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
                             ?: 0
-                    )
+                        )
                 }
             }
 
@@ -45,35 +45,35 @@ class ScoreTaskLocallyInteractor {
         private fun scoreHabit(
             user: User,
             task: Task,
-            direction: TaskDirection,
+            direction: TaskDirection
         ) {
         }
 
         private fun scoreDaily(
             user: User,
             task: Task,
-            direction: TaskDirection,
+            direction: TaskDirection
         ) {
         }
 
         private fun scoreToDo(
             user: User,
             task: Task,
-            direction: TaskDirection,
+            direction: TaskDirection
         ) {
         }
 
         private fun scoreReward(
             user: User,
             task: Task,
-            direction: TaskDirection,
+            direction: TaskDirection
         ) {
         }
 
         fun score(
             user: User,
             task: Task,
-            direction: TaskDirection,
+            direction: TaskDirection
         ): TaskDirectionData? {
             return if (task.type == TaskType.HABIT || direction == TaskDirection.UP) {
                 val stats = user.stats ?: return null
@@ -121,7 +121,7 @@ class ScoreTaskLocallyInteractor {
             delta: Double,
             stats: Stats,
             computedStats: Stats,
-            task: Task,
+            task: Task
         ) {
             var conBonus = 1f - ((computedStats.constitution?.toFloat() ?: 0f) / 250f)
             if (conBonus < 0.1) {
@@ -137,13 +137,13 @@ class ScoreTaskLocallyInteractor {
             stats: Stats,
             computedStats: Stats,
             task: Task,
-            direction: TaskDirection,
+            direction: TaskDirection
         ) {
             val intBonus = 1f + ((computedStats.intelligence?.toFloat() ?: 0f) * 0.025f)
             result.exp = (
                 stats.exp
                     ?: 0.0
-            ) + (delta * intBonus * task.priority * 6).roundToLong().toDouble()
+                ) + (delta * intBonus * task.priority * 6).roundToLong().toDouble()
 
             val perBonus = 1f + ((computedStats.per?.toFloat() ?: 0f) * 0.02f)
             val goldMod = delta * task.priority * perBonus

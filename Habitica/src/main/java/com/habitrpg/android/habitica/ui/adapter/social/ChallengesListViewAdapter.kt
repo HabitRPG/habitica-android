@@ -5,18 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChallengeItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import io.realm.OrderedRealmCollection
 
 class ChallengesListViewAdapter(
     private val viewUserChallengesOnly: Boolean,
-    private val userId: String,
+    private val userId: String
 ) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: List<Challenge>? = null
     private var challengeMemberships: List<ChallengeMembership>? = null
@@ -25,19 +25,19 @@ class ChallengesListViewAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ChallengeViewHolder {
         return ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
     }
 
     override fun onBindViewHolder(
         holder: ChallengeViewHolder,
-        position: Int,
+        position: Int
     ) {
         data[position].let { challenge ->
             holder.bind(
                 challenge,
-                challengeMemberships?.first { challenge.id == it.challengeID } != null,
+                challengeMemberships?.first { challenge.id == it.challengeID } != null
             )
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {
@@ -85,7 +85,7 @@ class ChallengesListViewAdapter(
 
     class ChallengeViewHolder internal constructor(
         itemView: View,
-        private val viewUserChallengesOnly: Boolean,
+        private val viewUserChallengesOnly: Boolean
     ) : RecyclerView.ViewHolder(itemView) {
         private val binding = ChallengeItemBinding.bind(itemView)
 
@@ -97,7 +97,7 @@ class ChallengesListViewAdapter(
 
         fun bind(
             challenge: Challenge,
-            isParticipating: Boolean,
+            isParticipating: Boolean
         ) {
             this.challenge = challenge
 

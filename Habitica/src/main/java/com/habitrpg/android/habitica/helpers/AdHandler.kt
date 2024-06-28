@@ -23,7 +23,7 @@ import kotlin.time.toDuration
 enum class AdType {
     ARMOIRE,
     SPELL,
-    FAINT,
+    FAINT
     ;
 
     val adUnitID: String
@@ -68,7 +68,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             UNINITIALIZED,
             INITIALIZING,
             READY,
-            DISABLED,
+            DISABLED
         }
 
         private lateinit var sharedPreferences: SharedPreferences
@@ -103,7 +103,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
 
         fun initialize(
             context: Context,
-            onComplete: () -> Unit,
+            onComplete: () -> Unit
         ) {
             if (currentAdStatus != AdStatus.UNINITIALIZED) return
 
@@ -125,7 +125,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
 
         fun whenAdsInitialized(
             context: Context,
-            onComplete: () -> Unit,
+            onComplete: () -> Unit
         ) {
             when (currentAdStatus) {
                 AdStatus.READY -> {

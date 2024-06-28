@@ -15,7 +15,7 @@ open class BaseViewModel(
     val userRepository: UserRepository,
     val taskRepository: TaskRepository,
     val exceptionBuilder: ExceptionHandlerBuilder,
-    val appStateManager: AppStateManager,
+    val appStateManager: AppStateManager
 ) : ViewModel(), ErrorPresenter {
     override val errorValues = MutableLiveData<DisplayedError>()
 

@@ -3,7 +3,7 @@ package com.habitrpg.shared.habitica.models.tasks
 class TasksOrder {
     fun positionOf(
         key: String,
-        type: TaskType,
+        type: TaskType
     ): Int {
         return when (type) {
             TaskType.HABIT -> habits.indexOf(key)

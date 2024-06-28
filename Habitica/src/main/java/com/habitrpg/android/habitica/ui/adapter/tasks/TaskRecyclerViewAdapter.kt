@@ -19,7 +19,7 @@ interface TaskRecyclerViewAdapter {
 
     fun notifyItemMoved(
         adapterPosition: Int,
-        adapterPosition1: Int,
+        adapterPosition1: Int
     )
 
     fun notifyDataSetChanged()

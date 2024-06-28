@@ -28,7 +28,7 @@ fun flowLayoutMeasurePolicy(spacing: Int = 0) =
                 }
                 placeable.placeRelative(
                     x = xPos,
-                    y = yPos,
+                    y = yPos
                 )
                 xPos += placeable.width
                 if (maxY < placeable.height) {
@@ -42,12 +42,12 @@ fun flowLayoutMeasurePolicy(spacing: Int = 0) =
 fun FlowLayout(
     modifier: Modifier = Modifier,
     spacing: Int = 0,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val measurePolicy = flowLayoutMeasurePolicy(spacing)
     Layout(
         measurePolicy = measurePolicy,
         content = content,
-        modifier = modifier,
+        modifier = modifier
     )
 }

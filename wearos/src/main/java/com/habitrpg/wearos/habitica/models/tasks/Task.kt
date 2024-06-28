@@ -194,7 +194,7 @@ open class Task() : Parcelable, BaseTask {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int,
+        flags: Int
     ) {
         dest.writeString(this.userId)
         dest.writeValue(this.priority)

@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 class TagRepositoryImpl(
     localRepository: TagLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler,
+    authenticationHandler: AuthenticationHandler
 ) : BaseRepositoryImpl<TagLocalRepository>(localRepository, apiClient, authenticationHandler),
     TagRepository {
     override fun getTags() = authenticationHandler.userIDFlow.flatMapLatest { getTags(it) }

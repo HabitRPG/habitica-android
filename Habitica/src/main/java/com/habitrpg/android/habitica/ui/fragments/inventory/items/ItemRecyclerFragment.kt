@@ -83,7 +83,7 @@ class ItemRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentItemsBinding {
         return FragmentItemsBinding.inflate(inflater, container, false)
     }
@@ -95,7 +95,7 @@ class ItemRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -112,8 +112,8 @@ class ItemRecyclerFragment :
                 HitType.EVENT,
                 mapOf(
                     "area" to "empty",
-                    "type" to (itemType ?: ""),
-                ),
+                    "type" to (itemType ?: "")
+                )
             )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
@@ -141,7 +141,7 @@ class ItemRecyclerFragment :
                     else -> null
                 },
                 false,
-                if (itemType == "special") null else buttonMethod,
+                if (itemType == "special") null else buttonMethod
             )
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
@@ -198,7 +198,7 @@ class ItemRecyclerFragment :
                             item.key?.let { mysteryItem ->
                                 inventoryRepository.equip(
                                     "equipped",
-                                    mysteryItem,
+                                    mysteryItem
                                 )
                             }
                         }
@@ -222,8 +222,8 @@ class ItemRecyclerFragment :
                 HitType.EVENT,
                 mapOf(
                     "area" to "bottom",
-                    "type" to (itemType ?: ""),
-                ),
+                    "type" to (itemType ?: "")
+                )
             )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
@@ -263,7 +263,7 @@ class ItemRecyclerFragment :
 
     private fun hatchPet(
         potion: HatchingPotion,
-        egg: Egg,
+        egg: Egg
     ) {
         (activity as? BaseActivity)?.let {
             lifecycleScope.launchCatching {
@@ -271,8 +271,8 @@ class ItemRecyclerFragment :
                     HatchPetUseCase.RequestValues(
                         potion,
                         egg,
-                        it,
-                    ),
+                        it
+                    )
                 )
             }
         }
@@ -290,7 +290,7 @@ class ItemRecyclerFragment :
                     user?.id,
                     "party",
                     "",
-                    false,
+                    false
                 )
                 val user = userRepository.retrieveUser(false, true)
                 if (user?.hasParty == true) {
@@ -298,7 +298,7 @@ class ItemRecyclerFragment :
                     socialRepository.retrievePartyMembers(party?.id ?: "", true)
                     MainNavigationController.navigate(
                         R.id.partyFragment,
-                        bundleOf(Pair("partyID", user.party?.id)),
+                        bundleOf(Pair("partyID", user.party?.id))
                     )
                 }
             }
@@ -369,7 +369,7 @@ class ItemRecyclerFragment :
 
     private fun useSpecialItem(
         specialItem: SpecialItem?,
-        memberID: String? = null,
+        memberID: String? = null
     ) {
         if (specialItem == null || memberID == null) {
             return
@@ -388,7 +388,7 @@ class ItemRecyclerFragment :
             HabiticaSnackbar.showSnackbar(
                 it.snackbarContainer,
                 context?.getString(R.string.used_skill_without_mana, specialItem?.text),
-                HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                HabiticaSnackbar.SnackbarDisplayType.BLUE
             )
         }
 

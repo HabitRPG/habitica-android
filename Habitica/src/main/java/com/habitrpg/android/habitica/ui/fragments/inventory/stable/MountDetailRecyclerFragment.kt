@@ -45,7 +45,7 @@ class MountDetailRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -53,7 +53,7 @@ class MountDetailRecyclerFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.usesTabLayout = false
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -66,7 +66,7 @@ class MountDetailRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -86,7 +86,7 @@ class MountDetailRecyclerFragment :
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
-                            position,
+                            position
                         ) == 1
                     ) {
                         layoutManager?.spanCount ?: 1

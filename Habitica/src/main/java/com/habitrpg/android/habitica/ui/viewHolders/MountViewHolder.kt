@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.stable.MountBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.inflate
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
 class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) :
@@ -32,7 +32,7 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
     fun bind(
         item: Mount,
         owned: Boolean,
-        currentMount: String?,
+        currentMount: String?
     ) {
         animal = item
         this.owned = owned
@@ -55,7 +55,7 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
                 } else {
                     BitmapDrawable(
                         itemView.context.resources,
-                        it.toBitmap().extractAlpha(),
+                        it.toBitmap().extractAlpha()
                     )
                 }
             if (binding.imageView.tag == imageName) {
@@ -76,12 +76,12 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
                 } else {
                     context
                 } as Activity
-            ).showAsBottomSheet {
+                ).showAsBottomSheet {
                 MountBottomSheet(
                     pet,
                     currentMount.equals(animal?.key),
                     onEquip,
-                    it,
+                    it
                 )
             }
         }

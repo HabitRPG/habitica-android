@@ -12,7 +12,7 @@ class NotificationDeserializer : JsonDeserializer<Notification> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): Notification {
         val notification = Notification()
         val obj = json.asJsonObject

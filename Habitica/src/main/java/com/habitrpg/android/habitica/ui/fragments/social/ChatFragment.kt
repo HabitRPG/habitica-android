@@ -43,13 +43,13 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentChatBinding {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
     open val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { requireParentFragment() },
+        ownerProducer = { requireParentFragment() }
     )
 
     @Inject
@@ -66,7 +66,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -95,7 +95,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 socialRepository,
                 autocompleteContext,
                 viewModel.groupID,
-                configManager.enableUsernameAutocomplete(),
+                configManager.enableUsernameAutocomplete()
             )
 
         binding?.recyclerView?.adapter = chatAdapter
@@ -107,12 +107,12 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 override fun onScrolled(
                     recyclerView: androidx.recyclerview.widget.RecyclerView,
                     dx: Int,
-                    dy: Int,
+                    dy: Int
                 ) {
                     super.onScrolled(recyclerView, dx, dy)
                     isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
                 }
-            },
+            }
         )
 
         viewModel.chatmessages.observe(viewLifecycleOwner) { setChatMessages(it) }
@@ -180,7 +180,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             showSnackbar(
                 activity.snackbarContainer,
                 getString(R.string.chat_message_copied),
-                SnackbarDisplayType.NORMAL,
+                SnackbarDisplayType.NORMAL
             )
         }
     }
@@ -194,7 +194,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 messageText = chatMessage.text ?: "",
                 groupId = chatMessage.groupId ?: "",
                 userIdBeingReported = chatMessage.userID ?: "",
-                sourceView = this::class.simpleName ?: "",
+                sourceView = this::class.simpleName ?: ""
             )
 
         reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)
@@ -225,7 +225,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private fun sendChatMessage(chatText: String) {
         viewModel.postGroupChat(
             chatText,
-            { binding?.recyclerView?.scrollToPosition(0) },
+            { binding?.recyclerView?.scrollToPosition(0) }
         ) { binding?.chatBarView?.message = chatText }
     }
 }

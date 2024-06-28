@@ -25,7 +25,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentSupportMainBinding {
         return FragmentSupportMainBinding.inflate(inflater, container, false)
     }
@@ -39,7 +39,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -47,7 +47,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.usingHabiticaWrapper?.setOnClickListener {
@@ -71,7 +71,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
                     null,
                     null,
                     getString(R.string.tutorial_reset_confirmation),
-                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                 )
             }
         }

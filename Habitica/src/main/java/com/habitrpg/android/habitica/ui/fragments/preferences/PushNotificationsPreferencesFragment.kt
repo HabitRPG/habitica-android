@@ -32,55 +32,55 @@ class PushNotificationsPreferencesFragment :
         isSettingUser = !isInitialSet
         updatePreference(
             "preference_push_you_won_challenge",
-            user?.preferences?.pushNotifications?.wonChallenge,
+            user?.preferences?.pushNotifications?.wonChallenge
         )
         updatePreference(
             "preference_push_received_a_private_message",
-            user?.preferences?.pushNotifications?.newPM,
+            user?.preferences?.pushNotifications?.newPM
         )
         updatePreference(
             "preference_push_gifted_gems",
-            user?.preferences?.pushNotifications?.giftedGems,
+            user?.preferences?.pushNotifications?.giftedGems
         )
         updatePreference(
             "preference_push_gifted_subscription",
-            user?.preferences?.pushNotifications?.giftedSubscription,
+            user?.preferences?.pushNotifications?.giftedSubscription
         )
         updatePreference(
             "preference_push_invited_to_party",
-            user?.preferences?.pushNotifications?.invitedParty,
+            user?.preferences?.pushNotifications?.invitedParty
         )
         updatePreference(
             "preference_push_invited_to_guild",
-            user?.preferences?.pushNotifications?.invitedGuild,
+            user?.preferences?.pushNotifications?.invitedGuild
         )
         updatePreference(
             "preference_push_your_quest_has_begun",
-            user?.preferences?.pushNotifications?.questStarted,
+            user?.preferences?.pushNotifications?.questStarted
         )
         updatePreference(
             "preference_push_invited_to_quest",
-            user?.preferences?.pushNotifications?.invitedQuest,
+            user?.preferences?.pushNotifications?.invitedQuest
         )
         updatePreference(
             "preference_push_important_announcements",
-            user?.preferences?.pushNotifications?.majorUpdates,
+            user?.preferences?.pushNotifications?.majorUpdates
         )
         updatePreference(
             "preference_push_party_activity",
-            user?.preferences?.pushNotifications?.partyActivity,
+            user?.preferences?.pushNotifications?.partyActivity
         )
         updatePreference(
             "preference_push_party_mention",
-            user?.preferences?.pushNotifications?.mentionParty,
+            user?.preferences?.pushNotifications?.mentionParty
         )
         updatePreference(
             "preference_push_joined_guild_mention",
-            user?.preferences?.pushNotifications?.mentionJoinedGuild,
+            user?.preferences?.pushNotifications?.mentionJoinedGuild
         )
         updatePreference(
             "preference_push_content_release",
-            user?.preferences?.pushNotifications?.contentRelease,
+            user?.preferences?.pushNotifications?.contentRelease
         )
         isSettingUser = false
         isInitialSet = false
@@ -88,7 +88,7 @@ class PushNotificationsPreferencesFragment :
 
     private fun updatePreference(
         key: String,
-        isChecked: Boolean?,
+        isChecked: Boolean?
     ) {
         val preference = (findPreference(key) as? CheckBoxPreference)
         preference?.isChecked = isChecked == true
@@ -96,7 +96,7 @@ class PushNotificationsPreferencesFragment :
 
     override fun onSharedPreferenceChanged(
         sharedPreferences: SharedPreferences,
-        key: String?,
+        key: String?
     ) {
         if (isSettingUser) {
             return
@@ -123,7 +123,7 @@ class PushNotificationsPreferencesFragment :
             lifecycleScope.launchCatching {
                 userRepository.updateUser(
                     "preferences.pushNotifications.$pathKey",
-                    sharedPreferences.getBoolean(key, false),
+                    sharedPreferences.getBoolean(key, false)
                 )
             }
         }

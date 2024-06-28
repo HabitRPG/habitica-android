@@ -42,7 +42,7 @@ class AvatarActivity : BaseActivity<ActivityAvatarBinding, AvatarViewModel>() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 max(
                     windowManager.currentWindowMetrics.bounds.bottom,
-                    windowManager.currentWindowMetrics.bounds.right,
+                    windowManager.currentWindowMetrics.bounds.right
                 )
             } else {
                 @Suppress("DEPRECATION")

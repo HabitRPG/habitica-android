@@ -51,7 +51,7 @@ class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
             Bitmap.createBitmap(
                 width,
                 height,
-                Bitmap.Config.ARGB_8888,
+                Bitmap.Config.ARGB_8888
             )
         val canvas = Canvas(sharedImage)
         var attempts = 0
@@ -63,9 +63,9 @@ class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
             petWrapper.root.draw(canvas)
             (
                 (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
-                    requestValues.context,
+                    requestValues.context
                 )?.currentActivity?.get()
-            )?.shareContent("pet", requestValues.message, sharedImage)
+                )?.shareContent("pet", requestValues.message, sharedImage)
             containerView?.removeView(petWrapper.root)
         }
         val m = FrameLayout.LayoutParams(width, height)

@@ -23,7 +23,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -51,7 +50,7 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
         val hiltEntryPoint =
             EntryPointAccessors.fromApplication(
                 parentActivity,
-                InsufficientGemsDialogEntryPoint::class.java,
+                InsufficientGemsDialogEntryPoint::class.java
             )
         insufficientGemsUseCase = hiltEntryPoint.insufficientGemsUseCase()
         configManager = hiltEntryPoint.configManager()
@@ -67,11 +66,11 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
         textView.setText(R.string.insufficientGems)
         addButton(
             R.string.see_other_options,
-            true,
+            true
         ) { _, _ ->
             MainNavigationController.navigate(
                 R.id.gemPurchaseActivity,
-                bundleOf(Pair("openSubscription", false)),
+                bundleOf(Pair("openSubscription", false))
             )
         }
         addCloseButton()
@@ -103,14 +102,14 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
                 purchaseButton?.setOnClickListener {
                     FirebaseAnalytics.getInstance(context).logEvent(
                         "purchased_gems_from_insufficient",
-                        bundleOf(Pair("gemPrice", gemPrice), Pair("sku", "")),
+                        bundleOf(Pair("gemPrice", gemPrice), Pair("sku", ""))
                     )
                     MainScope().launchCatching {
                         insufficientGemsUseCase.callInteractor(
                             InsufficientGemsUseCase.RequestValues(
                                 gemPrice,
-                                parentActivity,
-                            ),
+                                parentActivity
+                            )
                         )
                     }
                 }

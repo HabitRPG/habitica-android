@@ -61,12 +61,12 @@ enum class LoadingButtonState {
     DISABLED,
     LOADING,
     FAILED,
-    SUCCESS,
+    SUCCESS
 }
 
 enum class LoadingButtonType {
     NORMAL,
-    DESTRUCTIVE,
+    DESTRUCTIVE
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -83,7 +83,7 @@ fun LoadingButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     successContent: (@Composable RowScope.() -> Unit)? = null,
     failedContent: (@Composable RowScope.() -> Unit)? = null,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     val colorStyle =
         if (type == LoadingButtonType.DESTRUCTIVE) {
@@ -91,45 +91,45 @@ fun LoadingButton(
                 containerColor = HabiticaTheme.colors.errorBackground,
                 contentColor = Color.White,
                 disabledContainerColor = HabiticaTheme.colors.offsetBackground,
-                disabledContentColor = HabiticaTheme.colors.textQuad,
+                disabledContentColor = HabiticaTheme.colors.textQuad
             )
         } else {
             ButtonDefaults.buttonColors(
                 containerColor = HabiticaTheme.colors.tintedUiSub,
                 contentColor = Color.White,
                 disabledContainerColor = HabiticaTheme.colors.offsetBackground,
-                disabledContentColor = HabiticaTheme.colors.textQuad,
+                disabledContentColor = HabiticaTheme.colors.textQuad
             )
         }
     val colorSpec = tween<Color>(350)
     val backgroundColor =
         animateColorAsState(
             targetValue =
-                when (state) {
-                    LoadingButtonState.FAILED -> HabiticaTheme.colors.errorBackground
-                    LoadingButtonState.SUCCESS -> Color.Transparent
-                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContainerColor else colorStyle.containerColor
-                },
-            animationSpec = colorSpec,
+            when (state) {
+                LoadingButtonState.FAILED -> HabiticaTheme.colors.errorBackground
+                LoadingButtonState.SUCCESS -> Color.Transparent
+                else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContainerColor else colorStyle.containerColor
+            },
+            animationSpec = colorSpec
         )
     val contentColor =
         animateColorAsState(
             targetValue =
-                when (state) {
-                    LoadingButtonState.FAILED -> Color.White
-                    LoadingButtonState.SUCCESS -> if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
-                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContentColor else colorStyle.disabledContainerColor
-                },
-            animationSpec = colorSpec,
+            when (state) {
+                LoadingButtonState.FAILED -> Color.White
+                LoadingButtonState.SUCCESS -> if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
+                else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContentColor else colorStyle.disabledContainerColor
+            },
+            animationSpec = colorSpec
         )
     val borderWidth =
         animateDpAsState(
             targetValue =
-                if (state == LoadingButtonState.SUCCESS) {
-                    3.dp
-                } else {
-                    border?.width ?: 0.dp
-                },
+            if (state == LoadingButtonState.SUCCESS) {
+                3.dp
+            } else {
+                border?.width ?: 0.dp
+            }
         )
 
     val buttonColors =
@@ -137,7 +137,7 @@ fun LoadingButton(
             containerColor = backgroundColor.value,
             contentColor = contentColor.value,
             disabledContainerColor = backgroundColor.value,
-            disabledContentColor = contentColor.value,
+            disabledContentColor = contentColor.value
         )
     Button(
         {
@@ -152,16 +152,16 @@ fun LoadingButton(
         elevation = elevation,
         shape = shape,
         border =
-            if (state == LoadingButtonState.SUCCESS) {
-                BorderStroke(
-                    borderWidth.value,
-                    if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor,
-                )
-            } else {
-                border
-            },
+        if (state == LoadingButtonState.SUCCESS) {
+            BorderStroke(
+                borderWidth.value,
+                if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
+            )
+        } else {
+            border
+        },
         colors = buttonColors,
-        contentPadding = PaddingValues(0.dp),
+        contentPadding = PaddingValues(0.dp)
     ) {
         ProvideTextStyle(value = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)) {
             AnimatedContent(
@@ -174,16 +174,16 @@ fun LoadingButton(
                     if (targetState == LoadingButtonState.FAILED) {
                         (
                             fadeIn(
-                                animationSpec = tween(220, delayMillis = 90),
+                                animationSpec = tween(220, delayMillis = 90)
                             ) +
                                 slideInHorizontally(
                                     animationSpec =
-                                        spring(
-                                            dampingRatio = 0.2f,
-                                            stiffness = StiffnessMediumLow,
-                                        ),
+                                    spring(
+                                        dampingRatio = 0.2f,
+                                        stiffness = StiffnessMediumLow
+                                    )
                                 )
-                        ).togetherWith(fadeOut(animationSpec = tween(90)))
+                            ).togetherWith(fadeOut(animationSpec = tween(90)))
                     } else if (isInitialShowingContent && isTargetShowingContent) {
                         fadeIn() togetherWith fadeOut()
                     } else {
@@ -192,23 +192,23 @@ fun LoadingButton(
                                 scaleIn(
                                     initialScale = 0.92f,
                                     animationSpec =
-                                        tween(
-                                            220,
-                                            delayMillis = 90,
-                                            FastOutSlowInEasing,
-                                        ),
+                                    tween(
+                                        220,
+                                        delayMillis = 90,
+                                        FastOutSlowInEasing
+                                    )
                                 )
-                        ).togetherWith(fadeOut(animationSpec = tween(90)))
+                            ).togetherWith(fadeOut(animationSpec = tween(90)))
                     }
                 },
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(contentPadding),
+                modifier = Modifier.padding(contentPadding)
             ) { state ->
                 when (state) {
                     LoadingButtonState.LOADING ->
                         CircularProgressIndicator(
                             color = contentColor.value,
-                            modifier = Modifier.size(16.dp),
+                            modifier = Modifier.size(16.dp)
                         )
 
                     LoadingButtonState.SUCCESS -> successContent?.let { it() } ?: content()
@@ -216,7 +216,7 @@ fun LoadingButton(
                         failedContent?.let { it() } ?: Image(
                             painterResource(R.drawable.failed_loading),
                             stringResource(R.string.failed),
-                            Modifier.padding(horizontal = 8.dp),
+                            Modifier.padding(horizontal = 8.dp)
                         )
 
                     else -> content()
@@ -237,7 +237,7 @@ private fun Preview() {
         modifier =
         Modifier
             .width(200.dp)
-            .padding(8.dp),
+            .padding(8.dp)
     ) {
         LoadingButton(state, {
             scope.launch {
@@ -254,21 +254,21 @@ private fun Preview() {
                 state = LoadingButtonState.CONTENT
             }
         }, successContent = {
-            Text("I did it!")
-        }, content = {
-            Text("Do something")
-        }, modifier = Modifier.fillMaxWidth())
+                Text("I did it!")
+            }, content = {
+                Text("Do something")
+            }, modifier = Modifier.fillMaxWidth())
         LoadingButton(
             LoadingButtonState.LOADING,
             {},
             colors =
-                ButtonDefaults.buttonColors(
-                    containerColor = HabiticaTheme.colors.successBackground,
-                    contentColor = Color.White,
-                ),
+            ButtonDefaults.buttonColors(
+                containerColor = HabiticaTheme.colors.successBackground,
+                contentColor = Color.White
+            ),
             content = {
                 Text("Do something")
-            },
+            }
         )
         LoadingButton(LoadingButtonState.LOADING, {}, content = {
             Text("Do something")
@@ -279,15 +279,15 @@ private fun Preview() {
         LoadingButton(LoadingButtonState.FAILED, {}, failedContent = {
             Text("Didn't work :(")
         }, content = {
-            Text("Do something")
-        })
+                Text("Do something")
+            })
         LoadingButton(LoadingButtonState.SUCCESS, {}, content = {
             Text("Do something")
         })
         LoadingButton(LoadingButtonState.SUCCESS, {}, successContent = {
             Text("Success!")
         }, content = {
-            Text("Do something")
-        })
+                Text("Do something")
+            })
     }
 }

@@ -13,7 +13,7 @@ class QuestDropItemsListSerialization : JsonDeserializer<RealmList<QuestDropItem
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): RealmList<QuestDropItem> {
         val items = RealmList<QuestDropItem>()
         val keys = ArrayList<String>()

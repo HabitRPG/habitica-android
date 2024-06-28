@@ -49,7 +49,7 @@ open class Customization : RealmObject(), BaseObject {
 
     fun getIconName(
         userSize: String?,
-        hairColor: String?,
+        hairColor: String?
     ): String? {
         if (this.type == "hair" && this.category == "color") {
             return "icon_color_hair_bangs_1_$identifier"
@@ -60,7 +60,7 @@ open class Customization : RealmObject(), BaseObject {
 
     fun getImageName(
         userSize: String?,
-        hairColor: String?,
+        hairColor: String?
     ): String? {
         if (!this.isValid) {
             return null
@@ -96,7 +96,7 @@ open class Customization : RealmObject(), BaseObject {
                         path +
                             this.customizationSet?.substring(
                                 5,
-                                7,
+                                7
                             ) + this.customizationSet?.substring(0, 4)
                     } else {
                         path + "." + this.customizationSet

@@ -16,7 +16,7 @@ object PurchaseTypes {
             SUBSCRIPTION_1_MONTH,
             SUBSCRIPTION_3_MONTH,
             SUBSCRIPTION_6_MONTH,
-            SUBSCRIPTION_12_MONTH,
+            SUBSCRIPTION_12_MONTH
         )
     const val SUBSCRIPTION_1_MONTH_NORENEW =
         "com.habitrpg.android.habitica.norenew_subscription.1month"
@@ -31,6 +31,6 @@ object PurchaseTypes {
             SUBSCRIPTION_1_MONTH_NORENEW,
             SUBSCRIPTION_3_MONTH_NORENEW,
             SUBSCRIPTION_6_MONTH_NORENEW,
-            SUBSCRIPTION_12_MONTH_NORENEW,
+            SUBSCRIPTION_12_MONTH_NORENEW
         )
 }

@@ -73,7 +73,7 @@ class ApiClientImpl(
     private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
     private val notificationsManager: NotificationsManager,
-    private val context: Context,
+    private val context: Context
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
@@ -115,7 +115,7 @@ class ApiClientImpl(
         val timezoneOffset =
             -TimeUnit.MINUTES.convert(
                 timeZone.getOffset(calendar.timeInMillis).toLong(),
-                TimeUnit.MILLISECONDS,
+                TimeUnit.MILLISECONDS
             )
 
         val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
@@ -199,7 +199,7 @@ class ApiClientImpl(
         username: String,
         email: String,
         password: String,
-        confirmPassword: String,
+        confirmPassword: String
     ): UserAuthResponse? {
         val auth = UserAuth()
         auth.username = username
@@ -211,7 +211,7 @@ class ApiClientImpl(
 
     override suspend fun connectUser(
         username: String,
-        password: String,
+        password: String
     ): UserAuthResponse? {
         val auth = UserAuth()
         auth.username = username
@@ -222,7 +222,7 @@ class ApiClientImpl(
     override suspend fun connectSocial(
         network: String,
         userId: String,
-        accessToken: String,
+        accessToken: String
     ): UserAuthResponse? {
         val auth = UserAuthSocial()
         auth.network = network
@@ -257,7 +257,7 @@ class ApiClientImpl(
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
             this.showConnectionProblemDialog(
                 R.string.network_error_no_network_body,
-                isUserInputCall,
+                isUserInputCall
             )
         } else if (HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
             val error = throwable as HttpException
@@ -286,7 +286,7 @@ class ApiClientImpl(
                     showConnectionProblemDialog(
                         R.string.authentication_error_title,
                         R.string.authentication_error_body,
-                        isUserInputCall,
+                        isUserInputCall
                     )
                 }
             } else if (status in 500..599) {
@@ -303,7 +303,7 @@ class ApiClientImpl(
 
     override suspend fun updateMember(
         memberID: String,
-        updateData: Map<String, Map<String, Boolean>>,
+        updateData: Map<String, Map<String, Boolean>>
     ): Member? {
         return process { apiService.updateUser(memberID, updateData) }
     }
@@ -333,7 +333,7 @@ class ApiClientImpl(
 
     override suspend fun retrieveInboxMessages(
         uuid: String,
-        page: Int,
+        page: Int
     ): List<ChatMessage>? {
         return process { apiService.getInboxMessages(uuid, page) }
     }
@@ -348,7 +348,7 @@ class ApiClientImpl(
 
     private fun showConnectionProblemDialog(
         resourceMessageString: Int,
-        isFromUserInput: Boolean,
+        isFromUserInput: Boolean
     ) {
         showConnectionProblemDialog(null, context.getString(resourceMessageString), isFromUserInput)
     }
@@ -356,12 +356,12 @@ class ApiClientImpl(
     private fun showConnectionProblemDialog(
         resourceTitleString: Int,
         resourceMessageString: Int,
-        isFromUserInput: Boolean,
+        isFromUserInput: Boolean
     ) {
         showConnectionProblemDialog(
             context.getString(resourceTitleString),
             context.getString(resourceMessageString),
-            isFromUserInput,
+            isFromUserInput
         )
     }
 
@@ -370,7 +370,7 @@ class ApiClientImpl(
     private fun showConnectionProblemDialog(
         resourceTitleString: String?,
         resourceMessageString: String,
-        isFromUserInput: Boolean,
+        isFromUserInput: Boolean
     ) {
         erroredRequestCount += 1
         val application =
@@ -381,7 +381,7 @@ class ApiClientImpl(
                 erroredRequestCount,
                 resourceTitleString,
                 resourceMessageString,
-                isFromUserInput,
+                isFromUserInput
             )
     }
 
@@ -402,7 +402,7 @@ class ApiClientImpl(
 
     override fun updateAuthenticationCredentials(
         userID: String?,
-        apiToken: String?,
+        apiToken: String?
     ) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
@@ -415,7 +415,7 @@ class ApiClientImpl(
 
     override suspend fun reportChallenge(
         challengeid: String,
-        updateData: Map<String, String>,
+        updateData: Map<String, String>
     ): Void? {
         return process { apiService.reportChallenge(challengeid, updateData) }
     }
@@ -438,21 +438,21 @@ class ApiClientImpl(
 
     override suspend fun equipItem(
         type: String,
-        itemKey: String,
+        itemKey: String
     ): Items? {
         return process { apiService.equipItem(type, itemKey) }
     }
 
     override suspend fun buyItem(
         itemKey: String,
-        purchaseQuantity: Int,
+        purchaseQuantity: Int
     ): BuyResponse? {
         return process { apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
     }
 
     override suspend fun unlinkAllTasks(
         challengeID: String?,
-        keepOption: String,
+        keepOption: String
     ): Void? {
         return process { apiService.unlinkAllTasks(challengeID, keepOption) }
     }
@@ -464,13 +464,13 @@ class ApiClientImpl(
     override suspend fun purchaseItem(
         type: String,
         itemKey: String,
-        purchaseQuantity: Int,
+        purchaseQuantity: Int
     ): Void? {
         return process {
             apiService.purchaseItem(
                 type,
                 itemKey,
-                mapOf(Pair("quantity", purchaseQuantity)),
+                mapOf(Pair("quantity", purchaseQuantity))
             )
         }
     }
@@ -499,7 +499,7 @@ class ApiClientImpl(
 
     override suspend fun purchaseHourglassItem(
         type: String,
-        itemKey: String,
+        itemKey: String
     ): Void? {
         return process { apiService.purchaseHourglassItem(type, itemKey) }
     }
@@ -518,14 +518,14 @@ class ApiClientImpl(
 
     override suspend fun sellItem(
         itemType: String,
-        itemKey: String,
+        itemKey: String
     ): User? {
         return process { apiService.sellItem(itemType, itemKey) }
     }
 
     override suspend fun feedPet(
         petKey: String,
-        foodKey: String,
+        foodKey: String
     ): FeedResponse? {
         val response = apiService.feedPet(petKey, foodKey)
         response.data?.message = response.message
@@ -534,7 +534,7 @@ class ApiClientImpl(
 
     override suspend fun hatchPet(
         eggKey: String,
-        hatchingPotionKey: String,
+        hatchingPotionKey: String
     ): Items? {
         return process { apiService.hatchPet(eggKey, hatchingPotionKey) }
     }
@@ -547,7 +547,7 @@ class ApiClientImpl(
 
     override suspend fun getTasks(
         type: String,
-        dueDate: String,
+        dueDate: String
     ): TaskList? {
         return process { apiService.getTasks(type, dueDate) }
     }
@@ -566,7 +566,7 @@ class ApiClientImpl(
 
     override suspend fun postTaskDirection(
         id: String,
-        direction: String,
+        direction: String
     ): TaskDirectionData? {
         return process { apiService.postTaskDirection(id, direction) }
     }
@@ -577,14 +577,14 @@ class ApiClientImpl(
 
     override suspend fun postTaskNewPosition(
         id: String,
-        position: Int,
+        position: Int
     ): List<String>? {
         return process { apiService.postTaskNewPosition(id, position) }
     }
 
     override suspend fun scoreChecklistItem(
         taskId: String,
-        itemId: String,
+        itemId: String
     ): Task? {
         return process { apiService.scoreChecklistItem(taskId, itemId) }
     }
@@ -595,7 +595,7 @@ class ApiClientImpl(
 
     override suspend fun createGroupTask(
         groupId: String,
-        item: Task,
+        item: Task
     ): Task? {
         return process { apiService.createGroupTask(groupId, item) }
     }
@@ -606,7 +606,7 @@ class ApiClientImpl(
 
     override suspend fun updateTask(
         id: String,
-        item: Task,
+        item: Task
     ): Task? {
         return process { apiService.updateTask(id, item) }
     }
@@ -621,7 +621,7 @@ class ApiClientImpl(
 
     override suspend fun updateTag(
         id: String,
-        tag: Tag,
+        tag: Tag
     ): Tag? {
         return process { apiService.updateTag(id, tag) }
     }
@@ -637,14 +637,14 @@ class ApiClientImpl(
     override suspend fun useSkill(
         skillName: String,
         targetType: String,
-        targetId: String,
+        targetId: String
     ): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType, targetId) }
     }
 
     override suspend fun useSkill(
         skillName: String,
-        targetType: String,
+        targetType: String
     ): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType) }
     }
@@ -679,14 +679,14 @@ class ApiClientImpl(
 
     override suspend fun updateGroup(
         id: String,
-        item: Group,
+        item: Group
     ): Group? {
         return processResponse(apiService.updateGroup(id, item))
     }
 
     override suspend fun removeMemberFromGroup(
         groupID: String,
-        userID: String,
+        userID: String
     ): Void? {
         return processResponse(apiService.removeMemberFromGroup(groupID, userID))
     }
@@ -701,21 +701,21 @@ class ApiClientImpl(
 
     override suspend fun leaveGroup(
         groupId: String,
-        keepChallenges: String,
+        keepChallenges: String
     ): Void? {
         return processResponse(apiService.leaveGroup(groupId, keepChallenges))
     }
 
     override suspend fun postGroupChat(
         groupId: String,
-        message: Map<String, String>,
+        message: Map<String, String>
     ): PostChatMessageResult? {
         return process { apiService.postGroupChat(groupId, message) }
     }
 
     override suspend fun deleteMessage(
         groupId: String,
-        messageId: String,
+        messageId: String
     ): Void? {
         return process { apiService.deleteMessage(groupId, messageId) }
     }
@@ -726,7 +726,7 @@ class ApiClientImpl(
 
     override suspend fun getGroupMembers(
         groupId: String,
-        includeAllPublicFields: Boolean?,
+        includeAllPublicFields: Boolean?
     ): List<Member>? {
         return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields))
     }
@@ -734,21 +734,21 @@ class ApiClientImpl(
     override suspend fun getGroupMembers(
         groupId: String,
         includeAllPublicFields: Boolean?,
-        lastId: String,
+        lastId: String
     ): List<Member>? {
         return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields, lastId))
     }
 
     override suspend fun likeMessage(
         groupId: String,
-        mid: String,
+        mid: String
     ): ChatMessage? {
         return process { apiService.likeMessage(groupId, mid) }
     }
 
     override suspend fun reportMember(
         mid: String,
-        data: Map<String, String>,
+        data: Map<String, String>
     ): Void? {
         return process { apiService.reportMember(mid, data) }
     }
@@ -756,14 +756,14 @@ class ApiClientImpl(
     override suspend fun flagMessage(
         groupId: String,
         mid: String,
-        data: MutableMap<String, String>,
+        data: MutableMap<String, String>
     ): Void? {
         return process { apiService.flagMessage(groupId, mid, data) }
     }
 
     override suspend fun flagInboxMessage(
         mid: String,
-        data: MutableMap<String, String>,
+        data: MutableMap<String, String>
     ): Void? {
         return process { apiService.flagInboxMessage(mid, data) }
     }
@@ -774,7 +774,7 @@ class ApiClientImpl(
 
     override suspend fun inviteToGroup(
         groupId: String,
-        inviteData: Map<String, Any>,
+        inviteData: Map<String, Any>
     ): List<InviteResponse>? {
         return process { apiService.inviteToGroup(groupId, inviteData) }
     }
@@ -785,7 +785,7 @@ class ApiClientImpl(
 
     override suspend fun getGroupInvites(
         groupId: String,
-        includeAllPublicFields: Boolean?,
+        includeAllPublicFields: Boolean?
     ): List<Member>? {
         return process { apiService.getGroupInvites(groupId, includeAllPublicFields) }
     }
@@ -804,14 +804,14 @@ class ApiClientImpl(
 
     override suspend fun forceStartQuest(
         groupId: String,
-        group: Group,
+        group: Group
     ): Quest? {
         return process { apiService.forceStartQuest(groupId, group) }
     }
 
     override suspend fun inviteToQuest(
         groupId: String,
-        questKey: String,
+        questKey: String
     ): Quest? {
         return process { apiService.inviteToQuest(groupId, questKey) }
     }
@@ -841,7 +841,7 @@ class ApiClientImpl(
 
     override suspend fun markTaskNeedsWork(
         taskID: String,
-        userID: String,
+        userID: String
     ): Task? {
         return process { apiService.markTaskNeedsWork(taskID, userID) }
     }
@@ -863,7 +863,7 @@ class ApiClientImpl(
     override suspend fun findUsernames(
         username: String,
         context: String?,
-        id: String?,
+        id: String?
     ): List<FindUsernameResult>? {
         return process { apiService.findUsernames(username, context, id) }
     }
@@ -886,7 +886,7 @@ class ApiClientImpl(
 
     override suspend fun getUserChallenges(
         page: Int,
-        memberOnly: Boolean,
+        memberOnly: Boolean
     ): List<Challenge>? {
         return if (memberOnly) {
             process { apiService.getUserChallenges(page, memberOnly) }
@@ -909,7 +909,7 @@ class ApiClientImpl(
 
     override suspend fun leaveChallenge(
         challengeId: String,
-        body: LeaveChallengeBody,
+        body: LeaveChallengeBody
     ): Void? {
         return process { apiService.leaveChallenge(challengeId, body) }
     }
@@ -920,14 +920,14 @@ class ApiClientImpl(
 
     override suspend fun createChallengeTasks(
         challengeId: String,
-        tasks: List<Task>,
+        tasks: List<Task>
     ): List<Task>? {
         return process { apiService.createChallengeTasks(challengeId, tasks) }
     }
 
     override suspend fun createChallengeTask(
         challengeId: String,
-        task: Task,
+        task: Task
     ): Task? {
         return process { apiService.createChallengeTask(challengeId, task) }
     }
@@ -984,7 +984,7 @@ class ApiClientImpl(
 
     override suspend fun togglePinnedItem(
         pinType: String,
-        path: String,
+        path: String
     ): Void? {
         return process { apiService.togglePinnedItem(pinType, path) }
     }
@@ -997,7 +997,7 @@ class ApiClientImpl(
 
     override suspend fun updateLoginName(
         newLoginName: String,
-        password: String,
+        password: String
     ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = newLoginName
@@ -1019,7 +1019,7 @@ class ApiClientImpl(
 
     override suspend fun updateEmail(
         newEmail: String,
-        password: String,
+        password: String
     ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["newEmail"] = newEmail
@@ -1032,7 +1032,7 @@ class ApiClientImpl(
     override suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String,
+        newPasswordConfirmation: String
     ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = oldPassword
@@ -1047,14 +1047,14 @@ class ApiClientImpl(
 
     override suspend fun transferGems(
         giftedID: String,
-        amount: Int,
+        amount: Int
     ): Void? {
         return process {
             apiService.transferGems(
                 mapOf(
                     Pair("toUserId", giftedID),
-                    Pair("gemAmount", amount),
-                ),
+                    Pair("gemAmount", amount)
+                )
             )
         }
     }
@@ -1069,14 +1069,14 @@ class ApiClientImpl(
 
     override suspend fun assignToTask(
         taskId: String,
-        ids: List<String>,
+        ids: List<String>
     ): Task? {
         return process { apiService.assignToTask(taskId, ids) }
     }
 
     override suspend fun unassignFromTask(
         taskId: String,
-        userID: String,
+        userID: String
     ): Task? {
         return process { apiService.unassignFromTask(taskId, userID) }
     }
@@ -1085,7 +1085,7 @@ class ApiClientImpl(
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int,
+        perception: Int
     ): Stats? {
         val body = HashMap<String, Map<String, Int>>()
         val stats = HashMap<String, Int>()

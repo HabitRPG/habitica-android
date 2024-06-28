@@ -32,7 +32,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentSupportBugFixBinding {
         return FragmentSupportBugFixBinding.inflate(inflater, container, false)
     }
@@ -46,7 +46,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         hidesToolbar = true
         showsBackButton = true
@@ -55,7 +55,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -75,7 +75,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
             issueBinding.root.setOnClickListener {
                 MainNavigationController.navigate(
                     R.id.FAQDetailFragment,
-                    bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"])),
+                    bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"]))
                 )
             }
             binding?.knownIssuesLayout?.addView(issueBinding.root)
@@ -86,7 +86,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         try {
             mainActivity?.packageManager?.getPackageInfo(
                 mainActivity?.packageName ?: "",
-                0,
+                0
             )?.versionName
                 ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
@@ -99,7 +99,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
             @Suppress("DEPRECATION")
             mainActivity?.packageManager?.getPackageInfo(
                 mainActivity?.packageName ?: "",
-                0,
+                0
             )?.versionCode
                 ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
@@ -121,8 +121,8 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                         getString(
                             R.string.version_info,
                             versionName,
-                            versionCode,
-                        ),
+                            versionCode
+                        )
                 )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
@@ -141,16 +141,16 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                             (
                                 user.stats?.habitClass
                                     ?: "None"
-                            )
+                                )
                         }
-                    ),
+                        )
                 ) +
                 newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
                 newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
                 newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
                 newLine +
                 Uri.encode(
-                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0),
+                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
                 )
         }
 

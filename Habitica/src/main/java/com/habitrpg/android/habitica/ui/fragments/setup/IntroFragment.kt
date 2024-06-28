@@ -15,7 +15,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentIntroBinding {
         return FragmentIntroBinding.inflate(inflater, container, false)
     }
@@ -29,7 +29,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 

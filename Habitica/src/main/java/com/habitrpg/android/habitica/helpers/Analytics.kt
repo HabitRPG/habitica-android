@@ -13,12 +13,12 @@ import com.habitrpg.android.habitica.R
 
 enum class AnalyticsTarget {
     AMPLITUDE,
-    FIREBASE,
+    FIREBASE
 }
 
 enum class EventCategory(val key: String) {
     BEHAVIOUR("behaviour"),
-    NAVIGATION("navigation"),
+    NAVIGATION("navigation")
 }
 
 enum class HitType(val key: String) {
@@ -26,7 +26,7 @@ enum class HitType(val key: String) {
     PAGEVIEW("pageview"),
     CREATE_WIDGET("create"),
     REMOVE_WIDGET("remove"),
-    UPDATE_WIDGET("update"),
+    UPDATE_WIDGET("update")
 }
 
 object Analytics {
@@ -39,7 +39,7 @@ object Analytics {
         category: EventCategory?,
         hitType: HitType?,
         additionalData: Map<String, Any>? = null,
-        target: AnalyticsTarget? = null,
+        target: AnalyticsTarget? = null
     ) {
         if (BuildConfig.DEBUG) {
             return
@@ -49,7 +49,7 @@ object Analytics {
                 "eventAction" to eventAction,
                 "eventCategory" to category?.key,
                 "hitType" to hitType?.key,
-                "status" to "displayed",
+                "status" to "displayed"
             )
         if (additionalData != null) {
             data.putAll(additionalData)
@@ -79,8 +79,8 @@ object Analytics {
             Amplitude(
                 Configuration(
                     context.getString(R.string.amplitude_app_id),
-                    context,
-                ),
+                    context
+                )
             )
         firebase = FirebaseAnalytics.getInstance(context)
     }
@@ -109,7 +109,7 @@ object Analytics {
 
     fun setUserProperty(
         identifier: String,
-        value: Any?,
+        value: Any?
     ) {
         if (this::amplitude.isInitialized) {
             amplitude.identify(mapOf(identifier to value))

@@ -93,7 +93,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         lifecycleScope.launch(
             ExceptionHandler.coroutine {
                 showMemberLoadingErrorDialog()
-            },
+            }
         ) {
             val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID)
             if (member == null) {

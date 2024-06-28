@@ -42,7 +42,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
 
     private fun getMonthlyDays(
         e: JsonObject,
-        task: Task,
+        task: Task
     ) {
         val weeksOfMonth = e.getAsJsonArray("weeksOfMonth")
         if (weeksOfMonth != null && weeksOfMonth.size() > 0) {
@@ -58,7 +58,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): Task {
         val task = Task()
         val obj = json as? JsonObject ?: return task
@@ -106,8 +106,8 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                     ChecklistItem(
                         checklistObject.getAsString("id"),
                         checklistObject.getAsString("text"),
-                        checklistObject.get("completed").asBoolean,
-                    ),
+                        checklistObject.get("completed").asBoolean
+                    )
                 )
             }
         }
@@ -157,7 +157,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
     override fun serialize(
         task: Task,
         typeOfSrc: Type,
-        context: JsonSerializationContext,
+        context: JsonSerializationContext
     ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("_id", task.id)

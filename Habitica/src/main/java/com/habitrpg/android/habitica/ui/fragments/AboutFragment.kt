@@ -40,7 +40,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentAboutBinding {
         return FragmentAboutBinding.inflate(layoutInflater, container, false)
     }
@@ -48,7 +48,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -70,7 +70,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
                         Toast.makeText(
                             context,
                             "Only ${8 - versionNumberTappedCount} taps left!",
-                            Toast.LENGTH_SHORT,
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
 
@@ -90,7 +90,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
             @Suppress("DEPRECATION")
             mainActivity?.packageManager?.getPackageInfo(
                 mainActivity?.packageName ?: "",
-                0,
+                0
             )?.versionName ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
@@ -102,7 +102,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
             @Suppress("DEPRECATION")
             mainActivity?.packageManager?.getPackageInfo(
                 mainActivity?.packageName ?: "",
-                0,
+                0
             )?.versionCode ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0
@@ -111,7 +111,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -123,7 +123,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
                 getString(
                     R.string.update_available,
                     appConfigManager.lastVersionNumber(),
-                    appConfigManager.lastVersionCode(),
+                    appConfigManager.lastVersionCode()
                 )
         } else {
             binding?.updateAvailableWrapper?.visibility = View.GONE

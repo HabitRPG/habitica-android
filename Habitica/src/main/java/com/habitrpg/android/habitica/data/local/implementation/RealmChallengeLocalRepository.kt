@@ -20,7 +20,7 @@ class RealmChallengeLocalRepository(realm: Realm) :
     ChallengeLocalRepository {
     override fun isChallengeMember(
         userID: String,
-        challengeID: String,
+        challengeID: String
     ): Flow<Boolean> =
         realm.where(ChallengeMembership::class.java)
             .equalTo("userID", userID)
@@ -32,7 +32,7 @@ class RealmChallengeLocalRepository(realm: Realm) :
 
     override fun getChallengeMembership(
         userId: String,
-        id: String,
+        id: String
     ) =
         realm.where(ChallengeMembership::class.java)
             .equalTo("userID", userId)
@@ -106,7 +106,7 @@ class RealmChallengeLocalRepository(realm: Realm) :
     override fun setParticipating(
         userID: String,
         challengeID: String,
-        isParticipating: Boolean,
+        isParticipating: Boolean
     ) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
         executeTransaction {
@@ -125,7 +125,7 @@ class RealmChallengeLocalRepository(realm: Realm) :
         challenges: List<Challenge>,
         clearChallenges: Boolean,
         memberOnly: Boolean,
-        userID: String,
+        userID: String
     ) {
         if (clearChallenges || memberOnly) {
             val localChallenges = realm.where(Challenge::class.java).findAll().createSnapshot()

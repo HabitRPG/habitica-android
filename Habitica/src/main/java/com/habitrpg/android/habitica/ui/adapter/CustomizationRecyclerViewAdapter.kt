@@ -43,7 +43,7 @@ class CustomizationRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> {
@@ -76,7 +76,7 @@ class CustomizationRecyclerViewAdapter :
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         val obj = customizationList[position]
         if (getItemViewType(position) == 0) {
@@ -120,12 +120,12 @@ class CustomizationRecyclerViewAdapter :
             val isUsable = customization.isUsable(isOwned)
             if (customization.availableFrom != null || customization.availableUntil != null) {
                 if ((
-                        (
-                            customization.availableFrom?.compareTo(today)
-                                ?: 0
+                    (
+                        customization.availableFrom?.compareTo(today)
+                            ?: 0
                         ) > 0 || (
-                            customization.availableUntil?.compareTo(today)
-                                ?: 0
+                        customization.availableUntil?.compareTo(today)
+                            ?: 0
                         ) < 0
                     ) && !isUsable
                 ) {
@@ -205,7 +205,7 @@ class CustomizationRecyclerViewAdapter :
                 binding.wrapper.background =
                     ContextCompat.getDrawable(
                         itemView.context,
-                        R.drawable.layout_rounded_bg_window_tint_border,
+                        R.drawable.layout_rounded_bg_window_tint_border
                     )
             } else {
                 binding.wrapper.background =
@@ -232,8 +232,8 @@ class CustomizationRecyclerViewAdapter :
                             ShopItem.fromCustomization(
                                 it,
                                 userSize,
-                                hairColor,
-                            ),
+                                hairColor
+                            )
                         )
                     }
                 }
@@ -257,7 +257,7 @@ class CustomizationRecyclerViewAdapter :
                             ShopItem.fromCustomization(
                                 it,
                                 userSize,
-                                hairColor,
+                                hairColor
                             ).imageName
                         }
                     purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view)
@@ -329,8 +329,8 @@ class CustomizationRecyclerViewAdapter :
                         it,
                         additionalSetItems,
                         userSize,
-                        hairColor,
-                    ),
+                        hairColor
+                    )
                 )
             }
         }

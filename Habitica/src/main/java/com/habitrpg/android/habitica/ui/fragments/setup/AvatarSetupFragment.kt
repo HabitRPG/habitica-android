@@ -40,7 +40,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentSetupAvatarBinding {
         return FragmentSetupAvatarBinding.inflate(inflater, container, false)
     }
@@ -59,7 +59,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -99,7 +99,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
 
                 override fun onTabReselected(tab: TabLayout.Tab) { // no-on
                 }
-            },
+            }
         )
 
         binding?.customizationDrawer?.binding?.bodyButton?.setOnClickListener { selectedBodyCategory() }
@@ -123,7 +123,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         this.selectedBodyCategory()
         if (context != null) {
             binding?.speechBubble?.animateText(
-                context?.getString(R.string.avatar_setup_description) ?: "",
+                context?.getString(R.string.avatar_setup_description) ?: ""
             )
         }
     }
@@ -136,8 +136,8 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
             customizationRepository.getCustomizations(
                 activeCategory,
                 activeSubCategory,
-                user,
-            ),
+                user
+            )
         )
     }
 
@@ -166,7 +166,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         this.subcategories =
             listOf(
                 SetupCustomizationRepository.SUBCATEGORY_SIZE,
-                SetupCustomizationRepository.SUBCATEGORY_SHIRT,
+                SetupCustomizationRepository.SUBCATEGORY_SHIRT
             )
         binding?.customizationDrawer?.binding?.subcategoryTabs?.newTab()
             ?.setText(R.string.avatar_size)
@@ -196,7 +196,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
             listOf(
                 SetupCustomizationRepository.SUBCATEGORY_BANGS,
                 SetupCustomizationRepository.SUBCATEGORY_COLOR,
-                SetupCustomizationRepository.SUBCATEGORY_PONYTAIL,
+                SetupCustomizationRepository.SUBCATEGORY_PONYTAIL
             )
         binding?.customizationDrawer?.binding?.subcategoryTabs?.newTab()
             ?.setText(R.string.avatar_hair_bangs)
@@ -218,7 +218,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
             listOf(
                 SetupCustomizationRepository.SUBCATEGORY_GLASSES,
                 SetupCustomizationRepository.SUBCATEGORY_FLOWER,
-                SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR,
+                SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
             )
         binding?.customizationDrawer?.binding?.subcategoryTabs?.newTab()
             ?.setText(R.string.avatar_glasses)
@@ -240,72 +240,72 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_BODY,
                     SetupCustomizationRepository.SUBCATEGORY_SIZE,
-                    user,
+                    user
                 ),
-                false,
+                false
             )
         updateData["preferences.shirt"] =
             chooseRandomKey(
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_BODY,
                     SetupCustomizationRepository.SUBCATEGORY_SHIRT,
-                    user,
+                    user
                 ),
-                false,
+                false
             )
         updateData["preferences.skin"] =
             chooseRandomKey(
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_SKIN,
                     SetupCustomizationRepository.SUBCATEGORY_COLOR,
-                    user,
+                    user
                 ),
-                false,
+                false
             )
         updateData["preferences.hair.color"] =
             chooseRandomKey(
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_HAIR,
                     SetupCustomizationRepository.SUBCATEGORY_COLOR,
-                    user,
+                    user
                 ),
-                false,
+                false
             )
         updateData["preferences.hair.base"] =
             chooseRandomKey(
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_HAIR,
                     SetupCustomizationRepository.SUBCATEGORY_PONYTAIL,
-                    user,
+                    user
                 ),
-                false,
+                false
             )
         updateData["preferences.hair.bangs"] =
             chooseRandomKey(
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_HAIR,
                     SetupCustomizationRepository.SUBCATEGORY_BANGS,
-                    user,
+                    user
                 ),
-                false,
+                false
             )
         updateData["preferences.hair.flower"] =
             chooseRandomKey(
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_EXTRAS,
                     SetupCustomizationRepository.SUBCATEGORY_FLOWER,
-                    user,
+                    user
                 ),
-                true,
+                true
             )
         updateData["preferences.chair"] =
             chooseRandomKey(
                 customizationRepository.getCustomizations(
                     SetupCustomizationRepository.CATEGORY_EXTRAS,
                     SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR,
-                    user,
+                    user
                 ),
-                true,
+                true
             )
         lifecycleScope.launchCatching {
             userRepository.updateUser(updateData)
@@ -315,7 +315,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
     @Suppress("ReturnCount")
     private fun chooseRandomKey(
         customizations: List<SetupCustomization>,
-        weighFirstOption: Boolean,
+        weighFirstOption: Boolean
     ): String {
         if (customizations.isEmpty()) {
             return ""

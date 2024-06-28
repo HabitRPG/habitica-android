@@ -14,7 +14,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) :
     HabiticaLocalNotification(context, identifier) {
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>,
+        data: Map<String, String>
     ) {
         super.setNotificationActions(notificationId, data)
         val res = context.resources
@@ -29,7 +29,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 acceptInviteIntent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
         notificationBuilder.addAction(0, context.getString(R.string.accept), pendingIntentAccept)
 
@@ -42,7 +42,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode() + 1,
                 rejectInviteIntent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
         notificationBuilder.addAction(0, context.getString(R.string.reject), pendingIntentReject)
     }

@@ -11,14 +11,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConfirmactionActivityViewModel
-    @Inject
-    constructor(
-        savedStateHandle: SavedStateHandle,
-        userRepository: UserRepository,
-        taskRepository: TaskRepository,
-        exceptionBuilder: ExceptionHandlerBuilder,
-        appStateManager: AppStateManager,
-    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-        val icon: Int = savedStateHandle["icon"] ?: R.drawable.error
-        val text: String? = savedStateHandle["text"]
-    }
+@Inject
+constructor(
+    savedStateHandle: SavedStateHandle,
+    userRepository: UserRepository,
+    taskRepository: TaskRepository,
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+    val icon: Int = savedStateHandle["icon"] ?: R.drawable.error
+    val text: String? = savedStateHandle["text"]
+}

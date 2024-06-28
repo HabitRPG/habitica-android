@@ -32,55 +32,55 @@ class EmailNotificationsPreferencesFragment :
         isSettingUser = !isInitialSet
         updatePreference(
             "preference_email_you_won_challenge",
-            user?.preferences?.emailNotifications?.wonChallenge,
+            user?.preferences?.emailNotifications?.wonChallenge
         )
         updatePreference(
             "preference_email_received_a_private_message",
-            user?.preferences?.emailNotifications?.newPM,
+            user?.preferences?.emailNotifications?.newPM
         )
         updatePreference(
             "preference_email_gifted_gems",
-            user?.preferences?.emailNotifications?.giftedGems,
+            user?.preferences?.emailNotifications?.giftedGems
         )
         updatePreference(
             "preference_email_gifted_subscription",
-            user?.preferences?.emailNotifications?.giftedSubscription,
+            user?.preferences?.emailNotifications?.giftedSubscription
         )
         updatePreference(
             "preference_email_invited_to_party",
-            user?.preferences?.emailNotifications?.invitedParty,
+            user?.preferences?.emailNotifications?.invitedParty
         )
         updatePreference(
             "preference_email_invited_to_guild",
-            user?.preferences?.emailNotifications?.invitedGuild,
+            user?.preferences?.emailNotifications?.invitedGuild
         )
         updatePreference(
             "preference_email_your_quest_has_begun",
-            user?.preferences?.emailNotifications?.questStarted,
+            user?.preferences?.emailNotifications?.questStarted
         )
         updatePreference(
             "preference_email_invited_to_quest",
-            user?.preferences?.emailNotifications?.invitedQuest,
+            user?.preferences?.emailNotifications?.invitedQuest
         )
         updatePreference(
             "preference_email_important_announcements",
-            user?.preferences?.emailNotifications?.majorUpdates,
+            user?.preferences?.emailNotifications?.majorUpdates
         )
         updatePreference(
             "preference_email_kicked_group",
-            user?.preferences?.emailNotifications?.kickedGroup,
+            user?.preferences?.emailNotifications?.kickedGroup
         )
         updatePreference(
             "preference_email_onboarding",
-            user?.preferences?.emailNotifications?.onboarding,
+            user?.preferences?.emailNotifications?.onboarding
         )
         updatePreference(
             "preference_email_subscription_reminders",
-            user?.preferences?.emailNotifications?.subscriptionReminders,
+            user?.preferences?.emailNotifications?.subscriptionReminders
         )
         updatePreference(
             "preference_email_content_release",
-            user?.preferences?.emailNotifications?.contentRelease,
+            user?.preferences?.emailNotifications?.contentRelease
         )
         isSettingUser = false
         isInitialSet = false
@@ -88,7 +88,7 @@ class EmailNotificationsPreferencesFragment :
 
     private fun updatePreference(
         key: String,
-        isChecked: Boolean?,
+        isChecked: Boolean?
     ) {
         val preference = (findPreference(key) as? CheckBoxPreference)
         preference?.isChecked = isChecked == true
@@ -96,7 +96,7 @@ class EmailNotificationsPreferencesFragment :
 
     override fun onSharedPreferenceChanged(
         sharedPreferences: SharedPreferences,
-        key: String?,
+        key: String?
     ) {
         if (isSettingUser) {
             return
@@ -122,7 +122,7 @@ class EmailNotificationsPreferencesFragment :
             lifecycleScope.launchCatching {
                 userRepository.updateUser(
                     "preferences.emailNotifications.$pathKey",
-                    sharedPreferences.getBoolean(key, false),
+                    sharedPreferences.getBoolean(key, false)
                 )
             }
         }

@@ -39,7 +39,7 @@ class PrefsActivity :
 
     override fun onPreferenceStartScreen(
         preferenceFragment: PreferenceFragmentCompat,
-        preferenceScreen: PreferenceScreen,
+        preferenceScreen: PreferenceScreen
     ): Boolean {
         val fragment = createNextPage(preferenceScreen)
         if (fragment != null) {

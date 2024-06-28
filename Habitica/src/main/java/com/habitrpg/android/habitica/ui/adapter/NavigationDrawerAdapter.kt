@@ -7,7 +7,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
@@ -18,6 +17,7 @@ import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.inflate
 import java.util.Date
 
 class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
@@ -77,7 +77,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         val drawerItem = getItem(position)
         when {
@@ -129,7 +129,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return when (viewType) {
             2 -> {
@@ -137,7 +137,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 itemView.layoutParams =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        148.dpToPx(parent.context),
+                        148.dpToPx(parent.context)
                     )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
@@ -147,7 +147,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 promoView.layoutParams =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        118.dpToPx(parent.context),
+                        118.dpToPx(parent.context)
                     )
                 PromoMenuViewHolder(promoView)
             }
@@ -168,7 +168,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
         fun bind(
             drawerItem: HabiticaDrawerItem,
-            isSelected: Boolean,
+            isSelected: Boolean
         ) {
             titleTextView?.text = drawerItem.text
 
@@ -176,8 +176,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 itemView.setBackgroundColor(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.content_background_offset,
-                    ),
+                        R.color.content_background_offset
+                    )
                 )
                 itemView.background.alpha = 69
                 titleTextView?.setTextColor(tintColor)
@@ -185,14 +185,14 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 itemView.setBackgroundColor(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.content_background,
-                    ),
+                        R.color.content_background
+                    )
                 )
                 titleTextView?.setTextColor(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.text_primary,
-                    ),
+                        R.color.text_primary
+                    )
                 )
             }
 
@@ -208,7 +208,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
                     pillView.background = drawerItem.pillBackground ?: ContextCompat.getDrawable(
                         itemView.context,
-                        R.drawable.pill_bg_purple_200,
+                        R.drawable.pill_bg_purple_200
                     )
                     pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                     pillView.setPadding(pL, pT, pR, pB)

@@ -56,7 +56,7 @@ fun Fragment.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
 @OptIn(ExperimentalLayoutApi::class)
 private fun addContentToView(
     viewGroup: ViewGroup,
-    content: @Composable (() -> Unit) -> Unit,
+    content: @Composable (() -> Unit) -> Unit
 ) {
     viewGroup.addView(
         ComposeView(viewGroup.context).apply {
@@ -67,7 +67,7 @@ private fun addContentToView(
                     }
                 }
             }
-        },
+        }
     )
 }
 
@@ -76,7 +76,7 @@ private fun addContentToView(
 private fun BottomSheetWrapper(
     parent: ViewGroup,
     composeView: ComposeView,
-    content: @Composable (() -> Unit) -> Unit,
+    content: @Composable (() -> Unit) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState =
@@ -107,20 +107,20 @@ private fun BottomSheetWrapper(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
-                    Modifier
-                        .padding(horizontal = 4.dp)
-                        .background(
-                            HabiticaTheme.colors.windowBackground,
-                            RoundedCornerShape(topStart = radius, topEnd = radius),
-                        )
-                        .padding(vertical = 8.dp),
+                Modifier
+                    .padding(horizontal = 4.dp)
+                    .background(
+                        HabiticaTheme.colors.windowBackground,
+                        RoundedCornerShape(topStart = radius, topEnd = radius)
+                    )
+                    .padding(vertical = 8.dp)
             ) {
                 Box(
                     modifier =
-                        Modifier
-                            .padding(bottom = 16.dp)
-                            .background(colorResource(R.color.content_background_offset))
-                            .size(24.dp, 3.dp),
+                    Modifier
+                        .padding(bottom = 16.dp)
+                        .background(colorResource(R.color.content_background_offset))
+                        .size(24.dp, 3.dp)
                 )
                 content {
                     // Action passed for clicking close button in the content
@@ -128,11 +128,13 @@ private fun BottomSheetWrapper(
                         modalBottomSheetState.hide() // will trigger the LaunchedEffect
                     }
                 }
-                Spacer(Modifier.windowInsetsBottomHeight(
-                    WindowInsets.navigationBarsIgnoringVisibility
-                ))
+                Spacer(
+                    Modifier.windowInsetsBottomHeight(
+                        WindowInsets.navigationBarsIgnoringVisibility
+                    )
+                )
             }
-        },
+        }
     )
 
     BackHandler {

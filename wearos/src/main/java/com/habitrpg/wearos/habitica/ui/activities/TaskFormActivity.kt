@@ -34,7 +34,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
                         TaskType.TODO -> R.string.todo
                         TaskType.REWARD -> R.string.reward
                         else -> R.string.task
-                    },
+                    }
                 )
             binding.confirmationTitle.text = getString(R.string.new_task_x, typeName)
             binding.saveButton.setChipText(getString(R.string.save_task_x, typeName))
@@ -68,7 +68,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
                     binding.saveButton.isEnabled = true
                     binding.editTaskWrapper.isVisible = true
                     binding.taskConfirmationWrapper.isVisible = false
-                },
+                }
             ) {
                 viewModel.saveTask(binding.editText.text, taskType)
                 val data = Intent()
@@ -79,7 +79,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
                 parent.startActivity(
                     Intent(parent, TaskListActivity::class.java).apply {
                         putExtra("task_type", taskType?.value)
-                    },
+                    }
                 )
             }
         }
@@ -117,7 +117,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
 
     private fun updateTaskTypeButton(
         button: TextView,
-        thisType: TaskType,
+        thisType: TaskType
     ) {
         if (taskType == thisType) {
             button.backgroundTintList =

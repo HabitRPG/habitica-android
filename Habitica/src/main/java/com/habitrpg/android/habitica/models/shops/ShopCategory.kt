@@ -10,6 +10,7 @@ class ShopCategory {
     var path: String = ""
     var purchaseAll: Boolean? = null
     var pinType: String = ""
+
     @SerializedName("end")
     var endDate: Date? = null
 
