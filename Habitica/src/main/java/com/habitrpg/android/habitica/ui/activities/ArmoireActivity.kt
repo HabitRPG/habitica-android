@@ -63,6 +63,10 @@ class ArmoireActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_armoire
 
     private var hasUsedExtraArmoire = false
+    private var lastType: String? = null
+    private var lastKey: String? = null
+    private var lastText: String? = null
+    private var lastValue: String? = null
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityArmoireBinding.inflate(layoutInflater)
@@ -71,12 +75,23 @@ class ArmoireActivity : BaseActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean("hasUsedExtraArmoire", hasUsedExtraArmoire)
+        outState.putString("lastType", lastType)
+        outState.putString("lastKey", lastKey)
+        outState.putString("lastText", lastText)
+        outState.putString("lastValue", lastValue)
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         hasUsedExtraArmoire = savedInstanceState.getBoolean("hasUsedExtraArmoire")
+        lastType = savedInstanceState.getString("lastType")
+        lastKey = savedInstanceState.getString("lastKey")
+        lastText = savedInstanceState.getString("lastText")
+        lastValue = savedInstanceState.getString("lastValue")
+        if (lastType != null) {
+            configure(lastType ?: "", lastKey ?: "", lastText ?: "", lastValue)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -181,19 +196,19 @@ class ArmoireActivity : BaseActivity() {
         binding.dropRateButtonUnsubbed.setOnClickListener {
             showDropRateDialog()
         }
-        intent.extras?.let {
-            val args = ArmoireActivityArgs.fromBundle(it)
-            equipmentKey = args.key
-            configure(args.type, args.key, args.text, args.value)
+            intent.extras?.let {
+                val args = ArmoireActivityArgs.fromBundle(it)
+                equipmentKey = args.key
+                configure(args.type, args.key, args.text, args.value)
 
-            if (args.type == "gear") {
-                userViewModel.user.observeOnce(this) { user ->
-                    user?.loginIncentives?.let { totalCheckins ->
-                        reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
+                if (args.type == "gear") {
+                    userViewModel.user.observeOnce(this) { user ->
+                        user?.loginIncentives?.let { totalCheckins ->
+                            reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
+                        }
                     }
                 }
             }
-        }
     }
 
     private fun giveUserArmoire(): Boolean {
@@ -340,6 +355,11 @@ class ArmoireActivity : BaseActivity() {
         text: String,
         value: String? = "",
     ) {
+        lastType = type
+        lastKey = key
+        lastText = text
+        lastValue = value
+
         binding.titleView.text =
             text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         binding.equipButton.visibility = if (type == "gear") View.VISIBLE else View.GONE
