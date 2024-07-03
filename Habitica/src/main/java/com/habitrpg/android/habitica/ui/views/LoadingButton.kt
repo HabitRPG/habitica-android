@@ -108,7 +108,7 @@ fun LoadingButton(
                 when (state) {
                     LoadingButtonState.FAILED -> HabiticaTheme.colors.errorBackground
                     LoadingButtonState.SUCCESS -> Color.Transparent
-                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContainerColor else colorStyle.containerColor
+                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.containerColor else colorStyle.disabledContainerColor
                 },
             animationSpec = colorSpec,
         )
@@ -118,7 +118,7 @@ fun LoadingButton(
                 when (state) {
                     LoadingButtonState.FAILED -> Color.White
                     LoadingButtonState.SUCCESS -> if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
-                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.disabledContentColor else colorStyle.disabledContainerColor
+                    else -> if (state != LoadingButtonState.DISABLED) colorStyle.contentColor else colorStyle.disabledContentColor
                 },
             animationSpec = colorSpec,
         )
@@ -288,6 +288,12 @@ private fun Preview() {
             Text("Success!")
         }, content = {
             Text("Do something")
+        })
+        LoadingButton(LoadingButtonState.CONTENT, {}, content = {
+            Text("Do something")
+        })
+        LoadingButton(LoadingButtonState.DISABLED, {}, content = {
+            Text("Disabled Button")
         })
     }
 }

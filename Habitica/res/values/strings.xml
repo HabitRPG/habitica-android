@@ -1520,8 +1520,8 @@
     <string name="you_own_all_items">You own all of these items</string>
     <string name="try_on_next_month">You can try them on by customizing your avatar. Be sure to check back later for next month’s options!</string>
     <string name="try_on_next_season">You can try them on by customizing your avatar. Be sure to check back later for next season’s options!</string>
-    <string name="try_on_customize">"You can try them on by customizing your avatar. "</string>
-    <string name="try_on_equipment">"You can try them on by Equipment. Be sure to check back later for next month’s options! "</string>
+    <string name="try_on_customize">You can try them on by customizing your avatar.</string>
+    <string name="try_on_equipment">You can try them on from Equipment. New stock comes in at the beginning of each month!</string>
     <string name="healers">Healers</string>
     <string name="rogues">Rogues</string>
     <string name="warriors">Warriors</string>

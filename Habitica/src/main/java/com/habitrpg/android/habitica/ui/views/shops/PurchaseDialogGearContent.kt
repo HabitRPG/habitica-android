@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.shops
 import android.content.Context
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentGearBinding
 import com.habitrpg.android.habitica.models.inventory.Equipment
@@ -23,17 +24,18 @@ internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogConte
     }
 
     fun setEquipment(equipment: Equipment) {
-        if (equipment.isValid) {
+        if (equipment.isValid && equipment.type != "mystery") {
             configureFieldsForValue(binding.strLabel, binding.strValue, equipment.str)
             configureFieldsForValue(binding.perLabel, binding.perValue, equipment.per)
             configureFieldsForValue(binding.conLabel, binding.conValue, equipment.con)
             configureFieldsForValue(binding.intLabel, binding.intValue, equipment.intelligence)
         } else {
-            configureFieldsForValue(binding.strLabel, binding.strValue, 0)
-            configureFieldsForValue(binding.perLabel, binding.perValue, 0)
-            configureFieldsForValue(binding.conLabel, binding.conValue, 0)
-            configureFieldsForValue(binding.intLabel, binding.intValue, 0)
+            hideStatsTable()
         }
+    }
+
+    fun hideStatsTable() {
+        binding.statsTable.isVisible = false
     }
 
     private fun configureFieldsForValue(

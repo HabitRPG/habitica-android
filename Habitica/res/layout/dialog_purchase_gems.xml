@@ -15,7 +15,8 @@
     <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/imageView"
         android:layout_width="@dimen/shopitem_image_size"
-        android:layout_height="@dimen/shopitem_image_size" />
+        android:layout_height="@dimen/shopitem_image_size"
+        android:layout_marginTop="@dimen/spacing_medium" />
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"

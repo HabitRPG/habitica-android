@@ -124,9 +124,13 @@ class PurchaseDialog(
                 }
                 shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
-                    lifecycleScope.launchCatching {
-                        inventoryRepository.getEquipment(shopItem.key).firstOrNull()
-                            ?.let { contentView.setEquipment(it) }
+                    if (shopItem.purchaseType == "mystery_set") {
+                        lifecycleScope.launchCatching {
+                            inventoryRepository.getEquipment(shopItem.key).firstOrNull()
+                                ?.let { contentView.setEquipment(it) }
+                        }
+                    } else {
+                        contentView.hideStatsTable()
                     }
                     checkGearClass()
                 }
