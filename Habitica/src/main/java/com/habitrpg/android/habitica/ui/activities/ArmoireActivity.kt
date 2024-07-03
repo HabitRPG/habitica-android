@@ -92,6 +92,13 @@ class ArmoireActivity : BaseActivity() {
         if (lastType != null) {
             configure(lastType ?: "", lastKey ?: "", lastText ?: "", lastValue)
         }
+        if (hasUsedExtraArmoire) {
+            if (binding.adButton.visibility == View.VISIBLE) {
+                binding.adButton.visibility = View.INVISIBLE
+            } else {
+                binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
