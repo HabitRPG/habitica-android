@@ -1532,6 +1532,7 @@
     <string name="error">Error</string>
     <string name="error_loading_gems">There was an error loading gems</string>
     <string name="clear_database">Clear Database</string>
+    <string name="clear_cache_settings">Clear Cache</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

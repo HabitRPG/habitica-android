@@ -396,6 +396,11 @@
     <PreferenceCategory
         android:title="@string/maintenance"
         android:layout="@layout/preference_category">
+        <Preference
+                android:key="clear_database"
+                android:title="@string/clear_cache_settings"
+                android:layout="@layout/preference_child_summary"
+                app:isPreferenceVisible="false"/>
         <Preference android:title="@string/reload_content"
             android:key="reload_content"
             android:layout="@layout/preference_child_summary"/>
@@ -404,10 +409,5 @@
             android:entries="@array/server_urls"
             android:entryValues="@array/server_urls"
             android:layout="@layout/preference_child_summary" />
-        <Preference
-                android:key="clear_database"
-                android:title="@string/clear_database"
-                android:layout="@layout/preference_child_summary"
-                app:isPreferenceVisible="false"/>
     </PreferenceCategory>
 </PreferenceScreen>
