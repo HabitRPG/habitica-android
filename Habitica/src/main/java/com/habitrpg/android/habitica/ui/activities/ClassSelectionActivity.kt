@@ -275,7 +275,7 @@ class ClassSelectionActivity : BaseActivity() {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.opt_out_confirmation))
         alert.setMessage(getString(R.string.opt_out_description))
-        alert.addButton(R.string.opt_out_class, true, true) { _, _ ->
+        alert.addButton(R.string.opt_out_class, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 // Set Player to have no class, and opt out
                 classWasUnset
@@ -332,20 +332,14 @@ class ClassSelectionActivity : BaseActivity() {
     private fun selectClass(selectedClass: String) {
         shouldFinish = true
         val chosenClass = if (selectedClass == "mage") "wizard" else selectedClass
-        if (isClassSelected) {
-            val dialog = this.displayProgressDialog(getString(R.string.changing_class_progress))
-            lifecycleScope.launch(Dispatchers.Main) {
-                userRepository.changeClass(chosenClass)
-                dialog.hide()
-                displayClassChanged(chosenClass)
-            }
-        } else {
-            val dialog = this.displayProgressDialog(getString(R.string.choosing_class_progress))
-            lifecycleScope.launch(Dispatchers.Main) {
-                userRepository.changeClass(chosenClass)
-                dialog.hide()
-                displayClassChanged(chosenClass)
-            }
+        val dialog = this.displayProgressDialog(getString(
+            if (isClassSelected) R.string.changing_class_progress
+            else R.string.choosing_class_progress)
+        )
+        lifecycleScope.launch(Dispatchers.Main) {
+            userRepository.changeClass(chosenClass)
+            dialog.hide()
+            displayClassChanged(chosenClass)
         }
 
         // After class change was successful, check for in-app review eligibility the following check-in
