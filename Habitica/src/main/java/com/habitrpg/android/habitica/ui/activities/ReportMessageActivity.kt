@@ -95,9 +95,9 @@ class ReportMessageActivity : BaseActivity() {
     }
 
     private fun reportMessage() {
-        if (isReporting) {
-            return
-        }
+
+        if (isReporting) return
+
         isReporting = true
         messageID?.let {
             lifecycleScope.launch(
@@ -142,7 +142,7 @@ class ReportMessageActivity : BaseActivity() {
     fun setSystemBarTheme(isDark: Boolean) {
         // Fetch the current flags.
         val lFlags = window.decorView.systemUiVisibility
-        // Update the SystemUiVisibility dependening on whether we want a Light or Dark theme.
+        // Update the SystemUiVisibility depending on whether we want a Light or Dark theme.
         window.decorView.systemUiVisibility =
             if (isDark) lFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() else lFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }

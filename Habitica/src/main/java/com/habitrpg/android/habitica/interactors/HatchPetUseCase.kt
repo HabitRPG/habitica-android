@@ -69,7 +69,7 @@ class HatchPetUseCase
                 }
                 dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                     MainScope().launchCatching {
-                        SharePetUseCase().callInteractor(
+                        SharePetUseCase().callInterActor(
                             SharePetUseCase.RequestValues(
                                 petKey,
                                 requestValues.context.getString(

@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
-import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.menu.HabitIcaDrawerItem
 import com.habitrpg.android.habitica.ui.viewHolders.ComposableViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
@@ -41,20 +41,20 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
             }
         }
 
-    internal val items: MutableList<HabiticaDrawerItem> = ArrayList()
+    internal val items: MutableList<HabitIcaDrawerItem> = ArrayList()
     var selectedItem: Int? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    var itemSelectedEvents: ((HabiticaDrawerItem) -> Unit)? = null
+    var itemSelectedEvents: ((HabitIcaDrawerItem) -> Unit)? = null
     var promoClosedSubject: ((String) -> Unit)? = null
 
     var activePromo: HabiticaPromotion? = null
     var currentEvent: WorldStateEvent? = null
 
-    fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
+    fun getItemWithIdentifier(identifier: String): HabitIcaDrawerItem? =
         items.find { it.identifier == identifier }
 
     private fun getItemPosition(identifier: String): Int =
@@ -63,13 +63,13 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
     private fun getVisibleItemPosition(identifier: String): Int =
         items.filter { it.isVisible }.indexOfFirst { it.identifier == identifier }
 
-    fun updateItem(item: HabiticaDrawerItem) {
+    fun updateItem(item: HabitIcaDrawerItem) {
         val position = getItemPosition(item.identifier)
         items[position] = item
         notifyDataSetChanged()
     }
 
-    fun updateItems(newItems: List<HabiticaDrawerItem>) {
+    fun updateItems(newItems: List<HabitIcaDrawerItem>) {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
@@ -167,7 +167,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
         private val additionalInfoView: TextView? = itemView.findViewById(R.id.additionalInfoView)
 
         fun bind(
-            drawerItem: HabiticaDrawerItem,
+            drawerItem: HabitIcaDrawerItem,
             isSelected: Boolean,
         ) {
             titleTextView?.text = drawerItem.text
@@ -232,7 +232,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
     class SectionHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var backgroundTintColor: Int = 0
 
-        fun bind(drawerItem: HabiticaDrawerItem) {
+        fun bind(drawerItem: HabitIcaDrawerItem) {
             (itemView as? TextView)?.text = drawerItem.text
             itemView.setBackgroundColor(backgroundTintColor)
         }

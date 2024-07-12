@@ -34,7 +34,7 @@ class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
             HabiticaBaseApplication.getInstance(requestValues.context)?.currentActivity?.get()
         val containerView = (currentActivity?.window?.decorView as? ViewGroup)
         containerView?.addView(petWrapper.root)
-        if (currentActivity != null) {
+        currentActivity?.let {
             petWrapper.backgroundView.setContent {
                 HabiticaTheme {
                     BackgroundScene(Modifier.clip(HabiticaTheme.shapes.large))

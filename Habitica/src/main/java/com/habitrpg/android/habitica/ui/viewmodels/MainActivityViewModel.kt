@@ -42,8 +42,8 @@ class MainActivityViewModel
         val contentRepository: ContentRepository,
         val taskRepository: TaskRepository,
         val inventoryRepository: InventoryRepository,
-        val taskAlarmManager: TaskAlarmManager,
-        val maintenanceService: MaintenanceApiService,
+        private val taskAlarmManager: TaskAlarmManager,
+        private val maintenanceService: MaintenanceApiService,
     ) : BaseViewModel(userRepository, userViewModel), TutorialView.OnTutorialReaction {
         val isAuthenticated: Boolean
             get() = hostConfig.hasAuthentication()
@@ -113,9 +113,7 @@ class MainActivityViewModel
                             if (sharedPreferences.getBoolean("usePushNotifications", true)) {
                                 requestNotificationPermission.value = true
                             }
-                        } else {
-                            pushNotificationManager.addPushDeviceUsingStoredToken()
-                        }
+                        } else pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
                     inventoryRepository.retrieveInAppRewards()
                     contentRepository.retrieveContent()
@@ -144,7 +142,7 @@ class MainActivityViewModel
 
         fun logTutorialStatus(
             step: TutorialStep,
-            complete: Boolean,
+            complete: Boolean
         ) {
             val additionalData = HashMap<String, Any>()
             additionalData["eventLabel"] = step.identifier + "-android"

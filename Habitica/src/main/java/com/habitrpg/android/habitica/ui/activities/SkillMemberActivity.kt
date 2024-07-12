@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -46,6 +47,7 @@ class SkillMemberActivity : BaseActivity() {
         loadMemberList()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun loadMemberList() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter()

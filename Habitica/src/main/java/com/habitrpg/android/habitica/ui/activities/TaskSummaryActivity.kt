@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
@@ -9,7 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -92,10 +93,10 @@ class TaskSummaryViewModel
     }
 
 @AndroidEntryPoint
-class TaskSummaryActivity : BaseActivity() {
-    override fun getLayoutResId(): Int? = null
+class TaskSummaryActivity : ComponentActivity() {
 
-    private val viewModel: TaskSummaryViewModel by viewModels()
+
+    private val viewModel by viewModels<TaskSummaryViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,8 +141,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
             ) {
                 Button(
                     onClick = {
-                        if (activity != null) {
-                            activity.finish()
+                        activity?.let { activity.finish()
                             return@Button
                         }
                         MainNavigationController.navigateBack()
@@ -152,10 +152,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                     Image(
                         painterResource(R.drawable.arrow_back),
                         stringResource(R.string.action_back),
-                        colorFilter =
-                            ColorFilter.tint(
-                                topTextColor,
-                            ),
+                        colorFilter = ColorFilter.tint(topTextColor)
                     )
                 }
                 Text(
@@ -174,8 +171,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
                     )
                     .padding(20.dp, 5.dp)
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
+                    .fillMaxSize()
             ) {
                 Text(
                     stringResource(R.string.title),
@@ -261,9 +257,9 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             fontWeight = FontWeight.Medium,
                             modifier = titleModifier.padding(bottom = 4.dp),
                         )
-                        for (item in checklist) {
+                         checklist.forEach {
                             Text(
-                                item.text ?: "",
+                                it.text ?: "",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = darkestColor,
@@ -311,9 +307,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                             CompletedAt(item.completedDate)
                                         }
                                     )
-                                } else {
-                                    null
-                                },
+                                } else { null },
                         )
                     }
                     task?.group?.assignedUsersDetail?.find { it.assignedUserID == viewModel.userViewModel.userID }

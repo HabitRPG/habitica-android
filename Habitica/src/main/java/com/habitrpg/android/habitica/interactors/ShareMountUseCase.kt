@@ -34,7 +34,7 @@ class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
         mountWrapper.mountImageview.setMount(requestValues.mountKey)
         val currentActivity =
             HabiticaBaseApplication.getInstance(requestValues.context)?.currentActivity?.get()
-        // Add the view to the decorView so that it can be layouted
+        // Add the view to the decorView so that it can be layOuted
         val containerView = (currentActivity?.window?.decorView as? ViewGroup)
         containerView?.addView(mountWrapper.root)
         if (currentActivity != null) {
@@ -60,7 +60,7 @@ class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
             delay(100)
             attempts++
         }
-        // Draw it to the canvas once it's layouted
+        // Draw it to the canvas once it's layOuted
         mountWrapper.root.doOnNextLayout {
             mountWrapper.root.draw(canvas)
             (

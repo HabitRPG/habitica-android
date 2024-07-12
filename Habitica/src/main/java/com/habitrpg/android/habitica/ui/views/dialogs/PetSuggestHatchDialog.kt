@@ -256,7 +256,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         egg: Egg,
     ) {
         longLivingScope.launchCatching {
-            hatchPetUseCase.callInteractor(
+            hatchPetUseCase.callInterActor(
                 HatchPetUseCase.RequestValues(
                     potion,
                     egg,

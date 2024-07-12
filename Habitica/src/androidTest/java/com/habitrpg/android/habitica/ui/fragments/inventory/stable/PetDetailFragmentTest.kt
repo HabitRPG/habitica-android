@@ -64,7 +64,7 @@ internal class PetDetailRecyclerFragmentTest :
     @Test
     fun canFeedPet() {
         val slot = CapturingSlot<FeedPetUseCase.RequestValues>()
-        coEvery { feedPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
+        coEvery { feedPetUseCase.callInterActor(capture(slot)) } returns mockk(relaxed = true)
         every {
             inventoryRepository.getPets(
                 any(),
@@ -87,7 +87,7 @@ internal class PetDetailRecyclerFragmentTest :
                 childWith<PetItem> { withContentDescription("Skeleton Cactus") }.click()
                 KView { withText(R.string.feed) }.click()
                 KView { withText("Meat") }.click()
-                coVerify { feedPetUseCase.callInteractor(any()) }
+                coVerify { feedPetUseCase.callInterActor(any()) }
                 slot.captured.pet.key shouldBe "Cactus-Skeleton"
                 slot.captured.food.key shouldBe "Meat"
             }
@@ -97,7 +97,7 @@ internal class PetDetailRecyclerFragmentTest :
     @Test
     fun canUseSaddle() {
         val slot = CapturingSlot<FeedPetUseCase.RequestValues>()
-        coEvery { feedPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
+        coEvery { feedPetUseCase.callInterActor(capture(slot)) } returns mockk(relaxed = true)
         every {
             inventoryRepository.getPets(
                 any(),
@@ -117,7 +117,7 @@ internal class PetDetailRecyclerFragmentTest :
             recycler {
                 childWith<PetItem> { withContentDescription("Shade Fox") }.click()
                 KView { withText(R.string.use_saddle) }.click()
-                coVerify { feedPetUseCase.callInteractor(any()) }
+                coVerify { feedPetUseCase.callInterActor(any()) }
                 slot.captured.pet.key shouldBe "Fox-Shade"
                 slot.captured.food.key shouldBe "Saddle"
             }

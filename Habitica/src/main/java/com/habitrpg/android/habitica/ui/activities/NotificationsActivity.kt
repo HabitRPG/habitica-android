@@ -175,36 +175,36 @@ class NotificationsActivity :
                 mutableSetOf<View>().apply {
                     addAll(binding.notificationItems.children)
                 }
-            notifications.forEach {
+            notifications.forEach { notification ->
                 val item: View? =
-                    when (it.type) {
-                        Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
-                        Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
+                    when (notification.type) {
+                        Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(notification)
+                        Notification.Type.NEW_STUFF.type -> createNewStuffNotification(notification)
                         Notification.Type.UNALLOCATED_STATS_POINTS.type ->
                             createUnallocatedStatsNotification(
-                                it,
+                                notification,
                             )
 
-                        Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
+                        Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(notification)
                         Notification.Type.GROUP_TASK_NEEDS_WORK.type ->
                             createGroupTaskNeedsWorkNotification(
-                                it,
+                                notification,
                             )
 
                         Notification.Type.GROUP_TASK_APPROVED.type ->
                             createGroupTaskApprovedNotification(
-                                it,
+                                notification,
                             )
 
                         Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type ->
                             createGroupTaskNeedsApprovalNotification(
-                                it,
+                                notification,
                             )
 
-                        Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
-                        Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
-                        Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
-                        Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
+                        Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(notification)
+                        Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(notification)
+                        Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(notification)
+                        Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(notification)
                         else -> null
                     }
 

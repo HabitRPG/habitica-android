@@ -36,12 +36,9 @@ class GemPurchaseActivity : PurchaseActivity() {
     }
 
     private fun createFragment(showSubscription: Boolean) {
-        val fragment =
-            if (showSubscription) {
-                SubscriptionFragment()
-            } else {
-                GemsPurchaseFragment()
-            }
+        val fragment = if (showSubscription) SubscriptionFragment()
+             else GemsPurchaseFragment()
+
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment as Fragment)

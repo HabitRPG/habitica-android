@@ -23,7 +23,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -106,7 +105,7 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
                         bundleOf(Pair("gemPrice", gemPrice), Pair("sku", "")),
                     )
                     MainScope().launchCatching {
-                        insufficientGemsUseCase.callInteractor(
+                        insufficientGemsUseCase.callInterActor(
                             InsufficientGemsUseCase.RequestValues(
                                 gemPrice,
                                 parentActivity,

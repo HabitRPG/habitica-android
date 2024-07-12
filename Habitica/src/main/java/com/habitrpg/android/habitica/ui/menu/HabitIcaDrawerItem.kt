@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import com.habitrpg.android.habitica.models.user.User
 
-data class HabiticaDrawerItem(
+data class HabitIcaDrawerItem(
     var transitionId: Int,
     val identifier: String,
     val text: String,

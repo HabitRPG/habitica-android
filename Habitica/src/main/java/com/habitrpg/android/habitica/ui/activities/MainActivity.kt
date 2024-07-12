@@ -13,7 +13,6 @@ import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -150,7 +149,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     val viewModel: MainActivityViewModel by viewModels()
     private var sideAvatarView: AvatarView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
-    var drawerToggle: ActionBarDrawerToggle? = null
+    private var drawerToggle: ActionBarDrawerToggle? = null
     var showBirthdayIcon = false
     var showBackButton: Boolean? = null
         set(value) {
@@ -174,26 +173,23 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
         ) { granted ->
-            if (granted) {
+            if (granted)
                 viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
-            } else {
+             else
                 viewModel.updateAllowPushNotifications(false)
-            }
         }
 
     private val classSelectionResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.retrieveUser(true, true)
+                userRepository.retrieveUser(withTasks = true, forced = true)
             }
         }
 
     val isAppBarExpanded: Boolean
         get() = binding.content.appbar.height - binding.content.appbar.bottom == 0
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_main
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -220,17 +216,15 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             return
-        } else {
+        } else
             Wearable.getCapabilityClient(this).addLocalCapability("provide_auth")
-        }
 
         setupToolbar(binding.content.toolbar)
 
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
-        viewModel.user.observe(this) {
-            setUserData(it)
-        }
+        viewModel.user.observe(this) { setUserData(it) }
+
         lifecycleScope.launchCatching {
             userRepository.getUserQuestStatus().collect {
                 userQuestStatus = it
@@ -259,15 +253,14 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         drawerView: View,
                         slideOffset: Float,
                     ) {
-                        if (!isUsingNightModeResources()) {
-                            if (slideOffset < 0.5f && isOpeningDrawer == null) {
-                                window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                        if (!isUsingNightModeResources() && isOpeningDrawer == null) {
+                            if (slideOffset <= 0.5f) {
+                                window.updateStatusBarColor(getThemeColor(
+                                    R.attr.colorPrimaryDark), false)
                                 isOpeningDrawer = true
-                            } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
-                                window.updateStatusBarColor(
-                                    getThemeColor(R.attr.headerBackgroundColor),
-                                    true,
-                                )
+                            } else  {
+                                window.updateStatusBarColor(getThemeColor(
+                                    R.attr.headerBackgroundColor), true)
                                 isOpeningDrawer = false
                             }
                         }
@@ -275,17 +268,17 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
                     override fun onDrawerOpened(drawerView: View) {
                         hideKeyboard()
-                        if (!isUsingNightModeResources()) {
+                        if (!isUsingNightModeResources())
                             window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
-                        }
+
                         isOpeningDrawer = null
                         drawerFragment?.updatePromo()
                     }
 
                     override fun onDrawerClosed(drawerView: View) {
-                        if (!isUsingNightModeResources()) {
+                        if (!isUsingNightModeResources())
                             window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
-                        }
+
                         isOpeningDrawer = null
                     }
 
@@ -363,9 +356,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         onClick = {
                                             dismiss()
                                             user?.let {
-                                                val usecase = ShareAvatarUseCase()
                                                 lifecycleScope.launchCatching {
-                                                    usecase.callInteractor(
+                                                    ShareAvatarUseCase().callInterActor(
                                                         ShareAvatarUseCase.RequestValues(
                                                             this@MainActivity,
                                                             it,
@@ -403,11 +395,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         intent.putExtras(bundle)
                         classSelectionResult.launch(intent)
                     },
-                    configManager = appConfigManager,
+                    configManager = appConfigManager
                 )
             }
         }
-
         viewModel.onCreate()
     }
 
@@ -682,7 +673,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     else -> 0.0
                 }
             lifecycleScope.launchCatching {
-                notifyUserUseCase.callInteractor(
+                notifyUserUseCase.callInterActor(
                     NotifyUserUseCase.RequestValues(
                         this@MainActivity,
                         snackbarContainer,
@@ -701,7 +692,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         val showItemsFound = userQuestStatus == UserQuestStatus.QUEST_COLLECT
         lifecycleScope.launchCatching {
-            displayItemDropUseCase.callInteractor(
+            displayItemDropUseCase.callInterActor(
                 DisplayItemDropUseCase.RequestValues(
                     data,
                     this@MainActivity,

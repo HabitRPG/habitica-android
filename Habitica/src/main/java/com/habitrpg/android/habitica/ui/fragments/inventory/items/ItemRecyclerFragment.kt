@@ -267,7 +267,7 @@ class ItemRecyclerFragment :
     ) {
         (activity as? BaseActivity)?.let {
             lifecycleScope.launchCatching {
-                hatchPetUseCase.callInteractor(
+                hatchPetUseCase.callInterActor(
                     HatchPetUseCase.RequestValues(
                         potion,
                         egg,

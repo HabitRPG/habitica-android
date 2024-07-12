@@ -14,11 +14,11 @@ class InsufficientGemsUseCase
         override suspend fun run(requestValues: RequestValues) {
             val activity = requestValues.activity as? MainActivity ?: return
             val gemSku =
-                if (requestValues.gemPrice > 4) {
+                if (requestValues.gemPrice > 4)
                     PurchaseTypes.PURCHASE_21_GEMS
-                } else {
+                 else
                     PurchaseTypes.PURCHASE_4_GEMS
-                }
+
             val sku = purchaseHandler.getInAppPurchaseSKU(gemSku) ?: return
             purchaseHandler.purchase(activity, sku)
         }

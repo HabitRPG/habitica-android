@@ -127,12 +127,8 @@ class LoginActivity : BaseActivity() {
                 ExceptionHandler.reportError(it)
             },
         ) {
-            val response = apiClient.registerUser(username, email, password, confirmPassword)
-            if (response != null) {
-                handleAuthResponse(response)
-            } else {
-                hideProgress()
-            }
+            apiClient.registerUser(username, email, password, confirmPassword)
+                ?.let { handleAuthResponse(it) } ?: hideProgress()
         }
     }
 
@@ -302,10 +298,10 @@ class LoginActivity : BaseActivity() {
             FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(true, true)
-            if (isNew) {
+            userRepository.retrieveUser(withTasks = true, forced = true)
+            if (isNew)
                 startSetupActivity()
-            } else {
+            else {
                 startMainActivity()
                 Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
             }
@@ -313,9 +309,7 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_toggleRegistering -> toggleRegistering()
-        }
+        if (item.itemId == R.id.action_toggleRegistering ) toggleRegistering()
         return super.onOptionsItemSelected(item)
     }
 
@@ -349,9 +343,7 @@ class LoginActivity : BaseActivity() {
                 ) { isNew ->
                     handleAuthResponse(isNew)
                 }
-            } else {
-                binding.googleLoginProgress.visibility = View.GONE
-            }
+            } else binding.googleLoginProgress.visibility = View.GONE
         }
 
     private val recoverFromPlayServicesErrorResult =
@@ -378,9 +370,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun backButtonClicked() {
-        if (isShowingForm) {
-            hideForm()
-        }
+        if (isShowingForm) hideForm()
     }
 
     private fun showForm() {

@@ -19,7 +19,7 @@ class ShareAvatarUseCase
                     showPet = true,
                 )
             avatarView.setAvatar(requestValues.avatar)
-            var sharedImage: Bitmap? = null
+            var sharedImage: Bitmap?
             avatarView.onAvatarImageReady { image ->
                 sharedImage = image?.scale(image.width * 3, image.height * 3, false)
                 requestValues.activity.shareContent(

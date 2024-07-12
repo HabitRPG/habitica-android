@@ -134,7 +134,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     @Test
     fun canHatchPetWithEggs() {
         val slot = CapturingSlot<HatchPetUseCase.RequestValues>()
-        coEvery { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
+        coEvery { hatchPetUseCase.callInterActor(capture(slot)) } returns mockk(relaxed = true)
         fragment.itemType = "eggs"
         launchFragment()
         screen {
@@ -142,7 +142,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
                 childWith<ItemItem> { withDescendant { withText("Wolf") } }.click()
                 KView { withText(R.string.hatch_with_potion) }.click()
                 KView { withText("Shade") }.click()
-                coVerify { hatchPetUseCase.callInteractor(any()) }
+                coVerify { hatchPetUseCase.callInterActor(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
             }
@@ -152,7 +152,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     @Test
     fun canHatchPetWithPotions() {
         val slot = CapturingSlot<HatchPetUseCase.RequestValues>()
-        coEvery { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
+        coEvery { hatchPetUseCase.callInterActor(capture(slot)) } returns mockk(relaxed = true)
         fragment.itemType = "hatchingPotions"
         launchFragment()
         screen {
@@ -160,7 +160,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
                 childWith<ItemItem> { withDescendant { withText("Shade") } }.click()
                 KView { withText(R.string.hatch_egg) }.click()
                 KView { withText("Wolf") }.click()
-                coVerify { hatchPetUseCase.callInteractor(any()) }
+                coVerify { hatchPetUseCase.callInterActor(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
             }

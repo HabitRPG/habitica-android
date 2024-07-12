@@ -79,9 +79,8 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             }
         }
 
-        if (giftedUsername.isNullOrBlank() && giftedUserID.isNullOrBlank()) {
+        if (giftedUsername.isNullOrBlank() && giftedUserID.isNullOrBlank())
             showMemberLoadingErrorDialog()
-        }
 
         if (giftedUsername?.isNotBlank() == true) {
             binding.usernameTextView.text = "@$giftedUsername"
@@ -108,11 +107,11 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             giftedUsername = member.username
         }
 
-        if (appConfigManager.activePromo()?.identifier == "g1g1") {
-            binding.giftSubscriptionContainer.visibility = View.VISIBLE
-        } else {
-            binding.giftSubscriptionContainer.visibility = View.GONE
-        }
+        binding.giftSubscriptionContainer.visibility =
+            if (appConfigManager.activePromo()?.identifier == "g1g1")
+                View.VISIBLE
+            else
+                View.GONE
     }
 
     private fun showMemberLoadingErrorDialog() {
@@ -129,9 +128,8 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             val subscriptions = purchaseHandler.getAllGiftSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
-                for (sku in skus) {
-                    updateButtonLabel(sku)
-                }
+                skus.forEach { updateButtonLabel(it) }
+
                 skus.minByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
                     ?.let { selectSubscription(it) }
             }
@@ -140,7 +138,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
     private fun updateButtonLabel(sku: ProductDetails) {
         val matchingView = buttonForSku(sku)
-        if (matchingView != null) {
+        matchingView?.let {
             matchingView.setPriceText(sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
             matchingView.sku = sku.productId
             matchingView.setOnPurchaseClickListener { selectSubscription(sku) }
@@ -148,9 +146,8 @@ class GiftSubscriptionActivity : PurchaseActivity() {
     }
 
     private fun selectSubscription(sku: ProductDetails) {
-        for (thisSku in skus) {
-            buttonForSku(thisSku)?.setIsSelected(false)
-        }
+        skus.forEach { buttonForSku(it)?.setIsSelected(false) }
+
         this.selectedSubscriptionSku = sku
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
         subscriptionOptionButton?.setIsSelected(true)

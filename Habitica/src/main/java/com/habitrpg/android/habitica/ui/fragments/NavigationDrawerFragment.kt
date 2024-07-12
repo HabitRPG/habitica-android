@@ -41,7 +41,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
-import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.menu.HabitIcaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -184,9 +184,9 @@ class NavigationDrawerFragment : DialogFragment() {
                     val item = getItemWithIdentifier(SIDEBAR_BIRTHDAY)
                     if (event != null && item == null) {
                         adapter.currentEvent = event
-                        val birthdayItem = HabiticaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
+                        val birthdayItem = HabitIcaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
                         birthdayItem.itemViewType = 6
-                        val newItems = mutableListOf<HabiticaDrawerItem>()
+                        val newItems = mutableListOf<HabitIcaDrawerItem>()
                         newItems.addAll(adapter.items)
                         newItems.add(0, birthdayItem)
                         adapter.updateItems(newItems)
@@ -392,31 +392,31 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun initializeMenuItems() {
-        val items = ArrayList<HabiticaDrawerItem>()
+        val items = ArrayList<HabitIcaDrawerItem>()
         context?.let { context ->
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.tasksFragment,
                     SIDEBAR_TASKS,
                     context.getString(R.string.sidebar_tasks),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.skillsFragment,
                     SIDEBAR_SKILLS,
                     context.getString(R.string.sidebar_skills),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.statsFragment,
                     SIDEBAR_STATS,
                     context.getString(R.string.sidebar_stats),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.achievementsFragment,
                     SIDEBAR_ACHIEVEMENTS,
                     context.getString(R.string.sidebar_achievements),
@@ -424,7 +424,7 @@ class NavigationDrawerFragment : DialogFragment() {
             )
 
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     0,
                     SIDEBAR_INVENTORY,
                     context.getString(R.string.sidebar_shops),
@@ -432,20 +432,20 @@ class NavigationDrawerFragment : DialogFragment() {
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.marketFragment,
                     SIDEBAR_SHOPS_MARKET,
                     context.getString(R.string.market),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.questShopFragment,
                     SIDEBAR_SHOPS_QUEST,
                     context.getString(R.string.questShop),
                 ),
             )
-            val customizationShopItem = HabiticaDrawerItem(
+            val customizationShopItem = HabitIcaDrawerItem(
                 R.id.customizationsShopFragment,
                 SIDEBAR_SHOPS_CUSTOMIZATIONS,
                 context.getString(R.string.customizations),
@@ -455,14 +455,14 @@ class NavigationDrawerFragment : DialogFragment() {
                 customizationShopItem
             )
             val seasonalShopEntry =
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.seasonalShopFragment,
                     SIDEBAR_SHOPS_SEASONAL,
                     context.getString(R.string.seasonalShop),
                 )
             items.add(seasonalShopEntry)
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.timeTravelersShopFragment,
                     SIDEBAR_SHOPS_TIMETRAVEL,
                     context.getString(R.string.timeTravelers),
@@ -470,7 +470,7 @@ class NavigationDrawerFragment : DialogFragment() {
             )
 
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     0,
                     SIDEBAR_INVENTORY,
                     context.getString(R.string.sidebar_section_inventory),
@@ -478,49 +478,49 @@ class NavigationDrawerFragment : DialogFragment() {
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.avatarOverviewFragment,
                     SIDEBAR_AVATAR,
                     context.getString(R.string.sidebar_avatar),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.equipmentOverviewFragment,
                     SIDEBAR_EQUIPMENT,
                     context.getString(R.string.sidebar_equipment),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.itemsFragment,
                     SIDEBAR_ITEMS,
                     context.getString(R.string.sidebar_items),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.stableFragment,
                     SIDEBAR_STABLE,
                     context.getString(R.string.sidebar_stable),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.gemPurchaseActivity,
                     SIDEBAR_GEMS,
                     context.getString(R.string.sidebar_gems),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.subscriptionPurchaseActivity,
                     SIDEBAR_SUBSCRIPTION,
                     context.getString(R.string.sidebar_subscription),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     0,
                     SIDEBAR_SOCIAL,
                     context.getString(R.string.sidebar_section_social),
@@ -528,7 +528,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.partyFragment,
                     SIDEBAR_PARTY,
                     context.getString(R.string.sidebar_party),
@@ -536,7 +536,7 @@ class NavigationDrawerFragment : DialogFragment() {
             )
             if (!configManager.hideChallenges()) {
                 items.add(
-                    HabiticaDrawerItem(
+                    HabitIcaDrawerItem(
                         R.id.challengesOverviewFragment,
                         SIDEBAR_CHALLENGES,
                         context.getString(R.string.sidebar_challenges),
@@ -545,7 +545,7 @@ class NavigationDrawerFragment : DialogFragment() {
             }
 
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     0,
                     SIDEBAR_ABOUT_HEADER,
                     context.getString(R.string.sidebar_about),
@@ -553,21 +553,21 @@ class NavigationDrawerFragment : DialogFragment() {
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.newsFragment,
                     SIDEBAR_NEWS,
                     context.getString(R.string.sidebar_news),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.supportMainFragment,
                     SIDEBAR_HELP,
                     context.getString(R.string.sidebar_help),
                 ),
             )
             items.add(
-                HabiticaDrawerItem(
+                HabitIcaDrawerItem(
                     R.id.aboutFragment,
                     SIDEBAR_ABOUT,
                     context.getString(R.string.sidebar_about),
@@ -575,14 +575,14 @@ class NavigationDrawerFragment : DialogFragment() {
             )
         }
 
-        val promoItem = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_PROMO)
+        val promoItem = HabitIcaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_PROMO)
         promoItem.itemViewType = 5
         promoItem.isVisible = false
         items.add(0, promoItem)
 
         if (configManager.showSubscriptionBanner()) {
             val item =
-                HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
+                HabitIcaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
             item.itemViewType = 2
             items.add(item)
         }
@@ -709,7 +709,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    private fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
+    private fun getItemWithIdentifier(identifier: String): HabitIcaDrawerItem? =
         adapter.getItemWithIdentifier(identifier)
 
     private fun setDisplayName(name: String?) {
@@ -790,7 +790,7 @@ class NavigationDrawerFragment : DialogFragment() {
             promoItem.isVisible =
                 !sharedPreferences.getBoolean("hide${activePromo.identifier}", false)
             adapter.activePromo = activePromo
-            var promotedItem: HabiticaDrawerItem? = null
+            var promotedItem: HabitIcaDrawerItem? = null
             if (activePromo.promoType == PromoType.GEMS_AMOUNT || activePromo.promoType == PromoType.GEMS_PRICE) {
                 promotedItem = getItemWithIdentifier(SIDEBAR_GEMS)
             }

@@ -355,7 +355,7 @@ fun PetBottomSheet(
             modifier = Modifier.padding(bottom = 16.dp),
             onClick = {
                 MainScope().launchCatching {
-                    SharePetUseCase().callInteractor(
+                    SharePetUseCase().callInterActor(
                         SharePetUseCase.RequestValues(
                             pet.key,
                             "",

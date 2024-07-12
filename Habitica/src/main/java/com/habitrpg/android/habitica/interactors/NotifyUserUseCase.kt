@@ -23,9 +23,7 @@ import java.text.NumberFormat
 import javax.inject.Inject
 import kotlin.math.abs
 
-class NotifyUserUseCase
-    @Inject
-    constructor(
+class NotifyUserUseCase @Inject constructor(
         private val levelUpUseCase: LevelUpUseCase,
         private val userRepository: UserRepository,
     ) : UseCase<NotifyUserUseCase.RequestValues, Stats?>() {
@@ -49,7 +47,7 @@ class NotifyUserUseCase
                 HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
             }
             if (requestValues.hasLeveledUp == true) {
-                levelUpUseCase.callInteractor(
+                levelUpUseCase.callInterActor(
                     LevelUpUseCase.RequestValues(
                         requestValues.user,
                         requestValues.level,

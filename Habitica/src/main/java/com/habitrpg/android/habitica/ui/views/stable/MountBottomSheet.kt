@@ -159,7 +159,7 @@ fun MountBottomSheet(
             modifier = Modifier.padding(bottom = 16.dp),
             onClick = {
                 MainScope().launchCatching {
-                    ShareMountUseCase().callInteractor(
+                    ShareMountUseCase().callInterActor(
                         ShareMountUseCase.RequestValues(
                             mount.key,
                             "",

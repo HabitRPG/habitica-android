@@ -52,9 +52,7 @@ class GroupFormActivity : BaseActivity() {
             binding.privacySeparator.visibility = View.GONE
         }
 
-        if (groupID != null) {
-            fillForm()
-        }
+        groupID?.let{ fillForm() }
 
         binding.cancelButton.setOnClickListener {
             finish()

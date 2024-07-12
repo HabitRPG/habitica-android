@@ -247,7 +247,7 @@ class PetDetailRecyclerFragment :
     ): FeedResponse? {
         if (food != null) {
             val context = mainActivity ?: context ?: return null
-            return feedPetUseCase.callInteractor(
+            return feedPetUseCase.callInterActor(
                 FeedPetUseCase.RequestValues(
                     pet,
                     food,

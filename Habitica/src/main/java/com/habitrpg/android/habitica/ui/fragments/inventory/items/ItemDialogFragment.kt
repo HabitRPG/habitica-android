@@ -273,7 +273,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
             val result =
-                feedPetUseCase.callInteractor(
+                feedPetUseCase.callInterActor(
                     FeedPetUseCase.RequestValues(
                         pet,
                         food,
@@ -307,7 +307,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         dismiss()
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
-            hatchPetUseCase.callInteractor(
+            hatchPetUseCase.callInterActor(
                 HatchPetUseCase.RequestValues(
                     potion,
                     egg,

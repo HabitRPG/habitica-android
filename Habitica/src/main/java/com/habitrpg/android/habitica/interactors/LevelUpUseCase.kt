@@ -48,13 +48,12 @@ class LevelUpUseCase
                 alert.addButton(R.string.not_now, false)
                 alert.isCelebratory = true
 
-                if (!requestValues.activity.isFinishing) {
-                    alert.enqueue()
-                }
+                if (!requestValues.activity.isFinishing)   alert.enqueue()
+
             } else {
                 if (suppressedModals?.levelUp == true) {
                     HabiticaSnackbar.showSnackbar(
-                        requestValues.snackbarTargetView,
+                        requestValues.snackBarTargetView,
                         requestValues.activity.getString(
                             R.string.levelup_header,
                             requestValues.newLevel,
@@ -66,7 +65,7 @@ class LevelUpUseCase
                 }
                 val customView =
                     requestValues.activity.layoutInflater.inflate(R.layout.dialog_levelup, null)
-                if (customView != null) {
+                customView?.let {
                     val dialogAvatarView = customView.findViewById<AvatarView>(R.id.avatarView)
                     dialogAvatarView.setAvatar(requestValues.user)
                 }
@@ -86,8 +85,8 @@ class LevelUpUseCase
                 }
                 alert.addButton(R.string.share, false) { _, _ ->
                     MainScope().launchCatching {
-                        val usecase = ShareAvatarUseCase()
-                        usecase.callInteractor(
+                        val useCase = ShareAvatarUseCase()
+                        useCase.callInterActor(
                             ShareAvatarUseCase.RequestValues(
                                 requestValues.activity,
                                 requestValues.user,
@@ -102,15 +101,14 @@ class LevelUpUseCase
                 }
                 alert.isCelebratory = true
 
-                if (!requestValues.activity.isFinishing) {
-                    alert.enqueue()
-                }
+                if (!requestValues.activity.isFinishing)  alert.enqueue()
+
             }
             return requestValues.user.stats
         }
 
         private suspend fun showClassSelection(requestValues: RequestValues) {
-            checkClassSelectionUseCase.callInteractor(
+            checkClassSelectionUseCase.callInterActor(
                 CheckClassSelectionUseCase.RequestValues(
                     requestValues.user,
                     true,
@@ -124,7 +122,7 @@ class LevelUpUseCase
             val user: User,
             val level: Int?,
             val activity: BaseActivity,
-            val snackbarTargetView: ViewGroup,
+            val snackBarTargetView: ViewGroup,
         ) : UseCase.RequestValues {
             val newLevel: Int = level ?: 0
         }
