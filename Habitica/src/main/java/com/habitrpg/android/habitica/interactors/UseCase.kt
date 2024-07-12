@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 abstract class UseCase<Q : UseCase.RequestValues?, T> {
     protected abstract suspend fun run(requestValues: Q): T
 
-    suspend fun callInteractor(requestValues: Q): T {
+    suspend fun callInterActor(requestValues: Q): T {
         return withContext(Dispatchers.Main) {
             run(requestValues)
         }
