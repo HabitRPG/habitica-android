@@ -25,10 +25,9 @@ class AddTaskWidgetActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val intent = intent
-        val extras = intent.extras
-        if (extras != null) {
+        intent.extras?.let {
             widgetId =
-                extras.getInt(
+                it.getInt(
                     AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID,
                 )
@@ -36,9 +35,7 @@ class AddTaskWidgetActivity : AppCompatActivity() {
 
         // If this activity was started with an intent without an app widget ID,
         // finish with an error.
-        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-            finish()
-        }
+        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) finish()
 
         binding.addHabitButton.setOnClickListener { addHabitSelected() }
         binding.addDailyButton.setOnClickListener { addDailySelected() }
