@@ -30,9 +30,7 @@ class AdventureGuideActivity : BaseActivity() {
     private lateinit var achievementTitles: Map<String, String>
     private lateinit var achievementDescriptions: Map<String, String>
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayoutResId() = R.layout.activity_main
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityAdventureGuideBinding.inflate(layoutInflater)
@@ -67,9 +65,7 @@ class AdventureGuideActivity : BaseActivity() {
         Analytics.sendNavigationEvent("adventure guide screen")
 
         userViewModel.user.observe(this) {
-            if (it != null) {
-                updateUser(it)
-            }
+            it?.let { updateUser(it) }
         }
     }
 
@@ -77,9 +73,7 @@ class AdventureGuideActivity : BaseActivity() {
         return if (item.itemId == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this)
             true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
+        } else super.onOptionsItemSelected(item)
     }
 
     private fun updateUser(user: User) {
@@ -91,13 +85,12 @@ class AdventureGuideActivity : BaseActivity() {
             binding.progressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
         }
 
-        if (completed > 0) {
-            binding.progressTextview.text =
-                getString(
-                    R.string.percent_completed,
-                    ((completed / achievements.size.toFloat()) * 100).toInt(),
-                )
-        }
+        if (completed > 0) binding.progressTextview.text =
+            getString(
+                R.string.percent_completed,
+                ((completed / achievements.size.toFloat()) * 100).toInt(),
+            )
+
 
         binding.achievementContainer.removeAllViews()
         for (achievement in achievements) {
@@ -110,12 +103,10 @@ class AdventureGuideActivity : BaseActivity() {
             itemBinding.titleView.text = achievementTitles[achievement.key]
             itemBinding.descriptionView.text = achievementDescriptions[achievement.key]
 
-            val iconName =
-                if (achievement.earned) {
-                    "achievement-" + achievement.key + "2x"
-                } else {
-                    "achievement-unearned2x"
-                }
+            val iconName = if (achievement.earned)
+                "achievement-" + achievement.key + "2x"
+            else "achievement-unearned2x"
+
             itemBinding.iconView.loadImage(iconName)
             if (achievement.earned) {
                 itemBinding.titleView.paintFlags =
