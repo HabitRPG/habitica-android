@@ -89,7 +89,7 @@ class ArmoireActivity : BaseActivity() {
         lastKey = savedInstanceState.getString("lastKey")
         lastText = savedInstanceState.getString("lastText")
         lastValue = savedInstanceState.getString("lastValue")
-        if (lastType != null) {
+        lastType?.let {
             configure(lastType ?: "", lastKey ?: "", lastText ?: "", lastValue)
         }
         if (hasUsedExtraArmoire) {
@@ -111,9 +111,9 @@ class ArmoireActivity : BaseActivity() {
         binding.goldView.decimals = 0
 
         userViewModel.user.observe(this) { user ->
-            if (gold == null) {
-                gold = user?.stats?.gp
-            }
+
+            if (gold == null)  gold = user?.stats?.gp
+
             lifecycleScope.launchCatching {
                 val remaining = inventoryRepository.getArmoireRemainingCount().firstOrNull() ?: 0
                 binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
@@ -128,9 +128,9 @@ class ArmoireActivity : BaseActivity() {
         if (appConfigManager.enableArmoireAds()) {
             val handler =
                 AdHandler(this, AdType.ARMOIRE) {
-                    if (!it) {
-                        return@AdHandler
-                    }
+
+                    if (!it)  return@AdHandler
+
                     giveUserArmoire()
                 }
             handler.prepare {
@@ -356,7 +356,7 @@ class ArmoireActivity : BaseActivity() {
             .emitWithGravity(binding.confettiAnchor, Gravity.TOP, 15, 2000)
     }
 
-    fun configure(
+    private fun configure(
         type: String,
         key: String,
         text: String,
