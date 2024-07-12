@@ -146,7 +146,7 @@ fun AppHeaderView(
                     },
             )
             val animationValue =
-                animateFloatAsState(targetValue = if (teamPlan != null) 1f else 0f).value
+                animateFloatAsState(targetValue = if (teamPlan != null) 1f else 0f, label = "").value
             Box(modifier = Modifier.height(100.dp)) {
                 Column(
                     Modifier.padding(
@@ -280,6 +280,7 @@ fun AppHeaderView(
                                 initialContentExit = fadeOut(animationSpec = tween(200)) + slideOutVertically { height -> -height },
                             )
                         },
+                        label = "",
                     ) { members ->
                         Row(
                             horizontalArrangement =
