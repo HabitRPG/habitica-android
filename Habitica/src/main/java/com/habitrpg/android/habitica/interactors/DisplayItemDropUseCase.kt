@@ -18,13 +18,13 @@ class DisplayItemDropUseCase
     UseCase<DisplayItemDropUseCase.RequestValues, Unit>() {
         override suspend fun run(requestValues: RequestValues) {
             val data = requestValues.data
-            val snackbarText = StringBuilder(data?.drop?.dialog ?: "")
+            val snackBarText = StringBuilder(data?.drop?.dialog ?: "")
 
             if ((data?.questItemsFound ?: 0) > 0 && requestValues.showQuestItems) {
-                if (snackbarText.isNotEmpty()) {
-                    snackbarText.append('\n')
+                if (snackBarText.isNotEmpty()) {
+                    snackBarText.append('\n')
                 }
-                snackbarText.append(
+                snackBarText.append(
                     requestValues.context.getString(
                         R.string.quest_items_found,
                         data!!.questItemsFound,
@@ -32,12 +32,12 @@ class DisplayItemDropUseCase
                 )
             }
 
-            if (snackbarText.isNotEmpty()) {
+            if (snackBarText.isNotEmpty()) {
                 MainScope().launch(context = Dispatchers.Main) {
                     delay(3000L)
                     HabiticaSnackbar.showSnackbar(
-                        requestValues.snackbarTargetView,
-                        snackbarText,
+                        requestValues.snackBarTargetView,
+                        snackBarText,
                         HabiticaSnackbar.SnackbarDisplayType.DROP,
                         true,
                     )
@@ -50,7 +50,7 @@ class DisplayItemDropUseCase
         class RequestValues(
             val data: TaskScoringResult?,
             val context: AppCompatActivity,
-            val snackbarTargetView: ViewGroup,
+            val snackBarTargetView: ViewGroup,
             val showQuestItems: Boolean,
         ) : UseCase.RequestValues
     }

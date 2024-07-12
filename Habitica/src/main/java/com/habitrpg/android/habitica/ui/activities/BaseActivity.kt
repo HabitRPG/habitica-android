@@ -97,9 +97,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         habiticaApplication
-        getLayoutResId()?.let {
-            setContentView(getContentView(it))
-        }
+        getLayoutResId()?.let { setContentView(getContentView(it)) }
+
         lifecycleScope.launchCatching {
             notificationsManager.displayNotificationEvents.collect {
                 if (ShowNotificationInteractor(
@@ -181,35 +180,31 @@ abstract class BaseActivity : AppCompatActivity() {
         window.navigationBarColor =
             if (forcedIsNight ?: isNightMode) {
                 ContextCompat.getColor(this, R.color.system_bars)
-            } else {
-                getThemeColor(R.attr.colorPrimaryDark)
-            }
+            } else getThemeColor(R.attr.colorPrimaryDark)
+
         if (!(forcedIsNight ?: isNightMode)) {
             window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
         }
 
         if (currentTheme != null && theme != currentTheme) {
             reload()
-        } else {
-            currentTheme = theme
-        }
+        } else currentTheme = theme
     }
 
     protected fun setupToolbar(toolbar: Toolbar?) {
         this.toolbar = toolbar
-        if (toolbar != null) {
+        toolbar?.let {
             setSupportActionBar(toolbar)
-
             val actionBar = supportActionBar
-            if (actionBar != null) {
+            actionBar?.let {
                 actionBar.setDisplayHomeAsUpEnabled(true)
                 actionBar.setDisplayShowHomeEnabled(true)
                 actionBar.setDisplayShowTitleEnabled(true)
                 actionBar.setDisplayUseLogoEnabled(false)
                 actionBar.setHomeButtonEnabled(true)
             }
+            ToolbarColorHelper.colorizeToolbar(it, this)
         }
-        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -271,7 +266,7 @@ abstract class BaseActivity : AppCompatActivity() {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
         }
         try {
-            if (image != null) {
+            image?.let {
                 val fos: OutputStream
                 val uri: Uri
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

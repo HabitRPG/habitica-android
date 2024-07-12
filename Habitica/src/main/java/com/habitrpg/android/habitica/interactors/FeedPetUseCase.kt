@@ -65,7 +65,7 @@ class FeedPetUseCase
                             requestValues.pet.text,
                         )
                     MainScope().launchCatching {
-                        ShareMountUseCase().callInteractor(
+                        ShareMountUseCase().callInterActor(
                             ShareMountUseCase.RequestValues(
                                 requestValues.pet.key,
                                 message,

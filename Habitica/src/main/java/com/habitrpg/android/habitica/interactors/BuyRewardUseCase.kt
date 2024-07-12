@@ -7,9 +7,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import javax.inject.Inject
 
-class BuyRewardUseCase
-    @Inject
-    constructor(
+class BuyRewardUseCase @Inject constructor(
         private val taskRepository: TaskRepository,
         private val soundManager: SoundManager,
     ) : UseCase<BuyRewardUseCase.RequestValues, TaskScoringResult?>() {
@@ -18,8 +16,8 @@ class BuyRewardUseCase
                 taskRepository.taskChecked(
                     requestValues.user,
                     requestValues.task,
-                    false,
-                    false,
+                    up= false,
+                    force = false,
                     requestValues.notifyFunc,
                 )
             soundManager.loadAndPlayAudio(SoundManager.SOUND_REWARD)

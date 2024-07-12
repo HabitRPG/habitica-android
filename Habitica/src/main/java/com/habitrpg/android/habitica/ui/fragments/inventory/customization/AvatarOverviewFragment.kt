@@ -214,7 +214,7 @@ open class AvatarOverviewFragment :
             userViewModel.user.value?.let {
                 val usecase = ShareAvatarUseCase()
                 lifecycleScope.launchCatching {
-                    usecase.callInteractor(
+                    usecase.callInterActor(
                         ShareAvatarUseCase.RequestValues(
                             requireActivity() as BaseActivity,
                             it,

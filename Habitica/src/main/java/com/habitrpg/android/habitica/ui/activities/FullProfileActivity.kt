@@ -309,7 +309,7 @@ class FullProfileActivity : BaseActivity() {
                 member.value?.let {
                     val usecase = ShareAvatarUseCase()
                     lifecycleScope.launchCatching {
-                        usecase.callInteractor(
+                        usecase.callInterActor(
                             ShareAvatarUseCase.RequestValues(
                                 this@FullProfileActivity,
                                 it,

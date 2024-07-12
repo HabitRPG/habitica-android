@@ -1,11 +1,13 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityFixcharacterBinding
@@ -108,39 +110,12 @@ class FixCharacterValuesActivity : BaseActivity() {
         binding.levelEditText.setText(stats.lvl.toString())
         binding.streakEditText.setText(user.streakCount.toString())
 
-        when (stats.habitClass) {
-            Stats.WARRIOR -> {
-                setIconBackground(
-                    binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.red_500),
-                )
-                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
-            }
-
-            Stats.MAGE -> {
-                setIconBackground(
-                    binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.blue_500),
-                )
-                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
-            }
-
-            Stats.HEALER -> {
-                setIconBackground(
-                    binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.yellow_500),
-                )
-                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
-            }
-
-            Stats.ROGUE -> {
-                setIconBackground(
-                    binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.brand_500),
-                )
-                binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
-            }
-        }
+        val temp = backgroundAndIconCalculate(stats.habitClass)
+        setIconBackground(
+            binding.levelIconBackgroundView,
+            ContextCompat.getColor(this, temp.background)
+        )
+        binding.levelIconView.setImageBitmap(temp.bitmap)
     }
 
     private fun setIconBackground(
@@ -160,5 +135,34 @@ class FixCharacterValuesActivity : BaseActivity() {
         } catch (_: NumberFormatException) {
             0.0
         }
+    }
+}
+
+data class BackgroundAndIcon(
+    @ColorRes val background: Int,
+    val bitmap: Bitmap
+)
+
+private fun backgroundAndIconCalculate(habitClass: String?): BackgroundAndIcon {
+    return when (habitClass) {
+        Stats.WARRIOR -> BackgroundAndIcon(
+            R.color.red_500,
+            HabiticaIconsHelper.imageOfWarriorLightBg()
+        )
+
+        Stats.MAGE -> BackgroundAndIcon(
+            R.color.blue_500,
+            HabiticaIconsHelper.imageOfMageLightBg()
+        )
+
+        Stats.HEALER -> BackgroundAndIcon(
+            R.color.yellow_500,
+            HabiticaIconsHelper.imageOfHealerLightBg()
+        )
+
+        else -> BackgroundAndIcon(      //ROGUE
+            R.color.brand_500,
+            HabiticaIconsHelper.imageOfRogueLightBg()
+        )
     }
 }
