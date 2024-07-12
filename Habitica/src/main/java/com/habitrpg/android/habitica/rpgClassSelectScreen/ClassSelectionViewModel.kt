@@ -25,15 +25,14 @@ class ClassSelectionViewModel @Inject constructor(
     }
 
     override fun onConfirmClick() {
-        when (val choice = state.currentClass.serverName) {
-            "back" -> {}
-            "optOut" -> viewModelScope.launchCatching {
-                userRepository.disableClasses()
+        viewModelScope.launchCatching {
+            when (val choice = state.currentClass.serverName) {
+                "back" -> {}
+                "optOut" -> userRepository.disableClasses()
+                else -> userRepository.changeClass(choice)
             }
-            else -> viewModelScope.launchCatching {
-                userRepository.changeClass(choice)}
+            state = state.copy(shouldNavigateBack = true)
         }
-        state = state.copy(shouldNavigateBack = true)
     }
 
     fun onAnyClk(classSelectionCargo: ClassSelectionCargo) {

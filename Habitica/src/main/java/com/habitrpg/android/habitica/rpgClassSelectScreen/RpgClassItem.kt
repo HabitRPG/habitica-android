@@ -11,6 +11,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -22,17 +23,17 @@ fun RpgClassItem(
     state: CSVMState,
     onclick: (ClassSelectionCargo) -> Unit
 ) {
-    val eleVat = if (state.currentClass == rpgClass)
-        20.dp else 0.dp
+    val shape = if (state.currentClass==rpgClass) 42.dp
+    else 16.dp
     Card(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = eleVat
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
         ),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(
+        shape = RoundedCornerShape(shape),
+       border = BorderStroke(
             width = 7.dp,
-            color = colorResource(id = rpgClass.rpgColor)
-        ),
+           color = colorResource(id = rpgClass.rpgColor)
+       ),
         modifier = modifier
             .padding(16.dp)
             .clickable { onclick(ClassSelectionCargo.Item(rpgClass)) }
