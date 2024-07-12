@@ -94,12 +94,8 @@ class LoginActivity : BaseActivity() {
                 ExceptionHandler.reportError(it)
             },
         ) {
-            val response = apiClient.connectUser(username, password)
-            if (response != null) {
-                handleAuthResponse(response)
-            } else {
-                hideProgress()
-            }
+            apiClient.connectUser(username, password)?.let {
+                handleAuthResponse(it) } ?: hideProgress()
         }
     }
 
@@ -132,9 +128,7 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_login
-    }
+    override fun getLayoutResId() = R.layout.activity_login
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -376,7 +370,8 @@ class LoginActivity : BaseActivity() {
     private fun showForm() {
         isShowingForm = true
         val panAnimation =
-            ObjectAnimator.ofInt(binding.backgroundContainer, "scrollY", 0).setDuration(1000)
+            ObjectAnimator.ofInt(binding.backgroundContainer,
+                "scrollY", 0).setDuration(1000)
         val newGameAlphaAnimation =
             ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 0.toFloat())
         val showLoginAlphaAnimation =

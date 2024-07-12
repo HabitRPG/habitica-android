@@ -95,9 +95,7 @@ class ArmoireActivity : BaseActivity() {
         if (hasUsedExtraArmoire) {
             if (binding.adButton.visibility == View.VISIBLE) {
                 binding.adButton.visibility = View.INVISIBLE
-            } else {
-                binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
-            }
+            } else binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
         }
     }
 
@@ -112,7 +110,7 @@ class ArmoireActivity : BaseActivity() {
 
         userViewModel.user.observe(this) { user ->
 
-            if (gold == null)  gold = user?.stats?.gp
+            if (gold == null) gold = user?.stats?.gp
 
             lifecycleScope.launchCatching {
                 val remaining = inventoryRepository.getArmoireRemainingCount().firstOrNull() ?: 0
@@ -129,7 +127,7 @@ class ArmoireActivity : BaseActivity() {
             val handler =
                 AdHandler(this, AdType.ARMOIRE) {
 
-                    if (!it)  return@AdHandler
+                    if (!it) return@AdHandler
 
                     giveUserArmoire()
                 }
@@ -145,9 +143,7 @@ class ArmoireActivity : BaseActivity() {
                 binding.adButton.state = AdButton.State.LOADING
                 handler.show()
             }
-        } else {
-            binding.adButton.visibility = View.GONE
-        }
+        } else binding.adButton.visibility = View.GONE
 
         if (appConfigManager.enableArmoireSubs()) {
             userViewModel.user.observe(this) {
@@ -203,25 +199,24 @@ class ArmoireActivity : BaseActivity() {
         binding.dropRateButtonUnsubbed.setOnClickListener {
             showDropRateDialog()
         }
-            intent.extras?.let {
-                val args = ArmoireActivityArgs.fromBundle(it)
-                equipmentKey = args.key
-                configure(args.type, args.key, args.text, args.value)
+        intent.extras?.let {
+            val args = ArmoireActivityArgs.fromBundle(it)
+            equipmentKey = args.key
+            configure(args.type, args.key, args.text, args.value)
 
-                if (args.type == "gear") {
-                    userViewModel.user.observeOnce(this) { user ->
-                        user?.loginIncentives?.let { totalCheckins ->
-                            reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
-                        }
+            if (args.type == "gear") {
+                userViewModel.user.observeOnce(this) { user ->
+                    user?.loginIncentives?.let { totalCheckins ->
+                        reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
                     }
                 }
             }
+        }
     }
 
     private fun giveUserArmoire(): Boolean {
-        if (hasUsedExtraArmoire) {
-            return false
-        }
+        if (hasUsedExtraArmoire)  return false
+
         hasUsedExtraArmoire = true
         binding.iconWrapper.post {
             binding.iconView.bitmap = null

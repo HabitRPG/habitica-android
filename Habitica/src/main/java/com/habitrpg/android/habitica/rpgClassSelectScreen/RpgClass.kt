@@ -8,7 +8,6 @@ import androidx.annotation.StringRes
 data class RpgClass(
     @StringRes val rpgName: Int,
     @ColorRes val rpgColor: Int,
-    val icon: Bitmap,
     @StringRes val textDescription : Int,
     val serverName : String,
     @DrawableRes val pic : Int

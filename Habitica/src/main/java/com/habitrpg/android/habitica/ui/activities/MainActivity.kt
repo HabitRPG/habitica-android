@@ -199,9 +199,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        if (BuildConfig.DEBUG) {
-            mainActivityCreatedAt = Date()
-        }
+        if (BuildConfig.DEBUG) mainActivityCreatedAt = Date()
+
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         } catch (e: IllegalStateException) {
@@ -284,7 +283,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
                     override fun onDrawerStateChanged(newState: Int) {
                     }
-                },
+                }
             )
         }
 

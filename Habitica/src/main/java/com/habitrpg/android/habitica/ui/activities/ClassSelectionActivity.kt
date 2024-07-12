@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,12 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,12 +30,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.rpgClassSelectScreen.CSVMState
 import com.habitrpg.android.habitica.rpgClassSelectScreen.ClassSelectionCargo
 import com.habitrpg.android.habitica.rpgClassSelectScreen.ClassSelectionViewModel
@@ -86,16 +95,17 @@ fun Screen(
                 RpgClassProvider.listOfClasses().forEach { rpgClass ->
                     RpgClassItem(
                         rpgClass,
-                        Modifier.weight(0.25f)
+                        Modifier
+                            .weight(0.25f)
                             .aspectRatio(1f),
                         state,
                         onAnyClk
                     )
                 }
             }
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly,
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.8f)
@@ -105,6 +115,18 @@ fun Screen(
                         ).copy(alpha = 0.5f)
                     )
             ) {
+                Button(
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(50.dp)
+                        .offset(y = (-25).dp)
+                        .border(5.dp, color = Color.White
+                            , shape = CircleShape),
+                    onClick = { onAnyClk(ClassSelectionCargo.Confirm) }) {
+                    Text(
+                        text = stringResource(id = R.string.accept),
+                        style = MaterialTheme.typography.headlineSmall)
+                }
                 Text(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     text = stringResource(id = state.currentClass.textDescription),
@@ -114,18 +136,6 @@ fun Screen(
                     fontSize = 22.sp,
                     lineHeight = 26.sp
                 )
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(MaterialTheme.colorScheme.primary)
-                    .clickable { onAnyClk(ClassSelectionCargo.Confirm) },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(text = "Confirm")
             }
         }
     }

@@ -95,18 +95,12 @@ class ChallengeFormActivity : BaseActivity() {
 
             val locationPos = binding.challengeLocationSpinner.selectedItemPosition
 
-            if (challengeId != null) {
-                c.id = challengeId
-            }
+            challengeId?.let { c.id = challengeId }
 
-            if (groupID != null) {
-                c.groupId = groupID
-            } else {
+            groupID?.let { c.groupId = groupID } ?: {
                 if (locationAdapter.count > locationPos && locationPos >= 0) {
                     val locationGroup = locationAdapter.getItem(locationPos)
-                    if (locationGroup != null) {
-                        c.groupId = locationGroup.id
-                    }
+                    locationGroup?.let { c.groupId = locationGroup.id }
                 }
             }
             c.name = binding.createChallengeTitle.text.toString()
@@ -117,9 +111,7 @@ class ChallengeFormActivity : BaseActivity() {
             return c
         }
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_create_challenge
-    }
+    override fun getLayoutResId() = R.layout.activity_create_challenge
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -137,12 +129,8 @@ class ChallengeFormActivity : BaseActivity() {
                 savingInProgress = false
                 ExceptionHandler.reportError(it)
             }) {
-                val challenge =
-                    if (editMode) {
-                        updateChallenge()
-                    } else {
-                        createChallenge()
-                    }
+                val challenge = if (editMode) updateChallenge()
+                else createChallenge()
 
                 challengeId = challenge?.id
                 challengeRepository.retrieveChallenges(0, true)
@@ -176,24 +164,18 @@ class ChallengeFormActivity : BaseActivity() {
             val titleEmptyError = getString(R.string.challenge_create_error_title)
             binding.createChallengeTitleInputLayout.error = titleEmptyError
             errorMessages.add(titleEmptyError)
-        } else {
-            binding.createChallengeTitleInputLayout.isErrorEnabled = false
-        }
+        } else binding.createChallengeTitleInputLayout.isErrorEnabled = false
 
         if (getEditTextString(binding.createChallengeTag).isEmpty()) {
             val tagEmptyError = getString(R.string.challenge_create_error_tag)
 
             binding.createChallengeTagInputLayout.error = tagEmptyError
             errorMessages.add(tagEmptyError)
-        } else {
-            binding.createChallengeTagInputLayout.isErrorEnabled = false
-        }
+        } else binding.createChallengeTagInputLayout.isErrorEnabled = false
 
         val prizeError = checkPrizeAndMinimumForTavern()
 
-        if (prizeError.isNotEmpty()) {
-            errorMessages.add(prizeError)
-        }
+        if (prizeError.isNotEmpty())   errorMessages.add(prizeError)
 
         // all "Add {*}"-Buttons are one task itself, so we need atleast more than 4
         if (challengeTasks.taskList.size <= 4) {
@@ -242,17 +224,13 @@ class ChallengeFormActivity : BaseActivity() {
         }
         locationAdapter = GroupArrayAdapter(this)
 
-        if (bundle != null) {
-            challengeId = bundle.getString(CHALLENGE_ID_KEY, null)
-        }
+        bundle?.let { challengeId = bundle.getString(
+            CHALLENGE_ID_KEY, null) }
 
         fillControls()
 
-        if (challengeId != null) {
-            fillControlsByChallenge()
-        } else {
-            binding.createChallengePrize.setText("0")
-        }
+        challengeId?.let { fillControlsByChallenge()
+        } ?: binding.createChallengePrize.setText("0")
 
         userViewModel.user.observe(this) { user = it }
         binding.gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
@@ -269,9 +247,9 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun onAddGem() {
         var stringValue = binding.createChallengePrize.text.toString()
-        if (stringValue.isEmpty()) {
-            stringValue = "0"
-        }
+
+        if (stringValue.isEmpty()) stringValue = "0"
+
         var currentVal = Integer.parseInt(stringValue)
         currentVal++
 
@@ -282,9 +260,9 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun onRemoveGem() {
         var stringValue = binding.createChallengePrize.text.toString()
-        if (stringValue.isEmpty()) {
-            stringValue = "0"
-        }
+
+        if (stringValue.isEmpty()) stringValue = "0"
+
         var currentVal = Integer.parseInt(stringValue)
         currentVal--
 
@@ -298,9 +276,8 @@ class ChallengeFormActivity : BaseActivity() {
 
         var inputValue = binding.createChallengePrize.text.toString()
 
-        if (inputValue.isEmpty()) {
-            inputValue = "0"
-        }
+        if (inputValue.isEmpty())  inputValue = "0"
+
 
         val currentVal =
             try {
@@ -353,18 +330,17 @@ class ChallengeFormActivity : BaseActivity() {
             val party =
                 if (partyID?.isNotBlank() == true) {
                     socialRepository.retrieveGroup(partyID)
-                } else {
-                    null
-                }
+                } else null
+
             if (groups.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
                 val tavern = Group()
                 tavern.id = "00000000-0000-4000-A000-000000000000"
                 tavern.name = getString(R.string.public_challenge)
                 groups.add(0, tavern)
             }
-            if (party != null) {
-                groups.add(party)
-            }
+
+            party?.let{ groups.add(party) }
+
             locationAdapter.clear()
             locationAdapter.addAll(groups)
         }
@@ -462,9 +438,8 @@ class ChallengeFormActivity : BaseActivity() {
         val bundle = Bundle()
 
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type?.value ?: "")
-        if (task != null) {
-            bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task)
-        }
+
+        task?.let { bundle.putParcelable(TaskFormActivity.PARCELABLE_TASK, task) }
 
         bundle.putBoolean(TaskFormActivity.SET_IGNORE_FLAG, true)
         bundle.putBoolean(TaskFormActivity.IS_CHALLENGE_TASK, true)
@@ -480,9 +455,8 @@ class ChallengeFormActivity : BaseActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
-                if (task != null) {
-                    addOrUpdateTaskInList(task)
-                }
+
+                task?.let { addOrUpdateTaskInList(task) }
             }
         }
 

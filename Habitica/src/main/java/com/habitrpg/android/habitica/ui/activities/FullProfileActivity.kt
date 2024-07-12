@@ -73,7 +73,7 @@ class FullProfileActivity : BaseActivity() {
     lateinit var inventoryRepository: InventoryRepository
 
     @Inject
-    lateinit var apiClient: ApiClient
+   lateinit var apiClient: ApiClient
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -473,9 +473,8 @@ class FullProfileActivity : BaseActivity() {
             lifecycleScope.launchCatching {
                 loadItemDataByOutfit(user.costume).collect { gotCostume(it) }
             }
-        } else {
-            binding.costumeCard.visibility = View.GONE
-        }
+        } else binding.costumeCard.visibility = View.GONE
+
 
         // Load the members achievements now
         lifecycleScope.launchCatching {
@@ -602,7 +601,7 @@ class FullProfileActivity : BaseActivity() {
         table: TableLayout,
         gearKey: String?,
         text: String?,
-        stats: String?,
+        stats: String?
     ) {
         val gearRow =
             layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
@@ -640,7 +639,7 @@ class FullProfileActivity : BaseActivity() {
 
     private fun loadItemDataByOutfit(outfit: Outfit?): Flow<List<Equipment>> {
         val outfitList = ArrayList<String>()
-        if (outfit != null) {
+        outfit?.let {
             outfitList.add(outfit.armor)
             outfitList.add(outfit.back)
             outfitList.add(outfit.body)
@@ -655,7 +654,7 @@ class FullProfileActivity : BaseActivity() {
 
     private fun gotGear(
         equipmentList: List<Equipment>,
-        user: Member,
+        user: Member
     ) {
         val userStatComputer = UserStatComputer()
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
@@ -670,7 +669,7 @@ class FullProfileActivity : BaseActivity() {
 
         addLevelAttributes(user)
 
-        for (row in statsRows) {
+        statsRows.forEach { row->
             if (row is UserStatComputer.EquipmentRow) {
                 addEquipmentRow(binding.equipmentTableLayout, row.gearKey, row.text, row.stats)
             } else if (row is UserStatComputer.AttributeRow) {
@@ -692,8 +691,8 @@ class FullProfileActivity : BaseActivity() {
     private fun gotCostume(obj: List<Equipment>) {
         // fill costume table
         binding.costumeTableLayout.removeAllViews()
-        for (i in obj) {
-            addEquipmentRow(binding.costumeTableLayout, i.key, i.text, "")
+        obj.forEach { addEquipmentRow(binding.costumeTableLayout,
+            it.key, it.text, "")
         }
     }
 
@@ -793,8 +792,9 @@ class FullProfileActivity : BaseActivity() {
             ),
         )
 
-        for (row in attributeRows) {
-            row.visibility = if (attributeDetailsHidden) View.GONE else View.VISIBLE
+        attributeRows.forEach {
+            it.visibility = if (attributeDetailsHidden)
+                View.GONE else View.VISIBLE
         }
     }
 
@@ -816,9 +816,7 @@ class FullProfileActivity : BaseActivity() {
 
 // region BaseActivity-Overrides
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_full_profile
-    }
+    override fun getLayoutResId() = R.layout.activity_full_profile
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityFullProfileBinding.inflate(layoutInflater)
