@@ -3,6 +3,5 @@ plugins {
 }
 
 include 'Habitica', ':Habitica'
-include ':wearos'
 include ':common'
 include ':shared'

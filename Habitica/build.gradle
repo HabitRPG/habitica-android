@@ -60,27 +60,10 @@ dependencies {
     implementation "com.amplitude:analytics-android:$amplitude_version"
 
     //Tests
-    testImplementation 'androidx.test:core:1.5.0'
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "io.mockk:mockk-android:$mockk_version"
-    testImplementation "io.kotest:kotest-runner-junit5:$kotest_version"
-    testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
-    testImplementation "io.kotest:kotest-framework-datatest:$kotest_version"
-    androidTestImplementation ('com.kaspersky.android-components:kaspresso:1.5.1') {
-        exclude module: "protobuf-lite"
-    }
+
     androidTestImplementation "com.kaspersky.android-components:kaspresso-compose-support:1.5.1"
 
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-    debugImplementation 'androidx.fragment:fragment-testing:1.8.0'
-    androidTestImplementation 'androidx.test:core-ktx:1.5.0'
-    debugImplementation "androidx.test:monitor:1.6.1"
-    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
-    androidTestImplementation "io.mockk:mockk-android:$mockk_version"
-    androidTestImplementation "io.mockk:mockk-agent:$mockk_version"
-    androidTestImplementation "io.kotest:kotest-assertions-core:$kotest_version"
-    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+  
 
     androidTestUtil("androidx.test:orchestrator:1.4.2")
 
