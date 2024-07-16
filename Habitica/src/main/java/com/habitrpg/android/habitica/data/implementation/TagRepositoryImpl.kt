@@ -23,8 +23,8 @@ class TagRepositoryImpl(
         return localRepository.getTags(userId)
     }
 
-    override suspend fun createTag(tag: Tag): Tag? {
-        val savedTag = apiClient.createTag(tag) ?: return null
+    override suspend fun createTag(tag: Tag): Tag {
+        val savedTag = apiClient.createTag(tag) ?: return Tag()
         savedTag.userId = currentUserID
         localRepository.save(savedTag)
         return savedTag

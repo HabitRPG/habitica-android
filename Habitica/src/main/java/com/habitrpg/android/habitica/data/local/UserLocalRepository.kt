@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserLocalRepository : BaseLocalRepository {
     suspend fun getTutorialSteps(): Flow<RealmResults<TutorialStep>>
 
-    fun getUser(userID: String): Flow<User?>
+    fun getUser(userID: String): Flow<User>
 
     fun saveUser(
         user: User,

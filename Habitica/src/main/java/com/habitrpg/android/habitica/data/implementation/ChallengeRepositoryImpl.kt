@@ -52,16 +52,17 @@ class ChallengeRepositoryImpl(
         return challenge
     }
 
-    override suspend fun retrieveChallengeTasks(challengeID: String): TaskList? {
+    override suspend fun retrieveChallengeTasks(challengeID: String): TaskList {
         val tasks = apiClient.getChallengeTasks(challengeID)
-        if (tasks != null) {
+        tasks?.let {
             val taskList = tasks.tasks.values.toList()
             taskList.forEach {
                 it.ownerID = challengeID
             }
             localRepository.save(taskList)
+            return tasks
         }
-        return tasks
+        return TaskList()
     }
 
     private fun getTaskOrders(taskList: List<Task>): TasksOrder {
@@ -89,10 +90,13 @@ class ChallengeRepositoryImpl(
     ) {
         val savedTasks: List<Task>? = when {
             addedTaskList.count() == 1 ->
-                listOf(apiClient.createChallengeTask(
-                    challenge.id ?: "",
-                    addedTaskList[0],
-                )).filterNotNull()
+                listOfNotNull(
+                    apiClient.createChallengeTask(
+                        challenge.id ?: "",
+                        addedTaskList[0],
+                    )
+                )
+
             else ->
                 apiClient.createChallengeTasks(
                     challenge.id ?: "",
@@ -110,14 +114,15 @@ class ChallengeRepositoryImpl(
     override suspend fun createChallenge(
         challenge: Challenge,
         taskList: List<Task>,
-    ): Challenge? {
+    ): Challenge {
         challenge.tasksOrder = getTaskOrders(taskList)
 
         val createdChallenge = apiClient.createChallenge(challenge)
-        if (createdChallenge != null) {
+        createdChallenge?.let {
             addChallengeTasks(createdChallenge, taskList)
+            return createdChallenge
         }
-        return createdChallenge
+        return Challenge()
     }
 
     override suspend fun updateChallenge(

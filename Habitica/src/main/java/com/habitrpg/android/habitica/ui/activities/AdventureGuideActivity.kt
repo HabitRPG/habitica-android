@@ -27,8 +27,21 @@ class AdventureGuideActivity : BaseActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    private lateinit var achievementTitles: Map<String, String>
-    private lateinit var achievementDescriptions: Map<String, String>
+    private val achievementTitles: Map<String, String> = mapOf(
+        Pair("createdTask", getString(R.string.create_task_title)),
+        Pair("completedTask", getString(R.string.complete_task_title)),
+        Pair("hatchedPet", getString(R.string.hatch_pet_title)),
+        Pair("fedPet", getString(R.string.feedPet_title)),
+        Pair("purchasedEquipment", getString(R.string.purchase_equipment_title)),
+    )
+    private val achievementDescriptions: Map<String, String> =
+        mapOf(
+            Pair("createdTask", getString(R.string.create_task_description)),
+            Pair("completedTask", getString(R.string.complete_task_description)),
+            Pair("hatchedPet", getString(R.string.hatch_pet_description)),
+            Pair("fedPet", getString(R.string.feedPet_description)),
+            Pair("purchasedEquipment", getString(R.string.purchase_equipment_description)),
+        )
 
     override fun getLayoutResId() = R.layout.activity_main
 
@@ -41,23 +54,6 @@ class AdventureGuideActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setupToolbar(binding.toolbar)
-
-        achievementTitles =
-            mapOf(
-                Pair("createdTask", getString(R.string.create_task_title)),
-                Pair("completedTask", getString(R.string.complete_task_title)),
-                Pair("hatchedPet", getString(R.string.hatch_pet_title)),
-                Pair("fedPet", getString(R.string.feedPet_title)),
-                Pair("purchasedEquipment", getString(R.string.purchase_equipment_title)),
-            )
-        achievementDescriptions =
-            mapOf(
-                Pair("createdTask", getString(R.string.create_task_description)),
-                Pair("completedTask", getString(R.string.complete_task_description)),
-                Pair("hatchedPet", getString(R.string.hatch_pet_description)),
-                Pair("fedPet", getString(R.string.feedPet_description)),
-                Pair("purchasedEquipment", getString(R.string.purchase_equipment_description)),
-            )
 
         val descriptionText = getString(R.string.adventure_guide_description_new)
         binding.descriptionView.setText(descriptionText.fromHtml(), TextView.BufferType.SPANNABLE)
@@ -81,9 +77,7 @@ class AdventureGuideActivity : BaseActivity() {
         val completed = achievements.count { it.earned }
         binding.progressBar.max = achievements.size
         binding.progressBar.progress = completed
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-            binding.progressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
-        }
+        binding.progressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
 
         if (completed > 0) binding.progressTextview.text =
             getString(
@@ -141,3 +135,5 @@ class AdventureGuideActivity : BaseActivity() {
         }
     }
 }
+
+

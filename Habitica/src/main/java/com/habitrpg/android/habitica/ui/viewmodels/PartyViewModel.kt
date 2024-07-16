@@ -45,7 +45,7 @@ class PartyViewModel
 
         @OptIn(ExperimentalCoroutinesApi::class)
         private val membersFlow =
-            groupIDFlow
+            groupIDState
                 .filterNotNull()
                 .flatMapLatest { socialRepository.getPartyMembers(it) }
         private val members = membersFlow.asLiveData()

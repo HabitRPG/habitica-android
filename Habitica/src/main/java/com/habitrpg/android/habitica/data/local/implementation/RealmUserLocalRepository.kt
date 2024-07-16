@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class RealmUserLocalRepository(realm: Realm) :
@@ -30,7 +31,7 @@ class RealmUserLocalRepository(realm: Realm) :
             .filterNotNull()
             .map { it.party?.id ?: "" }
             .filter { it.isNotBlank() }
-            .flatMapLatest {
+            .flatMapLatest { it ->
                 realm.where(Group::class.java)
                     .equalTo("id", it)
                     .findAll()
@@ -72,15 +73,21 @@ class RealmUserLocalRepository(realm: Realm) :
         realm.where(TutorialStep::class.java).findAll().toFlow()
             .filter { it.isLoaded }.map { it }
 
-    override fun getUser(userID: String): Flow<User?> {
+    override fun getUser(userID: String): Flow<User> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(User::class.java)
+        val temp = realm.where(User::class.java)
             .equalTo("id", userID)
             .findAll()
             .toFlow()
             .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
             .map { users -> users.first() }
+        return flow {
+            temp.collect {
+                if (it != null) emit(it)
+            }
+        }
     }
+
 
     override fun saveUser(
         user: User,

@@ -49,14 +49,14 @@ class UserRepositoryImpl(
 
     override fun getUser(): Flow<User?> = authenticationHandler.userIDFlow.flatMapLatest { getUser(it) }
 
-    override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
+    override fun getUser(userID: String): Flow<User> = localRepository.getUser(userID)
 
     override suspend fun syncUserStats(): User? {
         val user = apiClient.syncUserStats()
         if (user != null && (user.stats?.toNextLevel ?: 0) > 1 &&
             (user.stats?.maxMP ?: 0) > 1
         ) {
-            localRepository.saveUser(user)
+           user?.let { localRepository.saveUser(user)}
         } else {
             retrieveUser(false, true)
         }

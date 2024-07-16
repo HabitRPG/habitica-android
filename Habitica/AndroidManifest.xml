@@ -1,117 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidDomInspection -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:screenOrientation="portrait"
-    android:installLocation="auto" >
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="com.android.vending.BILLING" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".HabiticaApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/MainAppTheme"
-        android:fullBackupContent="@xml/backup_descriptor"
         android:configChanges="orientation"
-        android:networkSecurityConfig="@xml/network_security_config">
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:theme="@style/MainAppTheme">
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/application_ad_id"/>
+            android:value="@string/application_ad_id" />
+
         <activity
             android:name=".ui.activities.MainActivity"
-            android:theme="@style/LaunchAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/LaunchAppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <nav-graph android:value="@navigation/navigation" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https"
+
+                <data
                     android:host="habitica.com"
-                    android:pathPattern="/"/>
+                    android:pathPattern="/"
+                    android:scheme="https" />
             </intent-filter>
 
         </activity>
         <activity
             android:name=".ui.activities.PrefsActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
-            android:label="@string/PS_settings_title"
-            tools:ignore="UnusedAttribute"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/PS_settings_title"
+            android:parentActivityName=".ui.activities.MainActivity"
+            tools:ignore="UnusedAttribute">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https"
+
+                <data
                     android:host="habitica.com"
-                    android:pathPattern="/settings/.*"/>
+                    android:pathPattern="/settings/.*"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.ArmoireActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/armoire"
-            android:screenOrientation="unspecified"
-            tools:ignore="UnusedAttribute">
-        </activity>
+            android:parentActivityName=".ui.activities.MainActivity"
+            tools:ignore="UnusedAttribute"> </activity>
         <activity
             android:name=".ui.activities.DeathActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/faint_header"
-            android:screenOrientation="unspecified"
-            tools:ignore="UnusedAttribute">
-        </activity>
+            android:parentActivityName=".ui.activities.MainActivity"
+            tools:ignore="UnusedAttribute"> </activity>
         <activity
             android:name=".ui.activities.BirthdayActivity"
             android:parentActivityName=".ui.activities.MainActivity"
-            android:screenOrientation="unspecified"
-            tools:ignore="UnusedAttribute">
-        </activity>
+            tools:ignore="UnusedAttribute"> </activity>
         <activity
             android:name=".ui.activities.NotificationsActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/notifications"
-            android:screenOrientation="unspecified"
-            tools:ignore="UnusedAttribute">
-        </activity>
+            android:parentActivityName=".ui.activities.MainActivity"
+            tools:ignore="UnusedAttribute"> </activity>
         <activity
             android:name=".ui.activities.FixCharacterValuesActivity"
-            android:parentActivityName=".ui.activities.PrefsActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:label="@string/PS_settings_title"
-            tools:ignore="UnusedAttribute">
-        </activity>
+            android:parentActivityName=".ui.activities.PrefsActivity"
+            tools:ignore="UnusedAttribute"> </activity>
         <activity
             android:name=".ui.activities.LoginActivity"
-            android:label="@string/LoginActivityName"
-            android:screenOrientation="unspecified"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:label="@string/LoginActivityName"
+            android:windowSoftInputMode="adjustResize"> </activity>
         <activity
             android:name=".ui.activities.AdventureGuideActivity"
             android:label=""
-            android:screenOrientation="unspecified"
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -119,57 +113,48 @@
         </activity>
         <activity
             android:name=".ui.activities.IntroActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize"> </activity>
         <activity
             android:name=".ui.activities.SetupActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
-        <activity
-            android:name=".ui.activities.SkillTasksActivity">
-        </activity>
-        <activity
-            android:name=".ui.activities.SkillMemberActivity">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"> </activity>
+        <activity android:name=".ui.activities.SkillTasksActivity"> </activity>
+        <activity android:name=".ui.activities.SkillMemberActivity"> </activity>
         <activity
             android:name=".ui.activities.GiftSubscriptionActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:label="@string/gift_subscription">
-        </activity>
+            android:label="@string/gift_subscription"> </activity>
         <activity
             android:name=".ui.activities.GiftGemsActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:label="@string/gift_gems">
-        </activity>
+            android:label="@string/gift_gems"> </activity>
         <activity
             android:name=".ui.activities.GuidelinesActivity"
-            android:label="@string/community_guidelines">
-        </activity>
+            android:label="@string/community_guidelines"> </activity>
 
         <activity
             android:name=".ui.activities.TaskFormActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
-            tools:ignore="UnusedAttribute"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:windowSoftInputMode="stateVisible|adjustResize">
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
             android:name=".ui.activities.TaskSummaryActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
-            tools:ignore="UnusedAttribute"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:windowSoftInputMode="stateVisible|adjustResize">
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
             android:name=".ui.activities.GroupFormActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
+            android:parentActivityName=".ui.activities.MainActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -177,100 +162,111 @@
         </activity>
         <activity
             android:name=".ui.activities.ClassSelectionActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            tools:ignore="UnusedAttribute"
-            android:label="@string/select_class">
+            android:label="@string/select_class"
+            android:parentActivityName=".ui.activities.MainActivity"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
             android:name=".ui.activities.GroupInviteActivity"
-            tools:ignore="UnusedAttribute">
-        </activity>
+            tools:ignore="UnusedAttribute"> </activity>
         <activity
             android:name=".ui.activities.FullProfileActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
+            android:exported="true"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:theme="@style/MainAppTheme"
-            tools:ignore="UnusedAttribute"
-            android:exported="true">
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https"
+
+                <data
                     android:host="habitica.com"
-                    android:pathPattern="/profile/.*"/>
+                    android:pathPattern="/profile/.*"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.ChallengeFormActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
+            android:parentActivityName=".ui.activities.MainActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
         </activity>
-        <activity android:name=".ui.activities.MaintenanceActivity"
-                  android:screenOrientation="unspecified"
-                  android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.activities.GemPurchaseActivity"
-                  android:screenOrientation="unspecified" />
+        <activity
+            android:name=".ui.activities.MaintenanceActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.activities.GemPurchaseActivity" />
+
         <receiver android:name=".receivers.NotificationPublisher" />
 
-        <receiver android:name=".receivers.TaskReceiver" android:enabled="true" android:exported="true">
+        <receiver
+            android:name=".receivers.TaskReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.NOTIFY" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receivers.LocalNotificationActionReceiver"
+        <receiver
+            android:name=".receivers.LocalNotificationActionReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="ACCEPT_PARTY_INVITE"/>
-                <action android:name="REJECT_PARTY_INVITE"/>
-                <action android:name="ACCEPT_QUEST_INVITE"/>
-                <action android:name="REJECT_QUEST_INVITE"/>
+                <action android:name="ACCEPT_PARTY_INVITE" />
+                <action android:name="REJECT_PARTY_INVITE" />
+                <action android:name="ACCEPT_QUEST_INVITE" />
+                <action android:name="REJECT_QUEST_INVITE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
-            android:exported="false">
+        <receiver
+            android:name=".receivers.TaskAlarmBootReceiver"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activities.AddTaskWidgetActivity"
+        <activity
+            android:name=".ui.activities.AddTaskWidgetActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.HabitButtonWidgetActivity"
+        <activity
+            android:name=".ui.activities.HabitButtonWidgetActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activities.ReportMessageActivity"
-            android:theme="@style/SheetDialog"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:theme="@style/SheetDialog"
+            android:windowSoftInputMode="stateHidden|adjustResize"> </activity>
+
         <service
             android:name=".helpers.notifications.HabiticaFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_gryphon_white" />
@@ -280,50 +276,59 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="default" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="@string/content_provider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <receiver android:name=".widget.AvatarStatsWidgetProvider"
-            android:label="@string/stats_widget_label"
-            android:exported="false">
+        <receiver
+            android:name=".widget.AvatarStatsWidgetProvider"
+            android:exported="false"
+            android:label="@string/stats_widget_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                       android:resource="@xml/avatar_widget_info" />
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/avatar_widget_info" />
         </receiver>
-        <receiver android:name=".widget.DailiesWidgetProvider"
-            android:label="@string/widget_dailies"
-            android:exported="false">
+        <receiver
+            android:name=".widget.DailiesWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_dailies">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/daily_list_widget_info" />
         </receiver>
-        <receiver android:name=".widget.TodoListWidgetProvider"
-            android:label="@string/widget_todo_list"
-            android:exported="false">
+        <receiver
+            android:name=".widget.TodoListWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_todo_list">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/todo_list_widget_info" />
         </receiver>
-        <receiver android:name=".widget.HabitButtonWidgetProvider"
-            android:label="@string/widget_habit_button"
-            android:exported="false">
+        <receiver
+            android:name=".widget.HabitButtonWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_habit_button">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/habit_button_widget_info" />
         </receiver>
 
@@ -333,13 +338,16 @@
         <service
             android:name=".widget.TodosWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-        <service android:name=".widget.HabitButtonWidgetService"/>
-        <service android:name=".receivers.DeviceCommunicationService"
+        <service android:name=".widget.HabitButtonWidgetService" />
+        <service
+            android:name=".receivers.DeviceCommunicationService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
-                <data android:scheme="wear" android:host="*" />
+                <data
+                    android:host="*"
+                    android:scheme="wear" />
             </intent-filter>
         </service>
     </application>

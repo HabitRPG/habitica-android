@@ -9,7 +9,8 @@ import java.util.Calendar
 import java.util.Locale
 
 class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctxt, attrs) {
-    private var timeval: String? = null
+
+    private var timeval: String = ""
 
     override fun onGetDefaultValue(
         a: TypedArray,
@@ -19,14 +20,11 @@ class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctx
     }
 
     override fun onSetInitialValue(defaultValue: Any?) {
-        timeval = null
-        timeval =
-            if (defaultValue == null) {
-                getPersistedString("19:00")
-            } else {
-                getPersistedString(defaultValue.toString())
-            }
-        summary = timeval ?: ""
+        timeval = ""
+        timeval = getPersistedString(
+            defaultValue?.toString() ?: "19:00"
+        )
+        summary = timeval
     }
 
     val lastHour: Int
@@ -37,7 +35,9 @@ class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctx
         get() = timeval
         set(text) {
             val wasBlocking = shouldDisableDependents()
-            timeval = text
+            if (text != null) {
+                timeval = text
+            }
             persistString(text)
             val isBlocking = shouldDisableDependents()
             if (isBlocking != wasBlocking) {

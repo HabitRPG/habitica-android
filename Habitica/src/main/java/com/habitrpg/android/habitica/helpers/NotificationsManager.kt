@@ -23,7 +23,7 @@ interface NotificationsManager {
 
     fun getNotifications(): Flow<List<Notification>>
 
-    fun getNotification(id: String): Notification?
+    fun getNotification(id: String): Notification
 
     fun dismissTaskNotification(
         context: Context,
@@ -32,7 +32,7 @@ interface NotificationsManager {
 }
 
 class MainNotificationsManager : NotificationsManager {
-    private val seenNotifications: MutableMap<String, Boolean>
+    private val seenNotifications: MutableMap<String, Boolean> = HashMap()
     override var apiClient: WeakReference<ApiClient>? = null
 
     private var lastNotificationHandling: Date? = null
@@ -40,10 +40,6 @@ class MainNotificationsManager : NotificationsManager {
     private val displayedNotificationEvents = Channel<Notification>()
     override val displayNotificationEvents: Flow<Notification> =
         displayedNotificationEvents.receiveAsFlow().filterNotNull()
-
-    init {
-        this.seenNotifications = HashMap()
-    }
 
     override fun setNotifications(current: List<Notification>) {
         notificationsFlow.value = current
@@ -54,8 +50,9 @@ class MainNotificationsManager : NotificationsManager {
         return notificationsFlow.filterNotNull()
     }
 
-    override fun getNotification(id: String): Notification? {
-        return notificationsFlow.value?.find { it.id == id }
+    override fun getNotification(id: String): Notification {
+        val temp= notificationsFlow.value?.find { it.id == id }
+        return temp ?: Notification()
     }
 
     override fun dismissTaskNotification(

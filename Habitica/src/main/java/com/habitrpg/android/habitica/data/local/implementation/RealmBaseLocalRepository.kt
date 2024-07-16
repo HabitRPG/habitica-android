@@ -82,8 +82,8 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
             }
         }
 
-        override fun <T : BaseObject> save(obj: T) {
-            pendingSaves.add(obj)
+        override fun <T : BaseObject> save(`object`: T) {
+            pendingSaves.add(`object`)
             if (isSaving.compareAndSet(false, true)) {
                 process()
             }

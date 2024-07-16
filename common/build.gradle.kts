@@ -123,17 +123,6 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:$navigation_version")
     implementation("com.google.android.material:material:1.12.0")
 
-    testImplementation("io.mockk:mockk:$mockk_version")
-    testImplementation("io.mockk:mockk-android:$mockk_version")
-    testImplementation("io.kotest:kotest-runner-junit5:$kotest_version")
-    testImplementation("io.kotest:kotest-assertions-core:$kotest_version")
-    testImplementation("io.kotest:kotest-framework-datatest:$kotest_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
-
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
-
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
     implementation("androidx.compose.animation:animation:$compose_version")

@@ -189,7 +189,7 @@ class ApiClientImpl(
     }
 
     override fun updateServerUrl(newAddress: String?) {
-        if (newAddress != null) {
+        newAddress?.let {
             hostConfig.address = newAddress
             buildRetrofit()
         }
@@ -304,8 +304,9 @@ class ApiClientImpl(
     override suspend fun updateMember(
         memberID: String,
         updateData: Map<String, Map<String, Boolean>>,
-    ): Member? {
-        return process { apiService.updateUser(memberID, updateData) }
+    ): Member {
+        val temp = process { apiService.updateUser(memberID, updateData) }
+        return temp ?: Member()
     }
 
     override fun getErrorResponse(throwable: HttpException): ErrorResponse {
@@ -409,15 +410,22 @@ class ApiClientImpl(
         Analytics.setUserID(hostConfig.userID)
     }
 
-    override suspend fun getStatus(): Status? = process { apiService.getStatus() }
+    override suspend fun getStatus(): Status {
+        val temp = process { apiService.getStatus() }
+        return temp ?: Status()
+    }
 
-    override suspend fun syncUserStats(): User? = process { apiService.syncUserStats() }
+    override suspend fun syncUserStats(): User {
+    val temp = process { apiService.syncUserStats() }
+        return temp ?: User()
+    }
 
     override suspend fun reportChallenge(
         challengeid: String,
         updateData: Map<String, String>,
     ): Void? {
-        return process { apiService.reportChallenge(challengeid, updateData) }
+        val temp=process { apiService.reportChallenge(challengeid, updateData) }
+        return temp
     }
 
     override suspend fun getContent(language: String?): ContentResult? {
@@ -428,12 +436,14 @@ class ApiClientImpl(
         return process { apiService.updateUser(updateDictionary) }
     }
 
-    override suspend fun registrationLanguage(registrationLanguage: String): User? {
-        return process { apiService.registrationLanguage(registrationLanguage) }
+    override suspend fun registrationLanguage(registrationLanguage: String): User {
+        val temp= process { apiService.registrationLanguage(registrationLanguage) }
+        return temp ?: User()
     }
 
-    override suspend fun retrieveInAppRewards(): List<ShopItem>? {
-        return process { apiService.retrieveInAppRewards() }
+    override suspend fun retrieveInAppRewards(): List<ShopItem> {
+        val temp= process { apiService.retrieveInAppRewards() }
+        return temp ?: listOf()
     }
 
     override suspend fun equipItem(
@@ -457,8 +467,9 @@ class ApiClientImpl(
         return process { apiService.unlinkAllTasks(challengeID, keepOption) }
     }
 
-    override suspend fun blockMember(userID: String): List<String>? {
-        return process { apiService.blockMember(userID) }
+    override suspend fun blockMember(userID: String): List<String> {
+        val temp= process { apiService.blockMember(userID) }
+        return temp ?: listOf()
     }
 
     override suspend fun purchaseItem(
@@ -485,8 +496,9 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun getHallMember(userId: String): Member? {
-        return process { apiService.getHallMember(userId) }
+    override suspend fun getHallMember(userId: String): Member {
+       val temp = process{ apiService.getHallMember(userId) }
+        return temp ?: Member()
     }
 
     override suspend fun validateNoRenewSubscription(request: PurchaseValidationRequest): Any? {
@@ -539,29 +551,35 @@ class ApiClientImpl(
         return process { apiService.hatchPet(eggKey, hatchingPotionKey) }
     }
 
-    override suspend fun getTasks(): TaskList? = process { apiService.getTasks() }
-
-    override suspend fun getTasks(type: String): TaskList? {
-        return process { apiService.getTasks(type) }
+    override suspend fun getTasks(): TaskList {
+        val temp = process { apiService.getTasks() }
+        return temp ?: TaskList()
+    }
+    override suspend fun getTasks(type: String): TaskList {
+        val temp= process { apiService.getTasks(type) }
+        return temp ?: TaskList()
     }
 
     override suspend fun getTasks(
         type: String,
         dueDate: String,
-    ): TaskList? {
-        return process { apiService.getTasks(type, dueDate) }
+    ): TaskList {
+        val temp = process { apiService.getTasks(type, dueDate) }
+        return temp ?: TaskList()
     }
 
 //    override suspend fun reorderTags(type: String, dueDate: String): {
 //        return process { apiService.getTasks(type, dueDate) }
 //    }
 
-    override suspend fun unlockPath(path: String): UnlockResponse? {
-        return process { apiService.unlockPath(path) }
+    override suspend fun unlockPath(path: String): UnlockResponse {
+        val temp = process { apiService.unlockPath(path) }
+        return temp ?: UnlockResponse()
     }
 
-    override suspend fun getTask(id: String): Task? {
-        return process { apiService.getTask(id) }
+    override suspend fun getTask(id: String): Task {
+        val temp= process { apiService.getTask(id) }
+        return temp ?:Task()
     }
 
     override suspend fun postTaskDirection(
@@ -944,8 +962,9 @@ class ApiClientImpl(
         return process { apiService.debugAddTenGems() }
     }
 
-    override suspend fun getNews(): List<Any>? {
-        return process { apiService.getNews() }
+    override suspend fun getNews(): List<Any> {
+        val temp= process { apiService.getNews() }
+        return temp ?: listOf()
     }
 
     override suspend fun readNotification(notificationId: String): List<Any>? {
@@ -1059,12 +1078,14 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun getTeamPlans(): List<TeamPlan>? {
-        return process { apiService.getTeamPlans() }
+    override suspend fun getTeamPlans(): List<TeamPlan> {
+        val temp= process { apiService.getTeamPlans() }
+        return temp ?: listOf()
     }
 
     override suspend fun getTeamPlanTasks(teamID: String): TaskList? {
-        return processResponse(apiService.getTeamPlanTasks(teamID))
+        val temp = processResponse(apiService.getTeamPlanTasks(teamID))
+        return temp ?: TaskList()
     }
 
     override suspend fun assignToTask(
@@ -1101,7 +1122,10 @@ class ApiClientImpl(
         return process { apiService.retrieveMarketGear(languageCode) }
     }
 
-    override suspend fun getWorldState(): WorldState? = process { apiService.worldState() }
+    override suspend fun getWorldState(): WorldState {
+        val temp = process { apiService.worldState() }
+        return temp ?: WorldState()
+    }
 
     companion object {
         fun createGsonFactory(): GsonConverterFactory {

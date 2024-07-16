@@ -26,6 +26,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -43,22 +44,21 @@ enum class GroupViewType(internal val order: String) {
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-open class GroupViewModel
-    @Inject
-    constructor(
+open class GroupViewModel @Inject constructor(
         userRepository: UserRepository,
         userViewModel: MainUserViewModel,
         val challengeRepository: ChallengeRepository,
         val socialRepository: SocialRepository,
         val notificationsManager: NotificationsManager,
     ) : BaseViewModel(userRepository, userViewModel) {
-        protected val groupIDState = MutableStateFlow<String?>(null)
-        val groupIDFlow: Flow<String?> = groupIDState
+
+        private val _groupIDState = MutableStateFlow<String?>(null)
+        val groupIDState: Flow<String?> = _groupIDState.asStateFlow()
 
         var groupViewType: GroupViewType? = null
 
         private val groupFlow =
-            groupIDFlow
+            groupIDState
                 .filterNotNull()
                 .flatMapLatest { socialRepository.getGroup(it) }
         private val group = groupFlow.asLiveData()
@@ -70,7 +70,7 @@ open class GroupViewModel
         private val leader = leaderFlow.asLiveData()
 
         private val isMemberFlow =
-            groupIDFlow
+            groupIDState
                 .filterNotNull()
                 .flatMapLatest { socialRepository.getGroupMembership(it) }
                 .map { it != null }
@@ -91,8 +91,8 @@ open class GroupViewModel
         }
 
         fun setGroupID(groupID: String) {
-            if (groupID == groupIDState.value) return
-            groupIDState.value = groupID
+            if (groupID == _groupIDState.value) return
+            _groupIDState.value = groupID
 
             viewModelScope.launchCatching {
                 val notifications =
@@ -105,7 +105,7 @@ open class GroupViewModel
         }
 
         val groupID: String?
-            get() = groupIDState.value
+            get() = _groupIDState.value
         val isMember: Boolean
             get() = isMemberData.value ?: false
         val leaderID: String?

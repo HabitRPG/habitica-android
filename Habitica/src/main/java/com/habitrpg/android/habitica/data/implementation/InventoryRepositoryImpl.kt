@@ -57,12 +57,13 @@ class InventoryRepositoryImpl(
         return localRepository.getInAppReward(key)
     }
 
-    override suspend fun retrieveInAppRewards(): List<ShopItem>? {
+    override suspend fun retrieveInAppRewards(): List<ShopItem> {
         val rewards = apiClient.retrieveInAppRewards()
-        if (rewards != null) {
+        rewards?.let {
             localRepository.saveInAppRewards(rewards)
+            return rewards
         }
-        return rewards
+        return listOf()
     }
 
     override fun getOwnedEquipment(type: String): Flow<List<Equipment>> {

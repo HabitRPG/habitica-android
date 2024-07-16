@@ -14,6 +14,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import javax.inject.Singleton
 
@@ -22,14 +23,15 @@ class AuthenticationHandler {
         _userIDFlow.value = userID
     }
 
-    private val _userIDFlow = MutableStateFlow<String?>(null)
-    val userIDFlow: Flow<String> = _userIDFlow.filterNotNull()
+    private val _userIDFlow = MutableStateFlow("")
+    val userIDFlow = _userIDFlow.asStateFlow()
 
-    val currentUserID: String?
-        get() = _userIDFlow.value
+
+    val currentUserID: String
+        get() = userIDFlow.value
 
     val isAuthenticated: Boolean
-        get() = currentUserID != null
+        get() = currentUserID != ""
 
     constructor(sharedPreferences: SharedPreferences) {
         _userIDFlow.value = sharedPreferences.getString("UserID", "") ?: ""
