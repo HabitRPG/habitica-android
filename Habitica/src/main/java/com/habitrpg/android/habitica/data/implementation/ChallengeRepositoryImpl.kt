@@ -46,10 +46,12 @@ class ChallengeRepositoryImpl(
         return localRepository.getTasks(challengeId)
     }
 
-    override suspend fun retrieveChallenge(challengeID: String): Challenge? {
-        val challenge = apiClient.getChallenge(challengeID) ?: return null
-        localRepository.save(challenge)
-        return challenge
+    override suspend fun retrieveChallenge(challengeID: String): Challenge {
+        val challenge = apiClient.getChallenge(challengeID)
+        if (challenge==null) return Challenge() else {
+            localRepository.save(challenge)
+            return challenge
+        }
     }
 
     override suspend fun retrieveChallengeTasks(challengeID: String): TaskList {
@@ -172,12 +174,12 @@ class ChallengeRepositoryImpl(
     override suspend fun retrieveChallenges(
         page: Int,
         memberOnly: Boolean,
-    ): List<Challenge>? {
+    ): List<Challenge> {
         val challenges = apiClient.getUserChallenges(page, memberOnly)
         if (challenges != null) {
             localRepository.saveChallenges(challenges, page == 0, memberOnly, currentUserID)
         }
-        return challenges
+        return challenges ?: listOf()
     }
 
     override suspend fun leaveChallenge(
@@ -189,8 +191,8 @@ class ChallengeRepositoryImpl(
         return null
     }
 
-    override suspend fun joinChallenge(challenge: Challenge): Challenge? {
-        val returnedChallenge = apiClient.joinChallenge(challenge.id ?: "") ?: return null
+    override suspend fun joinChallenge(challenge: Challenge): Challenge {
+        val returnedChallenge = apiClient.joinChallenge(challenge.id ?: "") ?: return Challenge()
         localRepository.setParticipating(currentUserID, returnedChallenge.id ?: "", true)
         return returnedChallenge
     }

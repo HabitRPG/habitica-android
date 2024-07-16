@@ -23,7 +23,7 @@ class RealmTutorialLocalRepository(realm: Realm) :
             .filterNotNull()
     }
 
-    override fun getTutorialSteps(keys: List<String>): Flow<out List<TutorialStep>> {
+    override fun getTutorialSteps(keys: List<String>): Flow<List<TutorialStep>> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(TutorialStep::class.java)
             .`in`("identifier", keys.toTypedArray())

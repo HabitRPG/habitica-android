@@ -131,13 +131,9 @@ class TaskFormActivity : BaseActivity() {
                 alert.setMessage(R.string.push_notification_system_settings_description)
                 alert.addButton(R.string.settings, isPrimary = true, isDestructive = false) { _, _ ->
                     val notifSettingIntent: Intent =
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                .putExtra(Settings.EXTRA_APP_PACKAGE, applicationContext?.packageName)
-                        } else {
-                            return@addButton
-                        }
+                        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .putExtra(Settings.EXTRA_APP_PACKAGE, applicationContext?.packageName)
                     startActivity(notifSettingIntent)
                 }
                 alert.addButton(R.string.cancel, false) { _, _ ->

@@ -70,7 +70,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .map { it.count() }
     }
 
-    override fun getOwnedEquipment(type: String): Flow<out List<Equipment>> {
+    override fun getOwnedEquipment(type: String): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .equalTo("type", type)
             .equalTo("owned", true)
@@ -79,7 +79,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .filter { it.isLoaded }
     }
 
-    override fun getOwnedEquipment(): Flow<out List<Equipment>> {
+    override fun getOwnedEquipment(): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .equalTo("owned", true)
             .findAll()
@@ -90,7 +90,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun getEquipmentType(
         type: String,
         set: String,
-    ): Flow<out List<Equipment>> {
+    ): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .equalTo("type", type)
             .equalTo("gearSet", set)
@@ -104,14 +104,14 @@ class RealmInventoryLocalRepository(realm: Realm) :
         userID: String,
         includeZero: Boolean,
     ): Flow<List<OwnedItem>> {
-        return queryUser(userID).map {
-            val items =
-                when (itemType) {
-                    "eggs" -> it?.items?.eggs
-                    "hatchingPotions" -> it?.items?.hatchingPotions
-                    "food" -> it?.items?.food
-                    "quests" -> it?.items?.quests
-                    "special" -> it?.items?.special
+        return queryUser(userID).filterNotNull()
+            .map { user ->
+            val items = when (itemType) {
+                    "eggs" -> user.items?.eggs
+                    "hatchingPotions" -> user.items?.hatchingPotions
+                    "food" -> user.items?.food
+                    "quests" -> user.items?.quests
+                    "special" -> user.items?.special
                     else -> emptyList()
                 } ?: emptyList()
             if (includeZero) {

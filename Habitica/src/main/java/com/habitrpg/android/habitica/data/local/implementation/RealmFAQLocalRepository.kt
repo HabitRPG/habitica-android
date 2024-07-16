@@ -17,7 +17,7 @@ class RealmFAQLocalRepository(realm: Realm) :
             .equalTo("position", position)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.count() > 0 }
+            .filter { it.isLoaded && it.isNotEmpty() }
             .map { it.firstOrNull() }
             .filterNotNull()
     }

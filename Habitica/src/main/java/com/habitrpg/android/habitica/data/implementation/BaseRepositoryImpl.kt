@@ -12,7 +12,7 @@ abstract class BaseRepositoryImpl<T : BaseLocalRepository>(
     protected val authenticationHandler: AuthenticationHandler,
 ) : BaseRepository {
     val currentUserID: String
-        get() = authenticationHandler.currentUserID ?: ""
+        get() = authenticationHandler.currentUserID
 
     override fun close() {
         this.localRepository.close()

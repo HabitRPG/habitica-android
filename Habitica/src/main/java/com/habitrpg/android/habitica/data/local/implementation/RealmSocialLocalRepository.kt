@@ -15,6 +15,7 @@ import io.realm.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
@@ -51,7 +52,7 @@ class RealmSocialLocalRepository(realm: Realm) :
             val membership =
                 realm.where(GroupMembership::class.java).equalTo("userID", userId)
                     .equalTo("groupID", id).findFirst()
-            if (membership != null) {
+            membership?.let {
                 executeTransaction {
                     membership.deleteFromRealm()
                 }

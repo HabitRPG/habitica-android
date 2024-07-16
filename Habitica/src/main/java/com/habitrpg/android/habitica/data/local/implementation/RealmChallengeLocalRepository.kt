@@ -28,7 +28,7 @@ class RealmChallengeLocalRepository(realm: Realm) :
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-            .map { it.count() > 0 }
+            .map { it.isNotEmpty() }
 
     override fun getChallengeMembership(
         userId: String,

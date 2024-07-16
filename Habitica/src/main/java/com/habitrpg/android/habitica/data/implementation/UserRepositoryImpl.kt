@@ -51,16 +51,16 @@ class UserRepositoryImpl(
 
     override fun getUser(userID: String): Flow<User> = localRepository.getUser(userID)
 
-    override suspend fun syncUserStats(): User? {
+    override suspend fun syncUserStats(): User {
         val user = apiClient.syncUserStats()
         if (user != null && (user.stats?.toNextLevel ?: 0) > 1 &&
             (user.stats?.maxMP ?: 0) > 1
         ) {
-           user?.let { localRepository.saveUser(user)}
+            localRepository.saveUser(user)
         } else {
-            retrieveUser(false, true)
+            retrieveUser(withTasks = false, forced = true)
         }
-        return user
+        return user ?: User()
     }
 
     private suspend fun updateUser(
@@ -76,8 +76,8 @@ class UserRepositoryImpl(
         userID: String,
         key: String,
         value: Any?,
-    ): User? {
-        return updateUser(userID, mapOf(key to value))
+    ): User {
+        return updateUser(userID, mapOf(key to value)) ?: User()
     }
 
     override suspend fun updateUser(updateData: Map<String, Any?>): User? {
@@ -87,7 +87,7 @@ class UserRepositoryImpl(
     override suspend fun updateUser(
         key: String,
         value: Any?,
-    ): User? {
+    ): User {
         return updateUser(currentUserID, key, value)
     }
 
@@ -96,10 +96,10 @@ class UserRepositoryImpl(
         withTasks: Boolean,
         forced: Boolean,
         overrideExisting: Boolean,
-    ): User? {
+    ): User {
         // Only retrieve again after 3 minutes or it's forced.
         if (forced || lastSync == null || Date().time - (lastSync?.time ?: 0) > 180000) {
-            val user = apiClient.retrieveUser(withTasks) ?: return null
+            val user = apiClient.retrieveUser(withTasks) ?: return User()
             lastSync = Date()
             withContext(Dispatchers.Main) {
                 localRepository.saveUser(user)
@@ -121,7 +121,7 @@ class UserRepositoryImpl(
                 user
             }
         } else {
-            return null
+            return User()
         }
     }
 
