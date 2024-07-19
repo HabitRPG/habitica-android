@@ -45,7 +45,10 @@ fun ClassText(
                 ),
         )
         Text(
-            getTranslatedClassName(LocalContext.current.resources, className),
+            getTranslatedClassName(
+                LocalContext.current.resources,
+                className
+            ),
             fontSize = fontSize,
             fontWeight = FontWeight.SemiBold,
             color = classColor,

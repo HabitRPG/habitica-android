@@ -31,7 +31,7 @@ import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
+import com.habitrpg.common.habitica.views.CircularProgressComposable
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -120,7 +120,7 @@ class ArmoireActivity : BaseActivity() {
         }
 
         binding.progressView.setContent {
-            HabiticaCircularProgressView(indicatorSize = 60.dp)
+            CircularProgressComposable(indicatorSize = 60.dp)
         }
 
         if (appConfigManager.enableArmoireAds()) {

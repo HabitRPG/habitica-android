@@ -42,7 +42,7 @@ import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
+import com.habitrpg.common.habitica.views.CircularProgressComposable
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -69,7 +69,7 @@ class NotificationsActivity :
     val viewModel: NotificationsViewModel by viewModels()
 
     var inflater: LayoutInflater? = null
-    var userLvl: Int? = null
+    private var userLvl: Int? = null
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
@@ -95,7 +95,7 @@ class NotificationsActivity :
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
         binding.progressView.setContent {
-            HabiticaCircularProgressView(indicatorSize = 60.dp)
+            CircularProgressComposable(indicatorSize = 60.dp)
         }
 
         lifecycleScope.launchCatching {

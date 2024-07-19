@@ -73,9 +73,6 @@ class FullProfileActivity : BaseActivity() {
     lateinit var inventoryRepository: InventoryRepository
 
     @Inject
-   lateinit var apiClient: ApiClient
-
-    @Inject
     lateinit var socialRepository: SocialRepository
 
     @Inject

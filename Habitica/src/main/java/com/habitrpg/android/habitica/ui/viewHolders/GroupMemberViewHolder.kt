@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 
+
 class GroupMemberViewHolder(itemView: View) :
     androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView),
     PopupMenu.OnMenuItemClickListener {

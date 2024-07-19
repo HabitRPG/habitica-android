@@ -22,9 +22,6 @@ class MaintenanceActivity : BaseActivity() {
     @Inject
     lateinit var maintenanceService: MaintenanceApiService
 
-    @Inject
-    lateinit var apiClient: ApiClient
-
     private var isDeprecationNotice: Boolean = false
 
     override fun getLayoutResId(): Int {

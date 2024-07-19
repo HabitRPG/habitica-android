@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
@@ -442,9 +441,9 @@ private fun Preview(
             data.first,
             teamPlan = data.second,
             modifier =
-                Modifier
-                    .background(HabiticaTheme.colors.contentBackground)
-                    .padding(8.dp),
+            Modifier
+                .background(HabiticaTheme.colors.contentBackground)
+                .padding(8.dp),
             onMemberRowClicked = { },
             onClassSelectionClicked = { }
         )

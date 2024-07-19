@@ -110,7 +110,7 @@ class RealmUserLocalRepository(realm: Realm) :
             }
         }
         executeTransaction { realm1 -> realm1.insertOrUpdate(user) }
-        removeOldTags(user.id ?: "", user.tags)
+        removeOldTags(user.id, user.tags)
     }
 
     private fun removeOldTags(

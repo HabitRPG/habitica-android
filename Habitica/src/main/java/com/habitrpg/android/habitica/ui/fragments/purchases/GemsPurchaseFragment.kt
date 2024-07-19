@@ -35,7 +35,7 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
+import com.habitrpg.common.habitica.views.CircularProgressComposable
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -136,7 +136,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     private fun loadInventory() {
         if (binding?.gems4View?.sku == null) {
             binding?.loadingIndicator?.setContent {
-                HabiticaCircularProgressView()
+                CircularProgressComposable()
             }
             binding?.loadingIndicator?.isVisible = true
             binding?.gemPurchaseOptions?.isVisible = false

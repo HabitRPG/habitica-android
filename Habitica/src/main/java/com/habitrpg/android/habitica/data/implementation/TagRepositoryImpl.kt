@@ -44,7 +44,7 @@ class TagRepositoryImpl(
     }
 
     override suspend fun createTags(tags: Collection<Tag>): List<Tag> {
-        return tags.mapNotNull {
+        return tags.map {
             createTag(it)
         }
     }

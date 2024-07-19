@@ -9,7 +9,6 @@ import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.text.SpannableString
@@ -60,9 +59,6 @@ class LoginActivity : BaseActivity() {
     lateinit var apiClient: ApiClient
 
     @Inject
-    lateinit var sharedPrefs: SharedPreferences
-
-    @Inject
     lateinit var configManager: AppConfigManager
 
     @Inject
@@ -74,11 +70,8 @@ class LoginActivity : BaseActivity() {
     private val loginClick =
         View.OnClickListener {
             binding.PBAsyncTask.visibility = View.VISIBLE
-            if (isRegistering) {
-                registerWithPassword()
-            } else {
-                loginWithPassword()
-            }
+            if (isRegistering)  registerWithPassword()
+             else loginWithPassword()
         }
 
     private fun loginWithPassword() {
@@ -232,19 +225,15 @@ class LoginActivity : BaseActivity() {
         if (this.isRegistering) {
             binding.loginBtn.text = getString(R.string.register_btn)
             binding.username.setHint(R.string.username)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                binding.username.setAutofillHints("newUsername")
-                binding.password.setAutofillHints("newPassword")
-            }
+            binding.username.setAutofillHints("newUsername")
+            binding.password.setAutofillHints("newPassword")
             binding.password.imeOptions = EditorInfo.IME_ACTION_NEXT
             binding.googleLoginButton.setText(R.string.register_btn_google)
         } else {
             binding.loginBtn.text = getString(R.string.login_btn)
             binding.username.setHint(R.string.email_username)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                binding.username.setAutofillHints("username")
-                binding.password.setAutofillHints("password")
-            }
+            binding.username.setAutofillHints("username")
+            binding.password.setAutofillHints("password")
             binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
             binding.googleLoginButton.setText(R.string.login_btn_google)
         }
@@ -330,7 +319,7 @@ class LoginActivity : BaseActivity() {
     private val pickAccountResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+                viewModel.googleEmail = it.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
                 viewModel.handleGoogleLoginResult(
                     this,
                     recoverFromPlayServicesErrorResult,
@@ -491,9 +480,7 @@ class LoginActivity : BaseActivity() {
 
     private fun onForgotPasswordClicked() {
         val input = EditText(this)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)
-        }
+        input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)
         input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         input.hint = getString(R.string.forgot_password_hint_example)
         input.textSize = 16f

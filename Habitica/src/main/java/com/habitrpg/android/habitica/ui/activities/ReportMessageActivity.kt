@@ -128,9 +128,7 @@ class ReportMessageActivity : BaseActivity() {
             binding.toolbarTitle.setTypeface(null, Typeface.NORMAL)
         }
 
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
-            setSystemBarTheme(dim)
-        }
+        setSystemBarTheme(dim)
     }
 
     override fun finish() {
@@ -138,12 +136,12 @@ class ReportMessageActivity : BaseActivity() {
         super.finish()
     }
 
-    @RequiresApi(api = VERSION_CODES.M)
     fun setSystemBarTheme(isDark: Boolean) {
         // Fetch the current flags.
         val lFlags = window.decorView.systemUiVisibility
         // Update the SystemUiVisibility depending on whether we want a Light or Dark theme.
         window.decorView.systemUiVisibility =
-            if (isDark) lFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() else lFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            if (isDark) lFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            else lFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 }

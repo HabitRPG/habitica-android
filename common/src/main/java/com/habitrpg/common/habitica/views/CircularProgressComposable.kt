@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.habitrpg.common.habitica.R
 
 @Composable
-fun HabiticaCircularProgressView(
+fun CircularProgressComposable(
     modifier: Modifier = Modifier,
     partialDisplay: Float = 1f,
     animate: Boolean = true,
@@ -41,7 +41,7 @@ fun HabiticaCircularProgressView(
 ) {
     val rotateAnimation: State<Float>
     if (animate) {
-        val infiniteTransition = rememberInfiniteTransition()
+        val infiniteTransition = rememberInfiniteTransition(label = "Circular")
 
         rotateAnimation =
             infiniteTransition.animateFloat(
@@ -55,6 +55,7 @@ fun HabiticaCircularProgressView(
                                 easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f),
                             ),
                     ),
+                label = "Circular1",
             )
     } else {
         rotateAnimation = remember { mutableFloatStateOf(0f) }
@@ -105,9 +106,9 @@ private fun Preview() {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.background(MaterialTheme.colorScheme.surface),
     ) {
-        HabiticaCircularProgressView()
-        HabiticaCircularProgressView(indicatorSize = 40.dp, strokeWidth = 5.dp)
-        HabiticaCircularProgressView(partialDisplay = 0.3f, indicatorSize = 32.dp, strokeWidth = 4.dp)
-        HabiticaCircularProgressView(partialDisplay = 0.91f, indicatorSize = 32.dp, strokeWidth = 4.dp)
+        CircularProgressComposable()
+        CircularProgressComposable(indicatorSize = 40.dp, strokeWidth = 5.dp)
+        CircularProgressComposable(partialDisplay = 0.3f, indicatorSize = 32.dp, strokeWidth = 4.dp)
+        CircularProgressComposable(partialDisplay = 0.91f, indicatorSize = 32.dp, strokeWidth = 4.dp)
     }
 }

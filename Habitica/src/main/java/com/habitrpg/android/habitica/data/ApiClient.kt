@@ -52,7 +52,7 @@ interface ApiClient {
     suspend fun getUserChallenges(
         page: Int,
         memberOnly: Boolean,
-    ): List<Challenge>?
+    ): List<Challenge>
 
     suspend fun getWorldState(): WorldState?
 
@@ -64,7 +64,7 @@ interface ApiClient {
 
     suspend fun registrationLanguage(registrationLanguage: String): User?
 
-    suspend fun retrieveInAppRewards(): List<ShopItem>?
+    suspend fun retrieveInAppRewards(): List<ShopItem>
 
     suspend fun equipItem(
         type: String,
@@ -135,7 +135,7 @@ interface ApiClient {
     suspend fun postTaskNewPosition(
         id: String,
         position: Int,
-    ): List<String>?
+    ): List<String>
 
     suspend fun scoreChecklistItem(
         taskId: String,
@@ -187,8 +187,6 @@ interface ApiClient {
 
     suspend fun disconnectSocial(network: String): Void?
 
-    suspend fun loginApple(authToken: String): UserAuthResponse?
-
     suspend fun sleep(): Boolean?
 
     suspend fun revive(): Items?
@@ -212,7 +210,7 @@ interface ApiClient {
 
     // Group API
 
-    suspend fun listGroups(type: String): List<Group>?
+    suspend fun listGroups(type: String): List<Group>
 
     suspend fun getGroup(groupId: String): Group?
 
@@ -228,7 +226,7 @@ interface ApiClient {
         userID: String,
     ): Void?
 
-    suspend fun listGroupChat(groupId: String): List<ChatMessage>?
+    suspend fun listGroupChat(groupId: String): List<ChatMessage>
 
     suspend fun joinGroup(groupId: String): Group?
 
@@ -252,13 +250,13 @@ interface ApiClient {
     suspend fun getGroupMembers(
         groupId: String,
         includeAllPublicFields: Boolean?,
-    ): List<Member>?
+    ): List<Member>
 
     suspend fun getGroupMembers(
         groupId: String,
         includeAllPublicFields: Boolean?,
         lastId: String,
-    ): List<Member>?
+    ): List<Member>
 
     // Like returns the full chat list
     suspend fun likeMessage(
@@ -287,7 +285,7 @@ interface ApiClient {
     suspend fun inviteToGroup(
         groupId: String,
         inviteData: Map<String, Any>,
-    ): List<InviteResponse>?
+    ): List<InviteResponse>
 
     suspend fun rejectGroupInvite(groupId: String): Void?
 
@@ -320,16 +318,16 @@ interface ApiClient {
 
     suspend fun getMemberWithUsername(username: String): Member?
 
-    suspend fun getMemberAchievements(memberId: String): List<Achievement>?
+    suspend fun getMemberAchievements(memberId: String): List<Achievement>
 
     suspend fun postPrivateMessage(messageDetails: Map<String, String>): PostChatMessageResult?
 
     suspend fun retrieveShopIventory(identifier: String): Shop?
 
     // Push notifications
-    suspend fun addPushDevice(pushDeviceData: Map<String, String>): List<Void>?
+    suspend fun addPushDevice(pushDeviceData: Map<String, String>): List<Void>
 
-    suspend fun deletePushDevice(regId: String): List<Void>?
+    suspend fun deletePushDevice(regId: String): List<Void>
 
     suspend fun getChallengeTasks(challengeId: String): TaskList?
 
@@ -347,7 +345,7 @@ interface ApiClient {
     suspend fun createChallengeTasks(
         challengeId: String,
         tasks: List<Task>,
-    ): List<Task>?
+    ): List<Task>
 
     suspend fun createChallengeTask(
         challengeId: String,
@@ -362,14 +360,14 @@ interface ApiClient {
 
     suspend fun debugAddTenGems(): Void?
 
-    suspend fun getNews(): List<Any>?
+    suspend fun getNews(): List<Any>
 
     // Notifications
-    suspend fun readNotification(notificationId: String): List<Any>?
+    suspend fun readNotification(notificationId: String): List<Any>
 
-    suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>?
+    suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>
 
-    suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any>?
+    suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any>
 
     fun getErrorResponse(throwable: HttpException): ErrorResponse
 
@@ -387,7 +385,7 @@ interface ApiClient {
         page: Int,
     ): List<ChatMessage>?
 
-    suspend fun retrieveInboxConversations(): List<InboxConversation>?
+    suspend fun retrieveInboxConversations(): List<InboxConversation>
 
     suspend fun openMysteryItem(): Equipment?
 
@@ -443,7 +441,7 @@ interface ApiClient {
         username: String,
         context: String?,
         id: String?,
-    ): List<FindUsernameResult>?
+    ): List<FindUsernameResult>
 
     suspend fun transferGems(
         giftedID: String,
@@ -455,9 +453,9 @@ interface ApiClient {
         keepOption: String,
     ): Void?
 
-    suspend fun blockMember(userID: String): List<String>?
+    suspend fun blockMember(userID: String): List<String>
 
-    suspend fun getTeamPlans(): List<TeamPlan>?
+    suspend fun getTeamPlans(): List<TeamPlan>
 
     suspend fun getTeamPlanTasks(teamID: String): TaskList?
 
@@ -488,7 +486,7 @@ interface ApiClient {
     suspend fun getGroupInvites(
         groupId: String,
         includeAllPublicFields: Boolean?,
-    ): List<Member>?
+    ): List<Member>
 
     suspend fun syncUserStats(): User?
 

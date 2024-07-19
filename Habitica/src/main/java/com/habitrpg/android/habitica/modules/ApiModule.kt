@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl.Companion.createGsonFactory
+import com.habitrpg.android.habitica.data.implementation.OkhttpWrapper
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.common.habitica.api.HostConfig
@@ -51,6 +52,7 @@ open class ApiModule {
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
         @ApplicationContext context: Context,
+        okhttpWrapper: OkhttpWrapper
     ): ApiClient {
         val apiClient =
             ApiClientImpl(
@@ -58,6 +60,7 @@ open class ApiModule {
                 hostConfig,
                 notificationsManager,
                 context,
+                okhttpWrapper
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient

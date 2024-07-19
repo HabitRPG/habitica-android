@@ -108,7 +108,7 @@ class UserRepositoryImpl(
                 val id = user.id
                 val tasksOrder = user.tasksOrder
                 val tasks = user.tasks
-                if (id != null && tasksOrder != null && tasks != null) {
+                if (tasksOrder != null && tasks != null) {
                     taskRepository.saveTasks(id, tasksOrder, tasks)
                 }
             }
@@ -116,7 +116,7 @@ class UserRepositoryImpl(
             val timeZone = calendar.timeZone
             val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
             return if (offset.toInt() != (user.preferences?.timezoneOffset ?: 0)) {
-                updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
+                updateUser(user.id, "preferences.timezoneOffset", offset.toString())
             } else {
                 user
             }
@@ -211,7 +211,7 @@ class UserRepositoryImpl(
             unlockResponse.preferences?.let { liveUser.preferences = it }
             liveUser.purchased = unlockResponse.purchased
             liveUser.items = unlockResponse.items
-            liveUser.balance = liveUser.balance - (price / 4.0)
+            liveUser.balance -= (price / 4.0)
         }
         return unlockResponse
     }
@@ -392,7 +392,7 @@ class UserRepositoryImpl(
         type: String,
         category: String?,
         identifier: String,
-    ): User? {
+    ): User {
         if (appConfigManager.enableLocalChanges()) {
             val liveUser = getLiveUser()
             if (liveUser != null) {

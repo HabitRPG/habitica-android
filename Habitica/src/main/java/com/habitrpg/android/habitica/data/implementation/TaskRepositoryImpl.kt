@@ -50,7 +50,7 @@ class TaskRepositoryImpl(
     ): Flow<List<Task>> =
         this.localRepository.getTasks(
             taskType,
-            userID ?: authenticationHandler.currentUserID ?: "",
+            userID ?: authenticationHandler.currentUserID,
             includedGroupIDs,
         )
 
@@ -75,7 +75,7 @@ class TaskRepositoryImpl(
         val taskList = this.apiClient.getTasks("completedTodos") ?: return null
         val tasks = taskList.tasks
         this.localRepository.saveCompletedTodos(
-            userId ?: authenticationHandler.currentUserID ?: "",
+            userId ?: authenticationHandler.currentUserID,
             tasks.values,
         )
         return taskList
@@ -131,7 +131,7 @@ class TaskRepositoryImpl(
             ) ?: return null
         // There are cases where the user object is not set correctly. So the app refetches it as a fallback
         val thisUser =
-            user ?: localRepository.getUser(authenticationHandler.currentUserID ?: "").firstOrNull()
+            user ?: localRepository.getUser(authenticationHandler.currentUserID).firstOrNull()
                 ?: return null
         // save local task changes
 
@@ -174,7 +174,7 @@ class TaskRepositoryImpl(
             if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
-                    bgTask.completeForUser(authenticationHandler.currentUserID ?: "", up)
+                    bgTask.completeForUser(authenticationHandler.currentUserID, up)
                     if (TaskType.DAILY == bgTask.type) {
                         if (up) {
                             bgTask.streak = (bgTask.streak ?: 0) + 1
@@ -299,7 +299,7 @@ class TaskRepositoryImpl(
             if (task.isGroupTask) {
                 task.group?.groupID ?: ""
             } else {
-                authenticationHandler.currentUserID ?: ""
+                authenticationHandler.currentUserID
             }
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()

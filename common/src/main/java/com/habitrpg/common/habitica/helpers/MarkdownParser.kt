@@ -164,7 +164,7 @@ object MarkdownParser {
         return sb.toString()
     }
 
-    val brRegex = Regex("<br>")
+    private val brRegex = Regex("<br>")
     private fun preprocessHtmlTags(markdown: String): String {
         return markdown.replace(brRegex) {
             "\n"

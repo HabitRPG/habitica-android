@@ -46,22 +46,19 @@ class HostConfig {
         keyHelper: KeyHelper?,
     ): String {
         return if (sharedPreferences.contains(userID)) {
-            val encryptedKey = sharedPreferences.getString(userID, null)
-            if (encryptedKey?.isNotBlank() == true) {
-                keyHelper?.decrypt(encryptedKey)
-            } else {
-                ""
-            }
+            val encryptedKey = sharedPreferences.getString(userID, null) ?: ""
+
+            if (encryptedKey.isNotBlank()) { keyHelper?.decrypt(encryptedKey) } else ""
+
         } else {
-            val key = sharedPreferences.getString("APIToken", null)
-            if (key?.isNotBlank() == true && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val encryptedKey = keyHelper?.encrypt(key)
+            val aPIToken = sharedPreferences.getString("APIToken", null) ?: ""
+            if (aPIToken.isNotBlank() ) {
                 sharedPreferences.edit {
-                    putString(userID, encryptedKey)
+                    putString(userID, keyHelper?.encrypt(aPIToken))
                     remove("APIToken")
                 }
             }
-            key
+            aPIToken
         } ?: ""
     }
 

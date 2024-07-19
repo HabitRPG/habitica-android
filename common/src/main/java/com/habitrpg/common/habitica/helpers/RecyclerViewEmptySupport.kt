@@ -14,7 +14,7 @@ import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.EmptyItemBinding
 import com.habitrpg.common.habitica.databinding.FailedItemBinding
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
+import com.habitrpg.common.habitica.views.CircularProgressComposable
 
 data class EmptyItem(
     var title: String,
@@ -97,7 +97,7 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
                 view.findViewById<ComposeView>(R.id.compose_view).startAnimation(animation1)
                 view.findViewById<ComposeView>(R.id.compose_view).setContent {
                     HabiticaTheme {
-                        HabiticaCircularProgressView(Modifier.size(60.dp))
+                        CircularProgressComposable(Modifier.size(60.dp))
                     }
                 }
                 object : RecyclerView.ViewHolder(view) {}

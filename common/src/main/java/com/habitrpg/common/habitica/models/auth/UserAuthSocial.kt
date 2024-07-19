@@ -1,6 +1,6 @@
 package com.habitrpg.common.habitica.models.auth
 
-class UserAuthSocial {
-    var network: String? = null
-    var authResponse: UserAuthSocialTokens? = null
-}
+data class UserAuthSocial (
+    val network: String? = null,
+    val authResponse: UserAuthSocialTokens? = null
+)

@@ -230,7 +230,7 @@ class InventoryRepositoryImpl(
     ): Items? {
         val liveUser = localRepository.getLiveUser(currentUserID)
 
-        if (liveUser != null) {
+        liveUser?.let {
             localRepository.modify(liveUser) { user ->
                 if (type == "mount") {
                     user.items?.currentMount = key
@@ -244,29 +244,29 @@ class InventoryRepositoryImpl(
                         user.items?.gear?.equipped
                     }
                 when (key.split("_").firstOrNull()) {
-                    "weapon" -> outfit?.weapon = key
-                    "armor" -> outfit?.armor = key
-                    "shield" -> outfit?.shield = key
+                    "weapon"  -> outfit?.weapon = key
+                    "armor"   -> outfit?.armor = key
+                    "shield"  -> outfit?.shield = key
                     "eyewear" -> outfit?.eyeWear = key
-                    "head" -> outfit?.head = key
-                    "back" -> outfit?.back = key
+                    "head"    -> outfit?.head = key
+                    "back"    -> outfit?.back = key
                     "headAccessory" -> outfit?.headAccessory = key
-                    "body" -> outfit?.body = key
+                    "body"    -> outfit?.body = key
                 }
             }
         }
         val items = apiClient.equipItem(type, key) ?: return null
         if (liveUser == null) return null
-        localRepository.modify(liveUser) { liveUser ->
+        localRepository.modify(liveUser) { user ->
             val newEquipped = items.gear?.equipped
-            val oldEquipped = liveUser.items?.gear?.equipped
+            val oldEquipped = user.items?.gear?.equipped
             val newCostume = items.gear?.costume
-            val oldCostume = liveUser.items?.gear?.costume
+            val oldCostume = user.items?.gear?.costume
             newEquipped?.let { equipped -> oldEquipped?.updateWith(equipped) }
             newCostume?.let { costume -> oldCostume?.updateWith(costume) }
-            liveUser.items?.currentMount = items.currentMount
-            liveUser.items?.currentPet = items.currentPet
-            liveUser.balance = liveUser.balance
+            user.items?.currentMount = items.currentMount
+            user.items?.currentPet = items.currentPet
+            user.balance = user.balance
         }
         return items
     }
@@ -312,27 +312,19 @@ class InventoryRepositoryImpl(
         val buyResponse = apiClient.buyItem(id, purchaseQuantity) ?: return null
         val foundUser = user ?: localRepository.getLiveUser(currentUserID) ?: return buyResponse
         val copiedUser = localRepository.getUnmanagedCopy(foundUser)
-        if (buyResponse.items != null) {
+        buyResponse.items?.let {
             copiedUser.items = buyResponse.items
             copiedUser.items?.setItemTypes()
         }
-        if (buyResponse.hp != null) {
-            copiedUser.stats?.hp = buyResponse.hp
-        }
-        if (buyResponse.exp != null) {
-            copiedUser.stats?.exp = buyResponse.exp
-        }
-        if (buyResponse.mp != null) {
-            copiedUser.stats?.mp = buyResponse.mp
-        }
-        if (buyResponse.gp != null) {
-            copiedUser.stats?.gp = buyResponse.gp
-        } else {
-            copiedUser.stats?.gp = (copiedUser.stats?.gp ?: 0.0) - (value * purchaseQuantity)
-        }
-        if (buyResponse.lvl != null) {
-            copiedUser.stats?.lvl = buyResponse.lvl
-        }
+        buyResponse.hp?.let  { copiedUser.stats?.hp = buyResponse.hp   }
+        buyResponse.exp?.let { copiedUser.stats?.exp = buyResponse.exp }
+        buyResponse.mp?.let  { copiedUser.stats?.mp = buyResponse.mp   }
+        buyResponse.gp?.let  { copiedUser.stats?.gp = buyResponse.gp   }
+            ?: {
+                copiedUser.stats?.gp = (copiedUser.stats?.gp ?: 0.0)
+                -(value * purchaseQuantity)
+            }
+        buyResponse.lvl?.let { copiedUser.stats?.lvl = buyResponse.lvl }
         localRepository.save(copiedUser)
         return buyResponse
     }
@@ -384,7 +376,7 @@ class InventoryRepositoryImpl(
         return response
     }
 
-    override suspend fun togglePinnedItem(item: ShopItem): List<ShopItem>? {
+    override suspend fun togglePinnedItem(item: ShopItem): List<ShopItem> {
         if (item.isValid) {
             apiClient.togglePinnedItem(item.pinType ?: "", item.path ?: "")
         }

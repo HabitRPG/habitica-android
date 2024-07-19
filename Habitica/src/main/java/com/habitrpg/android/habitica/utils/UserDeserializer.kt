@@ -159,7 +159,7 @@ class UserDeserializer : JsonDeserializer<User> {
         if (obj.has("challenges")) {
             user.challenges = RealmList()
             obj.getAsJsonArray("challenges").forEach {
-                user.challenges?.add(ChallengeMembership(user.id ?: "", it.asString))
+                user.challenges?.add(ChallengeMembership(user.id, it.asString))
             }
         }
 

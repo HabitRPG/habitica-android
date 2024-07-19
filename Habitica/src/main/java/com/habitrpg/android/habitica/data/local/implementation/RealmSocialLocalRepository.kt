@@ -204,6 +204,7 @@ class RealmSocialLocalRepository(realm: Realm) :
             .findAll()
             .toFlow()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun getGroupMembers(groupID: String) =
         realm.where(GroupMembership::class.java)
             .equalTo("groupID", groupID)
@@ -263,7 +264,7 @@ class RealmSocialLocalRepository(realm: Realm) :
             val membersToRemove = ArrayList<Member>()
             for (existingMember in existingMembers) {
                 val isStillMember =
-                    members.any { existingMember.id != null && existingMember.id == it.id }
+                    members.any { existingMember.id == it.id }
                 if (!isStillMember) {
                     membersToRemove.add(existingMember)
                 }

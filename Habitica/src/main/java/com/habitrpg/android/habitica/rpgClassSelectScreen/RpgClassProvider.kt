@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.rpgClassSelectScreen
 
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 object RpgClassProvider {
     fun listOfClasses() = listOf(
@@ -47,6 +46,6 @@ object RpgClassProvider {
             textDescription = R.string.opt_out_description,
             serverName = "optOut",
             pic = R.drawable.notification_close
-    ),
+    )
     )
 }

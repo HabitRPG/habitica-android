@@ -21,14 +21,9 @@ import javax.inject.Inject
 class GroupInviteActivity : BaseActivity() {
     private lateinit var binding: ActivityPartyInviteBinding
 
-    @Inject
-    lateinit var socialRepository: SocialRepository
-
     internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_party_invite
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_party_invite
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityPartyInviteBinding.inflate(layoutInflater)

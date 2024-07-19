@@ -10,7 +10,7 @@ import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
+import com.habitrpg.common.habitica.views.CircularProgressComposable
 
 class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
     companion object {
@@ -31,7 +31,7 @@ class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
             dialog.setAdditionalContentView(composeView)
             composeView.setContent {
                 HabiticaTheme {
-                    HabiticaCircularProgressView(Modifier.size(60.dp))
+                    CircularProgressComposable(Modifier.size(60.dp))
                 }
             }
             dialog.window?.let {

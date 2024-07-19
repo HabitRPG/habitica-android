@@ -49,7 +49,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .map { content -> content.first() }
     }
 
-    override fun getEquipment(searchedKeys: List<String>): Flow<out List<Equipment>> {
+    override fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .`in`("key", searchedKeys.toTypedArray())
             .findAll()

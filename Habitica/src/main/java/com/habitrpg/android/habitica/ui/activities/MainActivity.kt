@@ -58,7 +58,6 @@ import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
-import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
@@ -71,6 +70,7 @@ import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
+
 import com.habitrpg.android.habitica.ui.views.GroupPlanMemberList
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -119,8 +119,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     @Inject
     internal lateinit var soundManager: SoundManager
 
-    @Inject
-    internal lateinit var checkClassSelectionUseCase: CheckClassSelectionUseCase
+  //  @Inject
+  //  internal lateinit var checkClassSelectionUseCase: CheckClassSelectionUseCase
 
     @Inject
     internal lateinit var displayItemDropUseCase: DisplayItemDropUseCase

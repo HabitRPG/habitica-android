@@ -49,6 +49,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -66,6 +67,7 @@ class UserRepositoryModule {
         return RealmTaskLocalRepository(realm)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Provides
     fun providesTaskRepository(
         localRepository: TaskLocalRepository,

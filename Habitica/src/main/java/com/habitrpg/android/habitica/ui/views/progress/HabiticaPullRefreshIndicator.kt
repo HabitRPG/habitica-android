@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
+import com.habitrpg.common.habitica.views.CircularProgressComposable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +41,7 @@ fun HabiticaPullRefreshIndicator(
         exit = fadeOut(),
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            HabiticaCircularProgressView(Modifier)
+            CircularProgressComposable(Modifier)
         }
     }
     if (!isInitial) {
@@ -56,7 +56,7 @@ fun HabiticaPullRefreshIndicator(
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
-                HabiticaCircularProgressView(
+                CircularProgressComposable(
                     partialDisplay = if (isRefreshing) 1f else state.progress,
                     animate = isRefreshing,
                     indicatorSize = 40.dp,
