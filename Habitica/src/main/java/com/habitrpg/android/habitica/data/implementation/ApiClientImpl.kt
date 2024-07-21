@@ -73,7 +73,7 @@ class ApiClientImpl(
     private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
     val notificationsManager: NotificationsManager,
-    private val context: Context,
+    private val dialogs: ConnectionProblemDialogs,
     private val okhttpWrapper: OkhttpWrapper
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
@@ -177,9 +177,9 @@ class ApiClientImpl(
         if (SocketException::class.java.isAssignableFrom(throwableClass) ||
             SSLException::class.java.isAssignableFrom(throwableClass)
         ) {
-            this.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
+            dialogs.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
-            this.showConnectionProblemDialog(
+            dialogs.showConnectionProblemDialog(
                 R.string.network_error_no_network_body,
                 isUserInputCall,
             )
@@ -205,18 +205,18 @@ class ApiClientImpl(
 
             if (status in 400..499) {
                 if (res.displayMessage.isNotEmpty()) {
-                    showConnectionProblemDialog("", res.displayMessage, isUserInputCall)
+                    dialogs.showConnectionProblemDialog("", res.displayMessage, isUserInputCall)
                 } else if (status == 401) {
-                    showConnectionProblemDialog(
+                    dialogs.showConnectionProblemDialog(
                         R.string.authentication_error_title,
                         R.string.authentication_error_body,
                         isUserInputCall,
                     )
                 }
             } else if (status in 500..599) {
-                this.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
+                dialogs.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
             } else {
-                showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
+                dialogs.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
             }
         } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
             Analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
@@ -271,54 +271,7 @@ class ApiClientImpl(
         return this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
     }
 
-    private fun showConnectionProblemDialog(
-        resourceMessageString: Int,
-        isFromUserInput: Boolean,
-    ) {
-        showConnectionProblemDialog(null, context.getString(resourceMessageString), isFromUserInput)
-    }
 
-    private fun showConnectionProblemDialog(
-        resourceTitleString: Int,
-        resourceMessageString: Int,
-        isFromUserInput: Boolean,
-    ) {
-        showConnectionProblemDialog(
-            context.getString(resourceTitleString),
-            context.getString(resourceMessageString),
-            isFromUserInput,
-        )
-    }
-
-    private var erroredRequestCount = 0
-
-    private fun showConnectionProblemDialog(
-        resourceTitleString: String?,
-        resourceMessageString: String,
-        isFromUserInput: Boolean,
-    ) {
-        erroredRequestCount += 1
-        val application =
-            (context as? HabiticaBaseApplication)
-                ?: (context.applicationContext as? HabiticaBaseApplication)
-        application?.currentActivity?.get()
-            ?.showConnectionProblem(
-                erroredRequestCount,
-                resourceTitleString,
-                resourceMessageString,
-                isFromUserInput,
-            )
-    }
-
-    private fun hideConnectionProblemDialog() {
-        if (erroredRequestCount == 0) return
-        erroredRequestCount = 0
-        val application =
-            (context as? HabiticaBaseApplication)
-                ?: (context.applicationContext as? HabiticaBaseApplication)
-        application?.currentActivity?.get()
-            ?.hideConnectionProblem()
-    }
 
     /*
      This function is used with Observer.compose to reuse transformers across the application.

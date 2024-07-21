@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl.Companion.createGsonFactory
+import com.habitrpg.android.habitica.data.implementation.ConnectionProblemDialogs
 import com.habitrpg.android.habitica.data.implementation.OkhttpWrapper
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -51,7 +52,7 @@ open class ApiModule {
         gsonConverter: GsonConverterFactory,
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
-        @ApplicationContext context: Context,
+        dialogs: ConnectionProblemDialogs,
         okhttpWrapper: OkhttpWrapper
     ): ApiClient {
         val apiClient =
@@ -59,7 +60,7 @@ open class ApiModule {
                 gsonConverter,
                 hostConfig,
                 notificationsManager,
-                context,
+                dialogs,
                 okhttpWrapper
             )
         notificationsManager.apiClient = WeakReference(apiClient)

@@ -258,11 +258,6 @@ interface ApiService {
         @Path("network") network: String,
     ): HabitResponse<Void>
 
-    @POST("user/auth/apple")
-    suspend fun loginApple(
-        @Body auth: Map<String, Any>,
-    ): HabitResponse<UserAuthResponse>
-
     @POST("user/sleep")
     suspend fun sleep(): HabitResponse<Boolean>
 
