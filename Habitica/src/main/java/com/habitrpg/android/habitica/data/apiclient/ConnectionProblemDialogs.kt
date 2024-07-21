@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.data.implementation
+package com.habitrpg.android.habitica.data.apiclient
 
 import android.content.Context
 import com.habitrpg.android.habitica.HabiticaBaseApplication

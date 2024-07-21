@@ -6,8 +6,8 @@ import com.habitrpg.android.habitica.apiService.MaintenanceApiService
 import com.habitrpg.android.habitica.data.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.apiclient.ApiClientImpl
 import com.habitrpg.android.habitica.data.apiclient.ApiClientImpl.Companion.createGsonFactory
-import com.habitrpg.android.habitica.data.implementation.ConnectionProblemDialogs
-import com.habitrpg.android.habitica.data.implementation.OkhttpWrapper
+import com.habitrpg.android.habitica.data.apiclient.ConnectionProblemDialogs
+import com.habitrpg.android.habitica.data.apiclient.OkhttpWrapper
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.common.habitica.api.HostConfig

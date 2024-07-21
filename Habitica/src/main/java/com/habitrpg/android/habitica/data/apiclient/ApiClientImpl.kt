@@ -3,8 +3,6 @@ package com.habitrpg.android.habitica.data.apiclient
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.apiService.ApiService
 import com.habitrpg.android.habitica.apiService.GSonFactoryCreator
-import com.habitrpg.android.habitica.data.implementation.ConnectionProblemDialogs
-import com.habitrpg.android.habitica.data.implementation.OkhttpWrapper
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
@@ -55,25 +53,30 @@ import java.io.IOException
 import java.util.Date
 
 class ApiClientImpl(
-    private val converter: Converter.Factory,
+    converter: Converter.Factory,
     override val hostConfig: HostConfig,
     private val okhttpWrapper: OkhttpWrapper,
     notificationsManager: NotificationsManager,
     dialogs: ConnectionProblemDialogs,
-) : ApiClientBase(notificationsManager, dialogs) {
+) : ApiClientBase(
+    notificationsManager,
+    dialogs,
+    converter
+) {
+
     private lateinit var retrofitAdapter: Retrofit
 
     private lateinit var apiService: ApiService
 
     override var languageCode: String? = null
-    private var lastAPICallURL: String? = null
+   // private var lastAPICallURL: String? = null   //todo
 
     init {
         buildRetrofit()
     }
 
     private fun buildRetrofit() {
-        val client =okhttpWrapper.getOkhttpClient(hostConfig)
+        val client = okhttpWrapper.getOkhttpClient(hostConfig)
         val server = Server(this.hostConfig.address)
         retrofitAdapter =
             Retrofit.Builder()
@@ -97,13 +100,16 @@ class ApiClientImpl(
         password: String,
         confirmPassword: String,
     ): UserAuthResponse? {
-        val auth = UserAuth(
-            username = username,
-            password = password,
-            confirmPassword = confirmPassword,
-            email = email
-        )
-        return process { this.apiService.registerUser(auth) }
+        return process {
+            this.apiService.registerUser(
+                UserAuth(
+                    username = username,
+                    password = password,
+                    confirmPassword = confirmPassword,
+                    email = email
+                )
+            )
+        }
     }
 
     override suspend fun connectUser(
@@ -152,10 +158,14 @@ class ApiClientImpl(
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: JsonSyntaxException) {
-            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            Analytics.logError("Json Error: " +
+                //    lastAPICallURL + //todo
+                    ",  " + e.message)
             ErrorResponse()
         } catch (e: IOException) {
-            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            Analytics.logError("Json Error: " +
+               //     lastAPICallURL +     //todo
+                    ",  " + e.message)
             ErrorResponse()
         }
     }
@@ -181,13 +191,6 @@ class ApiClientImpl(
     override fun hasAuthenticationKeys(): Boolean {
         return this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
     }
-
-
-
-    /*
-     This function is used with Observer.compose to reuse transformers across the application.
-     See here for more info: http://blog.danlew.net/2015/03/02/dont-break-the-chain/
-     */
 
     override fun updateAuthenticationCredentials(
         userID: String?,
@@ -659,7 +662,7 @@ class ApiClientImpl(
         return process { apiService.markTaskNeedsWork(taskID, userID) }
     }
 
-    override suspend fun retrievePartySeekingUsers(page: Int): List<Member>{
+    override suspend fun retrievePartySeekingUsers(page: Int): List<Member> {
         return process { apiService.retrievePartySeekingUsers(page) } ?: listOf()
     }
 
@@ -765,28 +768,26 @@ class ApiClientImpl(
     }
 
     override suspend fun getNews(): List<Any> {
-        return process { apiService.getNews() }?: listOf()
+        return process { apiService.getNews() } ?: listOf()
     }
 
-    override suspend fun readNotification(notificationId: String): List<Any>{
-        return process { apiService.readNotification(notificationId) }?: listOf()
+    override suspend fun readNotification(notificationId: String): List<Any> {
+        return process { apiService.readNotification(notificationId) } ?: listOf()
     }
 
-    override suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>{
-        return process { apiService.readNotifications(notificationIds) }?: listOf()
+    override suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any> {
+        return process { apiService.readNotifications(notificationIds) } ?: listOf()
     }
 
-    override suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any>{
-        return process { apiService.seeNotifications(notificationIds) }?: listOf()
+    override suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any> {
+        return process { apiService.seeNotifications(notificationIds) } ?: listOf()
     }
 
-    override suspend fun openMysteryItem(): Equipment? {
-        return process { apiService.openMysteryItem() }
-    }
+    override suspend fun openMysteryItem(): Equipment? =
+        process { apiService.openMysteryItem() }
 
-    override suspend fun runCron(): Void? {
-        return process { apiService.runCron() }
-    }
+    override suspend fun runCron(): Void? =
+        process { apiService.runCron() }
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
@@ -861,9 +862,9 @@ class ApiClientImpl(
         return process { apiService.updatePassword(updateObject) }
     }
 
-    override suspend fun allocatePoint(stat: String): Stats? {
-        return process { apiService.allocatePoint(stat) }
-    }
+    override suspend fun allocatePoint(stat: String): Stats? =
+        process { apiService.allocatePoint(stat) }
+
 
     override suspend fun transferGems(
         giftedID: String,
@@ -879,27 +880,21 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun getTeamPlans(): List<TeamPlan> {
-        return process { apiService.getTeamPlans() }?: listOf()
-    }
+    override suspend fun getTeamPlans(): List<TeamPlan> =
+        process { apiService.getTeamPlans() } ?: listOf()
 
-    override suspend fun getTeamPlanTasks(teamID: String): TaskList {
-        return processResponse(apiService.getTeamPlanTasks(teamID))?: TaskList()
-    }
+    override suspend fun getTeamPlanTasks(teamID: String): TaskList =
+        processResponse(apiService.getTeamPlanTasks(teamID)) ?: TaskList()
 
     override suspend fun assignToTask(
         taskId: String,
         ids: List<String>,
-    ): Task? {
-        return process { apiService.assignToTask(taskId, ids) }
-    }
+    ): Task? = process { apiService.assignToTask(taskId, ids) }
 
     override suspend fun unassignFromTask(
         taskId: String,
         userID: String,
-    ): Task? {
-        return process { apiService.unassignFromTask(taskId, userID) }
-    }
+    ): Task? = process { apiService.unassignFromTask(taskId, userID) }
 
     override suspend fun bulkAllocatePoints(
         strength: Int,
@@ -917,18 +912,14 @@ class ApiClientImpl(
         return process { apiService.bulkAllocatePoints(body) }
     }
 
-    override suspend fun retrieveMarketGear(): Shop? {
-        return process { apiService.retrieveMarketGear(languageCode) }
-    }
+    override suspend fun retrieveMarketGear(): Shop? =
+        process { apiService.retrieveMarketGear(languageCode) }
 
-    override suspend fun getWorldState(): WorldState {
-        val temp = process { apiService.worldState() }
-        return temp ?: WorldState()
-    }
+    override suspend fun getWorldState(): WorldState =
+        process { apiService.worldState() } ?: WorldState()
 
     companion object {
-        fun createGsonFactory(): GsonConverterFactory {
-            return GSonFactoryCreator.create()
-        }
+        fun createGsonFactory(): GsonConverterFactory =
+            GSonFactoryCreator.create()
     }
 }
