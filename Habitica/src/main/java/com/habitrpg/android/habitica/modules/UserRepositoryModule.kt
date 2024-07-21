@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.modules
 
 import android.content.Context
-import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.FAQRepository

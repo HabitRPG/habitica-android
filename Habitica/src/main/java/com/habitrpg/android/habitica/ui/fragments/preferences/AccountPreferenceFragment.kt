@@ -19,7 +19,7 @@ import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.apiclient.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.models.user.User

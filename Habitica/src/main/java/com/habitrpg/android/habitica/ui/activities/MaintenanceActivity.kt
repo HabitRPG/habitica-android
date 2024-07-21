@@ -7,8 +7,7 @@ import android.view.View
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.api.MaintenanceApiService
-import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.apiService.MaintenanceApiService
 import com.habitrpg.android.habitica.databinding.ActivityMaintenanceBinding
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown

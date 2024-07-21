@@ -17,7 +17,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.Analytics

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.api;
+package com.habitrpg.android.habitica.apiService;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

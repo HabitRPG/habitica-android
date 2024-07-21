@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.modules
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.habitrpg.android.habitica.api.MaintenanceApiService
-import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
-import com.habitrpg.android.habitica.data.implementation.ApiClientImpl.Companion.createGsonFactory
+import com.habitrpg.android.habitica.apiService.MaintenanceApiService
+import com.habitrpg.android.habitica.data.apiclient.ApiClient
+import com.habitrpg.android.habitica.data.apiclient.ApiClientImpl
+import com.habitrpg.android.habitica.data.apiclient.ApiClientImpl.Companion.createGsonFactory
 import com.habitrpg.android.habitica.data.implementation.ConnectionProblemDialogs
 import com.habitrpg.android.habitica.data.implementation.OkhttpWrapper
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
@@ -59,9 +59,9 @@ open class ApiModule {
             ApiClientImpl(
                 gsonConverter,
                 hostConfig,
+                okhttpWrapper,
                 notificationsManager,
-                dialogs,
-                okhttpWrapper
+                dialogs
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient

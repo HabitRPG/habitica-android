@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository
 import com.habitrpg.android.habitica.models.TutorialStep

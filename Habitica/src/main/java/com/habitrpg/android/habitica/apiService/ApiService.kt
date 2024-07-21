@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.api
+package com.habitrpg.android.habitica.apiService
 
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult

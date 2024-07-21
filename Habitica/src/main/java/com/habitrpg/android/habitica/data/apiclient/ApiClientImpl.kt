@@ -1,13 +1,10 @@
-package com.habitrpg.android.habitica.data.implementation
+package com.habitrpg.android.habitica.data.apiclient
 
-import android.content.Context
 import com.google.gson.JsonSyntaxException
-import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.api.ApiService
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
-import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.apiService.ApiService
+import com.habitrpg.android.habitica.apiService.GSonFactoryCreator
+import com.habitrpg.android.habitica.data.implementation.ConnectionProblemDialogs
+import com.habitrpg.android.habitica.data.implementation.OkhttpWrapper
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
@@ -39,7 +36,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
-import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuth
@@ -51,50 +47,23 @@ import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 import java.io.IOException
-import java.net.SocketException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import java.util.Date
-import java.util.GregorianCalendar
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLException
 
 class ApiClientImpl(
     private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
-    val notificationsManager: NotificationsManager,
-    private val dialogs: ConnectionProblemDialogs,
-    private val okhttpWrapper: OkhttpWrapper
-) : ApiClient {
+    private val okhttpWrapper: OkhttpWrapper,
+    notificationsManager: NotificationsManager,
+    dialogs: ConnectionProblemDialogs,
+) : ApiClientBase(notificationsManager, dialogs) {
     private lateinit var retrofitAdapter: Retrofit
 
     private lateinit var apiService: ApiService
-
-    private fun <T> processResponse(habitResponse: HabitResponse<T>): T? {
-        habitResponse.notifications?.let {
-            notificationsManager.setNotifications(it)
-        }
-        return habitResponse.data
-    }
-
-    private suspend fun <T> process(apiCall: suspend () -> HabitResponse<T>): T? {
-        try {
-            return processResponse(apiCall())
-        } catch (throwable: Throwable) {
-            accept(throwable)
-        }
-        return null
-    }
 
     override var languageCode: String? = null
     private var lastAPICallURL: String? = null
@@ -165,64 +134,6 @@ class ApiClientImpl(
 
     override suspend fun disconnectSocial(network: String): Void? {
         return process { this.apiService.disconnectSocial(network) }
-    }
-
-    fun accept(throwable: Throwable) {
-        val throwableClass = throwable.javaClass
-        if (SocketTimeoutException::class.java.isAssignableFrom(throwableClass)) {
-            return
-        }
-
-        var isUserInputCall = false
-        if (SocketException::class.java.isAssignableFrom(throwableClass) ||
-            SSLException::class.java.isAssignableFrom(throwableClass)
-        ) {
-            dialogs.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
-        } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
-            dialogs.showConnectionProblemDialog(
-                R.string.network_error_no_network_body,
-                isUserInputCall,
-            )
-        } else if (HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
-            val error = throwable as HttpException
-            val res = getErrorResponse(error)
-            val status = error.code()
-            val requestUrl = error.response()?.raw()?.request?.url
-            val path = requestUrl?.encodedPath?.removePrefix("/api/v4") ?: ""
-            isUserInputCall =
-                when {
-                    path.startsWith("/groups") && path.endsWith("invite") -> true
-                    else -> false
-                }
-
-            if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
-                return
-            }
-            if (requestUrl?.toString()?.endsWith("/user/push-devices") == true) {
-                // workaround for an error that sometimes displays that the user already has this push device
-                return
-            }
-
-            if (status in 400..499) {
-                if (res.displayMessage.isNotEmpty()) {
-                    dialogs.showConnectionProblemDialog("", res.displayMessage, isUserInputCall)
-                } else if (status == 401) {
-                    dialogs.showConnectionProblemDialog(
-                        R.string.authentication_error_title,
-                        R.string.authentication_error_body,
-                        isUserInputCall,
-                    )
-                }
-            } else if (status in 500..599) {
-                dialogs.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
-            } else {
-                dialogs.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
-            }
-        } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
-            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
-        } else {
-            Analytics.logException(throwable)
-        }
     }
 
     override suspend fun updateMember(

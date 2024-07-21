@@ -6,7 +6,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.api.MaintenanceApiService
+import com.habitrpg.android.habitica.apiService.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository

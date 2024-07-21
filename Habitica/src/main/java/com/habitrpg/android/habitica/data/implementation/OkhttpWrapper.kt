@@ -64,7 +64,7 @@ interface OkhttpWrapper {
                    val request =
                        builder.method(original.method, original.body)
                            .build()
-              //   astAPICallURL = original.url.toString()     //debug
+              //   lastAPICallURL = original.url.toString()     // todo  debug
                    val response = chain.proceed(request)
                    if (response.isSuccessful) {
                //        hideConnectionProblemDialog()          //todo

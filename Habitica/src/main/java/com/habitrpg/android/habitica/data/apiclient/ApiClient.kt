@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.data
+package com.habitrpg.android.habitica.data.apiclient
 
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
