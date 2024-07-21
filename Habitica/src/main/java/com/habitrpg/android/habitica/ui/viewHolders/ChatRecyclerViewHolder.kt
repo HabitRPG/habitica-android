@@ -18,9 +18,9 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.Permission
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.setScaledPadding
+import com.habitrpg.common.habitica.extensionsCommon.DataBindingUtils
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.setScaledPadding
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import kotlinx.coroutines.Dispatchers

@@ -7,9 +7,9 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.common.habitica.extensions.fromHtml
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.common.habitica.extensionsCommon.fromHtml
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
+import com.habitrpg.common.habitica.viewsCommon.PixelArtView
 
 class AchievementDetailDialog(val achievement: Achievement, context: Context) :
     HabiticaAlertDialog(context) {

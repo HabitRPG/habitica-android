@@ -7,7 +7,7 @@
     style="@style/RowWrapper"
     android:focusable="true"
     android:clickable="true">
-    <com.habitrpg.common.habitica.views.PixelArtView
+    <com.habitrpg.common.habitica.viewsCommon.PixelArtView
         android:id="@+id/imageView"
         android:layout_width="@dimen/gear_image_size"
         android:layout_height="@dimen/gear_image_size"

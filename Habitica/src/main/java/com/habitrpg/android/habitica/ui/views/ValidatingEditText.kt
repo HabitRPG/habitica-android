@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import androidx.core.widget.doOnTextChanged
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ValidatingEditTextBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 
 class ValidatingEditText
     @JvmOverloads

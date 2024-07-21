@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
@@ -11,8 +10,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 
 class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     private val binding = RowShopitemBinding.bind(itemView)

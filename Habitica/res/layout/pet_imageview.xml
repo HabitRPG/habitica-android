@@ -11,7 +11,7 @@
         android:id="@+id/background_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <com.habitrpg.common.habitica.views.PixelArtView
+    <com.habitrpg.common.habitica.viewsCommon.PixelArtView
         android:id="@+id/pet_imageview"
         android:layout_width="68dp"
         android:layout_height="68dp"

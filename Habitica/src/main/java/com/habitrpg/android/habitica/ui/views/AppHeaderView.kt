@@ -66,7 +66,7 @@ import com.habitrpg.android.habitica.ui.theme.basicTextColor
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.ComposableAvatarView
+import com.habitrpg.common.habitica.viewsCommon.ComposableAvatarView
 import com.habitrpg.shared.habitica.models.Avatar
 import kotlin.random.Random
 

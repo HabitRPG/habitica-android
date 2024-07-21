@@ -73,7 +73,7 @@ import com.habitrpg.android.habitica.ui.views.progress.HabiticaPullRefreshIndica
 import com.habitrpg.android.habitica.ui.views.social.PartySeekingListItem
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.CircularProgressComposable
+import com.habitrpg.common.habitica.viewsCommon.CircularProgressComposable
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay

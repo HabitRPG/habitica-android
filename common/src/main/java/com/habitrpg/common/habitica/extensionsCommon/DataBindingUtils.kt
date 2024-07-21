@@ -1,4 +1,4 @@
-package com.habitrpg.common.habitica.extensions
+package com.habitrpg.common.habitica.extensionsCommon
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -14,7 +14,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.common.habitica.viewsCommon.PixelArtView
 import java.util.Date
 
 fun PixelArtView.loadImage(

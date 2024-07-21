@@ -5,14 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.NpcBannerBinding
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.DataBindingUtils
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt

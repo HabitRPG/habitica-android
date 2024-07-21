@@ -16,8 +16,8 @@ import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import io.realm.OrderedRealmCollection
 

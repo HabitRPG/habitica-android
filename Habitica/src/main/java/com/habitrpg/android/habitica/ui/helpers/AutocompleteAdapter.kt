@@ -9,7 +9,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensionsCommon.inflate
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult

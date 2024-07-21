@@ -35,9 +35,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsViewBinding
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensionsCommon.getThemeColor
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.setTintWith
 
 @Composable
 fun StatsViewComposable(

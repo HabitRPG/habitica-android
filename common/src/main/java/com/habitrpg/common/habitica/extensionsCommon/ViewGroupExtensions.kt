@@ -1,6 +1,6 @@
 @file:JvmName("ViewGroupExt")
 
-package com.habitrpg.common.habitica.extensions
+package com.habitrpg.common.habitica.extensionsCommon
 
 import android.view.View
 import android.view.ViewGroup

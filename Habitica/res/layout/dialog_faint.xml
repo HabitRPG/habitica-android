@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingEnd="24dip"
     android:paddingStart="24dip">
-    <com.habitrpg.common.habitica.views.ValueBar
+    <com.habitrpg.common.habitica.viewsCommon.ValueBar
         android:id="@+id/hpBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
         app:barForegroundColor="@color/hpColor"
         app:description="@string/HP_default" />
 
-    <com.habitrpg.common.habitica.views.AvatarView
+    <com.habitrpg.common.habitica.viewsCommon.AvatarView
         android:layout_width="@dimen/avatar_small_width"
         android:layout_height="@dimen/avatar_small_height"
         android:id="@+id/avatarView"

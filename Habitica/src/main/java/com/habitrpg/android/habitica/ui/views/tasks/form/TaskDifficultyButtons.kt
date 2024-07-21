@@ -42,8 +42,8 @@ import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.extensions.nameRes
+import com.habitrpg.common.habitica.extensionsCommon.getThemeColor
+import com.habitrpg.common.habitica.extensionsCommon.nameRes
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 

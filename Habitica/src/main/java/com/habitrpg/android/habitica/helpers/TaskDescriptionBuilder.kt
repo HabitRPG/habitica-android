@@ -6,7 +6,7 @@ import android.os.Build
 import android.text.format.DateUtils
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.extensions.nameSentenceRes
+import com.habitrpg.common.habitica.extensionsCommon.nameSentenceRes
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.shared.habitica.models.tasks.TaskType

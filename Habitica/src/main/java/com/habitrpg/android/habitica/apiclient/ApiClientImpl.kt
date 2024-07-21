@@ -1,10 +1,9 @@
-package com.habitrpg.android.habitica.data.apiclient
+package com.habitrpg.android.habitica.apiclient
 
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.apiService.ApiService
 import com.habitrpg.android.habitica.apiService.GSonFactoryCreator
 import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
@@ -32,8 +31,8 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.api.Server
+import com.habitrpg.android.habitica.apiService.HostConfig
+import com.habitrpg.android.habitica.apiService.Server
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuth

@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 
 class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
     var binding: PurchaseGemViewBinding =

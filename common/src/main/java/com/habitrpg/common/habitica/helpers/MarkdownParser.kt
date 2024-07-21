@@ -9,7 +9,7 @@ import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.widget.TextView
 import com.habitrpg.common.habitica.R
-import com.habitrpg.common.habitica.extensions.handleUrlClicks
+import com.habitrpg.common.habitica.extensionsCommon.handleUrlClicks
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonConfiguration

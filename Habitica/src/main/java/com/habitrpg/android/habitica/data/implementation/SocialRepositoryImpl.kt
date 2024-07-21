@@ -3,7 +3,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.data.apiclient.ApiClient
+import com.habitrpg.android.habitica.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
 import com.habitrpg.android.habitica.models.Achievement
@@ -44,12 +44,12 @@ class SocialRepositoryImpl(
     override suspend fun removeMemberFromGroup(
         groupID: String,
         userID: String,
-    ): List<Member>? {
+    ): List<Member> {
         apiClient.removeMemberFromGroup(groupID, userID)
         return retrievePartyMembers(groupID, true)
     }
 
-    override suspend fun blockMember(userID: String): List<String>? {
+    override suspend fun blockMember(userID: String): List<String> {
         return apiClient.blockMember(userID)
     }
 
@@ -84,9 +84,9 @@ class SocialRepositoryImpl(
         }
     }
 
-    override suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>? {
+    override suspend fun retrieveGroupChat(groupId: String): List<ChatMessage> {
         val messages = apiClient.listGroupChat(groupId)
-        messages?.forEach { it.groupId = groupId }
+        messages.forEach { it.groupId = groupId }
         return messages
     }
 
@@ -263,8 +263,8 @@ class SocialRepositoryImpl(
         return messages
     }
 
-    override suspend fun retrieveInboxConversations(): List<InboxConversation>? {
-        val conversations = apiClient.retrieveInboxConversations() ?: return null
+    override suspend fun retrieveInboxConversations(): List<InboxConversation> {
+        val conversations = apiClient.retrieveInboxConversations()
         localRepository.saveInboxConversations(currentUserID, conversations)
         return conversations
     }
@@ -294,9 +294,9 @@ class SocialRepositoryImpl(
     override suspend fun retrievePartyMembers(
         id: String,
         includeAllPublicFields: Boolean,
-    ): List<Member>? {
+    ): List<Member> {
         val members = apiClient.getGroupMembers(id, includeAllPublicFields)
-        members?.let { localRepository.savePartyMembers(id, it) }
+        localRepository.savePartyMembers(id, members)
         return members
     }
 
@@ -336,7 +336,7 @@ class SocialRepositoryImpl(
         username: String,
         context: String?,
         id: String?,
-    ): List<FindUsernameResult>? {
+    ): List<FindUsernameResult> {
         return apiClient.findUsernames(username, context, id)
     }
 

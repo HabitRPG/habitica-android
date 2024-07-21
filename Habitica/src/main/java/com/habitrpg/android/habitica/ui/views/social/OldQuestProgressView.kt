@@ -10,10 +10,10 @@ import com.habitrpg.android.habitica.databinding.QuestProgressOldBinding
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.extensions.setScaledPadding
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.setScaledPadding
 
 class OldQuestProgressView : LinearLayout {
     private val binding = QuestProgressOldBinding.inflate(context.layoutInflater, this)

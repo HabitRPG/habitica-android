@@ -10,7 +10,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:focusable="true"
     android:layout_marginBottom="@dimen/spacing_medium">
-    <com.habitrpg.common.habitica.views.AvatarView
+    <com.habitrpg.common.habitica.viewsCommon.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="97dp"
         android:layout_height="99dp"
@@ -84,7 +84,7 @@
                 <Space />
             </TableRow>
             <TableRow>
-                <com.habitrpg.common.habitica.views.HabiticaProgressBar
+                <com.habitrpg.common.habitica.viewsCommon.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/bar_size"
@@ -102,7 +102,7 @@
             </TableRow>
             <TableRow
                 android:gravity="center_vertical">
-                <com.habitrpg.common.habitica.views.HabiticaProgressBar
+                <com.habitrpg.common.habitica.viewsCommon.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/bar_size"
@@ -120,7 +120,7 @@
             </TableRow>
             <TableRow
                 android:gravity="center_vertical">
-                <com.habitrpg.common.habitica.views.HabiticaProgressBar
+                <com.habitrpg.common.habitica.viewsCommon.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/bar_size"

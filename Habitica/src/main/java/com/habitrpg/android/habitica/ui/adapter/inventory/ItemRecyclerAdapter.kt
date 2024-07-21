@@ -24,9 +24,9 @@ import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.localizedCapitalizeWithSpaces
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import java.text.SimpleDateFormat
 import java.util.Date

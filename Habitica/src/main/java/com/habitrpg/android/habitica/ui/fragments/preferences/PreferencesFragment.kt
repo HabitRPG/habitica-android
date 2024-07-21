@@ -17,7 +17,7 @@ import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.apiclient.ApiClient
+import com.habitrpg.android.habitica.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.Analytics

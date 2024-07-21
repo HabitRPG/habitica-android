@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.interactors
 import android.graphics.Bitmap
 import androidx.core.graphics.scale
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.common.habitica.views.AvatarView
+import com.habitrpg.common.habitica.viewsCommon.AvatarView
 import com.habitrpg.shared.habitica.models.Avatar
 import javax.inject.Inject
 

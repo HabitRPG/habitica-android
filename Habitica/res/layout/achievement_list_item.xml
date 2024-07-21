@@ -9,7 +9,7 @@
 <RelativeLayout
     android:layout_width="100dp"
     android:layout_height="86dp">
-    <com.habitrpg.common.habitica.views.PixelArtView
+    <com.habitrpg.common.habitica.viewsCommon.PixelArtView
         android:id="@+id/achievement_icon"
         android:layout_width="64dp"
         android:layout_height="56dp"

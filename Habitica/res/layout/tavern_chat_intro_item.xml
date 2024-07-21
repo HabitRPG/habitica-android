@@ -7,7 +7,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <com.habitrpg.common.habitica.views.AvatarView
+    <com.habitrpg.common.habitica.viewsCommon.AvatarView
         android:id="@+id/avatar_view"
         android:layout_width="87dp"
         android:layout_height="69dp"

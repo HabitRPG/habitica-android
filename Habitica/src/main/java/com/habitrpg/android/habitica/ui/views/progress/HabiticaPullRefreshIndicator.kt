@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.CircularProgressComposable
+import com.habitrpg.common.habitica.viewsCommon.CircularProgressComposable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

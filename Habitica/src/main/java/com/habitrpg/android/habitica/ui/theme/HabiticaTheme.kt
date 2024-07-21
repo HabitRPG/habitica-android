@@ -8,7 +8,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensionsCommon.getThemeColor
 import com.habitrpg.common.habitica.theme.HabiticaColors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import com.habitrpg.android.habitica.data.apiclient.ApiClient
+import com.habitrpg.android.habitica.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
 import com.habitrpg.android.habitica.helpers.AprilFoolsHandler

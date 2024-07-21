@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.data.apiclient
+package com.habitrpg.android.habitica.apiclient
 
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.android.habitica.apiService.HostConfig
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse

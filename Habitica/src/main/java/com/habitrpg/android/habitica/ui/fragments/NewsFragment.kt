@@ -11,7 +11,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
-import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.android.habitica.apiService.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import dagger.hilt.android.AndroidEntryPoint

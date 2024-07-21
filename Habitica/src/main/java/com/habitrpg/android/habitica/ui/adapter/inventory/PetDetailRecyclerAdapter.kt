@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CanHatchItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensionsCommon.inflate
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 

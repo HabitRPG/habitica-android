@@ -8,7 +8,7 @@ import androidx.core.view.children
 import androidx.core.view.updateMargins
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.ui.views.DragLinearLayout
-import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
 
 class ChecklistContainer
     @JvmOverloads

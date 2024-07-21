@@ -63,7 +63,7 @@
                         android:layout_marginBottom="@dimen/spacing_medium"
                         android:visibility="gone"
                         tools:visibility="visible">
-                        <com.habitrpg.common.habitica.views.PixelArtView
+                        <com.habitrpg.common.habitica.viewsCommon.PixelArtView
                             android:id="@+id/quest_scroll_image_view"
                             android:layout_width="@dimen/gear_image_size"
                             android:layout_height="@dimen/gear_image_size" />
@@ -108,7 +108,7 @@
                         android:clipChildren="true"
                         android:clipToOutline="true"
                         android:orientation="vertical">
-                        <com.habitrpg.common.habitica.views.PixelArtView
+                        <com.habitrpg.common.habitica.viewsCommon.PixelArtView
                             android:id="@+id/quest_image_view"
                             android:layout_width="@dimen/quest_image_width"
                             android:layout_height="wrap_content"

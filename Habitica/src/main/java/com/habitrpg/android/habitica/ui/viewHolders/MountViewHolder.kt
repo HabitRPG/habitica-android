@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensionsCommon.inflate
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.stable.MountBottomSheet
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensionsCommon.DataBindingUtils
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
 class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) :

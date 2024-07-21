@@ -15,7 +15,7 @@
         android:scaleType="center"
         android:visibility="gone" />
 
-    <com.habitrpg.common.habitica.views.HabiticaProgressBar
+    <com.habitrpg.common.habitica.viewsCommon.HabiticaProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bar_size"

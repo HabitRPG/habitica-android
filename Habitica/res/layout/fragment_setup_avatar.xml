@@ -25,7 +25,7 @@
             android:src="@drawable/creator_hills_bg"
             android:layout_centerInParent="true"
             android:importantForAccessibility="no" />
-        <com.habitrpg.common.habitica.views.AvatarView
+        <com.habitrpg.common.habitica.viewsCommon.AvatarView
             android:id="@+id/avatarView"
             android:layout_width="@dimen/avatar_small_width"
             android:layout_height="@dimen/avatar_small_height"

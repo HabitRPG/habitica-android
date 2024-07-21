@@ -1,4 +1,4 @@
-package com.habitrpg.common.habitica.views
+package com.habitrpg.common.habitica.viewsCommon
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -9,8 +9,8 @@ import android.view.View
 import android.widget.FrameLayout
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.ValueBarBinding
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 import java.math.RoundingMode
 import java.text.NumberFormat
 

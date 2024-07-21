@@ -1,4 +1,4 @@
-package com.habitrpg.common.habitica.views
+package com.habitrpg.common.habitica.viewsCommon
 
 import android.content.Context
 import android.graphics.Bitmap

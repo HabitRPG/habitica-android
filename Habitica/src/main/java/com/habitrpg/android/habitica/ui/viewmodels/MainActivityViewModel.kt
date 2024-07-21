@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.ui.TutorialView
-import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.android.habitica.apiService.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse

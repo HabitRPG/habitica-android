@@ -3,24 +3,13 @@ package com.habitrpg.android.habitica.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
-import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationBinding
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.MainNavigationController
-import com.habitrpg.common.habitica.views.AvatarView
-import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 
 class CustomizationEquipmentRecyclerViewAdapter :
     androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {

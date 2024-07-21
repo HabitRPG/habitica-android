@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensionsCommon.setTintWith
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

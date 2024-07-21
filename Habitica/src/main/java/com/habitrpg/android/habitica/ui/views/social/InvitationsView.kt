@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.databinding.ViewInvitationBinding
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.invitations.GenericInvitation
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.common.habitica.extensions.flash
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.flash
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.launch

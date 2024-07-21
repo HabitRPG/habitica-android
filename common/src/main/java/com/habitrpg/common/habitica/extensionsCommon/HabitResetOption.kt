@@ -1,4 +1,4 @@
-package com.habitrpg.common.habitica.extensions
+package com.habitrpg.common.habitica.extensionsCommon
 
 import com.habitrpg.common.habitica.R
 import com.habitrpg.shared.habitica.models.tasks.HabitResetOption

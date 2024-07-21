@@ -11,7 +11,7 @@
     tools:parentTag="LinearLayout"
     tools:orientation="vertical">
 
-    <com.habitrpg.common.habitica.views.PixelArtView
+    <com.habitrpg.common.habitica.viewsCommon.PixelArtView
         android:id="@+id/imageView"
         android:layout_width="@dimen/shopitem_image_size"
         android:layout_height="@dimen/shopitem_image_size"

@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensionsCommon.setTintWith
 
 class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     private val icon: Drawable?

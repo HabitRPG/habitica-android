@@ -7,8 +7,8 @@ import android.view.animation.TranslateAnimation
 import androidx.core.view.children
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 
 class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), View.OnClickListener {
     private var binding = MenuBottomSheetBinding.inflate(layoutInflater)

@@ -9,12 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillListItemBinding
-import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensionsCommon.inflate
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 import io.realm.RealmList
 
 class SkillsRecyclerViewAdapter :

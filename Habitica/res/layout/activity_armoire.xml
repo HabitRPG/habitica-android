@@ -58,7 +58,7 @@
                         android:layout_centerInParent="true"
                         android:src="@drawable/circle_gray_700" />
 
-                    <com.habitrpg.common.habitica.views.PixelArtView
+                    <com.habitrpg.common.habitica.viewsCommon.PixelArtView
                         android:id="@+id/icon_view"
                         android:layout_width="136dp"
                         android:layout_height="136dp"

@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.databinding.RewardItemCardBinding
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 

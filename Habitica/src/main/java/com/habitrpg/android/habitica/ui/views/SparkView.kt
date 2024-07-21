@@ -11,7 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
 import kotlin.math.min
 
 class SparkView

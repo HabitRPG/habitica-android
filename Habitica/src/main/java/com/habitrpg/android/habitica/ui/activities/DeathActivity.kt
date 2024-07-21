@@ -44,8 +44,8 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
-import com.habitrpg.common.habitica.extensions.fromHtml
-import com.habitrpg.common.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.extensionsCommon.fromHtml
+import com.habitrpg.common.habitica.extensionsCommon.observeOnce
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching

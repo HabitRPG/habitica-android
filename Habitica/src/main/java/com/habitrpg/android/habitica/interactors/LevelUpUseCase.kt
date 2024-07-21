@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.views.AvatarView
+import com.habitrpg.common.habitica.viewsCommon.AvatarView
 import kotlinx.coroutines.MainScope
 import javax.inject.Inject
 

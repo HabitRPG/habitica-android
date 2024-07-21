@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.views.ComposableAvatarView
+import com.habitrpg.common.habitica.viewsCommon.ComposableAvatarView
 import com.habitrpg.shared.habitica.models.Avatar
 
 @Composable

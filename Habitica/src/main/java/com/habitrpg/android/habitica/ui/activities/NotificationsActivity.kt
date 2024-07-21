@@ -24,11 +24,11 @@ import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
-import com.habitrpg.common.habitica.extensions.fadeInAnimation
-import com.habitrpg.common.habitica.extensions.flash
-import com.habitrpg.common.habitica.extensions.fromHtml
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.extensionsCommon.fadeInAnimation
+import com.habitrpg.common.habitica.extensionsCommon.flash
+import com.habitrpg.common.habitica.extensionsCommon.fromHtml
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.observeOnce
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.Notification
@@ -42,8 +42,8 @@ import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
-import com.habitrpg.common.habitica.views.CircularProgressComposable
-import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.common.habitica.viewsCommon.CircularProgressComposable
+import com.habitrpg.common.habitica.viewsCommon.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview

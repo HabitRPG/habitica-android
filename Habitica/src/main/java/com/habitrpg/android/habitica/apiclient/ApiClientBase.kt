@@ -1,9 +1,8 @@
-package com.habitrpg.android.habitica.data.apiclient
+package com.habitrpg.android.habitica.apiclient
 
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.common.habitica.models.HabitResponse
 import retrofit2.Converter
 import retrofit2.HttpException

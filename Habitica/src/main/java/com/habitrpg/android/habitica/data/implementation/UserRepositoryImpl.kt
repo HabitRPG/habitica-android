@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import com.habitrpg.android.habitica.data.apiclient.ApiClient
+import com.habitrpg.android.habitica.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
@@ -192,7 +192,7 @@ class UserRepositoryImpl(
 
     override suspend fun disableClasses(): User? = apiClient.disableClasses()
 
-    override suspend fun changeClass(selectedClass: String?): User? {
+    override suspend fun changeClass(selectedClass: String?): User {
         apiClient.changeClass(selectedClass)
         return retrieveUser(false, forced = true)
     }
@@ -220,13 +220,13 @@ class UserRepositoryImpl(
         runCron(ArrayList())
     }
 
-    override suspend fun getNews(): List<Any>? {
+    override suspend fun getNews(): List<Any> {
         return apiClient.getNews()
     }
 
     override suspend fun getNewsNotification(): Notification {
         val baileyNews = apiClient.getNews()
-        val baileyAnnouncement = (baileyNews?.first() as? Map<*, *>)?.get("title") as? String
+        val baileyAnnouncement = (baileyNews.first() as? Map<*, *>)?.get("title") as? String
         val notification = Notification()
         notification.id = "custom-new-stuff-notification"
         notification.type = Notification.Type.NEW_STUFF.type
@@ -273,7 +273,7 @@ class UserRepositoryImpl(
         return mergeWithExistingUser(user)
     }
 
-    override suspend fun resetAccount(password: String): User? {
+    override suspend fun resetAccount(password: String): User {
         apiClient.resetAccount(password)
         return retrieveUser(withTasks = true, forced = true)
     }
@@ -428,8 +428,8 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun retrieveAchievements(): List<Achievement>? {
-        val achievements = apiClient.getMemberAchievements(currentUserID) ?: return null
+    override suspend fun retrieveAchievements(): List<Achievement> {
+        val achievements = apiClient.getMemberAchievements(currentUserID)
         localRepository.save(achievements)
         return achievements
     }
@@ -442,8 +442,8 @@ class UserRepositoryImpl(
         return localRepository.getQuestAchievements(currentUserID)
     }
 
-    override suspend fun retrieveTeamPlans(): List<TeamPlan>? {
-        val teams = apiClient.getTeamPlans() ?: return null
+    override suspend fun retrieveTeamPlans(): List<TeamPlan> {
+        val teams = apiClient.getTeamPlans()
         teams.forEach { it.userID = currentUserID }
         localRepository.save(teams)
         return teams

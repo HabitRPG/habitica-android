@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.NotificationsManager
+import com.habitrpg.android.habitica.apiclient.NotificationsManager
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
@@ -45,11 +45,11 @@ enum class GroupViewType(internal val order: String) {
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 open class GroupViewModel @Inject constructor(
-        userRepository: UserRepository,
-        userViewModel: MainUserViewModel,
-        val challengeRepository: ChallengeRepository,
-        val socialRepository: SocialRepository,
-        val notificationsManager: NotificationsManager,
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val challengeRepository: ChallengeRepository,
+    val socialRepository: SocialRepository,
+    val notificationsManager: NotificationsManager,
     ) : BaseViewModel(userRepository, userViewModel) {
 
         private val _groupIDState = MutableStateFlow<String?>(null)

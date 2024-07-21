@@ -5,8 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.viewinterop.AndroidView
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
+import com.habitrpg.common.habitica.viewsCommon.PixelArtView
 
 @Composable
 fun PixelArtView(

@@ -59,7 +59,7 @@ import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
-import com.habitrpg.common.habitica.extensions.isValidEmail
+import com.habitrpg.common.habitica.extensionsCommon.isValidEmail
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme

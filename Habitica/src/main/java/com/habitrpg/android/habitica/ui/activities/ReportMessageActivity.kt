@@ -2,11 +2,8 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
-import android.os.Build
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
@@ -15,7 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensionsCommon.getThemeColor
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import dagger.hilt.android.AndroidEntryPoint

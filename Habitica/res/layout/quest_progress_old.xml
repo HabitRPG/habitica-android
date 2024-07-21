@@ -31,7 +31,7 @@
                 tools:text="item to collect"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="@dimen/spacing_small"/>
-            <com.habitrpg.common.habitica.views.ValueBar
+            <com.habitrpg.common.habitica.viewsCommon.ValueBar
                 android:id="@+id/bossHealthView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                 android:textColor="@color/text_primary"
                 android:text=""
                 android:layout_marginBottom="@dimen/spacing_small"/>
-            <com.habitrpg.common.habitica.views.ValueBar
+            <com.habitrpg.common.habitica.viewsCommon.ValueBar
                 android:id="@+id/bossRageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

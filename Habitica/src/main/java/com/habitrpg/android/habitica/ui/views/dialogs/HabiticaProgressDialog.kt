@@ -8,9 +8,9 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
-import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.CircularProgressComposable
+import com.habitrpg.common.habitica.viewsCommon.CircularProgressComposable
 
 class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
     companion object {

@@ -1,8 +1,8 @@
-package com.habitrpg.android.habitica.data.apiclient
+package com.habitrpg.android.habitica.apiclient
 
 import android.content.Context
 import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.android.habitica.apiService.HostConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Cache
 import okhttp3.OkHttpClient

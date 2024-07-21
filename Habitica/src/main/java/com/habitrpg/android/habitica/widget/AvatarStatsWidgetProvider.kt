@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.HealthFormatter
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.views.AvatarView
+import com.habitrpg.common.habitica.viewsCommon.AvatarView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull

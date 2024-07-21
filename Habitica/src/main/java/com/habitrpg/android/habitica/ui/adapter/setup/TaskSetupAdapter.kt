@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.inflate
-import com.habitrpg.common.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensionsCommon.inflate
+import com.habitrpg.common.habitica.extensionsCommon.setTintWith
 
 class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>() {
     var checkedList: MutableList<Boolean> = mutableListOf()

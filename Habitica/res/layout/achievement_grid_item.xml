@@ -22,7 +22,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="66dp">
-            <com.habitrpg.common.habitica.views.PixelArtView
+            <com.habitrpg.common.habitica.viewsCommon.PixelArtView
                 android:id="@+id/achievement_icon"
                 android:layout_width="64dp"
                 android:layout_height="56dp"

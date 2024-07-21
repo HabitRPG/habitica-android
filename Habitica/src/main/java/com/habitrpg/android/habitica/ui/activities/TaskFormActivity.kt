@@ -64,8 +64,8 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.HabitScoringSelector
 import com.habitrpg.android.habitica.ui.views.tasks.form.LabeledValue
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskDifficultySelector
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskFormSelector
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.getThemeColor
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.Frequency

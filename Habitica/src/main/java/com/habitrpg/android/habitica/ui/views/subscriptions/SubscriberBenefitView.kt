@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.SubscriptionBenefitsBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn

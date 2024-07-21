@@ -9,12 +9,12 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensionsCommon.inflate
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.EmptyItemBinding
 import com.habitrpg.common.habitica.databinding.FailedItemBinding
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.CircularProgressComposable
+import com.habitrpg.common.habitica.viewsCommon.CircularProgressComposable
 
 data class EmptyItem(
     var title: String,

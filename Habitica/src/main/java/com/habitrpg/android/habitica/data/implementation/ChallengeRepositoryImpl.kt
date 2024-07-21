@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import com.habitrpg.android.habitica.data.apiclient.ApiClient
+import com.habitrpg.android.habitica.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
 import com.habitrpg.android.habitica.models.LeaveChallengeBody

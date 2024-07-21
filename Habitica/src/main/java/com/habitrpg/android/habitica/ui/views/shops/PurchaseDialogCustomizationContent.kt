@@ -6,9 +6,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationBinding
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.views.AvatarView
-import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
+import com.habitrpg.common.habitica.viewsCommon.AvatarView
+import com.habitrpg.common.habitica.viewsCommon.PixelArtView
 import java.util.EnumMap
 
 class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogContent(context) {

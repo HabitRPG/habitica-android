@@ -35,9 +35,7 @@ class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctx
         get() = timeval
         set(text) {
             val wasBlocking = shouldDisableDependents()
-            if (text != null) {
-                timeval = text
-            }
+            text?.let { timeval = text }
             persistString(text)
             val isBlocking = shouldDisableDependents()
             if (isBlocking != wasBlocking) {

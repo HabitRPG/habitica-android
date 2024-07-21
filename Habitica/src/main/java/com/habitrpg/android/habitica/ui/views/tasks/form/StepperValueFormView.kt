@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.databinding.FormStepperValueBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 import java.text.DecimalFormat
 
 class StepperValueFormView

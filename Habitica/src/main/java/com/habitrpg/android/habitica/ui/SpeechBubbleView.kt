@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SpeechbubbleBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 
 class SpeechBubbleView(context: Context, attrs: AttributeSet) :
     FrameLayout(context, attrs),

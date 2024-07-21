@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.widget.TextView
 import androidx.preference.ListPreference
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.setScaledPadding
+import com.habitrpg.common.habitica.extensionsCommon.setScaledPadding
 import kotlin.math.max
 
 class HabiticaListPreference : ListPreference {

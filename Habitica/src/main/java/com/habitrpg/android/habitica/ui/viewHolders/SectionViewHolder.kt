@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getImpreciseRemainingString
 import com.habitrpg.android.habitica.extensions.getTranslatedAnimalType
-import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensionsCommon.inflate
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import java.util.Date

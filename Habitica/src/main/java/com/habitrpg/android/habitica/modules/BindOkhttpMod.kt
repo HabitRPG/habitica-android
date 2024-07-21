@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.modules
 
-import com.habitrpg.android.habitica.data.apiclient.ConnectionProblemDialogs
-import com.habitrpg.android.habitica.data.apiclient.OkhttpWrapper
+import com.habitrpg.android.habitica.apiclient.ConnectionProblemDialogs
+import com.habitrpg.android.habitica.apiclient.OkhttpWrapper
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

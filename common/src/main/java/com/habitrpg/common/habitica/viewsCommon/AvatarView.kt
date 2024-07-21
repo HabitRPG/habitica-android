@@ -1,4 +1,4 @@
-package com.habitrpg.common.habitica.views
+package com.habitrpg.common.habitica.viewsCommon
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -15,15 +15,14 @@ import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.constraintlayout.helper.widget.Layer
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil.dispose
 import coil.load
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.R
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
-import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.DataBindingUtils
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.shared.habitica.models.Avatar
 import java.util.Date

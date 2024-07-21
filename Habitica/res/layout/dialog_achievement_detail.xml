@@ -16,7 +16,7 @@
             android:layout_width="41dp"
             android:layout_height="wrap_content"
             android:src="@drawable/sparkles_left" />
-        <com.habitrpg.common.habitica.views.PixelArtView
+        <com.habitrpg.common.habitica.viewsCommon.PixelArtView
             android:id="@+id/icon_view"
             android:layout_width="52dp"
             android:layout_height="56dp"

@@ -1,4 +1,4 @@
-package com.habitrpg.common.habitica.views
+package com.habitrpg.common.habitica.viewsCommon
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,8 +7,8 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.ProgressBarBinding
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.DataBindingUtils
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 import kotlin.math.min
 
 class HabiticaProgressBar

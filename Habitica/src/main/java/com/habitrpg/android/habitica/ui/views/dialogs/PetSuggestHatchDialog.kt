@@ -22,8 +22,8 @@ import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.DataBindingUtils
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn

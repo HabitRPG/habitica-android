@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensionsCommon.isUsingNightModeResources
 
 class CurrencyViews : LinearLayout {
     var lightBackground: Boolean = false

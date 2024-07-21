@@ -15,7 +15,7 @@
             android:layout_height="80dp"
             android:background="@drawable/layout_rounded_bg_window"
             android:layout_marginEnd="@dimen/spacing_large">
-            <com.habitrpg.common.habitica.views.PixelArtView
+            <com.habitrpg.common.habitica.viewsCommon.PixelArtView
                 android:id="@+id/egg_view"
                 android:layout_width="@dimen/gear_image_size"
                 android:layout_height="@dimen/gear_image_size"
@@ -25,7 +25,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/layout_rounded_bg_window">
-            <com.habitrpg.common.habitica.views.PixelArtView
+            <com.habitrpg.common.habitica.viewsCommon.PixelArtView
                 android:id="@+id/hatchingPotion_view"
                 android:layout_width="@dimen/gear_image_size"
                 android:layout_height="@dimen/gear_image_size"

@@ -1,4 +1,4 @@
-package com.habitrpg.common.habitica.api
+package com.habitrpg.android.habitica.apiService
 
 class Server {
     private var addr: String

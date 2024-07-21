@@ -7,7 +7,7 @@ import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
 import com.habitrpg.android.habitica.models.TutorialStep
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensionsCommon.layoutInflater
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class TutorialView(

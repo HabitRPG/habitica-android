@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.habitrpg.common.habitica.views.PixelArtView
+        <com.habitrpg.common.habitica.viewsCommon.PixelArtView
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:scaleType="center"
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.habitrpg.common.habitica.views.PixelArtView
+        <com.habitrpg.common.habitica.viewsCommon.PixelArtView
             android:id="@+id/sub_benefits_mystery_item_icon"
             android:layout_width="68dp"
             android:layout_height="68dp"

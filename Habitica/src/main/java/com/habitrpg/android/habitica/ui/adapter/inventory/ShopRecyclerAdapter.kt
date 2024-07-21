@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
-import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.extensionsCommon.inflate
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
@@ -29,9 +29,9 @@ import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.fromHtml
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.dpToPx
+import com.habitrpg.common.habitica.extensionsCommon.fromHtml
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ViewHolder>() {

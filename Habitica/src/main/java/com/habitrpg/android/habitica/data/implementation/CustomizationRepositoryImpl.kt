@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import com.habitrpg.android.habitica.data.apiclient.ApiClient
+import com.habitrpg.android.habitica.apiclient.ApiClient
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.local.CustomizationLocalRepository
 import com.habitrpg.android.habitica.models.inventory.Customization

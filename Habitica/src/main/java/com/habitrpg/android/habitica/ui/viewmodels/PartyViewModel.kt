@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.NotificationsManager
+import com.habitrpg.android.habitica.apiclient.NotificationsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.lifecycle.HiltViewModel

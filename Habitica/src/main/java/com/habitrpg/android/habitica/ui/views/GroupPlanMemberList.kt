@@ -36,7 +36,7 @@ import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.ComposableAvatarView
+import com.habitrpg.common.habitica.viewsCommon.ComposableAvatarView
 import kotlin.random.Random
 
 @Composable

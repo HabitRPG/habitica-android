@@ -25,7 +25,7 @@
             android:background="@drawable/rounded_avatar_bg"
             android:clipToPadding="true"
             android:clipChildren="true">
-            <com.habitrpg.common.habitica.views.AvatarView
+            <com.habitrpg.common.habitica.viewsCommon.AvatarView
                 android:id="@+id/avatarView"
                 android:layout_width="70dp"
                 android:layout_height="70dp"

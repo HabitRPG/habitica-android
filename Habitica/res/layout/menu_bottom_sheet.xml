@@ -12,7 +12,7 @@
         tools:text="Title"
         android:gravity="center"
         style="@style/SubHeader1"/>
-    <com.habitrpg.common.habitica.views.PixelArtView
+    <com.habitrpg.common.habitica.viewsCommon.PixelArtView
         android:id="@+id/icon_view"
         android:layout_width="@dimen/shopitem_image_size"
         android:layout_height="@dimen/shopitem_image_size"

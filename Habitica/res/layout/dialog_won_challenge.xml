@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/sparkles_left" />
-        <com.habitrpg.common.habitica.views.PixelArtView
+        <com.habitrpg.common.habitica.viewsCommon.PixelArtView
             android:id="@+id/achievement_view"
             android:layout_width="48dp"
             android:layout_height="52dp"

@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.content.Context
 import android.view.LayoutInflater
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensionsCommon.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
-import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.common.habitica.viewsCommon.PixelArtView
 
 class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
     private var eggView: PixelArtView?
