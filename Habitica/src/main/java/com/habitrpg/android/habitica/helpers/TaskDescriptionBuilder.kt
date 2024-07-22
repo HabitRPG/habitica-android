@@ -7,6 +7,7 @@ import android.text.format.DateUtils
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.extensions.nameSentenceRes
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -131,7 +132,7 @@ class TaskDescriptionBuilder(private val context: Context) {
 
     private fun withOrdinal(day: Int): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val formatter = MessageFormat("{0,ordinal}", Locale.getDefault())
+            val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
             formatter.format(arrayOf(day))
         } else {
             day.toString()

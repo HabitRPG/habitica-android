@@ -61,6 +61,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CompletedAt
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.UserRow
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -321,7 +322,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             Text("")
                         }
                     task?.group?.assignedDetailsFor(viewModel.userViewModel.userID)?.let {
-                        val formatter = DateFormat.getDateInstance(DateFormat.SHORT)
+                        val formatter = DateFormat.getDateInstance(DateFormat.SHORT, LanguageHelper.systemLocale)
                         Text(
                             stringResource(
                                 R.string.assigned_to_you_by,

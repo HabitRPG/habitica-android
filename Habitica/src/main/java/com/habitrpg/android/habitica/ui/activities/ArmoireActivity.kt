@@ -370,7 +370,7 @@ class ArmoireActivity : BaseActivity() {
         lastValue = value
 
         binding.titleView.text =
-            text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            text.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         binding.equipButton.visibility = if (type == "gear") View.VISIBLE else View.GONE
         when (type) {
             "gear" -> {

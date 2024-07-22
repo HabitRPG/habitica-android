@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.text.DateFormat
@@ -43,7 +44,7 @@ class TaskSchedulingControls
         private val binding = TaskFormTaskSchedulingBinding.inflate(context.layoutInflater, this)
         var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
 
-        private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
+        private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, LanguageHelper.systemLocale)
         private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
 
         var taskType = TaskType.DAILY
@@ -61,7 +62,7 @@ class TaskSchedulingControls
                 startDateCalendar.time = value
                 generateSummary()
             }
-        private var startDateCalendar = Calendar.getInstance()
+        private var startDateCalendar = Calendar.getInstance(LanguageHelper.systemLocale)
         var dueDate: Date? = null
             set(value) {
                 field = value
@@ -422,7 +423,7 @@ class TaskSchedulingControls
                         val date = startDateCalendar.get(Calendar.DATE)
                         val formattedDate =
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                val formatter = MessageFormat("{0,ordinal}", Locale.getDefault())
+                                val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
                                 formatter.format(arrayOf(date))
                             } else {
                                 date.toString()
@@ -432,7 +433,7 @@ class TaskSchedulingControls
                         val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
                         val formattedWeek =
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                val formatter = MessageFormat("{0,ordinal}", Locale.getDefault())
+                                val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
                                 formatter.format(arrayOf(week))
                             } else {
                                 week.toString()
@@ -441,7 +442,7 @@ class TaskSchedulingControls
                             startDateCalendar.getDisplayName(
                                 Calendar.DAY_OF_WEEK,
                                 Calendar.LONG,
-                                Locale.getDefault(),
+                                LanguageHelper.systemLocale,
                             )
                         " on the $formattedWeek week on $dayLongName"
                     }

@@ -4,6 +4,7 @@ import android.view.View
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import java.text.DateFormat
 import java.util.Calendar
@@ -91,7 +92,7 @@ class DailyViewHolder(
     companion object {
         private val formatter: DateFormat
             get() {
-                return DateFormat.getTimeInstance(DateFormat.SHORT)
+                return DateFormat.getTimeInstance(DateFormat.SHORT, LanguageHelper.systemLocale)
             }
     }
 }

@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -57,6 +58,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlin.math.floor
@@ -96,7 +98,7 @@ class FullProfileActivity : BaseActivity() {
     private var attributePerSum = 0f
     private var attributeDetailsHidden = true
     private val attributeRows = ArrayList<TableRow>()
-    private val dateFormatter = SimpleDateFormat.getDateInstance()
+    private val dateFormatter = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, LanguageHelper.systemLocale)
     private lateinit var binding: ActivityFullProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

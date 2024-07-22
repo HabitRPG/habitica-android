@@ -14,12 +14,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import java.text.DateFormat
 import java.util.Date
 
-val completedTimeFormatToday: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT)
+val completedTimeFormatToday: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT, LanguageHelper.systemLocale)
 val completedTimeFormat: DateFormat =
-    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, LanguageHelper.systemLocale)
 
 @Composable
 fun CompletedAt(

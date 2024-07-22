@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import androidx.preference.DialogPreference
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import java.text.DateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -49,7 +50,7 @@ class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctx
         val calendar = Calendar.getInstance(Locale.getDefault())
         calendar.set(Calendar.HOUR_OF_DAY, getHour(timeval))
         calendar.set(Calendar.MINUTE, getMinute(timeval))
-        val formatter = DateFormat.getTimeInstance(DateFormat.SHORT)
+        val formatter = DateFormat.getTimeInstance(DateFormat.SHORT, LanguageHelper.systemLocale)
         super.setSummary(formatter.format(calendar.time))
     }
 

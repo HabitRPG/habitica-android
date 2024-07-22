@@ -31,13 +31,6 @@ fun Date.toZonedDateTime(): ZonedDateTime? {
     return this.toInstant().atZone(ZoneId.systemDefault())
 }
 
-/**
- * Returns full display name in default Locale (Monday, Tuesday, Wednesday, etc.)
- */
-fun ZonedDateTime.dayOfWeekString(): String {
-    return DayOfWeek.from(this).getDisplayName(TextStyle.FULL, Locale.getDefault())
-}
-
 fun formatter(): DateTimeFormatter =
     DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
         .appendPattern("['T'][' ']")

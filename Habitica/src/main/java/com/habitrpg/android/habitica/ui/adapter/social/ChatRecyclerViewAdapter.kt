@@ -13,6 +13,8 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.DiffCallback
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
+import com.habitrpg.common.habitica.helpers.LanguageHelper
+import java.text.SimpleDateFormat
 
 class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObject>) :
     DiffCallback<ChatMessage>(oldList, newList) {
@@ -124,7 +126,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) :
 }
 
 class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val dateTime = java.text.SimpleDateFormat.getDateTimeInstance()
+    private val dateTime = java.text.SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM, LanguageHelper.systemLocale)
     val binding = SystemChatMessageBinding.bind(itemView)
 
     var onShouldExpand: (() -> Unit)? = null
