@@ -192,4 +192,8 @@ class AppConfigManager(contentRepository: ContentRepository) :
     fun enableCustomizationShop(): Boolean {
         return remoteConfig.getBoolean("enableCustomizationShop")
     }
+
+    fun showAltDeathText(): Boolean {
+        return remoteConfig.getBoolean("showAltDeathText")
+    }
 }

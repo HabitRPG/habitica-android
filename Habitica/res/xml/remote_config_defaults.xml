@@ -145,5 +145,9 @@
         <key>enableCustomizationShop</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>showAltDeathText</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

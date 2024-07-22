@@ -17,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -63,6 +65,8 @@ class SkillMemberActivity : BaseActivity() {
             userRepository.getUser()
                 .map { it?.party?.id }
                 .filterNotNull()
+                .take(1)
+                .onEach { socialRepository.getPartyMembers(it) }
                 .flatMapLatest { socialRepository.getPartyMembers(it) }
                 .collect { viewAdapter?.data = it }
         }

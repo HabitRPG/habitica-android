@@ -96,7 +96,6 @@
     <string name="onwards">Onwards!</string>
 
     <string name="faint_subtitle">Don\'t despair!</string>
-    <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck—you\'ll do great.</string>
     <string name="faint_header">You ran out of Health!</string>
     <string name="faint_button">Refill Health &amp; Try Again</string>
 
@@ -1274,6 +1273,7 @@
     <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
     <string name="faint_broken_equipment">Broken equipment can be repurchased \nfrom Rewards</string>
     <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>… You can earn them all back with hard work!]]></string>
+    <string name="faint_loss_description_alt"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and your Experience… You can earn them all back with hard work!]]></string>
     <string name="account_reset">Account Reset</string>
     <string name="avatar_skin_customization">Avatar Skin Customization</string>
     <string name="avatar_shirt_customization">Avatar Shirt Customization</string>

@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -84,10 +85,19 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val stringId = if (appConfigManager.showAltDeathText()) {
+            R.string.faint_loss_description_alt
+        } else {
+            R.string.faint_loss_description
+        }
+
+        binding.brokenEquipmentDescription.isVisible = !appConfigManager.showAltDeathText()
+
         userViewModel.user.observeOnce(this) { user ->
             binding.lossDescription.text =
                 getString(
-                    R.string.faint_loss_description,
+                    stringId,
                     (user?.stats?.lvl ?: 2).toInt() - 1,
                     user?.stats?.gp?.toInt(),
                 ).fromHtml()
@@ -197,30 +207,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                                 .height(60.dp)
                                 .clickable {
                                     isUsingBenefit = true
-                                    Analytics.sendEvent(
-                                        "second chance perk",
-                                        EventCategory.BEHAVIOUR,
-                                        HitType.EVENT,
-                                    )
-                                    sharedPreferences.edit {
-                                        putLong("last_sub_revive", Date().time)
-                                    }
-                                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                        userRepository.updateUser("stats.hp", 1)
-                                        MainScope().launchCatching {
-                                            delay(1000)
-                                            (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let { activity ->
-                                                HabiticaSnackbar.showSnackbar(
-                                                    activity.snackbarContainer(),
-                                                    getString(R.string.subscriber_benefit_success_faint),
-                                                    HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
-                                                    isSubscriberBenefit = true,
-                                                    duration = 2500,
-                                                )
-                                            }
-                                        }
-                                        finish()
-                                    }
+                                    useSubBenefit()
                                 },
                     ) {
                         Text(
@@ -255,6 +242,33 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
             }
         }
         startAnimating()
+    }
+
+    private fun useSubBenefit() {
+        Analytics.sendEvent(
+            "second chance perk",
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
+        )
+        sharedPreferences.edit {
+            putLong("last_sub_revive", Date().time)
+        }
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.updateUser("stats.hp", 1)
+            MainScope().launchCatching {
+                delay(1000)
+                (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let { activity ->
+                    HabiticaSnackbar.showSnackbar(
+                        activity.snackbarContainer(),
+                        getString(R.string.subscriber_benefit_success_faint),
+                        HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
+                        isSubscriberBenefit = true,
+                        duration = 2500,
+                    )
+                }
+            }
+            finish()
+        }
     }
 
     private fun startAnimating() {
