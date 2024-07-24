@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.extensions
 
 import android.content.res.Resources
 import com.habitrpg.android.habitica.R
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -173,7 +174,7 @@ fun Duration.getMinuteOrSeconds(): DurationUnit {
 }
 
 fun Date.formatForLocale(): String {
-    val locale = Locale.getDefault()
+    val locale = LanguageHelper.systemLocale
     val dateFormatter: DateFormat =
         if (locale == Locale.US || locale == Locale.ENGLISH) {
             SimpleDateFormat("M/d/yy", locale)

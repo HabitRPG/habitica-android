@@ -43,6 +43,10 @@ class LanguageHelper(languageSharedPref: String?) {
     companion object {
         // Intentional, we want the system locale, not the app locale
         @SuppressLint("ConstantLocale")
-        val systemLocale = Locale.getAvailableLocales().firstOrNull() ?: Locale.getDefault()
+        val systemLocale: Locale
+
+        init {
+            systemLocale = Locale.getDefault()
+        }
     }
 }
