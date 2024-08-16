@@ -148,11 +148,12 @@ class SubscriptionDetailsView : LinearLayout {
             val now = LocalDate.now()
             val nextHourglassDate =
                 LocalDate.now().plusMonths(plan.monthsUntilNextHourglass.toLong())
+                    .withDayOfMonth(1)
             val format =
                 if (now.year != nextHourglassDate.year) {
-                    "MMM YYYY"
+                    "dd MMM yyyy"
                 } else {
-                    "MMMM"
+                    "dd MMMM"
                 }
             val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }

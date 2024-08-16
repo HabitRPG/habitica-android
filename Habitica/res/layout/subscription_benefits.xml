@@ -42,101 +42,26 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/benefit_armoire_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <com.habitrpg.common.habitica.views.PixelArtView
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:scaleType="center"
-            android:src="@drawable/sub_benefits_armoire" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/subscribe_listitemArmoire"
-                android:textColor="@color/text_primary" />
-
-            <TextView
-                style="@style/Caption2.Regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/subscribe_listitemArmoire_description"
-                android:textColor="@color/gray100_gray400" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/benefit_hourglasses_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="68dp"
-            android:layout_height="68dp"
-            android:scaleType="center"
-            android:src="@drawable/sub_benefits_hourglasses"
-            android:importantForAccessibility="no" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/subscribe_listitem2"
-                android:textColor="@color/text_primary" />
-
-            <TextView
-                style="@style/Caption2.Regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/subscribe_listitem2_description"
-                android:textColor="@color/gray100_gray400" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/sub_benefits_mystery_item_icon"
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:scaleType="center" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:orientation="vertical">
-
             <TextView
                 style="@style/Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitem3"
                 android:textColor="@color/text_primary" />
-
             <TextView
                 android:id="@+id/sub_benefits_mystery_item_text"
                 style="@style/Caption2.Regular"
@@ -148,36 +73,33 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/benefit_hourglasses_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <ImageView
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:scaleType="center"
-            android:src="@drawable/sub_benefits_pet"
+            android:src="@drawable/sub_benefits_hourglasses"
             android:importantForAccessibility="no" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:orientation="vertical">
-
             <TextView
                 style="@style/Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/subscribe_listitem4"
+                android:text="@string/subscribe_listitem2"
                 android:textColor="@color/text_primary" />
-
             <TextView
                 style="@style/Caption2.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/subscribe_listitem4_description"
+                android:text="@string/subscribe_listitem2_description"
                 android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
@@ -187,33 +109,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <ImageView
             android:layout_width="68dp"
             android:layout_height="68dp"
             android:scaleType="center"
             android:src="@drawable/sub_benefits_faint"
             android:importantForAccessibility="no" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:orientation="vertical">
-
             <TextView
                 style="@style/Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitemFaint"
                 android:textColor="@color/text_primary" />
-
             <TextView
                 style="@style/Caption2.Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitemFaint_description"
+                android:textColor="@color/gray100_gray400" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/benefit_armoire_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.habitrpg.common.habitica.views.PixelArtView
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:scaleType="center"
+            android:src="@drawable/sub_benefits_armoire" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+            <TextView
+                style="@style/Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subscribe_listitemArmoire"
+                android:textColor="@color/text_primary" />
+            <TextView
+                style="@style/Caption2.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subscribe_listitemArmoire_description"
                 android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>

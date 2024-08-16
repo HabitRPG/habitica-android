@@ -73,11 +73,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
 
     val monthsUntilNextHourglass: Int
         get() {
-            return if (subMonthCount > 1) {
-                (consecutive?.offset ?: 0) + 1
-            } else {
-                (3 - perkMonthCount)
-            }
+            return 1
         }
 
     companion object {
