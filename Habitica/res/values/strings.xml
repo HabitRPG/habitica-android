@@ -1537,6 +1537,8 @@
     <string name="unlocks_x_gems_per_month">Unlocks %d Gold-purchasable Gems per month</string>
     <string name="two_gems_per_month">+2 Gems each month</string>
     <string name="popular">Popular</string>
+    <string name="choose_member">Choose Member</string>
+    <string name="cleared_cache">Cleared Cache</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
