@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -46,8 +47,10 @@ class SkillMemberActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setupToolbar(findViewById(R.id.toolbar))
         loadMemberList()
+        title = getString(R.string.choose_member)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun loadMemberList() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter()
@@ -66,7 +69,7 @@ class SkillMemberActivity : BaseActivity() {
                 .map { it?.party?.id }
                 .filterNotNull()
                 .take(1)
-                .onEach { socialRepository.getPartyMembers(it) }
+                .onEach { socialRepository.retrievePartyMembers(it, true) }
                 .flatMapLatest { socialRepository.getPartyMembers(it) }
                 .collect { viewAdapter?.data = it }
         }
