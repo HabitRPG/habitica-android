@@ -6,3 +6,4 @@ actual class Platform actual constructor() {
 }
 
 actual interface HParcelable
+actual class HParcel
