@@ -6,6 +6,7 @@ import java.util.Properties
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 val rootExtra = rootProject.extra
@@ -130,11 +131,11 @@ dependencies {
     testImplementation("io.kotest:kotest-framework-datatest:$kotest_version")
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
 
-    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.activity:activity-compose:1.9.1")
     implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
     implementation("androidx.compose.animation:animation:$compose_version")
     implementation("androidx.compose.ui:ui-text-google-fonts:$compose_version")

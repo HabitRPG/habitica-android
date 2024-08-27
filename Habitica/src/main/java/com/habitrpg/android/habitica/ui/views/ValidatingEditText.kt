@@ -28,9 +28,8 @@ class ValidatingEditText
                 binding.errorText.text = value
             }
         var hint: CharSequence?
-            get() = binding.editText.hint
+            get() = binding.inputLayout.hint
             set(value) {
-                binding.editText.hint = value
                 binding.inputLayout.hint = value
             }
         var validator: ((String?) -> Boolean)? = null

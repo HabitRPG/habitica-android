@@ -1,10 +1,10 @@
 package com.habitrpg.shared.habitica.models.responses
 
+import com.habitrpg.shared.habitica.HParcel
 import com.habitrpg.shared.habitica.HParcelable
 import com.habitrpg.shared.habitica.HParcelize
 import com.habitrpg.shared.habitica.models.AvatarStats
 
-@HParcelize
 data class TaskScoringResult(
     var hasDied: Boolean = false,
     var drop: TaskDirectionDataDrop? = null,
@@ -33,4 +33,21 @@ data class TaskScoringResult(
         data._tmp?.quest?.progressDelta,
         data._tmp?.quest?.collection,
     )
+
+    override fun writeToParcel(dest: HParcel, flags: Int) {
+        dest.writeByte(if (hasDied) 1.toByte() else 0.toByte())
+        dest.writeParcelable(drop, flags)
+        dest.writeDouble(experienceDelta)
+        dest.writeDouble(healthDelta)
+        dest.writeDouble(goldDelta)
+        dest.writeDouble(manaDelta)
+        dest.writeByte(if (hasLeveledUp) 1.toByte() else 0.toByte())
+        dest.writeInt(level)
+        dest.writeValue(questDamage)
+        dest.writeValue(questItemsFound)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
 }

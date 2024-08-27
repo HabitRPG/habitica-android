@@ -55,7 +55,6 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
 
     companion object CREATOR : Parcelable.Creator<ChecklistItem>, RealmModel {
         override fun createFromParcel(source: Parcel): ChecklistItem = ChecklistItem(source)
-
         override fun newArray(size: Int): Array<ChecklistItem?> = arrayOfNulls(size)
     }
 

@@ -73,7 +73,7 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         if (isGifting) return
         isGifting = true
         try {
-            val amount = binding?.giftEditText?.text.toString().strip().toInt()
+            val amount = binding?.giftEditText?.text.toString().trim().toInt()
             giftedMember?.id?.let {
                 activity?.lifecycleScope?.launchCatching({
                     isGifting = false

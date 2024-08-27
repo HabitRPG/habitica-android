@@ -24,11 +24,15 @@ class InboxAdapter(private var user: User?) :
     var onCopyMessage: ((ChatMessage) -> Unit)? = null
 
     private fun isPositionIntroMessage(position: Int): Boolean {
-        return (position == super.getItemCount() - 1)
+        return (position == super.getItemCount())
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (isPositionIntroMessage(position)) FIRST_MESSAGE else NORMAL_MESSAGE
+    }
+
+    override fun getItemCount(): Int {
+        return super.getItemCount() + 1
     }
 
     override fun onCreateViewHolder(

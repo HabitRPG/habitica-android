@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.ViewGroup
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -13,7 +14,9 @@ import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
@@ -86,6 +89,7 @@ private fun BottomSheetWrapper(
     val systemUiController = rememberSystemUiController()
     val statusBarColor = colorResource(R.color.content_background)
     val navigationbarColor = colorResource(R.color.brand_50)
+
     DisposableEffect(systemUiController) {
         systemUiController.setStatusBarColor(statusBarColor.copy(alpha = 0.3f), darkIcons = true)
         systemUiController.setNavigationBarColor(navigationbarColor, darkIcons = true)
@@ -108,6 +112,7 @@ private fun BottomSheetWrapper(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
                     Modifier
+                        .verticalScroll(rememberScrollState())
                         .padding(horizontal = 4.dp)
                         .background(
                             HabiticaTheme.colors.windowBackground,

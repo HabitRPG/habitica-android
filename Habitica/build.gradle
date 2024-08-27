@@ -10,6 +10,8 @@ plugins {
     id 'com.google.firebase.firebase-perf'
 
     id 'jacoco-report-aggregation'
+    id 'org.jetbrains.kotlin.plugin.compose'
+    id("kotlin-parcelize")
 }
 
 apply plugin: 'kotlin-android'
@@ -169,10 +171,6 @@ android {
         renderScript true
         buildConfig = true
         aidl true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = rootProject.compose_compiler
     }
 
     signingConfigs {
