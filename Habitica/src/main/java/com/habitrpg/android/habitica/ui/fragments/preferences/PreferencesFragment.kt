@@ -109,9 +109,6 @@ class PreferencesFragment :
         serverUrlPreference?.summary =
             preferenceManager.sharedPreferences?.getString("server_url", "")
 
-        val clearDatabasePreference = findPreference("clear_database") as? Preference
-        clearDatabasePreference?.isVisible = false
-
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference?.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
@@ -601,9 +598,6 @@ class PreferencesFragment :
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
             taskListPreference?.isVisible = true
-
-            val clearDatabasePreference = findPreference("clear_database") as? Preference
-            clearDatabasePreference?.isVisible = true
         }
     }
 }
