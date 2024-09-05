@@ -105,7 +105,10 @@ abstract class BaseTaskViewHolder(
         notesTextView?.movementMethod = LinkMovementMethod.getInstance()
         titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
-        expandNotesButton?.setOnClickListener { expandTask() }
+        expandNotesButton?.setOnClickListener {
+            notesExpanded = !notesExpanded
+            updateExpandedTaskLogic()
+        }
         iconViewChallenge?.setOnClickListener {
             task?.let { t ->
                 if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
@@ -127,8 +130,7 @@ abstract class BaseTaskViewHolder(
         context = itemView.context
     }
 
-    private fun expandTask() {
-        notesExpanded = !notesExpanded
+    private fun updateExpandedTaskLogic() {
         if (notesExpanded) {
             notesTextView?.maxLines = 100
             expandNotesButton?.text = context.getString(R.string.collapse_notes)
@@ -162,6 +164,7 @@ abstract class BaseTaskViewHolder(
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
+            updateExpandedTaskLogic()
         } else {
             notesTextView?.visibility = View.GONE
         }
