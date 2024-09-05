@@ -34,7 +34,7 @@ class TimeTravelersShopFragment : ShopFragment() {
 
         lifecycleScope.launchCatching {
             val user = userViewModel.user.value
-            if (user?.isSubscribed != true) {
+            if (user?.isSubscribed != true && user?.purchased?.plan?.consecutive?.trinkets == 0) {
                 delay(2.seconds)
                 val subscriptionBottomSheet =
                     EventOutcomeSubscriptionBottomSheetFragment().apply {
