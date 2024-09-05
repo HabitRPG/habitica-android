@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
+import android.provider.Settings
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
@@ -106,7 +107,7 @@ object DataBindingUtils {
                 else -> imageName
             }
         return name +
-            if (imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
+            if (!disableAnimations && imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
                 "." + FILEFORMAT_MAP[imageName]
             } else {
                 ".${imageFormat ?: "png"}"
@@ -166,6 +167,7 @@ object DataBindingUtils {
     private var lastSubstitutionCheck: Date? = null
 
     var configManager: AppConfigManager? = null
+    var disableAnimations = false
 
     init {
         val tempMap = mutableMapOf<String, String>()

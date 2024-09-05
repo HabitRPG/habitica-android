@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
@@ -38,6 +39,7 @@ import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
@@ -114,6 +116,12 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     // endregion
 
+
+    var animationsEnabled: Boolean =
+        !(Settings.Global.getFloat(contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1.0f) == 0f
+                && Settings.Global.getFloat(contentResolver, Settings.Global.TRANSITION_ANIMATION_SCALE, 1.0f) == 0f
+                && Settings.Global.getFloat(contentResolver, Settings.Global.WINDOW_ANIMATION_SCALE, 1.0f) == 0f)
+
     override fun onCreate() {
         super.onCreate()
 
@@ -140,6 +148,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setupCoil()
+        DataBindingUtils.disableAnimations = !animationsEnabled
 
         ExceptionHandler.init {
             Analytics.logException(it)
