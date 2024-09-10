@@ -25,6 +25,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         installSplashScreen()
         binding = ActivitySplashBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+
         if (viewModel.hasAuthentication) {
             startMainActivity()
             return

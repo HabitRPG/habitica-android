@@ -109,8 +109,10 @@ object DataBindingUtils {
         return name +
             if (!disableAnimations && imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
                 "." + FILEFORMAT_MAP[imageName]
-            } else {
+            } else if (!disableAnimations) {
                 ".${imageFormat ?: "png"}"
+            } else {
+                ".png"
             }
     }
 
