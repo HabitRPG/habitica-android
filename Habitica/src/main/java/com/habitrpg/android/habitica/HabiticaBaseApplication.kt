@@ -116,12 +116,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     // endregion
 
-
-    var animationsEnabled: Boolean =
-        !(Settings.Global.getFloat(contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1.0f) == 0f
-                && Settings.Global.getFloat(contentResolver, Settings.Global.TRANSITION_ANIMATION_SCALE, 1.0f) == 0f
-                && Settings.Global.getFloat(contentResolver, Settings.Global.WINDOW_ANIMATION_SCALE, 1.0f) == 0f)
-
     override fun onCreate() {
         super.onCreate()
 
@@ -148,7 +142,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setupCoil()
-        DataBindingUtils.disableAnimations = !animationsEnabled
 
         ExceptionHandler.init {
             Analytics.logException(it)

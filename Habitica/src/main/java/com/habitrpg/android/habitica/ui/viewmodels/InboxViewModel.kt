@@ -51,12 +51,14 @@ class InboxViewModel
 
         private val config =
             PagingConfig(pageSize = 10, enablePlaceholders = false)
+        private var messagesDataSource = MessagesDataSource(socialRepository, memberID, ChatMessage())
         val messages: LiveData<PagingData<ChatMessage>> =
             Pager(
                 config,
                 null,
             ) {
-                MessagesDataSource(socialRepository, recipientID, ChatMessage())
+                messagesDataSource = MessagesDataSource(socialRepository, memberID, ChatMessage())
+                messagesDataSource
             }.liveData
         private val member =
             memberIDFlow
@@ -73,7 +75,7 @@ class InboxViewModel
             get() = memberIDFlow.value
 
         fun invalidateDataSource() {
-
+            messagesDataSource.invalidate()
         }
 
         init {
@@ -84,8 +86,6 @@ class InboxViewModel
                     val member = socialRepository.retrieveMember(recipientUsername, false)
                     setMemberID(member?.id ?: "")
                     invalidateDataSource()
-
-                    // dataSourceFactory.updateRecipientID(memberID)
                 }
             }
         }
@@ -99,7 +99,7 @@ class MessagesDataSource(
     private var lastFetchWasEnd = false
 
     override fun getRefreshKey(state: PagingState<Int, ChatMessage>): Int? {
-        TODO("Not yet implemented")
+        return 0
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ChatMessage> {

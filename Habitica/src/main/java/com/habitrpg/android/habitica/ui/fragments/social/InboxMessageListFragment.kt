@@ -34,6 +34,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -256,6 +257,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun openProfile() {
-        viewModel.recipientID?.let { FullProfileActivity.open(it) }
+        viewModel.memberID?.let { FullProfileActivity.open(it) }
     }
 }

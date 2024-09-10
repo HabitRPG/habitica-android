@@ -16,8 +16,6 @@ class HabiticaScrollView
     ) : NestedScrollView(context, attrs) {
         init {
             isVerticalScrollBarEnabled = true
-            focusable = View.FOCUSABLE
-            isFocusableInTouchMode = true
         }
 
         override fun onAttachedToWindow() {

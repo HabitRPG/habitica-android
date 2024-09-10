@@ -14,6 +14,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.view.animation.TranslateAnimation
 import androidx.core.animation.doOnEnd
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import kotlin.math.hypot
 import kotlin.random.Random
 
@@ -25,9 +26,13 @@ object Animations {
         return min + Random.nextFloat() * (max - min)
     }
 
+    private fun animationScale(): Long {
+        return if (DataBindingUtils.disableAnimations) 0L else 1L
+    }
+
     fun bobbingAnimation(amount: Float = 8f): Animation {
         val anim = TranslateAnimation(0f, 0f, -amount, amount)
-        anim.duration = 2500
+        anim.duration = 2500 * animationScale()
         anim.interpolator = AccelerateDecelerateInterpolator()
         anim.repeatCount = INFINITE
         anim.repeatMode = REVERSE
@@ -39,13 +44,13 @@ object Animations {
         anim.interpolator = LinearInterpolator()
 
         val translate = TranslateAnimation(randomFloat(-2f * intensity, 0f), randomFloat(0f, 2f * intensity), randomFloat(-1f * intensity, 0f), randomFloat(0f, 1f * intensity))
-        translate.duration = 70
+        translate.duration = 70 * animationScale()
         translate.repeatCount = 5
         translate.repeatMode = REVERSE
         anim.addAnimation(translate)
 
         val rotate = RotateAnimation(randomFloat(-0.4f * intensity, 0f), randomFloat(0f, 0.4f * intensity), RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f)
-        rotate.duration = 70
+        rotate.duration = 70 * animationScale()
         rotate.repeatCount = 5
         rotate.repeatMode = REVERSE
         anim.addAnimation(rotate)
@@ -62,7 +67,7 @@ object Animations {
         val cy = view.height / 2
         val finalRadius = hypot(cx.toDouble(), cy.toDouble()).toFloat()
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0f, finalRadius)
-        anim.duration = duration
+        anim.duration = duration * animationScale()
         anim.interpolator = AccelerateInterpolator()
         view.visibility = View.VISIBLE
         anim.start()
@@ -76,7 +81,7 @@ object Animations {
         val cy = view.height / 2
         val initialRadius = hypot(cx.toDouble(), cy.toDouble()).toFloat()
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0f)
-        anim.duration = duration
+        anim.duration = duration * animationScale()
         anim.interpolator = AccelerateInterpolator()
         anim.doOnEnd {
             view.visibility = View.INVISIBLE
@@ -89,7 +94,7 @@ object Animations {
         anim.interpolator = AccelerateDecelerateInterpolator()
         anim.fillBefore = true
         anim.fillAfter = true
-        anim.duration = duration
+        anim.duration = duration * animationScale()
         return anim
     }
 

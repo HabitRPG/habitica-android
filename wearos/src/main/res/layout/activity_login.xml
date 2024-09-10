@@ -1,82 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
-    android:id="@+id/scroll_view"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="vertical"
-    android:scrollbarStyle="insideOverlay">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.habitrpg.wearos.habitica.ui.activities.LoginActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
+            android:id="@+id/scroll_view"
             android:orientation="vertical"
-            android:gravity="center"
-            android:animateLayoutChanges="true">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_gryphon_white"
-                android:importantForAccessibility="no"
-                android:layout_marginBottom="@dimen/spacing_medium"
-                android:layout_marginTop="24dp"/>
-            <TextView
-                android:id="@+id/title_view"
-                android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="insideOverlay">
+
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Text.SubHeader1"
-                android:textColor="@color/watch_white"
-                android:text="@string/sign_in"
-                android:layout_marginBottom="@dimen/spacing_large"/>
-            <TextView
-                android:id="@+id/description_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:text="@string/sign_in_description"
-                style="@style/Text.Body2"
-                android:textColor="@color/watch_white"
-                android:layout_marginBottom="18dp"/>
+                android:animateLayoutChanges="true">
+
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_gryphon_white"
+                    android:importantForAccessibility="no"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:layout_marginTop="24dp" />
+
+            <TextView
+                    android:id="@+id/title_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Text.SubHeader1"
+                    android:textColor="@color/watch_white"
+                    android:text="@string/sign_in"
+                    android:layout_marginBottom="@dimen/spacing_large" />
+
+            <TextView
+                    android:id="@+id/description_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/sign_in_description"
+                    style="@style/Text.Body2"
+                    android:textColor="@color/watch_white"
+                    android:layout_marginBottom="18dp" />
 
             <com.habitrpg.wearos.habitica.ui.views.ConnectedActionChipView
-                android:id="@+id/sign_in_on_phone_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                app:chipImage="@drawable/handoff"
-                app:chipText="@string/sign_in_on_phone" />
+                    android:id="@+id/sign_in_on_phone_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    app:chipImage="@drawable/handoff"
+                    app:chipText="@string/sign_in_on_phone" />
 
             <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
-                android:id="@+id/other_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                app:chipImage="@drawable/ic_keyboard"
-                app:chipText="@string/other_options" />
+                    android:id="@+id/other_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    app:chipImage="@drawable/ic_keyboard"
+                    app:chipText="@string/other_options" />
 
             <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
-                android:id="@+id/google_login_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                app:chipImage="@drawable/google_icon"
-                app:chipText="@string/login_btn_google" />
+                    android:id="@+id/google_login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    app:chipImage="@drawable/google_icon"
+                    app:chipText="@string/login_btn_google" />
+
             <com.habitrpg.wearos.habitica.ui.views.ConnectedActionChipView
-                android:id="@+id/register_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                app:chipImage="@drawable/handoff"
-                app:chipText="@string/create_account" />
+                    android:id="@+id/register_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    app:chipImage="@drawable/handoff"
+                    app:chipText="@string/create_account" />
         </LinearLayout>
-</com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
-<com.habitrpg.wearos.habitica.ui.views.TimeText
-android:id="@+id/timeText"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:titleTextColor="@color/text_primary"
-    app:layout_behavior="com.habitrpg.wearos.habitica.util.TopScrollAwayBehavior" />
+    </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
+
+    <com.habitrpg.wearos.habitica.ui.views.TimeText
+            android:id="@+id/timeText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:titleTextColor="@color/text_primary"
+            app:layout_behavior="com.habitrpg.wearos.habitica.util.TopScrollAwayBehavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
