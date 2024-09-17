@@ -2,6 +2,7 @@
 <resources>
     <style name="HabiticaAppTheme" parent="Theme.AppCompat">
         <item name="android:windowBackground">@color/watch_black</item>
+        <item name="background">@color/watch_black</item>
         <item name="fontFamily">sans-serif</item>
     </style>
 

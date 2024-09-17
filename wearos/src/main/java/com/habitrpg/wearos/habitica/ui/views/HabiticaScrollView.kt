@@ -3,7 +3,6 @@ package com.habitrpg.wearos.habitica.ui.views
 import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
-import android.view.View
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import com.habitrpg.common.habitica.extensions.dpToPx
