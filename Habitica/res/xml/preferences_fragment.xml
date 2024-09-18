@@ -399,8 +399,7 @@
         <Preference
                 android:key="clear_database"
                 android:title="@string/clear_cache_settings"
-                android:layout="@layout/preference_child_summary"
-                app:isPreferenceVisible="false"/>
+                android:layout="@layout/preference_child_summary" />
         <Preference android:title="@string/reload_content"
             android:key="reload_content"
             android:layout="@layout/preference_child_summary"/>
