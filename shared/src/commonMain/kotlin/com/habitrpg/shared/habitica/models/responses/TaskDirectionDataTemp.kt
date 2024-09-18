@@ -31,4 +31,19 @@ data class TaskDirectionDataDrop(
     override fun describeContents(): Int {
         return 0
     }
+
+    companion object CREATOR : HParcelable.Creator<TaskDirectionDataDrop> {
+        override fun createFromParcel(source: HParcel): TaskDirectionDataDrop {
+            return TaskDirectionDataDrop(
+                value = source.readInt(),
+                key = source.readString(),
+                type = source.readString(),
+                dialog = source.readString()
+            )
+        }
+
+        override fun newArray(size: Int): Array<TaskDirectionDataDrop?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

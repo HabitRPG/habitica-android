@@ -3,7 +3,9 @@ package com.habitrpg.shared.habitica.models.responses
 import com.habitrpg.shared.habitica.HParcel
 import com.habitrpg.shared.habitica.HParcelable
 import com.habitrpg.shared.habitica.HParcelize
+import com.habitrpg.shared.habitica.getClassLoader
 import com.habitrpg.shared.habitica.models.AvatarStats
+import kotlin.jvm.JvmField
 
 data class TaskScoringResult(
     var hasDied: Boolean = false,
@@ -34,6 +36,19 @@ data class TaskScoringResult(
         data._tmp?.quest?.collection,
     )
 
+    constructor(source: HParcel) : this(
+        hasDied = source.readByte() != 0.toByte(),
+        drop = source.readParcelable(getClassLoader(TaskDirectionDataDrop.CREATOR::class)),
+        experienceDelta = source.readDouble(),
+        healthDelta = source.readDouble(),
+        goldDelta = source.readDouble(),
+        manaDelta = source.readDouble(),
+        hasLeveledUp = source.readByte() != 0.toByte(),
+        level = source.readInt(),
+        questDamage = source.readValue(getClassLoader(Double::class)) as? Double,
+        questItemsFound = source.readValue(getClassLoader(Int::class)) as? Int,
+    )
+
     override fun writeToParcel(dest: HParcel, flags: Int) {
         dest.writeByte(if (hasDied) 1.toByte() else 0.toByte())
         dest.writeParcelable(drop, flags)
@@ -49,5 +64,18 @@ data class TaskScoringResult(
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    companion object {
+        @JvmField
+        final val CREATOR: HParcelable.Creator<TaskScoringResult> = object : HParcelable.Creator<TaskScoringResult> {
+            override fun createFromParcel(source: HParcel): TaskScoringResult {
+                return TaskScoringResult(source)
+            }
+
+            override fun newArray(size: Int): Array<TaskScoringResult?> {
+                return arrayOfNulls(size)
+            }
+        }
     }
 }
