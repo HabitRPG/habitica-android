@@ -70,7 +70,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         refresh()
 
         binding?.invitationsView?.acceptCall = {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 socialRepository.joinGroup(it)
                 userRepository.retrieveUser(false, true)
                 parentFragmentManager.popBackStack()
@@ -152,7 +152,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             if (it.resultCode == Activity.RESULT_OK) {
                 val bundle = it.data?.extras
                 if (bundle?.getString("groupType") == "party") {
-                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    lifecycleScope.launchCatching {
                         val group =
                             socialRepository.createGroup(
                                 bundle.getString("name"),
@@ -176,14 +176,12 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         }
 
     private fun refresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             val user = userRepository.retrieveUser(false, true)
             binding?.refreshLayout?.isRefreshing = false
             if (user?.hasParty == true) {
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    val group = socialRepository.retrieveGroup("party")
-                    socialRepository.retrievePartyMembers(group?.id ?: "", true)
-                }
+                val group = socialRepository.retrieveGroup("party")
+                socialRepository.retrievePartyMembers(group?.id ?: "", true)
             }
         }
     }

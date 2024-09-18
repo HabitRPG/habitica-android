@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity"
     android:id="@+id/overlayFrameLayout">
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,5 +37,4 @@
             </com.google.android.material.appbar.AppBarLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </androidx.drawerlayout.widget.DrawerLayout>
 </FrameLayout>
