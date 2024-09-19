@@ -21,7 +21,7 @@ class ConnectedActionChipView(context: Context, attrs: AttributeSet? = null) :
             capabilityClient.addListener({
                 launch(Dispatchers.Main) {
                     isEnabled = it.nodes.firstOrNull { it.isNearby } != null
-                    alpha = if (isEnabled) 1.0f else 0.7f
+                    alpha = if (isEnabled) 1.0f else 0.5f
                 }
             }, "open_activity")
         }
