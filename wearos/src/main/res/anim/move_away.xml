@@ -2,9 +2,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="@integer/activity_transition_time"
     >
-    <scale android:fromXScale="1" android:toXScale="0.8" android:pivotX="50%"
-        android:fromYScale="1" android:toYScale="0.8" android:pivotY="50%" />
     <alpha
         android:fromAlpha="1"
-        android:toAlpha="0.2"/>
+        android:toAlpha="0.0"/>
 </set>
