@@ -25,7 +25,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     var consecutive: SubscriptionPlanConsecutive? = null
     var mysteryItemCount = 0
     var additionalData: AdditionalSubscriptionInfo? = null
-    var perkMonthCount: Int = 0
+    var hourglassPromoReceived: Date? = null
 
     @SerializedName("owner")
     var ownerID: String? = null
@@ -74,6 +74,11 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     val monthsUntilNextHourglass: Int
         get() {
             return 1
+        }
+
+    val isEligableForHourglassPromo: Boolean
+        get() {
+            return hourglassPromoReceived == null
         }
 
     companion object {

@@ -39,12 +39,6 @@ class SubscriptionDetailsView : LinearLayout {
     private fun setupView() {
         binding = SubscriptionDetailsBinding.inflate(context.layoutInflater, this, true)
         binding.changeSubscriptionButton.setOnClickListener { changeSubscriptionButtonTapped() }
-        binding.heartIcon.setImageDrawable(
-            BitmapDrawable(
-                context.resources,
-                HabiticaIconsHelper.imageOfHeartLightBg(),
-            ),
-        )
     }
 
     fun setPlan(plan: SubscriptionPlan) {
@@ -83,7 +77,7 @@ class SubscriptionDetailsView : LinearLayout {
             plan.dateTerminated != null ->
                 binding.subscriptionDurationTextView.text =
                     resources.getString(
-                        R.string.ending_on,
+                        R.string.benefits_end,
                         DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()),
                     )
         }
@@ -160,7 +154,9 @@ class SubscriptionDetailsView : LinearLayout {
             val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
         } else {
-            binding.nextHourglassTextview.text = "--"
+            binding.nextHourglassTextview.visibility = View.GONE
+            binding.nextHourglassLabel.visibility = View.VISIBLE
+            binding.nextHourglassLabel.text = resources.getString(R.string.resubscribe_for_hourglasses)
         }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE

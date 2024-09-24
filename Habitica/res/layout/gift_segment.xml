@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical">
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/gift_sub_gift"
+            android:importantForAccessibility="no" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Headline6"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:text="@string/subscribe_gift_description"
+            android:layout_marginVertical="14dp"
+            android:textColor="@color/white" />
+
+    <Button
+            android:id="@+id/gift_subscription_button"
+            style="@style/HabiticaButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/brand_200"
+            android:text="@string/gift_subscription"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+</LinearLayout>

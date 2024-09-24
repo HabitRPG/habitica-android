@@ -68,6 +68,7 @@ object ToolbarColorHelper {
 
                 is TextView -> {
                     v.setTextColor(toolbarIconsColor)
+                    v.setBackgroundColor(backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor))
                 }
             }
         }

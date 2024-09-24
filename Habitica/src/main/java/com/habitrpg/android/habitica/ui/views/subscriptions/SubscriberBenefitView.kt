@@ -25,9 +25,9 @@ class SubscriberBenefitView
         context: Context,
         attrs: AttributeSet? = null,
     ) : LinearLayout(context, attrs) {
-        private val binding: SubscriptionBenefitsBinding
+        private val binding: SubscriptionBenefitsBinding = SubscriptionBenefitsBinding.inflate(context.layoutInflater, this)
 
-        @Inject
+    @Inject
         lateinit var configManager: AppConfigManager
 
         @Inject
@@ -42,7 +42,6 @@ class SubscriberBenefitView
         }
 
         init {
-            binding = SubscriptionBenefitsBinding.inflate(context.layoutInflater, this)
             orientation = VERTICAL
             val hiltEntryPoint =
                 EntryPointAccessors.fromApplication(context, ThisEntryPoint::class.java)

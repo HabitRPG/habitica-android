@@ -611,6 +611,7 @@
         <item name="android:paddingStart">18dp</item>
         <item name="android:paddingEnd">18dp</item>
         <item name="android:layout_marginBottom">8dp</item>
+        <item name="textColor">@color/white</item>
     </style>
 
     <style name="subscriptionBoxText">
@@ -618,20 +619,20 @@
     </style>
 
     <style name="subscriptionBoxText.Title">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:fontFamily">
             @string/font_family_medium
         </item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginBottom">4dp</item>
     </style>
 
     <style name="subscriptionBoxText.Subtitle">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">
             @string/font_family_regular
         </item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
@@ -647,19 +648,20 @@
     </style>
 
     <style name="subscriptionBoxCompactText">
-        <item name="android:fontFamily">sans-serif-black</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="subscriptionBoxCompactTitle">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="subscriptionBoxCompactNumber">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">sans-serif-black</item>
         <item name="android:textSize">20sp</item>
     </style>
@@ -833,7 +835,11 @@
     </style>
 
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">
-        <item name="android:backgroundTint">@color/yellow_5</item>
+        <item name="android:backgroundTint">@color/yellow_100</item>
+    </style>
+
+    <style name="HabiticaButton.Yellow.Small" parent="HabiticaButton.Small">
+        <item name="android:backgroundTint">@color/yellow_100</item>
     </style>
 
     <style name="HabiticaButton.White" parent="HabiticaButton">

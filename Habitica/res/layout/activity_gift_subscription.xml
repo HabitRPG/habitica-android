@@ -1,160 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity">
-    <com.google.android.material.appbar.AppBarLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity"
+        android:background="@color/brand_300">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorContentBackground"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:background="@color/brand_300"
+                app:titleTextColor="@color/white"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/spacing_large">
-            <com.habitrpg.common.habitica.views.AvatarView
-                android:id="@+id/avatar_view"
-                android:layout_width="88dp"
-                android:layout_height="84dp"
-                app:showBackground="false"
-                app:showPet="false"
-                app:showMount="false"
-                app:showSleeping="false"
-                android:clipChildren="false"
-                android:layout_gravity="center_horizontal"/>
-            <com.habitrpg.android.habitica.ui.views.UsernameLabel
-                android:id="@+id/display_name_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                />
-            <TextView
-                android:id="@+id/username_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_quad"
-                android:textSize="12sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/spacing_large"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="@string/gift_subscription_subtitle"
-                android:textColor="@color/text_quad"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_large"/>
-            <LinearLayout
-                android:id="@+id/subscriptionOptions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_large"
-                android:layout_marginBottom="@dimen/spacing_large">
+                android:layout_marginTop="@dimen/spacing_large">
+
+            <com.habitrpg.common.habitica.views.AvatarView
+                    android:id="@+id/avatar_view"
+                    android:layout_width="88dp"
+                    android:layout_height="84dp"
+                    app:showBackground="false"
+                    app:showPet="false"
+                    app:showMount="false"
+                    app:showSleeping="false"
+                    android:clipChildren="false"
+                    android:layout_gravity="center_horizontal" />
+
+            <TextView
+                    android:id="@+id/display_name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:layout_gravity="center_horizontal" />
+
+            <TextView
+                    android:id="@+id/username_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/spacing_large" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gift_subscription_subtitle"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large" />
+
+            <LinearLayout
+                    android:id="@+id/subscriptionOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large">
 
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-                    android:id="@+id/subscription1MonthView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:recurringText="@string/one_month_one_time"
-                    app:gemCapText="@string/subscribe1month_gemcap"
-                    app:isNonRecurring="true"/>
+                        android:id="@+id/subscription3MonthView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recurringText="@string/three_months_one_time"
+                        app:isNonRecurring="true" />
 
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-                    android:id="@+id/subscription3MonthView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:recurringText="@string/three_months_one_time"
-                    app:gemCapText="@string/subscribe3month_gemcap"
-                    app:isNonRecurring="true"
-                    app:hourGlassCount="1" />
+                        android:id="@+id/subscription6MonthView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recurringText="@string/six_months_one_time"
+                        app:isNonRecurring="true" >
+
+                    <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                            android:id="@+id/subscription1MonthView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:recurringText="@string/one_month_one_time"
+                            app:isNonRecurring="true" />
+                </com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView>
+
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-                    android:id="@+id/subscription6MonthView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:recurringText="@string/six_months_one_time"
-                    app:gemCapText="@string/subscribe6month_gemcap"
-                    app:isNonRecurring="true"
-                    app:hourGlassCount="2" />
-                <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-                    android:id="@+id/subscription12MonthView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:recurringText="@string/twelve_months_one_time"
-                    app:gemCapText="@string/subscribe12month_gemcap"
-                    app:isNonRecurring="true"
-                    app:flagText="@string/save_20"
-                    app:hourGlassCount="4" >
+                        android:id="@+id/subscription12MonthView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recurringText="@string/twelve_months_one_time"
+                        app:gemCapText="50"
+                        app:isNonRecurring="true"
+                        app:flagText="@string/popular">
 
                 </com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView>
 
                 <Button
-                    android:text="@string/send_gift"
+                        android:text="@string/send_gift"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/subscription_button"
+                        style="@style/HabiticaButton.Purple.Small"
+                        android:textAllCaps="false"
+                        android:layout_marginTop="8dp" />
+            </LinearLayout>
+            <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/subscription_button"
-                    style="@style/HabiticaButton.Purple.Small"
-                    android:textAllCaps="false"
-                    android:layout_marginTop="8dp"/>
-            </LinearLayout>
+                    android:src="@drawable/subscription_bg" />
             <LinearLayout
-                android:id="@+id/gift_subscription_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/g1g1_menu_background"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                    android:id="@+id/gift_subscription_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/g1g1_menu_background"
+                    android:paddingHorizontal="32dp"
+                    android:paddingVertical="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp">
-                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/g1g1_sparkle_left" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gift_one_get_one"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:layout_marginHorizontal="12dp"
-                    android:fontFamily="@string/font_family_medium"/>
+                        android:layout_marginBottom="8dp">
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/g1g1_sparkle_right" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/g1g1_sparkle_left" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gift_one_get_one"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/white"
+                            android:textSize="17sp"
+                            android:layout_marginHorizontal="12dp"
+                            android:fontFamily="@string/font_family_medium" />
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/g1g1_sparkle_right" />
                 </LinearLayout>
+
                 <TextView
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gift_one_get_one_detailed_description"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"/>
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gift_one_get_one_detailed_description"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

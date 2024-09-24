@@ -1,94 +1,136 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/wrapper"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/subscription_type_box_bg"
-    android:gravity="center"
-    android:minHeight="106dp"
-    android:layout_marginBottom="8dp">
-
-    <FrameLayout
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:id="@+id/subscriptionSelectedFrameView">
-        <View
-            android:id="@+id/subscriptionSelectedView"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:background="@drawable/subscription_unselected"
-            android:layout_gravity="center"/>
-    </FrameLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="3dp"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginTop="8dp"
+        android:background="@drawable/subscription_type_box_bg"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:clipToOutline="true"
         android:layout_marginBottom="8dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:id="@+id/priceLabel"
-                android:textColor="@color/text_primary"
-                android:textSize="20sp"
-                android:fontFamily="@string/font_family_medium"
-                tools:text="$ 21" />
-            <ImageView
-                android:id="@+id/flag_flap"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:src="@drawable/flag_flap"
-                android:layout_gravity="center_vertical"
-                android:importantForAccessibility="no" />
-            <TextView
-                android:id="@+id/flag_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:paddingEnd="@dimen/spacing_medium"
-                android:paddingStart="0dp"
-                android:background="@color/green_50"
-                android:textColor="@color/white"
-                style="@style/Caption2"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                tools:text="Save 20%"/>
-        </LinearLayout>
-        <TextView
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/descriptionTextView"
-            tools:text="recurring every month"
-            />
+            android:orientation="vertical">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/gemCapTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="@string/subscribe1month_gemcap"
-                style="@style/Pill"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"/>
+                android:paddingVertical="12dp"
+                android:paddingStart="38dp"
+                android:paddingEnd="0dp"
+                android:orientation="vertical"
+                android:minHeight="126dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/priceLabel"
+                        android:textColor="@color/brand_600"
+                        android:textSize="22sp"
+                        android:fontFamily="@string/font_family_regular"
+                        android:textStyle="bold"
+                        tools:text="$21.99" />
+
+                <TextView
+                        android:id="@+id/sale_price_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/spacing_medium"
+                        android:paddingEnd="0dp"
+                        android:textSize="15sp"
+                        android:fontFamily="@string/font_family_medium"
+                        android:textColor="@color/gray_400" />
+
+                <ImageView
+                        android:id="@+id/flag_flap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:src="@drawable/flag_flap"
+                        android:layout_gravity="center_vertical"
+                        android:importantForAccessibility="no" />
+
+                <TextView
+                        android:id="@+id/flag_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:paddingEnd="@dimen/spacing_medium"
+                        android:paddingStart="8dp"
+                        android:background="@drawable/flag_flap_background"
+                        android:textColor="@color/teal_1"
+                        style="@style/Caption2"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        tools:text="Save 20%" />
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/hourglassTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="+1 Mystic Hourglass"
-                style="@style/Pill"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/descriptionTextView"
+                    android:textColor="@color/brand_600"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="recurring every month" />
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/gemCapTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/subscribe1month_gemcap"
+                        android:textSize="12sp"
+                        android:textColor="@color/brand_600"
+                        android:layout_marginTop="4dp"
+                        android:drawableStart="@drawable/sub_plus"
+                        android:drawableTint="@color/brand_400"
+                        android:drawablePadding="8dp" />
+
+                <TextView
+                        android:id="@+id/hourglassTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="+1 Mystic Hourglass"
+                        android:textColor="@color/brand_600"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:drawableStart="@drawable/sub_plus"
+                        android:drawableTint="@color/brand_400"
+                        android:drawablePadding="8dp" />
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+                android:id="@+id/hourglass_promo_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:text="@string/get_12_mystic_hourglasses"
+                android:textColor="@color/teal_1"
+                android:textSize="15sp"
+                android:fontFamily="@string/font_family_medium"
+                android:gravity="center"
+                android:background="@drawable/promo_gradient"
+                android:textColorLink="@color/yellow_100"
+                android:visibility="gone"/>
     </LinearLayout>
 
-</LinearLayout>
+    <ImageView
+            android:id="@+id/selected_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/subscription_selected_indicator"
+            android:visibility="gone" />
+</FrameLayout>

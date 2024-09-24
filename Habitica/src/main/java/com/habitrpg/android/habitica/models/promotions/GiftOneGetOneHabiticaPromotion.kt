@@ -100,25 +100,25 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
 
     override fun configurePurchaseBanner(binding: FragmentSubscriptionBinding) {
         val context = binding.root.context
-        binding.promoBanner.visibility = View.VISIBLE
-        binding.promoBanner.background = promoBackgroundDrawable(context)
-        binding.promoBannerLeftImage.setImageDrawable(
+        binding.content.promoBanner.visibility = View.VISIBLE
+        binding.content.promoBanner.background = promoBackgroundDrawable(context)
+        binding.content.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
                 R.drawable.g1g1_promo_left_small,
             ),
         )
-        binding.promoBannerRightImage.setImageDrawable(
+        binding.content.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
                 R.drawable.g1g1_promo_right_small,
             ),
         )
-        binding.promoBannerTitleImage.visibility = View.GONE
-        binding.promoBannerDurationView.visibility = View.GONE
-        binding.promoBannerTitleText.visibility = View.VISIBLE
+        binding.content.promoBannerTitleImage.visibility = View.GONE
+        binding.content.promoBannerDurationView.visibility = View.GONE
+        binding.content.promoBannerTitleText.visibility = View.VISIBLE
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        binding.promoBannerTitleText.text =
+        binding.content.promoBannerTitleText.text =
             context.getString(R.string.gift_one_get_one_purchase_banner, formatter.format(endDate))
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -48,6 +49,7 @@ import java.util.Date
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
+
     @Inject
     lateinit var notificationsManager: NotificationsManager
 
@@ -63,6 +65,8 @@ abstract class BaseActivity : AppCompatActivity() {
     open var overrideModernHeader: Boolean? = null
 
     internal var toolbar: Toolbar? = null
+    private var toolbarContentColor: Int? = null
+    private var toolbarBackgroundColor: Int? = null
 
     protected abstract fun getLayoutResId(): Int?
 
@@ -195,8 +199,10 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun setupToolbar(toolbar: Toolbar?) {
+    protected fun setupToolbar(toolbar: Toolbar?, iconColor: Int? = null, backgroundColor: Int? = null) {
         this.toolbar = toolbar
+        this.toolbarContentColor = iconColor
+        this.toolbarBackgroundColor = backgroundColor
         if (toolbar != null) {
             setSupportActionBar(toolbar)
 
@@ -209,12 +215,12 @@ abstract class BaseActivity : AppCompatActivity() {
                 actionBar.setHomeButtonEnabled(true)
             }
         }
-        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this) }
+        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this, iconColor, backgroundColor) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val ret = super.onCreateOptionsMenu(menu)
-        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this) }
+        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this, this.toolbarContentColor, this.toolbarBackgroundColor) }
         return ret
     }
 

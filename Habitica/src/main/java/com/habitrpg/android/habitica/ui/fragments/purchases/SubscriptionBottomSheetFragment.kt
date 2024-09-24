@@ -70,13 +70,9 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.subscriptionOptions.visibility = View.GONE
-        binding.seeMoreOptions.setOnClickListener {
-            dismiss()
-            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
-        }
-        binding.subscribeButton.setOnClickListener { purchaseSubscription() }
-        binding.subscriptionDisclaimerView.setMarkdown("Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).")
+        binding.content.subscriptionOptions.visibility = View.GONE
+        binding.content.subscribeButton.setOnClickListener { purchaseSubscription() }
+        binding.content.subscriptionDisclaimerView.setMarkdown("Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).")
 
         lifecycleScope.launchCatching {
             userRepository.getUser().collect { user ->
@@ -156,7 +152,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         this.selectedSubscriptionSku = sku
         val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
         subscriptionOptionButton?.setIsSelected(true)
-        binding.subscribeButton.isEnabled = true
+        binding.content.subscribeButton.isEnabled = true
     }
 
     internal fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
@@ -165,9 +161,9 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
         return when (sku) {
-            PurchaseTypes.SUBSCRIPTION_1_MONTH -> binding.subscription1month
-            PurchaseTypes.SUBSCRIPTION_3_MONTH -> binding.subscription3month
-            PurchaseTypes.SUBSCRIPTION_12_MONTH -> binding.subscription12month
+            PurchaseTypes.SUBSCRIPTION_1_MONTH -> binding.content.subscription1month
+            PurchaseTypes.SUBSCRIPTION_3_MONTH -> binding.content.subscription3month
+            PurchaseTypes.SUBSCRIPTION_12_MONTH -> binding.content.subscription12month
             else -> null
         }
     }
@@ -189,11 +185,12 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun updateSubscriptionInfo() {
         if (hasLoadedSubscriptionOptions) {
-            binding.subscriptionOptions.visibility = View.VISIBLE
-            binding.loadingIndicator.visibility = View.GONE
+            binding.content.subscriptionOptions.visibility = View.VISIBLE
+            binding.content.loadingIndicator.visibility = View.GONE
         }
         if (user != null) {
-            binding.loadingIndicator.visibility = View.GONE
+            binding.content.loadingIndicator.visibility = View.GONE
+            binding.content.subscription12month.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
         }
     }
 

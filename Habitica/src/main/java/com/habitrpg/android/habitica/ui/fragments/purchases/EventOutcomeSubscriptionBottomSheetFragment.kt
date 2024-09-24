@@ -19,31 +19,29 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
             EVENT_GEMS_FOR_GOLD -> setGemsForGoldEventSubscriptionViews()
             EVENT_HOURGLASS_SHOP_OPENED -> setHourglassShopEventSubscriptionViews()
         }
+        binding.content.subscription3month.visibility = View.GONE
+        binding.content.subscription6month.visibility = View.GONE
     }
 
     private fun setArmoireEventSubscriptionViews() {
-        binding.subscriberBenefitBanner.visibility = View.GONE
-        binding.subscribeBenefits.text = getString(R.string.subscribe_second_armoire_open_text)
-        binding.subscriberBenefits.hideArmoireBenefit()
+        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_second_armoire_open_text)
+        binding.content.subscriberBenefits.hideArmoireBenefit()
     }
 
     private fun setDeathScreenEventSubscriptionViews() {
-        binding.subscriberBenefitBanner.visibility = View.GONE
-        binding.subscribeBenefits.text = getString(R.string.subscribe_second_chance_incentive_text)
-        binding.subscriberBenefits.hideDeathBenefit()
+        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_second_chance_incentive_text)
+        binding.content.subscriberBenefits.hideDeathBenefit()
     }
 
     private fun setGemsForGoldEventSubscriptionViews() {
-        binding.subscribeBenefits.text = getString(R.string.subscribe_gems_for_gold_incentive_text)
-        binding.subscriberBenefits.hideGemsForGoldBenefit()
-        binding.subscription3month.visibility = View.GONE
+        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_gems_for_gold_incentive_text)
+        binding.content.subscriberBenefits.hideGemsForGoldBenefit()
+        binding.content.subscription3month.visibility = View.GONE
     }
 
     private fun setHourglassShopEventSubscriptionViews() {
-        binding.subscriberBenefitBanner.visibility = View.GONE
-        binding.subscribeBenefits.text = getString(R.string.subscribe_hourglass_incentive_text)
-        binding.subscriberBenefits.hideMysticHourglassBenefit()
-        binding.subscription1month.visibility = View.GONE
+        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_hourglass_incentive_text)
+        binding.content.subscriberBenefits.hideMysticHourglassBenefit()
         skus.firstOrNull { buttonForSku(it)?.isVisible == true }?.let { selectSubscription(it) }
     }
 
