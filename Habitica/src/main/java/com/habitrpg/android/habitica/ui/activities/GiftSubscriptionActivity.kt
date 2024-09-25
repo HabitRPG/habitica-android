@@ -101,8 +101,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
                 return@launch
             }
             binding.avatarView.setAvatar(member)
-            binding.displayNameTextView.username = member.profile?.name
-            binding.displayNameTextView.tier = member.contributor?.level ?: 0
+            binding.displayNameTextView.text = member.profile?.name
             binding.usernameTextView.text = "@${member.username}"
             giftedUserID = member.id
             giftedUsername = member.username

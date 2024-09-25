@@ -271,6 +271,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 user?.purchased?.plan?.let { binding?.content?.subscriptionDetails?.setPlan(it) }
                 binding?.content?.subscriptionOptions?.visibility = View.GONE
                 binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.GONE
+                binding?.content?.giftSegmentSubscribed?.root?.visibility = View.VISIBLE
                 binding?.content?.subscribeBenefitsTitle?.visibility = View.GONE
             } else {
                 binding?.content?.headerImageView?.setImageResource(R.drawable.subscribe_header_dark)
@@ -281,6 +282,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 binding?.content?.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt)
                 binding?.content?.subscribeBenefitsFooter?.visibility = View.GONE
                 binding?.content?.giftSegmentSubscribed?.root?.visibility = View.GONE
+                binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.VISIBLE
 
                 binding?.content?.subscription12month?.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
 
