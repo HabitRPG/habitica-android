@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.EquipmentSet
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
@@ -195,6 +196,10 @@ class InventoryRepositoryImpl(
 
     override fun getLatestMysteryItem(): Flow<Equipment> {
         return localRepository.getLatestMysteryItem()
+    }
+
+    override fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>> {
+        return localRepository.getLatestMysteryItemAndSet()
     }
 
     override fun getItem(

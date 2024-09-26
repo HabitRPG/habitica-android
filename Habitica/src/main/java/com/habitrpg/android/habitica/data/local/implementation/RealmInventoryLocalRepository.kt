@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.EquipmentSet
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
@@ -455,10 +456,31 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .filter { it.isLoaded && it.size > 0 }
             .map {
                 val format = SimpleDateFormat("yyyyMM", Locale.US)
-                it.first {
-                    it.key?.contains(format.format(Date())) == true
+                it.first { equipment ->
+                    equipment.key?.contains(format.format(Date())) == true
                 }
             }
+    }
+
+    private fun getLatestMysterySet(): Flow<EquipmentSet?> {
+        return realm.where(EquipmentSet::class.java)
+            .equalTo("pinType", "mystery_set")
+            .sort("key", Sort.DESCENDING)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
+            .map {
+                val format = SimpleDateFormat("yyyyMM", Locale.US)
+                it.firstOrNull() { set ->
+                    set.key.contains(format.format(Date()))
+                }
+            }
+    }
+
+    override fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>> {
+        return getLatestMysteryItem().combine(getLatestMysterySet()) { item, set ->
+            Pair(item, set)
+        }
     }
 
     override fun soldItem(

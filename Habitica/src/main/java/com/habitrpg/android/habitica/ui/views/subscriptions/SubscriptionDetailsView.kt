@@ -39,6 +39,7 @@ class SubscriptionDetailsView : LinearLayout {
     private fun setupView() {
         binding = SubscriptionDetailsBinding.inflate(context.layoutInflater, this, true)
         binding.changeSubscriptionButton.setOnClickListener { changeSubscriptionButtonTapped() }
+        binding.heartIcon.setImageBitmap(HabiticaIconsHelper.imageOfHeartLarge())
     }
 
     fun setPlan(plan: SubscriptionPlan) {
@@ -147,9 +148,9 @@ class SubscriptionDetailsView : LinearLayout {
         if (plan.isActive && (terminatedLocalDate == null || nextHourglassDate.isBefore(terminatedLocalDate))) {
             val format =
                 if (now.year != nextHourglassDate.year) {
-                    "dd MMM yyyy"
+                    "MMM yyyy"
                 } else {
-                    "dd MMMM"
+                    "MMMM"
                 }
             val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }

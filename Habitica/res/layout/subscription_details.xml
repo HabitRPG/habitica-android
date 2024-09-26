@@ -9,25 +9,40 @@
         tools:background="@color/content_background"
         android:paddingBottom="16dp">
 
+    <ImageView
+        android:id="@+id/heart_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:text="@string/thanks_for_subscribing"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+            android:layout_gravity="center_horizontal"
+        android:fontFamily="@string/font_family_medium"
+            android:layout_marginBottom="14dp"/>
+
     <com.google.android.material.card.MaterialCardView
             android:id="@+id/subscription_credit_card"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/transparent"
             app:cardCornerRadius="8dp"
-            app:strokeColor="@color/green_50"
-            app:strokeWidth="1dp">
+            app:strokeColor="@color/green_100"
+            app:strokeWidth="3dp">
 
         <TextView
                 android:id="@+id/subscription_credit_text_view"
-                style="@style/subscriptionBoxText.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="4dp"
+                android:textSize="15sp"
                 android:text="@string/subscription_credit_canceling"
-                android:textColor="@color/green_50" />
+                android:textColor="@color/green_500" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -59,6 +74,7 @@
         <TextView
                 android:id="@+id/subscriptionStatusActive"
                 style="@style/Pill.Selected.Green"
+                android:background="@drawable/pill_bg_green_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

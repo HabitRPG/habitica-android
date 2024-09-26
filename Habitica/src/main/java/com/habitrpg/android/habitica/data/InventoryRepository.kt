@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.EquipmentSet
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
@@ -153,6 +154,7 @@ interface InventoryRepository : BaseRepository {
     fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
 
     fun getLatestMysteryItem(): Flow<Equipment>
+    fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>>
 
     fun getItem(
         type: String,

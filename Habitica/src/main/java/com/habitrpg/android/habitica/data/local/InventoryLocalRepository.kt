@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.EquipmentSet
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
@@ -118,6 +119,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
     )
 
     fun getLatestMysteryItem(): Flow<Equipment>
+    fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>>
 
     fun soldItem(
         userID: String,

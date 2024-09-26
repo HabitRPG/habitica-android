@@ -79,6 +79,12 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                 user?.let { setUser(it) }
             }
         }
+
+        binding.content.subscriptionDetails.visibility = View.GONE
+        binding.content.subscribeBenefitsFooter.visibility = View.GONE
+        binding.content.giftSegmentSubscribed.root.visibility = View.GONE
+        binding.content.giftSegmentUnsubscribed.root.visibility = View.VISIBLE
+        binding.content.subscriptionDisclaimerView.visibility = View.VISIBLE
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

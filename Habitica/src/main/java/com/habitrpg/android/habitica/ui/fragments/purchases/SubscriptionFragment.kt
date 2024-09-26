@@ -172,10 +172,12 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             val subscriptions = purchaseHandler.getAllSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
+                binding?.content?.loadingIndicator?.visibility = View.GONE
                 if (subscriptions.isEmpty()) {
-                    binding?.content?.loadingIndicator?.visibility = View.GONE
-                    binding?.content?.noBillingSubscriptions?.visibility = View.VISIBLE
-                    binding?.content?.visitHabiticaWebsiteButton?.visibility = View.VISIBLE
+                    if (user?.isSubscribed != true) {
+                        binding?.content?.noBillingSubscriptions?.visibility = View.VISIBLE
+                        binding?.content?.visitHabiticaWebsiteButton?.visibility = View.VISIBLE
+                    }
                     return@withContext
                 }
                 binding?.content?.noBillingSubscriptions?.visibility = View.GONE
@@ -187,7 +189,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                             ?: "",
                     )
                 }
-                subscriptions.minByOrNull {
+                subscriptions.maxByOrNull {
                     it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
                         ?: 0
                 }?.let { selectSubscription(it) }
@@ -273,6 +275,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.GONE
                 binding?.content?.giftSegmentSubscribed?.root?.visibility = View.VISIBLE
                 binding?.content?.subscribeBenefitsTitle?.visibility = View.GONE
+                binding?.content?.subscriptionDisclaimerView?.visibility = View.GONE
             } else {
                 binding?.content?.headerImageView?.setImageResource(R.drawable.subscribe_header_dark)
                 if (!hasLoadedSubscriptionOptions) {
@@ -280,9 +283,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 }
                 binding?.content?.subscriptionDetails?.visibility = View.GONE
                 binding?.content?.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt)
+                binding?.content?.subscribeBenefitsTitle?.visibility = View.VISIBLE
                 binding?.content?.subscribeBenefitsFooter?.visibility = View.GONE
                 binding?.content?.giftSegmentSubscribed?.root?.visibility = View.GONE
                 binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.VISIBLE
+                binding?.content?.subscriptionDisclaimerView?.visibility = View.VISIBLE
 
                 binding?.content?.subscription12month?.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
 

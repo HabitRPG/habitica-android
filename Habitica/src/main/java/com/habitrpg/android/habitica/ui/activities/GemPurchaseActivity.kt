@@ -7,9 +7,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +27,11 @@ class GemPurchaseActivity : PurchaseActivity() {
         showSubscription = !(intent.extras?.containsKey("openSubscription") == true && intent.extras?.getBoolean("openSubscription") == false)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setupToolbar(toolbar, Color.WHITE, ContextCompat.getColor(this, R.color.brand_300))
+        if (showSubscription) {
+            setupToolbar(toolbar, Color.WHITE, ContextCompat.getColor(this, R.color.brand_300))
+        } else {
+            setupToolbar(toolbar)
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -39,10 +45,10 @@ class GemPurchaseActivity : PurchaseActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         if (showSubscription) {
-            toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this,) }
+            window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
         }
     }
 

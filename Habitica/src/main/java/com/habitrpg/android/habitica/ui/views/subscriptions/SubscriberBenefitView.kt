@@ -17,6 +17,9 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class SubscriberBenefitView
@@ -26,6 +29,8 @@ class SubscriberBenefitView
         attrs: AttributeSet? = null,
     ) : LinearLayout(context, attrs) {
         private val binding: SubscriptionBenefitsBinding = SubscriptionBenefitsBinding.inflate(context.layoutInflater, this)
+
+    val monthFormatter = SimpleDateFormat("MMMM", Locale.getDefault())
 
     @Inject
         lateinit var configManager: AppConfigManager
@@ -49,7 +54,9 @@ class SubscriberBenefitView
             inventoryRepository = hiltEntryPoint.inventoryRepository()
 
             MainScope().launchCatching {
-                val item = inventoryRepository.getLatestMysteryItem().firstOrNull()
+                val pair = inventoryRepository.getLatestMysteryItemAndSet().firstOrNull()
+                val item = pair?.first
+                val set = pair?.second
                 binding.subBenefitsMysteryItemIcon.loadImage(
                     "shop_set_mystery_${
                         item?.key?.split(
@@ -58,8 +65,10 @@ class SubscriberBenefitView
                     }",
                 )
                 binding.subBenefitsMysteryItemText.text =
-                    context.getString(R.string.subscribe_listitem3_description_new, item?.text)
+                    context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), set?.text ?: context.getString(R.string.set))
             }
+            binding.subBenefitsMysteryItemText.text =
+                context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), context.getString(R.string.set))
 
             binding.benefitArmoireWrapper.isVisible = configManager.enableArmoireSubs()
             binding.benefitFaintWrapper.isVisible = configManager.enableFaintSubs()
