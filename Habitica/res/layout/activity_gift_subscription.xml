@@ -82,29 +82,27 @@
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_marginEnd="@dimen/spacing_large"
                     android:layout_marginBottom="@dimen/spacing_large">
-
+                <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                        android:id="@+id/subscription1MonthView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:recurringText="@string/one_month_one_time"
+                        app:isNonRecurring="true"
+                        app:isGifted="true" />
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                         android:id="@+id/subscription3MonthView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:recurringText="@string/three_months_one_time"
-                        app:isNonRecurring="true" />
-
+                        app:isNonRecurring="true"
+                        app:isGifted="true" />
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                         android:id="@+id/subscription6MonthView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:recurringText="@string/six_months_one_time"
-                        app:isNonRecurring="true" >
-
-                    <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-                            android:id="@+id/subscription1MonthView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:recurringText="@string/one_month_one_time"
-                            app:isNonRecurring="true" />
-                </com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView>
-
+                        app:isNonRecurring="true"
+                        app:isGifted="true" />
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                         android:id="@+id/subscription12MonthView"
                         android:layout_width="match_parent"
@@ -112,23 +110,49 @@
                         app:recurringText="@string/twelve_months_one_time"
                         app:gemCapText="50"
                         app:isNonRecurring="true"
-                        app:flagText="@string/popular">
+                        app:flagText="@string/popular"
+                        app:isGifted="true" />
 
-                </com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView>
-
-                <Button
-                        android:text="@string/send_gift"
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/subscription_button"
-                        style="@style/HabiticaButton.Purple.Small"
-                        android:textAllCaps="false"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:shimmer_auto_start="true"
+                            app:shimmer_repeat_delay="6000"
+                            app:shimmer_duration="100"
+                            app:shimmer_base_color="@color/yellow_100"
+                            app:shimmer_base_alpha="1.0"
+                            app:shimmer_highlight_alpha="1.0"
+                            app:shimmer_colored="true"
+                            app:shimmer_highlight_color="@color/yellow_400">
+
+                        <View
+                                style="@style/HabiticaButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:background="@drawable/button_background" />
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <Button
+                            android:id="@+id/subscription_button"
+                            style="@style/HabiticaButton.Borderless"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="@string/send_gift"
+                            android:textColor="@color/brand_100"
+                            android:textAllCaps="false" />
+                </FrameLayout>
             </LinearLayout>
+
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/subscription_bg" />
+
             <LinearLayout
                     android:id="@+id/gift_subscription_container"
                     android:layout_width="match_parent"

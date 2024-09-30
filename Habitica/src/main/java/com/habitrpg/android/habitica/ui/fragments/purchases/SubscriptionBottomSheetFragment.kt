@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
@@ -83,8 +84,16 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         binding.content.subscriptionDetails.visibility = View.GONE
         binding.content.subscribeBenefitsFooter.visibility = View.GONE
         binding.content.giftSegmentSubscribed.root.visibility = View.GONE
-        binding.content.giftSegmentUnsubscribed.root.visibility = View.VISIBLE
+        binding.content.giftSegmentUnsubscribed.root.visibility = View.GONE
+        binding.content.headerImageView.visibility = View.GONE
         binding.content.subscriptionDisclaimerView.visibility = View.VISIBLE
+        binding.content.seeMoreButton.visibility = View.VISIBLE
+
+        binding.content.seeMoreButton.setOnClickListener {
+            MainNavigationController.navigate(R.id.gemPurchaseActivity,
+                bundleOf(Pair("openSubscription", true))
+            )
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -124,12 +133,14 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                             ?: "",
                     )
                 }
-                subscriptions
-                    .filter { buttonForSku(it)?.isVisible == true }
-                    .minByOrNull {
-                        it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
-                            ?: 0
-                    }?.let { selectSubscription(it) }
+                if (selectedSubscriptionSku == null) {
+                    subscriptions
+                        .filter { buttonForSku(it)?.isVisible == true }
+                        .maxByOrNull {
+                            it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
+                                ?: 0
+                        }?.let { selectSubscription(it) }
+                }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
@@ -197,6 +208,18 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         if (user != null) {
             binding.content.loadingIndicator.visibility = View.GONE
             binding.content.subscription12month.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
+            val totalGemCap = user?.purchased?.plan?.totalNumberOfGems ?: 24
+            binding.content.subscription1month.gemCap = totalGemCap
+            binding.content.subscription3month.gemCap = totalGemCap
+            binding.content.subscription6month.gemCap = totalGemCap
+
+            if (totalGemCap > 24) {
+                binding.content.existingGemCapBonusView.visibility = View.VISIBLE
+                binding.content.gemCapExtraLabel.text = getString(R.string.gem_cap_extra, totalGemCap - 24, 50)
+                binding.content.extraGemsProgress.progress = totalGemCap
+            } else {
+                binding.content.existingGemCapBonusView.visibility = View.GONE
+            }
         }
     }
 

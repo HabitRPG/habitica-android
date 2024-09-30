@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.android.billingclient.api.ProductDetails
@@ -10,6 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -57,7 +60,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_subscription)
-        setSupportActionBar(binding.toolbar)
+        setupToolbar(binding.toolbar, Color.WHITE, ContextCompat.getColor(this, R.color.brand_300))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -114,6 +117,11 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
+    }
+
     private fun showMemberLoadingErrorDialog() {
         val dialog = HabiticaAlertDialog(this@GiftSubscriptionActivity)
         dialog.setTitle(R.string.error_loading_member)
@@ -131,8 +139,10 @@ class GiftSubscriptionActivity : PurchaseActivity() {
                 for (sku in skus) {
                     updateButtonLabel(sku)
                 }
-                skus.minByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
-                    ?.let { selectSubscription(it) }
+                if (selectedSubscriptionSku == null) {
+                    skus.maxByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
+                        ?.let { selectSubscription(it) }
+                }
             }
         }
     }

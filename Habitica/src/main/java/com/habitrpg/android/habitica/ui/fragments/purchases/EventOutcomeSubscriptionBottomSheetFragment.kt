@@ -37,6 +37,7 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
         binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_gems_for_gold_incentive_text)
         binding.content.subscriberBenefits.hideGemsForGoldBenefit()
         binding.content.subscription3month.visibility = View.GONE
+        binding.content.gemsForGoldBanner.isVisible = true
     }
 
     private fun setHourglassShopEventSubscriptionViews() {

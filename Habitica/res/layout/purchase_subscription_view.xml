@@ -13,15 +13,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-        <LinearLayout
+        <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="12dp"
+                android:minHeight="126dp"
                 android:paddingStart="38dp"
-                android:paddingEnd="0dp"
+                android:paddingEnd="0dp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:minHeight="126dp">
+                android:layout_gravity="center">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -76,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/descriptionTextView"
                     android:textColor="@color/brand_600"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     tools:text="recurring every month" />
 
@@ -90,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="@string/subscribe1month_gemcap"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:textColor="@color/brand_600"
                         android:layout_marginTop="4dp"
                         android:drawableStart="@drawable/sub_plus"
@@ -103,14 +106,14 @@
                         android:layout_height="wrap_content"
                         tools:text="+1 Mystic Hourglass"
                         android:textColor="@color/brand_600"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:layout_marginTop="4dp"
                         android:drawableStart="@drawable/sub_plus"
                         android:drawableTint="@color/brand_400"
                         android:drawablePadding="8dp" />
             </LinearLayout>
         </LinearLayout>
-
+        </FrameLayout>
         <TextView
                 android:id="@+id/hourglass_promo_view"
                 android:layout_width="match_parent"
@@ -131,6 +134,5 @@
             android:id="@+id/selected_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/subscription_selected_indicator"
-            android:visibility="gone" />
+            android:src="@drawable/subscription_selected_indicator" />
 </FrameLayout>

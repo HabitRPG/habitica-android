@@ -41,7 +41,7 @@
                     style="@style/Caption2.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:text="@string/subscribe_listitem1_description"
                     android:textColor="@color/white" />
         </LinearLayout>
@@ -81,7 +81,7 @@
                     style="@style/Caption2.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:text="@string/subscribe_listitem3_description"
                     android:textColor="@color/white" />
         </LinearLayout>
@@ -122,7 +122,7 @@
                     style="@style/Caption2.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:text="@string/subscribe_listitem2_description"
                     android:textColor="@color/white" />
         </LinearLayout>
@@ -163,7 +163,7 @@
                     style="@style/Caption2.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:text="@string/subscribe_listitemFaint_description"
                     android:textColor="@color/white" />
         </LinearLayout>
@@ -203,7 +203,7 @@
                     style="@style/Caption2.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:text="@string/subscribe_listitemArmoire_description"
                     android:textColor="@color/white" />
         </LinearLayout>
@@ -220,7 +220,7 @@
                 android:layout_height="72dp"
                 android:background="@drawable/subscription_box_bg"
                 android:scaleType="center"
-                android:src="@drawable/sub_benefits_drops"
+                android:src="@drawable/sub_benefits_pet"
                 android:importantForAccessibility="no" />
 
         <LinearLayout
@@ -242,7 +242,7 @@
                     style="@style/Caption2.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:text="@string/subscribe_listitem5_description"
                     android:textColor="@color/white" />
         </LinearLayout>

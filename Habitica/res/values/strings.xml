@@ -928,7 +928,8 @@
     <string name="preference_push_party_activity">Party Activity</string>
     <string name="promo_subscription_buy_gems_prompt">Need Gems?</string>
     <string name="promo_subscription_buy_gems_description">Become a Subscriber to buy Gems with gold, get monthly mystery items, increased drop caps and more!</string>
-    <string name="see_other_options">See Other Options</string>
+    <string name="see_other_options">See other options</string>
+    <string name="see_other_sub_options">See other subscription options</string>
     <string name="gift_gems">Gift Gems</string>
     <string name="profile_send_message">Send\nMessage</string>
     <string name="profile_gift_gems">Gift\nGems</string>
@@ -1170,10 +1171,10 @@
     <string name="g1g1_promo_info_instructions">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
     <string name="g1g1_promo_info_limitations_fixed">This is a limited time event that starts on %1$s (%2$s) and will end %3$s (%4$s). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
     <string name="gift_one_get_one_purchase_banner">Gift a sub and get a sub for free until %s</string>
-    <string name="one_month_one_time">1 month one-time subscription</string>
-    <string name="three_months_one_time">3 month one-time subscription</string>
-    <string name="six_months_one_time">6 month one-time subscription</string>
-    <string name="twelve_months_one_time">12 month one-time subscription</string>
+    <string name="one_month_one_time">1 month</string>
+    <string name="three_months_one_time">3 months</string>
+    <string name="six_months_one_time">6 months</string>
+    <string name="twelve_months_one_time">12 months</string>
     <string name="sidebar_teams">Teams</string>
     <string name="team_information">Team Information</string>
     <string name="mystery_item_title">You open the Mystery Box and find…</string>
@@ -1537,9 +1538,11 @@
     <string name="clear_database">Clear Database</string>
     <string name="clear_cache_settings">Clear Cache</string>
     <string name="best_deal">Best Deal</string>
-    <string name="unlocks_x_gems_per_month">Unlock %d Gems per month instantly</string>
+    <string name="unlock_x_gems_per_month">Unlock %d Gems per month instantly</string>
+    <string name="unlocks_x_gems_per_month">Unlocks %d Gems per month instantly</string>
     <string name="x_gems">%d Gems</string>
     <string name="two_gems_per_month">Earn +2 Gems every month you\'re subscribed</string>
+    <string name="two_gems_per_month_gift">Earns +2 Gems every month they\'re subscribed</string>
     <string name="plus_two_gems">+2 Gems</string>
     <string name="popular">Popular</string>
     <string name="choose_member">Choose Member</string>
@@ -1553,6 +1556,8 @@
     <string name="twelve_mystic_hourglasses">12 Mystic Hourglasses</string>
     <string name="thanks_for_subscribing">Thanks for subscribing</string>
     <string name="set">Set</string>
+    <string name="rescrubscribe_to_pick_up">Resubscribe to pick up where you left off!</string>
+    <string name="gem_cap_extra">%d/%d Gem Cap</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -9,10 +9,53 @@
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:background="@color/brand_300"
         android:scrollbars="vertical">
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/gems_for_gold_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:background="@drawable/layout_extra_rounded_teal_1"
+                android:visibility="gone">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                android:src="@drawable/gem_gold_left" />
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:fontFamily="@string/font_family_medium"
+                        android:text="@string/buy_gems_with_gold"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:text="@string/subscriber_benefit"
+                    android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:letterSpacing="0.15"
+                    />
+            </LinearLayout>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gem_gold_right" />
+
+        </LinearLayout>
 
         <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/promo_compose_view"
@@ -103,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="18dp">
 
             <ImageView
                     android:id="@+id/header_image_view"
@@ -130,9 +173,9 @@
             <TextView
                     android:id="@+id/subscribeBenefitsTitle"
                     style="@style/SubHeader1"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:lineSpacingExtra="4dp"
@@ -141,10 +184,66 @@
 
             <include layout="@layout/separator_fancy" />
 
+            <LinearLayout
+                    android:id="@+id/existing_gem_cap_bonus_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="@dimen/spacing_large"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/extra_gem_cap_left" />
+
+                    <TextView
+                            android:id="@+id/gem_cap_extra_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:fontFamily="@string/font_family_medium"
+                            android:textColor="@color/white"
+                            android:paddingHorizontal="8dp"/>
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/extra_gem_cap_right" />
+                </LinearLayout>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rescrubscribe_to_pick_up"
+                        android:textSize="15sp"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="2dp"/>
+                <ProgressBar
+                        android:id="@+id/extra_gems_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:progressDrawable="@drawable/gem_extra_progress"
+                        android:progress="40"
+                        android:max="50"
+                        android:indeterminate="false"
+                        android:progressTint="@color/green_100"/>
+            </LinearLayout>
+
             <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriberBenefitView
                     android:id="@+id/subscriber_benefits"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="6dp" />
 
             <TextView
                     android:id="@+id/subscribeBenefitsFooter"
@@ -222,27 +321,52 @@
                         app:gemCapText="50"
                         app:recurringText="@string/twelve_months" />
 
-                <Button
-                        android:id="@+id/subscribeButton"
-                        style="@style/HabiticaButton"
+                <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/subscribe"
-                        android:textColor="@color/brand_100"
-                        android:backgroundTint="@color/yellow_100"
-                        android:textAllCaps="false" />
+                        android:layout_marginTop="8dp">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:shimmer_auto_start="true"
+                            app:shimmer_repeat_delay="6000"
+                            app:shimmer_duration="100"
+                            app:shimmer_base_color="@color/yellow_100"
+                            app:shimmer_base_alpha="1.0"
+                            app:shimmer_highlight_alpha="1.0"
+                            app:shimmer_colored="true"
+                            app:shimmer_highlight_color="@color/yellow_400">
+
+                        <View
+                                style="@style/HabiticaButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:background="@drawable/button_background" />
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <Button
+                            android:id="@+id/subscribeButton"
+                            style="@style/HabiticaButton.Borderless"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="@string/subscribe"
+                            android:textColor="@color/brand_100"
+                            android:textAllCaps="false" />
+                </FrameLayout>
+
 
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textStyle="italic"
                         android:gravity="center"
                         android:text="@string/subscribe_title"
                         android:layout_marginTop="6dp"
-                        android:layout_marginBottom="32dp" />
+                        android:layout_marginBottom="32dp"
+                        android:layout_marginHorizontal="14dp"/>
             </LinearLayout>
 
             <include
@@ -256,8 +380,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/subscription_bg"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop" />
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -266,14 +390,25 @@
                 android:paddingTop="6dp"
                 android:paddingBottom="32dp"
                 android:paddingHorizontal="24dp">
+
             <TextView
                     android:id="@+id/subscription_disclaimer_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textColorLink="@color/yellow_100"
-                    android:textSize="13sp"
-                    android:textStyle="italic"/>
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+            <Button
+                    android:id="@+id/see_more_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/see_more_subscription_options"
+                    style="@style/HabiticaButton.Borderless"
+                    android:textColor="@color/yellow_100"
+                    android:visibility="gone"
+                />
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

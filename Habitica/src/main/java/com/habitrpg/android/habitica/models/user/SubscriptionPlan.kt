@@ -41,11 +41,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
 
     val totalNumberOfGems: Int
         get() {
-            return if (isActive) {
-                24 + (consecutive?.gemCapExtra ?: 0)
-            } else {
-                0
-            }
+            return 24 + (consecutive?.gemCapExtra ?: 0)
         }
 
     val numberOfGemsLeft: Int
@@ -53,23 +49,6 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
             return totalNumberOfGems - (gemsBought ?: 0)
         }
 
-    /*
-      If user has a initial basic monthly subscription, receive hourglasses on fourth month,
-      else receive on third month (subtract 1 from total consecutive count)
-     */
-
-    val subMonthCount: Int
-        get() {
-            return when (planId) {
-                "basic_earned" -> 1
-                "basic_3mo" -> 3
-                "basic_6mo" -> 6
-                "google_6mo" -> 6
-                "basic_12mo" -> 12
-                "group_plan_auto" -> 1
-                else -> 0
-            }
-        }
 
     val monthsUntilNextHourglass: Int
         get() {

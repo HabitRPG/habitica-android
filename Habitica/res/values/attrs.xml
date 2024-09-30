@@ -47,6 +47,7 @@
         <attr name="recurringText" format="string" />
         <attr name="gemCapText" format="integer" />
         <attr name="isNonRecurring" format="boolean" />
+        <attr name="isGifted" format="boolean" />
         <attr name="hourGlassCount" format="integer" />
         <attr name="flagText" format="string" />
     </declare-styleable>

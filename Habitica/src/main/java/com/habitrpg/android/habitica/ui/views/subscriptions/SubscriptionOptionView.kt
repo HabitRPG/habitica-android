@@ -1,6 +1,9 @@
 package com.habitrpg.android.habitica.ui.views.subscriptions
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -26,7 +29,17 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
 
     var sku: String? = null
     private var isPromoted: Boolean = false
-    private var gemCap: Int = 24
+    private var isGifted: Boolean = false
+    var gemCap: Int = 24
+        set(value) {
+            field = value
+            updateGemCapText()
+        }
+    private var isSubscriptionSelected = false
+        set(value) {
+            field = value
+            updateGemCapText()
+        }
 
     init {
         val a = context.theme.obtainStyledAttributes(
@@ -35,6 +48,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             0,
             0,
         )
+
+        isGifted = a.getBoolean(R.styleable.SubscriptionOptionView_isGifted, false)
 
         if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {
             binding.descriptionTextView.text = context.getString(
@@ -49,15 +64,17 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         }
 
         gemCap = a.getInteger(R.styleable.SubscriptionOptionView_gemCapText, 24)
-        setGemCapText(false)
+        updateGemCapText()
         setAddtlGemText(false)
         setFlagText(a.getText(R.styleable.SubscriptionOptionView_flagText))
+
+        binding.selectedIndicator.translationX = -binding.selectedIndicator.drawable.intrinsicWidth.toFloat()
     }
 
-    private fun setGemCapText(isSelected: Boolean) {
-        binding.gemCapTextView.text = highlightText(context.getString(R.string.unlocks_x_gems_per_month, gemCap),
+    private fun updateGemCapText() {
+        binding.gemCapTextView.text = highlightText(context.getString(if (isGifted) R.string.unlock_x_gems_per_month else R.string.unlock_x_gems_per_month, gemCap),
             context.getString(R.string.x_gems, gemCap),
-            ContextCompat.getColor(context, if (isSelected) R.color.yellow_5 else R.color.white))
+            ContextCompat.getColor(context, if (isSubscriptionSelected) R.color.yellow_5 else R.color.white))
     }
 
     private fun setAddtlGemText(isSelected: Boolean) {
@@ -69,7 +86,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             )
         } else {
             binding.hourglassTextView.text = highlightText(
-                context.getString(R.string.two_gems_per_month),
+                context.getString(if (isGifted) R.string.two_gems_per_month_gift else R.string.two_gems_per_month),
                 context.getString(R.string.plus_two_gems),
                 ContextCompat.getColor(context, if (isSelected) R.color.yellow_5 else R.color.white)
             )
@@ -124,9 +141,24 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         return spannable
     }
 
+    fun animateBackgroundColor(colorFrom: Int, colorTo: Int) {
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+        colorAnimation.setDuration(350) // milliseconds
+        colorAnimation.addUpdateListener { animator -> binding.root.backgroundTintList = ColorStateList.valueOf(animator.animatedValue as Int) }
+        colorAnimation.start()
+    }
+
     fun setIsSelected(purchased: Boolean) {
+        if (isSubscriptionSelected == purchased) return
+        isSubscriptionSelected = purchased
         if (purchased) {
-            binding.selectedIndicator.visibility = View.VISIBLE
+            binding.selectedIndicator.animate()
+                .withStartAction { binding.selectedIndicator.alpha = 1f }
+                .translationX(0f)
+                .setDuration(250)
+                .setStartDelay(400)
+                .start()
+            animateBackgroundColor(ContextCompat.getColor(context, R.color.brand_200), ContextCompat.getColor(context, R.color.white))
             binding.root.setBackgroundResource(R.drawable.subscription_box_bg_selected)
             val textColor = if (isPromoted) {
                 ContextCompat.getColor(context, R.color.teal_1)
@@ -134,7 +166,6 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 ContextCompat.getColor(context, R.color.brand_300)
             }
             binding.gemCapTextView.setTextColor(textColor)
-            setGemCapText(true)
             binding.hourglassTextView.setTextColor(textColor)
             setAddtlGemText(true)
             if (!isPromoted) {
@@ -146,15 +177,21 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 TextViewCompat.setCompoundDrawableTintList(binding.hourglassTextView, ContextCompat.getColorStateList(context, R.color.yellow_100))
             }
         } else {
-            binding.selectedIndicator.visibility = View.GONE
-            binding.root.setBackgroundResource(R.drawable.subscription_type_box_bg)
+            binding.selectedIndicator.animate()
+                .alpha(0f)
+                .setStartDelay(0)
+                .setDuration(200)
+                .withEndAction {
+                    binding.selectedIndicator.translationX = -binding.selectedIndicator.drawable.intrinsicWidth.toFloat()
+                }
+                .start()
+            animateBackgroundColor(ContextCompat.getColor(context, R.color.white), ContextCompat.getColor(context, R.color.brand_200))
             binding.gemCapTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
                     R.color.brand_600,
                 ),
             )
-            setGemCapText(false)
             binding.hourglassTextView.setTextColor(
                 ContextCompat.getColor(
                     context,

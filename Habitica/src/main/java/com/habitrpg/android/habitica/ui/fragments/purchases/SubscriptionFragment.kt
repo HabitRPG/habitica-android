@@ -189,10 +189,12 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                             ?: "",
                     )
                 }
-                subscriptions.maxByOrNull {
-                    it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
-                        ?: 0
-                }?.let { selectSubscription(it) }
+                if (selectedSubscriptionSku == null) {
+                    subscriptions.maxByOrNull {
+                        it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
+                            ?: 0
+                    }?.let { selectSubscription(it) }
+                }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
@@ -275,7 +277,9 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.GONE
                 binding?.content?.giftSegmentSubscribed?.root?.visibility = View.VISIBLE
                 binding?.content?.subscribeBenefitsTitle?.visibility = View.GONE
+                binding?.content?.subscribeBenefitsFooter?.visibility = View.VISIBLE
                 binding?.content?.subscriptionDisclaimerView?.visibility = View.GONE
+                binding?.content?.existingGemCapBonusView?.visibility = View.GONE
             } else {
                 binding?.content?.headerImageView?.setImageResource(R.drawable.subscribe_header_dark)
                 if (!hasLoadedSubscriptionOptions) {
@@ -288,6 +292,19 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 binding?.content?.giftSegmentSubscribed?.root?.visibility = View.GONE
                 binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.VISIBLE
                 binding?.content?.subscriptionDisclaimerView?.visibility = View.VISIBLE
+
+                val totalGemCap = user?.purchased?.plan?.totalNumberOfGems ?: 24
+                binding?.content?.subscription1month?.gemCap = totalGemCap
+                binding?.content?.subscription3month?.gemCap = totalGemCap
+                binding?.content?.subscription6month?.gemCap = totalGemCap
+
+                if (totalGemCap > 24) {
+                    binding?.content?.existingGemCapBonusView?.visibility = View.VISIBLE
+                    binding?.content?.gemCapExtraLabel?.text = getString(R.string.gem_cap_extra, totalGemCap, 50)
+                    binding?.content?.extraGemsProgress?.progress = totalGemCap
+                } else {
+                    binding?.content?.existingGemCapBonusView?.visibility = View.GONE
+                }
 
                 binding?.content?.subscription12month?.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
 

@@ -20,7 +20,7 @@
         android:text="@string/thanks_for_subscribing"
         android:textColor="@color/white"
         android:textSize="17sp"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
         android:fontFamily="@string/font_family_medium"
             android:layout_marginBottom="14dp"/>
 
@@ -319,7 +319,7 @@
             android:layout_height="wrap_content"
             android:text="@string/subscription_details_footer"
             android:textColor="@color/white"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:textStyle="italic"
             android:layout_marginTop="4dp"
             android:layout_marginHorizontal="16dp"
