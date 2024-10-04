@@ -1,10 +1,7 @@
-
-New in 4.4.1:
-- Check out the new Customization Shop and Avatar Customization experience!
-- New Giraffe Quest Eggs, Koi Hatching Potions, and Summer Hair colors
-- It’s easier than ever to know when items will switch out
-- Hatching option no longer shows on Pet Eggs that aren’t unlocked
-- Body armor is now hidden when previewing shirts
-- Pet Bundles show which Quests are in them now
-- Avatar Customization view works properly on tablets again
-- Various other bug and interface fixes
+New in 4.4.4:
+- Enhancements and bug fixes for direct messages
+- Long task notes will no longer cause issues when editing
+- Fixes overlapping placeholder text in the About Me and Display name section
+- Further support for future events
+- Added the ability to clear cache in Settings for quicker troubleshooting
+- Markdown fixes

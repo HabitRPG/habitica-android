@@ -153,11 +153,13 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             binding?.subChangeAnnouncementView?.visibility = View.VISIBLE
             if (subChangeDate < Date()) {
                 binding?.subChangeAnnouncementView?.text = getString(R.string.sub_change_update)
-                val packageName = requireContext().packageName
-                try {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
-                } catch (e: ActivityNotFoundException) {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                binding?.subChangeAnnouncementView?.setOnClickListener {
+                    val packageName = requireContext().packageName
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                    }
                 }
             } else {
                 val dateFormat = SimpleDateFormat("MMMM d", Locale.getDefault())
