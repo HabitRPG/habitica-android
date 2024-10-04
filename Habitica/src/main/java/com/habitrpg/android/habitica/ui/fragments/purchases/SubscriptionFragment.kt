@@ -1,7 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -151,15 +153,21 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             binding?.subChangeAnnouncementView?.visibility = View.VISIBLE
             if (subChangeDate < Date()) {
                 binding?.subChangeAnnouncementView?.text = getString(R.string.sub_change_update)
+                val packageName = requireContext().packageName
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                } catch (e: ActivityNotFoundException) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+                }
             } else {
                 val dateFormat = SimpleDateFormat("MMMM d", Locale.getDefault())
                 binding?.subChangeAnnouncementView?.text = Html.fromHtml(getString(R.string.sub_change_announcement, dateFormat.format(subChangeDate)))
-            }
-            binding?.subChangeAnnouncementView?.setOnClickListener {
-                val intent = Intent(requireContext(), WebViewActivity::class.java).apply {
-                    putExtra("url", "https://habitica.com/static/faq/subscription-benefits-adjustments")
+                binding?.subChangeAnnouncementView?.setOnClickListener {
+                    val intent = Intent(requireContext(), WebViewActivity::class.java).apply {
+                        putExtra("url", "https://habitica.com/static/faq/subscription-benefits-adjustments")
+                    }
+                    startActivity(intent)
                 }
-                startActivity(intent)
             }
         }
     }

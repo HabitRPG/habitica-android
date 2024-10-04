@@ -1539,7 +1539,7 @@
     <string name="popular">Popular</string>
     <string name="choose_member">Choose Member</string>
     <string name="cleared_cache">Cleared Cache</string>
-    <string name="sub_change_update">Subscription benefits and how we deliver them has changed. Update to see the benefits you’ll receive!</string>
+    <string name="sub_change_update">Subscription benefits and how we deliver them have changed. Update to see the benefits you’ll receive!</string>
     <string name="sub_change_announcement"><![CDATA[Subscription benefits and how we deliver them will be changing on %s. You can <u>read about the changes here</u>.]]></string>
 
     <plurals name="you_x_others">
