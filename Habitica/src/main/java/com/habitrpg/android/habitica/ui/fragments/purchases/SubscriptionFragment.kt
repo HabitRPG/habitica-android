@@ -3,18 +3,23 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.EditText
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
+import com.habitrpg.android.habitica.HabiticaApplication
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -26,6 +31,7 @@ import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
+import com.habitrpg.android.habitica.ui.activities.WebViewActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -34,6 +40,7 @@ import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionVi
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -42,6 +49,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -136,6 +146,22 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         binding?.subscriptionDisclaimerView?.setMarkdown("Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).")
 
         Analytics.sendNavigationEvent("subscription screen")
+
+        appConfigManager.subChangeDate()?.let { subChangeDate ->
+            binding?.subChangeAnnouncementView?.visibility = View.VISIBLE
+            if (subChangeDate < Date()) {
+                binding?.subChangeAnnouncementView?.text = getString(R.string.sub_change_update)
+            } else {
+                val dateFormat = SimpleDateFormat("MMMM d", Locale.getDefault())
+                binding?.subChangeAnnouncementView?.text = Html.fromHtml(getString(R.string.sub_change_announcement, dateFormat.format(subChangeDate)))
+            }
+            binding?.subChangeAnnouncementView?.setOnClickListener {
+                val intent = Intent(requireContext(), WebViewActivity::class.java).apply {
+                    putExtra("url", "https://habitica.com/static/faq/subscription-benefits-adjustments")
+                }
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onResume() {

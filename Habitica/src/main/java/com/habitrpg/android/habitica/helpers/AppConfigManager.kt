@@ -15,11 +15,15 @@ import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromK
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class AppConfigManager(contentRepository: ContentRepository) :
     com.habitrpg.common.habitica.helpers.AppConfigManager() {
     private var worldState: WorldState? = null
+
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
 
     init {
         try {
@@ -195,5 +199,15 @@ class AppConfigManager(contentRepository: ContentRepository) :
 
     fun showAltDeathText(): Boolean {
         return remoteConfig.getBoolean("showAltDeathText")
+    }
+
+
+    fun subChangeDate(): Date? {
+        val date = remoteConfig.getString("subChangeDate")
+        return if (date.isNotBlank()) {
+            dateFormat.parse(date)
+        } else {
+            null
+        }
     }
 }

@@ -418,7 +418,7 @@
     <string name="subscription_hourglasses">%d Hourglasses</string>
     <string name="payment_method">Payment method</string>
     <string name="subscription">Subscription</string>
-    <string name="subscription_credit_canceling">"Your <b>+%d</b> months of subscription credit will activate after canceling</string>
+    <string name="subscription_credit_canceling">Your <b>+%d</b> months of subscription credit will activate after canceling</string>
     <string name="active">Active</string>
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
@@ -1539,6 +1539,8 @@
     <string name="popular">Popular</string>
     <string name="choose_member">Choose Member</string>
     <string name="cleared_cache">Cleared Cache</string>
+    <string name="sub_change_update">Subscription benefits and how we deliver them has changed. Update to see the benefits you’ll receive!</string>
+    <string name="sub_change_announcement"><![CDATA[Subscription benefits and how we deliver them will be changing on %s. You can <u>read about the changes here</u>.]]></string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

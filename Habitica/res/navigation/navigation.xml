@@ -299,6 +299,13 @@
             app:destination="@id/inboxMessageListFragment" />
     </fragment>
     <fragment
+            android:id="@+id/webViewActivity"
+            android:name="com.habitrpg.android.habitica.ui.activities.WebViewActivity">
+        <argument
+                android:name="url"
+                app:argType="string"/>
+    </fragment>
+    <fragment
         android:id="@+id/guildFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildFragment"
         android:label="@string/guild" >
