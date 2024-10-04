@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
-import com.habitrpg.android.habitica.extensions.toZonedDateTime
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.layoutInflater
@@ -145,17 +144,15 @@ class SubscriptionDetailsView : LinearLayout {
 
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
-        val now = LocalDate.now()
-        val nextHourglassDate =
-            now.plusMonths(plan.monthsUntilNextHourglass.toLong())
-                .withDayOfMonth(1)
-        val terminatedLocalDate = plan.dateTerminated?.toZonedDateTime()?.toLocalDate()
-        if (plan.isActive && (terminatedLocalDate == null || nextHourglassDate.isBefore(terminatedLocalDate))) {
+        if (plan.isActive && plan.dateTerminated == null) {
+            val now = LocalDate.now()
+            val nextHourglassDate =
+                LocalDate.now().plusMonths(plan.monthsUntilNextHourglass.toLong())
             val format =
                 if (now.year != nextHourglassDate.year) {
-                    "dd MMM yyyy"
+                    "MMM YYYY"
                 } else {
-                    "dd MMMM"
+                    "MMMM"
                 }
             val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }

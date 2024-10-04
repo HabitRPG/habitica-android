@@ -38,16 +38,16 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 )
         }
 
-        val gemCap = a.getInteger(R.styleable.SubscriptionOptionView_gemCapText, 25)
-        binding.gemCapTextView.text = context.getString(R.string.unlocks_x_gems_per_month, gemCap)
+        binding.gemCapTextView.text = a.getText(R.styleable.SubscriptionOptionView_gemCapText)
         setFlagText(a.getText(R.styleable.SubscriptionOptionView_flagText))
+        val hourGlassCount = a.getInteger(R.styleable.SubscriptionOptionView_hourGlassCount, 0)
         binding.hourglassTextView.visibility = View.VISIBLE
-        if (gemCap < 50) {
-            binding.hourglassTextView.visibility = View.VISIBLE
+        if (hourGlassCount != 0) {
             binding.hourglassTextView.text =
-                context.getString(R.string.two_gems_per_month)
+                context.getString(R.string.subscription_hourglasses, hourGlassCount)
         } else {
-            binding.hourglassTextView.visibility = View.GONE
+            binding.hourglassTextView.text =
+                context.getString(R.string.subscription_hourglasses_3month_timeframe)
         }
     }
 

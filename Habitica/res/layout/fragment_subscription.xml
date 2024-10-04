@@ -219,27 +219,34 @@
                         android:id="@+id/subscription1month"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:gemCapText="25"
+                        app:gemCapText="@string/subscribe1month_gemcap"
                         app:recurringText="@string/month" />
+
                     <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                         android:id="@+id/subscription3month"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:gemCapText="25"
+                        app:gemCapText="@string/subscribe3month_gemcap"
+                        app:hourGlassCount="1"
                         app:recurringText="@string/three_months" />
+
                     <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                         android:id="@+id/subscription6month"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:gemCapText="25"
+                        app:gemCapText="@string/subscribe6month_gemcap"
+                        app:hourGlassCount="2"
                         app:recurringText="@string/six_months" />
+
                     <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
                         android:id="@+id/subscription12month"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:flagText="@string/popular"
-                        app:gemCapText="50"
+                        app:flagText="@string/save_20"
+                        app:gemCapText="@string/subscribe12month_gemcap"
+                        app:hourGlassCount="4"
                         app:recurringText="@string/twelve_months" />
+
                     <Button
                         android:id="@+id/subscribeButton"
                         style="@style/HabiticaButton.Purple.Small"

@@ -45,7 +45,7 @@
 
     <declare-styleable name="SubscriptionOptionView">
         <attr name="recurringText" format="string" />
-        <attr name="gemCapText" format="integer" />
+        <attr name="gemCapText" format="string" />
         <attr name="isNonRecurring" format="boolean" />
         <attr name="hourGlassCount" format="integer" />
         <attr name="flagText" format="string" />
