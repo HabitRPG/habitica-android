@@ -423,8 +423,9 @@
     <string name="active">Active</string>
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription_google_description">You can cancel your subscription from the Google Play Store app. Any months of Subscription credit will be applied after your recurring Subscription has ended.</string>
-    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the player icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you!</string>
+    <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe by going to the Payments & Subscriptions section of the Google Play Store app. Any leftover months of subscription credit will be added to your end date after cancellation.</string>
+    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to your payment method, you’ll need to unsubscribe from our website. To do this, tap the button below, log in to your account, tap the player icon in the top right, then go to the Subscription section. Any leftover months of subscription credit will be added to your end date after cancellation. We’ll miss you!</string>
+    <string name="cancel_subscription_apple_description">No longer want to subscribe? Due to your payment method, you’ll need to unsubscribe through your Apple ID subscription settings on your iOS device.</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months Subscribed</string>
@@ -434,10 +435,10 @@
     <string name="inactive">Inactive</string>
     <string name="one_month">1 Month</string>
     <string name="x_months">%d Months</string>
-    <string name="month">month</string>
-    <string name="three_months">3 months</string>
-    <string name="six_months">6 months</string>
-    <string name="twelve_months">12 months</string>
+    <string name="month">Month</string>
+    <string name="three_months">3 mMnths</string>
+    <string name="six_months">6 Months</string>
+    <string name="twelve_months">12 Months</string>
     <string name="subscribe_prompt_thanks">You get these benefits for being a Subscriber</string>
     <string name="subscription_status">Subscription Status</string>
 
@@ -1275,7 +1276,7 @@
     <string name="tutorial_reset_confirmation">Your Tutorials were reset</string>
     <string name="you_ran_out_of_health">You ran out of Health!</string>
     <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
-    <string name="faint_broken_equipment">Broken equipment can be repurchased \nfrom Rewards</string>
+    <string name="faint_broken_equipment">Broken equipment can be repurchased \nfrom the Market</string>
     <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>… You can earn them all back with hard work!]]></string>
     <string name="faint_loss_description_alt"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and your Experience… You can earn them all back with hard work!]]></string>
     <string name="account_reset">Account Reset</string>
@@ -1491,7 +1492,7 @@
     <string name="subscriber_benefit_success_faint">You got a second chance with 1HP!</string>
     <string name="revive_broken_equipment">Your %s broke</string>
     <string name="subscribe_gems_for_gold_incentive_text">Subscribe to buy Gems with Gold and receive these other exclusive benefits!</string>
-    <string name="subscribe_hourglass_incentive_text">Subscribers get Mystic Hourglasses to buy items in the Time Travelers Shop and these other exclusive benefits!</string>
+    <string name="subscribe_hourglass_incentive_text">Subscribers get a Mystic Hourglass each month along with these exclusive benefits!</string>
     <string name="subscriber_benefit">SUBSCRIBER BENEFIT</string>
     <string name="no_saddles">You don\'t have any Saddles</string>
     <string name="purchase_saddles_in_market">Saddles instantly raise a Pet to a Mount. You can purchase one from the Market.</string>
@@ -1558,6 +1559,7 @@
     <string name="set">Set</string>
     <string name="rescrubscribe_to_pick_up">Resubscribe to pick up where you left off!</string>
     <string name="gem_cap_extra">%d/%d Gem Cap</string>
+    <string name="open_habitica_website">Open Habitica Website</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -120,7 +120,9 @@ class AppConfigManager(contentRepository: ContentRepository) :
     fun activePromo(): HabiticaPromotion? {
         var promo: HabiticaPromotion? = null
         if (worldState?.isValid == true) {
-            for (event in worldState?.events ?: listOf(worldState?.currentEvent)) {
+            val allEvents = worldState?.events?.toMutableList() ?: mutableListOf()
+            allEvents.add(worldState?.currentEvent)
+            for (event in allEvents) {
                 if (event == null) return null
                 val thisPromo =
                     getHabiticaPromotionFromKey(

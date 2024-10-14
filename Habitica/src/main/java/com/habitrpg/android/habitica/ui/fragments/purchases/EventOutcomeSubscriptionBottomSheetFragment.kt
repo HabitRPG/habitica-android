@@ -42,7 +42,6 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
 
     private fun setHourglassShopEventSubscriptionViews() {
         binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_hourglass_incentive_text)
-        binding.content.subscriberBenefits.hideMysticHourglassBenefit()
         skus.firstOrNull { buttonForSku(it)?.isVisible == true }?.let { selectSubscription(it) }
     }
 

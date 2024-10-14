@@ -91,7 +91,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="69dp"
                     android:layout_marginHorizontal="24dp"
-                    android:layout_marginBottom="6dp"
                     android:text="@string/faint_button"
                     android:textStyle="bold" />
 
@@ -101,6 +100,7 @@
                     android:layout_height="60dp"
                     android:layout_marginHorizontal="24dp"
                     app:activeBackground="@drawable/ad_button_background_content"
+                    android:visibility="gone"
                     app:text="@string/watch_ad_to_hang_on"
                     app:textColor="@color/text_primary" />
 
@@ -114,7 +114,6 @@
                 <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="65dp"
-                        android:layout_marginTop="4dp"
                         android:layout_marginBottom="8dp"
                         android:paddingStart="24dp"
                         android:paddingEnd="18dp">

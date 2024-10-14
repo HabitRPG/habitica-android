@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/not_recurring"
+                android:text="@string/gifted"
                 android:visibility="gone" />
 
         <TextView
@@ -253,6 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="2dp"
+                    android:layout_marginHorizontal="64dp"
                     tools:text="4" />
 
             <TextView
@@ -262,9 +263,11 @@
                     android:layout_below="@id/next_hourglass_textview"
                     android:layout_centerHorizontal="true"
                     android:text="@string/next_hourglass"
+                    android:gravity="center"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
                     android:textSize="12sp"
+                    android:layout_marginHorizontal="64dp"
                     android:textColor="@color/white" />
         </RelativeLayout>
 
@@ -321,6 +324,7 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="italic"
+            android:lineHeight="18sp"
             android:layout_marginTop="4dp"
             android:layout_marginHorizontal="16dp"
             android:gravity="center" />

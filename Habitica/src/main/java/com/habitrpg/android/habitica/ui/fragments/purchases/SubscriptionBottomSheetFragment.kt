@@ -215,7 +215,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
             if (totalGemCap > 24) {
                 binding.content.existingGemCapBonusView.visibility = View.VISIBLE
-                binding.content.gemCapExtraLabel.text = getString(R.string.gem_cap_extra, totalGemCap - 24, 50)
+                binding.content.gemCapExtraLabel.text = getString(R.string.gem_cap_extra, totalGemCap, 50)
                 binding.content.extraGemsProgress.progress = totalGemCap
             } else {
                 binding.content.existingGemCapBonusView.visibility = View.GONE

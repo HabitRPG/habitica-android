@@ -247,8 +247,8 @@
 
             <TextView
                     android:id="@+id/subscribeBenefitsFooter"
-                    style="@style/Title1"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
+                    android:fontFamily="@string/font_family_medium"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_gravity="center_horizontal"

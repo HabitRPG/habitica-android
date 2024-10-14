@@ -166,6 +166,7 @@ class SubscriptionDetailsView : LinearLayout {
             if (plan.paymentMethod == "Google") {
                 binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_google_description)
                 binding.changeSubscriptionButton.setText(R.string.open_in_store)
+                binding.changeSubscriptionButton.visibility = View.VISIBLE
             } else {
                 if (plan.isGroupPlanSub) {
                     /*if (plan.ownerID == currentUserID) {
@@ -174,10 +175,14 @@ class SubscriptionDetailsView : LinearLayout {
                     binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan)
                     binding.changeSubscriptionButton.visibility = View.GONE
                     // }
+                } else if (plan.paymentMethod == "Apple") {
+                    binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_apple_description)
+                    binding.changeSubscriptionButton.visibility = View.GONE
                 } else {
                     binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_notgoogle_description)
+                    binding.changeSubscriptionButton.setText(R.string.open_habitica_website)
+                    binding.changeSubscriptionButton.visibility = View.VISIBLE
                 }
-                binding.changeSubscriptionButton.setText(R.string.visit_habitica_website)
             }
         }
         if (plan.dateTerminated != null) {

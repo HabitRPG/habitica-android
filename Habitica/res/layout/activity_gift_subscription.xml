@@ -17,10 +17,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                android:background="@color/brand_300"
-                app:titleTextColor="@color/white"
+                android:background="?attr/colorContentBackground"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+                style="@style/Toolbar.Modern"
+                app:popupTheme="@style/Theme.AppCompat.DayNight">
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp">
+
+                <TextView
+                        android:id="@+id/toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:layout_toStartOf="@id/toolbar_accessory_container"
+                        android:layout_alignParentStart="true"
+                        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                        tools:text="Habitica"/>
+
+                <FrameLayout
+                        android:id="@+id/toolbar_accessory_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

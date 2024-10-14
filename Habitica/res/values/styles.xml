@@ -600,6 +600,12 @@
         <item name="android:background">@drawable/pill_bg_yellow</item>
     </style>
 
+
+    <style name="Pill.Selected.Yellow.Bright">
+        <item name="android:background">@drawable/pill_bg_yellow_100</item>
+        <item name="textColor">@color/brand_100</item>
+    </style>
+
     <style name="Pill.Selected.Red">
         <item name="android:background">@drawable/pill_bg_red</item>
     </style>
