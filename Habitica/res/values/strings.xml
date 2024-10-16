@@ -423,7 +423,7 @@
     <string name="active">Active</string>
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe by going to the Payments & Subscriptions section of the Google Play Store app. Any leftover months of subscription credit will be added to your end date after cancellation.</string>
+    <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe by going to the Payments &amp; Subscriptions section of the Google Play Store app. Any leftover months of subscription credit will be added to your end date after cancellation.</string>
     <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to your payment method, you’ll need to unsubscribe from our website. To do this, tap the button below, log in to your account, tap the player icon in the top right, then go to the Subscription section. Any leftover months of subscription credit will be added to your end date after cancellation. We’ll miss you!</string>
     <string name="cancel_subscription_apple_description">No longer want to subscribe? Due to your payment method, you’ll need to unsubscribe through your Apple ID subscription settings on your iOS device.</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
@@ -436,7 +436,7 @@
     <string name="one_month">1 Month</string>
     <string name="x_months">%d Months</string>
     <string name="month">Month</string>
-    <string name="three_months">3 mMnths</string>
+    <string name="three_months">3 Months</string>
     <string name="six_months">6 Months</string>
     <string name="twelve_months">12 Months</string>
     <string name="subscribe_prompt_thanks">You get these benefits for being a Subscriber</string>
@@ -770,7 +770,7 @@
     <string name="gift_title">Who would you like to gift to?</string>
     <string name="gift_one_get_one">Gift one, Get one!</string>
     <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive a matching subscription automatically after sending your gift.</string>
-    <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift below! This purchase won’t automatically renew.</string>
+    <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift! This purchase won’t renew.</string>
     <string name="gift_gems_subtitle">Choose the gem packet you’d like to gift below!</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
@@ -1172,10 +1172,10 @@
     <string name="g1g1_promo_info_instructions">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
     <string name="g1g1_promo_info_limitations_fixed">This is a limited time event that starts on %1$s (%2$s) and will end %3$s (%4$s). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
     <string name="gift_one_get_one_purchase_banner">Gift a sub and get a sub for free until %s</string>
-    <string name="one_month_one_time">1 month</string>
-    <string name="three_months_one_time">3 months</string>
-    <string name="six_months_one_time">6 months</string>
-    <string name="twelve_months_one_time">12 months</string>
+    <string name="one_month_one_time">1 Month</string>
+    <string name="three_months_one_time">3 Months</string>
+    <string name="six_months_one_time">6 Months</string>
+    <string name="twelve_months_one_time">12 Months</string>
     <string name="sidebar_teams">Teams</string>
     <string name="team_information">Team Information</string>
     <string name="mystery_item_title">You open the Mystery Box and find…</string>

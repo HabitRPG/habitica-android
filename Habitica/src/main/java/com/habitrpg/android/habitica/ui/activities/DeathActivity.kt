@@ -160,6 +160,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                     binding.unsubbedWrapper.visibility = View.GONE
                 } else if (it?.isSubscribed == false) {
                     binding.reviveSubscriberWrapper.visibility = View.GONE
+                    binding.subscriberBenefitUsedView.visibility = View.GONE
                     binding.unsubbedWrapper.visibility = View.VISIBLE
                     binding.subscribeModalButton.setOnClickListener {
                         Analytics.sendEvent(

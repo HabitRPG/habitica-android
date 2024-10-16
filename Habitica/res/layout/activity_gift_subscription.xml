@@ -98,6 +98,8 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:text="@string/gift_subscription_subtitle"
+                    android:textSize="17sp"
+                    android:fontFamily="@string/font_family_medium"
                     android:textColor="@color/white"
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_marginEnd="@dimen/spacing_large" />

@@ -154,10 +154,11 @@ class SubscriptionDetailsView : LinearLayout {
                 }
             val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
+            binding.resubscribeForHourglassesLabel.visibility = View.GONE
         } else {
             binding.nextHourglassTextview.visibility = View.GONE
-            binding.nextHourglassLabel.visibility = View.VISIBLE
-            binding.nextHourglassLabel.text = resources.getString(R.string.resubscribe_for_hourglasses)
+            binding.nextHourglassLabel.visibility = View.GONE
+            binding.resubscribeForHourglassesLabel.visibility = View.VISIBLE
         }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE

@@ -39,8 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="4dp"
                 android:textSize="15sp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp"
                 android:text="@string/subscription_credit_canceling"
                 android:textColor="@color/green_500" />
 
@@ -82,7 +83,7 @@
 
         <TextView
                 android:id="@+id/subscriptionStatusNotRecurring"
-                style="@style/Pill.Selected.Yellow"
+                style="@style/Pill.Selected.Yellow.Bright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -269,6 +270,17 @@
                     android:textSize="12sp"
                     android:layout_marginHorizontal="64dp"
                     android:textColor="@color/white" />
+
+            <TextView
+                    android:id="@+id/resubscribe_for_hourglasses_label"
+                    style="@style/subscriptionBoxCompactText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginHorizontal="64dp"
+                    android:text="@string/resubscribe_for_hourglasses"
+                    android:gravity="center"
+                    android:visibility="gone"/>
         </RelativeLayout>
 
     </LinearLayout>
@@ -303,8 +315,8 @@
                 style="@style/subscriptionBoxText.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:lineHeight="20sp"
                 android:text="@string/cancel_subscription_notgoogle_description" />
 
         <Button
