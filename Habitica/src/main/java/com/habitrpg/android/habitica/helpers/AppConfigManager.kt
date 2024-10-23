@@ -141,7 +141,10 @@ class AppConfigManager(contentRepository: ContentRepository) :
         if (promo is HabiticaWebPromotion) {
             promo.url = surveyURL()
         }
-        return promo
+        if (promo?.isActive == true) {
+            return promo
+        }
+        return null
     }
 
 

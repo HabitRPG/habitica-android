@@ -768,7 +768,7 @@
     <string name="gift_subscription">Gift Subscription</string>
     <string name="gift_one_get_one_description">Gift a sub and get a sub free event going on now!</string>
     <string name="gift_title">Who would you like to gift to?</string>
-    <string name="gift_one_get_one">Gift one, Get one!</string>
+    <string name="gift_one_get_one">Gift one, Get one</string>
     <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive a matching subscription automatically after sending your gift.</string>
     <string name="gift_subscription_subtitle">Choose the subscription you’d like to gift! This purchase won’t renew.</string>
     <string name="gift_gems_subtitle">Choose the gem packet you’d like to gift below!</string>
@@ -1170,7 +1170,7 @@
     <string name="claim_x_gems">Claim %d Gems</string>
     <string name="g1g1_promo_info_prompt">In honor of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
     <string name="g1g1_promo_info_instructions">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
-    <string name="g1g1_promo_info_limitations_fixed">This is a limited time event that starts on %1$s (%2$s) and will end %3$s (%4$s). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
+    <string name="g1g1_promo_info_limitations_noutc">This is a limited time event that starts on %1$s and will end %2$s. This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
     <string name="gift_one_get_one_purchase_banner">Gift a sub and get a sub for free until %s</string>
     <string name="one_month_one_time">1 Month</string>
     <string name="three_months_one_time">3 Months</string>

@@ -98,7 +98,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
                 val fragment = PromoInfoFragment()
                 parentFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment_container, fragment as Fragment)
+                    .add(R.id.fragment_container, fragment as Fragment)
                     .commit()
             }
         } else {

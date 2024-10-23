@@ -180,15 +180,17 @@
             </LinearLayout>
 
             <ImageView
+                    android:id="@+id/hills_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/subscription_bg" />
+                    android:src="@drawable/gift_subscription_bg"
+                    android:scaleType="centerCrop"/>
 
             <LinearLayout
                     android:id="@+id/gift_subscription_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/g1g1_menu_background"
+                    android:background="@drawable/g1g1_vertical_background"
                     android:paddingHorizontal="32dp"
                     android:paddingVertical="16dp"
                     android:gravity="center_horizontal"

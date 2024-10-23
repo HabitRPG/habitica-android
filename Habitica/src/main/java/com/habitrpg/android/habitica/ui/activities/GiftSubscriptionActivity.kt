@@ -112,8 +112,10 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
         if (appConfigManager.activePromo()?.identifier == "g1g1") {
             binding.giftSubscriptionContainer.visibility = View.VISIBLE
+            binding.hillsBg.setImageResource(R.drawable.gift_subscription_bg)
         } else {
             binding.giftSubscriptionContainer.visibility = View.GONE
+            binding.hillsBg.setImageResource(R.drawable.subscription_bg)
         }
     }
 

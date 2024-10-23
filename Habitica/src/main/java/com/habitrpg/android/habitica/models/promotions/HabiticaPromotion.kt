@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.models.promotions
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
@@ -20,6 +21,9 @@ abstract class HabiticaPromotion {
     val isActive: Boolean
         get() {
             val now = Date()
+            if (BuildConfig.TESTING_LEVEL == "staff") {
+                return startDate.before(now)
+            }
             return startDate.before(now) && endDate.after(now)
         }
     abstract val identifier: String

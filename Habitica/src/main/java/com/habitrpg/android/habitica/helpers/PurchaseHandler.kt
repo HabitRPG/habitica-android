@@ -376,13 +376,15 @@ class PurchaseHandler(
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
                     try {
-                        apiClient.validatePurchase(validationRequest)
+                        val response = apiClient.validatePurchase(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
                         withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
-                        displayConfirmationDialog(purchase, gift?.third)
+                        if (response != null) {
+                            displayConfirmationDialog(purchase, gift?.third)
+                        }
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
@@ -393,13 +395,15 @@ class PurchaseHandler(
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
                     try {
-                        apiClient.validateNoRenewSubscription(validationRequest)
+                        val response = apiClient.validateNoRenewSubscription(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
                         withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
-                        displayConfirmationDialog(purchase, gift?.third)
+                        if (response != null) {
+                            displayConfirmationDialog(purchase, gift?.third)
+                        }
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
@@ -410,12 +414,14 @@ class PurchaseHandler(
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
                     try {
-                        apiClient.validateSubscription(validationRequest)
+                        val response = apiClient.validateSubscription(validationRequest)
                         processedPurchase(purchase)
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             acknowledgePurchase(purchase)
                         }
-                        displayConfirmationDialog(purchase)
+                        if (response != null) {
+                            displayConfirmationDialog(purchase)
+                        }
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
@@ -623,9 +629,6 @@ class PurchaseHandler(
                 message?.let { alert.setMessage(it) }
                 alert.addOkButton { dialog, _ ->
                     dialog.dismiss()
-                    if (activity is PurchaseActivity) {
-                        activity.finish()
-                    }
                 }
                 alert.enqueue()
             }
@@ -653,9 +656,6 @@ class PurchaseHandler(
                 alert.setMessage(message)
                 alert.addOkButton { dialog, _ ->
                     dialog.dismiss()
-                    if (activity is PurchaseActivity) {
-                        activity.finish()
-                    }
                 }
                 alert.enqueue()
             }

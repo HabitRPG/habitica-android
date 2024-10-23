@@ -66,7 +66,7 @@
         <RelativeLayout
                 android:id="@+id/promo_banner"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="96dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/g1g1_box"
@@ -102,6 +102,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:gravity="center"
+                    android:layout_marginStart="84dp"
+                    android:layout_marginEnd="84dp"
                     android:orientation="vertical">
 
                 <ImageView
@@ -109,18 +111,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp" />
-
                 <TextView
                         android:id="@+id/promo_banner_title_text"
-                        style="@style/SubHeader1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="84dp"
-                        android:layout_marginEnd="84dp"
-                        android:layout_marginBottom="6dp"
+                        android:visibility="gone"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        android:visibility="gone" />
+                        android:layout_marginBottom="6dp" />
+
+                <TextView
+                        android:id="@+id/promo_banner_subtitle_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="6dp" />
 
                 <TextView
                         android:id="@+id/promo_banner_duration_view"

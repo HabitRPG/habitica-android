@@ -93,8 +93,10 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.promoBannerTitleImage.visibility = View.GONE
         binding.promoBannerDurationView.visibility = View.GONE
         binding.promoBannerTitleText.visibility = View.VISIBLE
+        binding.promoBannerSubtitleText.text = context.getString(R.string.gift_one_get_one)
+        binding.promoBannerSubtitleText.visibility = View.VISIBLE
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        binding.promoBannerTitleText.text =
+        binding.promoBannerSubtitleText.text =
             context.getString(R.string.gift_one_get_one_purchase_banner, formatter.format(endDate))
     }
 
@@ -117,8 +119,10 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.content.promoBannerTitleImage.visibility = View.GONE
         binding.content.promoBannerDurationView.visibility = View.GONE
         binding.content.promoBannerTitleText.visibility = View.VISIBLE
+        binding.content.promoBannerSubtitleText.text = context.getString(R.string.gift_one_get_one)
+        binding.content.promoBannerSubtitleText.visibility = View.VISIBLE
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        binding.content.promoBannerTitleText.text =
+        binding.content.promoBannerSubtitleText.text =
             context.getString(R.string.gift_one_get_one_purchase_banner, formatter.format(endDate))
     }
 
@@ -183,15 +187,11 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
             context.getString(R.string.g1g1_promo_info_instructions)
         val limitationsFormatter =
             SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.LONG)
-        val utcTimeFormatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.LONG)
-        utcTimeFormatter.timeZone = TimeZone.getTimeZone("UTC")
         fragment.binding?.limitationsDescriptionView?.text =
             context.getString(
-                R.string.g1g1_promo_info_limitations_fixed,
+                R.string.g1g1_promo_info_limitations_noutc,
                 limitationsFormatter.format(startDate),
-                utcTimeFormatter.format(startDate),
                 limitationsFormatter.format(endDate),
-                utcTimeFormatter.format(endDate),
             )
     }
 }

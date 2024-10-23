@@ -121,7 +121,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 val fragment = PromoInfoFragment()
                 parentFragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment_container, fragment as Fragment)
+                    .add(R.id.fragment_container, fragment as Fragment)
                     .commit()
             }
         } else {

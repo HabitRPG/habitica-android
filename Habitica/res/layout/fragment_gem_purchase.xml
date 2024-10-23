@@ -21,7 +21,7 @@
         <RelativeLayout
                 android:id="@+id/promo_banner"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="96dp"
                 android:background="@drawable/g1g1_box"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -67,6 +67,19 @@
 
                 <TextView
                         android:id="@+id/promo_banner_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="84dp"
+                        android:layout_marginEnd="84dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:layout_marginBottom="6dp" />
+
+                <TextView
+                        android:id="@+id/promo_banner_subtitle_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
