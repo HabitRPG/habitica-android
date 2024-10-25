@@ -93,7 +93,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.promoBannerTitleImage.visibility = View.GONE
         binding.promoBannerDurationView.visibility = View.GONE
         binding.promoBannerTitleText.visibility = View.VISIBLE
-        binding.promoBannerSubtitleText.text = context.getString(R.string.gift_one_get_one)
+        binding.promoBannerTitleText.text = context.getString(R.string.gift_one_get_one)
         binding.promoBannerSubtitleText.visibility = View.VISIBLE
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
         binding.promoBannerSubtitleText.text =
@@ -119,7 +119,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.content.promoBannerTitleImage.visibility = View.GONE
         binding.content.promoBannerDurationView.visibility = View.GONE
         binding.content.promoBannerTitleText.visibility = View.VISIBLE
-        binding.content.promoBannerSubtitleText.text = context.getString(R.string.gift_one_get_one)
+        binding.content.promoBannerTitleText.text = context.getString(R.string.gift_one_get_one)
         binding.content.promoBannerSubtitleText.visibility = View.VISIBLE
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
         binding.content.promoBannerSubtitleText.text =

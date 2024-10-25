@@ -39,7 +39,7 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
 
     override suspend fun retrieveWorldState(forced: Boolean): WorldState? {
         val now = Date().time
-        if (forced || now - this.lastWorldStateSync > 3600000) {
+        if (forced || now - this.lastWorldStateSync > 300000) {
             val state = apiClient.getWorldState() ?: return null
             lastWorldStateSync = now
             localRepository.save(state)
