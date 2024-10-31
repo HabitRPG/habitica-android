@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment

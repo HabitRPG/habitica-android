@@ -211,16 +211,17 @@ class TaskFormActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        tintColor = getThemeColor(R.attr.taskFormTint)
+        val upperTintColor =
+            if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
         if (forcedTheme == "taskform" || forcedTheme == "maroon") {
             ToolbarColorHelper.colorizeToolbar(
                 binding.toolbar,
                 this,
                 ContextCompat.getColor(this, R.color.white),
+                upperTintColor
             )
         }
-        tintColor = getThemeColor(R.attr.taskFormTint)
-        val upperTintColor =
-            if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
 

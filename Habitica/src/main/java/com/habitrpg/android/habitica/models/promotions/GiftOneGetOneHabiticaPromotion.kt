@@ -81,13 +81,13 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_left_small,
+                R.drawable.g1g1_promo_left,
             ),
         )
         binding.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_right_small,
+                R.drawable.g1g1_promo_right,
             ),
         )
         binding.promoBannerTitleImage.visibility = View.GONE
@@ -107,13 +107,13 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.content.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_left_small,
+                R.drawable.g1g1_promo_left,
             ),
         )
         binding.content.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_right_small,
+                R.drawable.g1g1_promo_right,
             ),
         )
         binding.content.promoBannerTitleImage.visibility = View.GONE

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.models
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.EquipmentSet
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Mount
@@ -29,4 +30,5 @@ class ContentResult {
     var backgrounds = RealmList<Customization>()
     var faq = RealmList<FAQArticle>()
     var special = RealmList<SpecialItem>()
+    var mystery = RealmList<EquipmentSet>()
 }

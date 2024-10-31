@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.EquipmentSet
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Mount
@@ -109,6 +110,12 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         if (obj.has("special")) {
             for (entry in obj.get("special").asJsonObject.entrySet()) {
                 result.special.add(context.deserialize(entry.value, SpecialItem::class.java))
+            }
+        }
+
+        if (obj.has("mystery")) {
+            for (entry in obj.get("mystery").asJsonObject.entrySet()) {
+                result.mystery.add(context.deserialize(entry.value, EquipmentSet::class.java))
             }
         }
 

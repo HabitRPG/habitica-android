@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
@@ -121,7 +122,8 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 val fragment = PromoInfoFragment()
                 parentFragmentManager
                     .beginTransaction()
-                    .add(R.id.fragment_container, fragment as Fragment)
+                    .replace(R.id.fragment_container, fragment as Fragment)
+                    .addToBackStack(null)
                     .commit()
             }
         } else {

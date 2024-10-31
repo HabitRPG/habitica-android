@@ -120,7 +120,7 @@
                         android:textStyle="bold"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        android:layout_marginBottom="6dp" />
+                        android:layout_marginBottom="4dp" />
 
                 <TextView
                         android:id="@+id/promo_banner_subtitle_text"
@@ -128,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         android:textSize="16sp"
-                        android:textStyle="bold"
+                        android:fontFamily="@string/font_family_medium"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:layout_marginBottom="6dp" />

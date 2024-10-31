@@ -215,7 +215,8 @@ class UserRepositoryModule {
         @ApplicationContext context: Context,
         apiClient: ApiClient,
         userViewModel: MainUserViewModel,
+        appConfigManager: AppConfigManager
     ): PurchaseHandler {
-        return PurchaseHandler(context, apiClient, userViewModel)
+        return PurchaseHandler(context, apiClient, userViewModel, appConfigManager)
     }
 }

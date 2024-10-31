@@ -464,7 +464,6 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     private fun getLatestMysterySet(): Flow<EquipmentSet?> {
         return realm.where(EquipmentSet::class.java)
-            .equalTo("pinType", "mystery_set")
             .sort("key", Sort.DESCENDING)
             .findAll()
             .toFlow()

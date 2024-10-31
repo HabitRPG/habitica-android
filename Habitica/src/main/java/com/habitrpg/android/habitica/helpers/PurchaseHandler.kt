@@ -57,6 +57,7 @@ class PurchaseHandler(
     private val context: Context,
     private val apiClient: ApiClient,
     private val userViewModel: MainUserViewModel,
+    private val configManager: AppConfigManager
 ) : PurchasesUpdatedListener, PurchasesResponseListener {
     private var billingClient =
         BillingClient.newBuilder(context).setListener(this).enablePendingPurchases().build()
@@ -383,7 +384,7 @@ class PurchaseHandler(
                             consume(purchase)
                         }
                         if (response != null) {
-                            displayConfirmationDialog(purchase, gift?.third)
+                            displayConfirmationDialog(purchase, gift?.second, gift?.third)
                         }
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
@@ -402,7 +403,7 @@ class PurchaseHandler(
                             consume(purchase)
                         }
                         if (response != null) {
-                            displayConfirmationDialog(purchase, gift?.third)
+                            displayConfirmationDialog(purchase, gift?.second, gift?.third)
                         }
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
@@ -574,6 +575,7 @@ class PurchaseHandler(
 
     private fun displayConfirmationDialog(
         purchase: Purchase,
+        giftedToID: String? = null,
         giftedTo: String? = null,
     ) {
         if (displayedConfirmations.contains(purchase.orderId)) {
@@ -591,7 +593,11 @@ class PurchaseHandler(
                     PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {
                         title = context.getString(R.string.gift_confirmation_title)
                         context.getString(
-                            R.string.gift_confirmation_text_sub,
+                            if (configManager.activePromo()?.identifier == "g1g1" && giftedToID != userViewModel.user.value?.id) {
+                                R.string.gift_confirmation_text_sub_g1g1
+                            } else {
+                                R.string.gift_confirmation_text_sub
+                            },
                             giftedTo,
                             durationString(sku),
                         )
@@ -629,6 +635,11 @@ class PurchaseHandler(
                 message?.let { alert.setMessage(it) }
                 alert.addOkButton { dialog, _ ->
                     dialog.dismiss()
+                    if (giftedTo != null) {
+                        if (activity is PurchaseActivity) {
+                            activity.finish()
+                        }
+                    }
                 }
                 alert.enqueue()
             }

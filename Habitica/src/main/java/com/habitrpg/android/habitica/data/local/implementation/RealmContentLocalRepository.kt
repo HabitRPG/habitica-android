@@ -33,6 +33,7 @@ open class RealmContentLocalRepository(realm: Realm) :
             realm1.insertOrUpdate(contentResult.appearances)
             realm1.insertOrUpdate(contentResult.backgrounds)
             realm1.insertOrUpdate(contentResult.faq)
+            realm1.insertOrUpdate(contentResult.mystery)
         }
     }
 
