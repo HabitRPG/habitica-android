@@ -16,7 +16,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -54,18 +54,19 @@ class SubscriberBenefitView
             inventoryRepository = hiltEntryPoint.inventoryRepository()
 
             MainScope().launchCatching {
-                val pair = inventoryRepository.getLatestMysteryItemAndSet().firstOrNull()
-                val item = pair?.first
-                val set = pair?.second
-                binding.subBenefitsMysteryItemIcon.loadImage(
-                    "shop_set_mystery_${
-                        item?.key?.split(
-                            "_",
-                        )?.last()
-                    }",
-                )
-                binding.subBenefitsMysteryItemText.text =
-                    context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), set?.text ?: context.getString(R.string.set))
+                inventoryRepository.getLatestMysteryItemAndSet().collectLatest { pair ->
+                    val item = pair.first
+                    val set = pair.second
+                    binding.subBenefitsMysteryItemIcon.loadImage(
+                        "shop_set_mystery_${
+                            item.key?.split(
+                                "_",
+                            )?.last()
+                        }",
+                    )
+                    binding.subBenefitsMysteryItemText.text =
+                        context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), set?.text ?: context.getString(R.string.set))
+                }
             }
             binding.subBenefitsMysteryItemText.text =
                 context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), context.getString(R.string.set))

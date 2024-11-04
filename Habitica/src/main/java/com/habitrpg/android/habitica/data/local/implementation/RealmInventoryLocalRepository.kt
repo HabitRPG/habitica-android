@@ -469,9 +469,9 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .toFlow()
             .filter { it.isLoaded }
             .map {
-                val format = SimpleDateFormat("yyyyMM", Locale.US)
-                it.firstOrNull() { set ->
-                    set.key.contains(format.format(Date()))
+                val dateString = SimpleDateFormat("yyyyMM", Locale.US).format(Date())
+                it.firstOrNull { set ->
+                    set.key.contains(dateString)
                 }
             }
     }

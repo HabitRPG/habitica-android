@@ -44,7 +44,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.5.2'
+        classpath 'com.android.tools.build:gradle:8.7.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.google.gms:google-services:4.4.2'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'

@@ -187,10 +187,11 @@ android {
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
-            testCoverageEnabled = false
             //resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
             resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
+            enableUnitTestCoverage false
+            enableAndroidTestCoverage false
         }
         debugIAP {
             signingConfig signingConfigs.release
