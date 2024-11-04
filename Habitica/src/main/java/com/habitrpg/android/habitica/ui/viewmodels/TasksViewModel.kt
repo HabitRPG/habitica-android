@@ -7,6 +7,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -42,6 +43,7 @@ class TasksViewModel
         val tagRepository: TagRepository,
         val appConfigManager: AppConfigManager,
         val sharedPreferences: SharedPreferences,
+        val contentRepository: ContentRepository
     ) : BaseViewModel(userRepository, userViewModel), GroupPlanInfoProvider {
         private var owners: List<Pair<String, CharSequence>> = listOf()
         var canSwitchOwners = MutableLiveData<Boolean?>()
@@ -90,6 +92,7 @@ class TasksViewModel
                     if (activeFilters[TaskType.TODO] == Task.FILTER_COMPLETED) {
                         taskRepository.retrieveCompletedTodos()
                     }
+                    contentRepository.retrieveWorldState()
                 } else {
                     userRepository.retrieveTeamPlan(ownerID.value ?: "")
                 }

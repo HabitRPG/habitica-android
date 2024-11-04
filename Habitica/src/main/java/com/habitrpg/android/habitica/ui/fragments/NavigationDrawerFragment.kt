@@ -205,6 +205,11 @@ class NavigationDrawerFragment : DialogFragment() {
                                 "spring" -> R.string.spring
                                 "summer" -> R.string.summer
                                 "fall" -> R.string.fall
+                                "nye" -> R.string.nye
+                                "birthday" -> R.string.winter
+                                "valentines" -> R.string.valentines
+                                "habitoween" -> R.string.habitoween
+                                "thanksgiving" -> R.string.turkey_day
                                 else -> R.string.open
                             }
                             seasonalItem.pillText = requireContext().getString(seasonID)

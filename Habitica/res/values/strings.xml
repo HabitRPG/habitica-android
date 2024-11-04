@@ -1560,6 +1560,10 @@
     <string name="rescrubscribe_to_pick_up">Resubscribe to pick up where you left off!</string>
     <string name="gem_cap_extra">%d/%d Gem Cap</string>
     <string name="open_habitica_website">Open Habitica Website</string>
+    <string name="nye">New Year\'s Eve</string>
+    <string name="valentines">Valentines</string>
+    <string name="habitoween" translatable="false">Habitoween</string>
+    <string name="turkey_day">Turkey Day</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
