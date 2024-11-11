@@ -3,4 +3,3 @@ New in 4.5:
 - Subscribers will now receive a Mystic Hourglass every month
 - The amount of Gems subscribers can purchase in the Market will now go up +2 each month they have benefits until reaching a max of 50
 - The amount of Gems subscribers can purchase in the Market will no longer reset if your benefits lapse. Subscribing again will unlock the Gem cap you left off with, even if subscribing at a lower tier.
-- Improved the subscription screen to make it easier to understand the benefits you receive for subscribing
