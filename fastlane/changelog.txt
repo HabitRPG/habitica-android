@@ -1,10 +1,7 @@
-
-New in 4.4.1:
-- Check out the new Customization Shop and Avatar Customization experience!
-- New Giraffe Quest Eggs, Koi Hatching Potions, and Summer Hair colors
-- It’s easier than ever to know when items will switch out
-- Hatching option no longer shows on Pet Eggs that aren’t unlocked
-- Body armor is now hidden when previewing shirts
-- Pet Bundles show which Quests are in them now
-- Avatar Customization view works properly on tablets again
-- Various other bug and interface fixes
+New in 4.5:
+- Support for new subscription benefits
+- Subscribers will now receive a Mystic Hourglass every month
+- The amount of Gems subscribers can purchase in the Market will now go up +2 each month they have benefits until reaching a max of 50
+- The amount of Gems subscribers can purchase in the Market will no longer reset if your benefits lapse. Subscribing again will unlock the Gem cap you left off with, even if subscribing at a lower tier.
+- Improved the subscription screen to make it easier to understand the benefits you receive for subscribing
+- Improvements to show events in a more timely manner
