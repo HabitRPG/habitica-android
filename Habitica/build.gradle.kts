@@ -237,22 +237,6 @@ tasks.withType<Test> {
     }))
 }
 
-//tasks.withType(Test).configureEach {
-//    testLogging {
-//        events "passed", "skipped", "failed", "standardError"
-//        outputs.upToDateWhen {false}
-//
-//        afterSuite { desc, result ->
-//            if (!desc.parent) { // will match the outermost suite
-//                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
-//                def startItem = '|  ', endItem = '  |'
-//                def repeatLength = startItem.length() + output.length() + endItem.length()
-//                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
-//            }
-//        }
-//    }
-//}
-
 dependencies {
     implementation(project(":common"))
     implementation(project(":shared"))
