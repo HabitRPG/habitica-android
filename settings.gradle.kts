@@ -3,16 +3,33 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         maven("https://jitpack.io")
         mavenLocal()
+    }
+    resolutionStrategy.eachPlugin {
+        if (requested.id.id == "realm-android") useModule(
+            "io.realm:realm-gradle-plugin:${requested.version}"
+        )
     }
 }
 
 dependencyResolutionManagement {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         maven("https://jitpack.io")
         maven("https://plugins.gradle.org/m2/")

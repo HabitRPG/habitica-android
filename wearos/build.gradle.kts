@@ -7,19 +7,19 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.firebase.crashlytics")
-    id("com.google.gms.google-services")
-    id("io.gitlab.arturbosch.detekt")
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.google.service)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 }
 
 android {
     namespace = "com.habitrpg.android.habitica"
-    compileSdk = rootProject.extra["target_sdk"].toString().toInt()
+    compileSdk = libs.versions.targetSdk.get().toInt()
 
     testOptions {
         unitTests {
@@ -32,10 +32,12 @@ android {
     defaultConfig {
         applicationId = "com.habitrpg.android.habitica"
         minSdk = 26
-        targetSdk = rootProject.extra["wearos_target_sdk"].toString().toInt()
-        compileSdk = rootProject.extra["target_sdk"].toString().toInt()
-        versionCode = rootProject.extra["app_version_code"].toString().toInt() + 1
-        versionName = "${rootProject.extra["app_version_name"]}w"
+        targetSdk = libs.versions.wearOsTargetSdk.get().toInt()
+        compileSdk = libs.versions.targetSdk.get().toInt()
+
+        // change this
+        versionCode = 1
+        versionName = "1"
 
         val hrpgProps = Properties().apply { load(FileInputStream(File(projectDir.absolutePath + "/../habitica.properties"))) }
         hrpgProps.forEach { key, value -> buildConfigField("String", key as String, "\"${value}\"") }
@@ -88,33 +90,33 @@ android {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
             resValue("string", "app_name", "Habitica Staff")
-            versionCode = rootProject.extra["app_version_code"].toString().toInt() + 9
+            versionCode = 0 + 9
         }
 
         register("partners") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"partners\"")
             resValue("string", "app_name", "Habitica")
-            versionCode = rootProject.extra["app_version_code"].toString().toInt() + 7
+            versionCode = 0 + 7
         }
 
         register("alpha") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"alpha\"")
             resValue("string", "app_name", "Habitica Alpha")
-            versionCode = rootProject.extra["app_version_code"].toString().toInt() + 5
+            versionCode = 0 + 5
         }
 
         register("beta") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"beta\"")
-            versionCode = rootProject.extra["app_version_code"].toString().toInt() + 3
+            versionCode = 0 + 3
         }
 
         register("prod") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"production\"")
-            versionCode = rootProject.extra["app_version_code"].toString().toInt() + 1
+            versionCode = 0 + 1
         }
     }
 
@@ -152,61 +154,55 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation(fileTree("../common/libs") { include("*.jar") })
-
-    implementation("androidx.core:core-ktx:${rootProject.extra["core_ktx_version"]}")
-    implementation("com.google.android.gms:play-services-wearable:${rootProject.extra["play_wearables_version"]}")
-    implementation("androidx.recyclerview:recyclerview:${rootProject.extra["recyclerview_version"]}")
-    implementation("androidx.wear:wear:1.3.0")
-    implementation("androidx.wear:wear-input:1.1.0")
-
-    //Networking
-    implementation("com.squareup.okhttp3:okhttp:${rootProject.extra["okhttp_version"]}")
-    implementation("com.squareup.okhttp3:logging-interceptor:${rootProject.extra["okhttp_version"]}")
-
-    //REST API handling
-    implementation("com.squareup.retrofit2:retrofit:${rootProject.extra["retrofit_version"]}") {
-//        exclude module : "okhttp"
-    }
-    implementation("com.squareup.retrofit2:converter-moshi:${rootProject.extra["retrofit_version"]}")
-    implementation("com.squareup.moshi:moshi-kotlin:${rootProject.extra["moshi_version"]}")
-    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:${rootProject.extra["moshi_version"]}")
-
-    implementation(platform("com.google.firebase:firebase-bom:${rootProject.extra["firebase_bom"]}"))
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
-
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.extra["lifecycle_version"]}")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.extra["lifecycle_version"]}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.extra["lifecycle_version"]}")
-    implementation("androidx.lifecycle:lifecycle-common-java8:${rootProject.extra["lifecycle_version"]}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra["coroutines_version"]}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.extra["coroutines_version"]}")
-    implementation("androidx.preference:preference-ktx:${rootProject.extra["preferences_version"]}")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-
-    implementation("com.google.android.gms:play-services-auth:${rootProject.extra["play_auth_version"]}")
-
     implementation(project(":common"))
     implementation(project(":shared"))
-    implementation("androidx.appcompat:appcompat:${rootProject.extra["appcompat_version"]}")
 
-    implementation("com.google.dagger:hilt-android:${rootProject.extra["daggerhilt_version"]}")
-    kapt("com.google.dagger:hilt-compiler:${rootProject.extra["daggerhilt_version"]}")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${rootProject.extra["kotlin_version"]}")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:${rootProject.extra["kotlin_version"]}")
+    implementation(fileTree("../common/libs") { include("*.jar") })
 
-    implementation("androidx.core:core-splashscreen:1.1.0-rc01")
+    implementation(libs.core)
+    implementation(libs.core.ktx)
+    implementation(libs.google.play.wearable)
+    implementation(libs.recyclerview)
+    implementation(libs.wear)
+    implementation(libs.wear.input)
 
-    testImplementation("io.mockk:mockk:${rootProject.extra["mockk_version"]}")
-    testImplementation("io.mockk:mockk-android:${rootProject.extra["mockk_version"]}")
-    testImplementation("io.kotest:kotest-runner-junit5:${rootProject.extra["kotest_version"]}")
-    testImplementation("io.kotest:kotest-assertions-core:${rootProject.extra["kotest_version"]}")
-    testImplementation("io.kotest:kotest-framework-datatest:${rootProject.extra["kotest_version"]}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${rootProject.extra["coroutines_version"]}")
-    testImplementation("app.cash.turbine:turbine:0.12.1")
+    //Networking
+    implementation(libs.bundles.okhttp)
+
+    //REST API handling
+    implementation(libs.retrofit) { exclude(module = libs.okhttp.asProvider().get().group) }
+    implementation(libs.retrofit2.converter.moshi)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.coordinatorlayout)
+    implementation(libs.constraintlayout)
+    ksp(libs.moshi.kotlin.codegen)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.google.services)
+
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.common)
+    implementation(libs.kotlinx.coroutine)
+    implementation(libs.coroutine.android)
+    implementation(libs.preference)
+    implementation(libs.navigation.fragment)
+
+    implementation(libs.google.play.auth)
+
+    implementation(libs.appcompat)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.kotlin.jdk7)
+    implementation(libs.kotlin.reflect)
+
+    implementation(libs.core.splashscreen) { exclude(module = libs.core.ktx.get().name) }
+
+    testImplementation(libs.bundles.test.implementation)
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.turbine)
 }
 //val props = Properties()
 //val propFile = File("signingrelease.properties")

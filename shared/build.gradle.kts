@@ -3,19 +3,21 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id("io.gitlab.arturbosch.detekt")
-    id("org.jlleitschuh.gradle.ktlint")
-    id("io.kotest.multiplatform") version "5.6.2"
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotest)
 }
 
 kotlin {
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -28,7 +30,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra.get("coroutines_version")}")
+                implementation(libs.kotlinx.coroutine)
             }
         }
         commonTest {
@@ -40,7 +42,7 @@ kotlin {
 }
 
 android {
-    compileSdk = rootProject.extra.get("target_sdk") as Int
+    compileSdk = libs.versions.targetSdk.get().toInt()
     namespace = "com.habitrpg.shared.habitica"
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig.minSdk = 21
@@ -66,7 +68,7 @@ ktlint {
     }
 }
 
-tasks.withType<Detekt>().configureEach {
+tasks.withType<Detekt> {
     source = fileTree("Habitica/src/main/java")
     config = files("detekt.yml")
     baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
@@ -80,7 +82,11 @@ tasks.withType<Detekt>().configureEach {
     }
 }
 
-tasks.withType<Test>().configureEach {
+tasks.withType<KotlinCompile> {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
+}
+
+tasks.withType<Test> {
     outputs.upToDateWhen { false }
     testLogging.events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
 }
