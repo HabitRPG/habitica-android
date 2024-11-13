@@ -1,28 +1,39 @@
-@file:Suppress("PropertyName")
-
+import io.gitlab.arturbosch.detekt.Detekt
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR
 import java.io.FileInputStream
 import java.util.Properties
+
 
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("io.gitlab.arturbosch.detekt")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 val rootExtra = rootProject.extra
 
 android {
+    namespace = "com.habitrpg.common.habitica"
     compileSdk = rootExtra.get("target_sdk") as Int
 
     defaultConfig {
         minSdk = rootExtra.get("min_sdk") as Int
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        val hrpgProps = Properties().apply { load(FileInputStream(File(projectDir.absolutePath + "/../habitica.properties"))) }
+        hrpgProps.forEach { key, value -> buildConfigField("String", key as String, "\"${value}\"") }
     }
 
     testOptions {
         unitTests {
+            isIncludeAndroidResources = true
+            all { it.useJUnitPlatform() }
         }
         animationsDisabled = true
     }
@@ -56,7 +67,7 @@ android {
     kotlin {
         jvmToolchain(11)
     }
-    namespace = "com.habitrpg.common.habitica"
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 
     flavorDimensions.add("buildType")
 
@@ -90,6 +101,29 @@ android {
             buildConfigField("String", "TESTING_LEVEL", "\"production\"")
         }
     }
+}
+
+ktlint {
+    filter {
+        exclude { entry -> entry.file.toString().contains("generated") }
+    }
+}
+tasks.withType<Detekt>().configureEach {
+    source = fileTree("Habitica/src/main/java")
+    config = files("detekt.yml")
+    baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt.html"))
+        txt.required.set(false)
+        sarif.required.set(true)
+        sarif.outputLocation.set(file("build/reports/detekt.sarif"))
+    }
+}
+tasks.withType<Test>().configureEach {
+    outputs.upToDateWhen { false }
+    testLogging.events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
 }
 
 val core_ktx_version: String by rootExtra
@@ -146,29 +180,8 @@ dependencies {
     implementation(project(":shared"))
 }
 
-android.testOptions {
-    unitTests.all {
-        it.useJUnitPlatform()
-    }
-}
-
 tasks.withType<Test> {
     this.testLogging {
         this.showStandardStreams = true
     }
-}
-
-// Add Habitica Properties to buildConfigField
-val HRPG_PROPS_FILE = File(projectDir.absolutePath + "/../habitica.properties")
-if (HRPG_PROPS_FILE.canRead()) {
-    val hrpgProps = Properties()
-    hrpgProps.load(FileInputStream(HRPG_PROPS_FILE))
-
-    android.buildTypes.configureEach {
-        hrpgProps.forEach { property ->
-            buildConfigField("String", property.key as String, "\"${property.value}\"")
-        }
-    }
-} else {
-    throw MissingResourceException("habitica.properties not found")
 }
