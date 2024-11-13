@@ -24,6 +24,15 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
+val signingProps = Properties().apply { load(FileInputStream(File("signingrelease.properties"))) }
+val signingPropsAvailable = signingProps.containsKey("STORE_FILE") && signingProps.containsKey("STORE_PASSWORD") &&
+        signingProps.containsKey("KEY_ALIAS") && signingProps.containsKey("KEY_PASSWORD")
+
+val versionProps = Properties().apply { load(FileInputStream(File("version.properties"))) }
+val versionPropsAvailable = versionProps.containsKey("NAME") && versionProps.containsKey("CODE")
+val currentVersionName = versionProps["NAME"].toString()
+val currentVersionCode = versionProps["CODE"].toString().toInt()
+
 android {
     compileSdk = libs.versions.targetSdk.get().toInt()
     namespace = "com.habitrpg.android.habitica"
@@ -33,10 +42,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         compileSdk = libs.versions.targetSdk.get().toInt()
         vectorDrawables.useSupportLibrary = true
-
-        // change this
-        versionCode = 1
-        versionName = "1"
+        versionCode = currentVersionCode
+        versionName = currentVersionName
 
         targetSdk = libs.versions.targetSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -62,9 +69,13 @@ android {
         aidl = true
     }
 
-//    signingConfigs {
-//        release
-//    }
+    if (signingPropsAvailable && versionPropsAvailable) signingConfigs.register("release") {
+        storeFile = file(signingProps["STORE_FILE"].toString())
+        storePassword = signingProps["STORE_PASSWORD"].toString()
+        keyAlias = signingProps["KEY_ALIAS"].toString()
+        keyPassword = signingProps["KEY_PASSWORD"].toString()
+    }
+
     flavorDimensions.add("buildType")
 
     buildTypes {
@@ -83,7 +94,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         create("debugIAP") {
-//            signingConfig signingConfigs . release
+            signingConfig = signingConfigs.getByName("release")
             isDebuggable = true
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
@@ -94,7 +105,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-//            signingConfig signingConfigs . release
+            signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
@@ -113,33 +124,33 @@ android {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
             resValue("string", "app_name", "Habitica Staff")
-            versionCode = 0 + 8
+            versionCode = currentVersionCode + 8
         }
 
         register("partners") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"partners\"")
             resValue("string", "app_name", "Habitica")
-            versionCode = 0 + 6
+            versionCode = currentVersionCode + 6
         }
 
         register("alpha") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"alpha\"")
             resValue("string", "app_name", "Habitica Alpha")
-            versionCode = 0 + 4
+            versionCode = currentVersionCode + 4
         }
 
         register("beta") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"beta\"")
-            versionCode = 0 + 2
+            versionCode = currentVersionCode + 2
         }
 
         register("prod") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"production\"")
-            versionCode = 0
+            versionCode = currentVersionCode
         }
     }
 
@@ -175,21 +186,13 @@ android {
         animationsDisabled = true
     }
 
-    bundle {
-        language {
-            // Specifies that the app bundle should not support
-            // configuration APKs for language resources. These
-            // resources are instead packaged with each base and
-            // dynamic feature APK.
-            enableSplit = false
-        }
-    }
     lint {
         abortOnError = false
         disable.addAll(listOf("MissingTranslation", "InvalidPackage"))
         enable.addAll(listOf("LogConditional", "IconExpectedSize", "MissingRegistered", "TypographyQuotes"))
     }
 
+    bundle.language.enableSplit = false
     packaging.resources.excludes.add("META-INF/*")
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 }
@@ -217,10 +220,38 @@ tasks.named("lint") { enabled = false }
 tasks.withType<JavaCompile> {
     options.compilerArgs.addAll(listOf("-Xmaxerrs", "500"))
 }
-tasks.withType<Test>().configureEach {
+tasks.withType<Test> {
     outputs.upToDateWhen { false }
     testLogging.events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
+
+    afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
+        if (desc.parent == null) { // will match the root suite
+            if (desc.parent == null) { // will match the outermost suite
+                val output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                val startItem = "|  "
+                val endItem = "  |"
+                val repeatLength = startItem.length + output.length + endItem.length
+                println("\n" + ("-".repeat(repeatLength)) + "\n" + startItem + output + endItem + "\n" + ("-".repeat(repeatLength)))
+            }
+        }
+    }))
 }
+
+//tasks.withType(Test).configureEach {
+//    testLogging {
+//        events "passed", "skipped", "failed", "standardError"
+//        outputs.upToDateWhen {false}
+//
+//        afterSuite { desc, result ->
+//            if (!desc.parent) { // will match the outermost suite
+//                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+//                def startItem = '|  ', endItem = '  |'
+//                def repeatLength = startItem.length() + output.length() + endItem.length()
+//                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+//            }
+//        }
+//    }
+//}
 
 dependencies {
     implementation(project(":common"))
@@ -308,24 +339,3 @@ dependencies {
 
     implementation(libs.toolargetool)
 }
-
-//Properties props = new Properties()
-//def propFile = new File("signingrelease.properties")
-//if (propFile.canRead()) {
-//    props.load(new FileInputStream (propFile))
-//
-//    if (props != null && props.containsKey("STORE_FILE") && props.containsKey("STORE_PASSWORD") &&
-//        props.containsKey("KEY_ALIAS") && props.containsKey("KEY_PASSWORD")
-//    ) {
-//        android.signingConfigs.release.storeFile = file(props["STORE_FILE"])
-//        android.signingConfigs.release.storePassword = props["STORE_PASSWORD"]
-//        android.signingConfigs.release.keyAlias = props["KEY_ALIAS"]
-//        android.signingConfigs.release.keyPassword = props["KEY_PASSWORD"]
-//    } else {
-//        println "signing.properties found but some entries are missing"
-//        android.buildTypes.release.signingConfig = null
-//    }
-//} else {
-//    println "signing.properties not found"
-//    android.buildTypes.release.signingConfig = null
-//}

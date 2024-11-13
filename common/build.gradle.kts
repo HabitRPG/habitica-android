@@ -122,6 +122,17 @@ tasks.withType<Test>().configureEach {
         showStandardStreams = true
         events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
     }
+    afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
+        if (desc.parent == null) { // will match the root suite
+            if (desc.parent == null) { // will match the outermost suite
+                val output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                val startItem = "|  "
+                val endItem = "  |"
+                val repeatLength = startItem.length + output.length + endItem.length
+                println("\n" + ("-".repeat(repeatLength)) + "\n" + startItem + output + endItem + "\n" + ("-".repeat(repeatLength)))
+            }
+        }
+    }))
 }
 
 dependencies {

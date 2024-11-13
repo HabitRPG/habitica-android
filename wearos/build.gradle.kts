@@ -17,6 +17,15 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
+val signingProps = Properties().apply { load(FileInputStream(File("signingrelease.properties"))) }
+val signingPropsAvailable = signingProps.containsKey("STORE_FILE") && signingProps.containsKey("STORE_PASSWORD") &&
+        signingProps.containsKey("KEY_ALIAS") && signingProps.containsKey("KEY_PASSWORD")
+
+val versionProps = Properties().apply { load(FileInputStream(File("version.properties"))) }
+val versionPropsAvailable = versionProps.containsKey("NAME") && versionProps.containsKey("CODE")
+val currentVersionName = versionProps["NAME"].toString()
+val currentVersionCode = versionProps["CODE"].toString().toInt()
+
 android {
     namespace = "com.habitrpg.android.habitica"
     compileSdk = libs.versions.targetSdk.get().toInt()
@@ -31,22 +40,23 @@ android {
 
     defaultConfig {
         applicationId = "com.habitrpg.android.habitica"
-        minSdk = 26
+        minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.wearOsTargetSdk.get().toInt()
         compileSdk = libs.versions.targetSdk.get().toInt()
-
-        // change this
-        versionCode = 1
-        versionName = "1"
+        versionCode = currentVersionCode
+        versionName = currentVersionName
 
         val hrpgProps = Properties().apply { load(FileInputStream(File(projectDir.absolutePath + "/../habitica.properties"))) }
         hrpgProps.forEach { key, value -> buildConfigField("String", key as String, "\"${value}\"") }
         buildConfigField("String", "TESTING_LEVEL", "\"production\"")
     }
 
-//    signingConfigs {
-//        release
-//    }
+    if (signingPropsAvailable && versionPropsAvailable) signingConfigs.register("release") {
+        storeFile = file(signingProps["STORE_FILE"].toString())
+        storePassword = signingProps["STORE_PASSWORD"].toString()
+        keyAlias = signingProps["KEY_ALIAS"].toString()
+        keyPassword = signingProps["KEY_PASSWORD"].toString()
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -62,20 +72,10 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-//            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             resValue("string", "app_name", "Habitica")
-        }
-    }
-
-    bundle {
-        language {
-            // Specifies that the app bundle should not support
-            // configuration APKs for language resources. These
-            // resources are instead packaged with each base and
-            // dynamic feature APK.
-            enableSplit = false
         }
     }
 
@@ -90,33 +90,33 @@ android {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
             resValue("string", "app_name", "Habitica Staff")
-            versionCode = 0 + 9
+            versionCode = currentVersionCode + 9
         }
 
         register("partners") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"partners\"")
             resValue("string", "app_name", "Habitica")
-            versionCode = 0 + 7
+            versionCode = currentVersionCode + 7
         }
 
         register("alpha") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"alpha\"")
             resValue("string", "app_name", "Habitica Alpha")
-            versionCode = 0 + 5
+            versionCode = currentVersionCode + 5
         }
 
         register("beta") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"beta\"")
-            versionCode = 0 + 3
+            versionCode = currentVersionCode + 3
         }
 
         register("prod") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"production\"")
-            versionCode = 0 + 1
+            versionCode = currentVersionCode + 1
         }
     }
 
@@ -125,6 +125,7 @@ android {
         buildConfig = true
     }
 
+    bundle.language.enableSplit = false
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 }
 
@@ -151,6 +152,17 @@ tasks.withType<Detekt>().configureEach {
 tasks.withType<Test> {
     outputs.upToDateWhen { false }
     testLogging.events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
+    afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
+        if (desc.parent == null) { // will match the root suite
+            if (desc.parent == null) { // will match the outermost suite
+                val output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                val startItem = "|  "
+                val endItem = "  |"
+                val repeatLength = startItem.length + output.length + endItem.length
+                println("\n" + ("-".repeat(repeatLength)) + "\n" + startItem + output + endItem + "\n" + ("-".repeat(repeatLength)))
+            }
+        }
+    }))
 }
 
 dependencies {
@@ -170,7 +182,7 @@ dependencies {
     implementation(libs.bundles.okhttp)
 
     //REST API handling
-    implementation(libs.retrofit) { exclude(module = libs.okhttp.asProvider().get().group) }
+    implementation(libs.retrofit) { exclude(module = libs.okhttp.asProvider().get().name) }
     implementation(libs.retrofit2.converter.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.coordinatorlayout)
@@ -204,23 +216,3 @@ dependencies {
     testImplementation(libs.mockk.android)
     testImplementation(libs.turbine)
 }
-//val props = Properties()
-//val propFile = File("signingrelease.properties")
-//if (propFile.canRead()) {
-//    props.load(FileInputStream(propFile))
-//
-//    if (props != null && props.containsKey("STORE_FILE") && props.containsKey("STORE_PASSWORD") &&
-//        props.containsKey("KEY_ALIAS") && props.containsKey("KEY_PASSWORD")
-//    ) {
-//        android.signingConfigs.release.storeFile = file(props["STORE_FILE"])
-//        android.signingConfigs.release.storePassword = props["STORE_PASSWORD"]
-//        android.signingConfigs.release.keyAlias = props["KEY_ALIAS"]
-//        android.signingConfigs.release.keyPassword = props["KEY_PASSWORD"]
-//    } else {
-//        println("signing.properties found but some entries are missing")
-//        android.buildTypes.release.signingConfig = null
-//    }
-//} else {
-//    println("signing.properties not found")
-//    android.buildTypes.release.signingConfig = null
-//}

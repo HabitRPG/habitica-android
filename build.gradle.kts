@@ -19,19 +19,3 @@ plugins {
 tasks.register("allUnitTests", GradleBuild::class) {
     tasks = listOf(":Habitica:testProdDebugUnitTest", ":wearos:testProdDebugUnitTest", ":common:testProdDebugUnitTest")
 }
-
-//Properties props = new Properties()
-//def propFile = new File("version.properties")
-//if (propFile.canRead()) {
-//    props.load(new FileInputStream(propFile))
-//
-//    if (props != null && props.containsKey("NAME") && props.containsKey("CODE")) {
-//        ext.app_version_name = props["NAME"]
-//        ext.app_version_code = props["CODE"] as Integer
-//    } else {
-//        println "signing.properties found but some entries are missing"
-//        android.buildTypes.release.signingConfig = null
-//    }
-//} else {
-//    println "signing.properties not found"
-//}

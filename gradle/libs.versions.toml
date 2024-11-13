@@ -42,7 +42,7 @@ lifecycleRuntimeKtx = "2.8.4"
 markwon = "4.6.2"
 material = "1.12.0"
 material3 = "1.2.1"
-minSdk = "21"
+minSdk = "26"
 mockk = "1.13.4"
 moshi = "1.15.0"
 moshiKotlin = "1.15.0"
@@ -204,7 +204,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerhilt" }
 kotest = { id = "io.kotest.multiplatform", version.ref = "kotest" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp" , version.ref = "ksp"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
 navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 realm = { id = "realm-android", version.ref = "realmPlugin" }
