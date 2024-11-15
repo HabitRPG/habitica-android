@@ -28,6 +28,8 @@ flexbox = "3.0.0"
 fragmentKtx = "1.8.2"
 fragmentTesting = "1.8.2"
 google-service = "4.4.2"
+gson = "2.11.0"
+habitRpgPlugin = "0.1.0"
 inAppReview = "2.0.1"
 junitKtx = "1.2.1"
 kaspresso = "1.5.1"
@@ -66,8 +68,7 @@ turbine = "0.12.1"
 wear = "1.3.0"
 wearInput = "1.1.0"
 wearOsTargetSdk = "33"
-#"app_version_name" = ""
-#"app_version_code" = 0
+
 [libraries]
 accompanist-sysmtemUi = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-theme = { group = "com.google.accompanist", name = "accompanist-themeadapter-material3", version.ref = "accompanist" }
@@ -160,6 +161,12 @@ viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-
 wear = { module = "androidx.wear:wear", version.ref = "wear" }
 wear-input = { module = "androidx.wear:wear-input", version.ref = "wearInput" }
 
+## Dependencies of included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlintPlugin" }
+
 [bundles]
 okhttp = ["okhttp", "okhttp-logging"]
 markwon = ["markwon-core", "markwon-ext", "markwon-image", "markwon-linkify", "markwon-recycler"]
@@ -208,3 +215,7 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
 navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 realm = { id = "realm-android", version.ref = "realmPlugin" }
+
+## Plugins defined by build-logic
+habitrpg-application = { id = "com.habitrpg.buildlogic.application", version.ref = "habitRpgPlugin" }
+habitrpg-convention = { id = "com.habitrpg.buildlogic.convention", version.ref = "habitRpgPlugin" }

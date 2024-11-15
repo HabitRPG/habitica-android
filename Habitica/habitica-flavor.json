@@ -1,0 +1,36 @@
+{
+  "dimension": "buildType",
+  "flavors": [
+    {
+      "name": "dev"
+    },
+    {
+      "name": "staff",
+      "testingLevel": "\"staff\"",
+      "appName": "Habitica Staff",
+      "versionCodeIncrement": 8
+    },
+    {
+      "name": "partners",
+      "testingLevel": "\"partners\"",
+      "appName": "Habitica",
+      "versionCodeIncrement": 6
+    },
+    {
+      "name": "alpha",
+      "testingLevel": "\"alpha\"",
+      "appName": "Habitica Alpha",
+      "versionCodeIncrement": 4
+    },
+    {
+      "name": "beta",
+      "testingLevel": "\"beta\"",
+      "versionCodeIncrement": 2
+    },
+    {
+      "name": "prod",
+      "testingLevel": "\"production\"",
+      "versionCodeIncrement": 0
+    }
+  ]
+}

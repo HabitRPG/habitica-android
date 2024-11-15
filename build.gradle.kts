@@ -14,8 +14,10 @@ plugins {
     alias(libs.plugins.ktlint) apply false
     alias(libs.plugins.navigation) apply false
     alias(libs.plugins.realm) apply false
+    alias(libs.plugins.habitrpg.application) apply false
+    alias(libs.plugins.habitrpg.convention) apply false
 }
 
-tasks.register("allUnitTests", GradleBuild::class) {
-    tasks = listOf(":Habitica:testProdDebugUnitTest", ":wearos:testProdDebugUnitTest", ":common:testProdDebugUnitTest")
+tasks.register("allUnitTests", DefaultTask::class) {
+    dependsOn(":Habitica:testProdDebugUnitTest", ":wearos:testProdDebugUnitTest", ":common:testProdDebugUnitTest")
 }
