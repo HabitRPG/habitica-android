@@ -103,34 +103,45 @@ ktlint {
         exclude { entry -> entry.file.toString().contains("generated") }
     }
 }
-tasks.withType<Detekt>().configureEach {
-    source = fileTree("Habitica/src/main/java")
-    config = files("detekt.yml")
+tasks.withType<Detekt> {
+    source = fileTree("$projectDir/src/main/java")
+    config = files("${rootProject.rootDir}/detekt.yml")
     baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
     reports {
         xml.required.set(false)
         html.required.set(true)
-        html.outputLocation.set(file("build/reports/detekt.html"))
+        html.outputLocation.set(layout.buildDirectory.file("reports/detekt.html"))
         txt.required.set(false)
         sarif.required.set(true)
-        sarif.outputLocation.set(file("build/reports/detekt.sarif"))
+        sarif.outputLocation.set(layout.buildDirectory.file("reports/detekt.sarif"))
     }
 }
-tasks.withType<Test>().configureEach {
+tasks.withType<Test> {
     outputs.upToDateWhen { false }
     testLogging {
         showStandardStreams = true
         events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
     }
     afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
-        if (desc.parent == null) { // will match the root suite
-            if (desc.parent == null) { // will match the outermost suite
-                val output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
-                val startItem = "|  "
-                val endItem = "  |"
-                val repeatLength = startItem.length + output.length + endItem.length
-                println("\n" + ("-".repeat(repeatLength)) + "\n" + startItem + output + endItem + "\n" + ("-".repeat(repeatLength)))
+        if (desc.parent == null) { // will match the outermost suite
+            val output = buildString {
+                append("Results: ${result.resultType} ")
+                append("(${result.testCount} tests, ")
+                append("${result.successfulTestCount} passed, ")
+                append("${result.failedTestCount} failed, ")
+                append("${result.skippedTestCount} skipped)")
             }
+            val startItem = "|  "
+            val endItem = "  |"
+            val repeatLength = startItem.length + output.length + endItem.length
+            println(buildString {
+                append("\n")
+                repeat(repeatLength) { append("—") }
+                append("\n")
+                append(startItem + output + endItem)
+                append("\n")
+                repeat(repeatLength) { append("—") }
+            })
         }
     }))
 }
