@@ -24,14 +24,23 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
-val signingProps = Properties().apply { load(FileInputStream(File("signingrelease.properties"))) }
+val signingProps = try {
+    Properties().apply { load(FileInputStream(File("signingrelease.properties"))) }
+} catch (t: Throwable) {
+    Properties()
+}
 val signingPropsAvailable = signingProps.containsKey("STORE_FILE") && signingProps.containsKey("STORE_PASSWORD") &&
         signingProps.containsKey("KEY_ALIAS") && signingProps.containsKey("KEY_PASSWORD")
 
-val versionProps = Properties().apply { load(FileInputStream(File("version.properties"))) }
+val versionProps = try {
+    Properties().apply { load(FileInputStream(File("version.properties"))) }
+} catch (t: Throwable) {
+    Properties()
+}
 val versionPropsAvailable = versionProps.containsKey("NAME") && versionProps.containsKey("CODE")
 val currentVersionName = versionProps["NAME"].toString()
 val currentVersionCode = versionProps["CODE"].toString().toInt()
+val generateSigningConfig = signingPropsAvailable && versionPropsAvailable
 
 android {
     compileSdk = libs.versions.targetSdk.get().toInt()
@@ -69,7 +78,7 @@ android {
         aidl = true
     }
 
-    if (signingPropsAvailable && versionPropsAvailable) signingConfigs.register("release") {
+    if (generateSigningConfig) signingConfigs.register("release") {
         storeFile = file(signingProps["STORE_FILE"].toString())
         storePassword = signingProps["STORE_PASSWORD"].toString()
         keyAlias = signingProps["KEY_ALIAS"].toString()
@@ -94,7 +103,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         create("debugIAP") {
-            signingConfig = signingConfigs.getByName("release")
+            if (generateSigningConfig) signingConfig = signingConfigs.getByName("release")
             isDebuggable = true
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
@@ -105,7 +114,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (generateSigningConfig) signingConfig = signingConfigs.getByName("release")
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
