@@ -147,7 +147,7 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(projects.shared)
 
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 

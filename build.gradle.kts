@@ -16,6 +16,6 @@ plugins {
     alias(libs.plugins.realm) apply false
 }
 
-tasks.register("allUnitTests", GradleBuild::class) {
-    tasks = listOf(":Habitica:testProdDebugUnitTest", ":wearos:testProdDebugUnitTest", ":common:testProdDebugUnitTest")
+tasks.register("allUnitTests", DefaultTask::class) {
+    dependsOn(":Habitica:testProdDebugUnitTest", ":wearos:testProdDebugUnitTest", ":common:testProdDebugUnitTest")
 }

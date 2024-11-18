@@ -252,8 +252,8 @@ tasks.withType<Test> {
 }
 
 dependencies {
-    implementation(project(":common"))
-    implementation(project(":shared"))
+    implementation(projects.common)
+    implementation(projects.shared)
 
     implementation(fileTree("../common/libs") { include("*.jar") })
 
