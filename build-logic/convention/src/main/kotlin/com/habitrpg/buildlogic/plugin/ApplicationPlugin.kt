@@ -1,12 +1,10 @@
 package com.habitrpg.buildlogic.plugin
 
-import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.AppExtension
 import com.google.gson.Gson
 import com.habitrpg.buildlogic.model.HabiticaFlavor
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.logging.LogLevel
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
 import java.io.FileInputStream
@@ -16,11 +14,19 @@ import java.util.Properties
 class ApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         pluginManager.withPlugin("com.android.application") {
-            val signingProps = Properties().apply { load(FileInputStream(File("signingrelease.properties"))) }
+            val signingProps = try {
+                Properties().apply { load(FileInputStream(File("signingrelease.properties"))) }
+            } catch (t: Throwable) {
+                Properties()
+            }
             val signingPropsAvailable = signingProps.containsKey("STORE_FILE") && signingProps.containsKey("STORE_PASSWORD") &&
                     signingProps.containsKey("KEY_ALIAS") && signingProps.containsKey("KEY_PASSWORD")
 
-            val versionProps = Properties().apply { load(FileInputStream(File("version.properties"))) }
+            val versionProps = try {
+                Properties().apply { load(FileInputStream(File("version.properties"))) }
+            } catch (t: Throwable) {
+                Properties()
+            }
             val versionPropsAvailable = versionProps.containsKey("NAME") && versionProps.containsKey("CODE")
             val currentVersionCode = versionProps["CODE"].toString().toInt()
 
