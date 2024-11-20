@@ -28,7 +28,7 @@ class ApplicationPlugin : Plugin<Project> {
                 Properties()
             }
             val versionPropsAvailable = versionProps.containsKey("NAME") && versionProps.containsKey("CODE")
-            val currentVersionCode = versionProps["CODE"].toString().toInt()
+            val currentVersionCode = (versionProps["CODE"] ?: "0").toString().toInt()
 
             val habiticaFlavor = Gson().fromJson(FileReader(file("habitica-flavor.json")), HabiticaFlavor::class.java)
 
@@ -57,8 +57,8 @@ class ApplicationPlugin : Plugin<Project> {
                         register(flavor.name) {
                             dimension = habiticaFlavor.dimension
                             versionCode = currentVersionCode + (flavor.versionCodeIncrement ?: 0)
-                            flavor.testingLevel?.let { testingLevel -> buildConfigField("String", "TESTING_LEVEL", testingLevel) }
-                            flavor.appName?.let { appName -> resValue("string", "app_name", appName) }
+                            if (flavor.testingLevel != null) buildConfigField("String", "TESTING_LEVEL", flavor.testingLevel)
+                            if (flavor.appName != null) resValue("string", "app_name", flavor.appName)
                         }
                     }
                 }
