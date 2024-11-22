@@ -1,9 +1,19 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.equipment
 
+import android.app.SearchManager
+import android.database.MatrixCursor
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
+import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,14 +32,17 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class EquipmentDetailFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
-    SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener, MenuProvider {
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -51,6 +64,8 @@ class EquipmentDetailFragment :
     var type: String? = null
     var equippedGear: String? = null
     var isCostume: Boolean? = null
+
+    private var searchedText = MutableStateFlow<String?>(null)
 
     private var adapter: EquipmentRecyclerViewAdapter = EquipmentRecyclerViewAdapter()
 
@@ -74,6 +89,7 @@ class EquipmentDetailFragment :
                 }
             }
         }
+        activity?.addMenuProvider(this, viewLifecycleOwner)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -118,6 +134,12 @@ class EquipmentDetailFragment :
         type?.let { type ->
             lifecycleScope.launchCatching {
                 inventoryRepository.getOwnedEquipment(type)
+                    .combine(searchedText) { equipment, query ->
+                        if (query.isNullOrBlank()) {
+                            return@combine equipment
+                        }
+                        equipment.filter { it.text.contains(query, true) || it.notes.contains(query, true) }
+                    }
                     .map { it.sortedBy { equipment -> equipment.text } }
                     .collect { adapter.data = it }
             }
@@ -134,5 +156,58 @@ class EquipmentDetailFragment :
             userRepository.retrieveUser(true, true)
             binding?.refreshLayout?.isRefreshing = false
         }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_searchable, menu)
+
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+        val suggestions = arrayOf("Spring Gear", "Summer Gear", "Fall Gear", "Winter Gear")
+        val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
+        val to = intArrayOf(android.R.id.text1)
+        val suggestionAdapter = SimpleCursorAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, null, from, to, 0)
+        val cursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
+        for ((index, suggestion) in suggestions.withIndex()) {
+            cursor.addRow(arrayOf(index, suggestion))
+        }
+        suggestionAdapter.changeCursor(cursor)
+        searchView.suggestionsAdapter = suggestionAdapter
+        searchView.findViewById<AutoCompleteTextView>(R.id.search_src_text).threshold = 0
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchedText.value = query
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchedText.value = newText
+                val filteredCursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
+                for ((index, suggestion) in suggestions.withIndex()) {
+                    if (suggestion.contains(newText, true)) {
+                        filteredCursor.addRow(arrayOf(index, suggestion))
+                    }
+                }
+                suggestionAdapter.changeCursor(filteredCursor)
+                return false
+            }
+        })
+
+        searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
+            override fun onSuggestionSelect(position: Int): Boolean {
+                val text = suggestionAdapter.getItem(position)
+                searchedText.value = text.toString()
+                return false
+            }
+
+            override fun onSuggestionClick(position: Int): Boolean {
+                return false
+            }
+        })
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        TODO("Not yet implemented")
     }
 }
