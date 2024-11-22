@@ -14,6 +14,8 @@ plugins {
     alias(libs.plugins.ktlint) apply false
     alias(libs.plugins.navigation) apply false
     alias(libs.plugins.realm) apply false
+    alias(libs.plugins.habitrpg.application) apply false
+    alias(libs.plugins.habitrpg.convention) apply false
 }
 
 tasks.register("allUnitTests", DefaultTask::class) {

@@ -1,10 +1,4 @@
-import io.gitlab.arturbosch.detekt.Detekt
-import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
-import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
-import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
-import org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR
-import java.io.FileInputStream
-import java.util.Properties
+import com.android.build.gradle.internal.lint.AndroidLintTask
 
 plugins {
     `jacoco-report-aggregation`
@@ -17,30 +11,12 @@ plugins {
     id("kotlin-kapt")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.realm)
+    alias(libs.plugins.habitrpg.application)
+    alias(libs.plugins.habitrpg.convention)
     alias(libs.plugins.crashlytics)
     alias(libs.plugins.firebase.perf)
     alias(libs.plugins.google.service)
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
 }
-
-val signingProps = try {
-    Properties().apply { load(FileInputStream(File("signingrelease.properties"))) }
-} catch (t: Throwable) {
-    Properties()
-}
-val signingPropsAvailable = signingProps.containsKey("STORE_FILE") && signingProps.containsKey("STORE_PASSWORD") &&
-        signingProps.containsKey("KEY_ALIAS") && signingProps.containsKey("KEY_PASSWORD")
-
-val versionProps = try {
-    Properties().apply { load(FileInputStream(File("version.properties"))) }
-} catch (t: Throwable) {
-    Properties()
-}
-val versionPropsAvailable = versionProps.containsKey("NAME") && versionProps.containsKey("CODE")
-val currentVersionName = versionProps["NAME"].toString()
-val currentVersionCode = versionProps["CODE"].toString().toInt()
-val generateSigningConfig = signingPropsAvailable && versionPropsAvailable
 
 android {
     compileSdk = libs.versions.targetSdk.get().toInt()
@@ -51,8 +27,6 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         compileSdk = libs.versions.targetSdk.get().toInt()
         vectorDrawables.useSupportLibrary = true
-        versionCode = currentVersionCode
-        versionName = currentVersionName
 
         targetSdk = libs.versions.targetSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -63,11 +37,6 @@ android {
 
         buildConfigField("String", "STORE", "\"google\"")
         buildConfigField("String", "TESTING_LEVEL", "\"production\"")
-        val habiticaRes = Properties().apply { load(FileInputStream(File(projectDir.absolutePath + "/../habitica.resources"))) }
-        habiticaRes.forEach { key, value -> resValue("string", key.toString(), "\"${value}\"") }
-
-        val hrpgProps = Properties().apply { load(FileInputStream(File(projectDir.absolutePath + "/../habitica.properties"))) }
-        hrpgProps.forEach { key, value -> buildConfigField("String", key as String, "\"${value}\"") }
     }
 
     buildFeatures {
@@ -77,15 +46,6 @@ android {
         buildConfig = true
         aidl = true
     }
-
-    if (generateSigningConfig) signingConfigs.register("release") {
-        storeFile = file(signingProps["STORE_FILE"].toString())
-        storePassword = signingProps["STORE_PASSWORD"].toString()
-        keyAlias = signingProps["KEY_ALIAS"].toString()
-        keyPassword = signingProps["KEY_PASSWORD"].toString()
-    }
-
-    flavorDimensions.add("buildType")
 
     buildTypes {
         debug {
@@ -124,45 +84,6 @@ android {
         }
     }
 
-    productFlavors {
-        register("dev") {
-            dimension = "buildType"
-        }
-
-        register("staff") {
-            dimension = "buildType"
-            buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
-            resValue("string", "app_name", "Habitica Staff")
-            versionCode = currentVersionCode + 8
-        }
-
-        register("partners") {
-            dimension = "buildType"
-            buildConfigField("String", "TESTING_LEVEL", "\"partners\"")
-            resValue("string", "app_name", "Habitica")
-            versionCode = currentVersionCode + 6
-        }
-
-        register("alpha") {
-            dimension = "buildType"
-            buildConfigField("String", "TESTING_LEVEL", "\"alpha\"")
-            resValue("string", "app_name", "Habitica Alpha")
-            versionCode = currentVersionCode + 4
-        }
-
-        register("beta") {
-            dimension = "buildType"
-            buildConfigField("String", "TESTING_LEVEL", "\"beta\"")
-            versionCode = currentVersionCode + 2
-        }
-
-        register("prod") {
-            dimension = "buildType"
-            buildConfigField("String", "TESTING_LEVEL", "\"production\"")
-            versionCode = currentVersionCode
-        }
-    }
-
     sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
@@ -173,9 +94,7 @@ android {
             res.srcDirs("res")
             assets.srcDirs("assets")
         }
-        getByName("test") {
-            java.srcDir("src/test/java")
-        }
+        getByName("test") { java.srcDir("src/test/java") }
         getByName("debugIAP") { java.srcDirs("src/debug/java") }
         getByName("release") { java.srcDirs("src/release/java") }
     }
@@ -206,59 +125,8 @@ android {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 }
 
-ktlint {
-    filter {
-        exclude { entry -> entry.file.toString().contains("generated") }
-    }
-}
-
-tasks.named("lint") { enabled = false }
-tasks.withType<JavaCompile> {
-    options.compilerArgs.addAll(listOf("-Xmaxerrs", "500"))
-}
-
-tasks.withType<Detekt> {
-    source = fileTree("$projectDir/src/main/java")
-    config = files("${rootProject.rootDir}/detekt.yml")
-    baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
-    reports {
-        xml.required.set(false)
-        html.required.set(true)
-        html.outputLocation.set(layout.buildDirectory.file("reports/detekt.html"))
-        txt.required.set(false)
-        sarif.required.set(true)
-        sarif.outputLocation.set(layout.buildDirectory.file("reports/detekt.sarif"))
-    }
-}
-tasks.withType<Test> {
-    outputs.upToDateWhen { false }
-    testLogging {
-        showStandardStreams = true
-        events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
-    }
-    afterSuite(KotlinClosure2<TestDescriptor, TestResult, Unit>({ desc, result ->
-        if (desc.parent == null) { // will match the outermost suite
-            val output = buildString {
-                append("Results: ${result.resultType} ")
-                append("(${result.testCount} tests, ")
-                append("${result.successfulTestCount} passed, ")
-                append("${result.failedTestCount} failed, ")
-                append("${result.skippedTestCount} skipped)")
-            }
-            val startItem = "|  "
-            val endItem = "  |"
-            val repeatLength = startItem.length + output.length + endItem.length
-            println(buildString {
-                append("\n")
-                repeat(repeatLength) { append("—") }
-                append("\n")
-                append(startItem + output + endItem)
-                append("\n")
-                repeat(repeatLength) { append("—") }
-            })
-        }
-    }))
-}
+tasks.withType<AndroidLintTask> { enabled = false }
+tasks.withType<JavaCompile> { options.compilerArgs.addAll(listOf("-Xmaxerrs", "500")) }
 
 dependencies {
     implementation(projects.common)
