@@ -135,7 +135,17 @@ class EquipmentDetailFragment :
                         if (query.isNullOrBlank()) {
                             return@combine equipment
                         }
-                        equipment.filter { it.text.contains(query, true) || it.notes.contains(query, true) }
+                        val tokens = query.split(" ")
+                        val tokenCount = tokens.size
+                        equipment.filter {
+                            var matchCount = 0
+                            for (token in tokens) {
+                                if (it.text.contains(token, true) || it.notes.contains(token, true)) {
+                                    matchCount += 1
+                                }
+                            }
+                            return@filter matchCount == tokenCount
+                        }
                     }
                     .map { it.sortedBy { equipment -> equipment.text } }
                     .collect { adapter.data = it }
