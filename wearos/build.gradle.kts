@@ -36,7 +36,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-            signingConfig = signingConfigs.getByName("release")
+            signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             resValue("string", "app_name", "Habitica")

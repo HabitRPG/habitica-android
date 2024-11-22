@@ -63,7 +63,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         create("debugIAP") {
-            if (generateSigningConfig) signingConfig = signingConfigs.getByName("release")
+            signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isDebuggable = true
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
@@ -74,7 +74,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-            if (generateSigningConfig) signingConfig = signingConfigs.getByName("release")
+            signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
