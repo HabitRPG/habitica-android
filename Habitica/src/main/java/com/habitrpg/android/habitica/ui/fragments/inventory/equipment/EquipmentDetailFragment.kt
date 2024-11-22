@@ -2,6 +2,8 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.equipment
 
 import android.app.SearchManager
 import android.database.MatrixCursor
+import android.graphics.Color
+import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
 import android.provider.BaseColumns
 import android.view.LayoutInflater
@@ -11,11 +13,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
@@ -24,8 +26,10 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -37,7 +41,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class EquipmentDetailFragment :
@@ -123,12 +126,6 @@ class EquipmentDetailFragment :
 
         binding?.recyclerView?.adapter = this.adapter
         binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity)
-        binding?.recyclerView?.addItemDecoration(
-            DividerItemDecoration(
-                activity,
-                DividerItemDecoration.VERTICAL,
-            ),
-        )
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         type?.let { type ->
@@ -148,6 +145,7 @@ class EquipmentDetailFragment :
 
     override fun onDestroy() {
         inventoryRepository.close()
+        KeyboardUtil.dismissKeyboard(requireActivity())
         super.onDestroy()
     }
 
@@ -162,8 +160,9 @@ class EquipmentDetailFragment :
         menuInflater.inflate(R.menu.menu_searchable, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
+        searchItem.expandActionView()
         val searchView = searchItem.actionView as SearchView
-        val suggestions = arrayOf("Spring Gear", "Summer Gear", "Fall Gear", "Winter Gear")
+        val suggestions = arrayOf("Spring Gear", "Summer Gear", "Fall Gear", "Winter Gear", "Subscriber Item", "Enchanted Armoire")
         val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
         val to = intArrayOf(android.R.id.text1)
         val suggestionAdapter = SimpleCursorAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, null, from, to, 0)
@@ -173,7 +172,21 @@ class EquipmentDetailFragment :
         }
         suggestionAdapter.changeCursor(cursor)
         searchView.suggestionsAdapter = suggestionAdapter
-        searchView.findViewById<AutoCompleteTextView>(R.id.search_src_text).threshold = 0
+        val textView = searchView.findViewById<AutoCompleteTextView>(R.id.search_src_text)
+        textView.threshold = 0
+        searchView.setIconifiedByDefault(false)
+        searchView.isIconified = false
+        searchView.clearFocus()
+        searchView.queryHint = getString(R.string.search_equipment)
+        searchView.findViewById<View>(androidx.appcompat.R.id.search_plate)
+            .setBackgroundColor(Color.TRANSPARENT)
+        searchView.background = InsetDrawable(
+            AppCompatResources.getDrawable(requireContext(), R.drawable.search_background),
+            12.dpToPx(requireContext()),
+            0,
+            8.dpToPx(requireContext()),
+            0
+        )
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -196,12 +209,14 @@ class EquipmentDetailFragment :
 
         searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
             override fun onSuggestionSelect(position: Int): Boolean {
-                val text = suggestionAdapter.getItem(position)
-                searchedText.value = text.toString()
+                val selected = suggestionAdapter.getItem(position)
+                searchView.setQuery((selected as MatrixCursor).getString(1), true)
                 return false
             }
 
             override fun onSuggestionClick(position: Int): Boolean {
+                val selected = suggestionAdapter.getItem(position)
+                searchView.setQuery((selected as MatrixCursor).getString(1), true)
                 return false
             }
         })

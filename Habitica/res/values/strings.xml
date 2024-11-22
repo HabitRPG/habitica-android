@@ -1564,6 +1564,7 @@
     <string name="valentines">Valentines</string>
     <string name="habitoween" translatable="false">Habitoween</string>
     <string name="turkey_day">Turkey Day</string>
+    <string name="search_equipment">Search Equipment</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
