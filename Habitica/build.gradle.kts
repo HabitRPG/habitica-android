@@ -66,6 +66,8 @@ android {
             signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isDebuggable = true
             isMinifyEnabled = false
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             // Disable fabric build ID generation for debug builds
             ext["enableCrashlytics"] = false
