@@ -29,6 +29,8 @@ open class QuestDropItem : RealmObject(), BaseObject {
                 "eggs" -> "Pet_Egg_$key"
                 "food" -> "Pet_Food_$key"
                 "hatchingPotions" -> "Pet_HatchingPotion_$key"
+                "pets" -> "stable_Pet-$key"
+                "mounts" -> "Mount_Head_$key"
                 else -> "shop_$key"
             }
 }
