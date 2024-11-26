@@ -34,7 +34,7 @@
             android:name=".ui.activities.MainActivity"
             android:theme="@style/LaunchAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout"
             android:exported="true">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
