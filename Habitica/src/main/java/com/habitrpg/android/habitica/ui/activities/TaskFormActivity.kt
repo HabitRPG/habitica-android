@@ -883,6 +883,9 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun checkIfShowNotifLayout() {
+
+        val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+        var warnAboutInexact = false
         if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
             binding.notificationsDisabledLayout.visibility = View.VISIBLE
             binding.remindersContainer.shouldShowNotifPermission = true
@@ -894,13 +897,11 @@ class TaskFormActivity : BaseActivity() {
         } else {
             binding.remindersContainer.shouldShowNotifPermission = false
             binding.notificationsDisabledLayout.visibility = View.GONE
-        }
 
-        val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-        var warnAboutInexact = false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (alarmManager?.canScheduleExactAlarms() == false) {
-                warnAboutInexact = true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (alarmManager?.canScheduleExactAlarms() == false) {
+                    warnAboutInexact = true
+                }
             }
         }
         if (warnAboutInexact) {
