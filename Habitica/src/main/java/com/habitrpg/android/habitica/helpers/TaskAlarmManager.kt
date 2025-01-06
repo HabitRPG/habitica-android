@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
@@ -283,26 +282,37 @@ class TaskAlarmManager(
             time: Long,
             pendingIntent: PendingIntent?,
         ) {
-            HLogger.log(LogLevel.INFO, "TaskAlarmManager", "Scheduling for $time")
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
-            if (pendingIntent == null) {
+            if (pendingIntent == null || alarmManager == null) {
                 return
             }
 
+            val notificationType = AlarmManager.RTC_WAKEUP
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                // For SDK >= Android 12, allows batching of reminders
                 try {
-                    alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
-                    Log.d(
-                        "TaskAlarmManager",
-                        "setAlarm: Scheduling for $time using setAndAllowWhileIdle",
-                    )
+                    var canScheduleExact = true
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        canScheduleExact = alarmManager.canScheduleExactAlarms()
+                    }
+                    if (canScheduleExact) {
+                        alarmManager.setExactAndAllowWhileIdle(notificationType, time, pendingIntent)
+                        HLogger.log(LogLevel.DEBUG,
+                            "TaskAlarmManager",
+                            "setAlarm: Scheduling for $time using setExact",
+                        )
+                    } else {
+                        alarmManager.setAndAllowWhileIdle(notificationType, time, pendingIntent)
+                        HLogger.log(LogLevel.DEBUG,
+                            "TaskAlarmManager",
+                            "setAlarm: Scheduling for $time using setAndAllowWhileIdle",
+                        )
+                    }
                 } catch (ex: Exception) {
                     when (ex) {
                         is IllegalStateException, is SecurityException -> {
-                            alarmManager?.setWindow(
-                                AlarmManager.RTC_WAKEUP,
+                            alarmManager.setWindow(
+                                notificationType,
                                 time,
                                 600000,
                                 pendingIntent,
@@ -315,7 +325,7 @@ class TaskAlarmManager(
                     }
                 }
             } else {
-                alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 600000, pendingIntent)
+                alarmManager.set(notificationType, time, pendingIntent)
             }
         }
     }

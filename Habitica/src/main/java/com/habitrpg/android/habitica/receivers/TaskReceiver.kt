@@ -1,12 +1,15 @@
 package com.habitrpg.android.habitica.receivers
 
+import android.Manifest
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.os.Build
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -113,6 +116,13 @@ class TaskReceiver : BroadcastReceiver() {
             )
         }
         val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(task.id.hashCode(), notificationBuilder.build())
+        notificationManager.safeNotify(context, task.id.hashCode(), notificationBuilder.build())
     }
+}
+
+fun NotificationManagerCompat.safeNotify(context: Context, code: Int, notification: Notification) {
+    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+        return
+    }
+    notify(code, notification)
 }

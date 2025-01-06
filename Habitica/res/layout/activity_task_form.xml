@@ -227,13 +227,28 @@
                         android:text="@string/push_notification_system_settings_reminders"
                         android:textColor="@color/text_quad"
                         android:textSize="12sp" />
-
                 </RelativeLayout>
 
                 <com.habitrpg.android.habitica.ui.views.tasks.form.ReminderContainer
                     android:id="@+id/reminders_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:id="@+id/exact_alarm_disabled_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:background="@drawable/layout_rounded_bg_yellow_10">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_medium"
+                        android:text="@string/exact_alarm_system_settings_reminders"
+                        android:textColor="@color/yellow_0"
+                        android:textSize="12sp" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/stat_wrapper"

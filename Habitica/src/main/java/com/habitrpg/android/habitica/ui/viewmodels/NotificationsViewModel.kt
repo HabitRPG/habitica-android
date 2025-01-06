@@ -310,7 +310,7 @@ open class NotificationsViewModel
             }
             when (data?.destination) {
                 "equipment" -> navController.navigate(R.id.equipmentOverviewFragment)
-                "customization" -> navController.navigate(R.id.avatarCustomizationFragment)
+                "customization" -> navController.navigate(R.id.composeAvatarEquipmentFragment)
                 "stable" -> navController.navigate(R.id.stableFragment)
                 "pets" -> navController.navigate(R.id.stableFragment)
                 "mounts" -> navController.navigate(R.id.stableFragment)

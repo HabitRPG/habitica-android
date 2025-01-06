@@ -1,15 +1,19 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
@@ -890,6 +894,26 @@ class TaskFormActivity : BaseActivity() {
         } else {
             binding.remindersContainer.shouldShowNotifPermission = false
             binding.notificationsDisabledLayout.visibility = View.GONE
+        }
+
+        val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+        var warnAboutInexact = false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (alarmManager?.canScheduleExactAlarms() == false) {
+                warnAboutInexact = true
+            }
+        }
+        if (warnAboutInexact) {
+            binding.exactAlarmDisabledContainer.visibility = View.VISIBLE
+            binding.exactAlarmDisabledContainer.setOnClickListener {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val intent =Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null));
+                    startActivity(intent)
+                }
+            }
+        } else {
+            binding.exactAlarmDisabledContainer.visibility = View.GONE
         }
     }
 

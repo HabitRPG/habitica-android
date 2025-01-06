@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.receivers
 
+import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -25,7 +26,8 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
         context: Context,
         intent: Intent,
     ) {
-        if (intent.action != Intent.ACTION_BOOT_COMPLETED) {
+        if (intent.action != Intent.ACTION_BOOT_COMPLETED
+            && intent.action != AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED) {
             return
         }
         MainScope().launch(ExceptionHandler.coroutine()) {

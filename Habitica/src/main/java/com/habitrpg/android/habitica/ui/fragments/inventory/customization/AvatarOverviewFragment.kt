@@ -52,7 +52,6 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
-import com.habitrpg.shared.habitica.models.Avatar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
@@ -97,14 +96,13 @@ open class AvatarOverviewFragment :
                 HabiticaTheme {
                     val avatar by userViewModel.user.observeAsState()
                     Column {
-
                         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
                             ComposableAvatarView(
                                 avatar = avatar,
                                 configManager = appConfigManager,
                                 modifier =
                                 Modifier
-                                    .padding(vertical = 24.dp)
+                                    .padding(top = 6.dp, bottom = 24.dp)
                                     .size(140.dp, 147.dp),
                             )
                             Box(
@@ -159,32 +157,19 @@ open class AvatarOverviewFragment :
         type: String,
         category: String?,
     ) {
-        if (appConfigManager.enableCustomizationShop()) {
-            MainNavigationController.navigate(
-                AvatarOverviewFragmentDirections.openComposeAvatarDetail(
-                    type,
-                    category ?: "",
-                ),
-            )
-        } else {
-            MainNavigationController.navigate(
-                AvatarOverviewFragmentDirections.openAvatarDetail(
-                    type,
-                    category ?: "",
-                ),
-            )
-        }
+        MainNavigationController.navigate(
+            AvatarOverviewFragmentDirections.openComposeAvatarDetail(
+                type,
+                category ?: "",
+            ),
+        )
     }
 
     private fun displayAvatarEquipmentFragment(
         type: String,
         category: String?,
     ) {
-        if (appConfigManager.enableCustomizationShop()) {
-            MainNavigationController.navigate(AvatarOverviewFragmentDirections.openComposeAvatarEquipment(type, category ?: ""))
-        } else {
-            MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarEquipment(type, category ?: ""))
-        }
+        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openComposeAvatarEquipment(type, category ?: ""))
     }
 
     private fun displayEquipmentFragment(

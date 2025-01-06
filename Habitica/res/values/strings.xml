@@ -30,8 +30,11 @@
     <string name="enable_notifications">Enable Notifications</string>
     <string name="push_notification_system_settings_description">Allow Habitica notifications in the Settings app to receive push notifications</string>
     <string name="push_notification_system_settings_reminders">Allow Habitica notifications in the Settings app to receive reminders</string>
+    <string name="exact_alarm_system_settings_reminders">Habitica does not have the `Alarms &amp; Reminders` permission in the Settings app. Reminders might not appear at the exact time.</string>
     <string name="push_notification_system_settings_title">Notifications Disabled</string>
     <string name="push_notifications_sum">Set your push notifications settings</string>
+    <string name="exact_alarm_system_settings_title">`Alarm &amp; Reminders` disabled`</string>
+    <string name="exact_alarm_system_settings_description">Allow `Alarms &amp; Reminders` in the Settings app to ensure reminders appear at the scheduled time exactly</string>
     <string name="preference_push_you_won_challenge">You won a Challenge!</string>
     <string name="preference_push_received_a_private_message">Received a Private Message</string>
     <string name="preference_push_gifted_gems">Gifted Gems</string>
@@ -1539,8 +1542,8 @@
     <string name="clear_database">Clear Database</string>
     <string name="clear_cache_settings">Clear Cache</string>
     <string name="best_deal">Best Deal</string>
-    <string name="unlock_x_gems_per_month">Unlock %d Gems per month instantly</string>
-    <string name="unlocks_x_gems_per_month">Unlocks %d Gems per month instantly</string>
+    <string name="unlock_x_gems_per_month">Unlock %d Gems per month in the Market</string>
+    <string name="unlocks_x_gems_per_month">Unlocks %d Gems per month in the Market</string>
     <string name="x_gems">%d Gems</string>
     <string name="two_gems_per_month">Earn +2 Gems every month you\'re subscribed</string>
     <string name="two_gems_per_month_gift">Earns +2 Gems every month they\'re subscribed</string>

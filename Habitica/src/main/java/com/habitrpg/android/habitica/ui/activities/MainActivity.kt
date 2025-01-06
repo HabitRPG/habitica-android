@@ -1,19 +1,23 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -31,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.core.view.setPadding
 import androidx.drawerlayout.widget.DrawerLayout
@@ -178,6 +183,14 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
             } else {
                 viewModel.updateAllowPushNotifications(false)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)) {
+                val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return@registerForActivityResult
+                if (!alarmManager.canScheduleExactAlarms()) {
+                    val intent =Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null));
+                    startActivity(intent)
+                }
             }
         }
 

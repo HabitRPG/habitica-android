@@ -478,7 +478,7 @@ private fun AvatarCustomizationView(
                 configManager = configManager,
                 modifier =
                     Modifier
-                        .padding(vertical = 24.dp)
+                        .padding(top = 6.dp, bottom = 24.dp)
                         .size(140.dp, 147.dp),
             )
             Box(

@@ -87,9 +87,12 @@ class NotificationPublisher : BroadcastReceiver() {
         intent: Intent,
         notification: Notification?,
     ) {
-        val notificationManager = context?.let { NotificationManagerCompat.from(it) }
+        val context = context ?: return
+        val notificationManager = NotificationManagerCompat.from(context)
         val id = intent.getIntExtra(NOTIFICATION_ID, 0)
-        notification?.let { notificationManager?.notify(id, it) }
+        notification?.let {
+            notificationManager.safeNotify(context, id, notification)
+        }
     }
 
     private fun buildNotification(

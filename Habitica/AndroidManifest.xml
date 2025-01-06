@@ -3,7 +3,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.habitrpg.android.habitica"
-    android:screenOrientation="portrait"
     android:installLocation="auto" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -239,10 +238,12 @@
                 <action android:name="REJECT_QUEST_INVITE"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.TaskAlarmBootReceiver" android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
+        <receiver android:name=".receivers.TaskAlarmBootReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
             </intent-filter>
         </receiver>
 

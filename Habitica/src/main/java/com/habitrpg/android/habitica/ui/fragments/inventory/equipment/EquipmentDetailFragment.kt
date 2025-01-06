@@ -15,6 +15,21 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
 import androidx.cursoradapter.widget.SimpleCursorAdapter
 import androidx.lifecycle.lifecycleScope
@@ -22,12 +37,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentEquipmentDetailBinding
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.observeOnce
@@ -35,6 +52,8 @@ import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.views.ComposableAvatarView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -44,12 +63,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class EquipmentDetailFragment :
-    BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+    BaseMainFragment<FragmentEquipmentDetailBinding>(),
     SwipeRefreshLayout.OnRefreshListener, MenuProvider {
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
-    override var binding: FragmentRefreshRecyclerviewBinding? = null
+    override var binding: FragmentEquipmentDetailBinding? = null
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
@@ -57,11 +76,14 @@ class EquipmentDetailFragment :
     @Inject
     lateinit var reviewManager: ReviewManager
 
+    @Inject
+    lateinit var configManager: AppConfigManager
+
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
+    ): FragmentEquipmentDetailBinding {
+        return FragmentEquipmentDetailBinding.inflate(inflater, container, false)
     }
 
     var type: String? = null
@@ -77,6 +99,9 @@ class EquipmentDetailFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        showsBackButton = true
+        hidesToolbar = true
+
         adapter.onEquip = {
             lifecycleScope.launchCatching {
                 inventoryRepository.equipGear(it, isCostume ?: false)
@@ -100,7 +125,6 @@ class EquipmentDetailFragment :
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
@@ -119,6 +143,28 @@ class EquipmentDetailFragment :
             ) {
                 MainNavigationController.navigate(R.id.marketFragment)
             }
+
+        binding?.avatarHeader?.setContent {
+            HabiticaTheme {
+                val avatar by userViewModel.user.observeAsState()
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
+                    ComposableAvatarView(
+                        avatar = avatar,
+                        configManager = configManager,
+                        modifier =
+                            Modifier
+                                .padding(top = 6.dp, bottom = 24.dp)
+                                .size(140.dp, 147.dp),
+                    )
+                    Box(
+                        Modifier
+                            .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                            .fillMaxWidth()
+                            .height(22.dp),
+                    )
+                }
+            }
+        }
 
         this.adapter.equippedGear = this.equippedGear
         this.adapter.isCostume = this.isCostume
@@ -230,6 +276,12 @@ class EquipmentDetailFragment :
                 return false
             }
         })
+
+        mainActivity?.toolbar?.let {
+            val color = ContextCompat.getColor(requireContext(), R.color.window_background)
+            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color)
+            requireActivity().window.statusBarColor = color
+        }
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
