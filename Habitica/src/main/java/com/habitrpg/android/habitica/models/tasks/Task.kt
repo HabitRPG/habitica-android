@@ -401,9 +401,13 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             dateTimeOccurenceToSchedule =
                 when (frequency) {
                     Frequency.DAILY -> {
+                        val todayWithTime = dateTimeOccurenceToSchedule
+                            .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         dateTimeOccurenceToSchedule =
                             if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
                                 startDate
+                            } else if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
+                                todayWithTime
                             } else {
                                 dateTimeOccurenceToSchedule.plusDays(everyX.toLong())
                                     .withHour(reminderTime.hour).withMinute(reminderTime.minute)

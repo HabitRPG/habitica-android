@@ -299,7 +299,7 @@ class TaskAlarmManager(
                         alarmManager.setExactAndAllowWhileIdle(notificationType, time, pendingIntent)
                         HLogger.log(LogLevel.DEBUG,
                             "TaskAlarmManager",
-                            "setAlarm: Scheduling for $time using setExact",
+                            "setAlarm: Scheduling for $time using setExact ${Date().time}",
                         )
                     } else {
                         alarmManager.setAndAllowWhileIdle(notificationType, time, pendingIntent)
