@@ -307,7 +307,11 @@ abstract class BaseTaskViewHolder(
             }
         }
         task?.let {
-            openTaskFunc(it, mainTaskWrapper)
+            if (it.challengeBroken?.isNotBlank() == true) {
+                brokenTaskFunc(it)
+            } else {
+                openTaskFunc(it, mainTaskWrapper)
+            }
         }
         return true
     }
