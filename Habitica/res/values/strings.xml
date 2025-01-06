@@ -551,9 +551,13 @@
     <string name="yesterdaililes_prompt">Check off any Dailies you did yesterday:</string>
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave this party?</string>
+    <string name="leave_party_confirmation_quest">Are you sure you want to leave this party?</string>
     <string name="leave_party_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Party?</string>
     <string name="discard_changes_to_task_message">Are you sure you want to discard changes to this task?</string>
     <string name="rejoin_party">You will not be able to rejoin this party unless invited.</string>
+    <string name="rejoin_party_quest">You will not be able to rejoin this party unless invited.\n\nLeaving the party will also make you leave the quest you are currently on.</string>
+    <string name="rejoin_party_quest_leader">You will not be able to rejoin this party unless invited.\n\nLeaving the party will also abort the current quest.</string>
+
     <string name="pending">Pending</string>
     <string name="accepted">Accepted</string>
     <string name="declined">Declined</string>

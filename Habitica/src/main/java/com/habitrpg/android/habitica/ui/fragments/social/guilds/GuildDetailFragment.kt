@@ -165,14 +165,14 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.setTitle(R.string.guild_challenges)
                     alert.setMessage(R.string.leave_guild_challenges_confirmation)
                     alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                        viewModel.leaveGroup(groupChallenges, true) { showLeaveSnackbar() }
+                        viewModel.leaveGroup(false, false, groupChallenges, true) { showLeaveSnackbar() }
                     }
                     alert.addButton(
                         R.string.leave_challenges_delete_tasks,
                         isPrimary = false,
                         isDestructive = true,
                     ) { _, _ ->
-                        viewModel.leaveGroup(groupChallenges, false) { showLeaveSnackbar() }
+                        viewModel.leaveGroup(false, false, groupChallenges, false) { showLeaveSnackbar() }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
                     alert.show()
@@ -185,7 +185,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                         isPrimary = true,
                         isDestructive = true,
                     ) { _, _ ->
-                        viewModel.leaveGroup(groupChallenges, false) {
+                        viewModel.leaveGroup(false, false, groupChallenges, false) {
                             showLeaveSnackbar()
                         }
                     }

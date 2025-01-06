@@ -43,6 +43,9 @@ class PartyViewModel
                         ?: true
                 )
 
+        internal val isUserQuestLeader: Boolean
+            get() = user.value?.id == getGroupData().value?.quest?.leader
+
         @OptIn(ExperimentalCoroutinesApi::class)
         private val membersFlow =
             groupIDFlow

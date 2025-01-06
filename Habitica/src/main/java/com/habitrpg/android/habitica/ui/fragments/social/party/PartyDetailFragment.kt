@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -42,6 +41,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.android.habitica.ui.views.social.PartySeekingListItem
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -507,7 +507,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.setTitle(R.string.party_challenges)
                     alert.setMessage(R.string.leave_party_challenges_confirmation)
                     alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                        viewModel.leaveGroup(groupChallenges, true) {
+                        viewModel.leaveGroup(viewModel.isUserOnQuest, viewModel.isUserQuestLeader, groupChallenges, true) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
@@ -517,7 +517,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         false,
                         isDestructive = true,
                     ) { _, _ ->
-                        viewModel.leaveGroup(groupChallenges, false) {
+                        viewModel.leaveGroup(viewModel.isUserOnQuest, viewModel.isUserQuestLeader, groupChallenges, false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
@@ -527,13 +527,21 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 } else {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.leave_party_confirmation)
-                    alert.setMessage(R.string.rejoin_party)
+                    if (viewModel.isUserOnQuest) {
+                        if (viewModel.isUserQuestLeader) {
+                            alert.setMessage(R.string.rejoin_party_quest_leader)
+                        } else {
+                            alert.setMessage(R.string.rejoin_party_quest)
+                        }
+                    } else {
+                        alert.setMessage(R.string.rejoin_party)
+                    }
                     alert.addButton(
                         R.string.leave,
                         isPrimary = true,
                         isDestructive = true,
                     ) { _, _ ->
-                        viewModel.leaveGroup(groupChallenges, false) {
+                        viewModel.leaveGroup(viewModel.isUserOnQuest, viewModel.isUserQuestLeader, groupChallenges, false) {
                             if (isAdded) {
                                 parentFragmentManager.popBackStack()
                                 MainNavigationController.navigate(R.id.noPartyFragment)

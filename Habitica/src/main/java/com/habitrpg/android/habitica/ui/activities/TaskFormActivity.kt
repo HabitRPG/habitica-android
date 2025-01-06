@@ -552,7 +552,7 @@ class TaskFormActivity : BaseActivity() {
         binding.tagsTitleView.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
         binding.tagsWrapper.visibility = if (isChallengeTask) View.GONE else View.VISIBLE
 
-        binding.statWrapper.visibility = if (usesTaskAttributeStats) View.VISIBLE else View.GONE
+        binding.statWrapper.visibility = if (usesTaskAttributeStats && taskType != TaskType.REWARD) View.VISIBLE else View.GONE
         if (isCreating) {
             binding.adjustStreakTitleView.visibility = View.GONE
             binding.adjustStreakWrapper.visibility = View.GONE

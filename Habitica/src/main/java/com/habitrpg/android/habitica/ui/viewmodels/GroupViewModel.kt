@@ -179,6 +179,8 @@ open class GroupViewModel
         }
 
         fun leaveGroup(
+            leaveQuest: Boolean,
+            abortQuest: Boolean,
             groupChallenges: List<Challenge>,
             keepChallenges: Boolean = true,
             function: (() -> Unit)? = null,
@@ -191,6 +193,11 @@ open class GroupViewModel
                 }
             }
             viewModelScope.launch(ExceptionHandler.coroutine()) {
+                if (abortQuest) {
+                    socialRepository.abortQuest(groupID ?: "")
+                } else if (leaveQuest) {
+                    socialRepository.leaveQuest(groupID ?: "")
+                }
                 socialRepository.leaveGroup(groupID ?: "", keepChallenges)
                 userRepository.retrieveUser(withTasks = false, forced = true)
                 function?.invoke()
