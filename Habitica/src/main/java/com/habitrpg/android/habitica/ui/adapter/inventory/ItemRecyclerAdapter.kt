@@ -50,7 +50,7 @@ class ItemRecyclerAdapter(val context: Context) :
             notifyDataSetChanged()
         }
 
-    var onSellItem: ((OwnedItem) -> Unit)? = null
+    var onSellItem: ((Item, OwnedItem) -> Unit)? = null
     var onQuestInvitation: ((QuestContent) -> Unit)? = null
     var onOpenMysteryItem: ((Item) -> Unit)? = null
     var onStartHatching: ((Item) -> Unit)? = null
@@ -276,6 +276,7 @@ class ItemRecyclerAdapter(val context: Context) :
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") && index == 0) {
                             ownedItem?.let { selectedOwnedItem ->
                                 onSellItem?.invoke(
+                                    selectedItem,
                                     selectedOwnedItem,
                                 )
                             }

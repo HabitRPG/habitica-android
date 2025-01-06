@@ -497,7 +497,12 @@ class RealmInventoryLocalRepository(realm: Realm) :
             }
             val stats = updatedUser.stats
             if (stats != null) {
-                user.stats = stats
+                user.stats?.apply {
+                    hp = stats.hp
+                    mp = stats.mp
+                    exp = stats.exp
+                    gp = stats.gp
+                }
             }
         }
         return user

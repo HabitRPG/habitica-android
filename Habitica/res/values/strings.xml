@@ -268,6 +268,7 @@
     <string name="armoireFood_new">You rummage in the Armoire and find food. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
     <string name="sell">Sell (%d Gold)</string>
+    <string name="sell_confirmation_title">Are you sure you want to sell this %s?</string>
     <string name="sell_no_price">Sell</string>
     <string name="hatch_with_potion">Hatch with potion</string>
     <string name="hatch_egg">Hatch with egg</string>

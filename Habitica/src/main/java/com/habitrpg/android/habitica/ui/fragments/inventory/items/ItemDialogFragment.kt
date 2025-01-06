@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
+import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
@@ -24,6 +25,7 @@ import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -31,6 +33,7 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.extensions.observeOnce
@@ -214,10 +217,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 adapter?.feedingPet = this.feedingPet
             }
             binding?.recyclerView?.adapter = adapter
-            adapter?.onSellItem = {
-                lifecycleScope.launchCatching {
-                    inventoryRepository.sellItem(it)
-                }
+            adapter?.onSellItem = { item, ownedItem ->
+                showSellItemConfirmation(item, ownedItem)
             }
             adapter?.onQuestInvitation = {
                 lifecycleScope.launchCatching {
@@ -366,6 +367,18 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     private fun openMarket() {
         MainNavigationController.navigate(R.id.marketFragment)
+    }
+
+    private fun showSellItemConfirmation(item: Item, ownedItem: OwnedItem) {
+        val dialog = HabiticaAlertDialog(requireContext())
+        dialog.setTitle(getString(R.string.sell_confirmation_title, item.text))
+        dialog.addButton(getString(R.string.sell, item.value), isPrimary = true, isDestructive = true) { _, _ ->
+            lifecycleScope.launchCatching {
+                inventoryRepository.sellItem(ownedItem)
+            }
+        }
+        dialog.addCancelButton()
+        dialog.show()
     }
 
     companion object {

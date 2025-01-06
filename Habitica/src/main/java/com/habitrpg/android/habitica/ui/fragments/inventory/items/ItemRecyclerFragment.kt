@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
+import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
@@ -171,10 +172,8 @@ class ItemRecyclerFragment :
             binding?.recyclerView?.adapter = adapter
         }
         adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
-        adapter?.onSellItem = {
-            lifecycleScope.launchCatching {
-                inventoryRepository.sellItem(it)
-            }
+        adapter?.onSellItem = { item, ownedItem ->
+            showSellItemConfirmation(item, ownedItem)
         }
         adapter?.onQuestInvitation = {
             lifecycleScope.launchCatching {
@@ -393,6 +392,18 @@ class ItemRecyclerFragment :
         }
 
         loadItems()
+    }
+
+    private fun showSellItemConfirmation(item: Item, ownedItem: OwnedItem) {
+        val dialog = HabiticaAlertDialog(requireContext())
+        dialog.setTitle(getString(R.string.sell_confirmation_title, item.text))
+        dialog.addButton(getString(R.string.sell, item.value), isPrimary = true, isDestructive = true) { _, _ ->
+            lifecycleScope.launchCatching {
+                inventoryRepository.sellItem(ownedItem)
+            }
+        }
+        dialog.addCancelButton()
+        dialog.show()
     }
 
     companion object {
