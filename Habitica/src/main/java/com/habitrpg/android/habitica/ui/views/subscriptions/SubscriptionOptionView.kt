@@ -72,7 +72,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     }
 
     private fun updateGemCapText() {
-        binding.gemCapTextView.text = highlightText(context.getString(if (isGifted) R.string.unlock_x_gems_per_month else R.string.unlock_x_gems_per_month, gemCap),
+        binding.gemCapTextView.text = highlightText(context.getString(if (isGifted) R.string.unlocks_x_gems_per_month else R.string.unlock_x_gems_per_month, gemCap),
             context.getString(R.string.x_gems, gemCap),
             ContextCompat.getColor(context, if (isSubscriptionSelected) R.color.yellow_5 else R.color.white))
     }
@@ -80,7 +80,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     private fun setAddtlGemText(isSelected: Boolean) {
         if (gemCap == 50) {
             binding.hourglassTextView.text = highlightText(
-                context.getString(R.string.max_gem_cap),
+                context.getString(if (isGifted) R.string.max_gem_cap_text_gift else R.string.max_gem_cap_text),
                 context.getString(R.string.gem_cap),
                 ContextCompat.getColor(context, if (isSelected) R.color.yellow_5 else R.color.white)
             )

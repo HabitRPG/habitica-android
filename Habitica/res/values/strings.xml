@@ -407,7 +407,7 @@
     <string name="subscription_duration">Recurring every %s</string>
     <string name="subscription_duration_norenew">For %s</string>
     <string name="subscribe">Subscribe</string>
-    <string name="subscribe_listitem1_description">Get up to 50 Gems in the Market to buy Quests, Customizations, Pets, and more!</string>
+    <string name="subscribe_listitem1_description">Get up to 50 Gold-purchasable Gems in the Market to buy Quests, Customizations, Pets, and more!</string>
     <string name="subscribe_listitem2_description">Never miss an item with 1 Mystic Hourglass a month to use in the Time Travelers Shop!</string>
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
     <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month!</string>
@@ -1548,10 +1548,10 @@
     <string name="clear_cache_settings">Clear Cache</string>
     <string name="best_deal">Best Deal</string>
     <string name="unlock_x_gems_per_month">Unlock %d Gems per month in the Market</string>
-    <string name="unlocks_x_gems_per_month">Unlocks %d Gems per month in the Market</string>
+    <string name="unlocks_x_gems_per_month">They unlock %d Gems per month in the Market</string>
     <string name="x_gems">%d Gems</string>
     <string name="two_gems_per_month">Earn +2 Gems every month you\'re subscribed</string>
-    <string name="two_gems_per_month_gift">Earns +2 Gems every month they\'re subscribed</string>
+    <string name="two_gems_per_month_gift">Earn +2 Gems every month they\'re subscribed</string>
     <string name="plus_two_gems">+2 Gems</string>
     <string name="popular">Popular</string>
     <string name="choose_member">Choose Member</string>
@@ -1560,6 +1560,9 @@
     <string name="enjoy_benefits">Enjoy all these exclusive benefits with your subscription</string>
     <string name="resubscribe_for_hourglasses">Subscribe again to continue receiving Mystic Hourglasses</string>
     <string name="max_gem_cap">Max Gem Cap</string>
+    <string name="max_gem_cap_text">Instantly start at the max Gem Cap</string>
+    <string name="max_gem_cap_text_gift">They instantly start at the Max Gem Cap</string>
+
     <string name="gem_cap">Gem Cap</string>
     <string name="get_12_mystic_hourglasses">Get 12 Mystic Hourglasses immediately after your first 12 month subscription!</string>
     <string name="twelve_mystic_hourglasses">12 Mystic Hourglasses</string>
