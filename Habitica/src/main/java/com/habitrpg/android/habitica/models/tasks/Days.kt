@@ -21,6 +21,23 @@ open class Days() : io.realm.RealmObject(), Parcelable {
     var s: Boolean = true
     var su: Boolean = true
 
+    constructor(m: Boolean? = null,
+        t: Boolean? = null,
+        w: Boolean? = null,
+        th: Boolean? = null,
+        f: Boolean? = null,
+        s: Boolean? = null,
+        su: Boolean? = null,
+        default: Boolean = true) : this() {
+        this.m = m ?: default
+        this.t = t ?: default
+        this.w = w ?: default
+        this.th = th ?: default
+        this.f = f ?: default
+        this.s = s ?: default
+        this.su = su ?: default
+    }
+
     override fun writeToParcel(
         dest: Parcel,
         flags: Int,

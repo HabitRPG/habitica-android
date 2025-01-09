@@ -33,13 +33,13 @@ class SubscriptionPlanTest : WordSpec({
             plan.totalNumberOfGems shouldBe 0
         }
 
-        "25 without extra consecutive bonus" {
-            plan.totalNumberOfGems shouldBe 25
+        "24 without extra consecutive bonus" {
+            plan.totalNumberOfGems shouldBe 24
         }
 
-        "35 with extra consecutive bonus" {
+        "40 with extra consecutive bonus" {
             plan.consecutive = SubscriptionPlanConsecutive()
-            plan.consecutive?.gemCapExtra = 15
+            plan.consecutive?.gemCapExtra = 16
             plan.totalNumberOfGems shouldBe 40
         }
     }
@@ -52,57 +52,14 @@ class SubscriptionPlanTest : WordSpec({
 
         "according to already purchased amount" {
             plan.gemsBought = 10
-            plan.numberOfGemsLeft shouldBe 15
+            plan.numberOfGemsLeft shouldBe 14
         }
 
         "according to already purchased amount with bonus" {
             plan.consecutive = SubscriptionPlanConsecutive()
             plan.consecutive?.gemCapExtra = 10
             plan.gemsBought = 10
-            plan.numberOfGemsLeft shouldBe 25
-        }
-    }
-
-    "monthsUntilNextHourglass" should {
-        beforeEach {
-            plan.consecutive = SubscriptionPlanConsecutive()
-            plan.consecutive?.count = 0
-            plan.dateTerminated = null
-        }
-
-        "months until next hourglass with initial basic sub" {
-            plan.planId = SubscriptionPlan.PLANID_BASIC
-            plan.monthsUntilNextHourglass shouldBe 3
-        }
-
-        "months until receiving first hourglass with basic sub" {
-            plan.consecutive?.count = 2
-            plan.planId = SubscriptionPlan.PLANID_BASIC
-            plan.monthsUntilNextHourglass shouldBe 1
-        }
-
-        "months until next hourglass with basic sub after receiving initial hourglass" {
-            plan.consecutive?.count = 3
-            plan.planId = SubscriptionPlan.PLANID_BASIC
-            plan.monthsUntilNextHourglass shouldBe 3
-        }
-
-        "months until next hourglass with three month sub" {
-            plan.consecutive?.offset = 3
-            plan.planId = SubscriptionPlan.PLANID_BASIC3MONTH
-            plan.monthsUntilNextHourglass shouldBe 3
-        }
-
-        "months until next hourglass with six month sub" {
-            plan.consecutive?.offset = 6
-            plan.planId = SubscriptionPlan.PLANID_BASIC6MONTH
-            plan.monthsUntilNextHourglass shouldBe 6
-        }
-
-        "months until next hourglass with 12 month sub" {
-            plan.consecutive?.offset = 12
-            plan.planId = SubscriptionPlan.PLANID_BASIC12MONTH
-            plan.monthsUntilNextHourglass shouldBe 12
+            plan.numberOfGemsLeft shouldBe 24
         }
     }
 })

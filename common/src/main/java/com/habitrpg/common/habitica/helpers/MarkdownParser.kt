@@ -122,14 +122,14 @@ object MarkdownParser {
         return result
     }
 
-    private fun processMarkdown(input: String): String {
+    fun processMarkdown(input: String): String {
         var processedInput = preprocessMarkdownLinks(input)
         processedInput = preprocessImageMarkdown(processedInput)
         processedInput = preprocessHtmlTags(processedInput)
         return processedInput
     }
 
-    private fun preprocessImageMarkdown(markdown: String): String {
+    fun preprocessImageMarkdown(markdown: String): String {
         // Used to handle an image tag with a URL that ends with .jpg or .png (Else the image may be shown as broken, a link, or not at all)
         // Example: (..ample_image_name.png"Zombie hatching potion") -> (..ample_image_name.png "Zombie hatching potion")
         val regex = Regex("""!\[.*?]\(.*?".*?"\)""")
@@ -145,8 +145,8 @@ object MarkdownParser {
         }
     }
 
-    private fun preprocessMarkdownLinks(input: String): String {
-        val linkPattern = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)"
+    fun preprocessMarkdownLinks(input: String): String {
+        val linkPattern = "\\[([^\\]]+)\\]\\(([^\\)\"]+)(\".*\")?\\)"
         val multilineLinkPattern = Pattern.compile(linkPattern, Pattern.DOTALL)
         val matcher = multilineLinkPattern.matcher(input)
 
@@ -155,8 +155,9 @@ object MarkdownParser {
         while (matcher.find()) {
             val linkText = matcher.group(1)
             val url = matcher.group(2)
+            val description = matcher.group(3)
             val sanitizedUrl = url?.replace(Regex("\\s"), "")
-            val correctedLink = "[$linkText]($sanitizedUrl)"
+            val correctedLink = if (description.isNullOrBlank()) "[$linkText]($sanitizedUrl)" else "[$linkText]($sanitizedUrl$description)"
             matcher.appendReplacement(sb, Matcher.quoteReplacement(correctedLink))
         }
         matcher.appendTail(sb)

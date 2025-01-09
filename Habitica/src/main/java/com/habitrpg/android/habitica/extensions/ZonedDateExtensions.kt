@@ -7,10 +7,9 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
-import java.time.format.TextStyle
 import java.time.temporal.TemporalAccessor
+import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 fun String.parseToZonedDateTime(): ZonedDateTime? {
     val parsed: TemporalAccessor =
@@ -49,6 +48,21 @@ fun ZonedDateTime.matchesRepeatDays(repeatDays: Days?): Boolean {
         DayOfWeek.FRIDAY -> repeatDays.f
         DayOfWeek.SATURDAY -> repeatDays.s
         DayOfWeek.SUNDAY -> repeatDays.su
+        else -> false
+    }
+}
+
+fun Calendar.matchesRepeatDays(repeatDays: Days?): Boolean {
+    repeatDays ?: return true // If no repeatDays specified, assume it matches
+
+    return when (this.get(Calendar.DAY_OF_WEEK)) {
+        Calendar.MONDAY -> repeatDays.m
+        Calendar.TUESDAY -> repeatDays.t
+        Calendar.WEDNESDAY -> repeatDays.w
+        Calendar.THURSDAY -> repeatDays.th
+        Calendar.FRIDAY -> repeatDays.f
+        Calendar.SATURDAY -> repeatDays.s
+        Calendar.SUNDAY -> repeatDays.su
         else -> false
     }
 }

@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.helpers
 
+import com.habitrpg.common.habitica.helpers.MarkdownParser.preprocessImageMarkdown
+import com.habitrpg.common.habitica.helpers.MarkdownParser.preprocessMarkdownLinks
+import com.habitrpg.common.habitica.helpers.MarkdownParser.processMarkdown
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class MarkdownProcessingTest : WordSpec({
     "processMarkdown" should {
@@ -41,43 +42,4 @@ class MarkdownProcessingTest : WordSpec({
             output shouldBe "![img](https://habitica-assets.s3.amazonaws.com/mobileApp/images/gold.png\"Habitica Gold\")"
         }
     }
-}) {
-    companion object {
-        fun processMarkdown(input: String): String {
-            var processedInput = preprocessMarkdownLinks(input)
-            processedInput = preprocessImageMarkdown(processedInput)
-            return processedInput
-        }
-
-        fun preprocessImageMarkdown(markdown: String): String {
-            val regex = Regex("""!\[.*?]\(.*?".*?"\)""")
-            return markdown.replace(regex) { matchResult ->
-                val match = matchResult.value
-                if (match.contains(".png\"")) {
-                    match.replace(".png\"", ".png \"")
-                } else {
-                    match
-                }
-            }
-        }
-
-        fun preprocessMarkdownLinks(input: String): String {
-            val linkPattern = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)"
-            val multilineLinkPattern = Pattern.compile(linkPattern, Pattern.DOTALL)
-            val matcher = multilineLinkPattern.matcher(input)
-
-            val sb = StringBuffer(input.length)
-
-            while (matcher.find()) {
-                val linkText = matcher.group(1)
-                val url = matcher.group(2)
-                val sanitizedUrl = url.replace(Regex("\\s"), "")
-                val correctedLink = "[$linkText]($sanitizedUrl)"
-                matcher.appendReplacement(sb, Matcher.quoteReplacement(correctedLink))
-            }
-            matcher.appendTail(sb)
-
-            return sb.toString()
-        }
-    }
-}
+})
