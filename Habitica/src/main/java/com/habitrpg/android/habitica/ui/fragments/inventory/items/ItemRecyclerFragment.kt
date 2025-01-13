@@ -2,11 +2,13 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -20,6 +22,7 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -71,6 +74,11 @@ class ItemRecyclerFragment :
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     var user: User? = null
     var adapter: ItemRecyclerAdapter? = null
@@ -273,6 +281,24 @@ class ItemRecyclerFragment :
                         it,
                     ),
                 )
+
+                if (isAdded) {
+                    var hatchCount = sharedPreferences.getInt("pets_hatched", 0)
+                    hatchCount += 1
+                    sharedPreferences.edit {
+                        putInt("pets_hatched", hatchCount)
+                    }
+                    if (hatchCount >= 2) {
+                        userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                            val parentActivity = activity as? MainActivity
+                            val totalCheckIns = user?.loginIncentives
+
+                            if (totalCheckIns != null && parentActivity != null) {
+                                reviewManager.requestReview(parentActivity, totalCheckIns)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

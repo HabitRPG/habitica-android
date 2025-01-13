@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
@@ -49,14 +51,17 @@ class PetDetailRecyclerFragment :
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var reviewManager: ReviewManager
+
     val adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
     private var animalType: String? = null
     private var animalGroup: String? = null
     private var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
-    @Inject
-    lateinit var reviewManager: ReviewManager
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -135,16 +140,6 @@ class PetDetailRecyclerFragment :
             lifecycleScope.launchCatching {
                 val items = inventoryRepository.equip("pet", it)
                 adapter.currentPet = items?.currentPet
-
-                if (isAdded) {
-                    userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
-                        val parentActivity = mainActivity
-                        val totalCheckIns = user?.loginIncentives
-                        if (totalCheckIns != null && parentActivity != null) {
-                            reviewManager.requestReview(parentActivity, totalCheckIns)
-                        }
-                    }
-                }
             }
         }
         userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }
@@ -247,13 +242,31 @@ class PetDetailRecyclerFragment :
     ): FeedResponse? {
         if (food != null) {
             val context = mainActivity ?: context ?: return null
-            return feedPetUseCase.callInteractor(
+            val response = feedPetUseCase.callInteractor(
                 FeedPetUseCase.RequestValues(
                     pet,
                     food,
                     context,
                 ),
             )
+            if (isAdded) {
+                var petFeedings = sharedPreferences.getInt("times_fed", 0)
+                petFeedings += 1
+                sharedPreferences.edit {
+                    putInt("times_fed", petFeedings)
+                }
+                if (petFeedings >= 2) {
+                    userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                        val parentActivity = mainActivity
+                        val totalCheckIns = user?.loginIncentives
+
+                        if (totalCheckIns != null && parentActivity != null) {
+                            reviewManager.requestReview(parentActivity, totalCheckIns)
+                        }
+                    }
+                }
+            }
+            return response
         }
         return suspendCoroutine { cont ->
             val fragment = ItemDialogFragment()

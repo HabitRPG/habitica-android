@@ -663,7 +663,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     this.title = newTitle
                 }
             }
-            checkForReviewPrompt(user)
         }
     }
 
@@ -865,9 +864,5 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         } else {
             binding.content.toolbarTitle.setPadding(0)
         }
-    }
-
-    private fun checkForReviewPrompt(user: User) {
-        reviewManager.requestReview(this, user.loginIncentives)
     }
 }

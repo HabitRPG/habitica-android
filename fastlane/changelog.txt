@@ -1,5 +1,6 @@
-New in 4.5:
-- Support for new subscription benefits
-- Subscribers will now receive a Mystic Hourglass every month
-- The amount of Gems subscribers can purchase in the Market will now go up +2 each month they have benefits until reaching a max of 50
-- The amount of Gems subscribers can purchase in the Market will no longer reset if your benefits lapse. Subscribing again will unlock the Gem cap you left off with, even if subscribing at a lower tier.
+New in 4.6.0
+- Improvements to reminder scheduling to help them appear on time
+- Reminders should no longer appear if a task isn't due that day
+- Your avatar now shows at the top of the screen when choosing equipment, letting you see how you look as you try gear on!
+- We made it easier to choose what to do with tasks from broken Challenges so they don't get stuck on your task list
+- You'll now be able to leave your Party if you're participating in an active Quest
