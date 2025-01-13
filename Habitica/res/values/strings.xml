@@ -30,7 +30,7 @@
     <string name="enable_notifications">Enable Notifications</string>
     <string name="push_notification_system_settings_description">Allow Habitica notifications in the Settings app to receive push notifications</string>
     <string name="push_notification_system_settings_reminders">Allow Habitica notifications in the Settings app to receive reminders</string>
-    <string name="exact_alarm_system_settings_reminders">Habitica does not have the `Alarms &amp; Reminders` permission in the Settings app. Reminders might not appear at the exact time.</string>
+    <string name="exact_alarm_system_settings_reminders">Reminders may be delayed because permissions aren\'t enabled. Tap to view and update permissions.</string>
     <string name="push_notification_system_settings_title">Notifications Disabled</string>
     <string name="push_notifications_sum">Set your push notifications settings</string>
     <string name="exact_alarm_system_settings_title">`Alarm &amp; Reminders` disabled`</string>

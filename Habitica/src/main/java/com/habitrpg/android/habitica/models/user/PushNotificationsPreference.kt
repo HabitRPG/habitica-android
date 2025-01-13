@@ -21,4 +21,21 @@ open class PushNotificationsPreference : RealmObject(), BaseObject {
     var mentionJoinedGuild: Boolean = false
     var mentionUnjoinedGuild: Boolean = false
     var contentRelease: Boolean = false
+
+    fun listOfEnabledKeys(): List<String> {
+        var enabled = mutableListOf<String>()
+        if (invitedParty) enabled.add("invitedParty")
+        if (invitedQuest) enabled.add("invitedQuest")
+        if (majorUpdates) enabled.add("majorUpdates")
+        if (wonChallenge) enabled.add("wonChallenge")
+        if (invitedGuild) enabled.add("invitedGuild")
+        if (newPM) enabled.add("newPM")
+        if (questStarted) enabled.add("questStarted")
+        if (giftedGems) enabled.add("giftedGems")
+        if (partyActivity) enabled.add("partyActivity")
+        if (mentionParty) enabled.add("mentionParty")
+        if (mentionJoinedGuild) enabled.add("mentionJoinedGuild")
+        if (contentRelease) enabled.add("contentRelease")
+        return enabled
+    }
 }

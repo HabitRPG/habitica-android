@@ -229,6 +229,10 @@ class TaskFormActivity : BaseActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
 
+        binding.exactAlarmDisabledContainer.background  = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_task_form)
+        binding.exactAlarmDisabledContainer.background.mutate().setTint(this.getThemeColor(R.attr.tintedUiMain))
+        binding.exactAlarmDisabledText.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
+
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
         taskType = TaskType.from(bundle.getString(TASK_TYPE_KEY)) ?: TaskType.HABIT

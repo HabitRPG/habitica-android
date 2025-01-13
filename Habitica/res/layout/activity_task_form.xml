@@ -242,11 +242,13 @@
                     android:background="@drawable/layout_rounded_bg_yellow_10">
 
                     <TextView
+                        android:id="@+id/exact_alarm_disabled_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/spacing_medium"
+                        android:padding="12dp"
+                        android:gravity="center"
+                        android:fontFamily="@string/font_family_medium"
                         android:text="@string/exact_alarm_system_settings_reminders"
-                        android:textColor="@color/yellow_0"
                         android:textSize="12sp" />
                 </FrameLayout>
 
