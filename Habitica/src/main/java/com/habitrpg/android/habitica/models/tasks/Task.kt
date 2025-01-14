@@ -368,12 +368,13 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
      */
     fun getNextReminderOccurrences(
         remindersItem: RemindersItem?,
-        occurrences: Int
+        occurrences: Int,
+        today: ZonedDateTime? = null
     ): List<ZonedDateTime>? {
         if (remindersItem == null) return null
 
         val reminderTime = remindersItem.time?.parseToZonedDateTime() ?: return null
-        var dateTimeOccurenceToSchedule: ZonedDateTime
+        var nextOccurence: ZonedDateTime
         val occurrencesList = mutableListOf<ZonedDateTime>()
 
         // If the reminder is a todo, only schedule sole dueDate/time occurrence. Otherwise, schedule multiple occurrences in advance
@@ -385,7 +386,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             )
             return occurrencesList
         }
-        val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
+        val now = today ?: ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
         var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val weekInMonth = getWeeksOfMonth()?.firstOrNull()?.toLong()
         val weekdayInMonth = startDate.dayOfWeek
@@ -396,52 +397,52 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         }
         val repeatDays = this.repeat
         startDate = startDate.withHour(reminderTime.hour).withMinute(reminderTime.minute)
-        dateTimeOccurenceToSchedule = startDate
+        nextOccurence = startDate
         if (frequency == Frequency.MONTHLY) {
             daysOfMonth?.let {
                 if (it.isEmpty()) return@let
-                dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.withDayOfMonth(it.first())
-                if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                    dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusMonths(1)
+                nextOccurence = nextOccurence.withDayOfMonth(it.first())
+                if (nextOccurence.isBefore(startDate)) {
+                    nextOccurence = nextOccurence.plusMonths(1)
                 }
             }
         }
 
         while (occurrencesList.size < occurrences) {
             // Increment currentDate based on the frequency
-            dateTimeOccurenceToSchedule =
+            nextOccurence =
                 when (frequency) {
                     Frequency.DAILY -> {
-                        while (dateTimeOccurenceToSchedule.isBefore(now)) {
-                            dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusDays(everyX)
+                        while (nextOccurence.isBefore(now)) {
+                            nextOccurence = nextOccurence.plusDays(everyX)
                         }
-                        val todayWithTime = dateTimeOccurenceToSchedule
+                        val todayWithTime = nextOccurence
                             .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        dateTimeOccurenceToSchedule = if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
+                        nextOccurence = if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
                             todayWithTime
                         } else {
-                            dateTimeOccurenceToSchedule.plusDays(everyX)
+                            nextOccurence.plusDays(everyX)
                                 .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         }
-                        dateTimeOccurenceToSchedule
+                        nextOccurence
                     }
 
                     Frequency.WEEKLY -> {
                         // Set to start date if current date is earlier
                         if (repeatDays?.hasAnyDaySelected() == true) {
-                            if (dateTimeOccurenceToSchedule.isBefore(now)) {
-                                dateTimeOccurenceToSchedule =
-                                    dateTimeOccurenceToSchedule.plusDays(1)
-                                while (!dateTimeOccurenceToSchedule.matchesRepeatDays(repeatDays)) {
-                                    dateTimeOccurenceToSchedule =
-                                        dateTimeOccurenceToSchedule.plusDays(1)
+                            if (nextOccurence.isBefore(now)) {
+                                var occurenceNowWeekday = nextOccurence.minusDays((nextOccurence.dayOfWeek.value - now.dayOfWeek.value).toLong())
+                                while (occurenceNowWeekday.isBefore(now) && occurenceNowWeekday.dayOfYear != now.dayOfYear) {
+                                    occurenceNowWeekday = occurenceNowWeekday.plusDays(everyX * 7)
+                                }
+                                nextOccurence = occurenceNowWeekday
+                                while (!nextOccurence.matchesRepeatDays(repeatDays)) {
+                                    nextOccurence =
+                                        nextOccurence.plusDays(1)
                                 }
                             }
-                            while (dateTimeOccurenceToSchedule.isBefore(now)) {
-                                dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusDays(everyX * 7)
-                            }
                             var nextDueDate =
-                                dateTimeOccurenceToSchedule.withHour(reminderTime.hour)
+                                nextOccurence.withHour(reminderTime.hour)
                                     .withMinute(reminderTime.minute)
                             // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
                             if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
@@ -475,58 +476,58 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                                 }
                             }
 
-                            dateTimeOccurenceToSchedule = nextDueDate
+                            nextOccurence = nextDueDate
                         }
                         // Set time to the reminder time
-                        dateTimeOccurenceToSchedule.withHour(reminderTime.hour)
+                        nextOccurence.withHour(reminderTime.hour)
                             .withMinute(reminderTime.minute)
                     }
 
                     Frequency.MONTHLY -> {
-                        while (dateTimeOccurenceToSchedule.isBefore(now)) {
-                            dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusMonths(everyX)
+                        while (nextOccurence.isBefore(now)) {
+                            nextOccurence = nextOccurence.plusMonths(everyX)
                             if (weekInMonth != null && weekdayInMonth != null) {
-                                dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.withDayOfMonth(1)
-                                while (dateTimeOccurenceToSchedule.dayOfWeek != weekdayInMonth) {
-                                    dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusDays(1)
+                                nextOccurence = nextOccurence.withDayOfMonth(1)
+                                while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                    nextOccurence = nextOccurence.plusDays(1)
                                 }
-                                dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusWeeks(weekInMonth)
+                                nextOccurence = nextOccurence.plusWeeks(weekInMonth)
                             }
                         }
-                        val todayWithTime = dateTimeOccurenceToSchedule
+                        val todayWithTime = nextOccurence
                             .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
                             todayWithTime
                         } else if (weekInMonth != null && weekdayInMonth != null) {
-                            dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusMonths(everyX)
+                            nextOccurence = nextOccurence.plusMonths(everyX)
                                 .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                                 .withDayOfMonth(1)
-                            while (dateTimeOccurenceToSchedule.dayOfWeek != weekdayInMonth) {
-                                dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusDays(1)
+                            while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                nextOccurence = nextOccurence.plusDays(1)
                             }
-                            dateTimeOccurenceToSchedule.plusWeeks(weekInMonth)
+                            nextOccurence.plusWeeks(weekInMonth)
                         } else {
-                            dateTimeOccurenceToSchedule.plusMonths(everyX)
+                            nextOccurence.plusMonths(everyX)
                                 .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         }
                     }
 
                     Frequency.YEARLY -> {
-                        while (dateTimeOccurenceToSchedule.isBefore(now)) {
-                            dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusYears(everyX)
+                        while (nextOccurence.isBefore(now)) {
+                            nextOccurence = nextOccurence.plusYears(everyX)
                         }
-                        val todayWithTime = dateTimeOccurenceToSchedule
+                        val todayWithTime = nextOccurence
                             .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
                             todayWithTime
                         } else {
-                            dateTimeOccurenceToSchedule.plusYears(everyX)
+                            nextOccurence.plusYears(everyX)
                                 .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         }
                     }
                 }
 
-            occurrencesList.add(dateTimeOccurenceToSchedule)
+            occurrencesList.add(nextOccurence)
         }
 
         return occurrencesList
