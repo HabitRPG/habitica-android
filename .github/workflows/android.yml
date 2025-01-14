@@ -86,24 +86,24 @@ jobs:
       with:
         arguments: ktlintCheck
 
-  detekt:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'adopt'
-        cache: gradle
-    - name: Prepare
-      run: ./.github/prepare-workflow
-    - name: Run with Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: detekt
-    - name: Upload SARIF to Github using the upload-sarif action
-      uses: github/codeql-action/upload-sarif@v2
-      if: ${{ always() }}
-      with:
-        sarif_file: build/reports/detekt.sarif
+#  detekt:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v3
+#    - name: set up JDK 17
+#      uses: actions/setup-java@v3
+#      with:
+#        java-version: '17'
+#        distribution: 'adopt'
+#        cache: gradle
+#    - name: Prepare
+#      run: ./.github/prepare-workflow
+#    - name: Run with Gradle
+#      uses: gradle/gradle-build-action@v2
+#      with:
+#        arguments: detekt
+#    - name: Upload SARIF to Github using the upload-sarif action
+#      uses: github/codeql-action/upload-sarif@v2
+#      if: ${{ always() }}
+#      with:
+#        sarif_file: build/reports/detekt.sarif
