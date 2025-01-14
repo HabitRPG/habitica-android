@@ -54,7 +54,7 @@ class StableRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -66,13 +66,13 @@ class StableRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.emptyItem =
             EmptyItem(
-                getString(R.string.empty_items, itemTypeText ?: viewModel.itemType),
+                getString(R.string.empty_items, itemTypeText ?: viewModel.itemType)
             )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
@@ -81,7 +81,7 @@ class StableRecyclerFragment :
             object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
-                            position,
+                            position
                         ) == 1
                     ) {
                         layoutManager.spanCount
@@ -107,7 +107,7 @@ class StableRecyclerFragment :
                     val potion =
                         inventoryRepository.getItems(
                             HatchingPotion::class.java,
-                            arrayOf(animal.color),
+                            arrayOf(animal.color)
                         ).firstOrNull()?.firstOrNull() as? HatchingPotion
                     callback(Pair(egg, potion))
                 }
@@ -122,7 +122,7 @@ class StableRecyclerFragment :
                     lifecycleScope.launchCatching {
                         inventoryRepository.equip(
                             if (viewModel.itemType == "pets") "pet" else "mount",
-                            it,
+                            it
                         )
                     }
                 }

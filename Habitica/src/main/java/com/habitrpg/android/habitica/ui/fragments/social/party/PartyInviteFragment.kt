@@ -81,38 +81,38 @@ fun uUIDFromStringOrNull(name: String): UUID? {
 
 @HiltViewModel
 class PartyInviteViewModel
-    @Inject
-    constructor(
-        userRepository: UserRepository,
-        userViewModel: MainUserViewModel,
-        val socialRepository: SocialRepository,
-    ) : BaseViewModel(userRepository, userViewModel) {
-        val invites = mutableStateListOf("")
+@Inject
+constructor(
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val socialRepository: SocialRepository
+) : BaseViewModel(userRepository, userViewModel) {
+    val invites = mutableStateListOf("")
 
-        suspend fun sendInvites(): List<InviteResponse>? {
-            val inviteMap =
-                mapOf<String, MutableList<Any>>(
-                    "emails" to mutableListOf(),
-                    "uuids" to mutableListOf(),
-                    "usernames" to mutableListOf(),
-                )
-            for (invite in invites) {
-                if (invite.isValidEmail()) {
-                    inviteMap["emails"]?.add(
-                        mapOf(
-                            "name" to "",
-                            "email" to invite,
-                        ),
+    suspend fun sendInvites(): List<InviteResponse>? {
+        val inviteMap =
+            mapOf<String, MutableList<Any>>(
+                "emails" to mutableListOf(),
+                "uuids" to mutableListOf(),
+                "usernames" to mutableListOf()
+            )
+        for (invite in invites) {
+            if (invite.isValidEmail()) {
+                inviteMap["emails"]?.add(
+                    mapOf(
+                        "name" to "",
+                        "email" to invite
                     )
-                } else if (uUIDFromStringOrNull(invite) != null) {
-                    inviteMap["uuids"]?.add(invite)
-                } else if (invite.isNotBlank()) {
-                    inviteMap["usernames"]?.add(invite)
-                }
+                )
+            } else if (uUIDFromStringOrNull(invite) != null) {
+                inviteMap["uuids"]?.add(invite)
+            } else if (invite.isNotBlank()) {
+                inviteMap["usernames"]?.add(invite)
             }
-            return socialRepository.inviteToGroup("party", inviteMap)
         }
+        return socialRepository.inviteToGroup("party", inviteMap)
     }
+}
 
 @AndroidEntryPoint
 class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
@@ -122,7 +122,7 @@ class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentComposeBinding {
         return FragmentComposeBinding.inflate(inflater, container, false)
     }
@@ -130,7 +130,7 @@ class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding?.composeView?.setContent {
@@ -148,7 +148,7 @@ class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
 @Composable
 fun PartyInviteView(
     viewModel: PartyInviteViewModel,
-    dismiss: () -> Unit,
+    dismiss: () -> Unit
 ) {
     var inviteButtonState: LoadingButtonState by remember { mutableStateOf(LoadingButtonState.CONTENT) }
     val scope = rememberCoroutineScope()
@@ -158,27 +158,27 @@ fun PartyInviteView(
         Modifier
             .fillMaxSize()
             .padding(14.dp)
-            .scrollable(scrollableState, Orientation.Vertical),
+            .scrollable(scrollableState, Orientation.Vertical)
     ) {
         item {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 22.dp, bottom = 14.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 22.dp, bottom = 14.dp)
             ) {
                 Text(
                     stringResource(R.string.invite_with_username_email),
                     color = HabiticaTheme.colors.textPrimary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(bottom = 4.dp),
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
                     stringResource(R.string.habiticans_send_invite),
                     color = HabiticaTheme.colors.textSecondary,
-                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
+                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
                 )
             }
         }
@@ -189,19 +189,19 @@ fun PartyInviteView(
             val rotation =
                 transition.animateFloat(
                     label = "isAssigned",
-                    transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow) },
+                    transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow) }
                 ) {
                     if (it) 135f else 0f
                 }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(0.dp, 4.dp)
-                        .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.medium)
-                        .padding(4.dp, 4.dp)
-                        .animateItemPlacement(),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 4.dp)
+                    .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.medium)
+                    .padding(4.dp, 4.dp)
+                    .animateItemPlacement()
             ) {
                 Button(
                     onClick = {
@@ -213,18 +213,18 @@ fun PartyInviteView(
                     elevation = ButtonDefaults.buttonElevation(0.dp),
                     contentPadding = PaddingValues(0.dp),
                     modifier =
-                        Modifier
-                            .size(32.dp)
-                            .padding(3.dp),
+                    Modifier
+                        .size(32.dp)
+                        .padding(3.dp)
                 ) {
                     Image(
                         painterResource(R.drawable.ic_close_white_24dp),
                         null,
                         colorFilter = ColorFilter.tint(HabiticaTheme.colors.textPrimary),
                         modifier =
-                            Modifier
-                                .rotate(rotation.value)
-                                .size(32.dp),
+                        Modifier
+                            .rotate(rotation.value)
+                            .size(32.dp)
                     )
                 }
 
@@ -240,22 +240,22 @@ fun PartyInviteView(
                     textStyle = TextStyle(fontSize = 16.sp),
                     placeholder = { Text(stringResource(R.string.username_or_email)) },
                     colors =
-                        TextFieldDefaults.colors(
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            focusedTextColor = HabiticaTheme.colors.textPrimary,
-                        ),
+                    TextFieldDefaults.colors(
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        focusedTextColor = HabiticaTheme.colors.textPrimary
+                    ),
                     modifier =
-                        Modifier
-                            .onFocusChanged {
-                                if (!it.isFocused) {
-                                    if (viewModel.invites.size > index && viewModel.invites[index].isBlank() && viewModel.invites.size - 1 != index && viewModel.invites.size > 1) {
-                                        viewModel.invites.removeAt(index)
-                                    }
+                    Modifier
+                        .onFocusChanged {
+                            if (!it.isFocused) {
+                                if (viewModel.invites.size > index && viewModel.invites[index].isBlank() && viewModel.invites.size - 1 != index && viewModel.invites.size > 1) {
+                                    viewModel.invites.removeAt(index)
                                 }
-                            },
+                            }
+                        }
                 )
             }
         }
@@ -283,7 +283,7 @@ fun PartyInviteView(
                             inviteButtonState = LoadingButtonState.CONTENT
                         }
                     }
-                },
+                }
             )
         }
     }

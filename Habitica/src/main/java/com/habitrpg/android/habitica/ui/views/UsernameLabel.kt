@@ -31,105 +31,105 @@ import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.models.PlayerTier
 
 class UsernameLabel
-    @JvmOverloads
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-    ) : LinearLayout(context, attrs) {
-        private val textView = TextView(context)
-        private val tierIconView = ImageView(context)
+@JvmOverloads
+constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : LinearLayout(context, attrs) {
+    private val textView = TextView(context)
+    private val tierIconView = ImageView(context)
 
-        var username: String? = ""
-            set(value) {
-                field = value
-                textView.text = value
-            }
-
-        var isNPC: Boolean = false
-            set(value) {
-                field = value
-                tier = tier
-            }
-
-        var tier: Int = 0
-            set(value) {
-                field = value
-                if (isNPC) {
-                    textView.setTextColor(ContextCompat.getColor(context, R.color.contributor_npc))
-                } else {
-                    textView.setTextColor(PlayerTier.getColorForTier(context, value))
-                }
-                if (value == 0) {
-                    tierIconView.visibility = View.GONE
-                } else {
-                    tierIconView.visibility = View.VISIBLE
-                    tierIconView.setImageBitmap(
-                        HabiticaIconsHelper.imageOfContributorBadge(
-                            value.toFloat(),
-                            isNPC,
-                        ),
-                    )
-                }
-            }
-
-        init {
-            val textViewParams =
-                LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                )
-            textViewParams.gravity = Gravity.CENTER_VERTICAL
-            textViewParams.weight = 1.0f
-            addView(textView, textViewParams)
-            val padding = context.resources.getDimension(R.dimen.spacing_small).toInt()
-            textView.setPadding(0, 0, padding, 0)
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                textView.typeface = Typeface.create(null, 600, false)
-            }
-            val iconViewParams =
-                LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                )
-            iconViewParams.gravity = Gravity.CENTER_VERTICAL
-            addView(tierIconView, iconViewParams)
+    var username: String? = ""
+        set(value) {
+            field = value
+            textView.text = value
         }
+
+    var isNPC: Boolean = false
+        set(value) {
+            field = value
+            tier = tier
+        }
+
+    var tier: Int = 0
+        set(value) {
+            field = value
+            if (isNPC) {
+                textView.setTextColor(ContextCompat.getColor(context, R.color.contributor_npc))
+            } else {
+                textView.setTextColor(PlayerTier.getColorForTier(context, value))
+            }
+            if (value == 0) {
+                tierIconView.visibility = View.GONE
+            } else {
+                tierIconView.visibility = View.VISIBLE
+                tierIconView.setImageBitmap(
+                    HabiticaIconsHelper.imageOfContributorBadge(
+                        value.toFloat(),
+                        isNPC
+                    )
+                )
+            }
+        }
+
+    init {
+        val textViewParams =
+            LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+        textViewParams.gravity = Gravity.CENTER_VERTICAL
+        textViewParams.weight = 1.0f
+        addView(textView, textViewParams)
+        val padding = context.resources.getDimension(R.dimen.spacing_small).toInt()
+        textView.setPadding(0, 0, padding, 0)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            textView.typeface = Typeface.create(null, 600, false)
+        }
+        val iconViewParams =
+            LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+        iconViewParams.gravity = Gravity.CENTER_VERTICAL
+        addView(tierIconView, iconViewParams)
     }
+}
 
 @Composable
 fun ComposableUsernameLabel(
     username: String,
     tier: Int,
     modifier: Modifier = Modifier,
-    isNPC: Boolean = false,
+    isNPC: Boolean = false
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier,
+        modifier = modifier
     ) {
         ProvideTextStyle(value = TextStyle(fontWeight = FontWeight.SemiBold)) {
             Text(
                 username,
                 color =
-                    if (isNPC) {
-                        colorResource(id = R.color.contributor_npc)
-                    } else {
-                        Color(
-                            PlayerTier.getColorForTier(
-                                LocalContext.current,
-                                tier,
-                            ),
+                if (isNPC) {
+                    colorResource(id = R.color.contributor_npc)
+                } else {
+                    Color(
+                        PlayerTier.getColorForTier(
+                            LocalContext.current,
+                            tier
                         )
-                    },
+                    )
+                }
             )
             if (tier > 0) {
                 Image(
                     bitmap =
-                        HabiticaIconsHelper.imageOfContributorBadge(tier.toFloat(), isNPC)
-                            .asImageBitmap(),
-                    contentDescription = null,
+                    HabiticaIconsHelper.imageOfContributorBadge(tier.toFloat(), isNPC)
+                        .asImageBitmap(),
+                    contentDescription = null
                 )
             }
         }

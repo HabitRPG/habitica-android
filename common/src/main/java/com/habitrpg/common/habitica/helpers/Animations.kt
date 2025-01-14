@@ -21,7 +21,7 @@ import kotlin.random.Random
 object Animations {
     private fun randomFloat(
         min: Float,
-        max: Float,
+        max: Float
     ): Float {
         return min + Random.nextFloat() * (max - min)
     }
@@ -60,7 +60,7 @@ object Animations {
 
     fun circularReveal(
         view: View,
-        duration: Long = 300,
+        duration: Long = 300
     ) {
         if (!view.isAttachedToWindow) return
         val cx = view.width / 2
@@ -75,7 +75,7 @@ object Animations {
 
     fun circularHide(
         view: View,
-        duration: Long = 300,
+        duration: Long = 300
     ) {
         val cx = view.width / 2
         val cy = view.height / 2

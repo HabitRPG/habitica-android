@@ -15,14 +15,14 @@ class DayNightTextView(context: Context, attrs: AttributeSet?) : AppCompatTextVi
             if (context.isUsingNightModeResources()) {
                 attributes?.getColor(
                     R.styleable.DayNightTextView_nightTextColor,
-                    ContextCompat.getColor(context, R.color.text_primary),
+                    ContextCompat.getColor(context, R.color.text_primary)
                 )
             } else {
                 attributes?.getColor(
                     R.styleable.DayNightTextView_dayTextColor,
-                    ContextCompat.getColor(context, R.color.text_primary),
+                    ContextCompat.getColor(context, R.color.text_primary)
                 )
-            } ?: ContextCompat.getColor(context, R.color.text_primary),
+            } ?: ContextCompat.getColor(context, R.color.text_primary)
         )
     }
 }

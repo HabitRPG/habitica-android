@@ -1,7 +1,5 @@
 package com.habitrpg.shared.habitica
 
-import com.habitrpg.shared.habitica.models.responses.TaskDirectionDataDrop
-import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import kotlin.reflect.KClass
 
 expect class Platform() {
@@ -35,7 +33,7 @@ expect class HParcel {
     fun writeValue(questDamage: Any?)
     fun writeString(it: String?)
     fun readByte(): Byte
-    fun <T: HParcelable> readParcelable(creator: HClassLoader?): T?
+    fun <T : HParcelable> readParcelable(creator: HClassLoader?): T?
     fun readDouble(): Double
     fun readInt(): Int
     fun readValue(classLoader: HClassLoader?): Any?

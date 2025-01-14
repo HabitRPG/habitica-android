@@ -16,7 +16,7 @@ class ReminderContainer
 constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     var taskType = TaskType.DAILY
         set(value) {
@@ -74,7 +74,7 @@ constructor(
 
     private fun addReminderViewAt(
         index: Int,
-        item: RemindersItem? = null,
+        item: RemindersItem? = null
     ) {
         val view = ReminderItemFormView(context)
         view.firstDayOfWeek = firstDayOfWeek

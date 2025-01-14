@@ -31,7 +31,7 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
     private fun openEditFormOnPhone() {
         sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray()) {}
         startActivity(
-            Intent(this, ContinuePhoneActivity::class.java),
+            Intent(this, ContinuePhoneActivity::class.java)
         )
     }
 
@@ -48,8 +48,8 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
             binding.taskTypeView.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    task?.extraLightTaskColor ?: R.color.watch_white,
-                ),
+                    task?.extraLightTaskColor ?: R.color.watch_white
+                )
             )
             binding.taskTextView.text = task?.text
             if (task?.notes?.isNotBlank() == true) {

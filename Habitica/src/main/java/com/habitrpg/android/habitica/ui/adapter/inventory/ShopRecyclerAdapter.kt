@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
@@ -30,6 +29,7 @@ import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.fromHtml
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 
@@ -109,7 +109,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ViewHolder =
         when (viewType) {
             0 -> ShopHeaderViewHolder(parent)
@@ -137,7 +137,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
     @Suppress("ReturnCount")
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int,
+        position: Int
     ) {
         val obj = getItem(position)
         if (obj != null) {
@@ -158,7 +158,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                 HabiticaClassArrayAdapter(
                                     context,
                                     R.layout.class_spinner_dropdown_item,
-                                    gearCategories.map { it.identifier },
+                                    gearCategories.map { it.identifier }
                                 )
                             sectionHolder.spinnerAdapter = adapter
                             sectionHolder.selectedItem = gearCategories.indexOf(obj)
@@ -181,7 +181,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                                     "show insufficient gems modal",
                                                     EventCategory.BEHAVIOUR,
                                                     HitType.EVENT,
-                                                    mapOf("reason" to "class change"),
+                                                    mapOf("reason" to "class change")
                                                 )
                                                 dialog.show()
                                             }
@@ -193,16 +193,16 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                             R.string.change_class_to_x,
                                             getTranslatedClassName(
                                                 context.resources,
-                                                selectedGearCategory,
-                                            ),
+                                                selectedGearCategory
+                                            )
                                         )
                                     sectionHolder.switchClassDescription?.text =
                                         context.getString(
                                             R.string.unlock_gear_and_skills,
                                             getTranslatedClassName(
                                                 context.resources,
-                                                selectedGearCategory,
-                                            ),
+                                                selectedGearCategory
+                                            )
                                         )
                                     sectionHolder.switchClassCurrency?.value = 3.0
                                 } else {
@@ -244,7 +244,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                 is Pair<*, *> ->
                     (holder as? ArmoireGearViewHolder)?.bind(
                         obj.first as? String ?: "",
-                        obj.second as? Int ?: 0,
+                        obj.second as? Int ?: 0
                     )
             }
         }
@@ -270,10 +270,10 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                     context?.resources?.let {
                         getTranslatedClassName(
                             it,
-                            selectedGearCategory?.identifier,
+                            selectedGearCategory?.identifier
                         )
                     } ?: selectedGearCategory?.identifier,
-                    armoireCount,
+                    armoireCount
                 )
 
                 else -> selectedGearCategory?.items?.get(position - 2)
@@ -351,7 +351,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         fun bind(
             shop: Shop,
             identifier: String,
-            shopSpriteSuffix: String?,
+            shopSpriteSuffix: String?
         ) {
             binding.npcBannerView.shopSpriteSuffix = shopSpriteSuffix
             binding.npcBannerView.identifier = identifier
@@ -386,7 +386,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
 
         fun bind(
             className: String,
-            armoireCount: Int,
+            armoireCount: Int
         ) {
             binding.titleView.text =
                 itemView.context.getString(R.string.shop_armoire_title, className)

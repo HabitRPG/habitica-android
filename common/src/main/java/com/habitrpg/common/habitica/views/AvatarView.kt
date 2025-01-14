@@ -15,7 +15,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.constraintlayout.helper.widget.Layer
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil.dispose
@@ -91,7 +90,7 @@ class AvatarView : FrameLayout {
                 Bitmap.createBitmap(
                     canvasRect.width(),
                     canvasRect.height(),
-                    Bitmap.Config.ARGB_8888,
+                    Bitmap.Config.ARGB_8888
                 )
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             imageViewHolder.forEach {
@@ -100,7 +99,7 @@ class AvatarView : FrameLayout {
                     bitmap,
                     Rect(0, 0, bitmap.width, bitmap.height),
                     Rect(it.marginStart, it.marginTop, bitmap.width + it.marginStart, bitmap.height + it.marginTop),
-                    null,
+                    null
                 )
             }
 
@@ -127,7 +126,7 @@ class AvatarView : FrameLayout {
 
     private fun init(
         attrs: AttributeSet?,
-        defStyle: Int,
+        defStyle: Int
     ) {
         // Load attributes
         val a =
@@ -135,7 +134,7 @@ class AvatarView : FrameLayout {
                 attrs,
                 R.styleable.AvatarView,
                 defStyle,
-                0,
+                0
             )
 
         try {
@@ -182,8 +181,8 @@ class AvatarView : FrameLayout {
             imageView.load(
                 DataBindingUtils.BASE_IMAGE_URL +
                     DataBindingUtils.getFullFilename(
-                        layerName,
-                    ),
+                        layerName
+                    )
             ) {
                 allowHardware(false)
                 target(
@@ -211,7 +210,7 @@ class AvatarView : FrameLayout {
                             imageView.layoutParams = layoutParams
                             onLayerComplete()
                         }
-                    },
+                    }
                 )
             }
         }
@@ -225,7 +224,7 @@ class AvatarView : FrameLayout {
 
     private fun getLayerMap(
         avatar: Avatar,
-        resetHasAttributes: Boolean,
+        resetHasAttributes: Boolean
     ): Map<LayerType, String> {
         val layerMap = getAvatarLayerMap(avatar, spriteSubstitutions)
 
@@ -272,7 +271,7 @@ class AvatarView : FrameLayout {
 
     private fun substituteOrReturn(
         substitutions: Map<String, String>?,
-        name: String,
+        name: String
     ): String {
         for (key in substitutions?.keys ?: arrayListOf()) {
             if (name.contains(key)) {
@@ -285,7 +284,7 @@ class AvatarView : FrameLayout {
     @Suppress("ReturnCount")
     private fun getAvatarLayerMap(
         avatar: Avatar,
-        substitutions: Map<String, Map<String, String>>,
+        substitutions: Map<String, Map<String, String>>
     ): EnumMap<LayerType, String> {
         val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
@@ -395,7 +394,7 @@ class AvatarView : FrameLayout {
     private fun getLayerBounds(
         layerType: LayerType,
         layerName: String,
-        drawable: Drawable,
+        drawable: Drawable
     ): Rect {
         var offset: PointF? = null
         val bounds = Rect(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
@@ -494,7 +493,7 @@ class AvatarView : FrameLayout {
 
     fun setAvatar(
         avatar: Avatar,
-        preview: Map<LayerType, String>? = null,
+        preview: Map<LayerType, String>? = null
     ) {
         val oldUser = this.avatar
         this.avatar = avatar
@@ -567,7 +566,7 @@ class AvatarView : FrameLayout {
         WEAPON,
         MOUNT_HEAD,
         ZZZ,
-        PET,
+        PET
     }
 
     companion object {
@@ -598,7 +597,7 @@ class AvatarView : FrameLayout {
             LayerType.WEAPON,
             LayerType.MOUNT_HEAD,
             LayerType.ZZZ,
-            LayerType.PET,
+            LayerType.PET
         )
     }
 }

@@ -160,8 +160,8 @@ class NotificationsActivity :
             inflater?.inflate(
                 R.layout.no_notifications,
                 binding.notificationItems,
-                false,
-            ),
+                false
+            )
         )
         binding.progressView.isVisible = false
     }
@@ -182,23 +182,23 @@ class NotificationsActivity :
                         Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
                         Notification.Type.UNALLOCATED_STATS_POINTS.type ->
                             createUnallocatedStatsNotification(
-                                it,
+                                it
                             )
 
                         Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
                         Notification.Type.GROUP_TASK_NEEDS_WORK.type ->
                             createGroupTaskNeedsWorkNotification(
-                                it,
+                                it
                             )
 
                         Notification.Type.GROUP_TASK_APPROVED.type ->
                             createGroupTaskApprovedNotification(
-                                it,
+                                it
                             )
 
                         Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type ->
                             createGroupTaskNeedsApprovalNotification(
-                                it,
+                                it
                             )
 
                         Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
@@ -247,7 +247,7 @@ class NotificationsActivity :
 
         return createDismissableNotificationItem(
             notification,
-            fromHtml(getString(stringId, data?.group?.name)),
+            fromHtml(getString(stringId, data?.group?.name))
         )
     }
 
@@ -256,7 +256,7 @@ class NotificationsActivity :
         return createDismissableNotificationItem(
             notification,
             fromHtml("<b>" + data?.title + "</b><br>" + data?.text),
-            imageName = data?.icon,
+            imageName = data?.icon
         )
     }
 
@@ -282,7 +282,7 @@ class NotificationsActivity :
                 createDismissableNotificationItem(
                     baileyNotification,
                     text,
-                    R.drawable.notifications_bailey,
+                    R.drawable.notifications_bailey
                 )
             }
         }
@@ -295,7 +295,7 @@ class NotificationsActivity :
             createDismissableNotificationItem(
                 notification,
                 fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
-                R.drawable.notification_stat_sparkles,
+                R.drawable.notification_stat_sparkles
             )
         } else {
             null
@@ -306,7 +306,7 @@ class NotificationsActivity :
         return createDismissableNotificationItem(
             notification,
             fromHtml(getString(R.string.new_subscriber_item)),
-            R.drawable.notification_mystery_item,
+            R.drawable.notification_mystery_item
         )
     }
 
@@ -318,7 +318,7 @@ class NotificationsActivity :
             notification,
             fromHtml(message),
             null,
-            textColor = R.color.yellow_5,
+            textColor = R.color.yellow_5
         )
     }
 
@@ -330,7 +330,7 @@ class NotificationsActivity :
             notification,
             fromHtml(message),
             null,
-            textColor = R.color.green_10,
+            textColor = R.color.green_10
         )
     }
 
@@ -341,7 +341,7 @@ class NotificationsActivity :
         val item =
             createActionableNotificationItem(
                 notification,
-                fromHtml(message),
+                fromHtml(message)
             )
         // Hide for now
         item?.visibility = View.GONE
@@ -366,7 +366,7 @@ class NotificationsActivity :
         messageText: CharSequence,
         imageResourceId: Int? = null,
         imageName: String? = null,
-        textColor: Int? = null,
+        textColor: Int? = null
     ): View? {
         val item = inflater?.inflate(R.layout.notification_item, binding.notificationItems, false)
         item?.tag = notification.id
@@ -423,11 +423,11 @@ class NotificationsActivity :
                         getString(
                             R.string.invited_to_party_notification,
                             data.invitation?.name,
-                            inviter?.formattedUsername,
-                        ),
+                            inviter?.formattedUsername
+                        )
                     ),
                     openable = true,
-                    inviterId,
+                    inviterId
                 )
             } else {
                 return@withContext null
@@ -446,11 +446,11 @@ class NotificationsActivity :
                         getString(
                             R.string.invited_to_guild_notification,
                             data.invitation?.name,
-                            inviter?.formattedUsername,
-                        ),
+                            inviter?.formattedUsername
+                        )
                     ),
                     openable = true,
-                    inviterId,
+                    inviterId
                 )
             } else {
                 return@withContext null
@@ -478,7 +478,7 @@ class NotificationsActivity :
 
     private fun updateQuestInvitationView(
         view: View?,
-        questContent: QuestContent,
+        questContent: QuestContent
     ) {
         val messageTextView = view?.findViewById(R.id.message_text) as? TextView
         messageTextView?.text = fromHtml(getString(R.string.invited_to_quest, questContent.text))
@@ -513,13 +513,13 @@ class NotificationsActivity :
         notification: Notification,
         messageText: CharSequence,
         openable: Boolean = false,
-        inviterId: String? = null,
+        inviterId: String? = null
     ): View? {
         val item =
             inflater?.inflate(
                 R.layout.notification_item_actionable,
                 binding.notificationItems,
-                false,
+                false
             )
         item?.tag = notification.id
 

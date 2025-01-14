@@ -19,14 +19,14 @@ object HealthFormatter {
 
     fun formatToString(
         input: Int,
-        locale: Locale = getDefaultLocale(),
+        locale: Locale = getDefaultLocale()
     ) = formatToString(input.toDouble(), locale)
 
     @JvmStatic
     @JvmOverloads
     fun formatToString(
         input: Double,
-        locale: Locale = getDefaultLocale(),
+        locale: Locale = getDefaultLocale()
     ): String {
         val doubleValue = format(input)
         val numberFormat = NumberFormat.getInstance(locale).apply { maximumFractionDigits = 1 }

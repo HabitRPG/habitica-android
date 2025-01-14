@@ -147,7 +147,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     fun completeForUser(
         userID: String?,
-        completed: Boolean,
+        completed: Boolean
     ) {
         if (isGroupTask && group?.assignedUsersDetail?.isNotEmpty() == true) {
             group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed =
@@ -183,8 +183,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     val streakString: String?
         get() {
             return if (counterUp != null && (
-                    counterUp
-                        ?: 0
+                counterUp
+                    ?: 0
                 ) > 0 && counterDown != null && (counterDown ?: 0) > 0
             ) {
                 "+" + counterUp.toString() + " | -" + counterDown?.toString()
@@ -368,7 +368,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
      */
     fun getNextReminderOccurrences(
         remindersItem: RemindersItem?,
-        occurrences: Int,
+        occurrences: Int
     ): List<ZonedDateTime>? {
         if (remindersItem == null) return null
 
@@ -380,8 +380,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         if (this.type == TaskType.TODO) {
             occurrencesList.add(
                 (remindersItem.getZonedDateTime() ?: this.dueDate?.toZonedDateTime())?.withHour(
-                    reminderTime.hour,
-                )?.withMinute(reminderTime.minute) ?: return null,
+                    reminderTime.hour
+                )?.withMinute(reminderTime.minute) ?: return null
             )
             return occurrencesList
         }
@@ -418,11 +418,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                         val todayWithTime = dateTimeOccurenceToSchedule
                             .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         dateTimeOccurenceToSchedule = if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
-                                todayWithTime
-                            } else {
-                                dateTimeOccurenceToSchedule.plusDays(everyX)
-                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                            }
+                            todayWithTime
+                        } else {
+                            dateTimeOccurenceToSchedule.plusDays(everyX)
+                                .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                        }
                         dateTimeOccurenceToSchedule
                     }
 
@@ -462,7 +462,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                             val weeksSinceStart =
                                 ChronoUnit.WEEKS.between(
                                     startDate.toLocalDate(),
-                                    nextDueDate.toLocalDate(),
+                                    nextDueDate.toLocalDate()
                                 )
                             if (weeksSinceStart % everyX != 0L) {
                                 val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
@@ -479,7 +479,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                         }
                         // Set time to the reminder time
                         dateTimeOccurenceToSchedule.withHour(reminderTime.hour)
-                                .withMinute(reminderTime.minute)
+                            .withMinute(reminderTime.minute)
                     }
 
                     Frequency.MONTHLY -> {
@@ -641,7 +641,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int,
+        flags: Int
     ) {
         dest.writeString(this.ownerID)
         dest.writeValue(this.priority)

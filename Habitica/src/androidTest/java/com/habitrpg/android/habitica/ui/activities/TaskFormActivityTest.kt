@@ -296,7 +296,7 @@ class TaskFormActivityTest : ActivityTestCase() {
             }
             KSpinner(
                 builder = { withId(R.id.repeats_every_spinner) },
-                itemTypeBuilder = { itemType(::KSpinnerItem) },
+                itemTypeBuilder = { itemType(::KSpinnerItem) }
             ) perform {
                 open()
                 childAt<KSpinnerItem>(1) {

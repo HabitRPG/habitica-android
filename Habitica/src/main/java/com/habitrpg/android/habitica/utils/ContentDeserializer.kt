@@ -29,7 +29,7 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): ContentResult {
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("ContentDeserialize")
         deserializeTrace.start()
@@ -122,12 +122,12 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.appearances =
             context.deserialize(
                 obj.get("appearances"),
-                object : TypeToken<RealmList<Customization>>() {}.type,
+                object : TypeToken<RealmList<Customization>>() {}.type
             )
         result.backgrounds =
             context.deserialize(
                 obj.get("backgrounds"),
-                object : TypeToken<RealmList<Customization>>() {}.type,
+                object : TypeToken<RealmList<Customization>>() {}.type
             )
         val noBackground = Customization()
         noBackground.customizationSet = "incentiveBackgrounds"

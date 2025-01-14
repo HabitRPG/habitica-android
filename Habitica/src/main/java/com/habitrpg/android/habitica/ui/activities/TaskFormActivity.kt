@@ -124,7 +124,7 @@ class TaskFormActivity : BaseActivity() {
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
+            ActivityResultContracts.RequestPermission()
         ) { granted ->
             if (granted) {
                 pushNotificationManager.addPushDeviceUsingStoredToken()
@@ -229,9 +229,9 @@ class TaskFormActivity : BaseActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
 
-        binding.exactAlarmDisabledContainer.background  = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_task_form)
+        binding.exactAlarmDisabledContainer.background = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_task_form)
         binding.exactAlarmDisabledContainer.background.mutate().setTint(this.getThemeColor(R.attr.tintedUiMain))
-        binding.exactAlarmDisabledText.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
+        binding.exactAlarmDisabledText.setTextColor(getThemeColor(R.attr.tintedUiDetails))
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
 
@@ -256,7 +256,7 @@ class TaskFormActivity : BaseActivity() {
         binding.textEditText.addTextChangedListener(
             OnChangeTextWatcher { _, _, _, _ ->
                 checkCanSave()
-            },
+            }
         )
         binding.textEditText.onFocusChangeListener =
             View.OnFocusChangeListener { _, isFocused ->
@@ -325,8 +325,8 @@ class TaskFormActivity : BaseActivity() {
                                 TaskType.TODO -> R.string.todo
                                 TaskType.REWARD -> R.string.reward
                                 else -> R.string.habit
-                            },
-                        ),
+                            }
+                        )
                     )
                 initialTaskInstance = configureTask(Task())
             }
@@ -350,7 +350,7 @@ class TaskFormActivity : BaseActivity() {
                             }
                         },
                         configManager = configManager,
-                        showEditButton = true,
+                        showEditButton = true
                     )
                 }
             }
@@ -373,7 +373,7 @@ class TaskFormActivity : BaseActivity() {
             HabiticaTheme {
                 TaskDifficultySelector(
                     viewModel.taskDifficulty.value,
-                    onSelect = { viewModel.taskDifficulty.value = it },
+                    onSelect = { viewModel.taskDifficulty.value = it }
                 )
             }
         }
@@ -391,7 +391,7 @@ class TaskFormActivity : BaseActivity() {
                         {
                             viewModel.habitScoringNegative.value =
                                 !viewModel.habitScoringNegative.value
-                        },
+                        }
                     )
                 }
             }
@@ -403,10 +403,10 @@ class TaskFormActivity : BaseActivity() {
                         listOf(
                             LabeledValue(getString(R.string.repeat_daily), HabitResetOption.DAILY),
                             LabeledValue(getString(R.string.weekly), HabitResetOption.WEEKLY),
-                            LabeledValue(getString(R.string.monthly), HabitResetOption.MONTHLY),
+                            LabeledValue(getString(R.string.monthly), HabitResetOption.MONTHLY)
                         ),
                         { viewModel.habitResetOption.value = it },
-                        columnSize = 3,
+                        columnSize = 3
                     )
                 }
             }
@@ -420,9 +420,9 @@ class TaskFormActivity : BaseActivity() {
                         LabeledValue(getString(R.string.strength), Attribute.STRENGTH),
                         LabeledValue(getString(R.string.constitution), Attribute.CONSTITUTION),
                         LabeledValue(getString(R.string.intelligence), Attribute.INTELLIGENCE),
-                        LabeledValue(getString(R.string.perception), Attribute.PERCEPTION),
+                        LabeledValue(getString(R.string.perception), Attribute.PERCEPTION)
                     ),
-                    { viewModel.selectedAttribute.value = it },
+                    { viewModel.selectedAttribute.value = it }
                 )
             }
         }
@@ -437,7 +437,7 @@ class TaskFormActivity : BaseActivity() {
 
     override fun loadTheme(
         sharedPreferences: SharedPreferences,
-        forced: Boolean,
+        forced: Boolean
     ) {
         super.loadTheme(sharedPreferences, forced)
         val upperTintColor =
@@ -722,9 +722,9 @@ class TaskFormActivity : BaseActivity() {
                 ColorStateList(
                     arrayOf(
                         intArrayOf(-android.R.attr.state_checked), // unchecked
-                        intArrayOf(android.R.attr.state_checked), // checked
+                        intArrayOf(android.R.attr.state_checked) // checked
                     ),
-                    intArrayOf(getThemeColor(R.attr.colorTintedBackgroundOffset), tintColor),
+                    intArrayOf(getThemeColor(R.attr.colorTintedBackgroundOffset), tintColor)
                 )
             tagView?.buttonTintList = colorStateList
         }
@@ -818,7 +818,7 @@ class TaskFormActivity : BaseActivity() {
         val assignChanges =
             mapOf(
                 "assign" to mutableListOf<String>(),
-                "unassign" to mutableListOf(),
+                "unassign" to mutableListOf()
             )
         if (groupID != null && thisTask.group?.groupID == null) {
             thisTask.group = TaskGroupPlan()
@@ -857,7 +857,7 @@ class TaskFormActivity : BaseActivity() {
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             },
-            500,
+            500
         )
     }
 
@@ -887,7 +887,6 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun checkIfShowNotifLayout() {
-
         val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         var warnAboutInexact = false
         if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
@@ -912,8 +911,8 @@ class TaskFormActivity : BaseActivity() {
             binding.exactAlarmDisabledContainer.visibility = View.VISIBLE
             binding.exactAlarmDisabledContainer.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    val intent =Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null));
+                    val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null))
                     startActivity(intent)
                 }
             }
@@ -934,13 +933,13 @@ class TaskFormActivity : BaseActivity() {
                 getString(
                     R.string.delete_challenge_task_description,
                     taskCount,
-                    challenge?.name ?: "",
-                ),
+                    challenge?.name ?: ""
+                )
             )
             alert.addButton(
                 R.string.leave_delete_task,
                 isPrimary = true,
-                isDestructive = true,
+                isDestructive = true
             ) { _, _ ->
                 challenge?.let {
                     lifecycleScope.launch(Dispatchers.Main) {
@@ -953,7 +952,7 @@ class TaskFormActivity : BaseActivity() {
             alert.addButton(
                 getString(R.string.leave_delete_x_tasks, taskCount),
                 isPrimary = false,
-                isDestructive = true,
+                isDestructive = true
             ) { _, _ ->
                 challenge?.let {
                     lifecycleScope.launch(Dispatchers.Main) {
@@ -982,12 +981,12 @@ class TaskFormActivity : BaseActivity() {
             dialog.setMessage(
                 getString(
                     R.string.broken_challenge_description,
-                    taskCount,
-                ),
+                    taskCount
+                )
             )
             dialog.addButton(
                 getString(R.string.keep_x_tasks, taskCount),
-                true,
+                true
             ) { _, _ ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
@@ -997,7 +996,7 @@ class TaskFormActivity : BaseActivity() {
             dialog.addButton(
                 getString(R.string.delete_x_tasks, taskCount),
                 isPrimary = false,
-                isDestructive = true,
+                isDestructive = true
             ) { _, _ ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
@@ -1034,7 +1033,7 @@ class TaskFormActivity : BaseActivity() {
                         assignedIDs.add(it)
                     }
                 },
-                onClose,
+                onClose
             )
         }
     }

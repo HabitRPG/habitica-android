@@ -11,6 +11,6 @@ inline fun View.waitForLayout(crossinline f: View.() -> Unit) =
                     viewTreeObserver.removeOnGlobalLayoutListener(this)
                     f()
                 }
-            },
+            }
         )
     }

@@ -55,7 +55,7 @@ fun PartySeekingListItem(
     showHeader: Boolean = false,
     showExtendedInfo: Boolean = true,
     configManager: AppConfigManager? = null,
-    onInvite: (Member) -> Unit,
+    onInvite: (Member) -> Unit
 ) {
     Column(
         modifier
@@ -66,62 +66,62 @@ fun PartySeekingListItem(
             }
             .padding(bottom = 6.dp)
             .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.large)
-            .padding(14.dp),
+            .padding(14.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(14.dp),
-            verticalAlignment = Alignment.Top,
+            verticalAlignment = Alignment.Top
         ) {
             ComposableAvatarView(
                 user,
                 configManager,
                 Modifier
                     .size(94.dp, 98.dp)
-                    .padding(top = 4.dp),
+                    .padding(top = 4.dp)
             )
             Column(
                 verticalArrangement = Arrangement.Top,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 if (showHeader) {
                     Text(
                         stringResource(R.string.pending_invite).uppercase(),
                         fontSize = 12.sp,
                         color = HabiticaTheme.colors.textQuad,
-                        modifier = Modifier.padding(bottom = 4.dp),
+                        modifier = Modifier.padding(bottom = 4.dp)
                     )
                 }
                 ProvideTextStyle(value = TextStyle(fontSize = 14.sp)) {
                     ComposableUsernameLabel(
                         user.displayName,
-                        user.contributor?.level ?: 0,
+                        user.contributor?.level ?: 0
                     )
                 }
                 Text(
                     user.formattedUsername ?: "",
                     fontSize = 14.sp,
-                    color = HabiticaTheme.colors.textTertiary,
+                    color = HabiticaTheme.colors.textTertiary
                 )
                 Divider(
                     color = colorResource(R.color.divider_color),
                     thickness = 1.dp,
-                    modifier = Modifier.padding(vertical = 6.dp),
+                    modifier = Modifier.padding(vertical = 6.dp)
                 )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         stringResource(R.string.level_abbreviated, user.stats?.lvl ?: 0),
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
-                        color = HabiticaTheme.colors.textPrimary,
+                        color = HabiticaTheme.colors.textPrimary
                     )
                     ClassText(
                         user.stats?.habitClass,
                         fontSize = 14.sp,
                         iconSize = 18.dp,
-                        hasClass = user.hasClass,
+                        hasClass = user.hasClass
                     )
                 }
                 if (showExtendedInfo) {
@@ -129,16 +129,16 @@ fun PartySeekingListItem(
                         stringResource(R.string.x_checkins, user.loginIncentives),
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
-                        color = HabiticaTheme.colors.textPrimary,
+                        color = HabiticaTheme.colors.textPrimary
                     )
                     Text(
                         "Language: ${
-                            user.preferences?.language?.toLocale()
-                                ?.getDisplayLanguage(Locale.getDefault())
+                        user.preferences?.language?.toLocale()
+                            ?.getDisplayLanguage(Locale.getDefault())
                         }",
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
-                        color = HabiticaTheme.colors.textPrimary,
+                        color = HabiticaTheme.colors.textPrimary
                     )
                 }
             }
@@ -147,12 +147,12 @@ fun PartySeekingListItem(
             state = inviteState,
             isAlreadyInvited = isInvited,
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             onClick = {
                 onInvite(user)
-            },
+            }
         )
     }
 }
@@ -212,7 +212,7 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 @Preview
 @Composable
 private fun Preview(
-    @PreviewParameter(MemberProvider::class) data: Member,
+    @PreviewParameter(MemberProvider::class) data: Member
 ) {
     PartySeekingListItem(user = data, onInvite = {})
 }

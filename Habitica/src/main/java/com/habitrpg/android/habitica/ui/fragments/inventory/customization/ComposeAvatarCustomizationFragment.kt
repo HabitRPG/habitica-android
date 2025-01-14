@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -79,7 +78,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
@@ -134,7 +132,7 @@ class ComposeAvatarCustomizationFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentComposeBinding {
         return FragmentComposeBinding.inflate(inflater, container, false)
     }
@@ -161,7 +159,7 @@ class ComposeAvatarCustomizationFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
         hidesToolbar = true
@@ -190,7 +188,7 @@ class ComposeAvatarCustomizationFragment :
                                 userRepository.useCustomization(
                                     customization.type ?: "",
                                     customization.category,
-                                    customization.identifier ?: "",
+                                    customization.identifier ?: ""
                                 )
                             }
                         }
@@ -203,7 +201,7 @@ class ComposeAvatarCustomizationFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -236,7 +234,7 @@ class ComposeAvatarCustomizationFragment :
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_customizations, menu)
@@ -337,7 +335,7 @@ class ComposeAvatarCustomizationFragment :
 
     private fun shouldSkip(
         filter: CustomizationFilter,
-        customization: Customization,
+        customization: Customization
     ): Boolean {
         return if (filter.onlyPurchased) {
             true
@@ -438,7 +436,7 @@ class ComposeAvatarCustomizationFragment :
     private fun configureMonthFilterButton(
         button: CheckBox,
         value: Int,
-        filter: CustomizationFilter,
+        filter: CustomizationFilter
     ) {
         val identifier = value.toString().padStart(2, '0')
         button.isChecked = filter.months.contains(identifier)
@@ -469,7 +467,7 @@ private fun AvatarCustomizationView(
     type: String?,
     typeName: String,
     activeCustomization: String?,
-    onSelect: (Customization) -> Unit,
+    onSelect: (Customization) -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
@@ -477,15 +475,15 @@ private fun AvatarCustomizationView(
                 avatar = avatar,
                 configManager = configManager,
                 modifier =
-                    Modifier
-                        .padding(top = 6.dp, bottom = 24.dp)
-                        .size(140.dp, 147.dp),
+                Modifier
+                    .padding(top = 6.dp, bottom = 24.dp)
+                    .size(140.dp, 147.dp)
             )
             Box(
                 Modifier
                     .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                     .fillMaxWidth()
-                    .height(22.dp),
+                    .height(22.dp)
             )
         }
         val nestedScrollInterop = rememberNestedScrollInteropConnection()
@@ -498,14 +496,14 @@ private fun AvatarCustomizationView(
             horizontalArrangement = Arrangement.Center,
             contentPadding = PaddingValues(horizontal = horizontalPadding),
             modifier =
-                Modifier
-                    .onGloballyPositioned {
-                        gridWidth = with(density) {
-                            it.size.width.toDp()
-                        }
+            Modifier
+                .onGloballyPositioned {
+                    gridWidth = with(density) {
+                        it.size.width.toDp()
                     }
-                    .nestedScroll(nestedScrollInterop)
-                    .background(colorResource(R.color.content_background)),
+                }
+                .nestedScroll(nestedScrollInterop)
+                .background(colorResource(R.color.content_background))
         ) {
             item(span = { GridItemSpan(3) }) {
                 Text(
@@ -514,7 +512,7 @@ private fun AvatarCustomizationView(
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.text_ternary),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(10.dp),
+                    modifier = Modifier.padding(10.dp)
                 )
             }
             if (items.size > 1) {
@@ -531,14 +529,14 @@ private fun AvatarCustomizationView(
                                 .clickable {
                                     onSelect(item)
                                 }
-                                .background(colorResource(id = R.color.window_background)),
+                                .background(colorResource(id = R.color.window_background))
                         ) {
                             if (item.identifier.isNullOrBlank() || item.identifier == "0" || item.identifier == "none") {
                                 Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                             } else {
                                 PixelArtView(
                                     imageName = item.getIconName(userSize, hairColor),
-                                    Modifier.size(68.dp),
+                                    Modifier.size(68.dp)
                                 )
                             }
                         }
@@ -549,7 +547,7 @@ private fun AvatarCustomizationView(
                             fontWeight = FontWeight.SemiBold,
                             color = colorResource(id = R.color.text_ternary),
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp).padding(top = 16.dp),
+                            modifier = Modifier.padding(10.dp).padding(top = 16.dp)
                         )
                     }
                 }

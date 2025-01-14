@@ -40,7 +40,7 @@ class AchievementsFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -57,7 +57,7 @@ class AchievementsFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         hidesToolbar = true
         adapter = AchievementsAdapter()
@@ -77,7 +77,7 @@ class AchievementsFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -110,7 +110,7 @@ class AchievementsFragment :
                 }.combine(
                     userRepository.getQuestAchievements()
                         .map { it.mapNotNull { achievement -> achievement.questKey } }
-                        .map { inventoryRepository.getQuestContent(it).firstOrNull() },
+                        .map { inventoryRepository.getQuestContent(it).firstOrNull() }
                 ) { achievements, content ->
                     Pair(achievements, content)
                 }.collect {
@@ -125,7 +125,7 @@ class AchievementsFragment :
                                     categoryIdentifier,
                                     achievements.count { check ->
                                         check.category == categoryIdentifier && check.earned
-                                    },
+                                    }
                                 )
                             entries.add(category)
                             lastCategory = categoryIdentifier
@@ -139,7 +139,7 @@ class AchievementsFragment :
                             val questContent = it.second?.firstOrNull { achievement.questKey == it.key }
                             achievement.title = questContent?.text
                             achievement
-                        },
+                        }
                     )
 
                     val user = userViewModel.user.value
@@ -157,7 +157,7 @@ class AchievementsFragment :
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         if (useGridLayout) {
             val menuItem = menu.add(R.string.switch_to_list_view)

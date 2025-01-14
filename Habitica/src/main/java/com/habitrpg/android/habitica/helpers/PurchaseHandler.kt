@@ -23,7 +23,6 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
-import com.google.api.Billing
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -64,21 +63,21 @@ class PurchaseHandler(
 
     override fun onPurchasesUpdated(
         result: BillingResult,
-        purchases: MutableList<Purchase>?,
+        purchases: MutableList<Purchase>?
     ) {
         purchases?.let { processPurchases(result, it) }
     }
 
     override fun onQueryPurchasesResponse(
         result: BillingResult,
-        purchases: MutableList<Purchase>,
+        purchases: MutableList<Purchase>
     ) {
         processPurchases(result, purchases)
     }
 
     private fun processPurchases(
         result: BillingResult,
-        purchases: List<Purchase>,
+        purchases: List<Purchase>
     ) {
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
@@ -90,8 +89,8 @@ class PurchaseHandler(
                             for (purchase in purchases) {
                                 if (plan?.isActive == true &&
                                     PurchaseTypes.allSubscriptionTypes.contains(
-                                        purchase.products.firstOrNull(),
-                                    )
+                                            purchase.products.firstOrNull()
+                                        )
                                 ) {
                                     if (((plan.dateTerminated != null) == purchase.isAutoRenewing) ||
                                         mostRecentSub?.orderId != purchase.orderId ||
@@ -139,7 +138,7 @@ class PurchaseHandler(
         READY,
         UNAVAILABLE,
         DISCONNECTED,
-        CONNECTING,
+        CONNECTING
         ;
 
         val canMaybePurchase: Boolean
@@ -203,7 +202,7 @@ class PurchaseHandler(
                         retryListening()
                     }
                 }
-            },
+            }
         )
     }
 
@@ -228,13 +227,13 @@ class PurchaseHandler(
         val subResponse =
             billingClient.queryPurchasesAsync(
                 QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS)
-                    .build(),
+                    .build()
             )
         processPurchases(subResponse.billingResult, subResponse.purchasesList)
         val iapResponse =
             billingClient.queryPurchasesAsync(
                 QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.INAPP)
-                    .build(),
+                    .build()
             )
         processPurchases(iapResponse.billingResult, iapResponse.purchasesList)
     }
@@ -256,13 +255,13 @@ class PurchaseHandler(
 
     private suspend fun getSKUs(
         type: String,
-        identifiers: List<String>,
+        identifiers: List<String>
     ) =
         loadInventory(type, identifiers) ?: emptyList()
 
     private suspend fun getSKU(
         type: String,
-        identifier: String,
+        identifier: String
     ): ProductDetails? {
         val inventory = loadInventory(type, listOf(identifier))
         return inventory?.firstOrNull()
@@ -270,11 +269,12 @@ class PurchaseHandler(
 
     private suspend fun loadInventory(
         type: String,
-        skus: List<String>,
+        skus: List<String>
     ): List<ProductDetails>? {
         retryUntil(8, initialDelay = 500, maxDelay = 2000) {
             if (billingClient.connectionState == BillingClient.ConnectionState.DISCONNECTED ||
-                billingClient.connectionState == BillingClient.ConnectionState.CLOSED) {
+                billingClient.connectionState == BillingClient.ConnectionState.CLOSED
+            ) {
                 startListening()
             }
             billingClientState.canMaybePurchase && billingClient.isReady
@@ -283,7 +283,7 @@ class PurchaseHandler(
             QueryProductDetailsParams.newBuilder().setProductList(
                 skus.map {
                     Product.newBuilder().setProductId(it).setProductType(type).build()
-                },
+                }
             ).build()
         val skuDetailsResult =
             withContext(Dispatchers.IO) {
@@ -293,8 +293,8 @@ class PurchaseHandler(
             Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
             FirebaseCrashlytics.getInstance().recordException(
                 Throwable(
-                    "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}",
-                ),
+                    "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}"
+                )
             )
             return null
         }
@@ -306,7 +306,7 @@ class PurchaseHandler(
         skuDetails: ProductDetails,
         recipient: String? = null,
         recipientUsername: String? = null,
-        isSaleGemPurchase: Boolean = false,
+        isSaleGemPurchase: Boolean = false
     ) {
         this.isSaleGemPurchase = isSaleGemPurchase
         recipient?.let {
@@ -320,14 +320,14 @@ class PurchaseHandler(
                         params = params.setOfferToken(offerToken)
                     }
                     return@map params.build()
-                },
+                }
             ).build()
         billingClient.launchBillingFlow(activity, flowParams)
     }
 
     private suspend fun consume(
         purchase: Purchase,
-        retries: Int = 4,
+        retries: Int = 4
     ) {
         retryUntil { billingClientState.canMaybePurchase && billingClient.isReady }
         val params = ConsumeParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
@@ -348,8 +348,8 @@ class PurchaseHandler(
     private fun handle(purchase: Purchase) {
         if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED ||
             processedPurchases.contains(
-                purchase.orderId,
-            )
+                    purchase.orderId
+                )
         ) {
             return
         }
@@ -433,7 +433,7 @@ class PurchaseHandler(
 
     private suspend fun acknowledgePurchase(
         purchase: Purchase,
-        retries: Int = 4,
+        retries: Int = 4
     ) {
         val params =
             AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
@@ -470,7 +470,7 @@ class PurchaseHandler(
 
     private fun handleError(
         throwable: Throwable,
-        purchase: Purchase,
+        purchase: Purchase
     ) {
         when (throwable) {
             is HttpException -> {
@@ -576,7 +576,7 @@ class PurchaseHandler(
     private fun displayConfirmationDialog(
         purchase: Purchase,
         giftedToID: String? = null,
-        giftedTo: String? = null,
+        giftedTo: String? = null
     ) {
         if (displayedConfirmations.contains(purchase.orderId)) {
             return
@@ -599,7 +599,7 @@ class PurchaseHandler(
                                 R.string.gift_confirmation_text_sub
                             },
                             giftedTo,
-                            durationString(sku),
+                            durationString(sku)
                         )
                     }
 
@@ -609,7 +609,7 @@ class PurchaseHandler(
                         } else {
                             context.getString(
                                 R.string.subscription_confirmation_multiple,
-                                durationString(sku),
+                                durationString(sku)
                             )
                         }
                     }
@@ -619,7 +619,7 @@ class PurchaseHandler(
                         context.getString(
                             R.string.gift_confirmation_text_gems_new,
                             giftedTo,
-                            gemAmountString(sku),
+                            gemAmountString(sku)
                         )
                     }
 
@@ -648,7 +648,7 @@ class PurchaseHandler(
 
     private fun displayGryphatriceConfirmationDialog(
         purchase: Purchase,
-        giftedTo: String? = null,
+        giftedTo: String? = null
     ) {
         MainScope().launch(ExceptionHandler.coroutine()) {
             val application =
@@ -681,7 +681,7 @@ class PurchaseHandler(
         fun addGift(
             sku: String,
             userID: String,
-            username: String,
+            username: String
         ) {
             pendingGifts[sku] = Triple(Date(), userID, username)
             savePendingGifts()
@@ -708,7 +708,7 @@ suspend fun retryUntil(
     initialDelay: Long = 100, // 0.1 second
     maxDelay: Long = 1000, // 1 second
     factor: Double = 2.0,
-    block: suspend () -> Boolean,
+    block: suspend () -> Boolean
 ) {
     var currentDelay = initialDelay
     repeat(times - 1) {

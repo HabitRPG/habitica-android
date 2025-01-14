@@ -40,7 +40,7 @@ class UserDeserializer : JsonDeserializer<User> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): User {
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("UserDeserialize")
         deserializeTrace.start()
@@ -134,7 +134,7 @@ class UserDeserializer : JsonDeserializer<User> {
                 context.deserialize(
                     obj.get("tags"),
                     object : TypeToken<RealmList<Tag>>() {
-                    }.type,
+                    }.type
                 )
             for (tag in user.tags) {
                 tag.userId = user.id

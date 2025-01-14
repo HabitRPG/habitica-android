@@ -50,12 +50,12 @@ interface InventoryRepository : BaseRepository {
 
     fun getEquipmentType(
         type: String,
-        set: String,
+        set: String
     ): Flow<List<Equipment>>
 
     fun getOwnedItems(
         itemType: String,
-        includeZero: Boolean = false,
+        includeZero: Boolean = false
     ): Flow<List<OwnedItem>>
 
     fun getOwnedItems(includeZero: Boolean = false): Flow<Map<String, OwnedItem>>
@@ -69,13 +69,13 @@ interface InventoryRepository : BaseRepository {
     fun getMounts(
         type: String?,
         group: String?,
-        color: String?,
+        color: String?
     ): Flow<List<Mount>>
 
     fun getPets(
         type: String?,
         group: String?,
-        color: String?,
+        color: String?
     ): Flow<List<Pet>>
 
     fun updateOwnedEquipment(user: User)
@@ -83,35 +83,35 @@ interface InventoryRepository : BaseRepository {
     suspend fun changeOwnedCount(
         type: String,
         key: String,
-        amountToAdd: Int,
+        amountToAdd: Int
     )
 
     suspend fun sellItem(
         type: String,
-        key: String,
+        key: String
     ): User?
 
     suspend fun sellItem(item: OwnedItem): User?
 
     suspend fun equipGear(
         equipment: String,
-        asCostume: Boolean,
+        asCostume: Boolean
     ): Items?
 
     suspend fun equip(
         type: String,
-        key: String,
+        key: String
     ): Items?
 
     suspend fun feedPet(
         pet: Pet,
-        food: Food,
+        food: Food
     ): FeedResponse?
 
     suspend fun hatchPet(
         egg: Egg,
         hatchingPotion: HatchingPotion,
-        successFunction: () -> Unit,
+        successFunction: () -> Unit
     ): Items?
 
     suspend fun inviteToQuest(quest: QuestContent): Quest?
@@ -120,7 +120,7 @@ interface InventoryRepository : BaseRepository {
         user: User?,
         id: String,
         value: Double,
-        purchaseQuantity: Int,
+        purchaseQuantity: Int
     ): BuyResponse?
 
     suspend fun retrieveShopInventory(identifier: String): Shop?
@@ -131,7 +131,7 @@ interface InventoryRepository : BaseRepository {
 
     suspend fun purchaseHourglassItem(
         purchaseType: String,
-        key: String,
+        key: String
     ): Void?
 
     suspend fun purchaseQuest(key: String): Void?
@@ -141,14 +141,14 @@ interface InventoryRepository : BaseRepository {
     suspend fun purchaseItem(
         purchaseType: String,
         key: String,
-        purchaseQuantity: Int,
+        purchaseQuantity: Int
     ): Void?
 
     suspend fun togglePinnedItem(item: ShopItem): List<ShopItem>?
 
     fun getItems(
         itemClass: Class<out Item>,
-        keys: Array<String>,
+        keys: Array<String>
     ): Flow<List<Item>>
 
     fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
@@ -158,7 +158,7 @@ interface InventoryRepository : BaseRepository {
 
     fun getItem(
         type: String,
-        key: String,
+        key: String
     ): Flow<Item>
 
     fun getAvailableLimitedItems(): Flow<List<Item>>

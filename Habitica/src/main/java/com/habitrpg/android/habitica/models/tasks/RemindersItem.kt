@@ -28,7 +28,7 @@ open class RemindersItem : RealmObject, Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int,
+        flags: Int
     ) {
         dest.writeString(id)
         dest.writeString(startDate)
@@ -78,7 +78,7 @@ open class RemindersItem : RealmObject, Parcelable {
             formatter.parseBest(
                 time,
                 ZonedDateTime::from,
-                LocalDateTime::from,
+                LocalDateTime::from
             )
         return if (parsed is ZonedDateTime) {
             parsed
@@ -100,7 +100,7 @@ open class RemindersItem : RealmObject, Parcelable {
             formatter.parseBest(
                 time,
                 ZonedDateTime::from,
-                LocalDateTime::from,
+                LocalDateTime::from
             )
         return if (parsed is ZonedDateTime) {
             parsed.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()

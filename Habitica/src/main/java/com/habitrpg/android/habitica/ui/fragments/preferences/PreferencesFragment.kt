@@ -83,7 +83,7 @@ class PreferencesFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
@@ -176,13 +176,13 @@ class PreferencesFragment :
                             dialog.addButton(
                                 R.string.change_class,
                                 isPrimary = true,
-                                isDestructive = true,
+                                isDestructive = true
                             ) { _, _ ->
                                 lifecycleScope.launch {
                                     userRepository.changeClass()
                                 }
                                 classSelectionResult.launch(
-                                    intent,
+                                    intent
                                 )
                             }
                             dialog.addButton(R.string.close, false)
@@ -195,7 +195,7 @@ class PreferencesFragment :
                                 "show insufficient gems modal",
                                 EventCategory.BEHAVIOUR,
                                 HitType.EVENT,
-                                mapOf("reason" to "class change"),
+                                mapOf("reason" to "class change")
                             )
                             dialog.show()
                         }
@@ -211,11 +211,10 @@ class PreferencesFragment :
 
             "reload_content" -> {
                 (activity as? SnackbarActivity)?.showSnackbar(
-                    content = context?.getString(R.string.reloading_content),
+                    content = context?.getString(R.string.reloading_content)
                 )
                 reloadContent(true)
             }
-
 
             "clear_database" -> {
                 context?.let { context ->
@@ -224,7 +223,7 @@ class PreferencesFragment :
                         userRepository.retrieveUser(true, true)
                         (activity as? SnackbarActivity)?.showSnackbar(
                             content = context.getString(R.string.cleared_cache),
-                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                         )
                         reloadContent(true)
                     }
@@ -240,7 +239,7 @@ class PreferencesFragment :
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloaded_content),
-                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                 )
             }
         }
@@ -261,7 +260,7 @@ class PreferencesFragment :
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
+            ActivityResultContracts.RequestPermission()
         ) { granted ->
             if (granted) {
                 val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
@@ -279,7 +278,7 @@ class PreferencesFragment :
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 .putExtra(
                                     Settings.EXTRA_APP_PACKAGE,
-                                    context?.applicationContext?.packageName,
+                                    context?.applicationContext?.packageName
                                 )
                         startActivity(notifSettingIntent)
                     }
@@ -293,7 +292,7 @@ class PreferencesFragment :
 
     override fun onSharedPreferenceChanged(
         sharedPreferences: SharedPreferences,
-        key: String?,
+        key: String?
     ) {
         when (key) {
             "use_reminder" -> {
@@ -321,7 +320,7 @@ class PreferencesFragment :
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.pushNotifications.unsubscribeFromAll",
-                        !usePushNotifications,
+                        !usePushNotifications
                     )
                 }
                 if (usePushNotifications) {
@@ -344,7 +343,7 @@ class PreferencesFragment :
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.emailNotifications.unsubscribeFromAll",
-                        !useEmailNotifications,
+                        !useEmailNotifications
                     )
                 }
             }
@@ -368,7 +367,7 @@ class PreferencesFragment :
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(
                     configuration,
-                    activity?.resources?.displayMetrics,
+                    activity?.resources?.displayMetrics
                 )
 
                 if (user?.preferences?.language == languageHelper.languageCode) {
@@ -456,7 +455,7 @@ class PreferencesFragment :
                     R.string.resume_damage
                 } else {
                     R.string.pause_damage
-                },
+                }
             )
         pauseDamagePreference?.summary =
             getString(
@@ -464,7 +463,7 @@ class PreferencesFragment :
                     R.string.resume_damage_summary
                 } else {
                     R.string.pause_damage_summary
-                },
+                }
             )
 
         val themePreference = findPreference("theme_name") as? ListPreference
@@ -580,7 +579,7 @@ class PreferencesFragment :
                             lifecycleScope.launchCatching {
                                 userRepository.updateUser(
                                     "preferences.tasks.mirrorGroupTasks",
-                                    currentIds,
+                                    currentIds
                                 )
                             }
                             true

@@ -73,7 +73,7 @@ class ChatBarView : LinearLayout {
             OnChangeTextWatcher { _, _, _, _ ->
                 setSendButtonEnabled(binding.chatEditText.text.isNotEmpty() && binding.chatEditText.text.length <= maxChatLength)
                 updateTextIndicator(binding.chatEditText.text.toString())
-            },
+            }
         )
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }

@@ -23,7 +23,7 @@ class RealmSocialLocalRepository(realm: Realm) :
     SocialLocalRepository {
     override fun getGroupMembership(
         userId: String,
-        id: String,
+        id: String
     ) =
         realm.where(GroupMembership::class.java)
             .equalTo("userID", userId)
@@ -43,7 +43,7 @@ class RealmSocialLocalRepository(realm: Realm) :
     override fun updateMembership(
         userId: String,
         id: String,
-        isMember: Boolean,
+        isMember: Boolean
     ) {
         if (isMember) {
             save(GroupMembership(userId, id))
@@ -73,7 +73,7 @@ class RealmSocialLocalRepository(realm: Realm) :
         userID: String,
         recipientID: String,
         messages: List<ChatMessage>,
-        page: Int,
+        page: Int
     ) {
         messages.forEach { it.userID = userID }
         for (message in messages) {
@@ -103,7 +103,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun saveInboxConversations(
         userID: String,
-        conversations: List<InboxConversation>,
+        conversations: List<InboxConversation>
     ) {
         conversations.forEach { it.userID = userID }
         save(conversations)
@@ -131,7 +131,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun saveGroupMemberships(
         userID: String?,
-        memberships: List<GroupMembership>,
+        memberships: List<GroupMembership>
     ) {
         save(memberships)
         if (userID != null) {
@@ -153,7 +153,7 @@ class RealmSocialLocalRepository(realm: Realm) :
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserGroups(
         userID: String,
-        type: String?,
+        type: String?
     ) =
         realm.where(GroupMembership::class.java)
             .equalTo("userID", userID)
@@ -167,7 +167,7 @@ class RealmSocialLocalRepository(realm: Realm) :
                         "id",
                         memberships.map {
                             return@map it.groupID
-                        }.toTypedArray(),
+                        }.toTypedArray()
                     )
                     .sort("memberCount", Sort.DESCENDING)
                     .findAll()
@@ -213,7 +213,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun updateRSVPNeeded(
         user: User?,
-        newValue: Boolean,
+        newValue: Boolean
     ) {
         executeTransaction { user?.party?.quest?.rsvpNeeded = newValue }
     }
@@ -221,7 +221,7 @@ class RealmSocialLocalRepository(realm: Realm) :
     override fun likeMessage(
         chatMessage: ChatMessage,
         userId: String,
-        liked: Boolean,
+        liked: Boolean
     ) {
         val liveMessage = getLiveObject(chatMessage)
         if (liveMessage == null) {
@@ -253,7 +253,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun savePartyMembers(
         groupId: String?,
-        members: List<Member>,
+        members: List<Member>
     ) {
         save(members)
         if (groupId != null) {
@@ -275,7 +275,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun rejectGroupInvitation(
         userID: String,
-        groupID: String,
+        groupID: String
     ) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst()
         executeTransaction {
@@ -292,7 +292,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun setQuestActivity(
         party: Group?,
-        active: Boolean,
+        active: Boolean
     ) {
         if (party == null) return
         val liveParty = getLiveObject(party)
@@ -303,7 +303,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun saveChatMessages(
         groupId: String?,
-        chatMessages: List<ChatMessage>,
+        chatMessages: List<ChatMessage>
     ) {
         save(chatMessages)
         if (groupId != null) {
@@ -331,7 +331,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun getInboxMessages(
         userId: String,
-        replyToUserID: String?,
+        replyToUserID: String?
     ) =
         realm.where(ChatMessage::class.java)
             .equalTo("isInboxMessage", true)

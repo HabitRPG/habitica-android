@@ -12,20 +12,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContinuePhoneViewModel
-    @Inject
-    constructor(
-        savedStateHandle: SavedStateHandle,
-        userRepository: UserRepository,
-        taskRepository: TaskRepository,
-        exceptionBuilder: ExceptionHandlerBuilder,
-        appStateManager: AppStateManager,
-    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager), MessageClient.OnMessageReceivedListener {
-        val keepActive = savedStateHandle.get<Boolean>("keep_active") ?: false
-        var onActionCompleted: (() -> Unit)? = null
+@Inject
+constructor(
+    savedStateHandle: SavedStateHandle,
+    userRepository: UserRepository,
+    taskRepository: TaskRepository,
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager), MessageClient.OnMessageReceivedListener {
+    val keepActive = savedStateHandle.get<Boolean>("keep_active") ?: false
+    var onActionCompleted: (() -> Unit)? = null
 
-        override fun onMessageReceived(event: MessageEvent) {
-            when (event.path) {
-                "/action_completed" -> onActionCompleted?.invoke()
-            }
+    override fun onMessageReceived(event: MessageEvent) {
+        when (event.path) {
+            "/action_completed" -> onActionCompleted?.invoke()
         }
     }
+}

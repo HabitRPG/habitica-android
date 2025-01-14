@@ -46,14 +46,14 @@ private val KTextView.text: CharSequence?
 
                     override fun perform(
                         uiController: UiController?,
-                        view: View?,
+                        view: View?
                     ) {
                         val tv = view as TextView
                         string = tv.text
                     }
-                },
+                }
             )
-        )
+            )
         return string
     }
 
@@ -67,8 +67,8 @@ class ItemScreen : Screen<ItemScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-            itemType(::ItemItem)
-        })
+                itemType(::ItemItem)
+            })
 }
 
 internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment, FragmentRecyclerviewBinding, ItemScreen>(false) {

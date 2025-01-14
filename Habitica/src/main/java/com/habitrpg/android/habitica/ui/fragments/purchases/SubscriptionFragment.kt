@@ -33,7 +33,6 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -52,7 +51,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentSubscriptionBinding {
         return FragmentSubscriptionBinding.inflate(inflater, container, false)
     }
@@ -77,7 +76,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -88,14 +87,14 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         binding?.content?.giftSegmentSubscribed?.giftSubscriptionButton?.setOnClickListener {
             context?.let { context ->
                 showGiftSubscriptionDialog(
-                    context,
+                    context
                 )
             }
         }
         binding?.content?.giftSegmentUnsubscribed?.giftSubscriptionButton?.setOnClickListener {
             context?.let { context ->
                 showGiftSubscriptionDialog(
-                    context,
+                    context
                 )
             }
         }
@@ -139,7 +138,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                         Modifier
                             .padding(horizontal = 20.dp)
                             .clip(HabiticaTheme.shapes.medium)
-                            .padding(bottom = 10.dp),
+                            .padding(bottom = 10.dp)
                     )
                 }
             }
@@ -188,7 +187,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                     updateButtonLabel(
                         sku,
                         sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
-                            ?: "",
+                            ?: ""
                     )
                 }
                 if (selectedSubscriptionSku == null) {
@@ -205,7 +204,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String,
+        price: String
     ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
@@ -309,7 +308,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 }
 
                 binding?.content?.subscription12month?.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
-
             }
             binding?.content?.loadingIndicator?.visibility = View.GONE
         }
@@ -336,7 +334,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             {
                 binding?.content?.scrollView?.smoothScrollTo(0, binding?.content?.subscriptionOptions?.top ?: 0)
             },
-            500,
+            500
         )
     }
 

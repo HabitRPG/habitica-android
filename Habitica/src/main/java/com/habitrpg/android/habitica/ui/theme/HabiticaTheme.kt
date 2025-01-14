@@ -16,7 +16,7 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 fun HabiticaColors.textPrimaryFor(task: Task?): Color {
     return colorResource(
         (if (isSystemInDarkTheme()) task?.extraExtraLightTaskColor else task?.extraDarkTaskColor)
-            ?: R.color.text_primary,
+            ?: R.color.text_primary
     )
 }
 
@@ -24,7 +24,7 @@ fun HabiticaColors.textPrimaryFor(task: Task?): Color {
 fun HabiticaColors.textSecondaryFor(task: Task?): Color {
     return colorResource(
         (if (isSystemInDarkTheme()) task?.extraLightTaskColor else task?.lowSaturationTaskColor)
-            ?: R.color.brand_sub_text,
+            ?: R.color.brand_sub_text
     )
 }
 
@@ -32,7 +32,7 @@ fun HabiticaColors.textSecondaryFor(task: Task?): Color {
 fun HabiticaColors.primaryBackgroundFor(task: Task?): Color {
     return colorResource(
         (if (isSystemInDarkTheme()) task?.mediumTaskColor else task?.lightTaskColor)
-            ?: R.color.brand_400,
+            ?: R.color.brand_400
     )
 }
 
@@ -40,7 +40,7 @@ fun HabiticaColors.primaryBackgroundFor(task: Task?): Color {
 fun HabiticaColors.windowBackgroundFor(task: Task?): Color {
     return (if (isSystemInDarkTheme()) task?.extraExtraDarkTaskColor else task?.extraExtraLightTaskColor)?.let {
         colorResource(
-            it,
+            it
         )
     } ?: windowBackground
 }
@@ -49,7 +49,7 @@ fun HabiticaColors.windowBackgroundFor(task: Task?): Color {
 fun HabiticaColors.contentBackgroundFor(task: Task?): Color {
     return (if (isSystemInDarkTheme()) task?.darkestTaskColor else task?.lightestTaskColor)?.let {
         colorResource(
-            it,
+            it
         )
     } ?: windowBackground
 }
@@ -94,6 +94,6 @@ val HabiticaTheme.colors: HabiticaColors
             errorBackground = Color(ContextCompat.getColor(context, R.color.background_red)),
             errorColor = Color(ContextCompat.getColor(context, R.color.text_red)),
             successBackground = Color(ContextCompat.getColor(context, R.color.background_green)),
-            successColor = Color(ContextCompat.getColor(context, R.color.text_green)),
+            successColor = Color(ContextCompat.getColor(context, R.color.text_green))
         )
     }

@@ -9,7 +9,7 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.RewardViewHolder
 class RewardListAdapter : TaskListAdapter() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return if (viewType == 1) {
             return RewardViewHolder(RowRewardBinding.inflate(parent.context.layoutInflater, parent, false).root)

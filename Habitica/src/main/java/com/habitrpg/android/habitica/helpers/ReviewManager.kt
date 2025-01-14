@@ -60,7 +60,7 @@ class ReviewManager(context: Context, private val configManager: AppConfigManage
 
     fun requestReview(
         activity: AppCompatActivity,
-        currentCheckins: Int,
+        currentCheckins: Int
     ) {
         if (!canRequestReview(currentCheckins)) return
 

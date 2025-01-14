@@ -33,7 +33,7 @@ abstract class ChecklistedViewHolder(
     var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?,
+    assignedTextProvider: GroupPlanInfoProvider?
 ) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
     private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
     private val checkmarkView: ImageView = itemView.findViewById(R.id.checkmark)
@@ -54,7 +54,7 @@ abstract class ChecklistedViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?,
+        ownerID: String?
     ) {
         var completed = data.completed(userID)
         if (data.isPendingApproval) {
@@ -102,7 +102,7 @@ abstract class ChecklistedViewHolder(
 
     abstract fun shouldDisplayAsActive(
         task: Task?,
-        userID: String?,
+        userID: String?
     ): Boolean
 
     private fun updateChecklistDisplay() {
@@ -130,7 +130,7 @@ abstract class ChecklistedViewHolder(
                                 } else {
                                     R.color.checkbox_fill
                                 }
-                            ) ?: R.color.checkbox_fill,
+                                ) ?: R.color.checkbox_fill
                         )
                     val textView = itemView?.findViewById<TextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
@@ -161,7 +161,7 @@ abstract class ChecklistedViewHolder(
                                 val color = if (context.isUsingNightModeResources()) task?.extraExtraDarkTaskColor else task?.darkTaskColor
                                 checkmark?.drawable?.setTint(ContextCompat.getColor(context, color ?: R.color.text_dimmed))
                                 task?.extraLightTaskColor ?: R.color.offset_background
-                            },
+                            }
                         )
                     color.let { checkboxHolder?.setBackgroundColor(it) }
                     this.checklistView.addView(itemView)
@@ -235,7 +235,7 @@ abstract class ChecklistedViewHolder(
 
     override fun setDisabled(
         openTaskDisabled: Boolean,
-        taskActionsDisabled: Boolean,
+        taskActionsDisabled: Boolean
     ) {
         super.setDisabled(openTaskDisabled, taskActionsDisabled)
         this.checkboxHolder.isEnabled = !taskActionsDisabled

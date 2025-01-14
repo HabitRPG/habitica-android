@@ -41,7 +41,7 @@ class YesterdailyDialog private constructor(
     context: Context,
     private val userRepository: UserRepository,
     private val taskRepository: TaskRepository,
-    private val tasks: List<Task>,
+    private val tasks: List<Task>
 ) : HabiticaAlertDialog(context) {
     private lateinit var yesterdailiesList: LinearLayout
 
@@ -113,7 +113,7 @@ class YesterdailyDialog private constructor(
                             inflater.inflate(
                                 R.layout.checklist_item_row,
                                 checklistContainer,
-                                false,
+                                false
                             ) as ViewGroup
                         configureChecklistView(checklistView, task, item)
                         checklistContainer.addView(checklistView)
@@ -128,7 +128,7 @@ class YesterdailyDialog private constructor(
                         inflater.inflate(
                             R.layout.checklist_item_row,
                             checklistContainer,
-                            false,
+                            false
                         ) as ViewGroup
                     configureChecklistView(checklistView, task, item)
                     checklistContainer.addView(checklistView)
@@ -141,7 +141,7 @@ class YesterdailyDialog private constructor(
     private fun configureChecklistView(
         checklistView: ViewGroup,
         task: Task,
-        item: ChecklistItem,
+        item: ChecklistItem
     ) {
         val checkmark = checklistView.findViewById<ImageView>(R.id.checkmark)
         if (task.completed) {
@@ -150,8 +150,8 @@ class YesterdailyDialog private constructor(
             checkmark?.drawable?.setTint(
                 ContextCompat.getColor(
                     context,
-                    task.extraExtraDarkTaskColor,
-                ),
+                    task.extraExtraDarkTaskColor
+                )
             )
         }
         checkmark?.visibility = if (item.completed) View.VISIBLE else View.GONE
@@ -171,7 +171,7 @@ class YesterdailyDialog private constructor(
                 R.color.offset_background
             } else {
                 task.extraLightTaskColor
-            },
+            }
         )
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView
         textView?.text = item.text
@@ -189,13 +189,13 @@ class YesterdailyDialog private constructor(
                     } else {
                         R.color.checkbox_fill
                     }
-                ),
+                    )
             )
     }
 
     private fun scoreChecklistItem(
         task: Task,
-        item: ChecklistItem,
+        item: ChecklistItem
     ) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
@@ -204,7 +204,7 @@ class YesterdailyDialog private constructor(
 
     private fun configureTaskView(
         taskView: View,
-        task: Task,
+        task: Task
     ) {
         val completed = !task.isDisplayedActive
         val checkmark = taskView.findViewById<ImageView>(R.id.checkmark)
@@ -236,7 +236,7 @@ class YesterdailyDialog private constructor(
             activity: Activity,
             userId: String?,
             userRepository: UserRepository?,
-            taskRepository: TaskRepository,
+            taskRepository: TaskRepository
         ) {
             if (userRepository != null && userId != null) {
                 MainScope().launchCatching {
@@ -275,7 +275,7 @@ class YesterdailyDialog private constructor(
                         "show cron",
                         EventCategory.BEHAVIOUR,
                         HitType.EVENT,
-                        additionalData,
+                        additionalData
                     )
 
                     if (sortedTasks?.isNotEmpty() == true) {
@@ -285,8 +285,8 @@ class YesterdailyDialog private constructor(
                                     activity,
                                     userRepository,
                                     taskRepository,
-                                    sortedTasks,
-                                ),
+                                    sortedTasks
+                                )
                             )
                     } else {
                         lastCronRun = Date()
@@ -300,7 +300,7 @@ class YesterdailyDialog private constructor(
             activity: Activity,
             userRepository: UserRepository,
             taskRepository: TaskRepository,
-            tasks: List<Task>,
+            tasks: List<Task>
         ): YesterdailyDialog {
             val dialog = YesterdailyDialog(activity, userRepository, taskRepository, tasks)
             dialog.setCancelable(false)

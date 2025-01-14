@@ -24,14 +24,14 @@ class SupportCollapsibleSection : LinearLayout {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
         context,
         attrs,
-        defStyle,
+        defStyle
     ) {
         init(attrs, defStyle)
     }
 
     private fun init(
         attrs: AttributeSet?,
-        defStyle: Int,
+        defStyle: Int
     ) {
         val binding = SupportCollapsibleSectionBinding.inflate(context.layoutInflater, this)
         val a =
@@ -39,7 +39,7 @@ class SupportCollapsibleSection : LinearLayout {
                 attrs,
                 R.styleable.SupportCollapsibleSection,
                 defStyle,
-                0,
+                0
             )
 
         orientation = VERTICAL
@@ -51,8 +51,8 @@ class SupportCollapsibleSection : LinearLayout {
         binding.titleView.setTextColor(
             a.getColor(
                 R.styleable.SupportCollapsibleSection_titleColor,
-                ContextCompat.getColor(context, R.color.text_primary),
-            ),
+                ContextCompat.getColor(context, R.color.text_primary)
+            )
         )
 
         background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)

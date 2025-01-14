@@ -16,27 +16,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StatsViewModel
-    @Inject
-    constructor(
-        userRepository: UserRepository,
-        taskRepository: TaskRepository,
-        exceptionBuilder: ExceptionHandlerBuilder,
-        appStateManager: AppStateManager,
-    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-        fun retrieveUser() {
-            viewModelScope.launch(exceptionBuilder.silent()) {
-                userRepository.retrieveUser(true)
-            }
+@Inject
+constructor(
+    userRepository: UserRepository,
+    taskRepository: TaskRepository,
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+    fun retrieveUser() {
+        viewModelScope.launch(exceptionBuilder.silent()) {
+            userRepository.retrieveUser(true)
         }
-
-        var user: LiveData<User> =
-            userRepository.getUser()
-                .filterNotNull()
-                .distinctUntilChanged { old, new ->
-                    val oldStats = old.stats ?: return@distinctUntilChanged false
-                    val newStats = new.stats ?: return@distinctUntilChanged false
-                    return@distinctUntilChanged (oldStats.hp ?: 0.0) + (oldStats.exp ?: 0.0) + (oldStats.exp ?: 0.0) ==
-                        (newStats.hp ?: 0.0) + (newStats.exp ?: 0.0) + (newStats.exp ?: 0.0)
-                }
-                .asLiveData()
     }
+
+    var user: LiveData<User> =
+        userRepository.getUser()
+            .filterNotNull()
+            .distinctUntilChanged { old, new ->
+                val oldStats = old.stats ?: return@distinctUntilChanged false
+                val newStats = new.stats ?: return@distinctUntilChanged false
+                return@distinctUntilChanged (oldStats.hp ?: 0.0) + (oldStats.exp ?: 0.0) + (oldStats.exp ?: 0.0) ==
+                    (newStats.hp ?: 0.0) + (newStats.exp ?: 0.0) + (newStats.exp ?: 0.0)
+            }
+            .asLiveData()
+}

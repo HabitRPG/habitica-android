@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.subscriptions
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
@@ -79,7 +78,7 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.subscriptionDurationTextView.text =
                     resources.getString(
                         R.string.benefits_end,
-                        DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()),
+                        DateFormat.getDateInstance().format(plan.dateTerminated ?: Date())
                     )
         }
 

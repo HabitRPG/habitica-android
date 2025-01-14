@@ -101,14 +101,14 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
 
     internal fun openRemoteActivity(
         url: String,
-        keepActive: Boolean = false,
+        keepActive: Boolean = false
     ) {
         sendMessage("open_activity", url, null) {}
         startActivity(
             Intent(this, ContinuePhoneActivity::class.java)
                 .apply {
                     putExtra("keep_active", keepActive)
-                },
+                }
         )
     }
 
@@ -116,7 +116,7 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
         permission: String,
         url: String,
         data: ByteArray?,
-        function: ((Boolean) -> Unit),
+        function: ((Boolean) -> Unit)
     ) {
         lifecycleScope.launchCatching({
             Log.e("BaseActivity", "Error sending message", it)
@@ -126,8 +126,8 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
                 Tasks.await(
                     capabilityClient.getCapability(
                         permission,
-                        CapabilityClient.FILTER_ALL,
-                    ),
+                        CapabilityClient.FILTER_ALL
+                    )
                 )
             val nodeID = info.nodes.firstOrNull()
             if (nodeID != null) {
@@ -137,8 +137,8 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
                         messageClient.sendMessage(
                             nodeID.id,
                             url,
-                            data,
-                        ),
+                            data
+                        )
                     )
                 } catch (_: ApiException) {
                     // It's not connected

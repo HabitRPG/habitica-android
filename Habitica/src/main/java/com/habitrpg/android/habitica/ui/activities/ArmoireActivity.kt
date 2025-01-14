@@ -38,7 +38,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -186,7 +185,7 @@ class ArmoireActivity : BaseActivity() {
                 }
             subscriptionBottomSheet.show(
                 supportFragmentManager,
-                EventOutcomeSubscriptionBottomSheetFragment.TAG,
+                EventOutcomeSubscriptionBottomSheetFragment.TAG
             )
         }
 
@@ -205,19 +204,19 @@ class ArmoireActivity : BaseActivity() {
         binding.dropRateButtonUnsubbed.setOnClickListener {
             showDropRateDialog()
         }
-            intent.extras?.let {
-                val args = ArmoireActivityArgs.fromBundle(it)
-                equipmentKey = args.key
-                configure(args.type, args.key, args.text, args.value)
+        intent.extras?.let {
+            val args = ArmoireActivityArgs.fromBundle(it)
+            equipmentKey = args.key
+            configure(args.type, args.key, args.text, args.value)
 
-                if (args.type == "gear") {
-                    userViewModel.user.observeOnce(this) { user ->
-                        user?.loginIncentives?.let { totalCheckins ->
-                            reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
-                        }
+            if (args.type == "gear") {
+                userViewModel.user.observeOnce(this) { user ->
+                    user?.loginIncentives?.let { totalCheckins ->
+                        reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
                     }
                 }
             }
+        }
     }
 
     private fun giveUserArmoire(): Boolean {
@@ -268,7 +267,7 @@ class ArmoireActivity : BaseActivity() {
                 buyResponse.armoire["type"] ?: "",
                 buyResponse.armoire["dropKey"] ?: "",
                 buyResponse.armoire["dropText"] ?: "",
-                buyResponse.armoire["value"] ?: "",
+                buyResponse.armoire["value"] ?: ""
             )
             hasAnimatedChanges = false
             gold = null
@@ -311,7 +310,7 @@ class ArmoireActivity : BaseActivity() {
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
             },
-            500,
+            500
         )
 
         binding.iconView.startAnimation(Animations.bobbingAnimation())
@@ -343,13 +342,13 @@ class ArmoireActivity : BaseActivity() {
 
     private fun createParticles(
         container: FrameLayout,
-        resource: Int,
+        resource: Int
     ) {
         ParticleSystem(
             container,
             30,
             ContextCompat.getDrawable(this, resource),
-            6000,
+            6000
         )
             .setRotationSpeed(144f)
             .setScaleRange(1.0f, 1.6f)
@@ -362,7 +361,7 @@ class ArmoireActivity : BaseActivity() {
         type: String,
         key: String,
         text: String,
-        value: String? = "",
+        value: String? = ""
     ) {
         lastType = type
         lastKey = key

@@ -34,13 +34,13 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     abstract fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         binding = createBinding(inflater, container)
         return binding?.root
@@ -61,7 +61,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
                     mainActivity.displayTutorialStep(
                         step,
                         tutorialTexts,
-                        tutorialCanBeDeferred,
+                        tutorialCanBeDeferred
                     )
                 }
             }

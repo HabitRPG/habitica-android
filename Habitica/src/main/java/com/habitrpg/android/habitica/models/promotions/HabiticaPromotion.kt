@@ -14,7 +14,7 @@ enum class PromoType {
     GEMS_AMOUNT,
     GEMS_PRICE,
     SUBSCRIPTION,
-    SURVEY,
+    SURVEY
 }
 
 abstract class HabiticaPromotion {
@@ -50,7 +50,7 @@ abstract class HabiticaPromotion {
 
     abstract fun configureGemView(
         binding: PurchaseGemViewBinding,
-        regularAmount: Int,
+        regularAmount: Int
     )
 
     abstract fun configureInfoFragment(fragment: PromoInfoFragment)
@@ -59,19 +59,19 @@ abstract class HabiticaPromotion {
 fun getHabiticaPromotionFromKey(
     key: String,
     startDate: Date?,
-    endDate: Date?,
+    endDate: Date?
 ): HabiticaPromotion? {
     return when (key) {
         "fall_extra_gems", "fall2020", "testFall2020" ->
             FallExtraGemsHabiticaPromotion(
                 startDate,
-                endDate,
+                endDate
             )
 
         "spooky_extra_gems", "fall2020SecondPromo", "spooky2020" ->
             SpookyExtraGemsHabiticaPromotion(
                 startDate,
-                endDate,
+                endDate
             )
 
         "g1g1" -> GiftOneGetOneHabiticaPromotion(startDate, endDate)

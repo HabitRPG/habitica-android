@@ -34,7 +34,7 @@ class QuestCompletedDialog(context: Context) : HabiticaAlertDialog(context) {
         fun showWithQuest(
             context: Context,
             quest: QuestContent,
-            userRepository: UserRepository,
+            userRepository: UserRepository
         ) {
             if (isShowingDialog) return
 

@@ -7,17 +7,17 @@ import javax.inject.Singleton
 
 @Singleton
 class UserLocalRepository
-    @Inject
-    constructor() {
-        private val user = MutableStateFlow<User?>(null)
+@Inject
+constructor() {
+    private val user = MutableStateFlow<User?>(null)
 
-        fun getUser() = user
+    fun getUser() = user
 
-        fun saveUser(user: User) {
-            this.user.value = user
-        }
-
-        fun clearData() {
-            user.value = null
-        }
+    fun saveUser(user: User) {
+        this.user.value = user
     }
+
+    fun clearData() {
+        user.value = null
+    }
+}

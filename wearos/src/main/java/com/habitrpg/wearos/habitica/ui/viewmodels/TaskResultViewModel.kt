@@ -12,14 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskResultViewModel
-    @Inject
-    constructor(
-        savedStateHandle: SavedStateHandle,
-        taskRepository: TaskRepository,
-        userRepository: UserRepository,
-        exceptionBuilder: ExceptionHandlerBuilder,
-        appStateManager: AppStateManager,
-    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+@Inject
+constructor(
+    savedStateHandle: SavedStateHandle,
+    taskRepository: TaskRepository,
+    userRepository: UserRepository,
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     val user = userRepository.getUser().asLiveData()
     val hasLeveledUp: Boolean
         get() = result?.hasLeveledUp == true

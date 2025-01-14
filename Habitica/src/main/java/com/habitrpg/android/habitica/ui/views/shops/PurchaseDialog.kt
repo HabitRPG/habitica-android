@@ -70,7 +70,7 @@ import kotlin.time.toDuration
 class PurchaseDialog(
     context: Context,
     val item: ShopItem,
-    private val parentActivity: AppCompatActivity? = null,
+    private val parentActivity: AppCompatActivity? = null
 ) : HabiticaAlertDialog(context) {
     private val inventoryRepository: InventoryRepository
     private val userRepository: UserRepository
@@ -193,7 +193,7 @@ class PurchaseDialog(
         val hiltEntryPoint =
             EntryPointAccessors.fromApplication(
                 context,
-                PurchaseDialogEntryPoint::class.java,
+                PurchaseDialogEntryPoint::class.java
             )
         inventoryRepository = hiltEntryPoint.inventoryRepository()
         userRepository = hiltEntryPoint.userRepository()
@@ -442,8 +442,8 @@ class PurchaseDialog(
             bundleOf(
                 Pair("shop", shopIdentifier),
                 Pair("type", shopItem.purchaseType),
-                Pair("key", shopItem.key),
-            ),
+                Pair("key", shopItem.key)
+            )
         )
         HapticFeedbackManager.tap(buyButton)
         val snackbarText = arrayOf("")
@@ -485,8 +485,8 @@ class PurchaseDialog(
                             buyResponse.armoire["type"] ?: "",
                             buyResponse.armoire["dropText"] ?: "",
                             buyResponse.armoire["dropKey"] ?: "",
-                            buyResponse.armoire["value"] ?: "",
-                        ).arguments,
+                            buyResponse.armoire["value"] ?: ""
+                        ).arguments
                     )
                 }
             }
@@ -525,7 +525,7 @@ class PurchaseDialog(
             rightIcon = priceLabel.compoundDrawables[0],
             rightTextColor = rightTextColor,
             rightText = "-" + priceLabel.text,
-            isCelebratory = true,
+            isCelebratory = true
         )
         inventoryRepository.retrieveInAppRewards()
         userRepository.retrieveUser(forced = true)
@@ -561,7 +561,7 @@ class PurchaseDialog(
         alert.addButton(
             context.getString(R.string.purchaseX, purchaseQuantity),
             isPrimary = true,
-            isDestructive = false,
+            isDestructive = false
         ) { _, _ ->
             buyItem(purchaseQuantity)
         }

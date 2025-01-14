@@ -27,13 +27,13 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
+        appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         val thisWidget =
             ComponentName(
                 context,
-                HabitButtonWidgetProvider::class.java,
+                HabitButtonWidgetProvider::class.java
             )
         val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
@@ -41,7 +41,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
             appWidgetManager.partiallyUpdateAppWidget(
                 widgetId,
-                sizeRemoteViews(context, options, widgetId),
+                sizeRemoteViews(context, options, widgetId)
             )
         }
 
@@ -57,14 +57,14 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent,
+        intent: Intent
     ) {
         if (intent.action == HABIT_ACTION) {
             val mgr = AppWidgetManager.getInstance(context)
             val appWidgetId =
                 intent.getIntExtra(
                     AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID
                 )
             val taskId = intent.getStringExtra(TASK_ID)
             val direction = intent.getStringExtra(TASK_DIRECTION)
@@ -80,7 +80,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
                             taskId,
                             TaskDirection.UP.text == direction,
                             false,
-                            null,
+                            null
                         )
                     showToastForTaskDirection(context, response)
                     this@HabitButtonWidgetProvider.onUpdate(context, mgr, ids)
@@ -94,7 +94,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
         remoteViews: RemoteViews,
         widgetId: Int,
         columns: Int,
-        rows: Int,
+        rows: Int
     ): RemoteViews {
         return remoteViews
     }

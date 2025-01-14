@@ -50,7 +50,7 @@ class InboxOverviewFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentInboxBinding {
         return FragmentInboxBinding.inflate(inflater, container, false)
     }
@@ -58,7 +58,7 @@ class InboxOverviewFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         lifecycleScope.launchCatching {
@@ -69,7 +69,7 @@ class InboxOverviewFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -99,7 +99,7 @@ class InboxOverviewFragment :
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         this.mainActivity?.menuInflater?.inflate(R.menu.inbox, menu)
         val item = menu.findItem(R.id.send_message)
@@ -129,7 +129,7 @@ class InboxOverviewFragment :
                 getString(R.string.action_continue),
                 true,
                 isDestructive = false,
-                autoDismiss = false,
+                autoDismiss = false
             ) { _, _ ->
                 binding.errorTextView.visibility = View.GONE
                 binding.progressCircular.visibility = View.VISIBLE
@@ -218,13 +218,13 @@ class InboxOverviewFragment :
 
     private fun openInboxMessages(
         userID: String,
-        username: String,
+        username: String
     ) {
         MainNavigationController.navigate(
             InboxOverviewFragmentDirections.openInboxDetail(
                 userID,
-                username,
-            ),
+                username
+            )
         )
     }
 }

@@ -17,7 +17,7 @@ class DateUtils {
         fun createDate(
             year: Int,
             month: Int,
-            day: Int,
+            day: Int
         ): Date {
             val cal = Calendar.getInstance()
             cal.set(Calendar.YEAR, year)
@@ -32,7 +32,7 @@ class DateUtils {
 
         fun isSameDay(
             date1: Date,
-            date2: Date,
+            date2: Date
         ): Boolean {
             val cal1 = Calendar.getInstance()
             val cal2 = Calendar.getInstance()

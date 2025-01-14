@@ -59,7 +59,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBottomsheetSubscriptionBinding.inflate(layoutInflater)
         return binding.root
@@ -67,7 +67,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -90,7 +90,8 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         binding.content.seeMoreButton.visibility = View.VISIBLE
 
         binding.content.seeMoreButton.setOnClickListener {
-            MainNavigationController.navigate(R.id.gemPurchaseActivity,
+            MainNavigationController.navigate(
+                R.id.gemPurchaseActivity,
                 bundleOf(Pair("openSubscription", true))
             )
         }
@@ -130,7 +131,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                     updateButtonLabel(
                         sku,
                         sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
-                            ?: "",
+                            ?: ""
                     )
                 }
                 if (selectedSubscriptionSku == null) {
@@ -149,7 +150,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String,
+        price: String
     ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {

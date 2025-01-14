@@ -9,15 +9,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FaintViewModel
-    @Inject
-    constructor(
-        userRepository: UserRepository,
-        taskRepository: TaskRepository,
-        exceptionBuilder: ExceptionHandlerBuilder,
-        appStateManager: AppStateManager,
-    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-        suspend fun revive() {
-            userRepository.revive()
-            userRepository.retrieveUser(true)
-        }
+@Inject
+constructor(
+    userRepository: UserRepository,
+    taskRepository: TaskRepository,
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+    suspend fun revive() {
+        userRepository.revive()
+        userRepository.retrieveUser(true)
     }
+}

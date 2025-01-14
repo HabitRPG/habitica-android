@@ -13,71 +13,71 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class PromoMenuView
-    @JvmOverloads
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0,
-    ) : RelativeLayout(context, attrs, defStyleAttr) {
-        var canClose: Boolean = false
-            set(value) {
-                field = value
-                binding.closeButton.visibility = if (value) View.VISIBLE else View.GONE
-            }
-        var binding: PromoMenuBinding = PromoMenuBinding.inflate(context.layoutInflater, this)
-
-        init {
-            setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
-            clipToPadding = false
-            clipChildren = false
-            clipToOutline = false
+@JvmOverloads
+constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : RelativeLayout(context, attrs, defStyleAttr) {
+    var canClose: Boolean = false
+        set(value) {
+            field = value
+            binding.closeButton.visibility = if (value) View.VISIBLE else View.GONE
         }
+    var binding: PromoMenuBinding = PromoMenuBinding.inflate(context.layoutInflater, this)
 
-        fun setTitleText(title: String?) {
-            setText(binding.titleTextView, title)
-        }
+    init {
+        setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
+        clipToPadding = false
+        clipChildren = false
+        clipToOutline = false
+    }
 
-        fun setSubtitleText(subtitle: String?) {
-            setText(binding.descriptionView, subtitle)
-        }
+    fun setTitleText(title: String?) {
+        setText(binding.titleTextView, title)
+    }
 
-        fun setTitleImage(title: Drawable?) {
-            setImage(binding.titleImageView, title)
-        }
+    fun setSubtitleText(subtitle: String?) {
+        setText(binding.descriptionView, subtitle)
+    }
 
-        fun setSubtitleImage(subtitle: Drawable?) {
-            setImage(binding.descriptionImageView, subtitle)
-        }
+    fun setTitleImage(title: Drawable?) {
+        setImage(binding.titleImageView, title)
+    }
 
-        fun setDecoration(
-            leftDrawable: Drawable?,
-            rightDrawable: Drawable?,
-        ) {
-            binding.leftImageView.setImageDrawable(leftDrawable)
-            binding.rightImageView.setImageDrawable(rightDrawable)
-        }
+    fun setSubtitleImage(subtitle: Drawable?) {
+        setImage(binding.descriptionImageView, subtitle)
+    }
 
-        private fun setImage(
-            view: ImageView,
-            drawable: Drawable?,
-        ) {
-            if (drawable != null) {
-                view.setImageDrawable(drawable)
-                view.visibility = View.VISIBLE
-            } else {
-                view.visibility = View.GONE
-            }
-        }
+    fun setDecoration(
+        leftDrawable: Drawable?,
+        rightDrawable: Drawable?
+    ) {
+        binding.leftImageView.setImageDrawable(leftDrawable)
+        binding.rightImageView.setImageDrawable(rightDrawable)
+    }
 
-        private fun setText(
-            view: TextView,
-            text: String?,
-        ) {
-            if (text != null) {
-                view.text = text
-                view.visibility = View.VISIBLE
-            } else {
-                view.visibility = View.GONE
-            }
+    private fun setImage(
+        view: ImageView,
+        drawable: Drawable?
+    ) {
+        if (drawable != null) {
+            view.setImageDrawable(drawable)
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
         }
     }
+
+    private fun setText(
+        view: TextView,
+        text: String?
+    ) {
+        if (text != null) {
+            view.text = text
+            view.visibility = View.VISIBLE
+        } else {
+            view.visibility = View.GONE
+        }
+    }
+}

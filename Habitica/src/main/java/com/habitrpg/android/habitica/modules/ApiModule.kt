@@ -28,7 +28,7 @@ open class ApiModule {
     fun providesHostConfig(
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): HostConfig {
         return HostConfig(sharedPreferences, keyHelper, context)
     }
@@ -50,14 +50,14 @@ open class ApiModule {
         gsonConverter: GsonConverterFactory,
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): ApiClient {
         val apiClient =
             ApiClientImpl(
                 gsonConverter,
                 hostConfig,
                 notificationsManager,
-                context,
+                context
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient

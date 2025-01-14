@@ -12,7 +12,7 @@ class SeasonalShopFragment : ShopFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         shopIdentifier = Shop.SEASONAL_SHOP
         return super.onCreateView(inflater, container, savedInstanceState)

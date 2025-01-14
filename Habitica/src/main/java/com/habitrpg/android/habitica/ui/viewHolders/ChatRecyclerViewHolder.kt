@@ -54,7 +54,7 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) :
 class ChatRecyclerMessageViewHolder(
     itemView: View,
     private var userId: String,
-    private val isGroupChat: Boolean,
+    private val isGroupChat: Boolean
 ) : ChatRecyclerViewHolder(itemView) {
     val binding = ChatItemBinding.bind(itemView)
 
@@ -95,28 +95,28 @@ class ChatRecyclerMessageViewHolder(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
             null,
             null,
-            null,
+            null
         )
         binding.copyButton.setOnClickListener { chatMessage?.let { onCopyMessage?.invoke(it) } }
         binding.copyButton.setCompoundDrawablesWithIntrinsicBounds(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
             null,
             null,
-            null,
+            null
         )
         binding.reportButton.setOnClickListener { chatMessage?.let { onFlagMessage?.invoke(it) } }
         binding.reportButton.setCompoundDrawablesWithIntrinsicBounds(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
             null,
             null,
-            null,
+            null
         )
         binding.deleteButton.setOnClickListener { chatMessage?.let { onDeleteMessage?.invoke(it) } }
         binding.deleteButton.setCompoundDrawablesWithIntrinsicBounds(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
             null,
             null,
-            null,
+            null
         )
     }
 
@@ -124,7 +124,7 @@ class ChatRecyclerMessageViewHolder(
         msg: ChatMessage,
         uuid: String,
         user: User?,
-        isExpanded: Boolean,
+        isExpanded: Boolean
     ) {
         chatMessage = msg
         this.user = user
@@ -184,7 +184,7 @@ class ChatRecyclerMessageViewHolder(
                 64.dpToPx(context),
                 itemView.paddingTop,
                 itemView.paddingRight,
-                itemView.paddingBottom,
+                itemView.paddingBottom
             )
         } else {
             val displayMetrics = res.displayMetrics
@@ -201,7 +201,7 @@ class ChatRecyclerMessageViewHolder(
                 16.dpToPx(context),
                 itemView.paddingTop,
                 itemView.paddingRight,
-                itemView.paddingBottom,
+                itemView.paddingBottom
             )
         }
 
@@ -220,8 +220,8 @@ class ChatRecyclerMessageViewHolder(
         val username = user?.formattedUsername
         binding.messageWrapper.background =
             if ((name != null && msg.text?.contains("@$name") == true) || (
-                    username != null && msg.text?.contains(
-                        username,
+                username != null && msg.text?.contains(
+                        username
                     ) == true
                 )
             ) {
@@ -253,15 +253,15 @@ class ChatRecyclerMessageViewHolder(
                 binding.flagCountTextview.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_orange,
-                    ),
+                        R.color.text_orange
+                    )
                 )
             } else {
                 binding.flagCountTextview.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_red,
-                    ),
+                        R.color.text_red
+                    )
                 )
             }
         } else {
@@ -296,7 +296,7 @@ class ChatRecyclerMessageViewHolder(
 
         DataBindingUtils.setRoundedBackground(
             binding.likeBackgroundLayout,
-            ContextCompat.getColor(context, backgroundColorRes),
+            ContextCompat.getColor(context, backgroundColorRes)
         )
         binding.tvLikes.setTextColor(ContextCompat.getColor(context, foregroundColorRes))
     }

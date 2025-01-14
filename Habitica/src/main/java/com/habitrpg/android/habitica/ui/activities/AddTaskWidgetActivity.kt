@@ -30,7 +30,7 @@ class AddTaskWidgetActivity : AppCompatActivity() {
             widgetId =
                 extras.getInt(
                     AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID
                 )
         }
 
@@ -75,7 +75,7 @@ class AddTaskWidgetActivity : AppCompatActivity() {
                 AppWidgetManager.ACTION_APPWIDGET_UPDATE,
                 null,
                 this,
-                AddTaskWidgetProvider::class.java,
+                AddTaskWidgetProvider::class.java
             )
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
         sendBroadcast(intent)

@@ -39,7 +39,7 @@ class TaskReceiver : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent,
+        intent: Intent
     ) {
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")
         val extras = intent.extras
@@ -62,7 +62,7 @@ class TaskReceiver : BroadcastReceiver() {
 
     private fun createNotification(
         context: Context,
-        task: Task,
+        task: Task
     ) {
         val intent = Intent(context, MainActivity::class.java)
         HLogger.log(LogLevel.INFO, this::javaClass.name, "Create Notification")
@@ -73,7 +73,7 @@ class TaskReceiver : BroadcastReceiver() {
                 context,
                 System.currentTimeMillis().toInt(),
                 intent,
-                withImmutableFlag(0),
+                withImmutableFlag(0)
             )
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
@@ -84,7 +84,7 @@ class TaskReceiver : BroadcastReceiver() {
                 .setContentTitle(task.text)
                 .setStyle(
                     NotificationCompat.BigTextStyle()
-                        .bigText(task.notes),
+                        .bigText(task.notes)
                 )
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(soundUri)
@@ -107,12 +107,12 @@ class TaskReceiver : BroadcastReceiver() {
                     context,
                     task.id.hashCode(),
                     completeIntent,
-                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
                 )
             notificationBuilder.addAction(
                 0,
                 context.getString(R.string.complete),
-                pendingIntentComplete,
+                pendingIntentComplete
             )
         }
         val notificationManager = NotificationManagerCompat.from(context)

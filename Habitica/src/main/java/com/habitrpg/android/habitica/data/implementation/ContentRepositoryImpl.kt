@@ -17,7 +17,7 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
     localRepository: T,
     apiClient: ApiClient,
     context: Context,
-    authenticationHandler: AuthenticationHandler,
+    authenticationHandler: AuthenticationHandler
 ) : BaseRepositoryImpl<T>(localRepository, apiClient, authenticationHandler), ContentRepository {
     private val mysteryItem = SpecialItem.makeMysteryItem(context)
 

@@ -19,7 +19,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
 
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>,
+        data: Map<String, String>
     ) {
         super.setNotificationActions(notificationId, data)
         val res = context.resources
@@ -34,7 +34,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 acceptInviteIntent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
         notificationBuilder.addAction(0, "Accept", pendingIntentAccept)
 
@@ -47,7 +47,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode() + 1,
                 rejectInviteIntent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
         notificationBuilder.addAction(0, "Reject", pendingIntentReject)
     }

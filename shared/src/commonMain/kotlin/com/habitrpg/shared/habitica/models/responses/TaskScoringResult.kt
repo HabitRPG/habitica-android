@@ -2,7 +2,6 @@ package com.habitrpg.shared.habitica.models.responses
 
 import com.habitrpg.shared.habitica.HParcel
 import com.habitrpg.shared.habitica.HParcelable
-import com.habitrpg.shared.habitica.HParcelize
 import com.habitrpg.shared.habitica.getClassLoader
 import com.habitrpg.shared.habitica.models.AvatarStats
 import kotlin.jvm.JvmField
@@ -17,7 +16,7 @@ data class TaskScoringResult(
     var hasLeveledUp: Boolean = false,
     var level: Int = 0,
     var questDamage: Double? = null,
-    var questItemsFound: Int? = null,
+    var questItemsFound: Int? = null
 ) : HParcelable {
     constructor(data: TaskDirectionData, stats: AvatarStats?) : this(
         data.hp <= 0.0,
@@ -33,7 +32,7 @@ data class TaskScoringResult(
         data.lvl > (stats?.lvl ?: 0),
         data.lvl,
         data._tmp?.quest?.progressDelta,
-        data._tmp?.quest?.collection,
+        data._tmp?.quest?.collection
     )
 
     constructor(source: HParcel) : this(
@@ -46,7 +45,7 @@ data class TaskScoringResult(
         hasLeveledUp = source.readByte() != 0.toByte(),
         level = source.readInt(),
         questDamage = source.readValue(getClassLoader(Double::class)) as? Double,
-        questItemsFound = source.readValue(getClassLoader(Int::class)) as? Int,
+        questItemsFound = source.readValue(getClassLoader(Int::class)) as? Int
     )
 
     override fun writeToParcel(dest: HParcel, flags: Int) {

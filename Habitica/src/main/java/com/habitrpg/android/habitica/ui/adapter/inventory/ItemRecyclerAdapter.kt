@@ -62,7 +62,7 @@ class ItemRecyclerAdapter(val context: Context) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ViewHolder {
         return if (viewType == 0) {
             ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -73,7 +73,7 @@ class ItemRecyclerAdapter(val context: Context) :
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int,
+        position: Int
     ) {
         if (position < data.size) {
             val ownedItem = data[position] as OwnedItem
@@ -94,7 +94,7 @@ class ItemRecyclerAdapter(val context: Context) :
                         "food" -> context.getString(R.string.food_footer_description)
                         "hatchingPotions" -> context.getString(R.string.hatchingPotions_footer_description)
                         else -> ""
-                    },
+                    }
                 )
             }
             typedHolder.itemView.setOnClickListener {
@@ -154,7 +154,7 @@ class ItemRecyclerAdapter(val context: Context) :
 
         fun bind(
             ownedItem: OwnedItem,
-            item: Item?,
+            item: Item?
         ) {
             this.ownedItem = ownedItem
             this.item = item
@@ -187,7 +187,7 @@ class ItemRecyclerAdapter(val context: Context) :
 
         private fun getImageName(
             item: Item? = null,
-            ownedItem: OwnedItem? = null,
+            ownedItem: OwnedItem? = null
         ): String {
             if (ownedItem != null && ownedItem.itemType == "special") {
                 return "shop_" + ownedItem.key
@@ -236,8 +236,8 @@ class ItemRecyclerAdapter(val context: Context) :
                             resources.getString(R.string.sell_no_price),
                             true,
                             "gold",
-                            item?.value?.toDouble() ?: 0.0,
-                        ),
+                            item?.value?.toDouble() ?: 0.0
+                        )
                     )
                 }
                 if (item is Egg) {
@@ -277,7 +277,7 @@ class ItemRecyclerAdapter(val context: Context) :
                             ownedItem?.let { selectedOwnedItem ->
                                 onSellItem?.invoke(
                                     selectedItem,
-                                    selectedOwnedItem,
+                                    selectedOwnedItem
                                 )
                             }
                             return@let

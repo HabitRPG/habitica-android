@@ -77,7 +77,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
     override fun onPageScrolled(
         position: Int,
         positionOffset: Float,
-        positionOffsetPixels: Int,
+        positionOffsetPixels: Int
     ) { // no-on
     }
 
@@ -110,7 +110,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
 
         override fun instantiateItem(
             container: ViewGroup,
-            position: Int,
+            position: Int
         ): Any {
             val item = super.instantiateItem(container, position)
             if (item is IntroFragment) {
@@ -122,7 +122,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
 
     private fun configureFragment(
         fragment: IntroFragment,
-        position: Int,
+        position: Int
     ) {
         when (position) {
             0 -> {
@@ -132,20 +132,20 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
                     ResourcesCompat.getDrawable(
                         resources,
                         R.drawable.intro_1_title,
-                        null,
-                    ),
+                        null
+                    )
                 )
                 fragment.setDescription(
                     getString(
                         R.string.intro_1_description,
-                        getString(R.string.habitica_user_count),
-                    ),
+                        getString(R.string.habitica_user_count)
+                    )
                 )
                 fragment.setBackgroundColor(
                     ContextCompat.getColor(
                         this@IntroActivity,
-                        R.color.brand_300,
-                    ),
+                        R.color.brand_300
+                    )
                 )
             }
 
@@ -157,8 +157,8 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
                 fragment.setBackgroundColor(
                     ContextCompat.getColor(
                         this@IntroActivity,
-                        R.color.blue_10,
-                    ),
+                        R.color.blue_10
+                    )
                 )
             }
 
@@ -170,8 +170,8 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
                 fragment.setBackgroundColor(
                     ContextCompat.getColor(
                         this@IntroActivity,
-                        R.color.red_100,
-                    ),
+                        R.color.red_100
+                    )
                 )
             }
         }

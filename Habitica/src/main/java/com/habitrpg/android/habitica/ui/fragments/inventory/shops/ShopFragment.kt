@@ -80,7 +80,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -88,7 +88,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -103,7 +103,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         initializeCurrencyViews()
@@ -139,7 +139,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         PurchaseDialog(
                             requireContext(),
                             item,
-                            mainActivity,
+                            mainActivity
                         )
                     dialog.shopIdentifier = shopIdentifier
                     dialog.isPinned = isPinned
@@ -298,7 +298,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             HabiticaProgressDialog.show(
                                 requireActivity(),
                                 getString(R.string.changing_class_progress),
-                                300,
+                                300
                             )
                         lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
@@ -317,7 +317,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             HabiticaProgressDialog.show(
                                 requireActivity(),
                                 getString(R.string.changing_class_progress),
-                                300,
+                                300
                             )
                         lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
@@ -378,7 +378,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     newShop.categories.sortWith(
                         compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
                             .thenByDescending { if (it.identifier == "quests") 10000 else findReleaseYear(it.items.firstOrNull()?.key ?: "") }
-                            .thenBy { it.items.firstOrNull()?.locked },
+                            .thenBy { it.items.firstOrNull()?.locked }
                     )
                 }
             }

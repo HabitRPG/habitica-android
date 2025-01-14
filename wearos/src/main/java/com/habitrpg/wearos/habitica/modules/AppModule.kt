@@ -39,7 +39,7 @@ class AppModule {
     fun providesHostConfig(
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): HostConfig {
         return HostConfig(sharedPreferences, keyHelper, context)
     }
@@ -47,7 +47,7 @@ class AppModule {
     @Provides
     fun providesConverterFactory(moshi: Moshi): Converter.Factory {
         return MoshiConverterFactory.create(
-            moshi,
+            moshi
         ).asLenient()
     }
 
@@ -69,20 +69,20 @@ class AppModule {
         hostConfig: HostConfig,
         @ApplicationContext context: Context,
         converter: Converter.Factory,
-        appStateManager: AppStateManager,
+        appStateManager: AppStateManager
     ): ApiClient {
         return ApiClient(
             converter,
             hostConfig,
             appStateManager,
-            context,
+            context
         )
     }
 
     @Provides
     @Singleton
     fun provideSharedPreferences(
-        @ApplicationContext context: Context,
+        @ApplicationContext context: Context
     ): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
@@ -109,7 +109,7 @@ class AppModule {
     fun provideKeyHelper(
         @ApplicationContext context: Context,
         sharedPreferences: SharedPreferences,
-        keyStore: KeyStore?,
+        keyStore: KeyStore?
     ): KeyHelper? {
         return if (keyStore == null) {
             null

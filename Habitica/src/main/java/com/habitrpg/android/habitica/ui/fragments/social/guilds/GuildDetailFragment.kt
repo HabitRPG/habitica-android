@@ -51,18 +51,18 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentGuildDetailBinding {
         return FragmentGuildDetailBinding.inflate(inflater, container, false)
     }
 
     val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { parentFragment as Fragment },
+        ownerProducer = { parentFragment as Fragment }
     )
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -170,7 +170,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.addButton(
                         R.string.leave_challenges_delete_tasks,
                         isPrimary = false,
-                        isDestructive = true,
+                        isDestructive = true
                     ) { _, _ ->
                         viewModel.leaveGroup(false, false, groupChallenges, false) { showLeaveSnackbar() }
                     }
@@ -183,7 +183,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.addButton(
                         R.string.leave,
                         isPrimary = true,
-                        isDestructive = true,
+                        isDestructive = true
                     ) { _, _ ->
                         viewModel.leaveGroup(false, false, groupChallenges, false) {
                             showLeaveSnackbar()
@@ -204,8 +204,8 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         binding?.titleView?.text = guild?.name
         binding?.guildMembersIcon?.setImageBitmap(
             HabiticaIconsHelper.imageOfGuildCrestMedium(
-                (guild?.memberCount ?: 0).toFloat(),
-            ),
+                (guild?.memberCount ?: 0).toFloat()
+            )
         )
         binding?.guildMembersText?.text = guild?.memberCount.toString()
         binding?.guildBankText?.text = guild?.gemCount.toString()

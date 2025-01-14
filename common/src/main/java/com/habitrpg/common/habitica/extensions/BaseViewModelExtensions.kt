@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 
 fun <T> LiveData<T>.observeOnce(
     lifecycleOwner: LifecycleOwner,
-    observer: Observer<T>,
+    observer: Observer<T>
 ) {
     observe(
         lifecycleOwner,
@@ -15,6 +15,6 @@ fun <T> LiveData<T>.observeOnce(
                 observer.onChanged(value)
                 removeObserver(this)
             }
-        },
+        }
     )
 }

@@ -25,7 +25,7 @@ class EquipmentRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): GearViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.gear_list_item, parent, false)
@@ -34,7 +34,7 @@ class EquipmentRecyclerViewAdapter :
 
     override fun onBindViewHolder(
         holder: GearViewHolder,
-        position: Int,
+        position: Int
     ) {
         holder.bind(data[position])
     }
@@ -51,11 +51,11 @@ class EquipmentRecyclerViewAdapter :
             binding.twoHandedView.setCompoundDrawablesWithIntrinsicBounds(
                 BitmapDrawable(
                     context.resources,
-                    HabiticaIconsHelper.imageOfTwoHandedIcon(),
+                    HabiticaIconsHelper.imageOfTwoHandedIcon()
                 ),
                 null,
                 null,
-                null,
+                null
             )
             itemView.setOnClickListener {
                 val key = gear?.key
@@ -82,8 +82,8 @@ class EquipmentRecyclerViewAdapter :
                 binding.gearContainer.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.lightly_tinted_background,
-                    ),
+                        R.color.lightly_tinted_background
+                    )
                 )
                 binding.gearIconBackgroundView.background =
                     ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
@@ -105,7 +105,7 @@ class EquipmentRecyclerViewAdapter :
         private fun set(
             label: TextView,
             valueTextView: TextView,
-            value: Int,
+            value: Int
         ) {
             if (value > 0) {
                 label.visibility = View.VISIBLE

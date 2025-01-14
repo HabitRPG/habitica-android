@@ -84,7 +84,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentItemsDialogBinding {
         return FragmentItemsDialogBinding.inflate(inflater, container, false)
     }
@@ -97,7 +97,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         when {
             this.isHatching -> {
@@ -119,7 +119,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -130,8 +130,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 HitType.EVENT,
                 mapOf(
                     "area" to "empty",
-                    "type" to (itemType ?: ""),
-                ),
+                    "type" to (itemType ?: "")
+                )
             )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
@@ -159,7 +159,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                     else -> null
                 },
                 false,
-                if (itemType == "special") null else buttonMethod,
+                if (itemType == "special") null else buttonMethod
             )
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
@@ -257,8 +257,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                     HitType.EVENT,
                     mapOf(
                         "area" to "bottom",
-                        "type" to (itemType ?: ""),
-                    ),
+                        "type" to (itemType ?: "")
+                    )
                 )
                 if (itemType == "quests") {
                     MainNavigationController.navigate(R.id.questShopFragment)
@@ -278,8 +278,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                     FeedPetUseCase.RequestValues(
                         pet,
                         food,
-                        activity,
-                    ),
+                        activity
+                    )
                 )
             onFeedResult?.invoke(result)
         }
@@ -303,7 +303,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     private fun hatchPet(
         potion: HatchingPotion,
-        egg: Egg,
+        egg: Egg
     ) {
         dismiss()
         val activity = activity ?: return
@@ -312,8 +312,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 HatchPetUseCase.RequestValues(
                     potion,
                     egg,
-                    activity,
-                ),
+                    activity
+                )
             )
         }
     }

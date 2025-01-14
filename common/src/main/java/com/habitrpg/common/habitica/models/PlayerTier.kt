@@ -15,13 +15,13 @@ class PlayerTier(val title: String, val id: Int) {
                 PlayerTier("Tier 5 (Champion)", 5),
                 PlayerTier("Tier 6 (Champion)", 6),
                 PlayerTier("Tier 7 (Legendary)", 7),
-                PlayerTier("Staff (Heroic)", 9),
+                PlayerTier("Staff (Heroic)", 9)
             )
         }
 
         fun getColorForTier(
             context: Context,
-            value: Int,
+            value: Int
         ): Int {
             return when (value) {
                 1 -> ContextCompat.getColor(context, R.color.contributor_1)

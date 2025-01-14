@@ -25,7 +25,7 @@ class MemberSerialization : JsonDeserializer<Member> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): Member {
         val obj = json.asJsonObject
         val id = obj.get("_id").asString
@@ -53,7 +53,7 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.preferences =
                 context.deserialize<MemberPreferences>(
                     obj.get("preferences"),
-                    MemberPreferences::class.java,
+                    MemberPreferences::class.java
                 )
         }
         if (obj.has("profile")) {
@@ -98,7 +98,7 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.contributor =
                 context.deserialize<ContributorInfo>(
                     obj.get("contributor"),
-                    ContributorInfo::class.java,
+                    ContributorInfo::class.java
                 )
         }
         if (obj.has("backer")) {

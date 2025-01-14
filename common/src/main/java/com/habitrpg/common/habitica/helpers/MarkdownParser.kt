@@ -41,7 +41,7 @@ object MarkdownParser {
                     ImagesPlugin.create {
                         it.addSchemeHandler(OkHttpNetworkSchemeHandler.create())
                             .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
-                    },
+                    }
                 )
                 .usePlugin(createImageSizeResolverScaleDpiPlugin(context))
                 .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
@@ -61,7 +61,7 @@ object MarkdownParser {
                             imageSize: ImageSize?,
                             imageBounds: Rect,
                             canvasWidth: Int,
-                            textSize: Float,
+                            textSize: Float
                         ): Rect {
                             val dpi = context.resources.displayMetrics.density
                             var width = imageBounds.width()
@@ -77,7 +77,7 @@ object MarkdownParser {
 
                             return Rect(0, 0, width, height)
                         }
-                    },
+                    }
                 )
             }
         }
@@ -174,7 +174,7 @@ object MarkdownParser {
 
     fun parseMarkdownAsync(
         input: String?,
-        onSuccess: (Spanned) -> Unit,
+        onSuccess: (Spanned) -> Unit
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             val result = parseMarkdown(input)
@@ -236,7 +236,7 @@ fun TextView.setParsedMarkdown(input: Spanned?) {
 
 private fun handleUrlClicks(
     context: Context,
-    url: String,
+    url: String
 ) {
     val webpage =
         if (url.startsWith("/")) {

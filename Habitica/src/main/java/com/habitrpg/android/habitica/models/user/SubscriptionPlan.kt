@@ -51,7 +51,6 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
             return totalNumberOfGems - (gemsBought ?: 0)
         }
 
-
     val monthsUntilNextHourglass: Int
         get() {
             return 1

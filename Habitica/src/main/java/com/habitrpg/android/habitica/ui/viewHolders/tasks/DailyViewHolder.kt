@@ -16,7 +16,7 @@ class DailyViewHolder(
     scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?,
+    assignedTextProvider: GroupPlanInfoProvider?
 ) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
     override val taskIconWrapperIsVisible: Boolean
         get() {
@@ -31,7 +31,7 @@ class DailyViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?,
+        ownerID: String?
     ) {
         this.task = data
         setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
@@ -51,7 +51,7 @@ class DailyViewHolder(
                         calendar.get(Calendar.DATE),
                         it.getZonedDateTime()?.hour ?: 0,
                         it.getZonedDateTime()?.minute ?: 0,
-                        0,
+                        0
                     )
                     now < calendar.time
                 } ?: data.reminders?.first()
@@ -72,7 +72,7 @@ class DailyViewHolder(
 
     override fun shouldDisplayAsActive(
         task: Task?,
-        userID: String?,
+        userID: String?
     ): Boolean {
         return task?.isDisplayedActiveForUser(userID) ?: false
     }

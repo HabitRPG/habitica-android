@@ -61,6 +61,7 @@ open class ShopItem : RealmObject(), BaseObject {
     @SerializedName("lvl")
     var level: Int? = null
     var event: ItemEvent? = null
+
     @SerializedName("end")
     var endDate: Date? = null
 
@@ -94,7 +95,7 @@ open class ShopItem : RealmObject(), BaseObject {
 
     fun canAfford(
         user: User?,
-        quantity: Int,
+        quantity: Int
     ): Boolean =
         when (currency) {
             "gold" -> (value * quantity) <= (user?.stats?.gp ?: 0.0)
@@ -189,7 +190,7 @@ open class ShopItem : RealmObject(), BaseObject {
         fun fromCustomization(
             customization: Customization,
             userSize: String?,
-            hairColor: String?,
+            hairColor: String?
         ): ShopItem {
             val item = ShopItem()
             item.key = customization.identifier ?: ""
@@ -214,7 +215,7 @@ open class ShopItem : RealmObject(), BaseObject {
             set: CustomizationSet,
             additionalSetItems: List<Customization>?,
             userSize: String?,
-            hairColor: String?,
+            hairColor: String?
         ): ShopItem {
             val item = ShopItem()
             var path = ""

@@ -4,13 +4,13 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerIntroViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
+import com.habitrpg.common.habitica.extensions.inflate
 
 class InboxAdapter(private var user: User?) :
     PagingDataAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
@@ -37,12 +37,12 @@ class InboxAdapter(private var user: User?) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ChatRecyclerViewHolder {
         return if (viewType == FIRST_MESSAGE) {
             ChatRecyclerIntroViewHolder(
                 parent.inflate(R.layout.tavern_chat_intro_item),
-                replyToUser?.id ?: "",
+                replyToUser?.id ?: ""
             )
         } else {
             ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
@@ -51,7 +51,7 @@ class InboxAdapter(private var user: User?) :
 
     override fun onBindViewHolder(
         holder: ChatRecyclerViewHolder,
-        position: Int,
+        position: Int
     ) {
         val firstMessage: Boolean = getItemViewType(position) == FIRST_MESSAGE
         if (firstMessage) {
@@ -65,7 +65,7 @@ class InboxAdapter(private var user: User?) :
                 message,
                 user?.id ?: "",
                 user,
-                expandedMessageId == message.id,
+                expandedMessageId == message.id
             )
             messageHolder.onShouldExpand = { expandMessage(message.id, position) }
             messageHolder.onOpenProfile = onOpenProfile
@@ -78,7 +78,7 @@ class InboxAdapter(private var user: User?) :
 
     private fun expandMessage(
         id: String,
-        position: Int,
+        position: Int
     ) {
         if (isPositionIntroMessage(position)) {
             return
@@ -103,12 +103,12 @@ class InboxAdapter(private var user: User?) :
                 // but ID is fixed.
                 override fun areItemsTheSame(
                     oldConcert: ChatMessage,
-                    newConcert: ChatMessage,
+                    newConcert: ChatMessage
                 ) = oldConcert.id == newConcert.id
 
                 override fun areContentsTheSame(
                     oldConcert: ChatMessage,
-                    newConcert: ChatMessage,
+                    newConcert: ChatMessage
                 ) = oldConcert.text == newConcert.text
             }
     }

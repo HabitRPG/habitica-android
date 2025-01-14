@@ -8,43 +8,43 @@ import androidx.core.widget.NestedScrollView
 import com.habitrpg.common.habitica.extensions.dpToPx
 
 class HabiticaScrollView
-    @JvmOverloads
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-    ) : NestedScrollView(context, attrs) {
-        init {
-            isVerticalScrollBarEnabled = true
-        }
+@JvmOverloads
+constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : NestedScrollView(context, attrs) {
+    init {
+        isVerticalScrollBarEnabled = true
+    }
 
-        override fun onAttachedToWindow() {
-            super.onAttachedToWindow()
-            requestFocus()
-        }
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        requestFocus()
+    }
 
-        override fun onLayout(
-            changed: Boolean,
-            l: Int,
-            t: Int,
-            r: Int,
-            b: Int,
-        ) {
-            super.onLayout(changed, l, t, r, b)
-            if (changed) {
-                val verticalPadding =
-                    if (context.resources.configuration.isScreenRound) {
-                        (0.146467f * Resources.getSystem().displayMetrics.widthPixels).toInt()
-                    } else {
-                        0
-                    }
-                val horizontalPadding = 10.dpToPx(context)
-                children.firstOrNull()
-                    ?.setPadding(
-                        horizontalPadding,
-                        verticalPadding,
-                        horizontalPadding,
-                        verticalPadding * 2,
-                    )
-            }
+    override fun onLayout(
+        changed: Boolean,
+        l: Int,
+        t: Int,
+        r: Int,
+        b: Int
+    ) {
+        super.onLayout(changed, l, t, r, b)
+        if (changed) {
+            val verticalPadding =
+                if (context.resources.configuration.isScreenRound) {
+                    (0.146467f * Resources.getSystem().displayMetrics.widthPixels).toInt()
+                } else {
+                    0
+                }
+            val horizontalPadding = 10.dpToPx(context)
+            children.firstOrNull()
+                ?.setPadding(
+                    horizontalPadding,
+                    verticalPadding,
+                    horizontalPadding,
+                    verticalPadding * 2
+                )
         }
     }
+}

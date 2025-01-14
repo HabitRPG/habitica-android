@@ -22,9 +22,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHabiticaBaseBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.CoroutineScope
@@ -192,7 +192,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         isPrimary: Boolean,
         isDestructive: Boolean = false,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
     ): Button {
         return addButton(context.getString(stringRes), isPrimary, isDestructive, autoDismiss, function)
     }
@@ -202,7 +202,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         isPrimary: Boolean,
         isDestructive: Boolean = false,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
     ): Button {
         val button: Button =
             if (isPrimary) {
@@ -226,7 +226,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun addButton(
         buttonView: View,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
     ): View {
         val weakThis = WeakReference(this)
         val buttonIndex = binding.buttonsWrapper.childCount
@@ -325,8 +325,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                     (dialogQueue[0].context as? BaseActivity)?.lifecycleScope?.launch(context = Dispatchers.Main) {
                         delay(500L)
                         if (dialogQueue.size > 0 && (
-                                (dialogQueue[0].context as? Activity)?.isFinishing == false ||
-                                    ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
+                            (dialogQueue[0].context as? Activity)?.isFinishing == false ||
+                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
                             )
                         ) {
                             dialogQueue[0].show()

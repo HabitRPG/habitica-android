@@ -90,7 +90,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun getEquipmentType(
         type: String,
-        set: String,
+        set: String
     ): Flow<out List<Equipment>> {
         return realm.where(Equipment::class.java)
             .equalTo("type", type)
@@ -103,7 +103,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun getOwnedItems(
         itemType: String,
         userID: String,
-        includeZero: Boolean,
+        includeZero: Boolean
     ): Flow<List<OwnedItem>> {
         return queryUser(userID).map {
             val items =
@@ -130,7 +130,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun getItems(
         itemClass: Class<out Item>,
-        keys: Array<String>,
+        keys: Array<String>
     ): Flow<List<Item>> {
         return realm.where(itemClass).`in`("key", keys).findAll().toFlow()
             .filter { it.isLoaded }
@@ -138,7 +138,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun getOwnedItems(
         userID: String,
-        includeZero: Boolean,
+        includeZero: Boolean
     ): Flow<Map<String, OwnedItem>> {
         return queryUser(userID)
             .filterNotNull()
@@ -178,7 +178,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun getMounts(
         type: String?,
         group: String?,
-        color: String?,
+        color: String?
     ): Flow<List<Mount>> {
         var query =
             realm.where(Mount::class.java)
@@ -217,7 +217,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun getPets(
         type: String?,
         group: String?,
-        color: String?,
+        color: String?
     ): Flow<List<Pet>> {
         var query =
             realm.where(Pet::class.java)
@@ -256,7 +256,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         type: String,
         key: String,
         userID: String,
-        amountToAdd: Int,
+        amountToAdd: Int
     ) {
         val item = getOwnedItem(userID, type, key, true).firstOrNull()
         if (item != null) {
@@ -266,7 +266,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun changeOwnedCount(
         item: OwnedItem,
-        amountToAdd: Int?,
+        amountToAdd: Int?
     ) {
         val liveItem = getLiveObject(item) ?: return
         amountToAdd?.let { amount ->
@@ -278,7 +278,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         userID: String,
         type: String,
         key: String,
-        includeZero: Boolean,
+        includeZero: Boolean
     ): Flow<OwnedItem> {
         return queryUser(userID)
             .filterNotNull()
@@ -291,7 +291,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
                         "quests" -> it.items?.quests
                         else -> emptyList()
                     } ?: emptyList()
-                )
+                    )
                 items = items.filter { it.key == key }
                 if (includeZero) {
                     items
@@ -305,7 +305,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun getItem(
         type: String,
-        key: String,
+        key: String
     ): Flow<Item> {
         val itemClass: Class<out RealmObject> =
             when (type) {
@@ -374,7 +374,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun hatchPet(
         eggKey: String,
         potionKey: String,
-        userID: String,
+        userID: String
     ) {
         val newPet = OwnedPet()
         newPet.key = "$eggKey-$potionKey"
@@ -399,7 +399,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun save(
         items: Items,
-        userID: String,
+        userID: String
     ) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
         items.setItemTypes()
@@ -411,7 +411,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun unhatchPet(
         eggKey: String,
         potionKey: String,
-        userID: String,
+        userID: String
     ) {
         val pet = realm.where(OwnedPet::class.java).equalTo("key", "$eggKey-$potionKey").findFirst()
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
@@ -429,7 +429,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         foodKey: String,
         petKey: String,
         feedValue: Int,
-        userID: String,
+        userID: String
     ) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
         val pet = user.items?.pets?.firstOrNull { it.key == petKey } ?: return
@@ -484,7 +484,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun soldItem(
         userID: String,
-        updatedUser: User,
+        updatedUser: User
     ): User {
         val user =
             realm.where(User::class.java)
@@ -522,7 +522,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
                 realm.where(Food::class.java)
                     .lessThan("event.start", Date())
                     .greaterThan("event.end", Date())
-                    .findAll().toFlow(),
+                    .findAll().toFlow()
             ) { items, food ->
                 items.addAll(food)
                 items
@@ -531,7 +531,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
                 realm.where(HatchingPotion::class.java)
                     .lessThan("event.start", Date())
                     .greaterThan("event.end", Date())
-                    .findAll().toFlow(),
+                    .findAll().toFlow()
             ) { items, food ->
                 items.addAll(food)
                 items
@@ -540,7 +540,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
                 realm.where(QuestContent::class.java)
                     .lessThan("event.start", Date())
                     .greaterThan("event.end", Date())
-                    .findAll().toFlow(),
+                    .findAll().toFlow()
             ) { items, food ->
                 items.addAll(food)
                 items

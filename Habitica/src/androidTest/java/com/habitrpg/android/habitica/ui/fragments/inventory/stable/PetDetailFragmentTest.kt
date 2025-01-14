@@ -25,9 +25,9 @@ class PetDetailScreen : Screen<PetDetailScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-            itemType(::SectionItem)
-            itemType(::PetItem)
-        })
+                itemType(::SectionItem)
+                itemType(::PetItem)
+            })
 }
 
 internal class PetDetailRecyclerFragmentTest :
@@ -43,9 +43,9 @@ internal class PetDetailRecyclerFragmentTest :
                 mapOf(
                     Pair(
                         "Saddle-food",
-                        saddle,
-                    ),
-                ),
+                        saddle
+                    )
+                )
             )
 
         fragment = spyk()
@@ -69,18 +69,18 @@ internal class PetDetailRecyclerFragmentTest :
             inventoryRepository.getPets(
                 any(),
                 any(),
-                any(),
+                any()
             )
         } returns flowOf(content.pets.filter { it.animal == "Cactus" })
         every {
             inventoryRepository.getMounts(
                 any(),
                 any(),
-                any(),
+                any()
             )
         } returns flowOf(content.mounts.filter { it.animal == "Cactus" })
         launchFragment(
-            PetDetailRecyclerFragmentArgs.Builder("cactus", "drop", "").build().toBundle(),
+            PetDetailRecyclerFragmentArgs.Builder("cactus", "drop", "").build().toBundle()
         )
         screen {
             recycler {
@@ -102,14 +102,14 @@ internal class PetDetailRecyclerFragmentTest :
             inventoryRepository.getPets(
                 any(),
                 any(),
-                any(),
+                any()
             )
         } returns flowOf(content.pets.filter { it.animal == "Fox" })
         every {
             inventoryRepository.getMounts(
                 any(),
                 any(),
-                any(),
+                any()
             )
         } returns flowOf(content.mounts.filter { it.animal == "Fox" })
         launchFragment(PetDetailRecyclerFragmentArgs.Builder("fox", "drop", "").build().toBundle())

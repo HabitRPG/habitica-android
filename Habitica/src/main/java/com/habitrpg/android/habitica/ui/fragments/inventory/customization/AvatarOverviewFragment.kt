@@ -78,7 +78,7 @@ open class AvatarOverviewFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentComposeScrollingBinding {
         return FragmentComposeScrollingBinding.inflate(inflater, container, false)
     }
@@ -86,7 +86,7 @@ open class AvatarOverviewFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         hidesToolbar = true
         val view = super.onCreateView(inflater, container, savedInstanceState)
@@ -103,13 +103,13 @@ open class AvatarOverviewFragment :
                                 modifier =
                                 Modifier
                                     .padding(top = 6.dp, bottom = 24.dp)
-                                    .size(140.dp, 147.dp),
+                                    .size(140.dp, 147.dp)
                             )
                             Box(
                                 Modifier
                                     .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                                     .fillMaxWidth()
-                                    .height(22.dp),
+                                    .height(22.dp)
                             )
                         }
                         AvatarOverviewView(
@@ -126,7 +126,7 @@ open class AvatarOverviewFragment :
                             },
                             { type, equipped, isCostume ->
                                 displayEquipmentFragment(type, equipped, isCostume)
-                            },
+                            }
                         )
                     }
                 }
@@ -139,13 +139,13 @@ open class AvatarOverviewFragment :
                     battleGearWeapon.value =
                         it.first?.let { key ->
                             inventoryRepository.getEquipment(
-                                key,
+                                key
                             ).firstOrNull()
                         }
                     costumeWeapon.value =
                         it.second?.let { key ->
                             inventoryRepository.getEquipment(
-                                key,
+                                key
                             ).firstOrNull()
                         }
                 }
@@ -155,19 +155,19 @@ open class AvatarOverviewFragment :
 
     private fun displayCustomizationFragment(
         type: String,
-        category: String?,
+        category: String?
     ) {
         MainNavigationController.navigate(
             AvatarOverviewFragmentDirections.openComposeAvatarDetail(
                 type,
-                category ?: "",
-            ),
+                category ?: ""
+            )
         )
     }
 
     private fun displayAvatarEquipmentFragment(
         type: String,
-        category: String?,
+        category: String?
     ) {
         MainNavigationController.navigate(AvatarOverviewFragmentDirections.openComposeAvatarEquipment(type, category ?: ""))
     }
@@ -175,14 +175,14 @@ open class AvatarOverviewFragment :
     private fun displayEquipmentFragment(
         type: String,
         equipped: String?,
-        isCostume: Boolean = false,
+        isCostume: Boolean = false
     ) {
         MainNavigationController.navigate(AvatarOverviewFragmentDirections.openEquipmentDetail(type, isCostume, equipped ?: ""))
     }
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_share_avatar, menu)
@@ -204,8 +204,8 @@ open class AvatarOverviewFragment :
                             requireActivity() as BaseActivity,
                             it,
                             "Check out my avatar on Habitica!",
-                            "avatar_customization",
-                        ),
+                            "avatar_customization"
+                        )
                     )
                 }
             }
@@ -217,7 +217,7 @@ open class AvatarOverviewFragment :
         parent: AdapterView<*>,
         view: View?,
         position: Int,
-        id: Long,
+        id: Long
     ) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
@@ -239,40 +239,40 @@ fun AvatarOverviewView(
     costumeTwoHanded: Boolean = false,
     onCustomizationTap: (String, String?) -> Unit,
     onAvatarEquipmentTap: (String, String?) -> Unit,
-    onEquipmentTap: (String, String?, Boolean) -> Unit,
+    onEquipmentTap: (String, String?, Boolean) -> Unit
 ) {
     val user by userViewModel.user.observeAsState()
     Column(
         Modifier
             .padding(horizontal = 8.dp)
-            .padding(bottom = 16.dp),
+            .padding(bottom = 16.dp)
     ) {
         if (showCustomization) {
             Row(
                 Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     stringResource(R.string.avatar_size),
                     style = HabiticaTheme.typography.titleMedium,
-                    color = HabiticaTheme.colors.textSecondary,
+                    color = HabiticaTheme.colors.textSecondary
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 SegmentedControl(
                     items =
-                        listOf(
-                            stringResource(R.string.avatar_size_slim),
-                            stringResource(
-                                R.string.avatar_size_broad,
-                            ),
-                        ),
+                    listOf(
+                        stringResource(R.string.avatar_size_slim),
+                        stringResource(
+                            R.string.avatar_size_broad
+                        )
+                    ),
                     defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1,
                     onItemSelection = {
                         userViewModel.updateUser(
                             "preferences.size",
-                            if (it == 0) "slim" else "broad",
+                            if (it == 0) "slim" else "broad"
                         )
-                    },
+                    }
                 )
             }
             AvatarCustomizationOverviewView(user?.preferences, user?.items?.gear?.equipped, onCustomizationTap, onAvatarEquipmentTap)
@@ -282,12 +282,12 @@ fun AvatarOverviewView(
                 Modifier
                     .padding(horizontal = 12.dp)
                     .padding(top = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     stringResource(R.string.equipped).uppercase(),
                     style = HabiticaTheme.typography.titleSmall,
-                    color = HabiticaTheme.colors.textSecondary,
+                    color = HabiticaTheme.colors.textSecondary
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
@@ -307,19 +307,19 @@ fun AvatarOverviewView(
                 Modifier
                     .padding(horizontal = 12.dp)
                     .padding(top = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     stringResource(R.string.costume).uppercase(),
                     style = HabiticaTheme.typography.titleSmall,
-                    color = HabiticaTheme.colors.textSecondary,
+                    color = HabiticaTheme.colors.textSecondary
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     stringResource(R.string.wear_costume),
                     style = HabiticaTheme.typography.bodyMedium,
                     color = HabiticaTheme.colors.textPrimary,
-                    modifier = Modifier.padding(end = 6.dp),
+                    modifier = Modifier.padding(end = 6.dp)
                 )
                 Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
                     userViewModel.updateUser("preferences.costume", it)

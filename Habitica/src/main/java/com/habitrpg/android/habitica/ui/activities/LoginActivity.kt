@@ -92,7 +92,7 @@ class LoginActivity : BaseActivity() {
             ExceptionHandler.coroutine {
                 hideProgress()
                 ExceptionHandler.reportError(it)
-            },
+            }
         ) {
             val response = apiClient.connectUser(username, password)
             if (response != null) {
@@ -116,8 +116,8 @@ class LoginActivity : BaseActivity() {
             showValidationError(
                 getString(
                     R.string.password_too_short,
-                    configManager.minimumPasswordLength(),
-                ),
+                    configManager.minimumPasswordLength()
+                )
             )
             return
         }
@@ -125,7 +125,7 @@ class LoginActivity : BaseActivity() {
             ExceptionHandler.coroutine {
                 hideProgress()
                 ExceptionHandler.reportError(it)
-            },
+            }
         ) {
             val response = apiClient.registerUser(username, email, password, confirmPassword)
             if (response != null) {
@@ -167,7 +167,7 @@ class LoginActivity : BaseActivity() {
         binding.backgroundContainer.post {
             binding.backgroundContainer.scrollTo(
                 0,
-                binding.backgroundContainer.bottom,
+                binding.backgroundContainer.bottom
             )
         }
         binding.backgroundContainer.isScrollable = false
@@ -187,7 +187,7 @@ class LoginActivity : BaseActivity() {
 
     override fun loadTheme(
         sharedPreferences: SharedPreferences,
-        forced: Boolean,
+        forced: Boolean
     ) {
         super.loadTheme(sharedPreferences, forced)
         window.updateStatusBarColor(R.color.black_20_alpha, false)
@@ -272,16 +272,16 @@ class LoginActivity : BaseActivity() {
                         Tasks.await(
                             capabilityClient.getCapability(
                                 "receive_message",
-                                CapabilityClient.FILTER_REACHABLE,
-                            ),
+                                CapabilityClient.FILTER_REACHABLE
+                            )
                         )
                     info.nodes.forEach {
                         Tasks.await(
                             messageClient.sendMessage(
                                 it.id,
                                 "/auth",
-                                "${response.id}:${response.apiToken}".toByteArray(),
-                            ),
+                                "${response.id}:${response.apiToken}".toByteArray()
+                            )
                         )
                     }
                 } catch (e: Exception) {
@@ -345,7 +345,7 @@ class LoginActivity : BaseActivity() {
                 viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
                 viewModel.handleGoogleLoginResult(
                     this,
-                    recoverFromPlayServicesErrorResult,
+                    recoverFromPlayServicesErrorResult
                 ) { isNew ->
                     handleAuthResponse(isNew)
                 }
@@ -356,7 +356,7 @@ class LoginActivity : BaseActivity() {
 
     private val recoverFromPlayServicesErrorResult =
         registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
+            ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode != Activity.RESULT_CANCELED) {
                 viewModel.handleGoogleLoginResult(this, null) { isNew ->
@@ -394,7 +394,7 @@ class LoginActivity : BaseActivity() {
         val scaleLogoAnimation =
             ValueAnimator.ofInt(
                 binding.logoView.measuredHeight,
-                (binding.logoView.measuredHeight * 0.75).toInt(),
+                (binding.logoView.measuredHeight * 0.75).toInt()
             )
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int ?: 0
@@ -414,7 +414,7 @@ class LoginActivity : BaseActivity() {
                         binding.loginScrollview.visibility = View.VISIBLE
                         binding.loginScrollview.alpha = 1f
                     }
-                },
+                }
             )
         } else {
             showLoginAlphaAnimation.startDelay = 600
@@ -428,7 +428,7 @@ class LoginActivity : BaseActivity() {
                         binding.loginScrollview.visibility = View.VISIBLE
                         binding.loginScrollview.alpha = 1f
                     }
-                },
+                }
             )
         }
         val backAlphaAnimation =
@@ -438,7 +438,7 @@ class LoginActivity : BaseActivity() {
             panAnimation,
             newGameAlphaAnimation,
             showLoginAlphaAnimation,
-            scaleLogoAnimation,
+            scaleLogoAnimation
         )
         showAnimation.play(backAlphaAnimation).after(panAnimation)
         for (i in 0 until binding.formWrapper.childCount) {
@@ -458,7 +458,7 @@ class LoginActivity : BaseActivity() {
             ObjectAnimator.ofInt(
                 binding.backgroundContainer,
                 "scrollY",
-                binding.backgroundContainer.bottom,
+                binding.backgroundContainer.bottom
             ).setDuration(1000)
         val newGameAlphaAnimation =
             ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 1.toFloat()).setDuration(700)
@@ -468,7 +468,7 @@ class LoginActivity : BaseActivity() {
         val scaleLogoAnimation =
             ValueAnimator.ofInt(
                 binding.logoView.measuredHeight,
-                (binding.logoView.measuredHeight * 1.333333).toInt(),
+                (binding.logoView.measuredHeight * 1.333333).toInt()
             )
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int
@@ -487,7 +487,7 @@ class LoginActivity : BaseActivity() {
                     binding.showLoginButton.visibility = View.VISIBLE
                     binding.loginScrollview.visibility = View.INVISIBLE
                 }
-            },
+            }
         )
         val backAlphaAnimation =
             ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 0.toFloat()).setDuration(800)
@@ -496,7 +496,7 @@ class LoginActivity : BaseActivity() {
             panAnimation,
             scrollViewAlphaAnimation,
             backAlphaAnimation,
-            scaleLogoAnimation,
+            scaleLogoAnimation
         )
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation)
@@ -515,7 +515,7 @@ class LoginActivity : BaseActivity() {
         val lp =
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
             )
         input.layoutParams = lp
         val alertDialog = HabiticaAlertDialog(this)

@@ -64,7 +64,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EquipmentDetailFragment :
     BaseMainFragment<FragmentEquipmentDetailBinding>(),
-    SwipeRefreshLayout.OnRefreshListener, MenuProvider {
+    SwipeRefreshLayout.OnRefreshListener,
+    MenuProvider {
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -81,7 +82,7 @@ class EquipmentDetailFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentEquipmentDetailBinding {
         return FragmentEquipmentDetailBinding.inflate(inflater, container, false)
     }
@@ -97,7 +98,7 @@ class EquipmentDetailFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
         hidesToolbar = true
@@ -123,7 +124,7 @@ class EquipmentDetailFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -139,7 +140,7 @@ class EquipmentDetailFragment :
             EmptyItem(
                 getString(R.string.empty_title),
                 getString(R.string.empty_equipment_description),
-                null,
+                null
             ) {
                 MainNavigationController.navigate(R.id.marketFragment)
             }
@@ -152,15 +153,15 @@ class EquipmentDetailFragment :
                         avatar = avatar,
                         configManager = configManager,
                         modifier =
-                            Modifier
-                                .padding(top = 6.dp, bottom = 24.dp)
-                                .size(140.dp, 147.dp),
+                        Modifier
+                            .padding(top = 6.dp, bottom = 24.dp)
+                            .size(140.dp, 147.dp)
                     )
                     Box(
                         Modifier
                             .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                             .fillMaxWidth()
-                            .height(22.dp),
+                            .height(22.dp)
                     )
                 }
             }

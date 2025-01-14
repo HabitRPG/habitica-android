@@ -54,7 +54,7 @@ class TasksFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
@@ -79,7 +79,7 @@ class TasksFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.usesTabLayout = false
         this.usesBottomNavigation = true
@@ -88,7 +88,7 @@ class TasksFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         loadTaskLists()
@@ -146,7 +146,7 @@ class TasksFragment :
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         if (viewModel.isPersonalBoard) {
@@ -175,7 +175,7 @@ class TasksFragment :
                     filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
                     return true
                 }
-            },
+            }
         )
     }
 
@@ -251,7 +251,7 @@ class TasksFragment :
                     bottomNavigation?.selectedPosition = position
                     updateFilterIcon(getTaskTypeFromTabPosition(position))
                 }
-            },
+            }
         )
     }
 
@@ -265,7 +265,7 @@ class TasksFragment :
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)
                 filterIcon?.setTintWith(
                     it.getThemeColor(R.attr.headerTextColor),
-                    PorterDuff.Mode.MULTIPLY,
+                    PorterDuff.Mode.MULTIPLY
                 )
                 filterMenuItem?.setIcon(filterIcon)
             }
@@ -274,7 +274,7 @@ class TasksFragment :
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_filters_active)
                 filterIcon?.setTintWith(
                     it.getThemeColor(R.attr.textColorPrimaryDark),
-                    PorterDuff.Mode.MULTIPLY,
+                    PorterDuff.Mode.MULTIPLY
                 )
                 filterMenuItem?.setIcon(filterIcon)
             }
@@ -351,7 +351,7 @@ class TasksFragment :
             "open create task form",
             EventCategory.BEHAVIOUR,
             HitType.EVENT,
-            additionalData,
+            additionalData
         )
 
         val bundle = Bundle()
@@ -391,7 +391,7 @@ class TasksFragment :
 
     private fun onTaskCreatedResult(
         resultCode: Int,
-        data: Intent?,
+        data: Intent?
     ) {
         if (resultCode == Activity.RESULT_OK) {
             val taskTypeValue = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
@@ -408,15 +408,15 @@ class TasksFragment :
 
             if (!DateUtils.isToday(
                     viewModel.sharedPreferences.getLong(
-                        "last_creation_reporting",
-                        0,
-                    ),
+                            "last_creation_reporting",
+                            0
+                        )
                 )
             ) {
                 Analytics.sendEvent(
                     "task created",
                     EventCategory.BEHAVIOUR,
-                    HitType.EVENT,
+                    HitType.EVENT
                 )
                 viewModel.sharedPreferences.edit {
                     putLong("last_creation_reporting", Date().time)
@@ -456,7 +456,7 @@ class TasksFragment :
 
     override fun onTabSelected(
         taskType: TaskType,
-        smooth: Boolean,
+        smooth: Boolean
     ) {
         val newItem =
             when (taskType) {
@@ -479,7 +479,7 @@ class TasksFragment :
             mainActivity?.title = viewModel.ownerTitle
             MainNavigationController.updateLabel(
                 R.id.tasksFragment,
-                viewModel.ownerTitle.toString(),
+                viewModel.ownerTitle.toString()
             )
         }
         val teamPlan = viewModel.teamPlans[viewModel.ownerID.value]

@@ -14,7 +14,7 @@ class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctx
 
     override fun onGetDefaultValue(
         a: TypedArray,
-        index: Int,
+        index: Int
     ): Any {
         return a.getString(index)!!
     }

@@ -74,23 +74,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskSummaryViewModel
-    @Inject
-    constructor(
-        savedStateHandle: SavedStateHandle,
-        userRepository: UserRepository,
-        userViewModel: MainUserViewModel,
-        val taskRepository: TaskRepository,
-        val socialRepository: SocialRepository,
-        val configManager: AppConfigManager,
-    ) : BaseViewModel(userRepository, userViewModel) {
-        val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
+@Inject
+constructor(
+    savedStateHandle: SavedStateHandle,
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val taskRepository: TaskRepository,
+    val socialRepository: SocialRepository,
+    val configManager: AppConfigManager
+) : BaseViewModel(userRepository, userViewModel) {
+    val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
 
-        val task = taskRepository.getTask(taskID).asLiveData()
+    val task = taskRepository.getTask(taskID).asLiveData()
 
-        fun getMember(userID: String?): Flow<Member?> {
-            return socialRepository.getMember(userID)
-        }
+    fun getMember(userID: String?): Flow<Member?> {
+        return socialRepository.getMember(userID)
     }
+}
 
 @AndroidEntryPoint
 class TaskSummaryActivity : BaseActivity() {
@@ -121,7 +121,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
         val topTextColor =
             if ((task?.value ?: 0.0) >= -20) {
                 colorResource(
-                    task?.extraDarkTaskColor ?: R.color.white,
+                    task?.extraDarkTaskColor ?: R.color.white
                 )
             } else {
                 Color.White
@@ -137,7 +137,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
         Column(Modifier.background(statusBarColor)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 2.dp),
+                modifier = Modifier.padding(vertical = 2.dp)
             ) {
                 Button(
                     onClick = {
@@ -148,15 +148,15 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         MainNavigationController.navigateBack()
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = darkestColor),
-                    elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp),
+                    elevation = ButtonDefaults.buttonElevation(0.dp, 0.dp)
                 ) {
                     Image(
                         painterResource(R.drawable.arrow_back),
                         stringResource(R.string.action_back),
                         colorFilter =
-                            ColorFilter.tint(
-                                topTextColor,
-                            ),
+                        ColorFilter.tint(
+                            topTextColor
+                        )
                     )
                 }
                 Text(
@@ -164,7 +164,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Medium,
                     color = topTextColor,
-                    modifier = Modifier.padding(start = 0.dp),
+                    modifier = Modifier.padding(start = 0.dp)
                 )
             }
             Column(
@@ -172,25 +172,25 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                     .shadow(16.dp)
                     .background(
                         lightestColor,
-                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
                     )
                     .padding(20.dp, 5.dp)
                     .fillMaxWidth()
-                    .fillMaxHeight(),
+                    .fillMaxHeight()
             ) {
                 Text(
                     stringResource(R.string.title),
                     fontSize = 16.sp,
                     color = darkestColor,
                     fontWeight = FontWeight.Medium,
-                    modifier = titleModifier,
+                    modifier = titleModifier
                 )
                 Text(
                     task?.text ?: "",
                     fontSize = 16.sp,
                     color = darkestColor,
                     fontWeight = FontWeight.Normal,
-                    modifier = textModifier,
+                    modifier = textModifier
                 )
                 if (task?.notes?.isNotBlank() == true) {
                     Text(
@@ -198,14 +198,14 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         fontSize = 16.sp,
                         color = darkestColor,
                         fontWeight = FontWeight.Medium,
-                        modifier = titleModifier,
+                        modifier = titleModifier
                     )
                     Text(
                         task?.notes ?: "",
                         fontSize = 16.sp,
                         color = darkestColor,
                         fontWeight = FontWeight.Normal,
-                        modifier = textModifier,
+                        modifier = textModifier
                     )
                 }
                 if (task?.type != TaskType.REWARD) {
@@ -214,14 +214,14 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         fontSize = 16.sp,
                         color = darkestColor,
                         fontWeight = FontWeight.Medium,
-                        modifier = titleModifier,
+                        modifier = titleModifier
                     )
                     Text(
                         task?.let { taskDescriptionBuilder.describe(it) }!!.makeBoldComposable(),
                         fontSize = 16.sp,
                         color = darkestColor,
                         fontWeight = FontWeight.Normal,
-                        modifier = textModifier,
+                        modifier = textModifier
                     )
                 }
                 if (task?.type == TaskType.REWARD) {
@@ -230,26 +230,26 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         fontSize = 16.sp,
                         color = darkestColor,
                         fontWeight = FontWeight.Medium,
-                        modifier = titleModifier.padding(bottom = 4.dp),
+                        modifier = titleModifier.padding(bottom = 4.dp)
                     )
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         modifier =
-                            Modifier
-                                .padding(vertical = 4.dp)
-                                .background(
-                                    HabiticaTheme.colors.windowBackgroundFor(task),
-                                    MaterialTheme.shapes.medium,
-                                )
-                                .padding(15.dp)
-                                .fillMaxWidth(),
+                        Modifier
+                            .padding(vertical = 4.dp)
+                            .background(
+                                HabiticaTheme.colors.windowBackgroundFor(task),
+                                MaterialTheme.shapes.medium
+                            )
+                            .padding(15.dp)
+                            .fillMaxWidth()
                     ) {
                         Image(HabiticaIconsHelper.imageOfGold().asImageBitmap(), null)
                         Text(
                             "${task?.value}",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
-                            color = darkestColor,
+                            color = darkestColor
                         )
                     }
                 }
@@ -260,7 +260,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             fontSize = 16.sp,
                             color = darkestColor,
                             fontWeight = FontWeight.Medium,
-                            modifier = titleModifier.padding(bottom = 4.dp),
+                            modifier = titleModifier.padding(bottom = 4.dp)
                         )
                         for (item in checklist) {
                             Text(
@@ -269,14 +269,14 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 fontWeight = FontWeight.Medium,
                                 color = darkestColor,
                                 modifier =
-                                    Modifier
-                                        .padding(vertical = 4.dp)
-                                        .background(
-                                            HabiticaTheme.colors.windowBackgroundFor(task),
-                                            MaterialTheme.shapes.medium,
-                                        )
-                                        .padding(15.dp)
-                                        .fillMaxWidth(),
+                                Modifier
+                                    .padding(vertical = 4.dp)
+                                    .background(
+                                        HabiticaTheme.colors.windowBackgroundFor(task),
+                                        MaterialTheme.shapes.medium
+                                    )
+                                    .padding(15.dp)
+                                    .fillMaxWidth()
                             )
                         }
                     }
@@ -287,7 +287,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         fontSize = 16.sp,
                         color = darkestColor,
                         fontWeight = FontWeight.Medium,
-                        modifier = titleModifier.padding(bottom = 4.dp),
+                        modifier = titleModifier.padding(bottom = 4.dp)
                     )
                     for (item in task?.group?.assignedUsersDetail ?: emptyList()) {
                         val member = viewModel.getMember(item.assignedUserID).collectAsState(null)
@@ -298,7 +298,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 .padding(vertical = 4.dp)
                                 .background(
                                     HabiticaTheme.colors.windowBackgroundFor(task),
-                                    MaterialTheme.shapes.medium,
+                                    MaterialTheme.shapes.medium
                                 )
                                 .padding(15.dp, 12.dp)
                                 .heightIn(min = 24.dp)
@@ -306,15 +306,15 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             color = darkestColor,
                             configManager = viewModel.configManager,
                             extraContent =
-                                if (item.completed) {
-                                    (
-                                        {
-                                            CompletedAt(item.completedDate)
-                                        }
+                            if (item.completed) {
+                                (
+                                    {
+                                        CompletedAt(item.completedDate)
+                                    }
                                     )
-                                } else {
-                                    null
-                                },
+                            } else {
+                                null
+                            }
                         )
                     }
                     task?.group?.assignedUsersDetail?.find { it.assignedUserID == viewModel.userViewModel.userID }
@@ -327,11 +327,11 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             stringResource(
                                 R.string.assigned_to_you_by,
                                 it.assigningUsername ?: "",
-                                formatter.format(it.assignedDate ?: Date()),
+                                formatter.format(it.assignedDate ?: Date())
                             ),
                             fontSize = 14.sp,
                             color = HabiticaTheme.colors.textSecondaryFor(task),
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp)
                         )
                     }
                 }

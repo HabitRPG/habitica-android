@@ -48,7 +48,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent,
+        intent: Intent
     ) {
         this.intent = intent
         this.context = context
@@ -136,7 +136,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                                     it.experienceDelta,
                                     it.healthDelta,
                                     it.goldDelta,
-                                    it.manaDelta,
+                                    it.manaDelta
                                 )
                             showToast(pair.first)
                         }

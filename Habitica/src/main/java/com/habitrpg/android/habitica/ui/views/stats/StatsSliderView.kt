@@ -54,8 +54,8 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
             binding.statTypeTitle.setTextColor(
                 attributes.getColor(
                     R.styleable.StatsSliderView_statsTextColor,
-                    0,
-                ),
+                    0
+                )
             )
             binding.statsSeekBar.progressTintList = ColorStateList.valueOf(statColor)
             val thumbDrawable = ContextCompat.getDrawable(context, R.drawable.seekbar_thumb)
@@ -78,7 +78,7 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                     binding.valueEditText.setText(currentValue.toString())
                     binding.valueEditText.setSelection(binding.valueEditText.length())
                 }
-            },
+            }
         )
 
         binding.statsSeekBar.setOnSeekBarChangeListener(
@@ -86,7 +86,7 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
-                    fromUser: Boolean,
+                    fromUser: Boolean
                 ) {
                     currentValue = progress
                     if (fromUser) {
@@ -99,7 +99,7 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) { // no-on
                 }
-            },
+            }
         )
 
         currentValue = 0

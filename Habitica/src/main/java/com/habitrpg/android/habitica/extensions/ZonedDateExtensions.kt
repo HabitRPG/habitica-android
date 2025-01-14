@@ -16,7 +16,7 @@ fun String.parseToZonedDateTime(): ZonedDateTime? {
         formatter().parseBest(
             this,
             ZonedDateTime::from,
-            LocalDateTime::from,
+            LocalDateTime::from
         )
     return if (parsed is ZonedDateTime) {
         parsed

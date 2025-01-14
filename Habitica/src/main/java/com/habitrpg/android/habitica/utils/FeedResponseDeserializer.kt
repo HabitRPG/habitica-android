@@ -12,7 +12,7 @@ class FeedResponseDeserializer : JsonDeserializer<FeedResponse> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): FeedResponse {
         val response = FeedResponse()
         response.value = json.asInt

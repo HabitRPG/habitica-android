@@ -13,7 +13,6 @@ import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.text.DateFormat
 import java.util.Date
-import java.util.Locale
 
 class TaskDescriptionBuilder(private val context: Context) {
     fun describe(task: Task): String {
@@ -22,7 +21,7 @@ class TaskDescriptionBuilder(private val context: Context) {
                 context.getString(
                     R.string.habit_summary_description,
                     describeHabitDirections(task.up ?: false, task.down ?: false),
-                    describeDifficulty(task.priority),
+                    describeDifficulty(task.priority)
                 )
 
             TaskType.TODO -> {
@@ -30,12 +29,12 @@ class TaskDescriptionBuilder(private val context: Context) {
                     context.getString(
                         R.string.todo_summary_description_duedate,
                         describeDifficulty(task.priority),
-                        describeDate(task.dueDate!!),
+                        describeDate(task.dueDate!!)
                     )
                 } else {
                     context.getString(
                         R.string.todo_summary_description,
-                        describeDifficulty(task.priority),
+                        describeDifficulty(task.priority)
                     )
                 }
             }
@@ -45,7 +44,7 @@ class TaskDescriptionBuilder(private val context: Context) {
                     R.string.daily_summary_description,
                     describeDifficulty(task.priority),
                     describeRepeatInterval(task.frequency, task.everyX ?: 1),
-                    describeRepeatDays(task),
+                    describeRepeatDays(task)
                 )
 
             else -> ""
@@ -102,7 +101,7 @@ class TaskDescriptionBuilder(private val context: Context) {
                         context.getString(
                             R.string.on_the_x_of_month,
                             occurrence,
-                            joinToCount(dayStrings),
+                            joinToCount(dayStrings)
                         )
                     } else {
                         ""
@@ -116,7 +115,7 @@ class TaskDescriptionBuilder(private val context: Context) {
                         task.startDate?.let {
                             val flags = DateUtils.FORMAT_SHOW_DATE + DateUtils.FORMAT_NO_YEAR
                             DateUtils.formatDateTime(context, it.time, flags)
-                        } ?: "",
+                        } ?: ""
                     )
 
             else -> ""
@@ -141,7 +140,7 @@ class TaskDescriptionBuilder(private val context: Context) {
 
     private fun describeRepeatInterval(
         interval: Frequency?,
-        everyX: Int,
+        everyX: Int
     ): String {
         if (everyX == 0) {
             return context.getString(R.string.never)
@@ -151,28 +150,28 @@ class TaskDescriptionBuilder(private val context: Context) {
                 context.resources.getQuantityString(
                     R.plurals.repeat_daily,
                     everyX,
-                    everyX,
+                    everyX
                 )
 
             Frequency.WEEKLY ->
                 context.resources.getQuantityString(
                     R.plurals.repeat_weekly,
                     everyX,
-                    everyX,
+                    everyX
                 )
 
             Frequency.MONTHLY ->
                 context.resources.getQuantityString(
                     R.plurals.repeat_monthly,
                     everyX,
-                    everyX,
+                    everyX
                 )
 
             Frequency.YEARLY ->
                 context.resources.getQuantityString(
                     R.plurals.repeat_yearly,
                     everyX,
-                    everyX,
+                    everyX
                 )
 
             null -> ""
@@ -181,7 +180,7 @@ class TaskDescriptionBuilder(private val context: Context) {
 
     private fun describeHabitDirections(
         up: Boolean,
-        down: Boolean,
+        down: Boolean
     ): String {
         return if (up && down) {
             context.getString(R.string.positive_and_negative)

@@ -8,7 +8,7 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 
 fun Window.updateStatusBarColor(
     color: Int,
-    isLight: Boolean,
+    isLight: Boolean
 ) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         statusBarColor = color

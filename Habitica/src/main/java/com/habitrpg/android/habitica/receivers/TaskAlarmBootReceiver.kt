@@ -24,18 +24,19 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent,
+        intent: Intent
     ) {
-        if (intent.action != Intent.ACTION_BOOT_COMPLETED
-            && intent.action != AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED) {
+        if (intent.action != Intent.ACTION_BOOT_COMPLETED &&
+            intent.action != AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED
+        ) {
             return
         }
         MainScope().launch(ExceptionHandler.coroutine()) {
             taskAlarmManager.scheduleAllSavedAlarms(
                 sharedPreferences.getBoolean(
                     "preventDailyReminder",
-                    false,
-                ),
+                    false
+                )
             )
         }
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")

@@ -2,7 +2,6 @@ package com.habitrpg.shared.habitica.models.responses
 
 import com.habitrpg.shared.habitica.HParcel
 import com.habitrpg.shared.habitica.HParcelable
-import com.habitrpg.shared.habitica.HParcelize
 
 class TaskDirectionDataTemp {
     var drop: TaskDirectionDataDrop? = null
@@ -19,7 +18,7 @@ data class TaskDirectionDataDrop(
     var value: Int,
     var key: String?,
     var type: String?,
-    var dialog: String?,
+    var dialog: String?
 ) : HParcelable {
     override fun writeToParcel(dest: HParcel, flags: Int) {
         dest.writeInt(value)

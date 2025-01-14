@@ -30,7 +30,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRecyclerviewBinding {
         return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -42,7 +42,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,7 +58,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
             taskRepository.getTasks(
                 taskType ?: TaskType.HABIT,
                 userViewModel.userID,
-                additionalGroupIDs,
+                additionalGroupIDs
             )
                 .map { it.filter { it.challengeID == null && it.group?.groupID?.isNotBlank() != true } }
         if (taskType == TaskType.TODO) {

@@ -23,7 +23,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
@@ -31,7 +31,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -50,7 +50,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 

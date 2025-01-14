@@ -12,7 +12,6 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import android.view.KeyEvent
 import android.view.MenuItem
@@ -35,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.core.view.setPadding
 import androidx.drawerlayout.widget.DrawerLayout
@@ -177,7 +175,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission(),
+            ActivityResultContracts.RequestPermission()
         ) { granted ->
             if (granted) {
                 viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
@@ -187,8 +185,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)) {
                 val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return@registerForActivityResult
                 if (!alarmManager.canScheduleExactAlarms()) {
-                    val intent =Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null));
+                    val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null))
                     startActivity(intent)
                 }
             }
@@ -260,7 +258,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     this,
                     drawerLayout,
                     R.string.navigation_drawer_open,
-                    R.string.navigation_drawer_close,
+                    R.string.navigation_drawer_close
                 ) {}
             // Set the drawer toggle as the DrawerListener
             drawerToggle?.let { drawerLayout.addDrawerListener(it) }
@@ -270,7 +268,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
                     override fun onDrawerSlide(
                         drawerView: View,
-                        slideOffset: Float,
+                        slideOffset: Float
                     ) {
                         if (!isUsingNightModeResources()) {
                             if (slideOffset < 0.5f && isOpeningDrawer == null) {
@@ -279,7 +277,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                             } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
                                 window.updateStatusBarColor(
                                     getThemeColor(R.attr.headerBackgroundColor),
-                                    true,
+                                    true
                                 )
                                 isOpeningDrawer = false
                             }
@@ -304,7 +302,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
                     override fun onDrawerStateChanged(newState: Int) {
                     }
-                },
+                }
             )
         }
 
@@ -317,7 +315,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             HabiticaTheme {
                 val user by viewModel.user.observeAsState(null)
                 val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(
-                    null,
+                    null
                 )
                 val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
                 val canShowTeamHeader: Boolean by viewModel.canShowTeamPlanHeader
@@ -331,15 +329,15 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.spacedBy(4.dp),
-                                modifier = Modifier.padding(22.dp),
+                                modifier = Modifier.padding(22.dp)
                             ) {
                                 ComposableAvatarView(
                                     avatar = user,
-                                    configManager = appConfigManager,
+                                    configManager = appConfigManager
                                 )
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.spacedBy(15.dp),
+                                    verticalArrangement = Arrangement.spacedBy(15.dp)
                                 ) {
                                     HabiticaButton(
                                         background = HabiticaTheme.colors.tintedUiSub,
@@ -349,10 +347,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                             dismiss()
                                             MainNavigationController.navigate(
                                                 MainNavDirections.openProfileActivity(
-                                                    user?.id ?: "",
-                                                ),
+                                                    user?.id ?: ""
+                                                )
                                             )
-                                        },
+                                        }
                                     ) {
                                         Text(stringResource(id = R.string.open_profile))
                                     }
@@ -364,7 +362,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         onClick = {
                                             dismiss()
                                             MainNavigationController.navigate(R.id.avatarOverviewFragment)
-                                        },
+                                        }
                                     ) {
                                         Text(stringResource(id = R.string.customize_avatar))
                                     }
@@ -383,12 +381,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                                             this@MainActivity,
                                                             it,
                                                             "Check out my avatar on Habitica!",
-                                                            "avatar_bottomsheet",
-                                                        ),
+                                                            "avatar_bottomsheet"
+                                                        )
                                                     )
                                                 }
                                             }
-                                        },
+                                        }
                                     ) {
                                         Text(stringResource(id = R.string.share_avatar))
                                     }
@@ -399,7 +397,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
                             val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
-                                null,
+                                null
                             )
                             val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
                             GroupPlanMemberList(members, group, appConfigManager) {
@@ -416,7 +414,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         intent.putExtras(bundle)
                         classSelectionResult.launch(intent)
                     },
-                    configManager = appConfigManager,
+                    configManager = appConfigManager
                 )
             }
         }
@@ -434,7 +432,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private fun updateToolbarTitle(
         destination: NavDestination,
-        arguments: Bundle?,
+        arguments: Bundle?
     ) {
         viewModel.getToolbarTitle(destination.id, destination.label, arguments?.getString("type")) {
             title = it
@@ -455,7 +453,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 NotificationChannel(
                     channelId,
                     "Habitica Notifications",
-                    NotificationManager.IMPORTANCE_DEFAULT,
+                    NotificationManager.IMPORTANCE_DEFAULT
                 )
             val manager = getSystemService(NotificationManager::class.java)
             manager?.createNotificationChannel(channel)
@@ -469,7 +467,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     0,
                     0,
                     0,
-                    binding.content.bottomNavigation.barHeight + 12.dpToPx(this),
+                    binding.content.bottomNavigation.barHeight + 12.dpToPx(this)
                 )
             } else {
                 snackbarContainer.setPadding(0, 0, 0, 0)
@@ -517,7 +515,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
             updateToolbarTitle(
                 destination,
-                arguments,
+                arguments
             )
         }
 
@@ -542,9 +540,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen !=
             intent.getLongExtra(
-                "notificationTimeStamp",
-                0,
-            )
+                    "notificationTimeStamp",
+                    0
+                )
         ) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
@@ -555,7 +553,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     "open notification",
                     EventCategory.BEHAVIOUR,
                     HitType.EVENT,
-                    additionalData,
+                    additionalData
                 )
             }
             retrieveUser(true)
@@ -592,7 +590,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     override fun startActivity(
         intent: Intent?,
-        options: Bundle?,
+        options: Bundle?
     ) {
         resumeFromActivity = true
         super.startActivity(intent, options)
@@ -646,7 +644,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         QuestCompletedDialog.showWithQuest(
                             this@MainActivity,
                             questContent,
-                            userRepository,
+                            userRepository
                         )
                     }
                     viewModel.updateUser("party.quest.completed", "")
@@ -705,8 +703,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         data.manaDelta,
                         damageValue,
                         data.hasLeveledUp,
-                        data.level,
-                    ),
+                        data.level
+                    )
                 )
             }
         }
@@ -718,8 +716,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     data,
                     this@MainActivity,
                     snackbarContainer,
-                    showItemsFound,
-                ),
+                    showItemsFound
+                )
             )
         }
     }
@@ -743,7 +741,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent,
+        event: KeyEvent
     ): Boolean {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             drawerFragment?.openDrawer()
@@ -760,7 +758,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     fun displayTutorialStep(
         step: TutorialStep,
         texts: List<String>,
-        canBeDeferred: Boolean,
+        canBeDeferred: Boolean
     ) {
         val view = TutorialView(this, step, viewModel)
         view.setTutorialTexts(texts)
@@ -798,7 +796,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private fun createMaintenanceIntent(
         maintenanceResponse: MaintenanceResponse,
-        isDeprecationNotice: Boolean,
+        isDeprecationNotice: Boolean
     ): Intent {
         val intent = Intent(this, MaintenanceActivity::class.java)
         val data = Bundle()
@@ -820,13 +818,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         errorCount: Int,
         title: String?,
         message: String,
-        isFromUserInput: Boolean,
+        isFromUserInput: Boolean
     ) {
         if (errorCount == 1 && !isFromUserInput) {
             showSnackbar(
                 title = title,
                 content = message,
-                displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE,
+                displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE
             )
         } else if (title != null) {
             super.showConnectionProblem(errorCount, title, message, isFromUserInput)

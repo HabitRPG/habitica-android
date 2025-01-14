@@ -51,7 +51,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentReportMessageBinding.inflate(inflater, container, false)
         return binding.root
@@ -69,7 +69,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -101,8 +101,8 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             binding.additionalExplanationTextview.setMarkdown(
                 getString(
                     R.string.report_user_description,
-                    profileName,
-                ),
+                    profileName
+                )
             )
             binding.reportExplanationTextview.setMarkdown(getString(R.string.report_user_explanation))
             val formattedString =
@@ -112,13 +112,13 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                 TypefaceSpan("sans-serif-medium"),
                 0,
                 displayName?.length ?: 0,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             spannable.setSpan(
                 TypefaceSpan("sans-serif"),
                 displayName?.length ?: 0,
                 formattedString.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             binding.messageTextView.text = spannable
             binding.reportReasonTitle.text = getString(R.string.report_reason_title_player)
@@ -146,7 +146,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                     ContextCompat.getColor(requireContext(), R.color.text_dimmed)
                 } else {
                     ContextCompat.getColor(requireContext(), R.color.maroon100_red100)
-                },
+                }
             )
         }
     }
@@ -160,12 +160,12 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             lifecycleScope.launch(
                 ExceptionHandler.coroutine {
                     isReporting = false
-                },
+                }
             ) {
                 socialRepository.flagMessage(
                     messageID ?: "",
                     binding.additionalInfoEdittext.text.toString(),
-                    groupID,
+                    groupID
                 )
                 dismiss()
             }
@@ -186,7 +186,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             val updateData =
                 mapOf(
                     "comment" to reportReasonInfo,
-                    "source" to (source ?: ""),
+                    "source" to (source ?: "")
                 )
             socialRepository.reportMember(userIdBeingReported, updateData)
             socialRepository.blockMember(userIdBeingReported)
@@ -209,7 +209,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             val updateData =
                 mapOf(
                     "comment" to reportReasonInfo,
-                    "source" to (source ?: ""),
+                    "source" to (source ?: "")
                 )
             challengeRepository.reportChallenge(challengeId, updateData)
             Toast.makeText(context, "$displayName Reported", Toast.LENGTH_SHORT).show()
@@ -242,7 +242,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             messageId: String = "",
             messageText: String = "",
             groupId: String = "",
-            sourceView: String,
+            sourceView: String
         ): ReportBottomSheetFragment {
             val args = Bundle()
             args.putString(REPORT_TYPE, reportType)

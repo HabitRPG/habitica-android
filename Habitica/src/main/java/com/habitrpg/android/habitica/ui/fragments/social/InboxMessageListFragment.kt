@@ -34,7 +34,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -49,7 +48,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentInboxMessageListBinding {
         return FragmentInboxMessageListBinding.inflate(inflater, container, false)
     }
@@ -67,7 +66,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -75,7 +74,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -96,13 +95,13 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(
                     positionStart: Int,
-                    itemCount: Int,
+                    itemCount: Int
                 ) {
                     if (positionStart == 0) {
                         binding?.recyclerView?.scrollToPosition(0)
                     }
                 }
-            },
+            }
         )
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -158,7 +157,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         this.mainActivity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -175,7 +174,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun markMessagesAsRead(messages: PagingData<ChatMessage>) {
-        //socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
+        // socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
     }
 
     private fun refreshConversation() {
@@ -201,7 +200,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                         alert.show()
                     }
                     binding?.chatBarView?.message = chatText
-                },
+                }
             ) {
                 socialRepository.postPrivateMessage(userID, chatText)
                 delay(200.toDuration(DurationUnit.MILLISECONDS))
@@ -219,7 +218,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             showSnackbar(
                 activity.snackbarContainer,
                 getString(R.string.chat_message_copied),
-                HabiticaSnackbar.SnackbarDisplayType.NORMAL,
+                HabiticaSnackbar.SnackbarDisplayType.NORMAL
             )
         }
     }
@@ -233,7 +232,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 messageText = chatMessage.text ?: "",
                 groupId = chatMessage.groupId ?: "",
                 userIdBeingReported = chatMessage.userID ?: "",
-                sourceView = this::class.simpleName ?: "",
+                sourceView = this::class.simpleName ?: ""
             )
 
         reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)

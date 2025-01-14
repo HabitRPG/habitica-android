@@ -12,7 +12,7 @@ class OnChangeTextWatcher(private var function: (CharSequence?, Int, Int, Int) -
         s: CharSequence?,
         start: Int,
         count: Int,
-        after: Int,
+        after: Int
     ) { // no-on
     }
 
@@ -20,7 +20,7 @@ class OnChangeTextWatcher(private var function: (CharSequence?, Int, Int, Int) -
         s: CharSequence?,
         start: Int,
         before: Int,
-        count: Int,
+        count: Int
     ) {
         function(s, start, before, count)
     }
@@ -35,7 +35,7 @@ class BeforeChangeTextWatcher(private var function: (CharSequence?, Int, Int, In
         s: CharSequence?,
         start: Int,
         count: Int,
-        after: Int,
+        after: Int
     ) {
         function(s, start, count, after)
     }
@@ -44,7 +44,7 @@ class BeforeChangeTextWatcher(private var function: (CharSequence?, Int, Int, In
         s: CharSequence?,
         start: Int,
         before: Int,
-        count: Int,
+        count: Int
     ) { // no-on
     }
 }
@@ -58,7 +58,7 @@ class AfterChangeTextWatcher(private var function: (Editable?) -> Unit) : TextWa
         s: CharSequence?,
         start: Int,
         count: Int,
-        after: Int,
+        after: Int
     ) { // no-on
     }
 
@@ -66,7 +66,7 @@ class AfterChangeTextWatcher(private var function: (Editable?) -> Unit) : TextWa
         s: CharSequence?,
         start: Int,
         before: Int,
-        count: Int,
+        count: Int
     ) { // no-on
     }
 }

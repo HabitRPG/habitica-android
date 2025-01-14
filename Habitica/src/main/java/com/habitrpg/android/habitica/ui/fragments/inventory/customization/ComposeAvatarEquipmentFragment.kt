@@ -107,7 +107,7 @@ class ComposeAvatarEquipmentFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentComposeBinding {
         return FragmentComposeBinding.inflate(inflater, container, false)
     }
@@ -115,7 +115,7 @@ class ComposeAvatarEquipmentFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
         hidesToolbar = true
@@ -131,11 +131,12 @@ class ComposeAvatarEquipmentFragment :
                             if ((equipment.key?.isNotBlank() != true || equipment.key?.endsWith("_0") == true) && equipment.key != activeEquipment) {
                                 inventoryRepository.equip(
                                     if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
-                                    activeEquipment ?: "")
+                                    activeEquipment ?: ""
+                                )
                             } else if (equipment.key?.contains("base_0") == false) {
                                 inventoryRepository.equip(
                                     if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
-                                    equipment.key ?: "",
+                                    equipment.key ?: ""
                                 )
                             }
                         }
@@ -148,7 +149,7 @@ class ComposeAvatarEquipmentFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -176,9 +177,11 @@ class ComposeAvatarEquipmentFragment :
                     val blank = Equipment()
                     blank.key = "${type}_base_0"
                     viewModel.items.add(blank)
-                    viewModel.items.addAll(equipment.filter {
-                        ownedEquipment.contains(it.key)
-                    })
+                    viewModel.items.addAll(
+                        equipment.filter {
+                            ownedEquipment.contains(it.key)
+                        }
+                    )
                 }
         }
     }
@@ -206,7 +209,6 @@ class ComposeAvatarEquipmentFragment :
     }
 }
 
-
 @Composable
 private fun AvatarEquipmentView(
     avatar: Avatar?,
@@ -215,7 +217,7 @@ private fun AvatarEquipmentView(
     type: String?,
     typeName: String,
     activeCustomization: String?,
-    onSelect: (Equipment) -> Unit,
+    onSelect: (Equipment) -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
@@ -225,13 +227,13 @@ private fun AvatarEquipmentView(
                 modifier =
                 Modifier
                     .padding(top = 6.dp, bottom = 24.dp)
-                    .size(140.dp, 147.dp),
+                    .size(140.dp, 147.dp)
             )
             Box(
                 Modifier
                     .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                     .fillMaxWidth()
-                    .height(22.dp),
+                    .height(22.dp)
             )
         }
         val nestedScrollInterop = rememberNestedScrollInteropConnection()
@@ -251,7 +253,7 @@ private fun AvatarEquipmentView(
                     }
                 }
                 .nestedScroll(nestedScrollInterop)
-                .background(colorResource(R.color.content_background)),
+                .background(colorResource(R.color.content_background))
         ) {
             item(span = { GridItemSpan(3) }) {
                 Text(
@@ -260,7 +262,7 @@ private fun AvatarEquipmentView(
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.text_ternary),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(10.dp),
+                    modifier = Modifier.padding(10.dp)
                 )
             }
             if (items.size > 1) {
@@ -277,14 +279,14 @@ private fun AvatarEquipmentView(
                                 .clickable {
                                     onSelect(item)
                                 }
-                                .background(colorResource(id = R.color.window_background)),
+                                .background(colorResource(id = R.color.window_background))
                         ) {
                             if (item.key.isNullOrBlank() || item.key == "0" || item.key?.endsWith("_0") == true || item.key == "none") {
                                 Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
                             } else {
                                 PixelArtView(
                                     imageName = "shop_" + item.key,
-                                    Modifier.size(68.dp),
+                                    Modifier.size(68.dp)
                                 )
                             }
                         }
@@ -295,7 +297,7 @@ private fun AvatarEquipmentView(
                             fontWeight = FontWeight.SemiBold,
                             color = colorResource(id = R.color.text_ternary),
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp).padding(top = 16.dp),
+                            modifier = Modifier.padding(10.dp).padding(top = 16.dp)
                         )
                     }
                 }
@@ -316,45 +318,63 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
             .padding(top = 56.dp)
             .clickable {
                 MainNavigationController.navigate(R.id.customizationsShopFragment)
-            },
+            }
     ) {
         Image(
             painterResource(if (type == "background") R.drawable.customization_background else R.drawable.customization_mix),
             null,
-            modifier = Modifier.padding(bottom = 16.dp),
+            modifier = Modifier.padding(bottom = 16.dp)
         )
         if (!hasItems) {
             Text(
-                stringResource(R.string.customizations_no_owned), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
+                stringResource(R.string.customizations_no_owned),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = colorResource(R.color.text_secondary),
                 modifier = Modifier.padding(bottom = 2.dp)
             )
-            Text(buildAnnotatedString {
-                val original = stringResource(id = R.string.customization_shop_check_out)
-                val customizationShopName = stringResource(id = R.string.customization_shop)
-                val first = original.substring(0, original.indexOf(customizationShopName))
-                val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
-                append(first)
-                withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
-                    append(customizationShopName)
-                }
-                append(second)
-            }, fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+            Text(
+                buildAnnotatedString {
+                    val original = stringResource(id = R.string.customization_shop_check_out)
+                    val customizationShopName = stringResource(id = R.string.customization_shop)
+                    val first = original.substring(0, original.indexOf(customizationShopName))
+                    val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
+                    append(first)
+                    withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
+                        append(customizationShopName)
+                    }
+                    append(second)
+                },
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = colorResource(R.color.text_ternary),
+                textAlign = TextAlign.Center
+            )
         } else {
             Text(
-                stringResource(R.string.looking_for_more), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = colorResource(R.color.text_secondary),
+                stringResource(R.string.looking_for_more),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = colorResource(R.color.text_secondary),
                 modifier = Modifier.padding(bottom = 2.dp)
             )
-            Text(buildAnnotatedString {
-                val original = stringResource(id = R.string.customization_shop_more)
-                val customizationShopName = stringResource(id = R.string.customization_shop)
-                val first = original.substring(0, original.indexOf(customizationShopName))
-                val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
-                append(first)
-                withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
-                    append(customizationShopName)
-                }
-                append(second)
-            }, fontSize = 14.sp, fontWeight = FontWeight.Normal, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+            Text(
+                buildAnnotatedString {
+                    val original = stringResource(id = R.string.customization_shop_more)
+                    val customizationShopName = stringResource(id = R.string.customization_shop)
+                    val first = original.substring(0, original.indexOf(customizationShopName))
+                    val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
+                    append(first)
+                    withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
+                        append(customizationShopName)
+                    }
+                    append(second)
+                },
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = colorResource(R.color.text_ternary),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }

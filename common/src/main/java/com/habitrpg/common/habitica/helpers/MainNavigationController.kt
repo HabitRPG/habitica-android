@@ -31,14 +31,14 @@ object MainNavigationController {
 
     fun updateLabel(
         destinationID: Int,
-        label: String,
+        label: String
     ) {
         navController?.findDestination(destinationID)?.label = label
     }
 
     fun navigate(
         transactionId: Int,
-        args: Bundle? = null,
+        args: Bundle? = null
     ) {
         if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()

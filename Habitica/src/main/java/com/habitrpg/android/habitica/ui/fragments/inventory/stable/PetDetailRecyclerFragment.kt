@@ -53,6 +53,7 @@ class PetDetailRecyclerFragment :
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
     @Inject
     lateinit var reviewManager: ReviewManager
 
@@ -62,12 +63,11 @@ class PetDetailRecyclerFragment :
     private var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
-
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -75,7 +75,7 @@ class PetDetailRecyclerFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.usesTabLayout = false
         if (savedInstanceState != null) {
@@ -91,7 +91,7 @@ class PetDetailRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -111,7 +111,7 @@ class PetDetailRecyclerFragment :
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(
-                            position,
+                            position
                         ) == 1
                     ) {
                         layoutManager?.spanCount ?: 1
@@ -146,7 +146,7 @@ class PetDetailRecyclerFragment :
         adapter.onFeed = { pet, food ->
             showFeedingDialog(
                 pet,
-                food,
+                food
             )
         }
 
@@ -195,7 +195,7 @@ class PetDetailRecyclerFragment :
                     inventoryRepository.getMounts(
                         animalType,
                         animalGroup,
-                        animalColor,
+                        animalColor
                     ).firstOrNull() ?: emptyList()
                 adapter.setExistingMounts(mounts)
                 val pets =
@@ -217,7 +217,7 @@ class PetDetailRecyclerFragment :
                                 currentSection =
                                     StableSection(
                                         pet.type,
-                                        "pets",
+                                        "pets"
                                     )
                                 items.add(currentSection)
                             }
@@ -238,7 +238,7 @@ class PetDetailRecyclerFragment :
 
     private suspend fun showFeedingDialog(
         pet: Pet,
-        food: Food?,
+        food: Food?
     ): FeedResponse? {
         if (food != null) {
             val context = mainActivity ?: context ?: return null
@@ -246,8 +246,8 @@ class PetDetailRecyclerFragment :
                 FeedPetUseCase.RequestValues(
                     pet,
                     food,
-                    context,
-                ),
+                    context
+                )
             )
             if (isAdded) {
                 var petFeedings = sharedPreferences.getInt("times_fed", 0)

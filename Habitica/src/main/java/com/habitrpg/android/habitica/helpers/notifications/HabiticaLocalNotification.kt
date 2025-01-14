@@ -18,7 +18,7 @@ import java.util.Date
  */
 abstract class HabiticaLocalNotification(
     protected var context: Context,
-    protected var identifier: String?,
+    protected var identifier: String?
 ) {
     protected var data: Map<String, String>? = null
     protected var title: String? = null
@@ -40,7 +40,7 @@ abstract class HabiticaLocalNotification(
     open fun notifyLocally(
         title: String?,
         message: String?,
-        data: MutableMap<String, String>,
+        data: MutableMap<String, String>
     ) {
         this.title = title
         this.message = message
@@ -71,7 +71,7 @@ abstract class HabiticaLocalNotification(
 
     protected open fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>,
+        data: Map<String, String>
     ) {
         val intent = Intent(context, MainActivity::class.java)
         configureMainIntent(intent)
@@ -81,7 +81,7 @@ abstract class HabiticaLocalNotification(
                 context,
                 3000,
                 intent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
         notificationBuilder.setContentIntent(pendingIntent)
     }

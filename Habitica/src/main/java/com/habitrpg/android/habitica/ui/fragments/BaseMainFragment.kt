@@ -46,7 +46,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
@@ -70,7 +70,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         context?.let {
             FirebaseAnalytics.getInstance(it).logEvent(
                 "fragment_view",
-                bundleOf(Pair("fragment", this::class.java.canonicalName)),
+                bundleOf(Pair("fragment", this::class.java.canonicalName))
             )
         }
 
@@ -91,7 +91,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     @Deprecated("Use onCreateOptionsMenu(Menu, MenuInflater) instead")
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater,
+        inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         mainActivity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, mainActivity) }

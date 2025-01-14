@@ -46,7 +46,7 @@ class ChallengeListFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -73,7 +73,7 @@ class ChallengeListFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,7 +85,7 @@ class ChallengeListFragment :
             binding?.recyclerView?.emptyItem =
                 EmptyItem(
                     getString(R.string.empty_challenge_list),
-                    getString(R.string.empty_discover_description),
+                    getString(R.string.empty_discover_description)
                 )
         }
         binding?.recyclerView?.layoutManager =
@@ -115,7 +115,7 @@ class ChallengeListFragment :
             object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(
                     recyclerView: RecyclerView,
-                    newState: Int,
+                    newState: Int
                 ) {
                     super.onScrollStateChanged(recyclerView, newState)
 
@@ -123,7 +123,7 @@ class ChallengeListFragment :
                         retrieveChallengesPage()
                     }
                 }
-            },
+            }
         )
 
         retrieveChallengesPage(true)
@@ -132,8 +132,8 @@ class ChallengeListFragment :
     private fun openDetailFragment(challengeID: String) {
         MainNavigationController.navigate(
             ChallengesOverviewFragmentDirections.openChallengeDetail(
-                challengeID,
-            ),
+                challengeID
+            )
         )
     }
 
@@ -186,7 +186,7 @@ class ChallengeListFragment :
             ChallengeFilterDialogHolder.showDialog(
                 it,
                 filterGroups ?: emptyList(),
-                filterOptions,
+                filterOptions
             ) {
                 changeFilter(it)
             }

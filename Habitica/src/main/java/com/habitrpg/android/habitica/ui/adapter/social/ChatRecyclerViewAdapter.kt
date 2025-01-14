@@ -6,29 +6,28 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SystemChatMessageBinding
-import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.DiffCallback
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
+import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObject>) :
     DiffCallback<ChatMessage>(oldList, newList) {
     override fun areItemsTheSame(
         oldItemPosition: Int,
-        newItemPosition: Int,
+        newItemPosition: Int
     ): Boolean {
         return oldList[oldItemPosition].primaryIdentifier == newList[newItemPosition].primaryIdentifier
     }
 
     override fun areContentsTheSame(
         oldItemPosition: Int,
-        newItemPosition: Int,
+        newItemPosition: Int
     ): Boolean {
         val oldItem = oldList[oldItemPosition] as ChatMessage
         val newItem = newList[newItemPosition] as ChatMessage
@@ -56,7 +55,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) :
 
     override fun getDiffCallback(
         oldList: List<ChatMessage>,
-        newList: List<ChatMessage>,
+        newList: List<ChatMessage>
     ): DiffCallback<ChatMessage> {
         return ChatDiffCallback(oldList, newList)
     }
@@ -67,7 +66,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             SystemChatMessageViewHolder(parent.inflate(R.layout.system_chat_message))
@@ -78,14 +77,14 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) :
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int,
+        position: Int
     ) {
         if (data[position].isSystemMessage) {
             val sysChatHolder = holder as? SystemChatMessageViewHolder ?: return
             val message = data[position]
             sysChatHolder.bind(
                 message,
-                expandedMessageId == data[position].id,
+                expandedMessageId == data[position].id
             )
             sysChatHolder.onShouldExpand = { expandMessage(message, position) }
         } else {
@@ -95,7 +94,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) :
                 message,
                 uuid,
                 user,
-                expandedMessageId == message.id,
+                expandedMessageId == message.id
             )
             chatHolder.onShouldExpand = { expandMessage(message, position) }
             chatHolder.onLikeMessage = onMessageLike
@@ -114,7 +113,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) :
 
     private fun expandMessage(
         message: ChatMessage,
-        position: Int?,
+        position: Int?
     ) {
         expandedMessageId =
             if (expandedMessageId == message.id) {
@@ -140,7 +139,7 @@ class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(item
 
     fun bind(
         chatMessage: ChatMessage?,
-        isExpanded: Boolean,
+        isExpanded: Boolean
     ) {
         binding.textView.text = chatMessage?.text?.removePrefix("`")?.removeSuffix("`")
         binding.systemMessageTimestamp.text =

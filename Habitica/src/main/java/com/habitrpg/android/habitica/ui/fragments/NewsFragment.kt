@@ -27,7 +27,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
+        container: ViewGroup?
     ): FragmentNewsBinding {
         return FragmentNewsBinding.inflate(inflater, container, false)
     }
@@ -35,7 +35,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -45,7 +45,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
         object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
-                request: WebResourceRequest?,
+                request: WebResourceRequest?
             ): Boolean {
                 if (request?.url?.path == "/static/new-stuff") {
                     view?.loadUrl(request.url.toString())
@@ -59,7 +59,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         val webSettings = binding?.newsWebview?.settings

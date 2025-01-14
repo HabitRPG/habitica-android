@@ -11,7 +11,7 @@ class AssignedDetailsDeserializer : JsonDeserializer<RealmList<GroupAssignedDeta
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?,
+        context: JsonDeserializationContext?
     ): RealmList<GroupAssignedDetails?> {
         val list = RealmList<GroupAssignedDetails?>()
         if (json == null) {
@@ -21,8 +21,8 @@ class AssignedDetailsDeserializer : JsonDeserializer<RealmList<GroupAssignedDeta
                 list.add(
                     context?.deserialize(
                         it,
-                        GroupAssignedDetails::class.java,
-                    ),
+                        GroupAssignedDetails::class.java
+                    )
                 )
             }
         } else {
@@ -31,7 +31,7 @@ class AssignedDetailsDeserializer : JsonDeserializer<RealmList<GroupAssignedDeta
                 val details =
                     context?.deserialize<GroupAssignedDetails>(
                         jsonObject[it],
-                        GroupAssignedDetails::class.java,
+                        GroupAssignedDetails::class.java
                     )
                 details?.assignedUserID = it
                 list.add(details)

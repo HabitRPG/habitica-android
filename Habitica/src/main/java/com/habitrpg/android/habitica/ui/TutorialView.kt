@@ -13,7 +13,7 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 class TutorialView(
     context: Context,
     val step: TutorialStep,
-    private val onReaction: OnTutorialReaction,
+    private val onReaction: OnTutorialReaction
 ) : FrameLayout(context) {
     private val binding = OverlayTutorialBinding.inflate(context.layoutInflater, this, true)
     private var tutorialTexts: List<String> = emptyList()
@@ -29,7 +29,7 @@ class TutorialView(
                 override fun showNextStep() {
                     displayNextTutorialText()
                 }
-            },
+            }
         )
 
         binding.speechBubbleView.binding.completeButton.setOnClickListener { completeButtonClicked() }

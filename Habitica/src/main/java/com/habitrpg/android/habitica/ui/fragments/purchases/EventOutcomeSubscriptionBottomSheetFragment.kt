@@ -10,7 +10,7 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
         when (eventType) {

@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseSubscriptionViewBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
-
 class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
     private val binding = PurchaseSubscriptionViewBinding.inflate(context.layoutInflater, this, true)
 
@@ -46,7 +45,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             attrs,
             R.styleable.SubscriptionOptionView,
             0,
-            0,
+            0
         )
 
         isGifted = a.getBoolean(R.styleable.SubscriptionOptionView_isGifted, false)
@@ -54,12 +53,12 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {
             binding.descriptionTextView.text = context.getString(
                 R.string.subscription_duration_norenew,
-                a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                a.getText(R.styleable.SubscriptionOptionView_recurringText)
             )
         } else {
             binding.descriptionTextView.text = context.getString(
                 R.string.subscription_duration,
-                a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                a.getText(R.styleable.SubscriptionOptionView_recurringText)
             )
         }
 
@@ -72,9 +71,11 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     }
 
     private fun updateGemCapText() {
-        binding.gemCapTextView.text = highlightText(context.getString(if (isGifted) R.string.unlocks_x_gems_per_month else R.string.unlock_x_gems_per_month, gemCap),
+        binding.gemCapTextView.text = highlightText(
+            context.getString(if (isGifted) R.string.unlocks_x_gems_per_month else R.string.unlock_x_gems_per_month, gemCap),
             context.getString(R.string.x_gems, gemCap),
-            ContextCompat.getColor(context, if (isSubscriptionSelected) R.color.yellow_5 else R.color.white))
+            ContextCompat.getColor(context, if (isSubscriptionSelected) R.color.yellow_5 else R.color.white)
+        )
     }
 
     private fun setAddtlGemText(isSelected: Boolean) {
@@ -110,7 +111,13 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         binding.priceLabel.text = text
         if (isPromoted) {
             val shader: Shader = LinearGradient(
-                0f, 0f, binding.priceLabel.paint.measureText(text), binding.priceLabel.lineHeight.toFloat(), Color.parseColor("#2995CD"), Color.parseColor("#24CC8F"), Shader.TileMode.REPEAT
+                0f,
+                0f,
+                binding.priceLabel.paint.measureText(text),
+                binding.priceLabel.lineHeight.toFloat(),
+                Color.parseColor("#2995CD"),
+                Color.parseColor("#24CC8F"),
+                Shader.TileMode.REPEAT
             )
             binding.priceLabel.paint.setShader(shader)
         }
@@ -189,14 +196,14 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             binding.gemCapTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.brand_600,
-                ),
+                    R.color.brand_600
+                )
             )
             binding.hourglassTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.brand_600,
-                ),
+                    R.color.brand_600
+                )
             )
             setAddtlGemText(false)
             if (!isPromoted) {
@@ -205,8 +212,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             binding.descriptionTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.brand_600,
-                ),
+                    R.color.brand_600
+                )
             )
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 TextViewCompat.setCompoundDrawableTintList(binding.gemCapTextView, ContextCompat.getColorStateList(context, R.color.brand_400))

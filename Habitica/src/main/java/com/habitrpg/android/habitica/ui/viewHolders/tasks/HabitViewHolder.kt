@@ -16,7 +16,7 @@ class HabitViewHolder(
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?,
+    assignedTextProvider: GroupPlanInfoProvider?
 ) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
     private val btnPlusWrapper: FrameLayout = itemView.findViewById(R.id.btnPlusWrapper)
     private val btnPlusIconView: ImageView = itemView.findViewById(R.id.btnPlusIconView)
@@ -38,7 +38,7 @@ class HabitViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?,
+        ownerID: String?
     ) {
         this.task = data
         if (data.up == true) {
@@ -164,7 +164,7 @@ class HabitViewHolder(
 
     override fun setDisabled(
         openTaskDisabled: Boolean,
-        taskActionsDisabled: Boolean,
+        taskActionsDisabled: Boolean
     ) {
         super.setDisabled(openTaskDisabled, taskActionsDisabled)
 

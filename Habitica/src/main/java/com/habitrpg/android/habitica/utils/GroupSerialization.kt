@@ -23,7 +23,7 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext,
+        context: JsonDeserializationContext
     ): Group {
         val group = Group()
         val obj = json.asJsonObject
@@ -83,7 +83,7 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 val realm = Realm.getDefaultInstance()
                 val dbMembers =
                     realm.copyFromRealm(
-                        realm.where(Member::class.java).equalTo("party.id", group.id).findAll(),
+                        realm.where(Member::class.java).equalTo("party.id", group.id).findAll()
                     )
                 realm.close()
                 dbMembers.forEach { member ->
@@ -149,7 +149,7 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
     override fun serialize(
         src: Group,
         typeOfSrc: Type,
-        context: JsonSerializationContext,
+        context: JsonSerializationContext
     ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("name", src.name)

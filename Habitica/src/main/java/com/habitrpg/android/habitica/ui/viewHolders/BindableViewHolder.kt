@@ -7,6 +7,6 @@ abstract class BindableViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(i
     abstract fun bind(
         data: T,
         position: Int,
-        displayMode: String,
+        displayMode: String
     )
 }

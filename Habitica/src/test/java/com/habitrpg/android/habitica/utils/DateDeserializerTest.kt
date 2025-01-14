@@ -15,7 +15,7 @@ class DateDeserializerTest : SerializerSpec({
                 deserializer.deserialize(
                     JsonPrimitive("2015-09-28T13:00:00.000Z"),
                     Date::class.java,
-                    deserializationContext,
+                    deserializationContext
                 )
             date shouldBe Date(referenceTimestamp)
         }
@@ -25,7 +25,7 @@ class DateDeserializerTest : SerializerSpec({
                 deserializer.deserialize(
                     JsonPrimitive(referenceTimestamp),
                     Date::class.java,
-                    deserializationContext,
+                    deserializationContext
                 )
             date shouldBe Date(referenceTimestamp)
         }
@@ -42,10 +42,10 @@ class DateDeserializerTest : SerializerSpec({
             val dateElement: JsonElement =
                 deserializer.serialize(
                     Date(
-                        referenceTimestamp,
+                        referenceTimestamp
                     ),
                     Date::class.java,
-                    serializationContext,
+                    serializationContext
                 )
             dateElement.asString shouldBe "2015-09-28T13:00:00.000Z"
         }
