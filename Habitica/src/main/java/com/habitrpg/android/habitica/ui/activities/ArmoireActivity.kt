@@ -42,7 +42,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ArmoireActivity : BaseActivity() {
-    private var equipmentKey: String? = null
     private var gold: Double? = null
     private var hasAnimatedChanges: Boolean = false
     private lateinit var binding: ActivityArmoireBinding
@@ -193,7 +192,7 @@ class ArmoireActivity : BaseActivity() {
             finish()
         }
         binding.equipButton.setOnClickListener {
-            equipmentKey?.let { it1 ->
+            lastKey?.let { it1 ->
                 MainScope().launchCatching { inventoryRepository.equip("equipped", it1) }
             }
             finish()
@@ -206,7 +205,6 @@ class ArmoireActivity : BaseActivity() {
         }
         intent.extras?.let {
             val args = ArmoireActivityArgs.fromBundle(it)
-            equipmentKey = args.key
             configure(args.type, args.key, args.text, args.value)
 
             if (args.type == "gear") {
