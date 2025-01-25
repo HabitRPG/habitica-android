@@ -217,7 +217,7 @@
                     android:id="@+id/notifications_disabled_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_medium">
+                    android:layout_marginVertical="@dimen/spacing_medium">
 
                     <TextView
                         android:id="@+id/notifications_enabled_text"
@@ -238,7 +238,7 @@
                     android:id="@+id/exact_alarm_disabled_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:layout_marginVertical="@dimen/spacing_medium"
                     android:background="@drawable/layout_rounded_bg_yellow_10">
 
                     <TextView
