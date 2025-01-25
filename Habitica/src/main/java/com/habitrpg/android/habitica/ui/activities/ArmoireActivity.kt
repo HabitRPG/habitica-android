@@ -399,4 +399,17 @@ class ArmoireActivity : BaseActivity() {
         dialog.setContentView(R.layout.armoire_drop_rate_dialog)
         dialog.show()
     }
+
+    override fun onPause() {
+        super.onPause()
+        // Clear infinite animations on pause to make sure Context references aren't leaked.
+        stopInfiniteAnimations()
+    }
+
+    private fun stopInfiniteAnimations() {
+        binding.leftSparkView.stopAnimating()
+        binding.rightSparkView.stopAnimating()
+        binding.iconView.animation?.cancel()
+        binding.iconView.animation = null
+    }
 }
