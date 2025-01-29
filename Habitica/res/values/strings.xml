@@ -1234,7 +1234,7 @@
     <string name="removed_social_auth">Disconnected %s</string>
     <string name="password_added">Password saved</string>
     <string name="add_email_and_password">Add Email and Password</string>
-    <string name="password_not_matching">Password needs to be typed correctly twice</string>
+    <string name="password_not_matching">The entered passwords do not match</string>
     <string name="email_invalid">Invalid Email address</string>
     <string name="successful_purchase_generic">Purchase successful</string>
     <string name="starting_objectives">Starting Objectives</string>
@@ -1576,6 +1576,9 @@
     <string name="habitoween" translatable="false">Habitoween</string>
     <string name="turkey_day">Turkey Day</string>
     <string name="search_equipment">Search Equipment</string>
+    <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
+    <string name="auth_invalid_credentials">Received invalid credentials.</string>
+    <string name="auth_unknown_error">Unknown error during authentication.</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -137,7 +137,8 @@
                         android:hint="@string/username"
                         android:theme="@style/LoginEditTextTheme"
                         android:textColor="@color/white_75_alpha"
-                        android:textColorHighlight="@color/white"/>
+                        android:textColorHighlight="@color/white"
+                            android:isCredential="true"/>
 
                     <EditText
                         android:id="@+id/email"
@@ -178,7 +179,7 @@
                         android:autofillHints="newPassword"/>
 
                     <ProgressBar
-                        android:id="@+id/PB_AsyncTask"
+                        android:id="@+id/progress_view"
                         android:indeterminate="true"
                         android:visibility="gone"
                         android:layout_width="wrap_content"
@@ -186,36 +187,21 @@
                         android:layout_gravity="center"/>
 
                     <Button
-                        android:id="@+id/login_btn"
+                        android:id="@+id/submit_button"
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
                         android:text="@string/register_btn"
                         android:layout_marginTop="@dimen/spacing_xlarge"
                         style="@style/LoginButton"/>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_large"
-                        android:layout_height="wrap_content">
-
-                        <Button
+                    <Button
                             android:id="@+id/google_login_button"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/diamond_button_height"
+                            android:layout_height="42dp"
                             android:text="@string/login_btn_google"
+                            android:layout_marginTop="@dimen/spacing_large"
                             android:drawableStart="@drawable/google_icon"
                             style="@style/LoginButton"/>
-
-                        <com.google.android.material.progressindicator.CircularProgressIndicator
-                            android:id="@+id/google_login_progress"
-                            style="@style/LoginButtonProgress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:indeterminate="true"
-                            android:visibility="gone"
-                            app:indicatorColor="@color/white" />
-                        
-                    </RelativeLayout>
 
                     <Button
                         android:id="@+id/apple_login_button"

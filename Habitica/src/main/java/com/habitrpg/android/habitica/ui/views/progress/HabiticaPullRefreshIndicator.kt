@@ -52,12 +52,12 @@ fun HabiticaPullRefreshIndicator(
             color = backgroundColor
         ) {
             AnimatedVisibility(
-                visible = isRefreshing || state.progress > 0f,
+                visible = isRefreshing || state.distanceFraction > 0f,
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
                 HabiticaCircularProgressView(
-                    partialDisplay = if (isRefreshing) 1f else state.progress,
+                    partialDisplay = if (isRefreshing) 1f else state.distanceFraction,
                     animate = isRefreshing,
                     indicatorSize = 40.dp,
                     strokeWidth = 6.dp,

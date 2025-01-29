@@ -18,8 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override var binding: FragmentViewpagerBinding? = null
 
-    private val viewModel: StableViewModel by viewModels()
-
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

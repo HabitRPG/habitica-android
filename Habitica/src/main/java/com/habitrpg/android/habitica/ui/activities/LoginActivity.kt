@@ -1,12 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.accounts.AccountManager
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
@@ -15,126 +14,49 @@ import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.UnderlineSpan
-import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
+import androidx.activity.addCallback
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.extensions.lifecycleLaunchWhen
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.extensions.AuthenticationErrors
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
-
-    @Inject
-    lateinit var apiClient: ApiClient
-
-    @Inject
-    lateinit var sharedPrefs: SharedPreferences
+    val viewModel by viewModels<AuthenticationViewModel>()
 
     @Inject
     lateinit var configManager: AppConfigManager
 
-    @Inject
-    lateinit var viewModel: AuthenticationViewModel
-
-    private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
-
-    private val loginClick =
-        View.OnClickListener {
-            binding.PBAsyncTask.visibility = View.VISIBLE
-            if (isRegistering) {
-                registerWithPassword()
-            } else {
-                loginWithPassword()
-            }
-        }
-
-    private fun loginWithPassword() {
-        val username: String = binding.username.text.toString().trim { it <= ' ' }
-        val password: String = binding.password.text.toString()
-        if (username.isEmpty() || password.isEmpty()) {
-            showValidationError(R.string.login_validation_error_fieldsmissing)
-            return
-        }
-        lifecycleScope.launch(
-            ExceptionHandler.coroutine {
-                hideProgress()
-                ExceptionHandler.reportError(it)
-            }
-        ) {
-            val response = apiClient.connectUser(username, password)
-            if (response != null) {
-                handleAuthResponse(response)
-            } else {
-                hideProgress()
-            }
-        }
-    }
-
-    private fun registerWithPassword() {
-        val username: String = binding.username.text.toString().trim { it <= ' ' }
-        val email: String = binding.email.text.toString().trim { it <= ' ' }
-        val password: String = binding.password.text.toString()
-        val confirmPassword: String = binding.confirmPassword.text.toString()
-        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
-            showValidationError(R.string.login_validation_error_fieldsmissing)
-            return
-        }
-        if (password.length < configManager.minimumPasswordLength()) {
-            showValidationError(
-                getString(
-                    R.string.password_too_short,
-                    configManager.minimumPasswordLength()
-                )
-            )
-            return
-        }
-        lifecycleScope.launch(
-            ExceptionHandler.coroutine {
-                hideProgress()
-                ExceptionHandler.reportError(it)
-            }
-        ) {
-            val response = apiClient.registerUser(username, email, password, confirmPassword)
-            if (response != null) {
-                handleAuthResponse(response)
-            } else {
-                hideProgress()
-            }
-        }
-    }
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_login
@@ -152,71 +74,96 @@ class LoginActivity : BaseActivity() {
         // Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false)
 
-        binding.loginBtn.setOnClickListener(loginClick)
-
-        val content = SpannableString(binding.forgotPassword.text)
-        content.setSpan(UnderlineSpan(), 0, content.length, 0)
-        binding.forgotPassword.text = content
-        binding.privacyPolicy.movementMethod = LinkMovementMethod.getInstance()
-
-        this.isRegistering = true
-
-        val additionalData = HashMap<String, Any>()
-        additionalData["page"] = this.javaClass.simpleName
-
-        binding.backgroundContainer.post {
-            binding.backgroundContainer.scrollTo(
-                0,
-                binding.backgroundContainer.bottom
-            )
-        }
+        configureSpecialUI()
         binding.backgroundContainer.isScrollable = false
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        setupOnClickListeners()
+        setupViewmodelObserving()
+    }
 
+    private fun setupViewmodelObserving() {
+        lifecycleLaunchWhen(Lifecycle.State.RESUMED) {
+            viewModel.showAuthProgress.collect { showProgress ->
+                binding.progressView.isVisible = showProgress
+            }
+        }
+        lifecycleLaunchWhen(Lifecycle.State.RESUMED) {
+            viewModel.isRegistering.collect { isRegistering ->
+                if (isRegistering) {
+                    configureForRegistering()
+                } else {
+                    configureForLogin()
+                }
+            }
+        }
+        lifecycleLaunchWhen(Lifecycle.State.RESUMED) {
+            viewModel.authenticationError
+                .filterNotNull()
+                .collect { showError(it) }
+        }
+        lifecycleLaunchWhen(Lifecycle.State.RESUMED) {
+            viewModel.authenticationSuccess
+                .filterNotNull()
+                .collect { didRegister ->
+                    if (didRegister) {
+                        startSetupActivity()
+                    } else {
+                        startMainActivity()
+                    }
+                }
+        }
+    }
+
+    private fun setupOnClickListeners() {
+        onBackPressedDispatcher.addCallback(this) {
+            if (isShowingForm) {
+                hideForm()
+            } else {
+                finish()
+            }
+        }
         binding.newGameButton.setOnClickListener { newGameButtonClicked() }
         binding.showLoginButton.setOnClickListener { showLoginButtonClicked() }
         binding.backButton.setOnClickListener { backButtonClicked() }
         binding.forgotPassword.setOnClickListener { onForgotPasswordClicked() }
         binding.googleLoginButton.setOnClickListener {
-            binding.googleLoginProgress.visibility = View.VISIBLE
-            viewModel.handleGoogleLogin(this, pickAccountResult)
+            viewModel.startGoogleAuth(this)
+        }
+        binding.submitButton.setOnClickListener {
+            if (viewModel.isRegistering.value) {
+                registerWithPassword()
+            } else {
+                loginWithPassword()
+            }
+        }
+    }
+
+    private fun configureSpecialUI() {
+        val content = SpannableString(binding.forgotPassword.text)
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        binding.forgotPassword.text = content
+        binding.privacyPolicy.movementMethod = LinkMovementMethod.getInstance()
+
+        binding.backgroundContainer.post {
+            binding.backgroundContainer.scrollTo(
+                0,
+                binding.backgroundContainer.bottom,
+            )
         }
     }
 
     override fun loadTheme(
         sharedPreferences: SharedPreferences,
-        forced: Boolean
+        forced: Boolean,
     ) {
         super.loadTheme(sharedPreferences, forced)
         window.updateStatusBarColor(R.color.black_20_alpha, false)
     }
 
-    override fun onBackPressed() {
-        if (isShowingForm) {
-            hideForm()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     private fun resetLayout() {
-        if (this.isRegistering) {
-            if (binding.email.visibility == View.GONE) {
-                show(binding.email)
-            }
-            if (binding.confirmPassword.visibility == View.GONE) {
-                show(binding.confirmPassword)
-            }
-        } else {
-            if (binding.email.visibility == View.VISIBLE) {
-                hide(binding.email)
-            }
-            if (binding.confirmPassword.visibility == View.VISIBLE) {
-                hide(binding.confirmPassword)
-            }
-        }
+        val isRegistering = viewModel.isRegistering.value
+        binding.email.isVisible = isRegistering
+        binding.confirmPassword.isVisible = isRegistering
     }
 
     private fun startMainActivity() {
@@ -233,154 +180,104 @@ class LoginActivity : BaseActivity() {
         finish()
     }
 
-    private fun toggleRegistering() {
-        this.isRegistering = (!this.isRegistering)
-        this.setRegistering()
-    }
-
-    private fun setRegistering() {
-        if (this.isRegistering) {
-            binding.loginBtn.text = getString(R.string.register_btn)
-            binding.username.setHint(R.string.username)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                binding.username.setAutofillHints("newUsername")
-                binding.password.setAutofillHints("newPassword")
-            }
-            binding.password.imeOptions = EditorInfo.IME_ACTION_NEXT
-            binding.googleLoginButton.setText(R.string.register_btn_google)
-        } else {
-            binding.loginBtn.text = getString(R.string.login_btn)
-            binding.username.setHint(R.string.email_username)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                binding.username.setAutofillHints("username")
-                binding.password.setAutofillHints("password")
-            }
-            binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
-            binding.googleLoginButton.setText(R.string.login_btn_google)
+    private fun configureForRegistering() {
+        binding.submitButton.text = getString(R.string.register_btn)
+        binding.username.setHint(R.string.username)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            binding.username.setAutofillHints("newUsername")
+            binding.password.setAutofillHints("newPassword")
         }
+        binding.password.imeOptions = EditorInfo.IME_ACTION_NEXT
+        binding.googleLoginButton.setText(R.string.register_btn_google)
+
         this.resetLayout()
     }
 
-    private fun handleAuthResponse(response: UserAuthResponse) {
-        viewModel.handleAuthResponse(response)
-        try {
-            val messageClient: MessageClient = Wearable.getMessageClient(this)
-            val capabilityClient: CapabilityClient = Wearable.getCapabilityClient(this)
-            lifecycleScope.launch(Dispatchers.IO) {
-                try {
-                    val info =
-                        Tasks.await(
-                            capabilityClient.getCapability(
-                                "receive_message",
-                                CapabilityClient.FILTER_REACHABLE
-                            )
-                        )
-                    info.nodes.forEach {
-                        Tasks.await(
-                            messageClient.sendMessage(
-                                it.id,
-                                "/auth",
-                                "${response.id}:${response.apiToken}".toByteArray()
-                            )
-                        )
-                    }
-                } catch (e: Exception) {
-                    // Wearable API is not available on this device.
+    private fun configureForLogin() {
+        binding.submitButton.text = getString(R.string.login_btn)
+        binding.username.setHint(R.string.email_username)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            binding.username.setAutofillHints("username")
+            binding.password.setAutofillHints("password")
+        }
+        binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
+        binding.googleLoginButton.setText(R.string.login_btn_google)
+        this.resetLayout()
+    }
+
+    private fun loginWithPassword() {
+        val username: String = binding.username.text.toString()
+        val password: String = binding.password.text.toString()
+        viewModel.validateInputs(username, password)?.let {
+            showError(it)
+            return
+        }
+        viewModel.login(username, password)
+    }
+
+    private fun registerWithPassword() {
+        val username = binding.username.text.toString()
+        val email = binding.email.text.toString()
+        val password = binding.password.text.toString()
+        val confirmPassword = binding.confirmPassword.text.toString()
+        viewModel.validateInputs(username, password, email, confirmPassword)?.let {
+            showError(it)
+            return
+        }
+        viewModel.register(username, email, password, confirmPassword)
+    }
+
+    private fun sendAuthToWearables(response: UserAuthResponse) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val messageClient: MessageClient = Wearable.getMessageClient(this@LoginActivity)
+            val capabilityClient: CapabilityClient = Wearable.getCapabilityClient(this@LoginActivity)
+            try {
+                val info =
+                    Tasks.await(
+                        capabilityClient.getCapability(
+                            "receive_message",
+                            CapabilityClient.FILTER_REACHABLE,
+                        ),
+                    )
+                info.nodes.forEach {
+                    Tasks.await(
+                        messageClient.sendMessage(
+                            it.id,
+                            "/auth",
+                            "${response.id}:${response.apiToken}".toByteArray(),
+                        ),
+                    )
                 }
-            }
-        } catch (e: Exception) {
-            // Wearable API is not available on this device.
-        }
-        handleAuthResponse(response.newUser)
-    }
-
-    private fun handleAuthResponse(isNew: Boolean) {
-        hideProgress()
-        dismissKeyboard()
-
-        if (isRegistering) {
-            FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
-        }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(true, true)
-            if (isNew) {
-                startSetupActivity()
-            } else {
-                startMainActivity()
-                Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
+            } catch (_: Exception) {
+                // Wearable API is not available on this device.
             }
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_toggleRegistering -> toggleRegistering()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun hideProgress() {
-        runOnUiThread {
-            binding.googleLoginProgress.visibility = View.GONE
-            binding.PBAsyncTask.visibility = View.GONE
-        }
-    }
-
-    private fun showValidationError(resourceMessageString: Int) {
-        showValidationError(getString(resourceMessageString))
-    }
-
-    private fun showValidationError(message: String) {
-        binding.PBAsyncTask.visibility = View.GONE
+    private fun showError(error: AuthenticationErrors) {
         val alert = HabiticaAlertDialog(this)
-        alert.setTitle(R.string.login_validation_error_title)
-        alert.setMessage(message)
+        if (error.isValidationError) {
+            alert.setTitle(R.string.login_validation_error_title)
+        } else {
+            alert.setTitle(R.string.authentication_error_title)
+        }
+        alert.setMessage(error.translatedMessage(this))
         alert.addOkButton()
         alert.show()
     }
 
-    private val pickAccountResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-                viewModel.handleGoogleLoginResult(
-                    this,
-                    recoverFromPlayServicesErrorResult
-                ) { isNew ->
-                    handleAuthResponse(isNew)
-                }
-            } else {
-                binding.googleLoginProgress.visibility = View.GONE
-            }
-        }
-
-    private val recoverFromPlayServicesErrorResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode != Activity.RESULT_CANCELED) {
-                viewModel.handleGoogleLoginResult(this, null) { isNew ->
-                    handleAuthResponse(isNew)
-                }
-            }
-        }
-
     private fun newGameButtonClicked() {
-        isRegistering = true
+        viewModel.isRegistering.value = true
         showForm()
-        setRegistering()
     }
 
     private fun showLoginButtonClicked() {
-        isRegistering = false
+        viewModel.isRegistering.value = false
         showForm()
-        setRegistering()
     }
 
     private fun backButtonClicked() {
-        if (isShowingForm) {
-            hideForm()
-        }
+        hideForm()
     }
 
     private fun showForm() {
@@ -394,7 +291,7 @@ class LoginActivity : BaseActivity() {
         val scaleLogoAnimation =
             ValueAnimator.ofInt(
                 binding.logoView.measuredHeight,
-                (binding.logoView.measuredHeight * 0.75).toInt()
+                (binding.logoView.measuredHeight * 0.75).toInt(),
             )
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int ?: 0
@@ -402,7 +299,7 @@ class LoginActivity : BaseActivity() {
             layoutParams.height = value
             binding.logoView.layoutParams = layoutParams
         }
-        if (isRegistering) {
+        if (viewModel.isRegistering.value) {
             newGameAlphaAnimation.startDelay = 600
             newGameAlphaAnimation.duration = 400
             showLoginAlphaAnimation.duration = 400
@@ -414,7 +311,7 @@ class LoginActivity : BaseActivity() {
                         binding.loginScrollview.visibility = View.VISIBLE
                         binding.loginScrollview.alpha = 1f
                     }
-                }
+                },
             )
         } else {
             showLoginAlphaAnimation.startDelay = 600
@@ -428,7 +325,7 @@ class LoginActivity : BaseActivity() {
                         binding.loginScrollview.visibility = View.VISIBLE
                         binding.loginScrollview.alpha = 1f
                     }
-                }
+                },
             )
         }
         val backAlphaAnimation =
@@ -438,7 +335,7 @@ class LoginActivity : BaseActivity() {
             panAnimation,
             newGameAlphaAnimation,
             showLoginAlphaAnimation,
-            scaleLogoAnimation
+            scaleLogoAnimation,
         )
         showAnimation.play(backAlphaAnimation).after(panAnimation)
         for (i in 0 until binding.formWrapper.childCount) {
@@ -453,12 +350,15 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun hideForm() {
+        if (!isShowingForm) {
+            return
+        }
         isShowingForm = false
         val panAnimation =
             ObjectAnimator.ofInt(
                 binding.backgroundContainer,
                 "scrollY",
-                binding.backgroundContainer.bottom
+                binding.backgroundContainer.bottom,
             ).setDuration(1000)
         val newGameAlphaAnimation =
             ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 1.toFloat()).setDuration(700)
@@ -468,7 +368,7 @@ class LoginActivity : BaseActivity() {
         val scaleLogoAnimation =
             ValueAnimator.ofInt(
                 binding.logoView.measuredHeight,
-                (binding.logoView.measuredHeight * 1.333333).toInt()
+                (binding.logoView.measuredHeight * 1.333333).toInt(),
             )
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int
@@ -487,7 +387,7 @@ class LoginActivity : BaseActivity() {
                     binding.showLoginButton.visibility = View.VISIBLE
                     binding.loginScrollview.visibility = View.INVISIBLE
                 }
-            }
+            },
         )
         val backAlphaAnimation =
             ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 0.toFloat()).setDuration(800)
@@ -496,7 +396,7 @@ class LoginActivity : BaseActivity() {
             panAnimation,
             scrollViewAlphaAnimation,
             backAlphaAnimation,
-            scaleLogoAnimation
+            scaleLogoAnimation,
         )
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation)
@@ -515,7 +415,7 @@ class LoginActivity : BaseActivity() {
         val lp =
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
+                LinearLayout.LayoutParams.MATCH_PARENT,
             )
         input.layoutParams = lp
         val alertDialog = HabiticaAlertDialog(this)
@@ -543,14 +443,15 @@ class LoginActivity : BaseActivity() {
         dismissKeyboard()
         super.finish()
     }
+}
 
-    companion object {
-        fun show(v: View) {
-            v.visibility = View.VISIBLE
-        }
+fun AuthenticationErrors.translatedMessage(context: Context): String {
+    return when (this) {
+        AuthenticationErrors.GET_CREDENTIALS_ERROR -> context.getString(R.string.auth_get_credentials_error)
+        AuthenticationErrors.INVALID_CREDENTIALS -> context.getString(R.string.auth_invalid_credentials)
 
-        fun hide(v: View) {
-            v.visibility = View.GONE
-        }
+        AuthenticationErrors.MISSING_FIELDS -> context.getString(R.string.login_validation_error_fieldsmissing)
+        AuthenticationErrors.PASSWORD_MISMATCH -> context.getString(R.string.password_not_matching)
+        AuthenticationErrors.PASSWORD_TOO_SHORT -> context.getString(R.string.password_too_short, minPasswordLength)
     }
 }

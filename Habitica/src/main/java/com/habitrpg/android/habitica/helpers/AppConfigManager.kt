@@ -92,8 +92,8 @@ class AppConfigManager(contentRepository: ContentRepository) :
         return remoteConfig.getBoolean("showSubscriptionBanner")
     }
 
-    fun minimumPasswordLength(): Long {
-        return remoteConfig.getLong("minimumPasswordLength")
+    fun minimumPasswordLength(): Int {
+        return remoteConfig.getLong("minimumPasswordLength").toInt()
     }
 
     fun enableTaskDisplayMode(): Boolean {

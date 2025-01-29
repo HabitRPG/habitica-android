@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.R
@@ -39,6 +41,7 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileNotFoundException
@@ -314,4 +317,5 @@ abstract class BaseActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out)
         startActivity(intent)
     }
+
 }
