@@ -94,7 +94,6 @@ private fun BottomSheetWrapper(
         systemUiController.setNavigationBarColor(navigationbarColor, darkIcons = true)
         onDispose {
             systemUiController.setNavigationBarColor(navigationbarColor, darkIcons = false)
-            systemUiController.setStatusBarColor(statusBarColor.copy(alpha = 0.3f), darkIcons = true)
         }
     }
 
