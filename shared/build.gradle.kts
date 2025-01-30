@@ -1,20 +1,17 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id("io.kotest.multiplatform") version "5.6.2"
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-    }
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.habitrpg.convention)
+    alias(libs.plugins.kotest)
 }
 
 kotlin {
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -27,7 +24,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra.get("coroutines_version")}")
+                implementation(libs.kotlinx.coroutine)
             }
         }
         commonTest {
@@ -39,15 +36,12 @@ kotlin {
 }
 
 android {
-    compileSdk = rootProject.extra.get("target_sdk") as Int
+    compileSdk = libs.versions.targetSdk.get().toInt()
+    namespace = "com.habitrpg.shared.habitica"
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = 21
-    }
+    defaultConfig.minSdk = 21
 
     buildTypes {
-        release {
-        }
         create("debugIAP") {
             initWith(buildTypes["debug"])
             isMinifyEnabled = false
@@ -60,6 +54,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
 
-    namespace = "com.habitrpg.shared.habitica"
+tasks.withType<KotlinCompile> {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
 }
