@@ -17,6 +17,7 @@ import androidx.core.view.children
 import androidx.core.view.updatePadding
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MainNavigationViewBinding
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.setTintWith
@@ -116,7 +117,7 @@ constructor(
         ViewCompat.setOnApplyWindowInsetsListener(binding.itemWrapper) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(bottom = insets.bottom)
-            WindowInsetsCompat.CONSUMED
+            consumeWindowInsetsAbove30(windowInsets)
         }
         binding.addButton.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {

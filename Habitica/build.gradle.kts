@@ -31,7 +31,9 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
-        resourceConfigurations.addAll(
+
+        @Suppress("UnstableApiUsage")
+        androidResources.localeFilters.addAll(
             listOf("en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "uk", "zh", "zh-rTW")
         )
 
@@ -44,7 +46,6 @@ android {
         compose = true
         renderScript = true
         buildConfig = true
-        aidl = true
     }
 
     buildTypes {
@@ -59,7 +60,6 @@ android {
             ext["alwaysUpdateBuildId"] = false
             enableUnitTestCoverage = false
             resValue("string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider")
-            resValue("string", "content_provider", "com.habitrpg.android.habitica.fileprovider")
             resValue("string", "app_name", "Habitica Debug")
         }
         create("debugIAP") {
@@ -91,7 +91,6 @@ android {
             manifest.srcFile("AndroidManifest.xml")
             java.srcDirs("src/main/java")
             resources.srcDirs("src/main/java")
-            aidl.srcDirs("src/main/java")
             renderscript.srcDirs("src/main/java")
             res.srcDirs("res")
             assets.srcDirs("assets")
@@ -165,17 +164,6 @@ dependencies {
     //Analytics
     implementation(libs.amplitude.analytic)
 
-    //Tests
-    testImplementation(libs.bundles.test.implementation)
-
-    androidTestImplementation(libs.bundles.android.test.implementation)
-    androidTestImplementation(libs.kaspresso) { exclude(module = "protobuf-lite") }
-
-    debugImplementation(libs.test.fragment)
-    debugImplementation(libs.test.monitor)
-
-    androidTestUtil(libs.test.orchestrator)
-
     implementation(libs.shimmer)
 
     //Leak Detection
@@ -184,23 +172,27 @@ dependencies {
     // Google Services
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.google.services)
+    implementation(libs.credentials)
+    implementation(libs.credentials.playServicesAuth)
+    implementation(libs.googleid)
 
     implementation(libs.flexbox)
 
     implementation(libs.core)
     implementation(libs.core.ktx)
+
+    implementation(libs.lifecycle.common)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
-    implementation(libs.lifecycle.common)
+    implementation(libs.lifecycle.process)
+
     implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
     implementation(libs.fragment.ktx)
     implementation(libs.paging)
     implementation(libs.paging.compose)
     implementation(libs.kotlinx.coroutine)
     implementation(libs.coroutine.android)
     implementation(libs.material3)
-    implementation(libs.accompanist.sysmtemUi)
 
     implementation(libs.google.play.review)
     implementation(libs.google.play.review.ktx)
@@ -212,7 +204,13 @@ dependencies {
     implementation(libs.ui.tooling)
     implementation(libs.viewmodel.compose)
 
-    implementation(libs.kotlin.jdk7)
+    implementation(libs.kotlin.stdlib)
 
-    implementation(libs.toolargetool)
+    //Tests
+    testImplementation(libs.bundles.test.implementation)
+    androidTestImplementation(libs.bundles.android.test.implementation)
+    androidTestImplementation(libs.kaspresso) { exclude(module = "protobuf-lite") }
+    debugImplementation(libs.test.fragment)
+    debugImplementation(libs.test.monitor)
+    androidTestUtil(libs.test.orchestrator)
 }

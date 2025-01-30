@@ -10,6 +10,9 @@ fun Window.updateStatusBarColor(
     color: Int,
     isLight: Boolean
 ) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        return
+    }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         statusBarColor = color
         @Suppress("DEPRECATION")

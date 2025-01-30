@@ -2,11 +2,13 @@ package com.habitrpg.common.habitica.extensions
 
 import android.app.Application
 import android.os.Build
-import coil.Coil
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.util.DebugLogger
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.gif.AnimatedImageDecoder
+import coil3.gif.GifDecoder
+import coil3.request.allowHardware
+import coil3.request.crossfade
+import coil3.util.DebugLogger
 import com.habitrpg.common.habitica.BuildConfig
 
 fun Application.setupCoil() {
@@ -16,7 +18,7 @@ fun Application.setupCoil() {
             .crossfade(false)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
+                    add(AnimatedImageDecoder.Factory())
                 } else {
                     add(GifDecoder.Factory())
                 }
@@ -24,5 +26,5 @@ fun Application.setupCoil() {
     if (BuildConfig.DEBUG) {
         builder = builder.logger(DebugLogger())
     }
-    Coil.setImageLoader(builder.build())
+    SingletonImageLoader.setSafe { builder.build() }
 }

@@ -1,11 +1,14 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.Activity
+import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +22,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -40,16 +42,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.TaskDescriptionBuilder
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.ui.activities.TaskFormActivity.Companion.TASK_VALUE_KEY
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.theme.contentBackgroundFor
 import com.habitrpg.android.habitica.ui.theme.primaryBackgroundFor
@@ -61,6 +66,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CompletedAt
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.UserRow
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -84,6 +90,7 @@ constructor(
     val configManager: AppConfigManager
 ) : BaseViewModel(userRepository, userViewModel) {
     val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
+    val taskValue: Double = savedStateHandle[TaskFormActivity.TASK_VALUE_KEY] ?: 0.0
 
     val task = taskRepository.getTask(taskID).asLiveData()
 
@@ -99,11 +106,37 @@ class TaskSummaryActivity : BaseActivity() {
     private val viewModel: TaskSummaryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val bundle = intent.extras ?: Bundle()
+        val taskValue = bundle.getDouble(TASK_VALUE_KEY)
+        forcedTheme = when {
+            taskValue < -20 -> "maroon"
+            taskValue < -10 -> "red"
+            taskValue < -1 -> "orange"
+            taskValue < 1 -> "yellow"
+            taskValue < 5 -> "green"
+            taskValue < 10 -> "teal"
+            else -> "blue"
+        }
         super.onCreate(savedInstanceState)
         setContent {
             HabiticaTheme {
                 TaskSummaryView(viewModel = viewModel)
             }
+        }
+    }
+
+    override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
+        super.loadTheme(sharedPreferences, forced)
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            window.updateStatusBarColor(ContextCompat.getColor(this, when {
+                this.viewModel.taskValue < -20 -> R.color.maroon_50
+                this.viewModel.taskValue < -10 -> R.color.red_50
+                this.viewModel.taskValue < -1 -> R.color.orange_50
+                this.viewModel.taskValue < 1 -> R.color.yellow_10
+                this.viewModel.taskValue < 5 -> R.color.green_50
+                this.viewModel.taskValue < 10 -> R.color.teal_50
+                else -> R.color.blue_50
+            }), false)
         }
     }
 }
@@ -114,7 +147,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
     val task by viewModel.task.observeAsState()
     val titleModifier = Modifier.padding(top = 30.dp)
     val textModifier = Modifier.padding(top = 4.dp)
-    val activity = LocalContext.current as? Activity
+    val activity = LocalActivity.current
 
     if (task != null) {
         val darkestColor = HabiticaTheme.colors.textPrimaryFor(task)
@@ -126,15 +159,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
             } else {
                 Color.White
             }
-        val systemUiController = rememberSystemUiController()
-        val statusBarColor = HabiticaTheme.colors.primaryBackgroundFor(task)
-        val lightestColor = HabiticaTheme.colors.contentBackgroundFor(task)
-        DisposableEffect(systemUiController) {
-            systemUiController.setStatusBarColor(statusBarColor, darkIcons = true)
-            systemUiController.setNavigationBarColor(lightestColor)
-            onDispose {}
-        }
-        Column(Modifier.background(statusBarColor)) {
+        Column(Modifier.background(HabiticaTheme.colors.primaryBackgroundFor(task))) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 2.dp)
@@ -171,7 +196,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                 Modifier
                     .shadow(16.dp)
                     .background(
-                        lightestColor,
+                        HabiticaTheme.colors.contentBackgroundFor(task),
                         RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
                     )
                     .padding(20.dp, 5.dp)

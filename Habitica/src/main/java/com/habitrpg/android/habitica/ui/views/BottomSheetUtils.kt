@@ -9,16 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.displayCutout
-import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.foundation.layout.windowInsetsEndWidth
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.layout.windowInsetsStartWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -27,7 +21,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +34,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -90,18 +82,6 @@ private fun BottomSheetWrapper(
     val modalBottomSheetState =
         rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var isSheetOpened by remember { mutableStateOf(false) }
-
-    val systemUiController = rememberSystemUiController()
-    val statusBarColor = colorResource(R.color.content_background)
-    val navigationbarColor = colorResource(R.color.brand_50)
-
-    DisposableEffect(systemUiController) {
-        systemUiController.setStatusBarColor(statusBarColor.copy(alpha = 0.3f), darkIcons = true)
-        systemUiController.setNavigationBarColor(navigationbarColor, darkIcons = true)
-        onDispose {
-            systemUiController.setNavigationBarColor(navigationbarColor, darkIcons = false)
-        }
-    }
 
     val radius = 20.dp
     ModalBottomSheet(
@@ -159,7 +139,6 @@ private fun BottomSheetWrapper(
             SheetValue.Hidden -> {
                 when {
                     isSheetOpened -> {
-                        systemUiController.setStatusBarColor(statusBarColor, darkIcons = false)
                         parent.removeView(composeView)
                     }
 

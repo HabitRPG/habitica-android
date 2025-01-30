@@ -17,8 +17,12 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
-import coil.dispose
-import coil.load
+import coil3.Image
+import coil3.asDrawable
+import coil3.dispose
+import coil3.load
+import coil3.request.allowHardware
+import coil3.target.Target
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
@@ -186,21 +190,22 @@ class AvatarView : FrameLayout {
             ) {
                 allowHardware(false)
                 target(
-                    object : coil.target.Target {
-                        override fun onError(error: Drawable?) {
+                    object : Target {
+                        override fun onError(error: Image?) {
                             super.onError(error)
-                            imageView.setImageDrawable(error)
+                            imageView.setImageDrawable(error?.asDrawable(context.resources))
                             onLayerComplete()
                         }
 
-                        override fun onSuccess(result: Drawable) {
-                            result.isFilterBitmap = false
+                        override fun onSuccess(result: Image) {
+                            val drawable = result.asDrawable(context.resources)
+                            drawable.isFilterBitmap = false
                             super.onSuccess(result)
-                            imageView.setImageDrawable(result)
+                            imageView.setImageDrawable(drawable)
                             if (result is Animatable) {
                                 result.start()
                             }
-                            val bounds = getLayerBounds(layerKey, layerName, result)
+                            val bounds = getLayerBounds(layerKey, layerName, drawable)
                             imageView.imageMatrix = avatarMatrix
                             val layoutParams = imageView.layoutParams as? LayoutParams
                             layoutParams?.topMargin = bounds.top

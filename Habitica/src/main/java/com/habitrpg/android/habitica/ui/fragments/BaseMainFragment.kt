@@ -9,6 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
@@ -48,10 +50,16 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (this.usesBottomNavigation) {
-            bottomNavigation?.visibility = View.VISIBLE
-        } else {
-            bottomNavigation?.visibility = View.GONE
+        val window = activity?.window
+        if (window != null) {
+            val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+            if (this.usesBottomNavigation) {
+                bottomNavigation?.visibility = View.VISIBLE
+                windowInsetsController.isAppearanceLightNavigationBars = false
+            } else {
+                bottomNavigation?.visibility = View.GONE
+                windowInsetsController.isAppearanceLightNavigationBars = true
+            }
         }
 
         setHasOptionsMenu(true)

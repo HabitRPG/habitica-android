@@ -19,8 +19,11 @@ import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.activity.SystemBarStyle
 import androidx.activity.addCallback
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -68,7 +71,7 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.requestFeature(Window.FEATURE_ACTION_BAR)
+        navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.black_50_alpha))
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         // Set default values to avoid null-responses when requesting unedited settings

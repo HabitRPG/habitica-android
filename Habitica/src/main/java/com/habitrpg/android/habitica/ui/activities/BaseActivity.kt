@@ -16,6 +16,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -23,6 +24,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
+import androidx.core.view.ViewGroupCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -34,6 +37,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.extensions.forceLocale
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
@@ -95,7 +99,15 @@ abstract class BaseActivity : AppCompatActivity() {
         return destroyed
     }
 
+    private val defaultNavigationBarStyle by lazy {
+        SystemBarStyle.auto(ContextCompat.getColor(this, R.color.white_50_alpha),
+            ContextCompat.getColor(this, R.color.black_50_alpha)
+        )
+    }
+    internal var navigationBarStyle: SystemBarStyle? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         resources.forceLocale(this, languageHelper.locale)
@@ -109,6 +121,8 @@ abstract class BaseActivity : AppCompatActivity() {
         loadTheme(sharedPreferences)
 
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         habiticaApplication
         getLayoutResId()?.let {
             setContentView(getContentView(it))
@@ -126,13 +140,16 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         findViewById<View>(R.id.appbar)?.let { appbar ->
             val paddingTop = appbar.paddingTop
             ViewCompat.setOnApplyWindowInsetsListener(appbar) { v, windowInsets ->
                 val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
                 v.updatePadding(top = insets.top + paddingTop)
-                WindowInsetsCompat.CONSUMED
+                consumeWindowInsetsAbove30(windowInsets)
             }
         }
     }
@@ -200,14 +217,16 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
 
-        window.navigationBarColor =
-            if (forcedIsNight ?: isNightMode) {
-                ContextCompat.getColor(this, R.color.system_bars)
-            } else {
-                getThemeColor(R.attr.colorPrimaryDark)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.navigationBarColor =
+                if (forcedIsNight ?: isNightMode) {
+                    ContextCompat.getColor(this, R.color.system_bars)
+                } else {
+                    getThemeColor(R.attr.colorPrimaryDark)
+                }
+            if (!(forcedIsNight ?: isNightMode)) {
+                window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
             }
-        if (!(forcedIsNight ?: isNightMode)) {
-            window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
         }
 
         if (currentTheme != null && theme != currentTheme) {

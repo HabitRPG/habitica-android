@@ -10,8 +10,10 @@ import android.view.animation.Transformation
 import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import coil.imageLoader
-import coil.request.ImageRequest
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.asDrawable
+import coil3.request.ImageRequest
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
@@ -84,14 +86,14 @@ object DataBindingUtils {
                     onStart = { _ ->
                     },
                     onSuccess = {
-                        imageResult(it)
+                        imageResult(it.asDrawable(context.resources))
                     },
                     onError = {
                         imageError()
                     }
                 )
                 .build()
-        context.imageLoader.enqueue(request)
+        SingletonImageLoader.get(context).enqueue(request)
     }
 
     fun getFullFilename(

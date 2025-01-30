@@ -1,84 +1,85 @@
 [versions]
-accompanist = "0.30.0"
-agp = "8.5.2"
-amplitude = "1.6.1"
+minSdk = "21"
+targetSdk = "35"
+wearOsTargetSdk = "34"
+
+accompanist = "0.34.0"
+agp = "8.8.0"
+amplitude = "1.19.4"
 androidTest = "1.6.1"
+androidTestMonitor = "1.7.2"
 androidTestRunner = "1.6.2"
 annotationApi = "1.3.2"
 appcompat = "1.7.0"
-billing = "7.0.0"
-coil = "2.4.0"
-compose = "1.6.8"
-composeActivity = "1.9.1"
+billing = "7.1.1"
+coil = "3.0.4"
+compose = "1.7.7"
+composeActivity = "1.10.0"
 compose_compiler = "1.5.14"
 constraintlayout = "2.2.0"
 converterMoshi = "2.9.0"
 coordinatorlayout = "1.2.0"
 coreSplashscreen = "1.1.0-rc01"
-core_ktx = "1.13.0"
-coroutines = "1.8.0"
+core_ktx = "1.15.0"
+coroutines = "1.9.0"
 crashlytics = "3.0.2"
-daggerhilt = "2.51.1"
-desuggar = "2.0.4"
+credentials = "1.3.0"
+daggerhilt = "2.55"
+desuggar = "2.1.4"
 detekt = "1.19.0"
 deviceNames = "2.1.1"
 firebase-perf = "1.4.2"
-firebase_bom = "31.3.0"
+firebase_bom = "33.8.0"
 flexbox = "3.0.0"
-fragmentKtx = "1.8.2"
-fragmentTesting = "1.8.2"
+fragmentKtx = "1.8.5"
+fragmentTesting = "1.8.5"
 google-service = "4.4.2"
-gson = "2.11.0"
+googleid = "1.1.1"
+gson = "2.12.0"
 habitRpgPlugin = "0.1.0"
-inAppReview = "2.0.1"
+inAppReview = "2.0.2"
 junitKtx = "1.2.1"
-kaspresso = "1.5.1"
-kotest = "5.6.2"
-kotlin = "2.0.20"
-ksp = "2.0.20-1.0.25"
-ktlint = "1.2.1"
+kaspresso = "1.6.0"
+kotest = "5.9.1"
+kotlin = "2.1.10"
+ksp = "2.1.10-1.0.29"
 ktlintPlugin = "11.3.1"
 leakCanary = "2.10"
-lifecycle = "2.8.4"
-lifecycleRuntimeKtx = "2.8.4"
+lifecycle = "2.8.7"
+lifecycleRuntimeKtx = "2.8.7"
 markwon = "4.6.2"
 material = "1.12.0"
-material3 = "1.2.1"
-minSdk = "26"
-mockk = "1.13.4"
-moshi = "1.15.0"
+material3 = "1.3.1"
+mockk = "1.13.6"
 moshiKotlin = "1.15.0"
-navigation = "2.7.7"
+navigation = "2.8.6"
 okhttp = "4.12.0"
-orchestrator = "1.5.0"
+orchestrator = "1.5.1"
 pagerIndicator = "2.4.1"
-paging = "3.3.0"
-play_auth = "21.2.0"
-play_wearables = "18.2.0"
+paging = "3.3.5"
+play_auth = "21.3.0"
+play_wearables = "19.0.0"
 preferences = "1.2.1"
-realm = "1.9.1"
 realmPlugin = "10.19.0"
-recyclerview = "1.3.2"
-retrofit = "2.9.0"
+recyclerview = "1.4.0"
+retrofit = "2.11.0"
 shimmer = "0.5.0"
 swipeRefresh = "1.1.0"
-targetSdk = "34"
-tooLargeTool = "0.3.0"
-turbine = "0.12.1"
+turbine = "1.2.0"
 wear = "1.3.0"
 wearInput = "1.1.0"
-wearOsTargetSdk = "33"
 
 [libraries]
-accompanist-sysmtemUi = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-theme = { group = "com.google.accompanist", name = "accompanist-themeadapter-material3", version.ref = "accompanist" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
 amplitude-analytic = { group = "com.amplitude", name = "analytics-android", version.ref = "amplitude" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 billing = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
-coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
-coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
+coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+coil-cacheControl = { group = "io.coil-kt.coil3", name = "coil-network-cache-control", version.ref = "coil" }
+coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version.ref = "coil" }
 compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "compose" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorlayout" }
@@ -86,6 +87,8 @@ core = { group = "androidx.core", name = "core", version.ref = "core_ktx" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core_ktx" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
+credentials-playServicesAuth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desuggar" }
 device-names = { group = "com.jaredrummler", name = "android-device-names", version.ref = "deviceNames" }
 firebase-analytic = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
@@ -100,6 +103,7 @@ google-play-auth = { group = "com.google.android.gms", name = "play-services-aut
 google-play-review = { group = "com.google.android.play", name = "review", version.ref = "inAppReview" }
 google-play-review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "inAppReview" }
 google-play-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "play_wearables" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerhilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "daggerhilt" }
 javax-annotation = { group = "javax.annotation", name = "javax.annotation-api", version.ref = "annotationApi" }
@@ -108,7 +112,7 @@ kaspresso-compose = { group = "com.kaspersky.android-components", name = "kaspre
 kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 kotest-framework = { group = "io.kotest", name = "kotest-framework-datatest", version.ref = "kotest" }
 kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
-kotlin-jdk7 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakCanary" }
@@ -116,6 +120,7 @@ lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common-java
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
 markwon-core = { group = "io.noties.markwon", name = "core", version.ref = "markwon" }
 markwon-ext = { group = "io.noties.markwon", name = "ext-strikethrough", version.ref = "markwon" }
 markwon-image = { group = "io.noties.markwon", name = "image", version.ref = "markwon" }
@@ -131,7 +136,6 @@ moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", ver
 navigation-common = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigation" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation" }
-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 paging = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
@@ -148,12 +152,11 @@ test-core = { group = "androidx.test", name = "core", version.ref = "androidTest
 test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidTest" }
 test-fragment = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentTesting" }
 test-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
-test-monitor = { group = "androidx.test", name = "monitor", version.ref = "androidTest" }
+test-monitor = { group = "androidx.test", name = "monitor", version.ref = "androidTestMonitor" }
 test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "orchestrator" }
 test-rules = { group = "androidx.test", name = "rules", version.ref = "androidTest" }
 test-runner = { group = "androidx.test", name = "runner", version.ref = "androidTestRunner" }
 text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "compose" }
-toolargetool = { group = "com.gu.android", name = "toolargetool", version.ref = "tooLargeTool" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 viewPagerIndicator = { group = "fr.avianey.com.viewpagerindicator", name = "library", version.ref = "pagerIndicator" }

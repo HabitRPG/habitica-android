@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.Activity
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,7 +23,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +31,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -48,9 +46,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 import com.android.billingclient.api.ProductDetails
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
@@ -196,16 +193,16 @@ fun BirthdayTitle(text: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp, bottom = 8.dp)
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 8.dp)
     ) {
         Box(
             modifier =
-            Modifier
-                .height(1.dp)
-                .weight(1f)
-                .background(colorResource(id = R.color.brand_50))
+                Modifier
+                    .height(1.dp)
+                    .weight(1f)
+                    .background(colorResource(id = R.color.brand_50))
         )
         Image(painterResource(id = R.drawable.birthday_textdeco_left), null)
         Text(
@@ -218,10 +215,10 @@ fun BirthdayTitle(text: String) {
         Image(painterResource(id = R.drawable.birthday_textdeco_right), null)
         Box(
             modifier =
-            Modifier
-                .height(1.dp)
-                .weight(1f)
-                .background(colorResource(id = R.color.brand_50))
+                Modifier
+                    .height(1.dp)
+                    .weight(1f)
+                    .background(colorResource(id = R.color.brand_50))
         )
     }
 }
@@ -238,36 +235,27 @@ fun BirthdayActivityView(
     onGemPurchaseClick: () -> Unit,
     onEquipClick: () -> Unit
 ) {
-    val activity = LocalContext.current as? Activity
+    val activity = LocalActivity.current
     val dateFormat = SimpleDateFormat("MMM dd", java.util.Locale.getDefault())
     val complexDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL)
 
     val textColor = Color.White
     val specialTextColor = colorResource(R.color.yellow_50)
 
-    val systemUiController = rememberSystemUiController()
-    val statusbarColor = colorResource(R.color.brand_300)
-    val navigationbarColor = colorResource(R.color.brand_50)
-    DisposableEffect(systemUiController) {
-        systemUiController.setStatusBarColor(statusbarColor, darkIcons = false)
-        systemUiController.setNavigationBarColor(navigationbarColor)
-        onDispose {}
-    }
-
-    Scaffold() { padding ->
+    Scaffold { padding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier =
-            Modifier
-                .background(
-                    Brush.verticalGradient(
-                        Pair(0.0f, colorResource(id = R.color.brand_300)),
-                        Pair(1.0f, colorResource(id = R.color.brand_200))
+                Modifier
+                    .background(
+                        Brush.verticalGradient(
+                            Pair(0.0f, colorResource(id = R.color.brand_300)),
+                            Pair(1.0f, colorResource(id = R.color.brand_200))
+                        )
                     )
-                )
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(padding)
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(padding)
         ) {
             Button(
                 onClick = {
@@ -285,17 +273,17 @@ fun BirthdayActivityView(
                     painterResource(R.drawable.arrow_back),
                     stringResource(R.string.action_back),
                     colorFilter =
-                    ColorFilter.tint(
-                        textColor
-                    )
+                        ColorFilter.tint(
+                            textColor
+                        )
                 )
             }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
-                Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth()
+                    Modifier
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth()
             ) {
                 Image(
                     painterResource(R.drawable.birthday_header),
@@ -344,10 +332,10 @@ fun BirthdayActivityView(
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier =
-                    Modifier
-                        .padding(vertical = 20.dp)
-                        .size(161.dp, 129.dp)
-                        .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))
+                        Modifier
+                            .padding(vertical = 20.dp)
+                            .size(161.dp, 129.dp)
+                            .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))
                 ) {
                     PixelArtView(
                         imageName = "stable_Pet-Gryphatrice-Jubilant",
@@ -505,11 +493,11 @@ fun BirthdayActivityView(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
-                Modifier
-                    .padding(top = 20.dp)
-                    .background(colorResource(R.color.brand_50))
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 20.dp, bottom = 60.dp)
+                    Modifier
+                        .padding(top = 20.dp)
+                        .background(colorResource(R.color.brand_50))
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 20.dp, bottom = 60.dp)
             ) {
                 Text(
                     stringResource(R.string.limitations),
@@ -564,10 +552,10 @@ fun PotionGrid() {
                     ) {
                         AsyncImage(
                             model =
-                            DataBindingUtils.BASE_IMAGE_URL +
-                                DataBindingUtils.getFullFilename(
-                                    "Pet_HatchingPotion_$potion"
-                                ),
+                                DataBindingUtils.BASE_IMAGE_URL +
+                                        DataBindingUtils.getFullFilename(
+                                            "Pet_HatchingPotion_$potion"
+                                        ),
                             null,
                             Modifier.size(68.dp)
                         )
@@ -590,9 +578,9 @@ fun FourFreeItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(18.dp),
         modifier =
-        modifier
-            .background(colorResource(R.color.brand_50), HabiticaTheme.shapes.medium)
-            .padding(16.dp)
+            modifier
+                .background(colorResource(R.color.brand_50), HabiticaTheme.shapes.medium)
+                .padding(16.dp)
     ) {
         Text(
             stringResource(R.string.day_x, day).uppercase(),
@@ -603,9 +591,9 @@ fun FourFreeItem(
         Box(
             contentAlignment = Alignment.Center,
             modifier =
-            Modifier
-                .size(121.dp, 84.dp)
-                .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium)
+                Modifier
+                    .size(121.dp, 84.dp)
+                    .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium)
         ) {
             if (image != null) {
                 Image(image, null)

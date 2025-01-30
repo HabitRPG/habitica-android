@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DrawerMainBinding
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
@@ -154,7 +155,7 @@ class NavigationDrawerFragment : DialogFragment() {
             ViewCompat.setOnApplyWindowInsetsListener(it) { v, windowInsets ->
                 val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
                 v.updatePadding(top = insets.top)
-                WindowInsetsCompat.CONSUMED
+                consumeWindowInsetsAbove30(windowInsets)
             }
         }
 
@@ -168,7 +169,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     bottom = bars.bottom,
                     left = bars.left
                 )
-                WindowInsetsCompat.CONSUMED
+                consumeWindowInsetsAbove30(insets)
             }
         }
 

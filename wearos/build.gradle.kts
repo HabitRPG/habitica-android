@@ -102,7 +102,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation(libs.kotlin.jdk7)
+    implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.reflect)
 
     implementation(libs.core.splashscreen) { exclude(module = libs.core.ktx.get().name) }

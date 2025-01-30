@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.activity.SystemBarStyle
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -39,6 +40,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.black_50_alpha))
         super.onCreate(savedInstanceState)
 
         setupIntro()

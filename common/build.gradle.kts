@@ -103,6 +103,8 @@ dependencies {
     // Image Management Library
     implementation(libs.coil)
     implementation(libs.coil.gif)
+    implementation(libs.coil.okhttp)
+    implementation(libs.coil.cacheControl)
 
     implementation(libs.navigation.common)
     implementation(libs.navigation.runtime)

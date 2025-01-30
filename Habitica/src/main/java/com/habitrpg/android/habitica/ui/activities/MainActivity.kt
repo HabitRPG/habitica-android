@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
+import androidx.core.view.ViewGroupCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.setPadding
@@ -244,7 +245,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         ViewCompat.setOnApplyWindowInsetsListener(binding.content.headerView) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(top = insets.top + headerPaddingTop)
-            WindowInsetsCompat.CONSUMED
+            windowInsets
         }
 
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)

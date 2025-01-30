@@ -6,6 +6,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.RecyclerViewStateAdapter
@@ -66,7 +67,7 @@ constructor(
                 right = bars.right + rightPadding,
                 bottom = bars.bottom + bottomPadding,
             )
-            WindowInsetsCompat.CONSUMED
+            consumeWindowInsetsAbove30(insets)
         }
     }
 

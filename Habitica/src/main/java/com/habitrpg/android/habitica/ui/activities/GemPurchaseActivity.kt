@@ -2,6 +2,8 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import androidx.activity.SystemBarStyle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,8 +22,11 @@ class GemPurchaseActivity : PurchaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         showSubscription = !(intent.extras?.containsKey("openSubscription") == true && intent.extras?.getBoolean("openSubscription") == false)
+        if (showSubscription) {
+            navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.background_brand_30))
+        }
+        super.onCreate(savedInstanceState)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         if (showSubscription) {
@@ -46,6 +51,7 @@ class GemPurchaseActivity : PurchaseActivity() {
         super.onResume()
         if (showSubscription) {
             window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
+            findViewById<View>(R.id.appbar).setBackgroundColor(ContextCompat.getColor(this, R.color.brand_300))
         }
     }
 
