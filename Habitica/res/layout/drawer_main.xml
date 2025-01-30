@@ -1,166 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment">
 
     <LinearLayout
-        android:id="@+id/menuHeaderView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="64dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="1dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="?colorPrimaryOffset"
-        android:baselineAligned="false">
+            android:id="@+id/menuHeaderView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="64dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="1dp"
+            android:paddingBottom="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="?colorPrimaryOffset"
+            android:baselineAligned="false">
 
         <com.habitrpg.android.habitica.ui.RoundedFrameLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="@dimen/spacing_large"
-            android:background="@drawable/rounded_avatar_bg"
-            android:clipToPadding="true"
-            android:clipChildren="true">
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:background="@drawable/rounded_avatar_bg"
+                android:clipToPadding="true"
+                android:clipChildren="true">
+
             <com.habitrpg.common.habitica.views.AvatarView
-                android:id="@+id/avatarView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"/>
+                    android:id="@+id/avatarView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center" />
         </com.habitrpg.android.habitica.ui.RoundedFrameLayout>
+
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:singleLine="true"
-                tools:text="Habitica"
-                style="@style/Body1"
-                android:textColor="@color/white"/>
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
             <TextView
-                android:id="@+id/usernameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:singleLine="true"
-                tools:text="\@username"
-                android:textSize="12sp"
-                android:textColor="@color/white_80_alpha"/>
+                    android:id="@+id/toolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    tools:text="Habitica"
+                    style="@style/Body1"
+                    android:textColor="@color/white" />
+
+            <TextView
+                    android:id="@+id/usernameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    tools:text="\@username"
+                    android:textSize="12sp"
+                    android:textColor="@color/white_80_alpha" />
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/notificationsButtonWrapper"
-            android:layout_width="33dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp">
+                android:id="@+id/notificationsButtonWrapper"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="16dp">
+
             <ImageView
-                android:id="@+id/notificationsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/menu_notifications"
-                android:layout_centerVertical="true"
-                android:clickable="false"
-                android:contentDescription="@string/notifications" />
+                    android:id="@+id/notificationsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:src="@drawable/menu_notifications"
+                    android:layout_centerVertical="true"
+                    android:clickable="false"
+                    android:contentDescription="@string/notifications" />
 
             <TextView
-                android:id="@+id/notificationsBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_alignStart="@id/notificationsButton"
-                android:layout_alignTop="@id/notificationsButton"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="-13dp"
-                android:background="@drawable/badge_circle"
-                android:gravity="center"
-                android:minWidth="20dp"
-                android:paddingTop="0dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="gone"
-                tools:text="1"
-                tools:visibility="visible" />
+                    android:id="@+id/notificationsBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_alignStart="@id/notificationsButton"
+                    android:layout_alignTop="@id/notificationsButton"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="-13dp"
+                    android:background="@drawable/badge_circle"
+                    android:gravity="center"
+                    android:minWidth="20dp"
+                    android:paddingTop="0dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="1"
+                    tools:visibility="visible" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:id="@+id/messagesButtonWrapper"
-            android:layout_width="33dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp">
+                android:id="@+id/messagesButtonWrapper"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="8dp">
+
             <ImageView
-                android:id="@+id/messagesButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/menu_messages"
-                android:layout_centerVertical="true"
-                android:clickable="false"
-                android:contentDescription="@string/inbox" />
+                    android:id="@+id/messagesButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:src="@drawable/menu_messages"
+                    android:layout_centerVertical="true"
+                    android:clickable="false"
+                    android:contentDescription="@string/inbox" />
 
             <TextView
-                android:id="@+id/messagesBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_alignStart="@id/messagesButton"
-                android:layout_alignTop="@id/messagesButton"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="-12dp"
-                android:background="@drawable/badge_circle"
-                android:gravity="center"
-                android:minWidth="20dp"
-                android:paddingTop="0dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="gone"
-                tools:text="1"
-                tools:visibility="visible" />
+                    android:id="@+id/messagesBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_alignStart="@id/messagesButton"
+                    android:layout_alignTop="@id/messagesButton"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="-12dp"
+                    android:background="@drawable/badge_circle"
+                    android:gravity="center"
+                    android:minWidth="20dp"
+                    android:paddingTop="0dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="1"
+                    tools:visibility="visible" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:id="@+id/settingsButtonWrapper"
-            android:layout_width="43dp"
-            android:layout_height="match_parent"
-            android:paddingStart="8dp">
-            <ImageView
-                android:id="@+id/settingsButton"
-                android:layout_width="wrap_content"
+                android:id="@+id/settingsButtonWrapper"
+                android:layout_width="43dp"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/menu_settings"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/PS_settings_title" />
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp">
+
+            <ImageView
+                    android:id="@+id/settingsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:src="@drawable/menu_settings"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/PS_settings_title" />
+
             <TextView
-                android:id="@+id/settingsBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_alignStart="@id/settingsButton"
-                android:layout_alignTop="@id/settingsButton"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="-12dp"
-                android:background="@drawable/badge_circle"
-                android:gravity="center"
-                android:minWidth="20dp"
-                android:paddingTop="0dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:visibility="gone"
-                tools:text="1"
-                tools:visibility="visible" />
+                    android:id="@+id/settingsBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_alignStart="@id/settingsButton"
+                    android:layout_alignTop="@id/settingsButton"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginTop="-12dp"
+                    android:background="@drawable/badge_circle"
+                    android:gravity="center"
+                    android:minWidth="20dp"
+                    android:paddingTop="0dp"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    tools:text="1"
+                    tools:visibility="visible" />
         </RelativeLayout>
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorContentBackground"/>
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorContentBackground" />
 </LinearLayout>

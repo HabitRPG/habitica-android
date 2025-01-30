@@ -225,6 +225,7 @@ class TaskFormActivity : BaseActivity() {
                 ContextCompat.getColor(this, R.color.white),
                 upperTintColor
             )
+            binding.appbar.setBackgroundColor(upperTintColor)
         }
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
@@ -267,12 +268,12 @@ class TaskFormActivity : BaseActivity() {
             View.OnFocusChangeListener { _, isFocused ->
                 binding.notesInputLayout.alpha = if (isFocused) 0.8f else 0.6f
             }
-        binding.scrollView.setOnTouchListener { view, event ->
+        binding.nestedScrollView.setOnTouchListener { view, event ->
             userScrolled =
-                view == binding.scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
+                view == binding.nestedScrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
             return@setOnTouchListener false
         }
-        binding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
+        binding.nestedScrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
             if (userScrolled) {
                 dismissKeyboard()
             }

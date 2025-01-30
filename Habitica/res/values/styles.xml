@@ -1055,9 +1055,10 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.3</item>
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsFloating">false</item>
         <item name="android:windowAnimationStyle">@style/SheetDialogAnimations</item>
         <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Modal</item>
+        <item name="enableEdgeToEdge">true</item>
 
         <item name="colorPrimary">@color/brand</item>
         <item name="colorPrimaryDark">@color/brand_50</item>

@@ -16,7 +16,8 @@
         app:behavior_peekHeight="350dp"
         app:behavior_hideable="true">
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
+            android:id="@+id/appbar"
+                android:background="?attr/headerBackgroundColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="0dp">
@@ -61,6 +62,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
         <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="0dp">

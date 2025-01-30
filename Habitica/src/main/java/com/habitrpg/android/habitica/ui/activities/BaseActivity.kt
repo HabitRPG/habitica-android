@@ -15,15 +15,22 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
+import com.google.android.material.appbar.AppBarLayout
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
@@ -117,6 +124,15 @@ abstract class BaseActivity : AppCompatActivity() {
                         userRepository.retrieveUser(false, true)
                     }
                 }
+            }
+        }
+
+        findViewById<View>(R.id.appbar)?.let { appbar ->
+            val paddingTop = appbar.paddingTop
+            ViewCompat.setOnApplyWindowInsetsListener(appbar) { v, windowInsets ->
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.updatePadding(top = insets.top + paddingTop)
+                WindowInsetsCompat.CONSUMED
             }
         }
     }
@@ -217,7 +233,6 @@ abstract class BaseActivity : AppCompatActivity() {
                 actionBar.setHomeButtonEnabled(true)
             }
         }
-        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this, iconColor, backgroundColor) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

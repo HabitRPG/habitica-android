@@ -9,10 +9,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsEndWidth
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.windowInsetsStartWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -104,6 +110,7 @@ private fun BottomSheetWrapper(
         scrimColor = colorResource(R.color.gray_5).copy(alpha = 0.3f),
         sheetState = modalBottomSheetState,
         shape = RoundedCornerShape(topStart = radius, topEnd = radius),
+        contentWindowInsets = { WindowInsets(0) },
         dragHandle = {},
         content = {
             Column(

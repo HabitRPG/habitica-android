@@ -251,7 +251,7 @@ class FullProfileActivity : BaseActivity() {
                 clipboard?.setPrimaryClip(clip)
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
                     HabiticaSnackbar.showSnackbar(
-                        this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
+                        this@FullProfileActivity.binding.nestedScrollView.getChildAt(0) as ViewGroup,
                         String.format(getString(R.string.username_copied), userDisplayName),
                         SnackbarDisplayType.NORMAL
                     )
@@ -266,7 +266,7 @@ class FullProfileActivity : BaseActivity() {
                 clipboard?.setPrimaryClip(clip)
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
                     HabiticaSnackbar.showSnackbar(
-                        this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
+                        this@FullProfileActivity.binding.nestedScrollView.getChildAt(0) as ViewGroup,
                         String.format(getString(R.string.id_copied), userDisplayName),
                         SnackbarDisplayType.NORMAL
                     )

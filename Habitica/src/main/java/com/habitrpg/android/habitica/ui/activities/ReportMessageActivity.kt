@@ -48,7 +48,7 @@ class ReportMessageActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = ""
-        raisedElevation = binding.appBar.elevation
+        raisedElevation = binding.appbar.elevation
         setStatusBarDim(true)
 
         binding.bottomSheet.setOnTouchListener { _, _ -> true }
@@ -117,12 +117,12 @@ class ReportMessageActivity : BaseActivity() {
 
     private fun setStatusBarDim(dim: Boolean) {
         if (dim) {
-            binding.appBar.elevation = 0f
+            binding.appbar.elevation = 0f
             window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
             binding.closeButton.visibility = View.GONE
             binding.toolbarTitle.setTypeface(null, Typeface.BOLD)
         } else {
-            binding.appBar.elevation = 8f
+            binding.appbar.elevation = 8f
             window.statusBarColor = ContextCompat.getColor(this, R.color.offset_background)
             binding.closeButton.visibility = View.VISIBLE
             binding.toolbarTitle.setTypeface(null, Typeface.NORMAL)

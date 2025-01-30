@@ -2,6 +2,9 @@ package com.habitrpg.android.habitica.ui.helpers
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
@@ -45,6 +48,27 @@ constructor(
 
     private var actualAdapter: Adapter<*>? = null
     private val emptyAdapter = RecyclerViewStateAdapter()
+
+    init {
+        clipToPadding = false
+        val topPadding = paddingTop
+        val bottomPadding = paddingBottom
+        val leftPadding = paddingLeft
+        val rightPadding = paddingRight
+        ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(
+                left = bars.left + leftPadding,
+                top = topPadding,
+                right = bars.right + rightPadding,
+                bottom = bars.bottom + bottomPadding,
+            )
+            WindowInsetsCompat.CONSUMED
+        }
+    }
 
     private val observer =
         object : AdapterDataObserver() {

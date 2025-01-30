@@ -66,7 +66,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         }
         realm.executeTransaction {
             while (pendingSaves.isNotEmpty()) {
-                val pending = pendingSaves.removeFirst()
+                val pending = pendingSaves.removeAt(0)
                 @Suppress("UNCHECKED_CAST")
                 if (pending is RealmModel) {
                     copy(it, pending)

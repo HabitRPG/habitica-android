@@ -10,9 +10,11 @@
         android:orientation="vertical"
         android:background="?attr/colorContentBackground">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:background="?attr/headerBackgroundColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

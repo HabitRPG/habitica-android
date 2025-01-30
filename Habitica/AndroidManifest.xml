@@ -70,27 +70,23 @@
             android:name=".ui.activities.ArmoireActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/armoire"
-            android:screenOrientation="unspecified"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name=".ui.activities.DeathActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/faint_header"
-            android:screenOrientation="unspecified"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name=".ui.activities.BirthdayActivity"
             android:parentActivityName=".ui.activities.MainActivity"
-            android:screenOrientation="unspecified"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name=".ui.activities.NotificationsActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/notifications"
-            android:screenOrientation="unspecified"
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
@@ -103,14 +99,12 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
-            android:screenOrientation="unspecified"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".ui.activities.AdventureGuideActivity"
             android:label=""
-            android:screenOrientation="unspecified"
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

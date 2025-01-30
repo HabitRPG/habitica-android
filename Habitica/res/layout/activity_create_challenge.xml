@@ -7,6 +7,8 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+            android:background="?attr/headerBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -21,6 +23,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -216,14 +219,14 @@
                 tools:visibility="visible"/>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
             android:background="?attr/colorContentBackground"
             android:id="@+id/create_challenge_task_list">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 </LinearLayout>

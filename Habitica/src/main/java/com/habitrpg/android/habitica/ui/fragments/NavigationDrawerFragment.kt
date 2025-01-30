@@ -14,7 +14,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Lifecycle
@@ -146,6 +149,28 @@ class NavigationDrawerFragment : DialogFragment() {
         (binding?.recyclerView?.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
             false
         initializeMenuItems()
+
+        binding?.menuHeaderView?.let {
+            ViewCompat.setOnApplyWindowInsetsListener(it) { v, windowInsets ->
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.updatePadding(top = insets.top)
+                WindowInsetsCompat.CONSUMED
+            }
+        }
+
+        binding?.recyclerView?.let {
+            ViewCompat.setOnApplyWindowInsetsListener(it) { v, insets ->
+                val bars = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                            or WindowInsetsCompat.Type.displayCutout()
+                )
+                v.updatePadding(
+                    bottom = bars.bottom,
+                    left = bars.left
+                )
+                WindowInsetsCompat.CONSUMED
+            }
+        }
 
         adapter.itemSelectedEvents = {
             setSelection(it.transitionId, it.bundle, true)

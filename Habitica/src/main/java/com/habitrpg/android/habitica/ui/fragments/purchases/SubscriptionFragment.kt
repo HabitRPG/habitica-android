@@ -332,7 +332,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         binding?.content?.subscriptionOptions?.visibility = View.VISIBLE
         binding?.content?.subscriptionOptions?.postDelayed(
             {
-                binding?.content?.scrollView?.smoothScrollTo(0, binding?.content?.subscriptionOptions?.top ?: 0)
+                binding?.content?.nestedScrollView?.smoothScrollTo(0, binding?.content?.subscriptionOptions?.top ?: 0)
             },
             500
         )

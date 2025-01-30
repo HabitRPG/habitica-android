@@ -6,6 +6,8 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+            android:background="?attr/headerBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -21,6 +23,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"

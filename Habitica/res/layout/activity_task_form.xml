@@ -1,285 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="?attr/colorTintedBackground"
-    tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity">
-    <com.google.android.material.appbar.AppBarLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?attr/colorTintedBackground"
+        tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:background="?attr/headerBackgroundColor"
+            android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/Toolbar"
-            style="@style/ToolbarTitleStyle"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/Toolbar"
+                style="@style/ToolbarTitleStyle"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_view"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:id="@+id/nested_scroll_view"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="@dimen/spacing_large">
-            <LinearLayout
-                android:id="@+id/upper_text_wrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:background="@color/brand_300"
+            android:layout_height="match_parent">
+
+        <LinearLayout
                 android:orientation="vertical"
-                android:paddingStart="@dimen/spacing_large"
-                android:paddingEnd="@dimen/spacing_large"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:paddingBottom="@dimen/spacing_large">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/text_input_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/TaskFormTextInputLayoutAppearance"
-                    app:boxStrokeWidth="2dp"
-                    app:boxStrokeWidthFocused="2dp"
-                    app:hintTextColor="?colorPrimaryText"
-                    android:backgroundTint="?attr/colorPrimaryText"
-                    android:hint="@string/task_title"
-                    android:alpha="0.75">
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/text_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="?attr/colorPrimaryText"
-                        android:inputType="textCapSentences|textAutoCorrect"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/notes_input_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/TaskFormTextInputLayoutAppearance"
-                    app:boxStrokeWidth="2dp"
-                    app:boxStrokeWidthFocused="2dp"
-                    android:backgroundTint="?attr/colorPrimaryText"
-                    app:hintTextColor="?colorPrimaryText"
-                    android:hint="@string/notes"
-                    android:layout_marginTop="@dimen/spacing_large"
-                    android:alpha="0.75">
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/notes_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minLines="3"
-                        android:gravity="top"
-                        android:textColor="?attr/colorPrimaryText"
-                        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <TextView
-                    android:id="@+id/challenge_name_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    style="@style/Caption1"
-                    android:gravity="center"
-                    android:textColor="@color/text_primary"
-                    tools:visibility="visible"
-                    tools:text="Challenge Name"/>
-            </LinearLayout>
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/spacing_large"
-                android:layout_marginEnd="@dimen/spacing_large">
-                <androidx.compose.ui.platform.ComposeView
-                    android:id="@+id/habit_scoring_buttons"
+                    android:id="@+id/upper_text_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp" />
-                <TextView
-                    android:id="@+id/reward_value_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cost"
-                    style="@style/TaskFormSectionheader"/>
-                <com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
-                    android:id="@+id/reward_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp" />
-                <TextView
-                    android:id="@+id/checklist_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/checklist"
-                    style="@style/TaskFormSectionheader"/>
-                <com.habitrpg.android.habitica.ui.views.tasks.form.ChecklistContainer
-                    android:id="@+id/checklist_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/task_difficulty_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/difficulty"
-                    style="@style/TaskFormSectionheader"/>
-                <androidx.compose.ui.platform.ComposeView
-                    android:id="@+id/task_difficulty_buttons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/assign_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/assign"
-                    style="@style/TaskFormSectionheader" />
-                <androidx.compose.ui.platform.ComposeView
-                    android:id="@+id/assign_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/habit_reset_streak_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reset_counter"
-                    style="@style/TaskFormSectionheader"/>
-                <androidx.compose.ui.platform.ComposeView
-                    android:id="@+id/habit_reset_streak_buttons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/scheduling_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/scheduling"
-                    style="@style/TaskFormSectionheader"/>
-                <com.habitrpg.android.habitica.ui.views.tasks.form.TaskSchedulingControls
-                    android:id="@+id/task_scheduling_controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/adjust_streak_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/adjust_counter"
-                    style="@style/TaskFormSectionheader"/>
-                <LinearLayout
-                    android:id="@+id/adjust_streak_wrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/TextInputLayoutAppearance"
-                        android:id="@+id/habit_adjust_positive_input_layout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/task_form_control_bg"
-                        android:hint="@string/positive_habit_form"
-                        android:layout_weight="1">
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/habit_adjust_positive_streak_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/transparent"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <Space
-                        android:layout_width="22dp"
-                        android:layout_height="wrap_content" />
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/TextInputLayoutAppearance"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/negative_habit_form"
-                        android:background="@drawable/task_form_control_bg"
-                        android:layout_weight="1">
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/habit_adjust_negative_streak_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/transparent"
-                            android:inputType="number"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                    tools:background="@color/brand_300"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/spacing_large"
+                    android:paddingEnd="@dimen/spacing_large"
+                    android:paddingBottom="@dimen/spacing_large">
 
-                <TextView
-                    android:id="@+id/reminders_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reminders"
-                    style="@style/TaskFormSectionheader"/>
-
-                <RelativeLayout
-                    android:id="@+id/notifications_disabled_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_medium">
-
-                    <TextView
-                        android:id="@+id/notifications_enabled_text"
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="@dimen/spacing_medium"
-                        android:text="@string/push_notification_system_settings_reminders"
-                        android:textColor="@color/text_quad"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                        style="@style/TaskFormTextInputLayoutAppearance"
+                        app:boxStrokeWidth="2dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:hintTextColor="?colorPrimaryText"
+                        android:backgroundTint="?attr/colorPrimaryText"
+                        android:hint="@string/task_title"
+                        android:alpha="0.75">
 
-                <com.habitrpg.android.habitica.ui.views.tasks.form.ReminderContainer
-                    android:id="@+id/reminders_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/text_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorPrimaryText"
+                            android:inputType="textCapSentences|textAutoCorrect" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <FrameLayout
-                    android:id="@+id/exact_alarm_disabled_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_medium"
-                    android:background="@drawable/layout_rounded_bg_yellow_10">
-
-                    <TextView
-                        android:id="@+id/exact_alarm_disabled_text"
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/notes_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="12dp"
+                        style="@style/TaskFormTextInputLayoutAppearance"
+                        app:boxStrokeWidth="2dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        android:backgroundTint="?attr/colorPrimaryText"
+                        app:hintTextColor="?colorPrimaryText"
+                        android:hint="@string/notes"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:alpha="0.75">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/notes_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minLines="3"
+                            android:gravity="top"
+                            android:textColor="?attr/colorPrimaryText"
+                            android:inputType="textCapSentences|textAutoCorrect|textMultiLine" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                        android:id="@+id/challenge_name_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        style="@style/Caption1"
                         android:gravity="center"
-                        android:fontFamily="@string/font_family_medium"
-                        android:text="@string/exact_alarm_system_settings_reminders"
-                        android:textSize="12sp" />
-                </FrameLayout>
+                        android:textColor="@color/text_primary"
+                        tools:visibility="visible"
+                        tools:text="Challenge Name" />
+            </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/stat_wrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/assigned_stat"
-                        style="@style/TaskFormSectionheader"/>
-                    <androidx.compose.ui.platform.ComposeView
-                        android:id="@+id/stats_selector"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/tags_title_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tags"
-                    style="@style/TaskFormSectionheader"/>
-                <LinearLayout
-                    android:id="@+id/tags_wrapper"
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:showDividers="middle"
-                    android:divider="@drawable/tag_divider"/>
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large">
+
+                <androidx.compose.ui.platform.ComposeView
+                        android:id="@+id/habit_scoring_buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp" />
+
+                <TextView
+                        android:id="@+id/reward_value_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cost"
+                        style="@style/TaskFormSectionheader" />
+
+                <com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
+                        android:id="@+id/reward_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp" />
+
+                <TextView
+                        android:id="@+id/checklist_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checklist"
+                        style="@style/TaskFormSectionheader" />
+
+                <com.habitrpg.android.habitica.ui.views.tasks.form.ChecklistContainer
+                        android:id="@+id/checklist_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                <TextView
+                        android:id="@+id/task_difficulty_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/difficulty"
+                        style="@style/TaskFormSectionheader" />
+
+                <androidx.compose.ui.platform.ComposeView
+                        android:id="@+id/task_difficulty_buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                <TextView
+                        android:id="@+id/assign_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/assign"
+                        style="@style/TaskFormSectionheader" />
+
+                <androidx.compose.ui.platform.ComposeView
+                        android:id="@+id/assign_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                <TextView
+                        android:id="@+id/habit_reset_streak_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reset_counter"
+                        style="@style/TaskFormSectionheader" />
+
+                <androidx.compose.ui.platform.ComposeView
+                        android:id="@+id/habit_reset_streak_buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                <TextView
+                        android:id="@+id/scheduling_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/scheduling"
+                        style="@style/TaskFormSectionheader" />
+
+                <com.habitrpg.android.habitica.ui.views.tasks.form.TaskSchedulingControls
+                        android:id="@+id/task_scheduling_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                <TextView
+                        android:id="@+id/adjust_streak_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/adjust_counter"
+                        style="@style/TaskFormSectionheader" />
+
+                <LinearLayout
+                        android:id="@+id/adjust_streak_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputLayoutAppearance"
+                            android:id="@+id/habit_adjust_positive_input_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/task_form_control_bg"
+                            android:hint="@string/positive_habit_form"
+                            android:layout_weight="1">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/habit_adjust_positive_streak_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space
+                            android:layout_width="22dp"
+                            android:layout_height="wrap_content" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputLayoutAppearance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/negative_habit_form"
+                            android:background="@drawable/task_form_control_bg"
+                            android:layout_weight="1">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/habit_adjust_negative_streak_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <TextView
+                        android:id="@+id/reminders_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reminders"
+                        style="@style/TaskFormSectionheader" />
+
+                <RelativeLayout
+                        android:id="@+id/notifications_disabled_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium">
+
+                    <TextView
+                            android:id="@+id/notifications_enabled_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:text="@string/push_notification_system_settings_reminders"
+                            android:textColor="@color/text_quad"
+                            android:textSize="12sp" />
+                </RelativeLayout>
+
+                <com.habitrpg.android.habitica.ui.views.tasks.form.ReminderContainer
+                        android:id="@+id/reminders_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                <FrameLayout
+                        android:id="@+id/exact_alarm_disabled_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:background="@drawable/layout_rounded_bg_yellow_10">
+
+                    <TextView
+                            android:id="@+id/exact_alarm_disabled_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="12dp"
+                            android:gravity="center"
+                            android:fontFamily="@string/font_family_medium"
+                            android:text="@string/exact_alarm_system_settings_reminders"
+                            android:textSize="12sp" />
+                </FrameLayout>
+
+                <LinearLayout
+                        android:id="@+id/stat_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/assigned_stat"
+                            style="@style/TaskFormSectionheader" />
+
+                    <androidx.compose.ui.platform.ComposeView
+                            android:id="@+id/stats_selector"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <TextView
+                        android:id="@+id/tags_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tags"
+                        style="@style/TaskFormSectionheader" />
+
+                <LinearLayout
+                        android:id="@+id/tags_wrapper"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:showDividers="middle"
+                        android:divider="@drawable/tag_divider" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

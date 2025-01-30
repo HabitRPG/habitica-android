@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentTasksRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -65,19 +66,19 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 open class TaskRecyclerViewFragment :
-    BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+    BaseFragment<FragmentTasksRecyclerviewBinding>(),
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     private var taskFlowJob: Job? = null
     val viewModel: TasksViewModel by viewModels({ requireParentFragment() })
 
     internal var canScoreTasks: Boolean = true
-    override var binding: FragmentRefreshRecyclerviewBinding? = null
+    override var binding: FragmentTasksRecyclerviewBinding? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
+    ): FragmentTasksRecyclerviewBinding {
+        return FragmentTasksRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
@@ -357,8 +358,6 @@ open class TaskRecyclerViewFragment :
                     }
                 }
             }
-
-        binding?.recyclerView?.setScaledPadding(context, 0, 0, 0, 108)
 
         layoutManager = getLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager

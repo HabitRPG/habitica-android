@@ -48,7 +48,7 @@
         android:layout_marginStart="@dimen/content_inset"
         android:layout_marginEnd="@dimen/content_inset"
         android:layout_marginBottom="12dp"/>
-    <androidx.recyclerview.widget.RecyclerView
+    <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:layout_width="match_parent"
             android:layout_height="230dp"
             android:background="@drawable/avatar_customization_category_bg"

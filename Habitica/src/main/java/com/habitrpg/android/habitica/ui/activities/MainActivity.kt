@@ -34,8 +34,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.setPadding
+import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
@@ -236,6 +239,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         setupToolbar(binding.content.toolbar)
+
+        val headerPaddingTop = binding.content.headerView.paddingTop
+        ViewCompat.setOnApplyWindowInsetsListener(binding.content.headerView) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = insets.top + headerPaddingTop)
+            WindowInsetsCompat.CONSUMED
+        }
 
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 

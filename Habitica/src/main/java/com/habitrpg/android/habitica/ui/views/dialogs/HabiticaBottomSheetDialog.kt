@@ -2,7 +2,10 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import android.view.View
+import androidx.core.view.WindowCompat
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.internal.ViewUtils.doOnApplyWindowInsets
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.BottomSheetWrapperBinding
 
@@ -19,6 +22,7 @@ open class HabiticaBottomSheetDialog(context: Context) :
         set(value) {
             wrapperBinding.grabber.visibility = value
         }
+
 
     override fun setContentView(view: View) {
         wrapperBinding.container.addView(view)

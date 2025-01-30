@@ -23,7 +23,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -212,23 +212,37 @@ fun PartySeekingView(
     val pageData = viewModel.seekingUsers.collectAsLazyPagingItems()
     val refreshing by viewModel.isRefreshing
     val pullRefreshState = rememberPullToRefreshState()
-    if (pullRefreshState.isRefreshing) {
+    if (pullRefreshState.isAnimating) {
         LaunchedEffect(true) {
             pageData.refresh()
         }
     }
     if (!refreshing) {
         LaunchedEffect(true) {
-            pullRefreshState.endRefresh()
+            pullRefreshState.animateToHidden()
         }
     }
     val scope = rememberCoroutineScope()
 
-    Box(
+    PullToRefreshBox(
+        state = pullRefreshState,
+        isRefreshing = refreshing,
+        onRefresh = {
+            viewModel.isRefreshing.value = true
+            pageData.refresh()
+            viewModel.isRefreshing.value = false
+        },
+        indicator = {
+            HabiticaPullRefreshIndicator(
+                pageData.itemCount == 0,
+                refreshing,
+                pullRefreshState,
+                Modifier.align(Alignment.TopCenter)
+            )
+        },
         modifier =
         modifier
             .fillMaxSize()
-            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         LazyColumn {
             item {
@@ -362,18 +376,6 @@ fun PartySeekingView(
                 else -> {}
             }
         }
-        PullToRefreshContainer(
-            modifier = Modifier.align(Alignment.TopCenter),
-            state = pullRefreshState,
-            indicator = {
-                HabiticaPullRefreshIndicator(
-                    pageData.itemCount == 0,
-                    refreshing,
-                    it,
-                    Modifier.align(Alignment.TopCenter)
-                )
-            }
-        )
     }
 }
 

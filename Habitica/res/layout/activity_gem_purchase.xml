@@ -20,9 +20,9 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
+                    android:background="?attr/headerBackgroundColor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fitsSystemWindows="false">
+                android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
