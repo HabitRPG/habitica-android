@@ -27,6 +27,7 @@ constructor(
             invalidate()
         }
     private var paint: Paint = Paint()
+    private var animator: ValueAnimator? = null
 
     var thickness = 3.dpToPx(context)
     var length = 6.dpToPx(context)
@@ -59,15 +60,16 @@ constructor(
     }
 
     fun startAnimating() {
-        val anim = ObjectAnimator.ofFloat(thickness.toFloat(), maxSpacing.toFloat())
-        anim.addUpdateListener {
-            spacing = it.animatedValue as Float
+        animator = ObjectAnimator.ofFloat(thickness.toFloat(), maxSpacing.toFloat()).apply {
+            addUpdateListener {
+                spacing = it.animatedValue as Float
+            }
+            interpolator = AccelerateDecelerateInterpolator()
+            repeatCount = Animation.INFINITE
+            repeatMode = ValueAnimator.REVERSE
+            duration = animationDuration
+            start()
         }
-        anim.interpolator = AccelerateDecelerateInterpolator()
-        anim.repeatCount = Animation.INFINITE
-        anim.repeatMode = ValueAnimator.REVERSE
-        anim.duration = animationDuration
-        anim.start()
     }
 
     override fun onMeasure(
@@ -138,5 +140,10 @@ constructor(
             thickness / 2f,
             paint
         )
+    }
+
+    fun stopAnimating() {
+        animator?.end()
+        animator = null
     }
 }
