@@ -208,7 +208,7 @@ class TaskAlarmManager(
                 context,
                 intentId,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
         val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         sender.cancel()
@@ -261,7 +261,7 @@ class TaskAlarmManager(
                         context,
                         0,
                         notificationIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
+                        PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
                     )
 
                 setAlarm(context, triggerTime, pendingIntent)

@@ -32,7 +32,7 @@ interface NotificationsManager {
 }
 
 class MainNotificationsManager : NotificationsManager {
-    private val seenNotifications: MutableMap<String, Boolean>
+    private val seenNotifications: MutableMap<String, Boolean> = HashMap()
     override var apiClient: WeakReference<ApiClient>? = null
 
     private var lastNotificationHandling: Date? = null
@@ -40,10 +40,6 @@ class MainNotificationsManager : NotificationsManager {
     private val displayedNotificationEvents = Channel<Notification>()
     override val displayNotificationEvents: Flow<Notification> =
         displayedNotificationEvents.receiveAsFlow().filterNotNull()
-
-    init {
-        this.seenNotifications = HashMap()
-    }
 
     override fun setNotifications(current: List<Notification>) {
         notificationsFlow.value = current

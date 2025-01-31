@@ -202,7 +202,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                     context,
                     0,
                     openAppIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
                 )
             remoteViews.setOnClickPendingIntent(android.R.id.background, openApp)
 

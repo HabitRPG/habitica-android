@@ -104,7 +104,7 @@ class TaskReceiver : BroadcastReceiver() {
                     context,
                     task.id.hashCode(),
                     completeIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
                 )
             notificationBuilder.addAction(
                 0,

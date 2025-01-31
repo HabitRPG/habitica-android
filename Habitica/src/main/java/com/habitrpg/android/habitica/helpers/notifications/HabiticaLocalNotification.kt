@@ -80,7 +80,7 @@ abstract class HabiticaLocalNotification(
                 context,
                 3000,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
         notificationBuilder.setContentIntent(pendingIntent)
     }

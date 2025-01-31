@@ -93,7 +93,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
                     context,
                     0,
                     openAppIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
                 )
             rv.setOnClickPendingIntent(R.id.widget_title, openApp)
 

@@ -143,7 +143,7 @@ class HabitButtonWidgetService : Service() {
             context,
             widgetId + direction.hashCode(),
             taskIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
+            PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
         )
     }
 }
