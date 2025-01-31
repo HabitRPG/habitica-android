@@ -4,12 +4,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 
-/**
- * Created by keithholliday on 7/1/16.
- */
 class GuildInviteLocalNotification(context: Context, identifier: String?) :
     HabiticaLocalNotification(context, identifier) {
     override fun configureMainIntent(intent: Intent) {
@@ -34,7 +30,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 acceptInviteIntent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
         notificationBuilder.addAction(0, "Accept", pendingIntentAccept)
 
@@ -47,7 +43,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode() + 1,
                 rejectInviteIntent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
         notificationBuilder.addAction(0, "Reject", pendingIntentReject)
     }

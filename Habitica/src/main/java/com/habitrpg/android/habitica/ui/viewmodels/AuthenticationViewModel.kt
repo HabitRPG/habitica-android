@@ -157,7 +157,7 @@ class AuthenticationViewModel @Inject constructor(
         sharedPrefs.edit {
             putString("UserID", user)
             val encryptedKey =
-                if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (keyHelper != null) {
                     try {
                         keyHelper.encrypt(api)
                     } catch (e: Exception) {

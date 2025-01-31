@@ -9,8 +9,6 @@ import android.net.Uri
 import android.widget.RemoteViews
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -95,7 +93,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
                     context,
                     0,
                     openAppIntent,
-                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
                 )
             rv.setOnClickPendingIntent(R.id.widget_title, openApp)
 
@@ -108,7 +106,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
                     context,
                     0,
                     taskIntent,
-                    withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE
                 )
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent)
 

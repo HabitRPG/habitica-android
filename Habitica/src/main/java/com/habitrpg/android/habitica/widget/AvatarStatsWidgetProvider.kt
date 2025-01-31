@@ -8,7 +8,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.RemoteViews
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -203,7 +202,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                     context,
                     0,
                     openAppIntent,
-                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
                 )
             remoteViews.setOnClickPendingIntent(android.R.id.background, openApp)
 

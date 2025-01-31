@@ -15,9 +15,7 @@ fun Resources.forceLocale(
     Locale.setDefault(locale)
     val configuration = Configuration()
     configuration.setLocale(locale)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        activity.createConfigurationContext(configuration)
-    }
+    activity.createConfigurationContext(configuration)
     updateConfiguration(configuration, displayMetrics)
 
     try {

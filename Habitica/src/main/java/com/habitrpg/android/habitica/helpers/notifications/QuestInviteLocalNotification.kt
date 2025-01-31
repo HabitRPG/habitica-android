@@ -7,9 +7,6 @@ import android.os.Build
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 
-/**
- * Created by keithholliday on 7/1/16.
- */
 class QuestInviteLocalNotification(context: Context, identifier: String?) :
     HabiticaLocalNotification(context, identifier) {
     override fun getNotificationID(data: MutableMap<String, String>): Int {
@@ -27,11 +24,7 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) :
         acceptInviteIntent.action = res.getString(R.string.accept_quest_invite)
         acceptInviteIntent.putExtra("NOTIFICATION_ID", notificationId)
         val flags =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
-            } else {
-                PendingIntent.FLAG_UPDATE_CURRENT
-            }
+            PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
         val pendingIntentAccept =
             PendingIntent.getBroadcast(
                 context,

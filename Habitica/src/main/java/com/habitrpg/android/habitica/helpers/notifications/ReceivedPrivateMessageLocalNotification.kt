@@ -10,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import com.habitrpg.common.habitica.helpers.EmojiParser
 
@@ -20,11 +19,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         val existingNotifications =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
-            } else {
-                null
-            }
+            notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
         val messageText = EmojiParser.parseEmojis(data["message"]?.trim { it <= ' ' })
         val oldMessages =
             existingNotifications?.firstOrNull()?.notification?.extras?.getStringArrayList("messages")
@@ -100,7 +95,7 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
                 context,
                 senderID.hashCode(),
                 intent,
-                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE
             )
 
         val action: NotificationCompat.Action =

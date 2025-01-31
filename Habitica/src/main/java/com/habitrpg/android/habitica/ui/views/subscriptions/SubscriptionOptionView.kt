@@ -179,10 +179,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 binding.priceLabel.setTextColor(textColor)
             }
             binding.descriptionTextView.setTextColor(textColor)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                TextViewCompat.setCompoundDrawableTintList(binding.gemCapTextView, ContextCompat.getColorStateList(context, R.color.yellow_100))
-                TextViewCompat.setCompoundDrawableTintList(binding.hourglassTextView, ContextCompat.getColorStateList(context, R.color.yellow_100))
-            }
+            TextViewCompat.setCompoundDrawableTintList(binding.gemCapTextView, ContextCompat.getColorStateList(context, R.color.yellow_100))
+            TextViewCompat.setCompoundDrawableTintList(binding.hourglassTextView, ContextCompat.getColorStateList(context, R.color.yellow_100))
         } else {
             binding.selectedIndicator.animate()
                 .alpha(0f)
@@ -215,10 +213,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                     R.color.brand_600
                 )
             )
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                TextViewCompat.setCompoundDrawableTintList(binding.gemCapTextView, ContextCompat.getColorStateList(context, R.color.brand_400))
-                TextViewCompat.setCompoundDrawableTintList(binding.hourglassTextView, ContextCompat.getColorStateList(context, R.color.brand_400))
-            }
+            TextViewCompat.setCompoundDrawableTintList(binding.gemCapTextView, ContextCompat.getColorStateList(context, R.color.brand_400))
+            TextViewCompat.setCompoundDrawableTintList(binding.hourglassTextView, ContextCompat.getColorStateList(context, R.color.brand_400))
         }
     }
 }

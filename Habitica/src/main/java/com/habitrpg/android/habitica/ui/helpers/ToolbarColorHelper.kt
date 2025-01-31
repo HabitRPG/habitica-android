@@ -50,9 +50,6 @@ object ToolbarColorHelper {
             backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor)
         )
         val toolbarIconsColor = iconColor ?: activity.getThemeColor(R.attr.headerTextColor)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            activity.window.statusBarColor = activity.getThemeColor(R.attr.colorPrimaryDark)
-        }
         val colorFilter = PorterDuffColorFilter(toolbarIconsColor, PorterDuff.Mode.MULTIPLY)
         for (i in 0 until toolbar.childCount) {
             when (val v = toolbar.getChildAt(i)) {

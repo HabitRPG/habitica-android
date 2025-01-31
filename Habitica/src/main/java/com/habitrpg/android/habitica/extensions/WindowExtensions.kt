@@ -13,12 +13,8 @@ fun Window.updateStatusBarColor(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         return
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        statusBarColor = color
-        @Suppress("DEPRECATION")
-        decorView.systemUiVisibility =
-            if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else View.SYSTEM_UI_FLAG_VISIBLE
-    } else {
-        statusBarColor = context.getThemeColor(R.attr.colorPrimaryDark)
-    }
+    statusBarColor = color
+    @Suppress("DEPRECATION")
+    decorView.systemUiVisibility =
+        if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else View.SYSTEM_UI_FLAG_VISIBLE
 }

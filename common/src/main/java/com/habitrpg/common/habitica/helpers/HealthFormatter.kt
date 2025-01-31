@@ -34,9 +34,5 @@ object HealthFormatter {
     }
 
     private fun getDefaultLocale() =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Locale.getDefault(Locale.Category.FORMAT)
-        } else {
-            Locale.getDefault()
-        }
+        Locale.getDefault(Locale.Category.FORMAT)
 }

@@ -11,7 +11,6 @@ import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import java.text.SimpleDateFormat
@@ -35,11 +34,7 @@ class GroupActivityNotification(context: Context, identifier: String?) :
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         val existingNotifications =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
-            } else {
-                null
-            }
+            notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
         val oldMessages =
             existingNotifications?.firstOrNull()?.notification?.extras?.getBundle("messages")
                 ?.get("messages") as? ArrayList<Map<String, String>> ?: arrayListOf()
@@ -89,7 +84,7 @@ class GroupActivityNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 intent,
-                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE
             )
 
         val action: NotificationCompat.Action =

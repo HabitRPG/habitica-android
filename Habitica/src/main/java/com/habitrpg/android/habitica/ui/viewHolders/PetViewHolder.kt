@@ -20,6 +20,7 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.internal.managers.ViewComponentManager
+import androidx.core.graphics.drawable.toDrawable
 
 class PetViewHolder(
     parent: ViewGroup,
@@ -92,9 +93,7 @@ class PetViewHolder(
             binding.imageView.alpha = 0.2f
         }
 
-        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-            binding.trainedProgressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
-        }
+        binding.trainedProgressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
         binding.imageView.background = null
         binding.activeIndicator.visibility =
             if (currentPet.equals(animal?.key)) View.VISIBLE else View.GONE
@@ -103,10 +102,7 @@ class PetViewHolder(
             val resources = itemView.context.resources ?: return@loadImage
             val drawable =
                 if (trained == 0 && canRaiseToMount) {
-                    BitmapDrawable(
-                        resources,
-                        it.toBitmap().extractAlpha()
-                    )
+                    it.toBitmap().extractAlpha().toDrawable(resources)
                 } else {
                     it
                 }

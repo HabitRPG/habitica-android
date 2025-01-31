@@ -15,7 +15,6 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -73,7 +72,7 @@ class TaskReceiver : BroadcastReceiver() {
                 context,
                 System.currentTimeMillis().toInt(),
                 intent,
-                withImmutableFlag(0)
+                PendingIntent.FLAG_IMMUTABLE
             )
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
@@ -91,9 +90,7 @@ class TaskReceiver : BroadcastReceiver() {
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            notificationBuilder = notificationBuilder.setCategory(Notification.CATEGORY_REMINDER)
-        }
+        notificationBuilder = notificationBuilder.setCategory(Notification.CATEGORY_REMINDER)
 
         if (task.type == TaskType.DAILY || task.type == TaskType.TODO) {
             val completeIntent =
@@ -107,7 +104,7 @@ class TaskReceiver : BroadcastReceiver() {
                     context,
                     task.id.hashCode(),
                     completeIntent,
-                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
                 )
             notificationBuilder.addAction(
                 0,

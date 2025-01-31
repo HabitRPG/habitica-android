@@ -9,7 +9,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import java.util.Date
 
@@ -81,7 +80,7 @@ abstract class HabiticaLocalNotification(
                 context,
                 3000,
                 intent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
             )
         notificationBuilder.setContentIntent(pendingIntent)
     }

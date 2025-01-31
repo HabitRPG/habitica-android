@@ -13,7 +13,6 @@ import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -142,7 +141,7 @@ class NotificationPublisher : BroadcastReceiver() {
                 thisContext,
                 0,
                 notificationIntent,
-                withImmutableFlag(0)
+                PendingIntent.FLAG_IMMUTABLE
             )
         builder.setContentIntent(intent)
 

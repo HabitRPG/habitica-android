@@ -130,12 +130,8 @@ class TaskDescriptionBuilder(private val context: Context) {
         }
 
     private fun withOrdinal(day: Int): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
-            formatter.format(arrayOf(day))
-        } else {
-            day.toString()
-        }
+        val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
+        return formatter.format(arrayOf(day))
     }
 
     private fun describeRepeatInterval(

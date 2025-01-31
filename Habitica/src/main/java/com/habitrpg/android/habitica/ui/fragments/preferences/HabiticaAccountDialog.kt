@@ -80,9 +80,7 @@ class HabiticaAccountDialog(private var thisContext: Context) :
 
     private fun showForgotPasswordDialog() {
         val input = EditText(requireContext())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)
-        }
+        input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)
         input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         input.hint = getString(R.string.forgot_password_hint_example)
         input.textSize = 16f

@@ -420,23 +420,13 @@ constructor(
             weekdays =
                 if (daysOfMonth?.isNotEmpty() == true) {
                     val date = startDateCalendar.get(Calendar.DATE)
-                    val formattedDate =
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
-                            formatter.format(arrayOf(date))
-                        } else {
-                            date.toString()
-                        }
+                    val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
+                    val formattedDate = formatter.format(arrayOf(date))
                     " on the $formattedDate"
                 } else {
                     val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
-                    val formattedWeek =
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
-                            formatter.format(arrayOf(week))
-                        } else {
-                            week.toString()
-                        }
+                    val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
+                    val formattedWeek = formatter.format(arrayOf(week))
                     val dayLongName =
                         startDateCalendar.getDisplayName(
                             Calendar.DAY_OF_WEEK,

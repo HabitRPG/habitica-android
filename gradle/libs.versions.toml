@@ -1,5 +1,5 @@
 [versions]
-minSdk = "21"
+minSdk = "26"
 targetSdk = "35"
 wearOsTargetSdk = "34"
 

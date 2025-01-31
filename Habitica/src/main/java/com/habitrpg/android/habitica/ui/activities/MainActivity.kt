@@ -114,6 +114,7 @@ import java.util.Date
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
+import androidx.core.view.isVisible
 
 var mainActivityCreatedAt: Date? = null
 
@@ -458,22 +459,20 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     }
 
     private fun setupNotifications() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "default"
-            val channel =
-                NotificationChannel(
-                    channelId,
-                    "Habitica Notifications",
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
-            val manager = getSystemService(NotificationManager::class.java)
-            manager?.createNotificationChannel(channel)
-        }
+        val channelId = "default"
+        val channel =
+            NotificationChannel(
+                channelId,
+                "Habitica Notifications",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager?.createNotificationChannel(channel)
     }
 
     private fun setupBottomnavigationLayoutListener() {
         binding.content.bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
-            if (binding.content.bottomNavigation.visibility == View.VISIBLE) {
+            if (binding.content.bottomNavigation.isVisible) {
                 snackbarContainer.setPadding(
                     0,
                     0,

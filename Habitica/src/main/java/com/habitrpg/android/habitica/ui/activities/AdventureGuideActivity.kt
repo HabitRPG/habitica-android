@@ -87,9 +87,7 @@ class AdventureGuideActivity : BaseActivity() {
         val completed = achievements.count { it.earned }
         binding.progressBar.max = achievements.size
         binding.progressBar.progress = completed
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-            binding.progressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
-        }
+        binding.progressBar.progressBackgroundTintMode = PorterDuff.Mode.SRC_OVER
 
         if (completed > 0) {
             binding.progressTextview.text =

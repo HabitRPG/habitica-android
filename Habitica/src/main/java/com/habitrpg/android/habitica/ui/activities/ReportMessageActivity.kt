@@ -118,32 +118,17 @@ class ReportMessageActivity : BaseActivity() {
     private fun setStatusBarDim(dim: Boolean) {
         if (dim) {
             binding.appbar.elevation = 0f
-            window.statusBarColor = getThemeColor(R.attr.colorPrimaryDark)
             binding.closeButton.visibility = View.GONE
             binding.toolbarTitle.setTypeface(null, Typeface.BOLD)
         } else {
             binding.appbar.elevation = 8f
-            window.statusBarColor = ContextCompat.getColor(this, R.color.offset_background)
             binding.closeButton.visibility = View.VISIBLE
             binding.toolbarTitle.setTypeface(null, Typeface.NORMAL)
-        }
-
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
-            setSystemBarTheme(dim)
         }
     }
 
     override fun finish() {
         dismissKeyboard()
         super.finish()
-    }
-
-    @RequiresApi(api = VERSION_CODES.M)
-    fun setSystemBarTheme(isDark: Boolean) {
-        // Fetch the current flags.
-        val lFlags = window.decorView.systemUiVisibility
-        // Update the SystemUiVisibility dependening on whether we want a Light or Dark theme.
-        window.decorView.systemUiVisibility =
-            if (isDark) lFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() else lFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 }

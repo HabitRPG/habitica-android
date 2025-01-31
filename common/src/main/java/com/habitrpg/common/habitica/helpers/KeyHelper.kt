@@ -49,55 +49,26 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         }
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            this.generateEncryptKey(ctx)
-        }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            try {
-                this.generateAESKey()
-            } catch (e: Exception) {
-                HLogger.logException("KeyHelper", "Error initializing", e)
-            }
-        }
+        this.generateEncryptKey(ctx)
     }
 
     @Throws(NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class)
     private fun generateEncryptKey(ctx: Context) {
         keyStore?.load(null)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (keyStore?.containsAlias(KEY_ALIAS) == false) {
-                val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE)
-                keyGenerator.init(
-                    KeyGenParameterSpec.Builder(
-                        KEY_ALIAS,
-                        KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-                    )
-                        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                        .setRandomizedEncryptionRequired(false)
-                        .build()
+        if (keyStore?.containsAlias(KEY_ALIAS) == false) {
+            val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE)
+            keyGenerator.init(
+                KeyGenParameterSpec.Builder(
+                    KEY_ALIAS,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
                 )
-                keyGenerator.generateKey()
-            }
-        } else {
-            if (keyStore?.containsAlias(KEY_ALIAS) == false) {
-                // Generate a key pair for encryption
-                val start = Calendar.getInstance()
-                val end = Calendar.getInstance()
-                end.add(Calendar.YEAR, 30)
-                val spec =
-                    KeyPairGeneratorSpec.Builder(ctx)
-                        .setAlias(KEY_ALIAS)
-                        .setSubject(X500Principal("CN=$KEY_ALIAS"))
-                        .setSerialNumber(BigInteger.TEN)
-                        .setStartDate(start.time)
-                        .setEndDate(end.time)
-                        .build()
-                val kpg = KeyPairGenerator.getInstance("RSA", ANDROID_KEY_STORE)
-                kpg.initialize(spec)
-                kpg.generateKeyPair()
-            }
+                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .setRandomizedEncryptionRequired(false)
+                    .build()
+            )
+            keyGenerator.generateKey()
         }
     }
 
@@ -158,20 +129,11 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         val c: Cipher
         val publicIV = getRandomIV()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            c = Cipher.getInstance(AES_MODE_M)
-            try {
-                c.init(Cipher.ENCRYPT_MODE, aesKeyFromKS, GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
-            } catch (e: Exception) {
-                HLogger.logException("KeyHelper", "Error encrypting", e)
-            }
-        } else {
-            c = Cipher.getInstance(AES_MODE_M)
-            try {
-                c.init(Cipher.ENCRYPT_MODE, getSecretKey(), GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
-            } catch (e: Exception) {
-                HLogger.logException("KeyHelper", "Error encrypting", e)
-            }
+        c = Cipher.getInstance(AES_MODE_M)
+        try {
+            c.init(Cipher.ENCRYPT_MODE, aesKeyFromKS, GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
+        } catch (e: Exception) {
+            HLogger.logException("KeyHelper", "Error encrypting", e)
         }
         val encodedBytes = c.doFinal(input.toByteArray(charset("UTF-8")))
         return Base64.encodeToString(encodedBytes, Base64.DEFAULT)
@@ -182,20 +144,11 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         val c: Cipher
         val publicIV = getRandomIV()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            c = Cipher.getInstance(AES_MODE_M)
-            try {
-                c.init(Cipher.DECRYPT_MODE, aesKeyFromKS, GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
-            } catch (e: Exception) {
-                HLogger.logException("KeyHelper", "Error decrypting", e)
-            }
-        } else {
-            c = Cipher.getInstance(AES_MODE_M)
-            try {
-                c.init(Cipher.DECRYPT_MODE, getSecretKey(), GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
-            } catch (e: Exception) {
-                HLogger.logException("KeyHelper", "Error decrypting", e)
-            }
+        c = Cipher.getInstance(AES_MODE_M)
+        try {
+            c.init(Cipher.DECRYPT_MODE, aesKeyFromKS, GCMParameterSpec(128, Base64.decode(publicIV, Base64.DEFAULT)))
+        } catch (e: Exception) {
+            HLogger.logException("KeyHelper", "Error decrypting", e)
         }
 
         return try {

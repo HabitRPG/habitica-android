@@ -22,15 +22,8 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         get() {
             val lastHour: Int
             val lastMinute: Int
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                lastHour = picker.hour
-                lastMinute = picker.minute
-            } else {
-                @Suppress("DEPRECATION")
-                lastHour = picker.currentHour
-                @Suppress("DEPRECATION")
-                lastMinute = picker.currentMinute
-            }
+            lastHour = picker.hour
+            lastMinute = picker.minute
             return lastHour.toString() + ":" + String.format(Locale.UK, "%02d", lastMinute)
         }
 
@@ -46,15 +39,8 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         val preference = timePreference
         val lastHour = preference.lastHour
         val lastMinute = preference.lastMinute
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            picker.hour = lastHour
-            picker.minute = lastMinute
-        } else {
-            @Suppress("DEPRECATION")
-            picker.currentHour = lastHour
-            @Suppress("DEPRECATION")
-            picker.currentMinute = lastMinute
-        }
+        picker.hour = lastHour
+        picker.minute = lastMinute
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {

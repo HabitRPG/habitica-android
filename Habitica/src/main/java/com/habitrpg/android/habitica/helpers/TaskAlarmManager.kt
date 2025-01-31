@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
@@ -166,7 +165,7 @@ class TaskAlarmManager(
                 context,
                 intentId,
                 intent,
-                withImmutableFlag(PendingIntent.FLAG_NO_CREATE)
+                PendingIntent.FLAG_NO_CREATE + PendingIntent.FLAG_IMMUTABLE
             )
         if (previousSender != null) {
             previousSender.cancel()
@@ -178,7 +177,7 @@ class TaskAlarmManager(
                 context,
                 intentId,
                 intent,
-                withImmutableFlag(PendingIntent.FLAG_CANCEL_CURRENT)
+                PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -209,7 +208,7 @@ class TaskAlarmManager(
                 context,
                 intentId,
                 intent,
-                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
             )
         val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         sender.cancel()
@@ -250,7 +249,7 @@ class TaskAlarmManager(
                         context,
                         0,
                         notificationIntent,
-                        withImmutableFlag(PendingIntent.FLAG_NO_CREATE)
+                        PendingIntent.FLAG_NO_CREATE + PendingIntent.FLAG_IMMUTABLE
                     )
                 if (previousSender != null) {
                     previousSender.cancel()
@@ -262,7 +261,7 @@ class TaskAlarmManager(
                         context,
                         0,
                         notificationIntent,
-                        withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                        PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
                     )
 
                 setAlarm(context, triggerTime, pendingIntent)
@@ -273,7 +272,7 @@ class TaskAlarmManager(
             val notificationIntent = Intent(context, NotificationPublisher::class.java)
             val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             val displayIntent =
-                PendingIntent.getBroadcast(context, 0, notificationIntent, withImmutableFlag(0))
+                PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
             alarmManager?.cancel(displayIntent)
         }
 
@@ -289,45 +288,41 @@ class TaskAlarmManager(
             }
 
             val notificationType = AlarmManager.RTC_WAKEUP
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                try {
-                    var canScheduleExact = true
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        canScheduleExact = alarmManager.canScheduleExactAlarms()
-                    }
-                    if (canScheduleExact) {
-                        alarmManager.setExactAndAllowWhileIdle(notificationType, time, pendingIntent)
-                        HLogger.log(
-                            LogLevel.DEBUG,
-                            "TaskAlarmManager",
-                            "setAlarm: Scheduling for $time using setExact ${Date().time}"
+            try {
+                var canScheduleExact = true
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    canScheduleExact = alarmManager.canScheduleExactAlarms()
+                }
+                if (canScheduleExact) {
+                    alarmManager.setExactAndAllowWhileIdle(notificationType, time, pendingIntent)
+                    HLogger.log(
+                        LogLevel.DEBUG,
+                        "TaskAlarmManager",
+                        "setAlarm: Scheduling for $time using setExact ${Date().time}"
+                    )
+                } else {
+                    alarmManager.setAndAllowWhileIdle(notificationType, time, pendingIntent)
+                    HLogger.log(
+                        LogLevel.DEBUG,
+                        "TaskAlarmManager",
+                        "setAlarm: Scheduling for $time using setAndAllowWhileIdle"
+                    )
+                }
+            } catch (ex: Exception) {
+                when (ex) {
+                    is IllegalStateException, is SecurityException -> {
+                        alarmManager.setWindow(
+                            notificationType,
+                            time,
+                            600000,
+                            pendingIntent
                         )
-                    } else {
-                        alarmManager.setAndAllowWhileIdle(notificationType, time, pendingIntent)
-                        HLogger.log(
-                            LogLevel.DEBUG,
-                            "TaskAlarmManager",
-                            "setAlarm: Scheduling for $time using setAndAllowWhileIdle"
-                        )
                     }
-                } catch (ex: Exception) {
-                    when (ex) {
-                        is IllegalStateException, is SecurityException -> {
-                            alarmManager.setWindow(
-                                notificationType,
-                                time,
-                                600000,
-                                pendingIntent
-                            )
-                        }
 
-                        else -> {
-                            throw ex
-                        }
+                    else -> {
+                        throw ex
                     }
                 }
-            } else {
-                alarmManager.set(notificationType, time, pendingIntent)
             }
         }
     }

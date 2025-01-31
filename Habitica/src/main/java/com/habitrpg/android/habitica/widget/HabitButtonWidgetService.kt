@@ -14,7 +14,6 @@ import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MarkdownParser
@@ -144,7 +143,7 @@ class HabitButtonWidgetService : Service() {
             context,
             widgetId + direction.hashCode(),
             taskIntent,
-            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABE
         )
     }
 }

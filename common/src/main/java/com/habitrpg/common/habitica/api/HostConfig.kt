@@ -54,7 +54,7 @@ class HostConfig {
             }
         } else {
             val key = sharedPreferences.getString("APIToken", null)
-            if (key?.isNotBlank() == true && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (key?.isNotBlank() == true) {
                 val encryptedKey = keyHelper?.encrypt(key)
                 sharedPreferences.edit {
                     putString(userID, encryptedKey)
