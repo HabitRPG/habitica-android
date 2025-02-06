@@ -39,6 +39,11 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
             return customerId != null && (dateTerminated == null || dateTerminated!!.after(today) || active == true)
         }
 
+    val totalNumberOfGemsAlways: Int
+        get() {
+            return 24 + (consecutive?.gemCapExtra ?: 0)
+        }
+
     val totalNumberOfGems: Int
         get() {
             if (!isActive) return 0

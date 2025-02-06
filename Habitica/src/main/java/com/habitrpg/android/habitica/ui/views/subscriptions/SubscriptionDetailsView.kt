@@ -147,11 +147,11 @@ class SubscriptionDetailsView : LinearLayout {
         if (plan.isActive && (terminatedLocalDate == null || nextHourglassDate.isBefore(terminatedLocalDate))) {
             val format =
                 if (now.year != nextHourglassDate.year) {
-                    "MMM yyyy"
+                    "MMMM yyyy"
                 } else {
-                    "MMMM"
+                    "LLLL"
                 }
-            val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
+            val nextHourglassMonth = DateTimeFormatter.ofPattern(format).format(nextHourglassDate)
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
             binding.resubscribeForHourglassesLabel.visibility = View.GONE
         } else {
