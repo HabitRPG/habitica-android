@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:702161604257:android:8c2cad26a20d622dcd2ae0",
+        "android_client_info": {
+          "package_name": "pt.aguiarvieira.android.habitica.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRA09vQhmIBpzVjwWGJKUEhphVZGOTo0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:702161604257:android:e10bacd9174a1798cd2ae0",
         "android_client_info": {
           "package_name": "pt.aguiarvieira.pt.android.habitica"
