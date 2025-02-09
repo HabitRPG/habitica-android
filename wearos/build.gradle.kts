@@ -14,7 +14,7 @@ android {
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.habitrpg.android.habitica"
+        applicationId = "pt.aguiarvieira.pt.android.habitica"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.wearOsTargetSdk.get().toInt()
         compileSdk = libs.versions.targetSdk.get().toInt()
