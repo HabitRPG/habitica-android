@@ -1,8 +1,8 @@
 # Habitica Server Port
 # local instance
 # PORT=3000
-PORT=80
-BASE_URL=https://habitica.com
+PORT=443
+BASE_URL=https://habitica.aguiarvieira.pt
 STAGING_KEY=
 ANDROID_TESTING_UUID=
 APPLE_AUTH_CLIENT_ID=
