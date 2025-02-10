@@ -28,10 +28,10 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
-    - name: Run with Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: ./gradlew assembleProd -PdisablePreDex "-Dorg.gradle.jvmargs=-Xmx2g"
+      - name: Run with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: ./gradlew assembleProd -PdisablePreDex "-Dorg.gradle.jvmargs=-Xmx2g"
 
       - name: Get apk path
         id: apk-path
