@@ -140,8 +140,7 @@
                 android:id="@+id/snackbar_container"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:layout_alignParentBottom="true"
-                android:paddingBottom="50dp" />
+                android:layout_alignParentBottom="true" />
 
         <com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationView
                 android:id="@+id/bottom_navigation"

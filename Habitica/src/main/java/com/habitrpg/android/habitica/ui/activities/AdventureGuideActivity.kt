@@ -2,16 +2,19 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.graphics.Paint
 import android.graphics.PorterDuff
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -70,6 +73,23 @@ class AdventureGuideActivity : BaseActivity() {
             if (it != null) {
                 updateUser(it)
             }
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.nestedScrollView) { v, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                    or WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(
+                top = bars.top,
+                bottom = bars.bottom,
+                left = bars.left,
+                right = bars.right
+            )
+            consumeWindowInsetsAbove30(insets)
         }
     }
 

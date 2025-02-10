@@ -18,16 +18,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsIgnoringVisibility
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -119,6 +123,7 @@ fun getTranslatedClassNamePlural(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AppHeaderView(
     user: Avatar?,
@@ -132,7 +137,8 @@ fun AppHeaderView(
     configManager: AppConfigManager? = null
 ) {
     val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
-    Column(modifier) {
+    Column(modifier
+        .windowInsetsPadding(WindowInsets.systemBarsIgnoringVisibility)) {
         Row {
             ComposableAvatarView(
                 user,

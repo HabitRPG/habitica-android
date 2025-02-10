@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
@@ -21,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import javax.inject.Inject
 
 abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
@@ -58,7 +58,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
                 windowInsetsController.isAppearanceLightNavigationBars = false
             } else {
                 bottomNavigation?.visibility = View.GONE
-                windowInsetsController.isAppearanceLightNavigationBars = true
+                windowInsetsController.isAppearanceLightNavigationBars = requireActivity().isUsingNightModeResources()
             }
         }
 

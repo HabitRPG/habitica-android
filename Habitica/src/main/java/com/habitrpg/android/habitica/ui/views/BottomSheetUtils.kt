@@ -53,7 +53,6 @@ fun Fragment.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
 }
 
 // Helper method
-@OptIn(ExperimentalLayoutApi::class)
 private fun addContentToView(
     viewGroup: ViewGroup,
     content: @Composable (() -> Unit) -> Unit

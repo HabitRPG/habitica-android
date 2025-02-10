@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
@@ -100,11 +99,11 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         ) {
             content.scaleY = 0f
             content.scaleX = 0f
-            ViewCompat.animate(content).scaleY(1f).setDuration(duration.toLong()).startDelay =
+            content.animate().scaleY(1f).setDuration(duration.toLong()).startDelay =
                 delay.toLong()
-            ViewCompat.animate(content).scaleX(1f).setDuration(duration.toLong()).startDelay =
+            content.animate().scaleX(1f).setDuration(duration.toLong()).startDelay =
                 delay.toLong()
-            ViewCompat.animate(content).alpha(1f).setDuration(duration.toLong()).startDelay =
+            content.animate().alpha(1f).setDuration(duration.toLong()).startDelay =
                 delay.toLong()
         }
 
@@ -114,11 +113,11 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         ) {
             content.scaleY = 1f
             content.scaleX = 1f
-            ViewCompat.animate(content).scaleY(0f).setDuration(duration.toLong()).startDelay =
+            content.animate().scaleY(0f).setDuration(duration.toLong()).startDelay =
                 delay.toLong()
-            ViewCompat.animate(content).scaleX(0f).setDuration(duration.toLong()).startDelay =
+            content.animate().scaleX(0f).setDuration(duration.toLong()).startDelay =
                 delay.toLong()
-            ViewCompat.animate(content).alpha(0f).setDuration(duration.toLong()).startDelay =
+            content.animate().alpha(0f).setDuration(duration.toLong()).startDelay =
                 delay.toLong()
         }
     }
