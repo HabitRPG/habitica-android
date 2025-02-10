@@ -49,7 +49,7 @@ android {
     }
 
     signingConfigs {
-        release {
+        create("releaseSigning") {
             keyAlias = 'habitica'         // Alias of the key in the keystore
             keyPassword = '12345678'   // Password for the key
             storeFile = file("./signature/habitica.keystore")  // Keystore file path
@@ -85,8 +85,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-            //signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
-            signingConfig = signingConfigs.release // Use the release signing config here
+            signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
