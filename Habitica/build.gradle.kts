@@ -86,7 +86,7 @@ android {
         }
         release {
             //signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
-            signingConfig signingConfigs.release // Use the release signing config here
+            signingConfig = signingConfigs.release // Use the release signing config here
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
