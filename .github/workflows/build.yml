@@ -28,6 +28,8 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
+      - name: Prepare
+        run: ./.github/prepare-workflow
       - name: Run with Gradle
         uses: gradle/gradle-build-action@v2
         with:
