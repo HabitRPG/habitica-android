@@ -31,7 +31,7 @@ jobs:
       - name: Configure gradle
         uses: gradle/actions/setup-gradle@v3
       - name: Create app bundle
-        run: ./gradlew assembleRelease
+        run: ./gradlew bundleRelease
 
       - name: Get apk path
         id: apk-path
