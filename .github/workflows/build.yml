@@ -35,7 +35,9 @@ jobs:
 
       - name: Get apk path
         id: apk-path
-        run: echo "path=$(find . -regex '^.*/build/outputs/apk/.*\.apk$' -type f | head -1)" >> $GITHUB_OUTPUT
+        run: |
+          echo "path=$(find . -regex '^.*/build/outputs/apk/.*\.apk$' -type f | head -1)" >> $GITHUB_OUTPUT
+          echo "path=$(find . -regex '^.*/build/outputs/apk/.*\.apk$' -type f | head -1)"
       - name: Get apk info
         id: apk-info
         uses: hkusu/apk-info-action@v1
