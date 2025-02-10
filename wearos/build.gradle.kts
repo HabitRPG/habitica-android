@@ -27,6 +27,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    signingConfigs {
+        release {
+            keyAlias 'habitica'         // Alias of the key in the keystore
+            keyPassword '12345678'   // Password for the key
+            storeFile file("./signature/habitica.keystore")  // Keystore file path
+            storePassword '12345678'  // Keystore password
+        }
+    } 
     buildTypes {
         debug {
             isMinifyEnabled = false
@@ -36,7 +44,8 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-            signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
+            //signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
+            signingConfig signingConfigs.release // Use the release signing config here
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             resValue("string", "app_name", "Habitica")
