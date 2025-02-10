@@ -50,10 +50,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias 'habitica'         // Alias of the key in the keystore
-            keyPassword '12345678'   // Password for the key
-            storeFile file("./signature/habitica.keystore")  // Keystore file path
-            storePassword '12345678'  // Keystore password
+            keyAlias = 'habitica'         // Alias of the key in the keystore
+            keyPassword = '12345678'   // Password for the key
+            storeFile = file("./signature/habitica.keystore")  // Keystore file path
+            storePassword = '12345678'  // Keystore password
         }
     } 
 
