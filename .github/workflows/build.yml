@@ -33,7 +33,7 @@ jobs:
       - name: Run with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: ./gradlew assembleProd -PdisablePreDex "-Dorg.gradle.jvmargs=-Xmx2g"
+          arguments: gradlew assembleProd -PdisablePreDex "-Dorg.gradle.jvmargs=-Xmx2g"
 
       - name: Get apk path
         id: apk-path
