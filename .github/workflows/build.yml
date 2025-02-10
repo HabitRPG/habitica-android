@@ -38,12 +38,12 @@ jobs:
         #  ELEMENT_ANDROID_NIGHTLY_KEYPASSWORD: '12345678'
         #  ELEMENT_ANDROID_NIGHTLY_STOREPASSWORD: '12345678'
         run: ./gradlew bundleDebug  #tasks #assembleGplayNightly $CI_GRADLE_ARG_PROPERTIES
-      #- name: Upload bundle as artifact
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: elementx-av-nightly
-      #    path: |
-      #      app/build/outputs/apk/gplay/nightly/app-gplay-arm64-v8a-nightly.apk
+      - name: Upload bundle as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: elementx-av-nightly
+          path: |
+            app/build/outputs/apk/gplay/nightly/app-gplay-arm64-v8a-nightly.apk
 
       #- name: Send to Matrix
       #  uses: daedric7/Matrix-Send-File@v0.2-beta6
