@@ -48,6 +48,15 @@ android {
         buildConfig = true
     }
 
+    signingConfigs {
+        release {
+            keyAlias 'habitica'         // Alias of the key in the keystore
+            keyPassword '12345678'   // Password for the key
+            storeFile file("./signature/habitica.keystore")  // Keystore file path
+            storePassword '12345678'  // Keystore password
+        }
+    } 
+
     buildTypes {
         debug {
             // Keep it commented!
@@ -76,7 +85,8 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-            signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
+            //signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
+            signingConfig signingConfigs.release // Use the release signing config here
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
