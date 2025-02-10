@@ -31,19 +31,37 @@ jobs:
       - name: Configure gradle
         uses: gradle/actions/setup-gradle@v3
       - name: Create app bundle
-        #env:
-        #  ELEMENT_ANDROID_MAPTILER_API_KEY: 'xM0m5aJZr9xRVpDGcOxB'
-        #  ELEMENT_ANDROID_MAPTILER_LIGHT_MAP_ID: 'streets-v2'
-        #  ELEMENT_ANDROID_MAPTILER_DARK_MAP_ID: 'streets-v2-dark'
-        #  ELEMENT_ANDROID_NIGHTLY_KEYPASSWORD: '12345678'
-        #  ELEMENT_ANDROID_NIGHTLY_STOREPASSWORD: '12345678'
-        run: ./gradlew bundleDebug  #tasks #assembleGplayNightly $CI_GRADLE_ARG_PROPERTIES
-      - name: Upload bundle as artifact
-        uses: actions/upload-artifact@v4
+        run: ./gradlew bundleDebug
+
+      - name: Get apk path
+        id: apk-path
+        run: echo "path=$(find . -regex '^.*/build/outputs/apk/.*\.apk$' -type f | head -1)" >> $GITHUB_OUTPUT
+      - name: Get apk info
+        id: apk-info
+        uses: hkusu/apk-info-action@v1
         with:
-          name: elementx-av-nightly
-          path: |
-            app/build/outputs/apk/gplay/nightly/app-gplay-arm64-v8a-nightly.apk
+          apk-path: ${{ steps.apk-path.outputs.path }}
+      - name: Show apk info
+          run: |
+            echo '${{ steps.apk-info.outputs.application-name }}'
+            echo '${{ steps.apk-info.outputs.application-id }}'
+            echo '${{ steps.apk-info.outputs.version-code }}'
+            echo '${{ steps.apk-info.outputs.version-name }}'
+            echo '${{ steps.apk-info.outputs.min-sdk-version }}'
+            echo '${{ steps.apk-info.outputs.target-sdk-version }}'
+            echo '${{ steps.apk-info.outputs.compile-sdk-version }}'
+            echo '${{ steps.apk-info.outputs.uses-permissions }}'
+            echo '${{ steps.apk-info.outputs.debuggable }}'
+            echo '${{ steps.apk-info.outputs.allow-backup }}'
+            echo '${{ steps.apk-info.outputs.supports-rtl }}'
+            echo '${{ steps.apk-info.outputs.file-size }}'
+            echo '${{ steps.apk-info.outputs.readable-file-size }}'      
+      #- name: Upload bundle as artifact
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: elementx-av-nightly
+      #    path: |
+      #      app/build/outputs/apk/gplay/nightly/app-gplay-arm64-v8a-nightly.apk
 
       #- name: Send to Matrix
       #  uses: daedric7/Matrix-Send-File@v0.2-beta6
