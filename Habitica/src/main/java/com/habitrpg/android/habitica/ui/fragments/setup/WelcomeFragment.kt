@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
@@ -47,17 +48,14 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     private val checkmarkIcon: Drawable by lazy {
         context?.let {
-            BitmapDrawable(
-                resources,
-                HabiticaIconsHelper.imageOfCheckmark(
-                    ContextCompat.getColor(it, R.color.green_50),
-                    1f
-                )
-            )
+            HabiticaIconsHelper.imageOfCheckmark(
+                ContextCompat.getColor(it, R.color.green_50),
+                1f
+            ).toDrawable(resources)
         } ?: VectorDrawable()
     }
     private val alertIcon: Drawable by lazy {
-        BitmapDrawable(resources, HabiticaIconsHelper.imageOfAlertIcon())
+        HabiticaIconsHelper.imageOfAlertIcon().toDrawable(resources)
     }
     val username: String
         get() = binding?.usernameEditText?.text?.toString() ?: ""

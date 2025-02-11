@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="Theme.Material3.DayNight">
+    <style name="AppTheme" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle
         </item>
 

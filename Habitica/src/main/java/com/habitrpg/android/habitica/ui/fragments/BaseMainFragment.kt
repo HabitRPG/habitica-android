@@ -100,7 +100,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
                 view?.systemUiVisibility
                 window.setNavigationBarDarkIcons(false)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    window.isNavigationBarContrastEnforced = false
+                    window.isNavigationBarContrastEnforced = true
                 }
             } else {
                 windowInsetsController.isAppearanceLightNavigationBars = requireActivity().isUsingNightModeResources()

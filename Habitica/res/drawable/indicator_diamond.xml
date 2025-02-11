@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:drawable="@drawable/indicator_diamond_selected" />
-    <item android:drawable="@drawable/indicator_diamond_unselected" />
+    <item android:state_selected="true">
+        <layer-list>
+            <item android:drawable="@drawable/indicator_diamond_selected" android:height="24dp" />
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item android:drawable="@drawable/indicator_diamond_unselected" android:height="24dp" />
+        </layer-list>
+    </item>
 </selector>

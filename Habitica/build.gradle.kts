@@ -157,7 +157,6 @@ dependencies {
 
     // IAP Handling / Verification
     implementation(libs.billing)
-    implementation(libs.viewPagerIndicator) { exclude(group = "com.google.android") }
 
     implementation(libs.coil.compose)
 
