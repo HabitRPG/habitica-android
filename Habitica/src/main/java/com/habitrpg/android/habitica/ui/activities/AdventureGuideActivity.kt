@@ -14,6 +14,7 @@ import androidx.core.view.updatePadding
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.models.user.User
@@ -78,19 +79,7 @@ class AdventureGuideActivity : BaseActivity() {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        ViewCompat.setOnApplyWindowInsetsListener(binding.nestedScrollView) { v, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-                    or WindowInsetsCompat.Type.displayCutout()
-            )
-            v.updatePadding(
-                top = bars.top,
-                bottom = bars.bottom,
-                left = bars.left,
-                right = bars.right
-            )
-            consumeWindowInsetsAbove30(insets)
-        }
+        applyScrollContentWindowInsets(binding.scrollContent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

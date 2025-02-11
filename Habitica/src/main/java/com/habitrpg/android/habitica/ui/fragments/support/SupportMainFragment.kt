@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -75,6 +76,8 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
                 )
             }
         }
+        binding?.resetTutorialButtonWrapper?.let { applyScrollContentWindowInsets(it) }
+
     }
 
     override fun onDestroy() {

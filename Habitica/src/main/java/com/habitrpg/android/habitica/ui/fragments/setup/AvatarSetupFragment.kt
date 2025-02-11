@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSetupAvatarBinding
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
@@ -113,6 +114,7 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         if (this.user != null) {
             this.updateAvatar()
         }
+        binding?.contentWrapper?.let { applyScrollContentWindowInsets(it) }
     }
 
     override fun onResume() {

@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -161,6 +162,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         binding?.questMechanicsButton?.setOnClickListener {
             showQuestMechanicsDialog()
         }
+
+        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
     }
 
     private fun refreshParty() {

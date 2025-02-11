@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.DialogChallengeDetailTaskGroupBinding
 import com.habitrpg.android.habitica.databinding.FragmentChallengeDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -165,7 +166,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
             }
         }
         binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
-
+        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
         refresh()
     }
 

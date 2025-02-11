@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentSetupTasksBinding
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
@@ -63,6 +64,8 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
                 HabiticaIconsHelper.imageOfHeartLightBg()
             )
         )
+
+        binding?.contentWrapper?.let { applyScrollContentWindowInsets(it) }
     }
 
     override fun onResume() {

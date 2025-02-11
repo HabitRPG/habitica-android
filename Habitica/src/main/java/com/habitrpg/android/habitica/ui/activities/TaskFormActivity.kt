@@ -48,6 +48,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
@@ -433,11 +434,7 @@ class TaskFormActivity : BaseActivity() {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        ViewCompat.setOnApplyWindowInsetsListener(binding.mainFormContent) { v, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.updatePadding(bottom = insets.bottom)
-            consumeWindowInsetsAbove30(windowInsets)
-        }
+        applyScrollContentWindowInsets(binding.mainFormContent)
     }
 
     override fun onResume() {

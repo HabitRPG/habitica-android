@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +18,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGuildDetailBinding
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -89,6 +94,8 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                 MainNavigationController.navigate(profileDirections)
             }
         }
+
+        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
     }
 
     private fun setLeader(leader: Member?) {
