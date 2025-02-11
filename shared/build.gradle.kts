@@ -3,11 +3,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
-    alias(libs.plugins.android.library)
+    id(libs.plugins.android.library.get().pluginId)
     id("kotlin-parcelize")
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.habitrpg.convention)
-    alias(libs.plugins.kotest)
+    id(libs.plugins.ksp.get().pluginId)
+    id(libs.plugins.habitrpg.convention.get().pluginId)
+    id(libs.plugins.kotest.get().pluginId)
 }
 
 kotlin {

@@ -2,20 +2,20 @@ import com.android.build.gradle.internal.lint.AndroidLintTask
 
 plugins {
     `jacoco-report-aggregation`
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.navigation)
-    alias(libs.plugins.ksp)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.android.application.get().pluginId)
+    id(libs.plugins.hilt.get().pluginId)
+    id(libs.plugins.navigation.get().pluginId)
+    id(libs.plugins.ksp.get().pluginId)
     id("kotlin-parcelize")
     id("kotlin-kapt")
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.realm)
-    alias(libs.plugins.habitrpg.application)
-    alias(libs.plugins.habitrpg.convention)
-    alias(libs.plugins.crashlytics)
-    alias(libs.plugins.firebase.perf)
-    alias(libs.plugins.google.service)
+    id(libs.plugins.kotlin.compose.get().pluginId)
+    id(libs.plugins.realm.get().pluginId)
+    id(libs.plugins.habitrpg.application.get().pluginId)
+    id(libs.plugins.habitrpg.convention.get().pluginId)
+    id(libs.plugins.crashlytics.get().pluginId)
+    id(libs.plugins.firebase.perf.get().pluginId)
+    id(libs.plugins.google.service.get().pluginId)
 }
 
 android {

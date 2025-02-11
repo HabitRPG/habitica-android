@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.habitrpg.convention)
-    alias(libs.plugins.habitrpg.application)
-    alias(libs.plugins.crashlytics)
-    alias(libs.plugins.google.service)
+    id(libs.plugins.android.application.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.ksp.get().pluginId)
+    id(libs.plugins.hilt.get().pluginId)
+    id(libs.plugins.habitrpg.convention.get().pluginId)
+    id(libs.plugins.habitrpg.application.get().pluginId)
+    id(libs.plugins.crashlytics.get().pluginId)
+    id(libs.plugins.google.service.get().pluginId)
 }
 
 android {
