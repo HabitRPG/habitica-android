@@ -23,9 +23,6 @@ class GemPurchaseActivity : PurchaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         showSubscription = !(intent.extras?.containsKey("openSubscription") == true && intent.extras?.getBoolean("openSubscription") == false)
-        if (showSubscription) {
-            navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.background_brand_30))
-        }
         super.onCreate(savedInstanceState)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)

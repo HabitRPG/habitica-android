@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
+import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -71,7 +72,6 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.black_50_alpha))
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         // Set default values to avoid null-responses when requesting unedited settings
@@ -82,6 +82,17 @@ class LoginActivity : BaseActivity() {
 
         setupOnClickListeners()
         setupViewmodelObserving()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+            val controller = WindowCompat.getInsetsController(window, window.decorView)
+            controller.isAppearanceLightNavigationBars = false
+            controller.isAppearanceLightStatusBars = false
+            window.setNavigationBarDarkIcons(false)
+        }
     }
 
     private fun setupViewmodelObserving() {
@@ -153,14 +164,6 @@ class LoginActivity : BaseActivity() {
                 binding.backgroundContainer.bottom,
             )
         }
-    }
-
-    override fun loadTheme(
-        sharedPreferences: SharedPreferences,
-        forced: Boolean,
-    ) {
-        super.loadTheme(sharedPreferences, forced)
-        window.updateStatusBarColor(R.color.black_20_alpha, false)
     }
 
     private fun resetLayout() {

@@ -282,17 +282,25 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         drawerView: View,
                         slideOffset: Float
                     ) {
-                        if (!isUsingNightModeResources()) {
-                            if (slideOffset < 0.5f && isOpeningDrawer == null) {
+                        if (slideOffset < 0.5f && isOpeningDrawer == null) {
+                            if (!isUsingNightModeResources()) {
                                 window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
-                                isOpeningDrawer = true
-                            } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                window?.isNavigationBarContrastEnforced = true
+                            }
+                            isOpeningDrawer = true
+                        } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
+                            if (!isUsingNightModeResources()) {
                                 window.updateStatusBarColor(
                                     getThemeColor(R.attr.headerBackgroundColor),
                                     true
                                 )
-                                isOpeningDrawer = false
                             }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                window?.isNavigationBarContrastEnforced = !binding.content.bottomNavigation.isVisible
+                            }
+                            isOpeningDrawer = false
                         }
                     }
 

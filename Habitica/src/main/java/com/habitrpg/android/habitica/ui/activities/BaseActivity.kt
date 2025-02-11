@@ -94,7 +94,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private val defaultNavigationBarStyle by lazy {
         SystemBarStyle.auto(ContextCompat.getColor(this, R.color.white_50_alpha),
-            ContextCompat.getColor(this, R.color.black_50_alpha)
+            ContextCompat.getColor(this, R.color.black_50_alpha),
+            { _ -> true}
         )
     }
     internal var navigationBarStyle: SystemBarStyle? = null

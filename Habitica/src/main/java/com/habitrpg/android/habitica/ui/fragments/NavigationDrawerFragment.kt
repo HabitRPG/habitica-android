@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -620,11 +621,6 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.updateItems(items)
     }
 
-    override fun onResume() {
-        super.onResume()
-        getItemWithIdentifier(SIDEBAR_SHOPS_CUSTOMIZATIONS)?.isVisible = configManager.enableCustomizationShop()
-    }
-
     fun setSelection(
         transitionId: Int?,
         bundle: Bundle? = null,
@@ -726,17 +722,16 @@ class NavigationDrawerFragment : DialogFragment() {
             containerView?.isVisible = false
         }
     }
-
     fun toggleDrawer() {
         val containerView = fragmentContainerView
         if (containerView != null && containerView.parent is DrawerLayout) {
             if (drawerLayout?.isDrawerOpen(containerView) == true) {
-                drawerLayout?.closeDrawer(containerView)
+                closeDrawer()
             } else {
-                drawerLayout?.openDrawer(containerView)
+                openDrawer()
             }
         } else {
-            containerView?.isVisible = containerView?.isVisible != true
+            containerView?.isVisible = containerView.isVisible != true
         }
     }
 
