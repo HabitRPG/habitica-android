@@ -287,7 +287,6 @@
                         android:layout_width="wrap_content"
                         android:paddingStart="41dp"
                         android:paddingEnd="41dp"
-                        android:paddingBottom="30dp"
                         android:paddingTop="70dp"
                         android:text="@string/gem_purchase_title"
                         android:layout_gravity="center_horizontal"
@@ -296,6 +295,12 @@
                         android:textColor="@color/white"
                         style="@style/Caption2"
                         android:drawablePadding="@dimen/spacing_medium" />
+                <View
+                    android:id="@+id/bottom_spacing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    android:background="@color/red_5"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

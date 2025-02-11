@@ -127,7 +127,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         }
         loadInventory()
 
-        binding?.supportTextView?.let {
+        binding?.bottomSpacing?.let {
             val paddingBottom = it.paddingBottom
             ViewCompat.setOnApplyWindowInsetsListener(it) { v, insets ->
                 val bars = insets.getInsets(
