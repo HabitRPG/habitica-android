@@ -604,7 +604,7 @@
     <string name="setup_task_join_habitica">Gå med i Habitica (Bocka av mig!)</string>
     <string name="limitations">Begränsningar</string>
     <string name="how_it_works">Hur det funkar</string>
-    <string name="x_to_y">%s till %s</string>
+    <string name="x_to_y">%1$s till %2$s</string>
     <string name="block_user">Blockera Användar</string>
     <string name="tavern_inn_checkOut">Återaktivera dina dagliga uppgifter</string>
     <string name="learn_more">Lär Mer</string>

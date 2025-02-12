@@ -338,7 +338,6 @@
     <string name="quest_owner_rewards">Recompensas do Dono de Missão</string>
     <string name="levelup_header">Alcançaste o Nível %1$d!</string>
     <string name="levelup_detail">Por completares os teus objectivos na vida real, subiste de nível e agora estás totalmente curado!</string>
-    <string name="faint_penalty_body">Perdeste um Nível. o teu Ouro, e uma peça de Equipamento, mas podes recuperá-los de volta com trabalho árduo! Boa sorte — Vais-te sair bem.</string>
     <string name="reminder_title">Lembra-te de marcares as tuas Diárias</string>
     <string name="intro_2_title">Progresso na vida</string>
     <string name="intro_2_description">Desbloqueia recursos no jogo ao completares as tuas tarefas da vida real. Ganha armaduras, animais de estimação, e mais como recompensas por atingires os teus objectivos.</string>
@@ -504,10 +503,10 @@
     <string name="tavern_owner_long">Daniel o dono da Taverna</string>
     <string name="market_owner_long">Alex o Mercador</string>
     <string name="questShop">Loja de Missões</string>
-    <string name="strike_active_description">Nosso querido %s ficou devastado quando %s aniquilou %s. Rapido, enfrente tuas tarefas para derrotar o monstro e ajudar a reconstruir !!</string>
+    <string name="strike_active_description">Nosso querido %1$s ficou devastado quando %2$s aniquilou %3$s. Rapido, enfrente tuas tarefas para derrotar o monstro e ajudar a reconstruir !!</string>
     <string name="strike_active_title">%s foi Atacado!</string>
     <string name="pending_strike_title">Ataque Pendente</string>
-    <string name="rage_strike_count">Ataques de Fúria: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Ataques de Fúria: %d/%d</string>
     <string name="world_boss">Chefão Mundial</string>
     <string name="boss_art">Arte do Chefão</string>
     <string name="world_boss_description">Descrição do Chefão Mundial</string>
@@ -704,7 +703,7 @@
     <string name="equipment_empty">Já tens todo o equipamento! Mais vai ser lançado durante as Grandes Galas, perto dos solstícios e equinócios.</string>
     <string name="quest_items_found">Encontraste %d itens da jornada</string>
     <string name="discard">Descartar</string>
-    <string name="class_confirmation_price">Queres mudar a tua classe para %s por %d gemas\?</string>
+    <string name="class_confirmation_price">Queres mudar a tua classe para %1$s por %2$d gemas\?</string>
     <string name="use_item">Usar item em membro de equipa</string>&gt;
     <string name="unsaved_changes">Alterações não gravadas</string>
     <string name="discard_changes_to_task_message">Tens a certeza de que queres descartar as alterações nesta tarefa\?</string>

@@ -69,7 +69,6 @@
     <string name="levelup_detail">Door het verwezelijken van je \'real life\' doelen ben je een niveau gestegen en ben je nu volledig geheeld!</string>
     <string name="onwards">Hoera!</string>
     <string name="faint_subtitle">Wanhoop niet!</string>
-    <string name="faint_penalty_body">Je verliest een niveau, je goud en een stuk uitrusting, maar je kunt ze allemaal terug krijgen door hard te werken! Succes—je zult het geweldig doen.</string>
     <string name="faint_header">Je hebt geen Levenspunten meer!</string>
     <string name="faint_button">Herstel Gezondheid &amp; probeer opnieuw</string>
     <string name="filter">Filter</string>
@@ -532,11 +531,11 @@
     <string name="world_boss">Wereldbaas</string>
     <string name="boss_art">Baas Kunst</string>
     <string name="world_boss_description">Wereldbaas beschrijving</string>
-    <string name="rage_strike_count">Woede Aanvallen: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Woede Aanvallen: %d/%d</string>
     <string name="pending_strike_title">Inkomende Aanval</string>
     <string name="strike_description_title">Wat is een Woede Aanval?</string>
     <string name="strike_active_title">De %s werd aangevallen!</string>
-    <string name="strike_active_description">Onze dierbare %s was verwoest toen de %s de %s verbrijzelde. Pak snel je taken aan om het monster te verslaan en te helpen herbouwen!</string>
+    <string name="strike_active_description">Onze dierbare %1$s was verwoest toen de %2$s de %3$s verbrijzelde. Pak snel je taken aan om het monster te verslaan en te helpen herbouwen!</string>
     <string name="questShop">Queestenwinkel</string>
     <string name="market_owner_long">Alex de Handelaar</string>
     <string name="tavern_owner_long">Daniel de herbergier</string>
@@ -701,7 +700,7 @@
     <string name="local">Lokaal</string>
     <string name="authentication_methods">Verificatiemethoden</string>
     <string name="someone">Iemand</string>
-    <string name="invitation_title">%s heeft je uitgenodigd voor diens groep %s</string>
+    <string name="invitation_title">%1$s heeft je uitgenodigd voor diens groep %2$s</string>
     <string name="password_too_short">Je wachtwoord moet minimaal %d karakters lang zijn</string>
     <string name="copy_username">Kopieer Gebruikersnaam</string>
     <string name="id_copied">Gebruikers ID naar het klembord gekopieerd</string>
@@ -817,7 +816,7 @@
     <string name="preference_push_important_announcements">Belangrijke mededelingen</string>
     <string name="damage_paused">Schade is onderbroken</string>
     <string name="discover">Ontdekken</string>
-    <string name="gift_confirmation_text_sub">Je hebt %s een %s-maand Habitica abonnement gestuurd.</string>
+    <string name="gift_confirmation_text_sub">Je hebt %1$s een %2$s-maand Habitica abonnement gestuurd.</string>
     <string name="task_title">Taaktitel</string>
     <string name="create_party">Een nieuwe groep aanmaken</string>
     <string name="only_leader_create_challenge">Alleen de leider kan uitdagingen creëren</string>
@@ -855,7 +854,7 @@
     <string name="report_message_hint">Reden voor melding (optioneel)</string>
     <string name="report_message_title">%s melden wegens overtreding:</string>
     <string name="report_explanation">Meld **alleen** een bericht dat de [Communityrichtlijnen](https://habitica.com/static/community-guidelines) en/of [Servicevoorwaarden](https://habitica.com/static/terms) schendt. Het ongepast melden van een bericht kan een overtreding opleveren.</string>
-    <string name="gift_confirmation_text_sub_g1g1">Je hebt %s een %s-maand Habitica-abonnement gestuurd en hetzelfde abonnement is toegepast op je account voor onze Gift One Get One-promotie!</string>
+    <string name="gift_confirmation_text_sub_g1g1">Je hebt %1$s een %2$s-maand Habitica-abonnement gestuurd en hetzelfde abonnement is toegepast op je account voor onze Gift One Get One-promotie!</string>
     <string name="gift_gems_subtitle">Kies hieronder het edelsteenpakket dat je cadeau wilt doen!</string>
     <string name="gift_subscription_subtitle">Kies hieronder het abonnement dat u wilt schenken! Deze aankoop wordt niet automatisch verlengd.</string>
     <string name="gift_one_get_one_detailed_description">Terwijl deze promotie actief is, ontvang je zelf, automatisch hetzelfde abonnement nadat je je cadeau hebt verzonden.</string>
@@ -973,7 +972,7 @@
     <string name="is_open">Openen</string>
     <string name="discard">Gooi weg</string>
     <string name="rejoin_party">Je kan deze groep niet weer inkomen zonder uitnodiging.</string>
-    <string name="class_confirmation_price">Wil je jouw klasse veranderen naar %s voor %d edelstenen\?</string>
+    <string name="class_confirmation_price">Wil je jouw klasse veranderen naar %1$s voor %2$d edelstenen\?</string>
     <string name="quest_items_found">Je hebt %d queeste-voorwerpen gevonden</string>
     <string name="leave_delete_tasks">Verlaat en verwijder Taken</string>
     <string name="guild_challenges">Je neemt deel aan een Gilde Uitdaging</string>

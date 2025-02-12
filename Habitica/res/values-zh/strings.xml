@@ -69,7 +69,6 @@
     <string name="levelup_detail">通过完成现实生活中的目标，你提升了等级并且恢复了满血状态！</string>
     <string name="onwards">继续前进！</string>
     <string name="faint_subtitle">别灰心！</string>
-    <string name="faint_penalty_body">你降了一级，失去了所有金币和一件装备。但你可以通过努力把它们都找回来！ 祝你好运——你能做到的。</string>
     <string name="faint_header">你的生命值耗尽了！</string>
     <string name="faint_button">回满生命值并再试一次</string>
     <string name="filter">筛选</string>
@@ -520,7 +519,7 @@
     <string name="world_boss">世界Boss</string>
     <string name="boss_art">boss图像</string>
     <string name="world_boss_description">世界boss简介</string>
-    <string name="rage_strike_count">暴走：%d/%d</string>
+    <string name="rage_strike_count" formatted="false">暴走：%d/%d</string>
     <string name="strike_description_title">什么是暴击？</string>
     <string name="strike_active_title">%s被攻击了！</string>
     <string name="questShop">副本商店</string>
@@ -560,7 +559,7 @@
     <string name="distribute_task_help">根据你已完成任务的关联属性：力量，智力，体质和感知来分配点数。</string>
     <string name="staff_moderators">工作人员和管理员</string>
     <string name="pending_strike_title">即将造成的攻击</string>
-    <string name="strike_active_description">我们心爱的 %s 在 %s 攻击 %s 时被彻底破坏了，快抓紧时间完成你的任务来打败怪物，帮助我们重建！</string>
+    <string name="strike_active_description">我们心爱的 %1$s 在 %2$s 攻击 %3$s 时被彻底破坏了，快抓紧时间完成你的任务来打败怪物，帮助我们重建！</string>
     <string name="no_party_description">和朋友一同完成副本或者独自出击。和怪物战斗，创建挑战，能力越大，责任越大。</string>
     <string name="join_party_description">把下方的用户名给一个队伍成员，这样他们就能邀请你加入了</string>
     <string name="insufficientSubscriberGems">你已经买空了这个月所有的宝石限额！每月可购买的宝石将于当月前三天内上架，感谢你的订阅！</string>
@@ -778,7 +777,7 @@
     <string name="id_copied">已将用户ID复制到剪贴板</string>
     <string name="password_too_short">您的密码长度至少为%d个字符</string>
     <string name="copy_username">复制用户名</string>
-    <string name="invitation_title">%s邀请你加入他们的小组%s</string>
+    <string name="invitation_title">%1$s邀请你加入他们的小组%2$s</string>
     <string name="someone">有人</string>
     <string name="authentication_methods">认证方式</string>
     <string name="local">本地</string>
@@ -1033,10 +1032,10 @@
     <string name="unblock_user">解除屏蔽此用户</string>
     <string name="pms_disabled_description">你依旧能正常发送私信给他人，但没人能发送私信给你。在设置中可重启接收私信功能。</string>
     <string name="spooky_promo_info_prompt">今年在秋季庆典的宝石特卖会步入尾声！这是最后一次获得更多宝石的机会，请趁早囤货！</string>
-    <string name="spooky_promo_info_instructions">在%s至3%s期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
+    <string name="spooky_promo_info_instructions">在%1$s至3%2$s期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
     <string name="view_gem_bundles">查看宝石捆绑包</string>
     <string name="fall_promo_info_prompt">秋季盛典正在如火如荼的进行中，所以我们认为这是我们首次推出宝石特卖会的最佳时机！现在你每次购买都会获得比以往更多的宝石。现在你每次购买都将获得比以往更多的宝石。</string>
-    <string name="fall_promo_info_instructions">在%s至%s间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
+    <string name="fall_promo_info_instructions">在%1$s至%2$s间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
     <string name="limitations">限制</string>
     <string name="how_it_works">如何工作</string>
     <string name="x_to_y">%1$s致%2$s</string>
@@ -1117,7 +1116,7 @@
     <string name="privacy_policy">隐私政策</string>
     <string name="all_tasks_completed">你完成了所有任务。干得漂亮！</string>
     <string name="discard">放弃</string>
-    <string name="class_confirmation_price">转职为%s需要%d宝石，是否确定更改？</string>
+    <string name="class_confirmation_price">转职为%1$s需要%2$d宝石，是否确定更改？</string>
     <string name="use_item">对队伍成员使用物品</string>&gt;
     <string name="unsaved_changes">修改未保存</string>
     <string name="damage_pending">即将造成%s点伤害</string>
@@ -1207,7 +1206,7 @@
     <string name="death_description">但是你能通过努力把它们都赢回来！祝你好运——你会做好的。</string>
     <string name="faint_broken_equipment">丢失的装备可以重新购买
 \n来自奖励</string>
-    <string name="faint_loss_description">你会降至<b>%d</b>级，失去 <b>%d</b>金币，并失去<b>一个装备</b>！……只要努力，你就能把它们赚回来！</string>
+    <string name="faint_loss_description">你会降至<b>%1$d</b>级，失去 <b>%2$d</b>金币，并失去<b>一个装备</b>！……只要努力，你就能把它们赚回来！</string>
     <string name="account_reset">账号重置</string>
     <string name="avatar_skin_customization">自定义角色皮肤</string>
     <string name="avatar_shirt_customization">自定义角色上衣</string>
@@ -1356,7 +1355,6 @@
     <string name="change_class_message">这将移除您当前的职业并退还所有属性点数，然后你可以选择一个新职业</string>
     <string name="reset_account_description_no_pw">你将会失去所有的等级、金币和经验。你设置的所有任务及其任务历史数据将会被删除（挑战任务除外）。你将失去除了订阅者物品和免费纪念物品外的所有装备，但你之后可以重新购买被删除的物品。重新购买职业专属装备需要对应的职业。你当前的职业、成就、宠物和坐骑将会保留。如果你已确定要重置数据，请在下方输入“RESET”。</string>
     <string name="report_message_explanation">您只能举报违反[社区准则](https://habitica.com/static/community-guidelines)和/或[服务条款](https://habitica.com/static/terms)的帖子。提交虚假报告违反了 Habitica 社区准则。</string>
-    <string name="g1g1_promo_info_limitations_fixed">这是一个限时活动，从 %1$s (%2$s) 开始，到 %3$s (%4$s) 结束。此促销活动仅适用于您向另一位Habitican赠送礼物。如果您或您的收礼人已经订阅，则赠送的订阅将增加订阅月份，只有在当前订阅被取消或过期后才能使用。</string>
     <string name="todo_summary_description">这是一项没有截止日期的 **%1$s** 任务。</string>
     <string name="shadow_mute_user">禁言</string>
     <string name="plenty_of_potions_description">我们返场了 10 种最受社区欢迎的魔法孵化药水。前往 \"市场 \"来完善你的收藏吧！</string>

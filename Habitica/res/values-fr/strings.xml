@@ -68,7 +68,6 @@
     <string name="levelup_header">Vous avez atteint le niveau %1$d !</string>
     <string name="levelup_detail">En atteignant vos buts dans la vie réelle, vous avez gagné un niveau et vous êtes maintenant complètement guéri !</string>
     <string name="faint_subtitle">Ne désespérez pas !</string>
-    <string name="faint_penalty_body">Vous avez perdu un niveau, votre or, et une pièce d\'équipement, mais vous pouvez tous les récupérer en travaillant dur ! Bonne chance — vous y arriverez.</string>
     <string name="faint_header">Votre santé est à zéro !</string>
     <string name="faint_button">Reprendre des forces &amp; réessayer</string>
     <string name="filter">Filtrer</string>
@@ -535,11 +534,11 @@
     <string name="world_boss">Boss mondial</string>
     <string name="boss_art">Représentation du boss</string>
     <string name="world_boss_description">Description du boss mondial</string>
-    <string name="rage_strike_count">Attaques de rage : %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Attaques de rage : %d/%d</string>
     <string name="pending_strike_title">Attaque en cours</string>
     <string name="strike_description_title">Qu\'est-ce qu\'une attaque de rage ?</string>
     <string name="strike_active_title">%s a été attaqué !</string>
-    <string name="strike_active_description">Notre %s a eu le cœur brisé lorsque %s a fracassé %s. Vite, réalisez vos quotidiennes pour vaincre le monstre et aider à reconstruire Habitica ! !</string>
+    <string name="strike_active_description">Notre %1$s a eu le cœur brisé lorsque %2$s a fracassé %3$s. Vite, réalisez vos quotidiennes pour vaincre le monstre et aider à reconstruire Habitica ! !</string>
     <string name="questShop">Magasin de quêtes</string>
     <string name="market_owner_long">Alex le marchand</string>
     <string name="tavern_owner_long">Daniel l\'aubergiste</string>
@@ -795,8 +794,8 @@
     <string name="promo_subscription_buy_gems_description">Abonnez-vous pour acheter des gemmes avec de l\'or, obtenir des objets mystères tous les mois, augmenter le taux de butin et plus encore !</string>
     <string name="promo_subscription_buy_gems_prompt">Besoin de gemmes \?</string>
     <string name="transfer_ownership_confirm_message">Cela fera de %s le nouveau responsable de l\'équipe</string>
-    <string name="gift_confirmation_text_sub">Vous avez envoyé à %s un abonnement de %s mois.</string>
-    <string name="gift_confirmation_text_sub_g1g1">Vous avez envoyé à %s un abonnement de %s mois et le même abonnement vous a été accordé pour notre promotion Un en cadeau, un reçu !</string>
+    <string name="gift_confirmation_text_sub">Vous avez envoyé à %1$s un abonnement de %2$s mois.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Vous avez envoyé à %1$s un abonnement de %2$s mois et le même abonnement vous a été accordé pour notre promotion Un en cadeau, un reçu !</string>
     <string name="gift_gems_subtitle">Choisissez le paquet de gemmes que vous voudriez offrir ci-dessous !</string>
     <string name="empty_title_rewards_filtered">Pas de récompense</string>
     <string name="empty_description_todos_filtered">Il n\'y a pas de tâche visible avec vos filtres actuels.</string>
@@ -868,7 +867,7 @@
     <string name="local">local</string>
     <string name="authentication_methods">Méthodes d\'authentification</string>
     <string name="someone">Quelqu\'un</string>
-    <string name="invitation_title">%s vous a invité à rejoindre son groupe %s</string>
+    <string name="invitation_title">%1$s vous a invité à rejoindre son groupe %2$s</string>
     <string name="password_too_short">Votre mot de passe doit contenir au moins %d caractères</string>
     <string name="copy_username">Copier l\'identifiant</string>
     <string name="subscriber_currency">Monnaie d\'abonnement</string>
@@ -981,11 +980,11 @@
     <string name="hatch_pet_again">Faire éclore le familier à nouveau</string>
     <string name="unhatched_pet">Familier non éclos</string>
     <string name="hatch_pet">Faire éclore le familier</string>
-    <string name="can_hatch_pet">Combinez votre œuf de %s et votre potion %s pour faire éclore ce familier !</string>
-    <string name="suggest_pet_hatch_again_missing_both">Vous avez besoin d\'un %s et d\'une potion %s pour faire éclore ce familier à nouveau</string>
+    <string name="can_hatch_pet">Combinez votre œuf de %1$s et votre potion %2$s pour faire éclore ce familier !</string>
+    <string name="suggest_pet_hatch_again_missing_both">Vous avez besoin d\'un %1$s et d\'une potion %2$s pour faire éclore ce familier à nouveau</string>
     <string name="suggest_pet_hatch_again_missing_potion">Vous avez besoin d\'une potion %s pour faire éclore ce familier à nouveau</string>
     <string name="suggest_pet_hatch_again_missing_egg">Vous avez besoin d\'un œuf de %s pour faire éclore ce familier à nouveau</string>
-    <string name="suggest_pet_hatch_missing_both">Vous avez besoin d\'un %s et d\'une potion %s pour faire éclore ce familier</string>
+    <string name="suggest_pet_hatch_missing_both">Vous avez besoin d\'un %1$s et d\'une potion %2$s pour faire éclore ce familier</string>
     <string name="suggest_pet_hatch_missing_potion">Vous avez besoin d\'une potion %s pour faire éclore ce familier</string>
     <string name="suggest_pet_hatch_missing_egg">Vous avez besoin d\'un œuf de %s pour faire éclore ce familier</string>
     <string name="view_onboarding_tasks">Voir les tâches d’intégration</string>
@@ -1037,12 +1036,12 @@
     <string name="block_user">Bloquer l\'utilisateur</string>
     <string name="limitations">Limitations</string>
     <string name="spooky_promo_info_prompt">La vente de gemmes est de retour pour hanter cette fin de gala d\'automne ! C\'est votre dernière chance d\'obtenir plus de gemmes que jamais, alors faites le plein tant que ça dure !</string>
-    <string name="spooky_promo_info_instructions">Entre le %s et le %s, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
+    <string name="spooky_promo_info_instructions">Entre le %1$s et le %2$s, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
     <string name="view_gem_bundles">Voir les paquets de gemmes</string>
     <string name="fall_promo_info_prompt">Le gala d\'automne bat son plein, alors nous avons pensé que ce serait le moment idéal pour proposer notre toute première vente de gemmes ! Dès à présent, vous recevrez plus de gemmes qu\'auparavant pour chaque achat.</string>
-    <string name="fall_promo_info_instructions">Entre le %s et le %s, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
+    <string name="fall_promo_info_instructions">Entre le %1$s et le %2$s, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
     <string name="how_it_works">Comment ça marche</string>
-    <string name="x_to_y">%s à %s</string>
+    <string name="x_to_y">%1$s à %2$s</string>
     <string name="usually_x_gems">Généralement %d gemmes</string>
     <string name="quest_leave_message_nostart">Êtes-vous sûr de vouloir quitter la quête \? Vous ne pourrez pas participer.</string>
     <string name="quest_leave_message">Êtes-vous sûr que vous voulez partir de la Quête \? Tout votre progrès sera perdu.</string>
@@ -1151,10 +1150,10 @@
     <string name="minimal">Minimal</string>
     <string name="task_list_mode">Mode liste de tâches</string>
     <string name="discard">Abandonner</string>
-    <string name="class_confirmation_price">Voulez-vous changer de classe et devenir %s pour %d Gemmes \?</string>
+    <string name="class_confirmation_price">Voulez-vous changer de classe et devenir %1$s pour %2$d Gemmes \?</string>
     <string name="use_item">Utilisez l\'objet sur un allié</string>&gt;
     <string name="discard_changes_to_task_message">Voulez-vous vraiment abandonner les changements pour cette tâche \?</string>
-    <string name="gift_confirmation_text_gems_new">Vous avez envoyé %s gemmes à %s.</string>
+    <string name="gift_confirmation_text_gems_new">Vous avez envoyé %2$s gemmes à %1$s.</string>
     <string name="subscription_confirmation_multiple">Vous disposez maintenant de %s mois d\'abonnement</string>
     <string name="my_account">Mon compte</string>
     <string name="quest_party_required_description">Quand vous faites partie d\'une équipe, vous pouvez faire des quêtes en solo ou inviter des amis pour quêter avec eux !</string>
@@ -1210,7 +1209,7 @@
     <string name="tutorial_reset_confirmation">Vos tutoriels ont été réinitialisés</string>
     <string name="you_ran_out_of_health">Vous avez épuisé votre santé !</string>
     <string name="death_description">Mais vous pouvez tous les récupérer avec un peu de travail ! Bonne chance — vous allez y arriver.</string>
-    <string name="faint_loss_description">Vous redescendrez au niveau <b>%d</b>, perdrez <b>%d</b> pièces d\'or, et abîmerez <b>une pièce d\'équipement</b>…</string>
+    <string name="faint_loss_description">Vous redescendrez au niveau <b>%1$d</b>, perdrez <b>%2$d</b> pièces d\'or, et abîmerez <b>une pièce d\'équipement</b>…</string>
     <string name="account_reset">Réinitialisation du compte</string>
     <string name="avatar_skin_customization">Personnalisation de l\'apparence de l\'avatar</string>
     <string name="avatar_shirt_customization">Personnalisation de l\'habit de l\'avatar</string>

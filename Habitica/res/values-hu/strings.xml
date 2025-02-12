@@ -64,7 +64,6 @@
     <string name="levelup_header">Elérted a %1$d. szintet!</string>
     <string name="levelup_detail">A valós céljaid elvégzésével szintet léptél, és teljesen felgyógyultál!</string>
     <string name="faint_subtitle">Ne ess kétségbe!</string>
-    <string name="faint_penalty_body">Elvesztettél egy szintet, az aranyad és egy darab felszerelési tárgyat, de mindet visszaszerezheted kemény munkával! Sok sikert, menni fog!</string>
     <string name="faint_header">Elfogyott az életerőd!</string>
     <string name="faint_button">Töltsd fel az életerődet és próbáld újra</string>
     <string name="filter">Szűrő</string>

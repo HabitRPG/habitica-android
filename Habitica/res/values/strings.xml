@@ -305,7 +305,7 @@
     <string name="opt_out_class">Opt Out</string>
     <string name="opting_out_progress">Opting Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
-    <string name="class_confirmation_price">Do you want to change your class to %s for %d Gems?</string>
+    <string name="class_confirmation_price">Do you want to change your class to %1$s for %2$d Gems?</string>
     <string name="class_changed">You\'re a %s!</string>
     <string name="class_changed_description">You can now use %s skills and purchase gear from shops. Gain levels to earn stat points you can use to power up your skills.</string>
     <string name="choose_class">Choose Class</string>
@@ -684,11 +684,11 @@
     <string name="world_boss">World Boss</string>
     <string name="boss_art">Boss Art</string>
     <string name="world_boss_description">World Boss Description</string>
-    <string name="rage_strike_count">Rage Strikes: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Rage Strikes: %d/%d</string>
     <string name="pending_strike_title">Pending Strike</string>
     <string name="strike_description_title">What’s a Rage Strike?</string>
     <string name="strike_active_title">The %s was Attacked!</string>
-    <string name="strike_active_description">Our beloved %s was devastated when the %s shattered the %s. Quickly, tackle your tasks to defeat the monster and help rebuild!!</string>
+    <string name="strike_active_description">Our beloved %1$s was devastated when the %2$s shattered the %3$s. Quickly, tackle your tasks to defeat the monster and help rebuild!!</string>
     <string name="questShop">Quests</string>
     <string name="market_owner_long">Alex the Merchant</string>
     <string name="tavern_owner_long">Daniel the inn keeper</string>
@@ -958,7 +958,7 @@
     <string name="id_copied">Copied User ID to clipboard</string>
     <string name="copy_username">Copy Username</string>
     <string name="password_too_short">Your password has to be at least %d characters long</string>
-    <string name="invitation_title">%s invited you to join their group %s</string>
+    <string name="invitation_title">%1$s invited you to join their group %2$s</string>
     <string name="someone">Someone</string>
     <string name="authentication_methods">Authentication Methods</string>
     <string name="local">local</string>
@@ -1146,10 +1146,10 @@
     <string name="x_to_y">%1$s to %2$s</string>
     <string name="how_it_works">How it works</string>
     <string name="limitations">Limitations</string>
-    <string name="fall_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="fall_promo_info_instructions">Between %1$s and %2$s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time for a Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
     <string name="view_gem_bundles">View Gem Bundles</string>
-    <string name="spooky_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="spooky_promo_info_instructions">Between %1$s and %2$s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="gems_promo_info_limitations_fixed">This promotion only applies during the limited time event. This event starts on %1$s (%2$s) and will end %3$s (%4$s). The promo offer is only available when buying Gems for yourself.</string>
     <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
     <string name="dark_mode">Dark Mode</string>
@@ -1285,8 +1285,8 @@
     <string name="you_ran_out_of_health">You ran out of Health!</string>
     <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
     <string name="faint_broken_equipment">Broken equipment can be repurchased \nfrom the Market</string>
-    <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>… You can earn them all back with hard work!]]></string>
-    <string name="faint_loss_description_alt"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and your Experience… You can earn them all back with hard work!]]></string>
+    <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and break <b>a piece of gear</b>… You can earn them all back with hard work!]]></string>
+    <string name="faint_loss_description_alt"><![CDATA[You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and your Experience… You can earn them all back with hard work!]]></string>
     <string name="account_reset">Account Reset</string>
     <string name="avatar_skin_customization">Avatar Skin Customization</string>
     <string name="avatar_shirt_customization">Avatar Shirt Customization</string>
@@ -1569,7 +1569,7 @@
     <string name="thanks_for_subscribing">Thanks for subscribing</string>
     <string name="set">Set</string>
     <string name="rescrubscribe_to_pick_up">Resubscribe to pick up where you left off!</string>
-    <string name="gem_cap_extra">%d/%d Gem Cap</string>
+    <string name="gem_cap_extra">%1$d/%2$d Gem Cap</string>
     <string name="open_habitica_website">Open Habitica Website</string>
     <string name="nye">New Year\'s Eve</string>
     <string name="valentines">Valentines</string>

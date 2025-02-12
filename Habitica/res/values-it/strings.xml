@@ -69,7 +69,6 @@
     <string name="levelup_detail">Raggiungendo obiettivi nella vita reale, sei salito di livello e la tua Salute è stata ripristinata!</string>
     <string name="onwards">Urrà!</string>
     <string name="faint_subtitle">Non disperarti!</string>
-    <string name="faint_penalty_body">Hai perso un livello, l\'oro e un pezzo di equipaggiamento, ma puoi riottenere ogni cosa lavorando sodo! Buona fortuna, vedrai che ci riuscirai.</string>
     <string name="faint_header">Hai finito i punti salute!</string>
     <string name="faint_button">Ripristina i punti salute &amp; Riprova</string>
     <string name="filter">Filtro</string>
@@ -871,7 +870,7 @@
     <string name="local">locale</string>
     <string name="authentication_methods">Metodi di autenticazione</string>
     <string name="someone">Qualcuno</string>
-    <string name="invitation_title">%s ti ha invitato ad unirti al suo gruppo %s</string>
+    <string name="invitation_title">%1$s ti ha invitato ad unirti al suo gruppo %2$s</string>
     <string name="password_too_short">La tua password deve essere lunga almeno %d caratteri</string>
     <string name="copy_username">Copia Nome Utente</string>
     <string name="id_copied">ID Utente copiato negli appunti</string>
@@ -946,8 +945,8 @@
     <string name="switch_to_list_view">Passa alla vista elenco</string>
     <string name="delete_reminder">Elimina Promemoria</string>
     <string name="leave_guild_confirmation">Sei sicuro di voler abbandonare questa gilda\?</string>
-    <string name="gift_confirmation_text_sub">Hai inviato a %s un abbonamento Habitica per %s mesi.</string>
-    <string name="gift_confirmation_text_sub_g1g1">Hai inviato a %s un abbonamento Habitica per %s mesi e lo stesso abbonamento è stato aggiunto al tuo account per la nostra promozione Regalane uno Prendine Uno!</string>
+    <string name="gift_confirmation_text_sub">Hai inviato a %1$s un abbonamento Habitica per %2$s mesi.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Hai inviato a %1$s un abbonamento Habitica per %2$s mesi e lo stesso abbonamento è stato aggiunto al tuo account per la nostra promozione Regalane uno Prendine Uno!</string>
     <string name="gift_gems_subtitle">Scegli qui di seguito il pacchetto di gemme che vuoi regalare!</string>
     <string name="number_responded">%1$d/%2$d risposte</string>
     <string name="empty_title_rewards_filtered">Nessuna Ricompensa</string>
@@ -1006,11 +1005,11 @@
     <string name="hatch_pet_again">Schiudi di nuovo un animale</string>
     <string name="unhatched_pet">Animali non schiusi</string>
     <string name="hatch_pet">Schiudi un Animale</string>
-    <string name="can_hatch_pet">Combina il tuo Uovo %s e la tua Pozione %s per schiudere questo animale!</string>
-    <string name="suggest_pet_hatch_again_missing_both">Hai ancora bisogno di %s ed un uovo %s per poter schiudere di nuovo questo animale</string>
+    <string name="can_hatch_pet">Combina il tuo Uovo %1$s e la tua Pozione %2$s per schiudere questo animale!</string>
+    <string name="suggest_pet_hatch_again_missing_both">Hai ancora bisogno di %1$s ed un uovo %2$s per poter schiudere di nuovo questo animale</string>
     <string name="suggest_pet_hatch_again_missing_potion">Hai ancora bisogno di una Pozione %s per poter schiudere di nuovo questo animale</string>
     <string name="suggest_pet_hatch_again_missing_egg">Hai ancora bisogno di un uovo %s per poter schiudere di nuovo questo animale</string>
-    <string name="suggest_pet_hatch_missing_both">Hai bisogno di %s e una Pozione %s per poter schiudere questo animale</string>
+    <string name="suggest_pet_hatch_missing_both">Hai bisogno di %1$s e una Pozione %2$s per poter schiudere questo animale</string>
     <string name="suggest_pet_hatch_missing_potion">Hai bisogno di una Pozione %s per poter schiudere questo animale</string>
     <string name="suggest_pet_hatch_missing_egg">Hai bisogno di un uovo %s per poter schiudere questo animale</string>
     <string name="view_onboarding_tasks">Visualizza le attività introduttive</string>
@@ -1031,13 +1030,13 @@
     <string name="unblock_user">Sblocca utente</string>
     <string name="block_user">Blocca utente</string>
     <string name="spooky_promo_info_prompt">La vendita di Gemme è tornata per infestare la fine del Gala Autunnale di quest\'anno! Questa è l\'ultima possibilità per ottenere più gemme che mai, quindi fanne scorta finché dura!</string>
-    <string name="spooky_promo_info_instructions">Tra il %s e il %s, acquista semplicemente un pacchetto di gemme come faresti di solito, e sull\' account ti verranno accreditate con in aggiunta l\'importo promozionale. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
+    <string name="spooky_promo_info_instructions">Tra il %1$s e il %2$s, acquista semplicemente un pacchetto di gemme come faresti di solito, e sull\' account ti verranno accreditate con in aggiunta l\'importo promozionale. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
     <string name="view_gem_bundles">Visualizza pacchetti di gemme</string>
     <string name="fall_promo_info_prompt">Il Gala Autunnale è in pieno svolgimento, quindi abbiamo pensato che fosse il momento perfetto per presentare la nostra prima vendita di Gemme in assoluto! Ora otterrai più gemme ogni acquisto più che mai.</string>
-    <string name="fall_promo_info_instructions">Tra il %s e il %s, acquista semplicemente un pacchetto di gemme come faresti di solito, e sull\' account ti verranno accreditate con in aggiunta l\'importo promozionale. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
+    <string name="fall_promo_info_instructions">Tra il %1$s e il %2$s, acquista semplicemente un pacchetto di gemme come faresti di solito, e sull\' account ti verranno accreditate con in aggiunta l\'importo promozionale. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
     <string name="limitations">Limitazioni</string>
     <string name="how_it_works">Come funziona</string>
-    <string name="x_to_y">%s a %s</string>
+    <string name="x_to_y">%1$s a %2$s</string>
     <string name="usually_x_gems">Solitamente %d Gemme</string>
     <string name="user_is_blocked_explanation">Un utente bloccato non può mandarti Messaggi Privati ma vedrai i suoi messaggi nella Taverna o nelle Gilde.</string>
     <string name="user_is_blocked">Hai bloccato questo utente</string>
@@ -1128,7 +1127,7 @@
     <string name="sale_ends_in">La vendita termina fra %s</string>
     <string name="damage_pending">%s danno in sospeso</string>
     <string name="discard">Scarta</string>
-    <string name="class_confirmation_price">Vuoi cambiare la tua classe in %s per %d gemme\?</string>
+    <string name="class_confirmation_price">Vuoi cambiare la tua classe in %1$s per %2$d gemme\?</string>
     <string name="adventure_guide_description_new">Completa questi obbiettivi e guadagnerai &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ori&lt;/b&gt;&lt;/font&gt; quando avrai finito!</string>
     <string name="removed_social_auth">%s disconnesso</string>
     <string name="discard_changes_to_task_message">Sei sicuro/a di voler scartare le modifiche fatte a questa attività\?</string>
@@ -1139,7 +1138,7 @@
     <string name="add">Aggiungi</string>
     <string name="use_item">Usa Oggetto sul membro della squadra</string>&gt;
     <string name="unsaved_changes">Modifiche Non Salvate</string>
-    <string name="gift_confirmation_text_gems_new">Hai inviato %s %s gemme.</string>
+    <string name="gift_confirmation_text_gems_new">Hai inviato %1$s %2$s gemme.</string>
     <string name="subscription_confirmation">Sei ora abbonato/a per 1 mese</string>
     <string name="subscription_confirmation_multiple">Sei ora abbonato/a per %s mesi</string>
     <string name="gem_purchase_confirmation">Hai ottenuto %s gemme.</string>
@@ -1212,7 +1211,7 @@
     <string name="tutorial_reset_confirmation">I tuoi Tutorial sono stati resettati</string>
     <string name="death_description">Ma puoi recuperarli tutti lavorando sodo! Buona fortuna, te la caverai benissimo.</string>
     <string name="faint_broken_equipment">L\'equipaggiamento danneggiato può essere ricomprato nella colonna Ricompense</string>
-    <string name="faint_loss_description">Tornerai a livello <b>%d</b>, perderai <b>%d</b> Oro e danneggerai <b>un pezzo di armatura</b>…</string>
+    <string name="faint_loss_description">Tornerai a livello <b>%1$d</b>, perderai <b>%2$d</b> Oro e danneggerai <b>un pezzo di armatura</b>…</string>
     <string name="account_reset">Ripristino Account</string>
     <string name="display">Mostra</string>
     <string name="go_to_subscription">Vai ad abbonamento</string>

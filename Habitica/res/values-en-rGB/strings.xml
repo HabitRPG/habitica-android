@@ -417,7 +417,6 @@
     <string name="deleting_account">Deleting Account</string>
     <string name="levelup_header">You Reached Level %1$d!</string>
     <string name="levelup_detail">By accomplishing your real life goals, you levelled up and are now fully healed!</string>
-    <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck—you\'ll do great.</string>
     <string name="reminder_title">Remember to check off your tasks</string>
     <string name="quest_begin_message">Are you sure\? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="ago_1day">1d ago</string>
@@ -539,11 +538,11 @@
     <string name="world_boss">World Boss</string>
     <string name="boss_art">Boss Art</string>
     <string name="world_boss_description">World Boss Description</string>
-    <string name="rage_strike_count">Rage Strikes: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Rage Strikes: %d/%d</string>
     <string name="pending_strike_title">Pending Strike</string>
     <string name="strike_description_title">What\'s a Rage Strike\?</string>
     <string name="strike_active_title">The %s was Attacked!</string>
-    <string name="strike_active_description">Our beloved %s was devastated when the %s shattered the %s. Quickly, tackle your tasks to defeat the monster and help rebuild!!</string>
+    <string name="strike_active_description">Our beloved %1$s was devastated when the %2$s shattered the %3$s. Quickly, tackle your tasks to defeat the monster and help rebuild!!</string>
     <string name="questShop">Quest Shop</string>
     <string name="market_owner_long">Alex the Merchant</string>
     <string name="tavern_owner_long">Daniel the inn keeper</string>
@@ -679,7 +678,7 @@
     <string name="local">local</string>
     <string name="authentication_methods">Authentication Methods</string>
     <string name="someone">Someone</string>
-    <string name="invitation_title">%s invited you to join their group %s</string>
+    <string name="invitation_title">%1$s invited you to join their group %2$s</string>
     <string name="password_too_short">Your password has to be at least %d characters long</string>
     <string name="copy_username">Copy Username</string>
     <string name="id_copied">Copied User ID to clipboard</string>
@@ -831,8 +830,8 @@
     <string name="unlock_previous_short">Finish Quest %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
-    <string name="gift_confirmation_text_sub">You sent %s a %s-month Habitica subscription.</string>
-    <string name="gift_confirmation_text_sub_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
+    <string name="gift_confirmation_text_sub">You sent %1$s a %2$s-month Habitica subscription.</string>
+    <string name="gift_confirmation_text_sub_g1g1">You sent %1$s a %2$s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
     <string name="gift_gems_subtitle">Choose the gem packet you’d like to gift below!</string>
     <string name="join_party_description_guild">Give the username below to a friend or head to the %s to meet potential comrades!</string>
     <string name="insufficientGoldTitle">Not Enough Gold</string>
@@ -981,16 +980,16 @@
     <string name="hatch_pet_again">Hatch Pet again</string>
     <string name="unhatched_pet">Unhatched Pet</string>
     <string name="hatch_pet">Hatch Pet</string>
-    <string name="suggest_pet_hatch_again_missing_both">You need a %s and %s Potion to hatch this pet again</string>
+    <string name="suggest_pet_hatch_again_missing_both">You need a %1$s and %2$s Potion to hatch this pet again</string>
     <string name="suggest_pet_hatch_again_missing_potion">You still need a %s Potion to hatch this pet again</string>
     <string name="suggest_pet_hatch_again_missing_egg">You still need a %s Egg to hatch this pet again</string>
-    <string name="suggest_pet_hatch_missing_both">You need a %s and %s Potion to hatch this pet</string>
+    <string name="suggest_pet_hatch_missing_both">You need a %1$s and %2$s Potion to hatch this pet</string>
     <string name="suggest_pet_hatch_missing_potion">You still need a %s Potion to hatch this pet</string>
     <string name="suggest_pet_hatch_missing_egg">You still need a %s Egg to hatch this pet</string>
     <string name="view_onboarding_tasks">View Onboarding Tasks</string>
     <string name="equip">Equip</string>
     <string name="unequip">Unequip</string>
-    <string name="excessItemsNoneLeft">You already have everything you need for all %1$s pets. Are you sure you want to purchase %2$d %s3$s\?</string>
+    <string name="excessItemsNoneLeft">You already have everything you need for all %1$s pets. Are you sure you want to purchase %2$d %3$ss\?</string>
     <string name="purchaseX">Purchase %d</string>
     <string name="excessItemsXLeft">You only need %1$d %2$s to hatch all possible pets. Are you sure you want to purchase %3$d\?</string>
     <string name="excess_items">Excess Items</string>
@@ -1009,7 +1008,7 @@
     <string name="purchasedEquipmentTitle">Purchased Equipment</string>
     <string name="fedPetTitle">Fed a Pet</string>
     <string name="hatchedPetTitle">Hatched a Pet</string>
-    <string name="can_hatch_pet">Combine your %s Egg and %s Potion to hatch this pet!</string>
+    <string name="can_hatch_pet">Combine your %1$s Egg and %2$s Potion to hatch this pet!</string>
     <string name="createdTaskTitle">Created your first task</string>
     <string name="completedTaskTitle">Completed a task</string>
     <string name="purchase_equipment_description">Equipment is a way to customize your avatar and improve your stats</string>
@@ -1031,10 +1030,10 @@
     <string name="block_user_title">Block %s\?</string>
     <string name="unblock_user">Unblock User</string>
     <string name="block_user">Block User</string>
-    <string name="fall_promo_info_instructions">Between September %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="fall_promo_info_instructions">Between September %1$s and %2$s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="limitations">Limitations</string>
     <string name="how_it_works">How it works</string>
-    <string name="x_to_y">%s to %s</string>
+    <string name="x_to_y">%1$s to %2$s</string>
     <string name="usually_x_gems">Usually %d Gems</string>
     <string name="pms_disabled_description">You can still send messages, but no one can send them to you. You can enable again from Settings.</string>
     <string name="pms_disabled">Private Messages are disabled</string>
@@ -1042,7 +1041,7 @@
     <string name="block">Block</string>
     <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts. This will have no effect if the person is a moderator now or in the future.</string>
     <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
-    <string name="spooky_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="spooky_promo_info_instructions">Between %1$s and %2$s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="view_gem_bundles">View Gem Bundles</string>
     <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time for a Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
 </resources>

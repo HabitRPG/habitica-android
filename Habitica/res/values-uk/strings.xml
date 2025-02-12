@@ -130,7 +130,6 @@
     <string name="tavern_inn_rest">Призупинити щоденні завдання</string>
     <string name="tavern_inn_checkOut">Знову активувати щоденні завдання</string>
     <string name="reminder_title">Не забудьте зазначити виконані завдання</string>
-    <string name="faint_penalty_body">Ви втратили рівень, своє золото і предмет екіпіровки, але ви можете все повернути, якщо будете працювати! Щасти! У вас все вийде.</string>
     <string name="onwards">Вперед!</string>
     <string name="levelup_detail">Завдяки досягненню цілей у реальному житті ваш рівень підвищився та персонаж був зцілений!</string>
     <string name="levelup_header">Ви отримали %1$d рівень!</string>
@@ -754,11 +753,11 @@
     <string name="active_world_boss">Активний світовий бос</string>
     <string name="hide_boss_art">Приховати зображення боса</string>
     <string name="questShop">Магазин квестів</string>
-    <string name="strike_active_description">Наш улюблений %s був спустошений, коли %s розбив %s. Швидко завершуйте свої завдання, щоб перемогти монстра і допомогти з відновленням!</string>
+    <string name="strike_active_description">Наш улюблений %1$s був спустошений, коли %2$s розбив %3$s. Швидко завершуйте свої завдання, щоб перемогти монстра і допомогти з відновленням!</string>
     <string name="strike_active_title">%s був атакований!</string>
     <string name="strike_description_title">Що таке Удар Люті\?</string>
     <string name="pending_strike_title">Очікувана шкода</string>
-    <string name="rage_strike_count">Удари люті: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Удари люті: %d/%d</string>
     <string name="world_boss_description">Опис світового боса</string>
     <string name="boss_art">Зображення боса</string>
     <string name="world_boss">Світовий бос</string>
@@ -977,7 +976,7 @@
     <string name="cancel_subscription_group_plan">У вас є безкоштовна підписка тому, що Група або Гільдія має груповий план підписка. Це закінчиться, якщо Ви покинете Групу, або підписка закінчиться. Будь-які місяці додаткового кредиту на підписку будуть застосовуватися в кінці Групового плану.</string>
     <string name="subscription_credit">Кредит на підписку</string>
     <string name="not_recurring">Не Повторююється</string>
-    <string name="invitation_title">%s запросив(-ла) Вас до групи %s</string>
+    <string name="invitation_title">%1$s запросив(-ла) Вас до групи %2$s</string>
     <string name="partyOnTitle">Час вечірки</string>
     <string name="partyUpTitle">Об\'єднуйтесь</string>
     <string name="update_available">Нове оновлення: %1$s (%2$d)</string>
@@ -1003,9 +1002,9 @@
     <string name="gift_one_get_one_detailed_description">Допоки ця акція активна, ви отримуєте відповідну підписку автоматично після відправки подарунка.</string>
     <string name="confirm_username_description">Підтвердження свого Ім\'я користувача дає змогу приймати запрошення, @згадки і повідомлення. Ви можете змінити своє Ім\'я користувача в будь-який час в налаштуваннях.</string>
     <string name="spooky_promo_info_prompt">Розпродаж самоцвітів повернувся до самого кінця цьогорічної гала-осені! Це останній шанс отримати більше самоцвітів, ніж будь-коли, тож запасіться, поки це триває!</string>
-    <string name="spooky_promo_info_instructions">У період з %s по %s просто придбайте будь-який комплект самоцвітів, як зазвичай, і на Ваш рахунок буде зараховано їх додаткове число. Більше дорогоцінних каменів, які можна витратити, поділитися або зберегти для майбутніх оновлень!</string>
+    <string name="spooky_promo_info_instructions">У період з %1$s по %2$s просто придбайте будь-який комплект самоцвітів, як зазвичай, і на Ваш рахунок буде зараховано їх додаткове число. Більше дорогоцінних каменів, які можна витратити, поділитися або зберегти для майбутніх оновлень!</string>
     <string name="fall_promo_info_prompt">Fall Gala у розпалі, тому ми подумали, що це ідеальний час, щоб представити нашу першу в історії розпродаж самоцвітів! Тепер ви отримаєте більше самоцвітів з кожною покупкою, ніж будь-коли раніше.</string>
-    <string name="fall_promo_info_instructions">У період з %s по %s просто придбайте будь-який комплект Самоцвітів, як зазвичай, і на Ваш рахунок буде зараховано додаткове їх число. Більше дорогоцінних каменів, які можна витратити, поділитися або зберегти для майбутніх оновлень!</string>
+    <string name="fall_promo_info_instructions">У період з %1$s по %2$s просто придбайте будь-який комплект Самоцвітів, як зазвичай, і на Ваш рахунок буде зараховано додаткове їх число. Більше дорогоцінних каменів, які можна витратити, поділитися або зберегти для майбутніх оновлень!</string>
     <string name="x_to_y">%1$s до %2$s</string>
     <string name="usually_x_gems">Зазвичай %d самоцвітів</string>
     <string name="block_user_description">Заблокований користувач не може писати вам особисто, але ви можете бачити його повідомлення деінде.</string>
@@ -1144,7 +1143,7 @@
     <string name="successful_purchase_generic">Успішна купівля</string>
     <string name="task_list_mode">Режим списку завдань</string>
     <string name="discard">Не зберігати</string>
-    <string name="class_confirmation_price">Ви хочете змінити свій клас на %s за %d самоцвітів\?</string>
+    <string name="class_confirmation_price">Ви хочете змінити свій клас на %1$s за %2$d самоцвітів\?</string>
     <string name="use_item">Застосуйте до члена команди</string>&gt;
     <string name="unsaved_changes">Незбережені зміни</string>
     <string name="gift_confirmation_text_gems_new">Ви надіслали @%1$s %2$s самоцвіт(-и/ів).</string>
@@ -1267,7 +1266,7 @@
     <string name="august">Серпень</string>
     <string name="september">Вересень</string>
     <string name="october">Жовтень</string>
-    <string name="faint_loss_description">Ваш рівень знижено до <b>%d</b>, ви втратили <b>%d</b> золота, та зламали <b>частину вашого обладнання</b>…</string>
+    <string name="faint_loss_description">Ваш рівень знижено до <b>%1$d</b>, ви втратили <b>%2$d</b> золота, та зламали <b>частину вашого обладнання</b>…</string>
     <string name="account_reset">Скидання облікового запису</string>
     <string name="avatar_skin_customization">Налаштування шкіри аватара</string>
     <string name="avatar_shirt_customization">Налаштування сорочки аватара</string>

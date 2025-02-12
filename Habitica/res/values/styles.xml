@@ -60,6 +60,7 @@
 
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="enableEdgeToEdge">true</item>
 
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="toolbarContentColor">@color/text_primary</item>

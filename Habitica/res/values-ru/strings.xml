@@ -69,7 +69,6 @@
     <string name="levelup_detail">Благодаря выполнению своих целей в реальной жизни вы получили уровень и восполнили полностью здоровье!</string>
     <string name="onwards">Вперёд!</string>
     <string name="faint_subtitle">Не отчаивайтесь!</string>
-    <string name="faint_penalty_body">Вы потеряли Уровень, Золото и предмет Экипировки, но вы сможете все вернуть, если продолжите выполнять задачи! Удачи! Вы справитесь.</string>
     <string name="faint_header">У вас закончилось здоровье!</string>
     <string name="faint_button">Восстановить здоровье &amp; Попробовать ещё раз</string>
     <string name="filter">Фильтр</string>
@@ -526,11 +525,11 @@
     <string name="world_boss">Мировой босс</string>
     <string name="boss_art">Изображение босса</string>
     <string name="world_boss_description">Описание мирового босса</string>
-    <string name="rage_strike_count">Ярость: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Ярость: %d/%d</string>
     <string name="pending_strike_title">Ожидаемый урон</string>
     <string name="strike_description_title">Что такое Удар Ярости?</string>
     <string name="strike_active_title">Атаковали %s!</string>
-    <string name="strike_active_description">Наш любимый %s был печально потрясен, когда %s порушил %s. Скорее, завершайте ваши задания, чтобы победить этого монстра и помочь в восстановлении!</string>
+    <string name="strike_active_description">Наш любимый %1$s был печально потрясен, когда %2$s порушил %3$s. Скорее, завершайте ваши задания, чтобы победить этого монстра и помочь в восстановлении!</string>
     <string name="questShop">Лавка квестов</string>
     <string name="market_owner_long">Торговец Александр</string>
     <string name="tavern_owner_long">Даниэль, хозяин гостиницы</string>
@@ -800,7 +799,7 @@
     <string name="beastMasterTitle">Повелитель зверей</string>
     <string name="partyOnDescription">Ваша команда увеличилась до 4 участников!</string>
     <string name="partyUpDescription">Вы объединились с членом команды!</string>
-    <string name="invitation_title">%s пригласил(-а) вас в группу %s</string>
+    <string name="invitation_title">%1$s пригласил(-а) вас в группу %2$s</string>
     <string name="id_copied">ID пользователя cкопирован в буфер обмена</string>
     <string name="preference_push_unjoined_guild_mention">\@Упоминания в остальных Гильдиях</string>
     <string name="preference_push_joined_guild_mention">\@Упоминания в моих Гильдиях</string>
@@ -966,10 +965,10 @@
     <string name="theme_mode">Режим (Темный/Светлый)</string>
     <string name="dark_mode">Темная тема</string>
     <string name="spooky_promo_info_prompt">Распродажа самоцветов возвращается до конца Осеннего фестиваля этого года! Это последний шанс, чтобы получить больше самоцветов, чем когда-либо, так что запасайтесь пока не поздно!</string>
-    <string name="spooky_promo_info_instructions">Между %s и %s, выберете как обычно любой набор самоцветов, и на вашу учетную запись будет зачислена их акционная сумма. Больше самоцветов, чтобы потратить их, поделиться с кем-то или сохранить для любых будущих обновлений!</string>
+    <string name="spooky_promo_info_instructions">Между %1$s и %2$s, выберете как обычно любой набор самоцветов, и на вашу учетную запись будет зачислена их акционная сумма. Больше самоцветов, чтобы потратить их, поделиться с кем-то или сохранить для любых будущих обновлений!</string>
     <string name="view_gem_bundles">Посмотреть наборы самоцветов</string>
     <string name="fall_promo_info_prompt">Осенний фестиваль идет полным ходом, так что мы подумали, что это идеальное время, чтобы представить нашу первую в истории распродажу самоцветов! Теперь вы можете получить больше самоцветов с каждой покупки, чем когда-либо прежде.</string>
-    <string name="fall_promo_info_instructions">Между %s и %s, выберете как обычно любой набор самоцветов, и на вашу учетную запись будет зачислена их акционная сумма. Больше самоцветов, чтобы потратить их, поделиться с кем-то или сохранить для любых будущих обновлений!</string>
+    <string name="fall_promo_info_instructions">Между %1$s и %2$s, выберете как обычно любой набор самоцветов, и на вашу учетную запись будет зачислена их акционная сумма. Больше самоцветов, чтобы потратить их, поделиться с кем-то или сохранить для любых будущих обновлений!</string>
     <string name="pms_disabled_description">Вы всё ещё можете отправлять сообщения, но никто не может отправлять их вам. Вы можете изменить это в настройках.</string>
     <string name="block_user_description">Заблокированный игрок не может отправлять вам личные сообщения, но вы все равно будете видеть его сообщения</string>
     <string name="challenge_task_name">%s задание испытания</string>
@@ -1125,7 +1124,7 @@
     <string name="about_me">Обо мне</string>
     <string name="my_account">Мой аккаунт</string>
     <string name="public_profile">Публичный профиль</string>
-    <string name="class_confirmation_price">Хотите сменить ваш класс на %s за %d самоцветов\?</string>
+    <string name="class_confirmation_price">Хотите сменить ваш класс на %1$s за %2$d самоцветов\?</string>
     <string name="use_item">Использовать предмет на члена команды</string>&gt;
     <string name="unsaved_changes">Изменения не сохранены</string>
     <string name="gift_confirmation_text_gems_new">Вы отправили @%1$s %2$s самоцветов.</string>
@@ -1220,7 +1219,7 @@
     <string name="death_description">Но вы сможете вернуть все это упорным трудом! Удачи - у вас все получится.</string>
     <string name="faint_broken_equipment">Сломанное снаряжение можно
 \nвыкупить обратно из Вознаграждений</string>
-    <string name="faint_loss_description">Ваш уровень понижен до <b>%d</b>, вы потеряли <b>%d</b> золота(-о) и сломали <b>часть вашей экипировки</b>… Вы сможете вернуть все это упорным трудом!</string>
+    <string name="faint_loss_description">Ваш уровень понижен до <b>%1$d</b>, вы потеряли <b>%2$d</b> золота(-о) и сломали <b>часть вашей экипировки</b>… Вы сможете вернуть все это упорным трудом!</string>
     <string name="account_reset">Сброс учетной записи</string>
     <string name="avatar_skin_customization">Персонализация кожи аватара</string>
     <string name="avatar_shirt_customization">Персонализация рубашки аватара</string>
@@ -1333,7 +1332,6 @@
     <string name="report_challenge_explanation">Вы должны сообщать только о тех проблемах, которые нарушают [Правила сообщества](https://habitica.com/static/community-guidelines) и/или [Условия предоставления услуг](https://habitica.com/static/terms). Подача ложного сообщения является нарушением Правил сообщества Habitica.</string>
     <string name="report_successful">%s жалоба отправлена</string>
     <string name="unmute_user_confirm">Хотите разрешить этому пользователю использовать чат\?</string>
-    <string name="g1g1_promo_info_limitations_fixed">Это ограниченное по времени мероприятие, которое начнется в %1$s (%2$s) и закончится в %3$s (%4$s). Эта акция действует только в том случае, если вы дарите подписку другому игроку Habitica. Если у вас или у получателя подарка уже есть подписка, подаренная подписка добавит несколько месяцев кредита, который можно будет использовать только после отмены или истечения срока действия текущей подписки.</string>
     <string name="assigned_to">Назначен на</string>
     <string name="gems_promo_info_limitations_fixed">Акция действует ограниченное время. Это мероприятие начинается с %1$s (%2$s) и закончится %3$s (%4$s). Промо доступно только при покупке драгоценных камней для себя.</string>
     <string name="promote_to_manager">Повысить до менеджера</string>

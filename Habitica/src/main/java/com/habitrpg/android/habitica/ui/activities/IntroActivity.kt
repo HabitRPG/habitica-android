@@ -54,7 +54,6 @@ class IntroActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
             window.isNavigationBarContrastEnforced = false
             val controller = WindowCompat.getInsetsController(window, window.decorView)
             controller.isAppearanceLightNavigationBars = false

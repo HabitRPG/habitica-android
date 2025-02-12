@@ -69,7 +69,6 @@
     <string name="levelup_detail">Gerçek hayattaki hedeflerini gerçekleştirerek seviye atladın ve sağlığın yenilendi!</string>
     <string name="onwards">Yaşasın!</string>
     <string name="faint_subtitle">Umudunu kaybetme!</string>
-    <string name="faint_penalty_body">Bir Seviye, Altınlarını ve bir parça Ekipman kaybettin, ama çok çalışarak hepsini yeniden kazanabilirsin! İyi şanslar—bu işi başaracaksın.</string>
     <string name="faint_header">Sağlığın tükendi!</string>
     <string name="faint_button">Sağlığını Doldur &amp; Tekrar Dene</string>
     <string name="filter">Filtre</string>
@@ -532,11 +531,11 @@
     <string name="world_boss">Dünya Canavarı</string>
     <string name="boss_art">Canavar Görseli</string>
     <string name="world_boss_description">Dünya Canavarı Tanımı</string>
-    <string name="rage_strike_count">Öfke Saldırıları: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Öfke Saldırıları: %d/%d</string>
     <string name="pending_strike_title">Bekleyen Saldırı</string>
     <string name="strike_description_title">Öfke Saldırısı nedir?</string>
     <string name="strike_active_title">%s Saldırıya uğradı!</string>
-    <string name="strike_active_description">Çok sevdiğimiz %s hüsrana uğradı çünkü %s, %s ve çevresini paramparça etti. Çabuk, canavarı yenmek ve yeniden inşaya yardım etmek için işlerine sarıl!</string>
+    <string name="strike_active_description">Çok sevdiğimiz %1$s hüsrana uğradı çünkü %2$s, %3$s ve çevresini paramparça etti. Çabuk, canavarı yenmek ve yeniden inşaya yardım etmek için işlerine sarıl!</string>
     <string name="questShop">Görev Dükkanı</string>
     <string name="market_owner_long">Tüccar Alex</string>
     <string name="tavern_owner_long">Hancı Daniel</string>
@@ -795,7 +794,7 @@
     <string name="feedPet_title">Bir evcil hayvan besle</string>
     <string name="group_plan">Grup Aboneliği</string>
     <string name="gift_gems_balance_subtitle">Aşağıya kaç Elmas göndermek istediğini gir veya hediye etmek üzere Elmas satın almak için sekmeleri değiştir</string>
-    <string name="invitation_title">%s seni %s grubuna katılman için davet etti</string>
+    <string name="invitation_title">%1$s seni %2$s grubuna katılman için davet etti</string>
     <string name="gems_to_gift">Hediye edilecek taşlar</string>
     <string name="from_balance">Bakiyeden Gönder</string>
     <string name="partyOnDescription">Takımın 4 üyeye ulaştı!</string>
@@ -938,9 +937,9 @@
     <string name="assigned_stat">Atanan İstatistik</string>
     <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için %s gidin!</string>
     <string name="spooky_promo_info_prompt">Değerli Taş Satışı, bu yılki Sonbahar Galasının en sonunda tekrar gündeme geldi! Bu, her zamankinden daha fazla Mücevher almak için son bir şans, bu yüzden bu süre boyunca stok yapın!</string>
-    <string name="spooky_promo_info_instructions">%s ile %s arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="spooky_promo_info_instructions">%1$s ile %2$s arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="fall_promo_info_prompt">Sonbahar Galası tüm hızıyla devam ediyor, bu yüzden ilk Mücevher Satışımızı sunmak için mükemmel bir zaman olduğunu düşündük! Artık her satın alma işleminde her zamankinden daha fazla Mücevher kazanacaksınız.</string>
-    <string name="fall_promo_info_instructions">%s ve %s arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="fall_promo_info_instructions">%1$s ve %2$s arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="how_it_works">Nasıl çalışır</string>
     <string name="x_to_y">%1$s - %2$s</string>
     <string name="usually_x_gems">Genellikle %d Mücevher</string>
@@ -1203,7 +1202,7 @@
     <string name="armoire_rate_equipment_title">60% parça ekipman</string>
     <string name="armoire_rate_food_title">20% Yem</string>
     <string name="purchased">Satın Alındı</string>
-    <string name="class_confirmation_price">Sınıfını %s\'ye %d Elmas için değiştirmek istiyor musun\?</string>
+    <string name="class_confirmation_price">Sınıfını %1$s\'ye %2$d Elmas için değiştirmek istiyor musun\?</string>
     <string name="subscription_credit_canceling">Sizin <b>+%d</b> aylık abonelik krediniz aboneliğinizi iptal ettikten sonra etkinleşecek</string>
     <string name="unsaved_changes">Kaydedilmemiş Değişiklikler</string>
     <string name="armoire_rate_equipment_description">Yeni Ekipman parçaları her ay eklenir. Eğer bütün Ekipmanlara sahipsen, o zaman Yem ya da Deneyim alırsın, 50/50 şans.</string>
@@ -1252,7 +1251,7 @@
     <string name="mor_gems_title">Bunu almak için daha fazla elmas lazım!</string>
     <string name="gems_support">Elmas satın almak bizim küçük Habitica takımımızı destekler</string>
     <string name="month_released">Yayımlandığı Ay</string>
-    <string name="faint_loss_description">Seviye <b>%d</b>\'e düşecek, <b>%d</b> Altın kaybedecek, ve <b>bir parça ekipman</b> kıracaksın…</string>
+    <string name="faint_loss_description">Seviye <b>%1$d</b>\'e düşecek, <b>%2$d</b> Altın kaybedecek, ve <b>bir parça ekipman</b> kıracaksın…</string>
     <string name="account_reset">Hesap Sıfırlama</string>
     <string name="avatar_skin_customization">Avatar Kıyafeti Özelleştirme</string>
     <string name="delete_account_subscription_active">Aktif bir aboneliğin içindeyken hesabını silemezsin. Lütfen önce aboneliğini iptal et.</string>
