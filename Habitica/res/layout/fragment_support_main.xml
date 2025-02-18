@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
+        android:id="@+id/scroll_content"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -165,6 +166,7 @@
         </LinearLayout>
     </LinearLayout>
     <View
+            android:id="@+id/reset_tutorial_button_wrapper"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?attr/colorContentBackgroundOffset"/>

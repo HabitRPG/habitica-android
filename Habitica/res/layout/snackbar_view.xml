@@ -9,8 +9,7 @@
     android:paddingEnd="0dp"
     android:gravity="center"
     tools:background="@drawable/snackbar_background_green"
-    android:layout_marginBottom="32dp"
-    android:layout_gravity="center_horizontal"
+    android:layout_gravity="center_horizontal|bottom"
     android:elevation="24dp"
     android:clipToPadding="false">
     <ImageView

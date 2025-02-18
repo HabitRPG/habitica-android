@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqDetailBinding
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -60,5 +61,6 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
         }
 
         binding?.answerTextView?.movementMethod = LinkMovementMethod.getInstance()
+        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
     }
 }

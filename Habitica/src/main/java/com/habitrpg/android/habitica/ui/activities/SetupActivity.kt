@@ -107,20 +107,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
         binding.previousButton.setOnClickListener { previousClicked() }
         binding.nextButton.setOnClickListener { nextClicked() }
-
-        if (this.isUsingNightModeResources()) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                window.insetsController?.setSystemBarsAppearance(
-                    0,
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            }
-        }
     }
 
     override fun onDestroy() {

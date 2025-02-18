@@ -2,10 +2,10 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.habitrpg.convention)
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.compose)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.habitrpg.convention.get().pluginId)
+    id(libs.plugins.android.library.get().pluginId)
+    id(libs.plugins.kotlin.compose.get().pluginId)
 }
 
 android {

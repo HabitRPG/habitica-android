@@ -1,13 +1,15 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.activity.SystemBarStyle
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -16,6 +18,7 @@ import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
+import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.viewpagerindicator.IconPagerAdapter
@@ -40,7 +43,6 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
     }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.black_50_alpha))
         super.onCreate(savedInstanceState)
 
         setupIntro()
@@ -52,9 +54,18 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             contentRepository.retrieveContent()
         }
+    }
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    override fun onResume() {
+        super.onResume()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
+            window.isNavigationBarContrastEnforced = false
+            val controller = WindowCompat.getInsetsController(window, window.decorView)
+            controller.isAppearanceLightNavigationBars = false
+            controller.isAppearanceLightStatusBars = false
+            window.setNavigationBarDarkIcons(false)
+        }
     }
 
     private fun setupIntro() {

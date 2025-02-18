@@ -113,6 +113,8 @@ fun LabeledBar(
                     .clip(CircleShape)
                     .height(barHeight),
                 trackColor = barColor,
+                drawStopIndicator = {},
+                gapSize = -barHeight,
                 color = color
             )
             AnimatedVisibility(visible = !displayCompact) {
@@ -177,6 +179,14 @@ private fun Preview() {
             color = colorResource(R.color.hpColor),
             value = 10.0,
             maxValue = 50.0,
+            displayCompact = compact
+        )
+        LabeledBar(
+            icon = HabiticaIconsHelper.imageOfExperience(),
+            label = stringResource(id = R.string.XP_default),
+            color = colorResource(R.color.xpColor),
+            value = 100.0,
+            maxValue = 300.0,
             displayCompact = compact
         )
         LabeledBar(

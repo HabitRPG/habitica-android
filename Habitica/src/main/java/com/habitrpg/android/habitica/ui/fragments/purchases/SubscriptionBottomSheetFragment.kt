@@ -209,7 +209,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         if (user != null) {
             binding.content.loadingIndicator.visibility = View.GONE
             binding.content.subscription12month.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
-            val totalGemCap = user?.purchased?.plan?.totalNumberOfGems ?: 24
+            val totalGemCap = user?.purchased?.plan?.totalNumberOfGemsAlways ?: 24
             binding.content.subscription1month.gemCap = totalGemCap
             binding.content.subscription3month.gemCap = totalGemCap
             binding.content.subscription6month.gemCap = totalGemCap

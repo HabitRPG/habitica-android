@@ -14,6 +14,7 @@
         android:scrollbars="vertical">
 
         <LinearLayout
+                android:id="@+id/scroll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

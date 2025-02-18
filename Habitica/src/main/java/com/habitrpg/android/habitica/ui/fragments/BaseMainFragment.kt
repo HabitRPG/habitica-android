@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments
 
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -8,8 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsetsController
 import androidx.core.os.bundleOf
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
@@ -17,10 +18,12 @@ import com.google.android.material.tabs.TabLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import javax.inject.Inject
 
 abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
@@ -50,16 +53,10 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val window = activity?.window
-        if (window != null) {
-            val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
-            if (this.usesBottomNavigation) {
-                bottomNavigation?.visibility = View.VISIBLE
-                windowInsetsController.isAppearanceLightNavigationBars = false
-            } else {
-                bottomNavigation?.visibility = View.GONE
-                windowInsetsController.isAppearanceLightNavigationBars = true
-            }
+        if (this.usesBottomNavigation) {
+            bottomNavigation?.visibility = View.VISIBLE
+        } else {
+            bottomNavigation?.visibility = View.GONE
         }
 
         setHasOptionsMenu(true)
@@ -94,6 +91,25 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         super.onResume()
         mainActivity?.showBackButton = showsBackButton
         mainActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val window = activity?.window
+        if (window != null) {
+            val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+            if (this.usesBottomNavigation) {
+                windowInsetsController.isAppearanceLightNavigationBars = false
+                view?.systemUiVisibility
+                window.setNavigationBarDarkIcons(false)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    window.isNavigationBarContrastEnforced = false
+                }
+            } else {
+                windowInsetsController.isAppearanceLightNavigationBars = requireActivity().isUsingNightModeResources()
+                window.setNavigationBarDarkIcons(!requireActivity().isUsingNightModeResources())
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    window.isNavigationBarContrastEnforced = true
+                }
+            }
+        }
     }
 
     @Deprecated("Use onCreateOptionsMenu(Menu, MenuInflater) instead")

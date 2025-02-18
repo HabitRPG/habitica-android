@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -134,6 +135,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 }
             }
         }
+        binding?.chatBarView?.let { applyScrollContentWindowInsets(it) }
     }
 
     override fun onResume() {

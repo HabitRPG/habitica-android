@@ -31,6 +31,7 @@
         android:scrollbars="vertical">
 
         <LinearLayout
+                android:id="@+id/scroll_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"

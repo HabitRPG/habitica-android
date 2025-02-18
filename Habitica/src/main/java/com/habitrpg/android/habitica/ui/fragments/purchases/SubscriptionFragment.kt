@@ -294,7 +294,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.VISIBLE
                 binding?.content?.subscriptionDisclaimerView?.visibility = View.VISIBLE
 
-                val totalGemCap = user?.purchased?.plan?.totalNumberOfGems ?: 24
+                val totalGemCap = user?.purchased?.plan?.totalNumberOfGemsAlways ?: 24
                 binding?.content?.subscription1month?.gemCap = totalGemCap
                 binding?.content?.subscription3month?.gemCap = totalGemCap
                 binding?.content?.subscription6month?.gemCap = totalGemCap

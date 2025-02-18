@@ -17,6 +17,8 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:background="?colorPrimaryOffset"
+        android:clipToPadding="false"
+            android:clipChildren="false"
             android:baselineAligned="false">
 
         <com.habitrpg.android.habitica.ui.RoundedFrameLayout
@@ -68,6 +70,7 @@
                 android:id="@+id/notificationsButtonWrapper"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
+                android:clipChildren="false"
                 android:layout_marginStart="16dp">
 
             <ImageView
@@ -103,6 +106,8 @@
                 android:id="@+id/messagesButtonWrapper"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:layout_marginStart="8dp">
 
             <ImageView
@@ -137,7 +142,7 @@
         <RelativeLayout
                 android:id="@+id/settingsButtonWrapper"
                 android:layout_width="43dp"
-                android:layout_height="wrap_content"
+                android:layout_height="33dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="0dp">
 
@@ -175,5 +180,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorContentBackground" />
+            android:background="?attr/colorContentBackground"
+        android:clipToPadding="false"/>
 </LinearLayout>
