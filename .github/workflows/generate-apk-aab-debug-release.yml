@@ -69,7 +69,7 @@ jobs:
        # Only argument, a single string, to be passed as arguments to ff.
        # See `ff --help` for more help.
        # Default: "*"
-       args: "*.apk *.abb"
+        args: "*.apk *.abb"
       - name: Print files
         run: echo "${{ steps.ff.outputs.files }}"
 
