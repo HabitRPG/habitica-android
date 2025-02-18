@@ -47,16 +47,16 @@ jobs:
       #  run: ./gradlew test
 
       # Run Build Project
-      - name: Build gradle project
-        run: ./gradlew build
+      #- name: Build gradle project
+      #  run: ./gradlew build
 
       # Create APK Debug
-      #- name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-      #  run: ./gradlew assembleDebug
+      - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
+        run: ./gradlew assembleProd
 
       # Create APK Release
-      #- name: Build apk release project (APK) - ${{ env.main_project_module }} module
-      #  run: ./gradlew assemble
+      - name: Build apk release project (APK) - ${{ env.main_project_module }} module
+        run: ./gradlew assemble
 
       # Create Bundle AAB Release
       # Noted for main module build [main_project_module]:bundleRelease
