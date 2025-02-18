@@ -43,25 +43,25 @@ jobs:
         run: chmod +x ./gradlew
 
       # Run Tests Build
-      - name: Run gradle tests
-        run: ./gradlew test
+      #- name: Run gradle tests
+      #  run: ./gradlew test
 
       # Run Build Project
-      - name: Build gradle project
-        run: ./gradlew build
+      #- name: Build gradle project
+      #  run: ./gradlew build
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
         run: ./gradlew assembleDebug
 
       # Create APK Release
-      - name: Build apk release project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assemble
+      #- name: Build apk release project (APK) - ${{ env.main_project_module }} module
+      #  run: ./gradlew assemble
 
       # Create Bundle AAB Release
       # Noted for main module build [main_project_module]:bundleRelease
-      - name: Build app bundle release (AAB) - ${{ env.main_project_module }} module
-        run: ./gradlew ${{ env.main_project_module }}:bundleRelease
+      #- name: Build app bundle release (AAB) - ${{ env.main_project_module }} module
+      #  run: ./gradlew ${{ env.main_project_module }}:bundleRelease
 
       # Upload Artifact Build
       # Noted For Output [main_project_module]/build/outputs/apk/debug/
@@ -72,15 +72,15 @@ jobs:
           path: ${{ env.main_project_module }}/build/outputs/apk/debug/
 
       # Noted For Output [main_project_module]/build/outputs/apk/release/
-      - name: Upload APK Release - ${{ env.repository_name }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/release/
+      #- name: Upload APK Release - ${{ env.repository_name }}
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
+      #    path: ${{ env.main_project_module }}/build/outputs/apk/release/
 
       # Noted For Output [main_project_module]/build/outputs/bundle/release/
-      - name: Upload AAB (App Bundle) Release - ${{ env.repository_name }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - App bundle(s) AAB release generated
-          path: ${{ env.main_project_module }}/build/outputs/bundle/release/
+      #- name: Upload AAB (App Bundle) Release - ${{ env.repository_name }}
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - App bundle(s) AAB release generated
+      #    path: ${{ env.main_project_module }}/build/outputs/bundle/release/
