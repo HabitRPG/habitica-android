@@ -62,6 +62,16 @@ jobs:
       # Noted for main module build [main_project_module]:bundleRelease
       #- name: Build app bundle release (AAB) - ${{ env.main_project_module }} module
       #  run: ./gradlew ${{ env.main_project_module }}:bundleRelease
+      - name: Find files matching "*.rs" or "*.md"
+        uses: jeertmans/filesfinder@latest
+        id: ff # Any id, to be used later to reference to files output
+        with:
+       # Only argument, a single string, to be passed as arguments to ff.
+       # See `ff --help` for more help.
+       # Default: "*"
+       args: "*.apk *.abb"
+      - name: Print files
+        run: echo "${{ steps.ff.outputs.files }}"
 
       # Upload Artifact Build
       # Noted For Output [main_project_module]/build/outputs/apk/debug/
