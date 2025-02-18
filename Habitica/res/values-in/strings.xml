@@ -153,7 +153,7 @@
     <string name="setup_task_creativity_1">Belajar menguasai kerajinan tangan</string>
     <string name="setup_task_creativity_2">Mengerjakan proyek kreatif</string>
     <string name="setup_task_creativity_3">Menyelesaikan proyek kreatif</string>
-            <string name="guild">Guild</string>
+    <string name="guild">Guild</string>
     <string name="leave">Tinggalkan</string>
     <string name="join">Gabung</string>
     <string name="delete">Hapus</string>
@@ -216,17 +216,16 @@
     <string name="select_class">Pilih Profesi</string>
     <string name="opt_out_class">Matikan Fitur</string>
     <string name="class_confirmation">Apakah kamu yakin ingin menjadi seorang %s?</string>
-    <string name="class_changed">Kamu sekarang seorang %s! </string>
-
-    <string name="choose_class">Pilih Kelas</string>
+    <string name="class_changed">Kamu sekarang adalah seorang %s!</string>
+    <string name="choose_class">Pilih Profesi</string>
     <string name="dialog_go_back">Kembali</string>
-    <string name="opt_out_confirmation">Apakah kamu yakin kamu ingin mematikan fitur?</string>
-    <string name="change_class">Ganti profesi</string>
+    <string name="opt_out_confirmation">Apakah kamu yakin kamu ingin keluar dari profesimu\?</string>
+    <string name="change_class">Ganti profesimu</string>
     <string name="change_class_description">Ubah kelasmu dan terima kembali poin atribut seharga 3 Permata.</string>
     <string name="enable_class">Aktifkan Sistem Profesi</string>
-    <string name="changing_class_progress">Ganti Profesi</string>
+    <string name="changing_class_progress">Mengganti Profesi</string>
     <string name="by_email">Melalui Email</string>
-    <string name="invite_existing_users">Undang Pengguna yang telah ada</string>
+    <string name="invite_existing_users">Undang pemain yang telah ada</string>
     <string name="send">Kirim</string>
     <string name="invite">Undang Teman</string>
     <string name="invite_email_description">Jika seorang teman bergabung dengan Habitica melalui emailmu, mereka otomatis akan diundang ke dalam kelompokmu!</string>
@@ -237,8 +236,8 @@
     <string name="share_hatched">Saya menetaskan peliharaan seekor %2$s %1$s di #Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
     <string name="share_raised">Saya baru mendapatkan tunggangan seekor %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
     <string name="open_in_store">Buka di Play Store</string>
-    <string name="change_class_confirmation">Apa kamu yakin untuk mengubah pekerjaanmu\? Ini akan membutuhkan 3 permata.</string>
-    <string name="change_class_equipment_warning">Peringatan: Kamu tidak akan dapat membeli perlengkapan untuk profesi %s. </string>
+    <string name="change_class_confirmation">Apa kamu yakin untuk mengubah profesimu dengan menggunakan 3 Permata\?</string>
+    <string name="change_class_equipment_warning">Ini akan mengubah poin atribut mu, mengganti peralatan yang tersedia di toko, dan mengubah skillmu yang tersedia.</string>
     <string name="confirm">Yakin</string>
     <string name="market">Pasar</string>
     <string name="timeTravelers">Penjelajah Waktu</string>
@@ -287,10 +286,10 @@
     <string name="belongs_to_challenge">Milik Tantangan</string>
     <string name="has_reminder">Memiliki Pengingat</string>
     <string name="has_tag">Memiliki Label</string>
-    <string name="subscribe_title">Berlangganan mendukung para pengembang dan membantu menjaga Habitica terus berjalan</string>
-    <string name="subscribe_prompt">Jadilah seorang pelanggan untuk mendapatkan keuntungan eksklusif!</string>
-    <string name="subscribe_listitem1">Beli permata dengan koin emas</string>
-    <string name="subscribe_listitem2">Item bulanan eksklusif</string>
+    <string name="subscribe_title">Dengan berlangganan, kamu mendukung para pengembang untuk menjaga Habitica terus beroperasi</string>
+    <string name="subscribe_prompt">Jaga motivasimu dengan lebih banyak reward saat berlangganan</string>
+    <string name="subscribe_listitem1">Permata Gratis Bulanan</string>
+    <string name="subscribe_listitem2">Jam Pasir Mistik Bulanan</string>
     <string name="subscribe_listitem3">Simpan lebih banyak riwayat masukan</string>
     <string name="subscribe_listitem4">Batas drop harian didobel</string>
     <string name="subscriptions">Langganan</string>
@@ -520,7 +519,6 @@
     <string name="insufficientSubscriberGems">Kamu telah membeli semua Permata yang tersedia bulan ini. Lebih banyak akan ditambahkan dalam tiga hari pertama pada setiap bulan. Terima kasih sudah berlangganan!</string>
     <string name="levelup_header">Kamu Telah Mencapai Level %1$d!</string>
     <string name="levelup_detail">Dengan menyelesaikan tujuan hidupmu, kamu naik level dan sekarang sepenuhnya pulih!</string>
-    <string name="faint_penalty_body">Kamu kehilangan satu level, uangmu, and sebagian perlengkapan, tapi kamu bisa mendapatkannya kembali dengan kerja keras! Semoga beruntung—kamu bisa melakukannya dengan baik.</string>
     <string name="reminder_title">Ingatlah untuk selalu memeriksa tugas anda</string>
     <string name="ago_1day">1 hari yang lalu</string>
     <string name="ago_days">%d hari yang lalu</string>
@@ -870,7 +868,7 @@
     <string name="subscribe_options_title">Pilih masa Berlangganan yang kamu inginkan</string>
     <string name="ending_on">Berakhir pada %s</string>
     <string name="not_recurring">Tidak Berulang</string>
-    <string name="cancelled">Membatalkan</string>
+    <string name="cancelled">Dibatalkan</string>
     <string name="apple_sign_in">Masuk dengan Apple</string>
     <string name="send_invites">Mengirim Undangan</string>
     <string name="google">Google</string>
@@ -951,4 +949,36 @@
     <string name="armoireFood_new">Kamu mengobrak-abrik isi Peti dan menemukan makanan. Kenapa bisa ada di sini\?</string>
     <string name="sell_no_price">Jual</string>
     <string name="create_new_party">Buat party baru</string>
+    <plurals name="x_days">
+        <item quantity="other">%d Hari</item>
+    </plurals>
+    <plurals name="x_hours">
+        <item quantity="other">%d Jam</item>
+    </plurals>
+    <plurals name="x_minutes">
+        <item quantity="other">%d Menit</item>
+    </plurals>
+    <string name="choosing_class_progress">Memilih Profesi</string>
+    <string name="level_abbreviated">Lv. %d</string>
+    <string name="thousand_abbrev">rb</string>
+    <string name="million_abbrev">jt</string>
+    <string name="class_confirmation_price">Apakah kamu mau mengganti profesimu ke %s dengan %d permata\?</string>
+    <string name="buy_all">Beli Semua</string>
+    <string name="billion_abbrev">mil</string>
+    <string name="push_notification_system_settings_description">Perbolehkan notifikasi Habitica di aplikasi Pengaturan untuk menerima notifikasi</string>
+    <string name="push_notification_system_settings_reminders">Perbolehkan notifikasi Habitica di aplikasi Pengaturan untuk menerima pengingat</string>
+    <string name="push_notification_system_settings_title">Notifikasi Dinonaktifkan</string>
+    <string name="title">Judul</string>
+    <string name="positive_sentence">Positif</string>
+    <string name="negative_sentence">negatif</string>
+    <string name="enable_notifications">Aktifkan Pengingat</string>
+    <string name="buy_gems_with_gold">Beli Permata menggunakan Gold</string>
+    <string name="opt_out_description">Ini akan meninggalkanmu tanpa profesi. Kamu bisa memilih profesi lagi dengan menyalakan sistem profesi di pengaturan kapanpun.</string>
+    <string name="enable_class_description">Pilihlah profesi untuk mengaktifkan skill, statistik, dan mana</string>
+    <string name="send_invite">Kirim undangan</string>
+    <string name="class_changed_description">Kamu sekarang bisa menggunakan skill %s dan membeli peralatan dari toko. Naikkan level untuk menambah poin atribut yang bisa digunakan untuk memperkuat skill mu.</string>
+    <string name="change_class_message">Ini akan menghapus kelas anda saat ini dan mengembalikan semua point status kemudian anda dapat memilih kelas yang baru</string>
+    <string name="change_class_confirmation_message">Ini akan mengganti perlengkapan apa yang akan dibuka di toko dan mengganti kemampuan anda yang tersedia</string>
+    <string name="your_tags">Tag Anda</string>
+    <string name="change_class_selected_confirmation">Apakah anda ingin mengubah kelas anda menjadi %1$s\?</string>
 </resources>

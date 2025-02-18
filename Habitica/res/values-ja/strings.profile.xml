@@ -6,9 +6,8 @@
     <string name="profile_loading_data">メンバーのデータを読み込み中…</string>
     <string name="profile_send_message_to">%s にメッセージを送る</string>
     <string name="profile_message_sent_to">%s に送ったメッセージ</string>
-    <string name="profile_level">レベル : </string>
-    <string name="profile_class_bonus">クラスボーナス : </string>
-    <string name="profile_allocated">割当済み : </string>
+    <string name="profile_level">レベル：</string>
+    <string name="profile_class_bonus">クラスボーナス：</string>
+    <string name="profile_allocated">割当済み：</string>
     <string name="profile_achievements">実績</string>
-
 </resources>

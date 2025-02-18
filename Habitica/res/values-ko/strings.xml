@@ -205,7 +205,7 @@
 \n • 과제의 콤보 수치나 습관의 횟수가 초기화되지 않습니다
 \n • 당신이 우두머리에게 주는 피해나 수집 퀘스트에서 수집한 아이템은 보류되었다가 체크아웃하면 적용됩니다</string>
     <string name="empty_items">%s 이(가) 하나도 없습니다</string>
-    <string name="user_level_with_class">Lvl %1$d %2$s</string>
+    <string name="user_level_with_class">Lv. %1$d %2$s</string>
     <string name="warrior">전사</string>
     <string name="rogue">도적</string>
     <string name="mage">마법사</string>
@@ -216,7 +216,7 @@
     <string name="select_class">직업 고르기</string>
     <string name="opt_out_class">선택 유예</string>
     <string name="class_confirmation">%s 이(가) 되고싶은 것이 확실한가요\?</string>
-    <string name="class_changed">%s이(가) 되었습니다!</string>
+    <string name="class_changed">당신은 %s 이(가) 되었습니다!</string>
     <string name="choose_class">직업 선택</string>
     <string name="dialog_go_back">뒤로 가기</string>
     <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
@@ -376,7 +376,6 @@
     <string name="leave_party">파티 떠나기</string>
     <string name="levelup_header">레벨 %1$d이 되었습니다!</string>
     <string name="levelup_detail">생활의 목표를 달성함으로 레벨이 올라가서 체력이 완전히 회복되었습니다!</string>
-    <string name="faint_penalty_body">레벨 하나, 골드 전부, 그리고 장비 하나를 잃었네요, 하지만 열심히 일하면 모두 다시 얻을 수 있습니다! 화이팅 - 잘 할 수 있어요.</string>
     <string name="reminder_title">끝낸 과제에 체크하는 걸 잊지 마세요</string>
     <string name="ago_1day">1일 전</string>
     <string name="ago_days">%d일 전</string>
@@ -962,7 +961,7 @@
     <string name="common_questions">자주 묻는 질문</string>
     <string name="usernames_party">%s의 파티</string>
     <string name="discard">버리기</string>
-    <string name="class_confirmation_price">%d개의 보석을 사용하여 %s직업으로 전직하시겠습니까\?</string>
+    <string name="class_confirmation_price">%s직업으로 보석 %d개를 사용하여 전직하시겠습니까\?</string>
     <string name="subscription_confirmation">이제 1개월간 구독하였습니다</string>
     <string name="month_reminder_title">일과에 변화가 필요한가요\?</string>
     <string name="use_item">파티원에게 아이템 사용하기</string>&gt;
@@ -1260,7 +1259,7 @@
     <string name="title">제목</string>
     <string name="positive_sentence">긍정적</string>
     <string name="negative_sentence">부정적</string>
-    <string name="class_changed_description">%s 스킬을 사용할 수 있고 상점에서 장비를 구매할 수 있습니다!</string>
+    <string name="class_changed_description">%s 스킬을 사용할 수 있고 상점에서 장비를 구매할 수 있습니다! 레벨을 올려 스탯 포인트를 획득하면 스킬을 강화하는 데 사용할 수 있습니다.</string>
     <string name="change_class_selected_confirmation">보석 3개를 사용하여 %1$s 직업으로 변경하시겠습니까\?</string>
     <string name="x_and_y">%1$s 와(과) %2$s</string>
 </resources>

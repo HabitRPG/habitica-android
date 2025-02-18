@@ -69,7 +69,6 @@
     <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
     <string name="onwards">Hurra!</string>
     <string name="faint_subtitle">Não se desespere!</string>
-    <string name="faint_penalty_body">Você perdeu um Nível, seu Ouro, e uma peça de Equipamento, mas você pode ganhar todos eles de volta com trabalho duro! Boa sorte — Você se sairá bem.</string>
     <string name="faint_header">Você perdeu toda sua Vida!</string>
     <string name="faint_button">Restaurar Vida &amp; Tentar Novamente</string>
     <string name="filter">Filtro</string>
@@ -517,7 +516,7 @@
     <string name="class_equipment">Equipamento</string>
     <string name="equipment_empty">Você já tem todos os equipamentos! Outros serão liberados durante as Grand Galas, que acontecem ao fim de cada estação do ano.</string>
     <string name="classless">Sem Classe</string>
-    <string name="class_equipment_shop_dialog">Este item está disponível apenas para uma classe específica.\nVocê pode alterar sua classe em Configurações.</string>
+    <string name="class_equipment_shop_dialog">Este item só está disponível para uma classe específica. Você pode mudar sua classe nas Configurações.</string>
     <string name="class_gear_disclaimer">Você apenas pode comprar equipamento para sua classe atual</string>
     <string name="check_into_inn">Entrar na Pousada</string>
     <string name="community_guidelines">Diretrizes da Comunidade</string>
@@ -539,7 +538,7 @@
     <string name="strike_description_title">O que é um Strike de Raiva?</string>
     <string name="strike_active_title">O %s foi Atacado!</string>
     <string name="strike_active_description">Nossa amada %s foi devastada quando o %s quebrou o %s. Rápido, enfrente suas tarefas para derrotar o monstro e ajudar a reconstruir!!</string>
-    <string name="questShop">Loja de Missões</string>
+    <string name="questShop">Missões</string>
     <string name="market_owner_long">Alex o Mercante</string>
     <string name="tavern_owner_long">Daniel o estalajadeiro</string>
     <string name="stable_owner_long">Matt o mestre das bestas</string>
@@ -1006,7 +1005,7 @@
     <string name="hatchedPetTitle">Chocou um Mascote</string>
     <string name="completedTaskTitle">Completou uma tarefa</string>
     <string name="createdTaskTitle">Criou sua primeira tarefa</string>
-    <string name="purchase_equipment_description">Equipamentos são uma forma de customizar seu avatar e melhorar seus atributos</string>
+    <string name="purchase_equipment_description">Equipamentos são uma forma de personalizar seu avatar e melhorar seus atributos</string>
     <string name="feedPet_description">Complete tarefas para ganhar comida! Você pode alimentar seu mascote em Mascotes &amp; Montarias</string>
     <string name="hatch_pet_description">Complete tarefas para ganhar uma Poção de Eclosão e Ovo e então choque seu Mascote!</string>
     <string name="complete_task_description">Marque como feita qualquer uma das suas tarefas para ganhar recompensas</string>
@@ -1029,7 +1028,7 @@
     <string name="pms_disabled">Mensagens Privadas estão desabilitadas</string>
     <string name="disablePrivateMessages">Desabilitar Mensagens Privadas</string>
     <string name="block">Bloquear</string>
-    <string name="block_user_description">Um usuário bloqueado não pode te enviar Mensagens Privadas, mas você ainda verá suas postagens na Taverna ou nas Guildas. Isso não terá efeito se a pessoa for moderadora agora ou no futuro.</string>
+    <string name="block_user_description">Um usuário bloqueado não pode te enviar Mensagens Privadas, mas você ainda verá suas postagens</string>
     <string name="block_user_title">Bloquear %s\?</string>
     <string name="unblock_user">Desbloquear Usuário</string>
     <string name="block_user">Bloquear Usuário</string>
@@ -1081,7 +1080,7 @@
     <string name="you">Você</string>
     <string name="login_disclaimer">Ao se inscrever, você está indicando que leu e concorda com os <a href="https://habitica.com/static/terms">Termos de Serviço</a> e com a <a href="https://habitica.com/static/privacy">Política de Privacidade.</a></string>
     <string name="finish">Concluir</string>
-    <string name="user_is_blocked_explanation">Um usuário bloqueado não pode lhe enviar mensagens privadas, mas você ainda verá seus posts na Taverna ou guildas.</string>
+    <string name="user_is_blocked_explanation">Um usuário bloqueado não pode lhe enviar mensagens privadas, mas você ainda verá suas postagens</string>
     <string name="user_is_blocked">Você bloqueou este usuário</string>
     <string name="submit_feedback">Submeter feedback</string>
     <string name="dark_mode">Modo escuro</string>
@@ -1207,7 +1206,8 @@
     <string name="tutorial_reset_confirmation">Seus tutoriais foram reiniciados</string>
     <string name="you_ran_out_of_health">Você perdeu sua Vida!</string>
     <string name="death_description">Você pode recuperá-la com trabalho duro! Boa sorte–você se sairá bem.</string>
-    <string name="faint_broken_equipment">Equipamento quebrado pode ser comprado novamente em Recompensas</string>
+    <string name="faint_broken_equipment">Equipamento quebrado pode ser comprado novamente 
+\nem Recompensas</string>
     <string name="account_reset">Reinicio de conta</string>
     <string name="avatar_shirt_customization">Personalização da camiseta do avatar</string>
     <string name="avatar_beard_customization">Personalização da barba do avatar</string>
@@ -1249,11 +1249,12 @@
         <item quantity="other"/>
     </plurals>
     <plurals name="you_x_others">
-        <item quantity="one">Você</item>
+        <item quantity="one">Você, %d outro</item>
+        <item quantity="many">Vocês, %d outros</item>
         <item quantity="other">Vocês, %d outros</item>
     </plurals>
     <string name="x_and_y">%1$s e %2$s</string>
-    <string name="enable_notifications">Habilitar notificações</string>
+    <string name="enable_notifications">Habilitar Notificações</string>
     <string name="push_notification_system_settings_description">Habilite notificações do Habitica nas Configurações do aplicativo para receber notificações</string>
     <string name="push_notification_system_settings_title">Notificações desabilitadas</string>
     <string name="title">Título</string>
@@ -1337,8 +1338,7 @@
     <string name="find_more_members">Encontrar mais membros</string>
     <string name="resume_damage">Despausar dano</string>
     <string name="resume_damage_1_title">Suas Diárias incompletas não te causarão dano</string>
-    <string name="insufficient_level_equipment_dialog">Este item apenas está disponível para uma classe específica.
-\nVocê pode selecionar uma classe depois do nível 10.</string>
+    <string name="insufficient_level_equipment_dialog">Este item apenas está disponível para uma classe específica. Você pode selecionar uma classe depois do nível 10.</string>
     <string name="birthday_set">Conjunto de Aniversário</string>
     <string name="go_to_settings">Ir para Configurações</string>
     <string name="resume_damage_1_description">Chefões ainda causarão dano devido as
@@ -1442,7 +1442,6 @@
     <string name="report_successful">%s Denunciado</string>
     <string name="report_failure">Falha na denúncia, por favor, tente novamente mais tarde</string>
     <string name="report_player_toolbar_title">Denunciar %s</string>
-    <string name="g1g1_promo_info_limitations_fixed">Este é um evento por tempo limitado que começa em %1$s (%2$s) e terminará em %3$s (%4$s). Esta promoção só se aplica ao presentear outro Habiticano. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presenteada adicionará meses de crédito que só serão utilizados após o cancelamento ou expiração da assinatura atual.</string>
     <string name="item_footer_description">Confira o [Market](/shops/market) para comprar apenas o que você precisa!</string>
     <string name="visit_market">Visitar Mercado</string>
     <string name="empty_quests_description">Obtenha Missões ao subir de nível, bônus de login ou na [Quest Shop](/shops/quests)!</string>
@@ -1494,4 +1493,80 @@
     <string name="sub_perk">BENEFÍCIO SUB</string>
     <string name="subscribe_second_chance_incentive_text">Os assinantes têm uma segunda chance na vida todos os dias e esses outros benefícios!</string>
     <string name="watch_ad_to_hang_on">Assista ao anúncio para aguentar o 1HP!</string>
+    <string name="report_challenge_explanation">Você somente deve reportar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](http://habitica.com/static/terms). Enviar uma denúncia falsa é uma violação das Diretrizes da Comunidade do Habitica.</string>
+    <string name="quests_footer_description">Confira o [Mercado de Missões](/shops/quests) para ver o que tem disponível!</string>
+    <string name="subscriber_benefit_success_faint">Você conseguiu uma segunda chance com 1PV!</string>
+    <string name="purchase_saddles_in_market">Selas fazem seu Pet se tornar uma Montaria instantaneamente. Você pode comprar uma no Mercado.</string>
+    <string name="error_loading_member_body">Houve um erro no carregamento dos dados deste jogador. Por favor, tenha certeza que digitou o @nome do usuário corretamente.</string>
+    <plurals name="items_pending">
+        <item quantity="one">%d Item pendente</item>
+        <item quantity="many">%d Itens pendentes</item>
+        <item quantity="other">%d Itens pendentes</item>
+    </plurals>
+    <string name="report_reason_title_challenge">Por que você está reportando esse desafio\?</string>
+    <string name="eggs_footer_description">Confira o [Mercado](/lojas/mercado) para comprar somente os ovos que você precisa!</string>
+    <string name="error_loading_member">Impossível encontrar o jogador</string>
+    <string name="report_challenge">Reportar Desafio</string>
+    <string name="no_x">Sem %s</string>
+    <string name="food_footer_description">Confira o [Mercado](/shops/market) para comprar comida ou uma Sela para crescer seu Pet instantaneamente!</string>
+    <string name="hatchingPotions_footer_description">Confira o [Mercado](/shops/market) para comprar Poções de Eclosão básicas e sazonais!</string>
+    <string name="subscribe_listitem2_description_2">Ganhe Ampulhetas com o tempo para comprar itens na Loja do Viajante do Tempo</string>
+    <string name="preference_push_joined_group_plan_mention">\@Menções nos Planos do Grupo</string>
+    <string name="subscribe_incentive_button_faint">Assine para manter-se firme com 1PV!</string>
+    <string name="subscription_benefit_armoire_sub">Sua assinatura te dá uma chance extra no Baú!</string>
+    <plurals name="x_days">
+        <item quantity="one">%d Dia</item>
+        <item quantity="many">%d Dias</item>
+        <item quantity="other"/>
+    </plurals>
+    <plurals name="x_hours">
+        <item quantity="one">%d Hora</item>
+        <item quantity="many">%d Horas</item>
+        <item quantity="other"/>
+    </plurals>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Minuto</item>
+        <item quantity="many">%d Minutos</item>
+        <item quantity="other">%d Minuto</item>
+    </plurals>
+    <string name="class_equipment_shop_dialog_new">Este item só está disponível para %s. Abra as Configurações para mudar de classe.</string>
+    <string name="insufficient_level_equipment_dialog_new">Este item só está disponível para %s. Você pode escolher uma classe após o nível 10.</string>
+    <string name="winter">Inverno</string>
+    <string name="spring">Primavera</string>
+    <string name="clear_database">Limpar banco de dados</string>
+    <string name="animal_tails">Caudas de Animais</string>
+    <string name="avatar_accents">Decorações</string>
+    <string name="avatar_shirts">Camisas</string>
+    <string name="avatar_skins">Skins</string>
+    <string name="avatar_mustaches">Bigodes</string>
+    <string name="customizations">Customizações</string>
+    <string name="customizations_owner">Felicitus</string>
+    <string name="looking_for_more">Procurando mais\?</string>
+    <string name="customizations_no_owned">Você não possui nenhum desses itens</string>
+    <string name="avatar_hair_styles">Estilos de cabelo</string>
+    <string name="customization_shop_more">Confira a Loja de Personalização para ainda mais maneiras de personalizar seu avatar!</string>
+    <string name="monthly_backgrounds">Cenários Mensais</string>
+    <string name="try_on_equipment">Você pode experimentá-los em Equipamentos. Novo estoque chega no início de cada mês!</string>
+    <string name="clear_cache_settings">Limpar cache</string>
+    <string name="customizing_your_avatar">Customizando seu avatar</string>
+    <string name="equipment">Equipamento</string>
+    <string name="error">Erro</string>
+    <string name="error_loading_gems">Ocorreu um erro ao carregar as gemas</string>
+    <string name="standard_backgrounds">Cenários padrão</string>
+    <string name="avatar_hair_colors">Cores de cabelo</string>
+    <string name="customization_shop_check_out">Vá até a Loja de Personalização para conferir as diversas maneiras de personalizar seu avatar!</string>
+    <string name="tap_to_reload">Atualizar para novos itens</string>
+    <string name="summer">Verão</string>
+    <string name="fall">Outono</string>
+    <string name="you_own_all_items">Você possui todos esses itens</string>
+    <string name="try_on_next_month">Você pode experimentá-los customizando seu avatar. Não deixe de conferir mais tarde as opções do próximo mês!</string>
+    <string name="try_on_next_season">Você pode experimentá-los customizando seu avatar. Não deixe de conferir mais tarde as opções da próxima temporada!</string>
+    <string name="try_on_customize">Você pode experimentá-los customizando seu avatar.</string>
+    <string name="healers">Curandeiros</string>
+    <string name="rogues">Ladinos</string>
+    <string name="warriors">Guerreiros</string>
+    <string name="mages">Magos</string>
+    <string name="avatar_beards">Barbas</string>
+    <string name="switches_in_x">Mudanças em %s</string>
+    <string name="customization_shop">Loja de Personalização</string>
 </resources>

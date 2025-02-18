@@ -26,9 +26,9 @@
     <string name="preference_push_you_won_challenge">Vyhrál jsi výzvu!</string>
     <string name="preference_push_received_a_private_message">Přijata osobní zpráva</string>
     <string name="preference_push_gifted_gems">Darované diamanty</string>
-    <string name="preference_push_gifted_subscription">Darované předpatné</string>
-    <string name="preference_push_invited_to_party">Pozván do skupiny</string>
-    <string name="preference_push_invited_to_guild">Pozván do gildy</string>
+    <string name="preference_push_gifted_subscription">Darované Předpatné</string>
+    <string name="preference_push_invited_to_party">Pozván do Skupiny</string>
+    <string name="preference_push_invited_to_guild">Pozván do Cechu</string>
     <string name="preference_push_your_quest_has_begun">Tvoje výprava začala</string>
     <string name="preference_push_invited_to_quest">Pozván na výpravu</string>
     <!--Adding tasks-->
@@ -62,7 +62,6 @@
     <string name="saturday">Sobota</string>
     <string name="sunday">Neděle</string>
     <string name="faint_subtitle">Nezoufejte!</string>
-    <string name="faint_penalty_body">Ztratil jsi úroveň, zlato a kousek vybavení, ale můžeš je získat zpět když se budeš dost snažit! Hodně štěstí—Ať se ti daří.</string>
     <string name="faint_header">Došlo ti zdraví!</string>
     <string name="faint_button">Doplnit zdraví &amp; a zkusit to znovu</string>
     <string name="filter">Filtr</string>
@@ -141,7 +140,7 @@
     <string name="setup_task_creativity_1">Vypracovat předlohu</string>
     <string name="setup_task_creativity_2">Pracovat na kreativním projektu</string>
     <string name="setup_task_creativity_3">Dokončit kreativní projekt</string>
-            <string name="guild">Cech</string>
+    <string name="guild">Cech</string>
     <string name="leave">Odejít</string>
     <string name="join">Připojit se</string>
     <string name="delete">Smazat</string>
@@ -209,7 +208,6 @@
     <string name="opt_out_class">Neúčastnit se</string>
     <string name="class_confirmation">Opravdu chceš být %s?</string>
     <string name="class_changed">Nyní jsi %s!</string>
-
     <string name="choose_class">Vybrat třidu</string>
     <string name="dialog_go_back">Jít zpět</string>
     <string name="opt_out_confirmation">Jsi si jist, že se chceš neúčastnit?</string>
@@ -272,7 +270,7 @@
     <string name="belongs_to_challenge">Patří k Výzvě</string>
     <string name="has_reminder">Má připomínku</string>
     <string name="has_tag">Má štítek</string>
-    <string name="subscribe_prompt">Staň se předplatitel a získáš tyto užitečné benefity:</string>
+    <string name="subscribe_prompt">Staň se předplatitel a získáš tyto užitečné benefity</string>
     <string name="subscriptions">Předplatné</string>
     <string name="subscription_duration">Opakující se každý %s</string>
     <string name="subscribe">Předplatit</string>
@@ -292,7 +290,7 @@
     <string name="three_months">3 měsíce</string>
     <string name="six_months">6 měsíců</string>
     <string name="twelve_months">12 měsíců</string>
-    <string name="subscribe_prompt_thanks">Za předplatné obdržuješ tyto užitečné benefity:</string>
+    <string name="subscribe_prompt_thanks">Za předplatné obdržuješ tyto užitečné benefity</string>
     <string name="subscription_status">Status předplatného</string>
     <string name="challenge_leave_title">Opustit výzvu</string>
     <string name="remove_tasks">Odstranit</string>
@@ -402,7 +400,7 @@
     <string name="invite_username_description">Pokud někdo z tvých přátel už Habiticu používá, pozvi je pomocí jejich přihlašovacího jména.</string>
     <string name="create_account_short">Vytvořit účet</string>
     <string name="gem_purchase_title">Nákup drahokamů podporuje vývojáře a pomáhá udržovat Habitica v chodu</string>
-    <string name="gem_purchase_subtitle">Drahokamy vám umožní koupit zábavné doplňky pro váš účet, včetně:</string>
+    <string name="gem_purchase_subtitle">Drahokamy vám umožní koupit zábavné doplňky pro váš účet</string>
     <string name="gem_purchase_listitem1">Parádní kostýmy pro Váš avatar</string>
     <string name="subscribe_title">Předplatné podporuje vývojáře a pomáhá udržovat Habitica v chodu</string>
     <string name="subscribe_listitem3">Měsíční tajné předměty</string>

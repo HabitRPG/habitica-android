@@ -2,19 +2,19 @@
 <resources>
     <string name="tutorial_overview">¡Vamos allá! He añadido varias tareas por ti basándome en tus intereses. Intenta añadir algunas por ti mismo. Puedes editar cualquier tarea pulsando en su título.</string>
     <string name="tutorial_habits_1">Lo primero de todo son los Hábitos. Pueden ser hábitos positivos que quieras mejorar, o hábitos negativos que quieras dejar.</string>
-    <string name="tutorial_habits_2">¡Cada vez que realizas un Hábito positivo, presiona el + para obtener oro y experiencia!</string>
-    <string name="tutorial_habits_3">Si tienes un traspié y realizas un Hábito negativo, presionando el - reducirás la salud de tu personaje para impulsarte a tomártelo más en serio.</string>
+    <string name="tutorial_habits_2">¡Cada vez que realizas un hábito positivo, presiona el + para obtener oro y experiencia!</string>
+    <string name="tutorial_habits_3">Si tienes un traspié y realizas un hábito negativo, presionando el - reducirás la salud de tu personaje para impulsarte a tomártelo más en serio.</string>
     <string name="tutorial_habits_4">¡Inténtalo! Puedes explorar otros tipos de tarea mediante la barra de navegación inferior.</string>
-    <string name="tutorial_dailies_1">Utiliza Tareas Diarias para aquellas tareas que debes realizar ciñéndote a un programa regular.</string>
-    <string name="tutorial_dailies_2">Ten cuidado — si fallas una, tu personaje recibirá daño durante la noche. ¡Tacharlas sistemáticamente trae consigo premios estupendos!</string>
+    <string name="tutorial_dailies_1">Utiliza Tareas Diarias para aquellas tareas que debes realizar siguiendo un programa regular.</string>
+    <string name="tutorial_dailies_2">Ten cuidado — si no completas una, tu personaje recibirá daño durante la noche. ¡Cumplirlas constantemente te dará grandes recompensas!</string>
     <string name="tutorial_todos_1">Usa las Tareas Pendientes para gestionar las tareas que solo tienes que realizar una vez.</string>
     <string name="tutorial_todos_2">Si tu Tarea Pendiente debe estar completada para un momento concreto, añádele una fecha límite. Parece ser que puedes tachar una — ¡Adelante!</string>
-    <string name="tutorial_rewards_1">¡Compra equipamiento para tu personaje con el oro que ganas!</string>
+    <string name="tutorial_rewards_1">¡Compra Equipamiento para tu personaje con el oro que ganas!</string>
     <string name="tutorial_rewards_2">También puedes hacer Recompensas Personalizadas del mundo real basándote en lo que te motiva.</string>
     <string name="tutorial_tasks_complete">Eso es todo por ahora. Si necesitas un recordatorio, consulta la sección de Preguntas Frecuentes.</string>
-    <string name="tutorial_skills">Las habilidades son competencias especiales con efectos muy poderosos. Para usar una habilidad, solo tienes que pulsar en ella. Te costará maná (la barra azul), que puedes recuperar entrando todos los días y realizando tareas en la vida real. Para obtener más información, puedes consultar la sección de preguntas frecuentes en el menú!</string>
-    <string name="tutorial_party">Aquí es donde tú y tus amigos podéis estar pendientes unos de otros para cumplir vuestros objetivos y combatir monstruos con vuestras tareas!</string>
-    <string name="tutorial_stats">Toca el botón gris para asignar los puntos de tus atributos de una sola vez, o toca las flechas para agregarlos punto por punto.</string>
+    <string name="tutorial_skills">Las Habilidades son competencias especiales con efectos muy poderosos. Para usar una Habilidad, solo tienes que pulsar en ella. Te costará Maná (la barra azul), que puedes recuperar entrando todos los días y realizando tareas en la vida real. Para obtener más información, puedes consultar la sección de Preguntas Frecuentes en el menú!</string>
+    <string name="tutorial_party">Aquí es donde tú y tus amigos podéis estar pendientes unos de otros para cumplir vuestros objetivos y combatir monstruos con vuestras Tareas!</string>
+    <string name="tutorial_stats">Toca el botón gris para asignar los puntos de tus atributos de una sola vez, o toca las flechas para agregarlos manualmente.</string>
     <string name="tutorial_party_created">¡Bienvenido a tu Equipo! Podrás añadir a más miembros desde una lista de jugadores que estén buscando Equipo o invitar a amigos directamente. ¡Así, conseguirás el Pergamino de Misión de la Basi-Lista!
 \n
 \nVisita la página de Ayuda para obtener más información sobre los Equipos.</string>

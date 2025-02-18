@@ -15,5 +15,7 @@
     <string name="tutorial_skills">Les compétences sont des capacités spéciales qui ont des effets puissants ! Tapez sur une compétence pour l\'utiliser. Cela vous coûtera du Mana (la barre bleue), que vous gagnez en faisant le point tous les jours et en accomplissant des tâches dans la vie réelle. Allez voir les FAQ dans le menu pour plus d\'infos !</string>
     <string name="tutorial_party">Voici l\'endroit où vos amis et vous pouvez vous tenir mutuellement responsables de vos buts et combattre des monstres grâce à vos tâches !</string>
     <string name="tutorial_stats">Utilisez le bouton gris pour allouer plusieurs points à la fois, ou utilisez les flèches pour en ajouter un à la fois.</string>
-    <string name="tutorial_party_created">Bienvenu dans votre équipe ! Vous pouvez trouver d\'autres membres dans la liste des personnes cherchant une équipe, ou en invitant directement vos amis pour recevoir le parchemin de quête du basi-liste.\n\nVisitez la section Support pour en apprendre plus sur les équipes.</string>
+    <string name="tutorial_party_created">Bienvenue dans votre Équipe ! Vous pouvez trouver d\'autres membres depuis la liste de joueur·euse·s à la recherche d\'une Équipe, ou en invitant directement vos amis afin de recevoir le parchemin de la Quête du Basi-liste.
+\n
+\nVisitez la section Support pour en apprendre plus sur les Équipes.</string>
 </resources>

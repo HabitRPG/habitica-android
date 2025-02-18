@@ -69,7 +69,6 @@
     <string name="levelup_detail">Gerçek hayattaki hedeflerini gerçekleştirerek seviye atladın ve sağlığın yenilendi!</string>
     <string name="onwards">Yaşasın!</string>
     <string name="faint_subtitle">Umudunu kaybetme!</string>
-    <string name="faint_penalty_body">Bir Seviye, Altınlarını ve bir parça Ekipman kaybettin, ama çok çalışarak hepsini yeniden kazanabilirsin! İyi şanslar—bu işi başaracaksın.</string>
     <string name="faint_header">Sağlığın tükendi!</string>
     <string name="faint_button">Sağlığını Doldur &amp; Tekrar Dene</string>
     <string name="filter">Filtre</string>
@@ -157,7 +156,7 @@
     <string name="setup_task_creativity_1">Bir zanaat uzmanlığına çalış</string>
     <string name="setup_task_creativity_2">Yaratıcı bir proje üzerinde çalış</string>
     <string name="setup_task_creativity_3">Yaratıcı projeyi bitir</string>
-            <string name="guild">Lonca</string>
+    <string name="guild">Lonca</string>
     <string name="leave">Ayrıl</string>
     <string name="join">Katıl</string>
     <string name="delete">Sil</string>
@@ -231,7 +230,7 @@
     <string name="class_changed">Yeni sınıfın: %s!</string>
     <string name="choose_class">Sınıf Seç</string>
     <string name="dialog_go_back">Geri Dön</string>
-    <string name="opt_out_confirmation">Çekilmek istediğinden emin misin?</string>
+    <string name="opt_out_confirmation">Sınıf sisteminden çekilecek misin\?</string>
     <string name="change_class">Sınıfını değiştir</string>
     <string name="change_class_description">3 Elmas karşılığında sınıfını değiştir ve nitelik puanlarını geri al.</string>
     <string name="enable_class">Sınıf Sistemini Etkinleştir</string>
@@ -299,11 +298,11 @@
     <string name="belongs_to_challenge">Bir Mücadeleye ait</string>
     <string name="has_reminder">Hatırlatıcı Mevcut</string>
     <string name="has_tag">Etiket Mevcut</string>
-    <string name="subscribe_title">Abone olmak küçük takımımızı destekliyor ve Habitica\'nın çalışmaya devam etmesini sağlıyor, teşekkürler!</string>
+    <string name="subscribe_title">Abone olmak küçük takımımızı destekliyor ve Habitica\'nın çalışmaya devam etmesini sağlıyor</string>
     <string name="subscribe_prompt">Bu özel avantajlardan yararlanmak için abone olun!</string>
-    <string name="subscribe_listitem1">Altınla elmas satın al</string>
-    <string name="subscribe_listitem2">Mistik Kum Saati</string>
-    <string name="subscribe_listitem3">Geçmiş kaydınızı daha uzun süre saklama</string>
+    <string name="subscribe_listitem1">Ücretsiz Aylık Elmaslar</string>
+    <string name="subscribe_listitem2">Aylık Mistik Kum Saati</string>
+    <string name="subscribe_listitem3">Aylık Gizemli Eşyalar</string>
     <string name="subscribe_listitem4">Abonelere özel evcil hayvan</string>
     <string name="subscriptions">Abonelikler</string>
     <string name="subscription_duration">Her %s tekrar eder</string>
@@ -394,7 +393,7 @@
     <string name="read_community_guidelines">Lütfen mesaj göndermeden önce <u>Topluluk Kuralları</u>\'mıza göz at</string>
     <string name="maintenance">Bakım</string>
     <string name="reload_content">İçeriği Yenile</string>
-    <string name="dailyDueDefaultView">"Günlük İşleri varsayılan olarak  ‘Aktif’ sekmesine ata"</string>
+    <string name="dailyDueDefaultView">Günlük İşleri varsayılan olarak ‘Aktif’ sekmesine ata</string>
     <string name="dailyDueDefaultViewDescription">Bu seçenek seçili ise, Günlük İşlerin varsayılan sekmesi \'tümü\' yerine \'aktif\' olacaktır</string>
     <string name="no_billing_gems">Cihazında hiçbir desteklenen ödeme yöntemi yok. Elmas satın almak istersen lütfen habitica web sitesini kullan.</string>
     <string name="no_billing_subscriptions">Cihazında hiçbir desteklenen ödeme yöntemi yok. Abonelik satın almak istersen lütfen habitica web sitesini kullan.</string>
@@ -462,7 +461,7 @@
     <string name="insufficientHourglasses">Bu eşyayı almak için daha çok Mistik Kum Saatine ihtiyacın var!</string>
     <string name="get_hourglasses">Kum Saatleri al</string>
     <string name="subscribe_for_hourglasses">Kum Saatleri için abone ol</string>
-    <string name="timetravelers_closed_description">"Her 3 aylık devamlı üyelik başına bir Mistik Kum Saati kazan, daha sonra onu kullanarak sınırlı sayıdaki ekipmanların, hayvanların ve bineklerin kilidini  aç, geçmişten …_ ve gelecekten!"</string>
+    <string name="timetravelers_closed_description">Her 3 aylık devamlı üyelik başına bir Mistik Kum Saati kazan, daha sonra onu kullanarak sınırlı sayıdaki ekipmanların, hayvanların ve bineklerin kilidini aç, geçmişten …_ ve gelecekten!</string>
     <string name="want_to_subscribe">Abone olmak istiyorum</string>
     <string name="seasonal_closed_description">Büyük Galalar gündönümü ve ekinoks zamanlarına yakın gerçekleşirler, çeşit çeşit özel mevsimsel eşyalar bulmak için bu zamanlarda ziyaret et!</string>
     <string name="come_back_soon">Yakında yine gel!</string>
@@ -1155,7 +1154,7 @@
     <string name="armoireEquipment_new">Gardıroptan nadir bir parça Ekipman buldun!</string>
     <string name="level_abbreviated">Sv. %d</string>
     <string name="class_changed_description">%s yetenek kullanabilir ve mağazalardan eşya alabilirsin!</string>
-    <string name="change_class_selected_confirmation">Sınıfını %1$s\'ye 3 Elmak için değiştirmek istiyor musun\?</string>
+    <string name="change_class_selected_confirmation">Sınıfını %1$s\'ye değiştirmek istiyor musun\?</string>
     <string name="next_hourglass">Bir sonraki Kum Saati teslimi</string>
     <string name="use_item">Takım üyesi üzerinde eşya kullan</string>&gt;
     <string name="discard_changes_to_task_message">Bu göreve yapılan değişiklikleri iptal etmek istediğine emin misin\?</string>
@@ -1305,4 +1304,20 @@
     <string name="plenty_of_potions">Pek Çok İksir</string>
     <string name="for_for_free">Dördü Bedava</string>
     <string name="buy_for_x">%s için Al</string>
+    <plurals name="x_hours">
+        <item quantity="one">%d Saat</item>
+        <item quantity="other">%d Saatler</item>
+    </plurals>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Dakika</item>
+        <item quantity="other">%d Dakikalar</item>
+    </plurals>
+    <plurals name="x_days">
+        <item quantity="one">%d Gün</item>
+        <item quantity="other">%d Günler</item>
+    </plurals>
+    <string name="your_tags">Etiketlerin</string>
+    <string name="challenge_tags">Mücadele Etiketleri</string>
+    <string name="group_tags">Grup Etiketleri</string>
+    <string name="choosing_class_progress">Sınıf Seçimi</string>
 </resources>

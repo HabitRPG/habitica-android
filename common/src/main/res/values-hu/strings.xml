@@ -7,4 +7,76 @@
     <string name="settings">Beállítások</string>
     <string name="action_edit">Szerkesztés</string>
     <string name="are_you_sure">Biztos vagy benne\?</string>
+    <plurals name="x_todos">
+        <item quantity="one">%d tennivaló</item>
+        <item quantity="other">%d tennivalók</item>
+    </plurals>
+    <string name="new_task">Új feladat</string>
+    <string name="avatar">Avatár</string>
+    <string name="user_level">%d szint</string>
+    <string name="thousand_abbrev">e</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="stats">Statisztikák</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="gems">Gyémántok</string>
+    <string name="gold_plural">arany</string>
+    <string name="gold_capitalized">Arany</string>
+    <string name="mystic_hourglasses">Misztikus Homokóra</string>
+    <string name="trivial">Triviális</string>
+    <string name="easy">Könnyű</string>
+    <string name="medium">Közepes</string>
+    <string name="hard">Nehéz</string>
+    <string name="habits">Szokások</string>
+    <string name="dailies">Napi teendők</string>
+    <string name="todos">Tennivalók</string>
+    <string name="rewards">Jutalmak</string>
+    <string name="habit">Szokás</string>
+    <string name="reward">Jutalom</string>
+    <string name="todo">Tennivaló</string>
+    <string name="user_level_long">%d szint</string>
+    <string name="save_task_x">%s mentése</string>
+    <string name="task">Feladat</string>
+    <string name="failed">Betöltés meghiúsult</string>
+    <string name="retry">Újra próbálkozás</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="trivial_sentence">triviális</string>
+    <string name="easy_sentence">könnyű</string>
+    <string name="medium_sentence">közepes</string>
+    <string name="hard_sentence">nehéz</string>
+    <string name="action_cancel">Visszavonás</string>
+    <string name="login_btn">Bejelentkezés</string>
+    <string name="complete_task_title">Feladat befejezése</string>
+    <string name="create_task">%s készítése</string>
+    <string name="register_btn">Regisztráció</string>
+    <string name="username">Felhasználónév</string>
+    <string name="email_username">E-mail/felhasználónév</string>
+    <string name="password">Jelszó</string>
+    <string name="emailAddress">E-mail cím</string>
+    <string name="confirmpassword">Jelszó megerősítése</string>
+    <string name="login_btn_google">Bejelentkezés Google fiókkal</string>
+    <string name="logout">Kijelentkezés</string>
+    <string name="logout_description">Jelentkezz ki a fiókodból</string>
+    <string name="LoginActivityName">Üdvözlünk</string>
+    <string name="about_title">Rólunk</string>
+    <string name="login_validation_error_title">Megerősítés érvénytelen</string>
+    <string name="login_validation_error_fieldsmissing">Az összes mező kitöltése kötelező.</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d szokás</item>
+        <item quantity="other">%d szokások</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d napi tennivaló</item>
+        <item quantity="other">%d napi tennivalók</item>
+    </plurals>
+    <string name="create_task_title">Feladat létrehozása</string>
+    <string name="new_task_x">Új %s</string>
+    <plurals name="x_rewards">
+        <item quantity="one">%d jutalom</item>
+        <item quantity="other">%d jutalmak</item>
+    </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">Jelentve %d alkalommal</item>
+        <item quantity="other">Jelentve %d alkalommal, elrejtve</item>
+    </plurals>
 </resources>

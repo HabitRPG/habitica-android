@@ -9,7 +9,7 @@
     <string name="monthly">Mensuellement</string>
     <string name="weekly">Hebdomadairement</string>
     <string name="daily">Quotidiennement</string>
-    <string name="todo">tâche à faire</string>
+    <string name="todo">À faire</string>
     <string name="stats">Stats</string>
     <string name="settings">Paramètres</string>
     <string name="user_level_long">Niveau %d</string>
@@ -17,7 +17,7 @@
     <string name="action_cancel">Annuler</string>
     <string name="about_title">À propos</string>
     <string name="are_you_sure">Confirmez-vous \?</string>
-    <string name="task">tâche</string>
+    <string name="task">Tâche</string>
     <string name="avatar">Avatar</string>
     <string name="user_level">Niv. %d</string>
     <string name="login_btn">Identifiant</string>
@@ -26,18 +26,19 @@
     <string name="create_task">Créer %s</string>
     <string name="new_task_x">Nouvelle %s</string>
     <string name="dailies">Tâches quotidiennes</string>
-    <string name="todos">Tâches à faire</string>
+    <string name="todos">À faire</string>
     <string name="save_task_x">Sauvegarder %s</string>
     <string name="failed">Échec du chargement</string>
     <string name="retry">Réessayer</string>
     <plurals name="x_dailies">
         <item quantity="one">%d Tâche quotidienne</item>
+        <item quantity="many">%d Tâches quotidiennes</item>
         <item quantity="other">%d Tâches quotidiennes</item>
     </plurals>
-    <string name="emailAddress">Adresse email</string>
+    <string name="emailAddress">Adresse e-mail</string>
     <string name="confirmpassword">Confirmer le mot de passe</string>
     <string name="login_btn_google">S\'identifier avec Google</string>
-    <string name="logout_description">Se déconnecter de votre compte</string>
+    <string name="logout_description">Déconnectez-vous de votre compte</string>
     <string name="LoginActivityName">Bienvenue</string>
     <string name="login_validation_error_title">Erreur de validation</string>
     <string name="new_task">Nouvelle tâche</string>
@@ -45,10 +46,12 @@
     <string name="login_validation_error_fieldsmissing">Vous devez remplir tous les champs.</string>
     <plurals name="x_rewards">
         <item quantity="one">%d Récompense</item>
+        <item quantity="many">%d Récompenses</item>
         <item quantity="other">%d Récompenses</item>
     </plurals>
     <plurals name="flagged_count">
         <item quantity="one">Signalé %d fois</item>
+        <item quantity="many">Signalé %d fois</item>
         <item quantity="other">Signalé %d fois, caché</item>
     </plurals>
     <string name="gems">Gemmes</string>
@@ -58,7 +61,7 @@
     <string name="habits">Habitudes</string>
     <string name="habit">Habitude</string>
     <string name="reward">Récompense</string>
-    <string name="trivial_sentence">banal</string>
+    <string name="trivial_sentence">insignifiant</string>
     <string name="easy_sentence">facile</string>
     <string name="medium_sentence">moyen</string>
     <string name="hard_sentence">difficile</string>
@@ -70,11 +73,13 @@
     <string name="trivial">Banal</string>
     <plurals name="x_habits">
         <item quantity="one">%d Habitude</item>
+        <item quantity="many">%d Habitudes</item>
         <item quantity="other">%d Habitudes</item>
     </plurals>
     <string name="username">Pseudo</string>
     <plurals name="x_todos">
         <item quantity="one">%d Tâche à faire</item>
+        <item quantity="many">%d Tâches à faire</item>
         <item quantity="other">%d Tâches à faire</item>
     </plurals>
     <string name="complete_task_title">Terminer une Tâche</string>

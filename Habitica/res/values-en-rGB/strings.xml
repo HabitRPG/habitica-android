@@ -153,7 +153,7 @@
     <string name="setup_task_creativity_1">Study a master of the craft</string>
     <string name="setup_task_creativity_2">Work on creative project</string>
     <string name="setup_task_creativity_3">Finish creative project</string>
-            <string name="guild">Guild</string>
+    <string name="guild">Guild</string>
     <string name="leave">Leave</string>
     <string name="join">Join</string>
     <string name="delete">Delete</string>
@@ -210,7 +210,6 @@
     <string name="opt_out_class">Opt Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
     <string name="class_changed">You are now a %s!</string>
-
     <string name="choose_class">Choose Class</string>
     <string name="dialog_go_back">Go Back</string>
     <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
@@ -258,7 +257,7 @@
     <string name="google_services_missing">Google Play services could not be found.</string>
     <string name="gem_purchase_toolbartitle">Purchase</string>
     <string name="gem_purchase_title">Buying gems supports the developers and helps keep Habitica running</string>
-    <string name="gem_purchase_subtitle">Gems allow you to buy fun extras for your account, including:</string>
+    <string name="gem_purchase_subtitle">Gems allow you to buy fun extras for your account</string>
     <string name="gem_purchase_listitem1">Cool costumes for your avatar</string>
     <string name="gem_purchase_listitem2">Awesome backgrounds</string>
     <string name="gem_purchase_listitem3">Quests that reward you with pet eggs</string>
@@ -417,7 +416,6 @@
     <string name="deleting_account">Deleting Account</string>
     <string name="levelup_header">You Reached Level %1$d!</string>
     <string name="levelup_detail">By accomplishing your real life goals, you levelled up and are now fully healed!</string>
-    <string name="faint_penalty_body">You lost a Level, your Gold, and a piece of Equipment, but you can get them all back with hard work! Good luck—you\'ll do great.</string>
     <string name="reminder_title">Remember to check off your tasks</string>
     <string name="quest_begin_message">Are you sure\? Only %1$d of your %2$d party members have joined this quest! Quests start automatically when all players have joined or rejected the invitation.</string>
     <string name="ago_1day">1d ago</string>

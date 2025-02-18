@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="you_found">Du hast gefunden:</string>
+    <string name="you_found">Du hast … gefunden</string>
     <string name="edit_on_phone">Auf dem Handy bearbeiten</string>
     <string name="sign_in">Anmelden</string>
     <string name="other_options">Andere Optionen</string>
@@ -14,13 +14,30 @@
     <string name="task_type">Aufgabentyp</string>
     <string name="task_title_hint">Gib einen Titel für die Aufgabe ein</string>
     <string name="faint_description">Du bist ein Level herabgefallen und hast Gold sowie Erfahrung verloren. Gib nicht auf!</string>
-    <string name="how_did_you_do">Wie hast du dich gemacht\?</string>
-    <string name="x_quest_item">Quest-Gegenstände</string>
-    <string name="sign_in_description">Erstelle Aufgabenlisten und verfolge Fortschritte spielerisch mit deinem Avatar!</string>
-    <string name="you_ran_out_of_hp">Deine LP sind ausgegangen</string>
+    <string name="how_did_you_do">Wie hast du dich geschlagen\?</string>
+    <string name="x_quest_item">%d Quest-Gegenstände</string>
+    <string name="sign_in_description">Erstelle Aufgabenlisten und verfolge Fortschritte spielerisch mit deinem Avatar</string>
+    <string name="you_ran_out_of_hp">Dir sind die HP ausgegangen</string>
     <string name="checklist_disclaimer">Checklisten für Aufgaben sind auf dem Handy verfügbar</string>
     <string name="sign_in_on_phone">Auf dem Handy anmelden</string>
     <string name="check_on_phone">Auf dem Handy nachsehen</string>
     <string name="ok">Okay</string>
     <string name="syncing_account">Benutzerkonto vom Handy wird synchronisiert</string>
+    <string name="one_quest_item">1 Quest-Gegenstand</string>
+    <string name="some_x">etwas %s</string>
+    <string name="x_and_y">%1$s und %2$s</string>
+    <string name="save">Speichern</string>
+    <string name="hide_task_rewards">Aufgabenbelohnungen ausblenden</string>
+    <string name="version_info">Version %1$s (%2$d)</string>
+    <string name="a_potion">ein Trank</string>
+    <string name="continue_on_your_phone">Auf dem Handy fortfahren</string>
+    <string name="starting_your_day">Beginne deinen Tag...</string>
+    <string name="sync_data">Daten synchronisieren</string>
+    <string name="an_egg">ein Ei</string>
+    <string name="some_food">etwas zu essen</string>
+    <string name="all_done_today">Alles erledigt für heute!</string>
+    <string name="disconnected">Verbindung getrennt</string>
+    <string name="log_out_of_habitica">Aus Habitica ausloggen\?</string>
+    <string name="levelup_description">Du bist durch all deine Harte Arbeit aufgestiegen!</string>
+    <string name="no_tasks">Erstelle eine %s um sie der Liste hinzuzufügen</string>
 </resources>

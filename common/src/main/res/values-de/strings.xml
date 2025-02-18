@@ -23,12 +23,12 @@
     <string name="weekly">Wöchentlich</string>
     <string name="easy">Einfach</string>
     <string name="hard">Schwer</string>
-    <string name="habits">Gewohnheiten</string>
+    <string name="habits">Rituale</string>
     <string name="trivial">Trivial</string>
     <string name="medium">Mittel</string>
-    <string name="dailies">Tägliche Aufgaben</string>
+    <string name="dailies">Dailies</string>
     <string name="todos">To-dos</string>
-    <string name="rewards">Belohnungen</string>
+    <string name="rewards">Belohnung</string>
     <string name="reward">Belohnung</string>
     <string name="todo">To-do</string>
     <string name="new_task">Neue Aufgabe</string>
@@ -46,8 +46,8 @@
     <string name="logout_description">Logge Dich aus</string>
     <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
     <plurals name="x_habits">
-        <item quantity="one">%d Gewohnheit</item>
-        <item quantity="other">%d Gewohnheiten</item>
+        <item quantity="one">%d Ritual</item>
+        <item quantity="other">%d Rituale</item>
     </plurals>
     <plurals name="x_dailies">
         <item quantity="one">%d Tagesaufgabe</item>
@@ -71,8 +71,12 @@
     <string name="failed">Laden fehlgeschlagen</string>
     <string name="retry">Wiederholen</string>
     <string name="quadrillion_abbrev">q</string>
-    <string name="trivial_sentence">geringfügig</string>
-    <string name="easy_sentence">leicht</string>
+    <string name="trivial_sentence">trivial</string>
+    <string name="easy_sentence">einfach</string>
     <string name="medium_sentence">mittel</string>
     <string name="hard_sentence">schwer</string>
+    <plurals name="flagged_count">
+        <item quantity="one">%d mal markiert</item>
+        <item quantity="other">%d mal markiert, ausgeblendet</item>
+    </plurals>
 </resources>

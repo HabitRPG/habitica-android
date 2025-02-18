@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="profile_send_message_to">Trimite un mesaj lui %s</string>
+    <string name="profile_loading_data">Se încarcă datele de membru…</string>
+    <string name="profile_message_sent_to">Mesaj trimis lui %s</string>
+    <string name="profile_allocated">Puncte alocate:</string>
+    <string name="profile_pets_and_mounts">Animale de companie și călărit</string>
+    <string name="profile_mounts_tamed">Animale de călărit dresate</string>
+    <string name="profile_class_bonus">Bonus de clasă:</string>
+    <string name="profile_pets_found">Animale de companie găsite</string>
+    <string name="profile_level">Nivel:</string>
+    <string name="profile_achievements">Realizări</string>
+</resources>

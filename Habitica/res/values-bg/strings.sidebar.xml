@@ -1,17 +1,20 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">Задачи</string>
-  <string name="sidebar_skills">Умения</string>
-  <string name="sidebar_section_social">Общност</string>
-  <string name="sidebar_inbox">Съобщения</string>
-  <string name="sidebar_party">Група</string>
-  <string name="sidebar_challenges">Предизвикателства</string>
-  <string name="sidebar_section_inventory">Инвентар</string>
-  <string name="sidebar_avatar">Герой</string>
-  <string name="sidebar_equipment">Екипировка</string>
-  <string name="sidebar_stable">Конюшня</string>
-  <string name="sidebar_news">Новини</string>
+    <string name="sidebar_tasks">Задачи</string>
+    <string name="sidebar_skills">Умения</string>
+    <string name="sidebar_section_social">Общност</string>
+    <string name="sidebar_inbox">Съобщения</string>
+    <string name="sidebar_party">Група</string>
+    <string name="sidebar_challenges">Предизвикателства</string>
+    <string name="sidebar_section_inventory">Инвентар</string>
+    <string name="sidebar_avatar">Редактиране на Героя</string>
+    <string name="sidebar_equipment">Екипировка</string>
+    <string name="sidebar_stable">Конюшня</string>
+    <string name="sidebar_news">Новини</string>
     <string name="sidebar_about">Относно</string>
-  <string name="sidebar_shops">Магазини</string>
-  <string name="sidebar_stats">Показатели</string>
+    <string name="sidebar_shops">Магазини</string>
+    <string name="sidebar_stats">Показатели</string>
+    <string name="sidebar_gems">Купи Диаманти</string>
+    <string name="sidebar_subscription">Абонамент</string>
+    <string name="sidebar_avatar_equipment">Герой и Екипировка</string>
 </resources>

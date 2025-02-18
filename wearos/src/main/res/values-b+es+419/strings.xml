@@ -1,2 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="ok">OK</string>
+    <string name="syncing_account">Sincronizar cuenta desde el teléfono</string>
+    <string name="how_did_you_do">¿Cómo lo hago\?</string>
+    <string name="edit_on_phone">Editar en teléfono</string>
+    <string name="sign_in">Ingresar</string>
+    <string name="sign_in_description">Crear listas de tareas y tacha tu progreso con tu personaje del juego</string>
+    <string name="sign_in_on_phone">Entra en tu teléfono</string>
+    <string name="other_options">Otras opciones</string>
+    <string name="create_account">Crear Cuenta</string>
+    <string name="continue_text">Continuar</string>
+    <string name="you_ran_out_of_hp">Te quedaste sin PV</string>
+    <string name="faint_description">Perdiste un nivel, experiencia y oro. ¡No te rindas!</string>
+    <string name="rya_description">Hay tareas diarias incompletas de ayer</string>
+    <string name="review_dailies">Revisión diaria</string>
+    <string name="check_on_phone">Tacha en el celular</string>
+    <string name="checklist_disclaimer">Tareas con lista de tareas están disponibles en el celular</string>
+    <string name="day_start">Comenzar día</string>
+    <string name="start_new_day">Iniciar nuevo día</string>
+    <string name="check_off_yesterday">Tacha todo lo que hiciste ayer:</string>
+    <string name="task_type">Tipo de tareas</string>
+    <string name="task_title_hint">Escribe el titulo de la tarea</string>
+    <string name="save">Guardar</string>
+    <string name="sync_data">Sincronizar datos</string>
+    <string name="hide_task_rewards">Ocultar recompensas de la tarea</string>
+    <string name="version_info">Versión %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">¿Quieres cerrar sesión en Habitica\?</string>
+    <string name="no_tasks">Crea un %s para añadirlo a esta lista</string>
+    <string name="an_egg">Un huevo</string>
+    <string name="a_potion">Una Poción</string>
+    <string name="some_food">Un poco de comida</string>
+    <string name="continue_on_your_phone">Continua con tu celular</string>
+    <string name="levelup_description">¡Subiste de nivel gracias a tu trabajo duro!</string>
+    <string name="all_done_today">¡Ya esta todo hoy!</string>
+    <string name="disconnected">Desconectado</string>
+    <string name="starting_your_day">empezando tu Día...</string>
+    <string name="you_found">Encontraste…</string>
+</resources>

@@ -69,7 +69,6 @@
     <string name="levelup_detail">Door het verwezelijken van je \'real life\' doelen ben je een niveau gestegen en ben je nu volledig geheeld!</string>
     <string name="onwards">Hoera!</string>
     <string name="faint_subtitle">Wanhoop niet!</string>
-    <string name="faint_penalty_body">Je verliest een niveau, je goud en een stuk uitrusting, maar je kunt ze allemaal terug krijgen door hard te werken! Succes—je zult het geweldig doen.</string>
     <string name="faint_header">Je hebt geen Levenspunten meer!</string>
     <string name="faint_button">Herstel Gezondheid &amp; probeer opnieuw</string>
     <string name="filter">Filter</string>
@@ -996,4 +995,6 @@
     <string name="usernames_party">%s\'s Groep</string>
     <string name="your_tags">Jouw tags</string>
     <string name="challenge_tags">Uitdagingen tags</string>
+    <string name="quest_party_required_title">Je moet in een Groep zitten voor je een Queeste kan starten</string>
+    <string name="quest_party_required_description">Als je eenmaal in een Groep zit, kan je zelf Queestes doen of vrienden uitnodigen om ook met hen Queestes te doen!</string>
 </resources>

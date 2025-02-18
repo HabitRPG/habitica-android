@@ -130,7 +130,6 @@
     <string name="tavern_inn_rest">Призупинити щоденні завдання</string>
     <string name="tavern_inn_checkOut">Знову активувати щоденні завдання</string>
     <string name="reminder_title">Не забудьте зазначити виконані завдання</string>
-    <string name="faint_penalty_body">Ви втратили рівень, своє золото і предмет екіпіровки, але ви можете все повернути, якщо будете працювати! Щасти! У вас все вийде.</string>
     <string name="onwards">Вперед!</string>
     <string name="levelup_detail">Завдяки досягненню цілей у реальному житті ваш рівень підвищився та персонаж був зцілений!</string>
     <string name="levelup_header">Ви отримали %1$d рівень!</string>
@@ -284,7 +283,7 @@
     <string name="invite">Знайти учасників</string>
     <string name="send">Надіслати</string>
     <string name="invite_existing_users">Запросити існуючих користувачів</string>
-    <string name="by_email">Eлектронною пошту</string>
+    <string name="by_email">Eлектронною поштою</string>
     <string name="changing_class_progress">Зміна класу</string>
     <string name="enable_class">Дозволити систему класів</string>
     <string name="change_class_description">Змініть свій клас і поверніть свої бали за 3 самоцвіти.</string>
@@ -300,7 +299,7 @@
     <string name="healer_description">Цілителі вивчають навички, які можуть зцілити та захистити себе та свою команду. Грайта за цілителя, якщо вам подобається допомагати іншим або уникати пошкоджень! Цілителі отримують бонус від високого показника Витривалості.</string>
     <string name="warrior_description">Воїни наносять більше критичних ударів і завдають босам великої шкоди. Грайте за воїна, якщо хочете швидко перемагати монстрів! Воїн отримує вигоду від високого показника Сили.</string>
     <string name="mage_description">Маги вивчають навички, які завдають шкоди босам і підвищують досвід і ману. Грайте за мага, якщо вас мотивує швидкий перехід на наступний рівень! Маги виграють від високого рівня Інтелекту.</string>
-    <string name="rogue_description">Розбійники вивчають навички, які дозволяють їм та їхній команді знаходити більше золота та випадкових предметів. Грайте за розбійника, якщо хочете багато предметів та золота! Розбійники виграють від високого рівня Cпритності.</string>
+    <string name="rogue_description">Розбійники вивчають навички, які дозволяють їм та їхній команді знаходити більше золота та випадкових предметів. Грайте за розбійника, якщо хочете багато предметів та золота! Розбійники виграють від високого рівня Сприйняття.</string>
     <string name="healer">Цілитель</string>
     <string name="mage">Маг</string>
     <string name="rogue">Розбійник</string>
@@ -325,9 +324,9 @@
     <string name="allocating_points">Розподіл очок</string>
     <string name="points_to_allocate">%d очок для розподілу</string>
     <string name="no_points_to_allocate">Немає очок для розподілу</string>
-    <string name="distribute_task">Розподілити на основі типів завдань</string>
-    <string name="distribute_class">Розподілити на основі класа</string>
-    <string name="distribute_evenly">Розподілити рівномірно</string>
+    <string name="distribute_task">Розподіляти відповідно до типів завдань</string>
+    <string name="distribute_class">Розподіляти відповідно до класу</string>
+    <string name="distribute_evenly">Розподіляти рівномірно</string>
     <string name="allocated">Розподілено</string>
     <string name="buffs">Підсилювачі</string>
     <string name="perception">Сприйняття</string>
@@ -532,7 +531,7 @@
     <string name="subscribe_listitem1">Купівля самоцвітів за золото</string>
     <string name="subscribe_prompt">Станьте підписником, щоб отримати ці ексклюзивні переваги!</string>
     <string name="subscribe_title">Підписка підтримує нашу маленьку команду та допомагає забезпечувати роботу Habitica! Дякуємо!</string>
-    <string name="has_tag">Має ярлик</string>
+    <string name="has_tag">Має тег</string>
     <string name="has_reminder">Має нагадування</string>
     <string name="belongs_to_challenge">Належить до Випробовування</string>
     <string name="see_you_tomorrow">Побачимось завтра!</string>
@@ -769,7 +768,7 @@
     <string name="view_faq">Переглянути FAQ</string>
     <string name="helpful_links">Корисні посилання</string>
     <string name="guidelines_description">Habitica намагається створити приємне середовище для користувачів різного віку та походження, особливо в громадських місцях, таких як Таверна. Якщо у вас є які-небудь питання, будь ласка, ознайомтеся з нашими рекомендаціями.</string>
-    <string name="distribute_task_help">Призначає очки на основі атрибутів Сила, Інтелект, Витривалість та Спритність, пов\'язаних із виконаними вами завданнями.</string>
+    <string name="distribute_task_help">Призначає очки відповідно до категорії (Сила, Інтелект, Витривалість та Сприйняття), пов\'язаної із завданнями, які ви виконаєте.</string>
     <string name="distribute_class_help">Призначає більше очок атрибутам, важливим для вашого класу.</string>
     <string name="distribute_evenly_help">Призначає однакову кількість очок кожному атрибуту.</string>
     <string name="perception_description">Підвищує ймовірність знаходження випадкових предметів при виконанні завдань, щоденний шанс випадіння предметів, бонуси за серію і кількість золота, отриманого за завдання.</string>
@@ -805,7 +804,7 @@
     <string name="add_tag">Додати новий ярлик</string>
     <string name="battle_gear">Обладунки</string>
     <string name="group_plan">Груповий план</string>
-    <string name="resubscribe_description">Хочеш надалі використовувати свої переваги\? Ти можеш розпочати нову підписку до закінчення актуальної підтиски, щоб зберегти свої переваги.</string>
+    <string name="resubscribe_description">Хочеш надалі використовувати свої переваги\? Ти можеш розпочати нову підписку допоки не закінчилася наявна, щоб зберегти свої переваги.</string>
     <string name="subscribe_options_title">Вибери час підписки, який тобі найбільше підходить</string>
     <string name="thanks_for_supporting">Дякуємо за підписку</string>
     <string name="resubscribe">Підписатися знову</string>
@@ -846,7 +845,7 @@
     <string name="avatar_hair_ponytail">Хвостик</string>
     <string name="animal_tail">Звірячі хвости</string>
     <string name="animal_ears">Звірячі вуха</string>
-    <string name="could_not_find_user">Не можу знайти користувача</string>
+    <string name="could_not_find_user">Не можу знайти гравця</string>
     <string name="wacky">Дивакуваті</string>
     <string name="equip">Одягнути</string>
     <string name="unequip">Неоснащення</string>
@@ -881,13 +880,13 @@
     <string name="delete_checklist_entry">Видалити…</string>
     <string name="manual_sync_restart_description">Іноді застосунок не оновлює вміст автоматично. Спробуйте оновити або закрити програму та знову відкрити її.</string>
     <string name="update_app_description">Ми постійно виправляємо помилки, тому обов’язково перевірте Play Store, чи є доступні оновлення.</string>
-    <string name="use_saddle">Використати сідло</string>
+    <string name="use_saddle">Віддати сідло</string>
     <string name="hatch">Виростити</string>
     <string name="delete_challenge_task_title">Видалити завдання випробування\?</string>
     <string name="delete_x_tasks">Видалити завдання: %d</string>
     <string name="pet_category">%s улюбленці</string>
-    <string name="block_user">Заблокувати користувача</string>
-    <string name="unblock_user">Розблокувати користувача</string>
+    <string name="block_user">Заблокувати гравця</string>
+    <string name="unblock_user">Розблокувати гравця</string>
     <string name="block">Заблокувати</string>
     <string name="disablePrivateMessages">Заблокувати отримання приватних повідомлень</string>
     <string name="pms_disabled">Особисті повідомлення заблоковано</string>
@@ -958,7 +957,7 @@
 \n
 \n**Інтелект (ІНТ)** збільшує кількість мани та досвіду, яку ви отримуєте. Маги та Цілителі отримують ІНТ від їх спорядження.
 \n
-\n**Спритність (СПР)** збільшує кількість золота, яку ви отримуєте та коефіцієнт випадіння предметів. Розбійники та Маги отримують ІНТ від їх спорядження.
+\n**Сприйняття (СПР)** збільшує кількість золота, яку ви отримуєте та коефіцієнт випадіння предметів. Розбійники та Маги отримують ІНТ від їх спорядження.
 \n
 \nПісля 10 рівня ви отримуєте 1 Очко Статистики за кожний наступний рівень, які ви можете витратити, щоб прокачати ту характеристику, що вам більше до вподоби. Ви також можете одягти спорядження з різними комбінаціями підсилення цих навичок.</string>
     <string name="mana_description">Очки мани розблоковуються системою класів на рівні 10 і дозволяють **використовувати навички**, коли ви починаєте вивчати їх на рівні 11.
@@ -966,7 +965,7 @@
 \nДеякі **ОМ відновлюються** при денному скиданні щодня, але ви можете повернути більше, виконуючи завдання або використовуючи вміння класу мага.</string>
     <string name="gold_description">Золото це **головна валюта** у Габітиці, яка дозволяє купувати деяке спорядження, квести, предмети, або навіть персональні нагороди, які Ви додаєте самостійно.
 \n
-\n**Отримуйте Золото** шляхом завершення задач та квестів, або шляхом класових навичок. **Бали спритності** збільшують кількість отримуваного золота.
+\n**Отримуйте Золото** шляхом завершення задач та квестів, або шляхом класових навичок. **Бали сприйняття** збільшують кількість отримуваного золота.
 \n
 \nЗ підпискою на Габітику, Ви навіть зможете використовувати золото для придбання певної кількості самоцвітів, кількість яких визначається тривалістю підписки.</string>
     <string name="experience_description">Бали досвіду представляють Ваш прогрес і дозволяють Вам підвищити рівень. В основному, Ви будете **отримувати** досвід після закінчення задач або квестів, а крім цього досвід дають деякі класові навички.
@@ -1064,7 +1063,7 @@
     <string name="theme_mode">Вибір теми</string>
     <string name="theme_color">Колір теми</string>
     <string name="submit_feedback">Залишити відгук</string>
-    <string name="user_is_blocked">Ви заблокували цього користувача</string>
+    <string name="user_is_blocked">Ви заблокували цього гравця</string>
     <string name="user_is_blocked_explanation">Заблокований користувач не може надсилати вам особисті повідомлення, але Ви все ще можете бачити його дописи.</string>
     <string name="finish">Закінчити</string>
     <string name="login_disclaimer">Реєструючись, ви підтверджуєте, що прочитали та згодні з: <a href="https://habitica.com/static/terms">Умовами використання</a> та <a href="https://habitica.com/static/privacy">Політикою конфіденційності</a></string>
@@ -1179,7 +1178,7 @@
     <string name="enchanted_armoire_drop_rates">Шанси випадіння з чарівної скрині</string>
     <string name="watch_ad_to_revive">Перегляньте рекламу, щоб відродитись</string>
     <string name="level_abbreviated">Рів. %d</string>
-    <string name="class_changed_description">Ви можете використовувати навички %s і купувати спорядження в магазинах!</string>
+    <string name="class_changed_description">Ви можете використовувати навички %s і купувати спорядження в магазинах! Підвищуйте рівень, щоб отримати очки атрибутів для посилення своїх навичок.</string>
     <string name="change_class_selected_confirmation">Ви хочете змінити свій клас на %1$s за 3 самоцвіти\?</string>
     <string name="enable_notifications">Увімкнути повідомлення</string>
     <string name="push_notification_system_settings_reminders">Дозвольте повідомлення від Habitica в налаштуваннях застосунку, щоб отримувати нагадування</string>
@@ -1218,10 +1217,10 @@
     <string name="assign_to">Призначити на…</string>
     <string name="manager">Менеджер</string>
     <string name="member_list">Список учасників</string>
-    <string name="ban_user_confirm">Ви хочете забанити цього користувача\?</string>
-    <string name="ban_user">Забанити користувача</string>
+    <string name="ban_user_confirm">Ви хочете забанити цього гравця\?</string>
+    <string name="ban_user">Забанити гравця</string>
     <string name="shadow_mute_user">Тіньовий бан</string>
-    <string name="mute_user_confirm">Хочете скасувати доступ до чату для цього користувача\?</string>
+    <string name="mute_user_confirm">Ви хочете скасувати доступ до чату для цього гравця\?</string>
     <string name="entertainment">Розваги</string>
     <string name="finance">Фінанси</string>
     <string name="habitica_official">Офіційні Habitica</string>
@@ -1247,7 +1246,7 @@
     <string name="assigned_to">Призначено на</string>
     <string name="completed_at">Виконано при %s</string>
     <string name="assign">Призначити</string>
-    <string name="unmute_user_confirm">Ви хочете повернути доступ до чату цьому користувачеві\?</string>
+    <string name="unmute_user_confirm">Ви хочете повернути доступ до чату цьому гравцеві\?</string>
     <string name="armoire_rate_experience_title">Шанс отримати досвід 20%</string>
     <string name="day_start_adjustment">Час початку доби</string>
     <string name="purchased">Придбано</string>
@@ -1284,10 +1283,10 @@
     <string name="avatar_hair_color_customization">Налаштування кольору волосся аватара</string>
     <string name="gems_support">Купівля самоцвітів підтримує нашу невелику команду Habitica</string>
     <string name="copy_tasks_description">Відображення призначених і відкритих завдань в особистих списках завдань</string>
-    <string name="mute_user">Вимкнення звуку користувача</string>
+    <string name="mute_user">Вимкнути звук гравця</string>
     <string name="armoire_rate_experience_description">Отримана сума випадковим чином варіюється від 10 до 50</string>
     <string name="group_plan_settings">Налаштування групового плану</string>
-    <string name="unban_user_confirm">Ви хочете розбанити цього користувача\?</string>
+    <string name="unban_user_confirm">Ви хочете зняти бан з цього гравця\?</string>
     <string name="todo_summary_description_duedate">Це **%1$s** Завдання, яке належить виконати **%2$s**.</string>
     <string name="todo_summary_description">Це завдання **%1$s**, яке не має терміну.</string>
     <string name="promote_to_manager">Підвищення до менеджера</string>
@@ -1304,7 +1303,7 @@
     <string name="subscribe_listitemFaint_description">У вас буде можливість отримати другий шанс, коли у вас закінчаться ОЗ.</string>
     <string name="need_help_description">Ви можете зв\'язатись з нами, і член нашої команди зробить все можливе, щоб допомогти!</string>
     <string name="challenges">Випробування</string>
-    <string name="username_or_email">Ім\'я користувача або email</string>
+    <string name="username_or_email">Ім\'я користувача або електронна пошта</string>
     <string name="fifth">п\'ятий</string>
     <string name="fourth">четвертий</string>
     <string name="limited_edition">Обмежене видання</string>
@@ -1318,4 +1317,83 @@
     <string name="visit_the_market">Відвідати ринок</string>
     <string name="thanks_for_support">Вдячні за вашу підтримку!</string>
     <string name="birthday_title_description">Святкуйте 10-річчя Habitica з подарунками та ексклюзивними речами нижче!</string>
+    <string name="change_class_confirmation_message">Це змінить спорядження, яке буде розблоковане в магазинах, та змінить ваші доступні навички</string>
+    <string name="subscribe_listitemArmoire_description_2">Кожного разу, відкриваючи Скриню, ви можете відкрити ще одну безкоштовно!</string>
+    <string name="your_tags">Ваші Теги</string>
+    <string name="opt_out_description">Це призведе до того, що ви залишитеся без призначеного класу. Ви можете обрати клас знову, увімкнувши систему класів у Налаштуваннях у будь-який час.</string>
+    <string name="change_class_message">Це видалить ваш поточний клас і поверне всі очки досвіду, що були зароблені, а потім дозволить вам обрати новий клас</string>
+    <string name="challenge_tags">Теги Випробування</string>
+    <string name="group_tags">Теги групи</string>
+    <string name="share_avatar">Поділитися аватаром</string>
+    <string name="item_footer_title">Не можете отримати бажані %s з завдань\?</string>
+    <string name="invite_with_username_email">Запросіть за @нікнейм або електронною поштою</string>
+    <string name="seeking_party_description">Хочете доєднатися до команди разом із іншими, але нікого не знаєте\? Сповістіть лідерів команд, що ви чекаєте на запрошення!</string>
+    <string name="change_class_to_x">Змінити клас на %s</string>
+    <string name="habiticans_send_invite">Надішліть запрошення гравцям, яких ви знаєте</string>
+    <string name="seeking_party_title">Шукаєте команду\?</string>
+    <string name="look_for_party">Шукати команду</string>
+    <string name="you_re_looking_for_party">Ви шукаєте команду!</string>
+    <string name="seeking_hint">Слідкуйте за запрошеннями або створіть власну команду в будь-який час</string>
+    <string name="subscribe_incentive_button_armoire">Підпишіться, щоб відкрити знову безкоштовно!</string>
+    <string name="rescind_invite">Відмінити запрошення</string>
+    <string name="username_requirements">Може містити лише літери a-z, цифри, дефіси або нижні підкреслювання</string>
+    <string name="report_challenge_explanation">Ви повинні повідомляти лише про ті Випробування, що порушують [Правила спільноти](https://habitica.com/static/community-guidelines) та/або [Умови використання](https://habitica.com/static/terms). Подання неправдивого звіту є порушенням Правил спільноти Habitica.</string>
+    <string name="report_failure">Будь ласка спробуйте пізніше, під час відправки повідомлення сталася помилка</string>
+    <string name="reset_account_description_new">Ви втратите всі свої рівні, золото та досвід. Усі ваші завдання та їхні дані буде видалено (завдання Випробувань залишаться). Ви втратите все спорядження, окрім предметів для підписників та безкоштовних пам’ятних предметів, але ви зможете викупити його назад. Ви повинні мати відповідний клас, щоб повторно купити обладунки для певного класу. Ви збережете свій поточний клас, досягнення, а також ваших домашніх улюбленців та скакунів. Щоб підтвердити скидання, введіть свій пароль нижче.</string>
+    <string name="gems_promo_info_limitations_fixed">Ця акція діє лише протягом опідчас події. Подія починається о %1$s (%2$s) і закінчується о %3$s (%4$s). Акційна пропозиція діє тільки за покупки Самоцвітів для себе.</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; запросив вас приєднатися до групи &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="report_user_description">Це також заблокує @%s</string>
+    <string name="report_reason_title_message">Чиму ви повідомляєте про ще повідомлення\?</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="report_reason_title_challenge">Чому ви повідомляєте про це Випробування\?</string>
+    <string name="report_message">Повідомлення про порушення</string>
+    <string name="report_successful">%s скарга відправлена</string>
+    <string name="report_player_toolbar_title">Поскаржитися на %s</string>
+    <string name="subscribe_listitemFaint">Тримайтеся з 1 ОЗ!</string>
+    <string name="subscription_hourglasses_3month_timeframe">Містичний Годинник що три місяці</string>
+    <string name="unban_user">Зняти бан з гравця</string>
+    <string name="reset_account_description_no_pw">Ви втратите всі свої рівні, золото та досвід. Усі ваші завдання та їхні дані буде видалено (завдання Випробувань залишаться). Ви втратите все спорядження, окрім предметів для підписників та безкоштовних пам’ятних предметів, але ви зможете викупити його назад. Ви повинні мати відповідний клас, щоб повторно купити обладунки для певного класу. Ви збережете свій поточний клас, досягнення, а також ваших домашніх улюбленців та скакунів. Щоб підтвердити скидання, введіть RESET нижче.</string>
+    <string name="gryphatrice_description">Рідкісний Радісний Грифолиск приєднується до святкування дня народження! Не пропустіть свій шанс володіти цим ексклюзивним анімованим улюбленцем.</string>
+    <string name="for_for_free_description">Щоб продовжити вечірку, ми роздамо вбрання для вечірки, 20 Самоцвітів та обмежене видання набору Накидок та Фон!</string>
+    <string name="first">перший</string>
+    <string name="status">Стан</string>
+    <string name="assigned_to_you_by">Призначено вам @%1$s на %2$s</string>
+    <string name="never">ніколи</string>
+    <string name="on_x">на %s</string>
+    <string name="on_weekdays">в будні</string>
+    <string name="on_weekends">у вихідні</string>
+    <string name="on_the_x_of_month">на %1$s %2$s місяця</string>
+    <string name="amazon">Amazon</string>
+    <string name="apple_pay">Apple Pay</string>
+    <string name="google_pay">Google Pay</string>
+    <string name="paypal">PayPal</string>
+    <string name="stripe_payment">Stripe</string>
+    <string name="on_the_x">на %s</string>
+    <string name="for_for_free">Чотири безкоштовно</string>
+    <string name="buy_for">Купити за</string>
+    <string name="on_every_day_of_week">кожного дня тижня</string>
+    <string name="plenty_of_potions_description">Ми повертаємо 10 улюблених Магічних Зіллів нашої спільноти. Завітайте на Ринок, щоб поповнити свою колекцію!</string>
+    <string name="message_flagged">Повідомлення позначено %d раз(и/ів).</string>
+    <string name="resume_damage">Відновити отримання шкоди</string>
+    <string name="jubilant_gryphatrice_confirmation">Ви придбали Радісного Грифолиска!</string>
+    <string name="jubilant_gryphatrice_confirmation_gift">Ви подарували Радісного Грифолиска!</string>
+    <string name="open_settings">Відкрити налаштування</string>
+    <string name="undo">Скасувати</string>
+    <string name="day_x">День %d</string>
+    <string name="a_party_robe">Вбрання для вечірки</string>
+    <string name="background">Фон</string>
+    <string name="birthday_set">Набір до Дня Народження</string>
+    <string name="you_equipped_x">Ви спорядили %s</string>
+    <string name="purchase_gryphatrice_confirmation">Придбати Радісного Грифолиска за %d самоцвітів\?</string>
+    <string name="find_new_member">Знайти учасників</string>
+    <string name="find_more_members">Знайти більше учасників</string>
+    <string name="go_to_settings">Перейти до Налаштувань</string>
+    <string name="resume_damage_1_title">Ваші пропущені Щоденки не завдадуть вам шкоди</string>
+    <string name="resume_damage_1_description">Боси все одно завдаватимуть шкоду іншим
+\nчленам команди, що пропустили Щоденки</string>
+    <string name="visit_market">Відвідати ринок</string>
+    <string name="ends_in_x">Закінчується через %s</string>
+    <string name="see_more">Дивитись більше</string>
+    <string name="twenty_gems">20 самоцвітів</string>
 </resources>

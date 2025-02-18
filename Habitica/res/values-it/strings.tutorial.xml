@@ -15,4 +15,7 @@
     <string name="tutorial_skills">Le Abilità sono dei poteri con straordinari effetti! Tocca un\'abilità per utilizzarla. Costerà punti Mana (la barra blu), che puoi ottenere usando Habitica ogni giorno e completando le attività. Dai un\'occhiata alle FAQ nel menù per avere maggiori informazioni!</string>
     <string name="tutorial_party">Qui è dove tu e i tuoi amici potete motivarvi a vicenda e combattere i mostri con le vostre attività!</string>
     <string name="tutorial_stats">Premi sul pulsante grigio per assegnare più punti statistica in una volta, oppure usa le frecce per aggiungerne uno alla volta.</string>
+    <string name="tutorial_party_created">Benvenuto nel tuo Team! Puoi trovare altri membri nell\'elenco delle persone in cerca di una squadra, o invitando direttamente i tuoi amici a ricevere la pergamena della missione Basi-Lista.
+\n
+\nVisita la sezione Support per saperne di più sui team.</string>
 </resources>

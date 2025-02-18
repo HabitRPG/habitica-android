@@ -85,8 +85,8 @@
     <string name="failed">Не вдалося завантажити</string>
     <plurals name="flagged_count">
         <item quantity="one">Позначено %d раз</item>
-        <item quantity="few">Позначено %d разів, приховано</item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="few">Позначено %d рази, приховано</item>
+        <item quantity="many">Позначено %d разів, приховано</item>
+        <item quantity="other">Позначено %d разів, приховано</item>
     </plurals>
 </resources>

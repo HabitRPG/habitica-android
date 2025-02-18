@@ -127,7 +127,7 @@
     <string name="setup_task_chores_3">Organiser skab</string>
     <string name="setup_task_creativity_2">Arbejd på et kreativt projekt</string>
     <string name="setup_task_creativity_3">Færdiggør et kreativt projekt</string>
-            <string name="guild">Klan</string>
+    <string name="guild">Klan</string>
     <string name="leave">Forlad</string>
     <string name="delete">Slet</string>
     <string name="name">Navn</string>
@@ -212,7 +212,7 @@
     <string name="three_months">3 måneder</string>
     <string name="six_months">6 måneder</string>
     <string name="twelve_months">12 måneder</string>
-    <string name="subscribe_prompt_thanks">Du modtager følgende fordele for dit abonnement:</string>
+    <string name="subscribe_prompt_thanks">Du modtager følgende fordele for dit abonnement</string>
     <string name="subscription_status">Abonnement status</string>
     <string name="challenge_leave_title">Forlad Udfordring</string>
     <string name="my_challenges">Mine Udfordringer</string>

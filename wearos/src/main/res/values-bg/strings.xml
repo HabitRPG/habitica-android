@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="how_did_you_do">Как се справи\?</string>
+    <string name="you_found">Ти намери…</string>
+    <string name="x_quest_item">%dПредмети от Мисия</string>
+    <string name="one_quest_item">1 Предмет от Мисия</string>
+    <string name="x_and_y">%1$sи%2$s</string>
+    <string name="some_x">няколко %s</string>
+    <string name="sign_in">Впиши се</string>
+    <string name="sign_in_description">Създайте списъци със задачи и следете напредъка си с вашия аватар</string>
+    <string name="sign_in_on_phone">Впиши се от телефонa</string>
+    <string name="edit_on_phone">Промени от телефона</string>
+    <string name="other_options">Други опции</string>
+    <string name="create_account">Създай профил</string>
+    <string name="continue_text">Продължи</string>
+    <string name="you_ran_out_of_hp">Остана без Здраве</string>
+    <string name="faint_description">Загуби Ниво, Опит и Злато. Не се предавай!</string>
+    <string name="version_info">Версия %1$s (%2$d)</string>
+    <string name="save">Запази</string>
+    <string name="ok">ОК</string>
+    <string name="syncing_account">Синхронизиране на акаунта от телефона</string>
+    <string name="disconnected">Прекъсната връзка</string>
+</resources>

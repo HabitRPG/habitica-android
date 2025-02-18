@@ -1,2 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="thousand_abbrev">K</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="gems">Drahokamy</string>
+    <string name="gold_plural">zlato</string>
+    <string name="gold_capitalized">Zlato</string>
+    <string name="repeat_daily">Denne</string>
+    <string name="monthly">Mesačne</string>
+    <string name="weekly">Týždenne</string>
+    <string name="trivial">Všedné</string>
+    <string name="easy">Ľahké</string>
+    <string name="medium">Stredne ťažké</string>
+    <string name="hard">Ťažké</string>
+    <string name="trivial_sentence">všedné</string>
+    <string name="easy_sentence">ľahké</string>
+    <string name="medium_sentence">stredne ťažké</string>
+    <string name="hard_sentence">ťažké</string>
+    <string name="habits">Zvyky</string>
+    <string name="dailies">Denné návyky</string>
+    <string name="todos">Úlohy</string>
+    <string name="rewards">Odmeny</string>
+    <string name="daily">Denne</string>
+    <string name="habit">Zvyk</string>
+    <string name="reward">Odmena</string>
+    <string name="stats">Štatistiky</string>
+    <string name="settings">Nastavenia</string>
+    <string name="new_task">Nové zadanie</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level">Lvl. %d</string>
+    <string name="user_level_long">Level %d</string>
+    <string name="action_edit">Upraviť</string>
+    <string name="action_cancel">Zrušiť</string>
+    <string name="login_btn">Prihlásiť sa</string>
+    <string name="username">Používateľské Meno</string>
+    <string name="password">Heslo</string>
+    <string name="emailAddress">Emailová adresa</string>
+    <string name="confirmpassword">Potvrdiť heslo</string>
+    <string name="login_btn_google">Prihlásiť sa cez Google</string>
+    <string name="logout">Odhlásiť sa</string>
+    <string name="logout_description">Odhlásiť sa z konta</string>
+    <string name="LoginActivityName">Vitajte</string>
+    <string name="about_title">O</string>
+    <string name="login_validation_error_fieldsmissing">Musíte vyplniť všetky polia.</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Zvyk</item>
+        <item quantity="few">%d Zvyky</item>
+        <item quantity="other">%d Zvykov</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Denný Návyk</item>
+        <item quantity="few">%d Denné Návyky</item>
+        <item quantity="other">%d Denných Návykov</item>
+    </plurals>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Odmena</item>
+        <item quantity="few">%d Odmeny</item>
+        <item quantity="other">%d Odmien</item>
+    </plurals>
+    <string name="create_task_title">Vytvoriť Zadanie</string>
+    <string name="complete_task_title">Dokončiť Zadanie</string>
+    <string name="new_task_x">Nové %s</string>
+    <string name="save_task_x">Uložiť %s</string>
+    <string name="are_you_sure">Ste si istý\?</string>
+    <string name="task">Zadanie</string>
+    <string name="failed">Nepodarilo sa načítať</string>
+    <string name="retry">Skúsiť znova</string>
+    <string name="mystic_hourglasses">Mýtické Presýpacie Hodiny</string>
+    <string name="todo">Úloha</string>
+    <string name="register_btn">Zaregistrovať sa</string>
+    <string name="email_username">Email/Používateľské Meno</string>
+    <string name="login_validation_error_title">Chyba v Overovaní</string>
+    <plurals name="x_todos">
+        <item quantity="one">%d Úloha</item>
+        <item quantity="few">%d Úlohy</item>
+        <item quantity="other">%d Úloh</item>
+    </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">Čas %d vlajky</item>
+        <item quantity="few">Časy %d vlajky, skryté</item>
+        <item quantity="other">Časov %d vlajky, skryté</item>
+    </plurals>
+    <string name="create_task">Vytvoriť %s</string>
+</resources>

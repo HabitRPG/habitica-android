@@ -96,7 +96,7 @@
     <string name="purchase_set_title">Köp set %s</string>
     <string name="due_date">Förfallodatum</string>
     <string name="version_info">Version %1$s (%2$d)</string>
-    <string name="sidebar_help">Hjälp &amp; FAQ</string>
+    <string name="sidebar_help">Support</string>
     <string name="complete_tutorial">Jag fattar!</string>
     <string name="dismiss_tutorial">Påminn mig igen</string>
     <string name="intro_1_subtitle">Välkommen till</string>
@@ -140,7 +140,7 @@
     <string name="setup_task_creativity_1">Studera en mästare inom hantverket</string>
     <string name="setup_task_creativity_2">Arbeta på ett kreativt projekt</string>
     <string name="setup_task_creativity_3">Slutför ett kreativt projekt</string>
-            <string name="guild">Gille</string>
+    <string name="guild">Gille</string>
     <string name="leave">Lämna</string>
     <string name="join">Gå med</string>
     <string name="delete">Radera</string>
@@ -187,7 +187,7 @@
     <string name="notification_purchase_reward">Du köpte en belöning</string>
     <string name="world_quest">Världsuppdrag</string>
     <string name="empty_items">Du har inga %s</string>
-    <string name="user_level_with_class">Lvl %1$d %2$s</string>
+    <string name="user_level_with_class">Niv. %1$d %2$s</string>
     <string name="warrior">Krigare</string>
     <string name="rogue">Smygare</string>
     <string name="mage">Magiker</string>
@@ -198,8 +198,7 @@
     <string name="select_class">Välja klass</string>
     <string name="opt_out_class">Välj bort</string>
     <string name="class_confirmation">Är du säker på att du vill vara en %s?</string>
-    <string name="class_changed">Du är nu en %s!</string>
-
+    <string name="class_changed">Du är en %s!</string>
     <string name="choose_class">Välj klass</string>
     <string name="dialog_go_back">Gå tillbaka</string>
     <string name="opt_out_confirmation">Är du säker på att du vill välja bort?</string>
@@ -208,9 +207,9 @@
     <string name="enable_class">Sätt igång klasssystemet</string>
     <string name="changing_class_progress">Ändra klass</string>
     <string name="by_email">Via email</string>
-    <string name="invite_existing_users">Bjud in existerande användare</string>
+    <string name="invite_existing_users">Bjud in existerande spelare</string>
     <string name="send">Skicka</string>
-    <string name="invite">Bjud in vänner</string>
+    <string name="invite">Hitta medlemmar</string>
     <string name="invite_email_description">Om vänner går med i Habitica via ditt mail kommer de automatiskt att bjudas in till ditt sällskap.</string>
     <string name="add_invites">Lägg till inbjudningar</string>
     <string name="email">Mail</string>
@@ -218,8 +217,8 @@
     <string name="share_levelup">Jag kom till level %d i #Habitica genom att förbättra mina vanor i verkliga livet!</string>
     <string name="share_hatched">Jag kläckte just ett %1$s %2$s husdjur i #Habitica genom att slutföra mina uppgifter!</string>
     <string name="share_raised">Jag fick just ett  %s riddjur i Habitica genom att slutföra mina uppgifter!</string>
-    <string name="open_in_store">Öppna i Play Store</string>
-    <string name="change_class_confirmation">Är du säker på att du vill ändra din klass? Det kommer kosta 3 juveler.</string>
+    <string name="open_in_store">Öppna Play Store</string>
+    <string name="change_class_confirmation">Vill du byta din klass för 3 juveler\?</string>
     <string name="change_class_equipment_warning">Varning: Du kommer inte längre kunna köpa utrustning från %s klassen.</string>
     <string name="confirm">Godkänn</string>
     <string name="market">Affären</string>
@@ -283,7 +282,7 @@
     <string name="three_months">3  månader</string>
     <string name="six_months">6 månader</string>
     <string name="twelve_months">12 månader</string>
-    <string name="subscribe_prompt_thanks">För att du Prenumererar så får du dessa användbara fördelar:</string>
+    <string name="subscribe_prompt_thanks">För att du Prenumererar så får du dessa användbara fördelar</string>
     <string name="subscription_status">Prenumerationsstatus</string>
     <string name="challenge_leave_title">Lämna utmaning</string>
     <string name="remove_tasks">Ta bort</string>
@@ -476,7 +475,7 @@
     <string name="gem_purchase_toolbartitle">Köp</string>
     <string name="create_account_short">skapa ett konto</string>
     <string name="login_incentive_short">logga in till Habitica regelbundet</string>
-    <string name="party_invite_short">Bjud in vänner</string>
+    <string name="party_invite_short">Hitta medlemmar</string>
     <string name="invite_username_description">Om du redan har vänner som använder Habitica, bjud in dem genom användarnamn här.</string>
     <string name="remaining_weeks">%d veckor kvar</string>
     <string name="remaining_1week">1 vecka kvar</string>
@@ -549,7 +548,7 @@
     <string name="ago_minutes">%dm sen</string>
     <string name="ago_days">%dd sen</string>
     <string name="ago_weeks">%dw sen</string>
-    <string name="ago_months">%d månad sen</string>
+    <string name="ago_months">%d månader sedan</string>
     <string name="ago_hours">%dh sen</string>
     <string name="ago_1hour">1h sen</string>
     <string name="ago_1Minute">1m sen</string>
@@ -631,4 +630,25 @@
     <string name="owner">Ägar</string>
     <string name="stat_allocation">Egenskapsfördelning</string>
     <string name="experience_points">Erfarenhetspoäng</string>
+    <string name="x_and_y">%1$s och %2$s</string>
+    <plurals name="x_days">
+        <item quantity="one">%d Dag</item>
+        <item quantity="other">%d Dagar</item>
+    </plurals>
+    <plurals name="x_hours">
+        <item quantity="one">%d Timme</item>
+        <item quantity="other">%d Timmar</item>
+    </plurals>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Minut</item>
+        <item quantity="other">%d Minuter</item>
+    </plurals>
+    <string name="enable_notifications">Aktivera aviseringar</string>
+    <string name="title">Titel</string>
+    <string name="on">På</string>
+    <string name="levelup_header">Du har nått nivå %1$d!</string>
+    <string name="sell_no_price">Sälj</string>
+    <string name="create_new_party">Skapa ett nytt sällskap</string>
+    <string name="evolved_pet_title">Du har tämjt %s, dags för en ridtur!</string>
+    <string name="class_confirmation_price">Vill du byta din klass till %s för %d juveler\?</string>
 </resources>

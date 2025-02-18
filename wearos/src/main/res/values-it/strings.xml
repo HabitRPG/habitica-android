@@ -3,12 +3,23 @@
     <string name="some_x">un po\' di %s</string>
     <string name="ok">OK</string>
     <string name="syncing_account">Sincronizzazione dell\'account dal telefono</string>
-    <string name="how_did_you_do">Come è andata\?</string>
+    <string name="how_did_you_do">Com\'è andata\?</string>
     <string name="you_found">Hai trovato…</string>
-    <string name="one_quest_item">1 oggetto della missione</string>
+    <string name="one_quest_item">1 Oggetto della missione</string>
     <string name="x_quest_item">%d Oggetti missione</string>
     <string name="x_and_y">%1$s e %2$s</string>
     <string name="edit_on_phone">Modifica sul telefono</string>
     <string name="sign_in">Accedi</string>
     <string name="sign_in_description">Crea elenchi di compiti e tieni traccia dei progressi con il tuo avatar gamificato</string>
+    <string name="sign_in_on_phone">Accedi dal tuo telefono</string>
+    <string name="other_options">Altre opzioni</string>
+    <string name="create_account">Creare un account</string>
+    <string name="continue_text">Continuare</string>
+    <string name="you_ran_out_of_hp">Non hai più punto di vita</string>
+    <string name="faint_description">Hai perso un Livello, esperienza e oro. Non arrenderti!</string>
+    <string name="day_start">Inizio della giornata</string>
+    <string name="rya_description">Hai Attività giornaliere incompleta per ieri</string>
+    <string name="review_dailies">Vedi la mia Attività giornaliere</string>
+    <string name="some_food">Un po\' di cibo</string>
+    <string name="continue_on_your_phone">Continua sul telefono</string>
 </resources>

@@ -69,7 +69,6 @@
     <string name="levelup_detail">Postižući svoje ciljeve u stvarnom životu, podigao/la si svoj level i sad si u potpunosti iscijeljen/a!</string>
     <string name="onwards">Hura!</string>
     <string name="faint_subtitle">Ne očajavaj!</string>
-    <string name="faint_penalty_body">Izgubio/la si level, svoje Zlatnike i komad opreme, ali ih možeš vratiti marljivim radom! Sretno - ići će te sjajno.</string>
     <string name="faint_header">Ostao/la si bez Zdravlja!</string>
     <string name="faint_button">Obnovi Zdravlje &amp; Pokušaj ponovno</string>
     <string name="filter">Filtriraj</string>
@@ -157,7 +156,7 @@
     <string name="setup_task_creativity_1">Uči od majstora vještine</string>
     <string name="setup_task_creativity_2">Radi na kreativnom projektu </string>
     <string name="setup_task_creativity_3">Završi kreativni projekt</string>
-            <string name="guild">Ceh</string>
+    <string name="guild">Ceh</string>
     <string name="leave">Napusti</string>
     <string name="join">Pridruži se</string>
     <string name="delete">Izbriši</string>

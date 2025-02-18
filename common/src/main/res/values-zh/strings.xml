@@ -5,7 +5,7 @@
     <string name="billion_abbrev">十亿</string>
     <string name="trillion_abbrev">兆</string>
     <string name="mystic_hourglasses">神秘沙漏</string>
-    <string name="repeat_daily">每日任务</string>
+    <string name="repeat_daily">每日</string>
     <string name="monthly">每月</string>
     <string name="weekly">每周</string>
     <string name="daily">每日</string>
@@ -33,7 +33,7 @@
     <string name="medium_sentence">中等</string>
     <string name="hard_sentence">困难</string>
     <string name="habits">习惯</string>
-    <string name="dailies">每日任务</string>
+    <string name="dailies">日常任务</string>
     <string name="todos">待办事项</string>
     <string name="avatar">角色形象</string>
     <string name="user_level">%d级</string>
