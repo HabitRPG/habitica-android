@@ -54,6 +54,10 @@ jobs:
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
         run: ./gradlew assembleDebug
 
+      # Create APK Debug
+      - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
+        run: ./gradlew Habitica:assembleDebug
+
       # Create APK Release
       #- name: Build apk release project (APK) - ${{ env.main_project_module }} module
       #  run: ./gradlew assemble
