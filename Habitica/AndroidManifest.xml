@@ -45,7 +45,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https"
-                    android:host="habitica.com"
+                    android:host="habitica.aguiarvieira.pt"
                     android:pathPattern="/"/>
             </intent-filter>
 
@@ -62,7 +62,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https"
-                    android:host="habitica.com"
+                    android:host="habitica.aguiarvieira.pt"
                     android:pathPattern="/settings/.*"/>
             </intent-filter>
         </activity>
@@ -197,7 +197,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https"
-                    android:host="habitica.com"
+                    android:host="habitica.aguiarvieira.pt"
                     android:pathPattern="/profile/.*"/>
             </intent-filter>
         </activity>
