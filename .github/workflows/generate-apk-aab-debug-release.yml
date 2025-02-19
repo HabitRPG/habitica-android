@@ -1,4 +1,4 @@
-name: Generated APK AAB (Upload - Create Artifact To Github Action)
+name: AV Habitica Release
 
 env:
   # The name of the main module repository
