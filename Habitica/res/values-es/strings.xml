@@ -69,7 +69,6 @@
     <string name="levelup_detail">¡Cumpliendo tus metas en la vida real, has subido de nivel y tu salud está restaurada!</string>
     <string name="onwards">¡Hurra!</string>
     <string name="faint_subtitle">¡No desesperes!</string>
-    <string name="faint_penalty_body">Has perdido un Nivel, todo tu Oro y una pieza de tu Equipamiento, ¡pero puedes recuperarlo todo con tu esfuerzo! Buena suerte, lo harás genial.</string>
     <string name="faint_header">¡Te has quedado sin puntos de salud!</string>
     <string name="faint_button">Recuperar todos los puntos de salud y volver a intentarlo</string>
     <string name="filter">Filtro</string>
@@ -533,11 +532,11 @@
     <string name="world_boss">Jefe Mundial</string>
     <string name="boss_art">Imagen del jefe</string>
     <string name="world_boss_description">Descripción del Jefe Mundial</string>
-    <string name="rage_strike_count">Ataque de ira: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Ataque de ira: %d/%d</string>
     <string name="pending_strike_title">Ataque pendiente</string>
     <string name="strike_description_title">¿Qué es un Ataque de Ira?</string>
     <string name="strike_active_title">¡El %s ha sido atacado!</string>
-    <string name="strike_active_description">Nuestro querido %s fue destrozado cuando el %s desmenuzó el %s. ¡¡Rápido, enfréntate a tus tareas para derrotar al monstruo y ayudar con la reconstrucción!!</string>
+    <string name="strike_active_description">Nuestro querido %1$s fue destrozado cuando el %2$s desmenuzó el %3$s. ¡¡Rápido, enfréntate a tus tareas para derrotar al monstruo y ayudar con la reconstrucción!!</string>
     <string name="questShop">Tienda de Misiones</string>
     <string name="market_owner_long">Alex el Mercader</string>
     <string name="tavern_owner_long">Daniel el posadero</string>
@@ -684,7 +683,7 @@
     <string name="facebook">Facebook</string>
     <string name="authentication_methods">Métodos de autentificación</string>
     <string name="someone">Alguien</string>
-    <string name="invitation_title">%s te invitó a unirte a su grupo %s</string>
+    <string name="invitation_title">%1$s te invitó a unirte a su grupo %2$s</string>
     <string name="copy_username">Copiar nombre de usuario</string>
     <string name="id_copied">Copiar ID de usuario al portapapeles</string>
     <string name="copy_userid">Copiar ID de usuario</string>
@@ -804,7 +803,7 @@
     <string name="gift_confirmation_text_sub_g1g1">Regalaste a %1$s una suscripción de %2$s meses y se ha aplicado la misma suscripción a tu cuenta por nuestra promoción de Regala Una Llévate Una Gratis.</string>
     <string name="join_party_description_guild">¡Da el nombre de usuario de abajo a un amigo o ve al %s para conocer a camaradas potenciales!</string>
     <string name="number_responded">%1$d/%2$d respondió</string>
-    <string name="fall_promo_info_instructions">Entre el %s y el %s, compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de gemas. ¡Más Gemas para gastar, compartir o ahorrar para cualquier evento futuro!</string>
+    <string name="fall_promo_info_instructions">Entre el %1$s y el %2$s, compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de gemas. ¡Más Gemas para gastar, compartir o ahorrar para cualquier evento futuro!</string>
     <string name="spooky_promo_info_prompt">¡La Venta de Gemas está de vuelta para atormentar el final de la Gala de Otoño de este año! Esta es la última oportunidad de conseguir más Gemas que nunca ¡así que aprovecha mientras dure!</string>
     <string name="preference_email_onboarding">Orientación para establecer tu cuenta de Habitica</string>
     <string name="game_mechanics">Mecánicas del Juego</string>
@@ -818,7 +817,7 @@
     <string name="experience_points">Puntos de Experiencia</string>
     <string name="purchaseX">Comprar %d</string>
     <string name="excessItemsXLeft">Solo necesitas %1$d %2$s para eclosionar todas las mascotas posibles. ¿Estás seguro de que quieres comprar %3$d\?</string>
-    <string name="spooky_promo_info_instructions">Entre el %s y el %s, compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de gemas. ¡Más gemas para gastar, compartir o guardar para cualquier evento futuro!</string>
+    <string name="spooky_promo_info_instructions">Entre el %1$s y el %2$s, compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de gemas. ¡Más gemas para gastar, compartir o guardar para cualquier evento futuro!</string>
     <string name="view_gem_bundles">Ver paquetes de Gemas</string>
     <string name="fall_promo_info_prompt">La Gala de Otoño está en pleno apogeo, así que pensamos que era el momento perfecto para presentar nuestra primera Venta de Gemas! Ahora obtendrás más gemas con cada compra como nunca antes.</string>
     <string name="defeat">Derrota</string>
@@ -1121,7 +1120,7 @@
     <string name="discard_changes_to_task_message">¿Está seguro de descartar los cambios de esta tarea\?</string>
     <string name="subscription_confirmation">Ahora estás suscrito por 1 mes</string>
     <string name="discard">Descartar</string>
-    <string name="class_confirmation_price">¿Quieres cambiar tu clase a %s por %d Gemas\?</string>
+    <string name="class_confirmation_price">¿Quieres cambiar tu clase a %1$s por %2$d Gemas\?</string>
     <string name="use_item">Usa el objeto en un miebro del grupo</string>&gt;
     <string name="unsaved_changes">Cambios sin guardar</string>
     <string name="gift_confirmation_text_gems_new">Has enviado %2$s gemas a @%1$s.</string>

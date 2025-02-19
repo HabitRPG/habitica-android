@@ -376,7 +376,6 @@
     <string name="leave_party">파티 떠나기</string>
     <string name="levelup_header">레벨 %1$d이 되었습니다!</string>
     <string name="levelup_detail">생활의 목표를 달성함으로 레벨이 올라가서 체력이 완전히 회복되었습니다!</string>
-    <string name="faint_penalty_body">레벨 하나, 골드 전부, 그리고 장비 하나를 잃었네요, 하지만 열심히 일하면 모두 다시 얻을 수 있습니다! 화이팅 - 잘 할 수 있어요.</string>
     <string name="reminder_title">끝낸 과제에 체크하는 걸 잊지 마세요</string>
     <string name="ago_1day">1일 전</string>
     <string name="ago_days">%d일 전</string>
@@ -545,7 +544,7 @@
     <string name="pending_strike_title">임박한 타격</string>
     <string name="strike_description_title">분노의 타격이 무엇인가요\?</string>
     <string name="strike_active_title">%s 이(가) 공격받았습니다!</string>
-    <string name="strike_active_description" formatted="false">우리의 %s는 %s가 %s를 산산조각 내서 엄청난 충격을 받았습니다. 어서 과제를 수행해서 괴물을 물리치고 재건할 수 있게 도와주세요!!</string>
+    <string name="strike_active_description" formatted="false">우리의 %1$s는 %2$s가 %3$s를 산산조각 내서 엄청난 충격을 받았습니다. 어서 과제를 수행해서 괴물을 물리치고 재건할 수 있게 도와주세요!!</string>
     <string name="questShop">퀘스트 상점</string>
     <string name="market_owner_long">상인 알렉스</string>
     <string name="tavern_owner_long">여관 주인 다니엘</string>
@@ -749,8 +748,8 @@
     <string name="subscribe_listitem5">아이템 드롭이 두 배</string>
     <string name="subscribe_listitem3_description_new">지금 %s를 받고 매달 새로운 아이템을 받으려면 구독하세요!</string>
     <string name="leave_guild_confirmation">정말로 길드를 탈퇴하시겠습니까\?</string>
-    <string name="gift_confirmation_text_sub">%s 에게 %s-개월 해비티카 구독권을 선물했습니다.</string>
-    <string name="gift_confirmation_text_sub_g1g1">원 플러스 원 프로모션을 통해 %s 에게 %s-개월 해비티카 구독권을 선물하고 동일한 구독 기간이 본인의 계정에도 적용되었습니다!</string>
+    <string name="gift_confirmation_text_sub">%1$s 에게 %2$s-개월 해비티카 구독권을 선물했습니다.</string>
+    <string name="gift_confirmation_text_sub_g1g1">원 플러스 원 프로모션을 통해 %1$s 에게 %2$s-개월 해비티카 구독권을 선물하고 동일한 구독 기간이 본인의 계정에도 적용되었습니다!</string>
     <string name="gift_gems_subtitle">선물하고 싶은 보석 꾸러미를 선택하세요!</string>
     <string name="number_responded">%1$d/%2$d 수락함</string>
     <string name="empty_title_todos_filtered">할 일 없음</string>
@@ -840,7 +839,7 @@
     <string name="copy_userid">API 아이디 복사하기</string>
     <string name="authentication_methods">인증 방식</string>
     <string name="someone">누군가</string>
-    <string name="invitation_title">%s 님이 %s 그룹에 초대하셨습니다</string>
+    <string name="invitation_title">%1$s 님이 %2$s 그룹에 초대하셨습니다</string>
     <string name="sale">할인</string>
     <string name="promo_g1g1_prompt">원 플러스 원 이벤트</string>
     <string name="promo_g1g1_description">지금 구독을 선물하면 본인도 같은 구독을 무료로 받게 됩니다!</string>
@@ -962,12 +961,12 @@
     <string name="common_questions">자주 묻는 질문</string>
     <string name="usernames_party">%s의 파티</string>
     <string name="discard">버리기</string>
-    <string name="class_confirmation_price">%d개의 보석을 사용하여 %s직업으로 전직하시겠습니까\?</string>
+    <string name="class_confirmation_price">%2$d개의 보석을 사용하여 %1$s직업으로 전직하시겠습니까\?</string>
     <string name="subscription_confirmation">이제 1개월간 구독하였습니다</string>
     <string name="month_reminder_title">일과에 변화가 필요한가요\?</string>
     <string name="use_item">파티원에게 아이템 사용하기</string>&gt;
     <string name="unsaved_changes">저장되지 않은 변경사항들</string>
-    <string name="gift_confirmation_text_gems_new">%s님에게 %s개의 보석을 보냈습니다.</string>
+    <string name="gift_confirmation_text_gems_new">%1$s님에게 %2$s개의 보석을 보냈습니다.</string>
     <string name="gem_purchase_confirmation">%s개의 보석을 얻었습니다</string>
     <string name="leave_guild_challenges_confirmation">길드를 탈퇴할 때, 참여 중이던 도전 과제를 계속 수행하시겠습니까\?</string>
     <string name="subscription_confirmation_multiple">이제 %s개월간 구독하였습니다</string>
@@ -1060,11 +1059,11 @@
     <string name="hatch">부화시키기</string>
     <string name="delete_challenge_task_title">도전과제를 삭제하시겠습니까\?</string>
     <string name="suggest_pet_hatch_missing_potion">이 펫을 부화시키려면 %s의 물약이 필요합니다</string>
-    <string name="suggest_pet_hatch_missing_both">이 펫을 부화시키려면 %s와(과) %s의 물약이 필요합니다</string>
+    <string name="suggest_pet_hatch_missing_both">이 펫을 부화시키려면 %1$s와(과) %2$s의 물약이 필요합니다</string>
     <string name="suggest_pet_hatch_again_missing_egg">이 펫을 부화시키려면 %s의 알이 다시 필요합니다</string>
     <string name="suggest_pet_hatch_again_missing_potion">이 펫을 부화시키려면 %s의 물약이 다시 필요합니다</string>
-    <string name="suggest_pet_hatch_again_missing_both">이 펫을 부화시키려면 %s와(과) %s의 물약이 다시 필요합니다</string>
-    <string name="can_hatch_pet">이 펫을 부화시키기 위해 %s의 알과 %s의 물약을 조합하세요!</string>
+    <string name="suggest_pet_hatch_again_missing_both">이 펫을 부화시키려면 %1$s와(과) %2$s의 물약이 다시 필요합니다</string>
+    <string name="can_hatch_pet">이 펫을 부화시키기 위해 %1$s의 알과 %2$s의 물약을 조합하세요!</string>
     <string name="suggest_pet_hatch_missing_egg">이 펫을 부화시키려면 %s의 알이 필요합니다</string>
     <string name="disablePrivateMessages">쪽지 비활성화</string>
     <string name="unblock_user">사용자 차단 해제하기</string>
@@ -1084,14 +1083,14 @@
     <string name="block">차단</string>
     <string name="pms_disabled">쪽지가 비활성화 되어있습니다.</string>
     <string name="pms_disabled_description">당신은 여전히 쪽지를 보낼 수 있지만 아무도 당신에게 쪽지를 보낼 수 없습니다. 이 기능은 설정에서 다시 활성화할 수 있습니다.</string>
-    <string name="spooky_promo_info_instructions">%s와(과) %s 사이에, 보석 꾸러미를 평소처럼 구입하면 더 많은 양의 보석이 적립됩니다. 더 많은 보석을 쓰고, 공유하고, 미래를 위해 모아두세요!</string>
+    <string name="spooky_promo_info_instructions">%1$s와(과) %2$s 사이에, 보석 꾸러미를 평소처럼 구입하면 더 많은 양의 보석이 적립됩니다. 더 많은 보석을 쓰고, 공유하고, 미래를 위해 모아두세요!</string>
     <string name="how_it_works">어떻게 작동하나요</string>
     <string name="limitations">제한 사항</string>
     <string name="fall_promo_info_prompt">가을 갈라가 열려있습니다! 보석 세일의 최적의 기간이죠! 보석을 구매할 때 평소보다 많은 보석을 얻게됩니다.</string>
     <string name="view_gem_bundles">보석 꾸러미 보기</string>
     <string name="usually_x_gems">보통 %d보석</string>
-    <string name="x_to_y">%s부터 %s</string>
-    <string name="fall_promo_info_instructions">%s와(과) %s 사이에, 보석 꾸러미를 평소처럼 구입하면 더 많은 양의 보석이 적립됩니다. 더 많은 보석을 쓰고, 공유하고, 미래를 위해 모아두세요!</string>
+    <string name="x_to_y">%1$s부터 %2$s</string>
+    <string name="fall_promo_info_instructions">%1$s와(과) %2$s 사이에, 보석 꾸러미를 평소처럼 구입하면 더 많은 양의 보석이 적립됩니다. 더 많은 보석을 쓰고, 공유하고, 미래를 위해 모아두세요!</string>
     <string name="spooky_promo_info_prompt">보석 세일이 올해 가을 축제 마지막을 장식하고 있습니다! 지금이 어느 때보다 보석을 많이 얻을 수 있는 마지막 기회이니, 끝나기 전에 보석을 쟁여두세요!</string>
     <string name="dark_mode">다크 모드</string>
     <string name="theme_mode">테마 모드</string>
@@ -1213,7 +1212,7 @@
     <string name="you_ran_out_of_health">생명력이 모두 닳았습니다!</string>
     <string name="death_description">하지만 모두 돌려받을 수 있을 겁니다! 당신은 할 수 있어요!</string>
     <string name="faint_broken_equipment">부서진 장비는 보상에서 다시 구매할 수 있습니다</string>
-    <string name="faint_loss_description">레벨이 <b>%d</b>로 떨어지고, <b>%d</b>의 골드를 잃고, <b>장비</b>가 부서집니다…</string>
+    <string name="faint_loss_description">레벨이 <b>%1$d</b>로 떨어지고, <b>%2$d</b>의 골드를 잃고, <b>장비</b>가 부서집니다…</string>
     <string name="account_reset">계정 초기화</string>
     <string name="avatar_skin_customization">아바타 피부 커스텀</string>
     <string name="avatar_shirt_customization">아바타 상의 커스텀</string>

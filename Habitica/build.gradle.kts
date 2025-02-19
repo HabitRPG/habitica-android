@@ -118,6 +118,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    hilt {
+        enableAggregatingTask = true
+    }
+
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -128,8 +132,9 @@ android {
     }
 
     lint {
-        abortOnError = false
-        disable.addAll(listOf("MissingTranslation", "InvalidPackage"))
+        checkReleaseBuilds = false
+        abortOnError = true
+        disable.addAll(listOf("MissingTranslation"))
         enable.addAll(listOf("LogConditional", "IconExpectedSize", "MissingRegistered", "TypographyQuotes"))
     }
 
@@ -169,7 +174,6 @@ dependencies {
 
     // IAP Handling / Verification
     implementation(libs.billing)
-    implementation(libs.viewPagerIndicator) { exclude(group = "com.google.android") }
 
     implementation(libs.coil.compose)
 

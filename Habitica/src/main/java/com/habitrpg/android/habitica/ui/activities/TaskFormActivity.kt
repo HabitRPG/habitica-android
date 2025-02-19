@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.activity.SystemBarStyle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -227,6 +228,7 @@ class TaskFormActivity : BaseActivity() {
                 upperTintColor
             )
         }
+        window.navigationBarColor = getThemeColor(R.attr.colorTintedBackground)
         binding.appbar.setBackgroundColor(upperTintColor)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)

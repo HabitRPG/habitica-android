@@ -69,7 +69,6 @@
     <string name="levelup_detail">Durch das Erfüllen Deiner Lebensziele bist Du ein Level aufgestiegen und bist nun vollständig geheilt!</string>
     <string name="onwards">Vorwärts!</string>
     <string name="faint_subtitle">Nicht verzweifeln!</string>
-    <string name="faint_penalty_body">Du hast ein Level, Dein Gold und ein Teil Deiner Ausrüstung verloren, aber Du kannst mit harter Arbeit alles wieder zurückbekommen! Viel Glück - Du schaffst das.</string>
     <string name="faint_header">Du hast alle Deine Lebenspunkte verloren!</string>
     <string name="faint_button">Lebenspunkte auffüllen &amp; nochmal versuchen</string>
     <string name="filter">Filtern</string>
@@ -533,11 +532,11 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="world_boss">Weltboss</string>
     <string name="boss_art">Boss-Grafik</string>
     <string name="world_boss_description">Weltboss-Beschreibung</string>
-    <string name="rage_strike_count">Raserei-Angriff: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Raserei-Angriff: %d/%d</string>
     <string name="pending_strike_title">Ausstehender Angriff</string>
     <string name="strike_description_title">Was ist ein Raserei-Angriff\?</string>
     <string name="strike_active_title">%s wurde angegriffen!</string>
-    <string name="strike_active_description">%s war am Boden zerstört, als der %s das %s-Gebäude zerschmetterte. Schnell, packt Eure Aufgaben an, um das Monster zu besiegen und beim Wiederaufbau zu helfen!!</string>
+    <string name="strike_active_description">%1$s war am Boden zerstört, als der %2$s das %3$s-Gebäude zerschmetterte. Schnell, packt Eure Aufgaben an, um das Monster zu besiegen und beim Wiederaufbau zu helfen!!</string>
     <string name="questShop">Quest-Shop</string>
     <string name="market_owner_long">Alex der Händler</string>
     <string name="tavern_owner_long">Daniel der Gastwirt</string>
@@ -699,7 +698,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="local">lokale</string>
     <string name="authentication_methods">Authentifizierungsmethoden</string>
     <string name="someone">Jemand</string>
-    <string name="invitation_title">%s hat Dich eingeladen der Gruppe %s beizutreten</string>
+    <string name="invitation_title">%1$s hat Dich eingeladen der Gruppe %2$s beizutreten</string>
     <string name="password_too_short">Das Passwort muss mindestens %d Zeichen haben</string>
     <string name="copy_username">Benutzernamen kopieren</string>
     <string name="id_copied">Benutzer-ID in die Zwischenablage kopiert</string>
@@ -829,8 +828,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="task_title">Aufgaben-Titel</string>
     <string name="add_local_authentication">Lokale Authentifizierung hinzufügen</string>
     <string name="defeat">Niederlage</string>
-    <string name="gift_confirmation_text_sub">Du hast %s ein %s-monatiges Abo für Habitica geschickt.</string>
-    <string name="gift_confirmation_text_sub_g1g1">Du hast %s ein %s-monatiges Abo für Habitica geschickt und das gleiche Abo wurde Deinem Konto gutgeschrieben, dank unserer \"Verschenke ein Abo und erhalte eins gratis\"-Aktion!</string>
+    <string name="gift_confirmation_text_sub">Du hast %1$s ein %2$s-monatiges Abo für Habitica geschickt.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Du hast %1$s ein %2$s-monatiges Abo für Habitica geschickt und das gleiche Abo wurde Deinem Konto gutgeschrieben, dank unserer \"Verschenke ein Abo und erhalte eins gratis\"-Aktion!</string>
     <string name="join_party_description_guild">Gib den untenstehenden Benutzernamen einem Freund, oder geh zur %s um potenzielle Verbündete zu treffen!</string>
     <string name="empty_title_rewards_filtered">Keine Belohnungen</string>
     <string name="empty_title_todos_filtered">Keine To-Dos</string>
@@ -1014,11 +1013,11 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="delete_challenge_task_title">Herausforderungsaufgabe löschen\?</string>
     <string name="use_saddle">Magischen Sattel benutzen</string>
     <string name="unhatched_pet">Nicht ausgebrütetes Haustier</string>
-    <string name="can_hatch_pet">Kombiniere Dein %s Ei und %s Elixier, um dieses Haustier auszubrüten!</string>
-    <string name="suggest_pet_hatch_again_missing_both">Du brauchst noch ein %s und %s Elixier, um dieses Haustier erneut auszubrüten</string>
+    <string name="can_hatch_pet">Kombiniere Dein %1$s Ei und %2$s Elixier, um dieses Haustier auszubrüten!</string>
+    <string name="suggest_pet_hatch_again_missing_both">Du brauchst noch ein %1$s und %2$s Elixier, um dieses Haustier erneut auszubrüten</string>
     <string name="suggest_pet_hatch_again_missing_potion">Du brauchst noch ein %s Elixier, um dieses Haustier erneut auszubrüten</string>
     <string name="suggest_pet_hatch_again_missing_egg">Du brauchst noch ein %s Ei, um dieses Haustier erneut auszubrüten</string>
-    <string name="suggest_pet_hatch_missing_both">Du brauchst noch ein %s und %s Elixier, um dieses Haustier auszubrüten</string>
+    <string name="suggest_pet_hatch_missing_both">Du brauchst noch ein %1$s und %2$s Elixier, um dieses Haustier auszubrüten</string>
     <string name="suggest_pet_hatch_missing_potion">Du brauchst noch ein %s Elixier, um dieses Haustier auszubrüten</string>
     <string name="suggest_pet_hatch_missing_egg">Du brauchst noch ein %s Ei, um dieses Haustier auszubrüten</string>
     <string name="hatch_pet_title">Ein neues Haustier ausbrüten</string>
@@ -1036,13 +1035,13 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="block_user_title">%s blockieren\?</string>
     <string name="unblock_user">User entblocken</string>
     <string name="block_user">User blockieren</string>
-    <string name="x_to_y">%s bis %s</string>
+    <string name="x_to_y">%1$s bis %2$s</string>
     <string name="usually_x_gems">Üblicherweise %d Edelsteine</string>
     <string name="limitations">Einschränkungen</string>
     <string name="how_it_works">So funktioniert es</string>
-    <string name="fall_promo_info_instructions">Zwischen %s und %s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="fall_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
-    <string name="spooky_promo_info_instructions">Zwischen %s und %s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="spooky_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
     <string name="fall_promo_info_prompt">Die Herbstgala ist in vollem Gange. Deshalb haben wir gedacht, dass dies der perfekte Zeitpunkt für den allerersten Edelstein-Sonderverkauf ist! Jetzt bekommst Du mit jedem Einkauf mehr Edelsteine als je zuvor.</string>
     <string name="quest_items_found">Du hast %d Questgegenstände gefunden</string>
@@ -1137,12 +1136,12 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="password_not_matching">Das Passwort muss zweimal richtig eingegeben werden</string>
     <string name="email_invalid">Ungültige E-Mail-Adresse</string>
     <string name="discard">Verwerfen</string>
-    <string name="class_confirmation_price">Möchtest Du Deine Klasse in %s ändern für %d Edelsteine\?</string>
+    <string name="class_confirmation_price">Möchtest Du Deine Klasse in %1$s ändern für %2$d Edelsteine\?</string>
     <string name="use_item">Wende Gegenstand auf Party Mitglied an</string>&gt;
     <string name="unsaved_changes">Ungesicherte Änderungen</string>
     <string name="discard_changes_to_task_message">Bist Du sicher, dass Du die Änderungen an dieser Aufgabe verwerfen möchtest\?</string>
     <string name="gem_purchase_confirmation">Du hast %s Edelsteine erhalten.</string>
-    <string name="gift_confirmation_text_gems_new">Du hast %s %s Edelsteine geschickt.</string>
+    <string name="gift_confirmation_text_gems_new">Du hast %1$s %2$s Edelsteine geschickt.</string>
     <string name="sale_ends_in">Angebot endet in %s</string>
     <string name="my_account">Mein Konto</string>
     <string name="added_social_auth">%s Authentifizierung hinzugefügt</string>
@@ -1204,7 +1203,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="death_description">Aber Du kannst sie alle mit harter Arbeit zurückerlangen! Viel Erfolg - Du wirst das schaffen.</string>
     <string name="faint_broken_equipment">Zerstörte Ausrüstungsgegenstände können 
 \nim Belohnungen-Bereich zurückgekauft werden</string>
-    <string name="faint_loss_description">Du fällst zurück auf Level <b>%d</b>, verlierst <b>%d</b> Gold und <b>ein Ausrüstungsgegenstand</b> wird zerstört…</string>
+    <string name="faint_loss_description">Du fällst zurück auf Level <b>%1$d</b>, verlierst <b>%2$d</b> Gold und <b>ein Ausrüstungsgegenstand</b> wird zerstört…</string>
     <string name="account_reset">Account zurücksetzen</string>
     <string name="avatar_skin_customization">Avatar Haut Anpassung</string>
     <string name="avatar_beard_customization">Avatar Bart Anpassung</string>

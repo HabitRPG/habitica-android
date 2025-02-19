@@ -23,7 +23,7 @@ class ApplicationPlugin : Plugin<Project> {
                     signingProps.containsKey("KEY_ALIAS") && signingProps.containsKey("KEY_PASSWORD")
 
             val versionProps = try {
-                Properties().apply { load(FileInputStream(File("version.properties"))) }
+                Properties().apply { load(FileInputStream(File(projectDir.absolutePath + "/../version.properties"))) }
             } catch (t: Throwable) {
                 Properties()
             }

@@ -69,7 +69,6 @@
     <string name="levelup_detail">現実での目標を達成してレベルが上がり、体力が全回復した！</string>
     <string name="onwards">イエーイ!</string>
     <string name="faint_subtitle">がっかりしないで!</string>
-    <string name="faint_penalty_body">レベルとゴールドと、いずれかの装備品を失いました。だけど、がんばればすべてを取り返せます！幸あらんことを。——あなたなら、きっとできます。</string>
     <string name="faint_header">体力がなくなった!</string>
     <string name="faint_button">体力を全回復してやり直す</string>
     <string name="filter">フィルター</string>
@@ -533,11 +532,11 @@
     <string name="world_boss">ワールドボス</string>
     <string name="boss_art">ボス画像</string>
     <string name="world_boss_description">ワールドボスの説明</string>
-    <string name="rage_strike_count">怒り攻撃 %d/%d</string>
+    <string name="rage_strike_count" formatted="false">怒り攻撃 %d/%d</string>
     <string name="pending_strike_title">保留中の攻撃</string>
     <string name="strike_description_title">怒り攻撃とは？</string>
     <string name="strike_active_title">%s が襲撃を受けました！</string>
-    <string name="strike_active_description">愛すべき%sは%sの攻撃で%sが破壊されてしまい途方に暮れています。急いでタスクに取り組んで、あの怪物を倒して再建の手助けをしましょう！</string>
+    <string name="strike_active_description">愛すべき%1$sは%2$sの攻撃で%3$sが破壊されてしまい途方に暮れています。急いでタスクに取り組んで、あの怪物を倒して再建の手助けをしましょう！</string>
     <string name="questShop">クエスト売り場</string>
     <string name="market_owner_long">商人のAlex</string>
     <string name="tavern_owner_long">ロッジの主人Daniel</string>
@@ -852,7 +851,7 @@
     <string name="local">ローカル</string>
     <string name="authentication_methods">認証方式</string>
     <string name="someone">誰か</string>
-    <string name="invitation_title">%sはあなたをグループ%sに招待しました</string>
+    <string name="invitation_title">%1$sはあなたをグループ%2$sに招待しました</string>
     <string name="password_too_short">パスワードが短すぎます。あと%d文字必要です</string>
     <string name="copy_username">ユーザー名をコピーする</string>
     <string name="id_copied">ユーザーIDをクリップボードにコピーする</string>
@@ -1023,10 +1022,10 @@
     <string name="first_drop_title">新しいアイテムを見つけました！</string>
     <string name="go_to_items">「アイテム」へ</string>
     <string name="spooky_promo_info_prompt">ジェムのセールが今年の秋の大祭に出没するために戻ってきました！いつもよりもジェムを多く手に入れるラストチャンスです。キャンペーンの間にジェムをストックしておきましょう！</string>
-    <string name="spooky_promo_info_instructions">%sから%sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
+    <string name="spooky_promo_info_instructions">%1$sから%2$sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
     <string name="view_gem_bundles">ジェムセットを見る</string>
     <string name="fall_promo_info_prompt">秋の大祭も最高潮で、はじめてのジェムのセールを皆さんにお知らせするのに最高のタイミングだと我々は考えました！このセールでは、いつもと同じ値段で、いつもよりも多くのジェムが購入できます。</string>
-    <string name="fall_promo_info_instructions">%sから%sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
+    <string name="fall_promo_info_instructions">%1$sから%2$sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
     <string name="limitations">制限事項</string>
     <string name="how_it_works">機能説明</string>
     <string name="x_to_y">%1$sから%2$sへ</string>
@@ -1122,7 +1121,7 @@
     <string name="reset_counter">カウンターをリセット</string>
     <string name="x_remaining">残り%s</string>
     <string name="discard">捨てる</string>
-    <string name="class_confirmation_price">クラスを%sに%dジェムで変更しますか？</string>
+    <string name="class_confirmation_price">クラスを%1$sに%2$dジェムで変更しますか？</string>
     <string name="use_item">パーティーメンバーにアイテムを使う</string>&gt;
     <string name="unsaved_changes">保存されていない変更</string>
     <string name="discard_changes_to_task_message">このタスクへの変更を保存せずに終了しますか？</string>
@@ -1161,7 +1160,7 @@
     <string name="quest_party_required_title">クエストを開始する前にパーティーに参加する必要があります</string>
     <string name="quest_party_required_description">パーティーに入れば、ひとりでクエストに挑戦したり、仲間を招待して一緒にクエストに挑戦したりできます！</string>
     <string name="new_pieces_added_every_month">毎月新しい作品が追加されます</string>
-    <string name="armoire_rate_equipment_description">毎月、新しい装備品が追加されます。すべての装備品を所持している場合、50%/50%の確率で「食べ物」または「経験値」を獲得できます。</string>
+    <string name="armoire_rate_equipment_description">毎月、新しい装備品が追加されます。すべての装備品を所持している場合、50/50の確率で「食べ物」または「経験値」を獲得できます。</string>
     <string name="armoire_rate_food_description">10種類の食べ物のうち1つを受け取れます。特別なイベント時には、通常の食べ物がケーキやお菓子に変わります。</string>
     <string name="cds_subtitle">デフォルトの0時時間をすぎた時間に1日が切り替わるように調整できます。</string>
     <string name="avatar_hair_color_customization">ヘアカラーのカスタマイズ</string>
@@ -1233,7 +1232,7 @@
 \n買い戻すことができます</string>
     <string name="armoire_rate_experience_title">20% 経験値</string>
     <string name="armoire_rate_food_title">20% の食べ物</string>
-    <string name="faint_loss_description">レベル <b>%d</b> に下がり、<b>%d</b> ゴールドを失い、<b>装備が一つ</b> が壊れます…頑張ればすべて取り戻せます！</string>
+    <string name="faint_loss_description">レベル <b>%1$d</b> に下がり、<b>%2$d</b> ゴールドを失い、<b>装備が一つ</b> が壊れます…頑張ればすべて取り戻せます！</string>
     <string name="armoire_rate_equipment_title">60% 装備品</string>
     <string name="academics">学術分野</string>
     <string name="advocacy_causes">主義主張</string>
@@ -1331,7 +1330,6 @@
     <string name="report_failure">報告に失敗しました、後ほど再実行してください</string>
     <string name="report_player_toolbar_title">%sを報告する</string>
     <string name="gems_promo_info_limitations_fixed">このキャンペーンは季節限定イベントの間のみの実施です。このイベントは%1$s (%2$s)に始まり、%3$s (%4$s)に終了します。キャンペーンの対象は自分へのジェムを購入したときにのみ適用されます。</string>
-    <string name="g1g1_promo_info_limitations_fixed">このイベントは日本時間で%1$s (%2$s)から%3$s (%4$s)までの期間限定です。プロモーションは他のプレイヤーにギフトを贈った際にのみ適用されます。もしギフトを受け取った人がすでに有料会員の場合、有料会員期間が延長されます。この延長は、現在の有料会員期間を満了もしくはキャンセルした後にのみ適用されます。</string>
     <string name="mute_user">プレーヤーをミュートする</string>
     <string name="unban_user_confirm">このプレーヤーの復帰させますか？</string>
     <string name="amazon">Amazon</string>

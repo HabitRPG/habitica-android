@@ -69,7 +69,6 @@
     <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
     <string name="onwards">Hurra!</string>
     <string name="faint_subtitle">Não se desespere!</string>
-    <string name="faint_penalty_body">Você perdeu um Nível, seu Ouro, e uma peça de Equipamento, mas você pode ganhar todos eles de volta com trabalho duro! Boa sorte — Você se sairá bem.</string>
     <string name="faint_header">Você perdeu toda sua Vida!</string>
     <string name="faint_button">Restaurar Vida &amp; Tentar Novamente</string>
     <string name="filter">Filtro</string>
@@ -534,11 +533,11 @@
     <string name="world_boss">Chefão Global</string>
     <string name="boss_art">Arte do Chefão</string>
     <string name="world_boss_description">Descrição do Chefão Global</string>
-    <string name="rage_strike_count">Strikes de Raiva: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Strikes de Raiva: %d/%d</string>
     <string name="pending_strike_title">Strike Pendente</string>
     <string name="strike_description_title">O que é um Strike de Raiva?</string>
     <string name="strike_active_title">O %s foi Atacado!</string>
-    <string name="strike_active_description">Nossa amada %s foi devastada quando o %s quebrou o %s. Rápido, enfrente suas tarefas para derrotar o monstro e ajudar a reconstruir!!</string>
+    <string name="strike_active_description">Nossa amada %1$s foi devastada quando o %2$s quebrou o %3$s. Rápido, enfrente suas tarefas para derrotar o monstro e ajudar a reconstruir!!</string>
     <string name="questShop">Loja de Missões</string>
     <string name="market_owner_long">Alex o Mercante</string>
     <string name="tavern_owner_long">Daniel o estalajadeiro</string>
@@ -677,7 +676,7 @@
     <string name="local">local</string>
     <string name="authentication_methods">Métodos de autenticação</string>
     <string name="someone">Alguém</string>
-    <string name="invitation_title">%s te convidou para se juntar ao grupo %s</string>
+    <string name="invitation_title">%1$s te convidou para se juntar ao grupo %2$s</string>
     <string name="password_too_short">Sua senha deve ter pelo menos %d caracteres</string>
     <string name="copy_username">Copiar nome de usuário</string>
     <string name="id_copied">ID de usuário copiado para a área de transferência</string>
@@ -1034,10 +1033,10 @@
     <string name="unblock_user">Desbloquear Usuário</string>
     <string name="block_user">Bloquear Usuário</string>
     <string name="spooky_promo_info_prompt">A Promoção de Gemas está de volta para assombrar o final do Festival de Outono deste ano! Esta é a última chance de conseguir mais Gemas do que nunca, então estoque enquanto dura!</string>
-    <string name="spooky_promo_info_instructions">Entre %s e %s, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com a quantidade promocional de Gemas. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
+    <string name="spooky_promo_info_instructions">Entre %1$s e %2$s, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com a quantidade promocional de Gemas. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
     <string name="view_gem_bundles">Ver Pacotes de Gemas</string>
     <string name="fall_promo_info_prompt">O Festival de Outono está em pleno andamento, então pensamos que era o momento perfeito para apresentar nossa primeira Promoção de Gemas! Agora você obterá mais Gemas com cada compra do que nunca.</string>
-    <string name="fall_promo_info_instructions">Entre %s e %s, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com o valor promocional de Gemas. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
+    <string name="fall_promo_info_instructions">Entre %1$s e %2$s, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com o valor promocional de Gemas. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
     <string name="limitations">Limitações</string>
     <string name="how_it_works">Como funciona</string>
     <string name="x_to_y">%1$s a %2$s</string>
@@ -1139,7 +1138,7 @@
     <string name="disconnect">Desconectar</string>
     <string name="add">Adicionar</string>
     <string name="discard">Descartar</string>
-    <string name="class_confirmation_price">Você quer mudar sua Classe para %s por %d Gemas\?</string>
+    <string name="class_confirmation_price">Você quer mudar sua Classe para %1$s por %2$d Gemas\?</string>
     <string name="use_item">Use o item em um membro do grupo</string>&gt;
     <string name="unsaved_changes">Mudanças não salvas</string>
     <string name="discard_changes_to_task_message">Tem certeza que deseja desfazer as mudanças desta tarefa\?</string>
@@ -1223,7 +1222,7 @@
     <string name="mor_gems_title">Você precisará de mais Gemas para comprar isso!</string>
     <string name="gems_support">Comprar Gemas ajuda nossa pequena equipe do Habitica</string>
     <string name="month_released">Lançamento do mês</string>
-    <string name="faint_loss_description">Você irá cair para o nível <b>%d</b>, perderá <b>%d</b> Ouro e <b>uma peça de seu equipamento</b> será destruída… Você pode recuperá-los com trabalho duro!</string>
+    <string name="faint_loss_description">Você irá cair para o nível <b>%1$d</b>, perderá <b>%2$d</b> Ouro e <b>uma peça de seu equipamento</b> será destruída… Você pode recuperá-los com trabalho duro!</string>
     <string name="avatar_skin_customization">Personalização da pele do avatar</string>
     <string name="incorrect_password">A senha está incorreta</string>
     <string name="habitica_official">Habitica Oficial</string>
@@ -1442,7 +1441,6 @@
     <string name="report_successful">%s Denunciado</string>
     <string name="report_failure">Falha na denúncia, por favor, tente novamente mais tarde</string>
     <string name="report_player_toolbar_title">Denunciar %s</string>
-    <string name="g1g1_promo_info_limitations_fixed">Este é um evento por tempo limitado que começa em %1$s (%2$s) e terminará em %3$s (%4$s). Esta promoção só se aplica ao presentear outro Habiticano. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presenteada adicionará meses de crédito que só serão utilizados após o cancelamento ou expiração da assinatura atual.</string>
     <string name="item_footer_description">Confira o [Market](/shops/market) para comprar apenas o que você precisa!</string>
     <string name="visit_market">Visitar Mercado</string>
     <string name="empty_quests_description">Obtenha Missões ao subir de nível, bônus de login ou na [Quest Shop](/shops/quests)!</string>
