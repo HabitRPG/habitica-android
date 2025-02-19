@@ -79,7 +79,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10sp"
             android:autoLink="web"
-            android:text="www.habitica.com"
+            android:text="habitica.aguiarvieira.pt"
             android:textSize="@dimen/card_medium_text" />
 
         <Button
