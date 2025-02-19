@@ -85,7 +85,7 @@ android {
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
-            signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
+            signingConfig = signingConfigs.getByName("releaseSigning")
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
