@@ -42,4 +42,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pt.aguiarvieira.habitica.nightly
-           path: Habitica/build/outputs/apk/prod/release/Habitica-prod-release.apk
+          path: Habitica/build/outputs/apk/prod/release/Habitica-prod-release.apk
