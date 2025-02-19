@@ -58,7 +58,7 @@ jobs:
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleDebug  --stracktrace 
+        run: ./gradlew assembleDebug  --stacktrace 
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
