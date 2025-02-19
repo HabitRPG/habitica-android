@@ -1,0 +1,45 @@
+name: AV Habitica Release
+
+env:
+  # The name of the main module repository
+  main_project_module: pt.aguiarvieira.habitica
+
+  # The name of the Play Store
+  playstore_name: Habitica
+
+on:
+
+  push:
+    branches:
+      - 'release/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+          cache: 'gradle'
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Build release APK
+        run: ./gradlew Habitica:assembleDebug --stacktrace 
+
+      # Upload Artifact Build
+      # Noted For Output [main_project_module]/build/outputs/apk/debug/
+      - name: Upload release APK 
+        uses: actions/upload-artifact@v4
+        with:
+          name: pt.aguiarvieira.habitica.nightly
+          path: Habitica/build/outputs/apk/prod/debug/Habitica-prod-debug.apk
