@@ -231,7 +231,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         dialog.setTitle(R.string.action_end_challenge)
         dialog.setMessage(R.string.end_challenge_description)
         dialog.addButton(R.string.open_website, true, false) { _, _ ->
-            val uriUrl = "https://habitica.com/challenges/$challengeID".toUri()
+            val uriUrl = "https://habitica.aguiarvieira.pt/challenges/$challengeID".toUri()
             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
             val l =
                 context.packageManager.queryIntentActivities(
