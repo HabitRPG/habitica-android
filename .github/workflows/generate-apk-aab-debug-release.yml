@@ -24,78 +24,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Set Current Date As Env Variable
-      - name: Set current date as env variable
-        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-
-      # Set Repository Name As Env Variable
-      - name: Set repository name as env variable
-        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
-
       - name: Set Up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '17'
           cache: 'gradle'
-
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      # Run Tests Build
-      #- name: Run gradle tests
-      #  run: ./gradlew test
-
-      # Run Build Project
-      #- name: Build gradle project
-      #  run: ./gradlew build
-
-      - name: Clean Build
-        run: ./gradlew clean
-
-        
-
-
-      # Create APK Debug
-      #- name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-      #  run: ./gradlew assembleProd  --stacktrace 
-
-      # Create APK Debug
-      - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
+      - name: Build release APK
         run: ./gradlew Habitica:assembleRelease --stacktrace 
-
-      # Create APK Release
-      #- name: Build apk release project (APK) - ${{ env.main_project_module }} module
-      #  run: ./gradlew assemble
-
-      # Create Bundle AAB Release
-      # Noted for main module build [main_project_module]:bundleRelease
-      #- name: Build app bundle release (AAB) - ${{ env.main_project_module }} module
-      #  run: ./gradlew ${{ env.main_project_module }}:bundleRelease
-
-      - name: List APK files
-        run: find . -name "*.apk" || echo "No APK found"
-
 
       # Upload Artifact Build
       # Noted For Output [main_project_module]/build/outputs/apk/debug/
-      - name: Upload APK Debug - ${{ env.repository_name }}
+      - name: Upload release APK 
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) debug generated
-          #path: ${{ env.main_project_module }}/build/outputs/apk/debug/
-          path: Habitica/build/outputs/apk/prod/debug/Habitica-prod-debug.apk
-
-      # Noted For Output [main_project_module]/build/outputs/apk/release/
-      #- name: Upload APK Release - ${{ env.repository_name }}
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
-      #    path: ${{ env.main_project_module }}/build/outputs/apk/release/
-
-      # Noted For Output [main_project_module]/build/outputs/bundle/release/
-      #- name: Upload AAB (App Bundle) Release - ${{ env.repository_name }}
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - App bundle(s) AAB release generated
-      #    path: ${{ env.main_project_module }}/build/outputs/bundle/release/
+          name: pt.aguiarvieira.habitica.nightly
+           path: Habitica/build/outputs/apk/prod/release/Habitica-prod-release.apk
