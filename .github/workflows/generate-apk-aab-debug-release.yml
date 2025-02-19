@@ -57,12 +57,12 @@ jobs:
 
 
       # Create APK Debug
-      - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleProd  --stacktrace 
+      #- name: Build apk debug project (APK) - ${{ env.main_project_module }} module
+      #  run: ./gradlew assembleProd  --stacktrace 
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew Habitica:assembleRelease
+        run: ./gradlew Habitica:assembleRelease --stacktrace 
 
       # Create APK Release
       #- name: Build apk release project (APK) - ${{ env.main_project_module }} module
