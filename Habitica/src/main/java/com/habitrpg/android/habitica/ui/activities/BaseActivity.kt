@@ -99,7 +99,7 @@ abstract class BaseActivity : AppCompatActivity() {
     internal var navigationBarStyle: SystemBarStyle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+        enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         resources.forceLocale(this, languageHelper.locale)
