@@ -1,4 +1,4 @@
-name: AV Habitica Release
+name: AV Habitica Debug
 
 env:
   # The name of the main module repository
