@@ -751,7 +751,7 @@
     <string name="usernamePromptTitle">It’s time to set your username!</string>
     <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
     <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
-    <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.aguiarvieira.pt/static/terms">Terms of Service</a> and <a href="https://habitica.aguiarvieira.pt/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
@@ -832,11 +832,11 @@
     <string name="need_more_help">Need more help?</string>
     <string name="become_x">Become a %s</string>
     <string name="x_class">%s Class</string>
-    <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
+    <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.aguiarvieira.pt/static/community-guidelines) and/or [Terms of Service](https://habitica.aguiarvieira.pt/static/terms). Inappropriately reporting a post may give you an infraction.</string>
     <string name="report_message_title">Report %s for violation:</string>
-    <string name="report_message_explanation">You should only report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
-    <string name="report_user_explanation">You should only report a player that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
-    <string name="report_challenge_explanation">You should only report a challenge that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
+    <string name="report_message_explanation">You should only report a post that violates the [Community Guidelines](https://habitica.aguiarvieira.pt/static/community-guidelines) and/or [Terms of Service](https://habitica.aguiarvieira.pt/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
+    <string name="report_user_explanation">You should only report a player that violates the [Community Guidelines](https://habitica.aguiarvieira.pt/static/community-guidelines) and/or [Terms of Service](https://habitica.aguiarvieira.pt/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
+    <string name="report_challenge_explanation">You should only report a challenge that violates the [Community Guidelines](https://habitica.aguiarvieira.pt/static/community-guidelines) and/or [Terms of Service](https://habitica.aguiarvieira.pt/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
     <string name="report_player_title">Report %s?</string>
     <string name="report_player">Report Player</string>
     <string name="report_hint">Reason for report</string>
@@ -944,7 +944,7 @@
     <string name="profile_gift_gems">Gift\nGems</string>
     <string name="profile_gift_subscription">Gift\nSubscription</string>
     <string name="gems_gift_description">Want to bestow a shiny haul of Gems to someone else?</string>
-    <string name="gift_gems_disclaimer">Habitica will never require you to gift gems to other players. Begging people for gems is a violation of the Community Guidelines and should be reported to admin@habitica.com.</string>
+    <string name="gift_gems_disclaimer">Habitica will never require you to gift gems to other players. Begging people for gems is a violation of the Community Guidelines and should be reported to admin@habitica.aguiarvieira.pt.</string>
     <string name="more_out_of_habitica">Get more out of Habitica</string>
     <string name="preference_push_party_mention">\@Mentions in Party</string>
     <string name="purchase">Purchase</string>
@@ -1159,7 +1159,7 @@
     <string name="user_is_blocked">You blocked this player</string>
     <string name="user_is_blocked_explanation">A blocked player cannot send you Private Messages but you will still see their posts</string>
     <string name="finish">Finish</string>
-    <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
+    <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.aguiarvieira.pt/static/terms">Terms of Service</a> and <a href="https://habitica.aguiarvieira.pt/static/privacy">Privacy Policy.</a></string>
     <string name="you">You</string>
     <string name="invitation_title_no_leader">You were invited to join a party</string>
     <string name="fortify_shop">Fortify Potion</string>
