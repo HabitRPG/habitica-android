@@ -1,10 +1,10 @@
 package com.habitrpg.shared.habitica.models.tasks
 
 enum class Frequency(val value: String) {
-    WEEKLY("weekly"),
-    DAILY("daily"),
-    MONTHLY("monthly"),
-    YEARLY("yearly")
+    WEEKLY("semanal"),
+    DAILY("diario"),
+    MONTHLY("mensal"),
+    YEARLY("anual")
     ;
 
     companion object {
