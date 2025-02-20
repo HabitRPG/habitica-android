@@ -381,35 +381,35 @@ constructor(
 
         frequencyQualifier =
             when (frequency) {
-                Frequency.DAILY -> if (everyX == 1) "day" else "days"
-                Frequency.WEEKLY -> if (everyX == 1) "week" else "weeks"
-                Frequency.MONTHLY -> if (everyX == 1) "month" else "months"
-                Frequency.YEARLY -> if (everyX == 1) "year" else "years"
+                Frequency.DAILY -> if (everyX == 1) "dia" else "dias"
+                Frequency.WEEKLY -> if (everyX == 1) "semana" else "semanas"
+                Frequency.MONTHLY -> if (everyX == 1) "mmes" else "meses"
+                Frequency.YEARLY -> if (everyX == 1) "ano" else "anos"
             }
 
         var weekdays =
             if (frequency == Frequency.WEEKLY) {
                 val weekdayStrings = ArrayList<String>()
                 if (weeklyRepeat.m) {
-                    weekdayStrings.add("Monday")
+                    weekdayStrings.add("Segunda")
                 }
                 if (weeklyRepeat.t) {
-                    weekdayStrings.add("Tuesday")
+                    weekdayStrings.add("Terça")
                 }
                 if (weeklyRepeat.w) {
-                    weekdayStrings.add("Wednesday")
+                    weekdayStrings.add("Quarta")
                 }
                 if (weeklyRepeat.th) {
-                    weekdayStrings.add("Thursday")
+                    weekdayStrings.add("Quinta")
                 }
                 if (weeklyRepeat.f) {
-                    weekdayStrings.add("Friday")
+                    weekdayStrings.add("Sexta")
                 }
                 if (weeklyRepeat.s) {
-                    weekdayStrings.add("Saturday")
+                    weekdayStrings.add("Sabado")
                 }
                 if (weeklyRepeat.su) {
-                    weekdayStrings.add("Sunday")
+                    weekdayStrings.add("Domingo")
                 }
                 " on " + TextUtils.join(", ", weekdayStrings)
             } else {
@@ -422,7 +422,7 @@ constructor(
                     val date = startDateCalendar.get(Calendar.DATE)
                     val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
                     val formattedDate = formatter.format(arrayOf(date))
-                    " on the $formattedDate"
+                    " na $formattedDate"
                 } else {
                     val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
                     val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
@@ -433,7 +433,7 @@ constructor(
                             Calendar.LONG,
                             LanguageHelper.systemLocale
                         )
-                    " on the $formattedWeek week on $dayLongName"
+                    " na $formattedWeek semana no $dayLongName"
                 }
         }
 
