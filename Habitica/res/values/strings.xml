@@ -79,7 +79,7 @@
     <string name="attributes">Attributes</string>
 
     <string name="repeatables_frequency_daily">Daily</string>
-    <string name="repeatables_frequency_weekly">Weekly</string>
+    <string name="repeatables_frequency_weekly">Semanalmente</string>
     <string name="repeatables_frequency_monthly">Monthly</string>
     <string name="repeatables_frequency_yearly">Yearly</string>
     <string name="repeatables_frequency_day_of_month">Day of Month</string>
