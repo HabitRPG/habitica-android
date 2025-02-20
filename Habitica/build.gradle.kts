@@ -87,14 +87,14 @@ android {
         release {
             signingConfig = signingConfigs.getByName("releaseSigning")
             isDebuggable = false
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             resValue("string", "content_provider", "com.habitrpg.android.habitica.fileprovider")
             resValue("string", "app_name", "Habitica")
-            #lint {
-            #    checkReleaseBuilds = false
-            #}
+            //lint {
+            //    checkReleaseBuilds = false
+            //}
         }
     }
 
