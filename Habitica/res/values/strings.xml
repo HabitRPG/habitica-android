@@ -523,7 +523,7 @@
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
     <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
-    <string name="repeat_summary" translatable="false">"Repeats %1$s every %2$s%3$s %4$s"</string>
+    <string name="repeat_summary" translatable="false">"Repete %1$s a cada %2$s%3$s %4$s"</string>
 
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
@@ -1359,10 +1359,10 @@
     <string name="shadow_muted_hidden">Shadow muted, hidden</string>
     <string name="assigned_to_you_by">Assigned to you by @%1$s on %2$s</string>
     <string name="never">never</string>
-    <string name="on_x">on %s</string>
-    <string name="on_weekdays">on weekdays</string>
-    <string name="on_weekends">on weekends</string>
-    <string name="on_every_day_of_week">on every day of the week</string>
+    <string name="on_x">na %s</string>
+    <string name="on_weekdays">em dias uteis</string>
+    <string name="on_weekends">no fim de semana</string>
+    <string name="on_every_day_of_week">todos os dias da semana</string>
     <string name="x_and_y">%1$s and %2$s</string>
     <string name="on_the_x">on the %s</string>
     <string name="first">first</string>
