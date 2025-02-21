@@ -400,7 +400,7 @@
                 android:background="@color/brand_400"
                 android:orientation="vertical"
                 android:paddingTop="6dp"
-                android:paddingBottom="32dp"
+                android:paddingBottom="10dp"
                 android:paddingHorizontal="24dp">
 
             <TextView
@@ -422,5 +422,10 @@
                     android:visibility="gone"
                 />
         </LinearLayout>
+        <View
+                android:id="@+id/bottom_spacing"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/brand_400"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

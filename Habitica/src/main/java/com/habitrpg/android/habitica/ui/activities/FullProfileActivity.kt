@@ -119,7 +119,8 @@ class FullProfileActivity : BaseActivity() {
                     isMyProfile = false,
                     onMemberRowClicked = {},
                     onClassSelectionClicked = {},
-                    configManager = configManager
+                    configManager = configManager,
+                    useWindowInsets = false
                 )
             }
         }
