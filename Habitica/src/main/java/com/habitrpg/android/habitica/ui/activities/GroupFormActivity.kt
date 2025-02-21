@@ -5,8 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityGroupFormBinding
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.common.habitica.helpers.MarkdownParser
@@ -63,6 +67,17 @@ class GroupFormActivity : BaseActivity() {
 
         binding.saveButton.setOnClickListener {
             finishActivitySuccessfuly()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                    + WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(top = insets.top,
+                left = insets.left,
+                right = insets.right)
+            consumeWindowInsetsAbove30(windowInsets)
         }
     }
 
