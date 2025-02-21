@@ -38,4 +38,24 @@ open class PushNotificationsPreference : RealmObject(), BaseObject {
         if (contentRelease) enabled.add("contentRelease")
         return enabled
     }
+
+    fun mapOfKeys(): Map<String, Boolean> {
+        return mapOf(
+            "unsubscribeFromAll" to unsubscribeFromAll,
+            "invitedParty" to invitedParty,
+            "invitedQuest" to invitedQuest,
+            "majorUpdates" to majorUpdates,
+            "wonChallenge" to wonChallenge,
+            "invitedGuild" to invitedGuild,
+            "newPM" to newPM,
+            "questStarted" to questStarted,
+            "giftedGems" to giftedGems,
+            "giftedSubscription" to giftedSubscription,
+            "partyActivity" to partyActivity,
+            "mentionParty" to mentionParty,
+            "mentionJoinedGuild" to mentionJoinedGuild,
+            "mentionUnjoinedGuild" to mentionUnjoinedGuild,
+            "contentRelease" to contentRelease
+        )
+    }
 }
