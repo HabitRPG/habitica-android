@@ -1024,7 +1024,8 @@
 
     <style name="FlatCardView">
         <item name="android:background">@drawable/layout_rounded_bg_window</item>
-        <item name="android:layout_margin">@dimen/spacing_sides</item>
+        <item name="android:layout_marginHorizontal">@dimen/spacing_sides</item>
+        <item name="android:layout_marginVertical">@dimen/spacing_medium</item>
     </style>
 
     <style name="CountLabel">

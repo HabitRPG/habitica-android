@@ -134,11 +134,16 @@ fun AppHeaderView(
     onAvatarClicked: (() -> Unit)? = null,
     onMemberRowClicked: () -> Unit,
     onClassSelectionClicked: () -> Unit,
-    configManager: AppConfigManager? = null
+    configManager: AppConfigManager? = null,
+    useWindowInsets: Boolean = true
 ) {
     val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
-    Column(modifier
-        .windowInsetsPadding(WindowInsets.systemBarsIgnoringVisibility)) {
+    var wrapperModifier = modifier
+    if (useWindowInsets) {
+        wrapperModifier = wrapperModifier
+            .windowInsetsPadding(WindowInsets.systemBarsIgnoringVisibility)
+    }
+    Column(modifier = wrapperModifier) {
         Row {
             ComposableAvatarView(
                 user,
