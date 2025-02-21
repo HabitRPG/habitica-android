@@ -1,13 +1,16 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.SystemBarStyle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
@@ -22,6 +25,7 @@ class GemPurchaseActivity : PurchaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.brand_200))
         showSubscription = !(intent.extras?.containsKey("openSubscription") == true && intent.extras?.getBoolean("openSubscription") == false)
         super.onCreate(savedInstanceState)
 
@@ -46,8 +50,16 @@ class GemPurchaseActivity : PurchaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.isAppearanceLightNavigationBars = false
+
         if (showSubscription) {
-            window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                controller.isAppearanceLightStatusBars = false
+                window.setNavigationBarDarkIcons(false)
+            } else {
+                window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
+            }
             findViewById<View>(R.id.appbar).setBackgroundColor(ContextCompat.getColor(this, R.color.brand_300))
         }
     }

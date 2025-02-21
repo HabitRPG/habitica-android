@@ -300,7 +300,7 @@
         <View
                 android:id="@+id/bottom_spacing"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="1dp"
                 android:background="@color/brand_400"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -9,15 +9,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,15 +36,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
 import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
@@ -58,7 +71,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 open class AvatarOverviewFragment :
-    BaseMainFragment<FragmentComposeScrollingBinding>(),
+    BaseMainFragment<FragmentComposeBinding>(),
     AdapterView.OnItemSelectedListener {
     @Inject
     lateinit var userViewModel: MainUserViewModel
@@ -69,7 +82,7 @@ open class AvatarOverviewFragment :
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
-    override var binding: FragmentComposeScrollingBinding? = null
+    override var binding: FragmentComposeBinding? = null
 
     protected var showCustomization = true
 
@@ -79,10 +92,11 @@ open class AvatarOverviewFragment :
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentComposeScrollingBinding {
-        return FragmentComposeScrollingBinding.inflate(inflater, container, false)
+    ): FragmentComposeBinding {
+        return FragmentComposeBinding.inflate(inflater, container, false)
     }
 
+    @OptIn(ExperimentalLayoutApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -96,38 +110,41 @@ open class AvatarOverviewFragment :
                 HabiticaTheme {
                     val avatar by userViewModel.user.observeAsState()
                     Column {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().background(colorResource(R.color.window_background))) {
                             ComposableAvatarView(
                                 avatar = avatar,
                                 configManager = appConfigManager,
                                 modifier =
                                 Modifier
-                                    .padding(top = 6.dp, bottom = 24.dp)
+                                    .padding(bottom = 24.dp)
                                     .size(140.dp, 147.dp)
                             )
-                            Box(
-                                Modifier
-                                    .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
-                                    .fillMaxWidth()
-                                    .height(22.dp)
-                            )
                         }
-                        AvatarOverviewView(
-                            userViewModel,
-                            showCustomization,
-                            !showCustomization,
-                            battleGearWeapon.value?.twoHanded == true,
-                            costumeWeapon.value?.twoHanded == true,
-                            { type, category ->
-                                displayCustomizationFragment(type, category)
-                            },
-                            { type, category ->
-                                displayAvatarEquipmentFragment(type, category)
-                            },
-                            { type, equipped, isCostume ->
-                                displayEquipmentFragment(type, equipped, isCostume)
-                            }
-                        )
+                        Column(modifier = Modifier
+                            .background(colorResource(R.color.window_background))
+                            .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                            .background(colorResource(R.color.content_background))
+                            .verticalScroll(rememberScrollState())
+                            .padding(top = 12.dp)
+                            ) {
+                            AvatarOverviewView(
+                                userViewModel,
+                                showCustomization,
+                                !showCustomization,
+                                battleGearWeapon.value?.twoHanded == true,
+                                costumeWeapon.value?.twoHanded == true,
+                                { type, category ->
+                                    displayCustomizationFragment(type, category)
+                                },
+                                { type, category ->
+                                    displayAvatarEquipmentFragment(type, category)
+                                },
+                                { type, equipped, isCostume ->
+                                    displayEquipmentFragment(type, equipped, isCostume)
+                                }
+                            )
+                            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBarsIgnoringVisibility))
+                        }
                     }
                 }
             }

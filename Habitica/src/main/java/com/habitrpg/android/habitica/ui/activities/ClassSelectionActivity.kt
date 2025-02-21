@@ -8,10 +8,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
@@ -96,6 +100,16 @@ class ClassSelectionActivity : BaseActivity() {
         binding.rogueWrapper.setOnClickListener { newClass = "rogue" }
         binding.warriorWrapper.setOnClickListener { newClass = "warrior" }
         binding.selectedButton.setOnClickListener { displayConfirmationDialogForClass() }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.selectedWrapperView) { v, windowInsets ->
+            val paddingBottom = v.paddingBottom
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                    + WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(bottom = insets.bottom + paddingBottom)
+            consumeWindowInsetsAbove30(windowInsets)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
