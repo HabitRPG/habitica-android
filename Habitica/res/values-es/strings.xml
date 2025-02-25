@@ -29,7 +29,7 @@
     <string name="preference_push_gifted_subscription">Suscripción regalada</string>
     <string name="preference_push_invited_to_party">Has sido invitado a un Equipo</string>
     <string name="preference_push_invited_to_guild">Has sido invitado a un Gremio</string>
-    <string name="preference_push_your_quest_has_begun">Tu misión ha comenzado</string>
+    <string name="preference_push_your_quest_has_begun">Tu Misión ha Comenzado</string>
     <string name="preference_push_invited_to_quest">Has sido invitado a una misión</string>
     <!--Adding tasks-->
     <string name="about_libraries">Bibliotecas</string>
