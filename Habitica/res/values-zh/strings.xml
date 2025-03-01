@@ -992,7 +992,7 @@
     <string name="feedPet_title">喂一只宠物</string>
     <string name="hatch_pet_title">孵化一只新宠物</string>
     <string name="percent_completed">%d%%已完成</string>
-    <string name="lets_get_started">我们开始吧</string>
+    <string name="lets_get_started">让我们开始吧</string>
     <string name="your_progress">你的进度</string>
     <string name="onboarding_tasks">新手任务</string>
     <string name="getting_started">现在开始</string>
