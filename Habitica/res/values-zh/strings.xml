@@ -1555,4 +1555,5 @@
     <string name="cleared_cache">已清除缓存</string>
     <string name="customizations_owner">Felicitus</string>
     <string name="two_gems_per_month">月度宝石获取数量+2</string>
+    <string name="subscribe_listitem3_description_alt">用最新的专属装备装扮自己。立即订阅来获取%1$s的%2$s！</string>
 </resources>
