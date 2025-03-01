@@ -272,7 +272,7 @@
     <string name="add_daily">添加日常任务</string>
     <string name="add_todo">添加待办事项</string>
     <string name="add_reward">添加奖励</string>
-    <string name="all_dailies_completed">你完成了所有日常任务。干得好！</string>
+    <string name="all_dailies_completed">你已完成全部日常任务。干得好！</string>
     <string name="widget_habit_button">Habitica完成习惯</string>
     <string name="widget_dailies">Habitica日常任务</string>
     <string name="widget_todo_list">Habitica待办事项</string>
@@ -966,7 +966,7 @@
     <string name="excessItemsXLeft">你只需要%1$d个%2$s就可以孵化所有可孵化的宠物。你确定要购买%3$d个吗？</string>
     <string name="purchaseX">购买%d个</string>
     <string name="excess_items">物品超额</string>
-    <string name="onboardingComplete_achievement_title">你完成了新手任务！</string>
+    <string name="onboardingComplete_achievement_title">你已完成新手任务！</string>
     <string name="onboardingCompleteDescription">如果你想要更多成就，请查看成就列表并开始收集吧！</string>
     <string name="onboardingCompleteTitle">你通过努力获得了&lt;b&gt;5项成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;。</string>
     <string name="first_drop_title">你找到了新物品！</string>
@@ -1114,7 +1114,7 @@
     <string name="gift_one_get_one_purchase_banner">赠一得一活动持续至%s</string>
     <string name="terms_of_service">服务条款</string>
     <string name="privacy_policy">隐私政策</string>
-    <string name="all_tasks_completed">你已完成了所有任务。干得好！</string>
+    <string name="all_tasks_completed">你已完成全部任务。干得好！</string>
     <string name="discard">放弃</string>
     <string name="class_confirmation_price">将职业改为%s需要花费%d颗宝石，你确定要更改吗？</string>
     <string name="use_item">对队伍成员使用道具</string>&gt;
