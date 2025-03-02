@@ -36,8 +36,8 @@
     <string name="about_habitica_open_source">Habitica está disponible como software de código abierto en Github</string>
     <string name="about_rate_our_app">Califica nuestra aplicación</string>
     <string name="about_give_us_feedback">¡Envíanos tus comentarios!</string>
-    <string name="about_bugreport">Notificar un error</string>
-    <string name="about_source_code">Código fuente</string>
+    <string name="about_bugreport">Notificar un Error</string>
+    <string name="about_source_code">Código Fuente</string>
     <!--Network Errors-->
     <string name="internal_error_api">Se ha perdido la conexión con el servidor</string>
     <string name="authentication_error_title">Error de autenticación</string>
@@ -69,8 +69,8 @@
     <string name="levelup_detail">¡Cumpliendo tus metas en la vida real, has subido de nivel y tu salud está restaurada!</string>
     <string name="onwards">¡Hurra!</string>
     <string name="faint_subtitle">¡No desesperes!</string>
-    <string name="faint_header">¡Te has quedado sin puntos de salud!</string>
-    <string name="faint_button">Recuperar todos los puntos de salud y volver a intentarlo</string>
+    <string name="faint_header">¡Te has quedado sin Puntos de salud!</string>
+    <string name="faint_button">Recupera Puntos de Salud y Vuelve a Intentarlo</string>
     <string name="filter">Filtro</string>
     <string name="used_skill_without_mana">Has usado %1$s.</string>
     <string name="new_checklist_item">Nuevo elemento de lista</string>
@@ -765,7 +765,7 @@
     <string name="mystery_sets">Conjuntos misteriosos</string>
     <string name="new_reminder">Nuevo recordatorio</string>
     <string name="password_changed">Contraseña actualizada correctamente</string>
-    <string name="new_password_repeat">Confirmar nueva contraseña</string>
+    <string name="new_password_repeat">Confirmar nueva Contraseña</string>
     <string name="new_password">Contraseña nueva</string>
     <string name="old_password">Contraseña anterior</string>
     <string name="task_title">Título de la tarea</string>
@@ -802,7 +802,7 @@
     <string name="gift_confirmation_text_sub">Regalaste a @%1$s una suscripción de Habitica de %2$s meses.</string>
     <string name="gift_confirmation_text_sub_g1g1">Regalaste a %1$s una suscripción de %2$s meses y se ha aplicado la misma suscripción a tu cuenta por nuestra promoción de Regala Una Llévate Una Gratis.</string>
     <string name="join_party_description_guild">¡Da el nombre de usuario de abajo a un amigo o ve al %s para conocer a camaradas potenciales!</string>
-    <string name="number_responded">%1$d/%2$d respondió</string>
+    <string name="number_responded">%1$d/%2$d Respondió</string>
     <string name="fall_promo_info_instructions">Entre el %s y el %s, compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de gemas. ¡Más Gemas para gastar, compartir o ahorrar para cualquier evento futuro!</string>
     <string name="spooky_promo_info_prompt">¡La Venta de Gemas está de vuelta para atormentar el final de la Gala de Otoño de este año! Esta es la última oportunidad de conseguir más Gemas que nunca ¡así que aprovecha mientras dure!</string>
     <string name="preference_email_onboarding">Orientación para establecer tu cuenta de Habitica</string>
@@ -836,7 +836,7 @@
     <string name="unpin">Desmarcar</string>
     <string name="pin">Marcar</string>
     <string name="setup_task_habit_2_notes">O elimínalo desde la pantalla de edición</string>
-    <string name="i_agree_to_follow_the_guidelines">Estoy de acuerdo con las siguientes normas</string>
+    <string name="i_agree_to_follow_the_guidelines">Estoy de acuerdo en seguir las normas</string>
     <string name="report_violation">Denunciar violación</string>
     <string name="purchase">Comprar</string>
     <string name="sent_card">Mandaste una %s</string>
@@ -1154,7 +1154,7 @@
     <string name="class_changed_description">Ahora puedes usar habilidades de %s y comprar equipamiento específico en las tiendas. Aumenta tu nivel para ganar puntos de atributo, que sirven para mejorar tus habilidades.</string>
     <string name="subscribe_listitemFaint_description">¡Evita la pérdida de puntos de experiencia con una cura instantánea cuando se te acaben los PV una vez al día!</string>
     <string name="subscription_hourglasses_3month_timeframe">Relojes de arena en 3 meses</string>
-    <string name="about_me">Sobre mí</string>
+    <string name="about_me">Sobre Mí</string>
     <string name="account_info">Información de la Cuenta</string>
     <string name="login_methods">Métodos de Inicio de Sesión</string>
     <string name="not_connected">No conectado</string>
@@ -1397,7 +1397,7 @@
     <string name="plenty_of_potions_description">Vamos a traer de vuelta 10 de las pociones mágicas de eclosión favoritas de la comunidad. ¡Dirígete al mercado para completar tu colección!</string>
     <string name="for_for_free_description">Para que la fiesta continúe, regalaremos batas de fiesta, 20 gemas y un conjunto de capa y fondo de edición limitada!</string>
     <string name="armoire_rate_equipment_description">Cada mes se añaden nuevas piezas de equipamiento. Si tienes todas las piezas de equipo, obtendrás comida o experiencia, probabilidades de 50/50.</string>
-    <string name="added_social_auth">Se ha añadido %s como autenticación</string>
+    <string name="added_social_auth">Autenticación %s añadida</string>
     <string name="subscription_credit_canceling">Tus <b>+%d</b> de suscripción mensual se activarán tras la cancelación</string>
     <string name="self_improvement">Superación personal</string>
     <string name="todo_summary_description">Esta es una tarea **%1$s** que no tiene fecha de vencimiento.</string>
