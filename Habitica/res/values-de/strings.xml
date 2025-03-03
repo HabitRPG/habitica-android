@@ -1133,7 +1133,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="connect">Verbinden</string>
     <string name="add">Hinzufügen</string>
     <string name="add_email_and_password">E-Mail und Passwort hinzufügen</string>
-    <string name="password_not_matching">Das Passwort muss zweimal richtig eingegeben werden</string>
+    <string name="password_not_matching">Die eingegebenen Passwörter stimmen nicht überein.</string>
     <string name="email_invalid">Ungültige E-Mail-Adresse</string>
     <string name="discard">Verwerfen</string>
     <string name="class_confirmation_price">Möchtest Du Deine Klasse in %s ändern für %d Edelsteine\?</string>
@@ -1457,7 +1457,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="customization_shop_more">Im Anpassungsshop findest du noch mehr Möglichkeiten, deinen Avatar individuell zu gestalten!</string>
     <string name="exact_alarm_system_settings_title">„Wecker und Erinnerungen“ deaktiviert</string>
     <string name="exact_alarm_system_settings_description">Erlaube „Wecker und Erinnerungen“ in der App Einstellungen, damit Erinnerungen exakt zur richtigen Zeit erscheinen</string>
-    <string name="exact_alarm_system_settings_reminders">Habitica verfügt nicht über die Berechtigung „Wecker und Erinnerungen“ in der App „Einstellungen“. Erinnerungen erscheinen möglicherweise nicht genau zum richtigen Zeitpunkt.</string>
+    <string name="exact_alarm_system_settings_reminders">Erinnerungen könnten verzögert sein, da die Berechtigungen nicht aktiviert sind. Tippe, um die Berechtigungen anzuzeigen und zu aktualisieren.</string>
     <string name="sell_confirmation_title">Bist Du sicher, dass Du %s verkaufen willst\?</string>
     <string name="leave_party_confirmation_quest">Bist Du sicher, dass Du diese Party verlassen willst\?</string>
     <string name="birthday_limitations">Dies ist eine zeitlich begrenzte Veranstaltung, die am %1$s beginnt und am %2$s endet. Die limitierte Ausgabe des Jubilierenden Greifatrix und der zehn Magischen Schlüpfelixiere können in dieser Zeit gekauft werden. Die anderen Geschenke im Gratis-Bereich werden automatisch an alle Accounts ausgegeben, die in den 30 Tagen vor dem Datum der Geschenkübergabe aktiv waren. Accounts, die nach der Geschenkübergabe erstellt wurden, haben keinen Anspruch darauf.</string>
@@ -1501,4 +1501,12 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="one">jeden Tag</item>
         <item quantity="other">alle %d Tage</item>
     </plurals>
+    <string name="item_footer_title">Bekommst du nicht das richtige %s aus Aufgaben\?</string>
+    <string name="potions">Tränke</string>
+    <string name="quests_footer_description">Schau im [Quest-Shop](/shops/quests) vorbei, um zu sehen, was verfügbar ist!</string>
+    <string name="eggs_footer_description">Schau im [Markt](/shops/market) vorbei, um genau die Eier zu kaufen, die du brauchst!</string>
+    <string name="empty_eggs_description">Schließe Aufgaben und Ei-Quests ab oder besuche den [Markt](/shops/market), um dich einzudecken!</string>
+    <string name="quests_footer_title">Möchtest du mehr Quests\?</string>
+    <string name="empty_special_description_subscribed">Erhalte Verwandlungsgegenstände während der saisonalen Galas, und Mystery-Boxen mit Abonnenten-Ausrüstung werden zu Beginn jedes Monats geliefert!</string>
+    <string name="item_footer_description">Schau im [Markt](/shops/market) vorbei, um genau das zu kaufen, was du brauchst!</string>
 </resources>
