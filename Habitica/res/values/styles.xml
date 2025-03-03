@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="Theme.Material3.DayNight">
+    <style name="AppTheme" parent="Theme.Material3.DynamicColors.DayNight">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle
         </item>
 
@@ -60,6 +60,7 @@
 
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="enableEdgeToEdge">true</item>
 
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="toolbarContentColor">@color/text_primary</item>
@@ -1023,7 +1024,8 @@
 
     <style name="FlatCardView">
         <item name="android:background">@drawable/layout_rounded_bg_window</item>
-        <item name="android:layout_margin">@dimen/spacing_sides</item>
+        <item name="android:layout_marginHorizontal">@dimen/spacing_sides</item>
+        <item name="android:layout_marginVertical">@dimen/spacing_medium</item>
     </style>
 
     <style name="CountLabel">

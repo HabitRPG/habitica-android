@@ -523,11 +523,11 @@
     <string name="world_boss">Svjetski Bos</string>
     <string name="boss_art">Umjetnički prikazi Bosa</string>
     <string name="world_boss_description">Opis Svjetskog Bosa</string>
-    <string name="rage_strike_count">Udari Bijesa: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Udari Bijesa: %d/%d</string>
     <string name="pending_strike_title">U iščekivanju Udarca</string>
     <string name="strike_description_title">Što je Udar Bijesa?</string>
     <string name="strike_active_title">%s je bio napadnut!</string>
-    <string name="strike_active_description">Naš dragi %s je bio razoren kad je %s razbio %s. Brzo, navali na svoje zadatke kako bi porazio/la čudovište i pomogao/la u obnovi!!</string>
+    <string name="strike_active_description">Naš dragi %1$s je bio razoren kad je %2$s razbio %3$s. Brzo, navali na svoje zadatke kako bi porazio/la čudovište i pomogao/la u obnovi!!</string>
     <string name="questShop">Dućan pustolovina</string>
     <string name="market_owner_long">Alex Trgovac</string>
     <string name="tavern_owner_long">Danijel Gostioničar</string>
@@ -641,7 +641,7 @@
     <string name="ago_1month">Prije 1 mjeseca</string>
     <string name="remaining_1Minute">Još 1 minuta</string>
     <string name="opting_out_progress">Odustajanje</string>
-    <string name="class_confirmation_price">Želiš li promijeniti svoju klasu u %s za %d Dragulja\?</string>
+    <string name="class_confirmation_price">Želiš li promijeniti svoju klasu u %1$s za %2$d Dragulja\?</string>
     <string name="leave_challenges">Napusti izazove</string>
     <string name="inviteFriendTitle">Pozvan je prijatelj</string>
     <string name="inviteFriendDescription">Pozvao/la si prijatelja (ili prijatelje) koji su ti se pridružili u avanturi!</string>
@@ -864,7 +864,7 @@
     <string name="gift_gems_balance_subtitle">Upiši koliko svojih Dragulja želiš poslati ispod ili promijeni karticu da kupiš Dragulje za poklon</string>
     <string name="password_too_short">Tvoja zaporka treba biti dugačka barem %d znakova</string>
     <string name="preference_push_joined_guild_mention">\@Spomeni u pridruženim Cehovima</string>
-    <string name="invitation_title">%s te pozvao da se pridružiš njihovoj grupi %s</string>
+    <string name="invitation_title">%1$s te pozvao da se pridružiš njihovoj grupi %2$s</string>
     <string name="someone">Netko</string>
     <string name="authentication_methods">Metode provjere autentičnosti</string>
     <string name="local">lokalno</string>
@@ -1056,7 +1056,7 @@
     <string name="pms_disabled_description">Još uvijek možeš slati poruke, ali nitko ih ne može slati tebi. Možeš ih ponovo omogućiti u Postavkama.</string>
     <string name="view_gem_bundles">Pogledaj Pakete Dragulja</string>
     <string name="usually_x_gems">Obično %d Dragulja</string>
-    <string name="spooky_promo_info_instructions">Između %s i %s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
+    <string name="spooky_promo_info_instructions">Između %1$s i %2$s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
     <string name="x_to_y">%1$s do %2$s</string>
     <string name="dark_mode">Tamni Način Rada</string>
     <string name="submit_feedback">Pošalji povratne informacije</string>
@@ -1104,7 +1104,7 @@
     <string name="apitoken_summary">Kopiraj Token. Pažljivo, ovo je zaporka!</string>
     <string name="mount_category">%s Jahače Životinje</string>
     <string name="disablePrivateMessages">Onemogući Privatne Poruke</string>
-    <string name="fall_promo_info_instructions">Između %s i %s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
+    <string name="fall_promo_info_instructions">Između %1$s i %2$s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
     <string name="open_website">Otvori Web Stranicu</string>
     <string name="delete_challenge_task_description">Ovo je jedan od %1$d zadataka koji su dio “%2$s” Izazova. Moraš napustiti Izazov kako bi izbrisao/la ovaj zadatak.</string>
     <string name="no_longer_available">Više nije dostupno</string>
@@ -1273,7 +1273,7 @@
     <string name="fall_promo_info_prompt">Jesenska gala zabava je u punom jeku pa smo mislili da je savršeno vrijeme za Rasprodaju Dragulja! Sada ćeš svakom kupnjom dobiti više Dragulja nego ikada prije.</string>
     <string name="clear_cache_description">Za brisanje predmemorije, otvori aplikaciju Postavke na telefonu. Idi na Pohrana &gt; Aplikacije &gt; Habitica, zatim dodirnite Očisti Predmemoriju.</string>
     <string name="death_description">Ali možeš ih sve vratiti uz naporan rad! Sretno - bit ćeš super.</string>
-    <string name="faint_loss_description">Past ćeš na razinu <b>%d</b>, izgubiti <b>%d</b> Zlatnika i razbiti <b>komad opreme</b>…</string>
+    <string name="faint_loss_description">Past ćeš na razinu <b>%1$d</b>, izgubiti <b>%2$d</b> Zlatnika i razbiti <b>komad opreme</b>…</string>
     <string name="health_fitness">Zdravlje + Fitnes</string>
     <string name="time_management">Upravljanje vremenom + Odgovornost</string>
     <string name="habit_summary_description">Ovo je **%1$s** Navika koja je **%2$s**.</string>

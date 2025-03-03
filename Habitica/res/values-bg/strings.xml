@@ -531,11 +531,11 @@
     <string name="world_boss">Световен главатар</string>
     <string name="boss_art">Графика на главатаря</string>
     <string name="world_boss_description">Описание на световния главатар</string>
-    <string name="rage_strike_count">Яростни удари: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Яростни удари: %d/%d</string>
     <string name="pending_strike_title">Изчакващ удар</string>
     <string name="strike_description_title">Какво е яростен удар?</string>
     <string name="strike_active_title">%s беше нападнат!</string>
-    <string name="strike_active_description">Нашият %s беше съсипан когато %s разби %s. Бързо, справете се със задачите си, за да победите чудовището и да помогнете за възстановяването!</string>
+    <string name="strike_active_description">Нашият %1$s беше съсипан когато %2$s разби %3$s. Бързо, справете се със задачите си, за да победите чудовището и да помогнете за възстановяването!</string>
     <string name="questShop">Магазинът за мисии</string>
     <string name="market_owner_long">Алекс Търговеца</string>
     <string name="tavern_owner_long">Даниел Кръчмаря</string>

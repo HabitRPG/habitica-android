@@ -486,7 +486,7 @@
     <string name="world_boss">Boss ogólnoświatowy</string>
     <string name="boss_art">Obrazek bossa</string>
     <string name="world_boss_description">Opis Ogólnoświatowego Bossa</string>
-    <string name="rage_strike_count">Ataki Szału: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Ataki Szału: %d/%d</string>
     <string name="pending_strike_title">Oczekujący Atak</string>
     <string name="strike_description_title">Czym jest Atak Szału?</string>
     <string name="strike_active_title">%s został zaatakowany!</string>
@@ -557,7 +557,7 @@
     <string name="identify_your_challenge_with_a_tag">Określ wyzwanie krótką nazwą</string>
     <string name="gems_left_max">Miesięczne Klejnoty: pozostało %1$d/%2$d</string>
     <string name="forgot_password_confirmation">Instrukcja dotyczącą ustawiania nowego hasła zostanie wysłana na e-mail, o ile został on ustawiony w profilu.</string>
-    <string name="strike_active_description">Nasz ukochany %s został zdewastowany, gdy %s roztrzaskał %s. Szybko, kończ swoje zadania, żeby pokonać potwora i pomóc w odbudowie!!</string>
+    <string name="strike_active_description">Nasz ukochany %1$s został zdewastowany, gdy %2$s roztrzaskał %3$s. Szybko, kończ swoje zadania, żeby pokonać potwora i pomóc w odbudowie!!</string>
     <string name="equipment_str">SIŁ:</string>
     <string name="equipment_con">KON:</string>
     <string name="equipment_int">INT:</string>
@@ -756,7 +756,7 @@
     <string name="armoireFood_new">Szperasz w Skrzyni i znajdujesz jedzenie. Co to tutaj robi\?</string>
     <string name="sell_no_price">Sprzedaj</string>
     <string name="create_new_party">Stwórz nową drużynę</string>
-    <string name="class_confirmation_price">Czy chcesz zmienić swoją klasę na %s za %d klejnotów\?</string>
+    <string name="class_confirmation_price">Czy chcesz zmienić swoją klasę na %1$s za %2$d klejnotów\?</string>
     <string name="next_hourglass">Następna klepsydra</string>
     <string name="guild_challenges">Bierzesz udział w wyzwaniu gildii</string>
     <string name="party_challenges">Bierzesz udział w wyzwaniu drużyny</string>
@@ -876,7 +876,7 @@
     <string name="subscribers_mythic_hourglasses"><i>Subskrybenci otrzymują Mistyczną Klepsydrę w pierwszych trzech dniach miesiąca.</i></string>
     <string name="member_group_plan">Członek Planu Grupowego</string>
     <string name="g1g1_info_3_text">Aby skorzystać z promocji, należy podarować Subskrybcję innemu użytkownikowi Habitica. Jeśli Ty lub osoba otrzymująca Twój prezent już posiada Subskrybcję, miesiące z tego zakupu zostaną wykorzystane dopiero po zakończeniu lub zrezygnowaniu z bieżącej Subskrybcji.</string>
-    <string name="invitation_title">Użytkownik %s zaprosił cię do grupy %s</string>
+    <string name="invitation_title">Użytkownik %1$s zaprosił cię do grupy %2$s</string>
     <string name="copy_username">Skopiuj nazwę użytkownika</string>
     <string name="password_too_short">Twoje hasło musi zawierać przynajmniej %d znaków</string>
     <string name="authentication_methods">Metody Uwierzytelnienia</string>
@@ -1081,14 +1081,14 @@
     <string name="block_user">Zablokuj użytkownika</string>
     <string name="unblock_user">Odblokuj użytkownika</string>
     <string name="block_user_title">Zablokować %s\?</string>
-    <string name="spooky_promo_info_instructions">Czas promocji: %s-%s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
+    <string name="spooky_promo_info_instructions">Czas promocji: %1$s-%2$s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
     <string name="g1g1_promo_info_instructions">Dotknij \"Podaruj Subskrybcję\" i wpisz nazwę użytkownika, któremu chcesz ją podarować. Następnie wybierz okres Subskrybcji i dokończ zakup. Twojemu kontu automatycznie zostanie przypisana Subskrybcja z takim samym okresem i korzyściami.</string>
     <string name="pms_disabled">Prywatne wiadomości są wyłączone</string>
     <string name="pms_disabled_description">Nadal jesteś w stanie wysyłać wiadomości, ale nie będziesz otrzymywać wiadomości od innych. Możesz to zmienić w dowolniej chwili w ustawieniach.</string>
     <string name="x_to_y">%1$s-%2$s</string>
     <string name="how_it_works">Jak to działa</string>
     <string name="limitations">Ograniczenia</string>
-    <string name="fall_promo_info_instructions">Czas promocji: %s-%s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
+    <string name="fall_promo_info_instructions">Czas promocji: %1$s-%2$s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
     <string name="view_gem_bundles">Przejdź do pakietów Klejnotów</string>
     <string name="dark_mode">Tryb ciemny</string>
     <string name="theme_mode">Tryb motywu</string>

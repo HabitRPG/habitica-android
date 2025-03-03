@@ -481,7 +481,7 @@
     <string name="pending_strike_title">Lovitură iminentă</string>
     <string name="strike_description_title">Ce este o Lovitură Furioasă?</string>
     <string name="strike_active_title" formatted="false">%s a fost Atacat!</string>
-    <string name="strike_active_description" formatted="false">Dragul nostru %s a fost devastat atunci când %s a distrus %s. Îndeplinește-ți sarcinile rapid pentru a înfrânge monstrul și a ajuta la reconstrucție! </string>
+    <string name="strike_active_description">Dragul nostru %1$s a fost devastat atunci când %2$s a distrus %3$s. Îndeplinește-ți sarcinile rapid pentru a înfrânge monstrul și a ajuta la reconstrucție! </string>
     <string name="questShop">Magazinul de Expediții</string>
     <string name="market_owner_long">Alex Negustorul</string>
     <string name="tavern_owner_long">Daniel Păzitorul Hanului</string>

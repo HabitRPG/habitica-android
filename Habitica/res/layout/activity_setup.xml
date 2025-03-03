@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <com.habitrpg.android.habitica.ui.views.FadingViewPager
-        android:id="@+id/viewPager"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     <RelativeLayout
-        android:id="@+id/bottomBar"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/background_brand"
-        android:gravity="center_vertical"
-        android:elevation="8dp">
-        <com.viewpagerindicator.IconPageIndicator
-            android:id="@+id/view_pager_indicator"
+            android:id="@+id/bottomBar"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_height="56dp"
+            android:background="@color/background_brand"
+            android:gravity="center_vertical"
+            android:elevation="8dp">
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/view_pager_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:tabBackground="@drawable/indicator_diamond"
+                android:background="@color/transparent"
+                app:tabIndicator="@null" />
+
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/previousButton"
-            android:drawableStart="@drawable/back_arrow_disabled"
-            android:background="@color/transparent"
-            android:drawablePadding="12dp"
-            android:textColor="@color/white"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/previousButton"
+                android:drawableStart="@drawable/back_arrow_disabled"
+                android:background="@color/transparent"
+                android:drawablePadding="12dp"
+                android:textColor="@color/white" />
+
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/next_button"
-            android:id="@+id/nextButton"
-            android:drawablePadding="12dp"
-            android:textColor="@color/white"
-            android:drawableEnd="@drawable/forward_arrow_enabled"
-            android:background="@color/transparent"
-            android:layout_alignParentEnd="true"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/next_button"
+                android:id="@+id/nextButton"
+                android:drawablePadding="12dp"
+                android:textColor="@color/white"
+                android:drawableEnd="@drawable/forward_arrow_enabled"
+                android:background="@color/transparent"
+                android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>

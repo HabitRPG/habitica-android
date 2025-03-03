@@ -9,10 +9,14 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.Analytics
@@ -214,6 +218,15 @@ class ArmoireActivity : BaseActivity() {
                     }
                 }
             }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.dropRateButton) { v, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                    + WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(bottom = insets.bottom)
+            consumeWindowInsetsAbove30(windowInsets)
         }
     }
 

@@ -518,11 +518,11 @@
     <string name="world_boss">世界 boss</string>
     <string name="boss_art">Boss 圖像</string>
     <string name="world_boss_description">世界 boss 簡介</string>
-    <string name="rage_strike_count">暴走攻擊：%d/%d</string>
+    <string name="rage_strike_count" formatted="false">暴走攻擊：%d/%d</string>
     <string name="pending_strike_title">即將造成的攻擊</string>
     <string name="strike_description_title">暴走攻擊是什麽？</string>
     <string name="strike_active_title">%s被攻擊了！</string>
-    <string name="strike_active_description">我們心愛的%s在%s攻擊%s時被徹底摧毀了！快點！完成你的任務來打敗怪物，幫忙重建！</string>
+    <string name="strike_active_description">我們心愛的%1$s在%2$s攻擊%3$s時被徹底摧毀了！快點！完成你的任務來打敗怪物，幫忙重建！</string>
     <string name="questShop">副本商店</string>
     <string name="market_owner_long">商人 Alex</string>
     <string name="tavern_owner_long">酒館老闆 Daniel</string>
@@ -800,7 +800,7 @@
     <string name="id_copied">已將用戶ID複製到剪貼板</string>
     <string name="copy_username">複製用戶名</string>
     <string name="password_too_short">您的密碼長度至少為%d個字符</string>
-    <string name="invitation_title">%s邀請你加入他們的小組%s</string>
+    <string name="invitation_title">%1$s邀請你加入他們的小組%2$s</string>
     <string name="someone">有人</string>
     <string name="authentication_methods">認證方式</string>
     <string name="local">本地</string>
@@ -862,8 +862,8 @@
     <string name="task_title">任務標題</string>
     <string name="add_local_authentication">新增地區性驗證</string>
     <string name="defeat">擊退</string>
-    <string name="gift_confirmation_text_sub">你送給%s一個%s個月的Habitica訂閱。</string>
-    <string name="gift_confirmation_text_sub_g1g1">你送給%s一個%s個月的Habitica訂閱，由於買一贈一促銷活動，你也獲得了同樣時長的訂閱！</string>
+    <string name="gift_confirmation_text_sub">你送給%1$s一個%2$s個月的Habitica訂閱。</string>
+    <string name="gift_confirmation_text_sub_g1g1">你送給%1$s一個%2$s個月的Habitica訂閱，由於買一贈一促銷活動，你也獲得了同樣時長的訂閱！</string>
     <string name="gift_gems_subtitle">在下面選擇你要贈送的寶石包！</string>
     <string name="join_party_description_guild">將下方的使用者名稱發給好友，或是前往%s找尋隊友！</string>
     <string name="insufficientGoldTitle">金幣不足</string>
@@ -959,8 +959,8 @@
     <string name="off">關</string>
     <string name="on">開</string>
     <string name="suggest_pet_hatch_again_missing_potion">你還需要一瓶%s藥水才能再次孵化這個寵物</string>
-    <string name="suggest_pet_hatch_again_missing_both">你需要一個%s和%s藥劑才能再次孵化這個寵物</string>
-    <string name="can_hatch_pet">對你的%s蛋使用%s藥水來孵化這個寵物吧！</string>
+    <string name="suggest_pet_hatch_again_missing_both">你需要一個%1$s和%2$s藥劑才能再次孵化這個寵物</string>
+    <string name="can_hatch_pet">對你的%1$s蛋使用%2$s藥水來孵化這個寵物吧！</string>
     <string name="hatch_pet">孵化寵物</string>
     <string name="unhatched_pet">未孵化的寵物</string>
     <string name="hatch_pet_again">再次孵化寵物</string>
@@ -981,13 +981,13 @@
     <string name="pet_category">%s寵物</string>
     <string name="mount_category">%s坐騎</string>
     <string name="suggest_pet_hatch_again_missing_egg">你還需要一個%s蛋才能再次孵化這個寵物</string>
-    <string name="suggest_pet_hatch_missing_both">你需要一個%s和一瓶%s藥水才能孵化這個寵物</string>
+    <string name="suggest_pet_hatch_missing_both">你需要一個%1$s和一瓶%2$s藥水才能孵化這個寵物</string>
     <string name="suggest_pet_hatch_missing_potion">你還需要一個%s孵化藥水來孵化這個寵物</string>
     <string name="suggest_pet_hatch_missing_egg">你還需要一個%s寵物蛋來孵化這個寵物任務</string>
     <string name="view_onboarding_tasks">查看新手任務</string>
     <string name="equip">裝備</string>
     <string name="unequip">取消裝備</string>
-    <string name="excessItemsNoneLeft">你已經有得到所有%s寵物所需的一切物品。你確定你要買%2$d個%3$s？</string>
+    <string name="excessItemsNoneLeft">你已經有得到所有%1$s寵物所需的一切物品。你確定你要買%2$d個%3$s？</string>
     <string name="purchaseX">買%d個</string>
     <string name="excessItemsXLeft">你只需要%3$d個%2$s即可孵化所有可得到的這種寵物。你確定你想要買%1$d個？</string>
     <string name="feedPet_description">完成任務有概率掉落寵物食品！這樣你就可以把寵物餵大長成坐騎啦！</string>
@@ -1074,7 +1074,7 @@
     <string name="empty_challenge_list">您尚未成為任何挑戰中的一位成員。</string>
     <string name="todo_item_checkbox">待辦事項核取方塊</string>
     <string name="empty_equipment_description">您目前還尚未有任何這類型的裝備。您可以透過市集並使用您所賺取來的金幣去採購裝備。</string>
-    <string name="fall_promo_info_instructions">取決於 %s 和 %s，簡易的購物如同以往任何寶石組合包以及您的帳號將會被存入此促銷的寶石總數。有更多的寶石去消費，分享，或保存至未來給任何使用！</string>
+    <string name="fall_promo_info_instructions">取決於 %1$s 和 %2$s，簡易的購物如同以往任何寶石組合包以及您的帳號將會被存入此促銷的寶石總數。有更多的寶石去消費，分享，或保存至未來給任何使用！</string>
     <string name="terms_of_service">服務條款</string>
     <string name="privacy_policy">隱私權政策</string>
     <string name="all_tasks_completed">您已完成您全部的任務。做得好！</string>
@@ -1096,7 +1096,7 @@
     <string name="quest_leave_message">您確定您要離開此副本？所有您的副本進展將會遺失。</string>
     <string name="quest_leave_message_nostart">您確定您要離開此副本？您將無法參與其中。</string>
     <string name="avatar_style">風格</string>
-    <string name="x_to_y">從%s到%s</string>
+    <string name="x_to_y">從%1$s到%2$s</string>
     <string name="open_website">開放網站</string>
     <string name="create_guild_description">去設立一個公會，登入至 Habitica網站並點選“我的公會”頁面中的 “設立”按鈕。</string>
     <string name="create_guild">設立公會</string>
@@ -1111,7 +1111,7 @@
     <string name="spooky_promo_info_prompt">此寶石折扣回歸去追尋今年最終的秋季節慶！這是一個最後的機會去擁有更多更多的寶石，所以當它還持續時請大量囤購吧！</string>
     <string name="view_gem_bundles">查看寶石組合包</string>
     <string name="fall_promo_info_prompt">此秋季節慶正在最高潮期所以我們認為這是個最好的時機去推出我們第一次的寶石折扣！現在你將會於每一次的購物上得到比之前更多的寶石。</string>
-    <string name="spooky_promo_info_instructions">取決於 %s 和 %s，簡易的購物如同以往任何寶石組合包以及您的帳號將會被存入此促銷的寶石總數。有更多的寶石去消費，分享，或保存至未來給任何使用！</string>
+    <string name="spooky_promo_info_instructions">取決於 %1$s 和 %2$s，簡易的購物如同以往任何寶石組合包以及您的帳號將會被存入此促銷的寶石總數。有更多的寶石去消費，分享，或保存至未來給任何使用！</string>
     <string name="adjust_counter">修正計數器</string>
     <string name="reset_counter">重設計數器</string>
     <string name="go_to_survey">去填寫問卷</string>
@@ -1154,7 +1154,7 @@
     <string name="reset_account_title">你確定需要重置\?</string>
     <string name="confirm_reset">確定重置</string>
     <string name="forgot_password_hint_example">例子：habitrabbit or gryphon@example.com</string>
-    <string name="gift_confirmation_text_gems_new">你送了%s%s寶石。</string>
+    <string name="gift_confirmation_text_gems_new">你送了%1$s%2$s寶石。</string>
     <string name="subscription_confirmation_multiple">你已訂閱了%s個月</string>
     <string name="subscription_confirmation">你已訂閱1個月</string>
     <string name="gem_purchase_confirmation">你獲得了%s寶石。</string>
@@ -1171,7 +1171,7 @@
     <string name="october">十月</string>
     <string name="november">十一月</string>
     <string name="december">十二月</string>
-    <string name="class_confirmation_price">更改你的職業成為%s需要%d的寶石，確認更改\?</string>
+    <string name="class_confirmation_price">更改你的職業成為%1$s需要%2$d的寶石，確認更改\?</string>
     <string name="armoireEquipment_new">你在衣櫥裏找到了一個稀有裝備！</string>
     <string name="starting_objectives">新手任務</string>
     <string name="damage_pending">%s即將造成的傷害</string>

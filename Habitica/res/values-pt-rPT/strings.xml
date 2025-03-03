@@ -503,10 +503,10 @@
     <string name="tavern_owner_long">Daniel o dono da Taverna</string>
     <string name="market_owner_long">Alex o Mercador</string>
     <string name="questShop">Loja de Missões</string>
-    <string name="strike_active_description">Nosso querido %s ficou devastado quando %s aniquilou %s. Rapido, enfrente tuas tarefas para derrotar o monstro e ajudar a reconstruir !!</string>
+    <string name="strike_active_description">Nosso querido %1$s ficou devastado quando %2$s aniquilou %3$s. Rapido, enfrente tuas tarefas para derrotar o monstro e ajudar a reconstruir !!</string>
     <string name="strike_active_title">%s foi Atacado!</string>
     <string name="pending_strike_title">Ataque Pendente</string>
-    <string name="rage_strike_count">Ataques de Fúria: %d/%d</string>
+    <string name="rage_strike_count" formatted="false">Ataques de Fúria: %d/%d</string>
     <string name="world_boss">Chefão Mundial</string>
     <string name="boss_art">Arte do Chefão</string>
     <string name="world_boss_description">Descrição do Chefão Mundial</string>
@@ -702,7 +702,7 @@
     <string name="equipment_empty">Já tens todo o equipamento! Mais vai ser lançado durante as Grandes Galas, perto dos solstícios e equinócios.</string>
     <string name="quest_items_found">Encontraste %d itens da jornada</string>
     <string name="discard">Descartar</string>
-    <string name="class_confirmation_price">Queres mudar a tua classe para %s por %d gemas\?</string>
+    <string name="class_confirmation_price">Queres mudar a tua classe para %1$s por %2$d gemas\?</string>
     <string name="use_item">Usar item em membro de equipa</string>&gt;
     <string name="unsaved_changes">Alterações não gravadas</string>
     <string name="discard_changes_to_task_message">Tens a certeza de que queres descartar as alterações nesta tarefa\?</string>

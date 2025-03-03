@@ -4,30 +4,26 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.SystemBarStyle
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import com.viewpagerindicator.IconPagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
+class IntroActivity : BaseActivity() {
     private lateinit var binding: ActivityIntroBinding
 
     @Inject
@@ -46,10 +42,9 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         super.onCreate(savedInstanceState)
 
         setupIntro()
-        binding.viewPagerIndicator.setViewPager(binding.viewPager)
 
-        binding.skipButton.setOnClickListener(this)
-        binding.finishButton.setOnClickListener(this)
+        binding.skipButton.setOnClickListener { finishIntro() }
+        binding.finishButton.setOnClickListener { finishIntro() }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             contentRepository.retrieveContent()
@@ -59,7 +54,6 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
     override fun onResume() {
         super.onResume()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.black)
             window.isNavigationBarContrastEnforced = false
             val controller = WindowCompat.getInsetsController(window, window.decorView)
             controller.isAppearanceLightNavigationBars = false
@@ -69,13 +63,17 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
     }
 
     private fun setupIntro() {
-        binding.viewPager.adapter = PagerAdapter(supportFragmentManager)
-
-        binding.viewPager.addOnPageChangeListener(this)
-    }
-
-    override fun onClick(v: View) {
-        finishIntro()
+        setViewPagerAdapter()
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position == 2) {
+                    binding.finishButton.visibility = View.VISIBLE
+                } else {
+                    binding.finishButton.visibility = View.GONE
+                }
+            }
+        })
     }
 
     private fun finishIntro() {
@@ -87,50 +85,21 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         finish()
     }
 
-    override fun onPageScrolled(
-        position: Int,
-        positionOffset: Float,
-        positionOffsetPixels: Int
-    ) { // no-on
-    }
-
-    override fun onPageSelected(position: Int) {
-        if (position == 2) {
-            binding.finishButton.visibility = View.VISIBLE
-        } else {
-            binding.finishButton.visibility = View.GONE
-        }
-    }
-
-    override fun onPageScrollStateChanged(state: Int) { // no-on
-    }
-
-    private inner class PagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
-        override fun getItem(position: Int): Fragment {
-            val fragment = IntroFragment()
-            configureFragment(fragment, position)
-            return fragment
-        }
-
-        override fun getIconResId(index: Int): Int {
-            return R.drawable.indicator_diamond
-        }
-
-        override fun getCount(): Int {
-            return 3
-        }
-
-        override fun instantiateItem(
-            container: ViewGroup,
-            position: Int
-        ): Any {
-            val item = super.instantiateItem(container, position)
-            if (item is IntroFragment) {
-                configureFragment(item, position)
+    private fun setViewPagerAdapter() {
+        val fragmentManager = supportFragmentManager
+        val viewPagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            override fun createFragment(position: Int): Fragment {
+                val fragment = IntroFragment()
+                configureFragment(fragment, position)
+                return fragment
             }
-            return item
+
+            override fun getItemCount(): Int {
+                return 3
+            }
         }
+        binding.viewPager.adapter = viewPagerAdapter
+        TabLayoutMediator(binding.viewPagerIndicator, binding.viewPager) { tab, position -> }.attach()
     }
 
     private fun configureFragment(

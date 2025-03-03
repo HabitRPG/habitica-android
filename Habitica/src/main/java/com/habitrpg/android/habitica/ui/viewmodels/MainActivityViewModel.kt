@@ -107,8 +107,8 @@ constructor(
                         "checkin_count",
                         user.loginIncentives.toString()
                     )
-                    user.preferences?.pushNotifications?.listOfEnabledKeys()?.let {
-                        Analytics.setUserProperty("allowed_push_notifications", it)
+                    user.preferences?.pushNotifications?.mapOfKeys()?.forEach { key, isEnabled ->
+                        Analytics.setUserProperty("allow_push_${key}", isEnabled)
                     }
                     Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)

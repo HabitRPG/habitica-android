@@ -295,13 +295,12 @@
                         android:textColor="@color/white"
                         style="@style/Caption2"
                         android:drawablePadding="@dimen/spacing_medium" />
-                <View
-                    android:id="@+id/bottom_spacing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="30dp"
-                    android:background="@color/red_5"/>
             </LinearLayout>
         </FrameLayout>
+        <View
+                android:id="@+id/bottom_spacing"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/brand_400"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

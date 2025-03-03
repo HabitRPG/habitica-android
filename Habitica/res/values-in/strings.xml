@@ -502,11 +502,11 @@
     <string name="world_boss">Bos Dunia</string>
     <string name="boss_art">Seni Bos</string>
     <string name="world_boss_description">Deskripsi Bos Dunia</string>
-    <string name="rage_strike_count">Tingkat Kemarahan 1%d/1%d</string>
+    <string name="rage_strike_count" formatted="false">Tingkat Kemarahan %1$d/%2$d</string>
     <string name="pending_strike_title">Serangan Tertunda</string>
     <string name="strike_description_title">Apakah itu Tingkatan Kemarahan?</string>
     <string name="strike_active_title">Sang %s telah Diserang!</string>
-    <string name="strike_active_description">%s kita yang tercinta hancur sewaktu sang %s meremukkan %s. Cepat, kalahkan tugas-tugasmu untuk mengalahkan sang monster dan bantu membangun kembali!!</string>
+    <string name="strike_active_description">%1$s kita yang tercinta hancur sewaktu sang %2$s meremukkan %3$s. Cepat, kalahkan tugas-tugasmu untuk mengalahkan sang monster dan bantu membangun kembali!!</string>
     <string name="questShop">Toko Misi</string>
     <string name="market_owner_long">Alex sang Pedagang</string>
     <string name="tavern_owner_long">Daniel sang penjaga penginapan</string>
@@ -699,8 +699,8 @@
     <string name="confirm_deletion">Konfirmasi penghapusan</string>
     <string name="leave_guild_challenges_confirmation">Apakah kamu ingin tetap berpartisipasi dalam Tantangan saat meninggalkan Perkumpulan\?</string>
     <string name="leave_guild_confirmation">Apakah kamu yakin ingin keluar dari perkumpulan ini\?</string>
-    <string name="gift_confirmation_text_sub">Kamu mengirimkan %s berlangganan %s-bulan Habitica.</string>
-    <string name="gift_confirmation_text_sub_g1g1">Kamu mengirimkan %s sebuah berlangganan %s-bulan dan berlangganan yang sama telah diterapkan pada akunmu melalui promo kami Beri Satu Dapat Satu!</string>
+    <string name="gift_confirmation_text_sub">Kamu mengirimkan %1$s berlangganan %2$s-bulan Habitica.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Kamu mengirimkan %1$s sebuah berlangganan %2$s-bulan dan berlangganan yang sama telah diterapkan pada akunmu melalui promo kami Beri Satu Dapat Satu!</string>
     <string name="update_available">Update tersedia: %1$s (%2$d)</string>
     <string name="streak">Beruntutan</string>
     <string name="new_reminder">Pengingat baru</string>
@@ -876,7 +876,7 @@
     <string name="local">lokal</string>
     <string name="authentication_methods">Metode Otentikasi</string>
     <string name="someone">Seseorang</string>
-    <string name="invitation_title">%s mengundangmu untuk bergabung dengan grup %s</string>
+    <string name="invitation_title">%1$s mengundangmu untuk bergabung dengan grup %2$s</string>
     <string name="password_too_short">Kata sandimu harus setidaknya %d karakter</string>
     <string name="copy_username">Salin Nama Pengguna</string>
     <string name="id_copied">Salin ID Pengguna ke clipboard</string>
