@@ -5,7 +5,7 @@
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.core.widget.NestedScrollView
+    <com.habitrpg.android.habitica.ui.views.HabiticaScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -268,5 +268,5 @@
                 android:text="@string/leave_party"
                 android:textSize="16sp" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.habitrpg.android.habitica.ui.views.HabiticaScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

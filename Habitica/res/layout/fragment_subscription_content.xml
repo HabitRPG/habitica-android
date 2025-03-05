@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<com.habitrpg.android.habitica.ui.views.HabiticaScrollView
         android:id="@+id/nested_scroll_view"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -9,7 +9,8 @@
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:background="@color/brand_300"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+    app:skipDirectchild="true">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -388,12 +389,23 @@
                     layout="@layout/gift_segment" />
         </LinearLayout>
 
-        <ImageView
-                android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/footer_hills">
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/subscription_bg"
-                android:scaleType="centerCrop" />
-
+                android:src="@drawable/footer_stars_right"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/footer_stars_left"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -428,4 +440,4 @@
                 android:layout_height="30dp"
                 android:background="@color/brand_400"/>
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</com.habitrpg.android.habitica.ui.views.HabiticaScrollView>

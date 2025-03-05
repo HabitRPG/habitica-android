@@ -27,7 +27,6 @@
                 android:layout_height="wrap_content"
                 app:titleEnabled="false"
                 app:contentScrim="?attr/headerBackgroundColor"
-                android:background="?attr/headerBackgroundColor"
                 app:expandedTitleMarginEnd="?attr/actionBarSize"
                 app:expandedTitleMarginStart="0dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"

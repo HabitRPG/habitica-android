@@ -24,7 +24,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqOverviewBinding
 import com.habitrpg.android.habitica.databinding.SupportFaqItemBinding
-import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -172,8 +171,6 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         binding?.moreHelpTextView?.movementMethod = LinkMovementMethod.getInstance()
 
         this.loadArticles()
-
-        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
     }
 
     override fun onDestroy() {

@@ -253,7 +253,7 @@ class FullProfileActivity : BaseActivity() {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
                     HabiticaSnackbar.showSnackbar(
                         this@FullProfileActivity.binding.nestedScrollView.getChildAt(0) as ViewGroup,
-                        String.format(getString(R.string.username_copied), userDisplayName),
+                        getString(R.string.username_copied),
                         SnackbarDisplayType.NORMAL
                     )
                 }
@@ -268,7 +268,7 @@ class FullProfileActivity : BaseActivity() {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
                     HabiticaSnackbar.showSnackbar(
                         this@FullProfileActivity.binding.nestedScrollView.getChildAt(0) as ViewGroup,
-                        String.format(getString(R.string.id_copied), userDisplayName),
+                        getString(R.string.id_copied),
                         SnackbarDisplayType.NORMAL
                     )
                 }

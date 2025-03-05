@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
 import com.habitrpg.android.habitica.databinding.KnownIssueBinding
-import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -81,7 +80,6 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
             }
             binding?.knownIssuesLayout?.addView(issueBinding.root)
         }
-        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
     }
 
     private val versionName: String by lazy {

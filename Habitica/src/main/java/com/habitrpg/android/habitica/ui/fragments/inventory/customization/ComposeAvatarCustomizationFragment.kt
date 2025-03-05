@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
+import android.content.res.Configuration
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Bundle
@@ -19,10 +20,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -44,6 +51,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.colorResource
@@ -248,9 +256,16 @@ class ComposeAvatarCustomizationFragment :
 
         mainActivity?.toolbar?.let {
             val color = ContextCompat.getColor(requireContext(), R.color.window_background)
-            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color)
-            requireActivity().window.statusBarColor = color
+            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color,
+                appbar = mainActivity?.findViewById(R.id.appbar))
         }
+    }
+
+    override fun onResume() {
+        if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            navigationBarColor = ContextCompat.getColor(requireContext(), R.color.window_background)
+        }
+        super.onResume()
     }
 
     private fun updateFilterIcon() {
@@ -469,21 +484,20 @@ private fun AvatarCustomizationView(
     activeCustomization: String?,
     onSelect: (Customization) -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+    val isWidthGreaterHeight = configuration.screenWidthDp > configuration.screenHeightDp
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colorResource(R.color.window_background))) {
             ComposableAvatarView(
                 avatar = avatar,
                 configManager = configManager,
                 modifier =
                 Modifier
-                    .padding(top = 6.dp, bottom = 24.dp)
+                    .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)
                     .size(140.dp, 147.dp)
-            )
-            Box(
-                Modifier
-                    .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
-                    .fillMaxWidth()
-                    .height(22.dp)
             )
         }
         val nestedScrollInterop = rememberNestedScrollInteropConnection()
@@ -491,19 +505,25 @@ private fun AvatarCustomizationView(
         var gridWidth by remember { mutableStateOf(screenWidth) }
         val horizontalPadding = (gridWidth - (84.dp * 3)) / 2
         val density = LocalDensity.current
+        val insets = WindowInsets.systemBars.add(WindowInsets.displayCutout).asPaddingValues()
+        val ld = LocalLayoutDirection.current
         LazyVerticalGrid(
             columns = GridCells.Adaptive(76.dp),
             horizontalArrangement = Arrangement.Center,
             contentPadding = PaddingValues(horizontal = horizontalPadding),
             modifier =
             Modifier
+                .padding(bottom = insets.calculateBottomPadding())
+                .background(colorResource(R.color.window_background))
+                .padding(start = insets.calculateStartPadding(ld), end = insets.calculateEndPadding(ld))
+                .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                .background(colorResource(R.color.content_background))
                 .onGloballyPositioned {
                     gridWidth = with(density) {
                         it.size.width.toDp()
                     }
                 }
                 .nestedScroll(nestedScrollInterop)
-                .background(colorResource(R.color.content_background))
         ) {
             item(span = { GridItemSpan(3) }) {
                 Text(

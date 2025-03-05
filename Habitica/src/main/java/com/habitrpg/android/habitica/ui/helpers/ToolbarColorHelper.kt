@@ -25,6 +25,7 @@ import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.appbar.AppBarLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.waitForLayout
@@ -43,12 +44,14 @@ object ToolbarColorHelper {
         toolbar: Toolbar,
         activity: Activity?,
         iconColor: Int? = null,
-        backgroundColor: Int? = null
+        backgroundColor: Int? = null,
+        appbar: AppBarLayout? = null
     ) {
         if (activity == null) return
         toolbar.setBackgroundColor(
             backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor)
         )
+        appbar?.setBackgroundColor(backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor))
         val toolbarIconsColor = iconColor ?: activity.getThemeColor(R.attr.headerTextColor)
         val colorFilter = PorterDuffColorFilter(toolbarIconsColor, PorterDuff.Mode.MULTIPLY)
         for (i in 0 until toolbar.childCount) {

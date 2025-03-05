@@ -125,6 +125,15 @@ class MountDetailRecyclerFragment :
         outState.putString(ANIMAL_TYPE_KEY, this.animalType)
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding?.recyclerView?.let {
+            it.post {
+                setGridSpanCount(it.width - it.paddingStart - it.paddingEnd)
+            }
+        }
+    }
+
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
         context?.resources?.let {

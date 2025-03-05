@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_scroll_view" xmlns:android="http://schemas.android.com/apk/res/android"
+<com.habitrpg.android.habitica.ui.views.HabiticaScrollView android:id="@+id/nested_scroll_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:skipDirectchild="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
         android:id="@+id/scroll_content"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/layout_rounded_bg_window">
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -165,11 +166,11 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <View
+    <FrameLayout
             android:id="@+id/reset_tutorial_button_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?attr/colorContentBackgroundOffset"/>
+        android:layout_height="wrap_content"
+        android:background="?attr/colorWindowBackground">
     <Button
         android:id="@+id/reset_tutorial_button"
         android:layout_width="match_parent"
@@ -178,5 +179,6 @@
         android:textColor="@color/text_primary"
         android:text="@string/reset_walkthrough"
         android:layout_margin="@dimen/spacing_large"/>
+    </FrameLayout>
 </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</com.habitrpg.android.habitica.ui.views.HabiticaScrollView>

@@ -55,7 +55,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <com.habitrpg.android.habitica.ui.views.HabiticaScrollView
         android:id="@+id/nested_scroll_view"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -234,5 +234,5 @@
                         android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.habitrpg.android.habitica.ui.views.HabiticaScrollView>
 </LinearLayout>

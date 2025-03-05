@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,21 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -37,19 +39,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
 import com.habitrpg.android.habitica.models.inventory.Equipment
@@ -108,24 +109,33 @@ open class AvatarOverviewFragment :
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 HabiticaTheme {
+                    val configuration = LocalConfiguration.current
+                    val isWidthGreaterHeight = configuration.screenWidthDp > configuration.screenHeightDp
+
                     val avatar by userViewModel.user.observeAsState()
                     Column {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().background(colorResource(R.color.window_background))) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(colorResource(R.color.window_background))) {
                             ComposableAvatarView(
                                 avatar = avatar,
                                 configManager = appConfigManager,
                                 modifier =
                                 Modifier
-                                    .padding(bottom = 24.dp)
+                                    .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)
                                     .size(140.dp, 147.dp)
                             )
                         }
+                        val insets = WindowInsets.systemBars.add(WindowInsets.displayCutout).asPaddingValues()
+                        val ld = LocalLayoutDirection.current
                         Column(modifier = Modifier
+                            .padding(bottom = insets.calculateBottomPadding())
                             .background(colorResource(R.color.window_background))
+                            .padding(start = insets.calculateStartPadding(ld), end = insets.calculateEndPadding(ld))
                             .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                             .background(colorResource(R.color.content_background))
                             .verticalScroll(rememberScrollState())
-                            .padding(top = 12.dp)
                             ) {
                             AvatarOverviewView(
                                 userViewModel,
@@ -143,7 +153,6 @@ open class AvatarOverviewFragment :
                                     displayEquipmentFragment(type, equipped, isCostume)
                                 }
                             )
-                            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.navigationBarsIgnoringVisibility))
                         }
                     }
                 }
@@ -204,11 +213,18 @@ open class AvatarOverviewFragment :
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_share_avatar, menu)
 
+        val color = ContextCompat.getColor(requireContext(), R.color.window_background)
         mainActivity?.toolbar?.let {
-            val color = ContextCompat.getColor(requireContext(), R.color.window_background)
-            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color)
-            requireActivity().window.statusBarColor = color
+            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color,
+                appbar = mainActivity?.findViewById(R.id.appbar))
         }
+    }
+
+    override fun onResume() {
+        if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            navigationBarColor = ContextCompat.getColor(requireContext(), R.color.window_background)
+        }
+        super.onResume()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -259,92 +275,97 @@ fun AvatarOverviewView(
     onEquipmentTap: (String, String?, Boolean) -> Unit
 ) {
     val user by userViewModel.user.observeAsState()
-    Column(
-        Modifier
-            .padding(horizontal = 8.dp)
-            .padding(bottom = 16.dp)
-    ) {
-        if (showCustomization) {
-            Row(
-                Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    stringResource(R.string.avatar_size),
-                    style = HabiticaTheme.typography.titleMedium,
-                    color = HabiticaTheme.colors.textSecondary
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                SegmentedControl(
-                    items =
-                    listOf(
-                        stringResource(R.string.avatar_size_slim),
-                        stringResource(
-                            R.string.avatar_size_broad
-                        )
-                    ),
-                    defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1,
-                    onItemSelection = {
-                        userViewModel.updateUser(
-                            "preferences.size",
-                            if (it == 0) "slim" else "broad"
-                        )
-                    }
-                )
+    Box(contentAlignment = Alignment.TopCenter,
+        modifier = Modifier.fillMaxWidth()) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .padding(bottom = 16.dp)
+                .widthIn(max = 500.dp)
+        ) {
+            if (showCustomization) {
+                Row(
+                    Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        stringResource(R.string.avatar_size),
+                        style = HabiticaTheme.typography.titleMedium,
+                        color = HabiticaTheme.colors.textSecondary
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    SegmentedControl(
+                        items =
+                            listOf(
+                                stringResource(R.string.avatar_size_slim),
+                                stringResource(
+                                    R.string.avatar_size_broad
+                                )
+                            ),
+                        defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1,
+                        onItemSelection = {
+                            userViewModel.updateUser(
+                                "preferences.size",
+                                if (it == 0) "slim" else "broad"
+                            )
+                        }
+                    )
+                }
+                AvatarCustomizationOverviewView(user?.preferences, user?.items?.gear?.equipped, onCustomizationTap, onAvatarEquipmentTap)
             }
-            AvatarCustomizationOverviewView(user?.preferences, user?.items?.gear?.equipped, onCustomizationTap, onAvatarEquipmentTap)
-        }
-        if (showEquipment) {
-            Row(
-                Modifier
-                    .padding(horizontal = 12.dp)
-                    .padding(top = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    stringResource(R.string.equipped).uppercase(),
-                    style = HabiticaTheme.typography.titleSmall,
-                    color = HabiticaTheme.colors.textSecondary
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    stringResource(R.string.equip_automatically),
-                    style = HabiticaTheme.typography.bodyMedium,
-                    color = HabiticaTheme.colors.textPrimary,
-                    modifier = Modifier.padding(end = 6.dp)
-                )
-                Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
-                    userViewModel.updateUser("preferences.autoEquip", it)
+            if (showEquipment) {
+                Row(
+                    Modifier
+                        .padding(horizontal = 12.dp)
+                        .padding(top = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        stringResource(R.string.equipped).uppercase(),
+                        style = HabiticaTheme.typography.titleSmall,
+                        color = HabiticaTheme.colors.textSecondary
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        stringResource(R.string.equip_automatically),
+                        style = HabiticaTheme.typography.bodyMedium,
+                        color = HabiticaTheme.colors.textPrimary,
+                        modifier = Modifier.padding(end = 6.dp)
+                    )
+                    Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
+                        userViewModel.updateUser("preferences.autoEquip", it)
+                    })
+                }
+                EquipmentOverviewView(user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
+                    onEquipmentTap(type, equipped, false)
                 })
+                Row(
+                    Modifier
+                        .padding(horizontal = 12.dp)
+                        .padding(top = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        stringResource(R.string.costume).uppercase(),
+                        style = HabiticaTheme.typography.titleSmall,
+                        color = HabiticaTheme.colors.textSecondary
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        stringResource(R.string.wear_costume),
+                        style = HabiticaTheme.typography.bodyMedium,
+                        color = HabiticaTheme.colors.textPrimary,
+                        modifier = Modifier.padding(end = 6.dp)
+                    )
+                    Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
+                        userViewModel.updateUser("preferences.costume", it)
+                    })
+                }
+                EquipmentOverviewView(user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
+                    onEquipmentTap(type, equipped, true)
+                }, modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f))
             }
-            EquipmentOverviewView(user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
-                onEquipmentTap(type, equipped, false)
-            })
-            Row(
-                Modifier
-                    .padding(horizontal = 12.dp)
-                    .padding(top = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    stringResource(R.string.costume).uppercase(),
-                    style = HabiticaTheme.typography.titleSmall,
-                    color = HabiticaTheme.colors.textSecondary
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    stringResource(R.string.wear_costume),
-                    style = HabiticaTheme.typography.bodyMedium,
-                    color = HabiticaTheme.colors.textPrimary,
-                    modifier = Modifier.padding(end = 6.dp)
-                )
-                Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
-                    userViewModel.updateUser("preferences.costume", it)
-                })
-            }
-            EquipmentOverviewView(user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
-                onEquipmentTap(type, equipped, true)
-            }, modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f))
         }
     }
 }

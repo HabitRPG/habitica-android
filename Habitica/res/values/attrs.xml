@@ -36,6 +36,7 @@
     <attr name="widgetBackgroundRadius" format="dimension" />
     <attr name="currency" format="string" />
     <attr name="color" format="color" />
+    <attr name="ignoreScrollViewWindowInsets" format="boolean" />
 
     <declare-styleable name="GemPurchaseOptionsView">
         <attr name="gemAmount" format="integer" />
@@ -145,5 +146,8 @@
         <attr name="length" format="dimension" />
         <attr name="maxSpacing" format="dimension" />
         <attr name="duration" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="HabiticaScrollView">
+        <attr name="skipDirectchild" format="boolean" />
     </declare-styleable>
 </resources>

@@ -280,8 +280,11 @@ class EquipmentDetailFragment :
 
         mainActivity?.toolbar?.let {
             val color = ContextCompat.getColor(requireContext(), R.color.window_background)
-            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color)
-            requireActivity().window.statusBarColor = color
+
+            ToolbarColorHelper.colorizeToolbar(it,
+                mainActivity,
+                backgroundColor = color,
+                appbar = mainActivity?.findViewById(R.id.appbar))
         }
     }
 

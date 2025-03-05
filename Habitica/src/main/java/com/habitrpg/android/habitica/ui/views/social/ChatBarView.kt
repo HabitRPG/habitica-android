@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
+import android.content.res.Configuration
 import android.util.AttributeSet
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -75,6 +78,16 @@ class ChatBarView : LinearLayout {
                 updateTextIndicator(binding.chatEditText.text.toString())
             }
         )
+        binding.chatEditText.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                sendButtonPressed()
+                if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    val inputService = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputService.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
+            true
+        }
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
 
