@@ -186,7 +186,7 @@
                     android:id="@+id/hills_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/gift_subscription_bg"
+                    android:src="@drawable/footer_hills"
                     android:scaleType="centerCrop"/>
 
             <LinearLayout
