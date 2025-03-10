@@ -43,6 +43,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 class ArmoireActivity : BaseActivity() {
@@ -95,7 +96,7 @@ class ArmoireActivity : BaseActivity() {
             configure(lastType ?: "", lastKey ?: "", lastText ?: "", lastValue)
         }
         if (hasUsedExtraArmoire) {
-            if (binding.adButton.visibility == View.VISIBLE) {
+            if (binding.adButton.isVisible) {
                 binding.adButton.visibility = View.INVISIBLE
             } else {
                 binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
@@ -264,10 +265,10 @@ class ArmoireActivity : BaseActivity() {
 
         val user = userViewModel.user.value ?: return true
         val currentGold = user.stats?.gp ?: return true
-        if (binding.adButton.visibility == View.VISIBLE) {
+        if (binding.adButton.isVisible) {
             binding.adButton.state = AdButton.State.UNAVAILABLE
             binding.adButton.visibility = View.INVISIBLE
-        } else if (binding.openArmoireSubscriberWrapper.visibility == View.VISIBLE) {
+        } else if (binding.openArmoireSubscriberWrapper.isVisible) {
             binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -328,8 +329,13 @@ class ArmoireActivity : BaseActivity() {
         binding.titleView.alpha = 0f
         binding.subtitleView.alpha = 0f
 
-        binding.iconWrapper.post {
-            Animations.circularReveal(binding.iconWrapper, 300)
+        binding.root.post {
+            if (binding.iconWrapper.isAttachedToWindow) {
+                Animations.circularReveal(binding.iconWrapper, 300)
+            } else {
+                binding.iconView.visibility = View.VISIBLE
+                binding.iconView.alpha = 1f
+            }
         }
 
         binding.leftSparkView.startAnimating()
@@ -395,7 +401,7 @@ class ArmoireActivity : BaseActivity() {
 
             else -> {
                 @SuppressLint("SetTextI18n")
-                binding.titleView.text = "+$value ${binding.titleView.text}"
+                binding.titleView.text = "+$value ${getString(R.string.XP_default)}"
                 binding.subtitleView.text = getString(R.string.armoireExp)
                 binding.iconView.setImageResource(R.drawable.armoire_experience)
                 val layoutParams = RelativeLayout.LayoutParams(108.dpToPx(this), 122.dpToPx(this))

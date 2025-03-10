@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,6 +43,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -137,11 +139,13 @@ fun AppHeaderView(
     configManager: AppConfigManager? = null,
     useWindowInsets: Boolean = true
 ) {
-    val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
+    val isPlayerOptedOutOfClass = user?.preferences?.disableClasses == true
     var wrapperModifier = modifier
     if (useWindowInsets) {
+        val padding = WindowInsets.systemBarsIgnoringVisibility.asPaddingValues()
+        val ld = LocalLayoutDirection.current
         wrapperModifier = wrapperModifier
-            .windowInsetsPadding(WindowInsets.systemBarsIgnoringVisibility)
+            .padding(start = padding.calculateLeftPadding(ld), end = padding.calculateRightPadding(ld))
     }
     Column(modifier = wrapperModifier) {
         Row {
