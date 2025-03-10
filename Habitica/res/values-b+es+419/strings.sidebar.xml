@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="sidebar_tasks">Tareas</string>
+    <string name="sidebar_skills">Habilidades</string>
+    <string name="sidebar_section_social">Social</string>
+    <string name="sidebar_inbox">Mensajes</string>
+    <string name="sidebar_party">Equipo</string>
+</resources>

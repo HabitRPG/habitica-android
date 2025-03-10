@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="tutorial_habits_1">El primero son los hábitos. Pueden ser hábitos positivos que desea mejorar o hábitos negativos que desea abandonar.</string>
+    <string name="tutorial_habits_3">Si cometes un error y cometes un hábito negativo, tocar - reducirá la vida de tu avatar para ayudarte a ser responsable.</string>
+    <string name="tutorial_overview">¡Aquí estamos! He hecho algunas tareas para ti según tus gustos. Intenta agregar algunos propios. Puedes editar cualquier tarea tocando el título.</string>
+    <string name="tutorial_habits_2">¡Cada vez que hagas un hábito positivo, toca el + para recibir experiencia y oro!</string>
+    <string name="tutorial_habits_4">¡Dale un tiro! Puede explorar los otros tipos de tareas mediante de la navegación inferior.</string>
+</resources>

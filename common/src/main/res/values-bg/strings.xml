@@ -13,4 +13,10 @@
     <string name="action_edit">Редактиране</string>
     <string name="action_cancel">Отказ</string>
     <string name="stats">Показатели</string>
+    <string name="trillion_abbrev">трлн.</string>
+    <string name="quadrillion_abbrev">квд.</string>
+    <string name="gold_plural">злато</string>
+    <string name="gold_capitalized">Злато</string>
+    <string name="gems">Диаманти</string>
+    <string name="habit">Навик</string>
 </resources>

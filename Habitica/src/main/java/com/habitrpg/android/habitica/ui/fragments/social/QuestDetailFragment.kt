@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentQuestDetailBinding
-import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -101,7 +100,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     updateQuestContent(it)
                 }
         }
-        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
     }
 
     private fun updateParty(group: Group?) {

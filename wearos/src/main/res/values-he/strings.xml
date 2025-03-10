@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="edit_on_phone">לערוך בטלפון</string>
+    <string name="you_found">מצאת…</string>
+    <string name="x_and_y">%1$s ו %2$s</string>
+    <string name="sign_in">לבצע לוגין</string>
+    <string name="sign_in_on_phone">לבצע לוגין בטלפון</string>
+    <string name="other_options">אפשרויות אחרות</string>
+    <string name="create_account">ליצור חשבון</string>
+    <string name="continue_text">המשך</string>
+    <string name="you_ran_out_of_hp">נגמרה לך הבריאות</string>
+    <string name="day_start">תחילת יום</string>
+    <string name="check_on_phone">לבדוק בטלפון</string>
+    <string name="start_new_day">להתחיל יום חדש</string>
+    <string name="check_off_yesterday">סמן כל מה שסיימת אתמול:</string>
+    <string name="save">לשמור</string>
+    <string name="version_info">גרסה %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">התנתק מהביטיקה\?</string>
+    <string name="no_tasks">צור %s כדי להוסיף לרשימה זו</string>
+    <string name="disconnected">מנותק</string>
+    <string name="levelup_description">עלית רמה כי עבדת קשה!</string>
+    <string name="all_done_today">הכל סיום להיום!</string>
+    <string name="starting_your_day">מתחיל את היום...</string>
+    <string name="a_potion">מדגרה</string>
+    <string name="continue_on_your_phone">להמשיך בטלפון</string>
+</resources>

@@ -4,4 +4,18 @@
     <string name="tutorial_habits_1">Kezdjünk a Szokásokkal. Ezek lehetnek pozitív Szokások, amelyeken javítani szeretnél, vagy negatív szokások, amelyekről szeretnél leszokni.</string>
     <string name="tutorial_habits_4">Próbáld ki! A többi feladattípust az alsó navigációs sávon fedezheted fel.</string>
     <string name="tutorial_dailies_2">Legyen óvatos – ha kihagysz egyet, az avatarod egyik napról a másikra sebzést szenved el. Ezek folyamatos ellenőrzése bőkezű jutalmat hoz!</string>
+    <string name="tutorial_habits_3">Ha engedsz a negatív szokásaidnak, a - jelre kattintva avatárod élete csökkenni fog, így számonkérhető maradsz.</string>
+    <string name="tutorial_habits_2">Minden alkalommal, amikor egy pozitív szokást végzel, koppints a + jelre, és tapasztalat pontot és aranyat kapsz cserébe!</string>
+    <string name="tutorial_rewards_2">Annak függvényében, hogy mi motivál téged, egyéni díjakat is létrehozhatsz, amiket a valóságban hajthatsz végre.</string>
+    <string name="tutorial_tasks_complete">Ez minden egyelőre. Ha szükséged van egy kis emlékeztetőre, pillants rá a Gy.i.k. szekcióra.</string>
+    <string name="tutorial_rewards_1">Vegyél új felszerelést az avatárodnak a megszerzett aranyodból!</string>
+    <string name="tutorial_todos_1">Vegyél fel tennivalót az olyan feladatokhoz, amiket csak egyszer kell elvégezned.</string>
+    <string name="tutorial_todos_2">Ha a tennivaló elvégzésére csak egy bizonyos idő áll rendelkezésedre, állíts be neki egy határidőt. Úgy néz ki, egy tennivalót már ki is pipálhatsz — rajta, csak nyugodtan!</string>
+    <string name="tutorial_party_created">Üdv a csapatodban! Használd a csapattárs kereső listát tagok toborzásához, vagy hívd meg barátaidat közvetlenül és szerezd meg a Bazilista küldetés tekercset.
+\n
+\nA Segítség oldalon többet tudhatsz meg a csapat rendszerről.</string>
+    <string name="tutorial_skills">A képességek erőteljes hatással rendelkező különleges készségek! Koppints egy képességre a használatához. Ez manába fog kerülni (kék sáv), amiket a napi bejelentkezésekkel illetve a való életbeli teendőid elvégzésével tudsz feltölteni. A Gy.i.K. menüben további információkat találsz!</string>
+    <string name="tutorial_party">Itt tudjátok barátaiddal számon kérni egymást a céljaitok tekintetében, és a feladataitok elvégzésével harcolhattok a szörnyek ellen!</string>
+    <string name="tutorial_stats">Koppints a szürke gombra hogy automatikusan, egyszerre oszd szét a pontjaidat, vagy koppints a nyilakra, hogy egyenként adj hozzá pontokat.</string>
+    <string name="tutorial_dailies_1">Készíts napi teendőket az olyan időérzékeny feladatoknak, amiket rendszeres időközönként kell elvégezned.</string>
 </resources>

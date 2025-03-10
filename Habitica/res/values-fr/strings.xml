@@ -230,7 +230,7 @@
     <string name="class_changed">Vous êtes maintenant un %s !</string>
     <string name="choose_class">Choisissez une classe</string>
     <string name="dialog_go_back">Revenir</string>
-    <string name="opt_out_confirmation">Confirmez-vous vouloir désactiver votre compte ?</string>
+    <string name="opt_out_confirmation">Confirmez-vous vouloir quitter le système de classe \?</string>
     <string name="change_class">Changez votre classe</string>
     <string name="change_class_description">Changez de classe et ré-attribuez vos points d\'attribut pour 3 gemmes.</string>
     <string name="enable_class">Activer le système de classe</string>
@@ -298,18 +298,18 @@
     <string name="belongs_to_challenge">Appartient au défi</string>
     <string name="has_reminder">A un rappel</string>
     <string name="has_tag">A une étiquette</string>
-    <string name="subscribe_title">L\'abonnement aide l\'équipe de développement et permet à Habitica de fonctionner</string>
-    <string name="subscribe_prompt">Abonnez vous pour obtenir des avantages exclusifs !</string>
-    <string name="subscribe_listitem1">De l\'or pour les gemmes</string>
-    <string name="subscribe_listitem2">Sabliers mystiques</string>
-    <string name="subscribe_listitem3">Objets mystère mensuels</string>
+    <string name="subscribe_title">L\'abonnement aide notre petite équipe et nous aide à faire fonctionner Habitica</string>
+    <string name="subscribe_prompt">Gardez votre motivation avec toujours plus de récompenses en vous abonnant</string>
+    <string name="subscribe_listitem1">Gemmes Gratuites Mensuelles</string>
+    <string name="subscribe_listitem2">Sablier Mystique Mensuel</string>
+    <string name="subscribe_listitem3">Objets Mystères Mensuels</string>
     <string name="subscribe_listitem4">Familier spécial d\'abonnement</string>
     <string name="subscriptions">Abonnements</string>
     <string name="subscription_duration">Périodique tous les %s</string>
     <string name="subscription_duration_norenew">Pour %s</string>
     <string name="subscribe">S\'abonner</string>
-    <string name="subscribe_listitem1_description">Vous pourrez acheter des gemmes au marché pour 20 pièces d\'or chacune !</string>
-    <string name="subscribe_listitem2_description">Obtenez des sabliers mystiques pour acheter des objets dans la boutique des voyageurs temporels !</string>
+    <string name="subscribe_listitem1_description">Obtenez jusqu\'à 50 Gemmes à acheter avec de l\'Or au Marché pour acheter des Quêtes, des éléments de Personnalisation, des Familiers, et plus encore !</string>
+    <string name="subscribe_listitem2_description">Ne ratez aucun objet avec 1 Sablier Mystique par mois à dépenser dans la Boutique des Voyageu·r·se·s Temporel·le·s !</string>
     <string name="subscribe_listitem3_description">Abonnez-vous pour recevoir un ensemble exclusif et de nouveaux objets tous les mois !</string>
     <string name="subscribe_listitem4_description">Obtenez le familier jackalope pourpre royal lorsque vous vous abonnez.</string>
     <string name="subscribe1month_gemcap">25 gemmes max</string>
@@ -322,8 +322,8 @@
     <string name="active">Actif</string>
     <string name="due">Echéance</string>
     <string name="cancel_subscription">Annuler l\'inscription</string>
-    <string name="cancel_subscription_google_description">Vous ne voulez plus vous abonner \? Vous trouverez l\'option pour vous désabonner dans la section \"Mes applications\" de Google Play Store. Le crédit des mois d\'abonnement restant sera appliqué dès que votre abonnement aura pris fin.</string>
-    <string name="cancel_subscription_notgoogle_description">Vous ne voulez plus vous abonner \? A cause de contraintes sur les paiements mobiles, vous ne pouvez vous désinscrire qu\'à travers le site. Pour cela, cliquez sur le bouton ci-dessous, et connectez-vous avec votre compte, cliquez sur l\'icône utilisateur en haut à droite, puis allez dans \"Abonnement\". Tous les crédits de mois d\'abonnement restants seront appliqués lorsque l\'abonnement aura pris fin. Vous allez nous manquer !</string>
+    <string name="cancel_subscription_google_description">Vous ne souhaitez plus vous abonner \? Vous trouverez l\'option pour vous désabonner en allant dans le menu Paiements et Abonnements de l\'application Google Play Store. Tous mois d\'abonnement restants seront recrédités sur votre forfait après annulation.</string>
+    <string name="cancel_subscription_notgoogle_description">Vous ne souhaitez plus être abonné·e \? Du fait de votre méthode de paiement, vous devrez vous désabonner depuis le site web. Pour cela, appuyez sur le bouton ci-dessous, connectez vous à votre compte, cliquez sur l\'icône utilisat·eur·rice en haut à droite, puis allez dans le menu Abonnements. Tous mois d\'abonnement restants seront recrédités sur votre forfait après annulation. Vous allez nous manquer !</string>
     <string name="visit_habitica_website">Rendez-vous sur le site Habitica</string>
     <string name="current_bonuses">Bonus actuels</string>
     <string name="months_subscribed">Mois souscrits</string>
@@ -332,10 +332,10 @@
     <string name="inactive">Inactif</string>
     <string name="one_month">1 mois</string>
     <string name="months">Mois</string>
-    <string name="month">mois</string>
-    <string name="three_months">3 mois</string>
-    <string name="six_months">6 mois</string>
-    <string name="twelve_months">12 mois</string>
+    <string name="month">Mois</string>
+    <string name="three_months">3 Mois</string>
+    <string name="six_months">6 Mois</string>
+    <string name="twelve_months">12 Mois</string>
     <string name="subscribe_prompt_thanks">Vous avez ces bonus grâce à votre abonnement</string>
     <string name="subscription_status">Etat de l\'abonnement</string>
     <string name="challenge_leave_title">Quitter le défi</string>
@@ -516,8 +516,7 @@
     <string name="class_equipment">Équipement</string>
     <string name="equipment_empty">Vous avez déjà tout l\'équipement ! D\'autres objets seront disponibles pendant les grands galas, lors des solstices et des équinoxes.</string>
     <string name="classless">Sans classe</string>
-    <string name="class_equipment_shop_dialog">Cet objet est disponible pour une classe spécifique.
-\nVous pouvez changer de classe depuis les paramètres.</string>
+    <string name="class_equipment_shop_dialog">Cet objet n\'est disponible que pour une classe spécifique. Vous pouvez changer de classe depuis les Paramètres.</string>
     <string name="class_gear_disclaimer">Vous ne pouvez acheter de l\'équipement que pour votre classe actuelle</string>
     <string name="check_into_inn">Se reposer à l\'auberge</string>
     <string name="community_guidelines">Règles de vie en communauté</string>
@@ -621,9 +620,9 @@
     <string name="gift_subscription">Offrir un Abonnement</string>
     <string name="gift_one_get_one_description">Un événement \"Offrez un abonnement et recevez un abonnement gratuit\" est en cours !</string>
     <string name="gift_title">A qui souhaitez-vous l\'offrir ?</string>
-    <string name="gift_one_get_one">Offrez-en un, recevez-en un !</string>
+    <string name="gift_one_get_one">Offrez-en un, recevez-en un</string>
     <string name="gift_one_get_one_detailed_description">Pendant que cette promotion est active, vous recevrez automatiquement un abonnement équivalent après avoir envoyé votre cadeau.</string>
-    <string name="gift_subscription_subtitle">Choisissez l\'abonnement que vous voulez offrir ci-dessous ! Cet achat ne se renouvellera pas automatiquement.</string>
+    <string name="gift_subscription_subtitle">Choisissez l\'abonnement que vous souhaitez offrir ! Cet achat ne se renouvellera pas.</string>
     <string name="send_gift">Offrir</string>
     <string name="server">Serveur</string>
     <string name="gift_confirmation_title">Votre cadeau a été envoyé !</string>
@@ -807,9 +806,9 @@
     <string name="register_btn_google">S\'inscrire avec Google</string>
     <string name="register_btn_fb">S\'inscrire avec Facebook</string>
     <string name="login_btn_apple">Se connecter avec Apple</string>
-    <string name="subscribe_listitem5_description">Trouvez encore plus d\'objets dans Habitica avec un bonus de 2x la limite de butin habituelle.</string>
+    <string name="subscribe_listitem5_description">Obtenez un Jackalope Violet Royal, et doublez vos Œufs, Potions d\'Éclosion et Nourriture chaque jour pour agrandir votre collection de Familier !</string>
     <string name="subscribe_listitem3_description_new">Abonnez-vous maintenant pour obtenir %s et pour recevoir de nouveaux objets chaque mois !</string>
-    <string name="subscribe_listitem5">Un butin doublé</string>
+    <string name="subscribe_listitem5">Un Familier Unique et plus de Drop</string>
     <string name="create_account_short">Créer un compte</string>
     <string name="login_incentive_short_count">%d connexions</string>
     <string name="login_incentive_short">Connectez-vous régulièrement à Habitica</string>
@@ -1030,7 +1029,7 @@
     <string name="pms_disabled">Les messages privés sont désactivés</string>
     <string name="disablePrivateMessages">Désactiver les messages privés</string>
     <string name="block">Bloquer</string>
-    <string name="block_user_description">Une personne bloquée ne peut vous envoyer de messages privés mais vous verrez malgré tout leurs messages dans la taverne ou les guildes. Vous ne pouvez pas bloquer l\'équipe de modération.</string>
+    <string name="block_user_description">Une joueu·r·se bloqué·e ne peut vous envoyer de messages privés mais vous verrez malgré tout leurs publications</string>
     <string name="block_user_title">Bloquer %s \?</string>
     <string name="unblock_user">Débloquer l\'utilisateur</string>
     <string name="block_user">Bloquer l\'utilisateur</string>
@@ -1068,10 +1067,10 @@
     <string name="mystery_item_title">Vous ouvrez la boîte mystérieuse et trouvez…</string>
     <string name="team_information">Informations de l\'équipe</string>
     <string name="sidebar_teams">Équipes</string>
-    <string name="twelve_months_one_time">Abonnement de 12 mois uniquement</string>
-    <string name="six_months_one_time">Abonnement de 6 mois uniquement</string>
-    <string name="three_months_one_time">Abonnement de 3 mois uniquement</string>
-    <string name="one_month_one_time">Abonnement d\'un mois uniquement</string>
+    <string name="twelve_months_one_time">12 Mois</string>
+    <string name="six_months_one_time">6 Mois</string>
+    <string name="three_months_one_time">3 Mois</string>
+    <string name="one_month_one_time">1 Mois</string>
     <string name="gift_one_get_one_purchase_banner">Offrez un abonnement et recevez un abonnement gratuit jusqu\'au %s</string>
     <string name="g1g1_promo_info_instructions">Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que celle que vous venez d\'offrir.</string>
     <string name="g1g1_promo_info_prompt">En l\'honneur de la saison des cadeaux, nous reprenons une promotion très spéciale. Désormais, lorsque vous offrez un abonnement à quelqu\'un, vous recevrez le même abonnement pour vous même !</string>
@@ -1093,7 +1092,7 @@
     <string name="you">Vous</string>
     <string name="login_disclaimer">En vous inscrivant, vous confirmez avoir lu et accepté les <a href="https://habitica.com/static/terms">Termes du service</a> et le <a href="https://habitica.com/static/privacy">règles de confidentialité.</a></string>
     <string name="finish">Terminer</string>
-    <string name="user_is_blocked_explanation">Une personne bloquée ne peut pas vous envoyé de message privé, mais vous verrez toujours leurs messages à la taverne ou dans les guildes.</string>
+    <string name="user_is_blocked_explanation">Un·e joueu·r·se bloqué·e ne peut vous envoyer de message privé mais vous verrez toujours leurs publications</string>
     <string name="user_is_blocked">Vous avez bloqué cette personne</string>
     <string name="submit_feedback">Soumettre des commentaires</string>
     <string name="theme_color">Couleur du thème</string>
@@ -1140,7 +1139,7 @@
     <string name="gem_purchase_confirmation">Vous avez gagné %s gemmes.</string>
     <string name="adventure_guide_description_new">Complétez ces objectifs et vous recevrez &lt;b&gt;5 succès&lt;/b&gt; et &lt;font color=#EE9109&gt;&lt;b&gt;100 Or&lt;/b&gt;&lt;/font&gt; lorsque vous aurez fini !</string>
     <string name="add">Ajouter</string>
-    <string name="password_not_matching">Les mot de passe doit être saisi correctement deux fois</string>
+    <string name="password_not_matching">Les mots de passe renseignés ne correspondent pas</string>
     <string name="email_invalid">Adresse mail invalide</string>
     <string name="successful_purchase_generic">Achat réussi</string>
     <string name="starting_objectives">Objectifs de départ</string>
@@ -1179,7 +1178,8 @@
     <string name="enchanted_armoire_drop_rates">Taux de butin de l\'armoire enchantée</string>
     <string name="armoire_rate_equipment_description">De nouvelles pièces d\'équipement sont ajoutées chaque mois. Si vous avez reçu toutes les pièces d\'équipement, alors vous aurez de la nourriture ou de l\'expérience, à chance égale.</string>
     <string name="cds_subtitle">Ajuster l\'heure à laquelle votre jour change au delà de la valeur par défaut à minuit.</string>
-    <string name="faint_broken_equipment">L\'équipement abîmé peut être racheté depuis les récompenses</string>
+    <string name="faint_broken_equipment">L\'équipement endommagé peut être racheté
+\ndepuis le Marché</string>
     <string name="avatar_beard_customization">Personnalisation de la barbe de l\'avatar</string>
     <string name="armoire_rate_equipment_title">60% pièces d\'équipement</string>
     <string name="armoire_rate_food_title">20% morceau de nourriture</string>
@@ -1245,10 +1245,12 @@
     <string name="group_plan_settings">Paramètres de plan de groupe</string>
     <plurals name="you_x_others">
         <item quantity="one">Vous</item>
+        <item quantity="many">Vous, %d autres</item>
         <item quantity="other">Vous, %d autres</item>
     </plurals>
     <plurals name="people">
         <item quantity="one">%d personne</item>
+        <item quantity="many">%d personnes</item>
         <item quantity="other">%d personnes</item>
     </plurals>
     <string name="x_and_y">%1$s et %2$s</string>
@@ -1261,9 +1263,8 @@
     <string name="push_notification_system_settings_reminders">Accepter les notifications Habitica dans les Paramètres de l\'application pour recevoir des rappels</string>
     <string name="positive_sentence">positif</string>
     <string name="negative_sentence">négatif</string>
-    <string name="class_changed_description">Vous pouvez utiliser %s talents et acheter del\'équipement depuis les boutiques !</string>
-    <string name="insufficient_level_equipment_dialog">Cet objet n\'est disponible que pour une certaine class.
-\nVous pouvez choisir votre classe après le niveau 10.</string>
+    <string name="class_changed_description">Vous pouvez utiliser %s talents et acheter de l\'équipement depuis les boutiques. Gagnez des niveaux pour obtenir des points d\'amélioration que vous pourrez utiliser pour augmenter vos compétences.</string>
+    <string name="insufficient_level_equipment_dialog">Cet objet n\'est disponible que pour une classe spécifique. Vous pouvez choisir votre classe après le niveau 10.</string>
     <string name="x_checkins">%d Connexions</string>
     <string name="send_invite">Envoyer une invitation</string>
     <string name="subscription_credit_canceling">Vos <b>+%d</b> crédits de mois d\'abonnement s\'activeront après avoir annulé</string>
@@ -1276,7 +1277,7 @@
     <string name="report_player_toolbar_title">Signaler %s</string>
     <string name="choosing_class_progress">Choisi une classe</string>
     <string name="group_tags">Catégories de groupe</string>
-    <string name="need_help_description">Tu peut nous contacter et un membre de notre équipe fera de son mieux pour t\'aider!</string>
+    <string name="need_help_description">Vous pouvez nous contacter et un·e membre de notre équipe fera de son mieux pour vous aider !</string>
     <string name="subscription_hourglasses_3month_timeframe">Sablier de 3 mois</string>
     <string name="challenges">Défis</string>
     <string name="report_player">Signaler un joueur</string>
@@ -1300,8 +1301,8 @@
     <string name="opt_out_description">Ceci vous laissera sans classe attitrée. Vous pourrez choisir une classe en activant le système de classes à n\'importe quel moment dans les Paramètres.</string>
     <string name="enable_class_description">Sélectionnez une classe pour en activer les compétences, stats et mana</string>
     <string name="change_class_message">Ceci va retirer votre classe actuelle et vous rembourser tous vos points de stats puis vous laissera sélectionner une nouvelle classe</string>
-    <string name="subscribe_listitemFaint_description">Vous aurez l\'option d\'une seconde chance après avoir été à court de PV.</string>
-    <string name="subscribe_listitemFaint">Tenez bon avec 1 PV !</string>
+    <string name="subscribe_listitemFaint_description">Ne perdez pas votre progression grâce à un soin instantané lorsque vous n\'avez plus de PV, une fois par jour !</string>
+    <string name="subscribe_listitemFaint">Obtenez une Seconde Chance</string>
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; vous as invité à rejoindre le groupe &lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="report_reason_title_challenge">Pourquoi signalez vous ce défi \?</string>
     <string name="subscribers_mythic_hourglasses"><i> Les Abonnés reçoivent des Sabliers Mystiques dans les trois premiers jours du mois.</i></string>

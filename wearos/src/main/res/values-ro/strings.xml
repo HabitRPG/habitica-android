@@ -11,7 +11,7 @@
     <string name="other_options">Alte opțiuni</string>
     <string name="create_account">Creare cont</string>
     <string name="day_start">Începutul zilei</string>
-    <string name="rya_description">Nu există zilnice incomplete de ieri</string>
+    <string name="rya_description">Există zilnice incomplete de ieri</string>
     <string name="review_dailies">Verificare zilnice</string>
     <string name="check_on_phone">Verifică pe telefon</string>
     <string name="start_new_day">Începe ziua nouă</string>
@@ -28,10 +28,16 @@
     <string name="version_info">Versiunea %1$s (%2$d)</string>
     <string name="log_out_of_habitica">Deconectare de la Habitica\?</string>
     <string name="no_tasks">Creează un/o %s pentru a adăuga la lista asta</string>
-    <string name="an_egg">un ou</string>
-    <string name="a_potion">o poțiune</string>
-    <string name="some_food">Niște mâncare</string>
+    <string name="an_egg">un Ou</string>
+    <string name="a_potion">o Poțiune</string>
+    <string name="some_food">Niște Mâncare</string>
     <string name="continue_on_your_phone">Continuă pe telefon</string>
     <string name="disconnected">Deconectat</string>
     <string name="task_title_hint">Scrie numele sarcinii</string>
+    <string name="how_did_you_do">Cum ai făcut\?</string>
+    <string name="sign_in_description">Creează liste de sarcini și urmărește-ți progresul cu avatarul tău de joc</string>
+    <string name="checklist_disclaimer">Listele de sarcini sunt disponibile pe telefon</string>
+    <string name="levelup_description">Ai avansat un nivel datorită eforturilor tale!</string>
+    <string name="all_done_today">Terminat pentru azi!</string>
+    <string name="starting_your_day">Se începe ziua ta...</string>
 </resources>

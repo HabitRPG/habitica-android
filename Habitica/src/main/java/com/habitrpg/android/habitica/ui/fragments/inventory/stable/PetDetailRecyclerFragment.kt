@@ -156,6 +156,11 @@ class PetDetailRecyclerFragment :
     override fun onResume() {
         super.onResume()
         mainActivity?.title = animalType
+        binding?.recyclerView?.let {
+            it.post {
+                setGridSpanCount(it.width - it.paddingStart - it.paddingEnd)
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

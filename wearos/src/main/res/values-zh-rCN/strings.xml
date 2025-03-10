@@ -18,7 +18,7 @@
     <string name="hide_task_rewards">隐藏任务奖励</string>
     <string name="log_out_of_habitica">登出Habitica？</string>
     <string name="no_tasks">创建一个 %s 添加到此列表</string>
-    <string name="an_egg">一颗蛋</string>
+    <string name="an_egg">一枚蛋</string>
     <string name="some_food">一些食物</string>
     <string name="levelup_description">你通过努力提升了自己的等级！</string>
     <string name="a_potion">一瓶药水</string>
@@ -35,7 +35,7 @@
     <string name="one_quest_item">1个副本物品</string>
     <string name="sign_in">登录</string>
     <string name="sync_data">同步数据</string>
-    <string name="rya_description">昨天有未完成的每日任务</string>
+    <string name="rya_description">昨天有未完成的日常任务</string>
     <string name="starting_your_day">开始你的一天…</string>
     <string name="disconnected">已断开连接</string>
     <string name="version_info">版本%1$s (%2$d)</string>

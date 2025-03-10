@@ -35,7 +35,7 @@
     <string name="about_libraries">ライブラリー</string>
     <string name="about_habitica_open_source">Habiticaは Github にてオープンソース・ソフトウェアとして開発されています</string>
     <string name="about_rate_our_app">このアプリをレビュー</string>
-    <string name="about_give_us_feedback">フィードバックを送る!</string>
+    <string name="about_give_us_feedback">フィードバックを送る！</string>
     <string name="about_bugreport">バグを報告する</string>
     <string name="about_source_code">ソースコード</string>
     <!--Network Errors-->
@@ -113,7 +113,7 @@
     <string name="quest_abort">クエストを中断する</string>
     <string name="version_info">バージョン %1$s (%2$d)</string>
     <string name="sidebar_help">サポート</string>
-    <string name="complete_tutorial">わかった!</string>
+    <string name="complete_tutorial">わかった！</string>
     <string name="dismiss_tutorial">もう一度通知</string>
     <string name="intro_1_subtitle">ようこそ</string>
     <string name="intro_1_description">やるべきことを片付けながら楽しむ時が来ました。 現在%s人以上の方々がタスクをこなしながら人生を楽しんでいます。</string>
@@ -122,7 +122,7 @@
     <string name="intro_2_description">現実でタスクをこなし、ゲーム内の機能をアンロックしよう。装備やペットなどのさまざまなアイテムを、あなた自身の目標に近づいたごほうびとして獲得しよう。</string>
     <string name="intro_3_subtitle">友達とつながって</string>
     <string name="intro_3_title">モンスターと戦おう</string>
-    <string name="intro_3_description">友達の力を借りて目標を順調に進めよう。現実とバトルでお互いに助け合い、いっしょに成長しよう!</string>
+    <string name="intro_3_description">友達の力を借りて目標を順調に進めよう。現実とバトルでお互いに助け合い、いっしょに成長しよう！</string>
     <string name="intro_finish_button">はじめましょう！</string>
     <string name="next_button">次へ</string>
     <string name="skip_button">スキップ</string>
@@ -177,7 +177,7 @@
     <string name="outfit_weapon">利き手</string>
     <string name="wear_costume">衣装を着る</string>
     <string name="equipped">装備済み</string>
-    <string name="quest_cancel_message">このクエストを中止します。よろしいですか?　招待を受けたすべての参加者を失うことになります。クエストの所有者の元にクエストの巻物が戻ってきます。</string>
+    <string name="quest_cancel_message">このクエストを中止します。よろしいですか？招待を受けたすべての参加者を失うことになります。クエストの所有者の元にクエストの巻物が戻ってきます。</string>
     <string name="quest_begin_message">本当によろしいですか？あなたの%2$dパーティメンバーのうち、 %1$d人しかクエストに参加していません！クエストはすべてのプレーヤーが参加すると自動的に始まります。</string>
     <string name="ago_1day">1日前</string>
     <string name="ago_days">%d日前</string>
@@ -193,7 +193,7 @@
     <string name="quests">クエスト</string>
     <string name="pets">ペット</string>
     <string name="mounts">乗騎</string>
-    <string name="armoireExp">宝箱と格闘して経験値を増やした。どうぞっ!</string>
+    <string name="armoireExp">宝箱と格闘して経験値を増やした。どうぞっ！</string>
     <string name="sell">%d ゴールドで売る</string>
     <string name="hatch_with_potion">たまごがえしの薬を使う</string>
     <string name="hatch_egg">たまごをかえす</string>
@@ -202,11 +202,11 @@
     <string name="use_animal">連れていく</string>
     <string name="feed">えさをやる</string>
     <string name="hatch_with">%s でペットをかえす</string>
-    <string name="hatched_pet_title">%1$s %2$sが生まれた!</string>
+    <string name="hatched_pet_title">%1$s %2$sが生まれた！</string>
     <string name="evolved_pet_title">%sを手なずけた！さあ、乗ってみよう！</string>
     <string name="close">閉じる</string>
     <string name="share">共有する</string>
-    <string name="notification_pet_fed">%sにえさをやった!</string>
+    <string name="notification_pet_fed">%sにえさをやった！</string>
     <string name="notification_purchase_reward">ごほうびを購入しました</string>
     <string name="world_quest">ワールドクエスト</string>
     <string name="inn_description">休息が必要ですか？Danielのロッジにチェックインして、Habiticaにおける手ごわいゲーム要素を停止させましょう。
@@ -226,11 +226,11 @@
     <string name="healer_description">治療師は、自分自身とパーティーの仲間を回復させたり守ったりするスキルを覚えます。他の人を助けたりダメージを防いだりして楽しみたいなら、治療師でプレイしましょう！治療師は高い「体質」の能力値の恩恵を受けます。</string>
     <string name="select_class">クラスを選ぶ</string>
     <string name="opt_out_class">選ばない</string>
-    <string name="class_confirmation">%s になります。いいですか?</string>
+    <string name="class_confirmation">%s になります。いいですか？</string>
     <string name="class_changed">あなたは%s に転職した！</string>
     <string name="choose_class">クラスを選ぶ</string>
     <string name="dialog_go_back">戻る</string>
-    <string name="opt_out_confirmation">選ばないでいい?</string>
+    <string name="opt_out_confirmation">選ばないでいい？</string>
     <string name="change_class">クラスを変更する</string>
     <string name="change_class_description">3ジェム支払い、クラスを変更し、ステータスポイントを再び割りあてできるようにする。</string>
     <string name="enable_class">クラス システムを有効にする</string>
@@ -261,19 +261,19 @@
     <string name="successful_purchase">%1$sを購入しました</string>
     <string name="chat_message_copied">メッセージをクリップボードにコピーしました</string>
     <string name="edit_tag_btn_edit">編集</string>
-    <string name="confirm_delete_tag_title">よろしいですか?</string>
-    <string name="confirm_delete_tag_message">削除します。いいですか?</string>
+    <string name="confirm_delete_tag_title">よろしいですか？</string>
+    <string name="confirm_delete_tag_message">削除します。いいですか？</string>
     <!--QR Strings-->
     <string name="choose_recipient_title">メッセージの送信先を選択</string>
     <string name="action_continue">続行</string>
-    <string name="invited_to_party">パーティーに招待されました!</string>
+    <string name="invited_to_party">パーティーに招待されました！</string>
     <string name="stats_widget_label">Habiticaステータス</string>
     <string name="add_task">タスクを追加</string>
     <string name="add_habit">習慣を追加</string>
     <string name="add_daily">日課を追加</string>
     <string name="add_todo">To Do を追加</string>
     <string name="add_reward">ごほうびを追加</string>
-    <string name="all_dailies_completed">日課をすべて完了した。お見事!</string>
+    <string name="all_dailies_completed">日課をすべて完了しました。お見事！</string>
     <string name="widget_habit_button">Habiticaの習慣</string>
     <string name="widget_dailies">Habiticaの日課</string>
     <string name="widget_todo_list">HabiticaのTo Do リスト</string>
@@ -287,10 +287,10 @@
     <string name="gem_purchase_listitem4">レベル 100 以前でのクラス変更</string>
     <string name="support_habitica">Habiticaの支援</string>
     <string name="skill_transformation_use">使う</string>
-    <string name="hatching_market_info">ほしい落とし物が見つからない?　市場をチェックしてみよう!</string>
-    <string name="feeding_market_info">違うえさがほしい?　市場で買いましょう!</string>
+    <string name="hatching_market_info">ほしい落とし物が見つからない？市場をチェックしてみましょう！</string>
+    <string name="feeding_market_info">違うえさがほしいですか？市場で買いましょう！</string>
     <string name="open_market">市場を開く</string>
-    <string name="cds_description">あなたの日課が次に更新されるのは %1$s です。この時間までに日課を片付けておきましょう!</string>
+    <string name="cds_description">あなたの日課が次に更新されるのは %1$s です。この時間までに日課を片付けておきましょう！</string>
     <string name="AudioTheme_title">サウンド テーマ</string>
     <string name="AudioTheme_summary">Habiticaのサウンドテーマを変更する</string>
     <!--Login Incentives-->
@@ -298,17 +298,17 @@
     <string name="belongs_to_challenge">チャレンジに参加中</string>
     <string name="has_reminder">通知あり</string>
     <string name="has_tag">タグあり</string>
-    <string name="subscribe_title">有料プランに加入することで、開発者を支援してHabiticaの運営を援助できます！</string>
-    <string name="subscribe_prompt">これらの限定特典を受けるために有料会員になりましょう！</string>
-    <string name="subscribe_listitem1">ゴールドをジェムに</string>
-    <string name="subscribe_listitem2">神秘の砂時計</string>
+    <string name="subscribe_title">有料プランに加入することで、開発者を支援してHabiticaの運営を援助できます</string>
+    <string name="subscribe_prompt">有料会員になると、さらに多くの特典でよりモチベーションを維持できます</string>
+    <string name="subscribe_listitem1">月ごとの無料ジェム</string>
+    <string name="subscribe_listitem2">月ごとの神秘の砂時計</string>
     <string name="subscribe_listitem3">毎月のミステリーアイテム</string>
     <string name="subscribe_listitem4">特別な有料会員限定ペット</string>
     <string name="subscriptions">有料プラン</string>
     <string name="subscription_duration">%sごとに繰り返す</string>
     <string name="subscribe">有料プランに加入する</string>
-    <string name="subscribe_listitem1_description">市場で20ゴールドごとにジェムを買えるようになります！</string>
-    <string name="subscribe_listitem2_description">タイムトラベラーの店でアイテムを買うために神秘の砂時計を手に入れましょう！</string>
+    <string name="subscribe_listitem1_description">市場で最大50ジェムを手に入れ、クエストやカスタマイズ、ペットなどを購入しましょう！</string>
+    <string name="subscribe_listitem2_description">タイムトラベラーの店で使える毎月1個の神秘の砂時計を見逃さないで！</string>
     <string name="subscribe_listitem3_description">今すぐ限定セットを手に入れて、毎月の新しいアイテムを受け取るために、さっそく有料プランに加入しましょう！</string>
     <string name="subscribe_listitem4_description">初めて有料会員になったときは高貴な紫のジャッカロープのペットを受け取れます。</string>
     <string name="subscribe1month_gemcap">上限 25 ジェム</string>
@@ -426,7 +426,7 @@
     <string name="participants">参加者</string>
     <string name="invitations">招待</string>
     <string name="quest_leader_header">%sが開始したクエスト</string>
-    <string name="quest_abort_message">このミッションを中断します。よろしいですか?　パーティの全員が中断になり、すべての進行状況は失われます。クエストの巻物はクエスト所有者の手に戻ります。</string>
+    <string name="quest_abort_message">このミッションを中断します。よろしいですか？パーティの全員が中断になり、すべての進行状況は失われます。クエストの巻物はクエスト所有者の手に戻ります。</string>
     <string name="reloading_content">再度読み込みます</string>
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
@@ -514,8 +514,7 @@
     <string name="class_equipment">装備</string>
     <string name="equipment_empty">あなたはすでにすべての装備を持っています！夏至、冬至、春分や秋分の頃に開催される大祭で新たな装備がリリースされます。</string>
     <string name="classless">クラスに属さない</string>
-    <string name="class_equipment_shop_dialog">このアイテムは特定のクラスにのみ利用可能です、\n
-クラスはセッティングから変更できます。</string>
+    <string name="class_equipment_shop_dialog">このアイテムは特定のクラスのみ利用可能です、クラスは設定から変更できます。</string>
     <string name="class_gear_disclaimer">現在のクラス用の装備しか購入できません</string>
     <string name="check_into_inn">宿にチェックインする</string>
     <string name="community_guidelines">コミュニティガイドライン</string>
@@ -676,9 +675,9 @@
     <string name="empty_title_rewards_filtered">ごほうびがありません</string>
     <string name="empty_title_todos_filtered">To Doがありません</string>
     <string name="empty_title_dailies_filtered">日課がありません</string>
-    <string name="subscribe_listitem5">落とし物が２倍</string>
+    <string name="subscribe_listitem5">スペシャルなペットやさらなる落とし物</string>
     <string name="subscribe_listitem3_description_new">この%sを手に入れて、毎月の新しいアイテムを受け取るために、今すぐ有料プランに加入しましょう！</string>
-    <string name="subscribe_listitem5_description">毎日の落とし物上限２倍ボーナスによってHabiticaでもっとたくさんのアイテムを発見しましょう。</string>
+    <string name="subscribe_listitem5_description">ロイヤル・パープル・ジャッカロープを手に入れて、たまご、たまごがえしの薬、餌を毎日2倍にしてペットコレクションを増やしましょう！</string>
     <string name="empty_description_habits_filtered">現在のフィルターでは表示できる習慣がありません。</string>
     <string name="insufficientGoldTitle">ゴールドが足りません</string>
     <string name="empty_description_todos_filtered">現在のフィルターでは表示できるTo Doがありません。</string>
@@ -1227,7 +1226,7 @@
     <string name="health_fitness">健康・フィットネス</string>
     <string name="self_improvement">自己改善</string>
     <string name="time_management">時間管理・アカウンタビリティ</string>
-    <string name="equipment_remaining">残りの装備: %d</string>
+    <string name="equipment_remaining">残りの装備：%d</string>
     <string name="faint_broken_equipment">壊れた装備はごほうび欄から
 \n買い戻すことができます</string>
     <string name="armoire_rate_experience_title">20% 経験値</string>
@@ -1268,8 +1267,7 @@
     <string name="push_notification_system_settings_title">通知は無効です</string>
     <string name="title">タイトル</string>
     <string name="level_abbreviated">レベル%d</string>
-    <string name="insufficient_level_equipment_dialog">このアイテムは特定のクラスにのみ利用可能です。
-\nレベル10になるとクラスを選択できます。</string>
+    <string name="insufficient_level_equipment_dialog">このアイテムは特定のクラスにのみ利用可能です。レベル10になるとクラスを選択できます。</string>
     <string name="x_checkins">%d 回チェックイン</string>
     <string name="send_invite">招待状を送る</string>
     <string name="change_class_selected_confirmation">3ジェムを支払ってクラスを%1$sに変更しますか？</string>
@@ -1288,7 +1286,7 @@
     <string name="not_set" tools:override="true">未セット</string>
     <string name="promote_to_manager">マネージャーへの昇格</string>
     <string name="report_player_title">%sを報告しますか？</string>
-    <string name="report_reason_title_player">なぜこのプレーヤーを報告するのですか？</string>
+    <string name="report_reason_title_player">このプレーヤーを報告する理由は何ですか？</string>
     <string name="report_user_description">\@%s もブロックします</string>
     <string name="enable_class_description">クラスを選択して、スキル、ステータス、マナを有効にする</string>
     <string name="choosing_class_progress">クラスの選択</string>
@@ -1298,7 +1296,7 @@
     <string name="group_tags">グループ・タグ</string>
     <string name="change_class_confirmation_message">これにより、ショップでアンロックされる装備が変わり、使用可能なスキルが変わります</string>
     <string name="opt_out_description">この場合、割り当てられたクラスはありません。いつでも設定からクラスシステムを有効にすることで、再度クラスを選択することができます。</string>
-    <string name="subscribe_listitemFaint">HP1で頑張る！</string>
+    <string name="subscribe_listitemFaint">2回めのチャンスをつかみましょう</string>
     <string name="challenges">チャレンジ</string>
     <string name="subscribe_listitemFaint_description">HPが尽きた場合、もう一度挑戦するオプションがあります。</string>
     <string name="report_message_explanation">[コミュニティガイドライン](https://habitica.com/static/community-guidelines)および/または[利用規約](https://habitica.com/static/terms)に違反する投稿のみを報告してください。虚偽の報告はHabiticaのコミュニティガイドラインに違反します。</string>

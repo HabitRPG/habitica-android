@@ -22,11 +22,16 @@ fun applyScrollContentWindowInsets(view: View,
     val bottomPadding = view.paddingBottom
     ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInsets ->
         val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.displayCutout())
+        val top = (if (applyTop) insets.top else 0) + topPadding
+        val bottom = (if (applyBottom) insets.bottom else 0) + bottomPadding
+        if (v.layoutParams.height > 0 && v.layoutParams.height < top + bottom) {
+            v.layoutParams.height += top + bottom
+        }
         v.updatePadding(
-            top = (if (applyTop) insets.top else 0) + topPadding,
+            top = top,
             left = (if (applyLeft) insets.left else 0) + leftPadding,
             right = (if (applyRight) insets.right else 0) + rightPadding,
-            bottom = (if (applyBottom) insets.bottom else 0) + bottomPadding)
+            bottom = bottom)
         consumeWindowInsetsAbove30(windowInsets)
     }
 }

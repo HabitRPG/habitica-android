@@ -1326,7 +1326,7 @@
     <string name="visit_the_market">Посетите рынок</string>
     <string name="see_more">Увидеть больше</string>
     <string name="reset_account_description_new">Вы потеряете все свои уровни, золото и опыт. Все ваши задания и их исторические данные будут удалены (сложные задания останутся). Вы потеряете все снаряжение, за исключением предметов для подписчиков и бесплатных памятных предметов, но вы сможете выкупить его обратно. Вам нужно будет принадлежать к нужному классу, чтобы повторно приобрести снаряжение, соответствующее классу. Вы сохраните свой текущий класс, достижения, а также своих питомцев и ездовых животных. Чтобы подтвердить сброс, введите свой пароль ниже.</string>
-    <string name="reset_account_description_no_pw">Вы потеряете все свои уровни, золото и опыт. Все ваши задания и их исторические данные будут удалены (сложные задания останутся). Вы потеряете все снаряжение, за исключением предметов для подписчиков и бесплатных памятных предметов, но вы сможете выкупить его обратно. Вам нужно будет принадлежать к нужному классу, чтобы повторно приобрести снаряжение, соответствующее классу. Вы сохраните свой текущий класс, достижения, а также своих питомцев и ездовых животных. Чтобы подтвердить сброс, введите СБРОС ниже.</string>
+    <string name="reset_account_description_no_pw">Вы потеряете все свои уровни, золото и опыт. Все ваши задания и их исторические данные будут удалены (сложные задания останутся). Вы потеряете все снаряжение, за исключением предметов для подписчиков и бесплатных памятных предметов, но вы сможете выкупить его обратно. Вам нужно будет принадлежать к нужному классу, чтобы повторно приобрести снаряжение, соответствующее классу. Вы сохраните свой текущий класс, достижения, а также своих питомцев и ездовых животных. Чтобы подтвердить сброс, введите RESET ниже.</string>
     <string name="report_message_explanation">Вы должны сообщать только о публикации, нарушающей [Правила сообщества](https://habitica.com/static/community-guidelines) и/или [Условия предоставления услуг](https://habitica.com/static/terms). Отправка ложного сообщения является нарушением Правил сообщества Habitica.</string>
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; пригласил(а) вас вступить в группу &lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="report_challenge_explanation">Вы должны сообщать только о тех проблемах, которые нарушают [Правила сообщества](https://habitica.com/static/community-guidelines) и/или [Условия предоставления услуг](https://habitica.com/static/terms). Подача ложного сообщения является нарушением Правил сообщества Habitica.</string>
@@ -1341,9 +1341,9 @@
     <string name="plenty_of_potions_description">Мы возвращаем 10 любимых сообществом инкубационных эликсиров. Направляйтесь на рынок чтобы пополнить свою коллекцию!</string>
     <plurals name="repeat_daily">
         <item quantity="one">каждый день</item>
-        <item quantity="few">каждые %d дня</item>
-        <item quantity="many">каждые %d дней</item>
-        <item quantity="other">каждые %d дней</item>
+        <item quantity="few">каждые %d дней</item>
+        <item quantity="many">каждые %d дни</item>
+        <item quantity="other">каждые %d дни</item>
     </plurals>
     <string name="report_failure">Во время отправки жалобы произошла ошибка, попробуйте еще раз позднее</string>
     <string name="opt_out_description">В результате вы останетесь без назначенного класса. Вы всегда сможете выбрать класс снова, включив систему классов в настройках.</string>
@@ -1355,7 +1355,7 @@
     <string name="challenge_tags">Теги Вызова</string>
     <string name="group_tags">Теги группы</string>
     <string name="subscribe_listitemFaint">Держитесь с 1HP!</string>
-    <string name="subscribe_listitemFaint_description">У вас будет возможность получить второй шанс, когда у вас закончатся HP.</string>
+    <string name="subscribe_listitemFaint_description">Используйте мгновенное исцеление раз в день, когда у вас заканчивается HP, чтобы не потерять прогресс!</string>
     <string name="subscription_hourglasses_3month_timeframe">Песочные часы в 3 месяца</string>
     <string name="challenges">Испытания</string>
     <string name="open_settings">Открыть Настройки</string>
@@ -1367,9 +1367,9 @@
     <string name="apple_pay">Apple Pay</string>
     <plurals name="you_x_others">
         <item quantity="one">Вы и другой</item>
-        <item quantity="few">Вы и %d других</item>
-        <item quantity="many">Вы и %d других</item>
-        <item quantity="other">Вы и %d других</item>
+        <item quantity="few">Вы и %d другие</item>
+        <item quantity="many">Вы и %d другие</item>
+        <item quantity="other">Вы и %d другие</item>
     </plurals>
     <string name="daily_summary_description">Повторяющееся **%2$s%3$s** задание **%1$s**.</string>
     <string name="habit_summary_description">Это привычка **%1$s**, которая является **%2$s**.</string>

@@ -8,7 +8,7 @@
     <string name="gold_plural">oro</string>
     <string name="gold_capitalized">Oro</string>
     <string name="mystic_hourglasses">Clessidre Mistiche</string>
-    <string name="repeat_daily">Quotidianamente</string>
+    <string name="repeat_daily">Quotidiano</string>
     <string name="monthly">Mensile</string>
     <string name="weekly">Settimanale</string>
     <string name="trivial">Facilissima</string>
@@ -48,7 +48,7 @@
     <plurals name="x_rewards">
         <item quantity="one">%d Ricompensa</item>
         <item quantity="many">%d Ricompense</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Ricompense</item>
     </plurals>
     <string name="create_task_title">Crea una Attività</string>
     <string name="complete_task_title">Completa una Attività</string>
@@ -63,4 +63,15 @@
     <string name="medium_sentence">media</string>
     <string name="hard_sentence">difficile</string>
     <string name="trivial_sentence">facilissima</string>
+    <plurals name="flagged_count">
+        <item quantity="one">Segnalato %d volta</item>
+        <item quantity="many">Segnalato %d volte</item>
+        <item quantity="other">Segnalato %d volte</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">Compito da svolgere</item>
+        <item quantity="many">Compiti da svolgere</item>
+        <item quantity="other">Compiti da svolgere</item>
+    </plurals>
+    <string name="save_task_x">Salvare %s</string>
 </resources>

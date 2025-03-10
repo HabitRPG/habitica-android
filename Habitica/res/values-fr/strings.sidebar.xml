@@ -7,7 +7,7 @@
     <string name="sidebar_party">Équipe</string>
     <string name="sidebar_challenges">Défis</string>
     <string name="sidebar_section_inventory">Inventaire</string>
-    <string name="sidebar_avatar">Personnalisation de l\'avatar</string>
+    <string name="sidebar_avatar">Personnaliser l\'Avatar</string>
     <string name="sidebar_equipment">Équipement</string>
     <string name="sidebar_stable">Familiers &amp; montures</string>
     <string name="sidebar_news">Nouveautés</string>
@@ -16,5 +16,5 @@
     <string name="sidebar_stats">Stats</string>
     <string name="sidebar_subscription">Abonnement</string>
     <string name="sidebar_gems">Acheter des gemmes</string>
-    <string name="sidebar_avatar_equipment">Avatar &amp; équipement</string>
+    <string name="sidebar_avatar_equipment">Avatar &amp; Équipement</string>
 </resources>

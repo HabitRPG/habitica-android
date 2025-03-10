@@ -47,9 +47,14 @@
     <string name="login_validation_error_fieldsmissing">Tem de preencher todos os campos.</string>
     <plurals name="x_rewards">
         <item quantity="one">Adicionar uma Recompensa</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="create_task_title">Cria uma tarefa</string>
     <string name="complete_task_title">Completa uma Tarefa</string>
     <string name="create_task">Criar %s</string>
+    <string name="medium_sentence">média</string>
+    <string name="hard_sentence">difícil</string>
+    <string name="trivial_sentence">trivial</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="easy_sentence">fácil</string>
 </resources>

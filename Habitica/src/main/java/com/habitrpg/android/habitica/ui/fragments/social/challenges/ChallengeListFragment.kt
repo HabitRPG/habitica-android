@@ -76,6 +76,9 @@ class ChallengeListFragment :
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState?.containsKey("viewUserChallengesOnly") == true) {
+            viewUserChallengesOnly = savedInstanceState.getBoolean("viewUserChallengesOnly")
+        }
 
         challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userViewModel.userID)
         challengeAdapter?.onOpenChallengeFragment = { openDetailFragment(it) }
@@ -127,6 +130,12 @@ class ChallengeListFragment :
         )
 
         retrieveChallengesPage(true)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("viewUserChallengesOnly", viewUserChallengesOnly)
+        super.onSaveInstanceState(outState)
+
     }
 
     private fun openDetailFragment(challengeID: String) {

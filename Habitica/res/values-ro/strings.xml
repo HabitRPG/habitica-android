@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="action_refresh">Reimprospateaza</string>
-    <string name="XP_default">Experienţă</string>
+    <string name="action_refresh">Reîmprospătează</string>
+    <string name="XP_default">Experiență</string>
     <string name="HP_default">Sănătate</string>
     <string name="MP_default">Mana</string>
     <!--Prefs-->
-    <string name="PS_settings_title">Setari</string>
+    <string name="PS_settings_title">Setări</string>
     <string name="SP_userID_title">Nume Utilizator</string>
-    <string name="SP_userID_summary">Numele tau de utilizator</string>
+    <string name="SP_userID_summary">Numele tău de utilizator</string>
     <string name="SP_APIToken_title">Token API</string>
-    <string name="SP_APIToken_summary">Tokenul tau API</string>
-    <string name="Language_title">Limba</string>
+    <string name="SP_APIToken_summary">Tokenul tău API</string>
+    <string name="Language_title">Limbă</string>
     <string name="Language_summary">Schimbă limba în Habitica</string>
-    <string name="PS_contact_title">Contacteaza-ma</string>
+    <string name="PS_contact_title">Contactează-mă</string>
     <string name="pref_account_header">Cont</string>
-    <string name="pref_first_day_of_the_week_title">Prima zi a saptamanii</string>
-    <string name="pref_first_day_of_the_week_summary">Prima zi a saptamanii in toate calendarele</string>
+    <string name="pref_first_day_of_the_week_title">Prima zi a săptămânii</string>
+    <string name="pref_first_day_of_the_week_summary">Prima zi a săptămânii în toate calendarele</string>
     <string name="pref_reminder_header">Memento zilnic</string>
     <string name="pref_reminder_checkbox">Activați Memento</string>
     <string name="pref_reminder_picker">Setați ora pentru memento</string>
@@ -96,7 +96,7 @@
     <string name="purchase_set_title">Cumpără setul pentru %s</string>
     <string name="due_date">Dată limită</string>
     <string name="version_info">Versiunea %1$s (%2$d)</string>
-    <string name="sidebar_help">Ajutor &amp; FAQ</string>
+    <string name="sidebar_help">Suport</string>
     <string name="complete_tutorial">Am înțeles!</string>
     <string name="dismiss_tutorial">Reamintește-mi</string>
     <string name="intro_1_subtitle">Bine ai venit la</string>
@@ -140,7 +140,7 @@
     <string name="setup_task_creativity_1">Studiază un o meserie</string>
     <string name="setup_task_creativity_2">Lucrează la un proiect de creativitate</string>
     <string name="setup_task_creativity_3">Finalizează proiectul de creativitate</string>
-            <string name="guild">Breaslă</string>
+    <string name="guild">Breaslă</string>
     <string name="leave">Părăsește</string>
     <string name="join">Alătură-te</string>
     <string name="delete">Șterge</string>
@@ -157,11 +157,11 @@
     <string name="outfit_armor">Armură</string>
     <string name="outfit_back">Spate</string>
     <string name="outfit_body">Corp</string>
-    <string name="outfit_shield">Scut</string>
-    <string name="outfit_weapon">Armă</string>
+    <string name="outfit_shield">Mână secundară</string>
+    <string name="outfit_weapon">Mână principală</string>
     <string name="wear_costume">Poartă Costum</string>
     <string name="equipped">Echipat</string>
-    <string name="quest_cancel_message">Ești sigur că vrei să anulezi această expediție? Toate invitațiile acceptate vor fi pierdute. Posesorul aventurii va păstra răvașul expediției.</string>
+    <string name="quest_cancel_message">Ești sigur că vrei să anulezi această aventură\? Anularea aventurii va renunța la toate invitațiile acceptate și în așteptare. Aventura va fi returnată in inventarul proprietarului.</string>
     <string name="quest_begin_message">Ești sigur? Doar %1$d din %2$d dintre membrii cetei tale s-au alăturat acestei expediții! Expedițiile încep automat atunci când toți jucătorii se alătură sau refuză invitația.</string>
     <string name="today">Astăzi</string>
     <string name="sidebar_items">Obiecte</string>
@@ -193,7 +193,7 @@
 • Căpcăunii nu-ți vor aduce prejudicii pentru Cotidienele ratate\n
 • Deteriorarea Căpcăunilor tăi și obiectele din expedițiile de colecție vor rămâne iminente până ieși din Han</string>
     <string name="empty_items">Nu ai deloc %s</string>
-    <string name="user_level_with_class">Nvl %1$d%2$s</string>
+    <string name="user_level_with_class">Niv. %1$d%2$s</string>
     <string name="warrior">Luptător</string>
     <string name="rogue">Bandit</string>
     <string name="mage">Vrăjitor</string>
@@ -204,33 +204,33 @@
     <string name="select_class">Selectează-ți Clasa</string>
     <string name="opt_out_class">Alege să nu iei parte</string>
     <string name="class_confirmation">Ești sigur că vrei să fii %s?</string>
-    <string name="class_changed">De acum ești %s!</string>
+    <string name="class_changed">Ești un %s!</string>
     <string name="choose_class">Alege Clasa</string>
     <string name="dialog_go_back">Mergi înapoi</string>
-    <string name="opt_out_confirmation">Ești sigur că vrei să nu iei parte?</string>
+    <string name="opt_out_confirmation">Renunțați la sistemul de clase\?</string>
     <string name="change_class">Schimbă-ți clasa</string>
     <string name="change_class_description">Schimbă-ți clasa și resetează punctele de status pentru 3 nestemate</string>
     <string name="enable_class">Activează Sistemul de Clase</string>
     <string name="changing_class_progress">Schimbă Clasa</string>
     <string name="by_email">Prin Email</string>
-    <string name="invite_existing_users">Invită Utilizatori existenți</string>
+    <string name="invite_existing_users">Invită jucători existenți</string>
     <string name="send">Trimite</string>
-    <string name="invite">Invită Prieteni</string>
+    <string name="invite">Găsește membri</string>
     <string name="invite_email_description">Dacă un prieten se alătura Habitica prin intermediul email-ului tău, aceștia vor fi automat invitați în ceata ta!</string>
     <string name="add_invites">Adaugă Invitații</string>
     <string name="email">Email</string>
     <string name="share_using">Distribuie utilizând</string>
-    <string name="share_levelup">Am ajuns la nivelul %d în Habitica îmbunătățindu-mi obicieiurile din viața reală!</string>
-    <string name="share_hatched">Tocmai am eclozat un %1$s%2$s ca animal de companie în Habitica, completându-mi sarcinile din viața reala!</string>
+    <string name="share_levelup">Am ajuns la nivelul %d în #Habitica îmbunătățindu-mi obiceiurile din viața reală!</string>
+    <string name="share_hatched">Tocmai am eclozat un %1$s%2$s ca animal de companie în #Habitica, completându-mi sarcinile din viața reala!</string>
     <string name="share_raised">Tocmai am obținut un %s ca animal de călărit în Habitica, completându-mi sarcinile din viața reală!</string>
     <string name="open_in_store">Deschide Play Store</string>
-    <string name="change_class_confirmation">Ești sigur că vrei să-ți schimbi clasa? Te va costa 3 nestemate.</string>
+    <string name="change_class_confirmation">Ești sigur că vrei să schimbi clasă pentru 3 nestemate\?</string>
     <string name="change_class_equipment_warning">Atenție: Nu vei mai putea cumpăra echipament din clasa %s.</string>
     <string name="confirm">Confirmă</string>
     <string name="market">Târg</string>
     <string name="timeTravelers">Călătorii în Timp</string>
     <string name="seasonalShop">Magazinul de Sezon</string>
-    <string name="empty_inbox">Nu ai niciun mesaj. Poți trimite un mesaj nou unui utilizator din mesajele lor publice din chat.</string>
+    <string name="empty_inbox">Nu ai niciun mesaj. Poți trimite un mesaj nou unui jucător din mesajele lor publice din chat.</string>
     <string name="party_invite">Deblochează invitând prieteni</string>
     <string name="login_incentive">Deblochează logându-te în Habitica regulat</string>
     <string name="create_account">Deblochează creând un cont nou</string>
@@ -267,7 +267,7 @@
     <string name="belongs_to_challenge">Aparține unei Provocări</string>
     <string name="has_reminder">Are Memento</string>
     <string name="has_tag">Are Etichetă</string>
-    <string name="subscribe_prompt">Devino abonat și primești aceste beneficii folositoare:</string>
+    <string name="subscribe_prompt">Devino abonat și primești aceste beneficii folositoare</string>
     <string name="subscriptions">Abonamente</string>
     <string name="subscription_duration">Se repetă la fiecare %s</string>
     <string name="subscribe">Abonează-te</string>
@@ -288,7 +288,7 @@
     <string name="three_months">3 luni</string>
     <string name="six_months">6 luni</string>
     <string name="twelve_months">12 luni</string>
-    <string name="subscribe_prompt_thanks">Pentru că te-ai abonat primești următoarele beneficii utile:</string>
+    <string name="subscribe_prompt_thanks">Pentru că te-ai abonat primești următoarele beneficii utile</string>
     <string name="subscription_status">Statusul abonamentului</string>
     <string name="challenge_leave_title">Părăsește Provocarea</string>
     <string name="remove_tasks">Elimină</string>
@@ -504,4 +504,29 @@
     <string name="seasonalShop_owner_long">Vrăjitoarea Sezonului</string>
     <string name="rage_attack">Atac furios:</string>
     <string name="x_and_y">%1$s și %2$s</string>
+    <plurals name="repeat_daily">
+        <item quantity="one">În fiecare zi</item>
+        <item quantity="few">La fiecare %d zile</item>
+        <item quantity="other">La fiecare %d de zile</item>
+    </plurals>
+    <plurals name="repeat_weekly">
+        <item quantity="one">În fiecare săptămână</item>
+        <item quantity="few">La fiecare %d săptămâni</item>
+        <item quantity="other">La fiecare %d de săptămâni</item>
+    </plurals>
+    <plurals name="repeat_monthly">
+        <item quantity="one">În fiecare lună</item>
+        <item quantity="few">La fiecare %d luni</item>
+        <item quantity="other">La fiecare %d de luni</item>
+    </plurals>
+    <plurals name="repeat_yearly">
+        <item quantity="one">În fiecare an</item>
+        <item quantity="few">În fiecare %d ani</item>
+        <item quantity="other">În fiecare %d de ani</item>
+    </plurals>
+    <plurals name="items_pending">
+        <item quantity="one">%d Obiect în așteptare</item>
+        <item quantity="few">%d Obiecte în așteptare</item>
+        <item quantity="other">%d de Obiecte în așteptare</item>
+    </plurals>
 </resources>

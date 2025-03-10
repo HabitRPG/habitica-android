@@ -129,7 +129,7 @@
     <string name="setup_task_creativity_1">לימדו אשף של המלאכה</string>
     <string name="setup_task_creativity_2">עבוד על פרוייקט יצירתי</string>
     <string name="setup_task_creativity_3">סיים פרוייקט יצירתי</string>
-            <string name="guild">גילדה</string>
+    <string name="guild">גילדה</string>
     <string name="leave">עיזבו</string>
     <string name="join">הצטרפו</string>
     <string name="delete">מחיקה</string>
@@ -232,11 +232,13 @@
     <string name="levelup_detail">באמצעות השלמה של משימות בחייך האמיתיים, עלית רמה וכל נקודות החיים שלך התמלאו!</string>
     <string name="used_skill_without_mana">השתמשת ב%1$s.</string>
     <string name="reminder_title">לא לשכוח לסמן משימות שהושלמו</string>
-    <string name="version_info">גרסה %1$s‏ (%2$d)</string>
+    <string name="version_info">גרסה %1$s (%2$d)</string>
     <string name="intro_1_subtitle">ברוך בואך אל</string>
     <string name="new_bailey_update">לביילי יש חדשות בשבילך!</string>
     <string name="register_btn_google">הרשמה דרך Google</string>
     <string name="register_btn_fb">הרשמה דרך פייסבוק</string>
     <string name="getting_started">תחילת השימוש</string>
     <string name="lets_get_started">בואו נתחיל</string>
+    <string name="x_and_y">%1$s ו %2$s</string>
+    <string name="save">לשמור</string>
 </resources>

@@ -285,11 +285,6 @@ fun BirthdayActivityView(
                         .padding(horizontal = 20.dp)
                         .fillMaxWidth()
             ) {
-                Image(
-                    painterResource(R.drawable.birthday_header),
-                    null,
-                    Modifier.padding(bottom = 8.dp)
-                )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(painterResource(R.drawable.birthday_gifts), null)
                     Column(

@@ -91,10 +91,6 @@ fun BirthdayBanner(
                     ),
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
-                    Image(
-                        painterResource(R.drawable.birthday_menu_text),
-                        null
-                    )
                     Text(
                         stringResource(R.string.exclusive_items_await),
                         color = colorResource(R.color.yellow_100),

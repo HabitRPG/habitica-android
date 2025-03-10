@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="profile_pets_and_mounts">Mascotas y Monturas</string>
+    <string name="profile_pets_found">Mascotas encontradas</string>
+    <string name="profile_mounts_tamed">Monturas Domesticadas</string>
+    <string name="profile_loading_data">Cargando datos del miembro…</string>
+    <string name="profile_send_message_to">Enviar mensaje a %s</string>
+</resources>

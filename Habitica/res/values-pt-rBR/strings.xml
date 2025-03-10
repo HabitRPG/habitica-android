@@ -516,7 +516,7 @@
     <string name="class_equipment">Equipamento</string>
     <string name="equipment_empty">Você já tem todos os equipamentos! Outros serão liberados durante as Grand Galas, que acontecem ao fim de cada estação do ano.</string>
     <string name="classless">Sem Classe</string>
-    <string name="class_equipment_shop_dialog">Este item está disponível apenas para uma classe específica.\nVocê pode alterar sua classe em Configurações.</string>
+    <string name="class_equipment_shop_dialog">Este item só está disponível para uma classe específica. Você pode mudar sua classe nas Configurações.</string>
     <string name="class_gear_disclaimer">Você apenas pode comprar equipamento para sua classe atual</string>
     <string name="check_into_inn">Entrar na Pousada</string>
     <string name="community_guidelines">Diretrizes da Comunidade</string>
@@ -1005,7 +1005,7 @@
     <string name="hatchedPetTitle">Chocou um Mascote</string>
     <string name="completedTaskTitle">Completou uma tarefa</string>
     <string name="createdTaskTitle">Criou sua primeira tarefa</string>
-    <string name="purchase_equipment_description">Equipamentos são uma forma de customizar seu avatar e melhorar seus atributos</string>
+    <string name="purchase_equipment_description">Equipamentos são uma forma de personalizar seu avatar e melhorar seus atributos</string>
     <string name="feedPet_description">Complete tarefas para ganhar comida! Você pode alimentar seu mascote em Mascotes &amp; Montarias</string>
     <string name="hatch_pet_description">Complete tarefas para ganhar uma Poção de Eclosão e Ovo e então choque seu Mascote!</string>
     <string name="complete_task_description">Marque como feita qualquer uma das suas tarefas para ganhar recompensas</string>
@@ -1028,7 +1028,7 @@
     <string name="pms_disabled">Mensagens Privadas estão desabilitadas</string>
     <string name="disablePrivateMessages">Desabilitar Mensagens Privadas</string>
     <string name="block">Bloquear</string>
-    <string name="block_user_description">Um usuário bloqueado não pode te enviar Mensagens Privadas, mas você ainda verá suas postagens na Taverna ou nas Guildas. Isso não terá efeito se a pessoa for moderadora agora ou no futuro.</string>
+    <string name="block_user_description">Um usuário bloqueado não pode te enviar Mensagens Privadas, mas você ainda verá suas postagens</string>
     <string name="block_user_title">Bloquear %s\?</string>
     <string name="unblock_user">Desbloquear Usuário</string>
     <string name="block_user">Bloquear Usuário</string>
@@ -1080,7 +1080,7 @@
     <string name="you">Você</string>
     <string name="login_disclaimer">Ao se inscrever, você está indicando que leu e concorda com os <a href="https://habitica.com/static/terms">Termos de Serviço</a> e com a <a href="https://habitica.com/static/privacy">Política de Privacidade.</a></string>
     <string name="finish">Concluir</string>
-    <string name="user_is_blocked_explanation">Um usuário bloqueado não pode lhe enviar mensagens privadas, mas você ainda verá seus posts na Taverna ou guildas.</string>
+    <string name="user_is_blocked_explanation">Um usuário bloqueado não pode lhe enviar mensagens privadas, mas você ainda verá suas postagens</string>
     <string name="user_is_blocked">Você bloqueou este usuário</string>
     <string name="submit_feedback">Submeter feedback</string>
     <string name="dark_mode">Modo escuro</string>
@@ -1206,7 +1206,8 @@
     <string name="tutorial_reset_confirmation">Seus tutoriais foram reiniciados</string>
     <string name="you_ran_out_of_health">Você perdeu sua Vida!</string>
     <string name="death_description">Você pode recuperá-la com trabalho duro! Boa sorte–você se sairá bem.</string>
-    <string name="faint_broken_equipment">Equipamento quebrado pode ser comprado novamente em Recompensas</string>
+    <string name="faint_broken_equipment">Equipamento quebrado pode ser comprado novamente 
+\nem Recompensas</string>
     <string name="account_reset">Reinicio de conta</string>
     <string name="avatar_shirt_customization">Personalização da camiseta do avatar</string>
     <string name="avatar_beard_customization">Personalização da barba do avatar</string>
@@ -1248,11 +1249,12 @@
         <item quantity="other"/>
     </plurals>
     <plurals name="you_x_others">
-        <item quantity="one">Você</item>
+        <item quantity="one">Você, %d outro</item>
+        <item quantity="many">Vocês, %d outros</item>
         <item quantity="other">Vocês, %d outros</item>
     </plurals>
     <string name="x_and_y">%1$s e %2$s</string>
-    <string name="enable_notifications">Habilitar notificações</string>
+    <string name="enable_notifications">Habilitar Notificações</string>
     <string name="push_notification_system_settings_description">Habilite notificações do Habitica nas Configurações do aplicativo para receber notificações</string>
     <string name="push_notification_system_settings_title">Notificações desabilitadas</string>
     <string name="title">Título</string>
@@ -1336,8 +1338,7 @@
     <string name="find_more_members">Encontrar mais membros</string>
     <string name="resume_damage">Despausar dano</string>
     <string name="resume_damage_1_title">Suas Diárias incompletas não te causarão dano</string>
-    <string name="insufficient_level_equipment_dialog">Este item apenas está disponível para uma classe específica.
-\nVocê pode selecionar uma classe depois do nível 10.</string>
+    <string name="insufficient_level_equipment_dialog">Este item apenas está disponível para uma classe específica. Você pode selecionar uma classe depois do nível 10.</string>
     <string name="birthday_set">Conjunto de Aniversário</string>
     <string name="go_to_settings">Ir para Configurações</string>
     <string name="resume_damage_1_description">Chefões ainda causarão dano devido as

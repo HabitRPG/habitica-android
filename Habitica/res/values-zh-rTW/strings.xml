@@ -155,7 +155,7 @@
     <string name="setup_task_creativity_1">學習以成為藝術能手</string>
     <string name="setup_task_creativity_2">進行創新項目</string>
     <string name="setup_task_creativity_3">完成創新項目</string>
-            <string name="guild">公會</string>
+    <string name="guild">公會</string>
     <string name="leave">離開</string>
     <string name="join">加入</string>
     <string name="delete">刪除</string>
@@ -226,7 +226,6 @@
     <string name="opt_out_class">退出</string>
     <string name="class_confirmation">你確定想要成為%1$s嗎？</string>
     <string name="class_changed">你成為了%s！</string>
-
     <string name="choose_class">選擇職業</string>
     <string name="dialog_go_back">返回</string>
     <string name="opt_out_confirmation">你確定要退出嗎？</string>
@@ -500,7 +499,7 @@
     <string name="distribute_task_help">依據您完成的任務所關聯的特質分配屬性點。</string>
     <string name="allocating_points">點數分配中</string>
     <string name="class_equipment">裝備</string>
-    <string name="equipment_empty">"您已擁有所有您所屬職業的裝備!  更多裝備將於下一個季節時進貨。"</string>
+    <string name="equipment_empty">您已擁有所有您所屬職業的裝備! 更多裝備將於下一個季節時進貨。</string>
     <string name="classless">無職業</string>
     <string name="class_equipment_shop_dialog">這個物品只對特定職業開放。\n你可以在設置改變你的職業。</string>
     <string name="class_gear_disclaimer">你只能購買當前職業的裝備</string>

@@ -147,7 +147,7 @@
     <string name="setup_task_creativity_1">Estudar a mestria de um ofício</string>
     <string name="setup_task_creativity_2">Trabalhe num projeto criativo</string>
     <string name="setup_task_creativity_3">Termine um projeto criativo</string>
-            <string name="guild">Guilda</string>
+    <string name="guild">Guilda</string>
     <string name="leave">Sair</string>
     <string name="join">Aderir</string>
     <string name="delete">Eliminar</string>
@@ -614,7 +614,6 @@
     <string name="reset_account_confirmation">Reiniciar a minha conta</string>
     <string name="delete_account_description">Isto irá eliminar a tua conta para sempre e ela não poderá ser restaurada! Gemas guardadas ou gastas não serão devolvidas. Se tiveres a certeza absoluta, digita a tua senha na caixa de texto abaixo.</string>
     <string name="delete_account">Eliminar Conta</string>
-
     <string name="reset_account">Reiniciar Conta</string>
     <string name="con_abbrv">Con</string>
     <string name="int_abbrv">Int</string>
@@ -711,4 +710,16 @@
     <string name="push_notification_system_settings_description">Altera as tuas configurações da app para permitires notificações</string>
     <string name="push_notification_system_settings_reminders">Altera as tuas configurações da app para permitires lembretes</string>
     <string name="push_notification_system_settings_title">Notificações desativadas</string>
+    <string name="armoireEquipment_new">Você encontrou uma peça de Equipamento rara no Baú!</string>
+    <string name="usernames_party">%s do Grupo</string>
+    <string name="title">Título</string>
+    <string name="positive_sentence">Positivo</string>
+    <string name="negative_sentence">Negativo</string>
+    <string name="quest_party_required_title">Você precisa estar em um Grupo antes de iniciar uma Missão</string>
+    <string name="quest_party_required_description">Depois que estiver em um Grupo, você pode fazer uma Missão a sós, ou convidar amigos para fazerem as Missões juntos!</string>
+    <string name="armoireFood_new">Você vasculha o Baú e encontra comida. O que ela está fazendo aqui\?</string>
+    <string name="create_new_party">Crie um novo grupo</string>
+    <string name="level_abbreviated">Nv. %d</string>
+    <string name="sell_no_price">Vender</string>
+    <string name="trillion_abbrev">t</string>
 </resources>

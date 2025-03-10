@@ -2,7 +2,7 @@
 <resources>
     <string name="profile_pets_and_mounts">宠物与坐骑</string>
     <string name="profile_pets_found">已发现宠物</string>
-    <string name="profile_mounts_tamed">已驯服的坐骑</string>
+    <string name="profile_mounts_tamed">已驯服坐骑</string>
     <string name="profile_loading_data">正在加载成员数据…</string>
     <string name="profile_send_message_to">向%s发送信息</string>
     <string name="profile_message_sent_to">信息已发送至 %s</string>

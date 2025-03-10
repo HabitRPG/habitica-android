@@ -25,9 +25,12 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.children
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
@@ -143,9 +146,12 @@ abstract class BaseActivity : AppCompatActivity() {
                     WindowInsetsCompat.Type.systemBars()
                     + WindowInsetsCompat.Type.displayCutout()
                 )
-                v.updatePadding(top = insets.top + paddingTop,
-                left = insets.left,
-                    right = insets.right)
+                v.updatePadding(top = insets.top + paddingTop)
+                (v as AppBarLayout).children.forEach {
+                    if (it !is TabLayout) {
+                        it.updatePadding(left = insets.left, right = insets.right)
+                    }
+                }
                 consumeWindowInsetsAbove30(windowInsets)
             }
         }

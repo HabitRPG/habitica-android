@@ -8,14 +8,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
-import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
-import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -75,11 +70,6 @@ class AdventureGuideActivity : BaseActivity() {
                 updateUser(it)
             }
         }
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        applyScrollContentWindowInsets(binding.scrollContent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

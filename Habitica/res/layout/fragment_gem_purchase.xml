@@ -1,306 +1,334 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_scroll_view" xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarSize="3dp"
-        android:scrollbarThumbVertical="@color/scrollbarThumb"
-        android:scrollbars="vertical">
+<com.habitrpg.android.habitica.ui.views.HabiticaScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nested_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarSize="3dp"
+    android:scrollbarThumbVertical="@color/scrollbarThumb"
+    app:skipDirectchild="true"
+    android:scrollbars="vertical">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.compose.ui.platform.ComposeView
-                android:id="@+id/promo_compose_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
+            android:id="@+id/promo_compose_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <RelativeLayout
-                android:id="@+id/promo_banner"
-                android:layout_width="match_parent"
-                android:layout_height="96dp"
-                android:background="@drawable/g1g1_box"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="@dimen/spacing_large"
-                android:clipChildren="true"
-                android:clipToPadding="true"
-                android:focusable="true"
-                android:clickable="true"
-                android:visibility="gone"
-                tools:visibility="visible">
+            android:id="@+id/promo_banner"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:background="@drawable/g1g1_box"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:clipChildren="true"
+            android:clipToPadding="true"
+            android:focusable="true"
+            android:clickable="true"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
-                    android:id="@+id/promo_banner_left_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="false"
-                    android:importantForAccessibility="no" />
+                android:id="@+id/promo_banner_left_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="false"
+                android:importantForAccessibility="no" />
 
             <ImageView
-                    android:id="@+id/promo_banner_right_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:importantForAccessibility="no" />
+                android:id="@+id/promo_banner_right_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:importantForAccessibility="no" />
 
             <LinearLayout
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
-                        android:id="@+id/promo_banner_title_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dp" />
+                    android:id="@+id/promo_banner_title_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp" />
 
                 <TextView
-                        android:id="@+id/promo_banner_title_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="84dp"
-                        android:layout_marginEnd="84dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_marginBottom="4dp" />
+                    android:id="@+id/promo_banner_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="84dp"
+                    android:layout_marginEnd="84dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="4dp" />
 
                 <TextView
-                        android:id="@+id/promo_banner_subtitle_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:textSize="16sp"
-                        android:fontFamily="@string/font_family_medium"
-                        android:layout_marginStart="84dp"
-                        android:layout_marginEnd="84dp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_marginBottom="6dp" />
+                    android:id="@+id/promo_banner_subtitle_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:fontFamily="@string/font_family_medium"
+                    android:layout_marginStart="84dp"
+                    android:layout_marginEnd="84dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="6dp" />
 
                 <TextView
-                        android:id="@+id/promo_banner_duration_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Overline" />
+                    android:id="@+id/promo_banner_duration_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Overline" />
             </LinearLayout>
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginEnd="60dp"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:fontFamily="@string/font_family_medium"
-                    android:layout_marginBottom="12dp"
-                    android:layout_centerInParent="true" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@string/font_family_medium"
+                android:layout_marginBottom="12dp"
+                android:layout_centerInParent="true" />
         </RelativeLayout>
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp">
             <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/gem_footer"
-                    android:layout_gravity="bottom"
-                    android:scaleType="fitXY"
-                    tools:ignore="ContentDescription" />
+                android:id="@+id/header_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gem_purchase_header"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp" />
 
-            <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gem_purchase_subtitle"
+                android:gravity="center"
+                android:textStyle="normal|bold"
+                android:textColor="?colorPrimaryText"
+                android:textSize="16sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="@dimen/spacing_xlarge"
+                android:layout_marginEnd="@dimen/spacing_xlarge" />
 
-                <ImageView
-                        android:id="@+id/header_image_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/gem_purchase_header"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="20dp" />
+            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+                android:text="@string/gem_purchase_listitem1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItem" />
 
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/gem_purchase_subtitle"
-                        android:gravity="center"
-                        android:textStyle="normal|bold"
-                        android:textColor="?colorPrimaryText"
-                        android:textSize="16sp"
-                        android:lineSpacingExtra="4dp"
-                        android:layout_marginTop="23dp"
-                        android:layout_marginBottom="12dp"
-                        android:layout_marginStart="@dimen/spacing_xlarge"
-                        android:layout_marginEnd="@dimen/spacing_xlarge" />
+            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+                android:text="@string/gem_purchase_listitem2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItem" />
 
-                <com.habitrpg.android.habitica.ui.views.DayNightTextView
-                        android:text="@string/gem_purchase_listitem1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/GemPurchaseListItem" />
+            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+                android:text="@string/gem_purchase_listitem3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItem" />
 
-                <com.habitrpg.android.habitica.ui.views.DayNightTextView
-                        android:text="@string/gem_purchase_listitem2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/GemPurchaseListItem" />
+            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+                android:text="@string/gem_purchase_listitem4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/GemPurchaseListItem" />
 
-                <com.habitrpg.android.habitica.ui.views.DayNightTextView
-                        android:text="@string/gem_purchase_listitem3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/GemPurchaseListItem" />
+            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_billing_gems"
+                android:paddingTop="50dp"
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
 
-                <com.habitrpg.android.habitica.ui.views.DayNightTextView
-                        android:text="@string/gem_purchase_listitem4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/GemPurchaseListItem" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/visit_habitica_website"
+                android:layout_marginBottom="50dp"
+                style="@style/HabiticaButton.Purple"
+                android:visibility="gone" />
 
-                <com.habitrpg.android.habitica.ui.views.DayNightTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_billing_gems"
-                        android:paddingTop="50dp"
-                        android:paddingBottom="10dp"
-                        android:visibility="gone" />
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/loading_indicator"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginVertical="60dp" />
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/visit_habitica_website"
-                        android:layout_marginBottom="50dp"
-                        style="@style/HabiticaButton.Purple"
-                        android:visibility="gone" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large">
 
-                <androidx.compose.ui.platform.ComposeView
-                        android:id="@+id/loading_indicator"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center"
-                        android:layout_marginVertical="60dp" />
                 <LinearLayout
-                        android:id="@+id/gem_purchase_options"
+                    android:id="@+id/gem_purchase_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    app:layout_constraintHeight_default="wrap"
+                    app:layout_constraintWidth_default="spread"
+                    app:layout_constraintWidth_max="500dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/spacing_large">
-                    <LinearLayout
-                            android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp">
+
+                        <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
+                            android:id="@+id/gems_4_view"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="16dp">
+                            android:layout_weight="1"
+                            app:gemAmount="4"
+                            app:gemDrawable="@drawable/gems_4"
+                            android:layout_marginEnd="@dimen/spacing_large" />
+
                         <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
-                                android:id="@+id/gems_4_view"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:gemAmount="4"
-                                app:gemDrawable="@drawable/gems_4"
-                                android:layout_marginEnd="@dimen/spacing_large" />
-                        <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
-                                android:id="@+id/gems_21_view"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:gemAmount="21"
-                                app:gemDrawable="@drawable/gems_21" />
+                            android:id="@+id/gems_21_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:gemAmount="21"
+                            app:gemDrawable="@drawable/gems_21" />
                     </LinearLayout>
 
                     <LinearLayout
-                            android:layout_width="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:dividerPadding="16dp"
+                        android:showDividers="middle"
+                            android:layout_gravity="center_horizontal"
+                        android:divider="@android:color/white">
+
+                        <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
+                            android:id="@+id/gems_42_view"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:dividerPadding="16dp"
-                            android:showDividers="middle"
-                            android:divider="@android:color/white">
+                            android:layout_weight="1"
+                            app:gemAmount="42"
+                            app:gemDrawable="@drawable/gems_42"
+                            android:layout_marginEnd="@dimen/spacing_large" />
 
                         <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
-                                android:id="@+id/gems_42_view"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:gemAmount="42"
-                                app:gemDrawable="@drawable/gems_42"
-                                android:layout_marginEnd="@dimen/spacing_large" />
-
-                        <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
-                                android:id="@+id/gems_84_view"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:gemAmount="84"
-                                app:gemDrawable="@drawable/gems_84" />
+                            android:id="@+id/gems_84_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:gemAmount="84"
+                            app:gemDrawable="@drawable/gems_84" />
                     </LinearLayout>
                 </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/gift_sub_gift"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_quad"
+                android:text="@string/gems_gift_description"
+                android:gravity="center_horizontal"
+                android:layout_marginStart="@dimen/spacing_xlarge"
+                android:layout_marginEnd="@dimen/spacing_xlarge" />
+
+            <Button
+                android:id="@+id/gift_gems_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gift_gems"
+                android:background="@color/transparent"
+                android:textColor="?colorPrimaryText"
+                android:textAllCaps="false" />
+    </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/footer_hills"
+                android:layout_gravity="bottom">
 
                 <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/gift_sub_gift"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginBottom="6dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/footer_stars_right"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="fitCenter" />
 
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_quad"
-                        android:text="@string/gems_gift_description"
-                        android:gravity="center_horizontal"
-                        android:layout_marginStart="@dimen/spacing_xlarge"
-                        android:layout_marginEnd="@dimen/spacing_xlarge" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/footer_stars_left"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="fitCenter" />
+            </FrameLayout>
 
-                <Button
-                        android:id="@+id/gift_gems_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/gift_gems"
-                        android:background="@color/transparent"
-                        android:textColor="?colorPrimaryText"
-                        android:textAllCaps="false" />
-
-                <TextView
-                        android:id="@+id/supportTextView"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:paddingStart="41dp"
-                        android:paddingEnd="41dp"
-                        android:paddingTop="70dp"
-                        android:text="@string/gem_purchase_title"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center"
-                        android:lineSpacingExtra="3dp"
-                        android:textColor="@color/white"
-                        style="@style/Caption2"
-                        android:drawablePadding="@dimen/spacing_medium" />
-            </LinearLayout>
-        </FrameLayout>
-        <View
-                android:id="@+id/bottom_spacing"
+            <TextView
+                android:id="@+id/supportTextView"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/brand_400"/>
+                android:paddingStart="41dp"
+                android:paddingEnd="41dp"
+                android:text="@string/gem_purchase_title"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:textColor="@color/white"
+                style="@style/Caption2"
+                android:background="@color/brand_400"
+                android:drawablePadding="@dimen/spacing_medium" />
+
+        <View
+            android:id="@+id/bottom_spacing"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/brand_400" />
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</com.habitrpg.android.habitica.ui.views.HabiticaScrollView>

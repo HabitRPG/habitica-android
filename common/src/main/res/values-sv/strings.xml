@@ -5,7 +5,7 @@
     <string name="billion_abbrev">b</string>
     <string name="trillion_abbrev">t</string>
     <string name="mystic_hourglasses">Mystiskt Timglas</string>
-    <string name="repeat_daily">Dagligen</string>
+    <string name="repeat_daily">Daglig uppgift</string>
     <string name="monthly">Månadsvis</string>
     <string name="weekly">Veckovis</string>
     <string name="daily">Dagligen</string>
@@ -18,4 +18,60 @@
     <string name="gems">Juveler</string>
     <string name="stats">Statistik</string>
     <string name="trivial">Trival</string>
+    <string name="gold_plural">guld</string>
+    <string name="gold_capitalized">Guld</string>
+    <string name="easy">Lätt</string>
+    <string name="avatar">Avatar</string>
+    <string name="login_btn">Logga in</string>
+    <string name="register_btn">Registrera</string>
+    <string name="username">Användarnamn</string>
+    <string name="medium">Mellan</string>
+    <string name="hard">Svår</string>
+    <string name="easy_sentence">lätt</string>
+    <string name="medium_sentence">mellan</string>
+    <string name="hard_sentence">svår</string>
+    <string name="habits">Vanor</string>
+    <string name="dailies">Dagliga uppgifter</string>
+    <string name="rewards">Belöningar</string>
+    <string name="habit">Vana</string>
+    <string name="reward">Belöning</string>
+    <string name="todos">Att göra</string>
+    <string name="todo">Att göra</string>
+    <string name="new_task">Ny Uppgift</string>
+    <string name="email_username">E-post/Användarnamn</string>
+    <string name="password">Lösenord</string>
+    <string name="emailAddress">E-postadress</string>
+    <string name="confirmpassword">Bekräfta lösenord</string>
+    <string name="login_btn_google">Logga in med Google</string>
+    <string name="logout">Logga ut</string>
+    <string name="logout_description">Logga ut från ditt konto</string>
+    <string name="LoginActivityName">Välkommen</string>
+    <string name="login_validation_error_fieldsmissing">Du måste fylla i alla fält.</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Vana</item>
+        <item quantity="other">%d Vanor</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Daglig uppgift</item>
+        <item quantity="other">%d Dagliga uppgifter</item>
+    </plurals>
+    <string name="user_level">Niv. %d</string>
+    <string name="failed">Misslyckades att ladda</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="login_validation_error_title">Valideringsfel</string>
+    <string name="create_task_title">Skapa en uppgift</string>
+    <string name="complete_task_title">Slutför en uppgift</string>
+    <string name="create_task">Skapa %s</string>
+    <string name="new_task_x">Ny %s</string>
+    <string name="save_task_x">Spara %s</string>
+    <string name="task">Uppgift</string>
+    <string name="retry">Försök igen</string>
+    <plurals name="x_todos">
+        <item quantity="one">%d Att göra</item>
+        <item quantity="other">%d Att göra</item>
+    </plurals>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Belöning</item>
+        <item quantity="other">%d Belöningar</item>
+    </plurals>
 </resources>

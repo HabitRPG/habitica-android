@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
-import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -145,8 +144,6 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                 }
             }
         }
-
-        binding?.scrollContent?.let { applyScrollContentWindowInsets(it) }
     }
 
     private val groupFormResult =

@@ -9,7 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowInsetsController
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
@@ -87,6 +87,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         binding = null
     }
 
+    var navigationBarColor: Int? = null
     override fun onResume() {
         super.onResume()
         mainActivity?.showBackButton = showsBackButton
@@ -108,6 +109,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     window.isNavigationBarContrastEnforced = true
                 }
+                activity?.window?.navigationBarColor = navigationBarColor ?: ContextCompat.getColor(requireContext(), R.color.content_background)
             }
         }
     }
@@ -118,7 +120,8 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
-        mainActivity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, mainActivity) }
+        mainActivity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, mainActivity,
+            appbar = mainActivity?.findViewById(R.id.appbar)) }
         updateToolbarInteractivity()
     }
 

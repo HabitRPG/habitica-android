@@ -230,7 +230,7 @@
     <string name="class_changed">Ora sei un %s!</string>
     <string name="choose_class">Scegli classe</string>
     <string name="dialog_go_back">Ritorna</string>
-    <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>
+    <string name="opt_out_confirmation">Vuoi davvero rinunciare al sistema di classi\?</string>
     <string name="change_class">Cambia la tua classe</string>
     <string name="change_class_description">Cambia classe e riottieni i tuoi punti attributo per 3 gemme.</string>
     <string name="enable_class">Abilita sistema delle classi</string>
@@ -238,7 +238,7 @@
     <string name="by_email">Per e-mail</string>
     <string name="invite_existing_users">Invita utenti esistenti</string>
     <string name="send">Invia</string>
-    <string name="invite">Invita amici</string>
+    <string name="invite">Trova amici</string>
     <string name="invite_username_description">Se i tuoi amici usano già Habitica, invitali qui usando il loro nome utente.</string>
     <string name="invite_email_description">Se un amico/a si unisce ad Habitica attraverso la tua e-mail, verrà automaticamente invitato/a nella tua squadra!</string>
     <string name="add_invites">Aggiungi inviti</string>
@@ -248,8 +248,8 @@
     <string name="share_hatched">Ho appena schiuso un %1$s %2$s in #Habitica completando le mie attività nella vita reale!</string>
     <string name="share_raised">Ho appena ottenuto un %1$s in #Habitica completando le mie attività nella vita reale!</string>
     <string name="open_in_store">Apri nel Play Store</string>
-    <string name="change_class_confirmation">Vuoi davvero cambiare la tua classe? Costerà 3 gemme.</string>
-    <string name="change_class_equipment_warning">Attenzione: non potrai più comprare equipaggiamento per la classe %s.</string>
+    <string name="change_class_confirmation">Vuoi davvero cambiare classe per 3 gemme\?</string>
+    <string name="change_class_equipment_warning">Ciò rimborserà i tuoi attributi, cambierà l\'equipaggiamento sbloccato nei negozi e cambierà le tue abilità disponibili.</string>
     <string name="confirm">Conferma</string>
     <string name="market">Mercato</string>
     <string name="timeTravelers">Viaggiatori del Tempo</string>
@@ -298,7 +298,7 @@
     <string name="belongs_to_challenge">Appartiene alla Sfida</string>
     <string name="has_reminder">Ha promemoria</string>
     <string name="has_tag">Ha etichetta</string>
-    <string name="subscribe_title">Gli abbonamenti aiutano a supportare gli sviluppatori e a tenere Habitica in vita </string>
+    <string name="subscribe_title">Gli abbonamenti aiutano a supportare gli sviluppatori e a tenere Habitica in vita, grazie !</string>
     <string name="subscribe_prompt">Abbonati per ottenere questi vantaggi esclusivi!</string>
     <string name="subscribe_listitem1">Oro per gemme</string>
     <string name="subscribe_listitem2">Clessidre Mistiche</string>
@@ -316,7 +316,7 @@
     <string name="subscribe3month_gemcap">Limite di 30 Gemme</string>
     <string name="subscribe6month_gemcap">Limite di 35 Gemme</string>
     <string name="subscribe12month_gemcap">Limite di 45 Gemme</string>
-    <string name="subscription_hourglasses">+%d Clessidra Mistica</string>
+    <string name="subscription_hourglasses">+%d Clessidre</string>
     <string name="payment_method">Metodo di pagamento</string>
     <string name="subscription">Abbonamento</string>
     <string name="active">Attivo</string>
@@ -332,7 +332,7 @@
     <string name="inactive">Inattivo</string>
     <string name="one_month">1 mese</string>
     <string name="months">Mesi</string>
-    <string name="month">mese</string>
+    <string name="month">Mese</string>
     <string name="three_months">3 mesi</string>
     <string name="six_months">6 mesi</string>
     <string name="twelve_months">12 mesi</string>
@@ -514,7 +514,7 @@
     <string name="class_equipment">Equipaggiamento</string>
     <string name="equipment_empty">Hai già tutto l\'equipaggiamento! Nuovi oggetti saranno disponibili durante i Gran Galà, nei periodi dei solstizi e degli equinozi.</string>
     <string name="classless">Nessuna classe</string>
-    <string name="class_equipment_shop_dialog">Questo oggetto è disponibile solo per una specifica classe.\nPuoi cambiare la tua classe nelle Impostazioni.</string>
+    <string name="class_equipment_shop_dialog">Questo oggetto è disponibile solo per una specifica classe. Puoi cambiare la tua classe nelle Impostazioni.</string>
     <string name="class_gear_disclaimer">Puoi comprare solo equipaggiamento per la Classe a cui appartieni</string>
     <string name="check_into_inn">Entra nella Locanda</string>
     <string name="community_guidelines">Linee guida della community</string>
@@ -536,7 +536,7 @@
     <string name="strike_description_title">Cos\'è un colpo furioso?</string>
     <string name="strike_active_title">%s è stato attaccato!</string>
     <string name="strike_active_description" formatted="false">Il nostro beneamato %s era devastato quando il %s frantumò il %s. In fretta, finisci le tue attività per sconfiggere il mostro e aiutare la ricostruzione !!</string>
-    <string name="questShop">Negozio missioni</string>
+    <string name="questShop">Missioni</string>
     <string name="market_owner_long">Alex il Mercante</string>
     <string name="tavern_owner_long">Daniel il Locandiere</string>
     <string name="stable_owner_long">Matt il domatore</string>
@@ -588,7 +588,7 @@
     <string name="week_reminder_title">Hai finito di fare tutto\?</string>
     <string name="week_reminder_text">Dai un\'occhiata ad Habitica per ricompense e XP!</string>
     <string name="last_login">Ultimo accesso</string>
-    <string name="total_checkins">Numero accessi</string>
+    <string name="total_checkins">Totale check-in</string>
     <string name="two_handed">Due mani</string>
     <string name="usernamePromptTitle">È giunta l\'ora di scegliere il tuo nome utente!</string>
     <string name="usernamePromptBody">I login sono nuovi, unici nomi utente, che appariranno accanto al tuo nome pubblico e che verranno usati per gli inviti, i @richiami nel chat, e i messaggi.</string>
@@ -715,7 +715,7 @@
     <string name="create_account_short">Crea un Account</string>
     <string name="login_incentive_short_count">%d Accessi</string>
     <string name="login_incentive_short">Accedi ad Habitica regolarmente</string>
-    <string name="party_invite_short">Invita degli Amici</string>
+    <string name="party_invite_short">Trouva membri</string>
     <string name="login_incentive_count">Sbloccalo accedendo ad Habitica %d volte.</string>
     <string name="user_level_with_class_unabbreviated">Livello %1$d &amp;%2$s</string>
     <string name="remaining_1hour">1 ora rimanente</string>
@@ -999,7 +999,7 @@
     <string name="delete_challenge_task_title">Eliminare le attività della sfida\?</string>
     <string name="hatch">Schiudi</string>
     <string name="hatch_your_pet">Schiudi il tuo animale</string>
-    <string name="use_saddle">Usa una Sella</string>
+    <string name="use_saddle">Dare una Sella</string>
     <string name="magic_potion">Pozione Magica</string>
     <string name="magic_potions">Pozioni magiche</string>
     <string name="hatch_pet_again">Schiudi di nuovo un animale</string>
@@ -1242,10 +1242,12 @@
     <string name="copy_tasks_description">Mostra le attività assegnate e quelle aperte nelle tue liste di attività personali</string>
     <plurals name="people">
         <item quantity="one">%d Persona</item>
+        <item quantity="many">%d Persone</item>
         <item quantity="other">%d Persone</item>
     </plurals>
     <plurals name="you_x_others">
         <item quantity="one">Tu</item>
+        <item quantity="many">Voi, %d altri</item>
         <item quantity="other">Voi, %d altri</item>
     </plurals>
     <string name="x_and_y">%1$s e %2$s</string>

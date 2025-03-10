@@ -61,7 +61,7 @@
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
-        <androidx.core.widget.NestedScrollView
+        <com.habitrpg.android.habitica.ui.views.HabiticaScrollView
         android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -129,6 +129,6 @@
                     android:textColorLink="?colorAccent"
                     />
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+        </com.habitrpg.android.habitica.ui.views.HabiticaScrollView>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

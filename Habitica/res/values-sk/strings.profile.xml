@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="profile_pets_and_mounts">Domáce Zvieratá a Tátoše</string>
+    <string name="profile_mounts_tamed">Skrotené Tátoše</string>
+    <string name="profile_loading_data">Načítavam dáta člena…</string>
+    <string name="profile_send_message_to">Poslať správu hráčovi %s</string>
+    <string name="profile_message_sent_to">Správa bola poslaná hráčovi %s</string>
+    <string name="profile_level">Level:</string>
+    <string name="profile_allocated">Pridelené:</string>
+    <string name="profile_achievements">Úspechy</string>
+    <string name="profile_pets_found">Nájdené Domáce Zvieratá</string>
+    <string name="profile_class_bonus">Triedový Bonus</string>
+</resources>
