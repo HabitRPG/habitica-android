@@ -216,7 +216,16 @@
     </string-array>
 
     <string-array name="server_urls">
-        <item>https://habitica.aguiarvieira.pt</item>
+        <item>https://habitica.com</item>
+        <item>https://staging.habitica.com</item>
+        <item>https://bat.habitica.com</item>
+        <item>https://frog.habitica.com</item>
+        <item>https://llama.habitica.com</item>
+        <item>https://monkey.habitica.com</item>
+        <item>https://seal.habitica.com</item>
+        <item>https://shrimp.habitica.com</item>
+        <item>https://starfish.habitica.com</item>
+        <item>https://turtle.habitica.com</item>
     </string-array>
 
     <string-array name="task_list_modes">
