@@ -102,7 +102,9 @@ abstract class BaseActivity : AppCompatActivity() {
     internal var navigationBarStyle: SystemBarStyle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
+        if (resources.getBoolean(R.bool.edge_to_edge)) {
+            enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
+        }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         resources.forceLocale(this, languageHelper.locale)
@@ -116,7 +118,6 @@ abstract class BaseActivity : AppCompatActivity() {
         loadTheme(sharedPreferences)
 
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         habiticaApplication
         getLayoutResId()?.let {
