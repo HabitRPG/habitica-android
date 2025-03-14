@@ -145,13 +145,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         super.onResume()
     }
 
-    override fun onAttach(context: Context) {
-        view?.invalidate()
-        view?.forceLayout()
-
-        super.onAttach(context)
-    }
-
     override fun onDestroy() {
         socialRepository.close()
         super.onDestroy()

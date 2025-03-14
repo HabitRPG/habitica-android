@@ -3,12 +3,14 @@ package com.habitrpg.android.habitica.ui.views.social
 import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
@@ -19,11 +21,13 @@ import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
+import com.habitrpg.android.habitica.ui.helpers.OnImeVisibilityChangedListener
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 
-class ChatBarView : LinearLayout {
+class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
     var hasAcceptedGuidelines: Boolean = false
         set(value) {
             field = value
@@ -61,6 +65,9 @@ class ChatBarView : LinearLayout {
     var message: String
         get() = binding.chatEditText.text.toString()
         set(value) = binding.chatEditText.setText(value, TextView.BufferType.EDITABLE)
+
+    private var safeInsets: Insets = Insets.NONE
+    private var imeHeight: Int = 0
 
     constructor(context: Context) : super(context) {
         setupView()
@@ -108,19 +115,13 @@ class ChatBarView : LinearLayout {
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        super.onWindowVisibilityChanged(visibility)
 
-        ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
-            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
-            val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
-            val safePadding = insets.getInsets(WindowInsetsCompat.Type.systemBars()
-                    or WindowInsetsCompat.Type.displayCutout())
-            updatePadding(
-                left = safePadding.left,
-                right = safePadding.right,
-                bottom = if (imeVisible) imeHeight else safePadding.bottom)
-            consumeWindowInsetsAbove30(insets)
+        if (visibility == VISIBLE) {
+            KeyboardUtil.addImeVisibilityListener(this)
+        } else {
+            KeyboardUtil.removeImeVisibilityListener(this)
         }
     }
 
@@ -159,5 +160,23 @@ class ChatBarView : LinearLayout {
             binding.chatEditText.text = null
             sendAction?.invoke(chatText)
         }
+    }
+
+    override fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets) {
+        this.safeInsets = safeInsets
+        imeHeight = if (visible) {
+            height
+        } else {
+            0
+        }
+        applyAllPadding()
+    }
+
+    private fun applyAllPadding() {
+        Log.e("ChatBarView", "applyAllPadding: safeInsets = $safeInsets, imeHeight = $imeHeight")
+        updatePadding(
+            left = safeInsets.left,
+            right = safeInsets.right,
+            bottom = if (imeHeight > 0) imeHeight else safeInsets.bottom)
     }
 }

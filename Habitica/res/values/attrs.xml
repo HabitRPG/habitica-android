@@ -150,4 +150,10 @@
     <declare-styleable name="HabiticaScrollView">
         <attr name="skipDirectchild" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="RecyclerViewEmptySupport">
+        <attr name="windowInsetTop" format="boolean" />
+        <attr name="windowInsetStart" format="boolean" />
+        <attr name="windowInsetEnd" format="boolean" />
+        <attr name="windowInsetBottom" format="boolean" />
+    </declare-styleable>
 </resources>

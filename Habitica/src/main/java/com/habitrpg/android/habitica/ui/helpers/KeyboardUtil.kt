@@ -17,16 +17,49 @@ package com.habitrpg.android.habitica.ui.helpers
  */
 
 import android.app.Activity
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
+import androidx.core.graphics.Insets
+
+interface OnImeVisibilityChangedListener {
+    fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets)
+}
 
 class KeyboardUtil {
     companion object {
+        private val imeListeners = mutableListOf<OnImeVisibilityChangedListener>()
+
         fun dismissKeyboard(act: Activity?) {
             if (act != null && act.currentFocus != null) {
                 val inputMethodManager =
                     act.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
                 inputMethodManager?.hideSoftInputFromWindow(act.currentFocus?.windowToken, 0)
             }
+        }
+
+        private var lastVisible = false
+        private var lastHeight = 0
+        fun updatePaddingForIme(isVisible: Boolean, height: Int, safeInsets: Insets) {
+            if (lastVisible == isVisible && lastHeight == height) {
+                return
+            }
+            lastVisible = isVisible
+            lastHeight = height
+            Log.e("KeyboardUtil", "updatePaddingForIme: isVisible = $isVisible, height = $height")
+            for (listener in imeListeners) {
+                Log.e("KeyboardUtil", "updatePaddingForIme: listener = $listener")
+                listener.onImeVisibilityChanged(isVisible, height, safeInsets)
+            }
+        }
+
+        fun addImeVisibilityListener(listener: OnImeVisibilityChangedListener) {
+            Log.e("KeyboardUtil", "addImeVisibilityListener: listener = $listener")
+            imeListeners.add(listener)
+        }
+
+        fun removeImeVisibilityListener(listener: OnImeVisibilityChangedListener) {
+            Log.e("KeyboardUtil", "removeImeVisibilityListener: listener = $listener")
+            imeListeners.remove(listener)
         }
     }
 }

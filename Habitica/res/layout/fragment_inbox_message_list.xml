@@ -1,14 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            app:windowInsetBottom="false" />
     <com.habitrpg.android.habitica.ui.views.social.ChatBarView
-        android:id="@+id/chatBarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            android:id="@+id/chatBarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 </LinearLayout>
