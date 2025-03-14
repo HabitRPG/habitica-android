@@ -33,7 +33,7 @@
                     android:paddingEnd="@dimen/spacing_medium"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
-                    android:imeOptions="actionSend|flagNoExtractUi"
+                    android:imeOptions="actionSend"
                     tools:height="200dp"/>
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
