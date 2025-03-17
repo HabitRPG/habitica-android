@@ -35,9 +35,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
-import androidx.core.view.ViewGroupCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
@@ -114,7 +114,6 @@ import java.util.Date
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
-import androidx.core.view.isVisible
 
 var mainActivityCreatedAt: Date? = null
 
@@ -238,6 +237,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             return
         } else {
             Wearable.getCapabilityClient(this).addLocalCapability("provide_auth")
+
+            val intent = Intent(this, SetupActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
         }
 
         setupToolbar(binding.content.toolbar)

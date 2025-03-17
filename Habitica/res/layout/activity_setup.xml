@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/content_background">
 
     <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <RelativeLayout
-            android:id="@+id/bottomBar"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/background_brand"
-            android:gravity="center_vertical"
-            android:elevation="8dp">
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/background_brand"
+        android:gravity="center_vertical"
+        android:elevation="8dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/previousButton"
+            android:drawableStart="@drawable/back_arrow_disabled"
+            android:background="@color/transparent"
+            android:drawablePadding="12dp"
+            android:textColor="@color/white" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1f" />
 
         <com.google.android.material.tabs.TabLayout
-                android:id="@+id/view_pager_indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                app:tabBackground="@drawable/indicator_diamond"
-                android:background="@color/transparent"
-                app:tabIndicator="@null" />
+            android:id="@+id/view_pager_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/indicator_diamond"
+            android:background="@color/transparent"
+            app:tabIndicator="@null" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1f" />
 
         <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/previousButton"
-                android:drawableStart="@drawable/back_arrow_disabled"
-                android:background="@color/transparent"
-                android:drawablePadding="12dp"
-                android:textColor="@color/white" />
-
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/next_button"
-                android:id="@+id/nextButton"
-                android:drawablePadding="12dp"
-                android:textColor="@color/white"
-                android:drawableEnd="@drawable/forward_arrow_enabled"
-                android:background="@color/transparent"
-                android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_button"
+            android:id="@+id/nextButton"
+            android:drawablePadding="12dp"
+            android:textColor="@color/white"
+            android:drawableEnd="@drawable/forward_arrow_enabled"
+            android:background="@color/transparent" />
+    </LinearLayout>
 </LinearLayout>
