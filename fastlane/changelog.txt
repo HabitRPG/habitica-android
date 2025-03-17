@@ -1,4 +1,4 @@
-New in 4.7.2
+New in 4.7.3
 - Upgraded to the latest Google Sign In authentication standards
 - Implemented full edge-to-edge display functionality on Android 11+ devices
 - Fixed some issues where the text box in chat wasn't adjusting properly

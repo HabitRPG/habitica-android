@@ -237,11 +237,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             return
         } else {
             Wearable.getCapabilityClient(this).addLocalCapability("provide_auth")
-
-            val intent = Intent(this, SetupActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
         }
 
         setupToolbar(binding.content.toolbar)
