@@ -1,6 +1,6 @@
-New in 4.6.0
-- Improvements to reminder scheduling to help them appear on time
-- Reminders should no longer appear if a task isn't due that day
-- Your avatar now shows at the top of the screen when choosing equipment, letting you see how you look as you try gear on!
-- We made it easier to choose what to do with tasks from broken Challenges so they don't get stuck on your task list
-- You'll now be able to leave your Party if you're participating in an active Quest
+New in 4.7.3
+- Upgraded to the latest Google Sign In authentication standards
+- Implemented full edge-to-edge display functionality on Android 11+ devices
+- Fixed some issues where the text box in chat wasn't adjusting properly
+- More support for landscape mode
+- Various other bug fixes and improvements

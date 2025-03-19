@@ -65,14 +65,12 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             updateGroupUI(it)
         }
 
-        binding?.viewPager?.currentItem = 0
-
         setViewPagerAdapter()
 
         arguments?.let {
             val args = PartyFragmentArgs.fromBundle(it)
             binding?.viewPager?.post {
-                binding?.viewPager?.currentItem = args.tabToOpen
+                binding?.viewPager?.currentItem = savedInstanceState?.getInt("tab") ?: args.tabToOpen
             }
             if (args.partyID?.isNotBlank() == true) {
                 viewModel.setGroupID(args.partyID ?: "")
@@ -82,6 +80,11 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         viewModel.loadPartyID()
 
         viewModel.retrieveGroup {}
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("tab", binding?.viewPager?.currentItem ?: 0)
     }
 
     override fun onResume() {

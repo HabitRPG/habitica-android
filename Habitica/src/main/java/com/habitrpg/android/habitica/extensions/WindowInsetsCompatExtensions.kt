@@ -2,12 +2,18 @@ package com.habitrpg.android.habitica.extensions
 
 import android.os.Build
 import android.view.View
+import android.view.WindowInsets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 
 fun consumeWindowInsetsAbove30(insets: WindowInsetsCompat): WindowInsetsCompat {
     if (Build.VERSION.SDK_INT >= 30) return WindowInsetsCompat.CONSUMED
+    return insets
+}
+
+fun consumeWindowInsetsAbove30(insets: WindowInsets?): WindowInsets? {
+    if (Build.VERSION.SDK_INT >= 30) return WindowInsets.CONSUMED
     return insets
 }
 

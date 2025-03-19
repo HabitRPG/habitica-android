@@ -42,6 +42,7 @@ import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
@@ -102,7 +103,9 @@ abstract class BaseActivity : AppCompatActivity() {
     internal var navigationBarStyle: SystemBarStyle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
+        if (resources.getBoolean(R.bool.edge_to_edge)) {
+            enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
+        }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         resources.forceLocale(this, languageHelper.locale)
@@ -116,7 +119,6 @@ abstract class BaseActivity : AppCompatActivity() {
         loadTheme(sharedPreferences)
 
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         habiticaApplication
         getLayoutResId()?.let {
@@ -144,8 +146,11 @@ abstract class BaseActivity : AppCompatActivity() {
             ViewCompat.setOnApplyWindowInsetsListener(appbar) { v, windowInsets ->
                 val insets = windowInsets.getInsets(
                     WindowInsetsCompat.Type.systemBars()
-                    + WindowInsetsCompat.Type.displayCutout()
+                            + WindowInsetsCompat.Type.displayCutout()
                 )
+                val isImeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
+                val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                KeyboardUtil.updatePaddingForIme(isImeVisible, imeHeight, insets)
                 v.updatePadding(top = insets.top + paddingTop)
                 (v as AppBarLayout).children.forEach {
                     if (it !is TabLayout) {

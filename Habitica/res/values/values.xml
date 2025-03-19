@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <bool name="edge_to_edge">true</bool>
+
     <string-array name="repeatables_frequencies">
         <item>@string/repeatables_frequency_daily</item>
         <item>@string/repeatables_frequency_weekly</item>

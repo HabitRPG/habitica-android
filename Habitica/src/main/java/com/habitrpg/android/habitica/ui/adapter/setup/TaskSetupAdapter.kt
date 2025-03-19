@@ -23,6 +23,7 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
         for (ignored in this.taskList) {
             this.checkedList.add(false)
         }
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
