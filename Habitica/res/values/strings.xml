@@ -1523,6 +1523,7 @@
     <string name="customizations_no_owned">You don’t own any of these items</string>
     <string name="customization_shop_check_out">Head over to the Customization Shop to browse the many ways you can customize your avatar!</string>
     <string name="switches_in_x">Switches in %s</string>
+    <string name="next_switch_in_x">Next switch in %s</string>
     <string name="tap_to_reload">Refresh for new items</string>
     <string name="monthly_backgrounds">Monthly Backgrounds</string>
     <string name="winter">Winter</string>

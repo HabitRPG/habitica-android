@@ -146,7 +146,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                 is ShopCategory -> {
                     val sectionHolder = holder as? SectionViewHolder ?: return
                     sectionHolder.bind(obj.text)
-                    sectionHolder.bind(obj.endDate)
+                    sectionHolder.bind(obj.endDates)
                     (sectionHolder.headerContainer?.layoutParams as? LinearLayout.LayoutParams)?.topMargin = if (position > 1) {
                         40.dpToPx(context)
                     } else {
