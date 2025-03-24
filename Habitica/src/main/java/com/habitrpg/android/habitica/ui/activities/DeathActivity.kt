@@ -25,13 +25,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityDeathBinding
 import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
@@ -93,6 +97,17 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
         }
 
         binding.brokenEquipmentDescription.isVisible = !appConfigManager.showAltDeathText()
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainContent) { v, windowInsets ->
+            val insets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                or WindowInsetsCompat.Type.displayCutout())
+            v.updatePadding(top = insets.top,
+                left = insets.left,
+                right = insets.right,
+                bottom = insets.bottom)
+            consumeWindowInsetsAbove30(windowInsets)
+        }
 
         userViewModel.user.observeOnce(this) { user ->
             binding.lossDescription.text =

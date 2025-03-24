@@ -16,6 +16,7 @@
             android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/main_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
