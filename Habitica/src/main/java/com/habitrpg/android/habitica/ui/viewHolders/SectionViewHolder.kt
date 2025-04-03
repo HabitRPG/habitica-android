@@ -96,13 +96,16 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             )
     }
 
-    fun bind(endDate: Date?) {
-        if (endDate != null) {
+    fun bind(endDates: Set<Date>) {
+        if (endDates.isNotEmpty()) {
+            val nextDate = endDates.minOrNull() ?: return
             switchesInLabel?.visibility = View.VISIBLE
-            if (endDate.time < Date().time) {
+            if (nextDate.time < Date().time) {
                 switchesInLabel?.text = context.getString(R.string.tap_to_reload)
+            } else if (endDates.size > 1) {
+                switchesInLabel?.text = context.getString(R.string.next_switch_in_x, nextDate.getImpreciseRemainingString(context.resources))
             } else {
-                switchesInLabel?.text = context.getString(R.string.switches_in_x, endDate.getImpreciseRemainingString(context.resources))
+                switchesInLabel?.text = context.getString(R.string.switches_in_x, nextDate.getImpreciseRemainingString(context.resources))
             }
         } else {
             switchesInLabel?.visibility = View.GONE

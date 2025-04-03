@@ -240,6 +240,10 @@ class ChallengeFormActivity : BaseActivity() {
                 openNewTaskActivity(it.type, it)
             }
         }
+
+        binding.createChallengeTaskList.adapter = challengeTasks
+        binding.createChallengeTaskList.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(this)
         locationAdapter = GroupArrayAdapter(this)
 
         if (bundle != null) {
@@ -417,9 +421,6 @@ class ChallengeFormActivity : BaseActivity() {
                 }
             }
         )
-        binding.createChallengeTaskList.adapter = challengeTasks
-        binding.createChallengeTaskList.layoutManager =
-            androidx.recyclerview.widget.LinearLayoutManager(this)
     }
 
     private fun fillControlsByChallenge() {

@@ -4,3 +4,4 @@ New in 4.7.3
 - Fixed some issues where the text box in chat wasn't adjusting properly
 - More support for landscape mode
 - Various other bug fixes and improvements
+- Support for future events

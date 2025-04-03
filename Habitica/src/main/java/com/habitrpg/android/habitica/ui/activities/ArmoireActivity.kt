@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -43,7 +44,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 class ArmoireActivity : BaseActivity() {
@@ -122,6 +122,15 @@ class ArmoireActivity : BaseActivity() {
                 binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
                 binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
             }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainContent) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
+                or WindowInsetsCompat.Type.displayCutout())
+            v.updatePadding(top = insets.top)
+            binding.unsubbedWrapper.updatePadding(bottom = insets.bottom)
+            binding.dropRateButton.updatePadding(bottom = insets.bottom)
+            consumeWindowInsetsAbove30(windowInsets)
         }
 
         binding.progressView.setContent {

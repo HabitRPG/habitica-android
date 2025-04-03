@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -154,7 +153,8 @@ class NavigationDrawerFragment : DialogFragment() {
 
         binding?.menuHeaderView?.let {
             ViewCompat.setOnApplyWindowInsetsListener(it) { v, windowInsets ->
-                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
+                    or WindowInsetsCompat.Type.displayCutout())
                 v.updatePadding(top = insets.top)
                 consumeWindowInsetsAbove30(windowInsets)
             }
@@ -731,7 +731,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 openDrawer()
             }
         } else {
-            containerView?.isVisible = containerView.isVisible != true
+            containerView?.isVisible = containerView?.isVisible != true
         }
     }
 
