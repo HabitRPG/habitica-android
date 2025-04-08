@@ -242,12 +242,6 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
                 "type" to type.name
             )
         )
-        FirebaseAnalytics.getInstance(activity).logEvent(
-            "adRewardEarned",
-            bundleOf(
-                Pair("type", type.name)
-            )
-        )
         rewardAction(true)
     }*/
 }

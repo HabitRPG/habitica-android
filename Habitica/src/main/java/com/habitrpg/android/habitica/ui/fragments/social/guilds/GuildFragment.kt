@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
@@ -70,12 +69,6 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
         setViewPagerAdapter()
         setFragments()
-
-        if (viewModel.groupID == "f2db2a7f-13c5-454d-b3ee-ea1f5089e601") {
-            context?.let {
-                FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null)
-            }
-        }
 
         viewModel.retrieveGroup { }
     }

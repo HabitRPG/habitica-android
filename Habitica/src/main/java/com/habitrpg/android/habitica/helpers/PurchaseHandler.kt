@@ -23,7 +23,6 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
@@ -122,7 +121,7 @@ class PurchaseHandler(
             }
 
             else -> {
-                FirebaseCrashlytics.getInstance().recordException(Throwable(result.debugMessage))
+                CrashReporter.recordException(Throwable(result.debugMessage))
             }
         }
     }
@@ -291,7 +290,7 @@ class PurchaseHandler(
             }
         if (skuDetailsResult.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
             Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
-            FirebaseCrashlytics.getInstance().recordException(
+            CrashReporter.recordException(
                 Throwable(
                     "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}"
                 )
@@ -496,7 +495,7 @@ class PurchaseHandler(
             }
         }
         processedPurchases.remove(purchase.orderId)
-        FirebaseCrashlytics.getInstance().recordException(throwable)
+        CrashReporter.recordException(throwable)
     }
 
     suspend fun checkForSubscription(): Purchase? {

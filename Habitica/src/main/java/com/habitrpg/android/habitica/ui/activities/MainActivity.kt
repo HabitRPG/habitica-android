@@ -46,8 +46,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.wearable.Wearable
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.MainNavDirections
@@ -60,6 +58,7 @@ import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
@@ -644,9 +643,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
             preferences?.sound?.let { soundManager.soundTheme = it }
 
-            val crashlytics = Firebase.crashlytics
-            crashlytics.setCustomKey("day_start", user.preferences?.dayStart ?: 0)
-            crashlytics.setCustomKey("timezone_offset", user.preferences?.timezoneOffset ?: 0)
+            CrashReporter.setCustomKey("day_start", user.preferences?.dayStart ?: 0)
+            CrashReporter.setCustomKey("timezone_offset", user.preferences?.timezoneOffset ?: 0)
+            Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
 
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user.id, userRepository, taskRepository)
@@ -865,7 +864,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             errorJob?.cancel()
         }
         lifecycleScope.launch(Dispatchers.Main) {
-            if (binding.content.connectionIssueView.visibility == View.VISIBLE) {
+            if (binding.content.connectionIssueView.isVisible) {
                 binding.content.connectionIssueView.visibility = View.GONE
             }
         }

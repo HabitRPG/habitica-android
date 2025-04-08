@@ -79,7 +79,8 @@ object Analytics {
             Amplitude(
                 Configuration(
                     context.getString(R.string.amplitude_app_id),
-                    context
+                    context,
+                    optOut = true,
                 )
             )
         firebase = FirebaseAnalytics.getInstance(context)
@@ -125,5 +126,15 @@ object Analytics {
 
     fun logException(t: Throwable) {
         FirebaseCrashlytics.getInstance().recordException(t)
+    }
+
+    fun setAnalyticsConsent(consents: Boolean?) {
+        if (consents == true) {
+            firebase.setAnalyticsCollectionEnabled(true)
+            amplitude.configuration.optOut = false
+        } else {
+            firebase.setAnalyticsCollectionEnabled(false)
+            amplitude.configuration.optOut = true
+        }
     }
 }

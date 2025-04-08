@@ -19,6 +19,10 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsTarget
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
@@ -72,12 +76,13 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
             showToolbar()
             enableToolbarScrolling()
         }
-        context?.let {
-            FirebaseAnalytics.getInstance(it).logEvent(
-                "fragment_view",
-                bundleOf(Pair("fragment", this::class.java.canonicalName))
-            )
-        }
+        Analytics.sendEvent(
+            "fragment_view",
+            EventCategory.NAVIGATION,
+            HitType.PAGEVIEW,
+            mapOf("fragment" to (this::class.java.canonicalName ?: "")),
+            AnalyticsTarget.FIREBASE
+        )
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }

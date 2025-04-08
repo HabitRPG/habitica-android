@@ -45,4 +45,5 @@ open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
     var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
     var tasks: UserTaskPreferences? = null
+    var analyticsConsent: Boolean? = null
 }

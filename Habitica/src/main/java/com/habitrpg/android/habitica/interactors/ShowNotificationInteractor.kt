@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsTarget
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
@@ -196,10 +199,8 @@ class ShowNotificationInteractor(
     }
 
     private fun logOnboardingEvents(type: String) {
-        if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(type)) {
-            FirebaseAnalytics.getInstance(activity).logEvent(type, null)
-        } else if (type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
-            FirebaseAnalytics.getInstance(activity).logEvent(type, null)
+        if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(type) || type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
+            Analytics.sendEvent(type, EventCategory.BEHAVIOUR, HitType.EVENT, null, AnalyticsTarget.FIREBASE)
         }
     }
 }

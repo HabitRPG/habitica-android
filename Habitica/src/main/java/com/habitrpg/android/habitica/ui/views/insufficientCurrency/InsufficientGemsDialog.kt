@@ -7,10 +7,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.interactors.InsufficientGemsUseCase
@@ -100,9 +103,12 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
                 purchaseButton.isVisible = true
 
                 purchaseButton?.setOnClickListener {
-                    FirebaseAnalytics.getInstance(context).logEvent(
+                    Analytics.sendEvent(
                         "purchased_gems_from_insufficient",
-                        bundleOf(Pair("gemPrice", gemPrice), Pair("sku", ""))
+                        EventCategory.BEHAVIOUR,
+                        HitType.EVENT,
+                        mapOf(Pair("gemPrice", gemPrice), Pair("sku", "")),
+                        AnalyticsTarget.FIREBASE
                     )
                     MainScope().launchCatching {
                         insufficientGemsUseCase.callInteractor(

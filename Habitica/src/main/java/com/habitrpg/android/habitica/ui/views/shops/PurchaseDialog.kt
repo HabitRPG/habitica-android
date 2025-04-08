@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.shops
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.media.metrics.Event
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -12,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
@@ -437,13 +438,16 @@ class PurchaseDialog(
     }
 
     private fun buyItem(quantity: Int) {
-        FirebaseAnalytics.getInstance(context).logEvent(
+        Analytics.sendEvent(
             "item_purchased",
-            bundleOf(
-                Pair("shop", shopIdentifier),
-                Pair("type", shopItem.purchaseType),
-                Pair("key", shopItem.key)
-            )
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
+            mapOf(
+                "shop" to (shopIdentifier ?: ""),
+                "type" to shopItem.purchaseType,
+                "key" to shopItem.key
+            ),
+            AnalyticsTarget.FIREBASE
         )
         HapticFeedbackManager.tap(buyButton)
         val snackbarText = arrayOf("")
