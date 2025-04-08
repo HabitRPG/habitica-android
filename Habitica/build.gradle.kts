@@ -34,7 +34,7 @@ android {
 
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters.addAll(
-            listOf("en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "uk", "zh", "zh-rTW")
+            listOf("en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "hu", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "uk", "zh", "zh-rTW")
         )
 
         buildConfigField("String", "STORE", "\"google\"")
