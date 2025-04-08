@@ -8,6 +8,7 @@ import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 
@@ -129,12 +130,9 @@ object Analytics {
     }
 
     fun setAnalyticsConsent(consents: Boolean?) {
-        if (consents == true) {
-            firebase.setAnalyticsCollectionEnabled(true)
-            amplitude.configuration.optOut = false
-        } else {
-            firebase.setAnalyticsCollectionEnabled(false)
-            amplitude.configuration.optOut = true
-        }
+        val isEnabled = consents == true
+        firebase.setAnalyticsCollectionEnabled(isEnabled)
+        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
+        amplitude.configuration.optOut = !isEnabled
     }
 }
