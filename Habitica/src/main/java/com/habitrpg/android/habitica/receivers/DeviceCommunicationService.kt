@@ -4,7 +4,7 @@ import android.content.Intent
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
-import com.habitrpg.android.habitica.ui.activities.LoginActivity
+import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.common.habitica.api.HostConfig
@@ -23,8 +23,8 @@ class DeviceCommunicationService : WearableListenerService() {
         super.onMessageReceived(event)
         when (event.path) {
             DeviceCommunication.REQUEST_AUTH -> processAuthRequest(event)
-            DeviceCommunication.SHOW_REGISTER -> openActivity(event, LoginActivity::class.java)
-            DeviceCommunication.SHOW_LOGIN -> openActivity(event, LoginActivity::class.java)
+            DeviceCommunication.SHOW_REGISTER -> openActivity(event, OnboardingActivity::class.java)
+            DeviceCommunication.SHOW_LOGIN -> openActivity(event, OnboardingActivity::class.java)
             DeviceCommunication.SHOW_RYA -> openActivity(event, MainActivity::class.java)
             DeviceCommunication.SHOW_TASK_EDIT -> openTaskForm(event)
         }

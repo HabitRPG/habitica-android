@@ -99,7 +99,7 @@
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
-            android:name=".ui.activities.LoginActivity"
+            android:name=".ui.activities.OnboardingActivity"
             android:label="@string/LoginActivityName"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:windowSoftInputMode="adjustResize">

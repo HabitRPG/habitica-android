@@ -4,7 +4,7 @@ targetSdk = "35"
 wearOsTargetSdk = "34"
 
 accompanist = "0.34.0"
-agp = "8.8.2"
+agp = "8.9.2"
 amplitude = "1.19.4"
 androidTest = "1.6.1"
 androidTestMonitor = "1.7.2"

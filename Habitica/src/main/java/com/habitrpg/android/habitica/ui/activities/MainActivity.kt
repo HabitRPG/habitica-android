@@ -230,7 +230,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         DataBindingUtils.configManager = appConfigManager
 
         if (!viewModel.isAuthenticated) {
-            val intent = Intent(this, IntroActivity::class.java)
+            val intent = Intent(this, OnboardingActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             return
@@ -643,8 +643,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
             preferences?.sound?.let { soundManager.soundTheme = it }
 
-            CrashReporter.setCustomKey("day_start", user.preferences?.dayStart ?: 0)
-            CrashReporter.setCustomKey("timezone_offset", user.preferences?.timezoneOffset ?: 0)
+            CrashReporter.setCustomKey("day_start", (user.preferences?.dayStart ?: 0).toString())
+            CrashReporter.setCustomKey("timezone_offset", (user.preferences?.timezoneOffset ?: 0).toString())
             Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
 
             displayDeathDialogIfNeeded()
