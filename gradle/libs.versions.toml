@@ -1,70 +1,76 @@
 [versions]
 minSdk = "26"
-targetSdk = "36"
+targetSdk = "35"
 wearOsTargetSdk = "34"
 
-agp = "8.10.1"
-amplitude = "1.21.2"
+accompanist = "0.34.0"
+agp = "8.9.2"
+amplitude = "1.19.4"
 androidTest = "1.6.1"
 androidTestMonitor = "1.7.2"
 androidTestRunner = "1.6.2"
 annotationApi = "1.3.2"
-appcompat = "1.7.1"
+appcompat = "1.7.0"
 billing = "7.1.1"
-coil = "3.2.0"
-compose = "1.8.2"
+coil = "3.0.4"
+compose = "1.7.8"
 composeActivity = "1.10.1"
 compose_compiler = "1.5.14"
 constraintlayout = "2.2.1"
-converterMoshi = "3.0.0"
+converterMoshi = "2.9.0"
 coordinatorlayout = "1.3.0"
 coreSplashscreen = "1.1.0-rc01"
-core_ktx = "1.16.0"
-coroutines = "1.10.2"
-crashlytics = "3.0.4"
+core_ktx = "1.15.0"
+coroutines = "1.10.1"
+crashlytics = "3.0.3"
 credentials = "1.5.0"
-daggerhilt = "2.56.2"
+daggerhilt = "2.55"
 desuggar = "2.1.5"
-detekt = "1.23.8"
+detekt = "1.19.0"
+deviceNames = "2.1.1"
 firebase-perf = "1.4.2"
-firebase_bom = "33.15.0"
+firebase_bom = "33.12.0"
 flexbox = "3.0.0"
-fragmentKtx = "1.8.8"
+fragmentKtx = "1.8.6"
+fragmentTesting = "1.8.6"
 google-service = "4.4.2"
 googleid = "1.1.1"
-gson = "2.13.1"
+gson = "2.12.0"
 habitRpgPlugin = "0.1.0"
 inAppReview = "2.0.2"
 junitKtx = "1.2.1"
 kaspresso = "1.6.0"
 kotest = "5.9.1"
-kotlin = "2.1.21"
-ksp = "2.1.20-2.0.1"
-ktlintPlugin = "12.3.0"
-leakCanary = "2.14"
-lifecycle = "2.9.1"
+kotlin = "2.1.10"
+ksp = "2.1.10-1.0.31"
+ktlintPlugin = "11.3.1"
+leakCanary = "2.10"
+lifecycle = "2.8.7"
+lifecycleRuntimeKtx = "2.8.7"
 markwon = "4.6.2"
 material = "1.12.0"
-material3 = "1.3.2"
-mockk = "1.14.2"
-moshiKotlin = "1.15.2"
-navigation = "2.9.0"
+material3 = "1.3.1"
+mockk = "1.13.6"
+moshiKotlin = "1.15.0"
+navigation = "2.8.9"
 okhttp = "4.12.0"
 orchestrator = "1.5.1"
+pagerIndicator = "2.4.1"
 paging = "3.3.6"
 play_auth = "21.3.0"
 play_wearables = "19.0.0"
 preferences = "1.2.1"
 realmPlugin = "10.19.0"
 recyclerview = "1.4.0"
-retrofit = "3.0.0"
+retrofit = "2.11.0"
 shimmer = "0.5.0"
 swipeRefresh = "1.1.0"
-turbine = "1.2.1"
+turbine = "1.2.0"
 wear = "1.3.0"
 wearInput = "1.1.0"
 
 [libraries]
+accompanist-theme = { group = "com.google.accompanist", name = "accompanist-themeadapter-material3", version.ref = "accompanist" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
 amplitude-analytic = { group = "com.amplitude", name = "analytics-android", version.ref = "amplitude" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -84,6 +90,7 @@ coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 credentials-playServicesAuth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desuggar" }
+device-names = { group = "com.jaredrummler", name = "android-device-names", version.ref = "deviceNames" }
 firebase-analytic = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase_bom" }
 firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
@@ -111,7 +118,7 @@ kotlinx-coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakCanary" }
 lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
 markwon-core = { group = "io.noties.markwon", name = "core", version.ref = "markwon" }
@@ -143,7 +150,7 @@ shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shi
 swipeRefreshLayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipeRefresh" }
 test-core = { group = "androidx.test", name = "core", version.ref = "androidTest" }
 test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidTest" }
-test-fragment = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentKtx" }
+test-fragment = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentTesting" }
 test-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 test-monitor = { group = "androidx.test", name = "monitor", version.ref = "androidTestMonitor" }
 test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "orchestrator" }
@@ -152,6 +159,7 @@ test-runner = { group = "androidx.test", name = "runner", version.ref = "android
 text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "compose" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
+viewPagerIndicator = { group = "fr.avianey.com.viewpagerindicator", name = "library", version.ref = "pagerIndicator" }
 viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 wear = { module = "androidx.wear:wear", version.ref = "wear" }
 wear-input = { module = "androidx.wear:wear-input", version.ref = "wearInput" }

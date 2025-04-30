@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -40,10 +39,9 @@ enum class LoginFieldState {
 fun LoginScreenField(
     label: String,
     value: String,
+    icon: @Composable () -> Unit,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    icon: @Composable (() -> Unit)? = null,
-    prefix: @Composable () -> Unit = {},
     state: LoginFieldState = LoginFieldState.DEFAULT,
     hideInput: Boolean = false,
 ) {
@@ -59,7 +57,7 @@ fun LoginScreenField(
                     Image(
                         painterResource(R.drawable.ic_close_white_18dp),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(colorResource(R.color.red_100))
+                        colorFilter = ColorFilter.tint(colorResource(R.color.red_500))
                     )
                 } else if (it == LoginFieldState.VALID) {
                     Image(
@@ -75,7 +73,6 @@ fun LoginScreenField(
         },
         singleLine = true,
         trailingIcon = icon,
-        prefix = prefix,
         textStyle = TextStyle(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal
@@ -86,18 +83,14 @@ fun LoginScreenField(
             errorContainerColor = containerColor,
             unfocusedTextColor = Color.White,
             focusedTextColor = Color.White,
-            errorTextColor = colorResource(R.color.red_100),
+            errorTextColor = colorResource(R.color.red_500),
             unfocusedPlaceholderColor = colorResource(R.color.brand_600),
             focusedPlaceholderColor = colorResource(R.color.brand_600).copy(alpha = 0.5f),
             unfocusedIndicatorColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
             errorIndicatorColor = Color.Transparent,
             unfocusedTrailingIconColor = colorResource(R.color.brand_100),
-            cursorColor = Color.White,
-            selectionColors = TextSelectionColors(
-                handleColor = colorResource(R.color.brand_600),
-                backgroundColor = colorResource(R.color.brand_600).copy(alpha = 0.3f)
-            ),
+            cursorColor = Color.White
         ),
         shape = HabiticaTheme.shapes.large,
         modifier = modifier.fillMaxWidth().heightIn(min = 60.dp),

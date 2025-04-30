@@ -51,7 +51,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.Wearable
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
@@ -236,11 +235,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         super.onCreate(savedInstanceState)
         DataBindingUtils.configManager = appConfigManager
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val step = preferences.getInt("last_onboarding_step", 0)
-        if (!viewModel.isAuthenticated ||
-            step == OnboardingSteps.SETUP.id ||
-            step == OnboardingSteps.USERNAME.id){
+        if (!viewModel.isAuthenticated) {
             val intent = Intent(this, OnboardingActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
@@ -668,8 +663,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
             preferences?.sound?.let { soundManager.soundTheme = it }
 
-            CrashReporter.setCustomKey("day_start", (user.preferences?.dayStart ?: 0).toString())
-            CrashReporter.setCustomKey("timezone_offset", (user.preferences?.timezoneOffset ?: 0).toString())
+            CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
+            CrashReporter.setCustomKey("timezone_offset", "${user.preferences?.timezoneOffset ?: 0}")
             Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
 
             displayDeathDialogIfNeeded()

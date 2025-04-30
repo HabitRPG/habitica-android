@@ -33,7 +33,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
 import com.habitrpg.android.habitica.ui.views.LoginScreenField
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
 @Composable
 fun LoginForm(
@@ -41,16 +40,11 @@ fun LoginForm(
     email: String,
     emailFieldState: LoginFieldState,
     onEmailChange: (String) -> Unit,
-    username: String,
-    usernameFieldState: LoginFieldState,
-    onUsernameChange: (String) -> Unit,
     password: String,
     passwordFieldState: LoginFieldState,
     onPasswordChange: (String) -> Unit,
     isRegistering: Boolean,
-    showUsernameField: Boolean,
     onSubmit: () -> Unit,
-    showLoading: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var confirmPassword by remember { mutableStateOf("") }
@@ -117,21 +111,6 @@ fun LoginForm(
             },
             modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 10.dp),
         )
-        AnimatedVisibility(isRegistering && showUsernameField) {
-            LoginScreenField(
-                label = stringResource(R.string.username),
-                value = username,
-                onValueChange = onUsernameChange,
-                state = usernameFieldState,
-                icon = {
-                    Image(
-                        painterResource(R.drawable.login_username),
-                        contentDescription = stringResource(R.string.username)
-                    )
-                },
-                modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 10.dp),
-            )
-        }
         LoginScreenField(
             label = stringResource(R.string.password),
             value = password,
@@ -166,45 +145,33 @@ fun LoginForm(
                 modifier = Modifier.Companion.fillMaxWidth().padding(top = 10.dp),
             )
         }
-        AnimatedContent(showLoading) { isLoading ->
-            if (isLoading) {
-                HabiticaCircularProgressView(indicatorSize = 64.dp, modifier = Modifier.padding(top = 30.dp))
-            } else {
-                Button(
-                    {
-                        onSubmit()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Companion.White,
-                        contentColor = colorResource(R.color.gray_50),
-                        disabledContainerColor = Color.White.copy(alpha = 0.5f),
-                    ),
-                    shape = HabiticaTheme.shapes.large,
-                    contentPadding = PaddingValues(15.dp),
-                    enabled = if (isRegistering) {
-                        (emailFieldState == LoginFieldState.VALID && passwordFieldState == LoginFieldState.VALID && password == confirmPassword)
-                    } else {
-                        (email.isNotBlank() && password.isNotBlank())
-                    },
-                    modifier = Modifier.Companion.fillMaxWidth().padding(top = 30.dp)
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.Companion.CenterVertically
-                    ) {
-                        if (isRegistering) {
-                            Text(
-                                stringResource(R.string.action_continue),
-                                fontWeight = FontWeight.Companion.Bold,
-                                fontSize = 18.sp
-                            )
-                        } else {
-                            Text(
-                                stringResource(R.string.login_btn), fontWeight = FontWeight.Companion.Bold,
-                                fontSize = 18.sp
-                            )
-                        }
-                    }
+        Button(
+            {
+                onSubmit()
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Companion.White,
+                contentColor = colorResource(R.color.gray_50),
+                disabledContainerColor = Color.White.copy(alpha = 0.5f),
+            ),
+            shape = HabiticaTheme.shapes.large,
+            contentPadding = PaddingValues(15.dp),
+            enabled = (emailFieldState == LoginFieldState.VALID && passwordFieldState == LoginFieldState.VALID && (!isRegistering || password == confirmPassword)),
+            modifier = Modifier.Companion.fillMaxWidth().padding(top = 30.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.Companion.CenterVertically
+            ) {
+                if (isRegistering) {
+                    Text(
+                        stringResource(R.string.action_continue),
+                        fontWeight = FontWeight.Companion.Bold,
+                        fontSize = 18.sp
+                    )
+                } else {
+                    Text(stringResource(R.string.login_btn), fontWeight = FontWeight.Companion.Bold,
+                        fontSize = 18.sp)
                 }
             }
         }

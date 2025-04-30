@@ -22,13 +22,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
@@ -59,29 +59,18 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow: Boolean, onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
-    val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
-    val authenticationError by authenticationViewModel.authenticationError.collectAsState(null)
-
-    LaunchedEffect(authenticationViewModel) {
-        authenticationViewModel.authenticationSuccess.collect { isRegistering ->
-            onNextOnboardingStep(isRegistering)
-        }
-    }
-
+fun LoginScreen(onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+    val viewModel: AuthenticationViewModel = viewModel()
+    val scrollState = rememberScrollState()
     var loginScreenState by remember { mutableStateOf(LoginScreenState.INITIAL) }
-    var password by authenticationViewModel.password
+    var password by remember { mutableStateOf("") }
     var passwordFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
-    var email by authenticationViewModel.email
+    var email by remember { mutableStateOf("") }
     var emailFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
-    var username by authenticationViewModel.username
-    var usernameFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     Box(modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
-                val layout = context.layoutInflater.inflate(R.layout.login_background, null)
-                (layout as? LockableScrollView)?.isScrollable = false
-                layout
+                context.layoutInflater.inflate(R.layout.login_background, null)
             },
             modifier = Modifier.fillMaxSize(),
         )
@@ -179,8 +168,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                         emailFieldState = emailFieldState,
                         onEmailChange = {
                             email = it
-                            emailFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
-                                if (it.isEmpty()) {
+                            if (loginScreenState == LoginScreenState.REGISTER) {
+                                emailFieldState = if (it.isEmpty()) {
                                     LoginFieldState.DEFAULT
                                 } else if (Patterns.EMAIL_ADDRESS.matcher(it).matches()) {
                                     LoginFieldState.VALID
@@ -188,20 +177,15 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                                     LoginFieldState.ERROR
                                 }
                             } else {
-                                LoginFieldState.DEFAULT
+                                emailFieldState = LoginFieldState.DEFAULT
                             }
-                        },
-                        username = username,
-                        usernameFieldState = usernameFieldState,
-                        onUsernameChange = {
-                            username = it
                         },
                         password = password,
                         passwordFieldState = passwordFieldState,
                         onPasswordChange = {
                             password = it
-                            passwordFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
-                                if (it.isEmpty()) {
+                            if (loginScreenState == LoginScreenState.REGISTER) {
+                                passwordFieldState = if (it.isEmpty()) {
                                     LoginFieldState.DEFAULT
                                 } else if (it.length >= 8) {
                                     LoginFieldState.VALID
@@ -209,23 +193,17 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                                     LoginFieldState.ERROR
                                 }
                             } else {
-                                LoginFieldState.DEFAULT
+                                passwordFieldState = LoginFieldState.DEFAULT
                             }
                         },
                         isRegistering = loginScreenState == LoginScreenState.REGISTER,
-                        showUsernameField = !useNewAuthFlow,
                         onSubmit = {
                             if (loginScreenState == LoginScreenState.REGISTER) {
-                                if (useNewAuthFlow) {
-                                    authenticationViewModel.checkEmail()
-                                } else {
-                                    authenticationViewModel.register()
-                                }
+                                // TODO: Implement registration
                             } else {
-                                authenticationViewModel.login()
+                                viewModel.login(email, password)
                             }
                         },
-                        showLoading = showLoading
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
