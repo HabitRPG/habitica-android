@@ -32,19 +32,16 @@ import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.PlayerTier
-import com.jaredrummler.android.device.DeviceName
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.max
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
-    private var deviceInfo: DeviceName.DeviceInfo? = null
     override var binding: FragmentFaqOverviewBinding? = null
 
     @Inject
@@ -73,7 +70,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 0
             )?.versionName
                 ?: ""
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             ""
         }
     }
@@ -86,7 +83,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 0
             )?.versionCode
                 ?: 0
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             0
         }
     }
@@ -111,12 +108,6 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         binding?.npcHeader?.npcBannerView?.identifier = "tavern"
         binding?.npcHeader?.namePlate?.setText(R.string.tavern_owner)
         binding?.npcHeader?.descriptionView?.isVisible = false
-
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            DeviceName.with(context).request { info, _ ->
-                deviceInfo = info
-            }
-        }
 
         binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
             HabiticaIconsHelper.imageOfHeartLarge()
@@ -203,8 +194,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
-        val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
+        val deviceName = Build.MODEL
+        val manufacturer = Build.MANUFACTURER
         val newLine = "%0D%0A"
         var bodyOfEmail =
             Uri.encode("Device: $manufacturer $deviceName") +
@@ -256,7 +247,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 "mailto:" + appConfigManager.supportEmail() +
                     "?subject=" + Uri.encode(subject) +
                     "&body=" + bodyOfEmail
-            emailIntent.data = Uri.parse(mailto)
+            emailIntent.data = mailto.toUri()
 
             startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"))
         }

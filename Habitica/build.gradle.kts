@@ -158,8 +158,6 @@ dependencies {
     //Desugaring
     coreLibraryDesugaring(libs.desugar)
 
-    implementation(libs.device.names)
-
     // IAP Handling / Verification
     implementation(libs.billing)
 

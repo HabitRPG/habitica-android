@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
 import com.habitrpg.android.habitica.databinding.KnownIssueBinding
@@ -18,16 +17,13 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
-import com.jaredrummler.android.device.DeviceName
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
-    private var deviceInfo: DeviceName.DeviceInfo? = null
     override var binding: FragmentSupportBugFixBinding? = null
 
     override fun createBinding(
@@ -59,12 +55,6 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            DeviceName.with(context).request { info, _ ->
-                deviceInfo = info
-            }
-        }
-
         binding?.reportBugButton?.setOnClickListener {
             sendEmail("[Android] Bugreport")
         }
@@ -89,7 +79,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                 0
             )?.versionName
                 ?: ""
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             ""
         }
     }
@@ -102,15 +92,15 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                 0
             )?.versionCode
                 ?: 0
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
             0
         }
     }
 
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
-        val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
+        val deviceName = Build.MODEL
+        val manufacturer = Build.MANUFACTURER
         val newLine = "%0D%0A"
         var bodyOfEmail =
             Uri.encode("Device: $manufacturer $deviceName") +
@@ -162,7 +152,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                 "mailto:" + appConfigManager.supportEmail() +
                     "?subject=" + Uri.encode(subject) +
                     "&body=" + bodyOfEmail
-            emailIntent.data = Uri.parse(mailto)
+            emailIntent.data = mailto.toUri()
 
             startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"))
         }
