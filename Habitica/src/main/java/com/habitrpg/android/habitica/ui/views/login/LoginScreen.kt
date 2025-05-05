@@ -22,12 +22,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +47,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
@@ -59,18 +59,27 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
-    val viewModel: AuthenticationViewModel = viewModel()
-    val scrollState = rememberScrollState()
+fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+    val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
+    val authenticationError by authenticationViewModel.authenticationError.collectAsState(null)
+
+    LaunchedEffect(authenticationViewModel) {
+        authenticationViewModel.authenticationSuccess.collect { isRegistering ->
+            onNextOnboardingStep(isRegistering)
+        }
+    }
+
     var loginScreenState by remember { mutableStateOf(LoginScreenState.INITIAL) }
-    var password by remember { mutableStateOf("") }
+    var password by authenticationViewModel.password
     var passwordFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
-    var email by remember { mutableStateOf("") }
+    var email by authenticationViewModel.email
     var emailFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     Box(modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
-                context.layoutInflater.inflate(R.layout.login_background, null)
+                val layout = context.layoutInflater.inflate(R.layout.login_background, null)
+                (layout as? LockableScrollView)?.isScrollable = false
+                layout
             },
             modifier = Modifier.fillMaxSize(),
         )
@@ -199,11 +208,12 @@ fun LoginScreen(onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Mo
                         isRegistering = loginScreenState == LoginScreenState.REGISTER,
                         onSubmit = {
                             if (loginScreenState == LoginScreenState.REGISTER) {
-                                // TODO: Implement registration
+                                authenticationViewModel.register("", email, password, password)
                             } else {
-                                viewModel.login(email, password)
+                                authenticationViewModel.login(email, password)
                             }
                         },
+                        showLoading = showLoading
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
