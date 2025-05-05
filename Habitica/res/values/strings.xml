@@ -610,7 +610,7 @@
     <string name="insufficientHourglasses">You\'ll need more Mystic Hourglasses to buy this item!</string>
     <string name="get_hourglasses">Get hourglasses</string>
     <string name="subscribe_for_hourglasses">Subscribe for Hourglasses</string>
-    <string name="timetravelers_closed_description">Earn one Mystic Hourglass for every three months of consecutive subscription, then use them to unlock limited edition items, pets, and mounts from the past… and future!</string>
+    <string name="timetravelers_closed_description">Earn one Mystic Hourglass for every month of subscription, then use them to unlock limited edition items, pets, and mounts from the past… and future!</string>
     <string name="want_to_subscribe">I want to Subscribe</string>
     <string name="seasonal_closed_description">The Grand Galas happen close to the solstices and equinoxes, so check back then to find a fun assortment of special seasonal items!</string>
     <string name="come_back_soon">Come back soon!</string>
@@ -1047,7 +1047,7 @@
     <string name="common_questions">Common Questions</string>
     <string name="game_mechanics">Game Mechanics</string>
     <string name="subscriber_currency">Subscriber Currency</string>
-    <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica for three consecutive months or more. They are used in the Time Traveler’s shop to buy past gear sets, pets, mounts, animated backgrounds, or even special quests.\n\nYou can receive up to four Mystic Hourglasses a year. The time they are rewarded is based on your subscription renewal schedule. They are sent out on the first day of a new month after your last subscription payment that qualified you for an hourglass. See the [Subscription] page for more details.</string>
+    <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica. You can use them in the Time Travelers Shop to buy past Subscriber Gear sets, exclusive Pets, Mounts, animated Backgrounds, or even special Quests! These extra perks are a great way to stay motivated through the year and reward yourself for a job well done.\n\nSubscribers receive a Mystic Hourglass at the start of each month they have subscription benefits, along with a bunch of other perks. Be sure to check out our subscription options if you’re interested in what the Time Travelers have to offer!</string>
     <string name="clear_cache">Clear your Cache</string>
     <string name="clear_cache_description"><![CDATA[To clear your cache, open your phone’s Settings app. Go to Storage > Apps >  Habitica, then tap Clear Cache.]]></string>
     <string name="manual_sync_restart">Manual Sync or Restart</string>
