@@ -48,16 +48,6 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".ui.activities.IntroActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".ui.activities.SetupActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name=".ui.activities.SkillTasksActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">

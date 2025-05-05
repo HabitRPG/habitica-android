@@ -122,7 +122,7 @@ fun IntroScreen(onNextOnboardingStep: () -> Unit) {
             bottomColor = colorResource(R.color.brand_100).blend(colorResource(R.color.blue_10), pageOffset)
         } else {
             topColor = colorResource(R.color.brand_400)
-            bottomColor = colorResource(R.color.brand_200)
+            bottomColor = colorResource(R.color.brand_100)
         }
     } else if (pagerState.currentPage < 2) {
         if (pageOffset > 0) {

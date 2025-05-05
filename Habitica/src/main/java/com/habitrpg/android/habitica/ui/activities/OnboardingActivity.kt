@@ -8,6 +8,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -42,6 +43,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.intro.IntroScreen
 import com.habitrpg.android.habitica.ui.views.login.LoginScreen
@@ -67,7 +69,9 @@ enum class OnboardingSteps {
 class OnboardingActivity: BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
 
-    val currentStep = mutableStateOf(OnboardingSteps.INTRO)
+    val authenticationViewModel: AuthenticationViewModel by viewModels()
+
+    val currentStep = mutableStateOf(OnboardingSteps.SETUP)
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -93,7 +97,7 @@ class OnboardingActivity: BaseActivity() {
                 AnimatedContent(step,
                     transitionSpec = {
                         (expandVertically(
-                            initialHeight = { fullHeight -> (fullHeight * 0.7f).roundToInt() }
+                            initialHeight = { fullHeight -> (fullHeight * 0.3f).roundToInt() }
                         )+fadeIn())
                             .togetherWith(
                                 slideOutVertically(
@@ -105,16 +109,20 @@ class OnboardingActivity: BaseActivity() {
                         OnboardingSteps.INTRO -> IntroScreen({
                             currentStep.value = OnboardingSteps.LOGIN
                         })
-                        OnboardingSteps.LOGIN -> LoginScreen({ newUser ->
+                        OnboardingSteps.LOGIN -> LoginScreen(authenticationViewModel,{ newUser ->
                             if (newUser) {
                                 currentStep.value = OnboardingSteps.USERNAME
                             } else {
                                 startMainActivity()
                             }
                         })
-                        OnboardingSteps.USERNAME -> UsernameSelectionScreen({
-                            currentStep.value = OnboardingSteps.SETUP
-                        })
+                        OnboardingSteps.USERNAME -> UsernameSelectionScreen(authenticationViewModel,
+                            {
+                                currentStep.value = OnboardingSteps.LOGIN
+                            }, {
+                                currentStep.value = OnboardingSteps.SETUP
+                            }
+                        )
                         OnboardingSteps.SETUP -> SetupScreen({
                             startMainActivity()
                         })

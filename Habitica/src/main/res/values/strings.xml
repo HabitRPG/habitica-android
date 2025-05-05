@@ -5,4 +5,7 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="need_an_account">Need an account?</string>
     <string name="enjoy_getting_things_done">Enjoy having fun getting things done</string>
+    <string name="what_should_call_you">What should we call you?</string>
+    <string name="get_started">Get Started</string>
+    <string name="username_description">This is a unique name you can change later at any time!</string>
 </resources>

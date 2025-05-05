@@ -113,14 +113,6 @@
                 android:value="com.habitrpg.android.habitica.ui.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.activities.IntroActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-        <activity
-            android:name=".ui.activities.SetupActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
-        <activity
             android:name=".ui.activities.SkillTasksActivity">
         </activity>
         <activity

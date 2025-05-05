@@ -752,6 +752,7 @@
     <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
     <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
     <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="register_tos_confirm">You agree to our <a href="https://habitica.com/static/terms">Terms of Service</a> and have read our <a href="https://habitica.com/static/privacy">Privacy Policy</a>.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
