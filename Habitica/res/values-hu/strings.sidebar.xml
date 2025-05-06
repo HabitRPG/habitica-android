@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sidebar_gems">Vásárolj Gyémántot</string>
-    <string name="sidebar_section_inventory">Felszerelés</string>
+    <string name="sidebar_gems">Gyémánt vásárlása</string>
+    <string name="sidebar_section_inventory">Leltár</string>
     <string name="sidebar_inbox">Üzenetek</string>
     <string name="sidebar_party">Csapat</string>
-    <string name="sidebar_stats">Statisztikák</string>
+    <string name="sidebar_stats">Tulajdonságok</string>
     <string name="sidebar_skills">Képességek</string>
     <string name="sidebar_subscription">Előfizetés</string>
     <string name="sidebar_tasks">Feladatok</string>
-    <string name="sidebar_about">Rólunk</string>
+    <string name="sidebar_about">Névjegy</string>
     <string name="sidebar_section_social">Közösség</string>
     <string name="sidebar_shops">Boltok</string>
-    <string name="sidebar_news">Újdonságok</string>
-    <string name="sidebar_avatar">Avatár Testreszabása</string>
+    <string name="sidebar_news">Hírek</string>
+    <string name="sidebar_avatar">Avatár testreszabása</string>
     <string name="sidebar_challenges">Kihívások</string>
     <string name="sidebar_equipment">Felszerelés</string>
-    <string name="sidebar_stable">Kisállatok &amp; Hátasok</string>
-    <string name="sidebar_avatar_equipment">Avatár &amp; Felszerelés</string>
+    <string name="sidebar_stable">Kisállatok és hátasok</string>
+    <string name="sidebar_avatar_equipment">Avatár és felszerelés</string>
 </resources>

@@ -7,7 +7,7 @@
     <string name="sidebar_party">隊伍</string>
     <string name="sidebar_challenges">挑戰</string>
     <string name="sidebar_section_inventory">物品欄</string>
-    <string name="sidebar_avatar">頭像自定義</string>
+    <string name="sidebar_avatar">自定義頭像</string>
     <string name="sidebar_equipment">裝備</string>
     <string name="sidebar_stable">寵物和坐騎</string>
     <string name="sidebar_news">消息</string>
@@ -16,4 +16,5 @@
     <string name="sidebar_stats">統計</string>
     <string name="sidebar_subscription">訂閱</string>
     <string name="sidebar_gems">購買寶石</string>
+    <string name="sidebar_avatar_equipment">角色與裝備</string>
 </resources>

@@ -1,17 +1,20 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">משימות</string>
-  <string name="sidebar_skills">מיומניויות</string>
-  <string name="sidebar_section_social">חברתי</string>
-  <string name="sidebar_party">חבורה</string>
-  <string name="sidebar_challenges">אתגרים</string>
-  <string name="sidebar_section_inventory">מלאי ציוד</string>
-  <string name="sidebar_avatar">דמות</string>
-  <string name="sidebar_equipment">ציוד</string>
-  <string name="sidebar_stable">אורווה</string>
-  <string name="sidebar_news">חדשות</string>
+    <string name="sidebar_tasks">משימות</string>
+    <string name="sidebar_skills">יכולות</string>
+    <string name="sidebar_section_social">חברתי</string>
+    <string name="sidebar_party">חבורה</string>
+    <string name="sidebar_challenges">אתגרים</string>
+    <string name="sidebar_section_inventory">מלאי ציוד</string>
+    <string name="sidebar_avatar">התאמה אישית של הדמות</string>
+    <string name="sidebar_equipment">ציוד</string>
+    <string name="sidebar_stable">חיות מחמד ורכיבה</string>
+    <string name="sidebar_news">חדשות</string>
     <string name="sidebar_about">אודות</string>
-  <string name="sidebar_shops">חנויות</string>
-<string name="sidebar_inbox">הודעות</string>
-    <string name="sidebar_stats">נתונים סטטיסטיים</string>
+    <string name="sidebar_shops">חנויות</string>
+    <string name="sidebar_inbox">הודעות</string>
+    <string name="sidebar_stats">מדדים</string>
+    <string name="sidebar_gems">רכישת אבני חן</string>
+    <string name="sidebar_subscription">מנוי</string>
+    <string name="sidebar_avatar_equipment">דמות וציוד</string>
 </resources>

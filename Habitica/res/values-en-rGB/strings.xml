@@ -1043,4 +1043,5 @@
     <string name="spooky_promo_info_instructions">Between %1$s and %2$s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="view_gem_bundles">View Gem Bundles</string>
     <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time for a Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
+    <string name="x_and_y">%1$s and %2$s</string>
 </resources>

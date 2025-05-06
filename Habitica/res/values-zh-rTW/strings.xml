@@ -108,7 +108,7 @@
     <string name="quest_begin">開始執行副本</string>
     <string name="quest_cancel">取消邀請</string>
     <string name="quest_abort">放棄副本</string>
-    <string name="version_info">版本 %1$s (%2$d)</string>
+    <string name="version_info">版本%1$s (%2$d)</string>
     <string name="sidebar_help">幫助 &amp; 常見問題</string>
     <string name="complete_tutorial">瞭解！</string>
     <string name="dismiss_tutorial">再次提醒我</string>
@@ -224,8 +224,8 @@
     <string name="healer_description">醫師們對傷害的抗性很強，也可以保護其他的人。錯過的日常任務和壞習慣無法傷害他們太多，而且他們有很多回血的技能。如果你熱衷於輔助其他的隊友，或者是享受那種從死神手里奪取生命的快感，那就成為一名醫師吧！醫師可以從較高的體質屬性中受益。</string>
     <string name="select_class">選擇職業</string>
     <string name="opt_out_class">退出</string>
-    <string name="class_confirmation">你確定想要成為%1$s嗎？</string>
-    <string name="class_changed">你成為了%s！</string>
+    <string name="class_confirmation">你確定想要成為%s嗎？</string>
+    <string name="class_changed">你現在是%s了！</string>
     <string name="choose_class">選擇職業</string>
     <string name="dialog_go_back">返回</string>
     <string name="opt_out_confirmation">你確定要退出嗎？</string>
@@ -236,7 +236,7 @@
     <string name="by_email">通過電子郵件</string>
     <string name="invite_existing_users">邀請現有玩家</string>
     <string name="send">送出</string>
-    <string name="invite">邀請朋友</string>
+    <string name="invite">尋找隊友</string>
     <string name="invite_email_description">如果您的朋友透過電子郵件加入 Habitica，他們將會自動被邀請加入您的隊伍!</string>
     <string name="add_invites">添加邀請</string>
     <string name="email">Email</string>
@@ -245,8 +245,8 @@
     <string name="share_hatched">我剛剛在#Habitica中通完成我現實生活中的任務孵化了一隻寵物%1$s %2$s！</string>
     <string name="share_raised">我剛剛在#Habitica中通完成我現實生活中的任務得到了一匹%1$s坐騎！</string>
     <string name="open_in_store">在應用商店中打開</string>
-    <string name="change_class_confirmation">你確定要變更職業嗎？這會花費3寶石。</string>
-    <string name="change_class_equipment_warning">提示：你無法再購買%s職業的裝備了（已頂級）。</string>
+    <string name="change_class_confirmation">你想要花費3顆寶石變更職業嗎？</string>
+    <string name="change_class_equipment_warning">這將退還你的屬性點數，切換商店中解鎖的裝備，並改變你可使用的技能。</string>
     <string name="confirm">確認</string>
     <string name="market">市場</string>
     <string name="timeTravelers">時空旅行者</string>
@@ -296,9 +296,9 @@
     <string name="has_reminder">有提醒</string>
     <string name="has_tag">有標籤</string>
     <string name="subscribe_title">訂閱可以支持開發人員並幫助 Habitica 持續營運</string>
-    <string name="subscribe_prompt">成為訂閱者你會得到這些優勢的好處！</string>
-    <string name="subscribe_listitem1">用金幣購買寶石</string>
-    <string name="subscribe_listitem2">神秘沙漏</string>
+    <string name="subscribe_prompt">成為訂閱者即可享受這些專屬福利！</string>
+    <string name="subscribe_listitem1">月度免費寶石</string>
+    <string name="subscribe_listitem2">月度神秘沙漏</string>
     <string name="subscribe_listitem3">每月神秘物品</string>
     <string name="subscribe_listitem4">特殊訂閱者寵物</string>
     <string name="subscriptions">訂閱</string>
@@ -657,7 +657,7 @@
     <string name="subscribe_listitem5_description">在Habitica發現更多的物品，每天享受雙倍的物品掉落上限。</string>
     <string name="subscribe_listitem4_description">如果您變成訂閱者，您可以獲得紫禦鹿角兔寵物。</string>
     <string name="subscribe_listitem3_description_new">現在訂閱，可以得到%s和每月得到新的物品！</string>
-    <string name="subscribe_listitem5">雙倍掉落</string>
+    <string name="subscribe_listitem5">特殊寵物，物品掉落率的提高</string>
     <string name="create_account_short">創建一個帳戶</string>
     <string name="login_incentive_short_count">簽到%d次</string>
     <string name="event">事件</string>
@@ -688,7 +688,7 @@
     <string name="quest_completed">副本已完成！</string>
     <string name="not_participating">你沒有參加這個副本</string>
     <string name="login_incentive_short">定期登錄Habitica</string>
-    <string name="party_invite_short">邀請朋友</string>
+    <string name="party_invite_short">尋找朋友</string>
     <string name="login_incentive_count">通過在Habitica簽到%d次來解鎖。</string>
     <string name="remaining_1hour">剩餘1小時</string>
     <string name="remaining_hours">剩餘%dh小時</string>
@@ -1217,4 +1217,32 @@
     <string name="delete_account_subscription_active">在訂閱時，你無法刪除你的帳號。請先取消訂閱。</string>
     <string name="cds_subtitle">調整你的日子什麼時候切換到默認的午夜。</string>
     <string name="death_description">但是你可以通過你的努力把它們贏回來！加油--你可以的。</string>
+    <string name="class_changed_description">現在你可以使用%s技能，並從商店購買裝備。提升等級可以獲得屬性點，用於增強技能。</string>
+    <string name="push_notification_system_settings_description">在系統設定中允許 Habitica 發送通知</string>
+    <string name="exact_alarm_system_settings_title">`警告和提醒` 已禁用`</string>
+    <string name="enable_class_description">選擇一種職業來啟用技能、狀態和魔力值</string>
+    <string name="choosing_class_progress">選擇職業</string>
+    <string name="change_class_confirmation_message">這將切換商店裡解鎖的裝備，並變更你可用的技能</string>
+    <string name="change_class_message">這會移除你目前的職業並退還所有屬性點，然後讓你重新選擇職業</string>
+    <string name="your_tags">你的標籤</string>
+    <string name="challenge_tags">挑戰標籤</string>
+    <string name="group_tags">群組標籤</string>
+    <plurals name="x_days">
+        <item quantity="other">%d天</item>
+    </plurals>
+    <plurals name="x_hours">
+        <item quantity="other">%d小時</item>
+    </plurals>
+    <plurals name="x_minutes">
+        <item quantity="other">%d分鐘</item>
+    </plurals>
+    <string name="push_notification_system_settings_reminders">在系統設定中允許 Habitica 發送提醒</string>
+    <string name="level_abbreviated">%d級</string>
+    <string name="change_class_selected_confirmation">你想要將你的職業改變成%1$s？</string>
+    <string name="enable_notifications">開啟通知</string>
+    <string name="push_notification_system_settings_title">通知已關閉</string>
+    <string name="title">標題</string>
+    <string name="positive_sentence">正面</string>
+    <string name="negative_sentence">負面</string>
+    <string name="x_and_y">%1$s 與 %2$s</string>
 </resources>

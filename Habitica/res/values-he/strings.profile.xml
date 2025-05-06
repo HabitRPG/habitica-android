@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_pets_and_mounts">חיות וחיות רכיבה</string>
+    <string name="profile_pets_and_mounts">חיות מחמד ורכיבה</string>
+    <string name="profile_allocated">הוקצאו:</string>
+    <string name="profile_loading_data">נתוני החבר נטענים…</string>
+    <string name="profile_mounts_tamed">חיות רכיבה שאולפו</string>
+    <string name="profile_class_bonus">בונוס מקצוע:</string>
+    <string name="profile_achievements">הישגים</string>
+    <string name="profile_send_message_to">שליחת הודעה אל %s</string>
+    <string name="profile_pets_found">חיות מחמד שנמצאו</string>
+    <string name="profile_message_sent_to">נשלחה הודעה אל %s</string>
+    <string name="profile_level">דרגה:</string>
 </resources>

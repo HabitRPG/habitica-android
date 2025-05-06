@@ -68,4 +68,7 @@
     <string name="login_validation_error_title">Error de validación</string>
     <string name="quadrillion_abbrev">Qd</string>
     <string name="complete_task_title">Completar una Tarea</string>
+    <string name="create_task_title">crea una tarea</string>
+    <string name="create_task">crear</string>
+    <string name="new_task_x">Nuevo %s</string>
 </resources>

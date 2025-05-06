@@ -328,7 +328,7 @@
     <string name="empty_title_rewards">Não tem quaisquer Recompensas</string>
     <string name="maintenance">Manutenção</string>
     <string name="reload_content">Recarregar Conteúdo</string>
-    <string name="save">Guardar</string>
+    <string name="save">Salvar</string>
     <string name="location">Localização</string>
     <string name="tasks">Tarefas</string>
     <string name="start_quest">Iniciar uma nova Missão</string>
@@ -722,4 +722,5 @@
     <string name="level_abbreviated">Nv. %d</string>
     <string name="sell_no_price">Vender</string>
     <string name="trillion_abbrev">t</string>
+    <string name="x_and_y">%1$s e %2$s</string>
 </resources>

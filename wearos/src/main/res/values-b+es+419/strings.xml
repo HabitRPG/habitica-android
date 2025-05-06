@@ -36,4 +36,5 @@
     <string name="disconnected">Desconectado</string>
     <string name="starting_your_day">empezando tu Día...</string>
     <string name="you_found">Encontraste…</string>
+    <string name="one_quest_item">Objeto de la misión</string>
 </resources>
