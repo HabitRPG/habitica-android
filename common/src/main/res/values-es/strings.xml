@@ -37,7 +37,7 @@
     <string name="email_username">Correo / Nombre de usuario</string>
     <string name="password">Contraseña</string>
     <string name="emailAddress">Correo electrónico</string>
-    <string name="confirmpassword">Confirma la contraseña</string>
+    <string name="confirmpassword">Repite la contraseña</string>
     <string name="login_btn_google">Inicia sesión con Google</string>
     <string name="logout">Cerrar sesión</string>
     <string name="logout_description">Cierra la sesión de tu cuenta</string>

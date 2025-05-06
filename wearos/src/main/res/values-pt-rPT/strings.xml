@@ -1,2 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="start_new_day">Comece um novo dia</string>
+    <string name="check_off_yesterday">Marque qualquer um que você fez ontem:</string>
+    <string name="task_type">Tipo de Tarefa</string>
+    <string name="task_title_hint">Escreva o Titulo da Tarefa</string>
+    <string name="save">Salvar</string>
+    <string name="sync_data">Sincronizar Dados</string>
+    <string name="hide_task_rewards">Esconder recompensas de tarefa</string>
+    <string name="version_info">Versão %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">Desconectar do Habitica\?</string>
+    <string name="an_egg">Um Ovo</string>
+    <string name="a_potion">Uma Poção</string>
+    <string name="some_food">Alguma Comida</string>
+    <string name="no_tasks">Crie uma %s para adicionar a esta lista</string>
+    <string name="ok">Ok</string>
+    <string name="syncing_account">Sincronizar conta do Celular</string>
+    <string name="how_did_you_do">Como você fez\?</string>
+    <string name="you_found">Você encontrou…</string>
+    <string name="one_quest_item">1 Item de missão</string>
+    <string name="x_quest_item">%d Itens de missão</string>
+    <string name="x_and_y">%1$s e %2$s</string>
+    <string name="some_x">Alguns %s</string>
+    <string name="edit_on_phone">Editar no celular</string>
+    <string name="sign_in_description">Crie listas de tarefas e acompanhe o progresso com seu avatar gamificado</string>
+    <string name="sign_in_on_phone">Registre-se no celular</string>
+    <string name="sign_in">Registre-se</string>
+    <string name="other_options">Outras opções</string>
+    <string name="create_account">Crie um conta</string>
+    <string name="continue_text">Continue</string>
+    <string name="you_ran_out_of_hp">Você está sem Vida</string>
+    <string name="faint_description">Você perdeu um nível, Exp, e Ouro. Não desista!</string>
+    <string name="day_start">Comece o Dia</string>
+    <string name="rya_description">Há Diárias incompletas de ontem</string>
+    <string name="review_dailies">Revise as Diárias</string>
+    <string name="check_on_phone">Olhe o celular</string>
+    <string name="checklist_disclaimer">A lista de tarefas está disponível no celular</string>
+    <string name="continue_on_your_phone">Continue no seu celular</string>
+    <string name="levelup_description">Você passou de nível através de todo seu trabalho duro!</string>
+    <string name="all_done_today">Tudo feito Hoje!</string>
+    <string name="starting_your_day">Começando seu Dia...</string>
+    <string name="disconnected">Desconectado</string>
+</resources>

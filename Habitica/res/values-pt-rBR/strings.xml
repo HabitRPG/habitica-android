@@ -1493,4 +1493,5 @@
     <string name="sub_perk">BENEFÍCIO SUB</string>
     <string name="subscribe_second_chance_incentive_text">Os assinantes têm uma segunda chance na vida todos os dias e esses outros benefícios!</string>
     <string name="watch_ad_to_hang_on">Assista ao anúncio para aguentar o 1HP!</string>
+    <string name="clear_cache_settings">Limpar cache</string>
 </resources>

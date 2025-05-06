@@ -1,2 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="x_quest_item">%d個副本物品</string>
+    <string name="x_and_y">%1$s 與 %2$s</string>
+    <string name="some_x">一些%s</string>
+    <string name="edit_on_phone">在手機上編輯</string>
+    <string name="check_on_phone">在手機上查看</string>
+    <string name="sync_data">同步數據</string>
+    <string name="hide_task_rewards">隱藏任務獎勵</string>
+    <string name="all_done_today">今日事，今日畢！</string>
+    <string name="starting_your_day">開始你的一天…</string>
+    <string name="disconnected">已斷開連接</string>
+    <string name="continue_on_your_phone">在手機上繼續</string>
+    <string name="levelup_description">你透過你的努力升級了！</string>
+    <string name="create_account">建立帳戶</string>
+    <string name="rya_description">昨天有未完成的每日任務</string>
+    <string name="checklist_disclaimer">任務清單可在手機上查看</string>
+    <string name="start_new_day">開始新的一天</string>
+    <string name="save">儲存</string>
+    <string name="version_info">版本%1$s (%2$d)</string>
+    <string name="log_out_of_habitica">登出 Habitica\?</string>
+    <string name="no_tasks">建立一個 %s 以添加到此清單</string>
+    <string name="an_egg">一顆蛋</string>
+    <string name="a_potion">一瓶藥水</string>
+    <string name="some_food">一些食物</string>
+    <string name="continue_text">繼續</string>
+    <string name="ok">確定</string>
+    <string name="one_quest_item">1個副本物品</string>
+    <string name="syncing_account">通過手機同步帳戶</string>
+    <string name="how_did_you_do">做得怎麼樣？</string>
+    <string name="you_found">你找到了...…</string>
+    <string name="sign_in">登入</string>
+    <string name="sign_in_description">使用遊戲化角色建立任務清單並追蹤進度</string>
+    <string name="sign_in_on_phone">手機登入</string>
+    <string name="other_options">其他選項</string>
+    <string name="you_ran_out_of_hp">你的生命值耗盡了</string>
+    <string name="faint_description">你失去了等級、經驗值與金幣。但別放棄！</string>
+    <string name="day_start">開始新的一天</string>
+    <string name="review_dailies">回顧每日任務</string>
+    <string name="check_off_yesterday">勾選昨日完成的任務：</string>
+    <string name="task_type">任務類型</string>
+    <string name="task_title_hint">輸入任務標題</string>
+</resources>

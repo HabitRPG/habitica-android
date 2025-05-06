@@ -36,7 +36,7 @@
         <item quantity="other">%d Tâches quotidiennes</item>
     </plurals>
     <string name="emailAddress">Adresse e-mail</string>
-    <string name="confirmpassword">Confirmer le mot de passe</string>
+    <string name="confirmpassword">Entrez à nouveau le mot de passe</string>
     <string name="login_btn_google">S\'identifier avec Google</string>
     <string name="logout_description">Déconnectez-vous de votre compte</string>
     <string name="LoginActivityName">Bienvenue</string>

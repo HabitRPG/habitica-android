@@ -528,7 +528,7 @@
     <string name="subscribe_listitem4">Особливі улюбленці тільки для підписників</string>
     <string name="subscribe_listitem3">Щомісячні містичні предмети</string>
     <string name="subscribe_listitem2">Містичні пісочні годинники</string>
-    <string name="subscribe_listitem1">Купівля самоцвітів за золото</string>
+    <string name="subscribe_listitem1">Безкоштовні Щомісячні Самоцвіти</string>
     <string name="subscribe_prompt">Станьте підписником, щоб отримати ці ексклюзивні переваги!</string>
     <string name="subscribe_title">Підписка підтримує нашу маленьку команду та допомагає забезпечувати роботу Habitica! Дякуємо!</string>
     <string name="has_tag">Має тег</string>
@@ -747,7 +747,7 @@
     <string name="report_message_title">Помітити %s, як порушення за:</string>
     <string name="report_explanation">Будь ласка, повідомляйте **лише** про публікації, які порушують [Правила спільноти](https://habitica.com/static/community-guidelines) і/або [Умови надання послуг](https://habitica.com/static/terms). Неналежне повідомлення про публікацію може призвести до порушення.</string>
     <string name="x_class">Клас %s</string>
-    <string name="become_x">Стати %s</string>
+    <string name="become_x">Вибрати клас %s</string>
     <string name="need_more_help">Потрібна допомога\?</string>
     <string name="need_help_header_description">Опублікуйте повідомлення в %s, щоб на ваші запитання відповідав колега-гравець.</string>
     <string name="active_world_boss">Активний світовий бос</string>
@@ -848,7 +848,7 @@
     <string name="could_not_find_user">Не можу знайти гравця</string>
     <string name="wacky">Дивакуваті</string>
     <string name="equip">Одягнути</string>
-    <string name="unequip">Неоснащення</string>
+    <string name="unequip">Зняти</string>
     <string name="username_confirmed">Ім\'я користувача підтверджено</string>
     <string name="username_not_confirmed">Ім\'я користувача не підтверджено</string>
     <string name="two_handed">Двуручний</string>
@@ -1317,4 +1317,5 @@
     <string name="visit_the_market">Відвідати ринок</string>
     <string name="thanks_for_support">Вдячні за вашу підтримку!</string>
     <string name="birthday_title_description">Святкуйте 10-річчя Habitica з подарунками та ексклюзивними речами нижче!</string>
+    <string name="sell_confirmation_title">Ви впевнені, що хочете це (%s) продати\?</string>
 </resources>

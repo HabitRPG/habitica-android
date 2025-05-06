@@ -1,18 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">Here we are! I’ve filled out some tasks for you based on your interests. Try adding a few of your own. You can edit any task by tapping the title.</string>
-  <string name="tutorial_habits_1">First up is Habits. They can be positive Habits you want to improve or negative Habits you want to quit.</string>
-  <string name="tutorial_habits_2">Every time you do a positive Habit, tap the + to get experience and gold!</string>
-  <string name="tutorial_habits_3">If you slip up and do a negative Habit, tapping the - will reduce your avatar’s health to help you stay accountable.</string>
-  <string name="tutorial_habits_4">Give it a shot! You can explore the other task types through the bottom navigation.</string>
-  <string name="tutorial_dailies_1">Make Dailies for time sensitive tasks that need to be done on a regular schedule.</string>
-  <string name="tutorial_dailies_2">Be careful — if you miss one, your avatar will take damage overnight. Checking them off consistently brings great rewards!</string>
-  <string name="tutorial_todos_1">Use To Do\'s to keep track of tasks you need to do just once.</string>
-  <string name="tutorial_todos_2">If your To Do has to be done by a certain time, set a due date. Looks like you can check one off — go ahead!</string>
-  <string name="tutorial_rewards_1">Buy gear for your avatar with the gold you earn!</string>
-  <string name="tutorial_rewards_2">You can also make real-world Custom Rewards based on what motivates you.</string>
-  <string name="tutorial_tasks_complete">That\'s all for now. If you need a reminder, check the FAQ section.</string>
+    <string name="tutorial_overview">Here we are! I’ve filled out some tasks for you based on your interests. Try adding a few of your own. You can edit any task by tapping the title.</string>
+    <string name="tutorial_habits_1">First up is Habits. They can be positive Habits you want to improve or negative Habits you want to quit.</string>
+    <string name="tutorial_habits_2">Every time you do a positive Habit, tap the + to get experience and gold!</string>
+    <string name="tutorial_habits_3">If you slip up and do a negative Habit, tapping the - will reduce your avatar’s health to help you stay accountable.</string>
+    <string name="tutorial_habits_4">Give it a shot! You can explore the other task types through the bottom navigation.</string>
+    <string name="tutorial_dailies_1">Make Dailies for time sensitive tasks that need to be done on a regular schedule.</string>
+    <string name="tutorial_dailies_2">Be careful — if you miss one, your avatar will take damage overnight. Checking them off consistently brings great rewards!</string>
+    <string name="tutorial_todos_1">Use To Do\'s to keep track of tasks you need to do just once.</string>
+    <string name="tutorial_todos_2">If your To Do has to be done by a certain time, set a due date. Looks like you can check one off — go ahead!</string>
+    <string name="tutorial_rewards_1">Buy gear for your avatar with the gold you earn!</string>
+    <string name="tutorial_rewards_2">You can also make real-world Custom Rewards based on what motivates you.</string>
+    <string name="tutorial_tasks_complete">That\'s all for now. If you need a reminder, check the FAQ section.</string>
     <string name="tutorial_skills">Skills are special abilities that have powerful effects! Tap on a skill to use it. It will cost Mana (the blue bar), which you earn by checking in every day and by completing your real-life tasks. Check out the FAQ in the menu for more info!</string>
-  <string name="tutorial_party">This is where you and your friends can hold each other accountable to your goals and fight monsters with your tasks!</string>
+    <string name="tutorial_party">This is where you and your friends can hold each other accountable to your goals and fight monsters with your tasks!</string>
     <string name="tutorial_stats">Tap the grey button to allocate lots of your stats at once, or tap the arrows to add them one point at a time.</string>
+    <string name="tutorial_party_created">Welcome to your Party! You can find more members from a list of players looking for a Party or invite friends directly to earn the Basi-List Quest Scroll.
+\n
+\nVisit Support to learn more about Parties.</string>
 </resources>

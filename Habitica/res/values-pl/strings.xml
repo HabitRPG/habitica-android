@@ -219,7 +219,7 @@
     <string name="select_class">Wybierz klasę postaci</string>
     <string name="opt_out_class">Wycofaj się</string>
     <string name="class_confirmation">Jesteś pewien, że chcesz być %s?</string>
-    <string name="class_changed">Jesteś teraz %s!</string>
+    <string name="class_changed">Jesteś %s!</string>
     <string name="choose_class">Wybierz klasę postaci</string>
     <string name="dialog_go_back">Wróć</string>
     <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>
@@ -1128,4 +1128,20 @@
     <string name="challenge_tags">Tagi Wyzwań</string>
     <string name="group_tags">Tagi Grup</string>
     <string name="x_and_y">%1$s i %2$s</string>
+    <string name="exact_alarm_system_settings_title">Alarmy i Przypomnienia wyłączone</string>
+    <string name="sell_confirmation_title">Czy na pewno chcesz sprzedać %s\?</string>
+    <string name="exact_alarm_system_settings_reminders">Przypomnienia mogą być opóźnione, ponieważ nie mają wymaganych uprawnień. Dotknij aby zobaczyć i zmienić uprawnienia.</string>
+    <string name="exact_alarm_system_settings_description">Zezwól na Alarmy i Przypomnienia w Ustawieniach, aby mieć pewność, że przypomnienia pojawią się dokładnie o zaplanowanej porze</string>
+    <plurals name="x_days">
+        <item quantity="one">%d dzień</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="many">%d dni</item>
+        <item quantity="other">%d dni</item>
+    </plurals>
+    <plurals name="repeat_daily">
+        <item quantity="one">Codziennie</item>
+        <item quantity="few">Co %d dni</item>
+        <item quantity="many">Co %d dni</item>
+        <item quantity="other">Co %d dni</item>
+    </plurals>
 </resources>

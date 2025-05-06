@@ -83,4 +83,10 @@
         <item quantity="many">%d Nawyków</item>
         <item quantity="other">%d Nawyków</item>
     </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">Zgłoszono %d raz</item>
+        <item quantity="few">Zgłoszono %d razy, ukryto</item>
+        <item quantity="many">Zgłoszono %d razy, ukryto</item>
+        <item quantity="other">Zgłoszono %d razy, ukryto</item>
+    </plurals>
 </resources>

@@ -2,12 +2,12 @@
 <resources>
     <string name="profile_allocated">Kiosztva:</string>
     <string name="profile_send_message_to">Üzenet küldése %s játékosnak</string>
-    <string name="profile_loading_data">Tag adatainak betöltése folyamatban…</string>
+    <string name="profile_loading_data">Tagok adatainak betöltése…</string>
     <string name="profile_message_sent_to">Üzenet elküldve %s játékosnak</string>
-    <string name="profile_pets_and_mounts">Kisállatok &amp; Hátasok</string>
-    <string name="profile_mounts_tamed">Megszelídített hátasok</string>
-    <string name="profile_class_bonus">Osztály bónusz:</string>
+    <string name="profile_pets_and_mounts">Kisállatok és hátasok</string>
+    <string name="profile_mounts_tamed">Szelídített hátasok</string>
+    <string name="profile_class_bonus">Kaszt bónusz:</string>
     <string name="profile_pets_found">Megtalált kisállatok</string>
     <string name="profile_level">Szint:</string>
-    <string name="profile_achievements">Eredmények</string>
+    <string name="profile_achievements">Kitüntetések</string>
 </resources>

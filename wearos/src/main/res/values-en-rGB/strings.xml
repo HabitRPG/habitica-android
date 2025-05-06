@@ -1,2 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="sign_in_description">Create task lists and track progress with your gamified avatar</string>
+    <string name="other_options">Alternative choices</string>
+    <string name="ok">OK</string>
+    <string name="syncing_account">Synchronising account from phone</string>
+    <string name="how_did_you_do">How did you do\?</string>
+    <string name="you_found">You found…</string>
+    <string name="sign_in">Sign on</string>
+    <string name="one_quest_item">1 Quest item</string>
+    <string name="x_quest_item">%d Quest items</string>
+    <string name="x_and_y">%1$s and %2$s</string>
+    <string name="some_x">some %s</string>
+    <string name="edit_on_phone">Edit on phone</string>
+    <string name="create_account">Create an account</string>
+    <string name="continue_text">Continue</string>
+    <string name="you_ran_out_of_hp">You ran out of HP</string>
+    <string name="task_type">Task Type</string>
+    <string name="task_title_hint">Enter Task Title</string>
+    <string name="save">Save</string>
+    <string name="sync_data">Sync Data</string>
+    <string name="hide_task_rewards">Hide task rewards</string>
+    <string name="sign_in_on_phone">Sign in on phone</string>
+    <string name="faint_description">You lost a Level, Exp, and Gold. Don’t give up!</string>
+    <string name="day_start">Day start</string>
+    <string name="rya_description">There are unfinished Dailies from yesterday</string>
+    <string name="review_dailies">Review Dailies</string>
+    <string name="check_on_phone">Check on your phone</string>
+    <string name="checklist_disclaimer">Task checklists are available on your Mobile</string>
+    <string name="start_new_day">Start new day</string>
+    <string name="check_off_yesterday">Check off any you did yesterday:</string>
+</resources>

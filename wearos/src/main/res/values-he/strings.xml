@@ -23,4 +23,20 @@
     <string name="starting_your_day">מתחיל את היום...</string>
     <string name="a_potion">מדגרה</string>
     <string name="continue_on_your_phone">להמשיך בטלפון</string>
+    <string name="how_did_you_do">איך הייתי\?</string>
+    <string name="syncing_account">מסנכרן חשבון מהטלפון</string>
+    <string name="one_quest_item">קפץ הרפתקה אחד</string>
+    <string name="x_quest_item">%d חפצי הרפתקה</string>
+    <string name="some_x">כמה %s</string>
+    <string name="sign_in_description">צרו רשימת משימות ועקבו אחר התקדמותכם עם דמות ממשחק</string>
+    <string name="faint_description">הפסדתם דרגה, ניסיון, ומטבעות זהב. אל תוותרו!</string>
+    <string name="rya_description">ישנן יומיות מאתמול שטרם הושלמו</string>
+    <string name="review_dailies">סקירת היומיות</string>
+    <string name="checklist_disclaimer">תוכלו למצוא משימות עם צ\'קליסטים בטלפון</string>
+    <string name="hide_task_rewards">הסתר תגמולים ממשימות</string>
+    <string name="an_egg">ביצה</string>
+    <string name="some_food">קצת אוכל</string>
+    <string name="task_type">סוג משימה</string>
+    <string name="task_title_hint">הכנס שם משימה</string>
+    <string name="sync_data">סנכרון נתונים</string>
 </resources>

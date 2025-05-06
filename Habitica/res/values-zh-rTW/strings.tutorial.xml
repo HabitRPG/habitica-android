@@ -1,18 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">我們在這兒！我已經根據你的興趣給你添加了幾個任務~也試試自己添加幾個吧！你還可以點擊任務標題來修改它們。</string>
-  <string name="tutorial_habits_1">首先是習慣。它們可以是你想養成的好習慣，也可以是你想戒掉的壞習慣。</string>
-  <string name="tutorial_habits_2">每當你完成一次好的習慣，點擊習慣前的加號，就可以獲得經驗和金幣啦！</string>
-  <string name="tutorial_habits_3">如果你一不留神完成了一次壞習慣，點擊減號，這會減少角色的生命值來幫助你戒掉壞習慣。</string>
-  <string name="tutorial_habits_4">試試看吧！你可以在下方導航列中發掘更多任務類型。</string>
-  <string name="tutorial_dailies_1">有一定規律的、或是時間緊迫的任務，可以將其新增至每日任務。</string>
-  <string name="tutorial_dailies_2">小心 - 如果你沒有完成，你的角色會在一夜之間受到傷害！</string>
-  <string name="tutorial_todos_1">待辦事項是只需要執行一次的任務。</string>
-  <string name="tutorial_todos_2">如果您的待辦事項必須在特定時間內完成，請設置截止日期！</string>
-  <string name="tutorial_rewards_1">用金幣為你的角色添購裝備吧！</string>
-  <string name="tutorial_rewards_2">你也可以自定義獎勵。</string>
-  <string name="tutorial_tasks_complete">目前為止就這樣了。如果您想了解更多，請查看FAQ部分。</string>
+    <string name="tutorial_overview">我們在這兒！我已經根據你的興趣給你添加了幾個任務~也試試自己添加幾個吧！你還可以點擊任務標題來修改它們。</string>
+    <string name="tutorial_habits_1">首先是習慣。它們可以是你想養成的好習慣，也可以是你想戒掉的壞習慣。</string>
+    <string name="tutorial_habits_2">每當你完成一次好的習慣，點擊習慣前的加號，就可以獲得經驗和金幣啦！</string>
+    <string name="tutorial_habits_3">如果你一不留神完成了一次壞習慣，點擊減號，這會減少角色的生命值來幫助你戒掉壞習慣。</string>
+    <string name="tutorial_habits_4">試試看吧！你可以在下方導航列中發掘更多任務類型。</string>
+    <string name="tutorial_dailies_1">有一定規律的、或是時間緊迫的任務，可以將其新增至每日任務。</string>
+    <string name="tutorial_dailies_2">小心 - 如果你沒有完成，你的角色會在一夜之間受到傷害！</string>
+    <string name="tutorial_todos_1">待辦事項是只需要執行一次的任務。</string>
+    <string name="tutorial_todos_2">如果您的待辦事項必須在特定時間內完成，請設置截止日期！</string>
+    <string name="tutorial_rewards_1">用金幣為你的角色添購裝備吧！</string>
+    <string name="tutorial_rewards_2">你也可以自定義獎勵。</string>
+    <string name="tutorial_tasks_complete">目前為止就這樣了。如果您想了解更多，請查看FAQ部分。</string>
     <string name="tutorial_skills">技能是有強大作用的特殊能力！點擊技能使用。使用技能需要消耗魔法值(藍色條)，魔力可由每日打卡和完成現實任務來獲得。更多信息請查詢FAQ！</string>
-  <string name="tutorial_party">在這裡，你和你的朋友可以互相激勵完成目標並通過完成任務組團打BOSS！</string>
+    <string name="tutorial_party">在這裡，你和你的朋友可以互相激勵完成目標並通過完成任務組團打BOSS！</string>
     <string name="tutorial_stats">按灰色的按鈕可以把所有的能力點用於一次升級某項能力，或是按箭頭以批次分配能力點。</string>
+    <string name="tutorial_party_created">歡迎來到你的隊伍！你可以從尋找隊伍的玩家列表中找到更多成員，或是直接邀請你的朋友以獲得基礎任務列表卷軸。
+\n
+\n訪問幫助頁面來獲得更多關於隊伍的訊息。</string>
 </resources>

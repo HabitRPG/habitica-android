@@ -7,13 +7,14 @@
     <string name="sidebar_party">Party</string>
     <string name="sidebar_challenges">Tantangan</string>
     <string name="sidebar_section_inventory">Inventori</string>
-    <string name="sidebar_avatar">Avatar</string>
+    <string name="sidebar_avatar">Sesuaikan Avatar</string>
     <string name="sidebar_equipment">Perlengkapan</string>
     <string name="sidebar_stable">Kandang Hewan</string>
     <string name="sidebar_news">Berita</string>
     <string name="sidebar_about">Tentang Kami</string>
     <string name="sidebar_shops">Toko</string>
-    <string name="sidebar_stats">Status</string>
+    <string name="sidebar_stats">Statistik</string>
     <string name="sidebar_subscription">Berlangganan</string>
-    <string name="sidebar_gems">Membeli Permata</string>
+    <string name="sidebar_gems">Beli Permata</string>
+    <string name="sidebar_avatar_equipment">Avatar &amp; Peralatan</string>
 </resources>
