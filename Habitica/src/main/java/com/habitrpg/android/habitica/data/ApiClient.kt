@@ -422,7 +422,7 @@ interface ApiClient {
         oldPassword: String,
         newPassword: String,
         newPasswordConfirmation: String
-    ): Void?
+    ): UserAuthResponse?
 
     suspend fun allocatePoint(stat: String): Stats?
 

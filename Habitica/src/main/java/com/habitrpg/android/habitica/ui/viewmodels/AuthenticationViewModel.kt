@@ -148,7 +148,7 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     @Throws(Exception::class)
-    private fun saveTokens(
+    fun saveTokens(
         api: String,
         user: String,
     ) {

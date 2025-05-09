@@ -661,7 +661,7 @@ interface ApiService {
     @PUT("user/auth/update-password")
     suspend fun updatePassword(
         @Body data: Map<String, String>
-    ): HabitResponse<Void>
+    ): HabitResponse<UserAuthResponse>
 
     @POST("user/allocate")
     suspend fun allocatePoint(

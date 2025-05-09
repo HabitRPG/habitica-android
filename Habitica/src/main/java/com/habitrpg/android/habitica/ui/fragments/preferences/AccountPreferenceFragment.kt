@@ -291,11 +291,14 @@ class AccountPreferenceFragment :
                 passwordRepeatEditText?.showErrorIfNecessary()
                 if (passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
                 lifecycleScope.launchCatching {
-                    userRepository.updatePassword(
+                    val response = userRepository.updatePassword(
                         oldPasswordEditText?.text ?: "",
                         passwordEditText.text ?: "",
                         passwordRepeatEditText.text ?: "",
                     )
+                    response?.apiToken?.let {
+                        viewModel.saveTokens(it, user?.id ?: "")
+                    }
                     (activity as? SnackbarActivity)?.showSnackbar(
                         content = context.getString(R.string.password_changed),
                         displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
@@ -340,7 +343,7 @@ class AccountPreferenceFragment :
                 val email =
                     if (showEmail) emailEditText?.text else user?.authentication?.findFirstSocialEmail()
                 lifecycleScope.launchCatching {
-                    viewModel.register(
+                    val response = viewModel.register(
                         user?.username ?: "",
                         email ?: "",
                         passwordEditText.text ?: "",
