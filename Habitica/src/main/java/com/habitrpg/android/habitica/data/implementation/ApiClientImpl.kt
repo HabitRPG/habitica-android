@@ -1033,7 +1033,7 @@ class ApiClientImpl(
         oldPassword: String,
         newPassword: String,
         newPasswordConfirmation: String
-    ): Void? {
+    ): UserAuthResponse? {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = oldPassword
         updateObject["newPassword"] = newPassword
