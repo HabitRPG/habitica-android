@@ -79,6 +79,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.views.TypewriterText
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
 
@@ -588,7 +589,7 @@ fun SpeechBubble(
     modifier: Modifier = Modifier,
     npc: @Composable (() -> Unit)? = null
 ) {
-    Text(
+    TypewriterText(
         text, fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 21.sp,
