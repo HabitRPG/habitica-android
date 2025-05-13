@@ -1,4 +1,5 @@
-New in 4.7.3
+New in 4.7.4
+- Hungarian language support
 - Upgraded to the latest Google Sign In authentication standards
 - Implemented full edge-to-edge display functionality on Android 11+ devices
 - Fixed some issues where the text box in chat wasn't adjusting properly
