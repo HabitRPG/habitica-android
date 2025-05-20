@@ -17,6 +17,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.AuthorizationRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -175,23 +176,31 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun startGoogleAuth(context: Context) {
-        val googleIdOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
-            .build()
-        val request = GetCredentialRequest.Builder()
-            .addCredentialOption(googleIdOption)
-            .build()
+        try {
+            val googleIdOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
+                .build()
+            val request = GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build()
 
-        viewModelScope.launch {
-            try {
-                val result = CredentialManager.create(context).getCredential(
-                    request = request,
-                    context = context,
-                )
-                handleSignIn(context, result)
-            } catch (e: GetCredentialException) {
-                authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
-                Log.e("AuthenticationViewModel", "Get Credential Exception", e)
+            viewModelScope.launch {
+                try {
+                    val result = CredentialManager.create(context).getCredential(
+                        request = request,
+                        context = context,
+                    )
+                    handleSignIn(context, result)
+                } catch (e: GetCredentialException) {
+                    authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
+                    Log.e("AuthenticationViewModel", "Get Credential Exception", e)
+                }
             }
+        } catch (e: ApiException) {
+            authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
+            Log.e("AuthenticationViewModel", "API Exception", e)
+        } catch (e: Exception) {
+            authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
+            Log.e("AuthenticationViewModel", "Unknown Exception", e)
         }
     }
 
