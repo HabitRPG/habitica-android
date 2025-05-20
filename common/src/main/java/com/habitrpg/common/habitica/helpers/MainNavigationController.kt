@@ -11,6 +11,7 @@ import androidx.navigation.NavDirections
 import java.lang.ref.WeakReference
 import java.util.Date
 import kotlin.math.abs
+import androidx.core.net.toUri
 
 object MainNavigationController {
     var lastNavigation: Date? = null
@@ -24,6 +25,9 @@ object MainNavigationController {
 
     val isReady: Boolean
         get() = controllerReference?.get() != null
+
+    val rootDestinationId: Int
+        get() = navController?.graph?.startDestinationId ?: 0
 
     fun setup(navController: NavController) {
         controllerReference = WeakReference(navController)
@@ -43,6 +47,9 @@ object MainNavigationController {
         if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()
             try {
+                if ((navController?.currentBackStack?.value?.size ?: 0) > 60) {
+                    navController?.popBackStack(destinationId = rootDestinationId, false)
+                }
                 navController?.navigate(transactionId, args)
             } catch (e: IllegalArgumentException) {
                 Log.e("Main Navigation", e.localizedMessage ?: "")
@@ -57,13 +64,17 @@ object MainNavigationController {
             lastNavigation = Date()
             try {
                 navController?.navigate(directions)
-            } catch (_: IllegalArgumentException) {
+                if ((navController?.currentBackStack?.value?.size ?: 0) > 60) {
+                    navController?.popBackStack(destinationId = rootDestinationId, false)
+                }
+            } catch (e: IllegalArgumentException) {
+                Log.e("Main Navigation", e.localizedMessage ?: "")
             }
         }
     }
 
     fun navigate(uriString: String) {
-        val uri = Uri.parse(uriString)
+        val uri = uriString.toUri()
         var builder = uri.buildUpon()
         if (uri.scheme == null) {
             builder = builder.scheme("https")
@@ -81,8 +92,7 @@ object MainNavigationController {
             val intent = Intent(Intent.ACTION_VIEW, uri)
             try {
                 navController?.context?.startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                // No application can handle the link
+            } catch (_: ActivityNotFoundException) {
             }
         }
     }
