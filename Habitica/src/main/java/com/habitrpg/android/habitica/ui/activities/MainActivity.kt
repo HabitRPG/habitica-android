@@ -587,6 +587,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         if (binding.content.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
+
+        YesterdailyDialog.showDialogIfNeeded(this, viewModel.userViewModel.userID, userRepository, taskRepository)
     }
 
     @RequiresApi(33)

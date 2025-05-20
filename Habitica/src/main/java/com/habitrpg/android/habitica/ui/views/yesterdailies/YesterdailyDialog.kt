@@ -306,7 +306,7 @@ class YesterdailyDialog private constructor(
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
-                dialog.enqueue()
+                dialog.show()
             }
             return dialog
         }
