@@ -375,7 +375,12 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                 buildAnnotatedString {
                     val original = stringResource(id = R.string.customization_shop_check_out)
                     val customizationShopName = stringResource(id = R.string.customization_shop)
-                    val first = original.substring(0, original.indexOf(customizationShopName))
+                    val customizationShopNameIndex = original.indexOf(customizationShopName)
+                    if (customizationShopNameIndex == -1) {
+                        append(original)
+                        return@buildAnnotatedString
+                    }
+                    val first = original.substring(0, )
                     val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
                     append(first)
                     withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {

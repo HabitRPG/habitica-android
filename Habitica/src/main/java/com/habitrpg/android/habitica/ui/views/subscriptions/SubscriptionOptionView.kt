@@ -142,9 +142,11 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     private fun highlightText(text: String, substring: String, color: Int): Spannable {
         val spannable = SpannableString(text)
         val start = text.indexOf(substring)
-        val end = start + substring.length
-        spannable.setSpan(ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        if (start != -1) {
+            val end = start + substring.length
+            spannable.setSpan(ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
         return spannable
     }
 
