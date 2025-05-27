@@ -191,7 +191,7 @@ fun UsernameSelectionScreen(
                 }
                 Text(
                     AnnotatedString.fromHtml(
-                        stringResource(R.string.register_tos_confirm),
+                        "You agree to our <a href=\"https://habitica.com/static/terms\">Terms of Service</a> and have read our <a href=\"https://habitica.com/static/privacy\">Privacy Policy</a>.",
                         linkStyles = TextLinkStyles(style = SpanStyle(
                             fontWeight = FontWeight.Bold,
                             color = colorResource(R.color.white)
@@ -203,7 +203,10 @@ fun UsernameSelectionScreen(
                 )
             }
             Button(
-                onClick = onNextOnboardingStep,
+                onClick = {
+                    onNextOnboardingStep()
+                    authenticationViewModel.updateUsername(username)
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = colorResource(R.color.gray_50),

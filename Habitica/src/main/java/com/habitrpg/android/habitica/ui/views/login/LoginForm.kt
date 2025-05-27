@@ -41,10 +41,14 @@ fun LoginForm(
     email: String,
     emailFieldState: LoginFieldState,
     onEmailChange: (String) -> Unit,
+    username: String,
+    usernameFieldState: LoginFieldState,
+    onUsernameChange: (String) -> Unit,
     password: String,
     passwordFieldState: LoginFieldState,
     onPasswordChange: (String) -> Unit,
     isRegistering: Boolean,
+    showUsernameField: Boolean,
     onSubmit: () -> Unit,
     showLoading: Boolean,
     modifier: Modifier = Modifier,
@@ -113,6 +117,21 @@ fun LoginForm(
             },
             modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 10.dp),
         )
+        AnimatedVisibility(isRegistering && showUsernameField) {
+            LoginScreenField(
+                label = stringResource(R.string.username),
+                value = username,
+                onValueChange = onUsernameChange,
+                state = usernameFieldState,
+                icon = {
+                    Image(
+                        painterResource(R.drawable.login_username),
+                        contentDescription = stringResource(R.string.username)
+                    )
+                },
+                modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 10.dp),
+            )
+        }
         LoginScreenField(
             label = stringResource(R.string.password),
             value = password,

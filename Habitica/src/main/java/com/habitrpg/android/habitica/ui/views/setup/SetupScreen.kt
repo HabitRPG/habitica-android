@@ -14,6 +14,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -79,16 +80,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.CustomizationRepository
+import com.habitrpg.android.habitica.data.SetupCustomizationRepository
+import com.habitrpg.android.habitica.data.implementation.CustomizationRepositoryImpl
+import com.habitrpg.android.habitica.models.SetupCustomization
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.TypewriterText
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
 
 @Composable
-fun SetupScreen(onNextOnboardingStep: () -> Unit) {
+fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: SetupCustomizationRepository, user: User, onNextOnboardingStep: () -> Unit) {
+    val username by viewModel.username
     var currentStep by remember { mutableIntStateOf(0) }
+
     var selectedCustomizationCategory by remember { mutableStateOf("skin") }
 
-    val density = LocalDensity.current
     val img = ImageBitmap.imageResource(R.drawable.border_pixelated)
 
     val bgColorTop = colorResource(R.color.brand_100)
@@ -163,7 +171,7 @@ fun SetupScreen(onNextOnboardingStep: () -> Unit) {
                             .padding(top = 170.dp)
                             .padding(bottom = 26.dp)
                     ) {
-                        CustomizationCategoryView(selectedCustomizationCategory)
+                        CustomizationCategoryView(customizationRepository,selectedCustomizationCategory, user)
                     }
                 }
                 AnimatedContent(currentStep, modifier = Modifier.weight(1f)) {
@@ -259,7 +267,7 @@ fun SetupScreen(onNextOnboardingStep: () -> Unit) {
                 )
         ) {
             Text(
-                "Username",
+                "@${username}",
                 color = colorResource(R.color.brand_600),
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
@@ -351,8 +359,9 @@ fun OnboardingTaskSelector(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Modifier) {
+fun CustomizationCategoryView(customizationRepository: SetupCustomizationRepository, selectedCategory: String, user: User, modifier: Modifier = Modifier) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
+    var selectedTab by remember { mutableStateOf("") }
     val unselected = Color.White.copy(0.5f)
     Column(verticalArrangement = Arrangement.spacedBy(26.dp)) {
         AnimatedContent(selectedCategory) {
@@ -378,11 +387,14 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                         }
                     }) {
                     when (it) {
-                        "skin" -> {
+                        SetupCustomizationRepository.CATEGORY_BODY -> {
                             Tab(
                                 selectedTabIndex == 0,
                                 unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 0 }) {
+                                onClick = {
+                                    selectedTabIndex = 0
+                                    selectedTab = SetupCustomizationRepository.CATEGORY_SKIN
+                                }) {
                                 Text(
                                     stringResource(R.string.avatar_skin_color).uppercase(),
                                     modifier = Modifier.padding(bottom = 8.dp)
@@ -390,11 +402,14 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                             }
                         }
 
-                        "hair" -> {
+                        SetupCustomizationRepository.CATEGORY_HAIR -> {
                             Tab(
                                 selectedTabIndex == 0,
                                 unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 0 }) {
+                                onClick = {
+                                    selectedTabIndex = 0
+                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_COLOR
+                                }) {
                                 Text(
                                     stringResource(R.string.avatar_hair_color).uppercase(),
                                     modifier = Modifier.padding(bottom = 8.dp)
@@ -403,25 +418,22 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                             Tab(
                                 selectedTabIndex == 1,
                                 unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 1 }) {
+                                onClick = {
+                                    selectedTabIndex = 1
+                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_BANGS
+                                }) {
                                 Text(
                                     stringResource(R.string.avatar_hair_bangs).uppercase(),
                                     modifier = Modifier.padding(bottom = 8.dp)
                                 )
                             }
                             Tab(
-                                selectedTabIndex == 2,
-                                unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 2 }) {
-                                Text(
-                                    stringResource(R.string.avatar_hair_styles).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
-                                )
-                            }
-                            Tab(
                                 selectedTabIndex == 3,
                                 unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 3 }) {
+                                onClick = {
+                                    selectedTabIndex = 3
+                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_PONYTAIL
+                                }) {
                                 Text(
                                     stringResource(R.string.avatar_hair_ponytail).uppercase(),
                                     modifier = Modifier.padding(bottom = 8.dp)
@@ -429,11 +441,14 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                             }
                         }
 
-                        "clothes" -> {
+                        SetupCustomizationRepository.CATEGORY_SKIN -> {
                             Tab(
                                 selectedTabIndex == 0,
                                 unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 0 }) {
+                                onClick = {
+                                    selectedTabIndex = 0
+                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_SHIRT
+                                }) {
                                 Text(
                                     stringResource(R.string.avatar_shirt).uppercase(),
                                     modifier = Modifier.padding(bottom = 8.dp)
@@ -441,22 +456,40 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                             }
                         }
 
-                        "accessories" -> {
+                        SetupCustomizationRepository.CATEGORY_EXTRAS -> {
                             Tab(
                                 selectedTabIndex == 0,
                                 unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 0 }) {
+                                onClick = {
+                                    selectedTabIndex = 0
+                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
+                                }) {
                                 Text(
                                     stringResource(R.string.avatar_wheelchair).uppercase(),
                                     modifier = Modifier.padding(bottom = 8.dp)
                                 )
                             }
                             Tab(
-                                selectedTabIndex == 0,
+                                selectedTabIndex == 1,
                                 unselectedContentColor = unselected,
-                                onClick = { selectedTabIndex = 0 }) {
+                                onClick = {
+                                    selectedTabIndex = 1
+                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_FLOWER
+                                }) {
                                 Text(
                                     stringResource(R.string.avatar_flower).uppercase(),
+                                    modifier = Modifier.padding(bottom = 8.dp)
+                                )
+                            }
+                            Tab(
+                                selectedTabIndex == 2,
+                                unselectedContentColor = unselected,
+                                onClick = {
+                                    selectedTabIndex = 2
+                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_GLASSES
+                                }) {
+                                Text(
+                                    stringResource(R.string.avatar_glasses).uppercase(),
                                     modifier = Modifier.padding(bottom = 8.dp)
                                 )
                             }
@@ -470,11 +503,11 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                 (fadeIn(animationSpec = tween(220, delayMillis = 400)) +
                         scaleIn(initialScale = 0.92f, animationSpec = tween(220, delayMillis = 400)))
                     .togetherWith(fadeOut(animationSpec = tween(90)))
-            }) {
+            }) { category ->
             val scrollState = rememberScrollState()
-            var selectedItem by remember { mutableIntStateOf(0) }
+            var selectedItem by remember { mutableStateOf("") }
             AnimatedContent(
-                selectedTabIndex,
+                selectedTab,
                 transitionSpec = {
                     slideIntoContainer(
                         if (targetState > initialState) {
@@ -495,6 +528,7 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                         )
                 },
             ) { it ->
+                val items = customizationRepository.getCustomizations(category, it, user)
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -504,25 +538,34 @@ fun CustomizationCategoryView(selectedCategory: String, modifier: Modifier = Mod
                         .horizontalScroll(scrollState)
                 ) {
                     Spacer(modifier = Modifier.width(20.dp))
-                    repeat(8) { index ->
-                        val transition = updateTransition(index == selectedItem)
+                    for (item in items) {
+                        val transition = updateTransition(item.key == selectedItem)
                         val borderColor by transition.animateColor { if (it) colorResource(R.color.brand_400) else Color.Transparent }
                         val borderWidth by transition.animateDp({
                             tween(300)
                         }) { if (it) 4.dp else 0.dp }
-                        Image(
-                            painterResource(R.drawable.creator_hair_bangs_1_black),
-                            contentDescription = null,
-                            contentScale = ContentScale.None,
-                            modifier = Modifier
+                            val m = Modifier
                                 .size(68.dp)
                                 .border(borderWidth, borderColor, CircleShape)
                                 .padding(4.dp)
                                 .background(Color.White, CircleShape)
                                 .clickable {
-                                    selectedItem = index
+                                    selectedItem = item.key
                                 }
-                        )
+                            if (item.drawableId != null) {
+                                Image(
+                                    painterResource(item.drawableId ?: R.drawable.creator_blank_face),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.None,
+                                    modifier = m
+                                )
+                            }
+                        if (item.colorId != null) {
+                            val color = colorResource(item.colorId ?: R.color.brand_400)
+                            Canvas(modifier = m, onDraw = {
+                                drawCircle(color = color)
+                            })
+                        }
                     }
                     Spacer(modifier = Modifier.width(20.dp))
                 }
@@ -545,11 +588,11 @@ fun CustomizationCategorySelector(
             .padding(horizontal = 31.dp)
     ) {
         val categories = listOf(
-            Pair("skin", Pair(stringResource(R.string.avatar_skin), R.drawable.icon_skin)),
-            Pair("hair", Pair(stringResource(R.string.avatar_hair), R.drawable.icon_hair)),
-            Pair("clothes", Pair(stringResource(R.string.avatar_body), R.drawable.icon_body)),
+            Pair(SetupCustomizationRepository.CATEGORY_SKIN, Pair(stringResource(R.string.avatar_skin), R.drawable.icon_skin)),
+            Pair(SetupCustomizationRepository.CATEGORY_HAIR, Pair(stringResource(R.string.avatar_hair), R.drawable.icon_hair)),
+            Pair(SetupCustomizationRepository.CATEGORY_BODY, Pair(stringResource(R.string.avatar_body), R.drawable.icon_body)),
             Pair(
-                "accessories",
+                SetupCustomizationRepository.CATEGORY_EXTRAS,
                 Pair(stringResource(R.string.avatar_extras), R.drawable.icon_extras)
             )
         )

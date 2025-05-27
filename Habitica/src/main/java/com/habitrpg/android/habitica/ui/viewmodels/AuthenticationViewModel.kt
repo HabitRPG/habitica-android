@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -61,6 +62,8 @@ class AuthenticationViewModel @Inject constructor(
     val email = mutableStateOf("")
     val password = mutableStateOf("")
     val username = mutableStateOf("")
+
+    val user = mutableStateOf<User?>(null)
 
     private val _showAuthProgress = MutableStateFlow(false)
     val showAuthProgress: Flow<Boolean> = _showAuthProgress
@@ -122,6 +125,7 @@ class AuthenticationViewModel @Inject constructor(
 
     fun login(username: String, password: String) {
         _showAuthProgress.value = true
+        isRegistering.value = false
         viewModelScope.launch {
             try {
                 val response = apiClient.connectUser(username, password)
@@ -135,6 +139,7 @@ class AuthenticationViewModel @Inject constructor(
 
     fun register(username: String, email: String, password: String, confirmPassword: String) {
         _showAuthProgress.value = true
+        isRegistering.value = true
         viewModelScope.launch {
             try {
                 val response = apiClient.registerUser(username, email, password, confirmPassword)
@@ -172,8 +177,8 @@ class AuthenticationViewModel @Inject constructor(
             Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
         }
         viewModelScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(true, true)
-            _authenticationSuccess.value = isRegistering.value
+            user.value = userRepository.retrieveUser(true, true)
+            _authenticationSuccess.value = response.newUser
         }
     }
 
@@ -262,6 +267,12 @@ class AuthenticationViewModel @Inject constructor(
                 authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
                 Log.e("AuthenticationViewModel", "Unexpected type of credential")
             }
+        }
+    }
+
+    fun updateUsername(username: String) {
+        viewModelScope.launchCatching {
+            apiClient.updateUsername(username)
         }
     }
 }

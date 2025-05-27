@@ -149,5 +149,9 @@
         <key>showAltDeathText</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>useNewAuthFlow</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

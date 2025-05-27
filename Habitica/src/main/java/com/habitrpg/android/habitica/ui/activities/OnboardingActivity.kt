@@ -10,24 +10,13 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandIn
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
-import androidx.compose.animation.with
-import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.TransformOrigin
+import androidx.core.content.edit
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
@@ -36,6 +25,7 @@ import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -58,11 +48,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-enum class OnboardingSteps {
-    INTRO,
-    LOGIN,
-    USERNAME,
-    SETUP
+enum class OnboardingSteps(val id: Int) {
+    INTRO(1),
+    LOGIN(2),
+    USERNAME(3),
+    SETUP(4)
 }
 
 @AndroidEntryPoint
@@ -71,10 +61,12 @@ class OnboardingActivity: BaseActivity() {
 
     val authenticationViewModel: AuthenticationViewModel by viewModels()
 
-    val currentStep = mutableStateOf(OnboardingSteps.SETUP)
+    val currentStep = mutableStateOf(OnboardingSteps.INTRO)
 
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var customizationRepository: SetupCustomizationRepository
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_login
@@ -90,9 +82,13 @@ class OnboardingActivity: BaseActivity() {
         supportActionBar?.hide()
         // Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val step = preferences.getInt("last_onboarding_step", 1)
+        currentStep.value = OnboardingSteps.entries.find { it.id == step } ?: OnboardingSteps.INTRO
 
         binding.composeView.setContent {
             val step by currentStep
+            val user = authenticationViewModel.user.value
             HabiticaTheme {
                 AnimatedContent(step,
                     transitionSpec = {
@@ -109,10 +105,13 @@ class OnboardingActivity: BaseActivity() {
                         OnboardingSteps.INTRO -> IntroScreen({
                             currentStep.value = OnboardingSteps.LOGIN
                         })
-                        OnboardingSteps.LOGIN -> LoginScreen(authenticationViewModel,{ newUser ->
+                        OnboardingSteps.LOGIN -> LoginScreen(authenticationViewModel, configManager.useNewAuthFlow(),{ newUser ->
                             if (newUser) {
                                 currentStep.value = OnboardingSteps.USERNAME
                             } else {
+                                preferences.edit {
+                                    putInt("last_onboarding_step", -1)
+                                }
                                 startMainActivity()
                             }
                         })
@@ -123,9 +122,14 @@ class OnboardingActivity: BaseActivity() {
                                 currentStep.value = OnboardingSteps.SETUP
                             }
                         )
-                        OnboardingSteps.SETUP -> SetupScreen({
-                            startMainActivity()
-                        })
+                        OnboardingSteps.SETUP -> if (user != null) {
+                            SetupScreen(authenticationViewModel, customizationRepository, user, {
+                                preferences.edit {
+                                    putInt("last_onboarding_step", -1)
+                                }
+                                startMainActivity()
+                            })
+                        }
                     }
                 }
             }
@@ -140,6 +144,16 @@ class OnboardingActivity: BaseActivity() {
             controller.isAppearanceLightNavigationBars = false
             controller.isAppearanceLightStatusBars = false
             window.setNavigationBarDarkIcons(false)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getInt("last_onboarding_step", 0) >= 0) {
+            preferences.edit {
+                putInt("last_onboarding_step", currentStep.value.id)
+            }
         }
     }
 
