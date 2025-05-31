@@ -33,6 +33,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.isTraversalGroup
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -100,7 +103,7 @@ private fun TaskDifficultySelection(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
-        modifier = modifier
+        modifier = modifier.clickable { onSelect(value) }
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -114,7 +117,6 @@ private fun TaskDifficultySelection(
                     MaterialTheme.shapes.medium
                 )
                 .clip(MaterialTheme.shapes.medium)
-                .clickable { onSelect(value) }
         ) {
             this@Column.AnimatedVisibility(
                 selected,
