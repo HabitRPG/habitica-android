@@ -47,6 +47,7 @@
                 android:textColor="@color/text_quad"
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
+                android:accessibilityTraversalAfter="@id/container"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -89,5 +90,6 @@
         android:layout_gravity="end"
         android:visibility="gone"
         android:layout_alignEnd="@id/container"
+        android:importantForAccessibility="no"
         style="@style/CountLabel"/>
 </RelativeLayout>
