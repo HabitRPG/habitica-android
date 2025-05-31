@@ -337,7 +337,7 @@ fun AvatarOverviewView(
                         userViewModel.updateUser("preferences.autoEquip", it)
                     })
                 }
-                EquipmentOverviewView(user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
+                EquipmentOverviewView(user?.items?.gear?.owned, user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
                     onEquipmentTap(type, equipped, false)
                 })
                 Row(
@@ -362,7 +362,7 @@ fun AvatarOverviewView(
                         userViewModel.updateUser("preferences.costume", it)
                     })
                 }
-                EquipmentOverviewView(user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
+                EquipmentOverviewView(user?.items?.gear?.owned, user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
                     onEquipmentTap(type, equipped, true)
                 }, modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f))
             }
