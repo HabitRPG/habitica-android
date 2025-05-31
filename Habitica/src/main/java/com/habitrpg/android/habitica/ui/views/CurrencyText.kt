@@ -11,6 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -58,7 +61,16 @@ fun CurrencyText(
         } else {
             value.toFloat()
         }
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
+    val currencyName = when (currency) {
+        "gold" -> stringResource(R.string.gold_plural)
+        "gems" -> stringResource(R.string.gems)
+        "hourglasses" -> stringResource(R.string.mystic_hourglasses)
+        else -> ""
+    }
+    val amount = NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbreviation)
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.semantics(mergeDescendants = true) {
+        contentDescription = "$amount $currencyName"
+    }) {
         when (currency) {
             "gold" -> HabiticaIconsHelper.imageOfGold()
             "gems" -> HabiticaIconsHelper.imageOfGem()
@@ -66,14 +78,14 @@ fun CurrencyText(
             else -> null
         }?.asImageBitmap()?.let { Image(it, null, Modifier.padding(end = 5.dp)) }
         Text(
-            NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbreviation),
+            text = amount,
             color =
-            when (currency) {
-                "gold" -> colorResource(R.color.text_gold)
-                "gems" -> colorResource(R.color.text_green)
-                "hourglasses" -> colorResource(R.color.text_brand)
-                else -> colorResource(R.color.text_primary)
-            },
+                when (currency) {
+                    "gold" -> colorResource(R.color.text_gold)
+                    "gems" -> colorResource(R.color.text_green)
+                    "hourglasses" -> colorResource(R.color.text_brand)
+                    else -> colorResource(R.color.text_primary)
+                },
             fontSize = fontSize,
             fontWeight = FontWeight.SemiBold
         )

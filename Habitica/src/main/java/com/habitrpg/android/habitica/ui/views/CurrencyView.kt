@@ -31,7 +31,8 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
             configureCurrency()
             updateVisibility()
         }
-    private var currencyContentDescription: String? = null
+    var currencyContentDescription: String? = null
+        private set
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributes =
