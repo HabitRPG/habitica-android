@@ -8,6 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
+import com.habitrpg.android.habitica.extensions.getImpreciseRemainingString
+import com.habitrpg.android.habitica.extensions.getRemainingString
+import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
@@ -52,6 +55,8 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         this.item = item
         binding.buyButton.visibility = View.VISIBLE
 
+        var contentDescription = item.text
+
         binding.imageView.loadImage(item.imageName?.replace("_locked", ""))
 
         binding.itemDetailIndicator.text = null
@@ -66,10 +71,12 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             }
             binding.priceLabel.visibility = View.VISIBLE
             binding.unlockLabel.visibility = View.GONE
+            contentDescription += ", ${item.value} ${binding.priceLabel.currencyContentDescription}"
         } else {
             binding.unlockLabel.text = lockedReason
             binding.priceLabel.visibility = View.GONE
             binding.unlockLabel.visibility = View.VISIBLE
+            contentDescription += ", $lockedReason"
         }
         val isLimited = item.isLimited || item.availableUntil != null
         if (numberOwned > 0) {
@@ -82,10 +89,12 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
                 binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
             }
             binding.itemDetailIndicator.visibility = View.VISIBLE
+            contentDescription += ", ${context.getString(R.string.owned)}: $numberOwned"
         } else if (item.locked) {
             binding.itemDetailIndicator.background =
                 AppCompatResources.getDrawable(context, if (isLimited) R.drawable.shop_locked_limited else R.drawable.shop_locked)
             binding.itemDetailIndicator.visibility = View.VISIBLE
+            contentDescription += ", ${context.getString(R.string.locked)}"
         } else if (isLimited) {
             if (numberOwned == 0) {
                 binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.shop_limited)
@@ -93,6 +102,10 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
                 binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_purple_300)
             }
             binding.itemDetailIndicator.visibility = View.VISIBLE
+
+            item.availableUntil?.let {
+                contentDescription += ", ${it.getImpreciseRemainingString(context.resources)}"
+            }
         }
 
         val limitedLeft = item.limitedNumberLeft ?: limitedNumberLeft
@@ -100,12 +113,14 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.itemDetailIndicator.background =
                 AppCompatResources.getDrawable(context, R.drawable.item_indicator_subscribe)
             binding.itemDetailIndicator.visibility = View.VISIBLE
+            contentDescription += ", ${context.getString(R.string.locked)}"
         } else if (item.key == "gem") {
             binding.itemDetailIndicator.background =
                 AppCompatResources.getDrawable(context, R.drawable.pill_bg_green)
             binding.itemDetailIndicator.text = "$limitedLeft"
             binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.white))
             binding.itemDetailIndicator.visibility = View.VISIBLE
+            contentDescription += ", ${context.getString(R.string.gems_left_nomax, limitedLeft)}"
         }
 
         if (binding.itemDetailIndicator.visibility == View.VISIBLE) {
@@ -120,6 +135,8 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         }
 
         binding.priceLabel.isLocked = item.locked || (!canBuy && item.currency == "gold")
+
+        binding.container.contentDescription = contentDescription
     }
 
     override fun onClick(view: View) {

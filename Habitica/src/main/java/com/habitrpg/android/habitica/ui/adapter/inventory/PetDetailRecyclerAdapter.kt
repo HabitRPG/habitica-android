@@ -201,6 +201,8 @@ class PetDetailRecyclerAdapter :
 
             binding.eggView.startAnimation(Animations.bobbingAnimation(4f))
             binding.hatchingPotionView.startAnimation(Animations.bobbingAnimation(-4f))
+
+            binding.root.contentDescription = "${item.text}, ${itemView.context.getString(R.string.hatch_pet)}"
         }
 
         override fun onClick(p0: View?) {
