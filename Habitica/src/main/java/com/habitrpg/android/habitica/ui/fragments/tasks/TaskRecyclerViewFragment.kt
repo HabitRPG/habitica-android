@@ -580,11 +580,12 @@ open class TaskRecyclerViewFragment :
         viewModel.userViewModel.user.observeOnce(this) {
             if (it != null) {
                 when (taskType) {
-                    TaskType.TODO ->
+                    TaskType.TODO -> {
                         viewModel.setActiveFilter(
                             TaskType.TODO,
-                            Task.FILTER_ACTIVE
+                            viewModel.getTaskFilterPreference(TaskType.TODO)
                         )
+                    }
 
                     TaskType.DAILY -> {
                         if (!viewModel.initialPreferenceFilterSet) {
