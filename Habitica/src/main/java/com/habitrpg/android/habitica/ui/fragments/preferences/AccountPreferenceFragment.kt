@@ -185,14 +185,7 @@ class AccountPreferenceFragment :
 
             "APIToken" -> {
                 ApiTokenBottomSheetFragment(
-                    apiToken = hostConfig.apiKey, { copiedToken ->
-                        (activity as? SnackbarActivity)?.showSnackbar(
-                            content = getString(R.string.copied_to_clipboard, copiedToken),
-                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
-                        )
-                    },
-
-                ).show(childFragmentManager, ApiTokenBottomSheetFragment.TAG)
+                    apiToken = hostConfig.apiKey).show(childFragmentManager, ApiTokenBottomSheetFragment.TAG)
                 return true
             }
 
