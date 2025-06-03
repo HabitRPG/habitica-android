@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.ApiTokenBottomSheet
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 
 class ApiTokenBottomSheetFragment(
-    private val apiToken: String,
-    private val onCopyToken: (String) -> Unit,
+    private val apiToken: String
 ) : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,7 +21,13 @@ class ApiTokenBottomSheetFragment(
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ApiTokenBottomSheet(apiToken = apiToken, onCopyToken = onCopyToken)
+                ApiTokenBottomSheet(apiToken = apiToken, onCopyToken = { copiedToken ->
+                    (activity as? SnackbarActivity)?.showSnackbar(
+                        content = getString(R.string.copied_to_clipboard, copiedToken),
+                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                    )
+                    dismiss()
+                })
             }
         }
     }
