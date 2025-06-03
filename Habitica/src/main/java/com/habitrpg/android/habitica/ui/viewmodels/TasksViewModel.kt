@@ -199,11 +199,8 @@ constructor(
         if (activeFilters[type] == null) {
             return false
         }
-        return if (TaskType.TODO == type) {
-            Task.FILTER_ACTIVE != activeFilters[type]
-        } else {
-            Task.FILTER_ALL != activeFilters[type]
-        }
+
+        return Task.FILTER_ALL != activeFilters[type]
     }
 
     fun filter(tasks: List<Task>): List<Task> {
@@ -259,6 +256,8 @@ constructor(
         activeFilters[type] = activeFilter
         filterSets[type]?.value = Triple(searchQuery, activeFilter, tags)
 
+        sharedPreferences.edit { putString("filter_${type.value}", activeFilter) }
+
         if (activeFilters[TaskType.TODO] == Task.FILTER_COMPLETED) {
             viewModelScope.launchCatching {
                 taskRepository.retrieveCompletedTodos()
@@ -281,6 +280,12 @@ constructor(
         } else {
             null
         }
+    }
+
+    fun getTaskFilterPreference(
+        type: TaskType
+    ): String {
+        return sharedPreferences.getString("filter_${type.value}", Task.FILTER_ALL) ?: Task.FILTER_ALL
     }
 
     fun createQuery(unfilteredData: OrderedRealmCollection<Task>): RealmQuery<Task>? {
