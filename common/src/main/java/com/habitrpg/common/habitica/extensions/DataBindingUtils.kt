@@ -98,7 +98,8 @@ object DataBindingUtils {
 
     fun getFullFilename(
         imageName: String,
-        imageFormat: String? = null
+        imageFormat: String? = null,
+        disableAnimations: Boolean = false
     ): String {
         val name =
             when {
@@ -108,7 +109,7 @@ object DataBindingUtils {
                 else -> imageName
             }
         return name +
-            if (!disableAnimations && imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
+            if (!this.disableAnimations && !disableAnimations && imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
                 "." + FILEFORMAT_MAP[imageName]
             } else if (!disableAnimations) {
                 ".${imageFormat ?: "png"}"
