@@ -200,7 +200,11 @@ constructor(
             return false
         }
 
-        return Task.FILTER_ALL != activeFilters[type]
+        return if (TaskType.TODO == type) {
+            Task.FILTER_ACTIVE != activeFilters[type]
+        } else {
+            Task.FILTER_ALL != activeFilters[type]
+        }
     }
 
     fun filter(tasks: List<Task>): List<Task> {
