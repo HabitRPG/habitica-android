@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.*
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import androidx.compose.ui.res.colorResource
 
 @Composable
 fun ApiTokenBottomSheet(
@@ -29,7 +30,7 @@ fun ApiTokenBottomSheet(
     val fieldBackground = colors.contentBackground
     val mainText = colors.textPrimary
     val secondaryText = colors.textSecondary
-    val buttonBg = colors.tintedUiMain
+    val buttonBg = colorResource(id = R.color.yellow_100)
     val buttonText = colors.tintedUiDetails
     val lockIconColor = colors.textSecondary
 
