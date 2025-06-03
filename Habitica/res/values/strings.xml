@@ -1229,7 +1229,7 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="add">Add</string>
-    <string name="apitoken_summary">Copy Token. Be careful, this is a password!</string>
+    <string name="apitoken_summary">Password token for developers and third-party tools.</string>
     <string name="added_social_auth">Added %s authentication</string>
     <string name="copied_to_clipboard">Copied %s to clipboard</string>
     <string name="removed_social_auth">Disconnected %s</string>
@@ -1581,6 +1581,18 @@
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
+    <string name="api_token_title">API Token</string>
+    <string name="api_token_is_password">Your API Token is like a password</string>
+    <string name="api_token_is_password_info">
+    Do not share it publicly. You may occasionally be asked for your User ID, but never post your API Token where others can see it, including on Github.
+</string>
+    <string name="api_token_reset_title">If you need a new API Token</string>
+    <string name="api_token_reset_info">
+    You can change your password to reset it. Once it is reset, you will need to log back in to any other devices you use Habitica on and provide the new API Token to third-party tools you may use.
+</string>
+    <string name="copy_token">Copy Token</string>
+
+
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
+import com.habitrpg.android.habitica.ui.views.ApiTokenBottomSheet
 import com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
@@ -179,7 +180,15 @@ class AccountPreferenceFragment :
             }
 
             "APIToken" -> {
-                copyValue(getString(R.string.SP_APIToken_title), hostConfig.apiKey)
+                ApiTokenBottomSheetFragment(
+                    apiToken = hostConfig.apiKey, { copiedToken ->
+                        (activity as? SnackbarActivity)?.showSnackbar(
+                            content = getString(R.string.copied_to_clipboard, copiedToken),
+                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                        )
+                    },
+
+                ).show(childFragmentManager, ApiTokenBottomSheetFragment.TAG)
                 return true
             }
 
