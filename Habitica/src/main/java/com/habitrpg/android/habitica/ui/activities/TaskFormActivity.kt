@@ -796,6 +796,9 @@ class TaskFormActivity : BaseActivity() {
             thisTask.dateCreated = Date()
         } else {
             if (!thisTask.isValid) return
+
+            // cancel any old alarms before updating
+            taskAlarmManager.removeAlarmsForTask(thisTask)
         }
 
         thisTask = configureTask(thisTask)
