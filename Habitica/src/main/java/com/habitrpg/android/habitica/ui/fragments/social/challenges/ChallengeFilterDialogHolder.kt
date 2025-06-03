@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.databinding.DialogChallengeFilterBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
 
 internal class ChallengeFilterDialogHolder private constructor(
     view: View,
@@ -53,8 +54,9 @@ internal class ChallengeFilterDialogHolder private constructor(
         currentFilter?.let { currentFilter ->
             adapter?.checkedEntries?.addAll(currentFilter.showByGroups)
         }
-
         binding.challengeFilterRecyclerView.adapter = adapter
+
+        binding.challengeFilterRecyclerView.state = RecyclerViewState.DISPLAYING_DATA
     }
 
     private fun allClicked() {
