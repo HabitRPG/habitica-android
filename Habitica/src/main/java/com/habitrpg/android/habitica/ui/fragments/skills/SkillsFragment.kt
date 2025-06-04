@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.skills
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,6 +32,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.core.graphics.drawable.toDrawable
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.views.PixelArtView
 
 @AndroidEntryPoint
 class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
@@ -99,21 +103,38 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     }
 
     private fun onSkillSelected(skill: Skill) {
-        when {
-            "special" == skill.habitClass -> {
-                selectedSkill = skill
-                val intent = Intent(mainActivity, SkillMemberActivity::class.java)
-                memberSelectionResult.launch(intent)
-            }
+        val context = context ?: return
+        val resourceIconDrawable: Drawable = HabiticaIconsHelper.imageOfMagic().toDrawable(context.resources)
+        val skillIdentifier = "shop_"
 
-            skill.target == "task" -> {
-                selectedSkill = skill
-                val intent = Intent(mainActivity, SkillTasksActivity::class.java)
-                taskSelectionResult.launch(intent)
-            }
+        val bottomSheet = SkillDialogBottomSheetFragment.newInstance(
+            skillTitle = skill.text,
+            skillDescription = skill.notes ?: "",
+            skillKey = skill.key,
+            skillPath = skillIdentifier,
+            skillMpCost = "${skill.mana?.toInt() ?: 0} MP",
+            resourceIcon = resourceIconDrawable,
+            onUseSkill = {
+                when {
+                    "special" == skill.habitClass -> {
+                        selectedSkill = skill
+                        val intent = Intent(mainActivity, SkillMemberActivity::class.java)
+                        memberSelectionResult.launch(intent)
+                    }
 
-            else -> useSkill(skill)
-        }
+                    skill.target == "task" -> {
+                        selectedSkill = skill
+                        val intent = Intent(mainActivity, SkillTasksActivity::class.java)
+                        taskSelectionResult.launch(intent)
+                    }
+
+                    else -> useSkill(skill)
+                }
+            }
+        )
+        bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
+
+
     }
 
     private fun displaySkillResult(
