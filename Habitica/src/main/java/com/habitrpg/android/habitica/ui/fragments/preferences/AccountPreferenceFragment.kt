@@ -271,46 +271,21 @@ class AccountPreferenceFragment :
     }
 
     private fun showChangePasswordDialog() {
-        val inflater = context?.layoutInflater
-        val view = inflater?.inflate(R.layout.dialog_edittext_change_pw, null)
-        val oldPasswordEditText =
-            view?.findViewById<ValidatingEditText>(R.id.old_password_edit_text)
-        val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.new_password_edit_text)
-        passwordEditText?.validator = { (it?.length ?: 0) >= 8 }
-        passwordEditText?.errorText = getString(R.string.password_too_short, 8)
-        val passwordRepeatEditText =
-            view?.findViewById<ValidatingEditText>(R.id.new_password_repeat_edit_text)
-        passwordRepeatEditText?.validator = { it == passwordEditText?.text }
-        passwordRepeatEditText?.errorText = getString(R.string.password_not_matching)
-        context?.let { context ->
-            val dialog = HabiticaAlertDialog(context)
-            dialog.setTitle(R.string.change_password)
-            dialog.addButton(R.string.change, true, false, false) { d, _ ->
+        ChangePasswordBottomSheet{ oldPassword, newPassword ->
+            lifecycleScope.launchCatching {
                 KeyboardUtil.dismissKeyboard(activity)
-                passwordEditText?.showErrorIfNecessary()
-                passwordRepeatEditText?.showErrorIfNecessary()
-                if (passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
                 lifecycleScope.launchCatching {
                     val response = userRepository.updatePassword(
-                        oldPasswordEditText?.text ?: "",
-                        passwordEditText.text ?: "",
-                        passwordRepeatEditText.text ?: "",
+                        oldPassword,
+                        newPassword,
+                        newPassword,
                     )
                     response?.apiToken?.let {
                         viewModel.saveTokens(it, user?.id ?: "")
                     }
-                    (activity as? SnackbarActivity)?.showSnackbar(
-                        content = context.getString(R.string.password_changed),
-                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
-                    )
                 }
-                d.dismiss()
             }
-            dialog.addCancelButton()
-            dialog.setAdditionalContentView(view)
-            dialog.setAdditionalContentSidePadding(12)
-            dialog.show()
-        }
+        }.show(childFragmentManager, ChangePasswordBottomSheet.TAG)
     }
 
     private fun showAddPasswordDialog(showEmail: Boolean) {
