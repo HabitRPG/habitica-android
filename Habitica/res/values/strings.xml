@@ -752,6 +752,7 @@
     <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
     <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
     <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="register_tos_confirm">You agree to our <a href="https://habitica.com/static/terms">Terms of Service</a> and have read our <a href="https://habitica.com/static/privacy">Privacy Policy</a>.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
@@ -1582,10 +1583,8 @@
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
-    <string name="chat_empty_state_title">Start chatting!</string>
-    <string name="chat_empty_state_description">Remember to be friendly and follow the Community Guidelines.</string>
-
-
+    <string name="password_change_info">Passwords must be 8 characters or more. Changing your password will log you out of any other devices and third-party tools you may use.</string>
+    <string name="confirm_new_password">Confirm new Password</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
