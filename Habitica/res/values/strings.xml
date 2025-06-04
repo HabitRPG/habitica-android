@@ -1581,6 +1581,8 @@
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
+    <string name="password_change_info">Passwords must be 8 characters or more. Changing your password will log you out of any other devices and third-party tools you may use.</string>
+    <string name="confirm_new_password">Confirm new Password</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
