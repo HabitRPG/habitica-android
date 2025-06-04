@@ -51,6 +51,7 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
@@ -160,6 +161,7 @@ class TaskFormActivity : BaseActivity() {
     private var taskCompletedMap = mutableStateMapOf<String, Date>()
     private var preselectedTags: ArrayList<String>? = null
     private var hasPreselectedTags = false
+    private var originalReminders: List<RemindersItem> = emptyList()
 
     private var isDiscardCancelled: Boolean = false
     private var canSave: Boolean = false
@@ -678,7 +680,17 @@ class TaskFormActivity : BaseActivity() {
         if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
             task.checklist?.let { binding.checklistContainer.checklistItems = it }
             binding.remindersContainer.taskType = taskType
-            task.reminders?.let { binding.remindersContainer.reminders = it }
+            task.reminders?.let {
+                binding.remindersContainer.reminders = it
+                originalReminders = it.map { reminder ->
+                    RemindersItem().apply {
+                        id = reminder.id
+                        startDate = reminder.startDate
+                        time = reminder.time
+                        type = reminder.type
+                    }
+                }
+            }
             checkIfShowNotifLayout()
         }
         task.attribute?.let { viewModel.selectedAttribute.value = it }
@@ -836,6 +848,10 @@ class TaskFormActivity : BaseActivity() {
             }
 
             if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {
+                taskAlarmManager.cancelRemovedRemindersAlarms(
+                    oldReminders = originalReminders,
+                    newReminders = thisTask.reminders ?: emptyList()
+                )
                 taskAlarmManager.scheduleAlarmsForTask(thisTask)
             }
         } else {
