@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,22 +21,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextButton
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.colorResource
+
+
+
+
+
 
 
 @Composable
 fun ChangePasswordScreen(
-    onCancel: () -> Unit,
-    onSave: (oldPassword: String, newPassword: String) -> Unit
+    onBack: () -> Unit,
+    onSave: (oldPassword: String, newPassword: String) -> Unit,
+    onForgotPassword: () -> Unit
 ) {
     val colors = HabiticaTheme.colors
     val backgroundColor = colors.windowBackground
@@ -62,96 +75,133 @@ fun ChangePasswordScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp),
-            verticalArrangement = Arrangement.Top
+                .padding(horizontal = 16.dp),
         ) {
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
-                modifier = Modifier
+                Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp, bottom = 32.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                    .padding(top = 4.dp, bottom = 0.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    stringResource(id = R.string.cancel),
-                    color = buttonColor,
-                    fontSize = 16.sp,
-                    modifier = Modifier.clickable { onCancel() }
-                )
-                Text(
-                    stringResource(id = R.string.change_password),
-                    color = textColor,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 17.sp,
-                )
-                Text(
-                    stringResource(id = R.string.save),
-                    color = if (canSave) buttonColor else labelColor,
-                    fontSize = 16.sp,
-                    modifier = Modifier
-                        .clickable(enabled = canSave) {
-                            attemptedSave = true
-                            if (canSave) onSave(oldPassword, newPassword)
-                        }
-                )
+                IconButton(onClick = onBack, modifier = Modifier.size(40.dp)) {
+                    Icon(
+                        painterResource(id = R.drawable.arrow_back),
+                        contentDescription = stringResource(R.string.action_back),
+                        tint = textColor
+                    )
+                }
             }
 
+            Text(
+                text = stringResource(R.string.change_password),
+                fontWeight = FontWeight.Bold,
+                fontSize = 28.sp,
+                color = textColor,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 4.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.password_change_info),
+                color = labelColor,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 6.dp, bottom = 22.dp)
+            )
+
             PasswordField(
-                label = stringResource(id = R.string.old_password),
+                label = stringResource(R.string.old_password),
                 value = oldPassword,
                 onValueChange = { oldPassword = it },
                 fieldColor = fieldColor,
                 labelColor = labelColor,
-                textColor = textColor
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Column {
-                PasswordField(
-                    label = stringResource(id = R.string.new_password),
-                    value = newPassword,
-                    onValueChange = { newPassword = it },
-                    fieldColor = fieldColor,
-                    labelColor = labelColor,
-                    textColor = textColor
-                )
-                if (attemptedSave && !passwordValid) {
-                    Text(
-                        stringResource(id = R.string.password_too_short),
-                        color = Color.Red,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            Column {
-                PasswordField(
-                    label = stringResource(id = R.string.confirm_new_password),
-                    value = confirmPassword,
-                    onValueChange = { confirmPassword = it },
-                    fieldColor = fieldColor,
-                    labelColor = labelColor,
-                    textColor = textColor
-                )
-                if (attemptedSave && !passwordsMatch) {
-                    Text(
-                        stringResource(id = R.string.password_not_matching),
-                        color = Color.Red,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                stringResource(id = R.string.password_change_info),
-                color = labelColor,
-                fontSize = 13.sp,
-                textAlign = TextAlign.Center,
+                textColor = textColor,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(56.dp)
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(14.dp))
+            PasswordField(
+                label = stringResource(R.string.new_password),
+                value = newPassword,
+                onValueChange = { newPassword = it },
+                fieldColor = fieldColor,
+                labelColor = labelColor,
+                textColor = textColor,
+                isError = attemptedSave && !passwordValid,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            )
+            if (attemptedSave && !passwordValid) {
+                Text(
+                    text = stringResource(R.string.password_too_short),
+                    color = Color.Red,
+                    fontSize = 13.sp,
+                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(14.dp))
+            PasswordField(
+                label = stringResource(R.string.confirm_new_password),
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                fieldColor = fieldColor,
+                labelColor = labelColor,
+                textColor = textColor,
+                isError = attemptedSave && !passwordsMatch,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            )
+            if (attemptedSave && !passwordsMatch) {
+                Text(
+                    text = stringResource(R.string.password_not_matching),
+                    color = Color.Red,
+                    fontSize = 13.sp,
+                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Button(
+                onClick = {
+                    attemptedSave = true
+                    if (canSave) onSave(oldPassword, newPassword)
+                },
+                enabled = canSave,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = buttonColor,
+                    disabledContainerColor = buttonColor.copy(alpha = 0.3f)
+                ),
+                shape = RoundedCornerShape(14.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.change_password),
+                    color = Color.White,
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            Spacer(modifier = Modifier.height(18.dp))
+
+            TextButton(
+                onClick = onForgotPassword,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(
+                    text = stringResource(R.string.forgot_pw_btn),
+                    color = buttonColor,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp
+                )
+            }
         }
     }
 }
@@ -167,43 +217,54 @@ fun PasswordField(
     isError: Boolean = false,
     modifier: Modifier = Modifier
 ) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = {
-            Text(label, color = labelColor, fontSize = 15.sp)
-        },
-        singleLine = true,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(48.dp),
-        shape = RoundedCornerShape(8.dp),
-        isError = isError,
-        visualTransformation = PasswordVisualTransformation(),
-        colors = OutlinedTextFieldDefaults.colors(
-            unfocusedContainerColor = fieldColor,
-            focusedContainerColor = fieldColor,
-            unfocusedBorderColor = if (isError) Color.Red else Color.Transparent,
-            focusedBorderColor = if (isError) Color.Red else Color.Transparent,
-            cursorColor = Color(0xFF9C8DF6),
-            unfocusedTextColor = textColor,
-            focusedTextColor = textColor
+    val dividerColor = if (value.isNotBlank()) colorResource(id = R.color.purple400_purple500) else colorResource(id = R.color.gray_400)
+
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = {
+                Text(label, color = labelColor, fontSize = 17.sp)
+            },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth().height(56.dp),
+            shape = RoundedCornerShape(10.dp),
+            isError = isError,
+            visualTransformation = PasswordVisualTransformation(),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = fieldColor,
+                focusedContainerColor = fieldColor,
+                unfocusedBorderColor = Color.Transparent,
+                focusedBorderColor = Color.Transparent,
+                cursorColor = Color(0xFF9C8DF6),
+                unfocusedTextColor = textColor,
+                focusedTextColor = textColor
+            )
         )
-    )
+        HorizontalDivider(
+            color = dividerColor,
+            thickness = 1.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 2.dp)
+        )
+    }
 }
 
 
-
-@Preview(showBackground = true, widthDp = 360, heightDp = 640)
+@Preview(showBackground = true, widthDp = 327, heightDp = 704, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ChangePasswordScreenPreview() {
     HabiticaTheme {
         ChangePasswordScreen(
-            onCancel = {},
-            onSave = { _, _ -> }
+            onBack = {},
+            onSave = { _, _ -> },
+            onForgotPassword = {}
         )
     }
 }
+
+
 
 
 

@@ -1,9 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.LaunchedEffect
@@ -15,10 +18,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.ui.views.ChangePasswordScreen
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.launchCatching
 
 
-
-class ChangePasswordBottomSheet(val onPasswordChanged: (oldPassword: String, newPassword: String) -> Unit = { _, _ -> }) : BottomSheetDialogFragment() {
+class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPasswordChanged: (oldPassword: String, newPassword: String) -> Unit = { _, _ -> }) : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.let { dlg ->
@@ -46,9 +53,13 @@ class ChangePasswordBottomSheet(val onPasswordChanged: (oldPassword: String, new
                         enter = fadeIn()
                     ) {
                         ChangePasswordScreen(
-                            onCancel = { dismiss() },
+                            onBack = { dismiss() },
                             onSave = { oldPassword, newPassword ->
                                 onPasswordChanged(oldPassword, newPassword)
+                                dismiss()
+                            },
+                            onForgotPassword = {
+                                onForgotPassword()
                                 dismiss()
                             }
                         )

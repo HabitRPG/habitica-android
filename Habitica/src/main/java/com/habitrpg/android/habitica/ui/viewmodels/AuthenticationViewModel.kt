@@ -205,24 +205,24 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun startGoogleAuth(context: Context) {
-        val googleIdOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
-            .build()
-        val request = GetCredentialRequest.Builder()
-            .addCredentialOption(googleIdOption)
-            .build()
-
-        viewModelScope.launch {
-            try {
-                val result = CredentialManager.create(context).getCredential(
-                    request = request,
-                    context = context,
-                )
-                handleSignIn(context, result)
-            } catch (e: GetCredentialException) {
-                authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
-                Log.e("AuthenticationViewModel", "Get Credential Exception", e)
-            }
-        }
+//        val googleIdOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
+//            .build()
+//        val request = GetCredentialRequest.Builder()
+//            .addCredentialOption(googleIdOption)
+//            .build()
+//
+//        viewModelScope.launch {
+//            try {
+//                val result = CredentialManager.create(context).getCredential(
+//                    request = request,
+//                    context = context,
+//                )
+//                handleSignIn(context, result)
+//            } catch (e: GetCredentialException) {
+//                authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
+//                Log.e("AuthenticationViewModel", "Get Credential Exception", e)
+//            }
+//        }
     }
 
     private suspend fun handleSignIn(context: Context, result: GetCredentialResponse) {
@@ -232,23 +232,23 @@ class AuthenticationViewModel @Inject constructor(
             is CustomCredential -> {
                 if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                     try {
-                        val googleIdTokenCredential = GoogleIdTokenCredential
-                            .createFrom(credential.data)
-                        val authorizationRequest = AuthorizationRequest.Builder()
-                            .requestOfflineAccess(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
-                            .setRequestedScopes(
-                                listOf(
-                                    Scope(Scopes.PROFILE),
-                                    Scope(Scopes.EMAIL),
-                                )
-                            )
-                            .build()
-                        val result = Identity.getAuthorizationClient(context)
-                            .authorize(authorizationRequest).await()
-                        if (result != null && result.accessToken != null) {
-                            val response = result.accessToken?.let { apiClient.connectSocial("google", googleIdTokenCredential.id, it) }
-                            handleAuthResponse(response)
-                        }
+//                        val googleIdTokenCredential = GoogleIdTokenCredential
+//                            .createFrom(credential.data)
+//                        val authorizationRequest = AuthorizationRequest.Builder()
+//                            .requestOfflineAccess(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
+//                            .setRequestedScopes(
+//                                listOf(
+//                                    Scope(Scopes.PROFILE),
+//                                    Scope(Scopes.EMAIL),
+//                                )
+//                            )
+//                            .build()
+//                        val result = Identity.getAuthorizationClient(context)
+//                            .authorize(authorizationRequest).await()
+//                        if (result != null && result.accessToken != null) {
+//                            val response = result.accessToken?.let { apiClient.connectSocial("google", googleIdTokenCredential.id, it) }
+//                            handleAuthResponse(response)
+//                        }
                     } catch (e: GoogleIdTokenParsingException) {
                         authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
                         Log.e("AuthenticationViewModel", "Received an invalid google id token response", e)
