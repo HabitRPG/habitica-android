@@ -16,6 +16,7 @@ constructor(
     defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
     private var targetRect = Rect(0, 0, 0, 0)
+    var forceScaleUp: Boolean = false
 
     var bitmap: Bitmap? = null
         set(value) {
@@ -44,28 +45,31 @@ constructor(
     private fun updateTargetRect() {
         var targetWidth = bitmap?.width ?: 0
         var targetHeight = bitmap?.height ?: 0
-        val smallestSide = min(width, height)
-        val divisor = if (targetWidth % 3 == 0 && targetHeight % 3 == 0) 3 else 2
+        val smallestSide = if (forceScaleUp) width else min(width, height)
+        val divisor = if (forceScaleUp) 1 else if (targetWidth % 3 == 0 && targetHeight % 3 == 0) 3 else 2
 
-        val factor =
+        val factor = if (forceScaleUp) {
+            if (smallestSide > 0 && targetWidth > 0) {
+                (smallestSide.toFloat() / (targetWidth.toFloat() / divisor)).toInt().coerceAtLeast(1)
+            } else 1
+        } else {
             min(
                 if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
                     smallestSide / (targetWidth / divisor)
-                } else {
-                    1
-                },
+                } else 1,
                 if (smallestSide > 0 && targetHeight > 0 && smallestSide != targetHeight) {
                     smallestSide / (targetHeight / divisor)
-                } else {
-                    1
-                }
+                } else 1
             )
+        }
+
         targetWidth = (targetWidth / divisor) * factor
         targetHeight = (targetHeight / divisor) * factor
         val left = (width - targetWidth) / 2
         val top = (height - targetHeight) / 2
         targetRect = Rect(left, top, left + targetWidth, top + targetHeight)
     }
+
 
     override fun onDraw(canvas: Canvas) {
         if (bitmap == null) {
