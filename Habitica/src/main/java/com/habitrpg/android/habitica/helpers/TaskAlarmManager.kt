@@ -82,6 +82,17 @@ class TaskAlarmManager(
         }
     }
 
+    fun cancelRemovedRemindersAlarms(
+        oldReminders: List<RemindersItem>,
+        newReminders: List<RemindersItem>
+    ) {
+        val newReminderIds = newReminders.mapNotNull { it.id }.toSet()
+        val removedReminders = oldReminders.filter { it.id != null && it.id !in newReminderIds }
+        for (reminder in removedReminders) {
+            removeAlarmForRemindersItem(reminder)
+        }
+    }
+
     fun removeAlarmsForTask(task: Task) {
         CoroutineScope(Dispatchers.IO).launch {
             task.reminders?.let { reminders ->
