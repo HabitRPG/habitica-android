@@ -1,50 +1,43 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
-import com.habitrpg.android.habitica.R
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Icon
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.colorResource
-
-
-
-
-
-
 
 @Composable
 fun ChangePasswordScreen(
@@ -75,22 +68,19 @@ fun ChangePasswordScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 4.dp, bottom = 0.dp),
-                verticalAlignment = Alignment.CenterVertically
+            IconButton(
+                onClick = onBack,
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(bottom = 12.dp)
             ) {
-                IconButton(onClick = onBack, modifier = Modifier.size(40.dp)) {
-                    Icon(
-                        painterResource(id = R.drawable.arrow_back),
-                        contentDescription = stringResource(R.string.action_back),
-                        tint = textColor
-                    )
-                }
+                Icon(
+                    painterResource(id = R.drawable.arrow_back),
+                    contentDescription = stringResource(R.string.action_back),
+                    tint = textColor
+                )
             }
 
             Text(
@@ -100,7 +90,7 @@ fun ChangePasswordScreen(
                 color = textColor,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(top = 4.dp)
+                    .padding(bottom = 8.dp)
             )
 
             Text(
@@ -109,7 +99,7 @@ fun ChangePasswordScreen(
                 fontSize = 14.sp,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 6.dp, bottom = 22.dp)
+                    .padding(bottom = 22.dp)
             )
 
             PasswordField(
@@ -119,11 +109,10 @@ fun ChangePasswordScreen(
                 fieldColor = fieldColor,
                 labelColor = labelColor,
                 textColor = textColor,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
+                modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
             PasswordField(
                 label = stringResource(R.string.new_password),
                 value = newPassword,
@@ -132,9 +121,7 @@ fun ChangePasswordScreen(
                 labelColor = labelColor,
                 textColor = textColor,
                 isError = attemptedSave && !passwordValid,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
+                modifier = Modifier.fillMaxWidth()
             )
             if (attemptedSave && !passwordValid) {
                 Text(
@@ -144,7 +131,8 @@ fun ChangePasswordScreen(
                     modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
             PasswordField(
                 label = stringResource(R.string.confirm_new_password),
                 value = confirmPassword,
@@ -153,9 +141,7 @@ fun ChangePasswordScreen(
                 labelColor = labelColor,
                 textColor = textColor,
                 isError = attemptedSave && !passwordsMatch,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
+                modifier = Modifier.fillMaxWidth()
             )
             if (attemptedSave && !passwordsMatch) {
                 Text(
@@ -165,7 +151,7 @@ fun ChangePasswordScreen(
                     modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.padding(top = 24.dp))
 
             Button(
                 onClick = {
@@ -180,7 +166,7 @@ fun ChangePasswordScreen(
                 shape = RoundedCornerShape(14.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(52.dp)
+
             ) {
                 Text(
                     text = stringResource(R.string.change_password),
@@ -217,6 +203,7 @@ fun PasswordField(
     isError: Boolean = false,
     modifier: Modifier = Modifier
 ) {
+
     val dividerColor = if (value.isNotBlank()) colorResource(id = R.color.purple400_purple500) else colorResource(id = R.color.gray_400)
 
     Column(modifier = modifier) {
@@ -227,7 +214,7 @@ fun PasswordField(
                 Text(label, color = labelColor, fontSize = 17.sp)
             },
             singleLine = true,
-            modifier = Modifier.fillMaxWidth().height(56.dp),
+            modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
             isError = isError,
             visualTransformation = PasswordVisualTransformation(),
@@ -251,7 +238,6 @@ fun PasswordField(
     }
 }
 
-
 @Preview(showBackground = true, widthDp = 327, heightDp = 704, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ChangePasswordScreenPreview() {
@@ -263,8 +249,3 @@ fun ChangePasswordScreenPreview() {
         )
     }
 }
-
-
-
-
-
