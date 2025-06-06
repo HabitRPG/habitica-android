@@ -72,4 +72,9 @@ constructor(
             appStateManager.endLoading()
         }
     }
+
+    fun areAllTasksCompleted(tasks: List<Task>): Boolean {
+        return tasks.all { it.completed }
+    }
+
 }
