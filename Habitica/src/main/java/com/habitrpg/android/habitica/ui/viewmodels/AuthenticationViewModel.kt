@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.edit
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -41,6 +43,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -56,6 +59,10 @@ class AuthenticationViewModel @Inject constructor(
     val hostConfig: HostConfig,
     private val keyHelper: KeyHelper?,
 ) : ViewModel() {
+    val email = mutableStateOf("")
+    val password = mutableStateOf("")
+    val username = mutableStateOf("")
+
     private val _showAuthProgress = MutableStateFlow(false)
     val showAuthProgress: Flow<Boolean> = _showAuthProgress
     val isRegistering = MutableStateFlow(false)
@@ -63,8 +70,13 @@ class AuthenticationViewModel @Inject constructor(
     val authenticationError: Flow<AuthenticationErrors?> = _authenticationError
         .onEach { _showAuthProgress.value = false }
     private val _authenticationSuccess = MutableStateFlow<Boolean?>(null)
-    val authenticationSuccess: Flow<Boolean?> = _authenticationSuccess
+    val authenticationSuccess: Flow<Boolean> = _authenticationSuccess
+        .filterNotNull()
         .onEach { _showAuthProgress.value = false }
+    private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
+    val isUsernameValid: Flow<Boolean?> = _isUsernameValid
+    private var _usernameIssues = MutableStateFlow<String?>(null)
+    val usernameIssues: Flow<String?> = _usernameIssues
 
     fun validateInputs(
         username: String,
@@ -89,6 +101,24 @@ class AuthenticationViewModel @Inject constructor(
             }
         }
         return null
+    }
+
+    fun checkUsername(username: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiClient.verifyUsername(username)
+                _isUsernameValid.value = response?.isUsable == true
+                _usernameIssues.value = response?.issues?.joinToString("\n") { it }
+            } catch (e: Exception) {
+                _isUsernameValid.value = null
+                Analytics.logException(e)
+            }
+        }
+    }
+
+    fun invalidateUsernameState() {
+        _isUsernameValid.value = null
+        _usernameIssues.value = null
     }
 
     fun login(username: String, password: String) {
@@ -119,7 +149,7 @@ class AuthenticationViewModel @Inject constructor(
 
     suspend fun removeSocialAuth(network: String) {
         apiClient.disconnectSocial(network)
-        userRepository.retrieveUser(true, true)
+        userRepository.retrieveUser(true, forced = true)
     }
 
     private fun authenticationError(error: AuthenticationErrors? = null) {

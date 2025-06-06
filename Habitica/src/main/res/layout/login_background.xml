@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.habitrpg.android.habitica.ui.views.login.LockableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/background_container"
+        android:scrollIndicators="none"
+        android:scrollbars="none"
+        tools:showIn="@layout/activity_login">
+
+    <com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView
+            android:id="@+id/background_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_gradient"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:layout_marginEnd="-2dp">
+
+        <Space
+                android:id="@+id/cloud_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="50dp" />
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/cloud_1"
+                android:id="@+id/left_cloud_view"
+                android:layout_toStartOf="@id/cloud_anchor"
+                android:layout_marginEnd="150dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="50dp"
+                android:scaleType="centerCrop" />
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/cloud_2"
+                android:id="@+id/right_cloud_view"
+                android:layout_toEndOf="@id/cloud_anchor"
+                android:layout_marginStart="170dp"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="130dp" />
+    </com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView>
+
+</com.habitrpg.android.habitica.ui.views.login.LockableScrollView>

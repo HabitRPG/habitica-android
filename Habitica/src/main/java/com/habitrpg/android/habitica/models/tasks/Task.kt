@@ -22,10 +22,13 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
+import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
+import java.time.temporal.TemporalAdjusters
 import java.util.Date
 
 open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
@@ -374,7 +377,9 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         if (remindersItem == null) return null
 
         val reminderTime = remindersItem.time?.parseToZonedDateTime() ?: return null
-        var nextOccurence: ZonedDateTime
+        val localTimeOfDay = reminderTime.toLocalTime()
+
+        var nextOccurrence: ZonedDateTime
         val occurrencesList = mutableListOf<ZonedDateTime>()
 
         // If the reminder is a todo, only schedule sole dueDate/time occurrence. Otherwise, schedule multiple occurrences in advance
@@ -386,65 +391,78 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             )
             return occurrencesList
         }
+
+
+        // Non-TODO (DAILY, WEEKLY, MONTHY, YEARLY)
         val now = today ?: ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
-        var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
-        val weekInMonth = getWeeksOfMonth()?.firstOrNull()?.toLong()
-        val weekdayInMonth = startDate.dayOfWeek
+        var startDate = this.startDate
+            ?.toInstant()
+            ?.atZone(ZoneId.systemDefault())
+            ?.withHour(localTimeOfDay.hour)
+            ?.withMinute(localTimeOfDay.minute)
+            ?: return null
+
         val frequency = this.frequency ?: return null
         val everyX = this.everyX?.toLong() ?: 1L
         if (everyX == 0L) {
             return null
         }
-        val repeatDays = this.repeat
-        startDate = startDate.withHour(reminderTime.hour).withMinute(reminderTime.minute)
-        nextOccurence = startDate
-        if (frequency == Frequency.MONTHLY) {
-            daysOfMonth?.let {
-                if (it.isEmpty()) return@let
-                nextOccurence = nextOccurence.withDayOfMonth(it.first())
-                if (nextOccurence.isBefore(startDate)) {
-                    nextOccurence = nextOccurence.plusMonths(1)
-                }
+
+        val repeatDays = this.repeat                  // “which weekdays are checked?”
+        val dateOfMonthList = getDaysOfMonth()       // e.g. [15] if “date-of-month”
+        val weekOfMonthList = getWeeksOfMonth()      // e.g. [3] if “week-of-month”
+
+        // if “date-of-month”, position nextOccurrence at that day-of-month
+        nextOccurrence = startDate
+        if (frequency == Frequency.MONTHLY && !dateOfMonthList.isNullOrEmpty()) {
+            val dayNum = dateOfMonthList.first().coerceAtMost(YearMonth.of(startDate.year, startDate.monthValue).lengthOfMonth())
+            nextOccurrence = startDate.withDayOfMonth(dayNum)
+            if (nextOccurrence.isBefore(startDate)) {
+                val bumped = nextOccurrence.plusMonths(everyX)
+                nextOccurrence = bumped.withDayOfMonth(
+                    dayNum.coerceAtMost(YearMonth.of(bumped.year, bumped.monthValue).lengthOfMonth())
+                )
             }
         }
 
         while (occurrencesList.size < occurrences) {
             // Increment currentDate based on the frequency
-            nextOccurence =
+            nextOccurrence =
                 when (frequency) {
                     Frequency.DAILY -> {
-                        while (nextOccurence.isBefore(now)) {
-                            nextOccurence = nextOccurence.plusDays(everyX)
+                        while (nextOccurrence.isBefore(now)) {
+                            nextOccurrence = nextOccurrence.plusDays(everyX)
                         }
-                        val todayWithTime = nextOccurence
-                            .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        nextOccurence = if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
+                        val todayWithTime = nextOccurrence
+                            .withHour(reminderTime.hour)
+                            .withMinute(reminderTime.minute)
+
+                        nextOccurrence = if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
                             todayWithTime
                         } else {
-                            nextOccurence.plusDays(everyX)
-                                .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            nextOccurrence.plusDays(everyX).withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         }
-                        nextOccurence
+                        nextOccurrence
                     }
 
                     Frequency.WEEKLY -> {
-                        // Set to start date if current date is earlier
+                        // set to start date if current date is earlier
                         if (repeatDays?.hasAnyDaySelected() == true) {
-                            if (nextOccurence.isBefore(now)) {
-                                var occurenceNowWeekday = nextOccurence.minusDays((nextOccurence.dayOfWeek.value - now.dayOfWeek.value).toLong())
+                            if (nextOccurrence.isBefore(now)) {
+                                var occurenceNowWeekday = nextOccurrence.minusDays((nextOccurrence.dayOfWeek.value - now.dayOfWeek.value).toLong())
                                 while (occurenceNowWeekday.isBefore(now) && occurenceNowWeekday.dayOfYear != now.dayOfYear) {
                                     occurenceNowWeekday = occurenceNowWeekday.plusDays(everyX * 7)
                                 }
-                                nextOccurence = occurenceNowWeekday
-                                while (!nextOccurence.matchesRepeatDays(repeatDays)) {
-                                    nextOccurence =
-                                        nextOccurence.plusDays(1)
+                                nextOccurrence = occurenceNowWeekday
+                                while (!nextOccurrence.matchesRepeatDays(repeatDays)) {
+                                    nextOccurrence =
+                                        nextOccurrence.plusDays(1)
                                 }
                             }
                             var nextDueDate =
-                                nextOccurence.withHour(reminderTime.hour)
+                                nextOccurrence.withHour(reminderTime.hour)
                                     .withMinute(reminderTime.minute)
-                            // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
+                            // If the next due date already happened for today, increment it by one day. (otherwise it will be scheduled for today)
                             if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
                                 nextDueDate = nextDueDate.plusDays(1)
                             }
@@ -476,62 +494,158 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                                 }
                             }
 
-                            nextOccurence = nextDueDate
+                            nextOccurrence = nextDueDate
                         }
-                        // Set time to the reminder time
-                        nextOccurence.withHour(reminderTime.hour)
+                        // set time to the reminder time
+                        nextOccurrence.withHour(reminderTime.hour)
                             .withMinute(reminderTime.minute)
                     }
 
                     Frequency.MONTHLY -> {
-                        while (nextOccurence.isBefore(now)) {
-                            nextOccurence = nextOccurence.plusMonths(everyX)
-                            if (weekInMonth != null && weekdayInMonth != null) {
-                                nextOccurence = nextOccurence.withDayOfMonth(1)
-                                while (nextOccurence.dayOfWeek != weekdayInMonth) {
-                                    nextOccurence = nextOccurence.plusDays(1)
-                                }
-                                nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                        // date-of-month
+                        if (!dateOfMonthList.isNullOrEmpty()) {
+                            // Extract the desired numeric day (e.g. [15]) once
+                            val desiredDay = dateOfMonthList.first()
+
+                            // Start from either startDate or “now”, whichever is later
+                            val boundary = if (occurrencesList.isEmpty()) {
+                                if (startDate.isAfter(now)) startDate else now
+                            } else {
+                                occurrencesList.last()
                             }
-                        }
-                        val todayWithTime = nextOccurence
-                            .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
-                            todayWithTime
-                        } else if (weekInMonth != null && weekdayInMonth != null) {
-                            nextOccurence = nextOccurence.plusMonths(everyX)
-                                .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                                .withDayOfMonth(1)
-                            while (nextOccurence.dayOfWeek != weekdayInMonth) {
-                                nextOccurence = nextOccurence.plusDays(1)
+
+                            // Initialize year/month from that boundary
+                            var year = boundary.year
+                            var month = boundary.monthValue
+
+                            // Build an initial candidate ZonedDateTime
+                            val clampedDay = desiredDay.coerceAtMost(YearMonth.of(year, month).lengthOfMonth())
+                            var candidateZonedDateTime = LocalDate
+                                .of(year, month, clampedDay)
+                                .atTime(localTimeOfDay)
+                                .atZone(ZoneId.systemDefault())
+
+                            // Keep bumping forward until candidateZdt > boundary
+                            while (!candidateZonedDateTime.isAfter(boundary)) {
+                                // Move to “first day of (month + everyX)”
+                                val nextFirst = LocalDate.of(year, month, 1).plusMonths(everyX)
+                                year = nextFirst.year
+                                month = nextFirst.monthValue
+
+                                // Clamp day to that next month’s length and rebuild candidate
+                                val nextClamped = desiredDay.coerceAtMost(YearMonth.of(year, month).lengthOfMonth())
+                                candidateZonedDateTime = LocalDate
+                                    .of(year, month, nextClamped)
+                                    .atTime(localTimeOfDay)
+                                    .atZone(ZoneId.systemDefault())
                             }
-                            nextOccurence.plusWeeks(weekInMonth)
+
+                            // candidateZonedDateTime is the first “desired day” after boundary
+                            candidateZonedDateTime
+
+                            // nth-weekday-of-month
+                        } else if (!weekOfMonthList.isNullOrEmpty()) {
+                            val boundary = if (occurrencesList.isEmpty()) {
+                                if (startDate.isAfter(now)) startDate else now
+                            } else {
+                                occurrencesList.last()
+                            }
+
+                            // figure out which “nth week” (zero‐based) and which DayOfWeek the user wants
+                            val rawWeekIndex = weekOfMonthList.first()       // e.g. 3 for “third week”
+                            val zeroBasedWeekIndex = rawWeekIndex - 1        // e.g. 2 for “third week” (0..4)
+
+                            val desiredDayOfWeek: DayOfWeek = when {
+                                repeatDays?.m == true  -> DayOfWeek.MONDAY
+                                repeatDays?.t == true  -> DayOfWeek.TUESDAY
+                                repeatDays?.w == true  -> DayOfWeek.WEDNESDAY
+                                repeatDays?.th == true -> DayOfWeek.THURSDAY
+                                repeatDays?.f == true  -> DayOfWeek.FRIDAY
+                                repeatDays?.s == true  -> DayOfWeek.SATURDAY
+                                repeatDays?.su == true -> DayOfWeek.SUNDAY
+                                else -> boundary.dayOfWeek
+                            }
+
+                            var year = boundary.year
+                            var month = boundary.monthValue
+
+                            // first candidateLocalDate for “nth desiredDayOfWeek in year/month”
+                            var candidateLocalDate: LocalDate? = nthWeekdayOfMonth(
+                                year,
+                                month,
+                                desiredDayOfWeek,
+                                zeroBasedWeekIndex + 1  // nthWeekdayOfMonth expects a 1-based “n”
+                            )
+
+                            var candidateZdt: ZonedDateTime? = candidateLocalDate
+                                ?.atTime(localTimeOfDay)
+                                ?.atZone(ZoneId.systemDefault())
+
+                            // if candidateZdt is null (meaning “this month doesn’t have an n-th desiredDayOfWeek”)
+                            // or candidateZdt is not after boundary, bump forward:
+                            while (candidateZdt == null || !candidateZdt.isAfter(boundary)) {
+                                // move to the first day of (month + everyX)
+                                val nextFirstOfMonth = LocalDate.of(year, month, 1).plusMonths(everyX)
+                                year = nextFirstOfMonth.year
+                                month = nextFirstOfMonth.monthValue
+
+                                // and again: does this new (year, month) have an n-th desiredDayOfWeek?
+                                candidateLocalDate = nthWeekdayOfMonth(
+                                    year,
+                                    month,
+                                    desiredDayOfWeek,
+                                    zeroBasedWeekIndex + 1
+                                )
+
+                                // if it exists, turn it into a ZonedDateTime; otherwise keep it null
+                                candidateZdt = candidateLocalDate
+                                    ?.atTime(localTimeOfDay)
+                                    ?.atZone(ZoneId.systemDefault())
+                            }
+
+                            // by now, candidateZdt should be guaranteed AND strictly after boundary
+                            candidateZdt
                         } else {
-                            nextOccurence.plusMonths(everyX)
-                                .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            nextOccurrence
+                                .plusMonths(everyX)
+                                .withHour(localTimeOfDay.hour)
+                                .withMinute(localTimeOfDay.minute)
                         }
                     }
 
                     Frequency.YEARLY -> {
-                        while (nextOccurence.isBefore(now)) {
-                            nextOccurence = nextOccurence.plusYears(everyX)
+                        while (nextOccurrence.isBefore(now)) {
+                            nextOccurrence = nextOccurrence.plusYears(everyX)
                         }
-                        val todayWithTime = nextOccurence
+                        val todayWithTime = nextOccurrence
                             .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
                             todayWithTime
                         } else {
-                            nextOccurence.plusYears(everyX)
+                            nextOccurrence.plusYears(everyX)
                                 .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         }
                     }
                 }
 
-            occurrencesList.add(nextOccurence)
+            occurrencesList.add(nextOccurrence)
         }
 
         return occurrencesList
     }
+
+    private fun nthWeekdayOfMonth(
+        year: Int,
+        monthValue: Int,
+        targetDow: DayOfWeek,
+        n: Int
+    ): LocalDate? {
+        val firstOfMonth = LocalDate.of(year, monthValue, 1)
+        val firstOccurrence = firstOfMonth.with(TemporalAdjusters.nextOrSame(targetDow))
+        val candidate = firstOccurrence.plusWeeks((n - 1).toLong())
+        return if (candidate.monthValue == monthValue) candidate else null
+    }
+
 
     fun parseMarkdown() {
         parsedText = MarkdownParser.parseMarkdown(text)

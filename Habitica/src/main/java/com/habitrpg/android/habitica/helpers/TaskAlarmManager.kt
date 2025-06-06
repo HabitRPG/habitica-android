@@ -67,11 +67,14 @@ class TaskAlarmManager(
             task.reminders?.let { reminders ->
                 for (reminder in reminders) {
                     try {
-                        val upcomingReminders =
-                            task.getNextReminderOccurrences(reminder, reminderOccurencesToSchedule)
+                        val upcomingReminders = task.getNextReminderOccurrences(reminder, reminderOccurencesToSchedule)
                         upcomingReminders?.forEachIndexed { index, reminderNextOccurrenceTime ->
-                            reminder?.time =
-                                reminderNextOccurrenceTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                            reminder?.time = reminderNextOccurrenceTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+                            // cancel any leftover alarm with the same reminder ID + index.
+                            // this is done earlier, however check again for consistency/safety.
+                            removeAlarmForRemindersItem(reminder, index)
+
                             setAlarmForRemindersItem(task, reminder, index)
                         }
                     } catch (_: DateTimeException) {
@@ -96,13 +99,23 @@ class TaskAlarmManager(
     fun removeAlarmsForTask(task: Task) {
         CoroutineScope(Dispatchers.IO).launch {
             task.reminders?.let { reminders ->
-                // Remove not only the immediate reminder, but also the next however many (upcomingReminderOccurrencesToSchedule) reminders
+                // cancel exactly the indices we originally scheduled
                 reminders.forEachIndexed { index, reminder ->
                     removeAlarmForRemindersItem(reminder, index)
+                }
+
+                reminders.forEach { reminder ->
+                    // also cancel indices 0..(upcomingReminderOccurrencesToSchedule−1), no matter what
+                    for (idx in 0 until upcomingReminderOccurrencesToSchedule) {
+                        removeAlarmForRemindersItem(reminder, idx)
+                    }
+                    // AND also cancel the “no‐index” variant, just in case c:
+                    removeAlarmForRemindersItem(reminder, null)
                 }
             }
         }
     }
+
 
     // This function is used from the TaskReceiver since we do not have access to the task
     // We currently only use this function to schedule the next reminder for dailies
