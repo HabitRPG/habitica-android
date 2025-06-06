@@ -199,8 +199,11 @@ constructor(
             weeksOfMonth = null
             generateSummary()
         }
+
         binding.monthlyRepeatWeeks.setOnClickListener {
-            weeksOfMonth = mutableListOf(startDateCalendar.get(Calendar.WEEK_OF_MONTH) - 1)
+            val dayOfMonth = startDateCalendar.get(Calendar.DAY_OF_MONTH)
+            val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
+            weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
             daysOfMonth = null
             generateSummary()
         }
