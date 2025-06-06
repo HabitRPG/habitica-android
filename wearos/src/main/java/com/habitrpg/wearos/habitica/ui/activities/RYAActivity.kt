@@ -37,11 +37,15 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                     } else {
                         binding.scrollView.isVisible = true
                         createTaskListViews(value)
-                        viewModel.tasks.removeObserver(this)
+                        // only remove the observer if all tasks are completed
+                        if (viewModel.areAllTasksCompleted(value)) {
+                            viewModel.tasks.removeObserver(this)
+                        }
                     }
                 }
             }
         )
+
 
         binding.ryaButton.setOnClickListener {
             binding.titleView.text = getString(R.string.check_off_yesterday)
