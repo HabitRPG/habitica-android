@@ -752,6 +752,7 @@
     <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
     <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
     <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
+    <string name="register_tos_confirm">You agree to our <a href="https://habitica.com/static/terms">Terms of Service</a> and have read our <a href="https://habitica.com/static/privacy">Privacy Policy</a>.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
@@ -1228,7 +1229,7 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="add">Add</string>
-    <string name="apitoken_summary">Copy Token. Be careful, this is a password!</string>
+    <string name="apitoken_summary">Password token for developers and third-party tools.</string>
     <string name="added_social_auth">Added %s authentication</string>
     <string name="copied_to_clipboard">Copied %s to clipboard</string>
     <string name="removed_social_auth">Disconnected %s</string>
@@ -1425,7 +1426,7 @@
     <string name="invited">Invited</string>
     <string name="invite_with_username_email">Invite with @username or email</string>
     <string name="habiticans_send_invite">Send an invite directly to players you know</string>
-    <string name="username_or_email">Username or email address</string>
+    <string name="username_or_email">Username or email</string>
     <string name="seeking_party_description">Want to join a Party with others but don’t know any other players? Let Party leaders know you’re looking for an invite!</string>
     <string name="seeking_party_title">Looking for a Party?</string>
     <string name="look_for_party">Look for a Party</string>
@@ -1580,6 +1581,18 @@
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
+    <string name="api_token_title">API Token</string>
+    <string name="api_token_is_password">Your API Token is like a password</string>
+    <string name="api_token_is_password_info">
+    Do not share it publicly. You may occasionally be asked for your User ID, but never post your API Token where others can see it, including on Github.
+</string>
+    <string name="api_token_reset_title">If you need a new API Token</string>
+    <string name="api_token_reset_info">
+    You can change your password to reset it. Once it is reset, you will need to log back in to any other devices you use Habitica on and provide the new API Token to third-party tools you may use.
+</string>
+    <string name="copy_token">Copy Token</string>
+
+
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

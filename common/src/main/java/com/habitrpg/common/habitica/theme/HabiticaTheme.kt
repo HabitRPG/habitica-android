@@ -7,89 +7,93 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.themeadapter.material3.createMdc3Theme
+import com.habitrpg.common.habitica.R
+import com.habitrpg.common.habitica.extensions.getThemeColor
 
 @Composable
 fun HabiticaTheme(
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
-    val layoutDirection = LocalLayoutDirection.current
-    val (colors, _, _) =
-        createMdc3Theme(
-            context = context,
-            layoutDirection = layoutDirection,
-            setTextColors = true
-        )
+    val colors = MaterialTheme.colorScheme.copy(
+        primary = Color(context.getThemeColor(R.attr.colorPrimary)),
+        secondary = Color(context.getThemeColor(R.attr.colorSecondary)),
+        tertiary = Color(context.getThemeColor(R.attr.colorTertiary)),
+        error = Color(context.getThemeColor(R.attr.colorError)),
+        background = Color(context.getThemeColor(R.attr.backgroundColor)),
+        onBackground = colorResource(R.color.text_primary),
+        surface = Color(context.getThemeColor(R.attr.colorSurface)),
+        onSurface = Color(context.getThemeColor(R.attr.colorOnSurface)),
+    )
     MaterialTheme(
-        colorScheme = colors ?: MaterialTheme.colorScheme,
+        colorScheme = colors,
         typography =
-        Typography(
-            displayLarge =
-            TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 20.sp,
-                letterSpacing = (0.05).sp
+            Typography(
+                displayLarge =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 20.sp,
+                        letterSpacing = (0.05).sp
+                    ),
+                displayMedium =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 28.sp,
+                        letterSpacing = (0.05).sp
+                    ),
+                titleLarge =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 16.sp
+                    ),
+                titleMedium =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        letterSpacing = 0.1.sp
+                    ),
+                titleSmall =
+                    TextStyle(
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp
+                    ),
+                bodyLarge =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        letterSpacing = 0.35.sp,
+                        lineHeight = 16.sp
+                    ),
+                bodyMedium =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        letterSpacing = 0.2.sp,
+                        lineHeight = 16.sp
+                    ),
+                labelMedium =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        letterSpacing = 1.25.sp
+                    ),
+                labelSmall =
+                    TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp
+                    )
             ),
-            displayMedium =
-            TextStyle(
-                fontWeight = FontWeight.Normal,
-                fontSize = 28.sp,
-                letterSpacing = (0.05).sp
-            ),
-            titleLarge =
-            TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp
-            ),
-            titleMedium =
-            TextStyle(
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
-                letterSpacing = 0.1.sp
-            ),
-            titleSmall =
-            TextStyle(
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp
-            ),
-            bodyLarge =
-            TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-                letterSpacing = 0.35.sp,
-                lineHeight = 16.sp
-            ),
-            bodyMedium =
-            TextStyle(
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                letterSpacing = 0.2.sp,
-                lineHeight = 16.sp
-            ),
-            labelMedium =
-            TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-                letterSpacing = 1.25.sp
-            ),
-            labelSmall =
-            TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 12.sp
-            )
-        ),
         shapes =
-        Shapes(
-            RoundedCornerShape(4.dp),
-            RoundedCornerShape(8.dp),
-            RoundedCornerShape(12.dp)
-        ),
+            Shapes(
+                RoundedCornerShape(4.dp),
+                RoundedCornerShape(8.dp),
+                RoundedCornerShape(12.dp)
+            ),
         content = content
     )
 }
