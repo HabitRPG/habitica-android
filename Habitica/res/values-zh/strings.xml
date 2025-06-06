@@ -1496,7 +1496,7 @@
     <string name="avatar_beards">下唇胡须</string>
     <string name="standard_backgrounds">基础背景</string>
     <string name="avatar_hair_colors">发色</string>
-    <string name="customization_shop_more">查看个性商店，探索更多头像装扮样式！</string>
+    <string name="customization_shop_more">查看个性装扮商店，探索更多头像装扮样式！</string>
     <string name="customizations_no_owned">你尚未获得过此类物品</string>
     <string name="customization_shop_check_out">前往个性商店探索更多头像装扮方案！</string>
     <string name="switches_in_x">切换%s</string>
