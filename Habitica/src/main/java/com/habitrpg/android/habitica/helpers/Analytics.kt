@@ -131,8 +131,12 @@ object Analytics {
 
     fun setAnalyticsConsent(consents: Boolean?) {
         val isEnabled = consents == true
-        firebase.setAnalyticsCollectionEnabled(isEnabled)
-        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
-        amplitude.configuration.optOut = !isEnabled
+        if (this::firebase.isInitialized) {
+            firebase.setAnalyticsCollectionEnabled(isEnabled)
+            FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
+        }
+        if (this::amplitude.isInitialized) {
+            amplitude.configuration.optOut = !isEnabled
+        }
     }
 }

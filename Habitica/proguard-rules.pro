@@ -118,7 +118,6 @@
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.infer.**
 -dontwarn com.habitrpg.android.habitica.ui.views.bottombar.**
--dontwarn com.viewpagerindicator.**
 #-ignorewarnings
 
 -keep class com.google.firebase.provider.FirebaseInitProvider

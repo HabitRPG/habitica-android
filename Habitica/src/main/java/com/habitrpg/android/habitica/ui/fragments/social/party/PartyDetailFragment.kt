@@ -285,6 +285,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         binding?.questTitleView?.text = questContent.text
         binding?.questScrollImageView?.loadImage("inventory_quest_scroll_" + questContent.key)
         if (questContent.hasGifImage()) {
+            binding?.questImageView?.forceScaleUp = true
             binding?.questImageView?.loadImage("quest_" + questContent.key, "gif")
         } else {
             context?.let { context ->

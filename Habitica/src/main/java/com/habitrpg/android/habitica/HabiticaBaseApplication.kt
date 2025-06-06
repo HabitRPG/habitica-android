@@ -35,7 +35,7 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.android.habitica.ui.activities.LoginActivity
+import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -336,7 +336,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 }
                 getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
                 Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
-                startActivity(LoginActivity::class.java, context)
+                startActivity(OnboardingActivity::class.java, context)
             }
         }
 
