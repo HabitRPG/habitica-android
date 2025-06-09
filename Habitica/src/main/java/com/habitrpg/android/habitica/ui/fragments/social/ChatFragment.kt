@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +31,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.fadeInAnimation
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -220,10 +222,12 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.data = chatMessages
         binding?.chatBarView?.chatMessages = chatMessages
 
-        binding?.recyclerView?.state = if (chatMessages.isEmpty()) {
-            RecyclerViewState.EMPTY
+         if (chatMessages.isEmpty()) {
+             binding?.recyclerView?.state = RecyclerViewState.EMPTY
+             binding?.chatEmptyTextview?.fadeInAnimation()
         } else {
-            RecyclerViewState.DISPLAYING_DATA
+             binding?.recyclerView?.state = RecyclerViewState.DISPLAYING_DATA
+             binding?.chatEmptyTextview?.isGone = true
         }
 
         viewModel.gotNewMessages = true
