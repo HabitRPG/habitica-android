@@ -164,19 +164,15 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
 
     override fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets) {
         this.safeInsets = safeInsets
-        imeHeight = if (visible) {
-            height
-        } else {
-            0
-        }
-        applyAllPadding()
-    }
+        imeHeight = if (visible) height else 0
 
-    private fun applyAllPadding() {
-        Log.e("ChatBarView", "applyAllPadding: safeInsets = $safeInsets, imeHeight = $imeHeight")
         updatePadding(
             left = safeInsets.left,
             right = safeInsets.right,
-            bottom = if (imeHeight > 0) imeHeight else safeInsets.bottom)
+            bottom = safeInsets.bottom
+        )
+
+        // slide the bar up under the keyboard
+        translationY = if (imeHeight > 0) -imeHeight.toFloat() else 0f
     }
 }
