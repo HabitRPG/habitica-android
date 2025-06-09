@@ -56,12 +56,12 @@ object Analytics {
             data.putAll(additionalData)
         }
         if (eventAction != null) {
-            if (this::amplitude.isInitialized) {
+            executeLambda(AnalyticsTarget.AMPLITUDE) {
                 if (target == null || target == AnalyticsTarget.AMPLITUDE) {
                     amplitude.track(eventAction, data)
                 }
             }
-            if (this::firebase.isInitialized) {
+            executeLambda(AnalyticsTarget.FIREBASE) {
                 if (target == null || target == AnalyticsTarget.FIREBASE) {
                     firebase.logEvent(eventAction, bundleOf(*data.toList().toTypedArray()))
                 }
@@ -94,17 +94,17 @@ object Analytics {
         sharedPrefs.getString("launch_screen", "")?.let {
             identify.set("launch_screen", it)
         }
-        if (this::amplitude.isInitialized) {
+        executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.identify(identify)
         }
     }
 
     fun setUserID(userID: String) {
-        if (this::amplitude.isInitialized) {
+        executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.setUserId(userID)
         }
         FirebaseCrashlytics.getInstance().setUserId(userID)
-        if (this::firebase.isInitialized) {
+        executeLambda(AnalyticsTarget.FIREBASE) {
             firebase.setUserId(userID)
         }
     }
@@ -113,10 +113,10 @@ object Analytics {
         identifier: String,
         value: Any?
     ) {
-        if (this::amplitude.isInitialized) {
+        executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.identify(mapOf(identifier to value))
         }
-        if (this::firebase.isInitialized) {
+        executeLambda(AnalyticsTarget.FIREBASE) {
             firebase.setUserProperty(identifier, value?.toString())
         }
     }
@@ -131,12 +131,21 @@ object Analytics {
 
     fun setAnalyticsConsent(consents: Boolean?) {
         val isEnabled = consents == true
-        if (this::firebase.isInitialized) {
+        executeLambda(AnalyticsTarget.FIREBASE) {
             firebase.setAnalyticsCollectionEnabled(isEnabled)
-            FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
         }
-        if (this::amplitude.isInitialized) {
+        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
+        executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.configuration.optOut = !isEnabled
         }
+    }
+
+
+    private fun executeLambda(analyticsTarget: AnalyticsTarget, action: () -> Unit) {
+        when (analyticsTarget) {
+            AnalyticsTarget.AMPLITUDE -> if (!::amplitude.isInitialized) return
+            AnalyticsTarget.FIREBASE -> if (!::firebase.isInitialized) return
+        }
+        action()
     }
 }
