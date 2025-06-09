@@ -186,7 +186,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 viewModel.updateAllowPushNotifications(false)
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)) {
-                val alarmManager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return@registerForActivityResult
+                val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager ?: return@registerForActivityResult
                 if (!alarmManager.canScheduleExactAlarms()) {
                     val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                     intent.setData(Uri.fromParts("package", applicationContext?.packageName, null))
@@ -645,8 +645,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
             preferences?.sound?.let { soundManager.soundTheme = it }
 
-            CrashReporter.setCustomKey("day_start", user.preferences?.dayStart ?: 0)
-            CrashReporter.setCustomKey("timezone_offset", user.preferences?.timezoneOffset ?: 0)
+            CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
+            CrashReporter.setCustomKey("timezone_offset", "${user.preferences?.timezoneOffset ?: 0}")
             Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
 
             displayDeathDialogIfNeeded()
