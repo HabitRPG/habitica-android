@@ -31,6 +31,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSna
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -219,10 +220,16 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.data = chatMessages
         binding?.chatBarView?.chatMessages = chatMessages
 
-        viewModel.gotNewMessages = true
+        binding?.recyclerView?.state = if (chatMessages.isEmpty()) {
+            RecyclerViewState.EMPTY
+        } else {
+            RecyclerViewState.DISPLAYING_DATA
+        }
 
+        viewModel.gotNewMessages = true
         markMessagesAsSeen()
     }
+
 
     private fun sendChatMessage(chatText: String) {
         viewModel.postGroupChat(
