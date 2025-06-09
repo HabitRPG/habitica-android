@@ -22,9 +22,14 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,6 +37,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
@@ -344,69 +350,76 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     isMyProfile = true,
                     onAvatarClicked = {
                         showAsBottomSheet { dismiss ->
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(4.dp),
-                                modifier = Modifier.padding(22.dp)
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.8f)
+                                    .padding(22.dp)
                             ) {
-                                ComposableAvatarView(
-                                    avatar = user,
-                                    configManager = appConfigManager
-                                )
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.spacedBy(15.dp)
+                                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                                    modifier = Modifier.verticalScroll(rememberScrollState())
                                 ) {
-                                    HabiticaButton(
-                                        background = HabiticaTheme.colors.tintedUiSub,
-                                        color = Color.White,
-                                        modifier = Modifier.height(48.dp),
-                                        onClick = {
-                                            dismiss()
-                                            MainNavigationController.navigate(
-                                                MainNavDirections.openProfileActivity(
-                                                    user?.id ?: ""
-                                                )
-                                            )
-                                        }
+                                    ComposableAvatarView(
+                                        avatar = user,
+                                        configManager = appConfigManager
+                                    )
+                                    Column(
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.spacedBy(15.dp)
                                     ) {
-                                        Text(stringResource(id = R.string.open_profile))
-                                    }
-
-                                    HabiticaButton(
-                                        background = HabiticaTheme.colors.tintedUiSub,
-                                        color = Color.White,
-                                        modifier = Modifier.height(48.dp),
-                                        onClick = {
-                                            dismiss()
-                                            MainNavigationController.navigate(R.id.avatarOverviewFragment)
-                                        }
-                                    ) {
-                                        Text(stringResource(id = R.string.customize_avatar))
-                                    }
-
-                                    HabiticaButton(
-                                        background = HabiticaTheme.colors.tintedUiSub,
-                                        color = Color.White,
-                                        modifier = Modifier.height(48.dp),
-                                        onClick = {
-                                            dismiss()
-                                            user?.let {
-                                                val usecase = ShareAvatarUseCase()
-                                                lifecycleScope.launchCatching {
-                                                    usecase.callInteractor(
-                                                        ShareAvatarUseCase.RequestValues(
-                                                            this@MainActivity,
-                                                            it,
-                                                            "Check out my avatar on Habitica!",
-                                                            "avatar_bottomsheet"
-                                                        )
+                                        HabiticaButton(
+                                            background = HabiticaTheme.colors.tintedUiSub,
+                                            color = Color.White,
+                                            modifier = Modifier.height(48.dp),
+                                            onClick = {
+                                                dismiss()
+                                                MainNavigationController.navigate(
+                                                    MainNavDirections.openProfileActivity(
+                                                        user?.id ?: ""
                                                     )
+                                                )
+                                            }
+                                        ) {
+                                            Text(stringResource(id = R.string.open_profile))
+                                        }
+
+                                        HabiticaButton(
+                                            background = HabiticaTheme.colors.tintedUiSub,
+                                            color = Color.White,
+                                            modifier = Modifier.height(48.dp),
+                                            onClick = {
+                                                dismiss()
+                                                MainNavigationController.navigate(R.id.avatarOverviewFragment)
+                                            }
+                                        ) {
+                                            Text(stringResource(id = R.string.customize_avatar))
+                                        }
+
+                                        HabiticaButton(
+                                            background = HabiticaTheme.colors.tintedUiSub,
+                                            color = Color.White,
+                                            modifier = Modifier.height(48.dp),
+                                            onClick = {
+                                                dismiss()
+                                                user?.let {
+                                                    val usecase = ShareAvatarUseCase()
+                                                    lifecycleScope.launchCatching {
+                                                        usecase.callInteractor(
+                                                            ShareAvatarUseCase.RequestValues(
+                                                                this@MainActivity,
+                                                                it,
+                                                                "Check out my avatar on Habitica!",
+                                                                "avatar_bottomsheet"
+                                                            )
+                                                        )
+                                                    }
                                                 }
                                             }
+                                        ) {
+                                            Text(stringResource(id = R.string.share_avatar))
                                         }
-                                    ) {
-                                        Text(stringResource(id = R.string.share_avatar))
                                     }
                                 }
                             }
@@ -414,13 +427,18 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     },
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
-                            val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
-                                null
-                            )
+                            val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
                             val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
-                            GroupPlanMemberList(members, group, appConfigManager) {
-                                onClose()
-                                FullProfileActivity.open(it)
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.8f)
+                                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                            ) {
+                                GroupPlanMemberList(members, group, appConfigManager) { member ->
+                                    onClose()
+                                    FullProfileActivity.open(member)
+                                }
                             }
                         }
                     },
