@@ -3,6 +3,20 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/chat_empty_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="16dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:text="@string/chat_empty_state"
+        android:textColor="@color/gray200_gray400"
+        android:textSize="16sp" />
+
     <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
