@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.models.user.User
@@ -19,6 +20,9 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
 
     internal open var user: User? = null
 
