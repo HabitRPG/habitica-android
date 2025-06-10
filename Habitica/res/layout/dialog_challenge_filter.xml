@@ -37,42 +37,6 @@
             android:visibility="invisible"/>
     </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
-            <TextView
-                style="@style/Caption3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="@string/groups"
-                android:textAllCaps="true" />
-
-            <Button
-                android:id="@+id/challenge_filter_button_all"
-                style="@style/Body1_Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end|center_vertical"
-                android:text="@string/all"
-                android:textColor="#6133b4"
-                android:textSize="16sp"
-                android:padding="0dp" />
-
-            <Button
-                android:id="@+id/challenge_filter_button_none"
-                style="@style/Body1_Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end|center_vertical"
-                android:text="@string/none"
-                android:textColor="#6133b4"
-                android:textSize="16sp"
-                android:padding="0dp"/>
-            </LinearLayout>
-
         <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/challenge_filter_recycler_view"
             android:layout_width="match_parent"
