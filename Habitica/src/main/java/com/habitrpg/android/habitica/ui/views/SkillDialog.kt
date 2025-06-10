@@ -25,10 +25,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.habitrpg.android.habitica.ui.theme.pixelArtBackground
 
@@ -44,6 +46,10 @@ fun SkillDialog(
     onUseSkill: () -> Unit,
 ) {
     val colors = HabiticaTheme.colors
+    val isDark = isSystemInDarkTheme()
+    val chipBg = colorResource(R.color.blue_500_24)
+    val chipTextColor = if (isDark) colorResource(R.color.blue_500) else colorResource(R.color.blue_10)
+
     Box(
         modifier
             .fillMaxWidth()
@@ -55,23 +61,23 @@ fun SkillDialog(
             modifier = Modifier.fillMaxWidth()
         ) {
             Box(
-                Modifier
-                    .padding(bottom = 12.dp)
-                    .size(width = 38.dp, height = 6.dp)
-                    .clip(CircleShape)
-                    .background(colors.textSecondary)
+                modifier =
+                    Modifier
+                        .padding(bottom = 16.dp)
+                        .background(colorResource(R.color.content_background_offset))
+                        .size(24.dp, 3.dp)
             )
 
             Box(
                 Modifier
-                    .size(54.dp)
+                    .size(70.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(colors.pixelArtBackground(hasIcon = true)),
                 contentAlignment = Alignment.Center
             ) {
                 PixelArtView (
                     imageName = skillPath + skillKey,
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier.size(62.dp)
                 )
             }
 
@@ -79,15 +85,15 @@ fun SkillDialog(
 
             Text(
                 text = title,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
                 color = colors.textPrimary,
                 modifier = Modifier.padding(top = 2.dp)
             )
 
             Text(
                 text = description,
-                fontSize = 15.sp,
+                fontSize = 14.sp,
                 color = colors.textSecondary,
                 modifier = Modifier.padding(top = 8.dp),
                 textAlign = TextAlign.Center
@@ -99,20 +105,20 @@ fun SkillDialog(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
-                    .background(Color(0xFF393F68))
+                    .background(chipBg)
                     .padding(horizontal = 20.dp, vertical = 8.dp)
             ) {
                 Icon(
                     painter = resourceIconPainter,
                     contentDescription = null,
-                    tint = Color(0xFF77C7F7),
+                    tint = Color.Unspecified,
                     modifier = Modifier.size(22.dp)
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
                     text = mpCost,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
+                    color = chipTextColor,
+                    fontWeight = FontWeight.Normal,
                     fontSize = 16.sp
                 )
             }
@@ -121,21 +127,22 @@ fun SkillDialog(
 
             Button(
                 onClick = onUseSkill,
+                shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFA380FC),
+                    containerColor = colorResource(R.color.brand_400),
                     contentColor = Color.White
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
-                    .clip(RoundedCornerShape(12.dp))
             ) {
                 Text(
-                    text = "Use Skill",
-                    fontWeight = FontWeight.Bold,
+                    text = stringResource(R.string.use_skill),
+                    fontWeight = FontWeight.Normal,
                     fontSize = 17.sp
                 )
             }
+
         }
     }
 }
