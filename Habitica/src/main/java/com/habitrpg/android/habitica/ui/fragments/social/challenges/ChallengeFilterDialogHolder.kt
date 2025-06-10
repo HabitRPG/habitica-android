@@ -22,8 +22,6 @@ internal class ChallengeFilterDialogHolder private constructor(
     private var adapter: ChallengesFilterRecyclerViewAdapter? = null
 
     init {
-        binding.challengeFilterButtonAll.setOnClickListener { allClicked() }
-        binding.challengeFilterButtonNone.setOnClickListener { noneClicked() }
         binding.challengeFilterOwned.setOnCheckedChangeListener { _, isChecked ->
             currentFilter?.showOwned = isChecked
         }
@@ -57,15 +55,6 @@ internal class ChallengeFilterDialogHolder private constructor(
         binding.challengeFilterRecyclerView.adapter = adapter
 
         binding.challengeFilterRecyclerView.state = RecyclerViewState.DISPLAYING_DATA
-    }
-
-    private fun allClicked() {
-        this.adapter?.checkedEntries?.clear()
-        adapter?.checkedEntries?.addAll(filterGroups)
-    }
-
-    private fun noneClicked() {
-        this.adapter?.checkedEntries?.clear()
     }
 
     companion object {
