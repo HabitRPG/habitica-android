@@ -226,6 +226,7 @@ class PreferencesFragment :
                             displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                         )
                         reloadContent(true)
+                        inventoryRepository.retrieveInAppRewards()
                     }
                 }
             }
