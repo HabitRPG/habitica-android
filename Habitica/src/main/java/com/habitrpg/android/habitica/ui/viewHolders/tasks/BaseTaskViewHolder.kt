@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
@@ -37,6 +38,8 @@ abstract class BaseTaskViewHolder(
     private val scope = MainScope()
 
     var task: Task? = null
+    var existingMarkdownText: Spanned? = null
+    var existingMarkdownNotes: Spanned? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: (() -> Unit)? = null
     var userID: String? = null
@@ -169,24 +172,41 @@ abstract class BaseTaskViewHolder(
             notesTextView?.visibility = View.GONE
         }
 
-        titleTextView.text = data.text
-        scope.launch(Dispatchers.IO) {
-            if (data.text.isNotEmpty() && MarkdownParser.containsMarkdown(data.text)) {
-                val parsedText = MarkdownParser.parseMarkdown(data.text)
-                withContext(Dispatchers.Main) {
-                    data.parsedText = parsedText
-                    titleTextView.setParsedMarkdown(parsedText)
+        val text = data.text ?: ""
+        if (!MarkdownParser.containsMarkdown(text)) {
+            titleTextView.text = text
+            existingMarkdownText = null
+        } else {
+            scope.launch(Dispatchers.IO) {
+                if (text.isNotEmpty() && MarkdownParser.containsMarkdown(text)) {
+                    val parsedText = MarkdownParser.parseMarkdown(text)
+                    if (existingMarkdownText != null && existingMarkdownText == parsedText) {
+                        return@launch
+                    }
+                    existingMarkdownText = parsedText
+                    withContext(Dispatchers.Main) {
+                        data.parsedText = parsedText
+                        titleTextView.setParsedMarkdown(parsedText)
+                    }
                 }
             }
         }
+
         if (displayMode != "minimal") {
-            notesTextView?.text = data.notes
-            data.notes?.let { notes ->
+            val notes = data.notes ?: ""
+            if (!MarkdownParser.containsMarkdown(notes)) {
+                notesTextView?.text = data.notes
+                existingMarkdownNotes = null
+            } else {
                 scope.launch(Dispatchers.IO) {
                     if (notes.isEmpty() || !MarkdownParser.containsMarkdown(notes)) {
                         return@launch
                     }
                     val parsedNotes = MarkdownParser.parseMarkdown(notes)
+                    if (existingMarkdownNotes != null && existingMarkdownNotes == parsedNotes) {
+                        return@launch
+                    }
+                    existingMarkdownNotes = parsedNotes
                     withContext(Dispatchers.Main) {
                         data.parsedNotes = parsedNotes
                         notesTextView?.setParsedMarkdown(parsedNotes)
