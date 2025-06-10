@@ -205,8 +205,8 @@ class AvatarView : FrameLayout {
                             drawable.isFilterBitmap = false
                             super.onSuccess(result)
                             imageView.setImageDrawable(drawable)
-                            if (result is Animatable) {
-                                result.start()
+                            if (drawable is Animatable) {
+                                drawable.start()
                             }
                             val bounds = getLayerBounds(layerKey, layerName, drawable)
                             imageView.imageMatrix = avatarMatrix
