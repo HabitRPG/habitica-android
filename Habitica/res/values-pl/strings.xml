@@ -3,11 +3,11 @@
     <string name="action_refresh">Odśwież</string>
     <string name="XP_default">Doświadczenie</string>
     <string name="HP_default">Zdrowie</string>
-    <string name="MP_default">Mana</string>
+    <string name="MP_default">Moc</string>
     <!--Prefs-->
     <string name="PS_settings_title">Ustawienia</string>
     <string name="SP_userID_title">Identyfikator użytkownika</string>
-    <string name="SP_userID_summary">Twój identyfikator</string>
+    <string name="SP_userID_summary">Twój identyfikator użytkownika</string>
     <string name="SP_APIToken_title">Token API</string>
     <string name="SP_APIToken_summary">Twój Token API</string>
     <string name="Language_title">Język</string>
@@ -16,21 +16,21 @@
     <string name="pref_account_header">Konto</string>
     <string name="pref_first_day_of_the_week_title">Pierwszy Dzień Tygodnia</string>
     <string name="pref_first_day_of_the_week_summary">Pierwszy dzień tygodnia we wszystkich kalendarzach</string>
-    <string name="pref_reminder_header">Przypominienie</string>
-    <string name="pref_reminder_checkbox">Aktywuj przypomnienie</string>
-    <string name="pref_reminder_picker">Ustaw czas przypomnienia</string>
-    <string name="pref_cds_header">Własny początek dnia</string>
+    <string name="pref_reminder_header">Codzienne Przypomnienie</string>
+    <string name="pref_reminder_checkbox">Aktywuj Przypomnienie</string>
+    <string name="pref_reminder_picker">Ustaw czas Przypomnienia</string>
+    <string name="pref_cds_header">Własny Początek Dnia</string>
     <string name="pref_push_notifications_checkbox">Użyj Powiadomień</string>
     <string name="push_notifications">Powiadomienia</string>
     <string name="push_notifications_sum">Ustaw swoje ustawienia powiadomień push</string>
-    <string name="preference_push_you_won_challenge">Ukończono wyzwanie!</string>
-    <string name="preference_push_received_a_private_message">Otrzymano prywatną wiadomość</string>
-    <string name="preference_push_gifted_gems">Otrzymane diamenty</string>
-    <string name="preference_push_gifted_subscription">Otrzymałeś subskrypcję</string>
-    <string name="preference_push_invited_to_party">Otrzymano zaproszenie do drużyny</string>
-    <string name="preference_push_invited_to_guild">Otrzymano zaproszenie do gildii</string>
-    <string name="preference_push_your_quest_has_begun">Twoja misja się rozpoczęła</string>
-    <string name="preference_push_invited_to_quest">Zaproszono Cię na misję</string>
+    <string name="preference_push_you_won_challenge">Wygrano Wyzwanie!</string>
+    <string name="preference_push_received_a_private_message">Otrzymano Prywatną Wiadomość</string>
+    <string name="preference_push_gifted_gems">Otrzymane Klejnoty</string>
+    <string name="preference_push_gifted_subscription">Otrzymano Subskrypcję</string>
+    <string name="preference_push_invited_to_party">Otrzymano zaproszenie do Drużyny</string>
+    <string name="preference_push_invited_to_guild">Otrzymano zaproszenie do Gildii</string>
+    <string name="preference_push_your_quest_has_begun">Twoja Misja się Rozpoczęła</string>
+    <string name="preference_push_invited_to_quest">Zaproszono Cię na Misję</string>
     <!--Adding tasks-->
     <string name="about_libraries">Biblioteki</string>
     <string name="about_habitica_open_source">Habitica jest dostępna jako otwarte oprogramowanie na platformie Github</string>
@@ -137,7 +137,7 @@
     <string name="setup_task_work_1">Przeglądnąć e-maile</string>
     <string name="setup_task_work_2">Najważniejsze zadanie</string>
     <string name="setup_task_work_3">Projekt zawodowy</string>
-    <string name="setup_task_exercise_1">10 min cardio</string>
+    <string name="setup_task_exercise_1">10 min kardio</string>
     <string name="setup_task_exercise_2">Rozciągnąć się</string>
     <string name="setup_task_exercise_3">Ustalić plan ćwiczeń</string>
     <string name="setup_task_healthWellness_1">Jeść zdrowe / śmieciowe jedzenie</string>
@@ -222,7 +222,7 @@
     <string name="class_changed">Jesteś %s!</string>
     <string name="choose_class">Wybierz klasę postaci</string>
     <string name="dialog_go_back">Wróć</string>
-    <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>
+    <string name="opt_out_confirmation">Czy chcesz wyjść z systemu klas\?</string>
     <string name="change_class">Zmień swoją klasę</string>
     <string name="change_class_description">Zmień klasę i odzyskaj punkty statystyk za 3 klejnoty.</string>
     <string name="enable_class">Odblokuj System Klas</string>
@@ -289,23 +289,23 @@
     <string name="belongs_to_challenge">Należy do wyzwania</string>
     <string name="has_reminder">Ma powiadomienie</string>
     <string name="has_tag">Ma tag</string>
-    <string name="subscribe_title">Subskrypcja wspiera nasz skromny zespół i pozwala utrzymać Habitica. Dziękujemy!</string>
-    <string name="subscribe_prompt">Subskrybuj aby uzyskać te wyjątkowe korzyści!</string>
-    <string name="subscribe_listitem1">Złoto na Klejnoty</string>
-    <string name="subscribe_listitem2">Mistyczne Klepsydry</string>
-    <string name="subscribe_listitem3">Comiesięczne Przedmioty Mistyczne</string>
+    <string name="subscribe_title">Subskrypcja wspiera deweloperów i pozwala utrzymać Habitikę</string>
+    <string name="subscribe_prompt">Zmotywuj się jeszcze bardziej z nagrodami subskrybenta</string>
+    <string name="subscribe_listitem1">Darmowe Miesięczne Klejnoty</string>
+    <string name="subscribe_listitem2">Miesięczne Mistyczne Klepsydry</string>
+    <string name="subscribe_listitem3">Miesięczne Mistyczne Przedmioty</string>
     <string name="subscribe_listitem4">Specjalny Chowaniec Subskrybenta</string>
     <string name="subscriptions">Subskrypcje</string>
     <string name="subscription_duration">Powtarzaj co %s</string>
     <string name="subscribe">Subskrybuj</string>
-    <string name="subscribe_listitem1_description">Będziesz mieć możliwość zakupu Klejnotów na Targu za 20 sztuk złota każdy!</string>
+    <string name="subscribe_listitem1_description">Zdobądź do 50 Klejnotów, które można kupić za Złoto na Rynku i kup za nie Przygody, Personalizacje, Zwierzęta i wiele więcej!</string>
     <string name="subscribe_listitem3_description">Zostań Subskrybentem aby uzyskać teraz elitarny zestaw oraz otrzymywać nowe przedmioty w każdym miesiącu!</string>
-    <string name="subscription_hourglasses">+%d Mistycznej Klepsydry</string>
+    <string name="subscription_hourglasses">%d Klepsydry</string>
     <string name="payment_method">Metoda płatności</string>
     <string name="subscription">Subskrypcja</string>
     <string name="active">Aktywne</string>
     <string name="cancel_subscription">Anuluj Subskrypcję</string>
-    <string name="cancel_subscription_google_description">Z subskrybcji możesz zrezygnować w sklepie Google Play. Jakiekolwiek uznania z miesięcznych subskrypcji zostaną zastosowane po zakończeniu obecnej subskrypcji.</string>
+    <string name="cancel_subscription_google_description">Nie chcesz już subskrybować\? Możesz znaleźć opcję anulowania subskrypcji, przechodząc do sekcji Płatności i subskrypcje w aplikacji Google Play Store. Wszelkie pozostałe miesiące kredytu subskrypcji zostaną dodane do daty zakończenia po anulowaniu.</string>
     <string name="cancel_subscription_notgoogle_description">Nie chcesz dłużej subskrybować\? Z powodu ograniczeń w płatnościach mobilnych, musisz anulować subskrypcję poprzez stronę webową. Aby to zrobić, tapnij poniższy przycisk, zaloguj się na swoje konto, tapnij ikonę Użytkownika w prawym, górnym rogu i przejdź do Subskrypcji. Wszelkie uznania z miesięcznych subskrypcji zostaną zastosowane po zakończeniu Twojej subskrypcji. Będzie nam Ciebie brakowało!</string>
     <string name="visit_habitica_website">Odwiedź Stronę Habitiki</string>
     <string name="current_bonuses">Obecne Dodatki</string>
@@ -473,7 +473,7 @@
     <string name="allocating_points">Przydzielanie Punktów</string>
     <string name="class_equipment">Ekwipunek</string>
     <string name="classless">Bez klasy</string>
-    <string name="class_equipment_shop_dialog">Ten przedmiot jest dostępny tylko dla konkretnej klasy. \nMożesz zmienić swoją klasę w Ustawieniach.</string>
+    <string name="class_equipment_shop_dialog">Ten przedmiot jest dostępny tylko dla konkretnej klasy. Możesz zmienić swoją klasę w Ustawieniach.</string>
     <string name="class_gear_disclaimer">Możesz kupić wyposażenie wyłącznie dla swojej obecnej klasy</string>
     <string name="check_into_inn">Zamelduj się w Karczmie</string>
     <string name="community_guidelines">Zasady Społeczności</string>
@@ -539,12 +539,12 @@
     <string name="evolved_pet_title">Oswoiłeś %s, idź na przejażdżkę!</string>
     <string name="opting_out_progress">Wycofywanie się</string>
     <string name="subscription_duration_norenew">Na %s</string>
-    <string name="subscribe_listitem2_description">Zdobądź Mistyczną Klepsydrę na zakupy w Sklepie Podróżników w Czasie!</string>
+    <string name="subscribe_listitem2_description">Nigdy więcej nie przegap żadnego przedmiotu dzięki 1 Mistycznej Klepsydrze miesięcznie do wykorzystania w Sklepie Podróżników w Czasie!</string>
     <string name="subscribe_listitem4_description">Otrzymaj ekskluzywnego chowańca: Purpurowego, Królewskiego Jackalope, kiedy zostaniesz nowym Subskrybentem.</string>
-    <string name="subscribe1month_gemcap">Limit 25 klejnotów</string>
-    <string name="subscribe3month_gemcap">Limit 3 klejnotów</string>
-    <string name="subscribe6month_gemcap">Limit 35 klejnotów</string>
-    <string name="subscribe12month_gemcap">Limit 45 klejnotów</string>
+    <string name="subscribe1month_gemcap">25 Klejnotów miesięcznie</string>
+    <string name="subscribe3month_gemcap">30 Klejnotów miesięcznie</string>
+    <string name="subscribe6month_gemcap">35 Klejnotów miesięcznie</string>
+    <string name="subscribe12month_gemcap">45 Klejnotów miesięcznie</string>
     <string name="due">Do</string>
     <string name="join_a_challenge">Dołącz do wyzwania aby dodać wybrany zestaw zadań do twojej listy i rywalizuj z innymi Habitikanami aby zdobyć osiągnięcia a nawet klejnoty!</string>
     <string name="welcome_text">Oh, musisz byś to nowy. Jestem Justin, będę twoim przewodnikiem po Habitice.
@@ -574,7 +574,7 @@
     <string name="no_notifications_title">Teraz jesteś na bieżąco!</string>
     <string name="no_notifications_text">Wróżki powiadomień składają ci gromkie brawa. Dobra robota!</string>
     <string name="dismiss_all">Odrzuć wszystko</string>
-    <string name="new_bailey_update">Nowości od Bailey</string>
+    <string name="new_bailey_update">Nowości od Bailey!</string>
     <string name="new_msg_guild"><![CDATA[<b>%1$s</b> ma nowe posty]]></string>
     <string name="new_msg_party"><![CDATA[Twoja drużyna <b>%1$s</b> ma nowe posty]]></string>
     <string name="unallocated_stats_points"><![CDATA[Masz <b>nieprzydzielone Punkty Atrybutów: %1$s</b>]]></string>
@@ -626,7 +626,7 @@
     <string name="login_incentive_short">Odwiedzaj Habitikę regularnie</string>
     <string name="create_account_short">stwórz konto</string>
     <string name="login_incentive_short_count">%d Wizyt</string>
-    <string name="subscribe_listitem5">Podwój Łup</string>
+    <string name="subscribe_listitem5">Wyjątkowe Zwierzaki &amp; Więcej Nagród</string>
     <string name="subscribe_listitem3_description_new">Subskrybuj teraz, aby zdobyć %s i otrzymywać nowe przedmioty każdego miesiąca!</string>
     <string name="world_boss_description_1">Wykonuj zadania aby zadawać obrażenia Bossowi</string>
     <string name="world_boss_description_intro">Boss Świata jest specjalnym wydarzeniem, kiedy cała społeczność, wypełniając swoje zadania, dąży wspólnie do pokonania bardzo silnego potwora!</string>
@@ -665,7 +665,7 @@
     <string name="join_party_description">Przekaż członkowi grupy poniższą nazwę użytkownika, aby mógł Ci wysłać zaproszenie</string>
     <string name="no_party_description">Razem z przyjaciółmi lub samodzielnie staw czoło misjom. Walcz z potworami, twórz wyzwania i pomóż sobie być odpowiedzialnym z pomocą Drużyn.</string>
     <string name="tiers_descriptions">Kolorowe nazwy użytkowników, które możesz zobaczyć w czacie, reprezentują poziom osób wnoszących wkład. Im wyższy poziom, tym większy wkład wniósł dany użytkownik do Habitica poprzez grafikę, kod, społeczność i inne!</string>
-    <string name="subscribe_listitem5_description">Odkryj więcej przedmiotów w Habitica z podwojoną szansą na dzienne łupy.</string>
+    <string name="subscribe_listitem5_description">Zdobądź Królewsko Fioletowego Szakala, a także dwa razy więcej Jaj, Mikstur Wylęgowych i Pożywienia każdego dnia, aby powiększyć swoją kolekcję Zwierząt!</string>
     <string name="need_help_header_description">Wyślij wiadomość do %s, aby inny gracz odpowiedział na twoje pytania.</string>
     <string name="update_available">Dostępna aktualizacja: %1$s (%2$d)</string>
     <string name="streak">Seria</string>
@@ -771,9 +771,9 @@
     <string name="discard_changes_to_task_message">Jesteś pewien, że chcesz porzucić zmiany w tym zadaniu\?</string>
     <string name="level_abbreviated">Poziom %d</string>
     <string name="change_class_selected_confirmation">Czy chcesz zmienić klasę na: %1$s\?</string>
-    <string name="class_changed_description">Możesz teraz używać umiejętności i kupować wyposażenie klasy: %s!</string>
-    <string name="enable_notifications">Włącz powiadomienia</string>
-    <string name="push_notification_system_settings_title">Powiadomienia wyłączone</string>
+    <string name="class_changed_description">Możesz teraz używać %s umiejętności i kupować wyposażenie ze sklepów. Podnoś poziomy aby zbierać punkty statystyk które możesz wykorzystać do podnoszenia swoich umiejętnosci.</string>
+    <string name="enable_notifications">Włącz Powiadomienia</string>
+    <string name="push_notification_system_settings_title">Powiadomienia Wyłączone</string>
     <string name="title">Tytuł</string>
     <string name="positive_sentence">pozytywne</string>
     <string name="negative_sentence">negatywne</string>
@@ -781,8 +781,7 @@
     <string name="partyUpDescription">Dołączyłeś(-aś) do drużyny z inną osobą!</string>
     <string name="reset_account_title">Czy na pewno chcesz zresetować konto\?</string>
     <string name="confirm_reset">Potwierdź zresetowanie</string>
-    <string name="insufficient_level_equipment_dialog">Ten przedmiot jest dostępny tylko dla konkretnej klasy.
-\nWybór klasy zostanie odblokowany na Poziomie 10.</string>
+    <string name="insufficient_level_equipment_dialog">Ten przedmiot jest dostępny wyłącznie dla konkretnej klasy. Wybór klasy zostanie odblokowany na Poziomie 10.</string>
     <string name="reset_counter">Zresetuj Licznik</string>
     <string name="month_reminder_title">Rutyna Cię dobija\?</string>
     <string name="month_reminder_text">Czasem łatwiej jest zacząć od zera. Habitica może Ci w tym pomóc!</string>
@@ -943,8 +942,8 @@
     <string name="hatchedPetDescription">Jest tak wiele Chowańców do zebrania, że z pewnością niedługo natrafisz na swojego ulubieńca. A jeśli je nakarmisz, być może urosną duże i silne…</string>
     <string name="someone">Ktoś</string>
     <string name="local">lokalne</string>
-    <string name="push_notification_system_settings_description">Zezwól Habitica na wysyłanie powiadomień w ustawieniach telefonu, aby otrzymywać powiadomienia push</string>
-    <string name="push_notification_system_settings_reminders">Zezwól Habitica na wysyłanie powiadomień w ustawieniach telefonu, aby otrzymywać przypomnienia</string>
+    <string name="push_notification_system_settings_description">Zezwól Habitica na wysyłanie powiadomień w Ustawieniach telefonu, aby otrzymywać powiadomienia push</string>
+    <string name="push_notification_system_settings_reminders">Pozwól Habitica na wysyłanie przypomnień</string>
     <string name="usernames_party">Drużyna %s</string>
     <string name="feedPet_title">Nakarm Chowańca</string>
     <string name="purchase_equipment_title">Kup ekwipunek</string>
@@ -1114,7 +1113,7 @@
     <string name="end_challenge_description">Aby zakończyć Wyzwanie, zaloguj się na stronie Habitica, a następnie naciśnij przycisk “Zakończ Wyzwanie” znajdujący się po prawej stronie ekranu Wyzwania.</string>
     <string name="you_won_challenge">Wygrałeś(-aś) Wyzwanie</string>
     <string name="congratulations">Gratulacje!</string>
-    <string name="won_achievement_description_noname">Zostałeś(-aś) zwycięzcą Wyzwania! Twoja wygrana została zapisana w Twoich Osiągnięciach</string>
+    <string name="won_achievement_description_noname">Zostałeś zwycięzcą Wyzwania! Twoja wygrana została zapisana w Twoich Osiągnięciach.</string>
     <string name="claim_x_gems">Odbierz %d Klejnotów</string>
     <string name="gift_one_get_one_purchase_banner">Podaruj Subskrypcję i otrzymaj darmową Subskrybcję do: %s</string>
     <string name="one_month_one_time">1 miesiąc jednorazowej Subskrypcji</string>
@@ -1128,7 +1127,7 @@
     <string name="challenge_tags">Tagi Wyzwań</string>
     <string name="group_tags">Tagi Grup</string>
     <string name="x_and_y">%1$s i %2$s</string>
-    <string name="exact_alarm_system_settings_title">Alarmy i Przypomnienia wyłączone</string>
+    <string name="exact_alarm_system_settings_title">Alarmy i Przypomnienia Wyłączone</string>
     <string name="sell_confirmation_title">Czy na pewno chcesz sprzedać %s\?</string>
     <string name="exact_alarm_system_settings_reminders">Przypomnienia mogą być opóźnione, ponieważ nie mają wymaganych uprawnień. Dotknij aby zobaczyć i zmienić uprawnienia.</string>
     <string name="exact_alarm_system_settings_description">Zezwól na Alarmy i Przypomnienia w Ustawieniach, aby mieć pewność, że przypomnienia pojawią się dokładnie o zaplanowanej porze</string>
@@ -1143,5 +1142,21 @@
         <item quantity="few">Co %d dni</item>
         <item quantity="many">Co %d dni</item>
         <item quantity="other">Co %d dni</item>
+    </plurals>
+    <plurals name="x_hours">
+        <item quantity="one">%d Godziny</item>
+        <item quantity="few">%d Godzin</item>
+        <item quantity="many">%d Godzin</item>
+        <item quantity="other">%d Godzin</item>
+    </plurals>
+    <string name="subscribe_listitem3_description_alt">Wystrój się w najnowszy ekskluzywny sprzęt. Subskrybuj teraz, aby otrzymać %2$s od %1$s!</string>
+    <string name="subscribe_listitemFaint_description">Uniknij utraty postępów dzięki natychmiastowemu uleczeniu, gdy raz dziennie zabraknie Ci punktów zdrowia!</string>
+    <string name="subscribe_listitemFaint">Zdobąć Drugą Szansę</string>
+    <string name="subscription_hourglasses_3month_timeframe">Klepsydra za 3 miesiące</string>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Minuta</item>
+        <item quantity="few">%d Minut</item>
+        <item quantity="many">%d Minuty</item>
+        <item quantity="other">%d Minuty</item>
     </plurals>
 </resources>
