@@ -43,7 +43,7 @@
     <string name="email_username">Email/Username</string>
     <string name="password">Password</string>
     <string name="emailAddress">Email address</string>
-    <string name="confirmpassword">Confirm password</string>
+    <string name="confirmpassword">Repeat password</string>
     <string name="login_btn_google">Sign in with Google</string>
 
     <string name="logout">Logout</string>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="thousand_abbrev">rb</string>
-    <string name="million_abbrev">jt</string>
-    <string name="billion_abbrev">mil</string>
+    <string name="thousand_abbrev">K</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
     <string name="trillion_abbrev">t</string>
     <string name="gems">Permata</string>
     <string name="gold_plural">Koin Emas</string>
     <string name="gold_capitalized">Emas</string>
     <string name="mystic_hourglasses">Jam Pasir Mistik</string>
-    <string name="repeat_daily">harian</string>
+    <string name="repeat_daily">Sehari-harian</string>
     <string name="monthly">Bulanan</string>
     <string name="weekly">Mingguan</string>
     <string name="trivial">Remeh</string>
@@ -36,7 +36,7 @@
     <string name="username">Nama Pengguna</string>
     <string name="password">Kata sandi</string>
     <string name="emailAddress">Alamat Email</string>
-    <string name="confirmpassword">Konfirmasi kata sandi</string>
+    <string name="confirmpassword">Ulangi kata sandi</string>
     <string name="login_btn_google">Masuk melalui Google</string>
     <string name="logout">Keluar</string>
     <string name="logout_description">Keluar dari akunmu</string>

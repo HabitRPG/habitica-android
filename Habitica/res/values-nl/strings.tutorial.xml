@@ -1,18 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">Daar zijn we dan! Ik heb enkele taken voor je ingevuld op basis van je interesses. Probeer er zelf enkele aan toe te voegen. Je kan elke taak bewerken door op de titel te tikken.</string>
-  <string name="tutorial_habits_1">Als eerste de gewoontes. Dit kunnen goede gewoontes zijn die je wilt verbeteren of slechte gewoontes die je wilt afleren.</string>
-  <string name="tutorial_habits_2">Iedere keer dat je een goede gewoonte doet, tik je op de + om ervaring en goud te krijgen!</string>
-  <string name="tutorial_habits_3">Als je toegeeft en een slechte gewoonte doet, tik je op de - en verliest je avatar gezondheid, dus neem verantwoordelijkheid en voorkom slechte gewoontes.</string>
-  <string name="tutorial_habits_4">Probeer het maar! Je kan de andere soorten taken doornemen met de onderstaande navigatie.</string>
-  <string name="tutorial_dailies_1">Maak dagelijkse taken voor tijdgevoelige taken die volgens een vast schema gedaan moeten worden.</string>
-  <string name="tutorial_dailies_2">Wees voorzichtig - als je er een mist, verliest je avatar gezondheid de volgende dag. Vink ze regelmatig af voor grootse beloningen!</string>
-  <string name="tutorial_todos_1">Gebruik To Do\'s om taken bij te houden die je slechts één keer moet doen.</string>
-  <string name="tutorial_todos_2">Als je To Do tegen een bepaalde dag afgewerkt moet zijn, voer dan een einddatum in. Je kan er een afvinken - doe maar!</string>
-  <string name="tutorial_rewards_1">Koop een uitrusting voor je avatar met het goud dat je verdient!</string>
-  <string name="tutorial_rewards_2">Je kan ook zelf beloningen maken voor in de echte wereld, gebaseerd op wat je motiveert.</string>
-  <string name="tutorial_tasks_complete">Dat was het voorlopig. Als je iets vergeet, kijk dan in de FAQ sectie.</string>
+    <string name="tutorial_overview">Daar zijn we dan! Ik heb enkele taken voor je ingevuld op basis van je interesses. Probeer er zelf enkele aan toe te voegen. Je kan elke taak bewerken door op de titel te tikken.</string>
+    <string name="tutorial_habits_1">Als eerste de gewoontes. Dit kunnen goede gewoontes zijn die je wilt verbeteren of slechte gewoontes die je wilt afleren.</string>
+    <string name="tutorial_habits_2">Iedere keer dat je een goede gewoonte doet, tik je op de + om ervaring en goud te krijgen!</string>
+    <string name="tutorial_habits_3">Als je toegeeft en een slechte gewoonte doet, tik je op de - en verliest je avatar gezondheid, dus neem verantwoordelijkheid en voorkom slechte gewoontes.</string>
+    <string name="tutorial_habits_4">Probeer het maar! Je kan de andere soorten taken doornemen met de onderstaande navigatie.</string>
+    <string name="tutorial_dailies_1">Maak dagelijkse taken voor tijdgevoelige taken die volgens een vast schema gedaan moeten worden.</string>
+    <string name="tutorial_dailies_2">Wees voorzichtig - als je er een mist, verliest je avatar gezondheid de volgende dag. Vink ze regelmatig af voor grootse beloningen!</string>
+    <string name="tutorial_todos_1">Gebruik To Do\'s om taken bij te houden die je slechts één keer moet doen.</string>
+    <string name="tutorial_todos_2">Als je To Do tegen een bepaalde dag afgewerkt moet zijn, voer dan een einddatum in. Je kan er een afvinken - doe maar!</string>
+    <string name="tutorial_rewards_1">Koop een uitrusting voor je avatar met het goud dat je verdient!</string>
+    <string name="tutorial_rewards_2">Je kan ook zelf beloningen maken voor in de echte wereld, gebaseerd op wat je motiveert.</string>
+    <string name="tutorial_tasks_complete">Dat was het voorlopig. Als je iets vergeet, kijk dan in de FAQ sectie.</string>
     <string name="tutorial_skills">Vaardigheiden zijn speciale talenten die krachtige effecten hebben! Tik op een vaardigheid om ze te gebruiken. Het kost je Mana (de blauwe balk), dat je kan verdienen door elke dag in te checken en je taken in de echte wereld te voltooien. Kijk in de FAQ in het menu voor meer informatie!</string>
-  <string name="tutorial_party">Dit is waar jij en je vrienden elkaar verantwoordelijk kunnen houden voor het bereiken van je doelen en je samen monsters kan bevechten met je taken!</string>
+    <string name="tutorial_party">Dit is waar jij en je vrienden elkaar verantwoordelijk kunnen houden voor het bereiken van je doelen en je samen monsters kan bevechten met je taken!</string>
     <string name="tutorial_stats">Tik de grijze knop aan om meerdere punten ineens aan te wijzen, of tik op de pijlen om ze één punt per keer toe  te voegen.</string>
+    <string name="tutorial_party_created">Welkom bij je Groep! Je kunt meer leden vinden via een lijst met spelers die opzoek zijn naar een Groep, of nodig vrienden direct uit on de Basi-List Queeste Scroll te verdienen.
+\n
+\nGa naar Support om meer te leren over Groepen.</string>
 </resources>

@@ -462,7 +462,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="insufficientHourglasses">Du wirst mehr mystische Sanduhren benötigen um diesen Gegenstand zu kaufen!</string>
     <string name="get_hourglasses">Kaufe Sanduhren</string>
     <string name="subscribe_for_hourglasses">Abonniere für Sanduhren</string>
-    <string name="timetravelers_closed_description">Erhalte eine mystische Sanduhr alle drei Monate für ein aufeinanderfolgendes Abonnement, nutze diese dann, um Limitiertes freizuschalten: Gegenstände, Haustiere oder Reittiere aus der Vergangenheit… und aus der Zukunft!</string>
+    <string name="timetravelers_closed_description">Erhalte jeden Monat deines Abonnements eine mystische Sanduhr, nutze diese dann, um Limitiertes freizuschalten: Gegenstände, Haustiere oder Reittiere aus der Vergangenheit… und aus der Zukunft!</string>
     <string name="want_to_subscribe">Ich möchte ein Abo abschließen</string>
     <string name="seasonal_closed_description">Die Großen Galas werden an Sonnenwenden und Tag-Nacht-Gleichen veranstaltet, also komme zu dieser Zeit wieder, um eine lustige Auswahl von speziellen saisonalen Gegenständen zu finden!</string>
     <string name="come_back_soon">Komm bald zurück!</string>
@@ -1263,4 +1263,65 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="positive_sentence">positiv</string>
     <string name="title">Titel</string>
     <string name="negative_sentence">negativ</string>
+    <string name="change_class_message">Dadurch wird deine aktuelle Klasse entfernt, du bekommst alle Attributspunkte zurück und kannst eine neue Klasse wählen</string>
+    <string name="subscribe_listitemFaint_description">Behalte deinen Fortschritt mit einer sofortigen Heilung pro Tag, wenn deine Gesundheit aufgebraucht ist!</string>
+    <string name="enable_class_description">Wähle eine Klasse, um Fähigkeiten, Werte und Mana zu aktivieren</string>
+    <string name="choosing_class_progress">Klasse wählen</string>
+    <string name="change_class_selected_confirmation">Willst du deine Klasse zu %1$s ändern\?</string>
+    <string name="your_tags">Deine Tags</string>
+    <string name="challenge_tags">Herausforderungs-Tags</string>
+    <string name="group_tags">Gruppen-Tags</string>
+    <string name="exact_alarm_system_settings_title">Wecker und Erinnerungen deaktiviert</string>
+    <string name="opt_out_description">In diesem Fall wird dir keine Klasse zugewiesen. Du kannst jederzeit wieder eine Klasse auswählen, indem du das Klassensystem in den Einstellungen aktivierst.</string>
+    <string name="subscribe_listitemFaint">Eine zweite Chance bekommen</string>
+    <string name="reset_account_description_no_pw">Du wirst alle deine Level, Gold und Erfahrung verlieren. Alle deine Aufgaben und deren historischen Daten werden gelöscht (Herausforderungsaufgaben bleiben erhalten). Du wirst alle Ausrüstungsgegenstände verlieren, mit Ausnahme von Abonnenten-Gegenständen und kostenlosen Erinnerungsgegenständen, aber du wirst sie zurückkaufen können. Du wirst der richtigen Klasse angehören müssen, um klassenspezifische Ausrüstung erneut zu kaufen. Du behältst deine aktuelle Klasse, deine Errungenschaften sowie deine Haus- und Reittiere. Um das Zurücksetzen zu bestätigen, gib RESET in das Textfeld unten ein.</string>
+    <string name="report_challenge_explanation">Du solltest eine Herausforderung nur melden, wenn sie gegen die [Community Richtlinien](https://habitica.com/static/community-guidelines) und/oder [AGB](https://habitica.com/static/terms) verstößt. Eine Falschmeldung ist ein Verstoß gegen Habiticas Community Richtlinien.</string>
+    <string name="challenges">Herausforderungen</string>
+    <string name="x_checkins">%d Anmeldungen</string>
+    <string name="need_help_description">Du kannst uns kontaktieren und ein Mitglied unseres Teams wird sein Bestes tun, um dir zu helfen!</string>
+    <plurals name="x_days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
+    <plurals name="x_hours">
+        <item quantity="one">%d Stunde</item>
+        <item quantity="other">%d Stunden</item>
+    </plurals>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Minute</item>
+        <item quantity="other">%d Minuten</item>
+    </plurals>
+    <string name="subscribe_listitem3_description_alt">Rüste dich mit der neuesten exklusiven Ausrüstung aus. Abonniere jetzt um %1$ss %2$s zu erhalten!</string>
+    <string name="subscription_hourglasses_3month_timeframe">Sanduhr in 3 Monaten</string>
+    <string name="report_user_description">Dies wird auch @%s blockieren</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="report_successful">%s gemeldet</string>
+    <string name="class_equipment_shop_dialog_new">Dieser Gegenstand ist nur für %s verfügbar. Öffne die Einstellungen, um deine Klasse zu ändern.</string>
+    <string name="insufficient_level_equipment_dialog_new">Dieser Gegenstand ist nur für %s verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
+    <string name="register_tos_confirm">Du stimmst unseren <a href="https://habitica.com/static/terms">Nutzungsbedingungen</a> zu und hast unsere <a href="https://habitica.com/static/privacy">Datenschutzbestimmungen</a> gelesen.</string>
+    <string name="report_hint">Begründung der Meldung</string>
+    <string name="reset_account_description_new">Du wirst alle deine Level, Gold und Erfahrung verlieren. Alle deine Aufgaben und deren historischen Daten werden gelöscht (Herausforderungsaufgaben bleiben erhalten). Du wirst alle Ausrüstungsgegenstände verlieren, mit Ausnahme von Abonnenten-Gegenständen und kostenlosen Erinnerungsgegenständen, aber du wirst sie zurückkaufen können. Du wirst der richtigen Klasse angehören müssen, um klassenspezifische Ausrüstung erneut zu kaufen. Du behältst deine aktuelle Klasse, deine Errungenschaften sowie deine Haus- und Reittiere. Um das Zurücksetzen zu bestätigen, gib dein Passwort unten ein.</string>
+    <string name="report_message_explanation">Du solltest nur Beiträge melden, die die [Community Richtlinien](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms) verletzen.
+\nEine Falschmeldung ist ein Verstoß gegen Habiticas Community Richtlinien.</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; hat dich eingeladen der Gruppe &lt;b&gt;%1$s&lt;/b&gt; beizutreten</string>
+    <string name="report_player_title">%s melden\?</string>
+    <string name="report_player">Spieler*in melden</string>
+    <string name="report_user_explanation">Du solltest einen Spieler nur melden, wenn er gegen die [Community Richtlinien](https://habitica.com/static/community-guidelines) und/oder [AGB](https://habitica.com/static/terms) verstößt. Eine Falschmeldung ist ein Verstoß gegen Habiticas Community Richtlinien.</string>
+    <string name="report_message">Nachricht melden</string>
+    <string name="report_failure">Melden fehlgeschlagen, bitte versuche es später erneut</string>
+    <string name="report_reason_title_challenge">Warum meldest du diese Herausforderung\?</string>
+    <string name="cancel_subscription_apple_description">Du möchtest kein Abonnement mehr\? Aufgrund deines gewählten Zahlungsverfahrens musst du das Abonnement in den Einstellungen deines iOS Gerätes mit deiner Apple ID kündigen.</string>
+    <string name="report_reason_title_message">Warum meldest du diese Nachricht\?</string>
+    <string name="report_reason_title_player">Warum meldest du diese/n Spieler*in\?</string>
+    <string name="exact_alarm_system_settings_reminders">Erinnerungen können verspätet erscheinen, da die Berechtigung nicht gegeben wurde. 
+\nKlicke um Berechtigungen anzuzeigen und zu ändern.</string>
+    <string name="exact_alarm_system_settings_description">Erlaube \"Wecker und Erinnerungen\" in der Einstellungen-App, damit Erinnerungen exakt zur richtigen Zeit erscheinen</string>
+    <string name="sell_confirmation_title">Bist du sicher, dass du %s verkaufen willst\?</string>
+    <string name="leave_party_confirmation_quest">Bist du sicher, dass du diese Party verlassen willst\?</string>
+    <string name="rejoin_party_quest">Du kannst dieser Party ohne Einladung nicht erneut beitreten.
+\n
+\nWenn du diese Party verlässt, nimmst du auch nicht mehr an deiner aktuellen Quest teil.</string>
+    <string name="level_abbreviated">Level %d</string>
+    <string name="insufficient_level_equipment_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
 </resources>

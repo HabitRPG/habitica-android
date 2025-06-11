@@ -298,7 +298,7 @@
     <string name="has_reminder">有提醒</string>
     <string name="has_tag">有标签</string>
     <string name="subscribe_title">购买订阅支持我们的小团队以及帮助维持Habitica运作</string>
-    <string name="subscribe_prompt">成为订阅者即可享受这些专属福利！</string>
+    <string name="subscribe_prompt">订阅即享更多奖励，助您时刻保持动力</string>
     <string name="subscribe_listitem1">月度免费宝石</string>
     <string name="subscribe_listitem2">月度神秘沙漏</string>
     <string name="subscribe_listitem3">月度神秘物品</string>
@@ -306,7 +306,7 @@
     <string name="subscriptions">订阅</string>
     <string name="subscription_duration">每%s订阅一次</string>
     <string name="subscribe">订阅</string>
-    <string name="subscribe_listitem1_description">最多可获取50个商店宝石，用于购买任务，装扮，宠物等！</string>
+    <string name="subscribe_listitem1_description">最多可获取50个可用于购买金币的商店宝石，用于购买任务，装扮，宠物等！</string>
     <string name="subscribe_listitem2_description">不要错过每月可在时空旅行者商店中购买一次价格为1个神秘沙漏的物品的机会！</string>
     <string name="subscribe_listitem4_description">首次订阅可获得皇家紫色鹿角兔宠物。</string>
     <string name="subscribe1month_gemcap">每月25颗宝石</string>
@@ -318,7 +318,7 @@
     <string name="subscription">订阅</string>
     <string name="active">进行中</string>
     <string name="cancel_subscription">取消订阅</string>
-    <string name="cancel_subscription_google_description">你可以通过GooglePlay商店取消订阅。任何结存的订阅将会在你的定期订阅结束后生效。</string>
+    <string name="cancel_subscription_google_description">不想继续订阅了？你可以在GooglePlay商店的付款和订阅栏目找到取消订阅的选项。任何结存的订阅将会被累加到你取消前的最后一天。</string>
     <string name="cancel_subscription_notgoogle_description">不想继续订阅了？由于手机支付的限制，您只能通过我们的网站取消订阅。请点击下方按钮登录您的账号，点击右上角的用户图标，然后转到订阅。任何结存的订阅都将在订阅结束后生效。我们会想念您的！</string>
     <string name="visit_habitica_website">访问Habitica网页版</string>
     <string name="current_bonuses">现有的奖励</string>
@@ -453,7 +453,7 @@
     <string name="insufficientHourglasses">你需要更多的神秘沙漏才能购买此物品！</string>
     <string name="get_hourglasses">获取沙漏</string>
     <string name="subscribe_for_hourglasses">订阅以获取沙漏</string>
-    <string name="timetravelers_closed_description">每连续订阅三个月即可一个神秘沙漏，然后用它们解锁过去和未来的限定版物品、宠物和坐骑！</string>
+    <string name="timetravelers_closed_description">订阅期间每月可获得一个神秘沙漏，以解锁过去和未来的限定版物品、宠物和坐骑！</string>
     <string name="want_to_subscribe">我想订阅</string>
     <string name="seasonal_closed_description">盛典会在春分、夏至、秋分、冬至前后举行，到时再来看看各种有趣的特殊季节商品吧！</string>
     <string name="come_back_soon">很快回来！</string>
@@ -619,9 +619,9 @@
     <string name="gift_subscription">赠送订阅</string>
     <string name="gift_one_get_one_description">订阅赠一得一活动正在进行中！</string>
     <string name="gift_title">你想将礼物送给谁？</string>
-    <string name="gift_one_get_one">赠一得一！</string>
+    <string name="gift_one_get_one">赠一得一</string>
     <string name="gift_one_get_one_detailed_description">在此促销活动期间，你将在送出礼物后自动收到相同的订阅。</string>
-    <string name="gift_subscription_subtitle">在下方选择你想要赠送的订阅时长！此购买不会自动续订。</string>
+    <string name="gift_subscription_subtitle">请选择你想要赠送的订阅时长！此购买不会自动续订。</string>
     <string name="send_gift">赠送礼物</string>
     <string name="server">服务器</string>
     <string name="gift_confirmation_title">你的礼物已送出！</string>
@@ -904,9 +904,9 @@
 \n难度较高的任务或红色任务会给你**更多经验值**。**智力属性**也会提高你的经验值获取速度。</string>
     <string name="experience_points">经验值</string>
     <string name="manual_sync_restart_description">有时，应用程序不会自动更新内容。请尝试滑动刷新或强制关闭应用再重新打开它。</string>
-    <string name="hourglasses_description">神秘沙漏是一种极为稀有的货币，只有连续订阅Habitica三个月或更长时间才能获得。它们可用于在时空旅行者商店中购买过去的装备套装、宠物、坐骑、动画背景甚至特殊副本。
+    <string name="hourglasses_description">神秘沙漏是一种极为稀有的货币，仅限订阅用户获取。你可在时空旅行者商店中购买往期订阅专属装备套装、专属宠物、坐骑、动画背景甚至特殊副本！这些超值特权将助您全年保持高效，为每个成就加冕！
 \n
-\n你每年最多可以收到四个神秘沙漏。收到神秘沙漏的时间取决于你的续订时间。它们将在你支付了使你有资格获得沙漏的订阅费用后的次月月初发送。详情请查看[订阅]页面。</string>
+\n订阅用户将在每个享有订阅福利的月初收到1枚神秘沙漏，并享有多项特权。若对时空旅者提供的服务感兴趣，请务必查看我们的订阅选项！</string>
     <string name="clear_cache_description">要清除缓存，请打开手机的应用设置。前往存储&gt;应用&gt;Habitica，然后点击清除缓存。</string>
     <string name="clear_cache">清除缓存</string>
     <string name="manual_sync_restart">手动同步或重启</string>
@@ -1107,10 +1107,10 @@
     <string name="mystery_item_title">你打开神秘礼盒，得到了……</string>
     <string name="team_information">团队信息</string>
     <string name="sidebar_teams">团队</string>
-    <string name="twelve_months_one_time">十二个月</string>
-    <string name="six_months_one_time">六个月</string>
-    <string name="three_months_one_time">三个月</string>
-    <string name="one_month_one_time">一个月</string>
+    <string name="twelve_months_one_time">12个月</string>
+    <string name="six_months_one_time">6个月</string>
+    <string name="three_months_one_time">3个月</string>
+    <string name="one_month_one_time">1个月</string>
     <string name="gift_one_get_one_purchase_banner">赠一得一活动持续至%s</string>
     <string name="terms_of_service">服务条款</string>
     <string name="privacy_policy">隐私政策</string>
@@ -1136,7 +1136,7 @@
     <string name="add">添加</string>
     <string name="apitoken_summary">复制令牌。小心，这相当于密码！</string>
     <string name="added_social_auth">已添加%s身份验证</string>
-    <string name="password_not_matching">必须正确输入两次密码</string>
+    <string name="password_not_matching">输入的密码不匹配</string>
     <string name="email_invalid">邮箱地址无效</string>
     <string name="discard_changes_to_task_message">你确定要放弃对此任务的更改吗？</string>
     <string name="gift_confirmation_text_gems_new">你向@%1$s赠送了%2$s颗宝石。</string>
@@ -1281,7 +1281,7 @@
     <string name="change_class_confirmation_message">这将切换商店中解锁的装备，并改变你可使用的技能</string>
     <string name="your_tags">你的标签</string>
     <string name="challenge_tags">挑战标签</string>
-    <string name="subscribe_listitemFaint">用1点生命值撑住！</string>
+    <string name="subscribe_listitemFaint">获得第二次机会</string>
     <string name="reset_account_description_new">你将会失去所有的等级、金币和经验。你设置的所有任务及其任务历史数据将会被删除（挑战任务除外）。你将失去除了订阅者物品和免费纪念物品外的所有装备，但你之后可以重新购买被删除的物品。重新购买职业专属装备需要对应的职业。你当前的职业、成就、宠物和坐骑将会保留。如果你已确定要重置数据，请在下方输入你的密码。</string>
     <string name="need_help_description">你可以联系我们，我们的团队成员会尽力提供帮助！</string>
     <string name="report_player_title">举报%s？</string>
@@ -1334,7 +1334,7 @@
     <string name="for_for_free_description">为了让派对继续下去，我们将送出派对长袍、20 颗宝石、限定版披风套装和背景！</string>
     <string name="visit_the_market">访问市场</string>
     <string name="ends_in_x">于%s结束</string>
-    <string name="subscribe_listitemFaint_description">当你的生命值耗尽时，你可以得到第二次机会。</string>
+    <string name="subscribe_listitemFaint_description">当你的生命值耗尽时，你可以得到第二次机会！</string>
     <string name="visit_market">访问市场</string>
     <string name="exclusive_items_await">专属物品和礼物在等着你</string>
     <string name="see_more">查看更多</string>
@@ -1455,7 +1455,7 @@
     <string name="subscriber_button_armoire">免费再次开启！</string>
     <string name="subscriber_button_faint">续命机制：1HP极限锁血！</string>
     <string name="sub_perk">订阅特权</string>
-    <string name="subscribe_incentive_text_faint">订阅即享每日1次免死特权，避免生命值归零！</string>
+    <string name="subscribe_incentive_text_faint">订阅即享每日1次免死特权，避免生命值归零</string>
     <string name="subscriber_benefit">订阅会员额外奖励</string>
     <string name="subscribe_listitemArmoire">双倍宝箱奖励</string>
     <string name="seeking_hint">关注对您的邀请或创建自己的队伍</string>
@@ -1480,7 +1480,7 @@
     <string name="quest_mechanics">副本机制</string>
     <string name="quest_mechanics_collecting_description">收集副本中，完成任务将有随机几率获得副本物品。获得中的副本物品将在每日重置时发放。感知属性可提高物品掉率。</string>
     <string name="see_more_subscription_options">查看更多订阅方案</string>
-    <string name="faint_subscriber_description">订阅会员权利：若您的生命值耗尽，每日可获得一次复活机会。</string>
+    <string name="faint_subscriber_description">订阅会员专属特权：若您的生命值耗尽，每日可获得一次复活机会</string>
     <string name="preference_push_invited_to_group_plan">您被邀请加入团队计划</string>
     <string name="preference_push_joined_group_plan_mention">在团队计划中被@提及</string>
     <string name="subscribe_incentive_button_faint">命悬一线？订阅立即锁住最后1HP！</string>
@@ -1524,7 +1524,7 @@
     <string name="item_footer_description">前往[市场](/shops/market)选购所需物品！</string>
     <string name="g1g1_promo_info_limitations_noutc">本次限时活动期限为 %1$s 至，%2$s。此促销仅适用于向其他Habitica用户赠送订阅。如您或受赠人为订阅用户，则所获赠时长将转为预存权益，将于现订阅服务终止后启用。</string>
     <string name="by_invite">通过邀请</string>
-    <string name="habiticans_looking_party">这些玩家正在寻找队伍：</string>
+    <string name="habiticans_looking_party">这些玩家正在寻找队伍</string>
     <string name="habiticans_looking_party_empty">当前暂无玩家申请组队，稍后再来看看吧！</string>
     <string name="invited">已邀请</string>
     <string name="invite_with_username_email">通过@用户名或邮箱进行邀请</string>
@@ -1572,7 +1572,7 @@
     <string name="quest_mechanics_rage_title">怒气值</string>
     <string name="quest_mechanics_rage_description">部分高难度Boss拥有橙色怒气条（位于血条下方）。当参与者未完成日常任务时，怒气值会持续累积。当怒气条攒满后，首领将发动致命一击，造成额外伤害！</string>
     <string name="subscribe_listitemArmoire_description_2">每次开启宝箱后，可立即获得一次免费再开机会！</string>
-    <string name="subscribe_listitem2_description_2">随时间累积获得时之沙漏，即可在时空旅人商店兑换物品。</string>
+    <string name="subscribe_listitem2_description_2">随时间累积获得时之沙漏，即可在时空旅人商店兑换物品</string>
     <string name="max_gem_cap">宝石持有上限</string>
     <string name="max_gem_cap_text">立即以最大宝石持有上限开始游戏</string>
     <string name="open_habitica_website">访问Habitica网站</string>
@@ -1591,4 +1591,14 @@
     <string name="subscribe_incentive_text_armoire">订阅后每次购买宝箱可额外获得一次开箱机会</string>
     <string name="subscribe_second_armoire_open_text">订阅者可获得额外的宝箱机会和其他福利！</string>
     <string name="empty_potions_description">完成任务、孵化药水副本，或直接前往 [Market](/shops/market)去购买所需物品吧！</string>
+    <string name="next_switch_in_x">下次切换在%s后</string>
+    <string name="rescrubscribe_to_pick_up">重新订阅即可继续您的旅程！</string>
+    <string name="register_tos_confirm">您同意我们的 <a href="https://habitica.com/static/terms">服务条款</a> 并且已经阅读了我们的 <a href="https://habitica.com/static/privacy">隐私政策</a>.</string>
+    <string name="popular">热门</string>
+    <string name="enjoy_benefits">享受你的订阅者专属奖励</string>
+    <string name="customizations_owner">Felicitus</string>
+    <string name="max_gem_cap_text_gift">他们将立即以最大宝石持有上限开始游戏</string>
+    <string name="unlocks_x_gems_per_month">他们每月可在商店解锁%d颗宝石</string>
+    <string name="two_gems_per_month_gift">他们在订阅期间每月可获取+2宝石</string>
+    <string name="use_skill">使用技能</string>
 </resources>

@@ -120,5 +120,4 @@ dependencies {
     implementation(libs.text.google.fonts)
     implementation(libs.ui.tooling)
     implementation(libs.material3)
-    implementation(libs.accompanist.theme)
 }
