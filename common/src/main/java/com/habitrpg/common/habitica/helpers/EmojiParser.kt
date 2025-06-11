@@ -3,6 +3,8 @@ package com.habitrpg.common.habitica.helpers
 import java.util.regex.Pattern
 
 object EmojiParser {
+    private val pattern: Pattern = Pattern.compile("(:[^:\\s]+:)")
+
     /**
      * Converts Cheat Sheet emoji-codes into unicode characters
      *
@@ -14,12 +16,10 @@ object EmojiParser {
             return text
         }
         var returnString: String = text
-        val pattern = Pattern.compile("(:[^:]+:)")
         val matcher = pattern.matcher(text)
         while (matcher.find()) {
             val found = matcher.group()
-            if (EmojiMap.invertedEmojiMap[found] == null) continue
-            val hexInt = EmojiMap.invertedEmojiMap[found]!!
+            val hexInt = EmojiMap.invertedEmojiMap[found] ?: continue
             val replacement = String(Character.toChars(hexInt))
             returnString = returnString.replace(found, replacement)
         }
@@ -41,9 +41,8 @@ object EmojiParser {
         for (i in 0..charArray.size - 2) {
             val testString = String(charArray.copyOfRange(i, i + 2))
             val test = testString.codePointAt(0)
-            if (EmojiMap.emojiMap.containsKey(test)) {
-                returnString = returnString.replace(testString, EmojiMap.emojiMap[test]!!)
-            }
+            val cheatCode = EmojiMap.emojiMap[test] ?: continue
+            returnString = returnString.replace(testString, cheatCode)
         }
         return returnString
     }
