@@ -1618,4 +1618,7 @@
     </plurals>
     <string name="next_switch_in_x">Próximo cambio en %s</string>
     <string name="register_tos_confirm">Estás de acuerdo con nuestros <a href="https://habitica.com/static/terms">Terminos de Servicio</a> y has leído nuestra <a href="https://habitica.com/static/privacy">Política de Privacidad</a>.</string>
+    <string name="chat_empty_state"><b>¡Empieza una charla!</b>
+\nRecuerda que debes ser amistoso y educado y seguir las Normas de la Comunidad.</string>
+    <string name="use_skill">Usar Habilidad</string>
 </resources>
