@@ -303,7 +303,7 @@ fun PartySeekingView(
                     configManager = viewModel.configManager,
                     modifier =
                     Modifier
-                        .animateItemPlacement()
+                        .animateItem()
                         .padding(horizontal = 14.dp)
                 ) { member ->
                     scope.launchCatching({

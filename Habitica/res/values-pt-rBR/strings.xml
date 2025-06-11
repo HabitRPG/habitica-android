@@ -710,7 +710,7 @@
     <string name="equip_automatically">Equipar novos equipamentos automaticamente</string>
     <string name="leave_challenges">Abandonar Desafios</string>
     <string name="keep_challenges">Manter Desafios</string>
-    <string name="inviteFriendDescription">Você convidou um(a) amigo(a) (ou amigos) que se juntaram à você em sua aventura!</string>
+    <string name="inviteFriendDescription">Você convidou um amigo ou mais que se juntaram a você em sua aventura!</string>
     <string name="inviteFriendTitle">Convidou um(a) amigo(a)</string>
     <string name="joinedChallengeDescription">Você colocou-se à prova participando de um Desafio!</string>
     <string name="joinedChallengeTitle">Entrou em um Desafio</string>
@@ -1032,7 +1032,7 @@
     <string name="block_user_title">Bloquear %s\?</string>
     <string name="unblock_user">Desbloquear Usuário</string>
     <string name="block_user">Bloquear Usuário</string>
-    <string name="spooky_promo_info_prompt">A Promoção de Gemas está de volta para assombrar o final do Festival de Outono deste ano! Esta é a última chance de conseguir mais Gemas do que nunca, então estoque enquanto dura!</string>
+    <string name="spooky_promo_info_prompt">A Promoção de Gemas está de volta para assombrar o final do Festival de Outono deste ano! Esta é a última chance de conseguir mais Gemas do que nunca, então aproveite enquanto duram os estoques!</string>
     <string name="spooky_promo_info_instructions">Entre %1$s e %2$s, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com a quantidade promocional de Gemas. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
     <string name="view_gem_bundles">Ver Pacotes de Gemas</string>
     <string name="fall_promo_info_prompt">O Festival de Outono está em pleno andamento, então pensamos que era o momento perfeito para apresentar nossa primeira Promoção de Gemas! Agora você obterá mais Gemas com cada compra do que nunca.</string>
@@ -1181,7 +1181,7 @@
     <string name="confirm_reset">Confirmar reinicio</string>
     <string name="forgot_password_hint_example">ex. habitrabbit ou gryphon@exemplo.com</string>
     <string name="quest_party_required_title">Você precisa estar em um Grupo antes de começar uma Missão</string>
-    <string name="quest_party_required_description">Quando estiver em um Grupo, poderá fazer Missões por conta própria ou convidar amigos para fazerem com você!</string>
+    <string name="quest_party_required_description">Quando estiver em um Grupo, você poderá fazer Missões por conta própria ou convidar amigos para completarem Missões juntos!</string>
     <string name="armoireEquipment_new">Você encontrou um Equipamento raro no Armário!</string>
     <string name="armoireFood_new">Você vasculhou o Armário e encontrou comida. O que isso faz aqui\?</string>
     <string name="sell_no_price">Vender</string>

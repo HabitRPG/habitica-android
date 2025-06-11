@@ -259,8 +259,8 @@
     <string name="setup_task_teams_2">A csapat tájékoztatása az állapotról</string>
     <string name="setup_task_teams_3">Csapatprojekt befejezése</string>
     <string name="quest_items_found">%d küldetési tárgyat találtál</string>
-    <string name="armoireFood_new">A Megbűvölt komódban kutakodva élelmet találsz. Hogy került ez ide\?</string>
-    <string name="armoireExp">Megharcolsz a Megbűvölt komóddal és tapasztalatot szerzel. Ez az!</string>
+    <string name="armoireFood_new">A Megbűvölt komódban kutakodva élelmet találtál. Hogy került ez ide\?</string>
+    <string name="armoireExp">Megharcoltál a Megbűvölt komóddal és tapasztalatot szereztél. Ez az!</string>
     <string name="sell_confirmation_title">Biztosan el akarod adni ezt: %s\?</string>
     <string name="sell_no_price">Eladás</string>
     <string name="invite_party">Csapat meghívása</string>
@@ -294,7 +294,7 @@
         <item quantity="one">%d óra</item>
         <item quantity="other">%d óra</item>
     </plurals>
-    <string name="armoireEquipment_new">Találsz egy ritka felszerelést a Megbűvölt komódban!</string>
+    <string name="armoireEquipment_new">Találtál egy ritka felszerelést a Megbűvölt komódban!</string>
     <plurals name="x_days">
         <item quantity="one">%d nap</item>
         <item quantity="other">%d nap</item>
@@ -308,8 +308,8 @@
     <string name="due">Esedékes</string>
     <string name="cancel_subscription">Előfizetés lemondása</string>
     <string name="visit_habitica_website">Habitica weboldal meglátogatása</string>
-    <string name="months_subscribed">Előfizetett hónapok</string>
-    <string name="monthly_gem_cap">Havi gyémánt keret</string>
+    <string name="months_subscribed">hónapja előfizetve</string>
+    <string name="monthly_gem_cap">havi gyémánt keret</string>
     <string name="cancel_subscription_apple_description">Nem szeretnél tovább előfizetni\? A fizetési módod miatt az előfizetésedet az Apple ID előfizetési beállításain keresztül kell lemondanod az iOS eszközödön.</string>
     <string name="setup_task_chores_3">Szekrény rendszerezése</string>
     <string name="level_abbreviated">%d. szint</string>
@@ -531,7 +531,7 @@
     <string name="insufficient_level_equipment_dialog">Ez a tárgy csak egy adott kaszt számára érhető el. Kasztot a 10. szint után választhatsz.</string>
     <string name="insufficient_level_equipment_dialog_new">Ez a tárgy csak %s számára érhető el. Kasztot a 10. szint után választhatsz.</string>
     <string name="clear">Törlés</string>
-    <string name="no_billing_gems">A készülékeden nem található egyetlen támogatott fizetési mód sem. Kérlek, használd a Habitica weboldalát, ha gyémántokat szeretnél vásárolni.</string>
+    <string name="no_billing_gems">Az eszközödön nincs elérhető támogatott fizetési mód. Ha gyémántot szeretnél vásárolni, használd a Habitica weboldalát.</string>
     <string name="unsaved_changes">Nem mentett változások</string>
     <string name="gold_reward">%d arany</string>
     <string name="insufficientGold">Több feladatot kell teljesítened, mielőtt megengedhetnéd magadnak ezt a tárgyat!</string>
@@ -604,10 +604,10 @@
     <string name="welcome_back">Üdv újra itt</string>
     <string name="check_into_inn">Bejelentkezés a fogadóba</string>
     <string name="insufficientGems">Több gyémántra lesz szükséged a vásárláshoz!</string>
-    <string name="guidelines_description">A Habitica célja, hogy barátságos környezetet biztosítson minden korkaszt és háttér számára. Ha kérdésed van, kérlek, olvasd el az irányelveinket.</string>
+    <string name="guidelines_description">A Habitica arra törekszik, hogy minden korosztály és háttér előtt nyitott, barátságos környezetet teremtsen. Ha kérdésed van, olvasd el az irányelveinket.</string>
     <string name="get_hourglasses">Homokórák beszerzése</string>
     <string name="navigation_drawer_close">Zárd be a navigációs menüt</string>
-    <string name="no_billing_subscriptions">A készülékeden nem található egyetlen támogatott fizetési mód sem. Kérlek, használd a Habitica weboldalát, ha előfizetést szeretnél vásárolni.</string>
+    <string name="no_billing_subscriptions">Az eszközödön nincs elérhető támogatott fizetési mód. Ha előfizetést szeretnél vásárolni, használd a Habitica weboldalát.</string>
     <string name="tiers_descriptions">A csevegésben megjelenő színes felhasználónevek a közreműködők rangját jelzik. Minél magasabb a rang, annál többet járult hozzá a játékhoz művészettel, kóddal, a közösség támogatásával vagy más módon!</string>
     <string name="quest_owner_rewards">Küldetésindító jutalmai</string>
     <string name="world_boss">Főellenség</string>
@@ -644,7 +644,7 @@
     <string name="quest_leader_header">Indította: %s</string>
     <string name="reloaded_content">Tartalom újratöltve</string>
     <string name="available_until">Elérhető eddig: %s</string>
-    <string name="available_for">Még elérhető: %s</string>
+    <string name="available_for">Elérhető eddig: %s</string>
     <string name="gems_left_max">Havi gyémántok: %1$d/%2$d maradt</string>
     <string name="rejoin_party">Nem fogsz tudni újra csatlakozni ehhez a csapathoz, hacsak meg nem hívnak újra.</string>
     <string name="gems_left_nomax">Havi gyémántok: %d maradt</string>
@@ -1203,7 +1203,7 @@
     <string name="levelup_detail_10">Válassz egy kasztot, amely illik a játékstílusodhoz, és oldj fel speciális képességeket és páncélokat, hogy segítsenek az utadon</string>
     <string name="sent_card">Elküldtél egy %s kártyát</string>
     <string name="unpin">Rögzítés feloldása</string>
-    <string name="take_me_back">Vissza akarok menni</string>
+    <string name="take_me_back">Vigyél vissza</string>
     <string name="sidebar_achievements">Kitüntetések</string>
     <string name="inbox_messages_title_single">Új üzenet érkezett %1$s felhasználótól</string>
     <string name="inbox_messages_title">%1$d új üzenet érkezett %2$s felhasználótól</string>
@@ -1233,7 +1233,7 @@
     <string name="resubscribe_description">Szeretnéd folytatni az előnyeid élvezetét\? Indíthatsz új előfizetést, mielőtt a jelenlegi lejár, így folyamatosan aktív marad.</string>
     <string name="gifted">Ajándékozva</string>
     <string name="unlock_level">A(z) %d. szint elérésével oldható fel</string>
-    <string name="unlock_previous_short">Fejezd be a(z) %d. küldetést</string>
+    <string name="unlock_previous_short">%d. küldetés után</string>
     <string name="level_unabbreviated">%d. szint</string>
     <string name="not_participating">Nem veszel részt</string>
     <string name="quest_completed">Küldetés teljesítve!</string>
