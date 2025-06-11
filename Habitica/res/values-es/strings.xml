@@ -1015,9 +1015,9 @@
     <string name="rejoin_guild">Puedes realistarte al gremio desde el submenú \"Gremios &gt; Descubre Gremios\"</string>
     <string name="rejoin_party">No podrás volver a unirte al equipo a no ser que te vuelvan a invitar.</string>
     <string name="available_for">Disponible durante %s</string>
-    <string name="hourglasses_description">Los relojes de arena Místicos son una forma de moneda extremadamente rara que solo puedes recibir por suscribirte a Habitica durante tres meses consecutivos o más. Se utilizan en la tienda del Viajero del tiempo para comprar conjuntos de equipamiento, mascotas, monturas, fondos animados o incluso misiones especiales.
+    <string name="hourglasses_description">Los Relojes de arena Místicos son un tipo de divisa extremadamente raro que solo puedes recibir por suscribirte a Habitica. Se utilizan en la Tienda de los Viajeros del Tiempo para comprar Conjuntos de Equipamiento por Suscripción de meses pasados, Macostas exclusivas, Monturas, Fondos animados o incluso ¡Misiones especiales! Estos beneficios adicionales son una excelente manera de mantenerte motivado durante el año y gratificarte por un trabajo bien hecho.
 \n
-\nPuedes recibir hasta cuatro elojes de arena Místicos al año. El tiempo que reciben las recompensas se basa en el calendario de renovación de su suscripción. Se envían el primer día de un nuevo mes después de su último pago de suscripción que lo calificó para un reloj de arena. Consulte la página [Suscripción] para obtener más detalles.</string>
+\nLos suscriptores reciben un Reloj de arena Místico al principio de cada mes en el cual se disfruta de los beneficios de suscriptor, además de muchos otros beneficios. ¡Comprueba nuestras opciones de suscripción si estás interesado en lo que los Viajeros del Tiempo tienen para ofrecerte!</string>
     <string name="leave_delete_tasks">Abandonar y borrar tareas</string>
     <string name="premium_currency">Divisas premium</string>
     <string name="month_reminder_text">A veces un nuevo comienzo es la mejor opción, ¡Habitica puede ayudarte!</string>

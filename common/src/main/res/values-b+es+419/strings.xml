@@ -4,7 +4,7 @@
     <string name="million_abbrev">M</string>
     <string name="billion_abbrev">B</string>
     <string name="trillion_abbrev">T</string>
-    <string name="mystic_hourglasses">Relojes de Arena Místicos</string>
+    <string name="mystic_hourglasses">Relojes de arena Místicos</string>
     <string name="repeat_daily">Diariamente</string>
     <string name="monthly">Mensualmente</string>
     <string name="weekly">Semanalmente</string>
@@ -35,8 +35,9 @@
         <item quantity="other">%d Tareas diarias</item>
     </plurals>
     <plurals name="x_todos">
-        <item quantity="one">%d Quehacer</item>
-        <item quantity="other">%d Quehaceres</item>
+        <item quantity="one">%d Tarea pendiente</item>
+        <item quantity="many"></item>
+        <item quantity="other">%d Tareas pendientes</item>
     </plurals>
     <string name="gems">Gemas</string>
     <string name="gold_plural">oro</string>
@@ -47,7 +48,7 @@
     <string name="hard">Difícil</string>
     <string name="habits">Hábitos</string>
     <string name="dailies">Tareas diarias</string>
-    <string name="todos">Quehaceres</string>
+    <string name="todos">Tareas pendientes</string>
     <string name="user_level_long">Nivel %d</string>
     <string name="login_btn">Iniciar sesión</string>
     <string name="register_btn">Registrarse</string>
@@ -56,19 +57,23 @@
     <string name="easy_sentence">fácil</string>
     <string name="medium_sentence">intermedio</string>
     <string name="hard_sentence">difícil</string>
-    <string name="todo">Quehacer</string>
-    <string name="new_task">Nueva Tarea</string>
-    <string name="avatar">Avatar</string>
+    <string name="todo">Tarea pendiente</string>
+    <string name="new_task">Nueva tarea</string>
+    <string name="avatar">Personaje</string>
     <string name="user_level">Nivel %d</string>
-    <string name="username">Usuario</string>
-    <string name="email_username">Correo/Usuario</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="email_username">Correo/Nombre de usuario</string>
     <string name="emailAddress">Correo electrónico</string>
     <string name="login_btn_google">Iniciar sesión con Google</string>
     <string name="logout_description">Salir de tu cuenta</string>
     <string name="login_validation_error_title">Error de validación</string>
     <string name="quadrillion_abbrev">Qd</string>
-    <string name="complete_task_title">Completar una Tarea</string>
-    <string name="create_task_title">crea una tarea</string>
-    <string name="create_task">crear</string>
-    <string name="new_task_x">Nuevo %s</string>
+    <string name="complete_task_title">Completa una tarea</string>
+    <string name="create_task_title">Crea una tarea</string>
+    <string name="create_task">Crear %s</string>
+    <string name="new_task_x">Nueva %s</string>
+    <string name="save_task_x">Guardar %s</string>
+    <string name="retry">Reintentar</string>
+    <string name="task">Tarea</string>
+    <string name="failed">Error al cargar</string>
 </resources>

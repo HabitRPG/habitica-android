@@ -5,4 +5,18 @@
     <string name="tutorial_overview">¡Aquí estamos! He hecho algunas tareas para ti según tus gustos. Intenta agregar algunos propios. Puedes editar cualquier tarea tocando el título.</string>
     <string name="tutorial_habits_2">¡Cada vez que hagas un hábito positivo, toca el + para recibir experiencia y oro!</string>
     <string name="tutorial_habits_4">¡Dale un tiro! Puede explorar los otros tipos de tareas mediante de la navegación inferior.</string>
+    <string name="tutorial_dailies_1">Usa Tareas Diarias para aquellas tareas que necesitan ser completadas en un horario regular.</string>
+    <string name="tutorial_dailies_2">Ten cuidado — si no completas una, tu avatar recibirá daño por la noche. ¡Completarlas constantemente trae grandes recompensas!</string>
+    <string name="tutorial_todos_1">Usa las Tareas Pendientes para gestionar las tareas que solo tienes que realizar una vez.</string>
+    <string name="tutorial_rewards_1">¡Compra equipamiento para tu avatar con el oro que ganas!</string>
+    <string name="tutorial_rewards_2">También puedes crear recompensas personalizadas del mundo real en función de lo que te motiva.</string>
+    <string name="tutorial_tasks_complete">Eso es todo por ahora. Si necesitas un recordatorio, consulta la sección de Preguntas Frecuentes (FAQ).</string>
+    <string name="tutorial_party">¡Aquí es donde tú y tus amigos pueden estar pendientes del uno al otro para cumplir sus objetivos y luchar contra monstruos junto a sus tareas!</string>
+    <string name="tutorial_stats">Toca el botón gris para asignar muchas de tus estadísticas a la vez, o toca las flechas para agregarlas un punto a la vez.</string>
+    <string name="tutorial_todos_2">Si tu Tarea Pendiente necesita ser completada en cierta hora, ánade una fecha límite. Parece que puedes tachar una — ¡Adelante!</string>
+    <string name="tutorial_skills">¡Las Habiliades son habilidades especiales con efectos poderosos! Toca una habilidad para usarla. Costará Maná (la barra azul), que puedes conseguir entrando todos los días y completar tareas en la vida real. ¡Consulta la sección de Preguntas Frecuentes (FAQ) para más información!</string>
+    <string name="tutorial_party_created">¡Bienvenido a tu Grupo!
+\nPuedes encontrar más miembros desde una lista de jugadores que estén buscando un grupo o invitar a tus amigos directamente para conseguir el pergamino de Tareas de la Basi-Lista.
+\n
+\nVe a Soporte para aprender más sobre los Grupos.</string>
 </resources>

@@ -43,7 +43,7 @@
     <string name="email_username">邮箱地址/用户名</string>
     <string name="password">密码</string>
     <string name="emailAddress">邮箱地址</string>
-    <string name="confirmpassword">确认密码</string>
+    <string name="confirmpassword">再次输入密码</string>
     <string name="login_btn_google">使用Google登录</string>
     <string name="logout">退出</string>
     <string name="LoginActivityName">欢迎</string>
