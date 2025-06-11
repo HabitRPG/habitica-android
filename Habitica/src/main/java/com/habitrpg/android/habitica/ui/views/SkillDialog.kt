@@ -106,7 +106,7 @@ fun SkillDialog(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
                     .background(chipBg)
-                    .padding(horizontal = 20.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 Icon(
                     painter = resourceIconPainter,
@@ -118,7 +118,7 @@ fun SkillDialog(
                 Text(
                     text = mpCost,
                     color = chipTextColor,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.Medium,
                     fontSize = 16.sp
                 )
             }
@@ -127,14 +127,14 @@ fun SkillDialog(
 
             Button(
                 onClick = onUseSkill,
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(R.color.brand_400),
                     contentColor = Color.White
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp)
+                    .height(43.dp)
             ) {
                 Text(
                     text = stringResource(R.string.use_skill),
