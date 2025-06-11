@@ -224,10 +224,10 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
          if (chatMessages.isEmpty()) {
              binding?.recyclerView?.state = RecyclerViewState.EMPTY
-             binding?.chatEmptyTextview?.fadeInAnimation()
+             binding?.chatEmptyContainer?.fadeInAnimation()
         } else {
              binding?.recyclerView?.state = RecyclerViewState.DISPLAYING_DATA
-             binding?.chatEmptyTextview?.isGone = true
+             binding?.chatEmptyContainer?.isGone = true
         }
 
         viewModel.gotNewMessages = true
