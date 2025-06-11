@@ -8,7 +8,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -23,6 +26,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
@@ -271,21 +275,58 @@ class AccountPreferenceFragment :
     }
 
     private fun showChangePasswordDialog() {
-        ChangePasswordBottomSheet{ oldPassword, newPassword ->
-            lifecycleScope.launchCatching {
-                KeyboardUtil.dismissKeyboard(activity)
+        ChangePasswordBottomSheet(
+            onForgotPassword = { showForgotPasswordDialog() },
+            onPasswordChanged = { oldPassword, newPassword ->
                 lifecycleScope.launchCatching {
-                    val response = userRepository.updatePassword(
-                        oldPassword,
-                        newPassword,
-                        newPassword,
-                    )
-                    response?.apiToken?.let {
-                        viewModel.saveTokens(it, user?.id ?: "")
+                    KeyboardUtil.dismissKeyboard(activity)
+                    lifecycleScope.launchCatching {
+                        val response = userRepository.updatePassword(
+                            oldPassword,
+                            newPassword,
+                            newPassword,
+                        )
+                        response?.apiToken?.let {
+                            viewModel.saveTokens(it, user?.id ?: "")
+                        }
                     }
                 }
             }
-        }.show(childFragmentManager, ChangePasswordBottomSheet.TAG)
+        ).show(childFragmentManager, ChangePasswordBottomSheet.TAG)
+
+    }
+
+    private fun showForgotPasswordDialog() {
+        val input = EditText(requireContext())
+        input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)
+        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        input.hint = getString(R.string.forgot_password_hint_example)
+        input.textSize = 16f
+        val lp =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        input.layoutParams = lp
+        val alertDialog = HabiticaAlertDialog(requireContext())
+        alertDialog.setTitle(R.string.forgot_password_title)
+        alertDialog.setMessage(R.string.forgot_password_description)
+        alertDialog.setAdditionalContentView(input)
+        alertDialog.addButton(R.string.send, true) { _, _ ->
+            lifecycleScope.launchCatching {
+                userRepository.sendPasswordResetEmail(input.text.toString())
+                showPasswordEmailConfirmation()
+            }
+        }
+        alertDialog.addCancelButton()
+        alertDialog.show()
+    }
+
+    private fun showPasswordEmailConfirmation() {
+        val alert = HabiticaAlertDialog(requireContext())
+        alert.setMessage(R.string.forgot_password_confirmation)
+        alert.addOkButton()
+        alert.show()
     }
 
     private fun showAddPasswordDialog(showEmail: Boolean) {
