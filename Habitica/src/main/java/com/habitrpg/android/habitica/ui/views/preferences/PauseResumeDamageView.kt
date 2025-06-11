@@ -88,6 +88,7 @@ fun PauseResumeDamageView(
                 color = HabiticaTheme.colors.textSecondary,
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Medium,
                 modifier =
                 Modifier
                     .padding(bottom = 18.dp)
