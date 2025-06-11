@@ -31,7 +31,7 @@ fun ApiTokenBottomSheet(
     val mainText = colors.textPrimary
     val secondaryText = colors.textSecondary
     val buttonBg = colorResource(id = R.color.yellow_100)
-    val buttonText = colors.tintedUiDetails
+    val buttonText = colorResource(id = R.color.yellow_1)
     val lockIconColor = colors.textSecondary
 
     Box(
@@ -124,7 +124,7 @@ fun ApiTokenBottomSheet(
                 Text(
                     stringResource(id = R.string.copy_token),
                     color = buttonText,
-                    fontSize = 19.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                 )
             }
