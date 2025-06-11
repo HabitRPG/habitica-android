@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="store_title">Convierte a tus tareas en un juego</string>
-  <string name="store_short_description">¡Trata tu vida como un juego para mantenerte motivado y organizado!</string>
-  <string name="store_description">¡Trata tu vida como un juego para mantenerte motivado y organizado! Habitica hace que cumplir objetivos sea entretenido.
+    <string name="store_title">Convierte tus tareas en un juego</string>
+    <string name="store_short_description">¡Trata tu vida como un juego para mantenerte motivado y organizado!</string>
+    <string name="store_description">¡Trata tu vida como un juego para mantenerte motivado y organizado! Habitica hace que cumplir objetivos sea entretenido.
 Escribe tus hábitos, tus metas diarias y tu lista de pendientes, y luego crea un avatar personalizado. ¡Marca tus tareas para subir de nivel y desbloquear objetos tales como armaduras, mascotas, habilidades, e incluso misiones! Lucha contra monstruos con tus amigos para mantenerse responsables mutuamente frente a sus tareas, y usa tu oro para comprar recompensas en el juego, como equipamiento, o premios personalizados, como ver un episodio de tu serie favorita. Flexible, social y divertido, Habitica es la mejor manera de motivarte para lograr cualquier cosa.
 Si tienes alguna duda, ¡siéntete libre de comunicárnosla a mobile@habitica.com ! Y si te gusta nuestra aplicación, nos encantaría que nos dejaras un comentario.
 </string>

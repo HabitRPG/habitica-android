@@ -14,7 +14,13 @@ import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
 import java.util.Random
 
-class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
+class LoginBackgroundView
+    @JvmOverloads
+    constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : RelativeLayout(context, attrs, defStyleAttr) {
     private val random: Random = Random()
 
     private lateinit var leftCloudView: ImageView
