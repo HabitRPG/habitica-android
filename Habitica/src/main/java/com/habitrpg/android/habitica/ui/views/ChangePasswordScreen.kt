@@ -160,21 +160,22 @@ fun ChangePasswordScreen(
                 },
                 enabled = canSave,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = buttonColor,
-                    disabledContainerColor = buttonColor.copy(alpha = 0.3f)
+                    containerColor = colorResource(id = R.color.purple400_purple500),
+                    disabledContainerColor = colorResource(id = R.color.purple400_purple500).copy(alpha = 0.3f)
                 ),
-                shape = RoundedCornerShape(14.dp),
+                shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-
+                    .height(60.dp)
             ) {
                 Text(
                     text = stringResource(R.string.change_password),
                     color = Color.White,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
                 )
             }
+
             Spacer(modifier = Modifier.height(18.dp))
 
             TextButton(
