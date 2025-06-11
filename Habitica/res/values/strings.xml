@@ -1581,7 +1581,8 @@
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
-    <string name="chat_empty_state"><b>Start chatting!</b>\nRemember to be friendly and follow the Community Guidelines.</string>
+    <string name="chat_empty_state_title">Start chatting!</string>
+    <string name="chat_empty_state_description">Remember to be friendly and follow the Community Guidelines.</string>
 
 
 
