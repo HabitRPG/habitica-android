@@ -429,12 +429,12 @@
     <string name="resetting_account">Me-reset Akun</string>
     <string name="deleting_account">Menghapus Akun</string>
     <string name="insufficientGold">Kamu perlu menyelesaikan lebih banyak tugas sebelum bisa membeli item ini!</string>
-    <string name="insufficientGems">Kamu perlu lebih banyak Permata untuk membeli item ini!</string>
+    <string name="insufficientGems">Anda memerlukan lebih banyak Permata untuk membeli ini!</string>
     <string name="purchase_gems">Beli permata</string>
     <string name="insufficientHourglasses">Kamu perlu lebih banyak Jam Pasir Mistis untuk membeli item ini!</string>
     <string name="get_hourglasses">Dapatkan jam pasir</string>
     <string name="subscribe_for_hourglasses">Berlangganan untuk Jam Pasir</string>
-    <string name="timetravelers_closed_description">Dapatkan satu Jam Pasir Mistis setiap tiga bulan berturut-turut kamu berlangganan, lalu gunakan untuk membuka item-item edisi terbatas, peliharaan, dan tunggangan dari masa lalu… dan masa depan!</string>
+    <string name="timetravelers_closed_description">Dapatkan satu Mystic Hourglass untuk setiap bulan berlangganan, lalu gunakan untuk membuka item edisi terbatas, hewan peliharaan, dan tunggangan dari masa lalu… dan masa depan!</string>
     <string name="want_to_subscribe">Aku mau Berlangganan</string>
     <string name="seasonal_closed_description">Grand Gala diadakan dekat dengan titik balik matahari dan ekuinoks, jadi cek kembali nanti untuk menemukan sekumpulan seru item musiman yang spesial!</string>
     <string name="come_back_soon">Datang kembali nanti!</string>
@@ -486,12 +486,12 @@
     <string name="class_equipment">Perlengkapan</string>
     <string name="equipment_empty">Kamu sudah punya semua perlengkapan! Lebih banyak lagi tersedia sewaktu Grand Gala, dekat titik balik matahari dan ekuinoks.</string>
     <string name="classless">Tanpa Pekerjaan</string>
-    <string name="class_equipment_shop_dialog">Item ini hanya tersedia untuk pekerjaan tetentu. \nKamu bisa menggantu pekerjaanmu dari Pengaturan.</string>
+    <string name="class_equipment_shop_dialog">Item ini hanya tersedia untuk kelas tertentu. Anda dapat mengubah kelas Anda dari Pengaturan.</string>
     <string name="class_gear_disclaimer">Kamu hanya bisa membeli perlengkapan untuk pekerjaanmu yang sekarang</string>
     <string name="check_into_inn">Masuk ke Penginapan</string>
     <string name="community_guidelines">Pedoman Komunitas</string>
     <string name="view_community_guidelines">Lihat Pedoman Komunitas</string>
-    <string name="guidelines_description">Habitica mengusahakan untuk membuat sebuah lingkungan yang ramah untuk pengguna segala usia dan latar belakang, khususnya di tempat umum seperti Kedai Minuman. Jika kamu ada pertanyaan, silahkan periksa pedoman kami.</string>
+    <string name="guidelines_description">Habitica berupaya menciptakan lingkungan yang ramah bagi pemain dari segala usia dan latar belakang. Jika Anda memiliki pertanyaan, silakan baca panduan kami.</string>
     <string name="helpful_links">Tautan Berguna</string>
     <string name="view_faq">Lihat FAQ</string>
     <string name="report_bug">Laporkan Gangguan</string>
@@ -507,7 +507,7 @@
     <string name="strike_description_title">Apakah itu Tingkatan Kemarahan?</string>
     <string name="strike_active_title">Sang %s telah Diserang!</string>
     <string name="strike_active_description">%1$s kita yang tercinta hancur sewaktu sang %2$s meremukkan %3$s. Cepat, kalahkan tugas-tugasmu untuk mengalahkan sang monster dan bantu membangun kembali!!</string>
-    <string name="questShop">Toko Misi</string>
+    <string name="questShop">Pencarian</string>
     <string name="market_owner_long">Alex sang Pedagang</string>
     <string name="tavern_owner_long">Daniel sang penjaga penginapan</string>
     <string name="stable_owner_long">Matt sang penguasa hewan buas</string>
@@ -736,9 +736,9 @@
     <string name="damage_paused">Kerusakan ditunda</string>
     <string name="discover">Telusuri</string>
     <string name="gift_gems_subtitle">Pilihlah paket permata yang ingin kamu hadiahkan!</string>
-    <string name="gift_subscription_subtitle">Pilihlah berlangganan yang ingin kamu berikan dibawah! Pembelian ini tidak akan diperbarui secara otomatis.</string>
+    <string name="gift_subscription_subtitle">Pilih langganan yang ingin Anda berikan sebagai hadiah! Pembelian ini tidak akan diperpanjang.</string>
     <string name="gift_one_get_one_detailed_description">Selama promosi ini aktif, kamu akan mendapatkan berlangganan yang sama secara otomatis setelah kamu memberikannya.</string>
-    <string name="gift_one_get_one">Berikan satu ,Dapatkan satu!</string>
+    <string name="gift_one_get_one">Hadiah satu, Dapatkan satu</string>
     <string name="gift_title">Kepada siapa ingin kamu hadiahkan\?</string>
     <string name="gift_one_get_one_description">Even beri satu berlangganan gratis satu berlangganan sedang berlangsung!</string>
     <string name="gift_subscription">Hadiahkan Berlangganan</string>
@@ -960,11 +960,11 @@
     </plurals>
     <string name="choosing_class_progress">Memilih Profesi</string>
     <string name="level_abbreviated">Lv. %d</string>
-    <string name="thousand_abbrev">rb</string>
-    <string name="million_abbrev">jt</string>
+    <string name="thousand_abbrev">K</string>
+    <string name="million_abbrev">m</string>
     <string name="class_confirmation_price">Apakah kamu mau mengganti profesimu ke %1$s dengan %2$d permata\?</string>
     <string name="buy_all">Beli Semua</string>
-    <string name="billion_abbrev">mil</string>
+    <string name="billion_abbrev">b</string>
     <string name="push_notification_system_settings_description">Perbolehkan notifikasi Habitica di aplikasi Pengaturan untuk menerima notifikasi</string>
     <string name="push_notification_system_settings_reminders">Perbolehkan notifikasi Habitica di aplikasi Pengaturan untuk menerima pengingat</string>
     <string name="push_notification_system_settings_title">Notifikasi Dinonaktifkan</string>
@@ -996,4 +996,46 @@
     <string name="cancel_subscription_apple_description">Tidak ingin berlangganan lagi\? Karena metode pembayaran Anda, Anda harus berhenti berlangganan melalui pengaturan langganan ID Apple di perangkat iOS Anda.</string>
     <string name="unsaved_changes">Perubahan yang belum disimpan</string>
     <string name="use_item">Gunakan Item pada anggota party</string>&gt;
-    </resources>
+    <string name="leave_party_confirmation_quest">Apakah Anda yakin ingin meninggalkan pesta ini\?</string>
+    <string name="rejoin_party_quest">Anda tidak akan dapat bergabung kembali dengan kelompok ini kecuali diundang.
+\n
+\nMeninggalkan kelompok juga akan membuat Anda meninggalkan misi yang sedang Anda jalani.</string>
+    <string name="rejoin_party_quest_leader">Anda tidak akan dapat bergabung kembali dengan kelompok ini kecuali diundang.
+\n
+\nMeninggalkan kelompok juga akan membatalkan misi saat ini.</string>
+    <string name="forgot_password_hint_example">misalnya, habitrabbit atau gryphon@example.com</string>
+    <string name="reset_account_description_new">Anda akan kehilangan semua level, Emas, dan Pengalaman. Semua tugas dan data historisnya akan dihapus (tugas Tantangan akan tetap ada). Anda akan kehilangan semua peralatan, kecuali item Pelanggan dan item peringatan gratis, tetapi Anda akan dapat membelinya kembali. Anda harus memiliki kelas yang tepat untuk membeli kembali perlengkapan khusus kelas. Anda akan tetap memiliki kelas, Prestasi, dan Hewan Peliharaan serta Tunggangan Anda saat ini. Untuk mengonfirmasi pengaturan ulang, ketik kata sandi Anda di bawah ini.</string>
+    <string name="reset_account_description_no_pw">Anda akan kehilangan semua level, Emas, dan Pengalaman. Semua tugas dan data historisnya akan dihapus (tugas Tantangan akan tetap ada). Anda akan kehilangan semua peralatan, kecuali item Pelanggan dan item peringatan gratis, tetapi Anda akan dapat membelinya kembali. Anda harus memiliki kelas yang tepat untuk membeli kembali perlengkapan khusus kelas. Anda akan tetap memiliki kelas, Prestasi, dan Hewan Peliharaan serta Tunggangan Anda saat ini. Untuk mengonfirmasi pengaturan ulang, ketik RESET di bawah.</string>
+    <string name="class_equipment_shop_dialog_new">Item ini hanya tersedia untuk %s. Buka Pengaturan untuk mengubah kelas.</string>
+    <string name="reset_account_title">Apakah Anda yakin ingin mengatur ulang\?</string>
+    <string name="discard_changes_to_task_message">Apakah Anda yakin ingin membuang perubahan pada tugas ini\?</string>
+    <string name="next_hourglass">Pengiriman Jam Pasir Berikutnya</string>
+    <string name="confirm_reset">Konfirmasi pengaturan ulang</string>
+    <string name="report_reason_title_player">Mengapa Anda melaporkan pemain ini\?</string>
+    <string name="report_successful">%s Dilaporkan</string>
+    <string name="report_failure">Laporan gagal, silakan coba lagi nanti</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; telah mengundang Anda untuk bergabung dengan grup &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="report_reason_title_challenge">Mengapa Anda melaporkan tantangan ini\?</string>
+    <string name="report_player">Laporan Pemutar</string>
+    <string name="report_player_title">Laporkan %s\?</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="need_help_description">Anda dapat menghubungi kami dan anggota tim kami akan melakukan yang terbaik untuk membantu!</string>
+    <string name="report_user_explanation">Anda hanya boleh melaporkan pemain yang melanggar [Pedoman Komunitas](https://habitica.com/static/community-guidelines) dan/atau [Persyaratan Layanan](https://habitica.com/static/terms). Mengirimkan laporan palsu merupakan pelanggaran terhadap Pedoman Komunitas Habitica.</string>
+    <string name="insufficient_level_equipment_dialog_new">Item ini hanya tersedia untuk %s. Anda dapat memilih kelas setelah level 10.</string>
+    <string name="report_message_explanation">Anda hanya boleh melaporkan kiriman yang melanggar [Pedoman Komunitas](https://habitica.com/static/community-guidelines) dan/atau [Persyaratan Layanan](https://habitica.com/static/terms). Mengirimkan laporan palsu merupakan pelanggaran terhadap Pedoman Komunitas Habitica.</string>
+    <string name="report_challenge_explanation">Anda hanya boleh melaporkan tantangan yang melanggar [Pedoman Komunitas](https://habitica.com/static/community-guidelines) dan/atau [Persyaratan Layanan](https://habitica.com/static/terms). Mengirimkan laporan palsu merupakan pelanggaran terhadap Pedoman Komunitas Habitica.</string>
+    <string name="report_message">Laporkan Pesan</string>
+    <string name="register_tos_confirm">Anda menyetujui <a href="https://habitica.com/static/terms">Persyaratan Layanan</a> kami dan telah membaca <a href="https://habitica.com/static/privacy">Kebijakan Privasi</a> kami.</string>
+    <string name="report_hint">Alasan laporan</string>
+    <string name="report_reason_title_message">Mengapa Anda melaporkan pesan ini\?</string>
+    <string name="report_user_description">Ini juga akan memblokir @%s</string>
+    <string name="x_checkins">%d Checkin</string>
+    <string name="insufficient_level_equipment_dialog">Item ini hanya tersedia untuk kelas tertentu. Anda dapat memilih kelas setelah level 10.</string>
+    <string name="adjust_counter">Sesuaikan Penghitung</string>
+    <string name="reset_counter">Setel Ulang Penghitung</string>
+    <string name="gem_purchase_confirmation">Anda memperoleh %s permata.</string>
+    <string name="gift_confirmation_text_gems_new">Anda mengirim @%1$s %2$s permata.</string>
+    <string name="subscription_confirmation">Anda sekarang berlangganan selama 1 bulan</string>
+    <string name="subscription_confirmation_multiple">Anda sekarang berlangganan selama %s bulan</string>
+</resources>
