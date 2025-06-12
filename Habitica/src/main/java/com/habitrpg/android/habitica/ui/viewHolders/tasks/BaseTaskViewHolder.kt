@@ -169,29 +169,23 @@ abstract class BaseTaskViewHolder(
             notesTextView?.visibility = View.GONE
         }
 
-        titleTextView.text = data.text
-        scope.launch(Dispatchers.IO) {
-            if (data.text.isNotEmpty() && MarkdownParser.containsMarkdown(data.text)) {
-                val parsedText = MarkdownParser.parseMarkdown(data.text)
-                withContext(Dispatchers.Main) {
-                    data.parsedText = parsedText
-                    titleTextView.setParsedMarkdown(parsedText)
-                }
-            }
+        val titleText = data.text ?: ""
+        if (!MarkdownParser.containsMarkdown(titleText)) {
+            titleTextView.text = titleText
+        } else {
+            val parsedText = MarkdownParser.parseMarkdown(titleText)
+            data.parsedText = parsedText
+            titleTextView.setParsedMarkdown(parsedText)
         }
+
         if (displayMode != "minimal") {
-            notesTextView?.text = data.notes
-            data.notes?.let { notes ->
-                scope.launch(Dispatchers.IO) {
-                    if (notes.isEmpty() || !MarkdownParser.containsMarkdown(notes)) {
-                        return@launch
-                    }
-                    val parsedNotes = MarkdownParser.parseMarkdown(notes)
-                    withContext(Dispatchers.Main) {
-                        data.parsedNotes = parsedNotes
-                        notesTextView?.setParsedMarkdown(parsedNotes)
-                    }
-                }
+            val notes = data.notes ?: ""
+            if (!MarkdownParser.containsMarkdown(notes)) {
+                notesTextView?.text = notes
+            } else {
+                val parsedNotes = MarkdownParser.parseMarkdown(notes)
+                data.parsedNotes = parsedNotes
+                notesTextView?.setParsedMarkdown(parsedNotes)
             }
         } else {
             notesTextView?.visibility = View.GONE
