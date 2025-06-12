@@ -249,7 +249,9 @@ class TasksFragment :
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     bottomNavigation?.selectedPosition = position
-                    updateFilterIcon(getTaskTypeFromTabPosition(position))
+                    binding?.viewPager?.post {
+                        updateFilterIcon(getTaskTypeFromTabPosition(position))
+                    }
                 }
             }
         )
