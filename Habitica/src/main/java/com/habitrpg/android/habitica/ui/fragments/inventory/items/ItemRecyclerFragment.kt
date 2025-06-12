@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
+import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
@@ -38,18 +39,22 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.skills.SkillDialogBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -87,6 +92,7 @@ class ItemRecyclerFragment :
     var transformationItems: MutableList<OwnedItem> = mutableListOf()
     var itemTypeText: String? = null
     private var selectedSpecialItem: SpecialItem? = null
+    private var specialSkills: MutableList<Skill> = mutableListOf()
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
 
     override var binding: FragmentItemsBinding? = null
@@ -113,6 +119,7 @@ class ItemRecyclerFragment :
             this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
             this.itemTypeText = savedInstanceState.getString(ITEM_TYPE_TEXT_KEY, "")
         }
+        getSpecialSkills()
 
         binding?.refreshLayout?.setOnRefreshListener(this)
         val buttonMethod = {
@@ -170,6 +177,24 @@ class ItemRecyclerFragment :
         this.loadItems()
     }
 
+    private fun getSpecialSkills() {
+        // Get special skills for description of special items
+        lifecycleScope.launchCatching {
+            val user = userViewModel.user.value ?: return@launchCatching
+            userRepository.getSkills(user)
+                .combine(userRepository.getSpecialItems(user)) { skills, items ->
+                    val allEntries = mutableListOf<Skill>()
+                    for (skill in skills) {
+                        allEntries.add(skill)
+                    }
+                    for (item in items) {
+                        allEntries.add(item)
+                    }
+                    return@combine allEntries
+                }.collect { skills -> specialSkills = skills }
+        }
+    }
+
     private fun setAdapter() {
         val context = activity
 
@@ -180,7 +205,23 @@ class ItemRecyclerFragment :
             }
             binding?.recyclerView?.adapter = adapter
         }
-        adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
+        adapter?.onUseSpecialItem = { specialItem ->
+            val specialSkill = specialSkills.find { it.key == specialItem.key }
+            if (specialSkill != null) {
+                val skillIdentifier = "shop_"
+                val bottomSheet = SkillDialogBottomSheetFragment.newInstance(
+                    skillTitle = specialSkill.text,
+                    skillDescription = specialSkill.notes ?: "",
+                    skillKey = specialSkill.key,
+                    skillPath = skillIdentifier,
+                    isTransformationItem = true,
+                    onUseSkill = {
+                        onSpecialItemSelected(specialItem)
+                    }
+                )
+                bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
+            }
+        }
         adapter?.onSellItem = { item, ownedItem ->
             showSellItemConfirmation(item, ownedItem)
         }
