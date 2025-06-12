@@ -59,7 +59,7 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow: Boolean, onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
     val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
     val authenticationError by authenticationViewModel.authenticationError.collectAsState(null)
 
@@ -74,6 +74,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
     var passwordFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     var email by authenticationViewModel.email
     var emailFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
+    var username by authenticationViewModel.username
+    var usernameFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     Box(modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
@@ -177,8 +179,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                         emailFieldState = emailFieldState,
                         onEmailChange = {
                             email = it
-                            if (loginScreenState == LoginScreenState.REGISTER) {
-                                emailFieldState = if (it.isEmpty()) {
+                            emailFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
+                                if (it.isEmpty()) {
                                     LoginFieldState.DEFAULT
                                 } else if (Patterns.EMAIL_ADDRESS.matcher(it).matches()) {
                                     LoginFieldState.VALID
@@ -186,15 +188,20 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                                     LoginFieldState.ERROR
                                 }
                             } else {
-                                emailFieldState = LoginFieldState.DEFAULT
+                                LoginFieldState.DEFAULT
                             }
+                        },
+                        username = username,
+                        usernameFieldState = usernameFieldState,
+                        onUsernameChange = {
+                            username = it
                         },
                         password = password,
                         passwordFieldState = passwordFieldState,
                         onPasswordChange = {
                             password = it
-                            if (loginScreenState == LoginScreenState.REGISTER) {
-                                passwordFieldState = if (it.isEmpty()) {
+                            passwordFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
+                                if (it.isEmpty()) {
                                     LoginFieldState.DEFAULT
                                 } else if (it.length >= 8) {
                                     LoginFieldState.VALID
@@ -202,15 +209,20 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                                     LoginFieldState.ERROR
                                 }
                             } else {
-                                passwordFieldState = LoginFieldState.DEFAULT
+                                LoginFieldState.DEFAULT
                             }
                         },
                         isRegistering = loginScreenState == LoginScreenState.REGISTER,
+                        showUsernameField = !useNewAuthFlow,
                         onSubmit = {
                             if (loginScreenState == LoginScreenState.REGISTER) {
-                                authenticationViewModel.register("", email, password, password)
+                                if (useNewAuthFlow) {
+                                    authenticationViewModel.checkEmail()
+                                } else {
+                                    authenticationViewModel.register()
+                                }
                             } else {
-                                authenticationViewModel.login(email, password)
+                                authenticationViewModel.login()
                             }
                         },
                         showLoading = showLoading
