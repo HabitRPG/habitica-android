@@ -27,6 +27,7 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
             skillPath: String,
             skillKey: String,
             resourceIcon: Drawable,
+            isTransformationItem: Boolean = false,
             onUseSkill: () -> Unit
         ): SkillDialogBottomSheetFragment {
             return SkillDialogBottomSheetFragment().apply {
@@ -39,6 +40,7 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
                 this.skillKey = skillKey
                 this.skillPath = skillPath
                 this.onUseSkill = onUseSkill
+                this.isTransformationItem = isTransformationItem
             }
         }
     }
@@ -47,6 +49,7 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
     private var resourceIcon: Drawable? = null
     var skillKey = ""
     var skillPath = ""
+    var isTransformationItem: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +65,7 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
                     title = requireArguments().getString(ARG_SKILL_TITLE) ?: "",
                     description = requireArguments().getString(ARG_SKILL_DESCRIPTION) ?: "",
                     mpCost = requireArguments().getString(ARG_SKILL_MP_COST) ?: "",
+                    isTransformationItem = isTransformationItem,
                     onUseSkill = {
                         onUseSkill?.invoke()
                         dismiss()

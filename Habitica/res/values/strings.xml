@@ -1040,6 +1040,7 @@
     <string name="stat_allocation">Stat Allocation</string>
     <string name="stat_description">All Habitica characters have four stats that affect the gameplay aspects of Habitica.\n\n**Strength (STR)** affects critical hits and raises damage done to a Quest Boss. Warriors and Rogues gain STR from their class equipment.\n\n**Constitution (CON)** raises your HP and makes you take less damage. Healers and Warriors gain CON from their class equipment.\n\n**Intelligence (INT)** raises the amount of EXP you earn and gives you more Mana. Mages and Healers gain INT from their class equipment.\n\n**Perception (PER)** increases the gold you earn and the rate of finding dropped items. Rogues and Mages gain PER from their class equipment.\n\nAfter level 10, you earn 1 Stat Point every level you gain that you can put into any stat you’d like. You can also equip gear that has different combinations of stat boosts.</string>
     <string name="use_skill">Use Skill</string>
+    <string name="use_on_party">Use on Party</string>
 
     <string name="standard"> Standard </string>
     <string name="premium_currency">Premium Currency</string>
