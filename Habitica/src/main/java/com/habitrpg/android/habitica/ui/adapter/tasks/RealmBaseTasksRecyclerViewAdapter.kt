@@ -89,13 +89,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
         }
     }
 
-    override fun getDiffCallback(
-        oldList: List<Task>,
-        newList: List<Task>
-    ): DiffCallback<Task>? {
-        return object : DiffCallback<Task>(oldList, newList) {}
-    }
-
     override fun getItemCount(): Int {
         return data.size + if (showAdventureGuide) 1 else 0
     }
