@@ -135,8 +135,6 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             }
         )
         bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
-
-
     }
 
     private fun displaySkillResult(

@@ -40,9 +40,9 @@ fun SkillDialog(
     skillPath: String = "",
     skillKey: String = "",
     resourceIconPainter: Painter,
-    title: String,
-    description: String,
-    mpCost: String,
+    title: String = "",
+    description: String = "",
+    mpCost: String = "",
     isTransformationItem: Boolean = false,
     onUseSkill: () -> Unit,
 ) {

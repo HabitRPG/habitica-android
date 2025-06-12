@@ -21,12 +21,12 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
         private const val ARG_SKILL_MP_COST = "skill_mp_cost"
 
         fun newInstance(
-            skillTitle: String,
-            skillDescription: String,
-            skillMpCost: String,
-            skillPath: String,
-            skillKey: String,
-            resourceIcon: Drawable,
+            skillTitle: String? = "",
+            skillDescription: String? = "",
+            skillMpCost: String? = "",
+            skillPath: String? = "",
+            skillKey: String? = "",
+            resourceIcon: Drawable? = null,
             isTransformationItem: Boolean = false,
             onUseSkill: () -> Unit
         ): SkillDialogBottomSheetFragment {
@@ -37,8 +37,8 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
                     putString(ARG_SKILL_MP_COST, skillMpCost)
                 }
                 this.resourceIcon = resourceIcon
-                this.skillKey = skillKey
-                this.skillPath = skillPath
+                this.skillKey = skillKey ?: ""
+                this.skillPath = skillPath ?: ""
                 this.onUseSkill = onUseSkill
                 this.isTransformationItem = isTransformationItem
             }
