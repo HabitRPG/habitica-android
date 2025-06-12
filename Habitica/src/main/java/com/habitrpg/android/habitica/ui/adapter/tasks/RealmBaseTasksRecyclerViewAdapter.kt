@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.adapter.DiffCallback
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -86,6 +87,13 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
             holder.itemView.setOnClickListener { adventureGuideOpenEvents?.invoke(true) }
             user?.let { holder.update(it) }
         }
+    }
+
+    override fun getDiffCallback(
+        oldList: List<Task>,
+        newList: List<Task>
+    ): DiffCallback<Task>? {
+        return object : DiffCallback<Task>(oldList, newList) {}
     }
 
     override fun getItemCount(): Int {
