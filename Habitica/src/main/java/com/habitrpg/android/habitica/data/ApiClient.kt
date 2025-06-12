@@ -35,6 +35,7 @@ import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import retrofit2.HttpException
 
@@ -182,7 +183,8 @@ interface ApiClient {
     suspend fun connectSocial(
         network: String,
         userId: String,
-        accessToken: String
+        accessToken: String,
+        allowRegister: Boolean
     ): UserAuthResponse?
 
     suspend fun disconnectSocial(network: String): Void?
@@ -436,6 +438,7 @@ interface ApiClient {
     suspend fun retrieveMarketGear(): Shop?
 
     suspend fun verifyUsername(username: String): VerifyUsernameResponse?
+    suspend fun verifyEmail(email: String): VerifyEmailResponse?
 
     fun updateServerUrl(newAddress: String?)
 

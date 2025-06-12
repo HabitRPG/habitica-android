@@ -39,6 +39,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -51,10 +52,14 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +74,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
@@ -79,23 +83,49 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
-import com.habitrpg.android.habitica.data.implementation.CustomizationRepositoryImpl
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.SetupViewModel
 import com.habitrpg.android.habitica.ui.views.TypewriterText
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
 @Composable
-fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: SetupCustomizationRepository, user: User, onNextOnboardingStep: () -> Unit) {
-    val username by viewModel.username
+fun SetupScreen(authViewModel: AuthenticationViewModel,
+                viewModel: SetupViewModel = viewModel(),
+                customizationRepository: SetupCustomizationRepository,
+                onNextOnboardingStep: () -> Unit) {
+    val username by authViewModel.username
     var currentStep by remember { mutableIntStateOf(0) }
 
+    LaunchedEffect(currentStep) {
+        if (currentStep == 2) {
+            viewModel.saveSetup()
+            onNextOnboardingStep()
+        }
+    }
+
     var selectedCustomizationCategory by remember { mutableStateOf("skin") }
+    var selectedCustomizationSubcategory by remember { mutableStateOf("") }
+
+    val taskCategories = listOf(
+        "work" to stringResource(R.string.setup_group_work),
+        "exercise" to stringResource(R.string.setup_group_exercise),
+        "health" to stringResource(R.string.setup_group_health),
+        "school" to stringResource(R.string.setup_group_school),
+        "teams" to stringResource(R.string.setup_group_teams),
+        "chores" to stringResource(R.string.setup_group_chores),
+        "creativity" to stringResource(R.string.setup_group_creativity),
+    )
+    val selectedTaskCategories by viewModel.selectedTaskCategories.collectAsState()
 
     val img = ImageBitmap.imageResource(R.drawable.border_pixelated)
 
@@ -111,6 +141,20 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
             )
         )
     }
+
+    val user by viewModel.user.collectAsState()
+
+    if (user == null) {
+        val scope = rememberCoroutineScope()
+        LifecycleStartEffect(user, LocalLifecycleOwner.current) {
+            scope.launchCatching {
+                viewModel.initializeUser(authViewModel.retrieveUser())
+            }
+            onStopOrDispose { }
+        }
+        return
+    }
+
     val text = if (currentStep == 0) {
         stringResource(R.string.onboarding_step_avatar)
     } else {
@@ -171,19 +215,34 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
                             .padding(top = 170.dp)
                             .padding(bottom = 26.dp)
                     ) {
-                        CustomizationCategoryView(customizationRepository,selectedCustomizationCategory, user)
+                        CustomizationCategoryView(customizationRepository,
+                            selectedCustomizationCategory,
+                            selectedCustomizationSubcategory,
+                            viewModel.getActiveCustomization(selectedCustomizationCategory, selectedCustomizationSubcategory),
+                            user, {
+                                selectedCustomizationSubcategory = it
+                        }, {
+                            viewModel.equipCustomization(it)
+                        })
                     }
                 }
                 AnimatedContent(currentStep, modifier = Modifier.weight(1f)) {
                     if (it == 0) {
                         CustomizationCategorySelector(
                             selectedCustomizationCategory,
-                            {
-                                selectedCustomizationCategory = it
+                            { selectedCategory ->
+                                selectedCustomizationCategory = selectedCategory
                             }
                         )
                     } else {
-                        OnboardingTaskSelector(modifier = Modifier.padding(top = 160.dp))
+                            OnboardingTaskSelector(
+                                taskCategories,
+                                selectedTaskCategories,
+                                selectCategory = { category ->
+                                    viewModel.selectTaskCategory(category)
+                                },
+                                modifier = Modifier.padding(top = 160.dp)
+                            )
                     }
                 }
             }
@@ -200,14 +259,15 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
                     }
             )
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                    .fillMaxWidth()
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
                     .background(bgColorBottom)
+                    .animateContentSize()
+                    .fillMaxWidth()
                     .padding(
                         bottom = WindowInsets.systemBars.asPaddingValues()
                             .calculateBottomPadding()
                     )
-                    .animateContentSize()
             ) {
                 Row(
                     Modifier
@@ -232,11 +292,11 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
                     }
                 }
                 Button(
-                    {
-                        if (currentStep == 0) {
-                            currentStep = 1
+                    onClick = {
+                        currentStep = if (currentStep == 0) {
+                            1
                         } else {
-                            currentStep = 2
+                            2
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -258,8 +318,10 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
                 }
             }
         }
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
                 .padding(
@@ -267,7 +329,7 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
                 )
         ) {
             Text(
-                "@${username}",
+                "@${user?.username ?: username}",
                 color = colorResource(R.color.brand_600),
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
@@ -285,8 +347,10 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
                     .padding(horizontal = 20.dp, vertical = 12.dp)
                     .widthIn(min = 120.dp)
             )
-            ComposableAvatarView(null, null)
+                ComposableAvatarView(user, null, showBackground = false, showPet = false, showMount = false,
+                    modifier = Modifier.size(120.dp).padding(top = 20.dp, end = 12.dp))
         }
+
         SpeechBubble(
             text, { Text("Justin") }, modifier = Modifier
                 .padding(horizontal = 36.dp)
@@ -324,16 +388,26 @@ fun SetupScreen(viewModel: AuthenticationViewModel, customizationRepository: Set
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
             Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(bgColorBottom)
-            )
+            ) {
+                AnimatedVisibility(currentStep == 2,
+                    enter = fadeIn(tween(300, delayMillis = 400))) {
+                    HabiticaCircularProgressView(indicatorSize = 75.dp)
+                }
+            }
         }
     }
 }
 
 @Composable
-fun OnboardingTaskSelector(modifier: Modifier = Modifier) {
+fun OnboardingTaskSelector(
+    taskCategories: List<Pair<String, String>>,
+    selectedCategories: Set<String>,
+    selectCategory: (String) -> Unit,
+    modifier: Modifier = Modifier) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 180.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
@@ -342,16 +416,19 @@ fun OnboardingTaskSelector(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
     ) {
-        items(7) { index ->
+        items(taskCategories) { category ->
             Text(
-                "Test ${index}",
+                category.second,
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                color = colorResource(R.color.white),
+                color = if (selectedCategories.contains(category.first)) colorResource(R.color.brand_200) else colorResource(R.color.white),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colorResource(R.color.brand_100), RoundedCornerShape(30.dp))
+                    .clickable {
+                        selectCategory(category.first)
+                    }
+                    .background(if (selectedCategories.contains(category.first)) colorResource(R.color.white) else colorResource(R.color.brand_100), RoundedCornerShape(30.dp))
                     .padding(20.dp)
             )
         }
@@ -359,155 +436,190 @@ fun OnboardingTaskSelector(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CustomizationCategoryView(customizationRepository: SetupCustomizationRepository, selectedCategory: String, user: User, modifier: Modifier = Modifier) {
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
-    var selectedTab by remember { mutableStateOf("") }
+fun CustomizationSubcategorySelector(
+    selectedCategory: String,
+    selectedTabIndex: Int,
+    selectTab: (Int, String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val unselected = Color.White.copy(0.5f)
-    Column(verticalArrangement = Arrangement.spacedBy(26.dp)) {
-        AnimatedContent(selectedCategory) {
-            ProvideTextStyle(
-                TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            ) {
-                TabRow(
-                    selectedTabIndex,
-                    containerColor = Color.Transparent,
-                    contentColor = Color.White,
-                    divider = {},
-                    indicator = { positions ->
-                        if (selectedTabIndex < positions.size) {
-                            TabRowDefaults.PrimaryIndicator(
-                                Modifier.tabIndicatorOffset(positions[selectedTabIndex]),
-                                width = 60.dp,
-                                height = 2.dp,
-                                color = colorResource(R.color.brand_400)
+    AnimatedContent(selectedCategory) {
+        ProvideTextStyle(
+            TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal
+            )
+        ) {
+            TabRow(
+                selectedTabIndex,
+                containerColor = Color.Transparent,
+                contentColor = Color.White,
+                divider = {},
+                indicator = { positions ->
+                    if (selectedTabIndex < positions.size) {
+                        TabRowDefaults.PrimaryIndicator(
+                            Modifier.tabIndicatorOffset(positions[selectedTabIndex]),
+                            width = 60.dp,
+                            height = 2.dp,
+                            color = colorResource(R.color.brand_400)
+                        )
+                    }
+                }) {
+                when (it) {
+                    SetupCustomizationRepository.CATEGORY_BODY -> {
+                        Tab(
+                            selectedTabIndex == 0,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    0,
+                                    SetupCustomizationRepository.SUBCATEGORY_SHIRT
+                                )
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_shirt).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
                             )
                         }
-                    }) {
-                    when (it) {
-                        SetupCustomizationRepository.CATEGORY_BODY -> {
-                            Tab(
-                                selectedTabIndex == 0,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 0
-                                    selectedTab = SetupCustomizationRepository.CATEGORY_SKIN
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_skin_color).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
-                                )
-                            }
-                        }
+                    }
 
-                        SetupCustomizationRepository.CATEGORY_HAIR -> {
-                            Tab(
-                                selectedTabIndex == 0,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 0
-                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_COLOR
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_hair_color).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
+                    SetupCustomizationRepository.CATEGORY_HAIR -> {
+                        Tab(
+                            selectedTabIndex == 0,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    0,
+                                    SetupCustomizationRepository.SUBCATEGORY_COLOR
                                 )
-                            }
-                            Tab(
-                                selectedTabIndex == 1,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 1
-                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_BANGS
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_hair_bangs).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
-                                )
-                            }
-                            Tab(
-                                selectedTabIndex == 3,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 3
-                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_PONYTAIL
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_hair_ponytail).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
-                                )
-                            }
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_hair_color).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
                         }
-
-                        SetupCustomizationRepository.CATEGORY_SKIN -> {
-                            Tab(
-                                selectedTabIndex == 0,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 0
-                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_SHIRT
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_shirt).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
+                        Tab(
+                            selectedTabIndex == 1,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    1,
+                                    SetupCustomizationRepository.SUBCATEGORY_BANGS
                                 )
-                            }
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_hair_bangs).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
                         }
+                        Tab(
+                            selectedTabIndex == 3,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    2,
+                                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL
+                                )
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_hair_ponytail).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
+                    }
 
-                        SetupCustomizationRepository.CATEGORY_EXTRAS -> {
-                            Tab(
-                                selectedTabIndex == 0,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 0
-                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_wheelchair).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
+                    SetupCustomizationRepository.CATEGORY_SKIN -> {
+                        Tab(
+                            selectedTabIndex == 0,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    0,
+                                    SetupCustomizationRepository.SUBCATEGORY_COLOR
                                 )
-                            }
-                            Tab(
-                                selectedTabIndex == 1,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 1
-                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_FLOWER
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_flower).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_skin_color).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
+                    }
+
+                    SetupCustomizationRepository.CATEGORY_EXTRAS -> {
+                        Tab(
+                            selectedTabIndex == 0,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    0,
+                                    SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
                                 )
-                            }
-                            Tab(
-                                selectedTabIndex == 2,
-                                unselectedContentColor = unselected,
-                                onClick = {
-                                    selectedTabIndex = 2
-                                    selectedTab = SetupCustomizationRepository.SUBCATEGORY_GLASSES
-                                }) {
-                                Text(
-                                    stringResource(R.string.avatar_glasses).uppercase(),
-                                    modifier = Modifier.padding(bottom = 8.dp)
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_wheelchair).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
+                        Tab(
+                            selectedTabIndex == 1,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    1,
+                                    SetupCustomizationRepository.SUBCATEGORY_FLOWER
                                 )
-                            }
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_flower).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
+                        Tab(
+                            selectedTabIndex == 2,
+                            unselectedContentColor = unselected,
+                            onClick = {
+                                selectTab(
+                                    2,
+                                    SetupCustomizationRepository.SUBCATEGORY_GLASSES
+                                )
+                            }) {
+                            Text(
+                                stringResource(R.string.avatar_glasses).uppercase(),
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
                         }
                     }
                 }
             }
         }
-        AnimatedContent(selectedCategory,
+    }
+}
+
+@Composable
+fun CustomizationCategoryView(customizationRepository: SetupCustomizationRepository,
+                              selectedCategory: String,
+                              selectedSubcategory: String,
+                              selectedItem: String,
+                              user: User?,
+                              selectSubcategory: (String) -> Unit,
+                              selectCustomization: (SetupCustomization) -> Unit,
+                              modifier: Modifier = Modifier) {
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    Column(verticalArrangement = Arrangement.spacedBy(26.dp)) {
+        CustomizationSubcategorySelector(selectedCategory, selectedTabIndex,{ index, tab ->
+            selectedTabIndex = index
+            selectSubcategory(tab)
+        })
+        AnimatedContent(
+            selectedCategory,
             transitionSpec = {
                 (fadeIn(animationSpec = tween(220, delayMillis = 400)) +
                         scaleIn(initialScale = 0.92f, animationSpec = tween(220, delayMillis = 400)))
                     .togetherWith(fadeOut(animationSpec = tween(90)))
             }) { category ->
             val scrollState = rememberScrollState()
-            var selectedItem by remember { mutableStateOf("") }
             AnimatedContent(
-                selectedTab,
+                selectedSubcategory,
                 transitionSpec = {
                     slideIntoContainer(
                         if (targetState > initialState) {
@@ -528,7 +640,11 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                         )
                 },
             ) { it ->
-                val items = customizationRepository.getCustomizations(category, it, user)
+                val items = if (user != null) {
+                    customizationRepository.getCustomizations(category, it, user)
+                } else {
+                    emptyList()
+                }
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -544,22 +660,22 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                         val borderWidth by transition.animateDp({
                             tween(300)
                         }) { if (it) 4.dp else 0.dp }
-                            val m = Modifier
-                                .size(68.dp)
-                                .border(borderWidth, borderColor, CircleShape)
-                                .padding(4.dp)
-                                .background(Color.White, CircleShape)
-                                .clickable {
-                                    selectedItem = item.key
-                                }
-                            if (item.drawableId != null) {
-                                Image(
-                                    painterResource(item.drawableId ?: R.drawable.creator_blank_face),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.None,
-                                    modifier = m
-                                )
+                        val m = Modifier
+                            .size(68.dp)
+                            .border(borderWidth, borderColor, CircleShape)
+                            .padding(4.dp)
+                            .background(Color.White, CircleShape)
+                            .clickable {
+                                selectCustomization(item)
                             }
+                        if (item.drawableId != null) {
+                            Image(
+                                painterResource(item.drawableId ?: R.drawable.creator_blank_face),
+                                contentDescription = null,
+                                contentScale = ContentScale.None,
+                                modifier = m
+                            )
+                        }
                         if (item.colorId != null) {
                             val color = colorResource(item.colorId ?: R.color.brand_400)
                             Canvas(modifier = m, onDraw = {

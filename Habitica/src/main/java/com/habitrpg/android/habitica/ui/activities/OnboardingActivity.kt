@@ -86,9 +86,14 @@ class OnboardingActivity: BaseActivity() {
         val step = preferences.getInt("last_onboarding_step", 1)
         currentStep.value = OnboardingSteps.entries.find { it.id == step } ?: OnboardingSteps.INTRO
 
+        if (authenticationViewModel.authenticationHandler.isAuthenticated) {
+            lifecycleScope.launchCatching {
+                authenticationViewModel.retrieveUser()
+            }
+        }
+
         binding.composeView.setContent {
             val step by currentStep
-            val user = authenticationViewModel.user.value
             HabiticaTheme {
                 AnimatedContent(step,
                     transitionSpec = {
@@ -102,9 +107,10 @@ class OnboardingActivity: BaseActivity() {
                             )
             },) {
                     when (it) {
-                        OnboardingSteps.INTRO -> IntroScreen({
+                        OnboardingSteps.INTRO -> IntroScreen {
                             currentStep.value = OnboardingSteps.LOGIN
-                        })
+                        }
+
                         OnboardingSteps.LOGIN -> LoginScreen(authenticationViewModel, configManager.useNewAuthFlow(),{ newUser ->
                             if (newUser) {
                                 currentStep.value = OnboardingSteps.USERNAME
@@ -122,14 +128,12 @@ class OnboardingActivity: BaseActivity() {
                                 currentStep.value = OnboardingSteps.SETUP
                             }
                         )
-                        OnboardingSteps.SETUP -> if (user != null) {
-                            SetupScreen(authenticationViewModel, customizationRepository, user, {
+                        OnboardingSteps.SETUP -> SetupScreen(authenticationViewModel, customizationRepository = customizationRepository) {
                                 preferences.edit {
                                     putInt("last_onboarding_step", -1)
                                 }
                                 startMainActivity()
-                            })
-                        }
+                            }
                     }
                 }
             }
@@ -189,18 +193,6 @@ class OnboardingActivity: BaseActivity() {
                 // Wearable API is not available on this device.
             }
         }
-    }
-
-    private fun showError(error: AuthenticationErrors) {
-        val alert = HabiticaAlertDialog(this)
-        if (error.isValidationError) {
-            alert.setTitle(R.string.login_validation_error_title)
-        } else {
-            alert.setTitle(R.string.authentication_error_title)
-        }
-        alert.setMessage(error.translatedMessage(this))
-        alert.addOkButton()
-        alert.show()
     }
 
     private fun onForgotPasswordClicked() {

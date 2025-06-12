@@ -122,10 +122,12 @@ class AvatarView : FrameLayout {
         init(attrs, defStyle)
     }
 
-    constructor(context: Context, showBackground: Boolean, showMount: Boolean, showPet: Boolean) : super(context) {
+    constructor(context: Context, showBackground: Boolean, showMount: Boolean = true, showPet: Boolean = true, showSleeping: Boolean = true) : super(context) {
+        init(null, 0)
         this.showBackground = showBackground
         this.showMount = showMount
         this.showPet = showPet
+        this.showSleeping = showSleeping
     }
 
     private fun init(

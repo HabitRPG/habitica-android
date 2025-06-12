@@ -110,9 +110,7 @@ fun TypewriterText(
     var textToDisplay by remember {
         mutableStateOf("")
     }
-    val textCharsList = remember {
-        text.splitToCodePoints()
-    }
+    val textCharsList = text.splitToCodePoints()
 
     LaunchedEffect(text,) {
             textCharsList.forEachIndexed { charIndex, _ ->

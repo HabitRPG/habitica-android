@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.setup
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,13 +24,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,31 +49,11 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
 import com.habitrpg.android.habitica.ui.views.LoginScreenField
+import com.habitrpg.android.habitica.ui.views.useDebounce
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
-
-@Composable
-fun <T> T.useDebounce(
-    delayMillis: Long = 300L,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onChange: (T) -> Unit
-): T{
-    val state by rememberUpdatedState(this)
-
-    DisposableEffect(state){
-        val job = coroutineScope.launch {
-            delay(delayMillis)
-            onChange(state)
-        }
-        onDispose {
-            job.cancel()
-        }
-    }
-    return state
-}
 
 @Composable
 fun UsernameSelectionScreen(
@@ -85,12 +64,15 @@ fun UsernameSelectionScreen(
     var username by authenticationViewModel.username
     val isUsernameValid by authenticationViewModel.isUsernameValid.collectAsState(null)
     val usernameIssues by authenticationViewModel.usernameIssues.collectAsState(null)
+    val showAuthProgress by authenticationViewModel.showAuthProgress.collectAsState(false)
 
     username.useDebounce {
         if (it.length > 2) {
-            authenticationViewModel.checkUsername(it)
+            authenticationViewModel.checkUsername()
         }
     }
+
+    val scope = rememberCoroutineScope()
 
     var acceptedTerms by remember { mutableStateOf(false) }
     Box(
@@ -166,62 +148,89 @@ fun UsernameSelectionScreen(
                     .padding(horizontal = 16.dp)
             )
             Spacer(Modifier.weight(1f))
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 4.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .clickable {
-                            acceptedTerms = !acceptedTerms
-                        }
-                        .background(colorResource(R.color.brand_100), shape = HabiticaTheme.shapes.small)) {
-                    if (acceptedTerms) {
-                        Image(
-                            painter = painterResource(R.drawable.checkmark),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(Color.White),
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                        )
+            AnimatedContent(showAuthProgress, modifier = Modifier.padding(bottom = 16.dp)) { isLoading ->
+                if (isLoading) {
+                    HabiticaCircularProgressView(indicatorSize = 64.dp)
+                } else {
+                    TermsAndConditionsRow(
+                        acceptedTerms = acceptedTerms,
+                        onAcceptedTermsChange = { acceptedTerms = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 4.dp)
+                    )
+
+                    Button(
+                        onClick = {
+                            scope.launchCatching {
+                                if (authenticationViewModel.user.value == null) {
+                                    authenticationViewModel.register()
+                                } else {
+                                    authenticationViewModel.updateUsername(username)
+                                }
+                                authenticationViewModel.retrieveUser()
+                                onNextOnboardingStep()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White,
+                            contentColor = colorResource(R.color.gray_50),
+                            disabledContainerColor = Color.White.copy(alpha = 0.5f),
+                            disabledContentColor = colorResource(R.color.gray_50)
+                        ),
+                        enabled = isUsernameValid == true && acceptedTerms,
+                        shape = HabiticaTheme.shapes.large,
+                        contentPadding = PaddingValues(15.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.get_started), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     }
                 }
-                Text(
-                    AnnotatedString.fromHtml(
-                        "You agree to our <a href=\"https://habitica.com/static/terms\">Terms of Service</a> and have read our <a href=\"https://habitica.com/static/privacy\">Privacy Policy</a>.",
-                        linkStyles = TextLinkStyles(style = SpanStyle(
-                            fontWeight = FontWeight.Bold,
-                            color = colorResource(R.color.white)
-                        ))
-                    ),
-                    fontSize = 16.sp,
-                    color = colorResource(R.color.brand_600),
-                    fontWeight = FontWeight.Normal,
-                )
-            }
-            Button(
-                onClick = {
-                    onNextOnboardingStep()
-                    authenticationViewModel.updateUsername(username)
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = colorResource(R.color.gray_50),
-                    disabledContainerColor = Color.White.copy(alpha = 0.5f),
-                    disabledContentColor = colorResource(R.color.gray_50)
-                ),
-                enabled = isUsernameValid == true && acceptedTerms,
-                shape = HabiticaTheme.shapes.large,
-                contentPadding = PaddingValues(15.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-            ) {
-                Text(stringResource(R.string.get_started), fontSize = 18.sp, fontWeight = FontWeight.Bold)
             }
         }
+    }
+}
+
+@Composable
+fun TermsAndConditionsRow(
+    acceptedTerms: Boolean,
+    onAcceptedTermsChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = modifier // Apply the passed modifier here
+    ) {
+        Box(
+            modifier = Modifier
+                .size(30.dp)
+                .clickable {
+                    onAcceptedTermsChange(!acceptedTerms)
+                }
+                .background(colorResource(R.color.brand_100), shape = HabiticaTheme.shapes.small)
+        ) {
+            if (acceptedTerms) {
+                Image(
+                    painter = painterResource(R.drawable.checkmark),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(Color.White),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
+        }
+        Text(
+            AnnotatedString.fromHtml(
+                "You agree to our <a href=\"https://habitica.com/static/terms\">Terms of Service</a> and have read our <a href=\"https://habitica.com/static/privacy\">Privacy Policy</a>.",
+                linkStyles = TextLinkStyles(style = SpanStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(R.color.white)
+                ))
+            ),
+            fontSize = 16.sp,
+            color = colorResource(R.color.brand_600),
+            fontWeight = FontWeight.Normal,
+        )
     }
 }

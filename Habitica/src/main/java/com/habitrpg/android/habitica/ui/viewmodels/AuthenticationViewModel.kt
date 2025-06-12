@@ -1,12 +1,9 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.edit
 import androidx.credentials.CredentialManager
@@ -95,7 +92,7 @@ class AuthenticationViewModel @Inject constructor(
             }
             if (password.length < configManager.minimumPasswordLength()) {
                 return AuthenticationErrors.PASSWORD_TOO_SHORT.apply {
-                     minPasswordLength = configManager.minimumPasswordLength()
+                    minPasswordLength = configManager.minimumPasswordLength()
                 }
             }
             if (password != confirmPassword) {
@@ -105,15 +102,34 @@ class AuthenticationViewModel @Inject constructor(
         return null
     }
 
-    fun checkUsername(username: String) {
+    fun checkUsername() {
+        _showAuthProgress.value = true
         viewModelScope.launch {
             try {
-                val response = apiClient.verifyUsername(username)
+                val response = apiClient.verifyUsername(username.value)
                 _isUsernameValid.value = response?.isUsable == true
                 _usernameIssues.value = response?.issues?.joinToString("\n") { it }
+                _showAuthProgress.value = false
             } catch (e: Exception) {
                 _isUsernameValid.value = null
                 Analytics.logException(e)
+                _showAuthProgress.value = false
+            }
+        }
+    }
+
+    fun checkEmail() {
+        _showAuthProgress.value = true
+        viewModelScope.launch {
+            try {
+                val response = apiClient.verifyEmail(email.value)
+                if (response?.email == email.value) {
+                    _authenticationSuccess.value = true
+                }
+                _showAuthProgress.value = false
+            } catch (e: Exception) {
+                Analytics.logException(e)
+                _showAuthProgress.value = false
             }
         }
     }
@@ -123,12 +139,12 @@ class AuthenticationViewModel @Inject constructor(
         _usernameIssues.value = null
     }
 
-    fun login(username: String, password: String) {
+    fun login() {
         _showAuthProgress.value = true
         isRegistering.value = false
         viewModelScope.launch {
             try {
-                val response = apiClient.connectUser(username, password)
+                val response = apiClient.connectUser(username.value, password.value)
                 handleAuthResponse(response)
             } catch (e: Exception) {
                 authenticationError()
@@ -137,12 +153,15 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun register(username: String, email: String, password: String, confirmPassword: String) {
+    fun register(username: String? = null, email: String? = null, password: String? = null) {
         _showAuthProgress.value = true
         isRegistering.value = true
         viewModelScope.launch {
             try {
-                val response = apiClient.registerUser(username, email, password, confirmPassword)
+                val response = apiClient.registerUser(username ?: this@AuthenticationViewModel.username.value,
+                    email ?: this@AuthenticationViewModel.email.value,
+                    password ?: this@AuthenticationViewModel.password.value,
+                    password ?: this@AuthenticationViewModel.password.value)
                 handleAuthResponse(response)
             } catch (e: Exception) {
                 authenticationError()
@@ -151,13 +170,21 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
+    suspend fun retrieveUser(): User? {
+        user.value = userRepository.retrieveUser(true, true)
+        return user.value
+    }
+
     suspend fun removeSocialAuth(network: String) {
         apiClient.disconnectSocial(network)
-        userRepository.retrieveUser(true, forced = true)
+        retrieveUser()
     }
 
     private fun authenticationError(error: AuthenticationErrors? = null) {
-        viewModelScope.launch { _authenticationError.emit(error) }
+        viewModelScope.launch {
+            _showAuthProgress.value = false
+            _authenticationError.emit(error)
+        }
     }
 
     private fun handleAuthResponse(response: UserAuthResponse?) {
@@ -177,7 +204,7 @@ class AuthenticationViewModel @Inject constructor(
             Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
         }
         viewModelScope.launch(ExceptionHandler.coroutine()) {
-            user.value = userRepository.retrieveUser(true, true)
+            retrieveUser()
             _authenticationSuccess.value = response.newUser
         }
     }
@@ -251,7 +278,9 @@ class AuthenticationViewModel @Inject constructor(
                         val result = Identity.getAuthorizationClient(context)
                             .authorize(authorizationRequest).await()
                         if (result != null && result.accessToken != null) {
-                            val response = result.accessToken?.let { apiClient.connectSocial("google", googleIdTokenCredential.id, it) }
+                            val response = result.accessToken?.let {
+                                apiClient.connectSocial("google", googleIdTokenCredential.id, it, false)
+                            }
                             handleAuthResponse(response)
                         }
                     } catch (e: GoogleIdTokenParsingException) {
@@ -263,6 +292,7 @@ class AuthenticationViewModel @Inject constructor(
                     Log.e("AuthenticationViewModel", "Unexpected type of credential")
                 }
             }
+
             else -> {
                 authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
                 Log.e("AuthenticationViewModel", "Unexpected type of credential")

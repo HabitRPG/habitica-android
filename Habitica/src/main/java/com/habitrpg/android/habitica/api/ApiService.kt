@@ -36,6 +36,7 @@ import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -652,6 +653,12 @@ interface ApiService {
     suspend fun verifyUsername(
         @Body data: Map<String, String>
     ): HabitResponse<VerifyUsernameResponse>
+
+    @POST("user/auth/check-email")
+    suspend fun verifyEmail(
+        @Body data: Map<String, String>
+    ): HabitResponse<VerifyEmailResponse>
+
 
     @PUT("user/auth/update-email")
     suspend fun updateEmail(

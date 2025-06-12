@@ -24,7 +24,7 @@ interface SetupCustomizationRepository {
         const val SUBCATEGORY_SIZE = "size"
         const val SUBCATEGORY_SHIRT = "shirt"
         const val SUBCATEGORY_COLOR = "color"
-        const val SUBCATEGORY_PONYTAIL = "ponytail"
+        const val SUBCATEGORY_PONYTAIL = "base"
         const val SUBCATEGORY_BANGS = "bangs"
         const val SUBCATEGORY_FLOWER = "flower"
         const val SUBCATEGORY_WHEELCHAIR = "wheelchair"

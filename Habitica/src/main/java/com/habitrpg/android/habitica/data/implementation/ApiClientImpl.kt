@@ -50,6 +50,7 @@ import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -222,7 +223,8 @@ class ApiClientImpl(
     override suspend fun connectSocial(
         network: String,
         userId: String,
-        accessToken: String
+        accessToken: String,
+        allowRegister: Boolean
     ): UserAuthResponse? {
         val auth = UserAuthSocial()
         auth.network = network
@@ -230,6 +232,7 @@ class ApiClientImpl(
         authResponse.client_id = userId
         authResponse.access_token = accessToken
         auth.authResponse = authResponse
+        auth.allowRegister = allowRegister
 
         return process { this.apiService.connectSocial(auth) }
     }
@@ -239,7 +242,9 @@ class ApiClientImpl(
     }
 
     override suspend fun loginApple(authToken: String): UserAuthResponse? {
-        return process { apiService.loginApple(mapOf(Pair("code", authToken))) }
+        return process { apiService.loginApple(mapOf("code" to authToken,
+            "allowRegister" to true
+            )) }
     }
 
     fun accept(throwable: Throwable) {
@@ -1015,6 +1020,12 @@ class ApiClientImpl(
         val updateObject = HashMap<String, String>()
         updateObject["username"] = username
         return process { this.apiService.verifyUsername(updateObject) }
+    }
+
+    override suspend fun verifyEmail(email: String): VerifyEmailResponse? {
+        val updateObject = HashMap<String, String>()
+        updateObject["email"] = email
+        return process { this.apiService.verifyEmail(updateObject) }
     }
 
     override suspend fun updateEmail(

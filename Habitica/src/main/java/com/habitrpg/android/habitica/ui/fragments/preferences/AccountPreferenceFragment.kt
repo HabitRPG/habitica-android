@@ -347,7 +347,6 @@ class AccountPreferenceFragment :
                         user?.username ?: "",
                         email ?: "",
                         passwordEditText.text ?: "",
-                        passwordRepeatEditText.text ?: "",
                     )
                     (activity as? SnackbarActivity)?.showSnackbar(
                         content = context.getString(R.string.password_added),

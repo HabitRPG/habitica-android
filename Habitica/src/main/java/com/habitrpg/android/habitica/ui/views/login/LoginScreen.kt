@@ -216,9 +216,13 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                         showUsernameField = !useNewAuthFlow,
                         onSubmit = {
                             if (loginScreenState == LoginScreenState.REGISTER) {
-                                authenticationViewModel.register(username, email, password, password)
+                                if (useNewAuthFlow) {
+                                    authenticationViewModel.checkEmail()
+                                } else {
+                                    authenticationViewModel.register()
+                                }
                             } else {
-                                authenticationViewModel.login(email, password)
+                                authenticationViewModel.login()
                             }
                         },
                         showLoading = showLoading
