@@ -1,8 +1,8 @@
 package com.habitrpg.common.habitica.helpers
 
 object EmojiMap {
-    val emojiMap: MutableMap<Int?, String?> = HashMap()
-    val invertedEmojiMap: MutableMap<String?, Int?> = HashMap()
+    val emojiMap: MutableMap<Int, String> = HashMap()
+    val invertedEmojiMap: MutableMap<String, Int> = HashMap()
 
     init {
         emojiMap.put(128077, ":+1:")
