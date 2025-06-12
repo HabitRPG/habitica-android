@@ -106,6 +106,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         val context = context ?: return
         val resourceIconDrawable: Drawable = HabiticaIconsHelper.imageOfMagic().toDrawable(context.resources)
         val skillIdentifier = "shop_"
+        val isTransformationItem = skill.habitClass == "special"
 
         val bottomSheet = SkillDialogBottomSheetFragment.newInstance(
             skillTitle = skill.text,
@@ -114,6 +115,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             skillPath = skillIdentifier,
             skillMpCost = "${skill.mana?.toInt() ?: 0} MP",
             resourceIcon = resourceIconDrawable,
+            isTransformationItem = isTransformationItem,
             onUseSkill = {
                 when {
                     "special" == skill.habitClass -> {

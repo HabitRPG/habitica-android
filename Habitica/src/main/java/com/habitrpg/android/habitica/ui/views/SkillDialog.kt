@@ -43,6 +43,7 @@ fun SkillDialog(
     title: String,
     description: String,
     mpCost: String,
+    isTransformationItem: Boolean = false,
     onUseSkill: () -> Unit,
 ) {
     val colors = HabiticaTheme.colors
@@ -61,11 +62,10 @@ fun SkillDialog(
             modifier = Modifier.fillMaxWidth()
         ) {
             Box(
-                modifier =
-                    Modifier
-                        .padding(bottom = 16.dp)
-                        .background(colorResource(R.color.content_background_offset))
-                        .size(24.dp, 3.dp)
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .background(colorResource(R.color.content_background_offset))
+                    .size(24.dp, 3.dp)
             )
 
             Box(
@@ -75,14 +75,12 @@ fun SkillDialog(
                     .background(colors.pixelArtBackground(hasIcon = true)),
                 contentAlignment = Alignment.Center
             ) {
-                PixelArtView (
-                    imageName = skillPath + skillKey,
+                PixelArtView(
+                    imageName = "$skillPath$skillKey",
                     modifier = Modifier.size(62.dp)
                 )
             }
-
             Spacer(Modifier.height(16.dp))
-
             Text(
                 text = title,
                 fontSize = 16.sp,
@@ -98,33 +96,33 @@ fun SkillDialog(
                 modifier = Modifier.padding(top = 8.dp),
                 textAlign = TextAlign.Center
             )
-
             Spacer(Modifier.height(18.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(chipBg)
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-            ) {
-                Icon(
-                    painter = resourceIconPainter,
-                    contentDescription = null,
-                    tint = Color.Unspecified,
-                    modifier = Modifier.size(22.dp)
-                )
-                Spacer(Modifier.width(8.dp))
-                Text(
-                    text = mpCost,
-                    color = chipTextColor,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp
-                )
+            if (!isTransformationItem) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(chipBg)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Icon(
+                        painter = resourceIconPainter,
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(22.dp)
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = mpCost,
+                        color = chipTextColor,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 16.sp
+                    )
+                }
+                Spacer(Modifier.height(28.dp))
+            } else {
+                Spacer(Modifier.height(18.dp))
             }
-
-            Spacer(Modifier.height(28.dp))
-
             Button(
                 onClick = onUseSkill,
                 shape = RoundedCornerShape(12.dp),
@@ -136,16 +134,20 @@ fun SkillDialog(
                     .fillMaxWidth()
                     .height(43.dp)
             ) {
+                val label = if (isTransformationItem)
+                    stringResource(R.string.use_on_party)
+                else
+                    stringResource(R.string.use_skill)
                 Text(
-                    text = stringResource(R.string.use_skill),
+                    text = label,
                     fontWeight = FontWeight.Normal,
                     fontSize = 17.sp
                 )
             }
-
         }
     }
 }
+
 
 
 @Preview(showBackground = true, backgroundColor = 0xFF232136)
@@ -158,6 +160,7 @@ fun PreviewSkillDialog() {
         title = "Title Skill",
         description = "Skill Description",
         mpCost = "10 MP",
+        isTransformationItem = true,
         onUseSkill = {
 
         }
