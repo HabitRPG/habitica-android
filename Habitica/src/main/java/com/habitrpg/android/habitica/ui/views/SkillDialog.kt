@@ -94,6 +94,7 @@ fun SkillDialog(
                 fontSize = 14.sp,
                 color = colors.textSecondary,
                 modifier = Modifier.padding(top = 8.dp),
+                fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center
             )
             Spacer(Modifier.height(18.dp))
@@ -140,7 +141,7 @@ fun SkillDialog(
                     stringResource(R.string.use_skill)
                 Text(
                     text = label,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.Medium,
                     fontSize = 17.sp
                 )
             }
