@@ -103,15 +103,12 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun checkUsername() {
-        _showAuthProgress.value = true
         viewModelScope.launch {
             try {
                 val response = apiClient.verifyUsername(username.value)
                 _isUsernameValid.value = response?.isUsable == true
                 _usernameIssues.value = response?.issues?.joinToString("\n") { it }
-                _showAuthProgress.value = false
             } catch (e: Exception) {
-                _isUsernameValid.value = null
                 Analytics.logException(e)
                 _showAuthProgress.value = false
             }

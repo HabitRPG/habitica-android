@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
@@ -73,7 +74,9 @@ import androidx.compose.ui.graphics.ImageShader
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
@@ -81,8 +84,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.updateBounds
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -115,6 +121,7 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
 
     var selectedCustomizationCategory by remember { mutableStateOf("skin") }
     var selectedCustomizationSubcategory by remember { mutableStateOf("") }
+    var selectedCustomizationSubcategoryIndex by remember { mutableIntStateOf(0) }
 
     val taskCategories = listOf(
         "work" to stringResource(R.string.setup_group_work),
@@ -142,16 +149,23 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
         )
     }
 
+    var userChangeCounter by remember { mutableIntStateOf(0) }
     val user by viewModel.user.collectAsState()
 
     if (user == null) {
         val scope = rememberCoroutineScope()
-        LifecycleStartEffect(user, LocalLifecycleOwner.current) {
+        LifecycleStartEffect(Unit, LocalLifecycleOwner.current) {
+            viewModel.initializeUser(authViewModel.user.value)
             scope.launchCatching {
                 viewModel.initializeUser(authViewModel.retrieveUser())
             }
             onStopOrDispose { }
         }
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(colorResource(R.color.brand_300))
+        )
         return
     }
 
@@ -218,11 +232,14 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                         CustomizationCategoryView(customizationRepository,
                             selectedCustomizationCategory,
                             selectedCustomizationSubcategory,
+                            selectedCustomizationSubcategoryIndex,
                             viewModel.getActiveCustomization(selectedCustomizationCategory, selectedCustomizationSubcategory),
-                            user, {
-                                selectedCustomizationSubcategory = it
+                            user, { category, index ->
+                                selectedCustomizationSubcategory = category
+                                selectedCustomizationSubcategoryIndex = index
                         }, {
                             viewModel.equipCustomization(it)
+                                userChangeCounter++
                         })
                     }
                 }
@@ -232,6 +249,14 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                             selectedCustomizationCategory,
                             { selectedCategory ->
                                 selectedCustomizationCategory = selectedCategory
+                                selectedCustomizationSubcategory = when (selectedCustomizationCategory) {
+                                    SetupCustomizationRepository.CATEGORY_SKIN -> SetupCustomizationRepository.SUBCATEGORY_COLOR
+                                    SetupCustomizationRepository.CATEGORY_HAIR -> SetupCustomizationRepository.SUBCATEGORY_COLOR
+                                    SetupCustomizationRepository.CATEGORY_BODY -> SetupCustomizationRepository.SUBCATEGORY_SHIRT
+                                    SetupCustomizationRepository.CATEGORY_EXTRAS -> SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
+                                    else -> ""
+                                }
+                                selectedCustomizationSubcategoryIndex = 0
                             }
                         )
                     } else {
@@ -329,7 +354,7 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                 )
         ) {
             Text(
-                "@${user?.username ?: username}",
+                "@${ user?.username ?: username }",
                 color = colorResource(R.color.brand_600),
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
@@ -347,17 +372,24 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                     .padding(horizontal = 20.dp, vertical = 12.dp)
                     .widthIn(min = 120.dp)
             )
-                ComposableAvatarView(user, null, showBackground = false, showPet = false, showMount = false,
-                    modifier = Modifier.size(120.dp).padding(top = 20.dp, end = 12.dp))
+            key(userChangeCounter) {
+                ComposableAvatarView(
+                    user, null, showBackground = false, showPet = false, showMount = false,
+                    modifier = Modifier.size(120.dp).padding(top = 20.dp, end = 12.dp)
+                )
+            }
         }
 
         SpeechBubble(
-            text, { Text("Justin") }, modifier = Modifier
-                .padding(horizontal = 36.dp)
-                .padding(top = 210.dp)
-                .padding(
-                    top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
-                )
+            text, { Text("Justin") },
+            npc = {
+                Image(painterResource(R.drawable.justin_textbox), null)
+            }, modifier = Modifier
+                    .padding(horizontal = 36.dp)
+                    .padding(top = 170.dp)
+                    .padding(
+                        top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
+                    )
         )
         AnimatedVisibility(
             currentStep != 0,
@@ -410,25 +442,33 @@ fun OnboardingTaskSelector(
     modifier: Modifier = Modifier) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 180.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         contentPadding = PaddingValues(horizontal = 19.dp),
         modifier = modifier
             .fillMaxSize()
     ) {
         items(taskCategories) { category ->
+            val isSelected = selectedCategories.contains(category.first)
+            val transition = updateTransition(isSelected)
+            val borderColor by transition.animateColor { if (it) colorResource(R.color.brand_400) else Color.Transparent }
+            val borderWidth by transition.animateDp({
+                tween(300)
+            }) { if (it) 4.dp else 0.dp }
+            val m = Modifier
+                .border(borderWidth, borderColor, CircleShape)
             Text(
                 category.second,
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                color = if (selectedCategories.contains(category.first)) colorResource(R.color.brand_200) else colorResource(R.color.white),
-                modifier = Modifier
+                color = if (isSelected) colorResource(R.color.brand_200) else colorResource(R.color.white),
+                modifier = m
                     .fillMaxWidth()
+                    .background(if (isSelected) colorResource(R.color.white) else colorResource(R.color.brand_100), RoundedCornerShape(30.dp))
                     .clickable {
                         selectCategory(category.first)
                     }
-                    .background(if (selectedCategories.contains(category.first)) colorResource(R.color.white) else colorResource(R.color.brand_100), RoundedCornerShape(30.dp))
                     .padding(20.dp)
             )
         }
@@ -443,7 +483,7 @@ fun CustomizationSubcategorySelector(
     modifier: Modifier = Modifier
 ) {
     val unselected = Color.White.copy(0.5f)
-    AnimatedContent(selectedCategory) {
+    AnimatedContent(selectedCategory, modifier = modifier) {
         ProvideTextStyle(
             TextStyle(
                 fontSize = 16.sp,
@@ -599,16 +639,15 @@ fun CustomizationSubcategorySelector(
 fun CustomizationCategoryView(customizationRepository: SetupCustomizationRepository,
                               selectedCategory: String,
                               selectedSubcategory: String,
+                                selectedSubcategoryTabIndex: Int,
                               selectedItem: String,
                               user: User?,
-                              selectSubcategory: (String) -> Unit,
+                              selectSubcategory: (String, Int) -> Unit,
                               selectCustomization: (SetupCustomization) -> Unit,
                               modifier: Modifier = Modifier) {
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
     Column(verticalArrangement = Arrangement.spacedBy(26.dp)) {
-        CustomizationSubcategorySelector(selectedCategory, selectedTabIndex,{ index, tab ->
-            selectedTabIndex = index
-            selectSubcategory(tab)
+        CustomizationSubcategorySelector(selectedCategory, selectedSubcategoryTabIndex,{ index, tab ->
+            selectSubcategory(tab, index)
         })
         AnimatedContent(
             selectedCategory,
@@ -668,7 +707,7 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                             .clickable {
                                 selectCustomization(item)
                             }
-                        if (item.drawableId != null) {
+                        if (item.drawableId != null && item.drawableId != 0) {
                             Image(
                                 painterResource(item.drawableId ?: R.drawable.creator_blank_face),
                                 contentDescription = null,
@@ -676,7 +715,7 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                                 modifier = m
                             )
                         }
-                        if (item.colorId != null) {
+                        if (item.colorId != null && item.colorId != 0) {
                             val color = colorResource(item.colorId ?: R.color.brand_400)
                             Canvas(modifier = m, onDraw = {
                                 drawCircle(color = color)
@@ -720,7 +759,9 @@ fun CustomizationCategorySelector(
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .clickable {
-                        onCategorySelected(category.first)
+                        if (!isSelected) {
+                            onCategorySelected(category.first)
+                        }
                     }
                     .padding(8.dp)) {
                 Image(
@@ -742,25 +783,78 @@ fun CustomizationCategorySelector(
 }
 
 @Composable
+fun NamePlate(npcName: @Composable () -> Unit, modifier: Modifier = Modifier) {
+    val namePlateBackground = ContextCompat.getDrawable(
+        LocalContext.current,
+        R.drawable.name_plate
+    )
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+        .drawBehind {
+            namePlateBackground?.updateBounds(0, 0, size.width.toInt(), size.height.toInt())
+            namePlateBackground?.draw(drawContext.canvas.nativeCanvas)
+        }
+        .padding(horizontal = 28.dp)
+        .heightIn(28.dp)
+    ) {
+        ProvideTextStyle(TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color.White)) {
+            npcName()
+        }
+    }
+}
+
+@Composable
+@Preview
+fun NameplatePreview() {
+    NamePlate({
+        Text("Justin")
+    })
+}
+
+@Composable
 fun SpeechBubble(
     text: String,
     npcName: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     npc: @Composable (() -> Unit)? = null
 ) {
-    TypewriterText(
-        text, fontSize = 16.sp,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 21.sp,
-        color = colorResource(R.color.yellow_1),
-        modifier = modifier
-            .border(
-                width = 4.dp,
-                colorResource(R.color.yellow_10),
-                shape = RoundedCornerShape(12.dp)
-            )
-            .padding(4.dp)
-            .background(Color.White, shape = RoundedCornerShape(8.dp))
-            .padding(24.dp)
-    )
+    Box(modifier = modifier) {
+        npc?.let { npc ->
+            Box(
+                modifier = Modifier.align(Alignment.TopEnd)
+                    .padding(end = 30.dp)
+            ) {
+                npc()
+            }
+        }
+        TypewriterText(
+            text, fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+            lineHeight = 21.sp,
+            color = colorResource(R.color.yellow_1),
+            modifier = Modifier
+                .padding(top = 42.dp)
+                .border(
+                    width = 4.dp,
+                    colorResource(R.color.yellow_10),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .padding(4.dp)
+                .background(Color.White, shape = RoundedCornerShape(8.dp))
+                .padding(24.dp)
+        )
+        NamePlate(npcName, modifier = Modifier
+            .padding(start = 28.dp, top = 30.dp))
+    }
+}
+
+@Composable
+@Preview(device = "spec:width=600dp,height=300dp,dpi=320,orientation=portrait")
+fun SpeechBubblePreview() {
+    SpeechBubble("Hello World",
+        npcName = { Text("Justin") },
+        npc = {
+            Image(painterResource(R.drawable.justin_textbox), null)
+    }, modifier = Modifier.fillMaxWidth())
 }
