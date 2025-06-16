@@ -176,6 +176,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override fun onResume() {
         super.onResume()
+        binding?.root?.let { ViewCompat.requestApplyInsets(it) }
         setNavigatedToFragment()
     }
 
