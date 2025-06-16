@@ -159,6 +159,7 @@ class SkillsRecyclerViewAdapter :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val binding = SkillTransformationListItemBinding.bind(itemView)
+        private val context = itemView.context
 
         init {
             binding.specialSkillContainer.setOnClickListener(this)
@@ -167,6 +168,9 @@ class SkillsRecyclerViewAdapter :
         fun bind(skill: Skill) {
             binding.skillText.text = skill.text
             binding.skillNotes.text = skill.notes
+            binding.skillText.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+            binding.skillNotes.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
+
             binding.countLabel.text = getOwnedCount(skill.key).toString()
             binding.skillImage.loadImage("shop_" + skill.key)
         }
