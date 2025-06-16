@@ -161,7 +161,7 @@ class SkillsRecyclerViewAdapter :
         private val binding = SkillTransformationListItemBinding.bind(itemView)
 
         init {
-            itemView.setOnClickListener(this)
+            binding.specialSkillContainer.setOnClickListener(this)
         }
 
         fun bind(skill: Skill) {
