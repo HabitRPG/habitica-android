@@ -2,6 +2,10 @@ package com.habitrpg.android.habitica.ui.views.setup
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +28,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +37,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
@@ -54,7 +61,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
-
 @Composable
 fun UsernameSelectionScreen(
     authenticationViewModel: AuthenticationViewModel,
@@ -73,6 +79,16 @@ fun UsernameSelectionScreen(
     }
 
     val scope = rememberCoroutineScope()
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) {
+        if (username.isEmpty() && authenticationViewModel.email.value.isNotBlank()) {
+            val email = authenticationViewModel.email.value
+            username = email.split("@").firstOrNull()?.replace("+", "_") ?: ""
+        } else if (username.isEmpty() && authenticationViewModel.user.value?.username?.isNotBlank() == true) {
+            username = authenticationViewModel.user.value?.username ?: ""
+        }
+        focusRequester.requestFocus()
+    }
 
     var acceptedTerms by remember { mutableStateOf(false) }
     Box(
@@ -92,7 +108,7 @@ fun UsernameSelectionScreen(
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 50.dp)
@@ -126,7 +142,7 @@ fun UsernameSelectionScreen(
                                 username = it
                                 authenticationViewModel.invalidateUsernameState()
                                 },
-                modifier = Modifier
+                modifier = Modifier.focusRequester(focusRequester)
             )
             AnimatedVisibility(usernameIssues?.isNotBlank() == true) {
                 Text(
@@ -147,44 +163,53 @@ fun UsernameSelectionScreen(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
             )
-            Spacer(Modifier.weight(1f))
-            AnimatedContent(showAuthProgress, modifier = Modifier.padding(bottom = 16.dp)) { isLoading ->
+            Spacer(Modifier.weight(2f))
+            AnimatedContent(
+                showAuthProgress,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(220))
+                        .togetherWith(fadeOut())
+                },
+                modifier = Modifier.padding(bottom = 12.dp)
+            ) { isLoading ->
                 if (isLoading) {
                     HabiticaCircularProgressView(indicatorSize = 64.dp)
                 } else {
-                    TermsAndConditionsRow(
-                        acceptedTerms = acceptedTerms,
-                        onAcceptedTermsChange = { acceptedTerms = it },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 4.dp)
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically)) {
+                        TermsAndConditionsRow(
+                            acceptedTerms = acceptedTerms,
+                            onAcceptedTermsChange = { acceptedTerms = it },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
 
-                    Button(
-                        onClick = {
-                            scope.launchCatching {
-                                if (authenticationViewModel.user.value == null) {
-                                    authenticationViewModel.register()
-                                } else {
-                                    authenticationViewModel.updateUsername(username)
+                        Button(
+                            onClick = {
+                                scope.launchCatching {
+                                    if (authenticationViewModel.user.value == null) {
+                                        authenticationViewModel.register()
+                                    } else {
+                                        authenticationViewModel.updateUsername(username)
+                                    }
+                                    onNextOnboardingStep()
                                 }
-                                authenticationViewModel.retrieveUser()
-                                onNextOnboardingStep()
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = colorResource(R.color.gray_50),
-                            disabledContainerColor = Color.White.copy(alpha = 0.5f),
-                            disabledContentColor = colorResource(R.color.gray_50)
-                        ),
-                        enabled = isUsernameValid == true && acceptedTerms,
-                        shape = HabiticaTheme.shapes.large,
-                        contentPadding = PaddingValues(15.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.get_started), fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.White,
+                                contentColor = colorResource(R.color.gray_50),
+                                disabledContainerColor = Color.White.copy(alpha = 0.5f),
+                                disabledContentColor = colorResource(R.color.gray_50)
+                            ),
+                            enabled = isUsernameValid == true && acceptedTerms,
+                            shape = HabiticaTheme.shapes.large,
+                            contentPadding = PaddingValues(15.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text(stringResource(R.string.get_started), fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        }
                     }
                 }
             }

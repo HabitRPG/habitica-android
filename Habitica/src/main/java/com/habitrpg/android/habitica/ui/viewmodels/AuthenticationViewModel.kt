@@ -140,34 +140,30 @@ class AuthenticationViewModel @Inject constructor(
         _usernameIssues.value = null
     }
 
-    fun login() {
+    suspend fun login() {
         _showAuthProgress.value = true
         isRegistering.value = false
-        viewModelScope.launch {
-            try {
-                val response = apiClient.connectUser(username.value, password.value)
-                handleAuthResponse(response)
-            } catch (e: Exception) {
-                authenticationError()
-                Analytics.logException(e)
-            }
+        try {
+            val response = apiClient.connectUser(username.value, password.value)
+            handleAuthResponse(response)
+        } catch (e: Exception) {
+            authenticationError()
+            Analytics.logException(e)
         }
     }
 
-    fun register(username: String? = null, email: String? = null, password: String? = null) {
+    suspend fun register(username: String? = null, email: String? = null, password: String? = null) {
         _showAuthProgress.value = true
         isRegistering.value = true
-        viewModelScope.launch {
-            try {
-                val response = apiClient.registerUser(username ?: this@AuthenticationViewModel.username.value,
-                    email ?: this@AuthenticationViewModel.email.value,
-                    password ?: this@AuthenticationViewModel.password.value,
-                    password ?: this@AuthenticationViewModel.password.value)
-                handleAuthResponse(response)
-            } catch (e: Exception) {
-                authenticationError()
-                Analytics.logException(e)
-            }
+        try {
+            val response = apiClient.registerUser(username ?: this@AuthenticationViewModel.username.value,
+                email ?: this@AuthenticationViewModel.email.value,
+                password ?: this@AuthenticationViewModel.password.value,
+                password ?: this@AuthenticationViewModel.password.value)
+            handleAuthResponse(response)
+        } catch (e: Exception) {
+            authenticationError()
+            Analytics.logException(e)
         }
     }
 
@@ -188,7 +184,7 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    private fun handleAuthResponse(response: UserAuthResponse?) {
+    private suspend fun handleAuthResponse(response: UserAuthResponse?) {
         if (response == null) {
             authenticationError()
             return
@@ -204,10 +200,8 @@ class AuthenticationViewModel @Inject constructor(
         } else {
             Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
         }
-        viewModelScope.launch(ExceptionHandler.coroutine()) {
-            retrieveUser()
-            _authenticationSuccess.value = response.newUser
-        }
+        retrieveUser()
+        _authenticationSuccess.value = response.newUser
     }
 
     @Throws(Exception::class)

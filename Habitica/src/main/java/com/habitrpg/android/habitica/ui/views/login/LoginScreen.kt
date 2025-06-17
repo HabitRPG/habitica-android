@@ -32,6 +32,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +52,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.launchCatching
 
 enum class LoginScreenState {
     INITIAL,
@@ -68,6 +70,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
             onNextOnboardingStep(isRegistering)
         }
     }
+
+    val coroutineScope = rememberCoroutineScope()
 
     var loginScreenState by remember { mutableStateOf(LoginScreenState.INITIAL) }
     var password by authenticationViewModel.password
@@ -215,14 +219,16 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                         isRegistering = loginScreenState == LoginScreenState.REGISTER,
                         showUsernameField = !useNewAuthFlow,
                         onSubmit = {
-                            if (loginScreenState == LoginScreenState.REGISTER) {
-                                if (useNewAuthFlow) {
-                                    authenticationViewModel.checkEmail()
+                            coroutineScope.launchCatching {
+                                if (loginScreenState == LoginScreenState.REGISTER) {
+                                    if (useNewAuthFlow) {
+                                        authenticationViewModel.checkEmail()
+                                    } else {
+                                        authenticationViewModel.register()
+                                    }
                                 } else {
-                                    authenticationViewModel.register()
+                                    authenticationViewModel.login()
                                 }
-                            } else {
-                                authenticationViewModel.login()
                             }
                         },
                         showLoading = showLoading
