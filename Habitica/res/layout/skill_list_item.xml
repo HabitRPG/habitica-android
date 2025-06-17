@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/skill_item_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_rounded_bg_window"
