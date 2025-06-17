@@ -94,7 +94,7 @@ class SkillsRecyclerViewAdapter :
         private var skill: Skill? = null
 
         init {
-            binding.buttonWrapper.setOnClickListener(this)
+            binding.skillItemContainer.setOnClickListener(this)
         }
 
         fun bind(skill: Skill) {
