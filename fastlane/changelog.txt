@@ -1,8 +1,11 @@
-New in 4.7.4
-- Hungarian language support
-- Upgraded to the latest Google Sign In authentication standards
-- Implemented full edge-to-edge display functionality on Android 11+ devices
-- Fixed some issues where the text box in chat wasn't adjusting properly
-- More support for landscape mode
-- Various other bug fixes and improvements
-- Support for future events
+New in 4.7.6
+- Monthly Dailies should repeat more accurately
+- Reminders update correctly after being deleted
+- More accessible designs for the Skill section
+- Scheduled To Do filter will stay applied on app reopen
+- Party description box no longer gets hidden by keyboard
+- Fixed a crash with certain languages in Avatar Customization
+- Fixed a crash with Group Plan member lists
+- Animated backgrounds move again
+- Markdown formatting no longer flashes when refreshing
+- Various other bug fixes
