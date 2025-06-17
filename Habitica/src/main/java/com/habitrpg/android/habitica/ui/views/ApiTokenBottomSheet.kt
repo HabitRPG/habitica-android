@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,9 +28,10 @@ fun ApiTokenBottomSheet(
     val colors = HabiticaTheme.colors
 
     val background = colors.windowBackground
-    val fieldBackground = colors.contentBackground
-    val mainText = colors.textPrimary
+    val fieldBackground = colorResource(id = R.color.gray600_gray10)
+    val mainTextColor = colors.textPrimary
     val secondaryText = colors.textSecondary
+    val tokenTextColor = colorResource(id = R.color.gray200_gray400)
     val buttonBg = colorResource(id = R.color.yellow_100)
     val buttonText = colorResource(id = R.color.yellow_1)
     val lockIconColor = colors.textSecondary
@@ -43,16 +45,16 @@ fun ApiTokenBottomSheet(
         Column(Modifier.fillMaxWidth()) {
             Spacer(modifier = Modifier.height(8.dp))
             Box(
-                Modifier
-                    .size(width = 40.dp, height = 6.dp)
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .background(colorResource(R.color.content_background_offset))
+                    .size(24.dp, 3.dp)
                     .align(Alignment.CenterHorizontally)
-                    .clip(RoundedCornerShape(50))
-                    .background(colors.contentBackgroundOffset)
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 stringResource(id = R.string.api_token_title),
-                color = mainText,
+                color = mainTextColor,
                 fontSize = 21.sp,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -60,7 +62,7 @@ fun ApiTokenBottomSheet(
             Spacer(modifier = Modifier.height(22.dp))
             Text(
                 stringResource(id = R.string.api_token_is_password),
-                color = mainText,
+                color = mainTextColor,
                 fontSize = 17.sp,
                 fontWeight = FontWeight.Medium,
             )
@@ -75,7 +77,7 @@ fun ApiTokenBottomSheet(
             Spacer(modifier = Modifier.height(22.dp))
             Text(
                 stringResource(id = R.string.api_token_reset_title),
-                color = mainText,
+                color = mainTextColor,
                 fontSize = 17.sp,
                 fontWeight = FontWeight.Medium,
             )
@@ -105,7 +107,7 @@ fun ApiTokenBottomSheet(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     apiToken,
-                    color = mainText,
+                    color = tokenTextColor,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier.weight(1f),
@@ -133,7 +135,7 @@ fun ApiTokenBottomSheet(
     }
 }
 
-@Preview(showBackground = true, widthDp = 380, heightDp = 550)
+@Preview(showBackground = true, widthDp = 380, heightDp = 550, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun ApiTokenBottomSheetPreview() {
     HabiticaTheme {
