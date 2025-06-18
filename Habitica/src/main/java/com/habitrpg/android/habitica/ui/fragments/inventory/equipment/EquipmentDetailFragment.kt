@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentDetailBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ReviewManager
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
@@ -79,6 +80,8 @@ class EquipmentDetailFragment :
 
     @Inject
     lateinit var configManager: AppConfigManager
+
+    private var pinnedGearKey: String? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -133,6 +136,7 @@ class EquipmentDetailFragment :
             type = args.type
             isCostume = args.isCostume
             equippedGear = args.equippedGear
+            pinnedGearKey = equippedGear
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
         binding?.recyclerView?.onRefresh = { onRefresh() }
@@ -175,26 +179,29 @@ class EquipmentDetailFragment :
         binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity)
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
-        type?.let { type ->
+        type?.let { gearType ->
             lifecycleScope.launchCatching {
-                inventoryRepository.getOwnedEquipment(type)
+                inventoryRepository.getOwnedEquipment(gearType)
                     .combine(searchedText) { equipment, query ->
-                        if (query.isNullOrBlank()) {
-                            return@combine equipment
-                        }
-                        val tokens = query.split(" ")
-                        val tokenCount = tokens.size
-                        equipment.filter {
-                            var matchCount = 0
-                            for (token in tokens) {
-                                if (it.text.contains(token, true) || it.notes.contains(token, true)) {
-                                    matchCount += 1
+                        if (query.isNullOrBlank()) equipment
+                        else {
+                            val tokens = query.split(" ")
+                            equipment.filter { gear ->
+                                tokens.all { token ->
+                                    gear.text.contains(token, true) || gear.notes.contains(token, true)
                                 }
                             }
-                            return@filter matchCount == tokenCount
                         }
                     }
-                    .map { it.sortedBy { equipment -> equipment.text } }
+                    .map { list ->
+                        val sorted = list.sortedBy { it.text }
+                        pinnedGearKey?.let { key ->
+                            sorted.sortedWith(
+                                compareBy<Equipment> { it.key != key }
+                                    .thenBy { it.text }
+                            )
+                        } ?: sorted
+                    }
                     .collect { adapter.data = it }
             }
         }
