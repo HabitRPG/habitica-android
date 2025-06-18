@@ -251,7 +251,7 @@ class PreferencesFragment :
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.are_you_sure)
             dialog.addButton(R.string.logout, true) { _, _ ->
-                HabiticaBaseApplication.logout(context)
+                HabiticaBaseApplication.logout(context, user)
                 activity?.finish()
             }
             dialog.addCancelButton()

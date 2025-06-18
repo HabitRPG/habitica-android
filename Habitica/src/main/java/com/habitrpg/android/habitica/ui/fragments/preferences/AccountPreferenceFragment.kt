@@ -485,7 +485,10 @@ class AccountPreferenceFragment :
             userRepository.deleteAccount(password)
             dialog?.dismiss()
             accountDialog.dismiss()
-            context?.let { HabiticaBaseApplication.logout(it) }
+            context?.let {
+                val user = userViewModel.user.value
+                HabiticaBaseApplication.logout(it, user)
+            }
             activity?.finish()
         }
     }

@@ -11,8 +11,6 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
-import android.os.Build
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
@@ -33,6 +31,8 @@ import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager.Companion.DEVICE_TOKEN_PREFERENCE_KEY
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
@@ -318,15 +318,26 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             realm.close()
         }
 
-        fun logout(context: Context) {
+        fun logout(context: Context, user: User? = null) {
             MainScope().launchCatching {
-                getInstance(context)?.pushNotificationManager?.removePushDeviceUsingStoredToken()
-                deleteDatabase(context)
                 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+                val instance      = getInstance(context)
+                val pushManager   = instance?.pushNotificationManager
+                val deviceToken   = preferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "") ?: ""
+
                 val useReminder = preferences.getBoolean("use_reminder", false)
                 val reminderTime = preferences.getString("reminder_time", "19:00")
                 val lightMode = preferences.getString("theme_mode", "system")
                 val launchScreen = preferences.getString("launch_screen", "")
+
+                // set the user and refreshed token in the push manager, so we can remove the push device
+                if (deviceToken.isNotEmpty() && user != null) {
+                    pushManager?.setUser(user)
+                    pushManager?.refreshedToken = deviceToken
+                    pushManager?.removePushDeviceUsingStoredToken()
+                }
+
+                deleteDatabase(context)
                 preferences.edit {
                     clear()
                     putBoolean("use_reminder", useReminder)
@@ -334,7 +345,9 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                     putString("theme_mode", lightMode)
                     putString("launch_screen", launchScreen)
                 }
-                getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
+                pushManager?.clearUser()
+
+                instance?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
                 Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
                 startActivity(OnboardingActivity::class.java, context)
             }
