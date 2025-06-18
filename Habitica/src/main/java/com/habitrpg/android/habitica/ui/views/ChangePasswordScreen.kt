@@ -1,6 +1,9 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -49,7 +52,7 @@ fun ChangePasswordScreen(
 ) {
     val colors = HabiticaTheme.colors
     val backgroundColor = colors.windowBackground
-    val fieldColor = colorResource(id = R.color.gray700_gray10)
+    val fieldColor = colorResource(id = R.color.gray600_gray10)
     val labelColor = colors.textSecondary
     val buttonColor = colors.tintedUiMain
     val textColor = colors.textPrimary
@@ -61,7 +64,6 @@ fun ChangePasswordScreen(
 
     val passwordValid = newPassword.length >= 8
     val passwordsMatch = newPassword == confirmPassword && newPassword.isNotEmpty()
-    val canSave = passwordValid && passwordsMatch && oldPassword.isNotBlank()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -102,8 +104,9 @@ fun ChangePasswordScreen(
 
                 Text(
                     text = stringResource(R.string.password_change_info),
-                    color = labelColor,
-                    fontSize = 14.sp,
+                    color = textColor,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(bottom = 22.dp)
@@ -163,12 +166,14 @@ fun ChangePasswordScreen(
                 Button(
                     onClick = {
                         attemptedSave = true
-                        if (canSave) onSave(oldPassword, newPassword)
+                        onSave(oldPassword, newPassword)
                     },
-                    enabled = canSave,
+                    enabled = true,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = colorResource(id = R.color.purple400_purple500),
-                        disabledContainerColor = colorResource(id = R.color.purple400_purple500).copy(alpha = 0.3f)
+                        disabledContainerColor = colorResource(id = R.color.purple400_purple500),
+                        contentColor           = Color.White,
+                        disabledContentColor   = Color.White
                     ),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
@@ -213,28 +218,43 @@ fun PasswordField(
     isError: Boolean = false,
     modifier: Modifier = Modifier
 ) {
-    val dividerColor = if (value.isNotBlank())
+    val onTextChangedColor = if (value.isNotBlank())
         colorResource(id = R.color.purple400_purple500)
     else
         colorResource(id = R.color.gray_400)
 
+    val interactionSource = remember { MutableInteractionSource() }
+    val isFocused by interactionSource.collectIsFocusedAsState()
+    val active = isFocused || value.isNotBlank()
+
+    val targetFontSize = if (active) 14.sp else 17.sp
+    val targetLabelColor = if (active) onTextChangedColor else labelColor
+
+
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clipToBounds()
+            .clip(RoundedCornerShape(6.dp))
+            .background(fieldColor)
     ) {
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            label = { Text(label, color = labelColor, fontSize = 17.sp) },
+            interactionSource = interactionSource,
+            label = {
+                Text(
+                    text = label,
+                    fontSize = targetFontSize,
+                    color = targetLabelColor
+                )
+            },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(6.dp),
             isError = isError,
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = fieldColor,
-                focusedContainerColor = fieldColor,
+                unfocusedContainerColor = Color.Transparent,
+                focusedContainerColor   = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Color.Transparent,
                 cursorColor = Color(0xFF9C8DF6),
@@ -244,11 +264,11 @@ fun PasswordField(
         )
 
         HorizontalDivider(
-            color = dividerColor,
+            color = onTextChangedColor,
             thickness = 1.dp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp)
+                .padding(horizontal = 3.dp)
                 .align(Alignment.BottomStart)
         )
     }
