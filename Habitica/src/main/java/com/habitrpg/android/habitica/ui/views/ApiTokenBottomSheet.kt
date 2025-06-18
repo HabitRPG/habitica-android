@@ -115,20 +115,17 @@ fun ApiTokenBottomSheet(
                 )
             }
             Spacer(modifier = Modifier.height(22.dp))
-            Button(
-                onClick = { onCopyToken(apiToken) },
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = buttonBg),
-                modifier = Modifier
+            HabiticaButton(
+                background = buttonBg,
+                color      = buttonText,
+                onClick    = { onCopyToken(apiToken) },
+                modifier   = Modifier
                     .fillMaxWidth()
-                    .height(54.dp)
+                    .height(48.dp),
+                contentPadding = PaddingValues(0.dp),
+                fontSize       = 16.sp
             ) {
-                Text(
-                    stringResource(id = R.string.copy_token),
-                    color = buttonText,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                )
+                Text(stringResource(id = R.string.copy_token))
             }
             Spacer(modifier = Modifier.height(8.dp))
         }
