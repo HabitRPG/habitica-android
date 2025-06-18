@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 
 @Composable
 fun ApiTokenBottomSheet(
@@ -99,10 +100,10 @@ fun ApiTokenBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = null,
+                    painter = painterResource(id = R.drawable.icon_lock),
+                    contentDescription = stringResource(R.string.locked),
                     tint = lockIconColor,
-                    modifier = Modifier.size(22.dp)
+                    modifier = Modifier.size(16.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
