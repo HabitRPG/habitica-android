@@ -40,7 +40,7 @@ constructor(
     val partyID: String?
         get() = validatedUser?.party?.id
     val isUserFainted: Boolean
-        get() = (validatedUser?.stats?.hp ?: 1.0) == 0.0
+        get() = (validatedUser?.stats?.hp ?: 1.0) <= 0.0
     val isUserInParty: Boolean
         get() = validatedUser?.hasParty == true
     val mirrorGroupTasks: List<String>
