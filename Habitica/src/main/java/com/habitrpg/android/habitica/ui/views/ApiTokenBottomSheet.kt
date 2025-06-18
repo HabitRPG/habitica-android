@@ -41,10 +41,9 @@ fun ApiTokenBottomSheet(
         modifier
             .fillMaxWidth()
             .background(background, RoundedCornerShape(22.dp))
-            .padding(horizontal = 20.dp, vertical = 14.dp)
+            .padding(horizontal = 20.dp, vertical = 8.dp)
     ) {
         Column(Modifier.fillMaxWidth()) {
-            Spacer(modifier = Modifier.height(8.dp))
             Box(
                 modifier = Modifier
                     .padding(bottom = 16.dp)
@@ -65,7 +64,7 @@ fun ApiTokenBottomSheet(
                 stringResource(id = R.string.api_token_is_password),
                 color = mainTextColor,
                 fontSize = 17.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Normal,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -80,7 +79,7 @@ fun ApiTokenBottomSheet(
                 stringResource(id = R.string.api_token_reset_title),
                 color = mainTextColor,
                 fontSize = 17.sp,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Normal,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
