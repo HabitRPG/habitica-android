@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.preferences
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -78,6 +79,9 @@ fun PauseResumeDamageView(
             HabiticaButton(
                 background = colorResource(R.color.yellow_100),
                 color = colorResource(R.color.yellow_1),
+                modifier   = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
                 onClick = { onClick() }
             ) {
                 Text(stringResource(R.string.resume_damage))
@@ -136,6 +140,9 @@ fun PauseResumeDamageView(
             HabiticaButton(
                 background = colorResource(R.color.yellow_100),
                 color = colorResource(R.color.yellow_1),
+                modifier   = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
                 onClick = { onClick() }
             ) {
                 Text(stringResource(R.string.pause_damage))
