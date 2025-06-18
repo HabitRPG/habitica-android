@@ -471,32 +471,23 @@ class PurchaseHandler(
         throwable: Throwable,
         purchase: Purchase
     ) {
-        when (throwable) {
-            is HttpException -> {
-                if (throwable.code() == 401) {
-                    val res = apiClient.getErrorResponse(throwable)
-                    if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
-                        processedPurchase(purchase)
-                        removeGift(purchase.products.firstOrNull())
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
-                            consume(purchase)
-                        }
-                        return
-                    }
-                }
-            }
-
-            else -> {
-                // Handles other potential errors such as IOException or an exception
-                // thrown by billingClient.consumePurchase method that is not handled
+        if (throwable is HttpException && throwable.code() == 401) {
+            val res = apiClient.getErrorResponse(throwable)
+            if (res.message == "RECEIPT_ALREADY_USED") {
+                processedPurchase(purchase)
+                removeGift(purchase.products.firstOrNull())
                 CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                     consume(purchase)
                 }
+                return
             }
         }
+
+        // All other errors: leave the purchase un-consumed so our backend retry logic can run
         processedPurchases.remove(purchase.orderId)
         CrashReporter.recordException(throwable)
     }
+
 
     suspend fun checkForSubscription(): Purchase? {
         val result =
