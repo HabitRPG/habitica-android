@@ -184,8 +184,7 @@ class AccountPreferenceFragment :
             }
 
             "APIToken" -> {
-                ApiTokenBottomSheetFragment(
-                    apiToken = hostConfig.apiKey).show(childFragmentManager, ApiTokenBottomSheetFragment.TAG)
+                ApiTokenBottomSheetFragment.newInstance(hostConfig.apiKey).show(childFragmentManager, ApiTokenBottomSheetFragment.TAG)
                 return true
             }
 
