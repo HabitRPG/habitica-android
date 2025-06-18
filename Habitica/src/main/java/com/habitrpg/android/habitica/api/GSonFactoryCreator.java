@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.models.inventory.Equipment;
 import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
+import com.habitrpg.android.habitica.models.invitations.InviteResponse;
 import com.habitrpg.android.habitica.models.members.Member;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
@@ -43,6 +44,7 @@ import com.habitrpg.android.habitica.utils.FAQArticleListDeserilializer;
 import com.habitrpg.android.habitica.utils.FeedResponseDeserializer;
 import com.habitrpg.android.habitica.utils.FindUsernameResultDeserializer;
 import com.habitrpg.android.habitica.utils.GroupSerialization;
+import com.habitrpg.android.habitica.utils.InviteResponseDeserializer;
 import com.habitrpg.android.habitica.utils.MemberSerialization;
 import com.habitrpg.android.habitica.utils.NotificationDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedItemListDeserializer;
@@ -136,6 +138,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(assignedDetailsListType, new AssignedDetailsDeserializer())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
+                .registerTypeAdapter(InviteResponse.class, new InviteResponseDeserializer())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
                 .registerTypeAdapter(FindUsernameResult.class, new FindUsernameResultDeserializer())
                 .registerTypeAdapter(Notification.class, new NotificationDeserializer())
