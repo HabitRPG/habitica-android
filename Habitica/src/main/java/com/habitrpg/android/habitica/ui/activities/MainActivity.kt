@@ -68,6 +68,7 @@ import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
@@ -152,6 +153,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     @Inject
     lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var purchaseHandler: PurchaseHandler
 
     lateinit var binding: ActivityMainBinding
 
@@ -242,6 +246,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             return
         } else {
             Wearable.getCapabilityClient(this).addLocalCapability("provide_auth")
+            // Start listening for any outstanding purchases that weren’t consumed last time.
+            // This ensures if a previous validate/consume cycle failed, we pick it up on app launch
+            // and re-run validation → consume so no purchases (gems for example) remain “stuck.”
+            purchaseHandler.startListening()
         }
 
         setupToolbar(binding.content.toolbar)
@@ -716,6 +724,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     public override fun onDestroy() {
         userRepository.close()
         inventoryRepository.close()
+        purchaseHandler.stopListening()
         super.onDestroy()
     }
     // endregion
