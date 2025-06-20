@@ -715,6 +715,7 @@
     <string name="reply">Reply</string>
     <string name="challenge_prize">Challenge Prize</string>
     <string name="challenge_categories">Challenge Categories</string>
+    <string name="category">Category</string>
     <string name="created_challenge">Created Challenge</string>
     <string name="joined">Joined</string>
     <string name="public_challenge">Public Challenge</string>

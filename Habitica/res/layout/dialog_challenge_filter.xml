@@ -37,6 +37,16 @@
             android:visibility="invisible"/>
     </LinearLayout>
 
+    <TextView
+        style="@style/Caption3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:height="20dp"
+        android:gravity="center_vertical"
+        android:text="@string/category"
+        android:textAllCaps="true" />
+
         <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
             android:id="@+id/challenge_filter_recycler_view"
             android:layout_width="match_parent"
