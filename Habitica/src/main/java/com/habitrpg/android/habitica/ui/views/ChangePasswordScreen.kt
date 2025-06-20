@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.ui.views
 
+import android.content.res.ColorStateList
 import android.content.res.Configuration
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
+import android.view.LayoutInflater
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,11 +17,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -30,16 +29,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -64,6 +65,7 @@ fun ChangePasswordScreen(
 
     val passwordValid = newPassword.length >= 8
     val passwordsMatch = newPassword == confirmPassword && newPassword.isNotEmpty()
+    val canSave = passwordValid && passwordsMatch && oldPassword.isNotBlank()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -75,7 +77,7 @@ fun ChangePasswordScreen(
                 modifier = Modifier
                     .size(48.dp)
                     .align(Alignment.TopStart)
-                    .padding(16.dp)
+                    .padding(start = 22.dp, top = 16.dp)
             ) {
                 Icon(
                     painterResource(id = R.drawable.arrow_back),
@@ -99,7 +101,7 @@ fun ChangePasswordScreen(
                     color = textColor,
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(bottom = 8.dp)
+                        .padding(start = 6.dp, bottom = 12.dp)
                 )
 
                 Text(
@@ -107,9 +109,10 @@ fun ChangePasswordScreen(
                     color = textColor,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Normal,
+                    lineHeight = 20.sp,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 22.dp)
+                        .padding(start = 6.dp,bottom = 22.dp)
                 )
 
                 PasswordField(
@@ -121,7 +124,6 @@ fun ChangePasswordScreen(
                     textColor = textColor,
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
                 PasswordField(
                     label = stringResource(R.string.new_password),
@@ -131,18 +133,9 @@ fun ChangePasswordScreen(
                     labelColor = labelColor,
                     textColor = textColor,
                     isError = attemptedSave && !passwordValid,
+                    errorMessage = if (attemptedSave && !passwordValid) stringResource(R.string.password_too_short, 8) else null,
                     modifier = Modifier.fillMaxWidth()
                 )
-                if (attemptedSave && !passwordValid) {
-                    Text(
-                        text = stringResource(R.string.password_too_short),
-                        color = Color.Red,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-                    )
-                }
-                Spacer(modifier = Modifier.padding(vertical = 8.dp))
-
                 PasswordField(
                     label = stringResource(R.string.confirm_new_password),
                     value = confirmPassword,
@@ -151,27 +144,19 @@ fun ChangePasswordScreen(
                     labelColor = labelColor,
                     textColor = textColor,
                     isError = attemptedSave && !passwordsMatch,
+                    errorMessage = if (attemptedSave && !passwordsMatch) stringResource(R.string.password_not_matching) else null,
                     modifier = Modifier.fillMaxWidth()
                 )
-                if (attemptedSave && !passwordsMatch) {
-                    Text(
-                        text = stringResource(R.string.password_not_matching),
-                        color = Color.Red,
-                        fontSize = 13.sp,
-                        modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-                    )
-                }
                 Spacer(modifier = Modifier.padding(top = 24.dp))
-
                 Button(
                     onClick = {
                         attemptedSave = true
-                        onSave(oldPassword, newPassword)
+                        if (canSave) onSave(oldPassword, newPassword)
                     },
                     enabled = true,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.purple400_purple500),
-                        disabledContainerColor = colorResource(id = R.color.purple400_purple500),
+                        containerColor = colorResource(id = R.color.brand_400),
+                        disabledContainerColor = colorResource(id = R.color.brand_400),
                         contentColor           = Color.White,
                         disabledContentColor   = Color.White
                     ),
@@ -216,6 +201,7 @@ fun PasswordField(
     labelColor: Color,
     textColor: Color,
     isError: Boolean = false,
+    errorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
     val onTextChangedColor = if (value.isNotBlank())
@@ -223,55 +209,52 @@ fun PasswordField(
     else
         colorResource(id = R.color.gray_400)
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val isFocused by interactionSource.collectIsFocusedAsState()
-    val active = isFocused || value.isNotBlank()
-
-    val targetFontSize = if (active) 14.sp else 17.sp
-    val targetLabelColor = if (active) onTextChangedColor else labelColor
-
-
-    Box(
+    AndroidView(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(6.dp))
-            .background(fieldColor)
-    ) {
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            interactionSource = interactionSource,
-            label = {
-                Text(
-                    text = label,
-                    fontSize = targetFontSize,
-                    color = targetLabelColor
-                )
-            },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            isError = isError,
-            visualTransformation = PasswordVisualTransformation(),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = Color.Transparent,
-                focusedContainerColor   = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-                focusedBorderColor = Color.Transparent,
-                cursorColor = Color(0xFF9C8DF6),
-                unfocusedTextColor = textColor,
-                focusedTextColor = textColor
-            )
-        )
+            .padding(vertical = 8.dp),
+        factory = { ctx ->
+            LayoutInflater.from(ctx)
+                .inflate(R.layout.component_text_input, null, false)
+        },
+        update = { view ->
+            val til = view.findViewById<TextInputLayout>(R.id.text_input_layout)
+            val edit = view.findViewById<AppCompatEditText>(R.id.text_edit_text)
+            til.hint = label
 
-        HorizontalDivider(
-            color = onTextChangedColor,
-            thickness = 1.dp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 3.dp)
-                .align(Alignment.BottomStart)
-        )
-    }
+            edit.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            edit.transformationMethod = PasswordTransformationMethod.getInstance()
+
+            fun syncColors(focused: Boolean) {
+                val active = focused || edit.text?.isNotBlank() == true
+                val stroke = if (active) onTextChangedColor else labelColor
+                til.defaultHintTextColor = ColorStateList.valueOf(stroke.toArgb())
+                til.setBoxStrokeColorStateList(ColorStateList.valueOf(stroke.toArgb()))
+            }
+
+            syncColors(edit.isFocused)
+
+            edit.setOnFocusChangeListener { _, focused ->
+                syncColors(focused)
+            }
+
+            edit.doAfterTextChanged {
+                syncColors(edit.isFocused)
+                onValueChange(it.toString())
+            }
+
+            if (edit.text.toString() != value) {
+                edit.setText(value)
+                edit.setSelection(value.length)
+            }
+
+            til.isErrorEnabled = isError
+            til.error = errorMessage
+
+            til.setBoxStrokeWidth(2)
+            edit.setTextColor(textColor.toArgb())
+        }
+    )
 }
 
 @Preview(showBackground = true, widthDp = 327, heightDp = 704, uiMode = Configuration.UI_MODE_NIGHT_YES)

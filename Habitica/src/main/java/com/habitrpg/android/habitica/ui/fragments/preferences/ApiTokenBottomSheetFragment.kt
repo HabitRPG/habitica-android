@@ -1,10 +1,13 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.ApiTokenBottomSheet
@@ -19,6 +22,32 @@ class ApiTokenBottomSheetFragment : BottomSheetDialogFragment() {
         apiToken = arguments?.getString(ARG_API_TOKEN) ?: ""
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        val nightModeFlags = requireContext()
+            .resources
+            .configuration
+            .uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
+            dialog?.window?.let { window ->
+                window.statusBarColor = ContextCompat.getColor(
+                    requireContext(),
+                    android.R.color.transparent
+                )
+                window.navigationBarColor = ContextCompat.getColor(
+                    requireContext(),
+                    android.R.color.transparent
+                )
+
+                WindowInsetsControllerCompat(window, window.decorView).apply {
+                    isAppearanceLightStatusBars = true
+                    isAppearanceLightNavigationBars = true
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
