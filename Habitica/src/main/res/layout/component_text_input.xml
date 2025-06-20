@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TaskFormTextInputLayoutAppearance"
+        app:boxStrokeWidth="2dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:boxBackgroundColor="@color/gray600_gray10"
+        app:hintTextColor="?colorPrimaryText"
+        android:backgroundTint="?attr/colorPrimaryText"
+        android:hint="@string/task_title"
+        android:alpha="0.75">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/text_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimaryText"
+            android:inputType="textCapSentences|textAutoCorrect" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</FrameLayout>
