@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.models.social
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import io.realm.RealmList
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
@@ -28,6 +29,8 @@ open class Challenge : RealmObject(), BaseMainObject {
     var rewardList: String? = null
     var createdAt: Date? = null
     var updatedAt: Date? = null
+
+    var categories: RealmList<ChallengeCategory> = RealmList()
 
     var group: Group? = null
 
