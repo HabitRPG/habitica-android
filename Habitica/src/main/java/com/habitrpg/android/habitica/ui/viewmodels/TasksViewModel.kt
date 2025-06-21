@@ -199,9 +199,12 @@ constructor(
         if (activeFilters[type] == null) {
             return false
         }
-
         return if (TaskType.TODO == type) {
-            Task.FILTER_ACTIVE != activeFilters[type]
+            when(activeFilters[type]) {
+                Task.FILTER_ACTIVE -> false
+                Task.FILTER_ALL -> false
+                else -> true
+            }
         } else {
             Task.FILTER_ALL != activeFilters[type]
         }
@@ -289,7 +292,7 @@ constructor(
     fun getTaskFilterPreference(
         type: TaskType
     ): String {
-        return sharedPreferences.getString("filter_${type.value}", Task.FILTER_ALL) ?: Task.FILTER_ALL
+        return sharedPreferences.getString("filter_${type.value}", Task.FILTER_ALL) ?: if (TaskType.TODO == type) Task.FILTER_ACTIVE else Task.FILTER_ALL
     }
 
     fun createQuery(unfilteredData: OrderedRealmCollection<Task>): RealmQuery<Task>? {
