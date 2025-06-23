@@ -13,6 +13,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.util.PatternsCompat
@@ -39,6 +43,8 @@ import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ValidatingEditText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
+import com.habitrpg.android.habitica.ui.views.preferences.PrivacyPreferencesView
+import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
@@ -177,7 +183,22 @@ class AccountPreferenceFragment :
                     showAddPasswordDialog(user?.authentication?.localAuthentication?.email?.isNotBlank() != true)
                 }
             }
-
+            "privacy_preferences" -> {
+                showAsBottomSheet { dismiss ->
+                    var analyticsConsent by remember { mutableStateOf(user?.preferences?.analyticsConsent ?: false) }
+                    var isSettingConsent by remember { mutableStateOf(false) }
+                    PrivacyPreferencesView(
+                        analyticsConsent,
+                        { newValue ->
+                            lifecycleScope.launchCatching {
+                                val user = userRepository.updateUser("preferences.analyticsConsent", newValue)
+                                analyticsConsent = user?.preferences?.analyticsConsent ?: false
+                            }
+                        },
+                        isSettingConsent
+                    )
+                }
+            }
             "UserID" -> {
                 copyValue(getString(R.string.SP_userID), user?.id)
                 return true

@@ -38,7 +38,7 @@
 
             <PreferenceCategory
                 android:title="@string/login_methods"
-                android:key="account_info"
+                android:key="login_methods"
                 android:layout="@layout/preference_category">
                 <com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
                     android:title="@string/password"
@@ -80,23 +80,22 @@
                     android:title="@string/photo_url" />
             </PreferenceCategory>
             <PreferenceCategory
-                android:title="@string/api"
+                android:title="@string/user_data"
                 android:key="api"
                 android:layout="@layout/preference_category">
                 <Preference
+                        android:key="privacy_preferences"
+                        android:title="@string/privacy_preferences"
+                        android:summary="@string/privacy_preferences_summary"
+                        android:layout="@layout/preference_child_summary"/>
+                <Preference
                     android:key="@string/SP_userID"
                     android:title="@string/SP_userID_title"
-                    android:selectable="true"
-                    android:persistent="false"
-                    android:shouldDisableView="false"
                     android:layout="@layout/preference_child_summary"/>
 
                 <Preference
                     android:key="@string/SP_APIToken"
                     android:title="@string/SP_APIToken_title"
-                    android:selectable="true"
-                    android:persistent="false"
-                    android:shouldDisableView="false"
                     android:summary="@string/apitoken_summary"
                     android:layout="@layout/preference_child_summary"/>
                 <Preference android:title="@string/fix_character_values"
