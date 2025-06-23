@@ -69,13 +69,13 @@
     <string name="levelup_detail">Wypełniając swoje cele życiowe, udało Ci się zyskać kolejny poziom i pełne uzdrowienie postaci!</string>
     <string name="onwards">Hurra!</string>
     <string name="faint_subtitle">Nie rozpaczaj!</string>
-    <string name="faint_header">Możesz stracić całe Zdrowie!</string>
-    <string name="faint_button">Uzupełnij Zdrowie &amp; Spróbuj jeszcze raz</string>
+    <string name="faint_header">Straciłeś całe Zdrowie!</string>
+    <string name="faint_button">Uzupełnij Zdrowie i Spróbuj Jeszcze Raz</string>
     <string name="filter">Filtr</string>
     <string name="used_skill_without_mana">Użyto %1$s.</string>
     <string name="new_checklist_item">nowa część zadania</string>
     <string name="unlock_lvl_11">Odblokuj na poziomie 11</string>
-    <string name="forgot_pw_btn">Zapomniane hasło</string>
+    <string name="forgot_pw_btn">Zapomniałem hasła</string>
     <string name="tavern_inn_checkOut">Reaktywuj swoje codzienne</string>
     <string name="tavern_inn_rest">Zapauzuj swoje codzienne</string>
     <string name="reward_dialog_buy">Kup</string>
@@ -111,7 +111,7 @@
     <string name="quest_cancel">Anuluj Zaproszenie</string>
     <string name="quest_abort">Przerwij Quest</string>
     <string name="version_info">Wersja %1$s (%2$d)</string>
-    <string name="sidebar_help">Pomoc i FAQ</string>
+    <string name="sidebar_help">Wsparcie</string>
     <string name="complete_tutorial">Jasne!</string>
     <string name="dismiss_tutorial">Przypomnij mi później</string>
     <string name="intro_1_subtitle">Witaj w</string>
@@ -533,7 +533,7 @@
     <string name="gift_confirmation_title">Twój prezent został wysłany!</string>
     <string name="discover">Odkryj</string>
     <string name="preference_push_important_announcements">Ważne Ogłoszenia</string>
-    <string name="reminder_title">Pamiętaj aby odznaczyć swoje zadania</string>
+    <string name="reminder_title">Pamiętaj, aby odznaczyć swoje zadania</string>
     <string name="ago_minutes">%d minut temu</string>
     <string name="ago_hours">%d godzin temu</string>
     <string name="evolved_pet_title">Oswoiłeś %s, idź na przejażdżkę!</string>
