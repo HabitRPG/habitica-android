@@ -23,10 +23,12 @@ class PrefsActivity :
         super.onCreate(savedInstanceState)
 
         setupToolbar(findViewById(R.id.toolbar))
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, PreferencesFragment())
-            .commit()
+        
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, PreferencesFragment())
+                .commit()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
