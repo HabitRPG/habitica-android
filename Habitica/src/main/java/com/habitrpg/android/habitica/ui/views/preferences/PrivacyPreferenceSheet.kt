@@ -25,7 +25,7 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
 @Composable
-fun PrivacyPreferencesView(analyticsConsent: Boolean, onConsentChanged: (Boolean) -> Unit, isSettingConsent: Boolean,
+fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean) -> Unit, isSettingConsent: Boolean,
                            modifier: Modifier = Modifier) {
     Column(
         horizontalAlignment = Alignment.Start,
@@ -81,7 +81,6 @@ fun PrivacyPreferencesView(analyticsConsent: Boolean, onConsentChanged: (Boolean
             disabled = true
         )
     }
-
 }
 
 @Composable
@@ -107,7 +106,7 @@ fun PrivacyToggleView(title: String, description: String, isChecked: Boolean, on
         }
         Spacer(Modifier.width(8.dp))
         if (isSetting) {
-            HabiticaCircularProgressView(indicatorSize = 32.dp, modifier = Modifier.align(Alignment.CenterVertically))
+            HabiticaCircularProgressView(indicatorSize = 48.dp, modifier = Modifier.align(Alignment.CenterVertically))
         } else {
             Switch(checked = isChecked, onCheckedChange = { if (!disabled) onCheckedChange(!isChecked) }, modifier = Modifier.align(Alignment.CenterVertically).alpha(if (disabled) 0.5f else 1f),)
         }

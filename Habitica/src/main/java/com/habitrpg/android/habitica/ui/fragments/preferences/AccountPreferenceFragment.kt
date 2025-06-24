@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
-import android.accounts.AccountManager
-import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
@@ -12,7 +10,6 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +24,6 @@ import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
@@ -36,14 +32,13 @@ import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
-import com.habitrpg.android.habitica.ui.views.ApiTokenBottomSheet
 import com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ValidatingEditText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
-import com.habitrpg.android.habitica.ui.views.preferences.PrivacyPreferencesView
+import com.habitrpg.android.habitica.ui.views.preferences.PrivacyPreferenceSheet
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.extensions.dpToPx
@@ -187,7 +182,7 @@ class AccountPreferenceFragment :
                 showAsBottomSheet { dismiss ->
                     var analyticsConsent by remember { mutableStateOf(user?.preferences?.analyticsConsent ?: false) }
                     var isSettingConsent by remember { mutableStateOf(false) }
-                    PrivacyPreferencesView(
+                    PrivacyPreferenceSheet(
                         analyticsConsent,
                         { newValue ->
                             lifecycleScope.launchCatching {

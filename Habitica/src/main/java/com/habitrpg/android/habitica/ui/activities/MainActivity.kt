@@ -697,6 +697,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     this.title = newTitle
                 }
             }
+
+            if (user.preferences?.analyticsConsent == null) {
+                val intent = Intent(this, PrivacyPreferencesActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 

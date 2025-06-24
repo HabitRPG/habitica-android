@@ -19,4 +19,8 @@
     <string name="performance_analytics_description">This is used to improve the user experience, performance, and services of Habitica. Our support team will also use this when handling requests and bug reports.</string>
     <string name="strictlye_necessary_analytics">Strictly necessary</string>
     <string name="strictlye_necessary_analytics_description">This is necessary data required by our app to function. This includes data like your preferences saved in settings as well as crash information.</string>
+    <string name="your_privacy_preferences_description_full">"Habitica uses data from your device to analyze performance, handle support requests, and provide you with the best possible gamified experience. To do that, we need to request the following permissions. "</string>
+    <string name="accept_all">Accept All</string>
+    <string name="habiticas_privacy_policy">Habitica\'s Privacy Policy</string>
+    <string name="save_preferences">Save Preferences</string>
 </resources>

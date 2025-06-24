@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.preferences.PauseResumeDamageView
-import com.habitrpg.android.habitica.ui.views.preferences.PrivacyPreferencesView
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
