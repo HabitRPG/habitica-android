@@ -44,6 +44,7 @@ fun LoginForm(
     password: String,
     passwordFieldState: LoginFieldState,
     onPasswordChange: (String) -> Unit,
+    onGoogleLoginClicked: () -> Unit,
     isRegistering: Boolean,
     onSubmit: () -> Unit,
     showLoading: Boolean,
@@ -159,6 +160,7 @@ fun LoginForm(
                         containerColor = Color.Companion.White,
                         contentColor = colorResource(R.color.gray_50),
                         disabledContainerColor = Color.White.copy(alpha = 0.5f),
+                        disabledContentColor = colorResource(R.color.gray_50)
                     ),
                     shape = HabiticaTheme.shapes.large,
                     contentPadding = PaddingValues(15.dp),
@@ -169,22 +171,17 @@ fun LoginForm(
                     },
                     modifier = Modifier.Companion.fillMaxWidth().padding(top = 30.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.Companion.CenterVertically
-                    ) {
-                        if (isRegistering) {
-                            Text(
-                                stringResource(R.string.action_continue),
-                                fontWeight = FontWeight.Companion.Bold,
-                                fontSize = 18.sp
-                            )
-                        } else {
-                            Text(
-                                stringResource(R.string.login_btn), fontWeight = FontWeight.Companion.Bold,
-                                fontSize = 18.sp
-                            )
-                        }
+                    if (isRegistering) {
+                        Text(
+                            stringResource(R.string.action_continue),
+                            fontWeight = FontWeight.Companion.Bold,
+                            fontSize = 18.sp
+                        )
+                    } else {
+                        Text(
+                            stringResource(R.string.login_btn), fontWeight = FontWeight.Companion.Bold,
+                            fontSize = 18.sp
+                        )
                     }
                 }
             }
@@ -192,6 +189,7 @@ fun LoginForm(
         AnimatedVisibility(!isRegistering) {
             Button(
                 {
+                    onGoogleLoginClicked()
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Companion.White,

@@ -39,6 +39,7 @@ class AvatarView : FrameLayout {
     private var showPet = true
     private var showSleeping = true
     private var hasBackground: Boolean = false
+    private var canAnimate: Boolean = true
     private var preview: Map<LayerType, String>? = null
     private var hasMount: Boolean = false
     private var hasPet: Boolean = false

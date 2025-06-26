@@ -26,6 +26,7 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 @Composable
 fun LoginInitialButtons(onLoginClicked: () -> Unit,
                         onRegisterClicked: () -> Unit,
+                        onGoogleLoginClicked: () -> Unit,
                         modifier: Modifier = Modifier.Companion
 ) {
     Column(
@@ -35,6 +36,7 @@ fun LoginInitialButtons(onLoginClicked: () -> Unit,
     ) {
         Button(
             {
+                onGoogleLoginClicked()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Companion.White,

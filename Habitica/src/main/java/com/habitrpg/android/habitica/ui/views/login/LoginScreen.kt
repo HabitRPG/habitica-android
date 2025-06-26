@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -36,9 +37,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -78,8 +81,7 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
     var passwordFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     var email by authenticationViewModel.email
     var emailFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
-    var username by authenticationViewModel.username
-    var usernameFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
+    val context = LocalContext.current
     Box(modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
@@ -143,6 +145,16 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
             ),
             label = "padding"
         )
+        val logoScale by animateFloatAsState(if (loginScreenState == LoginScreenState.INITIAL) {
+                1f
+            } else {
+                0.66f
+            },
+            animationSpec = tween(
+                delayMillis = if (loginScreenState == LoginScreenState.INITIAL) 400 else 0,
+                easing = EaseInOut
+            ),
+            label = "logoScale")
         ProvideTextStyle(TextStyle(fontSize = 18.sp)) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -150,8 +162,9 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
             ) {
                 Image(
                     painterResource(R.drawable.login_logo),
+                    contentScale = ContentScale.Fit,
                     contentDescription = null,
-                    modifier = Modifier.padding(top = logoPadding)
+                    modifier = Modifier.padding(top = logoPadding).scale(logoScale)
                 )
                 AnimatedVisibility(
                     loginScreenState == LoginScreenState.INITIAL,
@@ -195,11 +208,6 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                                 LoginFieldState.DEFAULT
                             }
                         },
-                        username = username,
-                        usernameFieldState = usernameFieldState,
-                        onUsernameChange = {
-                            username = it
-                        },
                         password = password,
                         passwordFieldState = passwordFieldState,
                         onPasswordChange = {
@@ -217,7 +225,6 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                             }
                         },
                         isRegistering = loginScreenState == LoginScreenState.REGISTER,
-                        showUsernameField = !useNewAuthFlow,
                         onSubmit = {
                             coroutineScope.launchCatching {
                                 if (loginScreenState == LoginScreenState.REGISTER) {
@@ -231,7 +238,10 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                                 }
                             }
                         },
-                        showLoading = showLoading
+                        showLoading = showLoading,
+                        onGoogleLoginClicked = {
+                            authenticationViewModel.startGoogleAuth(context)
+                        }
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -244,6 +254,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                         loginScreenState = LoginScreenState.LOGIN
                     }, {
                         loginScreenState = LoginScreenState.REGISTER
+                    }, {
+                        authenticationViewModel.startGoogleAuth(context)
                     })
                 }
             }

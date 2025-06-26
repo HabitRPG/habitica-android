@@ -144,7 +144,7 @@ class AuthenticationViewModel @Inject constructor(
         _showAuthProgress.value = true
         isRegistering.value = false
         try {
-            val response = apiClient.connectUser(username.value, password.value)
+            val response = apiClient.connectUser(email.value, password.value)
             handleAuthResponse(response)
         } catch (e: Exception) {
             authenticationError()

@@ -2,16 +2,35 @@ package com.habitrpg.android.habitica.ui.views
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.BasicSecureTextField
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldDecorator
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -19,7 +38,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.Wallpapers
@@ -37,6 +56,51 @@ enum class LoginFieldState {
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun makeDecorationBox(
+    value: String,
+    label: String,
+    state: LoginFieldState,
+    prefix: @Composable () -> Unit,
+    icon: @Composable (() -> Unit)? = null,
+    colors: TextFieldColors,
+    interactionSource: MutableInteractionSource,
+    innerTextField: @Composable () -> Unit) {
+        TextFieldDefaults.DecorationBox(
+            value = value,
+            innerTextField = innerTextField,
+            placeholder = { Text(label, fontSize = 18.sp, fontWeight = FontWeight.Normal) },
+            enabled = true,
+            singleLine = true,
+            visualTransformation = VisualTransformation.None,
+            interactionSource = interactionSource,
+            shape = HabiticaTheme.shapes.large,
+            prefix = prefix,
+            leadingIcon = icon,
+            suffix = {
+                AnimatedContent(state) {
+                    if (it == LoginFieldState.ERROR) {
+                        Image(
+                            painterResource(R.drawable.ic_close_white_18dp),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(colorResource(R.color.red_100))
+                        )
+                    } else if (it == LoginFieldState.VALID) {
+                        Image(
+                            painterResource(R.drawable.checkmark),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(colorResource(R.color.green_50))
+                        )
+                    } else if (it == LoginFieldState.LOADING) {
+                        HabiticaCircularProgressView(indicatorSize = 20.dp, strokeWidth = 2.dp)
+                    }
+                }
+            },
+            colors = colors
+        )
+}
+
+@Composable
 fun LoginScreenField(
     label: String,
     value: String,
@@ -47,62 +111,80 @@ fun LoginScreenField(
     state: LoginFieldState = LoginFieldState.DEFAULT,
     hideInput: Boolean = false,
 ) {
-    val containerColor = colorResource(R.color.brand_100)
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        placeholder = { Text(label, fontSize = 18.sp, fontWeight = FontWeight.Normal) },
-        isError = state == LoginFieldState.ERROR,
-        suffix = {
-            AnimatedContent(state) {
-                if (it == LoginFieldState.ERROR) {
-                    Image(
-                        painterResource(R.drawable.ic_close_white_18dp),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(colorResource(R.color.red_100))
-                    )
-                } else if (it == LoginFieldState.VALID) {
-                    Image(
-                        painterResource(R.drawable.checkmark),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(colorResource(R.color.green_50))
-                    )
-                } else if (it == LoginFieldState.LOADING) {
-                    HabiticaCircularProgressView(indicatorSize = 20.dp, strokeWidth = 2.dp)
-                }
-            }
+    val interactionSource = remember { MutableInteractionSource() }
+    val textFieldState by remember { mutableStateOf(TextFieldState(value)) }
 
-        },
-        singleLine = true,
-        trailingIcon = icon,
-        prefix = prefix,
-        textStyle = TextStyle(
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Normal
+    LaunchedEffect(textFieldState.text) {
+        onValueChange(textFieldState.text.toString())
+    }
+
+    val containerColor = colorResource(R.color.brand_100)
+    val keyboardOptions = if (hideInput) {
+        KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password, autoCorrectEnabled = false)
+    } else {
+        KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email, autoCorrectEnabled = false)
+    }
+    var stillShowInput by remember { mutableStateOf(false) }
+    val showInput = !hideInput || stillShowInput
+
+    val colors = TextFieldDefaults.colors(
+        unfocusedContainerColor = containerColor,
+        focusedContainerColor = containerColor,
+        errorContainerColor = containerColor,
+        unfocusedTextColor = Color.White,
+        focusedTextColor = Color.White,
+        errorTextColor = colorResource(R.color.red_100),
+        unfocusedPlaceholderColor = colorResource(R.color.brand_600),
+        focusedPlaceholderColor = colorResource(R.color.brand_600).copy(alpha = 0.5f),
+        unfocusedIndicatorColor = Color.Transparent,
+        focusedIndicatorColor = Color.Transparent,
+        errorIndicatorColor = Color.Transparent,
+        unfocusedTrailingIconColor = colorResource(R.color.brand_100),
+        cursorColor = Color.White,
+        selectionColors = TextSelectionColors(
+            handleColor = colorResource(R.color.brand_600),
+            backgroundColor = colorResource(R.color.brand_600).copy(alpha = 0.3f)
         ),
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = containerColor,
-            focusedContainerColor = containerColor,
-            errorContainerColor = containerColor,
-            unfocusedTextColor = Color.White,
-            focusedTextColor = Color.White,
-            errorTextColor = colorResource(R.color.red_100),
-            unfocusedPlaceholderColor = colorResource(R.color.brand_600),
-            focusedPlaceholderColor = colorResource(R.color.brand_600).copy(alpha = 0.5f),
-            unfocusedIndicatorColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            errorIndicatorColor = Color.Transparent,
-            unfocusedTrailingIconColor = colorResource(R.color.brand_100),
-            cursorColor = Color.White,
-            selectionColors = TextSelectionColors(
-                handleColor = colorResource(R.color.brand_600),
-                backgroundColor = colorResource(R.color.brand_600).copy(alpha = 0.3f)
-            ),
-        ),
-        shape = HabiticaTheme.shapes.large,
-        modifier = modifier.fillMaxWidth().heightIn(min = 60.dp),
-        visualTransformation = if (hideInput) PasswordVisualTransformation() else VisualTransformation.None,
     )
+    val focused = interactionSource.collectIsFocusedAsState().value
+
+    val mergedTextStyle = TextStyle(
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Normal
+    ).merge(TextStyle(color = if (focused) colors.focusedTextColor else colors.unfocusedTextColor))
+
+    if (hideInput) {
+        BasicSecureTextField(
+            state = textFieldState,
+            textObfuscationMode = if (showInput) {
+                TextObfuscationMode.Visible
+            } else {
+                TextObfuscationMode.RevealLastTyped
+            },
+            textStyle = mergedTextStyle,
+            keyboardOptions = keyboardOptions,
+            modifier = modifier.fillMaxWidth().heightIn(min = 60.dp),
+            decorator = {
+                makeDecorationBox(value, label, state, prefix, {
+                    Box(modifier = Modifier.clickable {
+                        stillShowInput = !stillShowInput
+                    }) {
+                        icon?.invoke()
+                    }
+                }, colors, interactionSource, it)
+            }
+            )
+    } else {
+        BasicTextField(state = textFieldState,
+            textStyle = mergedTextStyle,
+            modifier = modifier.fillMaxWidth().heightIn(min = 60.dp),
+            keyboardOptions = keyboardOptions,
+            lineLimits = TextFieldLineLimits.SingleLine,
+            decorator = { innerTextField ->
+                    makeDecorationBox(value, label, state, prefix, icon, colors, interactionSource, innerTextField)
+                }
+        )
+    }
 }
 
 @Preview(wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE)
@@ -136,6 +218,14 @@ fun LoginScreenFieldPreview() {
             icon = {
                 Image(painterResource(R.drawable.login_username), contentDescription = null)
             }, onValueChange = {}, state = LoginFieldState.LOADING
+        )
+        LoginScreenField(
+            label = "Password",
+            value = "",
+            hideInput = true,
+            icon = {
+                Image(painterResource(R.drawable.login_password), contentDescription = null)
+            }, onValueChange = {}
         )
         LoginScreenField(
             label = "Password",
