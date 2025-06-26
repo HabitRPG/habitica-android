@@ -32,9 +32,15 @@ import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
+import com.habitrpg.android.habitica.ui.views.AboutMeScreen
 import com.habitrpg.android.habitica.ui.views.ApiTokenBottomSheet
+import com.habitrpg.android.habitica.ui.views.ChangeDisplayNameScreen
+import com.habitrpg.android.habitica.ui.views.ChangeEmailScreen
+import com.habitrpg.android.habitica.ui.views.ChangePasswordScreen
+import com.habitrpg.android.habitica.ui.views.ChangeUsernameScreen
 import com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.PhotoUrlScreen
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ValidatingEditText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -160,13 +166,13 @@ class AccountPreferenceFragment :
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            "username" -> showLoginNameDialog()
+            "username" -> showChangeUsernameDialog()
             "confirm_username" -> showConfirmUsernameDialog()
             "email" -> {
                 if (user?.authentication?.hasPassword != true && user?.authentication?.localAuthentication?.email?.isNotBlank() != true) {
                     showAddPasswordDialog(true)
                 } else {
-                    showEmailDialog()
+                    showChangeEmailDialog()
                 }
             }
 
@@ -188,21 +194,11 @@ class AccountPreferenceFragment :
                 return true
             }
 
-            "display_name" ->
-                updateUser(
-                    "profile.name",
-                    user?.profile?.name,
-                    getString(R.string.display_name),
-                )
+            "display_name" -> showChangeDisplayNameDialog()
 
-            "photo_url" ->
-                updateUser(
-                    "profile.imageUrl",
-                    user?.profile?.imageUrl,
-                    getString(R.string.photo_url),
-                )
+            "photo_url" -> showPhotoUrlDialog()
 
-            "about" -> updateUser("profile.blurb", user?.profile?.blurb, getString(R.string.about))
+            "about" -> showAboutMeDialog()
             "google_auth" -> {
                 if (user?.authentication?.hasGoogleAuth == true) {
                     disconnect("google", "Google")
@@ -261,41 +257,102 @@ class AccountPreferenceFragment :
         )
     }
 
-    private fun updateUser(
-        path: String,
-        value: String?,
-        title: String,
-    ) {
-        showSingleEntryDialog(value, title) {
-            if (value != it) {
-                lifecycleScope.launchCatching {
-                    userRepository.updateUser(path, it ?: "")
-                }
-            }
-        }
-    }
-
     private fun showChangePasswordDialog() {
-        ChangePasswordBottomSheet().also { changePasswordBottomSheet ->
-            changePasswordBottomSheet.onForgotPassword = { showForgotPasswordDialog() }
-            changePasswordBottomSheet.onPasswordChanged = { oldPassword, newPassword ->
-                lifecycleScope.launchCatching {
-                    KeyboardUtil.dismissKeyboard(activity)
+        val sheet = SettingsFormBottomSheet()
+
+        sheet.content = {
+            ChangePasswordScreen(
+                onBack = { sheet.dismiss() },
+                onSave = { oldPassword, newPassword ->
                     lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
                         val response = userRepository.updatePassword(
-                            oldPassword,
-                            newPassword,
-                            newPassword,
+                            oldPassword, newPassword, newPassword
                         )
                         response?.apiToken?.let {
                             viewModel.saveTokens(it, user?.id ?: "")
-                            changePasswordBottomSheet.dismiss()
+                            sheet.dismiss()
                         }
                     }
+                },
+                onForgot = {
+                    showForgotPasswordDialog()
+                    sheet.dismiss()
                 }
-            }
-        }.show(childFragmentManager, ChangePasswordBottomSheet.TAG)
+            )
+        }
+
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
     }
+
+    private fun showChangeEmailDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            ChangeEmailScreen(
+                onBack = { sheet.dismiss() },
+                onSave = { newEmail, password ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        userRepository.updateEmail(
+                            newEmail,
+                            password,
+                        )
+                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                            userRepository.retrieveUser(true, true)
+                        }
+                        configurePreference(findPreference("email"), newEmail)
+                        sheet.dismiss()
+                    }
+                },
+                onForgotPassword = {
+                    showForgotPasswordDialog()
+                    sheet.dismiss()
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+    private fun showChangeUsernameDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            ChangeUsernameScreen(
+                onBack =  { sheet.dismiss() },
+                onSave = { newUsername ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        if (!newUsername.contains(" ") && newUsername.length > 1 && newUsername.length < 20 && !newUsername.contains(regex)) {
+                            val user = userRepository.updateLoginName(newUsername ?: "")
+                            if (user == null || user.username != newUsername) {
+                                userRepository.retrieveUser(false, forced = true)
+                            }
+                        }
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+    private fun showChangeDisplayNameDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            ChangeDisplayNameScreen(
+                onBack = { sheet.dismiss() },
+                onSave = { newDisplayName ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        userRepository.updateUser("profile.name", newDisplayName)
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+
 
     private fun showForgotPasswordDialog() {
         val input = EditText(requireContext())
@@ -321,6 +378,40 @@ class AccountPreferenceFragment :
         }
         alertDialog.addCancelButton()
         alertDialog.show()
+    }
+
+    private fun showAboutMeDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            AboutMeScreen (
+                onBack = { sheet.dismiss() },
+                onSave = { aboutText ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        userRepository.updateUser("profile.blurb", aboutText)
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+    private fun showPhotoUrlDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            PhotoUrlScreen(
+                onBack = { sheet.dismiss() },
+                onSave = { photoUrl ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        userRepository.updateUser("profile.imageUrl", photoUrl)
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
     }
 
     private fun showPasswordEmailConfirmation() {
@@ -376,44 +467,6 @@ class AccountPreferenceFragment :
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
             dialog.setAdditionalContentSidePadding(12)
-            dialog.show()
-        }
-    }
-
-    private fun showEmailDialog() {
-        val inflater = context?.layoutInflater
-        val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
-        val emailEditText = view?.findViewById<ValidatingEditText>(R.id.email_edit_text)
-        emailEditText?.text = user?.authentication?.localAuthentication?.email
-        emailEditText?.validator = { PatternsCompat.EMAIL_ADDRESS.matcher(it ?: "").matches() }
-        emailEditText?.errorText = getString(R.string.email_invalid)
-        emailEditText?.hint = context?.getString(R.string.email)
-        val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.password_edit_text)
-        if (user?.authentication?.hasPassword != true) {
-            passwordEditText?.isVisible = false
-        }
-        context?.let { context ->
-            val dialog = HabiticaAlertDialog(context)
-            dialog.setTitle(R.string.change_email)
-            dialog.addButton(R.string.change, true, false, false) { _, _ ->
-                KeyboardUtil.dismissKeyboard(activity)
-                emailEditText?.showErrorIfNecessary()
-                if (emailEditText?.isValid != true) return@addButton
-                lifecycleScope.launchCatching {
-                    userRepository.updateEmail(
-                        emailEditText.text.toString(),
-                        passwordEditText?.text.toString(),
-                    )
-                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                        userRepository.retrieveUser(true, true)
-                    }
-                    configurePreference(findPreference("email"), emailEditText.text.toString())
-                }
-                dialog.dismiss()
-            }
-            dialog.addCancelButton()
-            dialog.setAdditionalContentView(view)
-            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
             dialog.show()
         }
     }
