@@ -18,9 +18,12 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.habitrpg.android.habitica.R
+import androidx.lifecycle.MutableLiveData
 
-class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPasswordChanged: (oldPassword: String, newPassword: String) -> Unit = { _, _ -> }) : BottomSheetDialogFragment() {
+class ChangePasswordBottomSheet(
+    var onForgotPassword: () -> Unit? = {},
+    var onPasswordChanged: (oldPassword: String, newPassword: String) -> Unit = { _, _ -> }
+) : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
 
@@ -73,11 +76,10 @@ class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPas
                     ) {
                         ChangePasswordScreen(
                             onBack = { dismiss() },
-                            onSave = { oldPassword, newPassword ->
+                            onSave = { oldPassword, newPassword->
                                 onPasswordChanged(oldPassword, newPassword)
-                                dismiss()
                             },
-                            onForgotPassword = {
+                            onForgot = {
                                 onForgotPassword()
                                 dismiss()
                             }
@@ -87,7 +89,6 @@ class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPas
             }
         }
     }
-
 
     companion object {
         const val TAG = "ChangePasswordFragment"

@@ -628,6 +628,8 @@
     <string name="profile_summary">Edit your public profile.</string>
     <string name="display_name">Display Name</string>
     <string name="photo_url">Photo URL</string>
+    <string name="photo_url_description">You can display an image on your Habitica profile for others to see by adding a link to the image here.</string>
+    <string name="save_photo_url">Save Photo URL</string>
     <string name="login_name">Login Name</string>
     <string name="about">About</string>
     <string name="app_settings">App Settings</string>
@@ -635,7 +637,9 @@
     <string name="authentication_summary">Change your authentication options.</string>
     <string name="change_password">Change Password</string>
     <string name="change_email">Change Email Address</string>
+    <string name="change_email_description">This is the email address that you use to log in to Habitica, as well as receive notifications.</string>
     <string name="change_username">Change Username</string>
+    <string name="change_username_description">Usernames must be 1 to 20 characters, containing only letters a to z, numbers 0 to 9, hyphens, or underscores.</string>
     <string name="change">Change</string>
     <string name="character_level">Character Level</string>
     <string name="auto_allocate_points">Auto Allocate Points</string>
@@ -763,6 +767,8 @@
     <string name="username_copied">Username copied to clipboard</string>
     <string name="verification_pet">One of these Veteran Pets will be waiting for you after you’ve finished confirming!</string>
     <string name="welcomeNameTitle">What should we call you?</string>
+    <string name="change_display_name">Change Display Name</string>
+    <string name="display_name_description">This is the name that will be displayed for your avatar in Habitica. Unlike username, it does not have to be a unique identifier.</string>
     <string name="display_name_length_error">Display names must be between 1 and 30 characters</string>
     <string name="setup_task_join_habitica">Join Habitica (Check me off!)</string>
     <string name="setup_task_join_habitica_notes">You can either complete this To Do, edit it, or remove it.</string>
@@ -1223,6 +1229,8 @@
     <string name="my_account">My Account</string>
     <string name="public_profile">Public Profile</string>
     <string name="about_me">About Me</string>
+    <string name="about_me_description">Add a small blurb about yourself that will appear on your Habitica profile when others view it.</string>
+    <string name="save_about_me">Save About Me</string>
     <string name="api" translatable="false">API</string>
     <string name="account_info">Account Info</string>
     <string name="login_methods">Login Methods</string>

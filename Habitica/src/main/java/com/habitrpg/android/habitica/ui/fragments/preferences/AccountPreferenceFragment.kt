@@ -276,9 +276,9 @@ class AccountPreferenceFragment :
     }
 
     private fun showChangePasswordDialog() {
-        ChangePasswordBottomSheet(
-            onForgotPassword = { showForgotPasswordDialog() },
-            onPasswordChanged = { oldPassword, newPassword ->
+        ChangePasswordBottomSheet().also { changePasswordBottomSheet ->
+            changePasswordBottomSheet.onForgotPassword = { showForgotPasswordDialog() }
+            changePasswordBottomSheet.onPasswordChanged = { oldPassword, newPassword ->
                 lifecycleScope.launchCatching {
                     KeyboardUtil.dismissKeyboard(activity)
                     lifecycleScope.launchCatching {
@@ -289,12 +289,12 @@ class AccountPreferenceFragment :
                         )
                         response?.apiToken?.let {
                             viewModel.saveTokens(it, user?.id ?: "")
+                            changePasswordBottomSheet.dismiss()
                         }
                     }
                 }
             }
-        ).show(childFragmentManager, ChangePasswordBottomSheet.TAG)
-
+        }.show(childFragmentManager, ChangePasswordBottomSheet.TAG)
     }
 
     private fun showForgotPasswordDialog() {
