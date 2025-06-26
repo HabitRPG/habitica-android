@@ -9,11 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
@@ -57,7 +61,7 @@ fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean
                 color = HabiticaTheme.colors.textPrimary,
                 fontSize = 16.sp,
                 textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Normal,
                 lineHeight = 20.sp,
                 modifier =
                     Modifier
@@ -86,7 +90,7 @@ fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean
 @Composable
 fun PrivacyToggleView(title: String, description: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit, modifier: Modifier = Modifier, disabled: Boolean = false, isSetting: Boolean = false) {
     Row(modifier = modifier.fillMaxWidth()
-        .background(HabiticaTheme.colors.offsetBackground, RoundedCornerShape(16.dp))
+        .background(colorResource(if (LocalContext.current.isUsingNightModeResources()) R.color.gray_10 else R.color.gray_700), RoundedCornerShape(16.dp))
         .padding(vertical =16.dp)
         .padding(start = 16.dp, end = 12.dp)) {
         Column(
@@ -94,7 +98,7 @@ fun PrivacyToggleView(title: String, description: String, isChecked: Boolean, on
         ) {
             Text(
                 text = title,
-                style = HabiticaTheme.typography.titleMedium,
+                fontSize = 18.sp,
                 color = HabiticaTheme.colors.textPrimary,
                 modifier = Modifier.padding(bottom = 2.dp)
             )
@@ -108,7 +112,16 @@ fun PrivacyToggleView(title: String, description: String, isChecked: Boolean, on
         if (isSetting) {
             HabiticaCircularProgressView(indicatorSize = 48.dp, modifier = Modifier.align(Alignment.CenterVertically))
         } else {
-            Switch(checked = isChecked, onCheckedChange = { if (!disabled) onCheckedChange(!isChecked) }, modifier = Modifier.align(Alignment.CenterVertically).alpha(if (disabled) 0.5f else 1f),)
+            Switch(checked = isChecked,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_100) else colorResource(R.color.white),
+                    uncheckedThumbColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.gray_300) else colorResource(R.color.gray_200),
+                    checkedTrackColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_400) else colorResource(R.color.brand_100),
+                    checkedBorderColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_400) else colorResource(R.color.brand_100),
+                    uncheckedTrackColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.gray_50) else colorResource(R.color.gray_500),
+                    uncheckedBorderColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.gray_300) else colorResource(R.color.gray_200)
+                ),
+                onCheckedChange = { if (!disabled) onCheckedChange(!isChecked) }, modifier = Modifier.align(Alignment.CenterVertically).alpha(if (disabled) 0.5f else 1f),)
         }
     }
 }

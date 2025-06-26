@@ -38,6 +38,10 @@ class AuthenticationHandler {
     constructor(userID: String) {
         _userIDFlow.value = userID
     }
+
+    fun clear() {
+        _userIDFlow.value = null
+    }
 }
 
 @InstallIn(SingletonComponent::class)

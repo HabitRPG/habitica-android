@@ -247,8 +247,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                 Spacer(modifier = Modifier.weight(1f))
                 AnimatedVisibility(
                     loginScreenState == LoginScreenState.INITIAL,
-                    enter = fadeIn(tween(300, 500)) + expandVertically(tween(300, 400)),
-                    exit = fadeOut() + shrinkVertically(tween(300, 200))
+                    enter = fadeIn(tween(300, 500)) + expandVertically(tween(300, 400), clip = false),
+                    exit = fadeOut() + shrinkVertically(tween(300, 200), clip = false)
                 ) {
                     LoginInitialButtons({
                         loginScreenState = LoginScreenState.LOGIN

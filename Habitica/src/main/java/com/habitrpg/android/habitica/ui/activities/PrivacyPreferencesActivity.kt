@@ -70,7 +70,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                         .windowInsetsPadding(WindowInsets.systemBars)
                         .fillMaxSize()
                         .padding(horizontal = 12.dp)
-                        .padding(bottom = 24.dp)
+                        .padding(bottom = 24.dp, top = 72.dp)
             ) {
                 Column(
                     horizontalAlignment = Alignment.Start,
@@ -134,7 +134,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                             }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.brand_400)),
                                 shape = HabiticaTheme.shapes.small,
                                 modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth().heightIn(60.dp)) {
-                                Text(stringResource(R.string.accept_all))
+                                Text(stringResource(R.string.accept_all), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                             }
                             val colors = if (LocalContext.current.isUsingNightModeResources()) {
                                 ButtonDefaults.buttonColors().copy(containerColor = Color.White, contentColor = HabiticaTheme.colors.tintedUiSub)
@@ -150,7 +150,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                             }, colors = colors,
                                 shape = HabiticaTheme.shapes.small,
                                 modifier = Modifier.padding(bottom = 27.dp).fillMaxWidth().heightIn(60.dp)) {
-                                Text(stringResource(R.string.save_preferences))
+                                Text(stringResource(R.string.save_preferences), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -158,10 +158,10 @@ class PrivacyPreferencesActivity: BaseActivity() {
 
                 Button(
                     {},
-                    colors = ButtonDefaults.textButtonColors(),
+                    colors = ButtonDefaults.textButtonColors(contentColor = colorResource(if (isUsingNightModeResources()) R.color.brand_500 else R.color.brand_400)),
                     modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth()
                 ) {
-                    Text(stringResource(R.string.habiticas_privacy_policy))
+                    Text(stringResource(R.string.habiticas_privacy_policy), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }

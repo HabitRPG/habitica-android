@@ -61,7 +61,7 @@ fun LoginForm(
             },
             colors = ButtonDefaults.textButtonColors(),
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier.Companion.fillMaxWidth().padding(top = 24.dp, bottom = 8.dp)
+            modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 8.dp)
         ) {
             ProvideTextStyle(TextStyle(fontSize=18.sp)) {
                 AnimatedContent(isRegistering) {
