@@ -581,12 +581,19 @@ open class TaskRecyclerViewFragment :
             if (it != null) {
                 when (taskType) {
                     TaskType.TODO -> {
-                        viewModel.setActiveFilter(
-                            TaskType.TODO,
-                            viewModel.getTaskFilterPreference(TaskType.TODO)
-                        )
+                        // Handle case where a initial filter preference for to-dos were set for FILTER_ALL
+                        if (viewModel.getTaskFilterPreference(TaskType.TODO) == Task.FILTER_ALL) {
+                            viewModel.setActiveFilter(
+                                TaskType.TODO,
+                                Task.FILTER_ACTIVE
+                            )
+                        } else {
+                            viewModel.setActiveFilter(
+                                TaskType.TODO,
+                                viewModel.getTaskFilterPreference(TaskType.TODO)
+                            )
+                        }
                     }
-
                     TaskType.DAILY -> {
                         if (!viewModel.initialPreferenceFilterSet) {
                             viewModel.initialPreferenceFilterSet = true
