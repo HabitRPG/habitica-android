@@ -24,6 +24,13 @@ class SettingsFormBottomSheet : BottomSheetDialogFragment() {
 
     var content: @Composable () -> Unit = {}
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // this is a workaround to prevent the screen from appearing blank during config changes (Light/Dark mode change for example)
+        retainInstance = true
+    }
+
     override fun onStart() {
         super.onStart()
         val nightModeFlags = requireContext()

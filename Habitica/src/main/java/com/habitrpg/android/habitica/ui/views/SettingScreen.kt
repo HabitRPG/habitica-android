@@ -45,6 +45,7 @@ import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 
 @Composable
@@ -240,6 +241,11 @@ fun ComponentTextInput(
             edit.transformationMethod =
                 if (kind == FieldKind.PASSWORD) PasswordTransformationMethod.getInstance() else null
 
+            if (kind == FieldKind.MULTILINE) {
+                edit.inputType = edit.inputType or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                edit.height = 115.dpToPx(context = view.context)
+            }
+
             fun syncColors(focused: Boolean) {
                 val active = focused || edit.text?.isNotBlank() == true
                 val filledNotActive = !focused && edit.text?.isNotBlank() == true
@@ -356,6 +362,7 @@ fun ChangePasswordScreen(
 
 @Composable
 fun ChangeUsernameScreen(
+    initial: String,
     onBack: () -> Unit,
     onSave: (newUsername: String) -> Unit
 ) {
@@ -364,6 +371,7 @@ fun ChangeUsernameScreen(
             key = "username",
             labelRes = R.string.username,
             kind = FieldKind.TEXT,
+            initialValue = initial,
             validator = {
                 when {
                     it.isBlank() -> R.string.username_requirements
@@ -390,6 +398,7 @@ fun ChangeUsernameScreen(
 
 @Composable
 fun ChangeEmailScreen(
+    initialEmail: String,
     onBack: () -> Unit,
     onSave: (newEmail: String, password: String) -> Unit,
     onForgotPassword: () -> Unit
@@ -399,6 +408,7 @@ fun ChangeEmailScreen(
             key = "email",
             labelRes = R.string.email,
             kind = FieldKind.EMAIL,
+            initialValue = initialEmail,
             validator = { if (it.isBlank()) R.string.email_invalid else null }
         ),
         FieldConfig(
@@ -453,32 +463,35 @@ fun ChangeDisplayNameScreen(
 
 @Composable
 fun AboutMeScreen(
+    initial: String,
     onBack: () -> Unit,
     onSave: (aboutText: String) -> Unit
 ) {
     val fields = listOf(
         FieldConfig(
-            key = "about",
-            labelRes = R.string.about_me,
-            kind = FieldKind.MULTILINE
+            key          = "about",
+            labelRes     = R.string.about_me,
+            kind         = FieldKind.MULTILINE,
+            initialValue = initial
         )
     )
 
     ConfigurableFormScreen(
         FormScreenConfig(
-            titleRes = R.string.about_me,
-            descriptionRes = R.string.about_me_description,
-            fields = fields,
+            titleRes        = R.string.about_me,
+            descriptionRes  = R.string.about_me_description,
+            fields          = fields,
             submitButtonRes = R.string.save_about_me,
-            canSubmit = { true },
-            onSubmit = { vals -> onSave(vals["about"]!!.trim()) },
-            onBack = onBack
+            canSubmit       = { true },
+            onSubmit        = { vals -> onSave(vals["about"]!!.trim()) },
+            onBack          = onBack
         )
     )
 }
 
 @Composable
 fun PhotoUrlScreen(
+    initial: String,
     onBack: () -> Unit,
     onSave: (photoUrl: String) -> Unit
 ) {
@@ -486,7 +499,8 @@ fun PhotoUrlScreen(
         FieldConfig(
             key = "photoUrl",
             labelRes = R.string.photo_url,
-            kind = FieldKind.URI
+            kind = FieldKind.URI,
+            initialValue = initial
         )
     )
 
@@ -512,6 +526,7 @@ fun PhotoUrlScreen(
 fun PreviewChangeUsernameScreenDark() {
     HabiticaTheme {
         ChangeUsernameScreen(
+            initial = "",
             onBack = {},
             onSave = { }
         )
@@ -528,6 +543,7 @@ fun PreviewChangeEmailScreenDark() {
     HabiticaTheme {
         ChangeEmailScreen(
             onBack = {},
+            initialEmail = "",
             onSave = { newEmail, password -> },
             onForgotPassword = {}
         )
@@ -558,6 +574,7 @@ fun PreviewChangeDisplayNameScreenDark() {
 fun PreviewAboutMeScreenDark() {
     HabiticaTheme {
         AboutMeScreen(
+            initial = "",
             onBack = {},
             onSave = { }
         )
@@ -573,6 +590,7 @@ fun PreviewAboutMeScreenDark() {
 fun PreviewPhotoUrlScreenDark() {
     HabiticaTheme {
         PhotoUrlScreen(
+            initial = "",
             onBack = {},
             onSave = { }
         )

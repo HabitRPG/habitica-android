@@ -289,6 +289,7 @@ class AccountPreferenceFragment :
         val sheet = SettingsFormBottomSheet()
         sheet.content = {
             ChangeEmailScreen(
+                initialEmail = user?.authentication?.localAuthentication?.email ?: "",
                 onBack = { sheet.dismiss() },
                 onSave = { newEmail, password ->
                     lifecycleScope.launchCatching {
@@ -317,6 +318,7 @@ class AccountPreferenceFragment :
         val sheet = SettingsFormBottomSheet()
         sheet.content = {
             ChangeUsernameScreen(
+                initial = user?.username ?: "",
                 onBack =  { sheet.dismiss() },
                 onSave = { newUsername ->
                     lifecycleScope.launchCatching {
@@ -383,12 +385,12 @@ class AccountPreferenceFragment :
     private fun showAboutMeDialog() {
         val sheet = SettingsFormBottomSheet()
         sheet.content = {
-            AboutMeScreen (
-                onBack = { sheet.dismiss() },
-                onSave = { aboutText ->
+            AboutMeScreen(
+                initial = user?.profile?.blurb.orEmpty(),
+                onBack  = { sheet.dismiss() },
+                onSave  = { about ->
                     lifecycleScope.launchCatching {
-                        KeyboardUtil.dismissKeyboard(activity)
-                        userRepository.updateUser("profile.blurb", aboutText)
+                        userRepository.updateUser("profile.blurb", about)
                         sheet.dismiss()
                     }
                 }
@@ -397,10 +399,12 @@ class AccountPreferenceFragment :
         sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
     }
 
+
     private fun showPhotoUrlDialog() {
         val sheet = SettingsFormBottomSheet()
         sheet.content = {
             PhotoUrlScreen(
+                initial = user?.profile?.imageUrl ?: "",
                 onBack = { sheet.dismiss() },
                 onSave = { photoUrl ->
                     lifecycleScope.launchCatching {
