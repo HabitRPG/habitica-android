@@ -1066,7 +1066,6 @@
     <string name="user_is_blocked">Ви заблокували цього гравця</string>
     <string name="user_is_blocked_explanation">Заблокований користувач не може надсилати вам особисті повідомлення, але Ви все ще можете бачити його дописи.</string>
     <string name="finish">Закінчити</string>
-    <string name="login_disclaimer">Реєструючись, ви підтверджуєте, що прочитали та згодні з: <a href="https://habitica.com/static/terms">Умовами використання</a> та <a href="https://habitica.com/static/privacy">Політикою конфіденційності</a></string>
     <string name="you">Ви</string>
     <string name="invitation_title_no_leader">Вас запросили в команду</string>
     <string name="fortify_shop">Зілля зміцнення</string>

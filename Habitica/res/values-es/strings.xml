@@ -1114,7 +1114,6 @@
     <string name="survey_title">Formulario para usuarios de Habitica</string>
     <string name="create_task_description">Agrega una tarea para algo que te gustaría lograr esta semana</string>
     <string name="fedPetDescription">Cada mascota tiene una comida favorita específica. ¡Experimenta para descubrir cuál es la que hace crecer más rápido a tu mascota!</string>
-    <string name="login_disclaimer">Al registrarte, estás confirmando que has leído y estás de acuerdo con las <a href="https://habitica.com/static/terms">términos de servicio</a> y la <a href="https://habitica.com/static/privacy">política de privacidad.</a></string>
     <string name="empty_discover_description">¡Dirígete al submenú \"Gremios &gt; Descubre Gremios\" para encontrar uno del que formar parte!</string>
     <string name="x_remaining">%s restante</string>
     <string name="discard_changes_to_task_message">¿Está seguro de descartar los cambios de esta tarea\?</string>

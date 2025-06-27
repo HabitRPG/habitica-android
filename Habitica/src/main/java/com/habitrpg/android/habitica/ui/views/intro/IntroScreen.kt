@@ -229,7 +229,7 @@ fun IntroScreen(onNextOnboardingStep: () -> Unit) {
                 ),
                 shape = HabiticaTheme.shapes.large,
                 contentPadding = PaddingValues(15.dp),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
             ) {
                 if (pagerState.currentPage < pagerState.pageCount - 1) {
                     Text(stringResource(R.string.next_button), fontSize = 18.sp, fontWeight = FontWeight.Normal)

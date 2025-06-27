@@ -18,7 +18,11 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +61,12 @@ fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean
                         .fillMaxWidth()
             )
             Text(
-                stringResource(R.string.your_privacy_preferences_description),
+                AnnotatedString.fromHtml(
+                    stringResource(R.string.your_privacy_preferences_description),
+                    linkStyles = TextLinkStyles(style = SpanStyle(
+                        color = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_500) else colorResource(R.color.brand_400)
+                    ))
+                ),
                 color = HabiticaTheme.colors.textPrimary,
                 fontSize = 16.sp,
                 textAlign = TextAlign.Start,

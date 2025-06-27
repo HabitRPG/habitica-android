@@ -1058,7 +1058,6 @@
     <string name="theme_color">テーマカラー</string>
     <string name="theme_mode">テーマモード</string>
     <string name="dark_mode">ダークモード</string>
-    <string name="login_disclaimer">サインアップすることで<a href="https://habitica.com/static/terms">利用規約</a>と<a href="https://habitica.com/static/privacy">プライバシーポリシー</a>の内容に同意したものとみなします</string>
     <string name="finish">終了</string>
     <string name="user_is_blocked_explanation">ブロックしたユーザーからはプライベートメッセージを受けとれません。しかし、そのプレイヤーの投稿は見ることができます</string>
     <string name="user_is_blocked">このユーザーをブロックしています</string>

@@ -1033,7 +1033,6 @@
     <string name="block">Blokiraj</string>
     <string name="something_new">Novo</string>
     <string name="leave_delete_task">Napusti i Izbriši Zadatak</string>
-    <string name="login_disclaimer">Prijavljivanjem, ukazuješ da si pročitao/la i slažeš se s <a href="https://habitica.com/static/terms">Uvjetima pružanja usluge</a> i <a href="https://habitica.com/static/privacy">Pravilima o privatnosti.</a></string>
     <string name="leave_delete_x_tasks">Napusti i Izbriši %d Zadataka</string>
     <string name="empty_discover_description">Kreni do Otkrij kartice da pronađeš neke kojima se možeš pridružiti!</string>
     <string name="six_months_one_time">Jednokratna pretplata od 6 mjeseci</string>

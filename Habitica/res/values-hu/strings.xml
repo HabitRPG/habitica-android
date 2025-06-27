@@ -888,7 +888,6 @@
     <string name="theme_color">Téma színe</string>
     <string name="submit_feedback">Visszajelzés küldése</string>
     <string name="user_is_blocked_explanation">Egy tiltott játékos nem küldhet neked privát üzenetet, de továbbra is láthatod a bejegyzéseit</string>
-    <string name="login_disclaimer">A regisztrációval igazolod, hogy elolvastad és elfogadod a <a href="https://habitica.com/static/terms">Felhasználási feltételeket</a> és az <a href="https://habitica.com/static/privacy">Adatvédelmi szabályzatot</a></string>
     <string name="invitation_title_no_leader">Meghívtak egy csapatba</string>
     <string name="fortify_shop_description">Minden feladatot semleges értékre állít vissza (sárga színnel), és visszaállítja az elvesztett életerőt</string>
     <string name="purchase_immediately_description">A vásárlás után azonnal életbe lép!</string>

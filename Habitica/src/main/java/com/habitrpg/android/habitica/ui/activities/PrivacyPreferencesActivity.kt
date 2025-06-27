@@ -34,6 +34,7 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityComposeBinding
 import com.habitrpg.android.habitica.databinding.ActivityPartyInviteBinding
+import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.preferences.PrivacyToggleView
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
@@ -157,7 +158,9 @@ class PrivacyPreferencesActivity: BaseActivity() {
                 }
 
                 Button(
-                    {},
+                    {
+                        openBrowserLink("https://habitica.com/static/privacy")
+                    },
                     colors = ButtonDefaults.textButtonColors(contentColor = colorResource(if (isUsingNightModeResources()) R.color.brand_500 else R.color.brand_400)),
                     modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth()
                 ) {

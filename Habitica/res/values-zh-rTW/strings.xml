@@ -1082,7 +1082,6 @@
     <string name="claim_x_gems">要求 %d 的寶石</string>
     <string name="gift_one_get_one_purchase_banner">贈送一份訂閱即可免費獲得一份訂閱將到 %s</string>
     <string name="g1g1_promo_info_instructions">點選‘贈送訂閱’ 和填入您將贈送給予的帳號之使用者名稱。從那您將選取贈送訂閱的長度並且完成結帳。您的帳號將會自動獲得同贈送等級的訂閱為獎勵。</string>
-    <string name="login_disclaimer">透過註冊程序，您表示您已詳讀及同意其 <a href="https://habitica.com/static/terms">服務條款</a>和<a href="https://habitica.com/static/privacy">隱私權政策。</a></string>
     <string name="invitation_title_no_leader">您被邀請加入至一個隊伍</string>
     <string name="g1g1_promo_info_prompt">為了紀念這個隆重的聖誕佳節我們再次推出一個極特別的促銷。現在當您贈予給他人一份訂閱時，您也會得到一份免費相同的訂閱！</string>
     <string name="one_month_one_time">一次一個月的訂閱</string>

@@ -1104,7 +1104,6 @@
     <string name="disablePrivateMessages">Wyłącz prywatne wiadomości</string>
     <string name="block_user_description">Zablokowany użytkownik nie może napisać do Ciebie w wiadomości prywatnej, ale nadal będziesz widzieć jego posty.</string>
     <string name="block">Zablokuj</string>
-    <string name="login_disclaimer">Rejestrując się, oświadczasz, że zapoznałeś(-aś) i zgadzasz się na <a href="https://habitica.com/static/terms">Warunki korzystania z Usług</a> i naszą<a href="https://habitica.com/static/privacy">Politykę Prywatności.</a></string>
     <string name="you">Ty</string>
     <string name="invitation_title_no_leader">Zaproszono Cię do drużyny</string>
     <string name="fortify_shop">Mikstura Wzmocnienia</string>

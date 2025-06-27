@@ -1090,7 +1090,6 @@
     <string name="fortify_shop">Potion de fortification</string>
     <string name="invitation_title_no_leader">Vous avez reçu une invitation à rejoindre une équipe</string>
     <string name="you">Vous</string>
-    <string name="login_disclaimer">En vous inscrivant, vous confirmez avoir lu et accepté les <a href="https://habitica.com/static/terms">Termes du service</a> et le <a href="https://habitica.com/static/privacy">règles de confidentialité.</a></string>
     <string name="finish">Terminer</string>
     <string name="user_is_blocked_explanation">Un·e joueu·r·se bloqué·e ne peut vous envoyer de message privé mais vous verrez toujours leurs publications</string>
     <string name="user_is_blocked">Vous avez bloqué cette personne</string>

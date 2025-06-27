@@ -1164,7 +1164,6 @@
     <string name="user_is_blocked">You blocked this player</string>
     <string name="user_is_blocked_explanation">A blocked player cannot send you Private Messages but you will still see their posts</string>
     <string name="finish">Finish</string>
-    <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
     <string name="you">You</string>
     <string name="invitation_title_no_leader">You were invited to join a party</string>
     <string name="fortify_shop">Fortify Potion</string>
@@ -1597,7 +1596,29 @@
 </string>
     <string name="copy_token">Copy Token</string>
 
-
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_email">Continue with email</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="enjoy_getting_things_done">Enjoy having fun getting things done</string>
+    <string name="what_should_call_you">What should we call you?</string>
+    <string name="get_started">Get Started</string>
+    <string name="username_description">This is a unique name you can change later at any time!</string>
+    <string name="onboarding_step_avatar">You must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nSo how would you like to look? Don’t worry, you can change this later.</string>
+    <string name="onboarding_step_tasks">Looking good! Now, choose any categories you’d like to work on and we’ll create a few tasks to get started.\n\nWe’ll go to your task board after this!</string>
+    <string name="user_data">User Data</string>
+    <string name="privacy_preferences">Privacy Preferences</string>
+    <string name="privacy_preferences_summary">Change your privacy permissions</string>
+    <string name="your_privacy_preferences">Your Privacy Preferences</string>
+    <string name="your_privacy_preferences_description" formatted="false"><![CDATA[Habitica uses data from your device to analyze performance, handle support requests, and provide you with the best possible gamified experience. To do that, we need to request the following permissions. <br /><br />You can change this at any time. To learn more, review our <a href="https://habitica.com/static/privacy">Privacy Policy</a>]]>.</string>
+    <string name="performance_analytics"><![CDATA[Performance & Analytics]]></string>
+    <string name="performance_analytics_description">This is used to improve the user experience, performance, and services of Habitica. Our support team will also use this when handling requests and bug reports.</string>
+    <string name="strictlye_necessary_analytics">Strictly necessary</string>
+    <string name="strictlye_necessary_analytics_description">This is necessary data required by our app to function. This includes data like your preferences saved in settings as well as crash information.</string>
+    <string name="your_privacy_preferences_description_full">Habitica uses data from your device to analyze performance, handle support requests, and provide you with the best possible gamified experience. To do that, we need to request the following permissions.\n\nYou can change these at any time from your account settings.</string>
+    <string name="accept_all">Accept All</string>
+    <string name="habiticas_privacy_policy">Habitica\'s Privacy Policy</string>
+    <string name="save_preferences">Save Preferences</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -956,7 +956,6 @@
     <string name="fortify_shop">Эликсир укрепления</string>
     <string name="invitation_title_no_leader">Вас пригласили в команду</string>
     <string name="you">Вы</string>
-    <string name="login_disclaimer">Регистрируясь, вы подтверждаете, что прочитали и согласны с <a href="https://habitica.com/static/terms">Условиями предоставления услуг</a> and <a href="https://habitica.com/static/privacy">Политикой конфиденциальности.</a></string>
     <string name="finish">Завершить</string>
     <string name="user_is_blocked_explanation">Заблокированный игрок не может отправлять вам личные сообщение, но вы все еще будете видеть его посты</string>
     <string name="user_is_blocked">Вы заблокировали этого игрока</string>

@@ -1053,7 +1053,6 @@
     <string name="fortify_shop">稳固药水</string>
     <string name="invitation_title_no_leader">你被邀请加入队伍</string>
     <string name="you">你</string>
-    <string name="login_disclaimer">注册即表示你已阅读并同意<a href="https://habitica.com/static/terms">服务条款</a>和<a href="https://habitica.com/static/privacy">隐私政策。</a></string>
     <string name="finish">结束</string>
     <string name="user_is_blocked_explanation">被拉黑玩家无法向你发送私信，但你仍可以看到他的帖子</string>
     <string name="user_is_blocked">你已拉黑此玩家</string>

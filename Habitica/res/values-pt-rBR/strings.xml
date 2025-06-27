@@ -1078,7 +1078,6 @@
     <string name="fortify_shop">Poção de Fortificação</string>
     <string name="invitation_title_no_leader">Você foi convidado a participar de um Grupo</string>
     <string name="you">Você</string>
-    <string name="login_disclaimer">Ao se inscrever, você está indicando que leu e concorda com os <a href="https://habitica.com/static/terms">Termos de Serviço</a> e com a <a href="https://habitica.com/static/privacy">Política de Privacidade.</a></string>
     <string name="finish">Concluir</string>
     <string name="user_is_blocked_explanation">Um usuário bloqueado não pode lhe enviar mensagens privadas, mas você ainda verá suas postagens</string>
     <string name="user_is_blocked">Você bloqueou este usuário</string>
