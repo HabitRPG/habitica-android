@@ -1055,7 +1055,7 @@
     <string name="hatchedPetDescription">Ada banyak sekali Peliharaan untuk dikoleksi, kamu pasti punya satu yang favorit. Jika kamu beri makan, mereka bisa saja bertumbuh…</string>
     <string name="first_drop_explanation2">Pergi ke Item milikmu dan cobalah mengombinasikan telur barumu dengan Ramuan Penetas!</string>
     <string name="report_player_toolbar_title">laporkan%s</string>
-    <string name="subscribers_mythic_hourglasses"><i> Pelanggan menerima mystic hourglass pada tiga hari pertama setiap bulan. </i></string>
+    <string name="subscribers_mythic_hourglasses"><i> Pelanggan menerima jam pasir mistik pada tiga hari pertama setiap bulan. </i></string>
     <string name="resubscribe_description_gift">Ingin terus menerima keuntungan langganan\? Kamu dapat memulai langganan berulang untuk menjaga keuntunganmu aktif.</string>
     <string name="habitica_questions">Pertanyaan Habitica</string>
     <string name="could_not_find_user">Tidak dapat menemukan pemain</string>
@@ -1082,7 +1082,7 @@
     <string name="finish">Selesai</string>
     <string name="you">Kamu</string>
     <string name="task_display">Tampilan daftar Tugas</string>
-    <string name="use_skill">Gunakan Skill</string>
+    <string name="use_skill">Gunakan kemampuan</string>
     <string name="update_app_description">Kami terus merilis perbaikan baru, jadi pastikan untuk memeriksa Play Store untuk melihat apakah ada pembaruan yang tersedia.</string>
     <string name="use_saddle">Gunakan pelana</string>
     <string name="delete_challenge_task_title">Hapus Tugas Tantangan\?</string>
@@ -1109,7 +1109,7 @@
     <plurals name="items_pending">
         <item quantity="other">%d barang tertunda</item>
     </plurals>
-    <string name="g1g1_promo_info_limitations_noutc">Ini dalah event waktu terbatas yang mulai pada %1$s dan akan berakhir pada %2$s. promosi ini hanya berlaku ketika kamu menghadiahkan ke pemain Habitica lain. Jika kamu atau penerima hadiahmu sudah mempunyai langganan, langganan yang dihadiahkan akan menambahkan bulan-bulan kredit yang hanya akan digunakan setelah langganan saat ini dibatalkan atau kadaluarsa.</string>
+    <string name="g1g1_promo_info_limitations_noutc">Ini dalah event waktu terbatas yang mulai pada %1$s dan akan berakhir pada %2$s. promosi ini hanya berlaku ketika kamu menghadiahkan ke pemain Habitica lain. Jika kamu atau penerima hadiahmu sudah mempunyai langganan,hadiah langganan akanditambahkan dlam bentuk kredit bulanan yang hanya akan digunakan setelah langganan saat ini dibatalkan atau kadaluarsa.</string>
     <string name="clear_cache">bersihkan Cache</string>
     <string name="clear_cache_description">Untuk membersihkan cache, buka Setelan di ponsel. Buka Penyimpanan &gt; App &gt; Habitica, lalu ketuk Hapus Cache.</string>
     <string name="animal_tail">Ekor Hewan</string>
@@ -1157,7 +1157,7 @@
     <string name="unblock_user">Buka Blokir Pemain</string>
     <string name="block_user_title">Blokir %s\?</string>
     <string name="block_user_description">Pemain yang terblokir tidak dapat mengirimkan Pesan Pribadi kepadamu tapi kamu masih tetap bisa melihat postingan mereka.</string>
-    <string name="gems_description">Permata adalah mata uang yang dibeli dengan uang asli yang membolehkanmu untuk membeli konten ekstra di Habitica dan adalah salah satu sumber dukungan finansial untuk tim Habitica disamping paket langganan.
+    <string name="gems_description">Permata adalah mata uang yang dibeli dengan uang asli yang membolehkan kamu untuk membeli konten ekstra di Habitica dan adalah salah satu sumber dukungan finansial untuk tim Habitica disamping paket langganan.
 \n
 \nSemua Konten yang dibeli dengan Permata adalah murni fitur kosmetik atau bisa di peroleh secara gratis seiring waktu.
 \n
@@ -1203,4 +1203,17 @@
     <plurals name="repeat_yearly">
         <item quantity="other">setiap %d tahun</item>
     </plurals>
+    <string name="twelve_months_one_time">12 bulan</string>
+    <string name="quest_leave_message_nostart">Apakah kamu yakin kamu mau meninggalkan Misi ini\? Kamu tidak akan bisa berpartisipasi lagi.</string>
+    <string name="something_new">Baru</string>
+    <string name="launch_screen">Layar Utama</string>
+    <string name="cant_like_own_message">Tidak bisa menyukai pesanmu sendiri</string>
+    <string name="quest_leave_message">Apakah kamu yakin kamu mau meninggalkan misi\? Semua kemajuan misimu akan hilang.</string>
+    <string name="sidebar_teams">Tim</string>
+    <string name="team_information">Informasi Tim</string>
+    <string name="mystery_item_title">Kamu membuka Kotak Misteri dan menemukan…</string>
+    <string name="three_months_one_time">3 bulan</string>
+    <string name="one_month_one_time">1 bulan</string>
+    <string name="gift_one_get_one_purchase_banner">hadiahkan langganan dan dapatkan langganan secara gratis sampai %s</string>
+    <string name="six_months_one_time">6 bulan</string>
 </resources>
