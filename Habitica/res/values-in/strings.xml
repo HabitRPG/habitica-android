@@ -651,13 +651,13 @@
     <string name="usernamePromptDisclaimer">Nama pengguna harus sesuai dengan <a href="https://habitica.com/static/terms">Syarat Layanan</a> dan <a href="https://habitica.com/static/community-guidelines">Pedoman Komunitas</a>. Jika kamu sebelumnya belum membuat nama masuk, nama penggunamu akan dibuat otomatis.</string>
     <string name="stat_description">Semua karakter di Habitica memiliki 4 status (stat) yang berpengaruh pada permainan di Habitica.
 \n
-\n**Kekuatan (KUAT)** berpengaruh pada pukulan kritikal dan menaikkan dampak kerusakan pada Misi Boss. Prajurit dan Pencuri mendapat KUAT dari perlengkapan kelas mereka.
+\n**Kekuatan (STR)** berpengaruh pada pukulan kritikal dan menaikkan dampak kerusakan pada Boss misi. Profesi Prajurit dan Pencuri mendapat STR dari perlengkapan profesi mereka.
 \n
-\n**Ketahanan (THN)** berpengaruh pada kenaikan HP dan membuatmu lebih tahan serangan. Penyembuh dan Prajurit mendapat THN dari perlengkapan kelas mereka.
+\n**Ketahanan (CON)** berpengaruh pada kenaikan HP dan membuatmu lebih tahan serangan. Profesi Penyembuh dan Prajurit mendapat CON dari perlengkapan profesi mereka.
 \n
-\n**Kecerdasan (CRDS)** berpengaruh pada kenaikan EXP yang didapat dan memberimu lebih banyak Mana. Penyihir dan Penyembuh mendapat CRDS dari perlengkapan kelas mereka.
+\n**Kecerdasan (INT)** berpengaruh pada kenaikan EXP yang didapat dan memberimu lebih banyak Mana. Profesi Penyihir dan Penyembuh mendapat INT dari perlengkapan profesi mereka.
 \n
-\n**Persepsi (PERS)** berpengaruh pada banyaknya emas yang didapat dan seberapa sering mendapat item yang dijatuhkan. Pencuri dan Penyihir mendapat PERS dari perlengkapan kelas mereka.
+\n**Persepsi (PER)** berpengaruh pada banyaknya emas yang didapat dan seberapa sering mendapat item yang dijatuhkan. Profesi Pencuri dan Penyihir mendapat PER dari perlengkapan profesi mereka.
 \n
 \nSetelah mencapai level 10, kamu mendapat 1 Poin Stat pada setiap kenaikan level yang dapat kamu alokasikan pada stat yang kamu mau. Kamu juga bisa memakai perlengkapan dengan kombinasi kenaikan stat yang berbeda-beda.</string>
     <string name="empty_discover_description">Pergi ke tab Temukan untuk mencari yang lain untuk bergabung!</string>
@@ -692,13 +692,13 @@
     <string name="daily_tip_4">Sesekali evaluasi kembalilah tugasmu agar kamu tetap di jalur yang benar.</string>
     <string name="support_bug_title">Kami secara konsisten berusaha agar aplikasi kami lebih baik berdasarkan feedback dari pemain namun terkadang beberapa bug muncul…</string>
     <string name="contact_us">Hubungi Kami</string>
-    <string name="resubscribe_description">Masih ingin melanjutkan keuntunganmu\? Kamu dapat memulai berlangganan baru sebelum masa berlangganan ini selesai agar keuntunganmu tetap aktif.</string>
+    <string name="resubscribe_description">Masih ingin melanjutkan keuntunganmu\? Kamu dapat memulai langganan baru sebelum masa berlangganan ini selesai agar keuntunganmu tetap aktif.</string>
     <string name="remove_member_confirm">Apakah kamu yakin ingin mengeluarkan %s dari grup\?</string>
     <string name="transfer_ownership_confirm_message">Ini akan membuat %s sebagai pemimpin baru Party</string>
-    <string name="transfer_ownership_confirm">Memindahkan Kepimpinan\?</string>
+    <string name="transfer_ownership_confirm">Memindahkan Kepemimpinan\?</string>
     <string name="confirm_deletion">Konfirmasi penghapusan</string>
     <string name="leave_guild_challenges_confirmation">Apakah kamu ingin tetap berpartisipasi dalam Tantangan saat meninggalkan Perkumpulan\?</string>
-    <string name="leave_guild_confirmation">Apakah kamu yakin ingin keluar dari perkumpulan ini\?</string>
+    <string name="leave_guild_confirmation">Apakah kamu yakin ingin keluar dari guild ini\?</string>
     <string name="gift_confirmation_text_sub">Kamu mengirimkan %1$s berlangganan %2$s-bulan Habitica.</string>
     <string name="gift_confirmation_text_sub_g1g1">Kamu mengirimkan %1$s sebuah berlangganan %2$s-bulan dan berlangganan yang sama telah diterapkan pada akunmu melalui promo kami Beri Satu Dapat Satu!</string>
     <string name="update_available">Update tersedia: %1$s (%2$d)</string>
@@ -746,10 +746,10 @@
     <string name="guild_members">Anggota Guild</string>
     <string name="guild_summary">Ringkasan Guild</string>
     <string name="setup_task_habit_2_notes">Atau hapus ini dari layar edit</string>
-    <string name="setup_task_habit_2">Sentuh disini untuk mengedit ini menjadi kebiasaan buruk yang ingin kamu hentikan</string>
+    <string name="setup_task_habit_2">Sentuh disini untuk mengubah ini menjadi kebiasaan buruk yang ingin kamu tinggalkan</string>
     <string name="setup_task_habit_1_notes">Apakah itu Kebiasaan, Harian, atau To Do</string>
     <string name="setup_task_habit_1">Tambahkan tugas ke Habitica</string>
-    <string name="cost">Menggunakan</string>
+    <string name="cost">biaya</string>
     <string name="joined_guild">Kamu bergabung dengan guild</string>
     <string name="left_guild">Kamu meninggalkan guild</string>
     <string name="rejoin_guild">Kamu dapat bergabung kembali dengan guild ini melalui halaman Telusuri Guild</string>
@@ -765,30 +765,30 @@
     <string name="need_more_help">Butuh bantuan lebih lanjut\?</string>
     <string name="need_help_header_description">Post sebuah pesan di %s agar pertanyaanmu dapat dijawab oleh pemain lain.</string>
     <string name="from_balance">Dari Saldo</string>
-    <string name="purchase">Membeli</string>
+    <string name="purchase">Beli</string>
     <string name="preference_push_party_mention">\@Mentions di Party</string>
     <string name="more_out_of_habitica">Dapatkan yang lebih banyak lagi di Habitica</string>
-    <string name="gift_gems_disclaimer">Habitica tidak akan pernah meminta kamu untuk memberikan permata kepada pemain lain. Mengemis orang lain agar diberi permata adalah tindakan pelanggaran pada Pedoman Komunitas dan akan dilaporkan pada admin@habitica.com.</string>
-    <string name="gems_gift_description">Ingin menganugerahi Permata berkilauan kepada orang lain\?</string>
-    <string name="profile_gift_subscription">Memberikan
-\nBerlangganan</string>
-    <string name="profile_gift_gems">Memberikan
+    <string name="gift_gems_disclaimer">Habitica tidak akan pernah mengharuskan kamu untuk memberi permata kepada pemain lain. Mengemis permata ke orang ain adalah tindakan pelanggaran pada Pedoman Komunitas dan akan dilaporkan pada admin@habitica.com.</string>
+    <string name="gems_gift_description">Ingin memberikan Permata berkilauan kepada orang lain\?</string>
+    <string name="profile_gift_subscription">Hadiahkan
+\npaket langganan</string>
+    <string name="profile_gift_gems">Hadiahkan
 \nPermata</string>
-    <string name="profile_send_message">Mengirimkan
+    <string name="profile_send_message">Kirim
 \nPesan</string>
-    <string name="gift_gems">Memberikan Permata</string>
-    <string name="see_other_options">Lihat opsi lainnya</string>
-    <string name="promo_subscription_buy_gems_description">Jadilah Berlangganan untuk membeli Permata dengan emas, mendapatkan item misteri bulanan, meningkatkan drop caps dan masih banyak lagi!</string>
+    <string name="gift_gems">Hadiahkan Permata</string>
+    <string name="see_other_options">Lihat pilihan lainnya</string>
+    <string name="promo_subscription_buy_gems_description">Jadilah pelanggan untuk membeli Permata dengan emas, mendapatkan item misteri bulanan, tingkatkan drop caps dan masih banyak lagi!</string>
     <string name="promo_subscription_buy_gems_prompt">Butuh Permata\?</string>
     <string name="preference_push_party_activity">Aktifitas Party</string>
-    <string name="search_hint">Mencari tugas</string>
+    <string name="search_hint">cari tugas</string>
     <string name="search">Cari</string>
     <string name="complete">Selesai</string>
-    <string name="reject">Menolak</string>
-    <string name="accept">Menerima</string>
-    <string name="equip_automatically">Menggunakan otomatis perlengkapan baru</string>
-    <string name="leave_challenges_delete_tasks">Meninggalkan Tantangan dan Menghapus Tugas</string>
-    <string name="leave_challenges">Meninggalkan Tantangan</string>
+    <string name="reject">Tolak</string>
+    <string name="accept">Terima</string>
+    <string name="equip_automatically">Otomatis gunakan perlengkapan baru</string>
+    <string name="leave_challenges_delete_tasks">Tinggalkan Tantangan dan hapus Tugas</string>
+    <string name="leave_challenges">Tinggalkan Tantangan</string>
     <string name="keep_challenges">Menyimpan Tantangan</string>
     <string name="inviteFriendDescription">Kamu mengundang seorang teman (atau banyak teman) untuk bertualang bersamamu!</string>
     <string name="inviteFriendTitle">Mengundang Teman</string>
@@ -806,26 +806,26 @@
     <string name="partyOnTitle">Party On</string>
     <string name="partyUpDescription">Kamu bergabung dengan anggota party!</string>
     <string name="partyUpTitle">Party Up</string>
-    <string name="achievement_title">Kamu mendapatkan Pencapaian!</string>
-    <string name="view_achievements">Melihat Pencapaian</string>
+    <string name="achievement_title">Kamu mendapatkan sebuah Pencapaian!</string>
+    <string name="view_achievements">lihat Pencapaian</string>
     <string name="see_what_s_new">Lihat apa yang baru</string>
-    <string name="mystery_item_received">Kamumembuka kotak dan menerima %s</string>
-    <string name="removed_member">%s telah dibuang dari grup</string>
+    <string name="mystery_item_received">Kamu membuka kotak dan menerima %s</string>
+    <string name="removed_member">%s telah dikeluarkan dari grup</string>
     <string name="transfer">Memindahkan</string>
-    <string name="transferred_ownership">Kepimpinan dipindahkan ke %s</string>
+    <string name="transferred_ownership">Kepemimpinan dipindahkan ke %s</string>
     <string name="send_message">Mengirim Pesan</string>
     <string name="remove_member">Keluarkan Anggota</string>
-    <string name="transfer_ownership">Memindahkan Kepimpinan</string>
-    <string name="remove">Membuang</string>
+    <string name="transfer_ownership">serahkan Kepemimpinan</string>
+    <string name="remove">hapus</string>
     <string name="inbox_messages_title_nosender">%d pesan baru</string>
     <string name="inbox_messages_title">%1$d Pesan Baru dari %2$s</string>
     <string name="inbox_messages_title_single">Pesan Baru dari %1$s</string>
     <string name="sent_card">Kamu mengirimkan sebuah %s</string>
     <string name="app_theme">Tema App</string>
-    <string name="share_challenge_with">Membagikan Tantangan kepada</string>
+    <string name="share_challenge_with">bagikan Tantangan dengan</string>
     <string name="details">Detail</string>
-    <string name="switch_to_grid_view">Berpindah ke grid view</string>
-    <string name="switch_to_list_view">Berpindah ke list view</string>
+    <string name="switch_to_grid_view">Berganti ke grid view</string>
+    <string name="switch_to_list_view">berganti ke list view</string>
     <string name="special_achievements">Pencapaian Spesial</string>
     <string name="seasonal_achievements">Pencapaian Musiman</string>
     <string name="basic_achievements">Pencapaian Dasar</string>
@@ -833,37 +833,37 @@
     <string name="take_me_back">Bawa aku Kembali</string>
     <string name="unpin">Hapus pin</string>
     <string name="pin">Pin</string>
-    <string name="levelup_title_10">Sistem Pekerjaan Terbuka!</string>
-    <string name="levelup_detail_10">Pilihlah kelas yang sesuai dengan gaya permainanmu dan buka kemampuan khusus dan baju pelindung untuk membantumu di perjalanan</string>
+    <string name="levelup_title_10">Sistem kelas Terbuka!</string>
+    <string name="levelup_detail_10">Pilihlah kelas yang sesuai dengan gaya permainanmu dan buka skill spesial dan baju pelindung untuk membantu di perjalananmu</string>
     <string name="not_now">Tidak sekarang</string>
-    <string name="delete_reminder">Menghapus Pengingat</string>
-    <string name="delete_task">Menghapus Tugas</string>
-    <string name="invite_to_party">Mengundang ke Party</string>
+    <string name="delete_reminder">hapus Pengingat</string>
+    <string name="delete_task">hapus Tugas</string>
+    <string name="invite_to_party">undang ke Party</string>
     <string name="guild_bank">Bank Guild</string>
     <string name="i_agree_to_follow_the_guidelines">Saya setuju untuk mengikuti pedoman</string>
     <string name="garden">Taman</string>
     <string name="join_guild">Bergabung dengan Guild</string>
     <string name="invite_to_guild">Mengundang ke Guild</string>
     <string name="guild_description">Deskripsi Guild</string>
-    <string name="g1g1_info_2_text">Sentuh \"Memberikan Berlangganan\" dan ketik akun nama pengguna yang kamu berikan. Kemudian, pilih jangka waktu berlangganan yang ingin kamu berikan dan bayar. Akunmu secara otomatis akan diberikan hadiah berlangganan yang sama.</string>
+    <string name="g1g1_info_2_text">Sentuh \"Hadiahkan langganan\" dan ketik nama pengguna akun yang ingin kamu hadiahkan. Kemudian, pilih jangka waktu langganan yang ingin kamu hadiahkan dan bayar. Akunmu secara otomatis akan diberikan hadiah langganan yang sama.</string>
     <string name="g1g1_info_2">Bagaimana cara kerjanya</string>
-    <string name="gift_a_subscription">Berikan Berlangganan</string>
-    <string name="g1g1_info_1">Sebagai penghormatan musim pemberian ini kami menghadirkan kembali sebuah promosi yang sangat spesial. Sekarang ketika kamu memberikan seseorang sebuah berlangganan, kamu akan mendapatkan berlangganan yang sama secara cuma-cuma!</string>
+    <string name="gift_a_subscription">Hadiahkan langganan</string>
+    <string name="g1g1_info_1">Sebagai penghormatan musim pemberian ini kami menghadirkan kembali sebuah promosi yang sangat spesial. Sekarang ketika kamu memberikan seseorang sebuah langganan, kamu akan mendapatkan langganan yang sama secara cuma-cuma!</string>
     <string name="sale">Diskon</string>
     <string name="promo_g1g1_prompt">Event Beri Satu, Dapat Satu</string>
-    <string name="promo_g1g1_description">Berikan berlangganan sekarang dan dapatkan berlangganan yang sama gratis!</string>
+    <string name="promo_g1g1_description">Berikan langganan sekarang dan dapatkan langganan yang sama dengan gratis!</string>
     <string name="event">Event</string>
     <string name="member_group_plan">Anggota Rencana Grup</string>
     <string name="member">Anggota</string>
     <string name="owner">Pemilik</string>
-    <string name="cancel_subscription_group_plan_owner">Kamu memiliki berlangganan gratis karena kamu adalah pemilik Party atau Perkumpulan yang memiliki Rencana Grup. Ini dapat berakhir jika kamu membatalkan rencana tersebut. Bulan berlangganan ekstra yang tersisa yang kamu punya akan dimasukkan ke dalam Rencana Grup. Kamu dapat membatalkannya melalui situs Habitica.</string>
-    <string name="cancel_subscription_group_plan">Kamu memiliki berlangganan gratis karena kamu adalah anggota dari Party atau Perkumpulan yang mempunyai Rencana Grup. Ini dapat dibatalkan jika kamu meninggalkan grup atau Rencana Grup dibatalkan oleh sang pemilik. Bulan ekstra berlangganan tersisa yang kamu punya akan dimasukkan pada akhir Rencana Grup.</string>
+    <string name="cancel_subscription_group_plan_owner">Kamu memiliki langganan gratis karena kamu adalah pemilik Party atau Guild yang memiliki Rencana Grup. Langganan dapat berakhir jika kamu membatalkan rencana tersebut. Bulan-bulan langganan milikmu yang tersisa akan dimasukkan ke dalam Rencana Grup. Kamu dapat membatalkannya melalui situs Habitica.</string>
+    <string name="cancel_subscription_group_plan">Kamu memiliki langganan gratis karena kamu adalah anggota dari Party atau Guild yang mempunyai Rencana Grup. Langganan dapat dibatalkan jika kamu meninggalkan atau Rencana Grup dibatalkan oleh pemilik. Bulan-bulan ekstra dari langganan milikmu yang tersisa akan dimasukkan pada akhir Rencana Grup.</string>
     <string name="group_plan">Rencana Grup</string>
-    <string name="subscription_credit">Kredit Berlangganan</string>
+    <string name="subscription_credit">Kredit langganan</string>
     <string name="save_20">Hemat 20%</string>
-    <string name="gifted">Telah diberikan</string>
+    <string name="gifted">Telah dihadiahkan</string>
     <string name="resubscribe">Berlangganan Kembali</string>
-    <string name="renew_subscription">Memperbarui Berlangganan</string>
+    <string name="renew_subscription">perbarui langganan</string>
     <string name="thanks_for_supporting">Terima kasih telah berlangganan</string>
     <string name="subscribe_options_title">Pilih masa Berlangganan yang kamu inginkan</string>
     <string name="ending_on">Berakhir pada %s</string>
@@ -879,7 +879,7 @@
     <string name="invitation_title">%1$s mengundangmu untuk bergabung dengan grup %2$s</string>
     <string name="password_too_short">Kata sandimu harus setidaknya %d karakter</string>
     <string name="copy_username">Salin Nama Pengguna</string>
-    <string name="id_copied">Salin ID Pengguna ke clipboard</string>
+    <string name="id_copied">ID Pengguna di salin ke clipboard</string>
     <string name="copy_userid">Salin ID Pengguna</string>
     <string name="preference_push_unjoined_guild_mention">\@Mentions di Guild yang tidak diikuti</string>
     <string name="preference_push_joined_guild_mention">\@Mentions di Guild yang diikuti</string>
@@ -914,7 +914,7 @@
     <string name="learn_more">Pelajari lebih lanjut</string>
     <string name="g1g1_duration">17 Des sampai 6 Jan</string>
     <string name="limited_event">Event terbatas</string>
-    <string name="g1g1_info_3_text">Promo ini hanya berlaku jika kamu telah menghadiahkan pada Habitican lain. Jika kamu atau penerima hadiah telah berlangganan, maka hadiah berlangganan akan ditambahkan pada kredit yang hanya akan digunakan setelah masa berlangganan saat ini selesai atau dibatalkan.</string>
+    <string name="g1g1_info_3_text">Promo ini hanya berlaku jika kamu telah menghadiahkan pada Habitican lain. Jika kamu atau penerima hadiah telah berlangganan, maka hadiah langganan akan menambahkan kredit bulan yang hanya akan digunakan setelah masa berlangganan saat ini selesai atau dibatalkan.</string>
     <string name="g1g1_info_3">Batasan</string>
     <string name="quest_party_required_title">Kamu harus berada di dalam suatu Party sebelum memulai Misi</string>
     <string name="usernames_party">Party-nya %s</string>
@@ -928,18 +928,18 @@
 \n**Pulihkan Nyawa** dengan naik level, menggunakan Ramuan Penyembuh, atau dengan kemampuan penyembuh. 
 \n
 \nJika **Nyawa kamu sampai 0** kamu akan kehilangan satu level, semua Koin Emas, dan sebuah perlengkapan. Perlengkapan yang hilang bisa dibeli lagi nanti.</string>
-    <string name="experience_description">Poin Pengalaman / EXP merepresentasikan progressmu dan mempebolehkanmu untuk naik level. Kamu pada intinya akan **mendapatkan EXP** dengan menyelesaikan tugas atau misi, namun ada beberapa kelas yang dapat memberikan EXP.
+    <string name="experience_description">Poin Pengalaman / EXP merepresentasikan progressmu dan mempebolehkanmu untuk naik level. Kamu pada intinya akan **mendapatkan EXP** dengan menyelesaikan tugas atau misi, namun ada beberapa profesi yang dapat memberikan EXP.
 \n
 \nTugas dengan kesulitan yang lebih tinggi, atau yang diwarnai merah akan memberikanmu **EXP lebih banyak**. **Stat Kecerdasan** yang kamu miliki juga berpengaruh pada pemerolehan EXP.</string>
     <string name="gold_description">Koin Emas adalah **mata uang utama** dalam Habitica dan dapat kamu gunakan untuk membeli perlengkapan, misi, items, atau bahkan hadiah custom yang kamu buat sendiri.
 \n
-\n**Koin Emas diperoleh** dengan cara menyelesaikan tugas atau misi, atau melalui beberapa skill Kelas. **Stat Persepsi (Perception)** yang lebih tinggi membuatmu memperoleh Emas lebih banyak.
+\n**Peroleh koin emas** dengan cara menyelesaikan tugas atau misi, atau melalui beberapa skill profesi. **Stat Persepsi (Perception)** yang lebih tinggi membuatmu memperoleh lebih banyak emas.
 \n
-\nJika kamu berlangganan Habitica, maka kamu bahkan dapat menggunakan Koin Emas untuk membeli Permata yang jumlahnya bergantung dengan seberapa lama kamu telah berlangganan.</string>
+\nJika kamu berlangganan ke Habitica, maka kamu bahkan dapat menggunakan Koin Emas untuk membeli Permata yang jumlahnya bergantung dengan seberapa lama kamu telah berlangganan.</string>
     <string name="mana_points">Poin Mana</string>
-    <string name="mana_description">Poin Mana (MP) akan terbuka dengan sistem kelas pada level 10 dan membuatmu dapat **menggunakan Kemampuan** setelah kamu mempelajarinya pada level 11.
+    <string name="mana_description">Poin Mana (MP) akan terbuka dengan sistem profesi pada level 10 dan membuatmu dapat **menggunakan skill** setelah kamu mempelajarinya pada level 11.
 \n
-\nBeberapa **MP terisi** setiap pergantian hari, tetapi kamu dapat memperoleh lebih banyak lagi dengan menyelesaikan tugas atau menggunakan Kemampuan Penyihir.</string>
+\nBeberapa **MP terisi** setiap pergantian hari, tetapi kamu dapat memperoleh lebih banyak dengan menyelesaikan tugas atau menggunakan skill profesi Penyihir.</string>
     <string name="stat_allocation">Alokasi Stat</string>
     <string name="standard">Standar</string>
     <string name="premium_currency">Mata Uang Premium</string>
@@ -1038,4 +1038,169 @@
     <string name="gift_confirmation_text_gems_new">Anda mengirim @%1$s %2$s permata.</string>
     <string name="subscription_confirmation">Anda sekarang berlangganan selama 1 bulan</string>
     <string name="subscription_confirmation_multiple">Anda sekarang berlangganan selama %s bulan</string>
+    <string name="hourglasses_description">Mystic Hourglass adalah mata uang yang amat sangat langka yang hanya dapat kamu peroleh melalui berlangganan Habitica selama 3 bulan beruntun atau lebih. Kamu dapat menggunakannya di toko Penjelajah Waktu untuk membeli perlengkapan langganan yang telah lampau, peliharaan dan tunggangan eksklusif, background animasi, atau bahkan misi spesial! Keuntungan ekstra ini adalah cara yang bagus untuk tetap termotivasi sepanjang tahun dan menghadiahi dirimu untuk menyelesaikan tugas dengan baik.
+\n
+\nPelanggan akan menerima Mystic Hourglass pada awal setiap bulan, dengan banyak keuntungan lainya. Pastikan untuk melihat pilihan langganan kami jika kamu tertarik dengan apa yang penjelajah waktu tawarkan!</string>
+    <string name="manual_sync_restart_description">Terkadang aplikasi tidak memperbarui konten secara otomatis. Coba tarik untuk menyegarkan atau menutup paksa aplikasi dan membukanya kembali.</string>
+    <string name="delete_challenge_task_description">Tugas ini adalah satu dari %1$d tugas dari Tantangan \"%2$s\". Kamu harus meninggalkan Tantangan untuk menghapus tugas ini.</string>
+    <string name="pms_disabled_description">Kamu masih dapat mengirimkan pesan, namun orang lain tidak mengirimkan pesan padamu. Kamu bisa mengaktifkan pesan kembali dari Pengaturan.</string>
+    <string name="fall_promo_info_prompt">Gala Musim Gugur sedang berlangsung jadi kami pikir ini adalah waktu yang tepat untuk Diskon Permata! Sekarang kamu dapat memperoleh lebih banyak Permata daripada sebelumnya dalam setiap pembelian.</string>
+    <plurals name="repeat_monthly">
+        <item quantity="other">setiap %d bulan</item>
+    </plurals>
+    <string name="adventure_guide_description_new">Selesaikan target-target ini dan kamu akan mendapatkan &lt;b&gt;5 Pencapaian&lt;/b&gt; dan &lt;font color=#EE9109&gt;&lt;b&gt;100 Emas&lt;/b&gt;&lt;/font&gt; setelah kamu selesai!</string>
+    <string name="lets_get_started">Ayo mulai</string>
+    <string name="hatchedPetTitle">Menetaskan peliharaan</string>
+    <string name="fedPetTitle">Memberi makan peliharaan</string>
+    <string name="hatchedPetDescription">Ada banyak sekali Peliharaan untuk dikoleksi, kamu pasti punya satu yang favorit. Jika kamu beri makan, mereka bisa saja bertumbuh…</string>
+    <string name="first_drop_explanation2">Pergi ke Item milikmu dan cobalah mengombinasikan telur barumu dengan Ramuan Penetas!</string>
+    <string name="report_player_toolbar_title">laporkan%s</string>
+    <string name="subscribers_mythic_hourglasses"><i> Pelanggan menerima mystic hourglass pada tiga hari pertama setiap bulan. </i></string>
+    <string name="resubscribe_description_gift">Ingin terus menerima keuntungan langganan\? Kamu dapat memulai langganan berulang untuk menjaga keuntunganmu aktif.</string>
+    <string name="habitica_questions">Pertanyaan Habitica</string>
+    <string name="could_not_find_user">Tidak dapat menemukan pemain</string>
+    <string name="avatar_headband">Ikat kepala</string>
+    <string name="spooky_promo_info_prompt">Diskon Permata kembali menghantui hingga akhir Gala Musim Gugur tahun ini! Ini adalah kesempatan terakhir untuk mendapat Permata lebih banyak dari biasanya, jadi timbun sebanyak-banyaknya selagi bisa!</string>
+    <string name="create_guild">Buat Guild</string>
+    <string name="purchase_immediately_description">Efeknya langsung berlaku setelah pembelian!</string>
+    <string name="complete_task_description">Centang tugas manapun untuk memperoleh hadiah</string>
+    <string name="createdTaskDescription">Lanjutkan! Jika kamu perlu bantuan untuk merencanakan tugas, coba pikirkan hal apa yang ingin kamu lakukan pada waktu tertentu dalam sehari</string>
+    <string name="view_onboarding_tasks">Lihat Tugas Pengenalan</string>
+    <string name="block">Blokir</string>
+    <string name="action_end_challenge">Akhiri Tantangan</string>
+    <string name="end_challenge_description">Untuk mengakhiri Tantangan, masuk ke situs Habitica kemudian ketuk tombol \"Akhiri Tantangan\" pada layar Tantangan di sebelah kanan.</string>
+    <string name="you_won_challenge">Kamu memenangkan Tantangan</string>
+    <string name="open_website">Buka Situs</string>
+    <string name="fedPetDescription">Setiap Peliharaan punya satu jenis makanan yang mereka sukai! Bereksperimenlah untuk mencari tahu mana yang tercepat menumbuhkan Peliharaanmu</string>
+    <string name="first_drop_explanation1">Menyelesaikan tugas memberimu kesempatan untuk memperoleh telur, ramuan penetas, dan makanan peliharaan.</string>
+    <string name="x_to_y">%1$s ke %2$s</string>
+    <string name="fall_promo_info_instructions">Antara %1$s dan %2$s, cukup beli paket Permata mana saja dan akumu akan dikirimkan Permata dengan jumlah permata promosi. Semakin banyak Permata untuk digunakan, dibagikan, atau disimpan untuk kebutuhan mendatang!</string>
+    <string name="manual_sync_restart">Sinkronisasi manual atau mulai ulang</string>
+    <string name="update_app">Perbarui Aplikasi</string>
+    <string name="hatch_your_pet">Tetaskan Peliharaanmu</string>
+    <string name="how_it_works">Bagaimana cara kerjanya</string>
+    <string name="finish">Selesai</string>
+    <string name="you">Kamu</string>
+    <string name="task_display">Tampilan daftar Tugas</string>
+    <string name="use_skill">Gunakan Skill</string>
+    <string name="update_app_description">Kami terus merilis perbaikan baru, jadi pastikan untuk memeriksa Play Store untuk melihat apakah ada pembaruan yang tersedia.</string>
+    <string name="use_saddle">Gunakan pelana</string>
+    <string name="delete_challenge_task_title">Hapus Tugas Tantangan\?</string>
+    <string name="leave_delete_task">Tinggalkan &amp; Hapus Tugas</string>
+    <string name="purchase_amount_error">Kamu tidak dapat membeli sebanyak itu.</string>
+    <string name="still_questions">Masih ada pertanyaan\?</string>
+    <string name="feedPet_title">Beri makan peliharaan</string>
+    <string name="completedTaskDescription">Sebuah tugas bisa berupa Kebiasaan, harian, atau To do. Lanjutkan menyelesaikan mereka untuk mendapatkan berbagai hadiah!</string>
+    <string name="see_other_sub_options">Lihat pilihan berlangganan lainnya</string>
+    <string name="benefits_end">Keuntungan berakhir pada %s</string>
+    <string name="support">Dukungan</string>
+    <string name="suggest_pet_hatch_again_missing_both">Kamu membutuhkan sebuah %1$s dan ramuan %2$s untuk menetaskan hewan peliharaan ini lagi</string>
+    <string name="hatch_pet">Tetaskan Peliharaan</string>
+    <string name="magic_potions">Ramuan Ajaib</string>
+    <string name="magic_potion">Ramuan Ajaib</string>
+    <string name="broken_challenge_description">Tugas ini adalah satu dari %d Tugas yang merupakan bagian dari Tantangan yang sudah tidak lagi aktif. Apa yang ingin kamu lakukan pada Tugas ini\?</string>
+    <string name="pms_disabled">Pesan Pribadi dinonaktifkan</string>
+    <string name="gems_promo_info_limitations_fixed">Promosi ini hanya berlaku pada waktu event terbatas. event ini mulai pada %1$s (%2$s) dan akan berakhir pada %3$s (%4$s). tawaran promosi hanya tersedia ketika membeli permata untukmu sendiri.</string>
+    <string name="login_disclaimer">Dengan mendaftar, kamu menyatakan bahwa kamu telah membaca dan menyetujui <a href="https://habitica.com/static/terms">Persyaratan Layanan</a> dan <a href="https://habitica.com/static/privacy">Kebijakan Privasi.</a></string>
+    <string name="invitation_title_no_leader">Kamu diundang untuk bergabung dengan Party</string>
+    <string name="fortify_shop_description">Mengembalikan semua tugas ke nilai netral (warna kuning), dan mengembalikan semua Nyawa yang hilang</string>
+    <string name="congratulations">Selamat!</string>
+    <string name="won_achievement_description"><b>%s</b> memilihmu sebagai pemenang! Kemenanganmu telah tersimpan di Pencapaian.</string>
+    <plurals name="items_pending">
+        <item quantity="other">%d barang tertunda</item>
+    </plurals>
+    <string name="g1g1_promo_info_limitations_noutc">Ini dalah event waktu terbatas yang mulai pada %1$s dan akan berakhir pada %2$s. promosi ini hanya berlaku ketika kamu menghadiahkan ke pemain Habitica lain. Jika kamu atau penerima hadiahmu sudah mempunyai langganan, langganan yang dihadiahkan akan menambahkan bulan-bulan kredit yang hanya akan digunakan setelah langganan saat ini dibatalkan atau kadaluarsa.</string>
+    <string name="clear_cache">bersihkan Cache</string>
+    <string name="clear_cache_description">Untuk membersihkan cache, buka Setelan di ponsel. Buka Penyimpanan &gt; App &gt; Habitica, lalu ketuk Hapus Cache.</string>
+    <string name="animal_tail">Ekor Hewan</string>
+    <string name="delete_checklist_entry">Hapus…</string>
+    <string name="getting_started">Mulai</string>
+    <string name="leave_delete_x_tasks">Tinggalkan &amp; Hapus %d Tugas</string>
+    <string name="broken_challenge">Tantangan gagal</string>
+    <string name="common_questions">Pertanyaan umum</string>
+    <string name="pet_ownership_fraction">%1$d / %2$d</string>
+    <string name="suggest_pet_hatch_missing_potion">Kamu masih membutuhkansebuah ramuan %s untuk menetaskan hewan peliharaan ini</string>
+    <string name="subscriber_currency">Mata Uang Pelanggan</string>
+    <string name="onboarding_tasks">Tugas Pengenalan</string>
+    <string name="g1g1_promo_info_instructions">Ketuk \"Hadiahkan fitur Langganan\" dan ketik nama pengguna akun yang ingin kamu berikan. Kemudian, pilih jangka masa langganan yang ingin kamu berikan dan bayar. Akunmu secara otomatis akan diberikan hadiah langganan yang serupa.</string>
+    <plurals name="repeat_daily">
+        <item quantity="other">setiap %d hari</item>
+    </plurals>
+    <string name="avatar_accent">Aksesoris</string>
+    <string name="complete_for_gold">Selesaikan untuk memperoleh &lt;font color=#EE9109&gt;&lt;b&gt;100 Koin Emas&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="percent_completed">%d%% Terselesaikan</string>
+    <string name="hatch_pet_title">Tetaskan peliharaan baru</string>
+    <string name="purchase_equipment_description">Perlengkapan adalah sebuah cara untuk mengkustomisasi avatarmu dan meningkatkan stat</string>
+    <string name="createdTaskTitle">Tugas pertamamu dibuat</string>
+    <string name="completedTaskTitle">menyelesaikan tugas</string>
+    <string name="purchasedEquipmentDescription">Perlengkapan dapat berguna atau hanya sebagai penampilan semata. Tingkatkan stat milikmu untuk mendapatkan berbagai macam keuntungan pada avatarmu</string>
+    <string name="onboardingCompleteDescription">Jika kamu menginginkan lebih banyak, lihat bagian Pencapaian dan mulailah mengumpulkannya!</string>
+    <string name="onboardingComplete_achievement_title">Kamu menyelesaikan Tugas Pengenalanmu!</string>
+    <string name="excess_items">Item Berlebih</string>
+    <string name="purchaseX">Beli %d</string>
+    <string name="equip">Pakai</string>
+    <string name="unequip">Lepaskan</string>
+    <string name="suggest_pet_hatch_missing_egg">Kamu masih membutuhkan sebuah telur %s untuk menetaskan hewan peliharaan ini</string>
+    <string name="suggest_pet_hatch_missing_both">Kamu membutuhkan sebuah %1$s dan ramuan %2$s untuk menetaskan hewan peliharaan ini</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Kamu masih membutuhkan sebuah telur %s untuk menetaskan hewan peliharaan ini lagi</string>
+    <string name="can_hatch_pet">Kombinasikan Telur %1$s-mu dan Ramuan %2$s untuk menetaskan peliharaan ini!</string>
+    <string name="unhatched_pet">Peliharaan yang Belum Ditetaskan</string>
+    <string name="hatch_pet_again">Tetaskan Peliharaan lagi</string>
+    <string name="spooky_promo_info_instructions">Antara %1$s dan %2$s, cukup beli paket Permata mana saja dan akumu akan dikirimkan Permata dengan jumlah promosi permata! Semakin banyak Permata untuk digunakan, dibagikan, atau disimpan untuk kebutuhan mendatang!</string>
+    <string name="user_is_blocked_explanation">Pemain yang terblokir tidak dapat mengirimkan Pesan Pribadi kepadamu tapi kamu masih tetap bisa melihat postingan mereka.</string>
+    <string name="hatch">Tetaskan</string>
+    <string name="keep_x_tasks">Simpan %d Tugas</string>
+    <string name="challenge_task_name">Tugas Tantangan %s</string>
+    <string name="pet_category">Peliharaan %s</string>
+    <string name="mount_category">Tunggangan %s</string>
+    <string name="block_user">Blokir Pemain</string>
+    <string name="unblock_user">Buka Blokir Pemain</string>
+    <string name="block_user_title">Blokir %s\?</string>
+    <string name="block_user_description">Pemain yang terblokir tidak dapat mengirimkan Pesan Pribadi kepadamu tapi kamu masih tetap bisa melihat postingan mereka.</string>
+    <string name="gems_description">Permata adalah mata uang yang dibeli dengan uang asli yang membolehkanmu untuk membeli konten ekstra di Habitica dan adalah salah satu sumber dukungan finansial untuk tim Habitica disamping paket langganan.
+\n
+\nSemua Konten yang dibeli dengan Permata adalah murni fitur kosmetik atau bisa di peroleh secara gratis seiring waktu.
+\n
+\nkamu juga bisa menerima Permata dari hadiah yang diberikan pemain lain, hadiah tantangan, berkontribusi ke Habitica, atau berlangganan.</string>
+    <string name="animal_ears">Telinga Hewan</string>
+    <plurals name="repeat_weekly">
+        <item quantity="other">setiap %d minggu</item>
+    </plurals>
+    <string name="purchase_equipment_title">Beli Perlengkapan</string>
+    <string name="onboardingCompleteTitle">Kamu mendapatkan &lt;b&gt;5 Pencapaian&lt;/b&gt; dan &lt;font color=#EE9109&gt;&lt;b&gt;100 Koin Emas&lt;/b&gt;&lt;/font&gt; atas usahamu.</string>
+    <string name="create_guild_description">Untuk membuat Guild, masuk ke situs Habitica dan ketuk tombol \"Buat\" pada layar \"Guild Saya\".</string>
+    <string name="hurray">Hore!</string>
+    <string name="feedPet_description">Selesaikan tugas untuk mendapatkan makanan! Kamu dapat memberinya ke peliharaanmu dari Peliharaan &amp; Tunggangan</string>
+    <string name="hatch_pet_description">Selesaikan tugas untuk mendapatkan Ramuan Penetas dan Telur kemudian tetaskan peliharaanmu!</string>
+    <string name="fortify_shop">Ramuan Penguat</string>
+    <string name="delete_x_tasks">Hapus %d Tugas</string>
+    <string name="game_mechanics">Mekanika Game</string>
+    <string name="create_task_description">Tambahkan tugas untuk hal yang ingin kamu tuntaskan pekan ini</string>
+    <string name="excessItemsXLeft">Kamu hanya perlu %1$d %2$s untuk menetaskan semua hewan peliharaan yang mungkin. Apakah kamu yakin ingin membeli %3$d\?</string>
+    <string name="claim_x_gems">Klaim %d Permata</string>
+    <string name="read_more">Baca Lebih Lanjut</string>
+    <string name="disablePrivateMessages">Nonaktifkan Pesan Pribadi</string>
+    <string name="usually_x_gems">Biasanya %d Permata</string>
+    <string name="excessItemsNoneLeft">Kamu sudah memiliki semua yang kamu butuhkan untuk semua hewan peliharaan %1$s. Apakah kamu yakin ingin membeli %2$d %3$ss\?</string>
+    <string name="purchasedEquipmentTitle">Perlengkapan dibeli</string>
+    <string name="wacky">Aneh</string>
+    <plurals name="people">
+        <item quantity="other">%d orang</item>
+    </plurals>
+    <string name="your_progress">Kemajuanmu</string>
+    <string name="go_to_items">Buka Item</string>
+    <string name="first_drop_title">Kamu menemukan item baru!</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Kamu masih membutuhkan sebuah ramuan %s untuk menetaskan hewan peliharaan ini lagi</string>
+    <string name="limitations">Batasan</string>
+    <string name="view_gem_bundles">Lihat Paket Permata</string>
+    <string name="dark_mode">Mode Gelap</string>
+    <string name="theme_mode">Mode Tema</string>
+    <string name="theme_color">Warna Tema</string>
+    <string name="submit_feedback">Kirimkan Umpan Balik</string>
+    <string name="user_is_blocked">Kamu memblokir pemain ini</string>
+    <string name="won_achievement_description_noname">Kamu terpilih sebagai pemenang! Kemenanganmu telah tersimpan di Pencapaian.</string>
+    <string name="g1g1_promo_info_prompt">Untuk menghormati musim pemberian kami menghadirkan kembali sebuah promosi yang sangat spesial. Sekarang kapanpun kamu memberikan seseorang langganan, kamu akan dapat langganan yang serupa secara cuma-cuma!</string>
+    <plurals name="repeat_yearly">
+        <item quantity="other">setiap %d tahun</item>
+    </plurals>
 </resources>
