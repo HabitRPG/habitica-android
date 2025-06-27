@@ -215,6 +215,9 @@ object DataBindingUtils {
         tempMap["Pet_HatchingPotion_Fungi"] = "gif"
         tempMap["shop_armoire"] = "gif"
         tempMap["Pet_HatchingPotion_Cryptid"] = "gif"
+        tempMap["Mount_Head_Dragon-Hydra"] = "gif"
+        tempMap["Mount_Body_Dragon-Hydra"] = "gif"
+        tempMap["stable_Mount_Icon_Dragon-Hydra"] = "gif"
         FILEFORMAT_MAP = tempMap
 
         val tempNameMap = mutableMapOf<String, String>()
