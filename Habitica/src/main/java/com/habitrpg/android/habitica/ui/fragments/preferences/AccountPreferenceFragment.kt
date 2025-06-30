@@ -341,6 +341,7 @@ class AccountPreferenceFragment :
         val sheet = SettingsFormBottomSheet()
         sheet.content = {
             ChangeDisplayNameScreen(
+                initial = user?.profile?.name ?: "",
                 onBack = { sheet.dismiss() },
                 onSave = { newDisplayName ->
                     lifecycleScope.launchCatching {

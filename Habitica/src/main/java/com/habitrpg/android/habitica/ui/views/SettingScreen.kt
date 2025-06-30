@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
+import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatEditText
@@ -244,6 +245,8 @@ fun ComponentTextInput(
             if (kind == FieldKind.MULTILINE) {
                 edit.inputType = edit.inputType or InputType.TYPE_TEXT_FLAG_MULTI_LINE
                 edit.height = 115.dpToPx(context = view.context)
+                edit.gravity = Gravity.TOP and Gravity.START
+                edit.isVerticalScrollBarEnabled = true
             }
 
             fun syncColors(focused: Boolean) {
@@ -436,6 +439,7 @@ fun ChangeEmailScreen(
 
 @Composable
 fun ChangeDisplayNameScreen(
+    initial: String,
     onBack: () -> Unit,
     onSave: (newDisplayName: String) -> Unit
 ) {
@@ -444,7 +448,8 @@ fun ChangeDisplayNameScreen(
             key = "displayName",
             labelRes = R.string.display_name,
             kind = FieldKind.TEXT,
-            validator = { if (it.isBlank()) R.string.display_name_length_error else null }
+            validator = { if (it.isBlank()) R.string.display_name_length_error else null },
+            initialValue = initial
         )
     )
 
@@ -559,6 +564,7 @@ fun PreviewChangeEmailScreenDark() {
 fun PreviewChangeDisplayNameScreenDark() {
     HabiticaTheme {
         ChangeDisplayNameScreen(
+            initial = "displayName",
             onBack = {},
             onSave = { }
         )
