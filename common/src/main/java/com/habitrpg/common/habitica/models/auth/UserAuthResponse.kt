@@ -12,4 +12,5 @@ class UserAuthResponse {
         }
     var newUser = false
     var id: String = ""
+    var userExists = true
 }

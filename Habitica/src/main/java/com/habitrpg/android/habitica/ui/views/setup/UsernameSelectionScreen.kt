@@ -188,10 +188,10 @@ fun UsernameSelectionScreen(
                         Button(
                             onClick = {
                                 scope.launchCatching {
-                                    if (authenticationViewModel.user.value == null) {
-                                        authenticationViewModel.register()
+                                    if (authenticationViewModel.isRegistering.value) {
+                                        authenticationViewModel.completeRegistration()
                                     } else {
-                                        authenticationViewModel.updateUsername(username)
+                                        authenticationViewModel.updateUsername()
                                     }
                                     onNextOnboardingStep()
                                 }

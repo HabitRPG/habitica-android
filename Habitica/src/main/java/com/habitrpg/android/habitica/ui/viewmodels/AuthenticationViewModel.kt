@@ -41,6 +41,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -60,48 +61,28 @@ class AuthenticationViewModel @Inject constructor(
     val email = mutableStateOf("")
     val password = mutableStateOf("")
     val username = mutableStateOf("")
-
     val user = mutableStateOf<User?>(null)
+    val isRegistering = mutableStateOf(false)
 
     private val _showAuthProgress = MutableStateFlow(false)
-    val showAuthProgress: Flow<Boolean> = _showAuthProgress
-    val isRegistering = MutableStateFlow(false)
     private val _authenticationError: MutableSharedFlow<AuthenticationErrors?> = MutableSharedFlow()
+    private val _authenticationSuccess = MutableStateFlow<Boolean?>(null)
+    private val _socialAuthNeedsRegistration = MutableStateFlow(false)
+    private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
+    private var _usernameIssues = MutableStateFlow<String?>(null)
+
+    val showAuthProgress: Flow<Boolean> = _showAuthProgress
     val authenticationError: Flow<AuthenticationErrors?> = _authenticationError
         .onEach { _showAuthProgress.value = false }
-    private val _authenticationSuccess = MutableStateFlow<Boolean?>(null)
     val authenticationSuccess: Flow<Boolean> = _authenticationSuccess
         .filterNotNull()
         .onEach { _showAuthProgress.value = false }
-    private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
+    val socialAuthNeedsRegistration: Flow<Boolean> = _socialAuthNeedsRegistration
+        .filterNotNull()
+        .filter { it }
+        .onEach { _showAuthProgress.value = false }
     val isUsernameValid: Flow<Boolean?> = _isUsernameValid
-    private var _usernameIssues = MutableStateFlow<String?>(null)
     val usernameIssues: Flow<String?> = _usernameIssues
-
-    fun validateInputs(
-        username: String,
-        password: String,
-        email: String? = null,
-        confirmPassword: String? = null,
-    ): AuthenticationErrors? {
-        if (username.isBlank() || password.isBlank()) {
-            return AuthenticationErrors.MISSING_FIELDS
-        }
-        if (isRegistering.value) {
-            if (email.isNullOrBlank()) {
-                return AuthenticationErrors.MISSING_FIELDS
-            }
-            if (password.length < configManager.minimumPasswordLength()) {
-                return AuthenticationErrors.PASSWORD_TOO_SHORT.apply {
-                    minPasswordLength = configManager.minimumPasswordLength()
-                }
-            }
-            if (password != confirmPassword) {
-                return AuthenticationErrors.PASSWORD_MISMATCH
-            }
-        }
-        return null
-    }
 
     fun checkUsername() {
         _showAuthProgress.value = true
@@ -260,6 +241,9 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
+    private var googleIdTokenCredential: GoogleIdTokenCredential? = null
+    private var accessToken: String? = null
+
     private suspend fun handleSignIn(context: Context, result: GetCredentialResponse) {
         val credential = result.credential
 
@@ -281,10 +265,9 @@ class AuthenticationViewModel @Inject constructor(
                         val result = Identity.getAuthorizationClient(context)
                             .authorize(authorizationRequest).await()
                         if (result != null && result.accessToken != null) {
-                            val response = result.accessToken?.let {
-                                apiClient.connectSocial("google", googleIdTokenCredential.id, it, false)
-                            }
-                            handleAuthResponse(response)
+                            this.googleIdTokenCredential = googleIdTokenCredential
+                            this.accessToken = result.accessToken
+                            attemptSocialLogin(false)
                         }
                     } catch (e: GoogleIdTokenParsingException) {
                         authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
@@ -303,9 +286,34 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun updateUsername(username: String) {
+    suspend fun attemptSocialLogin(allowRegister: Boolean) {
+        val tokenId = googleIdTokenCredential?.id ?: return
+        val token = accessToken ?: return
+        val response = apiClient.connectSocial("google", tokenId, token, allowRegister)
+        Log.d("AuthenticationViewModel", "Social auth response: $response")
+        if (response?.userExists == false) {
+            _socialAuthNeedsRegistration.value = true
+        } else {
+            handleAuthResponse(response)
+        }
+    }
+
+    fun updateUsername() {
         viewModelScope.launchCatching {
-            apiClient.updateUsername(username)
+            apiClient.updateUsername(username.value)
+        }
+    }
+
+    fun startedSocialAuth(): Boolean {
+        return googleIdTokenCredential != null && accessToken != null
+    }
+
+    suspend fun completeRegistration() {
+        if (startedSocialAuth()) {
+            attemptSocialLogin(true)
+            updateUsername()
+        } else {
+            register()
         }
     }
 }

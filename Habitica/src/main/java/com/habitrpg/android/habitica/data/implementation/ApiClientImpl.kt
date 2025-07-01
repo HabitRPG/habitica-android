@@ -58,6 +58,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
@@ -80,18 +81,38 @@ class ApiClientImpl(
 
     private lateinit var apiService: ApiService
 
-    private fun <T> processResponse(habitResponse: HabitResponse<T>): T? {
-        habitResponse.notifications?.let {
+    private fun <T> processResponse(response: Response<HabitResponse<T>>): T? {
+        val habitResponse = response.body()
+        habitResponse?.statusCode = response.code()
+        habitResponse?.notifications?.let {
             notificationsManager.setNotifications(it)
         }
-        return habitResponse.data
+        return habitResponse?.data
     }
 
-    private suspend fun <T> process(apiCall: suspend () -> HabitResponse<T>): T? {
+    private suspend fun <T> process(apiCall: suspend () -> Response<HabitResponse<T>>): T? {
+        return process(apiCall, null, true, false)
+    }
+
+    private suspend fun <T> process(apiCall: suspend () -> Response<HabitResponse<T>>,
+                                    onError: ((Throwable) -> T?)? = null,
+                                    propagateError: Boolean = true,
+                                    returnOnError: Boolean = false): T? {
         try {
             return processResponse(apiCall())
         } catch (throwable: Throwable) {
-            accept(throwable)
+            if (onError != null) {
+                if (returnOnError) {
+                    return onError(throwable)
+                } else {
+                    onError(throwable)
+                }
+                if (propagateError) {
+                    accept(throwable)
+                }
+            } else {
+                accept(throwable)
+            }
         }
         return null
     }
@@ -234,7 +255,20 @@ class ApiClientImpl(
         auth.authResponse = authResponse
         auth.allowRegister = allowRegister
 
-        return process { this.apiService.connectSocial(auth) }
+        return try {
+            val response = this.apiService.connectSocial(auth)
+            if (response.code() == 404) {
+                UserAuthResponse().apply {
+                    userExists = false
+                }
+            } else {
+                processResponse(response)
+            }
+        } catch(e: Exception) {
+            UserAuthResponse().apply {
+                userExists = false
+            }
+        }
     }
 
     override suspend fun disconnectSocial(network: String): Void? {
@@ -533,7 +567,7 @@ class ApiClientImpl(
         foodKey: String
     ): FeedResponse? {
         val response = apiService.feedPet(petKey, foodKey)
-        response.data?.message = response.message
+        response.body()?.data?.message = response.body()?.message
         return process { response }
     }
 

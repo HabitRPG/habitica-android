@@ -72,6 +72,9 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
         authenticationViewModel.authenticationSuccess.collect { isRegistering ->
             onNextOnboardingStep(isRegistering)
         }
+        authenticationViewModel.socialAuthNeedsRegistration.collect {
+            onNextOnboardingStep(true)
+        }
     }
 
     val coroutineScope = rememberCoroutineScope()
