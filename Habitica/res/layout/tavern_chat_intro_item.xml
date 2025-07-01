@@ -72,6 +72,8 @@
         android:layout_height="42dp"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
         android:layout_marginBottom="8dp"
         android:lineSpacingMultiplier="1.0"
         android:text="Start chatting below! Remember to be friendly and follow the Community Guidelines."
