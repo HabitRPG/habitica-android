@@ -1601,6 +1601,4 @@
     <string name="unlocks_x_gems_per_month">他们每月可在商店解锁%d颗宝石</string>
     <string name="two_gems_per_month_gift">他们在订阅期间每月可获取+2宝石</string>
     <string name="use_skill">使用技能</string>
-    <string name="chat_empty_state"><b>开始畅聊吧！</b>
-\n请保持友好交流，并遵守《社区准则》。</string>
 </resources>

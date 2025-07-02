@@ -1620,7 +1620,5 @@
     </plurals>
     <string name="next_switch_in_x">Prochaine sélection dans %s</string>
     <string name="register_tos_confirm">Vous acceptez nos <a href="https://habitica.com/static/terms">Conditions d\'Utilisation</a> et avez lu notre <a href="https://habitica.com/static/privacy">Politique de Confidentialité</a>.</string>
-    <string name="chat_empty_state"><b>Commencez à papoter !</b>
-\nN\'oubliez pas d\'être aimable et de suivre le Guide de la Communauté.</string>
     <string name="use_skill">Utiliser une Compétence</string>
 </resources>
