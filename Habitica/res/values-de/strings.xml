@@ -1329,4 +1329,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
 \n
 \nDurch das Verlassen der Party, wird auch die aktuelle Quest abgebrochen.</string>
     <string name="see_other_sub_options">Siehe weitere Optionen fürs Abonnement</string>
+    <string name="send_invite">Einladung verschicken</string>
+    <string name="report_player_toolbar_title">Melde %s</string>
 </resources>
