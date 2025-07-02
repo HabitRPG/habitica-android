@@ -1325,4 +1325,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="level_abbreviated">Level %d</string>
     <string name="insufficient_level_equipment_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
     <string name="change_class_confirmation_message">Dadurch wird die Ausrüstung in den Geschäften freigeschaltet und die verfügbaren Fertigkeiten ändern sich.</string>
+    <string name="rejoin_party_quest_leader">Du kannst dich dieser Party nur wieder anschließen, wenn du eingeladen wirst.
+\n
+\nDurch das Verlassen der Party, wird auch die aktuelle Quest abgebrochen.</string>
+    <string name="see_other_sub_options">Siehe weitere Optionen fürs Abonnement</string>
 </resources>
