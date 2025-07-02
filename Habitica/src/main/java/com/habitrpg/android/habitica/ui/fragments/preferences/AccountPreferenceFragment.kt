@@ -271,6 +271,10 @@ class AccountPreferenceFragment :
                         )
                         response?.apiToken?.let {
                             viewModel.saveTokens(it, user?.id ?: "")
+                            (activity as? SnackbarActivity)?.showSnackbar(
+                                content = getString(R.string.password_changed),
+                                displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                            )
                             sheet.dismiss()
                         }
                     }
