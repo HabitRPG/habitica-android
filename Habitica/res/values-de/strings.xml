@@ -1335,4 +1335,5 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="subscribers_mythic_hourglasses"><i>Abonnenten erhalten mystische Sanduhren innerhalb der ersten drei Tage des Monats.</i></string>
     <string name="assigned_to">Zugewiesen zu</string>
     <string name="completed_at">Erledigt am %s</string>
+    <string name="benefits_end">Ende der Vorteile %s</string>
 </resources>
