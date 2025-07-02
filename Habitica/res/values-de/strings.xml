@@ -1331,4 +1331,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="see_other_sub_options">Siehe weitere Optionen fürs Abonnement</string>
     <string name="send_invite">Einladung verschicken</string>
     <string name="report_player_toolbar_title">Melde %s</string>
+    <string name="resubscribe_description_gift">Möchten Sie weiterhin die Vorteile eines Abonnements nutzen\? Sie können ein wiederkehrendes Abonnement abschließen, um Ihre Vorteile beizubehalten.</string>
+    <string name="subscribers_mythic_hourglasses"><i>Abonnenten erhalten mystische Sanduhren innerhalb der ersten drei Tage des Monats.</i></string>
+    <string name="assigned_to">Zugewiesen zu</string>
+    <string name="completed_at">Erledigt am %s</string>
 </resources>
