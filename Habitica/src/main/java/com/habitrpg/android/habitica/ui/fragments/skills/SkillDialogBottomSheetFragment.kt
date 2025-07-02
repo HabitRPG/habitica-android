@@ -21,12 +21,13 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
         private const val ARG_SKILL_MP_COST = "skill_mp_cost"
 
         fun newInstance(
-            skillTitle: String,
-            skillDescription: String,
-            skillMpCost: String,
-            skillPath: String,
-            skillKey: String,
-            resourceIcon: Drawable,
+            skillTitle: String? = "",
+            skillDescription: String? = "",
+            skillMpCost: String? = "",
+            skillPath: String? = "",
+            skillKey: String? = "",
+            resourceIcon: Drawable? = null,
+            isTransformationItem: Boolean = false,
             onUseSkill: () -> Unit
         ): SkillDialogBottomSheetFragment {
             return SkillDialogBottomSheetFragment().apply {
@@ -36,9 +37,10 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
                     putString(ARG_SKILL_MP_COST, skillMpCost)
                 }
                 this.resourceIcon = resourceIcon
-                this.skillKey = skillKey
-                this.skillPath = skillPath
+                this.skillKey = skillKey ?: ""
+                this.skillPath = skillPath ?: ""
                 this.onUseSkill = onUseSkill
+                this.isTransformationItem = isTransformationItem
             }
         }
     }
@@ -47,6 +49,7 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
     private var resourceIcon: Drawable? = null
     var skillKey = ""
     var skillPath = ""
+    var isTransformationItem: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +65,7 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
                     title = requireArguments().getString(ARG_SKILL_TITLE) ?: "",
                     description = requireArguments().getString(ARG_SKILL_DESCRIPTION) ?: "",
                     mpCost = requireArguments().getString(ARG_SKILL_MP_COST) ?: "",
+                    isTransformationItem = isTransformationItem,
                     onUseSkill = {
                         onUseSkill?.invoke()
                         dismiss()

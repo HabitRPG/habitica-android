@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,6 +73,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -279,14 +281,25 @@ fun PartyInviteView(
                             inviteButtonState = LoadingButtonState.CONTENT
                         }
                     }) {
-                        val responses = viewModel.sendInvites()
-                        if ((responses?.size ?: 0) > 0) {
+                        val responses: List<InviteResponse>? = viewModel.sendInvites()
+                        if (!responses.isNullOrEmpty()) {
                             inviteButtonState = LoadingButtonState.SUCCESS
-                            delay(2.toDuration(DurationUnit.SECONDS))
+                            // we are not differentiating between user and email invites here, however in the event we do - we can handle it
+                            responses.forEach { resp ->
+                                when (resp) {
+                                    is InviteResponse.UserInvite -> {
+                                        // UserInvite is a UUID
+                                    }
+                                    is InviteResponse.EmailInvite -> {
+                                        // EmailInvite is an email address
+                                    }
+                                }
+                            }
+                            delay(2.seconds)
                             dismiss()
                         } else {
                             inviteButtonState = LoadingButtonState.FAILED
-                            delay(2.toDuration(DurationUnit.SECONDS))
+                            delay(2.seconds)
                             inviteButtonState = LoadingButtonState.CONTENT
                         }
                     }

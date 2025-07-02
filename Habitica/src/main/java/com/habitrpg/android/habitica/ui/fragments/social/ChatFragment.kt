@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -140,11 +142,41 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 }
             }
         }
-        binding?.chatBarView?.let { applyScrollContentWindowInsets(it) }
+        
+        binding?.root.apply {
+            ViewCompat.setOnApplyWindowInsetsListener(this!!) { _, insets ->
+                val ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+
+                binding?.chatBarView?.translationY = -ime.toFloat()
+                binding?.chatBarView?.setPadding(
+                    binding?.chatBarView!!.paddingLeft,
+                    binding?.chatBarView!!.paddingTop,
+                    binding?.chatBarView!!.paddingRight,
+                    nav
+                )
+
+
+                binding?.recyclerView?.translationY = -ime.toFloat()
+
+
+                binding?.recyclerView?.setPadding(
+                    binding?.recyclerView!!.paddingLeft,
+                    binding?.recyclerView!!.paddingTop,
+                    binding?.recyclerView!!.paddingRight,
+                    ime + nav
+                )
+
+                insets
+            }
+            ViewCompat.requestApplyInsets(this)
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
+        binding?.root?.let { ViewCompat.requestApplyInsets(it) }
         setNavigatedToFragment()
     }
 
@@ -224,10 +256,10 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
          if (chatMessages.isEmpty()) {
              binding?.recyclerView?.state = RecyclerViewState.EMPTY
-             binding?.chatEmptyTextview?.fadeInAnimation()
+             binding?.chatEmptyContainer?.fadeInAnimation()
         } else {
              binding?.recyclerView?.state = RecyclerViewState.DISPLAYING_DATA
-             binding?.chatEmptyTextview?.isGone = true
+             binding?.chatEmptyContainer?.isGone = true
         }
 
         viewModel.gotNewMessages = true

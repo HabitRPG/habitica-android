@@ -1,9 +1,13 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.res.painterResource
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
@@ -20,10 +24,15 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
+import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.fragments.skills.SkillDialogBottomSheetFragment
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
+import com.habitrpg.common.habitica.extensions.asPainter
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
@@ -258,20 +267,19 @@ class ItemRecyclerAdapter(val context: Context) :
                     }
                 } else if (ownedItem?.itemType == "special") {
                     if ((ownedItem?.numberOwned ?: 0) > 0) {
-                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
+                        if (item == null && ownedItem != null) {
+                            // Special items that are not Mystery Item
+                            val specialItem = SpecialItem()
+                            ownedItem?.key?.let { key ->
+                                specialItem.key = key
+                                specialItem.text = key.localizedCapitalizeWithSpaces()
+                            }
+                            onUseSpecialItem?.invoke(specialItem)
+                        }
                     }
+                    return
                 }
                 menu.setSelectionRunnable { index ->
-                    if (item == null && ownedItem != null) {
-                        // Special items that are not Mystery Item
-                        val specialItem = SpecialItem()
-                        ownedItem?.key?.let { key ->
-                            specialItem.key = key
-                            specialItem.text = key.localizedCapitalizeWithSpaces()
-                        }
-                        onUseSpecialItem?.invoke(specialItem)
-                        return@setSelectionRunnable
-                    }
                     item?.let { selectedItem ->
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") && index == 0) {
                             ownedItem?.let { selectedOwnedItem ->

@@ -628,6 +628,8 @@
     <string name="profile_summary">Edit your public profile.</string>
     <string name="display_name">Display Name</string>
     <string name="photo_url">Photo URL</string>
+    <string name="photo_url_description">You can display an image on your Habitica profile for others to see by adding a link to the image here.</string>
+    <string name="save_photo_url">Save Photo URL</string>
     <string name="login_name">Login Name</string>
     <string name="about">About</string>
     <string name="app_settings">App Settings</string>
@@ -635,7 +637,9 @@
     <string name="authentication_summary">Change your authentication options.</string>
     <string name="change_password">Change Password</string>
     <string name="change_email">Change Email Address</string>
+    <string name="change_email_description">This is the email address that you use to log in to Habitica, as well as receive notifications.</string>
     <string name="change_username">Change Username</string>
+    <string name="change_username_description">Usernames must be 1 to 20 characters, containing only letters a to z, numbers 0 to 9, hyphens, or underscores.</string>
     <string name="change">Change</string>
     <string name="character_level">Character Level</string>
     <string name="auto_allocate_points">Auto Allocate Points</string>
@@ -763,6 +767,8 @@
     <string name="username_copied">Username copied to clipboard</string>
     <string name="verification_pet">One of these Veteran Pets will be waiting for you after you’ve finished confirming!</string>
     <string name="welcomeNameTitle">What should we call you?</string>
+    <string name="change_display_name">Change Display Name</string>
+    <string name="display_name_description">This is the name that will be displayed for your avatar in Habitica. Unlike username, it does not have to be a unique identifier.</string>
     <string name="display_name_length_error">Display names must be between 1 and 30 characters</string>
     <string name="setup_task_join_habitica">Join Habitica (Check me off!)</string>
     <string name="setup_task_join_habitica_notes">You can either complete this To Do, edit it, or remove it.</string>
@@ -813,6 +819,8 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="new_password_repeat">Repeat new Password</string>
+    <string name="password_change_info">Passwords must be 8 characters or more. Changing your password will log you out of any other devices and third-party tools you may use.</string>
+    <string name="confirm_new_password">Confirm new Password</string>
     <string name="adjust_streak">Adjust Streak</string>
     <string name="adjust_counter">Adjust Counter</string>
     <string name="password_changed">Password successfully changed</string>
@@ -1041,6 +1049,7 @@
     <string name="stat_allocation">Stat Allocation</string>
     <string name="stat_description">All Habitica characters have four stats that affect the gameplay aspects of Habitica.\n\n**Strength (STR)** affects critical hits and raises damage done to a Quest Boss. Warriors and Rogues gain STR from their class equipment.\n\n**Constitution (CON)** raises your HP and makes you take less damage. Healers and Warriors gain CON from their class equipment.\n\n**Intelligence (INT)** raises the amount of EXP you earn and gives you more Mana. Mages and Healers gain INT from their class equipment.\n\n**Perception (PER)** increases the gold you earn and the rate of finding dropped items. Rogues and Mages gain PER from their class equipment.\n\nAfter level 10, you earn 1 Stat Point every level you gain that you can put into any stat you’d like. You can also equip gear that has different combinations of stat boosts.</string>
     <string name="use_skill">Use Skill</string>
+    <string name="use_on_party">Use on Party</string>
 
     <string name="standard"> Standard </string>
     <string name="premium_currency">Premium Currency</string>
@@ -1220,6 +1229,8 @@
     <string name="my_account">My Account</string>
     <string name="public_profile">Public Profile</string>
     <string name="about_me">About Me</string>
+    <string name="about_me_description">Add a small blurb about yourself that will appear on your Habitica profile when others view it.</string>
+    <string name="save_about_me">Save About Me</string>
     <string name="api" translatable="false">API</string>
     <string name="account_info">Account Info</string>
     <string name="login_methods">Login Methods</string>
@@ -1230,7 +1241,7 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="add">Add</string>
-    <string name="apitoken_summary">Copy Token. Be careful, this is a password!</string>
+    <string name="apitoken_summary">Password token for developers and third-party tools.</string>
     <string name="added_social_auth">Added %s authentication</string>
     <string name="copied_to_clipboard">Copied %s to clipboard</string>
     <string name="removed_social_auth">Disconnected %s</string>
@@ -1565,7 +1576,8 @@
     <string name="max_gem_cap">Max Gem Cap</string>
     <string name="max_gem_cap_text">Instantly start at the max Gem Cap</string>
     <string name="max_gem_cap_text_gift">They instantly start at the Max Gem Cap</string>
-
+    <string name="chat_empty_state_title">Start chatting!</string>
+    <string name="chat_empty_state_description">Remember to be friendly and follow the Community Guidelines.</string>
     <string name="gem_cap">Gem Cap</string>
     <string name="get_12_mystic_hourglasses">Get 12 Mystic Hourglasses immediately after your first 12 month subscription!</string>
     <string name="twelve_mystic_hourglasses">12 Mystic Hourglasses</string>
@@ -1582,7 +1594,16 @@
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
-    <string name="chat_empty_state"><b>Start chatting!</b>\nRemember to be friendly and follow the Community Guidelines.</string>
+    <string name="api_token_title">API Token</string>
+    <string name="api_token_is_password">Your API Token is like a password</string>
+    <string name="api_token_is_password_info">
+    Do not share it publicly. You may occasionally be asked for your User ID, but never post your API Token where others can see it, including on Github.
+</string>
+    <string name="api_token_reset_title">If you need a new API Token</string>
+    <string name="api_token_reset_info">
+    You can change your password to reset it. Once it is reset, you will need to log back in to any other devices you use Habitica on and provide the new API Token to third-party tools you may use.
+</string>
+    <string name="copy_token">Copy Token</string>
 
 
 

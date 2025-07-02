@@ -952,6 +952,21 @@
         <item name="hintTextAppearance">@style/TaskFormHintTextAppearance</item>
     </style>
 
+    <style name="SettingTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">?colorTintedBackground</item>
+        <item name="boxStrokeColor">@color/gray200_gray400</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="android:textColor">?attr/colorPrimaryText</item>
+        <item name="android:textColorHint">?colorPrimaryText</item>
+        <item name="colorControlNormal">?attr/colorPrimary</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorPrimary</item>
+        <item name="colorAccent">?attr/colorPrimaryText</item>
+        <item name="colorPrimary">?attr/colorPrimaryText</item>
+        <item name="hintTextAppearance">@style/TaskFormHintTextAppearance</item>
+    </style>
+
     <style name="TaskFormHintTextAppearance">
         <item name="android:colorPrimary">?attr/colorPrimaryText</item>
         <item name="colorPrimary">?attr/colorPrimaryText</item>

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillListItemBinding
+import com.habitrpg.android.habitica.databinding.SkillTransformationListItemBinding
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -18,7 +19,8 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import io.realm.RealmList
 
 class SkillsRecyclerViewAdapter :
-    RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     var onUseSkill: ((Skill) -> Unit)? = null
 
     var mana: Double = 0.0
@@ -26,65 +28,73 @@ class SkillsRecyclerViewAdapter :
             field = value
             notifyDataSetChanged()
         }
+
     var level: Int = 0
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+
     var specialItems: RealmList<OwnedItem>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+
     private var skillList: List<Skill> = emptyList()
 
-    fun setSkillList(skillList: List<Skill>) {
-        this.skillList = skillList
-        this.notifyDataSetChanged()
+    companion object {
+        private const val TYPE_NORMAL  = 0
+        private const val TYPE_SPECIAL = 1
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): SkillViewHolder {
-        return SkillViewHolder(parent.inflate(R.layout.skill_list_item))
+    fun setSkillList(list: List<Skill>) {
+        skillList = list
+        notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(
-        holder: SkillViewHolder,
-        position: Int
-    ) {
-        holder.bind(skillList[position])
+    override fun getItemViewType(position: Int): Int {
+        return if (skillList[position].habitClass == "special") TYPE_SPECIAL
+        else TYPE_NORMAL
     }
 
-    override fun getItemCount(): Int {
-        return skillList.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_SPECIAL) {
+            val view = parent.inflate(R.layout.skill_transformation_list_item)
+            SpecialViewHolder(view)
+        } else {
+            val view = parent.inflate(R.layout.skill_list_item)
+            NormalViewHolder(view)
+        }
     }
 
-    inner class SkillViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is SpecialViewHolder -> holder.bind(skillList[position])
+            is NormalViewHolder  -> holder.bind(skillList[position])
+        }
+    }
+
+    override fun getItemCount(): Int = skillList.size
+
+    private inner class NormalViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
         private val binding = SkillListItemBinding.bind(itemView)
-        private val magicDrawable: Drawable
-        private val lockDrawable: Drawable
-
-        var skill: Skill? = null
-
-        var context: Context = itemView.context
+        private val context = itemView.context
+        private val magicDrawable: Drawable =
+            BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMagic())
+        private val lockDrawable: Drawable =
+            BitmapDrawable(
+                context.resources,
+                HabiticaIconsHelper.imageOfLocked(
+                    ContextCompat.getColor(context, R.color.text_dimmed)
+                )
+            )
+        private var skill: Skill? = null
 
         init {
-            binding.buttonWrapper.setOnClickListener(this)
-            magicDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMagic())
-            lockDrawable =
-                BitmapDrawable(
-                    context.resources,
-                    HabiticaIconsHelper.imageOfLocked(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.text_dimmed
-                        )
-                    )
-                )
+            binding.skillItemContainer.setOnClickListener(this)
         }
 
         fun bind(skill: Skill) {
@@ -97,103 +107,79 @@ class SkillsRecyclerViewAdapter :
             binding.skillNotes.visibility = View.VISIBLE
             binding.priceLabel.visibility = View.VISIBLE
 
-            if ("special" == skill.habitClass) {
-                binding.countLabel.visibility = View.VISIBLE
-                binding.countLabel.text = getOwnedCount(skill.key).toString()
-                binding.priceLabel.setText(R.string.skill_transformation_use)
-                if (context.isUsingNightModeResources()) {
-                    binding.priceLabel.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.brand_500
-                        )
-                    )
-                } else {
-                    binding.priceLabel.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.color_accent
-                        )
-                    )
-                }
-                binding.buttonIconView.setImageDrawable(null)
+            binding.countLabel.visibility = View.GONE
+            binding.priceLabel.text = skill.mana?.toString()
+
+            val manaColor = if (context.isUsingNightModeResources())
+                R.color.blue_500 else R.color.blue_10
+            binding.priceLabel.setTextColor(ContextCompat.getColor(context, manaColor))
+
+            binding.buttonIconView.setImageDrawable(magicDrawable)
+
+            if ((skill.mana ?: 0) > mana) {
                 binding.buttonWrapper.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.offset_background
-                    )
+                    ContextCompat.getColor(context, R.color.offset_background)
+                )
+                binding.buttonIconView.alpha = 0.3f
+                binding.priceLabel.alpha = 0.3f
+            } else {
+                binding.buttonWrapper.setBackgroundColor(
+                    ContextCompat.getColor(context, R.color.blue_500_24)
                 )
                 binding.buttonIconView.alpha = 1.0f
                 binding.priceLabel.alpha = 1.0f
-            } else {
-                binding.countLabel.visibility = View.GONE
-                binding.priceLabel.text = skill.mana?.toString()
-                if (context.isUsingNightModeResources()) {
-                    binding.priceLabel.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.blue_500
-                        )
-                    )
-                } else {
-                    binding.priceLabel.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.blue_10
-                        )
-                    )
-                }
-                binding.buttonIconView.setImageDrawable(magicDrawable)
-
-                if ((skill.mana ?: 0) > mana) {
-                    binding.buttonWrapper.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.offset_background
-                        )
-                    )
-                    binding.buttonIconView.alpha = 0.3f
-                    binding.priceLabel.alpha = 0.3f
-                } else {
-                    binding.buttonWrapper.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.blue_500_24
-                        )
-                    )
-                    binding.buttonIconView.alpha = 1.0f
-                    binding.priceLabel.alpha = 1.0f
-                }
-                if ((skill.lvl ?: 0) > level) {
-                    binding.buttonWrapper.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.offset_background
-                        )
-                    )
-                    binding.skillText.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.text_dimmed
-                        )
-                    )
-                    binding.skillText.text = context.getString(R.string.skill_unlocks_at, skill.lvl)
-                    binding.skillNotes.visibility = View.GONE
-                    binding.buttonIconView.setImageDrawable(lockDrawable)
-                    binding.priceLabel.visibility = View.GONE
-                }
             }
+
+            if ((skill.lvl ?: 0) > level) {
+                binding.buttonWrapper.setBackgroundColor(
+                    ContextCompat.getColor(context, R.color.offset_background)
+                )
+                binding.skillText.setTextColor(
+                    ContextCompat.getColor(context, R.color.text_dimmed)
+                )
+                binding.skillText.text = context.getString(
+                    R.string.skill_unlocks_at, skill.lvl
+                )
+                binding.skillNotes.visibility = View.GONE
+                binding.buttonIconView.setImageDrawable(lockDrawable)
+                binding.priceLabel.visibility = View.GONE
+            }
+
             binding.skillImage.loadImage("shop_" + skill.key)
         }
 
         override fun onClick(v: View) {
-            if ((skill?.lvl ?: 0) <= level) {
-                skill?.let { onUseSkill?.invoke(it) }
+            skill?.takeIf { (it.lvl ?: 0) <= level }?.also {
+                onUseSkill?.invoke(it)
             }
         }
+    }
 
-        private fun getOwnedCount(key: String): Int {
-            return specialItems?.firstOrNull { it.key == key }?.numberOwned ?: 0
+    private inner class SpecialViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        private val binding = SkillTransformationListItemBinding.bind(itemView)
+        private val context = itemView.context
+
+        init {
+            binding.specialSkillContainer.setOnClickListener(this)
+        }
+
+        fun bind(skill: Skill) {
+            binding.skillText.text = skill.text
+            binding.skillNotes.text = skill.notes
+            binding.skillText.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+            binding.skillNotes.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
+
+            binding.countLabel.text = getOwnedCount(skill.key).toString()
+            binding.skillImage.loadImage("shop_" + skill.key)
+        }
+
+        override fun onClick(v: View) {
+            onUseSkill?.invoke(skillList[bindingAdapterPosition])
         }
     }
+
+    private fun getOwnedCount(key: String): Int =
+        specialItems?.firstOrNull { it.key == key }?.numberOwned ?: 0
 }

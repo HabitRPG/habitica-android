@@ -8,7 +8,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -23,13 +26,21 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
+import com.habitrpg.android.habitica.ui.views.AboutMeScreen
+import com.habitrpg.android.habitica.ui.views.ApiTokenBottomSheet
+import com.habitrpg.android.habitica.ui.views.ChangeDisplayNameScreen
+import com.habitrpg.android.habitica.ui.views.ChangeEmailScreen
+import com.habitrpg.android.habitica.ui.views.ChangePasswordScreen
+import com.habitrpg.android.habitica.ui.views.ChangeUsernameScreen
 import com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.PhotoUrlScreen
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ValidatingEditText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -155,13 +166,13 @@ class AccountPreferenceFragment :
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            "username" -> showLoginNameDialog()
+            "username" -> showChangeUsernameDialog()
             "confirm_username" -> showConfirmUsernameDialog()
             "email" -> {
                 if (user?.authentication?.hasPassword != true && user?.authentication?.localAuthentication?.email?.isNotBlank() != true) {
                     showAddPasswordDialog(true)
                 } else {
-                    showEmailDialog()
+                    showChangeEmailDialog()
                 }
             }
 
@@ -179,25 +190,15 @@ class AccountPreferenceFragment :
             }
 
             "APIToken" -> {
-                copyValue(getString(R.string.SP_APIToken_title), hostConfig.apiKey)
+                ApiTokenBottomSheetFragment.newInstance(hostConfig.apiKey).show(childFragmentManager, ApiTokenBottomSheetFragment.TAG)
                 return true
             }
 
-            "display_name" ->
-                updateUser(
-                    "profile.name",
-                    user?.profile?.name,
-                    getString(R.string.display_name),
-                )
+            "display_name" -> showChangeDisplayNameDialog()
 
-            "photo_url" ->
-                updateUser(
-                    "profile.imageUrl",
-                    user?.profile?.imageUrl,
-                    getString(R.string.photo_url),
-                )
+            "photo_url" -> showPhotoUrlDialog()
 
-            "about" -> updateUser("profile.blurb", user?.profile?.blurb, getString(R.string.about))
+            "about" -> showAboutMeDialog()
             "google_auth" -> {
                 if (user?.authentication?.hasGoogleAuth == true) {
                     disconnect("google", "Google")
@@ -256,61 +257,173 @@ class AccountPreferenceFragment :
         )
     }
 
-    private fun updateUser(
-        path: String,
-        value: String?,
-        title: String,
-    ) {
-        showSingleEntryDialog(value, title) {
-            if (value != it) {
-                lifecycleScope.launchCatching {
-                    userRepository.updateUser(path, it ?: "")
+    private fun showChangePasswordDialog() {
+        val sheet = SettingsFormBottomSheet()
+
+        sheet.content = {
+            ChangePasswordScreen(
+                onBack = { sheet.dismiss() },
+                onSave = { oldPassword, newPassword ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        val response = userRepository.updatePassword(
+                            oldPassword, newPassword, newPassword
+                        )
+                        response?.apiToken?.let {
+                            viewModel.saveTokens(it, user?.id ?: "")
+                            sheet.dismiss()
+                        }
+                    }
+                },
+                onForgot = {
+                    showForgotPasswordDialog()
+                    sheet.dismiss()
                 }
-            }
+            )
         }
+
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
     }
 
-    private fun showChangePasswordDialog() {
-        val inflater = context?.layoutInflater
-        val view = inflater?.inflate(R.layout.dialog_edittext_change_pw, null)
-        val oldPasswordEditText =
-            view?.findViewById<ValidatingEditText>(R.id.old_password_edit_text)
-        val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.new_password_edit_text)
-        passwordEditText?.validator = { (it?.length ?: 0) >= 8 }
-        passwordEditText?.errorText = getString(R.string.password_too_short, 8)
-        val passwordRepeatEditText =
-            view?.findViewById<ValidatingEditText>(R.id.new_password_repeat_edit_text)
-        passwordRepeatEditText?.validator = { it == passwordEditText?.text }
-        passwordRepeatEditText?.errorText = getString(R.string.password_not_matching)
-        context?.let { context ->
-            val dialog = HabiticaAlertDialog(context)
-            dialog.setTitle(R.string.change_password)
-            dialog.addButton(R.string.change, true, false, false) { d, _ ->
-                KeyboardUtil.dismissKeyboard(activity)
-                passwordEditText?.showErrorIfNecessary()
-                passwordRepeatEditText?.showErrorIfNecessary()
-                if (passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
-                lifecycleScope.launchCatching {
-                    val response = userRepository.updatePassword(
-                        oldPasswordEditText?.text ?: "",
-                        passwordEditText.text ?: "",
-                        passwordRepeatEditText.text ?: "",
-                    )
-                    response?.apiToken?.let {
-                        viewModel.saveTokens(it, user?.id ?: "")
+    private fun showChangeEmailDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            ChangeEmailScreen(
+                initialEmail = user?.authentication?.localAuthentication?.email ?: "",
+                onBack = { sheet.dismiss() },
+                onSave = { newEmail, password ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        userRepository.updateEmail(
+                            newEmail,
+                            password,
+                        )
+                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                            userRepository.retrieveUser(true, true)
+                        }
+                        configurePreference(findPreference("email"), newEmail)
+                        sheet.dismiss()
                     }
-                    (activity as? SnackbarActivity)?.showSnackbar(
-                        content = context.getString(R.string.password_changed),
-                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
-                    )
+                },
+                onForgotPassword = {
+                    showForgotPasswordDialog()
+                    sheet.dismiss()
                 }
-                d.dismiss()
-            }
-            dialog.addCancelButton()
-            dialog.setAdditionalContentView(view)
-            dialog.setAdditionalContentSidePadding(12)
-            dialog.show()
+            )
         }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+    private fun showChangeUsernameDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            ChangeUsernameScreen(
+                initial = user?.username ?: "",
+                onBack =  { sheet.dismiss() },
+                onSave = { newUsername ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        if (!newUsername.contains(" ") && newUsername.length > 1 && newUsername.length < 20 && !newUsername.contains(regex)) {
+                            val user = userRepository.updateLoginName(newUsername ?: "")
+                            if (user == null || user.username != newUsername) {
+                                userRepository.retrieveUser(false, forced = true)
+                            }
+                        }
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+    private fun showChangeDisplayNameDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            ChangeDisplayNameScreen(
+                initial = user?.profile?.name ?: "",
+                onBack = { sheet.dismiss() },
+                onSave = { newDisplayName ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        userRepository.updateUser("profile.name", newDisplayName)
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+
+
+    private fun showForgotPasswordDialog() {
+        val input = EditText(requireContext())
+        input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)
+        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        input.hint = getString(R.string.forgot_password_hint_example)
+        input.textSize = 16f
+        val lp =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        input.layoutParams = lp
+        val alertDialog = HabiticaAlertDialog(requireContext())
+        alertDialog.setTitle(R.string.forgot_password_title)
+        alertDialog.setMessage(R.string.forgot_password_description)
+        alertDialog.setAdditionalContentView(input)
+        alertDialog.addButton(R.string.send, true) { _, _ ->
+            lifecycleScope.launchCatching {
+                userRepository.sendPasswordResetEmail(input.text.toString())
+                showPasswordEmailConfirmation()
+            }
+        }
+        alertDialog.addCancelButton()
+        alertDialog.show()
+    }
+
+    private fun showAboutMeDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            AboutMeScreen(
+                initial = user?.profile?.blurb.orEmpty(),
+                onBack  = { sheet.dismiss() },
+                onSave  = { about ->
+                    lifecycleScope.launchCatching {
+                        userRepository.updateUser("profile.blurb", about)
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+
+    private fun showPhotoUrlDialog() {
+        val sheet = SettingsFormBottomSheet()
+        sheet.content = {
+            PhotoUrlScreen(
+                initial = user?.profile?.imageUrl ?: "",
+                onBack = { sheet.dismiss() },
+                onSave = { photoUrl ->
+                    lifecycleScope.launchCatching {
+                        KeyboardUtil.dismissKeyboard(activity)
+                        userRepository.updateUser("profile.imageUrl", photoUrl)
+                        sheet.dismiss()
+                    }
+                }
+            )
+        }
+        sheet.show(childFragmentManager, SettingsFormBottomSheet.TAG)
+    }
+
+    private fun showPasswordEmailConfirmation() {
+        val alert = HabiticaAlertDialog(requireContext())
+        alert.setMessage(R.string.forgot_password_confirmation)
+        alert.addOkButton()
+        alert.show()
     }
 
     private fun showAddPasswordDialog(showEmail: Boolean) {
@@ -359,44 +472,6 @@ class AccountPreferenceFragment :
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)
             dialog.setAdditionalContentSidePadding(12)
-            dialog.show()
-        }
-    }
-
-    private fun showEmailDialog() {
-        val inflater = context?.layoutInflater
-        val view = inflater?.inflate(R.layout.dialog_edittext_confirm_pw, null)
-        val emailEditText = view?.findViewById<ValidatingEditText>(R.id.email_edit_text)
-        emailEditText?.text = user?.authentication?.localAuthentication?.email
-        emailEditText?.validator = { PatternsCompat.EMAIL_ADDRESS.matcher(it ?: "").matches() }
-        emailEditText?.errorText = getString(R.string.email_invalid)
-        emailEditText?.hint = context?.getString(R.string.email)
-        val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.password_edit_text)
-        if (user?.authentication?.hasPassword != true) {
-            passwordEditText?.isVisible = false
-        }
-        context?.let { context ->
-            val dialog = HabiticaAlertDialog(context)
-            dialog.setTitle(R.string.change_email)
-            dialog.addButton(R.string.change, true, false, false) { _, _ ->
-                KeyboardUtil.dismissKeyboard(activity)
-                emailEditText?.showErrorIfNecessary()
-                if (emailEditText?.isValid != true) return@addButton
-                lifecycleScope.launchCatching {
-                    userRepository.updateEmail(
-                        emailEditText.text.toString(),
-                        passwordEditText?.text.toString(),
-                    )
-                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                        userRepository.retrieveUser(true, true)
-                    }
-                    configurePreference(findPreference("email"), emailEditText.text.toString())
-                }
-                dialog.dismiss()
-            }
-            dialog.addCancelButton()
-            dialog.setAdditionalContentView(view)
-            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
             dialog.show()
         }
     }
@@ -486,7 +561,10 @@ class AccountPreferenceFragment :
             userRepository.deleteAccount(password)
             dialog?.dismiss()
             accountDialog.dismiss()
-            context?.let { HabiticaBaseApplication.logout(it) }
+            context?.let {
+                val user = userViewModel.user.value
+                HabiticaBaseApplication.logout(it, user)
+            }
             activity?.finish()
         }
     }
