@@ -159,7 +159,8 @@ class ApiClientImpl(
                             when (response.code) {
                                 401 -> {
                                     val path = response.request.url.encodedPath
-                                    if (!path.contains("/user/auth/update-password")) {
+
+                                    if (!path.contains("/user/auth/update-password") && !path.contains("group-plans")) {
                                         val bodyStr = try {
                                             response.peekBody(1024).string()
                                         } catch (_: Exception) {
@@ -172,10 +173,10 @@ class ApiClientImpl(
                                         } catch (_: Exception) {
                                             "" to ""
                                         }
-
+                                        
                                         val shouldLogout = errField.equals("missingAuthHeaders", ignoreCase = true)
-                                                || errField.equals("invalidCredentials",   ignoreCase = true)
-                                                || msgField.contains("invalidCredentials",      ignoreCase = true)
+                                                || errField.equals("invalidCredentials", ignoreCase = true)
+                                                || msgField.contains("invalidCredentials", ignoreCase = true)
                                                 || msgField.contains("Missing authentication headers", ignoreCase = true)
                                                 || msgField.contains("There is no account that uses those credentials", ignoreCase = true)
 
