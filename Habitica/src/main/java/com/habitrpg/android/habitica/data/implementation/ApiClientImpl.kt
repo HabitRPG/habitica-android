@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -155,6 +156,14 @@ class ApiClientImpl(
                         // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
                         if (response.code in 400..599) {
                             when (response.code) {
+                                401 -> {
+                                    val path = response.request.url.encodedPath
+                                    if (!path.contains("user/auth/update-password")) {
+                                        // token has been revoked/rotated elsewhere
+                                        HabiticaBaseApplication.logout(context)
+                                    }
+                                    return@addNetworkInterceptor response
+                                }
                                 404 -> {
                                     // The server is returning a 404 error, which means the requested resource was not found.
                                     // In this case - we want to actually cache the response, and handle it in the app

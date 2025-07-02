@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.R
@@ -61,6 +64,9 @@ class ApiTokenBottomSheetFragment : BottomSheetDialogFragment() {
                         content = getString(R.string.copied_to_clipboard, copiedToken),
                         displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                     )
+                    val clipboard: ClipboardManager? =
+                        context?.let { getSystemService(it, ClipboardManager::class.java) }
+                    clipboard?.setPrimaryClip(ClipData.newPlainText("API Token", copiedToken))
                     dismiss()
                 })
             }
