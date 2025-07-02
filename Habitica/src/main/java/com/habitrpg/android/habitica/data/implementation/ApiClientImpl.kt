@@ -56,6 +56,7 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -158,12 +159,33 @@ class ApiClientImpl(
                             when (response.code) {
                                 401 -> {
                                     val path = response.request.url.encodedPath
-                                    if (!path.contains("user/auth/update-password")) {
-                                        // token has been revoked/rotated elsewhere
-                                        HabiticaBaseApplication.logout(context)
+                                    if (!path.contains("/user/auth/update-password")) {
+                                        val bodyStr = try {
+                                            response.peekBody(1024).string()
+                                        } catch (_: Exception) {
+                                            ""
+                                        }
+
+                                        val (errField, msgField) = try {
+                                            val obj = JSONObject(bodyStr)
+                                            obj.optString("error", "") to obj.optString("message", "")
+                                        } catch (_: Exception) {
+                                            "" to ""
+                                        }
+
+                                        val shouldLogout = errField.equals("missingAuthHeaders", ignoreCase = true)
+                                                || errField.equals("invalidCredentials",   ignoreCase = true)
+                                                || msgField.contains("invalidCredentials",      ignoreCase = true)
+                                                || msgField.contains("Missing authentication headers", ignoreCase = true)
+                                                || msgField.contains("There is no account that uses those credentials", ignoreCase = true)
+
+                                        if (shouldLogout) {
+                                            HabiticaBaseApplication.logout(context)
+                                        }
                                     }
                                     return@addNetworkInterceptor response
                                 }
+
                                 404 -> {
                                     // The server is returning a 404 error, which means the requested resource was not found.
                                     // In this case - we want to actually cache the response, and handle it in the app
