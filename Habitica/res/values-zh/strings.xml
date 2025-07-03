@@ -1134,7 +1134,7 @@
     <string name="add_password">添加密码</string>
     <string name="connect">连接</string>
     <string name="add">添加</string>
-    <string name="apitoken_summary">复制令牌。小心，这相当于密码！</string>
+    <string name="apitoken_summary">开发者及第三方工具专用密码令牌。</string>
     <string name="added_social_auth">已添加%s身份验证</string>
     <string name="password_not_matching">输入的密码不匹配</string>
     <string name="email_invalid">邮箱地址无效</string>
@@ -1601,4 +1601,23 @@
     <string name="unlocks_x_gems_per_month">他们每月可在商店解锁%d颗宝石</string>
     <string name="two_gems_per_month_gift">他们在订阅期间每月可获取+2宝石</string>
     <string name="use_skill">使用技能</string>
+    <string name="change_email_description">此邮箱用于登录 Habitica 及接收系统通知。</string>
+    <string name="change_username_description">用户名长度应为 1-20 个字符，仅可使用：英文小写字母 a 至 z、数字 0 至 9、连字符 (-) 或下划线 (_)。</string>
+    <string name="change_display_name">修改昵称</string>
+    <string name="display_name_description">此名称将作为您在 Habitica 中的角色名称显示。与用户名不同，昵称无需唯一。</string>
+    <string name="password_change_info">密码需要至少为8位字符。修改密码后，系统将自动登出您在其他设备及第三方工具中的所有会话。</string>
+    <string name="confirm_new_password">确认新密码</string>
+    <string name="use_on_party">在队伍中使用</string>
+    <string name="save_about_me">保存个人简介</string>
+    <string name="about_me_description">添加个人简介，它将显示于 Habitica 个人资料中供其他玩家查看。</string>
+    <string name="api_token_title">API 令牌</string>
+    <string name="api_token_is_password">你的API令牌功能相当于密码</string>
+    <string name="api_token_reset_title">如您需要新的API令牌</string>
+    <string name="api_token_is_password_info">切勿公开分享此令牌。 他人可能要求您提供用户ID，但绝对不可在 GitHub 等公开平台发布API令牌。</string>
+    <string name="copy_token">复制令牌</string>
+    <string name="save_photo_url">保存照片链接</string>
+    <string name="photo_url_description">您可在 Habitica 个人资料中添加图片链接，向其他玩家展示您的专属形象。</string>
+    <string name="chat_empty_state_title">开始畅聊吧！</string>
+    <string name="api_token_reset_info">通过修改密码即可重置令牌。重置后需要：在所有设备重新登录Habitica、向您使用的第三方工具提供新令牌。</string>
+    <string name="chat_empty_state_description">请务必保持友善并遵循社区准则。</string>
 </resources>
