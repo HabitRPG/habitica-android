@@ -178,8 +178,7 @@ class ApiClientImpl(
                                                 || errField.equals("invalidCredentials", ignoreCase = true)
                                                 || msgField.contains("invalidCredentials", ignoreCase = true)
                                                 || msgField.contains("Missing authentication headers", ignoreCase = true)
-                                                || msgField.contains("There is no account that uses those credentials", ignoreCase = true)
-
+                                        
                                         if (shouldLogout) {
                                             HabiticaBaseApplication.logout(context)
                                         }
