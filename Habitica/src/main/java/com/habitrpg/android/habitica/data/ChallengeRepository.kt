@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data
 
+import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -65,4 +66,6 @@ interface ChallengeRepository : BaseRepository {
         challengeid: String,
         updateData: Map<String, String>
     ): Void?
+
+    fun getCategoryOptions(): Flow<List<CategoryOption>>
 }

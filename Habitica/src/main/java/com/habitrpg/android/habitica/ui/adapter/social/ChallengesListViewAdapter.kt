@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChallengeItemBinding
+import com.habitrpg.android.habitica.extensions.filterByCategorySlugs
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
@@ -55,32 +56,21 @@ class ChallengesListViewAdapter(
     }
 
     fun filter(filterOptions: ChallengeFilterOptions) {
-        val unfilteredData = unfilteredData as? OrderedRealmCollection ?: return
-
-        var query = unfilteredData.where()
-
-        if (filterOptions.showByGroups.isNotEmpty()) {
-            val groupIds = arrayOfNulls<String>(filterOptions.showByGroups.size)
-            var index = 0
-            for (group in filterOptions.showByGroups) {
-                groupIds[index] = group.id
-                index += 1
-            }
-            query = query?.`in`("groupId", groupIds)
-        }
+        val all = unfilteredData ?: return
+        val activeIds = filterOptions.showByGroups.map { it.id }.toSet()
+        var filtered = all.filterByCategorySlugs(activeIds)
 
         if (filterOptions.showOwned != filterOptions.notOwned) {
-            query =
+            filtered = filtered.filter { challenge ->
                 if (filterOptions.showOwned) {
-                    query?.equalTo("leaderId", userId)
+                    challenge.leaderId == userId
                 } else {
-                    query?.notEqualTo("leaderId", userId)
+                    challenge.leaderId != userId
                 }
+            }
         }
 
-        query?.let {
-            data = it.findAll()
-        }
+        this.data = filtered
     }
 
     class ChallengeViewHolder internal constructor(
