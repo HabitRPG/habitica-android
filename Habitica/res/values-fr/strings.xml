@@ -1621,4 +1621,9 @@
     <string name="next_switch_in_x">Prochaine sélection dans %s</string>
     <string name="register_tos_confirm">Vous acceptez nos <a href="https://habitica.com/static/terms">Conditions d\'Utilisation</a> et avez lu notre <a href="https://habitica.com/static/privacy">Politique de Confidentialité</a>.</string>
     <string name="use_skill">Utiliser une Compétence</string>
+    <string name="photo_url_description">Vous pouvez ajouter une image sur votre profil Habitica qui pourra être vue par les autres en ajoutant un lien vers l\'image ici.</string>
+    <string name="save_photo_url">Enregistrer le lien vers la Photo</string>
+    <string name="change_email_description">C\'est l\'adresse mail que vous utilisez pour vous connecter à Habitica, ainsi que pour recevoir des notifications.</string>
+    <string name="change_username_description">Les noms d\'utilisat·eur·rices doivent comprendre entre 1 et 20 caractères, composés de lettres de A à Z, de numéros de 0 à 9, de trait d\'union et/ou de tiret bas.</string>
+    <string name="change_display_name">Changer le Pseudo</string>
 </resources>
