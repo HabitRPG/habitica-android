@@ -1245,4 +1245,6 @@
     <string name="positive_sentence">正面</string>
     <string name="negative_sentence">負面</string>
     <string name="x_and_y">%1$s 與 %2$s</string>
+    <string name="exact_alarm_system_settings_reminders">如果未開啓權限，提醒將可能會延遲。點擊查看和設置權限。</string>
+    <string name="exact_alarm_system_settings_description">在設置內允許`警告和提醒`權限以保證提醒能準時觸發</string>
 </resources>

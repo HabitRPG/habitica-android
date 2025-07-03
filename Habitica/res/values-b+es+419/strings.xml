@@ -16,4 +16,15 @@
     <string name="pref_reminder_header">Recordatorio diario</string>
     <string name="pref_reminder_checkbox">Activar Recordatorio</string>
     <string name="pref_first_day_of_the_week_title">Primer día del mes</string>
+    <string name="gem_purchase_toolbartitle">Comprar</string>
+    <string name="special_items">Objetos especiales</string>
+    <string name="million_abbrev">M</string>
+    <string name="billion_abbrev">B</string>
+    <string name="gem_purchase_listitem2">Fondos increíbles</string>
+    <string name="gem_purchase_listitem4">La habilidad para cambiar tu clase antes del nivel 100</string>
+    <string name="thousand_abbrev">k</string>
+    <string name="gem_purchase_confirmation">Ganaste %s gemas.</string>
+    <string name="trillion_abbrev">T</string>
+    <string name="garden">Jardín</string>
+    <string name="x_and_y">%1$s y %2$s</string>
 </resources>

@@ -4,5 +4,17 @@
     <string name="sidebar_skills">Habilidades</string>
     <string name="sidebar_section_social">Social</string>
     <string name="sidebar_inbox">Mensajes</string>
-    <string name="sidebar_party">Equipo</string>
+    <string name="sidebar_party">Grupo</string>
+    <string name="sidebar_gems">Comprar gemas</string>
+    <string name="sidebar_subscription">Suscripción</string>
+    <string name="sidebar_challenges">Retos</string>
+    <string name="sidebar_section_inventory">Inventario</string>
+    <string name="sidebar_avatar">Personalizar personaje</string>
+    <string name="sidebar_avatar_equipment">Personaje y equipamiento</string>
+    <string name="sidebar_equipment">Equipamiento</string>
+    <string name="sidebar_stable">Mascotas y Monturas</string>
+    <string name="sidebar_news">Noticias</string>
+    <string name="sidebar_about">Información</string>
+    <string name="sidebar_shops">Tiendas</string>
+    <string name="sidebar_stats">Estadísticas</string>
 </resources>

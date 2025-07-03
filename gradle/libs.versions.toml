@@ -3,21 +3,20 @@ minSdk = "26"
 targetSdk = "36"
 wearOsTargetSdk = "34"
 
-accompanist = "0.34.0"
-agp = "8.10.1"
-amplitude = "1.21.2"
+agp = "8.10.0"
+amplitude = "1.20.7"
 androidTest = "1.6.1"
 androidTestMonitor = "1.7.2"
 androidTestRunner = "1.6.2"
 annotationApi = "1.3.2"
 appcompat = "1.7.1"
 billing = "7.1.1"
-coil = "3.2.0"
-compose = "1.8.2"
+coil = "3.1.0"
+compose = "1.8.1"
 composeActivity = "1.10.1"
 compose_compiler = "1.5.14"
 constraintlayout = "2.2.1"
-converterMoshi = "3.0.0"
+converterMoshi = "2.11.0"
 coordinatorlayout = "1.3.0"
 coreSplashscreen = "1.1.0-rc01"
 core_ktx = "1.16.0"
@@ -27,9 +26,8 @@ credentials = "1.5.0"
 daggerhilt = "2.56.2"
 desuggar = "2.1.5"
 detekt = "1.23.8"
-deviceNames = "2.1.1"
 firebase-perf = "1.4.2"
-firebase_bom = "33.15.0"
+firebase_bom = "33.13.0"
 flexbox = "3.0.0"
 fragmentKtx = "1.8.8"
 fragmentTesting = "1.8.8"
@@ -69,7 +67,6 @@ wear = "1.3.0"
 wearInput = "1.1.0"
 
 [libraries]
-accompanist-theme = { group = "com.google.accompanist", name = "accompanist-themeadapter-material3", version.ref = "accompanist" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
 amplitude-analytic = { group = "com.amplitude", name = "analytics-android", version.ref = "amplitude" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -89,7 +86,6 @@ coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 credentials-playServicesAuth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desuggar" }
-device-names = { group = "com.jaredrummler", name = "android-device-names", version.ref = "deviceNames" }
 firebase-analytic = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase_bom" }
 firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
