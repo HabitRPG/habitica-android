@@ -1175,7 +1175,7 @@
     <string name="password_added">Contraseña guardada</string>
     <string name="add_email_and_password">Añadir Correo y Contraseña</string>
     <string name="email_invalid">Dirección de Correo Inválida</string>
-    <string name="apitoken_summary">Copiar Token. ¡Ten cuidado, esto es una contraseña!</string>
+    <string name="apitoken_summary">Contraseña del token para desarrolladores y herramientas de terceros.</string>
     <string name="removed_social_auth">Desconectado %s</string>
     <string name="password_not_matching">Las contraseñas no coinciden</string>
     <string name="task_list_mode">Modo de la lista de Tareas</string>
@@ -1619,4 +1619,19 @@
     <string name="next_switch_in_x">Próximo cambio en %s</string>
     <string name="register_tos_confirm">Estás de acuerdo con nuestros <a href="https://habitica.com/static/terms">Terminos de Servicio</a> y has leído nuestra <a href="https://habitica.com/static/privacy">Política de Privacidad</a>.</string>
     <string name="use_skill">Usar Habilidad</string>
+    <string name="save_photo_url">Guardar la URL de la foto</string>
+    <string name="change_username_description">Los nombres de usuario deben contener entre 1 y 20 caracteres, usando solo las letras de la a a la z, los números del 0 al 9, guiones y guiones bajos.</string>
+    <string name="confirm_new_password">Confirmar la nueva Contraseña</string>
+    <string name="use_on_party">Úsalo en el Equipo</string>
+    <string name="about_me_description">Añade una pequeña promoción sobre ti mismo que aparecerá en tu perfil de Habitica cuando otros lo vean.</string>
+    <string name="save_about_me">Guardar Sobre Mi</string>
+    <string name="chat_empty_state_title">¡Empieza una charla!</string>
+    <string name="chat_empty_state_description">Recuerda ser amable y seguir las Normas de la Comunidad.</string>
+    <string name="api_token_title">Token de API</string>
+    <string name="api_token_is_password">Tu Token de API es como una contraseña</string>
+    <string name="photo_url_description">Puedes mostrar una imagen en tu perfil de Habitica para que otros lo vean añadiendo aquí el enlace a una imagen.</string>
+    <string name="change_email_description">Esta es la dirección de correo electrónico que usas para acceder a Habitica y para recibir notificaciones.</string>
+    <string name="change_display_name">Cambiar el Nombre Mostrado</string>
+    <string name="display_name_description">Este es el nombre que se mostrará para tu avatar en Habitica. Distinto del nombre de usuario, este no tiene un identificador único.</string>
+    <string name="password_change_info">Las contraseñas deben contener al menos 8 caracteres o más. Al cambiar la contraseña se desconectarán otros dispositivos y las herramientas de terceros que estuvieras usando.</string>
 </resources>

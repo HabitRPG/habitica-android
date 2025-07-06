@@ -993,7 +993,7 @@
     <string name="challenge_tags">Tag Tantangan</string>
     <string name="group_tags">Tag Grup</string>
     <string name="challenges">Tantangan</string>
-    <string name="cancel_subscription_apple_description">Tidak ingin berlangganan lagi\? Karena metode pembayaran Anda, Anda harus berhenti berlangganan melalui pengaturan langganan ID Apple di perangkat iOS Anda.</string>
+    <string name="cancel_subscription_apple_description">Tidak ingin berlangganan lagi\? Karena metode pembayaran anda, anda harus berhenti berlangganan melalui pengaturan langganan ID Apple di perangkat iOS Anda.</string>
     <string name="unsaved_changes">Perubahan yang belum disimpan</string>
     <string name="use_item">Gunakan Item pada anggota party</string>&gt;
     <string name="leave_party_confirmation_quest">Apakah Anda yakin ingin meninggalkan pesta ini\?</string>
@@ -1216,4 +1216,5 @@
     <string name="one_month_one_time">1 bulan</string>
     <string name="gift_one_get_one_purchase_banner">hadiahkan langganan dan dapatkan langganan secara gratis sampai %s</string>
     <string name="six_months_one_time">6 bulan</string>
+    <string name="x_and_y">%1$s dan %2$s</string>
 </resources>
