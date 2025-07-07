@@ -1632,4 +1632,12 @@
     <string name="save_about_me">Enregister le \"À propos\"</string>
     <string name="password_change_info">Votre mot de passe doit contenir au minimum 8 caractères. Si vous changez votre mot de passe, vous serez déconnecté·e des autres plateformes et add-ons.</string>
     <string name="about_me_description">Présentez-vous dans un petit descriptif qui apparaîtra sur votre profil Habitica et que les autres utilisat·eur·rice·s pourront voir.</string>
+    <string name="chat_empty_state_title">Commencez à discuter !</string>
+    <string name="chat_empty_state_description">N\'oubliez pas d\'être bienveillant·e, et de respecter le Guide de la Communauté.</string>
+    <string name="api_token_title">Clé API</string>
+    <string name="api_token_is_password">Votre Clé API est comme un mot de passe</string>
+    <string name="api_token_reset_title">Si vous avez besoin d\'une nouvelle Clé API</string>
+    <string name="api_token_reset_info">Vous pouvez changer votre mot de passe pour la réinitialiser. Une fois réinitialisée, vous devrez vous reconnecter sur toutes les plateformes sur lesquelles vous étiez connecté·e à Habitica et renseigner votre nouvelle Clé API aux applications tierces que utilisez.</string>
+    <string name="copy_token">Copier la Clé</string>
+    <string name="api_token_is_password_info">Ne le partagez pas. Il est possible que votre ID d\'Utilisat·eur·rice vous soit demandé, mais ne postez jamais votre Clé API sur des pages publiques, pas même sur Github.</string>
 </resources>
