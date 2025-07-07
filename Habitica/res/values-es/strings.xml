@@ -1634,4 +1634,8 @@
     <string name="change_display_name">Cambiar el Nombre Mostrado</string>
     <string name="display_name_description">Este es el nombre que se mostrará para tu avatar en Habitica. Distinto del nombre de usuario, este no tiene un identificador único.</string>
     <string name="password_change_info">Las contraseñas deben contener al menos 8 caracteres o más. Al cambiar la contraseña se desconectarán otros dispositivos y las herramientas de terceros que estuvieras usando.</string>
+    <string name="api_token_is_password_info">No lo compartas con otros. En ciertas ocasiones te podríamos pedir tu ID de Usuario, pero nunca publiques tu Token de API donde otros lo puedan ver, incluido GitHub.</string>
+    <string name="api_token_reset_title">Si necesitas un nuevo Token de API</string>
+    <string name="api_token_reset_info">Puedes cambiar tu contraseña para así resetearlo. Una vez se ha reseteado necesitarás volver a entrar en cualquier dispositivo donde estuvieras usando Habitica y también proporcionar el nuevo Token de API a las herramientas de terceros que estuvieras usando.</string>
+    <string name="copy_token">Copiar el Token</string>
 </resources>
