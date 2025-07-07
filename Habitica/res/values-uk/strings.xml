@@ -1318,4 +1318,6 @@
     <string name="thanks_for_support">Вдячні за вашу підтримку!</string>
     <string name="birthday_title_description">Святкуйте 10-річчя Habitica з подарунками та ексклюзивними речами нижче!</string>
     <string name="sell_confirmation_title">Ви впевнені, що хочете це (%s) продати\?</string>
+    <string name="api_token_title">API токен</string>
+    <string name="api_token_is_password">API токен це як ваш пароль</string>
 </resources>
