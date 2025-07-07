@@ -5,9 +5,9 @@
     <string name="billion_abbrev">b</string>
     <string name="trillion_abbrev">Bio.</string>
     <string name="mystic_hourglasses">Mystische Sanduhren</string>
-    <string name="repeat_daily">Tägliche Aufgabe</string>
+    <string name="repeat_daily">Tagesaufgabe</string>
     <string name="monthly">Monatlich</string>
-    <string name="daily">Tägliche Aufgabe</string>
+    <string name="daily">Tagesaufgabe</string>
     <string name="habit">Gewohnheit</string>
     <string name="stats">Statuswerte</string>
     <string name="settings">Einstellungen</string>
@@ -18,7 +18,7 @@
     <string name="are_you_sure">Bist Du sicher\?</string>
     <string name="task">Aufgabe</string>
     <string name="gems">Edelsteine</string>
-    <string name="gold_plural">Goldstücke</string>
+    <string name="gold_plural">Gold</string>
     <string name="gold_capitalized">Gold</string>
     <string name="weekly">wöchentlich</string>
     <string name="easy">Einfach</string>
@@ -26,7 +26,7 @@
     <string name="habits">Gewohnheiten</string>
     <string name="trivial">Trivial</string>
     <string name="medium">Mittel</string>
-    <string name="dailies">Tägliche Aufgaben</string>
+    <string name="dailies">Tagesaufgaben</string>
     <string name="todos">To-dos</string>
     <string name="rewards">Belohnungen</string>
     <string name="reward">Belohnung</string>
@@ -47,7 +47,7 @@
     <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Gewohnheit</item>
-        <item quantity="other">%d Gewohnheit</item>
+        <item quantity="other">%d Gewohnheiten</item>
     </plurals>
     <plurals name="x_dailies">
         <item quantity="one">%d Tagesaufgabe</item>
@@ -71,7 +71,7 @@
     <string name="failed">Laden fehlgeschlagen</string>
     <string name="retry">Wiederholen</string>
     <string name="quadrillion_abbrev">q</string>
-    <string name="trivial_sentence">trivial</string>
+    <string name="trivial_sentence">Trivial</string>
     <string name="easy_sentence">einfach</string>
     <string name="medium_sentence">mittel</string>
     <string name="hard_sentence">schwer</string>
