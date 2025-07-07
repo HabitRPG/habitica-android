@@ -1128,7 +1128,7 @@
     <string name="add_password">Ajouter un mot de passe</string>
     <string name="connect">Se connecter</string>
     <string name="disconnect">Se déconnecter</string>
-    <string name="apitoken_summary">Copier le jeton. Attention, il s\'agit d\'un mot de passe !</string>
+    <string name="apitoken_summary">Jeton mot de passe pour les développeu·r·se·s et outils tiers.</string>
     <string name="added_social_auth">Authentification %s ajoutée</string>
     <string name="copied_to_clipboard">%s copié dans le presse-papier</string>
     <string name="removed_social_auth">%s déconnecté</string>
@@ -1626,4 +1626,10 @@
     <string name="change_email_description">C\'est l\'adresse mail que vous utilisez pour vous connecter à Habitica, ainsi que pour recevoir des notifications.</string>
     <string name="change_username_description">Les noms d\'utilisat·eur·rices doivent comprendre entre 1 et 20 caractères, composés de lettres de A à Z, de numéros de 0 à 9, de trait d\'union et/ou de tiret bas.</string>
     <string name="change_display_name">Changer le Pseudo</string>
+    <string name="display_name_description">C\'est le pseudonyme qui sera affiché pour votre avatar Habitica. Contrairement à votre nom d\'utilisat·eur·rice, ce pseudo n\'a pas besoin d\'être unique.</string>
+    <string name="confirm_new_password">Confirmer le nouveau mot de passe</string>
+    <string name="use_on_party">Utiliser sur l\'Équipe</string>
+    <string name="save_about_me">Enregister le \"À propos\"</string>
+    <string name="password_change_info">Votre mot de passe doit contenir au minimum 8 caractères. Si vous changez votre mot de passe, vous serez déconnecté·e des autres plateformes et add-ons.</string>
+    <string name="about_me_description">Présentez-vous dans un petit descriptif qui apparaîtra sur votre profil Habitica et que les autres utilisat·eur·rice·s pourront voir.</string>
 </resources>
