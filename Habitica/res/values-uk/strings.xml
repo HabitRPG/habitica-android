@@ -203,14 +203,14 @@
     <string name="dialog_feeding">Нагодувати %s:</string>
     <string name="invite_party">Запросити команду</string>
     <string name="hatch_egg">Виростити з яйця</string>
-    <string name="hatch_with_potion">Виростити із зіллям</string>
+    <string name="hatch_with_potion">Виростити, використавши еліксир</string>
     <string name="sell">Продати (%d золота)</string>
     <string name="armoireExp">Ви боретеся зі скринею і отримуєте досвід. Отримайте!</string>
     <string name="mounts">Скакуни</string>
     <string name="pets">Улюбленці</string>
     <string name="quests">Квести</string>
     <string name="food">Корм</string>
-    <string name="hatching_potions">Зілля дозрівання</string>
+    <string name="hatching_potions">Інкубаційні еліксири</string>
     <string name="eggs">Яйця</string>
     <string name="sidebar_items">Предмети</string>
     <string name="today">Сьогодні</string>
@@ -522,12 +522,12 @@
     <string name="g1g1_info_3">Обмеження</string>
     <string name="subscribe">Підписатися</string>
     <string name="subscription_duration_norenew">Для %s</string>
-    <string name="subscription_duration">Повторювати кожні %s</string>
+    <string name="subscription_duration">Повторюється кожні %s</string>
     <string name="subscriptions">Підписка</string>
-    <string name="subscribe_listitem5">Вдвічі більша кількість випадіть предметів</string>
+    <string name="subscribe_listitem5">Особливі улюбленці і більше прикольчиків</string>
     <string name="subscribe_listitem4">Особливі улюбленці тільки для підписників</string>
     <string name="subscribe_listitem3">Щомісячні містичні предмети</string>
-    <string name="subscribe_listitem2">Містичні пісочні годинники</string>
+    <string name="subscribe_listitem2">Містичні пісочні годинники щомісяця!</string>
     <string name="subscribe_listitem1">Безкоштовні Щомісячні Самоцвіти</string>
     <string name="subscribe_prompt">Станьте підписником, щоб отримати ці ексклюзивні переваги!</string>
     <string name="subscribe_title">Підписка підтримує нашу маленьку команду та допомагає забезпечувати роботу Habitica! Дякуємо!</string>
@@ -608,7 +608,7 @@
     <string name="twelve_months">12 місяців</string>
     <string name="six_months">6 місяців</string>
     <string name="three_months">3 місяці</string>
-    <string name="month">місяць</string>
+    <string name="month">Місяць</string>
     <string name="x_months">%d місяців</string>
     <string name="one_month">1 місяць</string>
     <string name="inactive">Неактивний</string>
@@ -681,8 +681,8 @@
     <string name="subscribe_listitem4_description">Отримайте Королівського пурпурного Кроленя при оформленні підписки.</string>
     <string name="subscribe_listitem3_description_new">Підпишись зараз, щоб отримати %s і отримувати нові предмети кожного місяця!</string>
     <string name="subscribe_listitem3_description">Підпишись прямо зараз, щоб отримати ексклюзивний набір зараз і нові предмети кожного місяця!</string>
-    <string name="subscribe_listitem2_description">Заробляйте Містичні Пісочні годинники для купівлі предметів з Магазину мандрівників у часі!</string>
-    <string name="subscribe_listitem1_description">У вас буде можливість купувати самоцвіти на ринку за 20 монет золота кожен!</string>
+    <string name="subscribe_listitem2_description">Скажіть ні пропущеним предметам – купуйте їх за Містичні Пісочні годинники (ви отримуватимете 1 щомісяця) у Магазині мандрівників у часі!</string>
+    <string name="subscribe_listitem1_description">Отримайте унікальну можливість купувати самоцвіти на ринку – лише по 20 золотих за камінь!</string>
     <string name="gem_purchase_subtitle">Самоцвіти дозволяють Вам купувати цікаві додаткові речі для свого акаунту</string>
     <string name="gem_purchase_title">Підписка підтримує розробників та допомагає забезпечувати роботу Habitica</string>
     <string name="gem_purchase_toolbartitle">Придбати</string>
@@ -818,7 +818,7 @@
     <string name="username_copied">Нік скопійовано до буферу обміну</string>
     <string name="enter_recipient_username">Введіть @ ім\'я одержувача</string>
     <string name="empty_description_dailies">Щоденні завдання - це завдання, які повторюються регулярно. Вибери розклад, котрий пасує саме тобі!</string>
-    <string name="subscribe_listitem5_description">Відкрийте для себе ще більше предметів у Habitica з подвоєним щоденним шансом випадіння предметів.</string>
+    <string name="subscribe_listitem5_description">Отримайте королівського фіолетового Кроленя, а також подвойте щоденну кількість яєць, інкубаційних еліксирів та їжі, щоб колекціонувати ще більше улюбленців!</string>
     <string name="gem_purchase_listitem3">Квести, нагородою в яких є яйця з улюбленцями</string>
     <string name="widget_dailies">Щоденні завдання Habitica</string>
     <string name="widget_habit_button">Звички Habitica</string>
@@ -864,7 +864,7 @@
     <string name="defeat">Поразка</string>
     <string name="scheduling">Планування</string>
     <string name="every">Кожного</string>
-    <string name="repeats">Повторювати</string>
+    <string name="repeats">Повторюється</string>
     <string name="reset_streak">Почати спочатку</string>
     <string name="collapse_notes">Згорнути</string>
     <string name="hourglasses_description">Містичні пісочні годинники - це надзвичайно рідкісна форма валюти, яку ви можете отримати лише підписавшись на Habitica протягом трьох місяців поспіль або більше. Їх використовують у магазині «Мандрівника у часі», щоб купувати існуючі в минулому набори спорядження, домашніх тварин, кріплення, анімовані фони або навіть спеціальні квести.
@@ -1320,4 +1320,54 @@
     <string name="sell_confirmation_title">Ви впевнені, що хочете це (%s) продати\?</string>
     <string name="api_token_title">API токен</string>
     <string name="api_token_is_password">API токен це як ваш пароль</string>
+    <string name="api_token_is_password_info">Не розповідайте його нікому. Вас можуть часом питати про ваше ID користувача, але ніколи не вказуйте ваш API токен, там де інші можуть його бачити, зокрема на Github.</string>
+    <string name="api_token_reset_title">Якщо вам потрібен новий API токен</string>
+    <string name="copy_token">Скопіювати токен</string>
+    <string name="api_token_reset_info">Ви можете змінити ваш пароль, щоб створити новий. Коли ви його оновите, вам треба буде повторно залогуватись на всіх інших девайсах, де ви використовуєте Habitica, а також ввести новий API токен до всіх сторонніх інструментів, якщо ви ними користуєтесь.</string>
+    <string name="equipment">Спорядження</string>
+    <string name="error">Помилка</string>
+    <string name="nye">Новорічний вечір</string>
+    <string name="turkey_day">День Індички</string>
+    <string name="valentines">День Святого Валентина</string>
+    <string name="your_tags">Ваші теги</string>
+    <string name="best_deal">Найкраща пропозиція</string>
+    <string name="search_equipment">Шукайте спорядження</string>
+    <string name="avatar_hair_colors">Колір волосся</string>
+    <string name="set">Набір</string>
+    <string name="thanks_for_subscribing">Дякуємо за оформлення підписки</string>
+    <string name="challenge_tags">Теги з випробувань</string>
+    <string name="leave_party_confirmation_quest">Ви певні, що хочете покинути цю команду\?</string>
+    <string name="rejoin_party_quest">Без запрошення ви не зможете доєднатись знову.
+\n
+\nЯкщо ви залишите команду, то будете змушені покинути і квест, який ви зараз проходите.</string>
+    <string name="healers">Цілителі</string>
+    <string name="warriors">Воїни</string>
+    <string name="rogues">Розбійники</string>
+    <string name="plus_two_gems">+2 самоцвіти</string>
+    <string name="cleared_cache">Очистити Cache</string>
+    <string name="two_gems_per_month_gift">Вони отримають +2 самоцвіти за кожен місяць їх підписки</string>
+    <string name="popular">Популярний</string>
+    <string name="two_gems_per_month">Отримуйте +2 самоцвіти за кожен місяць підписки</string>
+    <string name="auth_invalid_credentials">Отримано недійсні облікові дані.</string>
+    <string name="auth_unknown_error">Виникла невідома під час автентифікації.</string>
+    <string name="auth_get_credentials_error">Виникла помилка з отриманням облікових даних для автентифікації.</string>
+    <string name="group_tags">Теги вашої групи</string>
+    <string name="unlocks_x_gems_per_month">Вони отримають %d Самоцвітів на ринку щомісяця</string>
+    <string name="twelve_mystic_hourglasses">12 таємничих пісочних годинників</string>
+    <string name="subscribe_listitemFaint">Отримай другий шанс</string>
+    <string name="mages">Маги</string>
+    <plurals name="repeat_daily">
+        <item quantity="one">щодня</item>
+        <item quantity="few">кожні %d дні</item>
+        <item quantity="many">кожні %d днів</item>
+        <item quantity="other">кожні %d днів</item>
+    </plurals>
+    <plurals name="repeat_weekly">
+        <item quantity="one">щотижня</item>
+        <item quantity="few">кожні %d тижні</item>
+        <item quantity="many">кожні %d тижнів</item>
+        <item quantity="other">кожні %d тижнів</item>
+    </plurals>
+    <string name="open_habitica_website">Відкрити сайт Habitica</string>
+    <string name="unlock_x_gems_per_month">Отримайте %d Самоцвітів на ринку щомісяця</string>
 </resources>
