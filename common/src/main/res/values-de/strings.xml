@@ -47,7 +47,7 @@
     <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Gewohnheit</item>
-        <item quantity="other">%d Gewohnheiten</item>
+        <item quantity="other">%d Gewohnheit</item>
     </plurals>
     <plurals name="x_dailies">
         <item quantity="one">%d Tagesaufgabe</item>
