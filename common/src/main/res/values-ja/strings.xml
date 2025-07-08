@@ -39,7 +39,7 @@
     <string name="email_username">Eメール / ユーザー名</string>
     <string name="password">パスワード</string>
     <string name="emailAddress">メールアドレス</string>
-    <string name="confirmpassword">パスワード ( 確認 )</string>
+    <string name="confirmpassword">Repeat password</string>
     <string name="login_btn_google">Google アカウントでサインイン</string>
     <string name="logout">ログアウト</string>
     <string name="logout_description">ログアウトする</string>
