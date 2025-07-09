@@ -123,6 +123,10 @@ class PurchaseDialog(
                         }
                     }
                 }
+                shopItem.isTypeGear && (shopItem.categoryIdentifier == "animalTails" || shopItem.categoryIdentifier == "animalEars" ) -> {
+                    contentView = PurchaseDialogCustomizationContent(context)
+                    contentView.setItem(shopItem)
+                }
                 shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
                     if (shopItem.purchaseType == "mystery_set") {

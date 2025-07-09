@@ -54,6 +54,8 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
                 path.contains("bangs") -> AvatarView.LayerType.HAIR_BANGS
                 path.contains("beard") -> AvatarView.LayerType.HAIR_BEARD
                 path.contains("mustache") -> AvatarView.LayerType.HAIR_MUSTACHE
+                path.contains("back") -> AvatarView.LayerType.BACK
+                path.contains("headAccessory") -> AvatarView.LayerType.HEAD
                 else -> null
             }
         layerName?.let {
