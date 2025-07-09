@@ -1586,4 +1586,6 @@
     <string name="rejoin_party_quest_leader">招待がないとこのパーティーに再入会することはできません。
 \n
 \nパーティーを抜けると、現在のクエストは中断されます。</string>
+    <string name="save_photo_url">写真のURLを保存</string>
+    <string name="photo_url_description">ここにリンクを張り付けて写真をHabiticaのプロフィールに表示できます。</string>
 </resources>
