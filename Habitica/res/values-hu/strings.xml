@@ -1192,7 +1192,7 @@
     <string name="support">Támogatás</string>
     <string name="purchasedEquipmentTitle">Vásároltál felszerelést</string>
     <string name="onboardingCompleteTitle">Erőfeszítéseidért &lt;b&gt;5 kitüntetést&lt;/b&gt; és &lt;font color=#EE9109&gt;&lt;b&gt;100 aranyat&lt;/b&gt;&lt;/font&gt; szereztél.</string>
-    <string name="apitoken_summary">Token másolása. Légy óvatos, ez egy jelszó!</string>
+    <string name="apitoken_summary">Fejlesztőknek és külső eszközöknek szánt jelszó token.</string>
     <string name="added_social_auth">%s hitelesítés hozzáadva</string>
     <string name="successful_purchase_generic">Sikeres vásárlás</string>
     <string name="guild_summary">Céh összesítő</string>
@@ -1610,4 +1610,24 @@
     </plurals>
     <string name="next_switch_in_x">Következő váltás: %s</string>
     <string name="register_tos_confirm">Elfogadod a <a href="https://habitica.com/static/terms">Felhasználási feltételeinket</a>, és elolvastad az <a href="https://habitica.com/static/privacy">Adatvédelmi nyilatkozatunkat</a>.</string>
+    <string name="save_photo_url">Fénykép URL mentése</string>
+    <string name="change_email_description">Ez az az email-cím, amellyel bejelentkezel a Habiticába és amelyre az értesítéseket kapod.</string>
+    <string name="confirm_new_password">Új jelszó megerősítése</string>
+    <string name="use_on_party">Használat a csapaton</string>
+    <string name="save_about_me">Rólam szóló rész mentése</string>
+    <string name="chat_empty_state_description">Ne feledd: legyél barátságos, és tartsd be a közösségi irányelveket.</string>
+    <string name="api_token_title">API token</string>
+    <string name="api_token_is_password">Az API tokened olyan, mint egy jelszó</string>
+    <string name="api_token_reset_title">Ha új API tokenre van szükséged</string>
+    <string name="copy_token">Token másolása</string>
+    <string name="photo_url_description">Megjeleníthetsz egy képet a Habitica profilodon, amit mások is láthatnak, ha ide beilleszted a kép linkjét.</string>
+    <string name="change_username_description">A felhasználónevek 1 és 20 karakter között lehetnek, és csak a–z betűket, 0–9 számokat, kötőjelet vagy aláhúzást tartalmazhatnak.</string>
+    <string name="change_display_name">Megjelenített név módosítása</string>
+    <string name="display_name_description">Ez az a név, amely az avatárodnál fog megjelenni a Habiticában. A felhasználónévvel ellentétben nem kell egyedinek lennie.</string>
+    <string name="password_change_info">A jelszónak legalább 8 karakter hosszúnak kell lennie. A jelszó megváltoztatása kijelentkeztet minden más eszközről és külső eszközről, amit használsz.</string>
+    <string name="about_me_description">Írj néhány mondatot magadról – ez fog megjelenni a Habitica profilodon, amikor mások megnézik azt.</string>
+    <string name="chat_empty_state_title">Kezdj el csevegni!</string>
+    <string name="api_token_is_password_info">Ne oszd meg nyilvánosan. Előfordulhat, hogy meg kell adnod a felhasználói azonosítódat, de soha ne tedd közzé az API tokened mások számára látható helyen, például a Githubon.</string>
+    <string name="api_token_reset_info">A jelszavad megváltoztatásával visszaállíthatod. A visszaállítás után újra be kell jelentkezned minden olyan eszközön, ahol használod a Habiticát, és újra meg kell adnod az API tokent azokhoz a külső eszközökhöz, amiket használsz.</string>
+    <string name="use_skill">Képesség használata</string>
 </resources>
