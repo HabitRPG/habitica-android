@@ -87,7 +87,7 @@ interface UserRepository : BaseRepository {
 
     suspend fun updateLanguage(languageCode: String): User?
 
-    suspend fun resetAccount(password: String): User?
+    suspend fun resetAccount(password: String): Boolean?
 
     suspend fun deleteAccount(password: String): Void?
 

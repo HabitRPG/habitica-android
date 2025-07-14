@@ -287,6 +287,15 @@ class HabiticaAccountDialog(private var thisContext: Context) :
         }
     }
 
+    fun showIncorrectPasswordError(message: String) {
+        if (viewBinding == null) return
+
+        binding.confirmationTextInputLayout.apply {
+            error = message
+            isErrorEnabled = true
+        }
+    }
+
     override fun getTheme(): Int {
         return R.style.HabiticaAlertDialogTheme
     }
