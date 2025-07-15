@@ -303,6 +303,10 @@ class ApiClientImpl(
                 return
             }
 
+            if (res.displayMessage.isNotEmpty() && res.displayMessage.contains("Missing authentication headers", ignoreCase = true)) {
+                return
+            }
+
             if (status in 400..499) {
                 if (res.displayMessage.isNotEmpty()) {
                     showConnectionProblemDialog("", res.displayMessage, isUserInputCall)
