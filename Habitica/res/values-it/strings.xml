@@ -1251,4 +1251,21 @@
         <item quantity="other">Voi, %d altri</item>
     </plurals>
     <string name="x_and_y">%1$s e %2$s</string>
+    <string name="food_footer_description">Controlla il [Mercato](/shops/market) per comprare cibo o una sella per far crescere istantaneamente il tuo Animale Domestico!</string>
+    <string name="eggs_footer_description">Controlla il [Mercato](/shops/market) per comprare giusto le uova che ti servono!</string>
+    <string name="exact_alarm_system_settings_reminders">I promemoria potrebbero essere ritardati perché le autorizzazioni non sono abilitate. Tocca per visualizzare e aggiornare le autorizzazioni.</string>
+    <string name="exact_alarm_system_settings_title">`Allarme e Promemoria` disabilitati`</string>
+    <string name="exact_alarm_system_settings_description">Consenti `Allarmi e Promemoria` nelle impostazioni per assicurarti che i promemoria vengano mostrati esattamente all’orario programmato.</string>
+    <string name="item_footer_title">Non riesci ad ottenere l\'oggetto giusto dalle attività\?</string>
+    <string name="item_footer_description">Controlla il [Mercato](/shops/market) per comprare giusto quello che ti serve!</string>
+    <string name="customization_shop_more">Controlla il Negozio Personalizzazioni per ancora più modi di personalizzare il tuo avatar!</string>
+    <string name="quests_footer_description">Controlla il [Negozio Missioni](/shops/quests) per vedere cos\'è disponibile!</string>
+    <string name="hatchingPotions_footer_description">Controlla il [Mercato](/shops/market) per comprare Pozioni di Schiusa standard o stagionali!</string>
+    <string name="enable_notifications">Abilita le notifiche</string>
+    <string name="push_notification_system_settings_description">Consenti le notifiche di Habitica nelle Impostazioni per ricevere notifiche push</string>
+    <string name="push_notification_system_settings_reminders">Consenti le notifiche di Habitica nelle Impostazioni per ricevere promemoria</string>
+    <string name="push_notification_system_settings_title">Notifiche disabilitate</string>
+    <string name="title">Titolo</string>
+    <string name="positive_sentence">positivo</string>
+    <string name="negative_sentence">negativo</string>
 </resources>

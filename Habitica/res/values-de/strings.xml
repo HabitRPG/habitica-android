@@ -1254,7 +1254,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="one">Du, ein anderer</item>
         <item quantity="other">Du und %d andere</item>
     </plurals>
-    <string name="push_notification_system_settings_description">Erlaube Habitica in den Einstellungen Benachrichtigungen zu senden, um Push-Benachrichtigungen zu erhalten</string>
+    <string name="push_notification_system_settings_description">Erlaube Benachrichtigungen von habitica in den Systemeinstellungen um Push-Benachrichtigungen zu erhalten</string>
     <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um, Erinnerungen zu erhalten</string>
     <string name="push_notification_system_settings_title">Benachrichtigungen wurden deaktiviert</string>
     <string name="class_changed_description">Du kannst nun deine Fertigkeit %s verwenden und Ausrüstungen im Shop erwerben. Erhöhe dein Level, um Punkte für die Aufwertung deiner Fertigkeiten zu erhalten.</string>
@@ -1540,4 +1540,17 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="task_summary">Zusammenfassung der Aufgaben</string>
     <string name="habit_summary_description">Dies ist eine **%1$s** Gewohnheit, die **%2$s** ist.</string>
     <string name="use_skill">Verwende Fähigkeit</string>
+    <string name="quest_mechanics_rage_title">Rasereimesser</string>
+    <string name="quest_mechanics_rage_description">Einige schwierige Bosse haben eine orangefarbene Wutanzeige unter ihren HP. Diese Anzeige füllt sich, wenn Teilnehmer Tagesaufgaben verpassen. Wenn sie sich vollständig füllt, führt der Boss einen furchterregenden Angriff aus, der zusätzlichen Schaden verursacht!</string>
+    <string name="subscribe_listitem2_description_2">Verdiene im Laufe der Zeit Sanduhren, um Gegenstände im Laden des Zeitreisenden zu kaufen.</string>
+    <string name="subscription_benefit_armoire_sub">Mit deinem Abo erhältst du eine zusätzliche Chance am Schrank!</string>
+    <string name="subscriber_benefit_success_faint">Du hast eine zweite Chance mit 1HP!</string>
+    <string name="revive_broken_equipment">Dein %s ist kaputt gegangen</string>
+    <string name="x_gems">%d Edelsteine</string>
+    <string name="unlock_x_gems_per_month">Schalte %d Edelsteine pro Monat auf dem Marktplatz frei</string>
+    <string name="subscribe_prompt_2">Abonniere,um Edelsteine mit Gold zu kaufen und diese weiteren exklusiven Vorteile zu erhalten!</string>
+    <string name="faint_subscriber_description">Mit deinem Abonnement hast du jeden Tag eine zweite Chance, wenn du keine HP mehr hast.</string>
+    <string name="subscribe_incentive_button_faint">Abboniere, um mit 1HP durchzuhalten!</string>
+    <string name="unlocks_x_gems_per_month">Sie schalten %d Edelsteine pro Monat auf dem Marktplatz frei</string>
+    <string name="see_more_subscription_options">Weitere Abonnementoptionen anzeigen</string>
 </resources>
