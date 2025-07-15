@@ -1249,4 +1249,13 @@
     <string name="exact_alarm_system_settings_description">在設置內允許`警告和提醒`權限以保證提醒能準時觸發</string>
     <string name="subscribe_listitemFaint">獲得第二次機會</string>
     <string name="sell_confirmation_title">確定要賣出%s 嗎\?</string>
+    <string name="a_party_robe">一件派對長袍</string>
+    <string name="twenty_gems">20 寶石</string>
+    <string name="background">背景</string>
+    <string name="birthday_set">生日套裝</string>
+    <string name="you_equipped_x">你裝備了%s</string>
+    <string name="find_new_member">尋找隊員</string>
+    <string name="find_more_members">尋找更多隊員</string>
+    <string name="day_x">第 %d 天</string>
+    <string name="purchase_gryphatrice_confirmation">用 %d 寶石購買節慶獅鷲？</string>
 </resources>
