@@ -1258,4 +1258,5 @@
     <string name="find_more_members">尋找更多隊員</string>
     <string name="day_x">第 %d 天</string>
     <string name="purchase_gryphatrice_confirmation">用 %d 寶石購買節慶獅鷲？</string>
+    <string name="opt_out_description">這樣你就離開了你所選擇的職業。你隨時可以從設定裡再度啟動職業系統，並選擇一種職業。</string>
 </resources>
