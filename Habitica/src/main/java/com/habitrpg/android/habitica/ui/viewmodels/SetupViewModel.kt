@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -21,7 +22,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class SetupViewModel @Inject constructor(val userRepository: UserRepository, val taskRepository: TaskRepository, val inventoryRepository: InventoryRepository) : ViewModel() {
+class SetupViewModel @Inject constructor(val userRepository: UserRepository, val taskRepository: TaskRepository, val inventoryRepository: InventoryRepository, val contentRepository: ContentRepository) : ViewModel() {
 
     private val _user = MutableStateFlow<User?>(null)
     val user: StateFlow<User?> = _user
@@ -251,6 +252,11 @@ class SetupViewModel @Inject constructor(val userRepository: UserRepository, val
         }
 
         return task
+    }
+
+    suspend fun retrieveContent() {
+        contentRepository.retrieveContent(true)
+        contentRepository.retrieveWorldState(true)
     }
 
     companion object {

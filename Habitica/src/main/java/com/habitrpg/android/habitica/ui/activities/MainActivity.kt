@@ -181,6 +181,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
     private var lastNotificationOpen: Long? = null
+    private var privacyActivityShown = false
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
@@ -698,7 +699,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 }
             }
 
-            if (user.preferences?.analyticsConsent == null) {
+            if (user.preferences?.analyticsConsent == null && !privacyActivityShown) {
+                privacyActivityShown = true
                 val intent = Intent(this, PrivacyPreferencesActivity::class.java)
                 startActivity(intent)
             }

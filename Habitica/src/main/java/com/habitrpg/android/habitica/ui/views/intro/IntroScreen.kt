@@ -154,7 +154,7 @@ fun IntroScreen(onNextOnboardingStep: () -> Unit) {
                     page = page,
                     title = { Image(painterResource(R.drawable.intro_1_title), contentDescription = null) },
                     subtitle = { Text(stringResource(R.string.intro_1_subtitle)) },
-                    description = { Text(stringResource(R.string.intro_1_description)) },
+                    description = { Text(stringResource(R.string.intro_1_description, "6,000,000")) },
                     image = { Image(painterResource(R.drawable.intro_1), contentDescription = null) },
                     background = Brush.verticalGradient(listOf(colorResource(R.color.brand_400), colorResource(R.color.brand_200)))
                 )

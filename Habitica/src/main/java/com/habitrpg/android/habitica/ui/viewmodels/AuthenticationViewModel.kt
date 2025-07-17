@@ -67,35 +67,32 @@ class AuthenticationViewModel @Inject constructor(
     private val _showAuthProgress = MutableStateFlow(false)
     private val _authenticationError: MutableSharedFlow<AuthenticationErrors?> = MutableSharedFlow()
     private val _authenticationSuccess = MutableStateFlow<Boolean?>(null)
-    private val _socialAuthNeedsRegistration = MutableStateFlow(false)
     private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
     private var _usernameIssues = MutableStateFlow<String?>(null)
 
     val showAuthProgress: Flow<Boolean> = _showAuthProgress
-    val authenticationError: Flow<AuthenticationErrors?> = _authenticationError
-        .onEach { _showAuthProgress.value = false }
-    val authenticationSuccess: Flow<Boolean> = _authenticationSuccess
+    val authenticationError: Flow<AuthenticationErrors> = _authenticationError
         .filterNotNull()
         .onEach { _showAuthProgress.value = false }
-    val socialAuthNeedsRegistration: Flow<Boolean> = _socialAuthNeedsRegistration
-        .filterNotNull()
-        .filter { it }
+    val authenticationSuccess: Flow<Boolean?> = _authenticationSuccess
         .onEach { _showAuthProgress.value = false }
     val isUsernameValid: Flow<Boolean?> = _isUsernameValid
     val usernameIssues: Flow<String?> = _usernameIssues
 
+    fun clearAuthenticationState() {
+        _showAuthProgress.value = false
+        _authenticationSuccess.value = null
+    }
+
     fun checkUsername() {
-        _showAuthProgress.value = true
         viewModelScope.launch {
             try {
                 val response = apiClient.verifyUsername(username.value)
                 _isUsernameValid.value = response?.isUsable == true
                 _usernameIssues.value = response?.issues?.joinToString("\n") { it }
-                _showAuthProgress.value = false
             } catch (e: Exception) {
                 _isUsernameValid.value = null
                 Analytics.logException(e)
-                _showAuthProgress.value = false
             }
         }
     }
@@ -105,8 +102,10 @@ class AuthenticationViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val response = apiClient.verifyEmail(email.value)
-                if (response?.email == email.value) {
+                if (response?.valid == true) {
                     _authenticationSuccess.value = true
+                } else {
+                    _authenticationError.emit(AuthenticationErrors.INVALID_EMAIL)
                 }
                 _showAuthProgress.value = false
             } catch (e: Exception) {
@@ -141,6 +140,10 @@ class AuthenticationViewModel @Inject constructor(
                 email ?: this@AuthenticationViewModel.email.value,
                 password ?: this@AuthenticationViewModel.password.value,
                 password ?: this@AuthenticationViewModel.password.value)
+            if (response?.id?.isBlank() == true && response.apiToken.isBlank()) {
+                // User added password to social account
+                return
+            }
             handleAuthResponse(response)
         } catch (e: Exception) {
             authenticationError()
@@ -153,9 +156,12 @@ class AuthenticationViewModel @Inject constructor(
         return user.value
     }
 
-    suspend fun removeSocialAuth(network: String) {
-        apiClient.disconnectSocial(network)
-        retrieveUser()
+    suspend fun removeSocialAuth(network: String): Boolean {
+        val success = apiClient.disconnectSocial(network)
+        if (success) {
+            retrieveUser()
+        }
+        return success
     }
 
     private fun authenticationError(error: AuthenticationErrors? = null) {
@@ -212,7 +218,7 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun startGoogleAuth(context: Context) {
+    fun startGoogleAuth(context: Context, allowRegister: Boolean = false) {
         try {
             val googleIdOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
                 .build()
@@ -226,9 +232,8 @@ class AuthenticationViewModel @Inject constructor(
                         request = request,
                         context = context,
                     )
-                    handleSignIn(context, result)
+                    handleSignIn(context, result, allowRegister)
                 } catch (e: GetCredentialException) {
-                    authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
                     Log.e("AuthenticationViewModel", "Get Credential Exception", e)
                 }
             }
@@ -244,7 +249,7 @@ class AuthenticationViewModel @Inject constructor(
     private var googleIdTokenCredential: GoogleIdTokenCredential? = null
     private var accessToken: String? = null
 
-    private suspend fun handleSignIn(context: Context, result: GetCredentialResponse) {
+    private suspend fun handleSignIn(context: Context, result: GetCredentialResponse, allowRegister: Boolean) {
         val credential = result.credential
 
         when (credential) {
@@ -267,21 +272,24 @@ class AuthenticationViewModel @Inject constructor(
                         if (result != null && result.accessToken != null) {
                             this.googleIdTokenCredential = googleIdTokenCredential
                             this.accessToken = result.accessToken
-                            attemptSocialLogin(false)
+                            attemptSocialLogin(allowRegister)
+                        } else {
+                            authenticationError(AuthenticationErrors.MISSING_TOKEN)
+                            Log.e("AuthenticationViewModel", "Received an empty access token response")
                         }
                     } catch (e: GoogleIdTokenParsingException) {
                         authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
                         Log.e("AuthenticationViewModel", "Received an invalid google id token response", e)
                     }
                 } else {
-                    authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
-                    Log.e("AuthenticationViewModel", "Unexpected type of credential")
+                    authenticationError(AuthenticationErrors.INVALID_CREDENTIAL_TYPE)
+                    Log.e("AuthenticationViewModel", "Unexpected type of credential: $credential")
                 }
             }
 
             else -> {
-                authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
-                Log.e("AuthenticationViewModel", "Unexpected type of credential")
+                authenticationError(AuthenticationErrors.UNKNOWN_CREDENTIAL_TYPE)
+                Log.e("AuthenticationViewModel", "Unexpected type of credential: $credential")
             }
         }
     }
@@ -292,16 +300,15 @@ class AuthenticationViewModel @Inject constructor(
         val response = apiClient.connectSocial("google", tokenId, token, allowRegister)
         Log.d("AuthenticationViewModel", "Social auth response: $response")
         if (response?.userExists == false) {
-            _socialAuthNeedsRegistration.value = true
+            isRegistering.value = true
+            _authenticationSuccess.value = true
         } else {
             handleAuthResponse(response)
         }
     }
 
-    fun updateUsername() {
-        viewModelScope.launchCatching {
-            apiClient.updateUsername(username.value)
-        }
+    suspend fun updateUsername() {
+        apiClient.updateUsername(username.value)
     }
 
     fun startedSocialAuth(): Boolean {
@@ -314,6 +321,24 @@ class AuthenticationViewModel @Inject constructor(
             updateUsername()
         } else {
             register()
+        }
+    }
+
+    fun prefillUsername() {
+        val email = if (googleIdTokenCredential != null) {
+            googleIdTokenCredential?.id ?: return
+        } else email.value.ifBlank {
+            ""
+        }
+        if (email.isNotBlank()) {
+            var suggested = email.substringBefore('@').takeIf { it.isNotBlank() } ?: ""
+            suggested = suggested.replace(Regex("[+\\s]"), "")
+            username.value = suggested
+        }
+        checkUsername()
+        if (_isUsernameValid.value == false) {
+            username.value = ""
+            _isUsernameValid.value = null
         }
     }
 }

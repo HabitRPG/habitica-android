@@ -45,6 +45,7 @@ fun LoginForm(
     passwordFieldState: LoginFieldState,
     onPasswordChange: (String) -> Unit,
     onGoogleLoginClicked: () -> Unit,
+    onForgotPasswordClicked: () -> Unit,
     isRegistering: Boolean,
     onSubmit: () -> Unit,
     showLoading: Boolean,
@@ -126,6 +127,7 @@ fun LoginForm(
                     contentDescription = stringResource(R.string.password)
                 )
             },
+            errorMessage = if (passwordFieldState == LoginFieldState.ERROR) stringResource(R.string.password_too_short, 8) else null,
             modifier = Modifier.Companion.fillMaxWidth(),
         )
         AnimatedVisibility(isRegistering) {
@@ -139,6 +141,8 @@ fun LoginForm(
                     confirmPassword == password && passwordFieldState == LoginFieldState.VALID -> LoginFieldState.VALID
                     else -> LoginFieldState.ERROR
                 },
+                errorMessage = if (confirmPassword.isNotBlank() && confirmPassword != password &&
+                        passwordFieldState == LoginFieldState.VALID) stringResource(R.string.password_not_matching) else null,
                 icon = {
                     Image(
                         painterResource(R.drawable.login_password),
@@ -153,9 +157,7 @@ fun LoginForm(
                 HabiticaCircularProgressView(indicatorSize = 64.dp, modifier = Modifier.padding(top = 30.dp))
             } else {
                 Button(
-                    {
-                        onSubmit()
-                    },
+                    onSubmit,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Companion.White,
                         contentColor = colorResource(R.color.gray_50),
@@ -188,9 +190,7 @@ fun LoginForm(
         }
         AnimatedVisibility(!isRegistering) {
             Button(
-                {
-                    onGoogleLoginClicked()
-                },
+                onGoogleLoginClicked,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Companion.White,
                     contentColor = colorResource(R.color.gray_50)
@@ -217,9 +217,7 @@ fun LoginForm(
         }
         AnimatedVisibility(!isRegistering) {
             Button(
-                {
-                    onToggleFormType()
-                },
+                onForgotPasswordClicked,
                 colors = ButtonDefaults.textButtonColors(),
                 contentPadding = PaddingValues(15.dp),
                 modifier = Modifier.Companion.fillMaxWidth()

@@ -83,6 +83,9 @@ class ApiClientImpl(
 
     private fun <T> processResponse(response: Response<HabitResponse<T>>): T? {
         val habitResponse = response.body()
+        if (habitResponse == null && response.errorBody() != null) {
+            throw HttpException(response)
+        }
         habitResponse?.statusCode = response.code()
         habitResponse?.notifications?.let {
             notificationsManager.setNotifications(it)
@@ -261,6 +264,10 @@ class ApiClientImpl(
                 UserAuthResponse().apply {
                     userExists = false
                 }
+            } else if (response.body()?.data?.id?.isEmpty() == true) {
+                UserAuthResponse().apply {
+                    userExists = false
+                }
             } else {
                 processResponse(response)
             }
@@ -271,8 +278,8 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun disconnectSocial(network: String): Void? {
-        return process { this.apiService.disconnectSocial(network) }
+    override suspend fun disconnectSocial(network: String): Boolean {
+        return this.apiService.disconnectSocial(network).code() == 200
     }
 
     override suspend fun loginApple(authToken: String): UserAuthResponse? {

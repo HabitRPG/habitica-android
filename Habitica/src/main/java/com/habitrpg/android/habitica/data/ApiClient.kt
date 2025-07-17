@@ -187,7 +187,7 @@ interface ApiClient {
         allowRegister: Boolean
     ): UserAuthResponse?
 
-    suspend fun disconnectSocial(network: String): Void?
+    suspend fun disconnectSocial(network: String): Boolean
 
     suspend fun loginApple(authToken: String): UserAuthResponse?
 

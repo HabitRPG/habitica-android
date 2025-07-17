@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -50,6 +52,7 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
@@ -80,6 +83,8 @@ fun UsernameSelectionScreen(
 
     val scope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
+    val scrollState = rememberScrollState()
+
     LaunchedEffect(Unit) {
         if (username.isEmpty() && authenticationViewModel.email.value.isNotBlank()) {
             val email = authenticationViewModel.email.value
@@ -113,6 +118,7 @@ fun UsernameSelectionScreen(
                 .fillMaxSize()
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp)
+                .verticalScroll(scrollState)
         ) {
             Image(
                 painter = painterResource(R.drawable.header_verify_username),
@@ -188,11 +194,12 @@ fun UsernameSelectionScreen(
                         Button(
                             onClick = {
                                 scope.launchCatching {
-                                    if (authenticationViewModel.isRegistering.value) {
+                                    if (authenticationViewModel.isRegistering.value || authenticationViewModel.user.value == null) {
                                         authenticationViewModel.completeRegistration()
                                     } else {
                                         authenticationViewModel.updateUsername()
                                     }
+                                    authenticationViewModel.retrieveUser()
                                     onNextOnboardingStep()
                                 }
                             },
@@ -225,7 +232,8 @@ fun TermsAndConditionsRow(
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = modifier // Apply the passed modifier here
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
     ) {
         Box(
             modifier = Modifier
@@ -250,9 +258,11 @@ fun TermsAndConditionsRow(
                 "You agree to our <a href=\"https://habitica.com/static/terms\">Terms of Service</a> and have read our <a href=\"https://habitica.com/static/privacy\">Privacy Policy</a>.",
                 linkStyles = TextLinkStyles(style = SpanStyle(
                     fontWeight = FontWeight.Bold,
+                    textDecoration = TextDecoration.Underline,
                     color = colorResource(R.color.white)
                 ))
             ),
+            lineHeight = 20.sp,
             fontSize = 16.sp,
             color = colorResource(R.color.brand_600),
             fontWeight = FontWeight.Normal,

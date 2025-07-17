@@ -116,6 +116,7 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
     LaunchedEffect(currentStep) {
         if (currentStep == 2) {
             viewModel.saveSetup(context)
+            viewModel.retrieveContent()
             onNextOnboardingStep()
         }
     }
@@ -695,7 +696,7 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                 ) {
                     Spacer(modifier = Modifier.width(20.dp))
                     for (item in items) {
-                        val transition = updateTransition(item.key == selectedItem)
+                        val transition = updateTransition(item.key == selectedItem.replace("chair_", ""))
                         val borderColor by transition.animateColor { if (it) colorResource(R.color.brand_400) else Color.Transparent }
                         val borderWidth by transition.animateDp({
                             tween(300)
@@ -715,12 +716,18 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                                 contentScale = ContentScale.None,
                                 modifier = m
                             )
-                        }
-                        if (item.colorId != null && item.colorId != 0) {
+                        } else if (item.colorId != null && item.colorId != 0) {
                             val color = colorResource(item.colorId ?: R.color.brand_400)
                             Canvas(modifier = m, onDraw = {
                                 drawCircle(color = color)
                             })
+                        } else {
+                            Image(
+                                painterResource(R.drawable.notification_close),
+                                contentDescription = null,
+                                contentScale = ContentScale.None,
+                                modifier = m
+                            )
                         }
                     }
                     Spacer(modifier = Modifier.width(20.dp))
@@ -835,6 +842,7 @@ fun SpeechBubble(
             lineHeight = 21.sp,
             color = colorResource(R.color.yellow_1),
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 42.dp)
                 .border(
                     width = 4.dp,

@@ -69,10 +69,25 @@ class AccountPreferenceFragment :
             updateUserFields()
         }
 
+    private var lastAuthenticationMethod: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         findPreference<Preference>("confirm_username")?.isVisible =
             user?.flags?.verifiedUsername == false
+
+        lifecycleScope.launchCatching {
+            viewModel.authenticationSuccess.collect { registered ->
+                if (registered == null) return@collect
+                displayAuthenticationSuccess(lastAuthenticationMethod ?: "Unknown")
+            }
+        }
+
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect { user ->
+                this@AccountPreferenceFragment.user = user
+            }
+        }
     }
 
     override fun setupPreferences() {
@@ -223,8 +238,9 @@ class AccountPreferenceFragment :
                 if (user?.authentication?.hasGoogleAuth == true) {
                     disconnect("google", "Google")
                 } else {
+                    lastAuthenticationMethod = getString(R.string.google)
                     activity?.let {
-                        viewModel.startGoogleAuth(it)
+                        viewModel.startGoogleAuth(it, true)
                     }
                 }
             }
@@ -254,8 +270,15 @@ class AccountPreferenceFragment :
             dialog.setTitle(R.string.are_you_sure)
             dialog.addButton(R.string.disconnect, true) { _, _ ->
                 lifecycleScope.launch {
-                    viewModel.removeSocialAuth(network)
-                    displayDisconnectSuccess(networkName)
+                    val success = viewModel.removeSocialAuth(network)
+                    if (success) {
+                        displayDisconnectSuccess(networkName)
+                    } else {
+                        (activity as? SnackbarActivity)?.showSnackbar(
+                            content = context.getString(R.string.error_removing_social_auth),
+                            displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE,
+                        )
+                    }
                 }
             }
             dialog.addCancelButton()
@@ -367,7 +390,7 @@ class AccountPreferenceFragment :
             } else {
                 dialog.setTitle(R.string.add_password)
             }
-            dialog.addButton(R.string.add, true, false, false) { _, _ ->
+            dialog.addButton(R.string.add, true, isDestructive = false, autoDismiss = false) { _, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
                 emailEditText?.showErrorIfNecessary()
                 passwordEditText?.showErrorIfNecessary()
@@ -376,15 +399,13 @@ class AccountPreferenceFragment :
                 val email =
                     if (showEmail) emailEditText?.text else user?.authentication?.findFirstSocialEmail()
                 lifecycleScope.launchCatching {
-                    val response = viewModel.register(
+                    lastAuthenticationMethod = getString(R.string.password)
+                    viewModel.register(
                         user?.username ?: "",
                         email ?: "",
                         passwordEditText.text ?: "",
                     )
-                    (activity as? SnackbarActivity)?.showSnackbar(
-                        content = context.getString(R.string.password_added),
-                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
-                    )
+                    viewModel.retrieveUser()
                 }
                 dialog.dismiss()
             }

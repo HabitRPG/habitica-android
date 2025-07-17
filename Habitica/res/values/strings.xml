@@ -1584,7 +1584,10 @@
     <string name="search_equipment">Search Equipment</string>
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
+    <string name="auth_invalid_credential_type">Received invalid credential type.</string>
+    <string name="auth_unknown_credential_type">Received unknown credential type.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
+    <string name="auth_missing_token">Received empty token.</string>
     <string name="api_token_title">API Token</string>
     <string name="api_token_is_password">Your API Token is like a password</string>
     <string name="api_token_is_password_info">

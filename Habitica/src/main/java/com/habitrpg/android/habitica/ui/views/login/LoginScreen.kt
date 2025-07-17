@@ -64,16 +64,14 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow: Boolean, onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow: Boolean, onNextOnboardingStep: (Boolean) -> Unit, onForgotPasswordClicked: () -> Unit, modifier: Modifier = Modifier) {
     val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
-    val authenticationError by authenticationViewModel.authenticationError.collectAsState(null)
 
     LaunchedEffect(authenticationViewModel) {
         authenticationViewModel.authenticationSuccess.collect { isRegistering ->
+            if (isRegistering == null) return@collect
             onNextOnboardingStep(isRegistering)
-        }
-        authenticationViewModel.socialAuthNeedsRegistration.collect {
-            onNextOnboardingStep(true)
+            authenticationViewModel.clearAuthenticationState()
         }
     }
 
@@ -101,8 +99,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
             Image(
                 painterResource(R.drawable.login_background),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.width(800.dp)
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier.height(318.dp)
             )
             AnimatedVisibility(
                 loginScreenState == LoginScreenState.INITIAL,
@@ -244,7 +242,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                         showLoading = showLoading,
                         onGoogleLoginClicked = {
                             authenticationViewModel.startGoogleAuth(context)
-                        }
+                        },
+                        onForgotPasswordClicked = onForgotPasswordClicked
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))

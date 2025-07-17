@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -32,8 +33,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -57,10 +60,11 @@ enum class LoginFieldState {
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun makeDecorationBox(
+private fun LoginDecorationBox(
     value: String,
     label: String,
     state: LoginFieldState,
+    focused: Boolean = false,
     prefix: @Composable () -> Unit,
     icon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors,
@@ -78,8 +82,8 @@ private fun makeDecorationBox(
             prefix = prefix,
             leadingIcon = icon,
             suffix = {
-                AnimatedContent(state) {
-                    if (it == LoginFieldState.ERROR) {
+                AnimatedContent(Pair(state, focused)) { (it, focused) ->
+                    if (it == LoginFieldState.ERROR && !focused) {
                         Image(
                             painterResource(R.drawable.ic_close_white_18dp),
                             contentDescription = null,
@@ -109,9 +113,11 @@ fun LoginScreenField(
     icon: @Composable (() -> Unit)? = null,
     prefix: @Composable () -> Unit = {},
     state: LoginFieldState = LoginFieldState.DEFAULT,
+    errorMessage: String? = null,
     hideInput: Boolean = false,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
+    var focused by remember { mutableStateOf(false) }
     val textFieldState by remember { mutableStateOf(TextFieldState(value)) }
 
     LaunchedEffect(textFieldState.text) {
@@ -142,48 +148,66 @@ fun LoginScreenField(
         unfocusedTrailingIconColor = colorResource(R.color.brand_100),
         cursorColor = Color.White,
         selectionColors = TextSelectionColors(
-            handleColor = colorResource(R.color.brand_600),
+            handleColor = colorResource(R.color.white),
             backgroundColor = colorResource(R.color.brand_600).copy(alpha = 0.3f)
         ),
     )
-    val focused = interactionSource.collectIsFocusedAsState().value
 
     val mergedTextStyle = TextStyle(
         fontSize = 18.sp,
         fontWeight = FontWeight.Normal
     ).merge(TextStyle(color = if (focused) colors.focusedTextColor else colors.unfocusedTextColor))
 
-    if (hideInput) {
-        BasicSecureTextField(
-            state = textFieldState,
-            textObfuscationMode = if (showInput) {
-                TextObfuscationMode.Visible
-            } else {
-                TextObfuscationMode.RevealLastTyped
-            },
-            textStyle = mergedTextStyle,
-            keyboardOptions = keyboardOptions,
-            modifier = modifier.fillMaxWidth().heightIn(min = 60.dp),
-            decorator = {
-                makeDecorationBox(value, label, state, prefix, {
-                    Box(modifier = Modifier.clickable {
-                        stillShowInput = !stillShowInput
-                    }) {
-                        icon?.invoke()
-                    }
-                }, colors, interactionSource, it)
-            }
-            )
-    } else {
-        BasicTextField(state = textFieldState,
-            textStyle = mergedTextStyle,
-            modifier = modifier.fillMaxWidth().heightIn(min = 60.dp),
-            keyboardOptions = keyboardOptions,
-            lineLimits = TextFieldLineLimits.SingleLine,
-            decorator = { innerTextField ->
-                    makeDecorationBox(value, label, state, prefix, icon, colors, interactionSource, innerTextField)
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (hideInput) {
+            BasicSecureTextField(
+                state = textFieldState,
+                textObfuscationMode = if (showInput) {
+                    TextObfuscationMode.Visible
+                } else {
+                    TextObfuscationMode.RevealLastTyped
+                },
+                cursorBrush = SolidColor(Color.White),
+                textStyle = mergedTextStyle,
+                keyboardOptions = keyboardOptions,
+                modifier = Modifier.fillMaxWidth().heightIn(min = 60.dp)
+                    .onFocusChanged {
+                        focused = it.isFocused
+                    },
+                decorator = {
+                    LoginDecorationBox(value, label, state, focused, prefix, {
+                        Box(modifier = Modifier.clickable {
+                            stillShowInput = !stillShowInput
+                        }) {
+                            icon?.invoke()
+                        }
+                    }, colors, interactionSource, it)
                 }
-        )
+            )
+        } else {
+            BasicTextField(
+                state = textFieldState,
+                textStyle = mergedTextStyle,
+                cursorBrush = SolidColor(Color.White),
+                modifier = Modifier.fillMaxWidth().heightIn(min = 60.dp)
+                    .onFocusChanged {
+                        focused = it.isFocused
+                    },
+                keyboardOptions = keyboardOptions,
+                lineLimits = TextFieldLineLimits.SingleLine,
+                decorator = { innerTextField ->
+                    LoginDecorationBox(value, label, state, focused, prefix, icon, colors, interactionSource, innerTextField)
+                }
+            )
+        }
+        AnimatedVisibility(errorMessage != null && !focused) {
+            Text(
+                text = errorMessage ?: "",
+                color = colorResource(R.color.red_100),
+                fontSize = 14.sp,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+            )
+        }
     }
 }
 
