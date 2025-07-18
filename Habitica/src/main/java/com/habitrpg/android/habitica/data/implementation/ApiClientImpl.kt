@@ -97,6 +97,16 @@ class ApiClientImpl(
         return null
     }
 
+    private suspend fun <T> processWithIfSuccess(apiCall: suspend () -> HabitResponse<T>): Boolean {
+        try {
+            processResponse(apiCall())
+            return true
+        } catch (throwable: Throwable) {
+            accept(throwable)
+            return false
+        }
+    }
+
     override var languageCode: String? = null
     private var lastAPICallURL: String? = null
 
@@ -998,10 +1008,10 @@ class ApiClientImpl(
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
-    override suspend fun resetAccount(password: String): Void? {
+    override suspend fun resetAccount(password: String): Boolean {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = password
-        return process { apiService.resetAccount(updateObject) }
+        return processWithIfSuccess { apiService.resetAccount(updateObject) }
     }
 
     override suspend fun deleteAccount(password: String): Void? {
