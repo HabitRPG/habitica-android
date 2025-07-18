@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -37,6 +38,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -121,6 +123,18 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             markMessagesAsRead(it)
             lifecycleScope.launchCatching {
                 chatAdapter?.submitData(it)
+            }
+        }
+
+        chatAdapter?.addLoadStateListener { loadStates ->
+            val isEmpty = loadStates.refresh is LoadState.NotLoading &&
+                    loadStates.append.endOfPaginationReached &&
+                    chatAdapter?.itemCount == 0
+
+            if (isEmpty) {
+                binding?.recyclerView?.state = RecyclerViewState.EMPTY
+            } else {
+                binding?.recyclerView?.state = RecyclerViewState.DISPLAYING_DATA
             }
         }
 
