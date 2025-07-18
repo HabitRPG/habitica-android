@@ -24,6 +24,7 @@ open class RealmContentLocalRepository(realm: Realm) :
             realm1.insertOrUpdate(contentResult.food)
             realm1.insertOrUpdate(contentResult.hatchingPotions)
             realm1.insertOrUpdate(contentResult.special)
+            realm1.insertOrUpdate(contentResult.categoryOptions)
 
             realm1.insertOrUpdate(contentResult.pets)
             realm1.insertOrUpdate(contentResult.mounts)

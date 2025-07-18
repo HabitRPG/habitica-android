@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
+import com.habitrpg.android.habitica.models.ContentResult
+import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -146,5 +148,13 @@ class RealmChallengeLocalRepository(realm: Realm) :
             }
         }
         executeTransaction { realm1 -> realm1.insertOrUpdate(challenges) }
+    }
+
+    override fun getCategoryOptions(): Flow<List<CategoryOption>> {
+        return realm.where(CategoryOption::class.java)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
+            .map { it.toList() }
     }
 }
