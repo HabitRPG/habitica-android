@@ -161,23 +161,16 @@ class ApiClientImpl(
                                     val path = response.request.url.encodedPath
 
                                     if (!path.contains("/user/auth/update-password") && !path.contains("group-plans")) {
-                                        val bodyStr = try {
-                                            response.peekBody(1024).string()
-                                        } catch (_: Exception) {
-                                            ""
-                                        }
+                                        val bodyStr = runCatching { response.peekBody(1024).string() }.getOrDefault("")
 
-                                        val (errField, msgField) = try {
-                                            val obj = JSONObject(bodyStr)
-                                            obj.optString("error", "") to obj.optString("message", "")
-                                        } catch (_: Exception) {
-                                            "" to ""
-                                        }
-                                        
-                                        val shouldLogout = errField.equals("missingAuthHeaders", ignoreCase = true)
-                                                || errField.equals("invalidCredentials", ignoreCase = true)
-                                                || msgField.contains("invalidCredentials", ignoreCase = true)
-                                                || msgField.contains("Missing authentication headers", ignoreCase = true)
+                                        val (errField, _) = runCatching {
+                                            JSONObject(bodyStr).let {
+                                                it.optString("error", "") to it.optString("message", "")
+                                            }
+                                        }.getOrDefault("" to "")
+
+                                        // logout if language agnostic "invalid_credentials" error is returned
+                                        val shouldLogout = errField.equals("invalid_credentials", ignoreCase = true)
 
                                         if (shouldLogout) {
                                             HabiticaBaseApplication.logout(context)
@@ -307,6 +300,10 @@ class ApiClientImpl(
             }
             if (requestUrl?.toString()?.endsWith("/user/push-devices") == true) {
                 // workaround for an error that sometimes displays that the user already has this push device
+                return
+            }
+
+            if (res.displayMessage.isNotEmpty() && res.displayMessage.contains("Missing authentication headers", ignoreCase = true)) {
                 return
             }
 
