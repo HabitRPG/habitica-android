@@ -395,7 +395,7 @@ interface ApiClient {
 
     suspend fun reroll(): User?
 
-    suspend fun resetAccount(password: String): Void?
+    suspend fun resetAccount(password: String): Boolean
 
     suspend fun deleteAccount(password: String): Void?
 
