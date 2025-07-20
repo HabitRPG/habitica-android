@@ -115,17 +115,17 @@
     <string name="complete_tutorial">Jasne!</string>
     <string name="dismiss_tutorial">Przypomnij mi później</string>
     <string name="intro_1_subtitle">Witaj w</string>
-    <string name="intro_1_description">Nadszedł czas, by się bawić kiedy wykonujesz swoje zadania. Dołącz do ponad %s innych, którzy polepszyli swoje życie wykonując zadanie za zadaniem.</string>
+    <string name="intro_1_description">Nadszedł czas, by się bawić kiedy wykonujesz swoje zadania. Dołącz do ponad %s innych osób, które ulepszają swoje życie wykonując zadanie za zadaniem.</string>
     <string name="intro_2_subtitle">Postęp w grze</string>
     <string name="intro_2_title">Postęp w życiu</string>
-    <string name="intro_2_description">Odblokuj cechy w grze przez wykonywanie twoich zadań z realnego życia. Zdobywaj broń, chowańce i znacznie więcej za realizacje swoich celów.</string>
+    <string name="intro_2_description">Odblokuj nagrody w grze przez wykonywanie twoich zadań z realnego życia. Zdobywaj broń, chowańce i znacznie więcej za realizacje swoich celów.</string>
     <string name="intro_3_subtitle">Walcz z potworami</string>
     <string name="intro_3_title">Bądź społeczny</string>
     <string name="intro_3_description">Zmierzaj do swoich celów z pomocą przyjaciół. Wspierajcie się wzajemnie w życiu i w walce, aby wspólnie się udoskonalać!</string>
     <string name="intro_finish_button">Zaczynajmy!</string>
     <string name="next_button">Następny</string>
     <string name="skip_button">Pomiń</string>
-    <string name="avatar_setup_description">Więc, jak chciałbyś wyglądać. Nie obawiaj się, możesz to później zmienić.</string>
+    <string name="avatar_setup_description">Więc, jak chciałbyś wyglądać\? Nie obawiaj się, możesz zmienić to później.</string>
     <string name="task_setup_description">Świetnie! Teraz, nad czym chciałbyś popracować podczas tej podróży?</string>
     <string name="setup_group_work">Praca</string>
     <string name="setup_group_exercise">Ćwiczenia</string>
@@ -134,7 +134,7 @@
     <string name="setup_group_teams">Zespoły</string>
     <string name="setup_group_chores">Obowiązki domowe</string>
     <string name="setup_group_creativity">Twórczość</string>
-    <string name="setup_task_work_1">Przeglądnąć e-maile</string>
+    <string name="setup_task_work_1">Przejrzeć e-maile</string>
     <string name="setup_task_work_2">Najważniejsze zadanie</string>
     <string name="setup_task_work_3">Projekt zawodowy</string>
     <string name="setup_task_exercise_1">10 min kardio</string>
@@ -176,7 +176,7 @@
     <string name="outfit_weapon">Główna Ręka</string>
     <string name="wear_costume">Użyj kostiumu</string>
     <string name="equipped">W użyciu</string>
-    <string name="quest_cancel_message">Jesteś pewien że chcesz przerwać quest? Quest zostanie przerwany dla wszystkich uczestników. Zwołujący quest odzyska skrypt (quest scroll).</string>
+    <string name="quest_cancel_message">Czy na pewno chcesz przerwać misję\? Przerwanie misji anuluje wszystkie zaakceptowane i oczekujące zaproszenia. Misja wróci do ekwipunku właściciela.</string>
     <string name="quest_begin_message">Jesteś pewien? Tylko %1$d z %2$d członków twojej drużyny dołączyło do tej misji! Misje zaczynają się automatycznie kiedy wszyscy członkowie dołączą bądź odrzucą zaproszenie.</string>
     <string name="today">Dzisiaj</string>
     <string name="sidebar_items">Przedmioty</string>
@@ -1159,4 +1159,9 @@
         <item quantity="many">%d Minuty</item>
         <item quantity="other">%d Minuty</item>
     </plurals>
+    <string name="challenges">Wyzwania</string>
+    <string name="leave_party_confirmation_quest">Czy jesteś pewny, że chcesz opuścić tę drużynę\?</string>
+    <string name="rejoin_party_quest">Nie będziesz miał możliwości dołączenia ponownie do tej drużyny dopóki ktoś Cię nie zaprosi.
+\n
+\nOpuszczenie drużyny sprawi również, że automatycznie porzucisz misję, w której uczestniczysz.</string>
 </resources>
