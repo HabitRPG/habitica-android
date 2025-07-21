@@ -348,6 +348,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 pushManager?.clearUser()
 
                 instance?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
+                instance?.authenticationHandler?.clear()
                 Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
                 startActivity(OnboardingActivity::class.java, context)
             }

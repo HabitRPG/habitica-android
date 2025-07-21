@@ -1059,7 +1059,6 @@
     <string name="quest_leave_message">Görevden ayrılmak istediğinizden emin misiniz? Tüm ilerlemeniz kaybolacak.</string>
     <string name="quest_leave_message_nostart">Görevden ayrılmak istediğinizden emin misiniz? Katılamayacaksınız.</string>
     <string name="available_for">%s için mevcuttur</string>
-    <string name="login_disclaimer">Kaydolarak, <a href="https://habitica.com/static/terms">Hizmet Şartlarını</a> ve <a href="https://habitica.com/static/privacy">Gizlilik Politikasını</a> okuyup kabul ettiğinizi belirtiyorsunuz.</string>
     <string name="cant_like_own_message">Kendi mesajlarını beğenemezsin</string>
     <string name="claim_x_gems">%d Mücevher Al</string>
     <string name="congratulations">Tebrikler!</string>

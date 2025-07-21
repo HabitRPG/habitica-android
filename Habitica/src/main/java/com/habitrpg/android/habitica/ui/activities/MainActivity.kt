@@ -181,6 +181,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
     private var lastNotificationOpen: Long? = null
+    private var privacyActivityShown = false
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
@@ -236,7 +237,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         DataBindingUtils.configManager = appConfigManager
 
         if (!viewModel.isAuthenticated) {
-            val intent = Intent(this, IntroActivity::class.java)
+            val intent = Intent(this, OnboardingActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             return
@@ -696,6 +697,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 viewModel.getToolbarTitle(0, null, null) { newTitle ->
                     this.title = newTitle
                 }
+            }
+
+            if (user.preferences?.analyticsConsent == null && !privacyActivityShown) {
+                privacyActivityShown = true
+                val intent = Intent(this, PrivacyPreferencesActivity::class.java)
+                startActivity(intent)
             }
         }
     }

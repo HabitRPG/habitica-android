@@ -29,7 +29,7 @@ class AuthenticationHandler {
         get() = _userIDFlow.value
 
     val isAuthenticated: Boolean
-        get() = currentUserID != null
+        get() = currentUserID?.isNotBlank() == true
 
     constructor(sharedPreferences: SharedPreferences) {
         _userIDFlow.value = sharedPreferences.getString("UserID", "") ?: ""
@@ -37,6 +37,10 @@ class AuthenticationHandler {
 
     constructor(userID: String) {
         _userIDFlow.value = userID
+    }
+
+    fun clear() {
+        _userIDFlow.value = null
     }
 }
 

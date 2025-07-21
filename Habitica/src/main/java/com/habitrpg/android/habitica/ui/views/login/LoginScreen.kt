@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -32,12 +33,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -51,6 +55,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.launchCatching
 
 enum class LoginScreenState {
     INITIAL,
@@ -59,21 +64,25 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardingStep: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow: Boolean, onNextOnboardingStep: (Boolean) -> Unit, onForgotPasswordClicked: () -> Unit, modifier: Modifier = Modifier) {
     val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
-    val authenticationError by authenticationViewModel.authenticationError.collectAsState(null)
 
     LaunchedEffect(authenticationViewModel) {
         authenticationViewModel.authenticationSuccess.collect { isRegistering ->
+            if (isRegistering == null) return@collect
             onNextOnboardingStep(isRegistering)
+            authenticationViewModel.clearAuthenticationState()
         }
     }
+
+    val coroutineScope = rememberCoroutineScope()
 
     var loginScreenState by remember { mutableStateOf(LoginScreenState.INITIAL) }
     var password by authenticationViewModel.password
     var passwordFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     var email by authenticationViewModel.email
     var emailFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
+    val context = LocalContext.current
     Box(modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
@@ -90,8 +99,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
             Image(
                 painterResource(R.drawable.login_background),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.width(800.dp)
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier.height(318.dp)
             )
             AnimatedVisibility(
                 loginScreenState == LoginScreenState.INITIAL,
@@ -137,6 +146,16 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
             ),
             label = "padding"
         )
+        val logoScale by animateFloatAsState(if (loginScreenState == LoginScreenState.INITIAL) {
+                1f
+            } else {
+                0.66f
+            },
+            animationSpec = tween(
+                delayMillis = if (loginScreenState == LoginScreenState.INITIAL) 400 else 0,
+                easing = EaseInOut
+            ),
+            label = "logoScale")
         ProvideTextStyle(TextStyle(fontSize = 18.sp)) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -144,8 +163,9 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
             ) {
                 Image(
                     painterResource(R.drawable.login_logo),
+                    contentScale = ContentScale.Fit,
                     contentDescription = null,
-                    modifier = Modifier.padding(top = logoPadding)
+                    modifier = Modifier.padding(top = logoPadding).scale(logoScale)
                 )
                 AnimatedVisibility(
                     loginScreenState == LoginScreenState.INITIAL,
@@ -177,8 +197,8 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                         emailFieldState = emailFieldState,
                         onEmailChange = {
                             email = it
-                            if (loginScreenState == LoginScreenState.REGISTER) {
-                                emailFieldState = if (it.isEmpty()) {
+                            emailFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
+                                if (it.isEmpty()) {
                                     LoginFieldState.DEFAULT
                                 } else if (Patterns.EMAIL_ADDRESS.matcher(it).matches()) {
                                     LoginFieldState.VALID
@@ -186,15 +206,15 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                                     LoginFieldState.ERROR
                                 }
                             } else {
-                                emailFieldState = LoginFieldState.DEFAULT
+                                LoginFieldState.DEFAULT
                             }
                         },
                         password = password,
                         passwordFieldState = passwordFieldState,
                         onPasswordChange = {
                             password = it
-                            if (loginScreenState == LoginScreenState.REGISTER) {
-                                passwordFieldState = if (it.isEmpty()) {
+                            passwordFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
+                                if (it.isEmpty()) {
                                     LoginFieldState.DEFAULT
                                 } else if (it.length >= 8) {
                                     LoginFieldState.VALID
@@ -202,30 +222,42 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                                     LoginFieldState.ERROR
                                 }
                             } else {
-                                passwordFieldState = LoginFieldState.DEFAULT
+                                LoginFieldState.DEFAULT
                             }
                         },
                         isRegistering = loginScreenState == LoginScreenState.REGISTER,
                         onSubmit = {
-                            if (loginScreenState == LoginScreenState.REGISTER) {
-                                authenticationViewModel.register("", email, password, password)
-                            } else {
-                                authenticationViewModel.login(email, password)
+                            coroutineScope.launchCatching {
+                                if (loginScreenState == LoginScreenState.REGISTER) {
+                                    if (useNewAuthFlow) {
+                                        authenticationViewModel.checkEmail()
+                                    } else {
+                                        authenticationViewModel.register()
+                                    }
+                                } else {
+                                    authenticationViewModel.login()
+                                }
                             }
                         },
-                        showLoading = showLoading
+                        showLoading = showLoading,
+                        onGoogleLoginClicked = {
+                            authenticationViewModel.startGoogleAuth(context)
+                        },
+                        onForgotPasswordClicked = onForgotPasswordClicked
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 AnimatedVisibility(
                     loginScreenState == LoginScreenState.INITIAL,
-                    enter = fadeIn(tween(300, 500)) + expandVertically(tween(300, 400)),
-                    exit = fadeOut() + shrinkVertically(tween(300, 200))
+                    enter = fadeIn(tween(300, 500)) + expandVertically(tween(300, 400), clip = false),
+                    exit = fadeOut() + shrinkVertically(tween(300, 200), clip = false)
                 ) {
                     LoginInitialButtons({
                         loginScreenState = LoginScreenState.LOGIN
                     }, {
                         loginScreenState = LoginScreenState.REGISTER
+                    }, {
+                        authenticationViewModel.startGoogleAuth(context)
                     })
                 }
             }

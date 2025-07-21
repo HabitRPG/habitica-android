@@ -1,12 +1,9 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.edit
 import androidx.credentials.CredentialManager
@@ -33,6 +30,7 @@ import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -43,6 +41,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -62,51 +61,33 @@ class AuthenticationViewModel @Inject constructor(
     val email = mutableStateOf("")
     val password = mutableStateOf("")
     val username = mutableStateOf("")
+    val user = mutableStateOf<User?>(null)
+    val isRegistering = mutableStateOf(false)
 
     private val _showAuthProgress = MutableStateFlow(false)
-    val showAuthProgress: Flow<Boolean> = _showAuthProgress
-    val isRegistering = MutableStateFlow(false)
     private val _authenticationError: MutableSharedFlow<AuthenticationErrors?> = MutableSharedFlow()
-    val authenticationError: Flow<AuthenticationErrors?> = _authenticationError
-        .onEach { _showAuthProgress.value = false }
     private val _authenticationSuccess = MutableStateFlow<Boolean?>(null)
-    val authenticationSuccess: Flow<Boolean> = _authenticationSuccess
+    private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
+    private var _usernameIssues = MutableStateFlow<String?>(null)
+
+    val showAuthProgress: Flow<Boolean> = _showAuthProgress
+    val authenticationError: Flow<AuthenticationErrors> = _authenticationError
         .filterNotNull()
         .onEach { _showAuthProgress.value = false }
-    private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
+    val authenticationSuccess: Flow<Boolean?> = _authenticationSuccess
+        .onEach { _showAuthProgress.value = false }
     val isUsernameValid: Flow<Boolean?> = _isUsernameValid
-    private var _usernameIssues = MutableStateFlow<String?>(null)
     val usernameIssues: Flow<String?> = _usernameIssues
 
-    fun validateInputs(
-        username: String,
-        password: String,
-        email: String? = null,
-        confirmPassword: String? = null,
-    ): AuthenticationErrors? {
-        if (username.isBlank() || password.isBlank()) {
-            return AuthenticationErrors.MISSING_FIELDS
-        }
-        if (isRegistering.value) {
-            if (email.isNullOrBlank()) {
-                return AuthenticationErrors.MISSING_FIELDS
-            }
-            if (password.length < configManager.minimumPasswordLength()) {
-                return AuthenticationErrors.PASSWORD_TOO_SHORT.apply {
-                     minPasswordLength = configManager.minimumPasswordLength()
-                }
-            }
-            if (password != confirmPassword) {
-                return AuthenticationErrors.PASSWORD_MISMATCH
-            }
-        }
-        return null
+    fun clearAuthenticationState() {
+        _showAuthProgress.value = false
+        _authenticationSuccess.value = null
     }
 
-    fun checkUsername(username: String) {
+    fun checkUsername() {
         viewModelScope.launch {
             try {
-                val response = apiClient.verifyUsername(username)
+                val response = apiClient.verifyUsername(username.value)
                 _isUsernameValid.value = response?.isUsable == true
                 _usernameIssues.value = response?.issues?.joinToString("\n") { it }
             } catch (e: Exception) {
@@ -116,47 +97,81 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
+    fun checkEmail() {
+        _showAuthProgress.value = true
+        viewModelScope.launch {
+            try {
+                val response = apiClient.verifyEmail(email.value)
+                if (response?.valid == true) {
+                    _authenticationSuccess.value = true
+                } else {
+                    _authenticationError.emit(AuthenticationErrors.INVALID_EMAIL)
+                }
+                _showAuthProgress.value = false
+            } catch (e: Exception) {
+                Analytics.logException(e)
+                _showAuthProgress.value = false
+            }
+        }
+    }
+
     fun invalidateUsernameState() {
         _isUsernameValid.value = null
         _usernameIssues.value = null
     }
 
-    fun login(username: String, password: String) {
+    suspend fun login() {
         _showAuthProgress.value = true
-        viewModelScope.launch {
-            try {
-                val response = apiClient.connectUser(username, password)
-                handleAuthResponse(response)
-            } catch (e: Exception) {
-                authenticationError()
-                Analytics.logException(e)
-            }
+        isRegistering.value = false
+        try {
+            val response = apiClient.connectUser(email.value, password.value)
+            handleAuthResponse(response)
+        } catch (e: Exception) {
+            authenticationError()
+            Analytics.logException(e)
         }
     }
 
-    fun register(username: String, email: String, password: String, confirmPassword: String) {
+    suspend fun register(username: String? = null, email: String? = null, password: String? = null) {
         _showAuthProgress.value = true
-        viewModelScope.launch {
-            try {
-                val response = apiClient.registerUser(username, email, password, confirmPassword)
-                handleAuthResponse(response)
-            } catch (e: Exception) {
-                authenticationError()
-                Analytics.logException(e)
+        isRegistering.value = true
+        try {
+            val response = apiClient.registerUser(username ?: this@AuthenticationViewModel.username.value,
+                email ?: this@AuthenticationViewModel.email.value,
+                password ?: this@AuthenticationViewModel.password.value,
+                password ?: this@AuthenticationViewModel.password.value)
+            if (response?.id?.isBlank() == true && response.apiToken.isBlank()) {
+                // User added password to social account
+                return
             }
+            handleAuthResponse(response)
+        } catch (e: Exception) {
+            authenticationError()
+            Analytics.logException(e)
         }
     }
 
-    suspend fun removeSocialAuth(network: String) {
-        apiClient.disconnectSocial(network)
-        userRepository.retrieveUser(true, forced = true)
+    suspend fun retrieveUser(): User? {
+        user.value = userRepository.retrieveUser(true, true)
+        return user.value
+    }
+
+    suspend fun removeSocialAuth(network: String): Boolean {
+        val success = apiClient.disconnectSocial(network)
+        if (success) {
+            retrieveUser()
+        }
+        return success
     }
 
     private fun authenticationError(error: AuthenticationErrors? = null) {
-        viewModelScope.launch { _authenticationError.emit(error) }
+        viewModelScope.launch {
+            _showAuthProgress.value = false
+            _authenticationError.emit(error)
+        }
     }
 
-    private fun handleAuthResponse(response: UserAuthResponse?) {
+    private suspend fun handleAuthResponse(response: UserAuthResponse?) {
         if (response == null) {
             authenticationError()
             return
@@ -172,10 +187,8 @@ class AuthenticationViewModel @Inject constructor(
         } else {
             Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
         }
-        viewModelScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(true, true)
-            _authenticationSuccess.value = isRegistering.value
-        }
+        retrieveUser()
+        _authenticationSuccess.value = response.newUser
     }
 
     @Throws(Exception::class)
@@ -205,7 +218,7 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun startGoogleAuth(context: Context) {
+    fun startGoogleAuth(context: Context, allowRegister: Boolean = false) {
         try {
             val googleIdOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
                 .build()
@@ -219,9 +232,8 @@ class AuthenticationViewModel @Inject constructor(
                         request = request,
                         context = context,
                     )
-                    handleSignIn(context, result)
+                    handleSignIn(context, result, allowRegister)
                 } catch (e: GetCredentialException) {
-                    authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
                     Log.e("AuthenticationViewModel", "Get Credential Exception", e)
                 }
             }
@@ -234,7 +246,10 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    private suspend fun handleSignIn(context: Context, result: GetCredentialResponse) {
+    private var googleIdTokenCredential: GoogleIdTokenCredential? = null
+    private var accessToken: String? = null
+
+    private suspend fun handleSignIn(context: Context, result: GetCredentialResponse, allowRegister: Boolean) {
         val credential = result.credential
 
         when (credential) {
@@ -255,22 +270,75 @@ class AuthenticationViewModel @Inject constructor(
                         val result = Identity.getAuthorizationClient(context)
                             .authorize(authorizationRequest).await()
                         if (result != null && result.accessToken != null) {
-                            val response = result.accessToken?.let { apiClient.connectSocial("google", googleIdTokenCredential.id, it) }
-                            handleAuthResponse(response)
+                            this.googleIdTokenCredential = googleIdTokenCredential
+                            this.accessToken = result.accessToken
+                            attemptSocialLogin(allowRegister)
+                        } else {
+                            authenticationError(AuthenticationErrors.MISSING_TOKEN)
+                            Log.e("AuthenticationViewModel", "Received an empty access token response")
                         }
                     } catch (e: GoogleIdTokenParsingException) {
                         authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
                         Log.e("AuthenticationViewModel", "Received an invalid google id token response", e)
                     }
                 } else {
-                    authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
-                    Log.e("AuthenticationViewModel", "Unexpected type of credential")
+                    authenticationError(AuthenticationErrors.INVALID_CREDENTIAL_TYPE)
+                    Log.e("AuthenticationViewModel", "Unexpected type of credential: $credential")
                 }
             }
+
             else -> {
-                authenticationError(AuthenticationErrors.INVALID_CREDENTIALS)
-                Log.e("AuthenticationViewModel", "Unexpected type of credential")
+                authenticationError(AuthenticationErrors.UNKNOWN_CREDENTIAL_TYPE)
+                Log.e("AuthenticationViewModel", "Unexpected type of credential: $credential")
             }
+        }
+    }
+
+    suspend fun attemptSocialLogin(allowRegister: Boolean) {
+        val tokenId = googleIdTokenCredential?.id ?: return
+        val token = accessToken ?: return
+        val response = apiClient.connectSocial("google", tokenId, token, allowRegister)
+        Log.d("AuthenticationViewModel", "Social auth response: $response")
+        if (response?.userExists == false) {
+            isRegistering.value = true
+            _authenticationSuccess.value = true
+        } else {
+            handleAuthResponse(response)
+        }
+    }
+
+    suspend fun updateUsername() {
+        apiClient.updateUsername(username.value)
+    }
+
+    fun startedSocialAuth(): Boolean {
+        return googleIdTokenCredential != null && accessToken != null
+    }
+
+    suspend fun completeRegistration() {
+        if (startedSocialAuth()) {
+            attemptSocialLogin(true)
+            updateUsername()
+        } else {
+            register()
+        }
+    }
+
+    fun prefillUsername() {
+        val email = if (googleIdTokenCredential != null) {
+            googleIdTokenCredential?.id ?: return
+        } else email.value.ifBlank {
+            ""
+        }
+        if (email.isNotBlank()) {
+            var suggested = email.substringBefore('@').takeIf { it.isNotBlank() } ?: ""
+            suggested = suggested.replace(Regex("[+\\s]"), "")
+            username.value = suggested
+        }
+        checkUsername()
+        if (_isUsernameValid.value == false) {
+            username.value = ""
+            _isUsernameValid.value = null
         }
     }
 }

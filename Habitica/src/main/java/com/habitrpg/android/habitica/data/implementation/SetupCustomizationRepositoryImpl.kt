@@ -79,21 +79,6 @@ constructor(private val context: Context) : SetupCustomizationRepository {
                 SetupCustomization.createHairColor("black", R.color.hair_black)
             )
 
-    private val sizes: List<SetupCustomization>
-        get() =
-            listOf(
-                SetupCustomization.createSize(
-                    "slim",
-                    R.drawable.creator_slim_shirt_black,
-                    context.getString(R.string.avatar_size_slim)
-                ),
-                SetupCustomization.createSize(
-                    "broad",
-                    R.drawable.creator_broad_shirt_black,
-                    context.getString(R.string.avatar_size_broad)
-                )
-            )
-
     private val skins: List<SetupCustomization>
         get() =
             listOf(
@@ -122,7 +107,6 @@ constructor(private val context: Context) : SetupCustomizationRepository {
         return when (type) {
             SetupCustomizationRepository.CATEGORY_BODY -> {
                 when (subtype) {
-                    SetupCustomizationRepository.SUBCATEGORY_SIZE -> sizes
                     SetupCustomizationRepository.SUBCATEGORY_SHIRT ->
                         getShirts(
                             user.preferences?.size ?: "slim"

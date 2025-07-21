@@ -2,7 +2,9 @@
   "dimension": "buildType",
   "flavors": [
     {
-      "name": "dev"
+      "name": "dev",
+      "testingLevel": "\"dev\"",
+      "appName": "Habitica Dev"
     },
     {
       "name": "staff",

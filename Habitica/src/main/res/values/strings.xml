@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="error_removing_social_auth">Could not disconnect authentication method without a backup method.</string>
+    <string name="login_validation_error_invalidemail">Please enter a valid E-Mail, that is not already associated with a habitica account.</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="continue_with_email">Continue with email</string>
     <string name="already_have_an_account">Already have an account?</string>

@@ -197,4 +197,8 @@ class AppConfigManager(contentRepository: ContentRepository) :
     fun showAltDeathText(): Boolean {
         return remoteConfig.getBoolean("showAltDeathText")
     }
+
+    fun useNewAuthFlow(): Boolean {
+        return remoteConfig.getBoolean("useNewAuthFlow")
+    }
 }

@@ -61,6 +61,11 @@ android {
             buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
         }
 
+        register("setup") {
+            dimension = "buildType"
+            buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
+        }
+
         register("partners") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"partners\"")
