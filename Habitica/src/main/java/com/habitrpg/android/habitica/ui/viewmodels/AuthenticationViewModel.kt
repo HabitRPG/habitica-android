@@ -105,7 +105,9 @@ class AuthenticationViewModel @Inject constructor(
                 if (response?.valid == true) {
                     _authenticationSuccess.value = true
                 } else {
-                    _authenticationError.emit(AuthenticationErrors.INVALID_EMAIL)
+                    _authenticationError.emit(AuthenticationErrors.INVALID_EMAIL.apply {
+                        message = response?.error
+                    })
                 }
                 _showAuthProgress.value = false
             } catch (e: Exception) {

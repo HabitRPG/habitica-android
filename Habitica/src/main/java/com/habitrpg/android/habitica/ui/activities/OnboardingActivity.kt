@@ -275,6 +275,9 @@ class OnboardingActivity: BaseActivity() {
 }
 
 fun AuthenticationErrors.translatedMessage(context: Context): String {
+    if (message != null) {
+        return message ?: ""
+    }
     return when (this) {
         AuthenticationErrors.GET_CREDENTIALS_ERROR -> context.getString(R.string.auth_get_credentials_error)
         AuthenticationErrors.INVALID_CREDENTIALS -> context.getString(R.string.auth_invalid_credentials)

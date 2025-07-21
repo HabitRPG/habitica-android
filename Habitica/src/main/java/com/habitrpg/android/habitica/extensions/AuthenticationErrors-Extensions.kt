@@ -17,4 +17,6 @@ enum class AuthenticationErrors {
 
     val isValidationError: Boolean
         get() = this == PASSWORD_TOO_SHORT || this == PASSWORD_MISMATCH || this == MISSING_FIELDS
+
+    var message: String? = null
 }
