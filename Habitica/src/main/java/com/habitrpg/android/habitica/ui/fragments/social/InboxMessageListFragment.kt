@@ -11,10 +11,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -35,6 +38,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -122,6 +126,18 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             }
         }
 
+        chatAdapter?.addLoadStateListener { loadStates ->
+            val isEmpty = loadStates.refresh is LoadState.NotLoading &&
+                    loadStates.append.endOfPaginationReached &&
+                    chatAdapter?.itemCount == 0
+
+            if (isEmpty) {
+                binding?.recyclerView?.state = RecyclerViewState.EMPTY
+            } else {
+                binding?.recyclerView?.state = RecyclerViewState.DISPLAYING_DATA
+            }
+        }
+
         binding?.chatBarView?.sendAction = { sendMessage(it) }
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
 
@@ -135,13 +151,39 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 }
             }
         }
-        binding?.chatBarView?.let { applyScrollContentWindowInsets(it) }
+        binding?.root.apply {
+            ViewCompat.setOnApplyWindowInsetsListener(this!!) { _, insets ->
+                val ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+
+                binding?.chatBarView?.translationY = -ime.toFloat()
+                binding?.chatBarView?.setPadding(
+                    binding?.chatBarView?.paddingLeft ?: 0,
+                    binding?.chatBarView?.paddingTop ?: 0,
+                    binding?.chatBarView?.paddingRight ?: 0,
+                    nav
+                )
+
+                binding?.recyclerView?.translationY = -ime.toFloat()
+
+                binding?.recyclerView?.setPadding(
+                    binding?.recyclerView?.paddingLeft ?: 0,
+                    binding?.recyclerView?.paddingTop ?: 0,
+                    binding?.recyclerView?.paddingRight ?: 0,
+                    ime + nav
+                )
+
+                insets
+            }
+            ViewCompat.requestApplyInsets(this)
+        }
     }
 
     override fun onResume() {
         if (viewModel.recipientID?.isNotBlank() != true && viewModel.recipientUsername?.isNotBlank() != true) {
             parentFragmentManager.popBackStack()
         }
+        binding?.root?.let { ViewCompat.requestApplyInsets(it) }
         super.onResume()
     }
 
