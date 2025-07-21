@@ -1553,4 +1553,5 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="subscribe_incentive_button_faint">Abboniere, um mit 1HP durchzuhalten!</string>
     <string name="unlocks_x_gems_per_month">Sie schalten %d Edelsteine pro Monat auf dem Marktplatz frei</string>
     <string name="see_more_subscription_options">Weitere Abonnementoptionen anzeigen</string>
+    <string name="quest_mechanics_damage_description">Der Boss-Schaden wird jedes Mal berechnet, wenn ein Mitglied der Party im Laufe des Tages eincheckt. Dieser Schaden wird angewandt, wenn du das nächste Mal eine Aktion ausführst, die mit dem Server synchronisiert wird. Der Boss-Schaden wird im Chat eurer Party aufgezeichnet.</string>
 </resources>
