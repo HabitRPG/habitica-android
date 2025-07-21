@@ -221,6 +221,7 @@ class PreferencesFragment :
                     HabiticaBaseApplication.deleteDatabase(context)
                     lifecycleScope.launchCatching {
                         userRepository.retrieveUser(true, true)
+                        userRepository.retrieveTeamPlans()
                         (activity as? SnackbarActivity)?.showSnackbar(
                             content = context.getString(R.string.cleared_cache),
                             displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
