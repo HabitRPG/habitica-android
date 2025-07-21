@@ -112,8 +112,8 @@ class PrivacyPreferencesActivity: BaseActivity() {
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
                 PrivacyToggleView(
-                    title = stringResource(R.string.strictlye_necessary_analytics),
-                    description = stringResource(R.string.strictlye_necessary_analytics_description),
+                    title = stringResource(R.string.strictly_necessary_analytics),
+                    description = stringResource(R.string.strictly_necessary_analytics_description),
                     isChecked = true,
                     onCheckedChange = {},
                     disabled = true,

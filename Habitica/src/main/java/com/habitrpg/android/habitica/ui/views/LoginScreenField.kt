@@ -139,7 +139,7 @@ fun LoginScreenField(
         errorContainerColor = containerColor,
         unfocusedTextColor = Color.White,
         focusedTextColor = Color.White,
-        errorTextColor = colorResource(R.color.red_100),
+        errorTextColor = colorResource(R.color.red_500),
         unfocusedPlaceholderColor = colorResource(R.color.brand_600),
         focusedPlaceholderColor = colorResource(R.color.brand_600).copy(alpha = 0.5f),
         unfocusedIndicatorColor = Color.Transparent,
@@ -203,7 +203,7 @@ fun LoginScreenField(
         AnimatedVisibility(errorMessage != null && !focused) {
             Text(
                 text = errorMessage ?: "",
-                color = colorResource(R.color.red_100),
+                color = colorResource(R.color.red_500),
                 fontSize = 14.sp,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )

@@ -12,4 +12,17 @@
     <string name="username_description">This is a unique name you can change later at any time!</string>
     <string name="onboarding_step_avatar">You must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nSo how would you like to look? Don’t worry, you can change this later.</string>
     <string name="onboarding_step_tasks">Looking good! Now, choose any categories you’d like to work on and we’ll create a few tasks to get started.\n\nWe’ll go to your task board after this!</string>
+    <string name="user_data">User Data</string>
+    <string name="privacy_preferences">Privacy Preferences</string>
+    <string name="privacy_preferences_summary">Change your privacy permissions</string>
+    <string name="your_privacy_preferences">Your Privacy Preferences</string>
+    <string name="your_privacy_preferences_description">Habitica uses data from your device to analyze performance, handle support requests, and provide you with the best possible gamified experience. To do that, we need to request the following permissions. \n\nYou can change this at any time. To learn more, review our Privacy Policy.</string>
+    <string name="performance_analytics"><![CDATA[Performance & Analytics]]></string>
+    <string name="performance_analytics_description">This is used to improve the user experience, performance, and services of Habitica. Our support team will also use this when handling requests and bug reports.</string>
+    <string name="strictly_necessary_analytics">Strictly necessary</string>
+    <string name="strictly_necessary_analytics_description">This is necessary data required by our app to function. This includes data like your preferences saved in settings as well as crash information.</string>
+    <string name="your_privacy_preferences_description_full">"Habitica uses data from your device to analyze performance, handle support requests, and provide you with the best possible gamified experience. To do that, we need to request the following permissions. "</string>
+    <string name="accept_all">Accept All</string>
+    <string name="habiticas_privacy_policy">Habitica\'s Privacy Policy</string>
+    <string name="save_preferences">Save Preferences</string>
 </resources>

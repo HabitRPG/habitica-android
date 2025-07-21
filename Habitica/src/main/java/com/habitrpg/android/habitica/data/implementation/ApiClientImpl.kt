@@ -122,7 +122,7 @@ class ApiClientImpl(
         return null
     }
 
-    private suspend fun <T> processWithIfSuccess(apiCall: suspend () -> HabitResponse<T>): Boolean {
+    private suspend fun <T> processWithIfSuccess(apiCall: suspend () -> Response<HabitResponse<T>>): Boolean {
         try {
             processResponse(apiCall())
             return true
