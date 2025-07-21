@@ -1,12 +1,16 @@
 package com.habitrpg.common.habitica.helpers
 
 import android.annotation.SuppressLint
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import java.util.Locale
 
 class LanguageHelper(languageSharedPref: String?) {
     var locale: Locale
         private set
     var languageCode: String? = null
+        private set
+    var localeListCompat: LocaleListCompat
         private set
 
     init {
@@ -38,6 +42,7 @@ class LanguageHelper(languageSharedPref: String?) {
                 languageCode = languageSharedPref
             }
         }
+        localeListCompat = LocaleListCompat.create(locale)
     }
 
     companion object {
@@ -47,6 +52,19 @@ class LanguageHelper(languageSharedPref: String?) {
 
         init {
             systemLocale = Locale.getDefault()
+        }
+        
+        fun getLanguageTag(languagePref: String?): String {
+            return when (languagePref) {
+                "iw" -> "iw"
+                "hr" -> "hr-HR"
+                "in" -> "in"
+                "pt" -> "pt-PT"
+                "pt_BR" -> "pt-BR"
+                "en_GB" -> "en-GB"
+                "zh_TW" -> "zh-TW"
+                else -> languagePref?.replace("_", "-") ?: "en"
+            }
         }
     }
 }

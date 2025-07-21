@@ -11,6 +11,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -149,13 +151,39 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 }
             }
         }
-        binding?.chatBarView?.let { applyScrollContentWindowInsets(it) }
+        binding?.root.apply {
+            ViewCompat.setOnApplyWindowInsetsListener(this!!) { _, insets ->
+                val ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+                val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+
+                binding?.chatBarView?.translationY = -ime.toFloat()
+                binding?.chatBarView?.setPadding(
+                    binding?.chatBarView?.paddingLeft ?: 0,
+                    binding?.chatBarView?.paddingTop ?: 0,
+                    binding?.chatBarView?.paddingRight ?: 0,
+                    nav
+                )
+
+                binding?.recyclerView?.translationY = -ime.toFloat()
+
+                binding?.recyclerView?.setPadding(
+                    binding?.recyclerView?.paddingLeft ?: 0,
+                    binding?.recyclerView?.paddingTop ?: 0,
+                    binding?.recyclerView?.paddingRight ?: 0,
+                    ime + nav
+                )
+
+                insets
+            }
+            ViewCompat.requestApplyInsets(this)
+        }
     }
 
     override fun onResume() {
         if (viewModel.recipientID?.isNotBlank() != true && viewModel.recipientUsername?.isNotBlank() != true) {
             parentFragmentManager.popBackStack()
         }
+        binding?.root?.let { ViewCompat.requestApplyInsets(it) }
         super.onResume()
     }
 

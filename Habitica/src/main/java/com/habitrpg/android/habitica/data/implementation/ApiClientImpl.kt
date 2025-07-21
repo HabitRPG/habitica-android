@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -55,6 +56,7 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -93,6 +95,16 @@ class ApiClientImpl(
             accept(throwable)
         }
         return null
+    }
+
+    private suspend fun <T> processWithIfSuccess(apiCall: suspend () -> HabitResponse<T>): Boolean {
+        try {
+            processResponse(apiCall())
+            return true
+        } catch (throwable: Throwable) {
+            accept(throwable)
+            return false
+        }
     }
 
     override var languageCode: String? = null
@@ -155,6 +167,28 @@ class ApiClientImpl(
                         // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
                         if (response.code in 400..599) {
                             when (response.code) {
+                                401 -> {
+                                    val path = response.request.url.encodedPath
+
+                                    if (!path.contains("/user/auth/update-password") && !path.contains("group-plans")) {
+                                        val bodyStr = runCatching { response.peekBody(1024).string() }.getOrDefault("")
+
+                                        val (errField, _) = runCatching {
+                                            JSONObject(bodyStr).let {
+                                                it.optString("error", "") to it.optString("message", "")
+                                            }
+                                        }.getOrDefault("" to "")
+
+                                        // logout if language agnostic "invalid_credentials" error is returned
+                                        val shouldLogout = errField.equals("invalid_credentials", ignoreCase = true)
+
+                                        if (shouldLogout) {
+                                            HabiticaBaseApplication.logout(context)
+                                        }
+                                    }
+                                    return@addNetworkInterceptor response
+                                }
+
                                 404 -> {
                                     // The server is returning a 404 error, which means the requested resource was not found.
                                     // In this case - we want to actually cache the response, and handle it in the app
@@ -276,6 +310,10 @@ class ApiClientImpl(
             }
             if (requestUrl?.toString()?.endsWith("/user/push-devices") == true) {
                 // workaround for an error that sometimes displays that the user already has this push device
+                return
+            }
+
+            if (res.displayMessage.isNotEmpty() && res.displayMessage.contains("Missing authentication headers", ignoreCase = true)) {
                 return
             }
 
@@ -970,10 +1008,10 @@ class ApiClientImpl(
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
-    override suspend fun resetAccount(password: String): Void? {
+    override suspend fun resetAccount(password: String): Boolean {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = password
-        return process { apiService.resetAccount(updateObject) }
+        return processWithIfSuccess { apiService.resetAccount(updateObject) }
     }
 
     override suspend fun deleteAccount(password: String): Void? {

@@ -273,9 +273,13 @@ class UserRepositoryImpl(
         return mergeWithExistingUser(user)
     }
 
-    override suspend fun resetAccount(password: String): User? {
-        apiClient.resetAccount(password)
-        return retrieveUser(withTasks = true, forced = true)
+    override suspend fun resetAccount(password: String): Boolean {
+        val resetAccountSuccessful = apiClient.resetAccount(password)
+        if (resetAccountSuccessful) {
+            retrieveUser(withTasks = true, forced = true)
+            return true
+        }
+        return false
     }
 
     override suspend fun deleteAccount(password: String) = apiClient.deleteAccount(password)
