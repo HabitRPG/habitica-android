@@ -10,6 +10,7 @@ import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.social.ChallengeCategory
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -57,6 +58,18 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
                         challenge.leaderId = id.asString
                     }
                 }
+            }
+        }
+
+        if (jsonObject.has("categories")) {
+            jsonObject.getAsJsonArray("categories").forEach { elem ->
+                val categoryObject = elem.asJsonObject
+                val category = ChallengeCategory().apply {
+                    slug = categoryObject.get("slug").asString
+                    name = categoryObject.get("name").asString
+                    id   = categoryObject.get("_id").asString
+                }
+                challenge.categories.add(category)
             }
         }
 

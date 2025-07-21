@@ -97,6 +97,16 @@ class ApiClientImpl(
         return null
     }
 
+    private suspend fun <T> processWithIfSuccess(apiCall: suspend () -> HabitResponse<T>): Boolean {
+        try {
+            processResponse(apiCall())
+            return true
+        } catch (throwable: Throwable) {
+            accept(throwable)
+            return false
+        }
+    }
+
     override var languageCode: String? = null
     private var lastAPICallURL: String? = null
 
@@ -300,6 +310,10 @@ class ApiClientImpl(
             }
             if (requestUrl?.toString()?.endsWith("/user/push-devices") == true) {
                 // workaround for an error that sometimes displays that the user already has this push device
+                return
+            }
+
+            if (res.displayMessage.isNotEmpty() && res.displayMessage.contains("Missing authentication headers", ignoreCase = true)) {
                 return
             }
 
@@ -994,10 +1008,10 @@ class ApiClientImpl(
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
-    override suspend fun resetAccount(password: String): Void? {
+    override suspend fun resetAccount(password: String): Boolean {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = password
-        return process { apiService.resetAccount(updateObject) }
+        return processWithIfSuccess { apiService.resetAccount(updateObject) }
     }
 
     override suspend fun deleteAccount(password: String): Void? {
