@@ -52,7 +52,9 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -602,11 +604,17 @@ class AccountPreferenceFragment :
     }
 
     private fun resetAccount(confirmationString: String) {
-        val dialog = activity?.let { HabiticaProgressDialog.show(it, R.string.resetting_account) }
+        val progressDialog = activity?.let { HabiticaProgressDialog.show(it, R.string.resetting_account) }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.resetAccount(confirmationString)
-            dialog?.dismiss()
-            accountDialog.dismiss()
+            val resetAccountSuccess = userRepository.resetAccount(confirmationString) ?: false
+            progressDialog?.dismiss()
+            if (resetAccountSuccess) {
+                accountDialog.dismiss()
+            } else {
+                accountDialog.showIncorrectPasswordError(
+                    getString(R.string.incorrect_password)
+                )
+            }
         }
     }
 
