@@ -84,16 +84,14 @@ class AuthenticationViewModel @Inject constructor(
         _authenticationSuccess.value = null
     }
 
-    fun checkUsername() {
-        viewModelScope.launch {
-            try {
-                val response = apiClient.verifyUsername(username.value)
-                _isUsernameValid.value = response?.isUsable == true
-                _usernameIssues.value = response?.issues?.joinToString("\n") { it }
-            } catch (e: Exception) {
-                _isUsernameValid.value = null
-                Analytics.logException(e)
-            }
+    suspend fun checkUsername() {
+        try {
+            val response = apiClient.verifyUsername(username.value)
+            _isUsernameValid.value = response?.isUsable == true
+            _usernameIssues.value = response?.issues?.joinToString("\n") { it }
+        } catch (e: Exception) {
+            _isUsernameValid.value = null
+            Analytics.logException(e)
         }
     }
 
@@ -326,7 +324,7 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun prefillUsername() {
+    suspend fun prefillUsername() {
         val email = if (googleIdTokenCredential != null) {
             googleIdTokenCredential?.id ?: return
         } else email.value.ifBlank {

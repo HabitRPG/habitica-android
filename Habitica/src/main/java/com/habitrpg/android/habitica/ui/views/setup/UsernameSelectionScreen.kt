@@ -75,13 +75,16 @@ fun UsernameSelectionScreen(
     val usernameIssues by authenticationViewModel.usernameIssues.collectAsState(null)
     val showAuthProgress by authenticationViewModel.showAuthProgress.collectAsState(false)
 
+    val scope = rememberCoroutineScope()
+
     username.useDebounce {
         if (it.length > 2) {
-            authenticationViewModel.checkUsername()
+            scope.launchCatching {
+                authenticationViewModel.checkUsername()
+            }
         }
     }
 
-    val scope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
     val scrollState = rememberScrollState()
 
@@ -133,6 +136,14 @@ fun UsernameSelectionScreen(
                 color = Color.White,
                 modifier = Modifier
             )
+            Text(
+                text = stringResource(R.string.username_description),
+                fontSize = 16.sp,
+                color = colorResource(R.color.brand_600),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            )
             LoginScreenField(
                 stringResource(R.string.username),
                 value = username,
@@ -161,14 +172,6 @@ fun UsernameSelectionScreen(
                         .padding(bottom = 12.dp)
                 )
             }
-            Text(
-                text = stringResource(R.string.username_description),
-                fontSize = 16.sp,
-                color = colorResource(R.color.brand_600),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-            )
             Spacer(Modifier.weight(2f))
             AnimatedContent(
                 showAuthProgress,
@@ -194,11 +197,7 @@ fun UsernameSelectionScreen(
                         Button(
                             onClick = {
                                 scope.launchCatching {
-                                    if (authenticationViewModel.isRegistering.value || authenticationViewModel.user.value == null) {
-                                        authenticationViewModel.completeRegistration()
-                                    } else {
-                                        authenticationViewModel.updateUsername()
-                                    }
+                                    authenticationViewModel.completeRegistration()
                                     authenticationViewModel.retrieveUser()
                                     onNextOnboardingStep()
                                 }
