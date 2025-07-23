@@ -4,7 +4,7 @@ data class UserAuthResponse(
     val apiToken: String = "",
     val id:       String = "",
     val newUser:  Boolean = false,
-    var userExists: Boolean = false,
+    var userExists: Boolean = true,
 ) {
 
     val token: String
