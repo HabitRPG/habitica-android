@@ -1588,6 +1588,7 @@
 \nパーティーを抜けると、現在のクエストは中断されます。</string>
     <string name="save_photo_url">写真のURLを保存</string>
     <string name="photo_url_description">ここにリンクを張り付けて写真をHabiticaのプロフィールに表示できます。</string>
-    <string name="two_gems_per_month">有料プランに加入している毎月+2ジェム</string>
+    <string name="two_gems_per_month">有料プランに加入している間、毎月ジェムが2個もらえます</string>
     <string name="unlocks_x_gems_per_month">市場でジェムを月間%d個アンロックします</string>
+    <string name="two_gems_per_month_gift">有料プランに加入している毎月+2ジェム</string>
 </resources>
