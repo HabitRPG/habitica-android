@@ -1140,7 +1140,7 @@
     <string name="gem_purchase_confirmation">%sのジェムを手に入れました。</string>
     <string name="adventure_guide_description_new">これらの目標を達成して、&lt;b&gt;5つの実績バッジ&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;をゲットしましょう！</string>
     <string name="add">追加</string>
-    <string name="password_not_matching">入力したパスワードは一致しません</string>
+    <string name="password_not_matching">入力したパスワードが一致しません</string>
     <string name="apitoken_summary">トークンをコピーする。これはパスワードなので慎重に扱ってください！</string>
     <string name="added_social_auth">%sとの連携を追加</string>
     <string name="copied_to_clipboard">%sをクリップボードにコピーしました</string>
@@ -1588,4 +1588,6 @@
 \nパーティーを抜けると、現在のクエストは中断されます。</string>
     <string name="save_photo_url">写真のURLを保存</string>
     <string name="photo_url_description">ここにリンクを張り付けて写真をHabiticaのプロフィールに表示できます。</string>
+    <string name="two_gems_per_month">有料プランに加入している毎月+2ジェム</string>
+    <string name="unlocks_x_gems_per_month">市場でジェムを月間%d個アンロックします</string>
 </resources>
