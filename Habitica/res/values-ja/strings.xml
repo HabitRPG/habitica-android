@@ -1591,5 +1591,6 @@
     <string name="two_gems_per_month">有料プランに加入している間、毎月ジェムが2個もらえます</string>
     <string name="unlocks_x_gems_per_month">市場でジェムを月間%d個アンロックします</string>
     <string name="two_gems_per_month_gift">有料プランに加入している間、毎月ジェムが2個もらえます</string>
-    <string name="max_gem_cap">最大限のジェムの上限</string>
+    <string name="max_gem_cap">最大限のジェム</string>
+    <string name="max_gem_cap_text">最大限のジェムの上限から今すぐスタート</string>
 </resources>
