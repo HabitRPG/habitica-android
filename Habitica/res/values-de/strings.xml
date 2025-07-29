@@ -655,7 +655,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="quest_completed">Quest abgeschlossen!</string>
     <string name="not_participating">Du nimmst nicht teil</string>
     <string name="unlock_previous_short">Schließe Quest %d ab</string>
-    <string name="unlock_level">Freischalten durch Erreichen des Levels %d</string>
+    <string name="unlock_level">Freigeschaltet bei Level %d</string>
     <string name="unlock_previous">Freischalten durch Abschluss der Quest %d</string>
     <string name="locked">Gesperrt</string>
     <string name="skill_unlocks_at">Fähigkeit wird ab Level %d freigeschaltet</string>
@@ -1039,7 +1039,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="usually_x_gems">Üblicherweise %d Edelsteine</string>
     <string name="limitations">Einschränkungen</string>
     <string name="how_it_works">So funktioniert es</string>
-    <string name="fall_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="fall_promo_info_instructions">Zwischen %s und %s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder für spätere Neuerungen sparen!</string>
     <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
     <string name="spooky_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
@@ -1324,7 +1324,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="insufficient_level_equipment_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
     <string name="change_class_confirmation_message">Dadurch wird die Ausrüstung in den Geschäften freigeschaltet und die verfügbaren Fertigkeiten ändern sich</string>
     <string name="rejoin_party_quest_leader">Du kannst dich dieser Gruppe nur wieder anschließen, wenn du eingeladen wirst. Das Verlassen der Gruppe wird auch die aktuelle Quest abbrechen.</string>
-    <string name="see_other_sub_options">"Siehe andere  Abo Optionen"</string>
+    <string name="see_other_sub_options">Weitere Abo-Optionen anzeigen</string>
     <string name="send_invite">Einladung verschicken</string>
     <string name="report_player_toolbar_title">Melde %s</string>
     <string name="resubscribe_description_gift">Möchten Sie weiterhin die Vorteile eines Abonnements nutzen\? Sie können ein wiederkehrendes Abonnement abschließen, um Ihre Vorteile beizubehalten.</string>
