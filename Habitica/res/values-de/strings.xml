@@ -1607,9 +1607,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="popular">Beliebt</string>
     <string name="choose_member">Wähle ein Mitglied</string>
     <string name="cleared_cache">Cache gelöscht</string>
-    <string name="max_gem_cap_text">Sofort bei der maximalen Edelsteinobergrenze anfangen</string>
+    <string name="max_gem_cap_text">Beginne direkt bei der max. Anzahl an Edelsteinen</string>
     <string name="resubscribe_for_hourglasses">Abonniere erneut, um wieder Mystische Sanduhren zu erhalten</string>
     <string name="enjoy_benefits">Genieße all diese exklusiven Vorteile mit deinem Abo</string>
     <string name="max_gem_cap">Max. Anzahl an Edelsteinen</string>
-    <string name="max_gem_cap_text_gift">Sie beginnen direkt bei der max. Anzahl an Edelsteinen</string>
+    <string name="max_gem_cap_text_gift">Sie starten sofort bei der maximalen Edelsteinobergrenze</string>
 </resources>
