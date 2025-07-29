@@ -307,7 +307,7 @@
     <string name="subscriptions">有料プラン</string>
     <string name="subscription_duration">%sごとに繰り返す</string>
     <string name="subscribe">有料プランに加入する</string>
-    <string name="subscribe_listitem1_description">市場で最大50ジェムを手に入れ、クエストやカスタマイズ、ペットなどを購入しましょう！</string>
+    <string name="subscribe_listitem1_description">市場でゴールドで購入できる最大50ジェムを手に入れ、クエストやカスタマイズ、ペットなどを購入しましょう！</string>
     <string name="subscribe_listitem2_description">タイムトラベラーの店で使える毎月1個の神秘の砂時計を見逃さないで！</string>
     <string name="subscribe_listitem3_description">今すぐ限定セットを手に入れて、毎月の新しいアイテムを受け取るために、さっそく有料プランに加入しましょう！</string>
     <string name="subscribe_listitem4_description">初めて有料会員になったときは高貴な紫のジャッカロープのペットを受け取れます。</string>
@@ -1140,7 +1140,7 @@
     <string name="gem_purchase_confirmation">%sのジェムを手に入れました。</string>
     <string name="adventure_guide_description_new">これらの目標を達成して、&lt;b&gt;5つの実績バッジ&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;をゲットしましょう！</string>
     <string name="add">追加</string>
-    <string name="password_not_matching">入力したパスワードが一致しません</string>
+    <string name="password_not_matching">入力したパスワードは一致しません</string>
     <string name="apitoken_summary">トークンをコピーする。これはパスワードなので慎重に扱ってください！</string>
     <string name="added_social_auth">%sとの連携を追加</string>
     <string name="copied_to_clipboard">%sをクリップボードにコピーしました</string>
@@ -1568,7 +1568,7 @@
     <string name="twelve_mystic_hourglasses">12個の神秘の砂時計</string>
     <string name="benefits_end">特典は%sに終わります</string>
     <string name="open_habitica_website">Habiticaのサイトを開く</string>
-    <string name="search_equipment">装備を検索して</string>
+    <string name="search_equipment">装備を検索</string>
     <plurals name="repeat_monthly">
         <item quantity="other">毎月</item>
     </plurals>
