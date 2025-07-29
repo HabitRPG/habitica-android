@@ -1305,7 +1305,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="report_message_explanation">Du solltest nur Beiträge melden, die die [Community Richtlinien](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms) verletzen. Eine Falschmeldung ist ein Verstoß gegen Habiticas Community Richtlinien.</string>
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; hat dich eingeladen der Gruppe &lt;b&gt;%1$s&lt;/b&gt; beizutreten</string>
     <string name="report_player_title">%s melden\?</string>
-    <string name="report_player">Spieler*in melden</string>
+    <string name="report_player">Melde Player</string>
     <string name="report_user_explanation">Du solltest einen Spieler nur melden, wenn er gegen die [Community Richtlinien](https://habitica.com/static/community-guidelines) und/oder [AGB](https://habitica.com/static/terms) verstößt. Eine Falschmeldung ist ein Verstoß gegen Habiticas Community Richtlinien.</string>
     <string name="report_message">Nachricht melden</string>
     <string name="report_failure">Melden fehlgeschlagen, bitte versuche es später erneut</string>
@@ -1323,7 +1323,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="level_abbreviated">Level %d</string>
     <string name="insufficient_level_equipment_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
     <string name="change_class_confirmation_message">Dadurch wird die Ausrüstung in den Geschäften freigeschaltet und die verfügbaren Fertigkeiten ändern sich</string>
-    <string name="rejoin_party_quest_leader">"Du  kannst dich dieser Gruppe nur wieder anschließen, wenn du eingeladen wirst. Das Verlassen der Gruppe wird auch die aktuelle Quest abbrechen."</string>
+    <string name="rejoin_party_quest_leader">Du kannst dich dieser Gruppe nur wieder anschließen, wenn du eingeladen wirst. Das Verlassen der Gruppe wird auch die aktuelle Quest abbrechen.</string>
     <string name="see_other_sub_options">Siehe weitere Optionen fürs Abonnement</string>
     <string name="send_invite">Einladung verschicken</string>
     <string name="report_player_toolbar_title">Melde %s</string>
