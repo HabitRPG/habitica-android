@@ -1582,4 +1582,17 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="avatar_hair_colors">Haarfarben</string>
     <string name="looking_for_more">Nach mehr suchen\?</string>
     <string name="spring">Frühling</string>
+    <string name="animal_tails">Tierschwänze</string>
+    <string name="customizations_owner">Felicitus</string>
+    <string name="mages">Magier</string>
+    <string name="switches_in_x">Wechselt in %s</string>
+    <string name="try_on_equipment">Du kannst sie von deiner Ausrüstung anprobieren. Neue Ware trifft zu Beginn jeden Monats ein!</string>
+    <string name="healers">Heiler</string>
+    <string name="rogues">Schurken</string>
+    <string name="warriors">Krieger</string>
+    <string name="try_on_next_season">Du kannst sie anprobieren, indem du deinen Avatar anpasst. Vergiss nicht später für die Möglichkeiten der nächsten Jahreszeit vorbeizuschauen!</string>
+    <string name="try_on_customize">Du kannst sie anprobieren, indem du deinen Avatar anpasst.</string>
+    <string name="try_on_next_month">Du kannst sie anprobieren, indem du deinen Avatar anpasst. Vergiss nicht später für die Möglichkeiten des nächsten Monats vorbeizuschauen!</string>
+    <string name="customization_shop">Individualisierungen</string>
+    <string name="next_switch_in_x">Nächster Wechsel in %s</string>
 </resources>
