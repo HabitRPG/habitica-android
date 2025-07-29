@@ -1039,7 +1039,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="usually_x_gems">Üblicherweise %d Edelsteine</string>
     <string name="limitations">Einschränkungen</string>
     <string name="how_it_works">So funktioniert es</string>
-    <string name="fall_promo_info_instructions">Zwischen %s und %s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder für spätere Neuerungen sparen!</string>
+    <string name="fall_promo_info_instructions">Zwischen %1$s und %2$s kannst du wie gewohnt ein Edelstein-Paket kaufen, deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum Ausgeben, Teilen oder für spätere Neuerungen Sparen!</string>
     <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
     <string name="spooky_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
@@ -1411,7 +1411,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="shadow_mute_user">Heimlich Stummschalten</string>
     <string name="mute_user">Spieler*in stumm schalten</string>
     <string name="ban_user_confirm">Willst du diese Spieler*in bannen\?</string>
-    <string name="unban_user_confirm">Willst du diese Spieler*in entbannen\?</string>
+    <string name="unban_user_confirm">Möchtest du diese Spieler*in freigeben\?</string>
     <string name="equipment_class_locked">Diese Ausrüstung ist aufgrund seiner Klasse gesperrt</string>
     <string name="manager">Manager*in</string>
     <string name="x_and_y">%1$s und %2$s</string>
@@ -1551,13 +1551,13 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="subscribe_incentive_button_faint">Abboniere, um mit 1HP durchzuhalten!</string>
     <string name="unlocks_x_gems_per_month">Sie schalten %d Edelsteine pro Monat auf dem Marktplatz frei</string>
     <string name="see_more_subscription_options">Weitere Abonnement-Optionen anzeigen</string>
-    <string name="quest_mechanics_damage_description">Der Boss-Schaden wird jedes Mal berechnet, wenn ein Mitglied der Party im Laufe des Tages eincheckt. Dieser Schaden wird angewandt, wenn du das nächste Mal eine Aktion ausführst, die mit dem Server synchronisiert wird. Der Boss-Schaden wird im Chat eurer Party aufgezeichnet.</string>
+    <string name="quest_mechanics_damage_description">Der Bossschaden wird jedes Mal berechnet, wenn ein Gruppenmitglied im Laufe des Tages eincheckt. Dieser Schaden wird angewendet, wenn du das nächste Mal eine Aktion ausführst, die mit dem Server synchronisiert wird. Der Boss-Schaden wird im Chat eurer Gruppe aufgezeichnet.</string>
     <string name="quest_mechanics_pausing_description">"Wenn du Schwierigkeiten hast, deine Tagesaufgaben abzuschließen, kannst du unter Einstellungen den Schaden aussetzen. Dadurch wird verhindert, dass der Boss dich oder andere verletzt, aber auch dein eigener Schaden wird unterbrochen. Die verpassten Tagesaufgaben anderer Mitglieder verursachen jedoch immer noch Schaden, also seid vorsichtig da draußen! "</string>
     <string name="subscribe_gems_for_gold_incentive_text">Abonniere, um Edelsteine mit Gold zu kaufen und diese weiteren exklusiven Vorteile zu erhalten!</string>
     <string name="subscribe_hourglass_incentive_text">Abonnenten erhalten jeden Monat eine Mystische Sanduhr, sowie diese weiteren exklusiven Vorteile!</string>
     <string name="monthly_backgrounds">Monatliche Hintergründe</string>
     <string name="winter">Winter</string>
-    <string name="customizations">individuelle Anpassungen</string>
+    <string name="customizations">Individualisierungen</string>
     <string name="avatar_shirts">Shirts</string>
     <string name="avatar_skins">Hauttöne</string>
     <string name="avatar_accents">Akzente</string>
@@ -1599,7 +1599,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="plus_two_gems">+2 Edelsteine</string>
     <string name="subscription_details_footer">Abonnenten erhalten eine Mystische Sanduhr, ein Mystisches Ausrüstungsset und Edelsteine, die innerhalb der ersten zwei Tage des Monats auf dem Markt wieder aufgefüllt werden</string>
     <string name="equipment">Ausrüstung</string>
-    <string name="customizing_your_avatar">Avatar anpassen</string>
+    <string name="customizing_your_avatar">deinen Avatar gestalten</string>
     <string name="error_loading_gems">Beim Laden der Edelsteine ist ein Fehler aufgetreten</string>
     <string name="error">Fehler</string>
     <string name="best_deal">Bester Deal</string>
