@@ -1323,7 +1323,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="level_abbreviated">Level %d</string>
     <string name="insufficient_level_equipment_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
     <string name="change_class_confirmation_message">Dadurch wird die Ausrüstung in den Geschäften freigeschaltet und die verfügbaren Fertigkeiten ändern sich</string>
-    <string name="rejoin_party_quest_leader">Du kannst dich dieser Gruppe nur wieder anschließen, wenn du eingeladen wirst. Das Verlassen der Gruppe wird auch die aktuelle Quest abbrechen.</string>
+    <string name="rejoin_party_quest_leader">Du kannst dich dieser Gruppe nur wieder anschließen, wenn du eingeladen wirst.
+\n
+\nDas Verlassen der Gruppe wird auch die aktuelle Quest abbrechen.</string>
     <string name="see_other_sub_options">Weitere Abo-Optionen anzeigen</string>
     <string name="send_invite">Einladung verschicken</string>
     <string name="report_player_toolbar_title">Melde %s</string>
@@ -1611,5 +1613,5 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="resubscribe_for_hourglasses">Abonniere erneut, um wieder Mystische Sanduhren zu erhalten</string>
     <string name="enjoy_benefits">Genieße all diese exklusiven Vorteile mit deinem Abo</string>
     <string name="max_gem_cap">Max. Anzahl an Edelsteinen</string>
-    <string name="max_gem_cap_text_gift">Sie starten sofort bei der maximalen Edelsteinobergrenze</string>
+    <string name="max_gem_cap_text_gift">Sie beginnen direkt bei der max. Anzahl an Edelsteinen</string>
 </resources>
