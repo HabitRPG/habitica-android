@@ -1597,7 +1597,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="clear_cache_settings">Cache löschen</string>
     <string name="two_gems_per_month_gift">Verdiene +2 Edelsteine jeden Monat solange sie Abonnenten sind</string>
     <string name="plus_two_gems">+2 Edelsteine</string>
-    <string name="subscription_details_footer">Innerhalb der ersten zwei Monaten des Monats erhalten Abonnenten eine Mystische Sanduhr, ein Mystisches Ausrüstungs-Set und Edelsteine werden auf dem Marktplatz wieder aufgefüllt</string>
+    <string name="subscription_details_footer">Abonnenten erhalten eine Mystische Sanduhr, ein Mystisches Ausrüstungsset und Edelsteine, die innerhalb der ersten zwei Tage des Monats auf dem Markt wieder aufgefüllt werden</string>
     <string name="equipment">Ausrüstung</string>
     <string name="customizing_your_avatar">Avatar anpassen</string>
     <string name="error_loading_gems">Beim Laden der Edelsteine ist ein Fehler aufgetreten</string>
@@ -1608,8 +1608,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="choose_member">Wähle ein Mitglied</string>
     <string name="cleared_cache">Cache gelöscht</string>
     <string name="max_gem_cap_text">Beginne direkt bei der max. Anzahl an Edelsteinen</string>
-    <string name="resubscribe_for_hourglasses">Abonniere erneut, um weiter Mystische Sanduhren zu erhalten</string>
-    <string name="enjoy_benefits">Genieße mit Deinem Abo all diese exklusiven Vorteile</string>
+    <string name="resubscribe_for_hourglasses">Beginne wieder ein Abo um weiterhin Mystische Sanduhren zu erhalten</string>
+    <string name="enjoy_benefits">Genieße all diese exklusiven Vorteile mit deinem Abo</string>
     <string name="max_gem_cap">Max. Anzahl an Edelsteinen</string>
     <string name="max_gem_cap_text_gift">Sie beginnen direkt bei der max. Anzahl an Edelsteinen</string>
 </resources>
