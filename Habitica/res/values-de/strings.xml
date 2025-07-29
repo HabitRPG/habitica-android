@@ -74,7 +74,7 @@
     <string name="filter">Filtern</string>
     <string name="used_skill_without_mana">Du hast %1$s benutzt.</string>
     <string name="new_checklist_item">Neue Unteraufgabe</string>
-    <string name="reminder_title">Vergiss nicht Deine Aufgaben abzuhaken</string>
+    <string name="reminder_title">Vergiss nicht deine Aufgaben abzuhaken</string>
     <string name="unlock_lvl_11">Freigeschaltet ab Lvl 11</string>
     <string name="forgot_pw_btn">Passwort vergessen</string>
     <string name="tavern_inn_checkOut">Reaktiviere Deine täglichen Aufgaben</string>
@@ -121,7 +121,7 @@
     <string name="intro_2_title">Fortschritt im Leben</string>
     <string name="intro_2_description">Schalte Spielinhalte durch das Erledigen und Abhaken Deiner realen Aufgaben frei. Verdiene Rüstungen, Tiere und vieles mehr als Belohnungen für das Erfüllen Deiner Ziele.</string>
     <string name="intro_3_subtitle">Bekämpfe Monster</string>
-    <string name="intro_3_title">Triff Dich mit Anderen</string>
+    <string name="intro_3_title">Vernetze dich mit Anderen</string>
     <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
     <string name="intro_finish_button">Fangen wir an!</string>
     <string name="next_button">Weiter</string>
@@ -649,7 +649,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="invited_to_party_notification">&lt;font color=#925CF3&gt;%1$s&lt;/font&gt; du wurdest zu der Party&lt;b&gt;%2$s&lt;/b&gt; eingeladen</string>
     <string name="invited_to_quest"><![CDATA[Du wurdest zur Quest <b>%1$s</b> eingeladen]]></string>
     <string name="repeat_summary" translatable="false">%1$s wird jeden %2$s %3$s %4$s wiederholt</string>
-    <string name="skill_progress_title">Fertigkeiten benutzen</string>
+    <string name="skill_progress_title">Fähigkeit benutzen</string>
     <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort.</string>
     <string name="network_error_no_network_body">Keine Internetverbindung.</string>
     <string name="quest_completed">Quest abgeschlossen!</string>
@@ -1314,7 +1314,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="report_reason_title_message">Warum meldest du diese Nachricht\?</string>
     <string name="report_reason_title_player">Warum meldest du diese/n Spieler*in\?</string>
     <string name="exact_alarm_system_settings_reminders">Erinnerungen können verspätet erscheinen, da die Berechtigung nicht gegeben wurde. Klicke um Berechtigungen anzuzeigen und zu ändern.</string>
-    <string name="exact_alarm_system_settings_description">Erlaube \"Wecker und Erinnerungen\" in den Systemeinstellungen, damit Erinnerungen exakt zur richtigen Zeit erscheinen</string>
+    <string name="exact_alarm_system_settings_description">Erlaube \"Wecker und Erinnerungen\" in der Einstellungen-App, damit Erinnerungen exakt zur richtigen Zeit erscheinen</string>
     <string name="sell_confirmation_title">Bist du dir sicher, dass du %s verkaufen möchtest\?</string>
     <string name="leave_party_confirmation_quest">Bist du sicher, dass du diese Party verlassen willst\?</string>
     <string name="rejoin_party_quest">Du kannst dieser Party ohne Einladung nicht erneut beitreten.
@@ -1323,9 +1323,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="level_abbreviated">Level %d</string>
     <string name="insufficient_level_equipment_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
     <string name="change_class_confirmation_message">Dadurch wird die Ausrüstung in den Geschäften freigeschaltet und die verfügbaren Fertigkeiten ändern sich</string>
-    <string name="rejoin_party_quest_leader">Du kannst dich dieser Party nur wieder anschließen, wenn du eingeladen wirst.
-\n
-\nDurch das Verlassen der Party, wird auch die aktuelle Quest abgebrochen.</string>
+    <string name="rejoin_party_quest_leader">"Du  kannst dich dieser Gruppe nur wieder anschließen, wenn du eingeladen wirst. Das Verlassen der Gruppe wird auch die aktuelle Quest abbrechen."</string>
     <string name="see_other_sub_options">Siehe weitere Optionen fürs Abonnement</string>
     <string name="send_invite">Einladung verschicken</string>
     <string name="report_player_toolbar_title">Melde %s</string>
