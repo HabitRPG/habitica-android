@@ -1087,7 +1087,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="claim_x_gems">Erhalte %d Edelsteine</string>
     <string name="won_achievement_description_noname">Du wurdest als Gewinner ausgewählt! Dein Sieg wurde in deinen Erfolgen vermerkt.</string>
     <string name="quest_leave_message_nostart">Bist Du sicher, dass Du aus dem Quest austreten willst\? Du wirst nicht daran teilnehmen können.</string>
-    <string name="login_disclaimer">Durch Deine Registrierung bestätigst Du, dass Du die <a href="https://habitica.com/static/terms">Allgemeinen Geschäftsbedingungen</a> und die <a href="https://habitica.com/static/privacy">Datenschutzrichtlinien</a> gelesen hast und mit ihnen einverstanden bist.</string>
+    <string name="login_disclaimer">Durch deine Registrierung akzeptierst du die <a href="https://habitica.com/static/terms">Nutzungsbedingungen</a> und <a href="https://habitica.com/static/privacy">Datenschutzbestimmungen.</a></string>
     <string name="create_guild_description">Um eine Gilde zu erstellen, logge dich auf der Habitica Webseite ein und wähle den \"Erstellen\" Knopf auf der \"Meine Gilden\" Seite.</string>
     <string name="end_challenge_description">Um eine Herausforderung zu beenden, logge dich auf der Habitica Seite ein und nutze dann den \"Beende die Herausforderung\" Knopf auf der rechten Seite der Herausforderung.</string>
     <string name="g1g1_promo_info_prompt">Zu Ehren der Jahreszeit des Gebens, präsentieren wir wieder eine ganz besondere Aktion. Wenn Du jetzt ein Abonnement verschenkst, erhältst Du für Dich selbst das gleiche Abo kostenlos!</string>
