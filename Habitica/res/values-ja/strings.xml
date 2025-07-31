@@ -461,7 +461,7 @@
     <string name="insufficientHourglasses">このアイテムを購入するにはもっと神秘の砂時計が必要です！</string>
     <string name="get_hourglasses">神秘の砂時計を手に入れる</string>
     <string name="subscribe_for_hourglasses">有料プランに加入して神秘の砂時計を手に入れる</string>
-    <string name="timetravelers_closed_description">三ヶ月の連続ログインごとに一つ神秘の砂時計が手に入るので、これを使って、過去や未来の限定版アイテム、ペット、乗騎を開放しましょう！</string>
+    <string name="timetravelers_closed_description">有料プランに登録している間、毎月神秘の砂時計が1個ゲットできます。これを使って、過去や未来の限定アイテム、ペット、乗騎をアンロックしましょう！</string>
     <string name="want_to_subscribe">有料プランに加入したい</string>
     <string name="seasonal_closed_description">大祭は夏至と冬至、春分や秋分の頃に開催されるので、その頃にまた季節の特別アイテムたちを確認してみましょう！</string>
     <string name="come_back_soon">間もなく再開！</string>
@@ -1596,4 +1596,17 @@
     <string name="max_gem_cap_text_gift">最大限のジェムから早速スタートします</string>
     <string name="chat_empty_state_title">会話をしよう！</string>
     <string name="chat_empty_state_description">他人にやさしくして、コミュニティガイドラインを守ってください。</string>
+    <string name="change_email_description">このメールアドレスを使ってHabiticaにログインして、通知を受信することができます。</string>
+    <string name="change_display_name">表示名を編集する</string>
+    <string name="display_name_description">アバターに表示される名前です。ユーザー名と違い、ユニークなものにする必要はありません。</string>
+    <string name="confirm_new_password">新しいパスワードを確認する</string>
+    <string name="save_about_me">自己紹介を保存する</string>
+    <string name="api_token_title">APIトークン</string>
+    <string name="api_token_is_password">あなたのAPIトークンはパスワードのようなものです</string>
+    <string name="api_token_is_password_info">だれとも共有しないでください。ユーザーIDの入力を求められることはありますが、Githubを含め、他の人が見られる場所にAPIトークンを投稿しないでください。</string>
+    <string name="api_token_reset_title">新しいAPIトークンが必要な場合</string>
+    <string name="api_token_reset_info">パスワードを変えてリセットすることができます。一度リセットされたら、Habiticaを使用するデバイスに再びログインし、サードパーティーツールを使用する場合、APIトークンを更新する必要があります。</string>
+    <string name="copy_token">コピートークン</string>
+    <string name="rescrubscribe_to_pick_up">有料プランに再登録して中断したところから続けましょう！</string>
+    <string name="register_tos_confirm">Habiticaの <a href="https://habitica.com/static/terms">利用規則</a>と<a href="https://habitica.com/static/privacy">プライバシーポリシー</a>に同意します。</string>
 </resources>
