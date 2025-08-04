@@ -245,7 +245,7 @@
     <string name="market">Sklep</string>
     <string name="timeTravelers">Podróżnicy w Czasie</string>
     <string name="seasonalShop">Sklep Sezonowy</string>
-    <string name="empty_inbox">Nie masz żadnych wiadomości. Możesz wysłać użytkownikowi nową wiadomość za pomocą ich publicznych wiadomości z czatu!</string>
+    <string name="empty_inbox">Nie masz żadnych wiadomości. Możesz wysłać graczowi nową wiadomość za pomocą jego publicznych wiadomości z czatu!</string>
     <string name="party_invite">Odblokuj poprzez zapraszanie przyjaciół</string>
     <string name="login_incentive">Odblokuj regularnie odwiedzając Habitikę</string>
     <string name="create_account">Odblokuj tworząc konto</string>
