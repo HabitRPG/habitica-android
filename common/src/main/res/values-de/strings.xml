@@ -5,7 +5,7 @@
     <string name="billion_abbrev">b</string>
     <string name="trillion_abbrev">Bio.</string>
     <string name="mystic_hourglasses">Mystische Sanduhren</string>
-    <string name="repeat_daily">Tagesaufgabe</string>
+    <string name="repeat_daily">Täglich</string>
     <string name="monthly">Monatlich</string>
     <string name="daily">Tagesaufgabe</string>
     <string name="habit">Gewohnheit</string>

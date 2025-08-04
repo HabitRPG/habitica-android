@@ -1247,4 +1247,34 @@
     <string name="terms_of_service">Ketentuan Layanan</string>
     <string name="damage_pending">%s Kerusakan tertunda</string>
     <string name="x_remaining">%s tersisa</string>
+    <string name="apitoken_summary">Token kata sandi untuk pengembang dan alat pihak ketiga.</string>
+    <string name="about_me_description">Tambahkan sedikit informasi tentang diri Anda yang akan muncul di profil Habitica Anda saat orang lain melihatnya.</string>
+    <string name="save_about_me">Simpan Tentang Saya</string>
+    <string name="added_social_auth">Menambahkan autentikasi %s</string>
+    <string name="email_invalid">Alamat email tidak valid</string>
+    <string name="connect">Menghubungkan</string>
+    <string name="add">Menambahkan</string>
+    <string name="disconnect">Memutuskan</string>
+    <string name="successful_purchase_generic">Pembelian berhasil</string>
+    <string name="add_email_and_password">Tambahkan Email dan Kata Sandi</string>
+    <string name="password_added">Kata sandi tersimpan</string>
+    <string name="add_password">Tambahkan kata sandi</string>
+    <string name="removed_social_auth">%s terputus</string>
+    <string name="are_you_sure_you_want_to_delete">Apakah Anda yakin ingin menghapus\?</string>
+    <string name="copied_to_clipboard">Disalin %s ke papan klip</string>
+    <string name="not_connected">Tidak terhubung</string>
+    <string name="public_profile">Profil Publik</string>
+    <string name="about_me">Tentang Saya</string>
+    <string name="account_info">Info Akun</string>
+    <string name="login_methods">Metode Login</string>
+    <string name="not_set" tools:override="true">Belum Ditetapkan</string>
+    <string name="password_not_matching">Kata sandi yang dimasukkan tidak cocok</string>
+    <string name="minimal">Minimal</string>
+    <string name="sale_ends_in">Penjualan berakhir dalam %s</string>
+    <string name="my_account">Akun Saya</string>
+    <string name="starting_objectives">Tujuan Awal</string>
+    <string name="switch_class">Ganti Kelas</string>
+    <string name="onboarding_objectives">Tujuan Awal</string>
+    <string name="task_list_mode">Mode daftar tugas</string>
+    <string name="compact">Kompak</string>
 </resources>

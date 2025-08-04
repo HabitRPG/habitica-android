@@ -74,7 +74,7 @@
     <string name="filter">Filtern</string>
     <string name="used_skill_without_mana">Du hast %1$s benutzt.</string>
     <string name="new_checklist_item">Neue Unteraufgabe</string>
-    <string name="reminder_title">Vergiss nicht Deine Aufgaben abzuhaken</string>
+    <string name="reminder_title">Vergiss nicht deine Aufgaben abzuhaken</string>
     <string name="unlock_lvl_11">Freigeschaltet ab Lvl 11</string>
     <string name="forgot_pw_btn">Passwort vergessen</string>
     <string name="tavern_inn_checkOut">Reaktiviere Deine täglichen Aufgaben</string>
@@ -121,7 +121,7 @@
     <string name="intro_2_title">Fortschritt im Leben</string>
     <string name="intro_2_description">Schalte Spielinhalte durch das Erledigen und Abhaken Deiner realen Aufgaben frei. Verdiene Rüstungen, Tiere und vieles mehr als Belohnungen für das Erfüllen Deiner Ziele.</string>
     <string name="intro_3_subtitle">Bekämpfe Monster</string>
-    <string name="intro_3_title">Triff Dich mit Anderen</string>
+    <string name="intro_3_title">Vernetze dich mit Anderen</string>
     <string name="intro_3_description">Behalte Deine Ziele im Auge mit Hilfe Deiner Freunde. Unterstützt Euch gegenseitig im Leben und im Kampf, während Ihr Euch gemeinsam verbessert!</string>
     <string name="intro_finish_button">Fangen wir an!</string>
     <string name="next_button">Weiter</string>
@@ -649,13 +649,13 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="invited_to_party_notification">&lt;font color=#925CF3&gt;%1$s&lt;/font&gt; du wurdest zu der Party&lt;b&gt;%2$s&lt;/b&gt; eingeladen</string>
     <string name="invited_to_quest"><![CDATA[Du wurdest zur Quest <b>%1$s</b> eingeladen]]></string>
     <string name="repeat_summary" translatable="false">%1$s wird jeden %2$s %3$s %4$s wiederholt</string>
-    <string name="skill_progress_title">Fertigkeiten benutzen</string>
+    <string name="skill_progress_title">Fähigkeit benutzen</string>
     <string name="authentication_error_body">Ungültiger Benutzername und/oder Passwort.</string>
     <string name="network_error_no_network_body">Keine Internetverbindung.</string>
     <string name="quest_completed">Quest abgeschlossen!</string>
     <string name="not_participating">Du nimmst nicht teil</string>
     <string name="unlock_previous_short">Schließe Quest %d ab</string>
-    <string name="unlock_level">Freischalten durch Erreichen des Levels %d</string>
+    <string name="unlock_level">Freigeschaltet bei Level %d</string>
     <string name="unlock_previous">Freischalten durch Abschluss der Quest %d</string>
     <string name="locked">Gesperrt</string>
     <string name="skill_unlocks_at">Fähigkeit wird ab Level %d freigeschaltet</string>
@@ -1039,7 +1039,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="usually_x_gems">Üblicherweise %d Edelsteine</string>
     <string name="limitations">Einschränkungen</string>
     <string name="how_it_works">So funktioniert es</string>
-    <string name="fall_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="fall_promo_info_instructions">Zwischen %1$s und %2$s kannst du wie gewohnt ein Edelstein-Paket kaufen, deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum Ausgeben, Teilen oder für spätere Neuerungen Sparen!</string>
     <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
     <string name="spooky_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
@@ -1087,6 +1087,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="claim_x_gems">Erhalte %d Edelsteine</string>
     <string name="won_achievement_description_noname">Du wurdest als Gewinner ausgewählt! Dein Sieg wurde in deinen Erfolgen vermerkt.</string>
     <string name="quest_leave_message_nostart">Bist Du sicher, dass Du aus dem Quest austreten willst\? Du wirst nicht daran teilnehmen können.</string>
+    <string name="login_disclaimer">Durch deine Registrierung akzeptierst du die <a href="https://habitica.com/static/terms">Nutzungsbedingungen</a> und <a href="https://habitica.com/static/privacy">Datenschutzbestimmungen.</a></string>
     <string name="create_guild_description">Um eine Gilde zu erstellen, logge dich auf der Habitica Webseite ein und wähle den \"Erstellen\" Knopf auf der \"Meine Gilden\" Seite.</string>
     <string name="end_challenge_description">Um eine Herausforderung zu beenden, logge dich auf der Habitica Seite ein und nutze dann den \"Beende die Herausforderung\" Knopf auf der rechten Seite der Herausforderung.</string>
     <string name="g1g1_promo_info_prompt">Zu Ehren der Jahreszeit des Gebens, präsentieren wir wieder eine ganz besondere Aktion. Wenn Du jetzt ein Abonnement verschenkst, erhältst Du für Dich selbst das gleiche Abo kostenlos!</string>
@@ -1253,7 +1254,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="one">Du, ein anderer</item>
         <item quantity="other">Du und %d andere</item>
     </plurals>
-    <string name="push_notification_system_settings_description">Erlaube Benachrichtigungen von habitica in den Systemeinstellungen um Push-Benachrichtigungen zu erhalten</string>
+    <string name="push_notification_system_settings_description">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um Push-Benachrichtigungen zu erhalten</string>
     <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um, Erinnerungen zu erhalten</string>
     <string name="push_notification_system_settings_title">Benachrichtigungen wurden deaktiviert</string>
     <string name="class_changed_description">Du kannst nun deine Fertigkeit %s verwenden und Ausrüstungen im Shop erwerben. Erhöhe dein Level, um Punkte für die Aufwertung deiner Fertigkeiten zu erhalten.</string>
@@ -1322,10 +1323,10 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="level_abbreviated">Level %d</string>
     <string name="insufficient_level_equipment_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar. Nach Level 10 kannst du eine Klasse wählen.</string>
     <string name="change_class_confirmation_message">Dadurch wird die Ausrüstung in den Geschäften freigeschaltet und die verfügbaren Fertigkeiten ändern sich</string>
-    <string name="rejoin_party_quest_leader">Du kannst dich dieser Party nur wieder anschließen, wenn du eingeladen wirst.
+    <string name="rejoin_party_quest_leader">Du kannst dich dieser Gruppe nur wieder anschließen, wenn du eingeladen wirst.
 \n
-\nDurch das Verlassen der Party, wird auch die aktuelle Quest abgebrochen.</string>
-    <string name="see_other_sub_options">Siehe weitere Optionen fürs Abonnement</string>
+\nDas Verlassen der Gruppe wird auch die aktuelle Quest abbrechen.</string>
+    <string name="see_other_sub_options">Weitere Abo-Optionen anzeigen</string>
     <string name="send_invite">Einladung verschicken</string>
     <string name="report_player_toolbar_title">Melde %s</string>
     <string name="resubscribe_description_gift">Möchten Sie weiterhin die Vorteile eines Abonnements nutzen\? Sie können ein wiederkehrendes Abonnement abschließen, um Ihre Vorteile beizubehalten.</string>
@@ -1412,7 +1413,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="shadow_mute_user">Heimlich Stummschalten</string>
     <string name="mute_user">Spieler*in stumm schalten</string>
     <string name="ban_user_confirm">Willst du diese Spieler*in bannen\?</string>
-    <string name="unban_user_confirm">Willst du diese Spieler*in entbannen\?</string>
+    <string name="unban_user_confirm">Möchtest du diese Spieler*in freigeben\?</string>
     <string name="equipment_class_locked">Diese Ausrüstung ist aufgrund seiner Klasse gesperrt</string>
     <string name="manager">Manager*in</string>
     <string name="x_and_y">%1$s und %2$s</string>
@@ -1541,17 +1542,76 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="use_skill">Verwende Fähigkeit</string>
     <string name="quest_mechanics_rage_title">Rasereianzeige</string>
     <string name="quest_mechanics_rage_description">Einige schwierige Bosse haben eine orangefarbene Wutanzeige unter ihren HP. Diese Anzeige füllt sich, wenn Teilnehmer Tagesaufgaben verpassen. Wenn sie sich vollständig füllt, führt der Boss einen furchterregenden Angriff aus, der zusätzlichen Schaden verursacht!</string>
-    <string name="subscribe_listitem2_description_2">Verdiene im Laufe der Zeit Sanduhren, um Gegenstände im Laden des Zeitreisenden zu kaufen.</string>
+    <string name="subscribe_listitem2_description_2">Verdiene im Laufe der Zeit Sanduhren, um Gegenstände im Laden des Zeitreisenden zu kaufen</string>
     <string name="subscription_benefit_armoire_sub">Mit deinem Abo erhältst du eine zusätzliche Chance am Schrank!</string>
     <string name="subscriber_benefit_success_faint">Du hast eine zweite Chance mit 1HP!</string>
     <string name="revive_broken_equipment">Dein %s ist kaputt gegangen</string>
     <string name="x_gems">%d Edelsteine</string>
     <string name="unlock_x_gems_per_month">Schalte %d Edelsteine pro Monat auf dem Marktplatz frei</string>
-    <string name="subscribe_prompt_2">Abonniere,um Edelsteine mit Gold zu kaufen und diese weiteren exklusiven Vorteile zu erhalten!</string>
-    <string name="faint_subscriber_description">Mit deinem Abonnement hast du jeden Tag eine zweite Chance, wenn du keine HP mehr hast.</string>
+    <string name="subscribe_prompt_2">Abonniere, um Edelsteine mit Gold zu kaufen und diese weiteren exklusiven Vorteile zu erhalten!</string>
+    <string name="faint_subscriber_description">Mit deinem Abonnement hast du jeden Tag eine zweite Chance, wenn du keine HP mehr hast</string>
     <string name="subscribe_incentive_button_faint">Abboniere, um mit 1HP durchzuhalten!</string>
     <string name="unlocks_x_gems_per_month">Sie schalten %d Edelsteine pro Monat auf dem Marktplatz frei</string>
-    <string name="see_more_subscription_options">Weitere Abonnementoptionen anzeigen</string>
-    <string name="quest_mechanics_damage_description">Der Boss-Schaden wird jedes Mal berechnet, wenn ein Mitglied der Party im Laufe des Tages eincheckt. Dieser Schaden wird angewandt, wenn du das nächste Mal eine Aktion ausführst, die mit dem Server synchronisiert wird. Der Boss-Schaden wird im Chat eurer Party aufgezeichnet.</string>
+    <string name="see_more_subscription_options">Weitere Abonnement-Optionen anzeigen</string>
+    <string name="quest_mechanics_damage_description">Der Bossschaden wird jedes Mal berechnet, wenn ein Gruppenmitglied im Laufe des Tages eincheckt. Dieser Schaden wird angewendet, wenn du das nächste Mal eine Aktion ausführst, die mit dem Server synchronisiert wird. Der Boss-Schaden wird im Chat eurer Gruppe aufgezeichnet.</string>
     <string name="quest_mechanics_pausing_description">"Wenn du Schwierigkeiten hast, deine Tagesaufgaben abzuschließen, kannst du unter Einstellungen den Schaden aussetzen. Dadurch wird verhindert, dass der Boss dich oder andere verletzt, aber auch dein eigener Schaden wird unterbrochen. Die verpassten Tagesaufgaben anderer Mitglieder verursachen jedoch immer noch Schaden, also seid vorsichtig da draußen! "</string>
+    <string name="subscribe_gems_for_gold_incentive_text">Abonniere, um Edelsteine mit Gold zu kaufen und diese weiteren exklusiven Vorteile zu erhalten!</string>
+    <string name="subscribe_hourglass_incentive_text">Abonnenten erhalten jeden Monat eine Mystische Sanduhr, sowie diese weiteren exklusiven Vorteile!</string>
+    <string name="monthly_backgrounds">Monatliche Hintergründe</string>
+    <string name="winter">Winter</string>
+    <string name="customizations">Individualisierungen</string>
+    <string name="avatar_shirts">Shirts</string>
+    <string name="avatar_skins">Hauttöne</string>
+    <string name="avatar_accents">Akzente</string>
+    <string name="summer">Sommer</string>
+    <string name="fall">Herbst</string>
+    <string name="subscriber_benefit">ABONNENTEN VORTEIL</string>
+    <string name="no_saddles">Du hast keinen Sattel</string>
+    <string name="purchase_saddles_in_market">Sattel machen aus einem Haustier direkt ein Reittier. Du kannst einen Sattel auf dem Markt kaufen.</string>
+    <string name="avatar_mustaches">Schnurrbärte</string>
+    <string name="standard_backgrounds">Standard Hintergründe</string>
+    <string name="avatar_hair_styles">Haarstile</string>
+    <string name="avatar_beards">Bärte</string>
+    <string name="tap_to_reload">Aktualisieren für neue Objekte</string>
+    <string name="you_own_all_items">Du besitzt alle diese Objekte</string>
+    <string name="customizations_no_owned">Du besitzt keines dieser Objekte</string>
+    <string name="preference_email_content_release">Content Freigabe + Events</string>
+    <string name="error_loading_member">Spieler wurde nicht gefunden</string>
+    <string name="error_loading_member_body">Es gab einen Fehler beim Laden der Daten dieses Spielers. Bitte achte darauf, dass du den @Benutzernamen korrekt geschrieben hast.</string>
+    <string name="report_challenge">Herausforderung melden</string>
+    <string name="avatar_hair_colors">Haarfarben</string>
+    <string name="looking_for_more">Nach mehr suchen\?</string>
+    <string name="spring">Frühling</string>
+    <string name="animal_tails">Tierschwänze</string>
+    <string name="customizations_owner">Felicitus</string>
+    <string name="mages">Magier</string>
+    <string name="switches_in_x">Wechselt in %s</string>
+    <string name="try_on_equipment">Du kannst sie von deiner Ausrüstung anprobieren. Neue Ware trifft zu Beginn jeden Monats ein!</string>
+    <string name="healers">Heiler</string>
+    <string name="rogues">Schurken</string>
+    <string name="warriors">Krieger</string>
+    <string name="try_on_next_season">Du kannst sie anprobieren, indem du deinen Avatar anpasst. Vergiss nicht später für die Möglichkeiten der nächsten Jahreszeit vorbeizuschauen!</string>
+    <string name="try_on_customize">Du kannst sie anprobieren, indem du deinen Avatar anpasst.</string>
+    <string name="try_on_next_month">Du kannst sie anprobieren, indem du deinen Avatar anpasst. Vergiss nicht später für die Möglichkeiten des nächsten Monats vorbeizuschauen!</string>
+    <string name="customization_shop">Individualisierungen</string>
+    <string name="next_switch_in_x">Nächster Wechsel in %s</string>
+    <string name="clear_database">Inhalte neu laden</string>
+    <string name="clear_cache_settings">Cache löschen</string>
+    <string name="two_gems_per_month_gift">Verdiene +2 Edelsteine jeden Monat solange sie Abonnenten sind</string>
+    <string name="plus_two_gems">+2 Edelsteine</string>
+    <string name="subscription_details_footer">Abonnenten erhalten eine Mystische Sanduhr, ein Mystisches Ausrüstungsset und Edelsteine, die innerhalb der ersten zwei Tage des Monats auf dem Markt wieder aufgefüllt werden</string>
+    <string name="equipment">Ausrüstung</string>
+    <string name="customizing_your_avatar">Avatar anpassen</string>
+    <string name="error_loading_gems">Beim Laden der Edelsteine ist ein Fehler aufgetreten</string>
+    <string name="error">Fehler</string>
+    <string name="best_deal">Bestes Angebot</string>
+    <string name="two_gems_per_month">Verdiene +2 Edelsteine jeden Monat solange du Abonnent bist</string>
+    <string name="popular">Beliebt</string>
+    <string name="choose_member">Wähle ein Mitglied</string>
+    <string name="cleared_cache">Cache gelöscht</string>
+    <string name="max_gem_cap_text">Beginne direkt bei der max. Anzahl an Edelsteinen</string>
+    <string name="resubscribe_for_hourglasses">Abonniere erneut, um wieder Mystische Sanduhren zu erhalten</string>
+    <string name="enjoy_benefits">Genieße all diese exklusiven Vorteile mit deinem Abo</string>
+    <string name="max_gem_cap">Max. Anzahl an Edelsteinen</string>
+    <string name="max_gem_cap_text_gift">Sie beginnen direkt bei der max. Anzahl an Edelsteinen</string>
 </resources>

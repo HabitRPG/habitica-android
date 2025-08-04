@@ -1264,4 +1264,5 @@
     <string name="challenges">挑戰</string>
     <string name="subscription_credit_canceling">您的 <b>+%d</b> 個月訂閱將在取消後啟用</string>
     <string name="leave_party_confirmation_quest">你確定要離開這個隊伍\?</string>
+    <string name="plus_two_gems">+2顆寶石</string>
 </resources>

@@ -1044,4 +1044,6 @@
     <string name="view_gem_bundles">View Gem Bundles</string>
     <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time for a Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
     <string name="x_and_y">%1$s and %2$s</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="push_notification_system_settings_description">Allow Habitica notifications in the Settings app to receive push notifications</string>
 </resources>
