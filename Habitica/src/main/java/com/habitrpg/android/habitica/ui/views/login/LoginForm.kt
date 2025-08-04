@@ -59,6 +59,9 @@ fun LoginForm(
         Button(
             {
                 onToggleFormType()
+                // Trigger revalidation
+                onEmailChange(email)
+                onPasswordChange(password)
             },
             colors = ButtonDefaults.textButtonColors(),
             contentPadding = PaddingValues(15.dp),
