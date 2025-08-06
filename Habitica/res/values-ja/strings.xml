@@ -1244,7 +1244,7 @@
     <string name="copy_tasks_description">割り当てられたタスクと未完了のタスクを個人のタスク リストに表示する</string>
     <string name="group_plan_settings">グループプランの設定</string>
     <plurals name="people">
-        <item quantity="other">%d 人</item>
+        <item quantity="other">%d人</item>
     </plurals>
     <plurals name="you_x_others">
         <item quantity="other">あなたと他 %d 名</item>
