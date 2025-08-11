@@ -71,7 +71,8 @@ class PreferencesFragment :
     private var pushNotificationsPreference: PreferenceScreen? = null
     private var emailNotificationsPreference: PreferenceScreen? = null
     private var classSelectionPreference: Preference? = null
-    private var serverUrlPreference: ListPreference? = null
+    private var customServerUrlDebugPreference: ListPreference? = null
+    private var customServerUrlReleaseCategory: PreferenceCategory? = null
     private var taskListPreference: ListPreference? = null
 
     private val classSelectionResult =
@@ -104,11 +105,13 @@ class PreferencesFragment :
         val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
         weekdayPreference?.summary = weekdayPreference.entry
 
-        serverUrlPreference = findPreference("server_url") as? ListPreference
-        serverUrlPreference?.isVisible = false
-        serverUrlPreference?.summary =
-            preferenceManager.sharedPreferences?.getString("server_url", "")
-
+        val serverUrl = preferenceManager.sharedPreferences?.getString("server_url", "")
+        customServerUrlDebugPreference = findPreference("server_url") as? ListPreference
+        customServerUrlDebugPreference?.isVisible = false
+        customServerUrlDebugPreference?.summary = serverUrl
+        customServerUrlReleaseCategory = findPreference("custom_server")
+        customServerUrlReleaseCategory?.title = serverUrl
+        
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
@@ -594,8 +597,11 @@ class PreferencesFragment :
         }
 
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
-            serverUrlPreference?.isVisible = true
+            customServerUrlDebugPreference?.isVisible = true
             taskListPreference?.isVisible = true
+        }
+        if (BuildConfig.DEBUG.not()) {
+            customServerUrlReleaseCategory?.isVisible = customServerUrlReleaseCategory?.title.isNullOrEmpty().not()
         }
     }
 }
