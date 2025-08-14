@@ -219,13 +219,13 @@
     <string name="class_changed">당신은 %s 이(가) 되었습니다!</string>
     <string name="choose_class">직업 선택</string>
     <string name="dialog_go_back">뒤로 가기</string>
-    <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
+    <string name="opt_out_confirmation">직업(클래스) 시스템에서 제외하시겠습니까\?</string>
     <string name="change_class">직업 바꾸기</string>
     <string name="change_class_description">보석 3개를 이용해 직업을 바꾸고 능력치 포인트를 돌려받으세요.</string>
     <string name="enable_class">직업시스템 활성화</string>
     <string name="changing_class_progress">직업 바꾸기</string>
     <string name="by_email">이메일로</string>
-    <string name="invite_existing_users">등록된 사용자 초대</string>
+    <string name="invite_existing_users">기존 사용자 초대</string>
     <string name="send">보내기</string>
     <string name="invite">친구 초대</string>
     <string name="invite_email_description">친구가 당신이 보낸 이메일로 해비티카에 가입하면, 자동으로 당신의 파티에 초대됩니다!</string>
@@ -242,7 +242,7 @@
     <string name="market">시장</string>
     <string name="timeTravelers">시간 여행자들</string>
     <string name="seasonalShop">계절 상점</string>
-    <string name="empty_inbox">편지함에 메시지가 없습니다. 공개 채팅 메시지를 통해 사용자에게 새 메시지를 보낼 수 있습니다!</string>
+    <string name="empty_inbox">메시지가 없습니다. 다른 플레이어의 공개 채팅 메시지에서 새 메시지를 보낼 수 있습니다!</string>
     <string name="party_invite">친구를 초대하면 열립니다</string>
     <string name="login_incentive">Habitica에 꾸준히 로그인하면 열립니다</string>
     <string name="create_account">계정을 만들면 열립니다</string>
@@ -287,20 +287,16 @@
     <string name="has_reminder">알림 있음</string>
     <string name="has_tag">태그 있음</string>
     <string name="subscribe_title">정기구독은 개발자를 후원하고 Habitica를 유지하는 데 도움이 됩니다</string>
-    <string name="subscribe_prompt">정기구독자가 되어서 다음과 같은 혜택을 받으세요!</string>
-    <string name="subscribe_listitem1">골드로 보석 구매</string>
-    <string name="subscribe_listitem2">신비한 모래시계</string>
+    <string name="subscribe_prompt">정기구독자가 되어서 다음과 같은 혜택을 받으세요</string>
+    <string name="subscribe_listitem1">매월 무료 보석</string>
+    <string name="subscribe_listitem2">월간 신비한 모래시계</string>
     <string name="subscribe_listitem3">월간 미스터리 아이템</string>
     <string name="subscribe_listitem4">스페셜 구독자 펫</string>
     <string name="subscriptions">구독</string>
     <string name="subscription_duration">자동이체: 매 %s</string>
     <string name="subscribe">구독하기</string>
-    <string name="subscribe_listitem1_description">이제부터 상인 알렉산더가 보석을 개당 20골드에 판매합니다!
-\n
-\n처음에는 매달 구비량이 한 달에 25개로 제한되어 있지만, 후원 기간에 따라 올라갈 수 있습니다.
-\n
-\n연속 정기후원 3개월마다 보석 제한개수가 5개씩, 최대 월 50개까지 올라갑니다!</string>
-    <string name="subscribe_listitem2_description">신비한 모래시계를 얻어서 시간 여행자 상점에서 아이템을 구입하세요!</string>
+    <string name="subscribe_listitem1_description">마켓에서 퀘스트, 꾸미기 아이템, 펫 등 다양한 상품을 구매할 수 있는 골드로 구매 가능한 젬을 최대 50개까지 얻으세요!</string>
+    <string name="subscribe_listitem2_description">매달 1개의 신비한 모래시계를 받아 시간 여행자 상점에서 아이템을 놓치지 마세요!</string>
     <string name="subscribe_listitem3_description">지금 구독하시면 바로 구독자 한정 세트를 받을 수 있고 매 달 새로운 아이템들을 추가로 받게 됩니다!</string>
     <string name="subscribe_listitem4_description">신규 구독자가 되시면 로얄 퍼플 재칼로프 펫을 드립니다.</string>
     <string name="subscription_hourglasses">신비한 모래시계 +%d개</string>
@@ -308,20 +304,20 @@
     <string name="subscription">정기구독</string>
     <string name="active">활성중</string>
     <string name="cancel_subscription">구독 취소하기</string>
-    <string name="cancel_subscription_google_description">구독을 취소하고 싶으신가요\? 구글 플레이 스토어의 \"내 애플리케이션\" 메뉴에 구독취소 옵션이 있습니다. 구독을 취소하신 후에도 남아있는 구독시간은 그대로 사용하실 수 있습니다.</string>
-    <string name="cancel_subscription_notgoogle_description">더 이상 구독하고 싶지 않으세요\? 모바일 결제 제한으로 인해 웹사이트에서만 취소가 가능합니다. 아래 버튼을 클릭하셔서 로그인 하시고 오른쪽 상단에 있는 유저 아이콘을 탭하신 후 구독란으로 들어가세요. 구독을 취소하신 후에도 남아있는 구독시간은 그대로 사용하실 수 있습니다. 보고싶을 거에요!</string>
+    <string name="cancel_subscription_google_description">더 이상 구독을 원하지 않으신가요\? Google Play 스토어 앱의 ‘결제 및 구독’ 섹션에서 구독 해지 옵션을 찾을 수 있습니다. 남아 있는 구독 크레딧 개월 수는 취소 후 종료일에 추가됩니다.</string>
+    <string name="cancel_subscription_notgoogle_description">더 이상 구독을 원하지 않으신가요\? 결제 방식에 따라 당사 웹사이트에서 구독을 해지해야 합니다. 아래 버튼을 누른 뒤 계정에 로그인하고, 오른쪽 상단의 플레이어 아이콘을 누른 다음 ‘구독’ 섹션으로 이동하세요. 남아 있는 구독 크레딧 개월 수는 취소 후 종료일에 추가됩니다. 아쉽게도 함께하지 못해 섭섭합니다!</string>
     <string name="visit_habitica_website">Habitica 웹사이트 가기</string>
     <string name="current_bonuses">현재 발동중인 보너스</string>
-    <string name="months_subscribed">구독한 기간</string>
+    <string name="months_subscribed">구독 기간</string>
     <string name="current_hourclasses">보유중인 신비한 모래시계</string>
     <string name="monthly_gem_cap">이달의 보석 한도</string>
     <string name="inactive">비활성중</string>
     <string name="one_month">1개월</string>
     <string name="months">달마다</string>
     <string name="month">달마다</string>
-    <string name="three_months">3개월</string>
-    <string name="six_months">6개월</string>
-    <string name="twelve_months">12개월</string>
+    <string name="three_months">분기</string>
+    <string name="six_months">반기</string>
+    <string name="twelve_months">연간</string>
     <string name="subscribe_prompt_thanks">구독자가 되시면 다음과 같은 혜택을 받을 수 있습니다</string>
     <string name="subscription_status">구독상황</string>
     <string name="challenge_leave_title">도전 그만두기</string>
@@ -388,10 +384,10 @@
     <string name="opting_out_progress">선택유예 중</string>
     <string name="invite_username_description">이미 해비티카를를 이용하는 친구가 있다면, 유저네임을 입력하여 초대하세요.</string>
     <string name="subscription_duration_norenew">%s 에</string>
-    <string name="subscribe1month_gemcap">보석 한도 25개</string>
-    <string name="subscribe3month_gemcap">보석 한도 30개</string>
-    <string name="subscribe6month_gemcap">보석 한도 35개</string>
-    <string name="subscribe12month_gemcap">보석 한도 45개</string>
+    <string name="subscribe1month_gemcap">월간 보석 한도 25개</string>
+    <string name="subscribe3month_gemcap">월간 보석 한도 30개</string>
+    <string name="subscribe6month_gemcap">월간 보석 한도 35개</string>
+    <string name="subscribe12month_gemcap">월간 보석 한도 45개</string>
     <string name="due">아직 안한 일</string>
     <string name="welcome_text">아, 새로운 모험가인가 보군요. 저는 저스틴이에요, 당신을 위해 Habitica 가이드가 되어드리죠.
 \n
@@ -469,7 +465,7 @@
     <string name="insufficientHourglasses">이 아이템을 구입하려면 더 많은 신비한 모래시계가 필요합니다!</string>
     <string name="get_hourglasses">모래시계 받기</string>
     <string name="subscribe_for_hourglasses">모래시계를 얻으려면 정기 구독을 해주세요</string>
-    <string name="timetravelers_closed_description">연속 정기구독 3달마다 신비한 모래시계 한 개씩을 얻을 수 있고 그것을 사용해서 과거와… 그리고 미래의 한정판 아이템, 펫, 그리고 탑승펫 등을 열 수 있습니다!</string>
+    <string name="timetravelers_closed_description">정기구독자는 매달 신비한 모래시계 한 개씩을 얻을 수 있고 그것을 사용해서 과거와… 그리고 미래의 한정판 아이템, 펫, 그리고 탑승펫 등을 열 수 있습니다!</string>
     <string name="want_to_subscribe">정기후원 하고 싶어요</string>
     <string name="seasonal_closed_description">그랜드 갈라는 춘분, 하지, 추분 그리고 동지 즈음에 열리니 그 때마다 재미있는 여러 계절별 특별 아이템을 찾으러 오세요!</string>
     <string name="come_back_soon">어서 다시 만나요!</string>
@@ -522,13 +518,12 @@
     <string name="class_equipment">장비</string>
     <string name="equipment_empty">모든 장비를 이미 보유하고 있습니다! 춘분, 하지, 추분, 동지 즈음에 열리는 그랜드 갈라에서 더 새로운 장비들이 출시될 예정입니다.</string>
     <string name="classless">무직</string>
-    <string name="class_equipment_shop_dialog">이 아이템은 특정 직업에서만 가능합니다.
-\n설정에 들어가서 직업을 바꾸실 수 있습니다.</string>
+    <string name="class_equipment_shop_dialog">이 아이템은 특정 직업만 사용할 수 있습니다. 설정에서 직업을 변경할 수 있습니다.</string>
     <string name="class_gear_disclaimer">현재 직업에 맞는 장비만 구입할 수 있습니다</string>
     <string name="check_into_inn">여관에서 머물기</string>
     <string name="community_guidelines">커뮤니티 방침</string>
     <string name="view_community_guidelines">커뮤니티 방침 읽어보기</string>
-    <string name="guidelines_description">Habitica는 나이나 배경에 상관없이 모든 유저들이 즐길 수 있는 환경을 제공하기 위해 노력합니다, 특히 주막 같은 공공장소에서는 더욱 그렇죠. 궁금한 점이 있다면 지침서를 참고하시기 바랍니다.</string>
+    <string name="guidelines_description">Habitica는 모든 연령과 배경의 플레이어가 환영받는 환경을 만들기 위해 노력하고 있습니다. 궁금한 점이 있다면 가이드라인을 참고해 주세요.</string>
     <string name="helpful_links">도움되는 링크들</string>
     <string name="view_faq">자주하는 질문 보기</string>
     <string name="report_bug">버그 신고하기</string>
@@ -545,7 +540,7 @@
     <string name="strike_description_title">분노의 타격이 무엇인가요\?</string>
     <string name="strike_active_title">%s 이(가) 공격받았습니다!</string>
     <string name="strike_active_description" formatted="false">우리의 %1$s는 %2$s가 %3$s를 산산조각 내서 엄청난 충격을 받았습니다. 어서 과제를 수행해서 괴물을 물리치고 재건할 수 있게 도와주세요!!</string>
-    <string name="questShop">퀘스트 상점</string>
+    <string name="questShop">퀘스트</string>
     <string name="market_owner_long">상인 알렉스</string>
     <string name="tavern_owner_long">여관 주인 다니엘</string>
     <string name="stable_owner_long">농장 주인 맷</string>
@@ -570,7 +565,7 @@
     <string name="expand_notes">더 보기</string>
     <string name="collapse_notes">접기</string>
     <string name="last_login">최근 접속</string>
-    <string name="total_checkins">전체 접속 수</string>
+    <string name="total_checkins">총 접속 횟수</string>
     <string name="two_handed">양 손</string>
     <string name="usernamePromptTitle">당신의 유저아이디를 설정할 차례입니다!</string>
     <string name="usernamePromptWiki">이 변경된 사항에 대해 더 알고 싶다면, <a href="https://habitica.wikia.com/wiki/Player_Names">저희 위키백과를 참고해 주세요.</a></string>
@@ -628,9 +623,9 @@
     <string name="gift_subscription">정기구독 선물하기</string>
     <string name="gift_one_get_one_description">정기구독 선물을 하면 본인도 같은 혜택을 받을 수 있는 이벤트가 진행중입니다!</string>
     <string name="gift_title">누구에게 선물할까요\?</string>
-    <string name="gift_one_get_one">하나 주고 하나 받기!</string>
+    <string name="gift_one_get_one">하나 주고 하나 받기</string>
     <string name="gift_one_get_one_detailed_description">이 이벤트가 진행중인 동안은 선물을 했을 때 본인에게도 자동으로 같은 기간의 정기구독이 됩니다.</string>
-    <string name="gift_subscription_subtitle">선물하고 싶은 정기구독 서비스를 선택하세요! 이 구매는 자동으로 연장되지 않습니다.</string>
+    <string name="gift_subscription_subtitle">선물할 구독을 선택하세요! 이 구매는 자동 갱신되지 않습니다.</string>
     <string name="send_gift">선물하기</string>
     <string name="server">서버</string>
     <string name="gift_confirmation_title" formatted="false">선물이 전달되었습니다!</string>
@@ -745,7 +740,7 @@
     <string name="hourglasses_description">신비한 모래시계는 해비티카를 매 3개월 연속 구독당 1개씩만 받을 수 있는 희귀한 화폐입니다. 시간 여행자의 상점에서 이전에 출시되었던 장비세트나, 펫, 탑승펫, 움직이는 배경, 혹은 특수 퀘스트등을 사는 데 이용됩니다.
 \n
 \n1년에 최대 네 개의 모래시계를 받을 수 있습니다. 받는 시간은 구독 갱신 스케쥴에 따라 정해집니다. 모래시계 획득 자격을 얻게 되는 달의 구독료 지불 다음 달의 첫 날 받게됩니다. 자세한 설명은 [구독] 페이지를 참고하세요.</string>
-    <string name="subscribe_listitem5">아이템 드롭이 두 배</string>
+    <string name="subscribe_listitem5">특별 펫 &amp; 추가 보상</string>
     <string name="subscribe_listitem3_description_new">지금 %s를 받고 매달 새로운 아이템을 받으려면 구독하세요!</string>
     <string name="leave_guild_confirmation">정말로 길드를 탈퇴하시겠습니까\?</string>
     <string name="gift_confirmation_text_sub">%1$s 에게 %2$s-개월 해비티카 구독권을 선물했습니다.</string>
@@ -765,7 +760,7 @@
     <string name="special_items">스페셜 아이템</string>
     <string name="leave_keep_tasks">나가기 &amp; 과제 킵하기</string>
     <string name="challenge_leave_description">이 도전의 과제들을 본인의 목록에 그대로 남기셔도 되고 나가면서 지우셔도 됩니다</string>
-    <string name="subscribe_listitem5_description">매일 두 배의 아이템 획득 제한으로 해비티카에서 더 많은 아이템을 발견하세요.</string>
+    <string name="subscribe_listitem5_description">로열 퍼플 잭칼로프를 받고, 매일 알, 부화 물약, 먹이를 두 배로 받아 펫 컬렉션을 늘리세요!</string>
     <string name="transfer_ownership">파티장 권한 이양</string>
     <string name="transfer_ownership_confirm">파티장 권한을 이양하시겠습니까\?</string>
     <string name="transferred_ownership">%s 에게 파티장 권한이 이양되었습니다</string>
@@ -1247,8 +1242,7 @@
     <string name="copy_shared_tasks">공유 중인 과제 복사</string>
     <string name="group_plan_settings">그룹 계획 설정</string>
     <string name="copy_tasks_description">할당된 과제와 열려 있는 과제를 개인 과제 목록에 표시</string>
-    <string name="insufficient_level_equipment_dialog">직업 제한이 있는 아이템입니다.
-\n10 레벨부터 직업을 선택할 수 있습니다.</string>
+    <string name="insufficient_level_equipment_dialog">직업 제한이 있는 아이템입니다. 10 레벨부터 직업을 선택할 수 있습니다.</string>
     <string name="send_invite">초대하기</string>
     <string name="shop_armoire_description">시즌 행사에서 새로운 장비가 출시됩니다. 기다리시는 동안, 마법의 장비상자에서 %d 벌의 장비를 획득해보세요!</string>
     <string name="enable_notifications">알림 켜기</string>
@@ -1262,4 +1256,59 @@
     <string name="class_changed_description">%s 스킬을 사용할 수 있고 상점에서 장비를 구매할 수 있습니다! 레벨을 올려 스탯 포인트를 획득하면 스킬을 강화하는 데 사용할 수 있습니다.</string>
     <string name="change_class_selected_confirmation">보석 3개를 사용하여 %1$s 직업으로 변경하시겠습니까\?</string>
     <string name="x_and_y">%1$s 와(과) %2$s</string>
+    <string name="photo_url_description">여기에 이미지 링크를 추가하면 다른 사람들이 볼 수 있도록 Habitica 프로필에 이미지를 표시할 수 있습니다.</string>
+    <string name="save_photo_url">Photo URL 저장</string>
+    <string name="change_email_description">이 메일 주소는 Habitica에 로그인하고 알림을 받는 데 사용됩니다.</string>
+    <string name="change_username_description">사용자 이름은 1 ~ 20자여야 하며, 영문 소문자(a~z), 숫자(0~9), 하이픈(-), 밑줄(_)만 포함할 수 있습니다.</string>
+    <string name="change_display_name">표시되는 이름 변경</string>
+    <string name="password_change_info">비밀번호는 8자 이상이어야 합니다. 비밀번호를 변경하면 다른 기기나 사용 중인 서드파티 도구에서 로그아웃됩니다.</string>
+    <string name="confirm_new_password">새로운 패스워드 확인</string>
+    <string name="report_user_explanation">https://habitica.com/static/community-guidelines 에 명시된 커뮤니티 가이드라인 및/또는 https://habitica.com/static/terms 에 명시된 서비스 약관을 위반한 플레이어만 신고해야 합니다. 허위 신고를 하는 것은 Habitica 커뮤니티 가이드라인 위반에 해당합니다.</string>
+    <string name="subscription_credit_canceling">현재 보유 중인 <b>+%d</b>개월의 구독 크레딧은 취소 후 활성화됩니다</string>
+    <string name="reset_account_description_new">모든 레벨, 골드, 경험치를 잃게 됩니다. 모든 작업과 그 기록이 삭제됩니다(도전 과제의 작업은 유지됩니다). 구독자 아이템과 무료 기념 아이템을 제외한 모든 장비를 잃게 되지만, 다시 구매할 수 있습니다. 직업 전용 장비를 다시 구매하려면 해당 직업이어야 합니다. 현재 직업, 업적, 그리고 펫과 탈것은 유지됩니다. 초기화를 확인하려면 아래에 비밀번호를 입력하세요.</string>
+    <string name="display_name_description">이 이름은 Habitica에서 아바타에 표시되는 이름입니다. 사용자 이름과 달리, 고유 식별자가 될 필요는 없습니다.</string>
+    <string name="report_message_explanation">https://habitica.com/static/community-guidelines 에 명시된 커뮤니티 가이드라인 및/또는 https://habitica.com/static/terms 에 명시된 서비스 약관을 위반한 게시물만 신고해야 합니다. 허위 신고를 하는 것은 Habitica 커뮤니티 가이드라인 위반에 해당합니다.</string>
+    <string name="enable_class_description">직업을 선택하면 스킬, 능력치, 마나가 활성화됩니다</string>
+    <string name="insufficient_level_equipment_dialog_new">이 아이템은 %s만 사용할 수 있습니다. 직업은 레벨 10 이후에 선택할 수 있습니다.</string>
+    <string name="class_equipment_shop_dialog_new">이 아이템은 %s만 사용할 수 있습니다. 직업을 변경하려면 설정을 여세요.</string>
+    <string name="x_checkins">%d 회</string>
+    <string name="subscribe_listitem3_description_alt">최신 한정 장비로 멋지게 꾸미세요. 지금 구독하고 %1$s의 %2$s를 받으세요!</string>
+    <string name="subscribe_listitemFaint_description">하루에 한 번, HP가 모두 소진되면 즉시 회복하여 진행 상황을 잃지 마세요!</string>
+    <string name="subscription_hourglasses_3month_timeframe">3개월 후 획득 가능한 모래시계</string>
+    <string name="exact_alarm_system_settings_reminders">권한이 활성화되어 있지 않아 알림이 지연될 수 있습니다. 탭하여 권한을 확인하고 업데이트하세요.</string>
+    <string name="exact_alarm_system_settings_title">알람과 리마인더가 꺼져 있음</string>
+    <string name="exact_alarm_system_settings_description">정확한 시간에 리마인더가 표시되도록 하려면, 설정 앱에서 Alarms &amp; Reminders를 허용하세요</string>
+    <string name="sell_confirmation_title">이 %s을(를) 정말 판매하시겠어요\?</string>
+    <string name="subscribe_listitemFaint">재도전하기</string>
+    <string name="leave_party_confirmation_quest">이 파티를 정말 떠나시겠어요\?</string>
+    <string name="rejoin_party_quest">이 파티는 초대를 받지 않으면 다시 합류할 수 없습니다.
+\n
+\n파티에서 나가면 현재 진행 중인 퀘스트에서도 이탈하게 됩니다.</string>
+    <string name="rejoin_party_quest_leader">이 파티는 초대를 받지 않으면 다시 합류할 수 없습니다.
+\n
+\n파티에서 나가면 현재 퀘스트가 중단됩니다.</string>
+    <string name="reset_account_description_no_pw">모든 레벨, 골드, 경험치를 잃게 됩니다. 모든 작업과 그 기록이 삭제됩니다(도전 과제의 작업은 유지됩니다). 구독자 아이템과 무료 기념 아이템을 제외한 모든 장비를 잃게 되지만, 다시 구매할 수 있습니다. 직업 전용 장비를 다시 구매하려면 해당 직업이어야 합니다. 현재 직업, 업적, 그리고 펫과 탈것은 유지됩니다. 초기화를 확인하려면 아래에 RESET을 입력하세요.</string>
+    <string name="report_challenge_explanation">https://habitica.com/static/community-guidelines 에 명시된 커뮤니티 가이드라인 및/또는 https://habitica.com/static/terms 에 명시된 서비스 약관을 위반한 도전 과제만 신고해야 합니다. 허위 신고를 하는 것은 Habitica 커뮤니티 가이드라인 위반에 해당합니다.</string>
+    <plurals name="x_days">
+        <item quantity="other">%d 일</item>
+    </plurals>
+    <string name="challenges">도전과제</string>
+    <plurals name="x_hours">
+        <item quantity="other">%d 시간</item>
+    </plurals>
+    <plurals name="x_minutes">
+        <item quantity="other">%d 분</item>
+    </plurals>
+    <string name="opt_out_description">이 작업을 하면 클래스가 지정되지 않은 상태가 됩니다. 언제든 설정에서 클래스 시스템을 활성화하여 다시 클래스를 선택할 수 있습니다.</string>
+    <string name="change_class_confirmation_message">이 작업을 하면 상점에서 해금된 장비가 변경되고, 사용할 수 있는 스킬이 바뀝니다</string>
+    <string name="your_tags">내 태그</string>
+    <string name="choosing_class_progress">직업을 선택하세요</string>
+    <string name="change_class_message">현재 직업이 해제되고 모든 능력치 포인트가 반환되고 새로운 직업을 선택할 수 있습니다</string>
+    <string name="group_tags">그룹 태그</string>
+    <string name="challenge_tags">도전 과제 태그</string>
+    <string name="cancel_subscription_apple_description">더 이상 구독을 원하지 않으신가요\? 결제 방식에 따라 iOS 기기의 Apple ID 구독 설정에서 구독을 해지해야 합니다.</string>
+    <string name="register_tos_confirm">당사의 <a href="https://habitica.com/static/terms">서비스 약관</a>에 동의하고, <a href="https://habitica.com/static/privacy">개인정보 처리방침</a>을 확인하였습니다.</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt;님이 그룹에 초대했습니다.&lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="need_help_description">저희에게 문의하시면 팀원이 최선을 다해 도와드리겠습니다!</string>
+    <string name="level_abbreviated">Lv. %d</string>
 </resources>
