@@ -89,16 +89,6 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
                 updateTextIndicator(binding.chatEditText.text.toString())
             }
         )
-        binding.chatEditText.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                sendButtonPressed()
-                if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    val inputService = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputService.hideSoftInputFromWindow(v.windowToken, 0)
-                }
-            }
-            true
-        }
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
 
