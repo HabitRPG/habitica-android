@@ -124,19 +124,6 @@ class PrivacyPreferencesActivity: BaseActivity() {
                         HabiticaCircularProgressView(modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(), indicatorSize = 80.dp)
                     } else {
                         Column {
-                            Button({
-                                analyticsConsent = true
-                                lifecycleScope.launchCatching {
-                                    delay(500)
-                                    isSaving = true
-                                    userRepository.updateUser("preferences.analyticsConsent", true)
-                                    finish()
-                                }
-                            }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.brand_400)),
-                                shape = HabiticaTheme.shapes.small,
-                                modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth().heightIn(60.dp)) {
-                                Text(stringResource(R.string.accept_all), fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                            }
                             val colors = if (LocalContext.current.isUsingNightModeResources()) {
                                 ButtonDefaults.buttonColors().copy(containerColor = Color.White, contentColor = HabiticaTheme.colors.tintedUiSub)
                             } else {
@@ -152,6 +139,19 @@ class PrivacyPreferencesActivity: BaseActivity() {
                                 shape = HabiticaTheme.shapes.small,
                                 modifier = Modifier.padding(bottom = 27.dp).fillMaxWidth().heightIn(60.dp)) {
                                 Text(stringResource(R.string.save_preferences), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                            }
+                            Button({
+                                analyticsConsent = true
+                                lifecycleScope.launchCatching {
+                                    delay(500)
+                                    isSaving = true
+                                    userRepository.updateUser("preferences.analyticsConsent", true)
+                                    finish()
+                                }
+                            }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.brand_400)),
+                                shape = HabiticaTheme.shapes.small,
+                                modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth().heightIn(60.dp)) {
+                                Text(stringResource(R.string.accept_all), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
