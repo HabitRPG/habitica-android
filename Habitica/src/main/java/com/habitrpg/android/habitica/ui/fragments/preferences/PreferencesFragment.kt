@@ -237,6 +237,8 @@ class PreferencesFragment :
     private fun reloadContent(withConfirmation: Boolean) {
         lifecycleScope.launchCatching {
             contentRepository.retrieveContent(true)
+            contentRepository.retrieveWorldState(true)
+            userRepository.retrieveUser(true, true)
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloaded_content),
