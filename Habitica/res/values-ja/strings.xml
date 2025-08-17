@@ -321,7 +321,7 @@
     <string name="active">有効</string>
     <string name="cancel_subscription">有料プランの解約</string>
     <string name="cancel_subscription_google_description">もう有料プランを続けたくないですか？Google Play ストアのマイアプリの項目で有料プランを解約できます。有料プランの有効期間のストックは、有料プランが終了した後に使用されます。</string>
-    <string name="cancel_subscription_notgoogle_description">もう有料プランを続けたくないですか？モバイル決済の制約により、解約するにはウェブサイトへ行く必要があります。解約するには、下のボタンをタップして、アカウントにログインして、右上のユーザーアイコンをタップして、有料プランの項目に行ってください。有料プランの有効期間のストックは、有料プランが終了した後に使用されます。私たちは寂しくなります！</string>
+    <string name="cancel_subscription_notgoogle_description">これ以上有料プランを続けたくありませんか？お支払方法のため、Habiticaのウェブサイトから有料プランをキャンセルする必要があります。下のボタンを押してアカウントにログインし、右上のユーザーアイコンをタップしてから「有料プラン」のセクションに移動してください。有料プランの残りのクレジットは、キャンセル後に終了日に加算されます。今までサポートしていただきありがとうございました。</string>
     <string name="visit_habitica_website">Habiticaのウェブサイトを訪れる</string>
     <string name="current_bonuses">現在のボーナス</string>
     <string name="months_subscribed">購読した月数</string>
@@ -1609,4 +1609,6 @@
     <string name="copy_token">コピートークン</string>
     <string name="rescrubscribe_to_pick_up">有料プランに再登録して中断したところから続けましょう！</string>
     <string name="register_tos_confirm">Habiticaの <a href="https://habitica.com/static/terms">利用規則</a>と<a href="https://habitica.com/static/privacy">プライバシーポリシー</a>に同意します。</string>
+    <string name="change_username_description">ユーザー名は1〜20文字以内である必要があり、アルファベット（a~z）、数字（0~9）、ハイフン（-）とアンダースコア（_）のみを含むことができます。</string>
+    <string name="password_change_info">パスワードは8文字以上でなければなりません。パスワードを変更すると他のデバイスや使用中のサードパーティーツールからログアウトされます。</string>
 </resources>
