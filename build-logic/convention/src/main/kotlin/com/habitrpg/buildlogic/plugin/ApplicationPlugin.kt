@@ -57,6 +57,7 @@ class ApplicationPlugin : Plugin<Project> {
                         register(flavor.name) {
                             dimension = habiticaFlavor.dimension
                             versionCode = currentVersionCode + (flavor.versionCodeIncrement ?: 0)
+                            if (flavor.applicationId != null) applicationId = flavor.applicationId
                             if (flavor.testingLevel != null) buildConfigField("String", "TESTING_LEVEL", flavor.testingLevel)
                             if (flavor.appName != null) resValue("string", "app_name", flavor.appName)
                         }

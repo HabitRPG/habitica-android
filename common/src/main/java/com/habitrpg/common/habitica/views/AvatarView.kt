@@ -123,10 +123,12 @@ class AvatarView : FrameLayout {
         init(attrs, defStyle)
     }
 
-    constructor(context: Context, showBackground: Boolean, showMount: Boolean, showPet: Boolean, canAnimate: Boolean = true) : super(context) {
+    constructor(context: Context, showBackground: Boolean, showMount: Boolean = true, showPet: Boolean = true, showSleeping: Boolean = true, canAnimate: Boolean = true) : super(context) {
+        init(null, 0)
         this.showBackground = showBackground
         this.showMount = showMount
         this.showPet = showPet
+        this.showSleeping = showSleeping
         this.canAnimate = canAnimate
     }
 
@@ -187,8 +189,7 @@ class AvatarView : FrameLayout {
             imageView.load(
                 DataBindingUtils.BASE_IMAGE_URL +
                     DataBindingUtils.getFullFilename(
-                        layerName,
-                        disableAnimations = !canAnimate
+                        layerName
                     )
             ) {
                 allowHardware(false)

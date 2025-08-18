@@ -203,14 +203,14 @@
     <string name="dialog_feeding">Нагодувати %s:</string>
     <string name="invite_party">Запросити команду</string>
     <string name="hatch_egg">Виростити з яйця</string>
-    <string name="hatch_with_potion">Виростити із зіллям</string>
+    <string name="hatch_with_potion">Виростити, використавши еліксир</string>
     <string name="sell">Продати (%d золота)</string>
     <string name="armoireExp">Ви боретеся зі скринею і отримуєте досвід. Отримайте!</string>
     <string name="mounts">Скакуни</string>
     <string name="pets">Улюбленці</string>
     <string name="quests">Квести</string>
     <string name="food">Корм</string>
-    <string name="hatching_potions">Зілля дозрівання</string>
+    <string name="hatching_potions">Інкубаційні еліксири</string>
     <string name="eggs">Яйця</string>
     <string name="sidebar_items">Предмети</string>
     <string name="today">Сьогодні</string>
@@ -317,8 +317,7 @@
     <string name="community_guidelines">Правила спiльноти</string>
     <string name="check_into_inn">Поселитись в готель</string>
     <string name="class_gear_disclaimer">Ви можете придбати спорядження лише для вашого поточного класу</string>
-    <string name="class_equipment_shop_dialog">Цей предмет доступний лише для певного класу.
-\nВи можете змінити свій клас у налаштуваннях.</string>
+    <string name="class_equipment_shop_dialog">Цей предмет доступний лише для певного класу. Ви можете змінити ваш клас у налаштуваннях.</string>
     <string name="classless">Безкласовий</string>
     <string name="class_equipment">Спорядження</string>
     <string name="allocating_points">Розподіл очок</string>
@@ -522,12 +521,12 @@
     <string name="g1g1_info_3">Обмеження</string>
     <string name="subscribe">Підписатися</string>
     <string name="subscription_duration_norenew">Для %s</string>
-    <string name="subscription_duration">Повторювати кожні %s</string>
+    <string name="subscription_duration">Повторюється кожні %s</string>
     <string name="subscriptions">Підписка</string>
-    <string name="subscribe_listitem5">Вдвічі більша кількість випадіть предметів</string>
+    <string name="subscribe_listitem5">Особливі улюбленці і вдвічі більше прикольчиків</string>
     <string name="subscribe_listitem4">Особливі улюбленці тільки для підписників</string>
     <string name="subscribe_listitem3">Щомісячні містичні предмети</string>
-    <string name="subscribe_listitem2">Містичні пісочні годинники</string>
+    <string name="subscribe_listitem2">Містичні пісочні годинники щомісяця!</string>
     <string name="subscribe_listitem1">Безкоштовні Щомісячні Самоцвіти</string>
     <string name="subscribe_prompt">Станьте підписником, щоб отримати ці ексклюзивні переваги!</string>
     <string name="subscribe_title">Підписка підтримує нашу маленьку команду та допомагає забезпечувати роботу Habitica! Дякуємо!</string>
@@ -608,7 +607,7 @@
     <string name="twelve_months">12 місяців</string>
     <string name="six_months">6 місяців</string>
     <string name="three_months">3 місяці</string>
-    <string name="month">місяць</string>
+    <string name="month">Місяць</string>
     <string name="x_months">%d місяців</string>
     <string name="one_month">1 місяць</string>
     <string name="inactive">Неактивний</string>
@@ -620,7 +619,7 @@
     <string name="forgot_password_confirmation">Якщо у вашому профілі вказана вірна електронна пошта, то на неї було надіслано вказівки щодо встановлення нового пароля.</string>
     <string name="fix_character_description">Якщо ви зіткнулися з багою або зробили помилку, яка несправедливо змінила вашого персонажа, ви можете вручну виправити ці значення тут.</string>
     <string name="seasonal_closed_description">Великі Свята трапляються ближче до сонцестояння та рівнодення, тож навідуйтесь тоді, щоб знайти цікавий асортимент особливих сезонних предметів!</string>
-    <string name="timetravelers_closed_description">Заробляйте по одному Містичному Пісочному годиннику за кожні три місяці підписки поспіль, а потім використовуйте їх, щоб розблокувати обмежені предмети, домашніх улюбленців та скакунів з минулого… та майбутнього!</string>
+    <string name="timetravelers_closed_description">Заробляйте по одному Містичному Пісочному щомісяця, коли підписка активна, а потім використовуйте їх, щоб розблокувати предмети з обмежених видань, улюбленців та скакунів з минулого… та майбутнього!</string>
     <string name="pending">На розгляді</string>
     <string name="leave_party_confirmation">Хочете залишити чи видалити випробовування після виходу з команди\?</string>
     <string name="start_day">Розпочати мій день</string>
@@ -681,8 +680,8 @@
     <string name="subscribe_listitem4_description">Отримайте Королівського пурпурного Кроленя при оформленні підписки.</string>
     <string name="subscribe_listitem3_description_new">Підпишись зараз, щоб отримати %s і отримувати нові предмети кожного місяця!</string>
     <string name="subscribe_listitem3_description">Підпишись прямо зараз, щоб отримати ексклюзивний набір зараз і нові предмети кожного місяця!</string>
-    <string name="subscribe_listitem2_description">Заробляйте Містичні Пісочні годинники для купівлі предметів з Магазину мандрівників у часі!</string>
-    <string name="subscribe_listitem1_description">У вас буде можливість купувати самоцвіти на ринку за 20 монет золота кожен!</string>
+    <string name="subscribe_listitem2_description">Скажіть ні пропущеним предметам – купуйте їх за Містичні Пісочні годинники (ви отримуватимете 1 щомісяця) у Магазині мандрівників у часі!</string>
+    <string name="subscribe_listitem1_description">Отримайте унікальну можливість купувати самоцвіти на ринку – лише по 20 золотих за камінь!</string>
     <string name="gem_purchase_subtitle">Самоцвіти дозволяють Вам купувати цікаві додаткові речі для свого акаунту</string>
     <string name="gem_purchase_title">Підписка підтримує розробників та допомагає забезпечувати роботу Habitica</string>
     <string name="gem_purchase_toolbartitle">Придбати</string>
@@ -752,7 +751,7 @@
     <string name="need_help_header_description">Опублікуйте повідомлення в %s, щоб на ваші запитання відповідав колега-гравець.</string>
     <string name="active_world_boss">Активний світовий бос</string>
     <string name="hide_boss_art">Приховати зображення боса</string>
-    <string name="questShop">Магазин квестів</string>
+    <string name="questShop">Квести</string>
     <string name="strike_active_description">Наш улюблений %1$s був спустошений, коли %2$s розбив %3$s. Швидко завершуйте свої завдання, щоб перемогти монстра і допомогти з відновленням!</string>
     <string name="strike_active_title">%s був атакований!</string>
     <string name="strike_description_title">Що таке Удар Люті\?</string>
@@ -765,9 +764,9 @@
     <string name="staff_moderators">Співробітники та модератори</string>
     <string name="player_tiers">Ранги гравців</string>
     <string name="report_bug">Повідомити про помилку</string>
-    <string name="view_faq">Переглянути FAQ</string>
+    <string name="view_faq">Переглянути ЧаПи</string>
     <string name="helpful_links">Корисні посилання</string>
-    <string name="guidelines_description">Habitica намагається створити приємне середовище для користувачів різного віку та походження, особливо в громадських місцях, таких як Таверна. Якщо у вас є які-небудь питання, будь ласка, ознайомтеся з нашими рекомендаціями.</string>
+    <string name="guidelines_description">Habitica намагається створити приємне середовище для користувачів різного віку та походження, особливо в громадських місцях, таких як Таверна. Якщо у вас є які-небудь питання, будь ласка, ознайомся з нашими рекомендаціями.</string>
     <string name="distribute_task_help">Призначає очки відповідно до категорії (Сила, Інтелект, Витривалість та Сприйняття), пов\'язаної із завданнями, які ви виконаєте.</string>
     <string name="distribute_class_help">Призначає більше очок атрибутам, важливим для вашого класу.</string>
     <string name="distribute_evenly_help">Призначає однакову кількість очок кожному атрибуту.</string>
@@ -775,7 +774,7 @@
     <string name="constitution_description">Зменшує шкоду, завдану вашими незавершеними завданнями. Не зменшує шкоду, отриману від босів.</string>
     <string name="intelligence_description">Збільшує досвід, зароблений за виконання завдань. Також збільшується вашу шкалу мани та швидкість її відновлення.</string>
     <string name="strength_description">Збільшує бонус критичних ударів і робить їх більш імовірними при виконанні завдання. Також збільшує шкоду, завдану босам.</string>
-    <string name="join_party_description">Дайте члену команди ім\'я користувача, знайдене нижче, і він(вона) зможе надіслати Вам запрошення</string>
+    <string name="join_party_description">Дайте члену команди ім\'я користувача, вказане нижче, щоб вони могли надіслати Вам запрошення</string>
     <string name="no_party_description">Беріться за квест з друзями або власноруч. Боріться з монстрами, створюйте випробування і допомагайте собі залишатися підзвітними завдяки команді товаришів.</string>
     <string name="no_party_title">Грайте Habitica гуртом</string>
     <string name="same_day_reminder_title">Ви вже додали свої завдання\?</string>
@@ -818,7 +817,7 @@
     <string name="username_copied">Нік скопійовано до буферу обміну</string>
     <string name="enter_recipient_username">Введіть @ ім\'я одержувача</string>
     <string name="empty_description_dailies">Щоденні завдання - це завдання, які повторюються регулярно. Вибери розклад, котрий пасує саме тобі!</string>
-    <string name="subscribe_listitem5_description">Відкрийте для себе ще більше предметів у Habitica з подвоєним щоденним шансом випадіння предметів.</string>
+    <string name="subscribe_listitem5_description">Отримайте королівського фіолетового Кроленя, а також подвойте щоденну кількість яєць, інкубаційних еліксирів та їжі, щоб колекціонувати ще більше улюбленців!</string>
     <string name="gem_purchase_listitem3">Квести, нагородою в яких є яйця з улюбленцями</string>
     <string name="widget_dailies">Щоденні завдання Habitica</string>
     <string name="widget_habit_button">Звички Habitica</string>
@@ -851,7 +850,7 @@
     <string name="unequip">Зняти</string>
     <string name="username_confirmed">Ім\'я користувача підтверджено</string>
     <string name="username_not_confirmed">Ім\'я користувача не підтверджено</string>
-    <string name="two_handed">Двуручний</string>
+    <string name="two_handed">Дворучний</string>
     <string name="hatch_pet">Виростити улюбленця</string>
     <string name="complete_task_description">Відміть котресь зі своїх завдань, як виконане, щоб заробити нагороду</string>
     <string name="create_task_description">Додай завдання, котре ти хочеш виконати цього тижня</string>
@@ -864,7 +863,7 @@
     <string name="defeat">Поразка</string>
     <string name="scheduling">Планування</string>
     <string name="every">Кожного</string>
-    <string name="repeats">Повторювати</string>
+    <string name="repeats">Повторюється</string>
     <string name="reset_streak">Почати спочатку</string>
     <string name="collapse_notes">Згорнути</string>
     <string name="hourglasses_description">Містичні пісочні годинники - це надзвичайно рідкісна форма валюти, яку ви можете отримати лише підписавшись на Habitica протягом трьох місяців поспіль або більше. Їх використовують у магазині «Мандрівника у часі», щоб купувати існуючі в минулому набори спорядження, домашніх тварин, кріплення, анімовані фони або навіть спеціальні квести.
@@ -916,7 +915,7 @@
     <string name="no_notifications_text">Феї повідомлень вам тихо аплодують! Відмінно!</string>
     <string name="gift_confirmation_text_sub">Ви вислали @%1$s %2$s-місячну підписку на Habitica.</string>
     <string name="gift_gems_subtitle">Виберіть пакет самоцвітів, який ви хочете подарувати!</string>
-    <string name="usernamePromptDisclaimer">Імена користувачів повинні відповідати нашим <a href="https://habitica.com/static/terms"> Умовам обслуговування </a> і <a href="https://habitica.com/static/community-guidelines"> Правилам спільноти </a>. Якщо ви раніше не вибирали ім\'я користувача, це значит, що воно було згенеровано автоматично.</string>
+    <string name="usernamePromptDisclaimer">Імена користувачів повинні відповідати нашим <a href="https://habitica.com/static/terms"> Умовам обслуговування </a> і <a href="https://habitica.com/static/community-guidelines"> Правилам спільноти </a>. Якщо ви раніше не вибирали ім\'я користувача, це значить, що воно було згенеровано автоматично.</string>
     <string name="usernamePromptWiki">Якщо ви хочете дізнатися більше про цю зміну, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
     <string name="usernamePromptBody">Імена для входу тепер є унікальними іменами користувачів, які відображатимуться поруч із вашим ніком і будуть використовуватися для запрошень, чату @ згадок та обміну повідомленнями.</string>
     <string name="total_checkins">Усього відвідувань</string>
@@ -1000,7 +999,7 @@
     <string name="gift_confirmation_text_sub_g1g1">Ви відправили %1$s %2$s-місячну підписку Habitica. Ця ж підписка була застосована до вашого облікового запису, завдяки участі в акції «Подаруйте підписку, отримайте підписку»!</string>
     <string name="gift_subscription_subtitle">Виберіть підписку, яку хочете подарувати внизу! Ця покупка не буде продовжена автоматично.</string>
     <string name="gift_one_get_one_detailed_description">Допоки ця акція активна, ви отримуєте відповідну підписку автоматично після відправки подарунка.</string>
-    <string name="confirm_username_description">Підтвердження свого Ім\'я користувача дає змогу приймати запрошення, @згадки і повідомлення. Ви можете змінити своє Ім\'я користувача в будь-який час в налаштуваннях.</string>
+    <string name="confirm_username_description">Підтвердження вашого Імені користувача дає змогу приймати запрошення, @згадки і повідомлення. Ви можете змінити ваше Ім\'я користувача в будь-який час у Налаштуваннях.</string>
     <string name="spooky_promo_info_prompt">Розпродаж самоцвітів повернувся до самого кінця цьогорічної гала-осені! Це останній шанс отримати більше самоцвітів, ніж будь-коли, тож запасіться, поки це триває!</string>
     <string name="spooky_promo_info_instructions">У період з %1$s по %2$s просто придбайте будь-який комплект самоцвітів, як зазвичай, і на Ваш рахунок буде зараховано їх додаткове число. Більше дорогоцінних каменів, які можна витратити, поділитися або зберегти для майбутніх оновлень!</string>
     <string name="fall_promo_info_prompt">Fall Gala у розпалі, тому ми подумали, що це ідеальний час, щоб представити нашу першу в історії розпродаж самоцвітів! Тепер ви отримаєте більше самоцвітів з кожною покупкою, ніж будь-коли раніше.</string>
@@ -1203,8 +1202,7 @@
     <string name="armoire_rate_equipment_description">Щомісяця додається нове спорядження. Якщо ви володієте всім спорядженням, то ви отримаєте їжу або досвід, з шансом 50/50.</string>
     <string name="subscription_credit_canceling">Ваші <b>+%d</b> місяців підписки будуть активовані після скасування</string>
     <string name="subscribers_mythic_hourglasses"><i>Підписники отримують Містичні пісочні годинники протягом перших трьох днів місяця.</i></string>
-    <string name="insufficient_level_equipment_dialog">Цей предмет доступний тільки для конкретного класу.
-\nТи зможеш обрати клас після досягнення 10 рівня.</string>
+    <string name="insufficient_level_equipment_dialog">Цей предмет доступний тільки для певного класу. Ви зможете обрати ваш клас після досягнення 10 рівня.</string>
     <string name="send_invite">Відправити запрошення</string>
     <string name="avatar_bangs_customization">Налаштування чубчика аватара</string>
     <string name="avatar_hair_style_customization">Налаштування стилю зачіски аватара</string>
@@ -1318,4 +1316,61 @@
     <string name="thanks_for_support">Вдячні за вашу підтримку!</string>
     <string name="birthday_title_description">Святкуйте 10-річчя Habitica з подарунками та ексклюзивними речами нижче!</string>
     <string name="sell_confirmation_title">Ви впевнені, що хочете це (%s) продати\?</string>
+    <string name="api_token_title">API токен</string>
+    <string name="api_token_is_password">API токен це як ваш пароль</string>
+    <string name="api_token_is_password_info">Не розповідайте його нікому. Вас можуть часом питати про ваше ID користувача, але ніколи не вказуйте ваш API токен, там де інші можуть його бачити, зокрема на Github.</string>
+    <string name="api_token_reset_title">Якщо вам потрібен новий API токен</string>
+    <string name="copy_token">Скопіювати токен</string>
+    <string name="api_token_reset_info">Ви можете змінити ваш пароль, щоб створити новий. Коли ви його оновите, вам треба буде повторно залогуватись на всіх інших девайсах, де ви використовуєте Habitica, а також ввести новий API токен до всіх сторонніх інструментів, якщо ви ними користуєтесь.</string>
+    <string name="equipment">Спорядження</string>
+    <string name="error">Помилка</string>
+    <string name="nye">Новорічний вечір</string>
+    <string name="turkey_day">День Індички</string>
+    <string name="valentines">День Святого Валентина</string>
+    <string name="your_tags">Ваші теги</string>
+    <string name="best_deal">Найкраща пропозиція</string>
+    <string name="search_equipment">Шукайте спорядження</string>
+    <string name="avatar_hair_colors">Колір волосся</string>
+    <string name="set">Набір</string>
+    <string name="thanks_for_subscribing">Дякуємо за оформлення підписки</string>
+    <string name="challenge_tags">Теги з випробувань</string>
+    <string name="leave_party_confirmation_quest">Ви певні, що хочете покинути цю команду\?</string>
+    <string name="rejoin_party_quest">Без запрошення ви не зможете доєднатись знову.
+\n
+\nЯкщо ви залишите команду, то будете змушені покинути і квест, який ви зараз проходите.</string>
+    <string name="healers">Цілителі</string>
+    <string name="warriors">Воїни</string>
+    <string name="rogues">Розбійники</string>
+    <string name="plus_two_gems">+2 самоцвіти</string>
+    <string name="cleared_cache">Очистити Cache</string>
+    <string name="two_gems_per_month_gift">Вони отримають +2 самоцвіти за кожен місяць їх підписки</string>
+    <string name="popular">Популярний</string>
+    <string name="two_gems_per_month">Отримуйте +2 самоцвіти за кожен місяць підписки</string>
+    <string name="auth_invalid_credentials">Отримано недійсні облікові дані.</string>
+    <string name="auth_unknown_error">Виникла невідома під час автентифікації.</string>
+    <string name="auth_get_credentials_error">Виникла помилка з отриманням облікових даних для автентифікації.</string>
+    <string name="group_tags">Теги вашої групи</string>
+    <string name="unlocks_x_gems_per_month">Вони отримають %d Самоцвітів на ринку щомісяця</string>
+    <string name="twelve_mystic_hourglasses">12 таємничих пісочних годинників</string>
+    <string name="subscribe_listitemFaint">Отримай другий шанс</string>
+    <string name="mages">Маги</string>
+    <plurals name="repeat_daily">
+        <item quantity="one">щодня</item>
+        <item quantity="few">кожні %d дні</item>
+        <item quantity="many">кожні %d днів</item>
+        <item quantity="other">кожні %d днів</item>
+    </plurals>
+    <plurals name="repeat_weekly">
+        <item quantity="one">щотижня</item>
+        <item quantity="few">кожні %d тижні</item>
+        <item quantity="many">кожні %d тижнів</item>
+        <item quantity="other">кожні %d тижнів</item>
+    </plurals>
+    <string name="open_habitica_website">Відкрити сайт Habitica</string>
+    <string name="unlock_x_gems_per_month">Отримайте %d Самоцвітів на ринку щомісяця</string>
+    <string name="save_photo_url">Збережіть URL фотки</string>
+    <string name="change_email_description">Ця електронна адреса використовуватиметься для входу у Habitica, а також на неї приходитимуть сповіщення.</string>
+    <string name="reset_account_description_new">Ви втратите всі ваші рівні, золото та досвід. Усі завдання та їхні дані буде видалено (завдання Випробувань залишаться). Ви втратите все спорядження, окрім предметів для підписників та безкоштовних пам’ятних предметів, але зможете викупити його назад. Ви повинні мати відповідний клас, щоб повторно купити обладунки для певного класу. Ви збережете поточний клас, досягнення, а також улюбленців та скакунів. Щоб підтвердити скидання, введіть свій пароль нижче.</string>
+    <string name="insufficient_level_equipment_dialog_new">Цей предмет доступний тільки для %s. Ви зможете обрати ваш клас після досягнення 10 рівня.</string>
+    <string name="class_equipment_shop_dialog_new">Цей предмет доступний лише для %s. Відкрийте Налаштування щоб змінити ваш клас.</string>
 </resources>

@@ -61,6 +61,11 @@ android {
             buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
         }
 
+        register("setup") {
+            dimension = "buildType"
+            buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
+        }
+
         register("partners") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"partners\"")
@@ -120,5 +125,4 @@ dependencies {
     implementation(libs.text.google.fonts)
     implementation(libs.ui.tooling)
     implementation(libs.material3)
-    implementation(libs.accompanist.theme)
 }

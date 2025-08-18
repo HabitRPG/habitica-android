@@ -319,51 +319,6 @@ data class FormScreenConfig(
 )
 
 @Composable
-fun ChangePasswordScreen(
-    onBack: () -> Unit,
-    onSave: (old: String, new: String) -> Unit,
-    onForgot: () -> Unit
-) {
-    val fields = listOf(
-        FieldConfig(
-            key = "oldPw",
-            labelRes = R.string.old_password,
-            kind = FieldKind.PASSWORD,
-            validator = { if (it.length < 8) R.string.password_too_short else null }
-        ),
-        FieldConfig(
-            key = "newPw",
-            labelRes = R.string.new_password,
-            kind = FieldKind.PASSWORD,
-            validator = { if (it.length < 8) R.string.password_too_short else null }
-        ),
-        FieldConfig(
-            key = "confirmPw",
-            labelRes = R.string.confirm_new_password,
-            kind = FieldKind.PASSWORD,
-            validator = { if (it.isBlank()) R.string.password_not_matching else null }
-        )
-    )
-
-    ConfigurableFormScreen(
-        FormScreenConfig(
-            titleRes = R.string.change_password,
-            descriptionRes = R.string.password_change_info,
-            fields = fields,
-            submitButtonRes = R.string.change_password,
-            canSubmit = { vals ->
-                fields.all { it.validator(vals[it.key].orEmpty()) == null }
-                        && vals["newPw"] == vals["confirmPw"]
-            },
-            onSubmit = { v -> onSave(v["oldPw"]!!, v["newPw"]!!) },
-            textButtonRes = R.string.forgot_pw_btn,
-            onTextButton = onForgot,
-            onBack = onBack
-        )
-    )
-}
-
-@Composable
 fun ChangeUsernameScreen(
     initial: String,
     onBack: () -> Unit,
@@ -615,9 +570,7 @@ fun PreviewChangePasswordScreenDark() {
         ChangePasswordScreen(
             onBack = {},
             onSave = { old, new -> },
-            onForgot = {}
+            onForgotPassword = {}
         )
     }
 }
-
-

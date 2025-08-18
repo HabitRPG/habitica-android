@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="you_found">Du hast … gefunden</string>
+    <string name="you_found">Du fandest…</string>
     <string name="edit_on_phone">Auf dem Handy bearbeiten</string>
     <string name="sign_in">Anmelden</string>
     <string name="other_options">Andere Optionen</string>

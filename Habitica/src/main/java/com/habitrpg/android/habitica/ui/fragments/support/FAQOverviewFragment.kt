@@ -230,9 +230,10 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         }
                         )
                 ) +
-                newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
+                newLine + Uri.encode("Damage paused: " + (user.preferences?.sleep ?: false)) +
                 newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
                 newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
+                newLine + Uri.encode("Analytics Enabled: " + (user.preferences?.analyticsConsent ?: "No Response")) +
                 newLine +
                 Uri.encode(
                     "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)

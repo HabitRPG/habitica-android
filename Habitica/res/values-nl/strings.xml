@@ -995,4 +995,10 @@
     <string name="usernames_party">%s\'s Groep</string>
     <string name="your_tags">Jouw tags</string>
     <string name="challenge_tags">Uitdagingen tags</string>
+    <string name="exact_alarm_system_settings_reminders">Herinneringen kunnen vertraagd zijn omdat de machtigingen niet zijn ingeschakeld. Tik om de machtigingen te bekijken en bij te werken.</string>
+    <string name="exact_alarm_system_settings_title">`Alarm &amp; Herinneringen` uitgeschakeld`</string>
+    <string name="x_and_y">%1$s en %2$s</string>
+    <string name="exact_alarm_system_settings_description">Sta`Alarmen &amp; Herinneringen` toe in de app Instellingen om ervoor te zorgen dat de herinneringen op precies de juiste tijd verschijnen</string>
+    <string name="quest_party_required_title">Je moet in een Groep zitten voordat je een Queeste kunt beginnen</string>
+    <string name="quest_party_required_description">Als je eenmaal in een Groep zit, kan je zelf Queestes doen of vrienden uitnodigen om ook met hen Queestes te doen!</string>
 </resources>

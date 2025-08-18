@@ -72,6 +72,6 @@
     <string name="new_task">新的任務</string>
     <string name="avatar">角色</string>
     <string name="emailAddress">電子郵件地址</string>
-    <string name="confirmpassword">確認密碼</string>
+    <string name="confirmpassword">重複密碼</string>
     <string name="login_btn_google">使用 Google 登入</string>
 </resources>

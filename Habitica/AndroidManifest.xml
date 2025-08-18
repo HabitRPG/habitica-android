@@ -42,7 +42,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:label="@string/app_name">
+            <intent-filter android:label="@string/app_name" android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -59,7 +59,7 @@
             tools:ignore="UnusedAttribute"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:exported="true">
-            <intent-filter android:label="@string/app_name">
+            <intent-filter android:label="@string/app_name" android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -99,7 +99,7 @@
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
-            android:name=".ui.activities.LoginActivity"
+            android:name=".ui.activities.OnboardingActivity"
             android:label="@string/LoginActivityName"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:windowSoftInputMode="adjustResize">
@@ -111,14 +111,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.habitrpg.android.habitica.ui.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name=".ui.activities.IntroActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-        <activity
-            android:name=".ui.activities.SetupActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity
             android:name=".ui.activities.SkillTasksActivity">
@@ -140,6 +132,12 @@
             android:name=".ui.activities.GuidelinesActivity"
             android:label="@string/community_guidelines">
         </activity>
+
+        <activity
+                android:name=".ui.activities.PrivacyPreferencesActivity"
+                android:label="@string/your_privacy_preferences">
+        </activity>
+
 
         <activity
             android:name=".ui.activities.TaskFormActivity"
@@ -194,7 +192,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
-            <intent-filter android:label="@string/app_name">
+            <intent-filter android:label="@string/app_name" android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -213,10 +211,8 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity android:name=".ui.activities.MaintenanceActivity"
-                  android:screenOrientation="unspecified"
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.activities.GemPurchaseActivity"
-                  android:screenOrientation="unspecified" />
+        <activity android:name=".ui.activities.GemPurchaseActivity" />
         <receiver android:name=".receivers.NotificationPublisher" />
 
         <receiver android:name=".receivers.TaskReceiver" android:enabled="true" android:exported="true">

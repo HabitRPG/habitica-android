@@ -36,7 +36,7 @@
     <string name="username">Ім\'я користувача</string>
     <string name="password">Пароль</string>
     <string name="emailAddress">Електронна пошта</string>
-    <string name="confirmpassword">Підтвердіть пароль</string>
+    <string name="confirmpassword">Введіть пароль повторно</string>
     <string name="login_btn_google">Приєднатися за допомогою Google</string>
     <string name="logout">Вийти</string>
     <string name="email_username">Електрона пошта/Ім\'я користувача</string>

@@ -102,7 +102,7 @@ class PreferencesFragment :
         classSelectionPreference = findPreference("choose_class")
 
         val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
-        weekdayPreference?.summary = weekdayPreference?.entry
+        weekdayPreference?.summary = weekdayPreference.entry
 
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
@@ -110,17 +110,17 @@ class PreferencesFragment :
             preferenceManager.sharedPreferences?.getString("server_url", "")
 
         val themePreference = findPreference("theme_name") as? ListPreference
-        themePreference?.summary = themePreference?.entry ?: "Default"
+        themePreference?.summary = themePreference.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
-        themeModePreference?.summary = themeModePreference?.entry ?: "Follow System"
+        themeModePreference?.summary = themeModePreference.entry ?: "Follow System"
 
         val launchScreenPreference = findPreference("launch_screen") as? ListPreference
-        launchScreenPreference?.summary = launchScreenPreference?.entry ?: "Habits"
+        launchScreenPreference?.summary = launchScreenPreference.entry ?: "Habits"
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
         if (configManager.enableTaskDisplayMode()) {
             taskDisplayPreference?.isVisible = true
-            taskDisplayPreference?.summary = taskDisplayPreference?.entry
+            taskDisplayPreference?.summary = taskDisplayPreference.entry
         } else {
             taskDisplayPreference?.isVisible = false
         }
@@ -220,7 +220,7 @@ class PreferencesFragment :
                 context?.let { context ->
                     HabiticaBaseApplication.deleteDatabase(context)
                     lifecycleScope.launchCatching {
-                        userRepository.retrieveUser(true, true)
+                        userRepository.retrieveUser(true, forced = true)
                         userRepository.retrieveTeamPlans()
                         (activity as? SnackbarActivity)?.showSnackbar(
                             content = context.getString(R.string.cleared_cache),
@@ -238,6 +238,8 @@ class PreferencesFragment :
     private fun reloadContent(withConfirmation: Boolean) {
         lifecycleScope.launchCatching {
             contentRepository.retrieveContent(true)
+            contentRepository.retrieveWorldState(true)
+            userRepository.retrieveUser(true, true)
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloaded_content),
@@ -273,7 +275,7 @@ class PreferencesFragment :
                 val alert = context?.let { HabiticaAlertDialog(it) }
                 alert?.setTitle(R.string.push_notification_system_settings_title)
                 alert?.setMessage(R.string.push_notification_system_settings_description)
-                alert?.addButton(R.string.open_settings, true, false) { _, _ ->
+                alert?.addButton(R.string.open_settings, true, isDestructive = false) { _, _ ->
                     val notifSettingIntent: Intent =
                         Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -355,7 +357,7 @@ class PreferencesFragment :
                     userRepository.changeCustomDayStart(hour)
                 }
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "language" -> {
@@ -405,12 +407,12 @@ class PreferencesFragment :
 
             "task_display" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "FirstDayOfTheWeek" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "disablePMs" -> {
@@ -424,7 +426,7 @@ class PreferencesFragment :
 
             "launch_screen" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry ?: "Habits"
+                preference?.summary = preference.entry ?: "Habits"
             }
         }
     }
@@ -432,7 +434,7 @@ class PreferencesFragment :
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
             if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                TimePreferenceDialogFragment.newInstance(this, preference.key)
                     .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
             }
         } else {
@@ -486,13 +488,13 @@ class PreferencesFragment :
         }
         val cdsTimePreference = findPreference("cds_time") as? ListPreference
         cdsTimePreference?.value = user?.preferences?.dayStart.toString()
-        cdsTimePreference?.summary = cdsTimePreference?.entry
+        cdsTimePreference?.summary = cdsTimePreference.entry
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language
-        languagePreference?.summary = languagePreference?.entry
+        languagePreference?.summary = languagePreference.entry
         val audioThemePreference = findPreference("audioTheme") as? ListPreference
         audioThemePreference?.value = user?.preferences?.sound
-        audioThemePreference?.summary = audioThemePreference?.entry
+        audioThemePreference?.summary = audioThemePreference.entry
 
         val preference = findPreference<Preference>("authentication")
         if (user?.flags?.verifiedUsername == true) {

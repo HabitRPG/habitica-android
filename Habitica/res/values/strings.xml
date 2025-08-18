@@ -1439,7 +1439,7 @@
     <string name="invited">Invited</string>
     <string name="invite_with_username_email">Invite with @username or email</string>
     <string name="habiticans_send_invite">Send an invite directly to players you know</string>
-    <string name="username_or_email">Username or email address</string>
+    <string name="username_or_email">Username or email</string>
     <string name="seeking_party_description">Want to join a Party with others but don’t know any other players? Let Party leaders know you’re looking for an invite!</string>
     <string name="seeking_party_title">Looking for a Party?</string>
     <string name="look_for_party">Look for a Party</string>
@@ -1594,7 +1594,10 @@
     <string name="search_equipment">Search Equipment</string>
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
+    <string name="auth_invalid_credential_type">Received invalid credential type.</string>
+    <string name="auth_unknown_credential_type">Received unknown credential type.</string>
     <string name="auth_unknown_error">Unknown error during authentication.</string>
+    <string name="auth_missing_token">Received empty token.</string>
     <string name="api_token_title">API Token</string>
     <string name="api_token_is_password">Your API Token is like a password</string>
     <string name="api_token_is_password_info">
