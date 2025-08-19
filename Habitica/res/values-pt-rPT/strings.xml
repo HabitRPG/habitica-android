@@ -5,14 +5,14 @@
     <string name="HP_default">Vida</string>
     <string name="MP_default">Mana</string>
     <!--Prefs-->
-    <string name="PS_settings_title">Definições</string>
-    <string name="SP_userID_title">Id. do Utilizador</string>
-    <string name="SP_userID_summary">A Sua Id. de Utilizador</string>
+    <string name="PS_settings_title">Configurações</string>
+    <string name="SP_userID_title">Id. do Usuário</string>
+    <string name="SP_userID_summary">A Sua Id. de Usuário</string>
     <string name="SP_APIToken_title">API Token</string>
-    <string name="SP_APIToken_summary">O teu token API</string>
-    <string name="Language_title">Língua </string>
-    <string name="Language_summary">Mudar a língua do Habitica</string>
-    <string name="PS_contact_title">Contactar-me</string>
+    <string name="SP_APIToken_summary">Seu token API</string>
+    <string name="Language_title">Idioma</string>
+    <string name="Language_summary">Mudar o idioma do Habitica</string>
+    <string name="PS_contact_title">Fale Conosco</string>
     <string name="pref_account_header">Conta</string>
     <string name="pref_first_day_of_the_week_title">Primeiro Dia da Semana</string>
     <string name="pref_first_day_of_the_week_summary">Primeiro dia da semana em todos os calendários </string>
@@ -201,7 +201,7 @@
     <string name="mage">Mago</string>
     <string name="healer">Curandeiro</string>
     <string name="mage_description">Os Magos aprendem rápido, ganhando Experiência e Níveis mais depressa que as outras classes. Também possuem uma grande quantidade de Mana para usar habilidades especiais. Joga como Mago se gostas dos aspectos tácitos de Habitica, ou se te motivas ao subir níveis e desbloquear funcionalidades avançadas!</string>
-    <string name="rogue_description">Os bandidos gostam de acumular riqueza, ganhando mais Ouro do que qualquer um, e são peritos em encontrar objetos aleatórios. A sua capacidade de atuação furtiva icónica permite-lhes evitar as consequências das Tarefas Diárias perdidas. Jogue como Bandido se se sentir uma motivação forte das Recompensas e Conquistas, lutando por espólios e medalhas! Bandidos se beneficiam de valores altos do atributo Percepção.</string>
+    <string name="rogue_description">Ladinos aprendem Habilidades que permitem a eles e ao seu grupo encontrar mais ouro e itens aleatórios. Jogue como um Ladino se você quiser muitos itens e ouro! Ladinos se beneficiam de um atributo alto de Percepção.</string>
     <string name="healer_description">Curandeiros são impenetráveis contra o mal, e extendem essa protecção aos outros. Tarefas Diárias falhadas e maus Hábitos não incomodam muito, e eles têm formas de recuperar Vida quando falham. Joga como Curandeiro se gostares de ajudar os teus colegas de Equipe, ou se a ideia de enganar a Morte através de trabalho duro inspira-te!</string>
     <string name="select_class">Selecionar Classe</string>
     <string name="opt_out_class">Optar</string>
@@ -408,7 +408,7 @@
     <string name="view_achievements">Ver conquistas</string>
     <string name="see_what_s_new">Veja o que há de novo</string>
     <string name="off">Desligado</string>
-    <string name="authentication_error_body">Nome de utilizador e/ou palavra-passe estão incorretos</string>
+    <string name="authentication_error_body">Nome de usuário e/ou senha estão incorretos.</string>
     <string name="network_error_no_network_body">Não estás ligado à internet.</string>
     <string name="subscribe_prompt_thanks">Tu consegues estes benefícios por ser um Subscrito</string>
     <string name="x_months">%d Meses</string>
@@ -460,7 +460,7 @@
     <string name="not_selected">Não selecionado</string>
     <string name="selected">Selecionado</string>
     <string name="on">Ligado</string>
-    <string name="create_account">Desbloqueia ao criares uma conta</string>
+    <string name="create_account">Desbloqueia ao criar uma conta</string>
     <string name="login_incentive">Desbloqueia ao entrares em Habitica regularmente</string>
     <string name="empty_inbox">Não tens mensagens. Podes enviar novas mensagens a um usuário através do seu chat público!</string>
     <string name="invite_username_description">Se tens amigos que já usam Habitica, convida-os através do seu nome de usuário aqui.</string>
