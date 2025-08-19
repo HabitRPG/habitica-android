@@ -200,9 +200,9 @@
     <string name="rogue">Bandido</string>
     <string name="mage">Mago</string>
     <string name="healer">Curandeiro</string>
-    <string name="mage_description">Os Magos aprendem rápido, ganhando Experiência e Níveis mais depressa que as outras classes. Também possuem uma grande quantidade de Mana para usar habilidades especiais. Joga como Mago se gostas dos aspectos tácitos de Habitica, ou se te motivas ao subir níveis e desbloquear funcionalidades avançadas!</string>
+    <string name="mage_description">Magos aprendem Habilidades que causam dano a Chefes e aumentam EXP e Mana. Jogue com um Mago se você estiver motivado para subir de nível rapidamente! Magos se beneficiam de um alto atributo de Inteligência.</string>
     <string name="rogue_description">Ladinos aprendem Habilidades que permitem a eles e ao seu grupo encontrar mais ouro e itens aleatórios. Jogue como um Ladino se você quiser muitos itens e ouro! Ladinos se beneficiam de um atributo alto de Percepção.</string>
-    <string name="healer_description">Curandeiros são impenetráveis contra o mal, e extendem essa protecção aos outros. Tarefas Diárias falhadas e maus Hábitos não incomodam muito, e eles têm formas de recuperar Vida quando falham. Joga como Curandeiro se gostares de ajudar os teus colegas de Equipe, ou se a ideia de enganar a Morte através de trabalho duro inspira-te!</string>
+    <string name="healer_description">Curandeiros aprendem Habilidades que podem curar e proteger a si mesmos e ao seu Grupo. Jogue como Curandeiro se você gosta de ajudar os outros ou evitar danos! Curandeiros se beneficiam de uma alta Constituição.</string>
     <string name="select_class">Selecionar Classe</string>
     <string name="opt_out_class">Optar</string>
     <string name="class_confirmation">Tem a certeza que deseja ser um %s?</string>
@@ -224,8 +224,8 @@
     <string name="share_hatched">Eu acabei de ganhar uma mascote %1$s %2$s em #Habitica ao concluir as minhas tarefas da vida real!</string>
     <string name="share_raised">Eu acabei de ganhar uma montaria %1$s em #Habitica, ao concluir as minhas tarefas da vida real!</string>
     <string name="open_in_store">Abrir na Play Store</string>
-    <string name="change_class_confirmation">Tem a certeza que pretende alterar a sua classe? Isto irá custar 3 gemas.</string>
-    <string name="change_class_equipment_warning">Aviso: já não irá poder comprar equipamento da classe %s.</string>
+    <string name="change_class_confirmation">Você quer mudar de classe por 3 Gemas\?</string>
+    <string name="change_class_equipment_warning">Isso reembolsará seus pontos de estatísticas, mudará os equipamentos desbloqueados nas lojas e mudará suas habilidades disponíveis.</string>
     <string name="confirm">Confirmar</string>
     <string name="market">Mercado</string>
     <string name="timeTravelers">Viajantes no Tempo</string>
@@ -253,7 +253,7 @@
     <string name="google_services_missing">Os serviços Google play não pode ser achado.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">Ao comprar gemas apoia os programadores e ajuda a manter o Habitica em funcionamento</string>
-    <string name="gem_purchase_subtitle">As gemas permitem-te comprar extras divertidos para a tua conta.</string>
+    <string name="gem_purchase_subtitle">Gemas lhe permitem comprar coisa divertidas para sua conta.</string>
     <string name="gem_purchase_listitem1">Disfarces divertidos para o teu avatar</string>
     <string name="gem_purchase_listitem2">Fundos de Ecrã fantásticos</string>
     <string name="gem_purchase_listitem3">Missões que recompensam com ovos de animal</string>
@@ -271,8 +271,8 @@
     <string name="belongs_to_challenge">Pertence ao Desafio</string>
     <string name="has_reminder">Tem Lembrete</string>
     <string name="has_tag">Tem Etiqueta</string>
-    <string name="subscribe_listitem1">Ouro por gemas</string>
-    <string name="subscribe_listitem2">Ampulhetas místicas</string>
+    <string name="subscribe_listitem1">Gemas Mensais Grátis</string>
+    <string name="subscribe_listitem2">Ampulheta Mística Mensal</string>
     <string name="subscriptions">Subscrições</string>
     <string name="subscribe">Subscreber</string>
     <string name="payment_method">Método de pagamento</string>
@@ -284,8 +284,8 @@
     <string name="months_subscribed">Meses subscritos</string>
     <string name="inactive">Inativo</string>
     <string name="one_month">1 mês</string>
-    <string name="months">%d meses</string>
-    <string name="month">mês</string>
+    <string name="months">Meses</string>
+    <string name="month">Mês</string>
     <string name="three_months">3 meses</string>
     <string name="six_months">6 meses</string>
     <string name="twelve_months">12 meses</string>
@@ -351,12 +351,11 @@
     <string name="ago_days">%dd atrás</string>
     <string name="ago_1Minute">1m atrás</string>
     <string name="evolved_pet_title">Domaste %s, vamos dar um passeio!</string>
-    <string name="inn_description">Preciso de um descanso\? Visite o Daniel\'s Inn para pausar alguns dos mecanismos de jogo mais difíceis do Habitica:
+    <string name="inn_description">Precisa de um descanso\? Visite a pousada do Daniel para pausar algumas mecânicas de jogo mais difíceis do Habitica:
 \n
-\n • As diárias perdidas não o prejudicarão
-\n • Tarefas não perdem listras ou decaem em cores
-\n • Chefes não causam dano por suas diárias perdidas
-\n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
+\n • Suas missões diárias perdidas não causaram dano a você (contudo, chefes ainda causaram dano aos membros do seu grupo por essas missões diárias perdidas)
+\n • Sequencias de Tarefas e contadores de Hábito não será reiniciados
+\n • Seu dano a Missão do chefe ou item coletados permanecerão pendentes até você sair da pousada</string>
     <string name="warrior_description">Guerreiros obtêm mais Golpes Críticos e infligem maior dano aos Monstros. Joga como Guerreiro se quiseres derrotar Monstros mais facilmente! Guerreiros beneficiam de uma elevada estatística de Força.</string>
     <string name="opting_out_progress">Optando por</string>
     <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
@@ -414,27 +413,27 @@
     <string name="x_months">%d Meses</string>
     <string name="monthly_gem_cap">Capacidade máxima atual de Gemas</string>
     <string name="current_hourclasses">Quantidade de Ampulhetas Místicas</string>
-    <string name="cancel_subscription_notgoogle_description">Não quer mais subscrever-te\? Devido a restrições nos pagamentos móveis, você precisará cancelar através do nosso site. Para fazer isso, toque no botão abaixo, faça login em sua conta, toque no ícone Usuário no canto superior direito e vá para Subscrição. Quaisquer créditos de meses de assinatura serão aplicados após o término de sua subscrição atual. Nós sentiremos tua falta!</string>
-    <string name="cancel_subscription_google_description">Não queres mais subscrever\? Tu podes encontrar a opção de cancelar a assinatura na seção “Meus aplicativos” da Google Play Store. Quaisquer créditos de meses de assinatura serão aplicados após o término de sua subscrição.</string>
+    <string name="cancel_subscription_notgoogle_description">Não quer mais assinar\? Devido ao seu método de pagamento, você precisará cancelar a assinatura do nosso site. Para isso, toque no botão abaixo, faça login na sua conta, toque no ícone do player no canto superior direito e acesse a seção Assinatura. Os créditos de meses restantes da assinatura serão adicionados à sua data de término após o cancelamento. Sentiremos sua falta!</string>
+    <string name="cancel_subscription_google_description">Não quer mais assinar\? Você pode encontrar a opção de cancelar a assinatura acessando a seção Pagamentos e Assinaturas do app Google Play Store. Os créditos restantes da assinatura serão adicionados à data de término após o cancelamento.</string>
     <string name="due">Prazo limite</string>
     <string name="subscription_hourglasses">+%d Ampulhetas Místicas</string>
     <string name="subscribe12month_gemcap">Capacidade máxima de Gemas: 45</string>
     <string name="subscribe6month_gemcap">Capacidade máxima de Gemas: 35</string>
     <string name="subscribe3month_gemcap">Capacidade máxima de Gemas: 30</string>
     <string name="subscribe1month_gemcap">Capacidade máxima de Gemas: 25</string>
-    <string name="subscribe_listitem5_description">Descobre ainda mais itens em Habitica com o bônus de 2x tua capacidade diária de drops.</string>
+    <string name="subscribe_listitem5_description">Ganhe um Lebrélope Roxo Real e o dobro de Ovos, Poções para Chocar e Comida todos os dias para aumentar sua coleção de mascotes!</string>
     <string name="subscribe_listitem4_description">Receba o mascote Jackalope Púrpura Real quando se tornar um novo subscrito.</string>
     <string name="subscribe_listitem3_description_new">Subscreve agora para conseguir este %s e recebe novos itens todo mês!</string>
     <string name="subscribe_listitem3_description">Subscreve agora para conseguir uma armadura exclusiva agora e receba novos itens todo mês!</string>
-    <string name="subscribe_listitem2_description">Ganhe Ampulhetas Místicas para comprar produtos na Loja dos Viajantes de Tempo!</string>
-    <string name="subscribe_listitem1_description">Serás capaz de comprar Gemas no Mercado por 20 de ouro cada!</string>
+    <string name="subscribe_listitem2_description">Não perca nenhum item com 1 Ampulheta Mística por mês para usar na Loja dos Viajantes do Tempo!</string>
+    <string name="subscribe_listitem1_description">Obtenha até 50 Gemas com Ouro no Mercado para comprar Missões, Personalizações, Mascotes e muito mais!</string>
     <string name="subscription_duration_norenew">Por %s</string>
     <string name="subscription_duration">Recorrente a cada %s</string>
-    <string name="subscribe_listitem5">Dobro de Drops</string>
+    <string name="subscribe_listitem5">Pet especial e o dobro de Drops</string>
     <string name="subscribe_listitem4">Mascote de Subscrito Especial</string>
     <string name="subscribe_listitem3">Itens Misteriosos Mensais</string>
-    <string name="subscribe_prompt">Torne-se um subscrito para receber benefícios exclusivos!</string>
-    <string name="subscribe_title">Subscrições ajudam os desenvolvedores e também a manter o Habitica a funcionar</string>
+    <string name="subscribe_prompt">Mantenha-se motivado com mais recompensas ao fazer uma assinatura</string>
+    <string name="subscribe_title">A assinatura apoia nossa pequena equipe e ajuda a manter o Habitica funcionando</string>
     <string name="create_account_short">Criar uma conta</string>
     <string name="login_incentive_short_count">%d Check-ins</string>
     <string name="login_incentive_short">Entre em Habitica regularmente</string>
@@ -502,7 +501,7 @@
     <string name="stable_owner_long">Matt o mestre das feras</string>
     <string name="tavern_owner_long">Daniel o dono da Taverna</string>
     <string name="market_owner_long">Alex o Mercador</string>
-    <string name="questShop">Loja de Missões</string>
+    <string name="questShop">Missões</string>
     <string name="strike_active_description">Nosso querido %1$s ficou devastado quando %2$s aniquilou %3$s. Rapido, enfrente tuas tarefas para derrotar o monstro e ajudar a reconstruir !!</string>
     <string name="strike_active_title">%s foi Atacado!</string>
     <string name="pending_strike_title">Ataque Pendente</string>
@@ -599,7 +598,7 @@
     <string name="come_back_soon">Volta rápido!</string>
     <string name="seasonal_closed_description">As Grandes Galas acontecem perto dos solstícios e equinócios, então volta nesses períodos para encontrar itens sazonais especiais!</string>
     <string name="want_to_subscribe">Eu quero assinar</string>
-    <string name="timetravelers_closed_description">Recebe uma Ampulheta Mística por cada três meses consecutivos de assinatura e então usa-as para desbloquear itens, mascotes e montarias de edição limitada do passado… e futuro!</string>
+    <string name="timetravelers_closed_description">Ganhe uma Ampulheta Mística para cada mês de assinatura e use-a para desbloquear itens de edição limitada, animais de estimação e montarias do passado... e do futuro!</string>
     <string name="subscribe_for_hourglasses">Assinar por Ampulhetas</string>
     <string name="get_hourglasses">Conseguir Ampulhetas</string>
     <string name="insufficientHourglasses">Precisarás de mais Ampulhetas Místicas para comprar este item!</string>
@@ -625,7 +624,7 @@
     <string name="rage_meter">Medidor de fúria</string>
     <string name="dailyDueDefaultView">Marcar Diárias na aba \"Por fazer\", por padrão</string>
     <string name="leave_keep_tasks">Sair e Manter as tarefas</string>
-    <string name="challenge_leave_description">Podes escolher manter as tarefas deste Desafio no teu quadro de tarefas pessoal ou eliminá-las quando saíres.</string>
+    <string name="challenge_leave_description">Podes escolher manter as tarefas deste Desafio no seu quadro de tarefas pessoal ou excluí-las quando sair</string>
     <string name="buffs">Impulsionadores</string>
     <string name="perception_description">Aumenta a chance de encontrar itens quando completas uma tarefa, a capacidade de itens diários, os bónus de Combo e a quantidade de ouro ganho por tarefas.</string>
     <string name="perception">Perspicácia</string>
@@ -690,7 +689,7 @@
     <string name="delete_oauth_account_description">Contas eliminadas são permanentes e não podem ser restauradas. O valor das gemas não pode ser devolvido. Se continuas a querer apagar a tua conta, escreve DELETE em baixo.</string>
     <string name="classless">Sem classe</string>
     <string name="class_equipment_shop_dialog">Este item só está disponível para uma classe específica.
-\nPodes mudar a tua classe nas definições.</string>
+\nVocê pode mudar sua classe nas configurações.</string>
     <string name="class_gear_disclaimer">Só podes comprar equipamento para a tua classe atual</string>
     <string name="daily_tip_2">Podes mudar a frequência com que cada Diária se repete. Mesmo tarefas infrequentes podem ser agendadas.</string>
     <string name="daily_tip_5">Respira profundamente algumas vezes para te ajudar a concentrar. Tu consegues!</string>
@@ -723,4 +722,61 @@
     <string name="sell_no_price">Vender</string>
     <string name="trillion_abbrev">t</string>
     <string name="x_and_y">%1$s e %2$s</string>
+    <string name="weeks">Semanas</string>
+    <string name="days">Dias</string>
+    <string name="report_message_explanation">Você só deve denunciar uma publicação que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Enviar uma denúncia falsa é uma violação das Diretrizes da Comunidade da Habitica.</string>
+    <string name="report_user_explanation">Você só deve denunciar um jogador que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Enviar uma denúncia falsa é uma violação das Diretrizes da Comunidade do Habitica.</string>
+    <string name="report_hint">Motivo da denuncia</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="report_user_description">Isso também bloqueará @%s</string>
+    <string name="guild_description">Descrição da Guilda</string>
+    <string name="invite_to_guild">Convidar para Guilda</string>
+    <string name="join_guild">Entrar na Guilda</string>
+    <string name="garden">Jardim</string>
+    <string name="report_violation">Denunciar Violação</string>
+    <string name="leave_guild">Deixar Guilda</string>
+    <string name="leave_guild_confirmation">Tem certeza de que deseja sair desta guilda\?</string>
+    <string name="leave_guild_challenges_confirmation">Você quer continuar participando do Desafio quando sair da Guilda\?</string>
+    <string name="report_player_title">Denunciar %s\?</string>
+    <string name="report_player">Denunciar Jogador</string>
+    <string name="report_reason_title_message">Por que você está denunciando esta mensagem\?</string>
+    <string name="report_reason_title_player">Por que você está denunciando este jogador\?</string>
+    <string name="levelup_detail_10">Escolha uma classe que se adapte ao seu estilo de jogo e desbloqueie habilidades e armaduras especiais para ajudá-lo em sua jornada</string>
+    <string name="levelup_title_10">Sistema de classes desbloqueado!</string>
+    <string name="unpin">Desfixar</string>
+    <string name="years">Anos</string>
+    <string name="new_reminder">Novo Lembrete</string>
+    <string name="update_available">Atualização disponível: %1$s (%2$d)</string>
+    <string name="need_help_description">Você pode entrar em contato conosco e um membro da nossa equipe fará o melhor para ajudar!</string>
+    <string name="become_x">Seja um %s</string>
+    <string name="x_class">%s Classe</string>
+    <string name="need_help_header_description">Publique uma mensagem em %s para que suas perguntas sejam respondidas por um colega jogador.</string>
+    <string name="report_explanation">Denuncie **Somente** uma publicação que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Denunciar uma publicação de forma inadequada pode resultar em uma infração.</string>
+    <string name="report_message_title">Denunciar %s por violação:</string>
+    <string name="report_reason_title_challenge">Por que você está denunciando este desafio\?</string>
+    <string name="report_challenge_explanation">Você só deve denunciar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Enviar uma denúncia falsa é uma violação das Diretrizes da Comunidade da Habitica.</string>
+    <string name="report_message_hint">Motivo da denuncia</string>
+    <string name="report_message">Mensagem da denuncia</string>
+    <string name="report_successful">%s Denunciado</string>
+    <string name="report_player_toolbar_title">Denunciar %s</string>
+    <string name="i_agree_to_follow_the_guidelines">Eu concordo com as diretrizes a seguir</string>
+    <string name="delete_reminder">Excluir lembrete</string>
+    <string name="not_now">Agora não</string>
+    <string name="left_guild">Você deixou a guilda</string>
+    <string name="delete_task">Excluir tarefa</string>
+    <string name="report_failure">Denuncia falhou, por favor tente novamente mais tarde</string>
+    <string name="rejoin_guild">Você pode se entrar novamente nesta guilda usando a página de Descobrir Guildas</string>
+    <string name="pin">Fixar</string>
+    <string name="take_me_back">Me leve de volta</string>
+    <string name="joined_guild">Você entrou na guilda</string>
+    <string name="cost">Custo</string>
+    <string name="setup_task_habit_1">Adicionar tarefas no Habitica</string>
+    <string name="guild_bank">Banco da Guilda</string>
+    <string name="setup_task_habit_1_notes">Seja um hábito, uma tarefa diária ou uma tarefa a fazer</string>
+    <string name="setup_task_habit_2">Toque aqui para mudar isso em um mau hábito que você gostaria de abandonar</string>
+    <string name="setup_task_habit_2_notes">Ou exclua-o da tela de edição</string>
+    <string name="guild_summary">Resumo da Guilda</string>
+    <string name="guild_members">Membros da Guilda</string>
+    <string name="invite_to_party">Convidar para um grupo</string>
 </resources>
