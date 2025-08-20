@@ -476,7 +476,7 @@
     <string name="ok">OK</string>
     <string name="profile">プロフィール</string>
     <string name="profile_summary">公開プロフィールを編集しましょう。</string>
-    <string name="display_name">名前を表示</string>
+    <string name="display_name">表示名</string>
     <string name="photo_url">写真のURL</string>
     <string name="login_name">ログイン名</string>
     <string name="about">プロフィール</string>
@@ -591,7 +591,7 @@
     <string name="total_checkins">総チェックイン日数</string>
     <string name="two_handed">両手持ち</string>
     <string name="usernamePromptTitle">あなたのユーザー名を決める時間です！</string>
-    <string name="usernamePromptBody">ログイン名は、現在は固有のユーザー名になりました。あなたの表示名の近くに表示されて、招待、チャットでの＠返信、メッセージのやりとりなどで使用されるでしょう。</string>
+    <string name="usernamePromptBody">ログイン名は固有のユーザー名で、表示名のとなりに見られます。招待、チャットでの＠返信、メッセージのやりとりなどで使用されます。</string>
     <string name="usernamePromptWiki">もしこの変更についてより詳しく知りたいときは、<a href="https://habitica.wikia.com/wiki/Player_Names">wiki(英語)をご覧ください。</a></string>
     <string name="usernamePromptDisclaimer">ユーザー名は、<a href="https://habitica.com/static/terms">サービス利用規約</a>と<a href="https://habitica.com/static/community-guidelines">コミュニティガイドライン</a>を守ったものでなければなりません。もしあなたがログイン名を設定していなかった場合、あなたのユーザー名は自動生成されたものになります。</string>
     <string name="confirm_username_title">本当に現在のユーザー名を承認しますか？</string>
