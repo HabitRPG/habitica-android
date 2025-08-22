@@ -949,7 +949,7 @@
 \n
 \nジェムは、他のプレイヤーからの贈り物・チャレンジの賞品・Habiticaへの貢献・有料プランの特典などでも受け取ることができます。</string>
     <string name="suggestions_feedback_description">Habiticaがもっと上手く機能しそうな仕組みや新しいアイデアをお持ちですか？是非教えてください！</string>
-    <string name="g1g1_info_3_text">このプロモーションはあなたが他のHabiticaユーザーにプレゼントを贈ると適用されます。あなた自身やプレゼントを贈った相手がすでに有料会員だった場合、プレゼンントされた有料プランの期間は、今の有料プランが解約されるか期限が切れた後に使用されます。</string>
+    <string name="g1g1_info_3_text">このキャンペーンは他のHabiticaユーザーに有料プランをプレゼントすると適用されます。あなたまたは受取人が既に有料プランに登録している場合は、有料会員期間が延長されます。この延長は、現在の有料プランを満了もしくはキャンセルした後に適用されます。</string>
     <string name="g1g1_info_3">制限事項</string>
     <string name="hourglasses_description">神秘の砂時計は極めてレアなゲーム内通貨で、Habiticaの有料会員を3ヶ月以上継続することで受け取れます。タイムトラベラーの店で神秘の砂時計を使って、過去の装備セット・ペット・乗騎・動く背景・特別なクエストなどを購入できます。
 \n
@@ -1611,4 +1611,8 @@
     <string name="register_tos_confirm">Habiticaの <a href="https://habitica.com/static/terms">利用規則</a>と<a href="https://habitica.com/static/privacy">プライバシーポリシー</a>に同意します。</string>
     <string name="change_username_description">ユーザー名は1〜20文字以内である必要があり、アルファベット（a~z）、数字（0~9）、ハイフン（-）とアンダースコア（_）のみを含むことができます。</string>
     <string name="password_change_info">パスワードは8文字以上でなければなりません。パスワードを変更すると他のデバイスや使用中のサードパーティーツールからログアウトされます。</string>
+    <string name="use_on_party">パーティーにかける</string>
+    <string name="g1g1_promo_info_limitations_noutc">これは%1$sに始まり、%2$sに終了する限定イベントです。このキャンペーンは他のHabiticaのユーザーに有料プランをプレゼントすると適用されます。あなたまたは受取人が既に有料プランに登録している場合は、有料会員期間が延長されます。この延長は、現在の有料プランを満了もしくはキャンセルした後に適用されます。</string>
+    <string name="about_me_description">プロフィールに表示される、ちょっとした自己紹介を書いてみよう！</string>
+    <string name="use_skill">スキルを使う</string>
 </resources>
