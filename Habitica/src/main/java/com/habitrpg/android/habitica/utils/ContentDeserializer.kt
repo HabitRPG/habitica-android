@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
+import com.habitrpg.android.habitica.models.social.CategoryOption
 import io.realm.RealmList
 import java.lang.reflect.Type
 
@@ -104,6 +105,18 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
                 }
 
                 result.spells.add(skill)
+            }
+        }
+
+        if (obj.has("categoryOptions")) {
+            obj.getAsJsonArray("categoryOptions").forEach { elem ->
+                val o     = elem.asJsonObject
+                val label = o.get("label").asString
+                val key   = o.get("key").asString
+                result.categoryOptions.add(CategoryOption().also {
+                    it.label = label
+                    it.key = key
+                })
             }
         }
 
