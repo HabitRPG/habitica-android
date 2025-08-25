@@ -1609,7 +1609,7 @@
     <string name="copy_token">コピートークン</string>
     <string name="rescrubscribe_to_pick_up">有料プランに再登録して中断したところから続けましょう！</string>
     <string name="register_tos_confirm">Habiticaの <a href="https://habitica.com/static/terms">利用規則</a>と<a href="https://habitica.com/static/privacy">プライバシーポリシー</a>に同意します。</string>
-    <string name="change_username_description">ユーザー名は1〜20文字以内である必要があり、アルファベット（a~z）、数字（0~9）、ハイフン（-）とアンダースコア（_）のみを含むことができます。</string>
+    <string name="change_username_description">ユーザー名は1〜20文字以内である必要があり、アルファベット（a~z）、数字（0~9）、ハイフン（-）とアンダーバー（_）のみを含むことができます。</string>
     <string name="password_change_info">パスワードは8文字以上でなければなりません。パスワードを変更すると他のデバイスや使用中のサードパーティーツールからログアウトされます。</string>
     <string name="use_on_party">パーティーにかける</string>
     <string name="g1g1_promo_info_limitations_noutc">これは%1$sに始まり、%2$sに終了する限定イベントです。このキャンペーンは他のHabiticaのユーザーに有料プランをプレゼントすると適用されます。あなたまたは受取人が既に有料プランに登録している場合は、有料会員期間が延長されます。この延長は、現在の有料プランを満了もしくはキャンセルした後に適用されます。</string>
