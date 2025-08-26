@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignTop="@id/item_wrapper"
-        android:layoutDirection="ltr">
+        android:layoutDirection="ltr"
+        android:clickable="true"
+        android:focusable="true">
         <View
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -48,7 +50,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:focusable="true">
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
             android:id="@+id/habits_tab"
             android:layout_width="0dp"
