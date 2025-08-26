@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -43,7 +44,8 @@ constructor(
     val tagRepository: TagRepository,
     val appConfigManager: AppConfigManager,
     val sharedPreferences: SharedPreferences,
-    val contentRepository: ContentRepository
+    val contentRepository: ContentRepository,
+    private val taskAlarmManager: TaskAlarmManager
 ) : BaseViewModel(userRepository, userViewModel), GroupPlanInfoProvider {
     private var owners: List<Pair<String, CharSequence>> = listOf()
     var canSwitchOwners = MutableLiveData<Boolean?>()
@@ -116,6 +118,9 @@ constructor(
         onResult: (TaskScoringResult, Int) -> Unit
     ) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
+            if (task.type == TaskType.TODO && direction == TaskDirection.UP && task.reminders?.isNotEmpty() == true) {
+                taskAlarmManager.removeAlarmsForTask(task)
+            }
             taskRepository.taskChecked(
                 null,
                 task.id ?: "",
