@@ -48,7 +48,7 @@
     <plurals name="x_rewards">
         <item quantity="one">Adicionar uma Recompensa</item>
         <item quantity="many">Adicionar Recompensas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="create_task_title">Cria uma tarefa</string>
     <string name="complete_task_title">Completa uma Tarefa</string>
@@ -59,10 +59,15 @@
     <string name="quadrillion_abbrev">q</string>
     <string name="easy_sentence">fácil</string>
     <plurals name="x_habits">
-        <item quantity="one">Hábito</item>
-        <item quantity="many">Hábitos</item>
+        <item quantity="one">%d Hábito</item>
+        <item quantity="many">%d Hábitos</item>
         <item quantity="other"></item>
     </plurals>
     <string name="email_username">Email/Nome de Usuário</string>
     <string name="avatar">Avatar</string>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Diário</item>
+        <item quantity="many">%d Diários</item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>
