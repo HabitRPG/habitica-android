@@ -3,7 +3,7 @@
     <!--  Prefs -->
     <string name="SP_userID" translatable="false">UserID</string>
     <string name="SP_APIToken" translatable="false">APIToken</string>
-    <string name="base_url" translatable="false">https://staging.habitica.com</string>
+    <string name="base_url" translatable="false">https://habitica.com</string>
 
     <!-- Local notification actions -->
     <string name="accept_party_invite" translatable="false">ACCEPT_PARTY_INVITE</string>

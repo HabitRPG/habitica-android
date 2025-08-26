@@ -125,20 +125,9 @@ class PrivacyPreferencesActivity: BaseActivity() {
                     } else {
                         Column {
                             val colors = if (LocalContext.current.isUsingNightModeResources()) {
-                                ButtonDefaults.buttonColors().copy(containerColor = Color.White, contentColor = HabiticaTheme.colors.tintedUiSub)
+                                ButtonDefaults.buttonColors().copy(containerColor = Color.White, contentColor = colorResource(R.color.gray_50))
                             } else {
                                 ButtonDefaults.buttonColors().copy(containerColor = colorResource(R.color.gray_600), contentColor = HabiticaTheme.colors.textPrimary)
-                            }
-                            Button({
-                                lifecycleScope.launchCatching {
-                                    isSaving = true
-                                    userRepository.updateUser("preferences.analyticsConsent", analyticsConsent)
-                                    finish()
-                                }
-                            }, colors = colors,
-                                shape = HabiticaTheme.shapes.small,
-                                modifier = Modifier.padding(bottom = 27.dp).fillMaxWidth().heightIn(60.dp)) {
-                                Text(stringResource(R.string.save_preferences), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                             }
                             Button({
                                 analyticsConsent = true
@@ -148,10 +137,21 @@ class PrivacyPreferencesActivity: BaseActivity() {
                                     userRepository.updateUser("preferences.analyticsConsent", true)
                                     finish()
                                 }
-                            }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.brand_400)),
+                            }, colors = colors,
                                 shape = HabiticaTheme.shapes.small,
                                 modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth().heightIn(60.dp)) {
                                 Text(stringResource(R.string.accept_all), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                            }
+                            Button({
+                                lifecycleScope.launchCatching {
+                                    isSaving = true
+                                    userRepository.updateUser("preferences.analyticsConsent", analyticsConsent)
+                                    finish()
+                                }
+                            }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.brand_400)),
+                                shape = HabiticaTheme.shapes.small,
+                                modifier = Modifier.padding(bottom = 27.dp).fillMaxWidth().heightIn(60.dp)) {
+                                Text(stringResource(R.string.save_preferences), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -162,7 +162,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                         openBrowserLink("https://habitica.com/static/privacy")
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = colorResource(if (isUsingNightModeResources()) R.color.brand_500 else R.color.brand_400)),
-                    modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth()
+                    modifier = Modifier.padding(bottom = 20.dp).fillMaxWidth()
                 ) {
                     Text(stringResource(R.string.habiticas_privacy_policy), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 }

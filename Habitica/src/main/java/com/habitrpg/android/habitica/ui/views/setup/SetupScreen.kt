@@ -241,8 +241,7 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                                 selectedCustomizationSubcategoryIndex = index
                         }, {
                             viewModel.equipCustomization(it)
-                                userChangeCounter++
-                        })
+                                userChangeCounter++                       })
                     }
                 }
                 AnimatedContent(currentStep, modifier = Modifier.weight(1f)) {
@@ -458,7 +457,7 @@ fun OnboardingTaskSelector(
                 tween(300)
             }) { if (it) 4.dp else 0.dp }
             val m = Modifier
-                .border(borderWidth, borderColor, CircleShape)
+                .border(borderWidth, borderColor, RoundedCornerShape(30.dp))
             Text(
                 category.second,
                 textAlign = TextAlign.Center,
@@ -471,7 +470,7 @@ fun OnboardingTaskSelector(
                     .clickable {
                         selectCategory(category.first)
                     }
-                    .padding(20.dp)
+                    .padding(16.dp)
             )
         }
     }
@@ -851,7 +850,8 @@ fun SpeechBubble(
                 )
                 .padding(4.dp)
                 .background(Color.White, shape = RoundedCornerShape(8.dp))
-                .padding(24.dp)
+                .padding(12.dp, top = 30.dp)
+                .padding(horizontal = 30.dp)
         )
         NamePlate(npcName, modifier = Modifier
             .padding(start = 28.dp, top = 30.dp))
