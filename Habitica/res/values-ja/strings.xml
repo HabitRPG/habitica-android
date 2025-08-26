@@ -851,7 +851,7 @@
     <string name="authentication_methods">認証方式</string>
     <string name="someone">誰か</string>
     <string name="invitation_title">%1$sはあなたをグループ%2$sに招待しました</string>
-    <string name="password_too_short">パスワードが短すぎます。あと%d文字必要です</string>
+    <string name="password_too_short">パスワードは%d文字以上である必要があります</string>
     <string name="copy_username">ユーザー名をコピーする</string>
     <string name="id_copied">ユーザーIDをクリップボードにコピーする</string>
     <string name="copy_userid">ユーザーIDをコピーする</string>
