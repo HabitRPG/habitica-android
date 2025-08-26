@@ -76,7 +76,7 @@
     <string name="new_checklist_item">新しいチェックリストの入力</string>
     <string name="reminder_title">忘れずにタスクをチェックしましょう</string>
     <string name="unlock_lvl_11">レベル11 でアンロック</string>
-    <string name="forgot_pw_btn">パスワードがわからない</string>
+    <string name="forgot_pw_btn">パスワードを忘れた場合</string>
     <string name="tavern_inn_checkOut">日課を再開する</string>
     <string name="tavern_inn_rest">日課を中断する</string>
     <string name="reward_dialog_buy">買う</string>
@@ -1141,7 +1141,7 @@
     <string name="adventure_guide_description_new">これらの目標を達成して、&lt;b&gt;5つの実績バッジ&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;をゲットしましょう！</string>
     <string name="add">追加</string>
     <string name="password_not_matching">入力したパスワードが一致しません</string>
-    <string name="apitoken_summary">トークンをコピーする。これはパスワードなので慎重に扱ってください！</string>
+    <string name="apitoken_summary">開発者とサードパーティーツール用のパスワードトークン。</string>
     <string name="added_social_auth">%sとの連携を追加</string>
     <string name="copied_to_clipboard">%sをクリップボードにコピーしました</string>
     <string name="removed_social_auth">%sとの連携を解除</string>
