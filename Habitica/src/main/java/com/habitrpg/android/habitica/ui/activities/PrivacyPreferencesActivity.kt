@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.compose.animation.AnimatedContent
@@ -13,6 +12,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -33,7 +34,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityComposeBinding
-import com.habitrpg.android.habitica.databinding.ActivityPartyInviteBinding
 import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.preferences.PrivacyToggleView
@@ -72,6 +72,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                         .fillMaxSize()
                         .padding(horizontal = 12.dp)
                         .padding(bottom = 24.dp, top = 72.dp)
+                        .verticalScroll(rememberScrollState())
             ) {
                 Column(
                     horizontalAlignment = Alignment.Start,

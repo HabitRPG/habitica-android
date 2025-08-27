@@ -1,3 +1,6 @@
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -89,8 +92,13 @@ android {
 
     kotlin.jvmToolchain(11)
     composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
     flavorDimensions.add("buildType")
+}
+
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
 }
 
 dependencies {
