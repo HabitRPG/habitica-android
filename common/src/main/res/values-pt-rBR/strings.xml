@@ -40,7 +40,7 @@
     <string name="email_username">E-mail / Nome de usuário</string>
     <string name="password">Senha</string>
     <string name="emailAddress">Endereço de e-mail</string>
-    <string name="confirmpassword">Confirmar senha</string>
+    <string name="confirmpassword">Repita a senha</string>
     <string name="login_btn_google">Logar com Google</string>
     <string name="logout">Sair</string>
     <string name="logout_description">Sair da sua conta</string>
