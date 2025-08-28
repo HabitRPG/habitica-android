@@ -619,7 +619,7 @@
     <string name="gift_one_get_one_description">有料プランをプレゼントすると、同じ有料プランが無料で利用できるキャンペーンが開催中です！</string>
     <string name="gift_title">誰にプレゼントを贈りたいですか？</string>
     <string name="gift_one_get_one">１つ贈って、１つ無料で手に入れよう</string>
-    <string name="gift_subscription_subtitle">方からプレゼントしたい有料プランを選んでください！この購入では、更新はされません。</string>
+    <string name="gift_subscription_subtitle">プレゼントしたい有料プランを選んでください！この購入は自動的に更新されません。</string>
     <string name="send_gift">プレゼントを贈る</string>
     <string name="server">サーバー</string>
     <string name="gift_confirmation_title">プレゼントを贈りました！</string>
@@ -1082,7 +1082,7 @@
     <string name="empty_guilds_list">あなたはどのギルドにも参加していません。</string>
     <string name="mystery_item_title">ミステリーボックスを開けて見つけたのは……</string>
     <string name="team_information">チームのインフォメーション</string>
-    <string name="twelve_months_one_time">12ヶ月</string>
+    <string name="twelve_months_one_time">12ヶ月間</string>
     <string name="six_months_one_time">6ヶ月間</string>
     <string name="three_months_one_time">3ヶ月間</string>
     <string name="one_month_one_time">1ヶ月間</string>
@@ -1488,7 +1488,7 @@
     <string name="visit_faq">FAQを見る</string>
     <string name="rescind_invite">招待を削除する</string>
     <string name="monthly_backgrounds">月替わりの背景</string>
-    <string name="cleared_cache">消去されたキャッシュ</string>
+    <string name="cleared_cache">キャッシュを消除しました</string>
     <string name="animal_tails">動物のしっぽ</string>
     <string name="clear_database">データベースの消去</string>
     <string name="popular">人気</string>
@@ -1619,4 +1619,7 @@
     <string name="auth_unknown_error">認証中に不明なエラーが発生しました。</string>
     <string name="enjoy_benefits">有料プランに登録してこれらの限定特典をお楽しみください</string>
     <string name="auth_invalid_credentials">認証情報が無効です。</string>
+    <string name="resubscribe_for_hourglasses">神秘の砂時計をゲットし続けるには、有料プランに再登録してください</string>
+    <string name="get_12_mystic_hourglasses">初めて12ヶ月間の有料プランに登録したときは、神秘の砂時計を一気に12個もらえます！</string>
+    <string name="next_switch_in_x">あと%sで切り換え</string>
 </resources>
