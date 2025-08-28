@@ -1082,8 +1082,8 @@
     <string name="empty_guilds_list">あなたはどのギルドにも参加していません。</string>
     <string name="mystery_item_title">ミステリーボックスを開けて見つけたのは……</string>
     <string name="team_information">チームのインフォメーション</string>
-    <string name="twelve_months_one_time">12ヶ月間一度きりの有料プラン</string>
-    <string name="six_months_one_time">6ヶ月</string>
+    <string name="twelve_months_one_time">12ヶ月</string>
+    <string name="six_months_one_time">6ヶ月間</string>
     <string name="three_months_one_time">3ヶ月間</string>
     <string name="one_month_one_time">1ヶ月間</string>
     <string name="gift_one_get_one_purchase_banner">%sまでに、有料プランをプレゼントして同じプランを無料でゲットしよう</string>
