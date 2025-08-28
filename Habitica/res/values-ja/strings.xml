@@ -951,9 +951,9 @@
     <string name="suggestions_feedback_description">Habiticaがもっと上手く機能しそうな仕組みや新しいアイデアをお持ちですか？是非教えてください！</string>
     <string name="g1g1_info_3_text">このキャンペーンは他のHabiticaユーザーに有料プランをプレゼントすると適用されます。あなたまたは受取人が既に有料プランに登録している場合は、有料会員期間が延長されます。この延長は、現在の有料プランを満了もしくはキャンセルした後に適用されます。</string>
     <string name="g1g1_info_3">制限事項</string>
-    <string name="hourglasses_description">神秘の砂時計は極めてレアなゲーム内通貨で、Habiticaの有料会員を3ヶ月以上継続することで受け取れます。タイムトラベラーの店で神秘の砂時計を使って、過去の装備セット・ペット・乗騎・動く背景・特別なクエストなどを購入できます。
+    <string name="hourglasses_description">神秘の砂時計は極めてレアなゲーム内通貨で、Habiticaの有料プランに登録しないと受け取れません。タイムトラベラーの店で神秘の砂時計を使って、限定の装備セット・ペット・乗騎・動く背景・特別なクエストなどを購入できます。これらの追加特典は、年間を通してやる気を出したり、よくできたときに自分にご褒美を与えたりするために便利です。
 \n
-\nあなたは神秘の砂時計を年に4つ受け取れます。入手のタイミングは有料会員の更新スケジュールに基づいています。砂時計を入手できる期間の有料プランを支払うと、その翌月の最初の日に配布されます。詳しくは「有料プラン」のページをご覧ください。</string>
+\n有料会員は毎月の初めに神秘の砂時計1つと、ほかにもたくさんの特典がゲットできます。タイムトラベラーの店でどんなものが買えるか、興味のある人はぜひ有料プランのオプションを見てください！</string>
     <string name="subscription_credit">有料プランの有効期間</string>
     <string name="percent_completed">%d%%完了</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
@@ -1085,7 +1085,7 @@
     <string name="twelve_months_one_time">12ヶ月間一度きりの有料プラン</string>
     <string name="six_months_one_time">6ヶ月間一度きりの有料プラン</string>
     <string name="three_months_one_time">3ヶ月間一度きりの有料プラン</string>
-    <string name="one_month_one_time">1ヶ月間一度きりの有料プラン</string>
+    <string name="one_month_one_time">1ヶ月</string>
     <string name="gift_one_get_one_purchase_banner">%sまでに、有料プランをプレゼントして同じプランを無料でゲットしよう</string>
     <string name="g1g1_promo_info_instructions">「有料プランをプレゼントする」をタップして、贈る相手のユーザーネームを入力し、プレゼントする有料プランの期間を選択してください。自動的にあなたのアカウントにもプレゼントした分と同じ期間のプランが無料で適用されます。</string>
     <string name="g1g1_promo_info_prompt">贈り物の季節を祝して、特別なプロモーションを再び開催しています。いま誰かに有料プランをプレゼントすると、あなた自身も同じプランを無料で受けることができます！</string>
@@ -1615,4 +1615,8 @@
     <string name="g1g1_promo_info_limitations_noutc">これは%1$sに始まり、%2$sに終了する限定イベントです。このキャンペーンは他のHabiticaのユーザーに有料プランをプレゼントすると適用されます。あなたまたは受取人が既に有料プランに登録している場合は、有料会員期間が延長されます。この延長は、現在の有料プランを満了もしくはキャンセルした後に適用されます。</string>
     <string name="about_me_description">プロフィールに表示される、ちょっとした自己紹介を書いてみよう！</string>
     <string name="use_skill">スキルを使う</string>
+    <string name="auth_get_credentials_error">認証情報の取得に失敗しました。</string>
+    <string name="auth_unknown_error">認証中に不明なエラーが発生しました。</string>
+    <string name="enjoy_benefits">有料プランに登録してこれらの限定特典をお楽しみください</string>
+    <string name="auth_invalid_credentials">認証情報が無効です。</string>
 </resources>
