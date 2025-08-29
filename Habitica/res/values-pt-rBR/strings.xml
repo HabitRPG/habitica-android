@@ -622,7 +622,7 @@
     <string name="gift_title">Quem você gostaria de presentear?</string>
     <string name="gift_one_get_one">Presenteie uma, Ganhe uma</string>
     <string name="gift_one_get_one_detailed_description">Enquanto esta promoção estiver ativa, você receberá uma assinatura correspondente automaticamente após o envio do seu presente.</string>
-    <string name="gift_subscription_subtitle">Escolha abaixo a assinatura que você gostaria de presentear! Essa compra não se renovará automaticamente.</string>
+    <string name="gift_subscription_subtitle">Escolha a assinatura que você gostaria de presentear! Essa compra não se renovará.</string>
     <string name="send_gift">Enviar presente</string>
     <string name="server">Servidor</string>
     <string name="gift_confirmation_title">Seu presente foi enviado!</string>
