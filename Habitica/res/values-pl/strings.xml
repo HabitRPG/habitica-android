@@ -86,7 +86,7 @@
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
     <string name="quest">Misja</string>
-    <string name="avatar_body">Postura</string>
+    <string name="avatar_body">Ciało</string>
     <string name="avatar_hair">Włosy</string>
     <string name="avatar_shirt">Koszulka</string>
     <string name="avatar_skin">Skóra</string>
@@ -177,7 +177,7 @@
     <string name="wear_costume">Użyj kostiumu</string>
     <string name="equipped">W użyciu</string>
     <string name="quest_cancel_message">Czy na pewno chcesz przerwać misję\? Przerwanie misji anuluje wszystkie zaakceptowane i oczekujące zaproszenia. Misja wróci do ekwipunku właściciela.</string>
-    <string name="quest_begin_message">Jesteś pewien? Tylko %1$d z %2$d członków twojej drużyny dołączyło do tej misji! Misje zaczynają się automatycznie kiedy wszyscy członkowie dołączą bądź odrzucą zaproszenie.</string>
+    <string name="quest_begin_message">Jesteś pewien\? Tylko %1$d z %2$d członków twojej drużyny dołączyło do tej misji! Misje zaczynają się automatycznie, gdy wszyscy członkowie dołączą bądź odrzucą zaproszenie.</string>
     <string name="today">Dzisiaj</string>
     <string name="sidebar_items">Przedmioty</string>
     <string name="eggs">Jaja</string>
@@ -613,8 +613,8 @@
     <string name="login_incentive_count">Odblokuj poprzez %d krotne odwiedzenie Habitiki.</string>
     <string name="remaining_1hour">Pozostała 1 godzina</string>
     <string name="remaining_hours">Pozostało %d godzin</string>
-    <string name="remaining_minutes">Pozostało %d miesięcy</string>
-    <string name="remaining_1Minute">Pozostał 1 miesiąc</string>
+    <string name="remaining_minutes">Pozostało %d minut</string>
+    <string name="remaining_1Minute">Pozostała 1 minuta</string>
     <string name="remaining_days">Pozostało %d dni</string>
     <string name="remaining_1day">Pozostał 1 dzień</string>
     <string name="remaining_weeks">Pozostało %d tygodni</string>
