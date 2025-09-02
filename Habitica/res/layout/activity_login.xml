@@ -1,11 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.compose.ui.platform.ComposeView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activities.OnboardingActivity">
-    <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/compose_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.compose.ui.platform.ComposeView>
-</FrameLayout>
+</androidx.compose.ui.platform.ComposeView>
