@@ -11,7 +11,7 @@
     <string name="get_started">Get Started</string>
     <string name="username_description">This is a unique name you can change later at any time!</string>
     <string name="onboarding_step_avatar">You must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nSo how would you like to look? Don’t worry, you can change this later.</string>
-    <string name="onboarding_step_tasks">Looking good! Now, choose any categories you’d like to work on and we’ll create a few tasks to get started.\n\nWe’ll go to your task board after this!</string>
+    <string name="onboarding_step_tasks">Looking good! Now, choose any categories you’d like to work on and we’ll create a few tasks. We’ll go to your task board after this!</string>
     <string name="user_data">User Data</string>
     <string name="privacy_preferences">Privacy Preferences</string>
     <string name="privacy_preferences_summary">Change your privacy permissions</string>

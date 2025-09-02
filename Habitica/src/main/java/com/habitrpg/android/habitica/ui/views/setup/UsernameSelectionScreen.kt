@@ -254,7 +254,7 @@ fun TermsAndConditionsRow(
         }
         Text(
             AnnotatedString.fromHtml(
-                "You agree to our <a href=\"https://habitica.com/static/terms\">Terms of Service</a> and have read our <a href=\"https://habitica.com/static/privacy\">Privacy Policy</a>.",
+                "You confirm that you are at least 18 years old, and that you have read and agree to our <a href=\"https://habitica.com/static/terms\">Terms of Service</a> and <a href=\"https://habitica.com/static/privacy\">Privacy Policy</a>.",
                 linkStyles = TextLinkStyles(style = SpanStyle(
                     fontWeight = FontWeight.Bold,
                     textDecoration = TextDecoration.Underline,

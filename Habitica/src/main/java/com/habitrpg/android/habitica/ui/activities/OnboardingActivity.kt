@@ -101,7 +101,7 @@ class OnboardingActivity: BaseActivity() {
             }
         }
 
-        binding.composeView.setContent {
+        binding.root.setContent {
             val step by currentStep
             HabiticaTheme {
                 AnimatedContent(step,

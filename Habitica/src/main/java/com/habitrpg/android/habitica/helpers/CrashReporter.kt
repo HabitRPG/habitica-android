@@ -1,8 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.crashlytics.crashlytics
 
 object CrashReporter {
     fun setCustomKey(key: String, value: String) {
