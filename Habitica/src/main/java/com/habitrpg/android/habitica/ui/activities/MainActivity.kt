@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
@@ -66,6 +67,7 @@ import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.EventCategory
@@ -123,6 +125,7 @@ import java.util.Date
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
+import androidx.core.content.edit
 
 var mainActivityCreatedAt: Date? = null
 
@@ -156,6 +159,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     @Inject
     lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     lateinit var binding: ActivityMainBinding
 
@@ -680,7 +686,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
             CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
             CrashReporter.setCustomKey("timezone_offset", "${user.preferences?.timezoneOffset ?: 0}")
-            Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
+            
+            handleAnalyticsConsent(user)
 
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user.id, userRepository, taskRepository)
@@ -916,6 +923,38 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             binding.content.toolbarTitle.setScaledPadding(this, 16, 4, 16, 4)
         } else {
             binding.content.toolbarTitle.setPadding(0)
+        }
+    }
+    
+    private fun handleAnalyticsConsent(user: User) {
+        Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
+        
+        when (user.preferences?.analyticsConsent) {
+            true -> {
+                Analytics.identify(sharedPreferences)
+                user.id?.let { Analytics.setUserID(it) }
+                Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
+                
+                if (sharedPreferences.getBoolean("pending_registration_event", false)) {
+                    Analytics.sendEvent("user_registered", EventCategory.BEHAVIOUR, HitType.EVENT, target = AnalyticsTarget.FIREBASE)
+                    sharedPreferences.edit { remove("pending_registration_event") }
+                }
+                if (sharedPreferences.getBoolean("pending_login_event", false)) {
+                    Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
+                    sharedPreferences.edit { remove("pending_login_event") }
+                }
+                
+                sharedPreferences.edit { putBoolean("analytics_consent_given", true) }
+            }
+            false -> {
+                sharedPreferences.edit {
+                    remove("pending_registration_event")
+                    remove("pending_login_event")
+                    putBoolean("analytics_consent_given", false)
+                }
+            }
+
+            null -> {}
         }
     }
 }

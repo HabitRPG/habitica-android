@@ -81,8 +81,10 @@ class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferenc
                 putInt("usage_time_day_count", ++observedDays)
                 putLong("usage_time_daily_average", average)
             }
-            Analytics.setUserProperty("usage_time_daily_average", average)
-            Analytics.setUserProperty("usage_time_total", currentTotal)
+            if (sharedPreferences.getBoolean("analytics_consent_given", false)) {
+                Analytics.setUserProperty("usage_time_daily_average", average)
+                Analytics.setUserProperty("usage_time_total", currentTotal)
+            }
             current = 0
             currentDay = Date()
         }
@@ -124,8 +126,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 Analytics.initialize(this)
             } catch (ignored: Resources.NotFoundException) {
             }
-            Analytics.identify(sharedPrefs)
-            Analytics.setUserID(lazyApiHelper.hostConfig.userID)
         }
         registerActivityLifecycleCallbacks(this)
         setupRealm()
@@ -144,7 +144,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             Analytics.logException(it)
         }
 
-        Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
         checkIfNewVersion()
     }
@@ -376,13 +375,19 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 }
 
                 deleteDatabase(context)
+                
+                Analytics.setAnalyticsConsent(false)
+                Analytics.clearUserID()
+                
                 preferences.edit {
                     clear()
                     putBoolean("use_reminder", useReminder)
                     putString("reminder_time", reminderTime)
                     putString("theme_mode", lightMode)
                     putString("launch_screen", launchScreen)
+                    putBoolean("analytics_consent_given", false)
                 }
+                
                 pushManager?.clearUser()
 
                 instance?.lazyApiHelper?.updateAuthenticationCredentials(null, null)

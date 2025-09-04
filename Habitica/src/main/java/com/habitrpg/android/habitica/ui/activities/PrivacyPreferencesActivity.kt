@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -38,6 +39,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityComposeBinding
 import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.preferences.PrivacyToggleView
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
@@ -46,9 +48,13 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PrivacyPreferencesActivity: BaseActivity() {
+    @Inject
+    lateinit var sharedPrefs: SharedPreferences
+    
     private lateinit var binding: ActivityComposeBinding
 
     override fun getLayoutResId(): Int? {
@@ -140,6 +146,8 @@ class PrivacyPreferencesActivity: BaseActivity() {
                                         lifecycleScope.launchCatching {
                                             delay(500)
                                             isSaving = true
+                                            Analytics.setAnalyticsConsent(true)
+                                            sharedPrefs.edit().putBoolean("analytics_consent_given", true).apply()
                                             userRepository.updateUser("preferences.analyticsConsent", true)
                                             finish()
                                         }
@@ -153,6 +161,8 @@ class PrivacyPreferencesActivity: BaseActivity() {
                                     {
                                         lifecycleScope.launchCatching {
                                             isSaving = true
+                                            Analytics.setAnalyticsConsent(analyticsConsent)
+                                            sharedPrefs.edit().putBoolean("analytics_consent_given", analyticsConsent).apply()
                                             userRepository.updateUser("preferences.analyticsConsent", analyticsConsent)
                                             finish()
                                         }
