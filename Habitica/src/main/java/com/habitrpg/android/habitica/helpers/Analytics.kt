@@ -33,6 +33,8 @@ enum class HitType(val key: String) {
 object Analytics {
     private lateinit var firebase: FirebaseAnalytics
     private lateinit var amplitude: Amplitude
+    private var hasConsent: Boolean = false
+    private var isInitialized: Boolean = false
 
     @JvmOverloads
     fun sendEvent(
@@ -42,7 +44,7 @@ object Analytics {
         additionalData: Map<String, Any>? = null,
         target: AnalyticsTarget? = null
     ) {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG || !hasConsent || !isInitialized) {
             return
         }
         val data =
@@ -70,6 +72,9 @@ object Analytics {
     }
 
     fun sendNavigationEvent(page: String) {
+        if (!hasConsent || !isInitialized) {
+            return
+        }
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = page
         sendEvent("navigated $page", EventCategory.NAVIGATION, HitType.PAGEVIEW, additionalData)
@@ -85,9 +90,15 @@ object Analytics {
                 )
             )
         firebase = FirebaseAnalytics.getInstance(context)
+        firebase.setAnalyticsCollectionEnabled(false)
+        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = false
+        isInitialized = true
     }
 
     fun identify(sharedPrefs: SharedPreferences) {
+        if (!hasConsent || !isInitialized) {
+            return
+        }
         val identify =
             Identify()
                 .setOnce("androidStore", BuildConfig.STORE)
@@ -100,6 +111,10 @@ object Analytics {
     }
 
     fun setUserID(userID: String) {
+        if (!hasConsent || !isInitialized) {
+            FirebaseCrashlytics.getInstance().setUserId(userID)
+            return
+        }
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.setUserId(userID)
         }
@@ -108,11 +123,24 @@ object Analytics {
             firebase.setUserId(userID)
         }
     }
+    
+    fun clearUserID() {
+        executeLambda(AnalyticsTarget.AMPLITUDE) {
+            amplitude.setUserId(null)
+        }
+        FirebaseCrashlytics.getInstance().setUserId("")
+        executeLambda(AnalyticsTarget.FIREBASE) {
+            firebase.setUserId(null)
+        }
+    }
 
     fun setUserProperty(
         identifier: String,
         value: Any?
     ) {
+        if (!hasConsent || !isInitialized) {
+            return
+        }
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.identify(mapOf(identifier to value))
         }
@@ -131,6 +159,12 @@ object Analytics {
 
     fun setAnalyticsConsent(consents: Boolean?) {
         val isEnabled = consents == true
+        hasConsent = isEnabled
+        
+        if (!isInitialized) {
+            return
+        }
+        
         executeLambda(AnalyticsTarget.FIREBASE) {
             firebase.setAnalyticsCollectionEnabled(isEnabled)
         }
