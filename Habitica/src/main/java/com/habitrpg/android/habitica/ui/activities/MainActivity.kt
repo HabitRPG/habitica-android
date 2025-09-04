@@ -64,6 +64,7 @@ import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.EventCategory
@@ -671,7 +672,28 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
             CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
             CrashReporter.setCustomKey("timezone_offset", "${user.preferences?.timezoneOffset ?: 0}")
+            
             Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
+            
+            if (user.preferences?.analyticsConsent == true) {
+                Analytics.identify(sharedPrefs)
+                Analytics.setUserID(user.id)
+                Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
+                
+                if (sharedPrefs.getBoolean("pending_registration_event", false)) {
+                    Analytics.sendEvent("user_registered", EventCategory.BEHAVIOUR, HitType.EVENT, target = AnalyticsTarget.FIREBASE)
+                    sharedPrefs.edit().remove("pending_registration_event").apply()
+                }
+                if (sharedPrefs.getBoolean("pending_login_event", false)) {
+                    Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
+                    sharedPrefs.edit().remove("pending_login_event").apply()
+                }
+            } else if (user.preferences?.analyticsConsent == false) {
+                sharedPrefs.edit()
+                    .remove("pending_registration_event")
+                    .remove("pending_login_event")
+                    .apply()
+            }
 
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user.id, userRepository, taskRepository)
@@ -704,6 +726,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 }
             }
 
+            user.preferences?.analyticsConsent?.let { consent ->
+                sharedPrefs.edit().putBoolean("analytics_consent_given", consent).apply()
+            }
+            
             if (user.preferences?.analyticsConsent == null && !privacyActivityShown) {
                 privacyActivityShown = true
                 val intent = Intent(this, PrivacyPreferencesActivity::class.java)

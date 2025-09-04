@@ -182,13 +182,15 @@ class AuthenticationViewModel @Inject constructor(
             Analytics.logException(e)
         }
 
-        if (isRegistering.value) {
-            Analytics.sendEvent("user_registered", EventCategory.BEHAVIOUR, HitType.EVENT, target = AnalyticsTarget.FIREBASE)
-        } else {
-            Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
-        }
+        val wasRegistering = isRegistering.value
         retrieveUser()
         _authenticationSuccess.value = response.newUser
+        
+        if (wasRegistering) {
+            sharedPrefs.edit().putBoolean("pending_registration_event", true).apply()
+        } else {
+            sharedPrefs.edit().putBoolean("pending_login_event", true).apply()
+        }
     }
 
     @Throws(Exception::class)

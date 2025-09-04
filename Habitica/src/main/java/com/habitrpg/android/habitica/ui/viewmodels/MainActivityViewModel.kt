@@ -95,22 +95,24 @@ constructor(
             viewModelScope.launch(ExceptionHandler.coroutine()) {
                 contentRepository.retrieveWorldState()
                 userRepository.retrieveUser(true, forced)?.let { user ->
-                    Analytics.setUserProperty(
-                        "has_party",
-                        if (user.party?.id?.isNotEmpty() == true) "true" else "false"
-                    )
-                    Analytics.setUserProperty(
-                        "is_subscribed",
-                        if (user.isSubscribed) "true" else "false"
-                    )
-                    Analytics.setUserProperty(
-                        "checkin_count",
-                        user.loginIncentives.toString()
-                    )
-                    user.preferences?.pushNotifications?.mapOfKeys()?.forEach { key, isEnabled ->
-                        Analytics.setUserProperty("allow_push_${key}", isEnabled)
+                    if (user.preferences?.analyticsConsent == true) {
+                        Analytics.setUserProperty(
+                            "has_party",
+                            if (user.party?.id?.isNotEmpty() == true) "true" else "false"
+                        )
+                        Analytics.setUserProperty(
+                            "is_subscribed",
+                            if (user.isSubscribed) "true" else "false"
+                        )
+                        Analytics.setUserProperty(
+                            "checkin_count",
+                            user.loginIncentives.toString()
+                        )
+                        user.preferences?.pushNotifications?.mapOfKeys()?.forEach { key, isEnabled ->
+                            Analytics.setUserProperty("allow_push_${key}", isEnabled)
+                        }
+                        Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     }
-                    Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
                     if (!pushNotificationManager.notificationPermissionEnabled()) {
                         if (sharedPreferences.getBoolean("usePushNotifications", true)) {
