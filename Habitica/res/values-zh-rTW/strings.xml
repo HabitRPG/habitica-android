@@ -228,7 +228,7 @@
     <string name="class_changed">你現在是%s了！</string>
     <string name="choose_class">選擇職業</string>
     <string name="dialog_go_back">返回</string>
-    <string name="opt_out_confirmation">你確定要退出嗎？</string>
+    <string name="opt_out_confirmation">要退出職業系統嗎？</string>
     <string name="change_class">更換你的職業</string>
     <string name="change_class_description">變更職業並重新分配屬性點，這會花費 3 寶石。</string>
     <string name="enable_class">開啟職業系統</string>
@@ -251,7 +251,7 @@
     <string name="market">市場</string>
     <string name="timeTravelers">時空旅行者</string>
     <string name="seasonalShop">季節限定商店</string>
-    <string name="empty_inbox">你的收件匣裡面沒有任何訊息。您可以通過公共聊天向其他人發送新訊息！</string>
+    <string name="empty_inbox">你的收件匣裡面沒有任何訊息。您可以通過公共聊天向其他玩家發送新訊息！</string>
     <string name="party_invite">透過邀請朋友解鎖</string>
     <string name="login_incentive">透過定期登入解鎖</string>
     <string name="create_account">透過創建帳號解鎖</string>
