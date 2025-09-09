@@ -188,7 +188,7 @@ class TaskAlarmManager(
                 context,
                 intentId,
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -322,14 +322,16 @@ class TaskAlarmManager(
             } catch (ex: Exception) {
                 when (ex) {
                     is IllegalStateException, is SecurityException -> {
-                        alarmManager.setWindow(
-                            notificationType,
-                            time,
-                            600000,
-                            pendingIntent
-                        )
+                        try {
+                            alarmManager.setWindow(
+                                notificationType,
+                                time,
+                                600000,
+                                pendingIntent
+                            )
+                        } catch (_: IllegalStateException) {
+                        }
                     }
-
                     else -> {
                         throw ex
                     }

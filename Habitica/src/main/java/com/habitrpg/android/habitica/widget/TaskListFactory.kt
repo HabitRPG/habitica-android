@@ -104,11 +104,8 @@ abstract class TaskListFactory internal constructor(
     }
 
     override fun getItemId(position: Int): Long {
-        if (taskList.size > position) {
-            val task = taskList[position]
-            return task.id.hashCode().toLong()
-        }
-        return position.toLong()
+        val task = taskList.getOrNull(position) ?: return position.toLong()
+        return task.id.hashCode().toLong()
     }
 
     override fun hasStableIds(): Boolean {
