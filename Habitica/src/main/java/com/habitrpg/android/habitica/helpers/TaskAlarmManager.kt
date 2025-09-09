@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -94,7 +95,7 @@ class TaskAlarmManager(
     }
 
     fun removeAlarmsForTask(task: Task) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launchCatching {
             task.reminders?.let { reminders ->
                 // Remove not only the immediate reminder, but also the next however many (upcomingReminderOccurrencesToSchedule) reminders
                 reminders.forEachIndexed { index, reminder ->

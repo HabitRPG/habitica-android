@@ -479,8 +479,8 @@ class ChallengeFormActivity : BaseActivity() {
 
     private val newTaskResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
+            if (it.resultCode == RESULT_OK) {
+                val task = it.data?.getParcelableExtra(TaskFormActivity.PARCELABLE_TASK, Task::class.java)
                 if (task != null) {
                     addOrUpdateTaskInList(task)
                 }
