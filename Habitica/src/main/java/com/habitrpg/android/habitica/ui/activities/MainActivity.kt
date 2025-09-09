@@ -559,6 +559,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val navigationController = navHostFragment.navController
         MainNavigationController.setup(navigationController)
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            if (navHostFragment.childFragmentManager.backStackEntryCount > 30) {
+                val transaction = navHostFragment.childFragmentManager.beginTransaction()
+                transaction.remove(navHostFragment.childFragmentManager.fragments.first())
+                transaction.commit()
+            }
             updateToolbarTitle(
                 destination,
                 arguments
