@@ -2,8 +2,6 @@ package com.habitrpg.wearos.habitica
 
 import android.app.Application
 import android.content.Intent
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.crashlytics
 import com.google.firebase.Firebase
 import com.habitrpg.android.habitica.BuildConfig
@@ -55,14 +53,6 @@ class MainApplication : Application() {
                     delay(1.toDuration(DurationUnit.SECONDS))
                 }.collect()
         }
-
-        logLaunch()
-    }
-
-    private fun logLaunch() {
-        if (!BuildConfig.DEBUG) {
-            Firebase.analytics.logEvent("wear_launched", null)
-        }
     }
 
     private fun setupFirebase() {
@@ -72,7 +62,6 @@ class MainApplication : Application() {
                 crashlytics.setUserId(userRepository.userID)
             }
             crashlytics.setCustomKey("is_wear", true)
-            FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
         }
     }
 }

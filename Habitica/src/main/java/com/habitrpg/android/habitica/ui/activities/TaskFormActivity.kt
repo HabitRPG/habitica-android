@@ -428,11 +428,6 @@ class TaskFormActivity : BaseActivity() {
         }
 
         configureForm()
-
-        additionalScreenViewParams["task_type"] = taskType.value
-        additionalScreenViewParams["is_editing"] = if (isCreating) "false" else "true"
-        additionalScreenViewParams["is_challenge_task"] = if (isChallengeTask) "true" else "false"
-        additionalScreenViewParams["is_group_task"] = if (groupID != null) "true" else "false"
 }
 
     override fun onResume() {

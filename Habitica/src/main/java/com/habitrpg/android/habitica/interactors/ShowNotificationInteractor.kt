@@ -178,7 +178,6 @@ class ShowNotificationInteractor(
                 dialog.enqueue()
             }
         }
-        logOnboardingEvents(achievement)
     }
 
     private fun showFirstDropDialog(notification: Notification) {
@@ -195,12 +194,6 @@ class ShowNotificationInteractor(
             val dialog = WonChallengeDialog(activity)
             dialog.configure(notification.data as? ChallengeWonData)
             dialog.enqueue()
-        }
-    }
-
-    private fun logOnboardingEvents(type: String) {
-        if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(type) || type == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
-            Analytics.sendEvent(type, EventCategory.BEHAVIOUR, HitType.EVENT, null, AnalyticsTarget.FIREBASE)
         }
     }
 }

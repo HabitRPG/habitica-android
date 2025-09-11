@@ -934,7 +934,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
                 
                 if (sharedPreferences.getBoolean("pending_registration_event", false)) {
-                    Analytics.sendEvent("user_registered", EventCategory.BEHAVIOUR, HitType.EVENT, target = AnalyticsTarget.FIREBASE)
                     sharedPreferences.edit { remove("pending_registration_event") }
                 }
                 if (sharedPreferences.getBoolean("pending_login_event", false)) {
