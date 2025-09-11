@@ -86,7 +86,6 @@ coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutine
 credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 credentials-playServicesAuth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desuggar" }
-firebase-analytic = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase_bom" }
 firebase-config = { group = "com.google.firebase", name = "firebase-config" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
@@ -168,7 +167,6 @@ okhttp = ["okhttp", "okhttp-logging"]
 markwon = ["markwon-core", "markwon-ext", "markwon-image", "markwon-linkify", "markwon-recycler"]
 design = ["appcompat", "material", "recyclerview", "preference", "swipeRefreshLayout"]
 google-services = [
-    "firebase-analytic",
     "firebase-crashlytics",
     "firebase-messaging",
     "firebase-config",

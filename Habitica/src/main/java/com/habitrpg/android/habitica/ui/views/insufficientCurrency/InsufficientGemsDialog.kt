@@ -103,13 +103,6 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
                 purchaseButton.isVisible = true
 
                 purchaseButton?.setOnClickListener {
-                    Analytics.sendEvent(
-                        "purchased_gems_from_insufficient",
-                        EventCategory.BEHAVIOUR,
-                        HitType.EVENT,
-                        mapOf(Pair("gemPrice", gemPrice), Pair("sku", "")),
-                        AnalyticsTarget.FIREBASE
-                    )
                     MainScope().launchCatching {
                         insufficientGemsUseCase.callInteractor(
                             InsufficientGemsUseCase.RequestValues(

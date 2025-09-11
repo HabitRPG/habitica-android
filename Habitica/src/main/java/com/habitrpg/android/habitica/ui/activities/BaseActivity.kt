@@ -31,7 +31,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
@@ -171,21 +170,10 @@ abstract class BaseActivity : AppCompatActivity() {
         resources.forceLocale(this, languageHelper.locale)
     }
 
-    val additionalScreenViewParams = mutableMapOf<String, String>()
-
     override fun onResume() {
         super.onResume()
         isActivityVisible = true
         loadTheme(PreferenceManager.getDefaultSharedPreferences(this))
-
-        Analytics.sendEvent(
-            "screen_view",
-            EventCategory.NAVIGATION,
-            HitType.PAGEVIEW,
-            mapOf(
-                FirebaseAnalytics.Param.SCREEN_CLASS to (this::class.java.canonicalName ?: "")) + additionalScreenViewParams,
-            AnalyticsTarget.FIREBASE
-        )
     }
 
     override fun onPause() {

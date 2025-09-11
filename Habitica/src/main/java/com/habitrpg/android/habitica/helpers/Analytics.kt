@@ -6,15 +6,13 @@ import androidx.core.os.bundleOf
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 
 enum class AnalyticsTarget {
-    AMPLITUDE,
-    FIREBASE
+    AMPLITUDE
 }
 
 enum class EventCategory(val key: String) {
@@ -31,7 +29,6 @@ enum class HitType(val key: String) {
 }
 
 object Analytics {
-    private lateinit var firebase: FirebaseAnalytics
     private lateinit var amplitude: Amplitude
     private var hasConsent: Boolean = false
     private var isInitialized: Boolean = false
@@ -63,11 +60,6 @@ object Analytics {
                     amplitude.track(eventAction, data)
                 }
             }
-            executeLambda(AnalyticsTarget.FIREBASE) {
-                if (target == null || target == AnalyticsTarget.FIREBASE) {
-                    firebase.logEvent(eventAction, bundleOf(*data.toList().toTypedArray()))
-                }
-            }
         }
     }
 
@@ -89,8 +81,6 @@ object Analytics {
                     optOut = true,
                 )
             )
-        firebase = FirebaseAnalytics.getInstance(context)
-        firebase.setAnalyticsCollectionEnabled(false)
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = false
         isInitialized = true
     }
@@ -119,9 +109,6 @@ object Analytics {
             amplitude.setUserId(userID)
         }
         FirebaseCrashlytics.getInstance().setUserId(userID)
-        executeLambda(AnalyticsTarget.FIREBASE) {
-            firebase.setUserId(userID)
-        }
     }
     
     fun clearUserID() {
@@ -129,9 +116,6 @@ object Analytics {
             amplitude.setUserId(null)
         }
         FirebaseCrashlytics.getInstance().setUserId("")
-        executeLambda(AnalyticsTarget.FIREBASE) {
-            firebase.setUserId(null)
-        }
     }
 
     fun setUserProperty(
@@ -143,9 +127,6 @@ object Analytics {
         }
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.identify(mapOf(identifier to value))
-        }
-        executeLambda(AnalyticsTarget.FIREBASE) {
-            firebase.setUserProperty(identifier, value?.toString())
         }
     }
 
@@ -165,9 +146,6 @@ object Analytics {
             return
         }
         
-        executeLambda(AnalyticsTarget.FIREBASE) {
-            firebase.setAnalyticsCollectionEnabled(isEnabled)
-        }
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.configuration.optOut = !isEnabled
@@ -178,7 +156,6 @@ object Analytics {
     private fun executeLambda(analyticsTarget: AnalyticsTarget, action: () -> Unit) {
         when (analyticsTarget) {
             AnalyticsTarget.AMPLITUDE -> if (!::amplitude.isInitialized) return
-            AnalyticsTarget.FIREBASE -> if (!::firebase.isInitialized) return
         }
         action()
     }
