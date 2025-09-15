@@ -474,7 +474,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="forgot_password_title">Einen Passwort-Rücksetz-Link per E-Mail senden</string>
     <string name="forgot_password_description">Gib Deinen Benutzernamen oder die E-Mail-Adresse an, mit der Du Dich bei Habitica registriert hast.</string>
     <string name="forgot_password_confirmation">Wenn Deine E-Mail-Adresse bei uns gespeichert ist, sind Informationen, wie Du ein neues Passwort setzt, an Deine Adresse unterwegs.</string>
-    <string name="ok">Okay</string>
+    <string name="ok">OK</string>
     <string name="profile">Profil</string>
     <string name="profile_summary">Bearbeite Dein öffentliches Profil.</string>
     <string name="display_name">Anzeigename</string>
