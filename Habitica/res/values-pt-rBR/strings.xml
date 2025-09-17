@@ -1531,4 +1531,7 @@
     <string name="register_tos_confirm">Você concorda com nossos <a href="https://habitica.com/static/terms">Termos de Serviço</a> e leu nossa <a href="https://habitica.com/static/privacy">Política de Privacidade</a>.</string>
     <string name="display_name_description">Este é o nome que será exibido para o seu avatar no Habitica. Ao contrário do nome de usuário, ele não precisa ser um identificador único.</string>
     <string name="cancel_subscription_apple_description">Não quer mais assinar\? Devido ao seu método de pagamento, você precisará cancelar a assinatura nas configurações de assinatura do seu ID Apple no seu dispositivo iOS.</string>
+    <string name="password_change_info">As senhas devem ter 8 caracteres ou mais. Alterar sua senha desconectará você de quaisquer outros dispositivos e ferramentas de terceiros que você utilize.</string>
+    <string name="confirm_new_password">Confirmar a nova senha</string>
+    <string name="report_challenge_explanation">Você só deve reportar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou [Termos de Serviço](https://habitica.com/static/terms). Enviar um relatório falso é uma violação das Diretrizes da Comunidade de Habitica.</string>
 </resources>
