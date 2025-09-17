@@ -187,11 +187,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     ?: 0
                 ) > 0 && counterDown != null && (counterDown ?: 0) > 0
             ) {
-                "+" + counterUp.toString() + " | -" + counterDown?.toString()
+                "+$counterUp | -$counterDown"
             } else if (counterUp != null && (counterUp ?: 0) > 0) {
-                "+" + counterUp.toString()
+                "+$counterUp"
             } else if (counterDown != null && (counterDown ?: 0) > 0) {
-                "-" + counterDown.toString()
+                "-$counterDown"
             } else if ((streak ?: 0) > 0) {
                 return streak.toString()
             } else {
@@ -449,12 +449,12 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                                 nextOccurence.withHour(reminderTime.hour)
                                     .withMinute(reminderTime.minute)
                             // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
-                            if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
+                            if (nextDueDate.isBefore(now) && occurrencesList.isEmpty()) {
                                 nextDueDate = nextDueDate.plusDays(1)
                             }
 
                             // If the reminder being scheduled is not the first iteration of the reminder, increment it by one day
-                            if (occurrencesList.size > 0) {
+                            if (occurrencesList.isNotEmpty()) {
                                 nextDueDate = nextDueDate.plusDays(1)
                             }
 
@@ -567,11 +567,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         }
 
         return occurrencesList
-    }
-
-    fun parseMarkdown() {
-        parsedText = MarkdownParser.parseMarkdown(text)
-        parsedNotes = MarkdownParser.parseMarkdown(notes)
     }
 
     fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
@@ -687,14 +682,14 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         dest.writeString(this.attribute?.value)
         dest.writeString(this.type?.value)
         dest.writeDouble(this.value)
-        dest.writeList(this.tags as? List<*>)
+        dest.writeList((this.tags as? MutableList<Tag>) ?: mutableListOf<Tag>())
         dest.writeLong(this.dateCreated?.time ?: -1)
         dest.writeInt(this.position)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
-        dest.writeList(this.checklist as? List<*>)
-        dest.writeList(this.reminders as? List<*>)
+        dest.writeList(this.checklist as? MutableList<ChecklistItem> ?: mutableListOf<ChecklistItem>())
+        dest.writeList(this.reminders as? MutableList<RemindersItem> ?: mutableListOf<RemindersItem>())
         dest.writeString(this.frequency?.value)
         dest.writeValue(this.everyX)
         dest.writeString(this.daysOfMonthString)
@@ -719,7 +714,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.type = TaskType.from(`in`.readString() ?: "")
         this.value = `in`.readDouble()
         this.tags = RealmList()
-        `in`.readList(this.tags as List<*>, TaskTag::class.java.classLoader)
+        `in`.readList(this.tags as MutableList<Tag>, TaskTag::class.java.classLoader, Tag::class.java)
         val tmpDateCreated = `in`.readLong()
         this.dateCreated = if (tmpDateCreated == -1L) null else Date(tmpDateCreated)
         this.position = `in`.readInt()
@@ -727,9 +722,9 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.down = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
         this.completed = `in`.readByte().toInt() != 0
         this.checklist = RealmList()
-        `in`.readList(this.checklist as List<*>, ChecklistItem::class.java.classLoader)
+        `in`.readList(this.checklist as MutableList<ChecklistItem>, ChecklistItem::class.java.classLoader, ChecklistItem::class.java)
         this.reminders = RealmList()
-        `in`.readList(this.reminders as MutableList<Any?>, RemindersItem::class.java.classLoader)
+        `in`.readList(this.reminders as MutableList<RemindersItem>, RemindersItem::class.java.classLoader, RemindersItem::class.java)
         this.frequency = Frequency.from(`in`.readString() ?: "")
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
         this.daysOfMonthString = `in`.readString()
@@ -737,7 +732,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.streak = `in`.readValue(Int::class.java.classLoader) as? Int ?: 0
         val tmpStartDate = `in`.readLong()
         this.startDate = if (tmpStartDate == -1L) null else Date(tmpStartDate)
-        this.repeat = `in`.readParcelable(Days::class.java.classLoader)
+        this.repeat = `in`.readParcelable(Days::class.java.classLoader, Days::class.java)
         val tmpDuedate = `in`.readLong()
         this.dueDate = if (tmpDuedate == -1L) null else Date(tmpDuedate)
         this.id = `in`.readString()

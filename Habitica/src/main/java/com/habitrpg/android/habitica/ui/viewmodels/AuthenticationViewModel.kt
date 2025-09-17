@@ -237,6 +237,9 @@ class AuthenticationViewModel @Inject constructor(
                     handleSignIn(context, result, allowRegister)
                 } catch (e: GetCredentialException) {
                     Log.e("AuthenticationViewModel", "Get Credential Exception", e)
+                } catch (e: ApiException) {
+                    authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
+                    Log.e("AuthenticationViewModel", "API Exception", e)
                 }
             }
         } catch (e: ApiException) {

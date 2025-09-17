@@ -442,17 +442,6 @@ class PurchaseDialog(
     }
 
     private fun buyItem(quantity: Int) {
-        Analytics.sendEvent(
-            "item_purchased",
-            EventCategory.BEHAVIOUR,
-            HitType.EVENT,
-            mapOf(
-                "shop" to (shopIdentifier ?: ""),
-                "type" to shopItem.purchaseType,
-                "key" to shopItem.key
-            ),
-            AnalyticsTarget.FIREBASE
-        )
         HapticFeedbackManager.tap(buyButton)
         val snackbarText = arrayOf("")
         val observable: (suspend () -> Any?)
