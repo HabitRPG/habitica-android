@@ -71,7 +71,7 @@ class OnboardingActivity: BaseActivity() {
 
     val authenticationViewModel: AuthenticationViewModel by viewModels()
 
-    val currentStep = mutableStateOf(OnboardingSteps.SETUP)
+    val currentStep = mutableStateOf(OnboardingSteps.LOGIN)
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -90,6 +90,11 @@ class OnboardingActivity: BaseActivity() {
         supportActionBar?.hide()
         // Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false)
+
+        if (authenticationViewModel.hostConfig.hasAuthentication()) {
+            startMainActivity()
+            return
+        }
 
         binding.composeView.setContent {
             val step by currentStep

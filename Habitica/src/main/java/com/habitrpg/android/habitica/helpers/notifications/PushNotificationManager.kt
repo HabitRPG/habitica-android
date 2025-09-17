@@ -76,6 +76,7 @@ class PushNotificationManager(
                 // catchy catch
             }
         }
+        addUnifiedPushDeviceIfConfigured()
     }
 
     private fun addRefreshToken() {
@@ -85,6 +86,22 @@ class PushNotificationManager(
         val pushDeviceData = HashMap<String, String>()
         pushDeviceData["regId"] = this.refreshedToken
         pushDeviceData["type"] = "android"
+        MainScope().launchCatching {
+            apiClient.addPushDevice(pushDeviceData)
+        }
+    }
+
+    private fun addUnifiedPushDeviceIfConfigured() {
+        val unifiedPushUrl = sharedPreferences.getString(UNIFIED_PUSH_SERVER_KEY, null)?.trim()
+        if (unifiedPushUrl.isNullOrEmpty()) {
+            return
+        }
+        if (this.user == null) {
+            return
+        }
+        val pushDeviceData = HashMap<String, String>()
+        pushDeviceData["regId"] = unifiedPushUrl
+        pushDeviceData["type"] = "unifiedpush"
         MainScope().launchCatching {
             apiClient.addPushDevice(pushDeviceData)
         }
@@ -140,6 +157,7 @@ class PushNotificationManager(
         const val CONTENT_RELEASE_NOTIFICATION_KEY = "contentRelease"
         const val G1G1_PROMO_KEY = "g1g1Promo"
         const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
+        private const val UNIFIED_PUSH_SERVER_KEY = "unified_push_server_url"
 
         fun displayNotification(
             remoteMessage: RemoteMessage,

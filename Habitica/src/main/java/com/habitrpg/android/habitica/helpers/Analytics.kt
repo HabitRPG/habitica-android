@@ -76,14 +76,19 @@ object Analytics {
     }
 
     fun initialize(context: Context) {
-        amplitude =
-            Amplitude(
-                Configuration(
-                    context.getString(R.string.amplitude_app_id),
-                    context,
-                    optOut = true,
+        val amplitudeAppId = context.getString(R.string.amplitude_app_id)
+        if (amplitudeAppId.isNullOrBlank()) {
+            // No amplitude configuration provided; skip amplitude setup for this build.
+        } else {
+            amplitude =
+                Amplitude(
+                    Configuration(
+                        amplitudeAppId,
+                        context,
+                        optOut = true,
+                    )
                 )
-            )
+        }
         firebase = FirebaseAnalytics.getInstance(context)
     }
 
