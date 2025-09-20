@@ -1618,6 +1618,6 @@
     <string name="enjoy_benefits">有料プランに登録してこれらの限定特典をお楽しみください</string>
     <string name="auth_invalid_credentials">認証情報が無効です。</string>
     <string name="resubscribe_for_hourglasses">神秘の砂時計をゲットし続けるには、有料プランに再登録してください</string>
-    <string name="get_12_mystic_hourglasses">初めて12ヶ月間の有料プランに登録したときは、神秘の砂時計を一気に12個もらえます！</string>
+    <string name="get_12_mystic_hourglasses">初めて12ヶ月間の有料プランに登録したとき、12個の神秘の砂時計をすぐにゲットしよう！</string>
     <string name="next_switch_in_x">あと%sで切り換えます</string>
 </resources>
