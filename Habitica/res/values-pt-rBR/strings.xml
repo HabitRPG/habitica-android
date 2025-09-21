@@ -1057,7 +1057,7 @@
     <string name="sidebar_teams">Times</string>
     <string name="twelve_months_one_time">Assinatura única de 12 meses</string>
     <string name="six_months_one_time">Assinatura única de 6 meses</string>
-    <string name="three_months_one_time">Assinatura única de 3 meses</string>
+    <string name="three_months_one_time">3 meses</string>
     <string name="one_month_one_time">Assinatura única de 1 mês</string>
     <string name="gift_one_get_one_purchase_banner">Presenteie uma assinatura e receba uma assinatura de graça até %s</string>
     <string name="g1g1_promo_info_instructions">Clique em \"Dê uma assinatura de presente\" e escreva o nome de usuário da conta que você gostaria de presentar. Em seguida, escolha o plano que você deseja presentear e confira. Sua conta será automaticamente recompensada com o mesmo nível de assinatura que você acabou de presentear.</string>
@@ -1534,4 +1534,8 @@
     <string name="password_change_info">As senhas devem ter 8 caracteres ou mais. Alterar sua senha desconectará você de quaisquer outros dispositivos e ferramentas de terceiros que você utilize.</string>
     <string name="confirm_new_password">Confirmar a nova senha</string>
     <string name="report_challenge_explanation">Você só deve reportar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou [Termos de Serviço](https://habitica.com/static/terms). Enviar um relatório falso é uma violação das Diretrizes da Comunidade de Habitica.</string>
+    <string name="benefits_end">Benefícios terminam em %s</string>
+    <string name="faint_loss_description_alt">Você cairá para o nível <b>%1$d</b>, perderá <b>%2$d</b> de Ouro, e sua Experiência… Mas você pode recuperar tudo com esforço!</string>
+    <string name="report_reason_title_challenge">Por que você está reportando este desafio\?</string>
+    <string name="g1g1_promo_info_limitations_noutc">Este é um evento por tempo limitado que começa em %1$s e termina em %2$s. Esta promoção se aplica apenas quando você presenteia outro Habitican. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presente adicionará meses de crédito que só serão usados após o cancelamento ou expiração da assinatura atual.</string>
 </resources>
