@@ -389,7 +389,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         val now = today ?: ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
         var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val weekInMonth = getWeeksOfMonth()?.firstOrNull()?.toLong()
-        val weekdayInMonth = startDate.dayOfWeek
+        val weekdayInMonth = if (weekInMonth != null) startDate.dayOfWeek else null
+        val monthDays = getDaysOfMonth()
         val frequency = this.frequency ?: return null
         val everyX = this.everyX?.toLong() ?: 1L
         if (everyX == 0L) {
@@ -399,11 +400,14 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         startDate = startDate.withHour(reminderTime.hour).withMinute(reminderTime.minute)
         nextOccurence = startDate
         if (frequency == Frequency.MONTHLY) {
-            daysOfMonth?.let {
-                if (it.isEmpty()) return@let
-                nextOccurence = nextOccurence.withDayOfMonth(it.first())
+            monthDays?.let { days ->
+                if (days.isEmpty()) return@let
+                val targetDay = days.first().coerceAtMost(nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear))
+                nextOccurence = nextOccurence.withDayOfMonth(targetDay)
                 if (nextOccurence.isBefore(startDate)) {
                     nextOccurence = nextOccurence.plusMonths(1)
+                    val maxDay = nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear)
+                    nextOccurence = nextOccurence.withDayOfMonth(targetDay.coerceAtMost(maxDay))
                 }
             }
         }
@@ -484,28 +488,60 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     }
 
                     Frequency.MONTHLY -> {
-                        while (nextOccurence.isBefore(now)) {
-                            nextOccurence = nextOccurence.plusMonths(everyX)
-                            if (weekInMonth != null && weekdayInMonth != null) {
-                                nextOccurence = nextOccurence.withDayOfMonth(1)
+                        if (monthDays?.isNotEmpty() == true) {
+                            while (nextOccurence.isBefore(now)) {
+                                nextOccurence = nextOccurence.plusMonths(everyX)
+                                val targetDay = monthDays.first()
+                                val maxDay = nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear)
+                                nextOccurence = nextOccurence.withDayOfMonth(targetDay.coerceAtMost(maxDay))
+                            }
+                            val todayWithTime =
+                                nextOccurence
+                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
+                                todayWithTime
+                            } else {
+                                nextOccurence = nextOccurence.plusMonths(everyX)
+                                val targetDay = monthDays.first()
+                                val maxDay = nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear)
+                                nextOccurence.withDayOfMonth(targetDay.coerceAtMost(maxDay))
+                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            }
+                        } else if (weekInMonth != null && weekdayInMonth != null) {
+                            while (nextOccurence.isBefore(now)) {
+                                nextOccurence = nextOccurence.plusMonths(everyX).withDayOfMonth(1)
                                 while (nextOccurence.dayOfWeek != weekdayInMonth) {
                                     nextOccurence = nextOccurence.plusDays(1)
                                 }
                                 nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                if (nextOccurence.monthValue != nextOccurence.minusWeeks(weekInMonth).monthValue) {
+                                    nextOccurence = nextOccurence.plusMonths(1).withDayOfMonth(1)
+                                    while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                        nextOccurence = nextOccurence.plusDays(1)
+                                    }
+                                    nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                }
                             }
-                        }
-                        val todayWithTime = nextOccurence
-                            .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
-                            todayWithTime
-                        } else if (weekInMonth != null && weekdayInMonth != null) {
-                            nextOccurence = nextOccurence.plusMonths(everyX)
-                                .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                                .withDayOfMonth(1)
-                            while (nextOccurence.dayOfWeek != weekdayInMonth) {
-                                nextOccurence = nextOccurence.plusDays(1)
+                            val todayWithTime =
+                                nextOccurence
+                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
+                                todayWithTime
+                            } else {
+                                nextOccurence = nextOccurence.plusMonths(everyX).withDayOfMonth(1)
+                                while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                    nextOccurence = nextOccurence.plusDays(1)
+                                }
+                                nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                if (nextOccurence.monthValue != nextOccurence.minusWeeks(weekInMonth).monthValue) {
+                                    nextOccurence = nextOccurence.plusMonths(1).withDayOfMonth(1)
+                                    while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                        nextOccurence = nextOccurence.plusDays(1)
+                                    }
+                                    nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                }
+                                nextOccurence.withHour(reminderTime.hour).withMinute(reminderTime.minute)
                             }
-                            nextOccurence.plusWeeks(weekInMonth)
                         } else {
                             nextOccurence.plusMonths(everyX)
                                 .withHour(reminderTime.hour).withMinute(reminderTime.minute)
@@ -708,6 +744,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.weeksOfMonth = weeksOfMonth
         if ((weeksOfMonth?.size ?: 0) > 0) {
             this.weeksOfMonthString = this.weeksOfMonth?.toString()
+            this.daysOfMonth = null
+            this.daysOfMonthString = "[]"
         } else {
             weeksOfMonthString = "[]"
         }
@@ -737,6 +775,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.daysOfMonth = daysOfMonth
         if ((daysOfMonth?.size ?: 0) > 0) {
             this.daysOfMonthString = this.daysOfMonth?.toString()
+            this.weeksOfMonth = null
+            this.weeksOfMonthString = "[]"
         } else {
             daysOfMonthString = "[]"
         }

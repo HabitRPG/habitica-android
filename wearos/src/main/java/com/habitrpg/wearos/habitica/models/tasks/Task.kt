@@ -260,6 +260,8 @@ open class Task() : Parcelable, BaseTask {
         this.weeksOfMonth = weeksOfMonth
         if ((weeksOfMonth?.size ?: 0) > 0) {
             this.weeksOfMonthString = this.weeksOfMonth?.toString()
+            this.daysOfMonth = null
+            this.daysOfMonthString = "[]"
         } else {
             weeksOfMonthString = "[]"
         }
@@ -288,6 +290,8 @@ open class Task() : Parcelable, BaseTask {
         this.daysOfMonth = daysOfMonth
         if ((daysOfMonth?.size ?: 0) > 0) {
             this.daysOfMonthString = this.daysOfMonth?.toString()
+            this.weeksOfMonth = null
+            this.weeksOfMonthString = "[]"
         } else {
             daysOfMonthString = "[]"
         }

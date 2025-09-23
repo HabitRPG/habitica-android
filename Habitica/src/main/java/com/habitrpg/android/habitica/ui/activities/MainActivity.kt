@@ -22,6 +22,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -105,6 +107,7 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -677,6 +680,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             preferences?.language?.let { apiClient.languageCode = it }
             if (preferences?.language != viewModel.preferenceLanguage) {
                 viewModel.preferenceLanguage = preferences?.language
+                val currentAppLocale = AppCompatDelegate.getApplicationLocales()
+                val serverLanguageTag = LanguageHelper.getLanguageTag(preferences?.language)
+                if (currentAppLocale.isEmpty || currentAppLocale[0]?.toLanguageTag() != serverLanguageTag) {
+                    val appLocale = LocaleListCompat.forLanguageTags(serverLanguageTag)
+                    AppCompatDelegate.setApplicationLocales(appLocale)
+                }
             }
             preferences?.sound?.let { soundManager.soundTheme = it }
 
@@ -735,14 +744,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
-    // region Events
 
     public override fun onDestroy() {
         userRepository.close()
         inventoryRepository.close()
         super.onDestroy()
     }
-    // endregion
 
     internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (viewModel.user.value != null && data != null) {

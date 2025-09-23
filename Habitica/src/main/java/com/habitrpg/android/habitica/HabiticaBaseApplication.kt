@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
@@ -15,6 +14,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -130,6 +130,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         registerActivityLifecycleCallbacks(this)
         setupRealm()
         setLocale()
+        setupLocaleChangeListener()
         setupRemoteConfig()
         setupNotifications()
         setupAdHandler()
@@ -152,15 +153,52 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     }
 
     private fun setLocale() {
-        val resources = resources
-        val configuration: Configuration = resources.configuration
-        val languageHelper = LanguageHelper(sharedPrefs.getString("language", "en"))
-        if (
-            configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
-        ) {
-            configuration.setLocale(languageHelper.locale)
-            resources.updateConfiguration(configuration, null)
+        val savedLanguage = sharedPrefs.getString("language", "en")
+        val currentAppLocales = AppCompatDelegate.getApplicationLocales()
+        
+        if (currentAppLocales.isEmpty || savedLanguage != null) {
+            val languageTag = LanguageHelper.getLanguageTag(savedLanguage)
+            val appLocale = LocaleListCompat.forLanguageTags(languageTag)
+            
+            if (currentAppLocales.isEmpty || currentAppLocales[0]?.toLanguageTag() != languageTag) {
+                AppCompatDelegate.setApplicationLocales(appLocale)
+            }
         }
+    }
+    
+    private fun setupLocaleChangeListener() {
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                val currentLocales = AppCompatDelegate.getApplicationLocales()
+                if (!currentLocales.isEmpty) {
+                    val currentLanguageTag = currentLocales[0]?.toLanguageTag() ?: "en"
+                    val prefLanguage = when (currentLanguageTag) {
+                        "iw" -> "iw"
+                        "hr-HR" -> "hr"
+                        "in" -> "in"
+                        "pt-PT" -> "pt"
+                        "pt-BR" -> "pt_BR"
+                        "en-GB" -> "en_GB"
+                        "zh-TW" -> "zh_TW"
+                        else -> currentLanguageTag.replace("-", "_")
+                    }
+                    
+                    val savedLanguage = sharedPrefs.getString("language", "en")
+                    if (savedLanguage != prefLanguage) {
+                        sharedPrefs.edit {
+                            putString("language", prefLanguage)
+                        }
+                    }
+                }
+            }
+            
+            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityResumed(activity: Activity) {}
+            override fun onActivityPaused(activity: Activity) {}
+            override fun onActivityStopped(activity: Activity) {}
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+            override fun onActivityDestroyed(activity: Activity) {}
+        })
     }
 
     protected open fun setupRealm() {
