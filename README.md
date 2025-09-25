@@ -20,6 +20,11 @@ See the project's Releases page for a list of versions with their changelogs.
 
 ##### [View Releases](https://github.com/HabitRPG/habitrpg-android/releases)
 
+Self-hosted builds published from this repository include two APKs in each release:
+
+- `habitica-self-host-debug.apk` – debuggable build with developer tooling enabled
+- `habitica-self-host-release.apk` – optimized release build ready for deployment
+
 If you Watch this repository, GitHub will send you an email every time we publish an update.
 
 ## Contributing
@@ -60,6 +65,8 @@ We use Kotlin and follow the code style based on the [Android Kotlin Style Guide
 
 
    Note: this is the default production `habitica.properties` file for habitica.com. If you want to use a local Habitica server, please modify the values in the properties file accordingly.
+
+   When running a self-hosted build you can now switch servers directly from the login screen. Tap the gear icon in the upper-right corner seven times to unlock the developer options dialog, enter your custom base URL, and (optionally) enable UnifiedPush with the distributor installed on the device.
 
 
 
