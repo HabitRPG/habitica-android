@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
+import org.unifiedpush.android.connector.UnifiedPush
 import java.io.IOException
 
 class PushNotificationManager(
@@ -91,19 +92,68 @@ class PushNotificationManager(
         }
     }
 
+    fun registerUnifiedPushEndpoint(endpoint: String) {
+        val sanitized = endpoint.trim()
+        val previous = sharedPreferences.getString(UNIFIED_PUSH_ENDPOINT_KEY, null)?.trim()
+        if (!previous.isNullOrEmpty() && previous != sanitized) {
+            enqueueUnifiedPushRemoval(previous)
+        }
+        sharedPreferences.edit {
+            putString(UNIFIED_PUSH_ENDPOINT_KEY, sanitized)
+        }
+        enqueueUnifiedPushRegistration(sanitized)
+    }
+
+    fun unregisterUnifiedPushEndpoint() {
+        val existing = sharedPreferences.getString(UNIFIED_PUSH_ENDPOINT_KEY, null)?.trim()
+        if (!existing.isNullOrEmpty()) {
+            enqueueUnifiedPushRemoval(existing)
+        }
+        sharedPreferences.edit {
+            remove(UNIFIED_PUSH_ENDPOINT_KEY)
+        }
+    }
+
+    fun ensureUnifiedPushRegistration() {
+        UnifiedPush.register(context)
+        enqueueUnifiedPushRegistration(
+            sharedPreferences.getString(UNIFIED_PUSH_ENDPOINT_KEY, null)?.trim().orEmpty(),
+            ignoreEmpty = true
+        )
+    }
+
     private fun addUnifiedPushDeviceIfConfigured() {
-        val unifiedPushUrl = sharedPreferences.getString(UNIFIED_PUSH_SERVER_KEY, null)?.trim()
+        val unifiedPushUrl = sharedPreferences.getString(UNIFIED_PUSH_ENDPOINT_KEY, null)?.trim()
         if (unifiedPushUrl.isNullOrEmpty()) {
+            return
+        }
+        enqueueUnifiedPushRegistration(unifiedPushUrl)
+    }
+
+    private fun enqueueUnifiedPushRegistration(endpoint: String, ignoreEmpty: Boolean = false) {
+        if (endpoint.isEmpty()) {
+            if (!ignoreEmpty) {
+                unregisterUnifiedPushEndpoint()
+            }
             return
         }
         if (this.user == null) {
             return
         }
         val pushDeviceData = HashMap<String, String>()
-        pushDeviceData["regId"] = unifiedPushUrl
+        pushDeviceData["regId"] = endpoint
         pushDeviceData["type"] = "unifiedpush"
         MainScope().launchCatching {
             apiClient.addPushDevice(pushDeviceData)
+        }
+    }
+
+    private fun enqueueUnifiedPushRemoval(endpoint: String) {
+        if (endpoint.isEmpty() || this.user == null) {
+            return
+        }
+        MainScope().launchCatching {
+            apiClient.deletePushDevice(endpoint)
         }
     }
 
@@ -157,7 +207,7 @@ class PushNotificationManager(
         const val CONTENT_RELEASE_NOTIFICATION_KEY = "contentRelease"
         const val G1G1_PROMO_KEY = "g1g1Promo"
         const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
-        private const val UNIFIED_PUSH_SERVER_KEY = "unified_push_server_url"
+        const val UNIFIED_PUSH_ENDPOINT_KEY = "unified_push_server_url"
 
         fun displayNotification(
             remoteMessage: RemoteMessage,

@@ -85,7 +85,6 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
     var emailFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     var showServerDialog by remember { mutableStateOf(false) }
     var customServerUrl by remember { mutableStateOf(authenticationViewModel.currentServerSelection()) }
-    var unifiedPushUrl by remember { mutableStateOf(authenticationViewModel.currentUnifiedPushServer()) }
     var serverError by remember { mutableStateOf<String?>(null) }
     val invalidServerMessage = stringResource(R.string.custom_server_invalid)
     val context = LocalContext.current
@@ -96,7 +95,6 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
     LaunchedEffect(showServerDialog) {
         if (showServerDialog) {
             customServerUrl = authenticationViewModel.currentServerSelection()
-            unifiedPushUrl = authenticationViewModel.currentUnifiedPushServer()
             serverError = null
             devTapCount = 0
         }
@@ -336,27 +334,6 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                         )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    OutlinedTextField(
-                        value = unifiedPushUrl,
-                        onValueChange = { unifiedPushUrl = it },
-                        label = { Text(stringResource(R.string.custom_up_server_label), color = Color.White) },
-                        placeholder = { Text(stringResource(R.string.custom_up_server_placeholder), color = Color.White.copy(alpha = 0.6f)) },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = containerColor,
-                            unfocusedContainerColor = containerColor,
-                            focusedLabelColor = Color.White,
-                            unfocusedLabelColor = Color.White,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            cursorColor = MaterialTheme.colorScheme.primary,
-                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                            focusedPlaceholderColor = Color.White.copy(alpha = 0.6f),
-                            unfocusedPlaceholderColor = Color.White.copy(alpha = 0.6f)
-                        )
-                    )
                 }
             },
             containerColor = dialogContainer,
@@ -366,7 +343,6 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                     onClick = {
                         val applied = authenticationViewModel.applyServerOverride(customServerUrl)
                         if (applied) {
-                            authenticationViewModel.updateUnifiedPushServer(unifiedPushUrl)
                             serverError = null
                             showServerDialog = false
                         } else {
@@ -382,9 +358,7 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                     TextButton(
                         onClick = {
                             authenticationViewModel.resetServerOverride()
-                            authenticationViewModel.updateUnifiedPushServer(null)
                             customServerUrl = authenticationViewModel.currentServerSelection()
-                            unifiedPushUrl = authenticationViewModel.currentUnifiedPushServer()
                             serverError = null
                             showServerDialog = false
                         }

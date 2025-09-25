@@ -83,10 +83,6 @@ class AuthenticationViewModel @Inject constructor(
         return sharedPrefs.getString(SERVER_OVERRIDE_KEY, hostConfig.address) ?: hostConfig.address
     }
 
-    fun currentUnifiedPushServer(): String {
-        return sharedPrefs.getString(UNIFIED_PUSH_SERVER_KEY, "") ?: ""
-    }
-
     fun isDevOptionsUnlocked(): Boolean {
         return sharedPrefs.getBoolean(DEV_OPTIONS_UNLOCKED_KEY, false)
     }
@@ -109,21 +105,9 @@ class AuthenticationViewModel @Inject constructor(
         return true
     }
 
-    fun updateUnifiedPushServer(serverUrl: String?) {
-        val sanitized = serverUrl?.trim()?.takeIf { it.isNotEmpty() }
-        sharedPrefs.edit {
-            if (sanitized != null) {
-                putString(UNIFIED_PUSH_SERVER_KEY, sanitized)
-            } else {
-                remove(UNIFIED_PUSH_SERVER_KEY)
-            }
-        }
-    }
-
     fun resetServerOverride() {
         sharedPrefs.edit {
             remove(SERVER_OVERRIDE_KEY)
-            remove(UNIFIED_PUSH_SERVER_KEY)
             if (!isDevOptionsUnlocked()) {
                 remove(DEV_OPTIONS_UNLOCKED_KEY)
             }
@@ -337,7 +321,6 @@ class AuthenticationViewModel @Inject constructor(
 
     companion object {
         private const val SERVER_OVERRIDE_KEY = "server_url"
-        private const val UNIFIED_PUSH_SERVER_KEY = "unified_push_server_url"
         private const val DEV_OPTIONS_UNLOCKED_KEY = "dev_options_unlocked"
     }
 }
