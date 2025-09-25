@@ -922,7 +922,7 @@
     <string name="avatar_accent">装饰</string>
     <string name="buy_all">全部购买</string>
     <string name="read_more">了解更多</string>
-    <string name="purchase_amount_error">你买不了这么多。</string>
+    <string name="purchase_amount_error">已达到购买上限。</string>
     <string name="delete_checklist_entry">删除……</string>
     <string name="still_questions">还有问题要问？</string>
     <string name="health_description">这代表你的角色的生命。未完成日常任务或点击负面习惯会**减少你的生命值**。

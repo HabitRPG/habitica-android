@@ -1504,7 +1504,7 @@
     <string name="error_loading_member_body">Une erreur est apparue en chargeant les données de ce·tte joueu·r·se. Assurez-vous d\'avoir correctement écrit son @pseudo.</string>
     <string name="preference_email_content_release">Sorties de Contenu + Évènements</string>
     <string name="customization_shop_check_out">Allez voir dans la Boutique de Personnalisation pour découvrir les nombreuses façon de personnaliser votre avatar !</string>
-    <string name="switches_in_x">Se transforme en %s</string>
+    <string name="switches_in_x">Se transforme dans %s</string>
     <string name="tap_to_reload">Rafraîchir pour de nouveaux objets</string>
     <string name="summer">Été</string>
     <string name="fall">Automne</string>

@@ -43,9 +43,9 @@
     <string name="login_btn">로그인</string>
     <string name="register_btn">등록</string>
     <string name="username">아이디</string>
-    <string name="password">암호</string>
+    <string name="password">비밀번호</string>
     <string name="emailAddress">이메일 주소</string>
-    <string name="confirmpassword">암호 확인</string>
+    <string name="confirmpassword">비밀번호 확인</string>
     <string name="login_btn_google">구글 계정으로 가입</string>
     <string name="logout">로그아웃</string>
     <string name="logout_description">계정에서 로그아웃하기</string>

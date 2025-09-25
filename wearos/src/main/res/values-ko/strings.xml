@@ -2,7 +2,7 @@
 <resources>
     <string name="save">저장</string>
     <string name="levelup_description">열심히 노력한 결과 레벨이 올랐습니다!</string>
-    <string name="ok">좋습니다</string>
+    <string name="ok">좋아요</string>
     <string name="syncing_account">휴대폰에서 계정 동기화 중</string>
     <string name="one_quest_item">1 퀘스트 아이템</string>
     <string name="other_options">다른 옵션</string>

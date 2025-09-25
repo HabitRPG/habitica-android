@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tutorial_overview">Eto nas! Ispunili smo nekoliko zadataka za tebe na osnovu tvojih interesa. Pokušaj dodati nekoliko vlastitih. Možeš urediti bilo koji zadatak klikom na njegov naziv.</string>
-    <string name="tutorial_habits_1">Prve na redu su Navike. To mogu biti pozitivne Navike koje želiš poboljšati ili loše Navike koje želiš prekinuti.</string>
-    <string name="tutorial_habits_2">Svaki put kad napraviš pozitivnu Naviku, klikni na + kako bi dobio/la iskustvo i zlatnike!</string>
-    <string name="tutorial_habits_3">Ako popustiš i napraviš lošu Naviku, klikom na - ćeš umanjiti zdravlje svog avatara i time pomoći sebi da ostaneš odgovoran/na.</string>
-    <string name="tutorial_habits_4">Pokušaj! Možeš istražiti druge vrste zadataka u navigaciji ispod.</string>
+    <string name="tutorial_overview">Odlično! Popunio sam ti neke zadatke na temelju tvojih interesa. Pokušaj dodati još nekoliko svojih. Možeš urediti bilo koji zadatak dodirom na naslov.</string>
+    <string name="tutorial_habits_1">Prve su Navike. One mogu biti pozitivne navike koje želiš poboljšati ili negativne navike koje želiš prestati raditi.</string>
+    <string name="tutorial_habits_2">Kada god izvršiš pozitivnu Naviku, dodirni + kako bi dobio iskustvo i zlato!</string>
+    <string name="tutorial_habits_3">Ako pak posustaneš i napraviš negativnu naviku, dodir na - smanjit će zdravlje tvog avatara kako bi ostao odgovoran.</string>
+    <string name="tutorial_habits_4">Pokušaj! Ostale vrste zadataka možeš istražiti putem donje navigacije.</string>
     <string name="tutorial_dailies_1">Stvori Svakodnevne zadatke za one zadatke koji imaju rokove i koje trebaš izvršavati prema redovnom rasporedu.</string>
-    <string name="tutorial_dailies_2">Pripazi — ako propustiš jedan, tvoj avatar će podnijeti štetu preko noći. Ali njihovo dosljedno križanje s popisa donosi velike nagrade!</string>
-    <string name="tutorial_todos_1">Koristi Zadatke kako bi vodio/la računa o zadaćama koje trebaš obaviti samo jednom.</string>
-    <string name="tutorial_todos_2">Ako trebaš obaviti svoj Zadatak unutar određenog vremena, postavi rok. Izgleda da možeš jedan prekrižiti — samo naprijed!</string>
-    <string name="tutorial_rewards_1">Kupuj opremu za svoj avatar zlatnicima koje zaradiš!</string>
-    <string name="tutorial_rewards_2">Također možeš stvarati stvarne Prilagođene Nagrade na osnovu onog što te motivira.</string>
-    <string name="tutorial_tasks_complete">To je to za sada. Ako ti treba podsjetnik, pogledaj odjeljak Često postavljenih pitanja.</string>
-    <string name="tutorial_skills">Vještine su posebne sposobnosti koje imaju jake učinke! Klikni na sposobnost kako bi ju iskoristio/la. Koštat će te mane (plava traka), koju zaradiš prijavljujući se svaki dan i izvršavajući svoje zadatke u stvarnom životu. Provjeri Često Postavljena Pitanja u meniju za više informacija!</string>
-    <string name="tutorial_party">Ovo je mjesto gdje se ti i tvoji prijatelji možete držati svojih ciljeva i boriti protiv čudovišta pomoću svojih zadataka!</string>
-    <string name="tutorial_stats">Klikni na sivi gumb kako bi raspodijelio/la mnoštvo svojih statističkih bodova odjednom, ili klikni na strelice kako bi ih dodavao/la jednog po jednog.</string>
-    <string name="tutorial_party_created">Dobrodošao/la u svoju Družinu! Možeš naći nove članove na popisu igrača koji traže Družinu ili pozvati prijatelje kako bi dobio/la Svitak za Bazi-Lista Pustolovinu.\n\nPosjeti Podršku kako bi naučio/la više o Družinama.</string>
+    <string name="tutorial_dailies_2">Budi oprezan - ako propustiš jedan, tvoj će avatar pretrpjeti štetu tijekom noći. Dosljedno ih označavaj kako bi dobio sjajne nagrade!</string>
+    <string name="tutorial_todos_1">Koristi Zadatke za praćenje obaveza koje trebaš obaviti samo jednom.</string>
+    <string name="tutorial_todos_2">Ako svoj zadatak moraš obaviti do određenog vremena, postavi mu rok. Izgleda da možeš označiti jedan — samo naprijed!</string>
+    <string name="tutorial_rewards_1">Kupuj opremu za svog avatara zlatom koje zaradiš!</string>
+    <string name="tutorial_rewards_2">Možete izraditi i prilagođene nagrade iz stvarnog svijeta na temelju onoga što vas motivira.</string>
+    <string name="tutorial_tasks_complete">Sve za sada. Ako vam treba podsjetnik, provjerite često postavljana pitanja.</string>
+    <string name="tutorial_skills">Vještine su posebne sposobnosti koje imaju snažne efekte! Dodirnite vještinu da biste je upotrijebili. Koštat će vas Mane (plava traka), koju zarađujete svakodnevnim prijavljivanjem i izvršavanjem zadataka iz stvarnog života. Za više informacija provjerite odjeljak često postavljana pitanjau izborniku!</string>
+    <string name="tutorial_party">Ovo je mjesto gdje ti i tvoji prijatelji možete biti odgovorni jedni drugima za svoje ciljeve i boriti se protiv čudovišta svojim zadacima!</string>
+    <string name="tutorial_stats">Dodirni sivi gumb da odjednom rasporediš puno bodova ili dodirni strelice da ih dodaš jedan po jedan.</string>
+    <string name="tutorial_party_created">Dobrodošli u svoju grupu! Možete pronaći više članova na popisu igrača koji traže grupu ili izravno pozvati prijatelje kako biste zaradili Bazi-Lista Pustolovinu. 
+\n
+\nPosjetite Podršku kako biste saznali više o grupama.</string>
 </resources>

@@ -9,9 +9,9 @@
     <string name="weekly">Semanalmente</string>
     <string name="daily">Diariamente</string>
     <string name="stats">Atributos</string>
-    <string name="settings">Definições</string>
+    <string name="settings">Configurações</string>
     <string name="action_edit">Editar</string>
-    <string name="action_cancel">Cancelar Convite</string>
+    <string name="action_cancel">Cancelar</string>
     <string name="about_title">Sobre</string>
     <string name="are_you_sure">Tem certeza\?</string>
     <string name="task">Tarefa</string>
@@ -28,25 +28,26 @@
     <string name="todos">Afazeres</string>
     <string name="rewards">Recompensas</string>
     <string name="habit">Hábito</string>
-    <string name="reward">Prémio</string>
+    <string name="reward">Recompensa</string>
     <string name="todo">Tarefa</string>
     <string name="new_task">Nova Tarefa</string>
     <string name="user_level">Nível %d</string>
     <string name="user_level_long">Nível %d</string>
     <string name="login_btn">Iniciar Sessão</string>
-    <string name="register_btn">Registar</string>
-    <string name="username">Nome de utilizador</string>
-    <string name="password">Palavra-passe</string>
+    <string name="register_btn">Registrar</string>
+    <string name="username">Nome de usuário</string>
+    <string name="password">Senha</string>
     <string name="emailAddress">Endereço de e-mail</string>
-    <string name="confirmpassword">Confirmar palavra-passe</string>
-    <string name="login_btn_google">Entre com sua conta Google</string>
+    <string name="confirmpassword">Confirmar senha</string>
+    <string name="login_btn_google">Entrar com a conta Google</string>
     <string name="logout">Terminar Sessão</string>
     <string name="logout_description">Termine a sessão da sua conta</string>
     <string name="LoginActivityName">Bem-vindo</string>
     <string name="login_validation_error_title">Erro de Validação</string>
-    <string name="login_validation_error_fieldsmissing">Tem de preencher todos os campos.</string>
+    <string name="login_validation_error_fieldsmissing">Tem que preencher todos os campos.</string>
     <plurals name="x_rewards">
         <item quantity="one">Adicionar uma Recompensa</item>
+        <item quantity="many">Adicionar Recompensas</item>
         <item quantity="other"/>
     </plurals>
     <string name="create_task_title">Cria uma tarefa</string>
@@ -57,4 +58,16 @@
     <string name="trivial_sentence">trivial</string>
     <string name="quadrillion_abbrev">q</string>
     <string name="easy_sentence">fácil</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Hábito</item>
+        <item quantity="many">%d Hábitos</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="email_username">Email/Nome de Usuário</string>
+    <string name="avatar">Avatar</string>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Diário</item>
+        <item quantity="many">%d Diários</item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>

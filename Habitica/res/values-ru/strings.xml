@@ -1574,4 +1574,11 @@
     <string name="popular">Популярный</string>
     <string name="plus_two_gems">+2 Самоцвета</string>
     <string name="rogues">Разбойники</string>
+    <string name="photo_url_description">Вы можете разместить изображение в своем профиле на Habitica, чтобы другие могли его увидеть, добавив ссылку на изображение здесь.</string>
+    <string name="save_photo_url">Сохраните URL-адрес фотографии</string>
+    <string name="change_username_description">Имена пользователей должны состоять из 1-20 символов, содержать только буквы от a до z, цифры от 0 до 9, дефисы или символы подчеркивания.</string>
+    <string name="display_name_description">Это имя, которое будет отображаться для вашего аватара в Habitica. В отличие от имени пользователя, оно не обязательно должно быть уникальным идентификатором.</string>
+    <string name="change_display_name">Изменить отображаемое имя</string>
+    <string name="change_email_description">Это адрес электронной почты, который вы используете для входа в Habitica, а также для получения уведомлений.</string>
+    <string name="register_tos_confirm">Вы соглашаетесь с нашими <a href="https://habitica.com/static/terms">Условиями использования</a> и ознакомились с <a href="https://habitica.com/static/privacy">Политикой конфиденциальности</a>.</string>
 </resources>

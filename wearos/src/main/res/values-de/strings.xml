@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="you_found">Du hast … gefunden</string>
+    <string name="you_found">Du fandest…</string>
     <string name="edit_on_phone">Auf dem Handy bearbeiten</string>
     <string name="sign_in">Anmelden</string>
     <string name="other_options">Andere Optionen</string>
@@ -13,17 +13,17 @@
     <string name="check_off_yesterday">Hake alles ab was du gestern erledigt hast:</string>
     <string name="task_type">Aufgabentyp</string>
     <string name="task_title_hint">Gib einen Titel für die Aufgabe ein</string>
-    <string name="faint_description">Du bist ein Level herabgefallen und hast Gold sowie Erfahrung verloren. Gib nicht auf!</string>
+    <string name="faint_description">Du hast ein Level, Erfahrung und Gold verloren. Gib nicht auf!</string>
     <string name="how_did_you_do">Wie hast du dich geschlagen\?</string>
     <string name="x_quest_item">%d Quest-Gegenstände</string>
     <string name="sign_in_description">Erstelle Aufgabenlisten und verfolge Fortschritte spielerisch mit deinem Avatar</string>
-    <string name="you_ran_out_of_hp">Dir sind die HP ausgegangen</string>
+    <string name="you_ran_out_of_hp">Dir sind die Lebenspunkte ausgegangen!</string>
     <string name="checklist_disclaimer">Checklisten für Aufgaben sind auf dem Handy verfügbar</string>
     <string name="sign_in_on_phone">Auf dem Handy anmelden</string>
     <string name="check_on_phone">Auf dem Handy nachsehen</string>
-    <string name="ok">Okay</string>
+    <string name="ok">OK</string>
     <string name="syncing_account">Benutzerkonto vom Handy wird synchronisiert</string>
-    <string name="one_quest_item">1 Quest-Gegenstand</string>
+    <string name="one_quest_item">1 Quest Gegenstand</string>
     <string name="some_x">etwas %s</string>
     <string name="x_and_y">%1$s und %2$s</string>
     <string name="save">Speichern</string>

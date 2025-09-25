@@ -298,18 +298,18 @@
     <string name="belongs_to_challenge">Pertence ao Desafio</string>
     <string name="has_reminder">Tem lembrete</string>
     <string name="has_tag">Tem etiqueta</string>
-    <string name="subscribe_title">Assinaturas dão suporte à nossa pequena equipe e ajudam a manter o Habitica funcionando, obrigado!</string>
-    <string name="subscribe_prompt">Seja um(a) assinante para receber estes benefícios exclusivos!</string>
-    <string name="subscribe_listitem1">Ouro para Gemas</string>
-    <string name="subscribe_listitem2">Ampulhetas Místicas</string>
-    <string name="subscribe_listitem3">Conjuntos Mensais Exclusivos de Equipamentos</string>
+    <string name="subscribe_title">Assinaturas dão suporte à nossa pequena equipe e ajudam a manter o Habitica funcionando</string>
+    <string name="subscribe_prompt">Mantenha-se motivado com ainda mais recompensas ao assinar</string>
+    <string name="subscribe_listitem1">Gemas gratuitas mensalmente</string>
+    <string name="subscribe_listitem2">Ampulhetas Místicas mensais</string>
+    <string name="subscribe_listitem3">Itens Misteriosos Mensais</string>
     <string name="subscribe_listitem4">Mascote especial para assinantes</string>
     <string name="subscriptions">Assinaturas</string>
     <string name="subscription_duration">Acontece a cada %s</string>
     <string name="subscription_duration_norenew">Por %s</string>
     <string name="subscribe">Assinar</string>
-    <string name="subscribe_listitem1_description">Você poderá comprar Gemas no Mercado por 20 peças de Ouro cada!</string>
-    <string name="subscribe_listitem2_description">Ganhe Ampulhetas Místicas para comprar itens na loja dos Viajante do Tempo!</string>
+    <string name="subscribe_listitem1_description">Obtenha até 50 Gemas compráveis com Ouro no Mercado para comprar Missões, Personalizações, Mascotes e muito mais!</string>
+    <string name="subscribe_listitem2_description">Não perca nenhum item com 1 Ampulheta Mística por mês para usar na Loja dos Viajantes do Tempo!</string>
     <string name="subscribe_listitem3_description">Assine já para obter um conjunto exclusivo agora mesmo e receber novos itens todos os meses!</string>
     <string name="subscribe_listitem4_description">Receba o mascote Lebrílope Roxo Real quando se tornar um(a) novo(a) assinante.</string>
     <string name="subscribe1month_gemcap">25 Gemas por mês</string>
@@ -322,8 +322,8 @@
     <string name="active">Ativo</string>
     <string name="due">Vencimento</string>
     <string name="cancel_subscription">Cancelar assinatura</string>
-    <string name="cancel_subscription_google_description">Não quer mais ser assinante\? Você encontrará a opção para cancelar a assinatura na seção \"Meus aplicativos\" no menu do Google Play Store. Qualquer mês de crédito de assinatura será aplicado após o término de sua assinatura.</string>
-    <string name="cancel_subscription_notgoogle_description">Não quer mais ser assinante\? Devido às restrições nos métodos de pagamentos móveis, você precisará cancelar através do nosso site. Para fazer isso, toque no botão abaixo, faça login na sua conta, toque no ícone Usuário no canto superior direito e vá para Assinatura. Qualquer mês de crédito será aplicado após o término de sua assinatura. Vamos sentir sua falta!</string>
+    <string name="cancel_subscription_google_description">Não quer mais assinar\? Você pode encontrar a opção de cancelar a assinatura acessando a seção Pagamentos e Assinaturas do app Google Play Store. Os créditos restantes da assinatura serão adicionados à data de término após o cancelamento.</string>
+    <string name="cancel_subscription_notgoogle_description">Não quer mais assinar\? Devido ao seu método de pagamento, você precisará cancelar a assinatura do nosso site. Para isso, toque no botão abaixo, faça login na sua conta, toque no ícone do player no canto superior direito e acesse a seção Assinatura. Os créditos de meses restantes da assinatura serão adicionados à sua data de término após o cancelamento. Sentiremos sua falta!</string>
     <string name="visit_habitica_website">Visite o site do Habitica</string>
     <string name="current_bonuses">Bônus atuais</string>
     <string name="months_subscribed">Meses assinados</string>
@@ -332,10 +332,10 @@
     <string name="inactive">Inativo</string>
     <string name="one_month">1 mês</string>
     <string name="months">Meses</string>
-    <string name="month">mês</string>
-    <string name="three_months">3 meses</string>
-    <string name="six_months">6 meses</string>
-    <string name="twelve_months">12 meses</string>
+    <string name="month">Mês</string>
+    <string name="three_months">3 Meses</string>
+    <string name="six_months">6 Meses</string>
+    <string name="twelve_months">12 Meses</string>
     <string name="subscribe_prompt_thanks">Você desfruta desses benefícios por ser um(a) assinante</string>
     <string name="subscription_status">Status da assinatura</string>
     <string name="challenge_leave_title">Sair do Desafio</string>
@@ -463,7 +463,7 @@
     <string name="insufficientHourglasses">Você precisará de mais Ampulhetas Místicas para comprar este item!</string>
     <string name="get_hourglasses">Obter ampulhetas</string>
     <string name="subscribe_for_hourglasses">Assinar pelas Ampulhetas</string>
-    <string name="timetravelers_closed_description">Receba uma Ampulheta Mística a cada três meses de assinatura consecutiva então as use para liberar itens, mascotes e montarias de edição limitada do passado… e do futuro!</string>
+    <string name="timetravelers_closed_description">Receba uma Ampulheta Mística a cada mês de assinatura, então as use para liberar itens, mascotes e montarias de edição limitada do passado… e do futuro!</string>
     <string name="want_to_subscribe">Eu quero Assinar</string>
     <string name="seasonal_closed_description">As Grande Galas acontecem próximo da virada das quatro estações do ano, então volte aqui nesses períodos para ver os itens sazonais especiais!</string>
     <string name="come_back_soon">Volte logo!</string>
@@ -620,9 +620,9 @@
     <string name="gift_subscription">Presentear assinatura</string>
     <string name="gift_one_get_one_description">O evento de \"Dê uma assinatura e ganhe outra de graça\" está acontecendo agora!</string>
     <string name="gift_title">Quem você gostaria de presentear?</string>
-    <string name="gift_one_get_one">Presenteie uma, Ganhe uma!</string>
+    <string name="gift_one_get_one">Presenteie uma, Ganhe uma</string>
     <string name="gift_one_get_one_detailed_description">Enquanto esta promoção estiver ativa, você receberá uma assinatura correspondente automaticamente após o envio do seu presente.</string>
-    <string name="gift_subscription_subtitle">Escolha abaixo a assinatura que você gostaria de presentear! Essa compra não se renovará automaticamente.</string>
+    <string name="gift_subscription_subtitle">Escolha a assinatura que você gostaria de presentear! Essa compra não se renovará.</string>
     <string name="send_gift">Enviar presente</string>
     <string name="server">Servidor</string>
     <string name="gift_confirmation_title">Seu presente foi enviado!</string>
@@ -823,9 +823,9 @@
     <string name="register_btn_fb">Entrar usando uma conta do Facebook</string>
     <string name="login_btn_apple">Entrar com uma conta Apple</string>
     <string name="x_months">%d meses</string>
-    <string name="subscribe_listitem5_description">Descubra ainda mais itens no Habitica com um bônus diário de 2x na sua capacidade de drops.</string>
+    <string name="subscribe_listitem5_description">Ganhe um Jackalope Roxo Real e o dobro de Ovos, Poções de Eclosão e Comida todos os dias para aumentar sua coleção de Mascotes!</string>
     <string name="subscribe_listitem3_description_new">Assine já para obter este(a) %s e receba novos itens todos os meses!</string>
-    <string name="subscribe_listitem5">Dobrar os Drops</string>
+    <string name="subscribe_listitem5">Mascote Especial e Mais Surpresas</string>
     <string name="create_account_short">criar uma conta</string>
     <string name="login_incentive_short_count">%d check-ins</string>
     <string name="login_incentive_short">efetue login regularmente no Habitica</string>
@@ -1057,7 +1057,7 @@
     <string name="sidebar_teams">Times</string>
     <string name="twelve_months_one_time">Assinatura única de 12 meses</string>
     <string name="six_months_one_time">Assinatura única de 6 meses</string>
-    <string name="three_months_one_time">Assinatura única de 3 meses</string>
+    <string name="three_months_one_time">3 meses</string>
     <string name="one_month_one_time">Assinatura única de 1 mês</string>
     <string name="gift_one_get_one_purchase_banner">Presenteie uma assinatura e receba uma assinatura de graça até %s</string>
     <string name="g1g1_promo_info_instructions">Clique em \"Dê uma assinatura de presente\" e escreva o nome de usuário da conta que você gostaria de presentar. Em seguida, escolha o plano que você deseja presentear e confira. Sua conta será automaticamente recompensada com o mesmo nível de assinatura que você acabou de presentear.</string>
@@ -1424,8 +1424,8 @@
     <string name="your_tags">Suas Tags</string>
     <string name="challenge_tags">Tags de Desafio</string>
     <string name="group_tags">Tags de Equipe</string>
-    <string name="subscribe_listitemFaint">Aguente com 1 HP!</string>
-    <string name="subscribe_listitemFaint_description">Você terá a opção de uma segunda chance quando ficar sem HP.</string>
+    <string name="subscribe_listitemFaint">Tenha uma segunda chance</string>
+    <string name="subscribe_listitemFaint_description">Evite perder seu progresso com uma cura instantânea quando você ficar sem HP uma vez por dia!</string>
     <string name="subscription_hourglasses_3month_timeframe">Ampulheta em 3 meses</string>
     <string name="challenges">Desafios</string>
     <string name="need_help_description">Você pode entrar em contato conosco, e um membro de nossa equipe fará o melhor possível para ajudar!</string>
@@ -1494,4 +1494,48 @@
     <string name="subscribe_second_chance_incentive_text">Os assinantes têm uma segunda chance na vida todos os dias e esses outros benefícios!</string>
     <string name="watch_ad_to_hang_on">Assista ao anúncio para aguentar o 1HP!</string>
     <string name="clear_cache_settings">Limpar cache</string>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Minuto</item>
+        <item quantity="many">%d Minutos</item>
+        <item quantity="other">%d Minutos</item>
+    </plurals>
+    <string name="photo_url_description">Você pode exibir uma imagem no seu perfil do Habitica para que outras pessoas vejam adicionando um link para a imagem aqui.</string>
+    <string name="save_photo_url">Salvar a URL da foto</string>
+    <string name="change_email_description">Este é o endereço de email que você usa para fazer login no Habitica e receber notificações.</string>
+    <string name="change_username_description">Os nomes de usuário devem ter de 1 a 20 caracteres, contendo apenas letras de A a Z, números de 0 a 9, hifens ou sublinhados.</string>
+    <string name="change_display_name">Mudar Nome Exibido</string>
+    <string name="class_equipment_shop_dialog_new">Este item está disponível apenas para %s. Abra as Configurações para alterar a classe.</string>
+    <string name="exact_alarm_system_settings_title">`Alarme e lembretes` desativados`</string>
+    <string name="sell_confirmation_title">Tem certeza de que deseja vender este %s\?</string>
+    <string name="insufficient_level_equipment_dialog_new">Este item está disponível apenas para %s. Você pode selecionar uma classe após o nível 10.</string>
+    <plurals name="x_hours">
+        <item quantity="one">%d Hora</item>
+        <item quantity="many">%d Horas</item>
+        <item quantity="other">%d Horas</item>
+    </plurals>
+    <plurals name="x_days">
+        <item quantity="one">%d Dia</item>
+        <item quantity="many">%d Dias</item>
+        <item quantity="other">%d Dias</item>
+    </plurals>
+    <string name="exact_alarm_system_settings_reminders">Os lembretes podem ser adiados porque as permissões não estão ativadas. Toque para visualizar e atualizar as permissões.</string>
+    <string name="exact_alarm_system_settings_description">Permitir `Alarmes e Lembretes` no aplicativo Configurações para garantir que os lembretes apareçam exatamente no horário programado</string>
+    <string name="subscribe_listitem3_description_alt">Fique por dentro dos últimos lançamentos exclusivos. Assine agora para ganhar %1$s de %2$s!</string>
+    <string name="leave_party_confirmation_quest">Tem certeza que deseja sair deste grupo\?</string>
+    <string name="rejoin_party_quest">Você não poderá retornar a este grupo a menos que seja convidado.
+\n
+\nSair do grupo também fará com que você abandone a missão em que está.</string>
+    <string name="rejoin_party_quest_leader">Você não poderá retornar a este grupo a menos que seja convidado.
+\n
+\nSair do grupo também encerrará a missão atual.</string>
+    <string name="register_tos_confirm">Você concorda com nossos <a href="https://habitica.com/static/terms">Termos de Serviço</a> e leu nossa <a href="https://habitica.com/static/privacy">Política de Privacidade</a>.</string>
+    <string name="display_name_description">Este é o nome que será exibido para o seu avatar no Habitica. Ao contrário do nome de usuário, ele não precisa ser um identificador único.</string>
+    <string name="cancel_subscription_apple_description">Não quer mais assinar\? Devido ao seu método de pagamento, você precisará cancelar a assinatura nas configurações de assinatura do seu ID Apple no seu dispositivo iOS.</string>
+    <string name="password_change_info">As senhas devem ter 8 caracteres ou mais. Alterar sua senha desconectará você de quaisquer outros dispositivos e ferramentas de terceiros que você utilize.</string>
+    <string name="confirm_new_password">Confirmar a nova senha</string>
+    <string name="report_challenge_explanation">Você só deve reportar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou [Termos de Serviço](https://habitica.com/static/terms). Enviar um relatório falso é uma violação das Diretrizes da Comunidade de Habitica.</string>
+    <string name="benefits_end">Benefícios terminam em %s</string>
+    <string name="faint_loss_description_alt">Você cairá para o nível <b>%1$d</b>, perderá <b>%2$d</b> de Ouro, e sua Experiência… Mas você pode recuperar tudo com esforço!</string>
+    <string name="report_reason_title_challenge">Por que você está reportando este desafio\?</string>
+    <string name="g1g1_promo_info_limitations_noutc">Este é um evento por tempo limitado que começa em %1$s e termina em %2$s. Esta promoção se aplica apenas quando você presenteia outro Habitican. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presente adicionará meses de crédito que só serão usados após o cancelamento ou expiração da assinatura atual.</string>
 </resources>

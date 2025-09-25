@@ -76,7 +76,7 @@
     <string name="new_checklist_item">新しいチェックリストの入力</string>
     <string name="reminder_title">忘れずにタスクをチェックしましょう</string>
     <string name="unlock_lvl_11">レベル11 でアンロック</string>
-    <string name="forgot_pw_btn">パスワードがわからない</string>
+    <string name="forgot_pw_btn">パスワードを忘れた場合</string>
     <string name="tavern_inn_checkOut">日課を再開する</string>
     <string name="tavern_inn_rest">日課を中断する</string>
     <string name="reward_dialog_buy">買う</string>
@@ -307,7 +307,7 @@
     <string name="subscriptions">有料プラン</string>
     <string name="subscription_duration">%sごとに繰り返す</string>
     <string name="subscribe">有料プランに加入する</string>
-    <string name="subscribe_listitem1_description">市場で最大50ジェムを手に入れ、クエストやカスタマイズ、ペットなどを購入しましょう！</string>
+    <string name="subscribe_listitem1_description">ゴールドで購入可能なジェムを最大50個市場でゲットし、クエストやカスタマイズ、ペットなどを購入しましょう！</string>
     <string name="subscribe_listitem2_description">タイムトラベラーの店で使える毎月1個の神秘の砂時計を見逃さないで！</string>
     <string name="subscribe_listitem3_description">今すぐ限定セットを手に入れて、毎月の新しいアイテムを受け取るために、さっそく有料プランに加入しましょう！</string>
     <string name="subscribe_listitem4_description">初めて有料会員になったときは高貴な紫のジャッカロープのペットを受け取れます。</string>
@@ -320,8 +320,8 @@
     <string name="subscription">有料プラン</string>
     <string name="active">有効</string>
     <string name="cancel_subscription">有料プランの解約</string>
-    <string name="cancel_subscription_google_description">もう有料プランを続けたくないですか？Google Play ストアのマイアプリの項目で有料プランを解約できます。有料プランの有効期間のストックは、有料プランが終了した後に使用されます。</string>
-    <string name="cancel_subscription_notgoogle_description">もう有料プランを続けたくないですか？モバイル決済の制約により、解約するにはウェブサイトへ行く必要があります。解約するには、下のボタンをタップして、アカウントにログインして、右上のユーザーアイコンをタップして、有料プランの項目に行ってください。有料プランの有効期間のストックは、有料プランが終了した後に使用されます。私たちは寂しくなります！</string>
+    <string name="cancel_subscription_google_description">もう有料プランを続けたくないですか？Google Play ストアのマイアプリの項目で有料プランを解約できます。キャンセル後、残りの有料プランのクレジットは契約終了日に追加されます。</string>
+    <string name="cancel_subscription_notgoogle_description">これ以上有料プランを続けたくありませんか？お支払方法のため、Habiticaのウェブサイトから有料プランをキャンセルする必要があります。下のボタンを押してアカウントにログインし、右上のユーザーアイコンをタップしてから「有料プラン」のセクションに移動してください。有料プランの残りのクレジットは、キャンセル後に終了日に加算されます。今までサポートしていただき、ありがとうございました！</string>
     <string name="visit_habitica_website">Habiticaのウェブサイトを訪れる</string>
     <string name="current_bonuses">現在のボーナス</string>
     <string name="months_subscribed">購読した月数</string>
@@ -461,7 +461,7 @@
     <string name="insufficientHourglasses">このアイテムを購入するにはもっと神秘の砂時計が必要です！</string>
     <string name="get_hourglasses">神秘の砂時計を手に入れる</string>
     <string name="subscribe_for_hourglasses">有料プランに加入して神秘の砂時計を手に入れる</string>
-    <string name="timetravelers_closed_description">三ヶ月の連続ログインごとに一つ神秘の砂時計が手に入るので、これを使って、過去や未来の限定版アイテム、ペット、乗騎を開放しましょう！</string>
+    <string name="timetravelers_closed_description">有料プランに登録している間、毎月神秘の砂時計が1個ゲットできます。これを使って、過去や未来の限定アイテム、ペット、乗騎をアンロックしましょう！</string>
     <string name="want_to_subscribe">有料プランに加入したい</string>
     <string name="seasonal_closed_description">大祭は夏至と冬至、春分や秋分の頃に開催されるので、その頃にまた季節の特別アイテムたちを確認してみましょう！</string>
     <string name="come_back_soon">間もなく再開！</string>
@@ -476,7 +476,7 @@
     <string name="ok">OK</string>
     <string name="profile">プロフィール</string>
     <string name="profile_summary">公開プロフィールを編集しましょう。</string>
-    <string name="display_name">名前を表示</string>
+    <string name="display_name">表示名</string>
     <string name="photo_url">写真のURL</string>
     <string name="login_name">ログイン名</string>
     <string name="about">プロフィール</string>
@@ -591,7 +591,7 @@
     <string name="total_checkins">総チェックイン日数</string>
     <string name="two_handed">両手持ち</string>
     <string name="usernamePromptTitle">あなたのユーザー名を決める時間です！</string>
-    <string name="usernamePromptBody">ログイン名は、現在は固有のユーザー名になりました。あなたの表示名の近くに表示されて、招待、チャットでの＠返信、メッセージのやりとりなどで使用されるでしょう。</string>
+    <string name="usernamePromptBody">ログイン名は固有のユーザー名で、表示名のとなりに見られます。招待、チャットでの＠返信、メッセージのやりとりなどで使用されます。</string>
     <string name="usernamePromptWiki">もしこの変更についてより詳しく知りたいときは、<a href="https://habitica.wikia.com/wiki/Player_Names">wiki(英語)をご覧ください。</a></string>
     <string name="usernamePromptDisclaimer">ユーザー名は、<a href="https://habitica.com/static/terms">サービス利用規約</a>と<a href="https://habitica.com/static/community-guidelines">コミュニティガイドライン</a>を守ったものでなければなりません。もしあなたがログイン名を設定していなかった場合、あなたのユーザー名は自動生成されたものになります。</string>
     <string name="confirm_username_title">本当に現在のユーザー名を承認しますか？</string>
@@ -619,7 +619,7 @@
     <string name="gift_one_get_one_description">有料プランをプレゼントすると、同じ有料プランが無料で利用できるキャンペーンが開催中です！</string>
     <string name="gift_title">誰にプレゼントを贈りたいですか？</string>
     <string name="gift_one_get_one">１つ贈って、１つ無料で手に入れよう</string>
-    <string name="gift_subscription_subtitle">方からプレゼントしたい有料プランを選んでください！この購入では、更新はされません。</string>
+    <string name="gift_subscription_subtitle">プレゼントしたい有料プランを選んでください！この購入は自動的に更新されません。</string>
     <string name="send_gift">プレゼントを贈る</string>
     <string name="server">サーバー</string>
     <string name="gift_confirmation_title">プレゼントを贈りました！</string>
@@ -851,7 +851,7 @@
     <string name="authentication_methods">認証方式</string>
     <string name="someone">誰か</string>
     <string name="invitation_title">%1$sはあなたをグループ%2$sに招待しました</string>
-    <string name="password_too_short">パスワードが短すぎます。あと%d文字必要です</string>
+    <string name="password_too_short">パスワードは%d文字以上である必要があります</string>
     <string name="copy_username">ユーザー名をコピーする</string>
     <string name="id_copied">ユーザーIDをクリップボードにコピーする</string>
     <string name="copy_userid">ユーザーIDをコピーする</string>
@@ -949,11 +949,11 @@
 \n
 \nジェムは、他のプレイヤーからの贈り物・チャレンジの賞品・Habiticaへの貢献・有料プランの特典などでも受け取ることができます。</string>
     <string name="suggestions_feedback_description">Habiticaがもっと上手く機能しそうな仕組みや新しいアイデアをお持ちですか？是非教えてください！</string>
-    <string name="g1g1_info_3_text">このプロモーションはあなたが他のHabiticaユーザーにプレゼントを贈ると適用されます。あなた自身やプレゼントを贈った相手がすでに有料会員だった場合、プレゼンントされた有料プランの期間は、今の有料プランが解約されるか期限が切れた後に使用されます。</string>
+    <string name="g1g1_info_3_text">このキャンペーンは他のHabiticaユーザーに有料プランをプレゼントすると適用されます。あなたまたは受取人が既に有料プランに登録している場合は、有料会員期間が延長されます。この延長は、現在の有料プランを満了もしくはキャンセルした後に適用されます。</string>
     <string name="g1g1_info_3">制限事項</string>
-    <string name="hourglasses_description">神秘の砂時計は極めてレアなゲーム内通貨で、Habiticaの有料会員を3ヶ月以上継続することで受け取れます。タイムトラベラーの店で神秘の砂時計を使って、過去の装備セット・ペット・乗騎・動く背景・特別なクエストなどを購入できます。
+    <string name="hourglasses_description">神秘の砂時計は極めてレアなゲーム内通貨で、Habiticaの有料プランに登録しないと受け取れません。タイムトラベラーの店で神秘の砂時計を使って、限定の装備セット・ペット・乗騎・動く背景・特別なクエストなどを購入できます。これらの追加特典は、年間を通してやる気を出したり、よくできたときに自分にご褒美を与えたりするために便利です。
 \n
-\nあなたは神秘の砂時計を年に4つ受け取れます。入手のタイミングは有料会員の更新スケジュールに基づいています。砂時計を入手できる期間の有料プランを支払うと、その翌月の最初の日に配布されます。詳しくは「有料プラン」のページをご覧ください。</string>
+\n有料会員は毎月の初めに神秘の砂時計1つと、ほかにもたくさんの特典がゲットできます。タイムトラベラーの店でどんなものが買えるか、興味のある人はぜひ有料プランのオプションを見てください！</string>
     <string name="subscription_credit">有料プランの有効期間</string>
     <string name="percent_completed">%d%%完了</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
@@ -1082,10 +1082,10 @@
     <string name="empty_guilds_list">あなたはどのギルドにも参加していません。</string>
     <string name="mystery_item_title">ミステリーボックスを開けて見つけたのは……</string>
     <string name="team_information">チームのインフォメーション</string>
-    <string name="twelve_months_one_time">12ヶ月間一度きりの有料プラン</string>
-    <string name="six_months_one_time">6ヶ月間一度きりの有料プラン</string>
-    <string name="three_months_one_time">3ヶ月間一度きりの有料プラン</string>
-    <string name="one_month_one_time">1ヶ月間一度きりの有料プラン</string>
+    <string name="twelve_months_one_time">12ヶ月間</string>
+    <string name="six_months_one_time">6ヶ月間</string>
+    <string name="three_months_one_time">3ヶ月間</string>
+    <string name="one_month_one_time">1ヶ月間</string>
     <string name="gift_one_get_one_purchase_banner">%sまでに、有料プランをプレゼントして同じプランを無料でゲットしよう</string>
     <string name="g1g1_promo_info_instructions">「有料プランをプレゼントする」をタップして、贈る相手のユーザーネームを入力し、プレゼントする有料プランの期間を選択してください。自動的にあなたのアカウントにもプレゼントした分と同じ期間のプランが無料で適用されます。</string>
     <string name="g1g1_promo_info_prompt">贈り物の季節を祝して、特別なプロモーションを再び開催しています。いま誰かに有料プランをプレゼントすると、あなた自身も同じプランを無料で受けることができます！</string>
@@ -1141,7 +1141,7 @@
     <string name="adventure_guide_description_new">これらの目標を達成して、&lt;b&gt;5つの実績バッジ&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;をゲットしましょう！</string>
     <string name="add">追加</string>
     <string name="password_not_matching">入力したパスワードが一致しません</string>
-    <string name="apitoken_summary">トークンをコピーする。これはパスワードなので慎重に扱ってください！</string>
+    <string name="apitoken_summary">開発者とサードパーティーツール用のパスワードトークン。</string>
     <string name="added_social_auth">%sとの連携を追加</string>
     <string name="copied_to_clipboard">%sをクリップボードにコピーしました</string>
     <string name="removed_social_auth">%sとの連携を解除</string>
@@ -1244,7 +1244,7 @@
     <string name="copy_tasks_description">割り当てられたタスクと未完了のタスクを個人のタスク リストに表示する</string>
     <string name="group_plan_settings">グループプランの設定</string>
     <plurals name="people">
-        <item quantity="other">%d 人</item>
+        <item quantity="other">%d人</item>
     </plurals>
     <plurals name="you_x_others">
         <item quantity="other">あなたと他 %d 名</item>
@@ -1298,7 +1298,7 @@
     <string name="opt_out_description">この場合、割り当てられたクラスはありません。いつでも設定からクラスシステムを有効にすることで、再度クラスを選択することができます。</string>
     <string name="subscribe_listitemFaint">2回めのチャンスをつかみましょう</string>
     <string name="challenges">チャレンジ</string>
-    <string name="subscribe_listitemFaint_description">HPが尽きた場合、もう一度挑戦するオプションがあります。</string>
+    <string name="subscribe_listitemFaint_description">1日1回、HPがなくなったら即座に回復することで、前進を失わないようにしましょう！</string>
     <string name="report_message_explanation">[コミュニティガイドライン](https://habitica.com/static/community-guidelines)および/または[利用規約](https://habitica.com/static/terms)に違反する投稿のみを報告してください。虚偽の報告はHabiticaのコミュニティガイドラインに違反します。</string>
     <string name="report_user_explanation">[コミュニティガイドライン](https://habitica.com/static/community-guidelines)および/または[利用規約](https://habitica.com/static/terms)に違反するプレイヤーのみを報告してください。虚偽の報告はHabiticaのコミュニティガイドラインに違反します。</string>
     <string name="need_help_description">ご連絡いただければ、チームのメンバーが最善を尽くします！</string>
@@ -1392,8 +1392,7 @@
     <plurals name="x_hours">
         <item quantity="other">%d時間</item>
     </plurals>
-    <string name="insufficient_level_equipment_dialog_new">このアイテムは%sのみ使用可能です。
-\nクラスはレベル10以降に選択できます。</string>
+    <string name="insufficient_level_equipment_dialog_new">このアイテムは%sのみ入手可能です。クラスはレベル10以降に選択できます。</string>
     <string name="you_re_looking_for_party">パーティーを探している最中です！</string>
     <string name="subscribe_listitemArmoire_description_2">ラッキー宝箱を開けるたびに、無料でもう一度開けることができます！</string>
     <string name="exact_alarm_system_settings_title">`アラームとリマインダー` 無効</string>
@@ -1444,7 +1443,7 @@
     <string name="hatchingPotions_footer_description">[市場](/shops/market)では、定番のたまごがえしの薬や季節限定のたまごがえしの薬を購入できます！</string>
     <string name="share_avatar">アバターを共有</string>
     <string name="subscribe_listitemArmoire">宝箱を増やすチャンス</string>
-    <string name="subscribe_listitemArmoire_description">宝箱1個分の料金で、新装備を2個手に入れるチャンスがあります</string>
+    <string name="subscribe_listitemArmoire_description">宝箱1個分の料金で、新装備を2個手に入れるチャンスがあります！</string>
     <string name="subscribe_incentive_button_armoire">有料会員になればもう一度無料でオープンできます！</string>
     <string name="subscriber_button_faint">セカンドチャンス：1HPで持ちこたえる！</string>
     <string name="subscribe_incentive_text_faint">HP切れを防ぐために、有料プランで毎日セカンドチャンスを手に入れましょう</string>
@@ -1467,8 +1466,7 @@
     <string name="quest_mechanics">クエストの仕組み</string>
     <string name="quest_mechanics_boss_title">ボスへのダメージ</string>
     <string name="quest_mechanics_collecting_title">クエストアイテムを集める</string>
-    <string name="class_equipment_shop_dialog_new">この項目は %s にのみ有効です。
-\n設定を開いてクラスを変更してください。</string>
+    <string name="class_equipment_shop_dialog_new">このアイテムは%sしか入手できません。設定からクラスを変更できます。</string>
     <string name="by_invite">招待</string>
     <string name="invited">招待されました</string>
     <string name="invite_with_username_email">ユーザー名またはEメールで招待します</string>
@@ -1488,7 +1486,7 @@
     <string name="visit_faq">FAQを見る</string>
     <string name="rescind_invite">招待を削除する</string>
     <string name="monthly_backgrounds">月替わりの背景</string>
-    <string name="cleared_cache">消去されたキャッシュ</string>
+    <string name="cleared_cache">キャッシュを消除しました</string>
     <string name="animal_tails">動物のしっぽ</string>
     <string name="clear_database">データベースの消去</string>
     <string name="popular">人気</string>
@@ -1568,7 +1566,7 @@
     <string name="twelve_mystic_hourglasses">12個の神秘の砂時計</string>
     <string name="benefits_end">特典は%sに終わります</string>
     <string name="open_habitica_website">Habiticaのサイトを開く</string>
-    <string name="search_equipment">装備を検索して</string>
+    <string name="search_equipment">装備を検索</string>
     <plurals name="repeat_monthly">
         <item quantity="other">毎月</item>
     </plurals>
@@ -1588,4 +1586,38 @@
 \nパーティーを抜けると、現在のクエストは中断されます。</string>
     <string name="save_photo_url">写真のURLを保存</string>
     <string name="photo_url_description">ここにリンクを張り付けて写真をHabiticaのプロフィールに表示できます。</string>
+    <string name="two_gems_per_month">有料プランに加入している間、毎月ジェムが2個もらえます</string>
+    <string name="unlocks_x_gems_per_month">市場でジェムを月間%d個アンロックします</string>
+    <string name="two_gems_per_month_gift">有料プランに加入している間、毎月ジェムが2個もらえます</string>
+    <string name="max_gem_cap">最大限のジェム</string>
+    <string name="max_gem_cap_text">最大限のジェムから早速スタートします</string>
+    <string name="max_gem_cap_text_gift">最大限のジェムから早速スタートします</string>
+    <string name="chat_empty_state_title">会話をしよう！</string>
+    <string name="chat_empty_state_description">他人にやさしくして、コミュニティガイドラインを守ってください。</string>
+    <string name="change_email_description">このメールアドレスを使ってHabiticaにログインして、通知を受信することができます。</string>
+    <string name="change_display_name">表示名を編集する</string>
+    <string name="display_name_description">アバターに表示される名前です。ユーザー名と違い、ユニークなものにする必要はありません。</string>
+    <string name="confirm_new_password">新しいパスワードを確認する</string>
+    <string name="save_about_me">自己紹介を保存する</string>
+    <string name="api_token_title">APIトークン</string>
+    <string name="api_token_is_password">あなたのAPIトークンはパスワードのようなものです</string>
+    <string name="api_token_is_password_info">だれとも共有しないでください。ユーザーIDの入力を求められることはありますが、Githubを含め、他の人が見られる場所にAPIトークンを投稿しないでください。</string>
+    <string name="api_token_reset_title">新しいAPIトークンが必要な場合</string>
+    <string name="api_token_reset_info">パスワードを変えてリセットすることができます。一度リセットされたら、Habiticaを使用するデバイスに再びログインし、サードパーティーツールを使用する場合、APIトークンを更新する必要があります。</string>
+    <string name="copy_token">コピートークン</string>
+    <string name="rescrubscribe_to_pick_up">有料プランに再登録して中断したところから続けましょう！</string>
+    <string name="register_tos_confirm">Habiticaの <a href="https://habitica.com/static/terms">利用規則</a>と<a href="https://habitica.com/static/privacy">プライバシーポリシー</a>に同意します。</string>
+    <string name="change_username_description">ユーザー名は1〜20文字以内である必要があり、アルファベット（a~z）、数字（0~9）、ハイフン（-）とアンダーバー（_）のみを含むことができます。</string>
+    <string name="password_change_info">パスワードは8文字以上でなければなりません。パスワードを変更すると他のデバイスや使用中のサードパーティーツールからログアウトされます。</string>
+    <string name="use_on_party">パーティーにかける</string>
+    <string name="g1g1_promo_info_limitations_noutc">これは%1$sに始まり、%2$sに終了する限定イベントです。このキャンペーンは他のHabiticaのユーザーに有料プランをプレゼントすると適用されます。あなたまたは受取人が既に有料プランに登録している場合は、有料会員期間が延長されます。この延長は、現在の有料プランを満了もしくはキャンセルした後に適用されます。</string>
+    <string name="about_me_description">プロフィールに表示される、ちょっとした自己紹介を書いてみよう！</string>
+    <string name="use_skill">スキルを使う</string>
+    <string name="auth_get_credentials_error">認証情報の取得に失敗しました。</string>
+    <string name="auth_unknown_error">認証中に不明なエラーが発生しました。</string>
+    <string name="enjoy_benefits">有料プランに登録してこれらの限定特典をお楽しみください</string>
+    <string name="auth_invalid_credentials">認証情報が無効です。</string>
+    <string name="resubscribe_for_hourglasses">神秘の砂時計をゲットし続けるには、有料プランに再登録してください</string>
+    <string name="get_12_mystic_hourglasses">初めて12ヶ月間の有料プランに登録したとき、12個の神秘の砂時計をすぐにゲットしよう！</string>
+    <string name="next_switch_in_x">あと%sで切り換えます</string>
 </resources>

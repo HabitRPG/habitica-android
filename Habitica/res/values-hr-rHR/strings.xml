@@ -227,16 +227,16 @@
     <string name="select_class">Odaberi Klasu</string>
     <string name="opt_out_class">Izaberi kasnije</string>
     <string name="class_confirmation">Jesi li siguran/na da želiš biti %s?</string>
-    <string name="class_changed">Sada si %s!</string>
+    <string name="class_changed">Ti si %s!</string>
     <string name="choose_class">Odaberi Klasu </string>
     <string name="dialog_go_back">Idi natrag</string>
-    <string name="opt_out_confirmation">Jesi li siguran/na da želiš izabrati kasnije?</string>
+    <string name="opt_out_confirmation">Isključiti sustav klasa\?</string>
     <string name="change_class">Promijeni svoju klasu</string>
     <string name="change_class_description">Promijeni svoju klasu i vrati bodove statistike za 3 dragulja.</string>
     <string name="enable_class">Omogući Sustav Klasa</string>
     <string name="changing_class_progress">Mijenjanje Klase</string>
     <string name="by_email">Putem e-maila</string>
-    <string name="invite_existing_users">Pozovi postojeće korisnike</string>
+    <string name="invite_existing_users">Pozovi postojeće igrače</string>
     <string name="send">Pošalji</string>
     <string name="invite">Nađi Članove</string>
     <string name="invite_username_description">Ako već imaš prijatelje koji koriste Habiticu, pozovi ih putem korisničkog imena ovdje.</string>
@@ -248,13 +248,13 @@
     <string name="share_hatched">Upravo sam izlegao/la %1$s %2$s ljubimca u aplikaciji #Habitica izvršavajući svoje zadatke u stvarnom životu!</string>
     <string name="share_raised">Upravo sam dobio/la %1$s životinju za jahanje u aplikaciji #Habitica izvršavanjem svojih zadataka u stvarnom životu!</string>
     <string name="open_in_store">Otvori Trgovinu Play</string>
-    <string name="change_class_confirmation">Želiš li promijeniti svoju klasu za 3 Dragulja\?</string>
+    <string name="change_class_confirmation">Želiš li promijeniti klasu za 3 dragulja\?</string>
     <string name="change_class_equipment_warning">Ovo će ti vratiti sve bodove iz atributa, zamijeniti otključanu opremu u prodavaonicama i promijeniti tvoje dostupne sposobnosti.</string>
     <string name="confirm">Potvrdi</string>
     <string name="market">Tržnica</string>
     <string name="timeTravelers">Vremenski putnici</string>
     <string name="seasonalShop">Sezonski dućan</string>
-    <string name="empty_inbox">Nemaš novih poruka. Možeš poslati korisniku novu poruku iz njihovih javnih poruka u chatu!</string>
+    <string name="empty_inbox">Nemaš nijednu poruku. Možeš poslati novu poruku igraču iz njihovih poruka u javnom chatu!</string>
     <string name="party_invite">Otključaj pozivanjem prijatelja</string>
     <string name="login_incentive">Otključaj redovitim prijavljivanjem u Habiticu</string>
     <string name="create_account">Otključaj stvaranjem računa</string>
@@ -296,21 +296,21 @@
     <string name="belongs_to_challenge">Pripada Izazovu</string>
     <string name="has_reminder">Ima podsjetnik</string>
     <string name="has_tag">Ima oznaku</string>
-    <string name="subscribe_title">Pretplata podržava naš mali tim i pomaže u održavanju Habitice, hvala!</string>
-    <string name="subscribe_prompt">Postani pretplatnik da dobiješ ove korisne prednosti!</string>
-    <string name="subscribe_listitem1">Zlato za Dragulje</string>
-    <string name="subscribe_listitem2">Mistični pješčani satovi</string>
-    <string name="subscribe_listitem3">Mjesečni mistični predmeti</string>
+    <string name="subscribe_title">Pretplata podržava naš mali tim i pomaže u održavanju Habitice.</string>
+    <string name="subscribe_prompt">Pretplatom ostanite motivirani uz još više nagrada</string>
+    <string name="subscribe_listitem1">Besplatni mjesečni dragulji</string>
+    <string name="subscribe_listitem2">Mjesečni mistični pješčani sat</string>
+    <string name="subscribe_listitem3">Mjesečni misteriozni predmeti</string>
     <string name="subscribe_listitem4">Posebni ljubimac za pretplatnike</string>
     <string name="subscriptions">Pretplate</string>
     <string name="subscription_duration">Ponavlja se svaku %s</string>
     <string name="subscription_duration_norenew">Za %s</string>
     <string name="subscribe">Pretplati se</string>
-    <string name="subscribe1month_gemcap">Limit od 25 Dragulja</string>
-    <string name="subscribe3month_gemcap">Limit od 30 Dragulja</string>
-    <string name="subscribe6month_gemcap">Limit od 35 Dragulja</string>
-    <string name="subscribe12month_gemcap">Limit od 45 Dragulja</string>
-    <string name="subscription_hourglasses">+%d Mistični Pješčani sat</string>
+    <string name="subscribe1month_gemcap">25 dragulja mjesečno</string>
+    <string name="subscribe3month_gemcap">30 dragulja mjesečno</string>
+    <string name="subscribe6month_gemcap">35 dragulja mjesečno</string>
+    <string name="subscribe12month_gemcap">45 dragulja mjesečno</string>
+    <string name="subscription_hourglasses">%d pješčanih satova</string>
     <string name="payment_method">Način plaćanja</string>
     <string name="subscription">Pretplata</string>
     <string name="active">Aktivno</string>
@@ -324,10 +324,10 @@
     <string name="inactive">Neaktivno</string>
     <string name="one_month">1 mjesec</string>
     <string name="months">mjeseci</string>
-    <string name="month">mjesec</string>
-    <string name="three_months">3 mjeseca</string>
-    <string name="six_months">6 mjeseci</string>
-    <string name="twelve_months">12 mjeseci</string>
+    <string name="month">Mjesec</string>
+    <string name="three_months">3 Mjeseca</string>
+    <string name="six_months">6 Mjeseci</string>
+    <string name="twelve_months">12 Mjeseci</string>
     <string name="subscribe_prompt_thanks">Dobivaš ove korisne prednosti ako si Pretplatnik</string>
     <string name="subscription_status">Status Pretplate</string>
     <string name="challenge_leave_title">Napusti Izazov</string>
@@ -448,12 +448,12 @@
     <string name="resetting_account">Resetiranje računa</string>
     <string name="deleting_account">Brisanje računa</string>
     <string name="insufficientGold">Trebaš izvršiti više zadataka prije nego što ćeš moći sebi priuštiti ovaj predmet!</string>
-    <string name="insufficientGems">Trebat će ti više Dragulja kako bi kupio/la ovaj predmet!</string>
+    <string name="insufficientGems">Trebat će ti još dragulja da ovo kupiš!</string>
     <string name="purchase_gems">Kupi dragulje</string>
     <string name="insufficientHourglasses">Trebat će ti više Mističnih pješčanih satova kako bi kupio/la ovaj predmet!</string>
     <string name="get_hourglasses">Nabavi pješčane satove</string>
     <string name="subscribe_for_hourglasses">Pretplati se za Pješčane satove</string>
-    <string name="timetravelers_closed_description">Zaradi jedan Mistični pješčani sat za svaka tri mjeseca uzastopne pretplate, onda ih koristi za otključavanje predmeta, ljubimaca i jahačih životinja ograničenih izdanja iz prošlosti… i budućnosti!</string>
+    <string name="timetravelers_closed_description">Zaradi po jednu Mjesečnu mističnu pješčanu uru za svaki mjesec pretplate, a zatim ih iskoristi za otključavanje ograničenih izdanja predmeta, ljubimaca i jahaćih životinja iz prošlosti... i budućnosti!</string>
     <string name="want_to_subscribe">Želim se pretplatiti</string>
     <string name="seasonal_closed_description">Četiri Velike gale se održavaju oko vremena suncostaja i ravnodnevnica, pa se vrati tada kako bi otkrio/la zabavan izbor posebnih sezonskih predmeta!</string>
     <string name="come_back_soon">Vrati se brzo!</string>
@@ -506,12 +506,12 @@
     <string name="class_equipment">Oprema</string>
     <string name="equipment_empty">Već imaš svu opremu! Više opreme će biti izbačeno za vrijeme Velikih gala oko suncostaja i ravnodnevnica.</string>
     <string name="classless">Bez klase</string>
-    <string name="class_equipment_shop_dialog">Ovaj artikal je dostupan samo određenoj klasi.\nMožeš promijeniti svoju klasu u Postavkama.</string>
+    <string name="class_equipment_shop_dialog">Ovaj predmet dostupan je samo određenoj klasi. Klasu možeš promijeniti u Postavkama.</string>
     <string name="class_gear_disclaimer">Možeš kupovati opremu samo za svoju trenutnu klasu</string>
     <string name="check_into_inn">Prijavi se u Svratište</string>
     <string name="community_guidelines">Smjernice za zajednicu</string>
     <string name="view_community_guidelines">Pogledaj Smjernice za zajednicu</string>
-    <string name="guidelines_description">Habitica pokušava stvoriti uključivo okruženje za korisnike svih godina i životnih okolnosti, i to posebice u prostorima kao što je Krčma. Ako imaš ikakvih pitanja, molimo te da pogledaš naše smjernice.</string>
+    <string name="guidelines_description">Habitica pokušava stvoriti ugodno okruženje za igrače svih dobi i pozadina. Ako imaš bilo kakvih pitanja, slobodno pogledaj naše smjernice.</string>
     <string name="helpful_links">Korisne poveznice</string>
     <string name="view_faq">Pogledaj ČPP</string>
     <string name="report_bug">Prijavi grešku</string>
@@ -528,7 +528,7 @@
     <string name="strike_description_title">Što je Udar Bijesa?</string>
     <string name="strike_active_title">%s je bio napadnut!</string>
     <string name="strike_active_description">Naš dragi %1$s je bio razoren kad je %2$s razbio %3$s. Brzo, navali na svoje zadatke kako bi porazio/la čudovište i pomogao/la u obnovi!!</string>
-    <string name="questShop">Dućan pustolovina</string>
+    <string name="questShop">Pustolovine</string>
     <string name="market_owner_long">Alex Trgovac</string>
     <string name="tavern_owner_long">Danijel Gostioničar</string>
     <string name="stable_owner_long">Matt gospodar zvijeri</string>
@@ -610,9 +610,9 @@
     <string name="gift_subscription">Pokloni pretplatu</string>
     <string name="gift_one_get_one_description">Trenutno je u tijeku promocija Pokloni pretplatu - dobij besplatnu pretplatu!</string>
     <string name="gift_title">Kome bi htio/la dati poklon?</string>
-    <string name="gift_one_get_one">Pokloni jednu, dobij jednu!</string>
+    <string name="gift_one_get_one">Pokloni jedan, dobij jedan</string>
     <string name="gift_one_get_one_detailed_description">Dok je ova promocija aktivna, dobit ćeš odgovarajuću pretplatu automatski nakon što pošalješ svoj poklon.</string>
-    <string name="gift_subscription_subtitle">Odaberi pretplatu koju bi htio/la pokloniti ispod! Ova kupnja se neće automatski obnoviti.</string>
+    <string name="gift_subscription_subtitle">Odaberi pretplatu koju želiš pokloniti! Ova kupovina se neće obnoviti.</string>
     <string name="send_gift">Pošalji poklon</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Tvoj poklon je poslan!</string>
@@ -649,21 +649,21 @@
     <string name="keep_challenges">Zadrži izazove</string>
     <string name="party_invite_short">Nađi Članove</string>
     <string name="login_incentive_short">redovito se prijavljuj u Habiticu</string>
-    <string name="subscribe_listitem1_description">Moći ćeš kupiti Dragulje iz tržnice za 20 zlatnika svaki!</string>
+    <string name="subscribe_listitem1_description">U Tržnici dobij do 50 dragulja koji se mogu kupiti za zlato, za kupovinu Potraga, Prilagodbi, Ljubimaca i još mnogo toga!</string>
     <string name="on">Uključeno</string>
-    <string name="subscribe_listitem2_description">Zaradi Mistične pješčane satove da kupiš predmete u Dućanu vremenskih putnika!</string>
+    <string name="subscribe_listitem2_description">Nikada ne propustite predmet uz 1 mistični pješčani sat mjesečno koju možete iskoristiti u Trgovini putnika kroz vrijeme!</string>
     <string name="off">Isključeno</string>
     <string name="subscribe_listitem4_description">Kad postaneš novi pretplatnik, dobit ćeš Kraljevskog Ljubičastog Zekolopa za ljubimca.</string>
     <string name="subscribe_listitem3_description_new">Pretplati se sada da dobiješ ovo %s i primiš nove predmete svaki mjesec!</string>
     <string name="gem_purchase_listitem4">Mogućnost promjene svoje klase prije levela 100</string>
-    <string name="subscribe_listitem5_description">Otkrij još predmeta u Habitici s 2x bonusom limita svakodnevnih nagrada.</string>
+    <string name="subscribe_listitem5_description">Nabavi Kraljevskog ljubičastog zeca-antilopu plus dvostruko više jaja, napitaka za izlijeganje i hrane svakog dana za povećanje svoje kolekcije ljubimaca!</string>
     <string name="login_incentive_short_count">%d prijava</string>
     <string name="subscribe_listitem3_description">Pretplati se sada da dobiješ ekskluzivni set odmah i primiš nove predmete svaki mjesec!</string>
     <string name="gem_purchase_listitem3">Pustolovine koje te nagrađuju jajima ljubimaca</string>
-    <string name="cancel_subscription_google_description">Pretplatu možeš otkazati u aplikaciji Trgovina Play. Svi mjeseci kredita za pretplatu primijenit će se nakon što ponavljajuća pretplata završi.</string>
+    <string name="cancel_subscription_google_description">Ne želiš više pretplatu\? Opciju za otkazivanje možeš pronaći u odjeljku Plaćanja i pretplate u aplikaciji Trgovina Google Play. Preostali mjeseci pretplate bit će dodani na tvoj krajnji datum nakon otkazivanja.</string>
     <string name="login_incentive_count">Otključaj prijavljivanjem u Habiticu %d puta.</string>
-    <string name="subscribe_listitem5">Udvostruči nagrade</string>
-    <string name="cancel_subscription_notgoogle_description">Više ne želiš biti pretplaćen/a\? Zbog ograničenja mobilnog plaćanja, morati ćeš odustati preko naše web stranice. Da to učiniš, dotakni gumb ispod, prijavi se na svoj račun, pritisni ikonu Korisnik gore desno, te odi na Pretplata. Bilo koji mjesečni krediti tvoje pretplate će biti apliciran nakon što je tvoja pretplata zaustavljena. Nedostajat ćeš nam!</string>
+    <string name="subscribe_listitem5">Poseban ljubimac i veća šansa za dobivanje predmeta</string>
+    <string name="cancel_subscription_notgoogle_description">Želiš otkazati pretplatu\? Zbog načina plaćanja, moraš se odjaviti s naše web stranice. Da bi to učinio, dodirni gumb ispod, prijavi se na svoj račun, dodirni ikonu igrača u gornjem desnom kutu, a zatim idi na odjeljak Pretplata. Preostali mjeseci pretplate bit će dodani na tvoj krajnji datum nakon otkazivanja. Nedostajat ćeš nam!</string>
     <string name="create">Stvori</string>
     <string name="create_party">Stvoriti novu zabavu</string>
     <string name="years">Godina</string>
@@ -849,7 +849,7 @@
 \nDragulje</string>
     <string name="joinedChallengeTitle">Pridružio/la se Izazovu</string>
     <string name="reject">Odbij</string>
-    <string name="see_other_options">Pogledaj Ostale Opcije</string>
+    <string name="see_other_options">Vidi ostale opcije</string>
     <string name="gems_gift_description">Želiš li darovati sjajnu lovinu Dragulja nekom drugom\?</string>
     <string name="gift_gems_disclaimer">Habitica nikad neće insistirati da pokloniš dragulje drugim igračima. Molenje ljudi za dragulje je prekršaj Smjernica zajednice i treba biti prijavljeno na admin@habitica.com.</string>
     <string name="joinedChallengeDescription">Testirao/la si se pridružujući se Izazovu!</string>
@@ -946,9 +946,9 @@
     <string name="your_progress">Tvoj Napredak</string>
     <string name="animal_ears">Životinjske Uši</string>
     <string name="hatch_pet_title">Izlezi novog ljubimca</string>
-    <string name="hourglasses_description">Mistični pješčani satovi su iznimno rijetka valuta koju možeš dobiti jedino pretplatom na Habitici na tri uzastopna mjeseca ili više. Korišteni su u Dućanu Vremenskih Putnika za kupnju prošlih setova opreme, ljubimaca, jahačih životinja, pokretnih pozadina, ili čak posebnih pustolovina.
+    <string name="hourglasses_description">Mistificirani pješčani satovi iznimno su rijetka valuta koju možeš dobiti samo pretplatom na Habiticu. Možeš ih iskoristiti u Dućanu Vremenskih Putnika za kupnju starih setova Opreme za Pretplatnike, ekskluzivnih Ljubimaca, Jahaćih životinja, animiranih Pozadina ili čak posebnih Pustolovina! Ove dodatne pogodnosti sjajan su način da ostaneš motiviran/a tijekom cijele godine i nagradiš se za dobro obavljen posao.
 \n
-\nMožeš primiti do četiri Mističnih pješčanih satova godišnje. Vrijeme kada ih primiš ovisi o rasporedu obnove tvoje pretplate. Poslani su prvog dana novog mjeseca nakon tvojeg zadnjeg plaćanja pretplate koja te kvalificirala za pješčani sat. Vidi stranicu [Pretplata] za dodatne detalje.</string>
+\nPretplatnici dobivaju Mistificirani pješčani sat na početku svakog mjeseca u kojem imaju pogodnosti pretplate, zajedno s hrpom drugih pogodnosti. Obavezno provjeri naše opcije pretplate ako te zanima što Vremenski Putnici nude!</string>
     <string name="gems_description">Dragulji su valuta kupljena pravim novcem koji ti daju da kupiš dodatni sadržaj u Habitici, te su jedan od glavnih izvora financijske podrške za Habitica tim odmah kraj pretplata.
 \n
 \nSav sadržaj kupljen kroz Dragulje je samo kozmetički ili se može dobiti besplatno vremenom.
@@ -958,7 +958,7 @@
     <string name="complete_for_gold">Završi da zaradiš &lt;font color=#EE9109&gt;&lt;b&gt;100 Zlatnika&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="hatch">Izlezi</string>
     <string name="unhatched_pet">Neizležen Ljubimac</string>
-    <string name="use_saddle">Iskoristi Sedlo</string>
+    <string name="use_saddle">Daj Sedlo</string>
     <string name="purchasedEquipmentDescription">Oprema može biti praktična ili samo otmjena. Povisi svoje statistike da tvoj avatar dobije svakakve prednosti</string>
     <string name="hatch_pet_again">Ponovo izlezi Ljubimca</string>
     <string name="subscriber_currency">Valuta Pretplatnika</string>
@@ -974,7 +974,7 @@
     <string name="update_app">Ažuriraj Aplikaciju</string>
     <string name="support">Podrška</string>
     <string name="complete_task_description">Označi bilo koji zadatak da zaradiš nagrade</string>
-    <string name="could_not_find_user">Korisnik nije pronađen</string>
+    <string name="could_not_find_user">Nismo mogli pronaći igrača.</string>
     <string name="animal_tail">Životinjski Rep</string>
     <string name="hatch_pet_description">Završi zadatke da dobiješ Čarobni napitak za izlijeganje i Jaje zatim izlezi svojeg Ljubimca!</string>
     <string name="first_drop_explanation2">Pođi do svojih Predmeta i pokušaj kombinirati tvoje novo Jaje i Napitak za izlijeganje!</string>
@@ -1028,7 +1028,7 @@
     <string name="all_tasks_completed">Završio/la si sve zadatke. Svaka čast!</string>
     <string name="hurray">Hura!</string>
     <string name="theme_color">Boja Teme</string>
-    <string name="block_user">Blokiraj Korisnika</string>
+    <string name="block_user">Blokiraj igrača</string>
     <string name="survey_title">Upitnik Habitica igračima</string>
     <string name="block">Blokiraj</string>
     <string name="something_new">Novo</string>
@@ -1036,10 +1036,10 @@
     <string name="login_disclaimer">Prijavljivanjem, ukazuješ da si pročitao/la i slažeš se s <a href="https://habitica.com/static/terms">Uvjetima pružanja usluge</a> i <a href="https://habitica.com/static/privacy">Pravilima o privatnosti.</a></string>
     <string name="leave_delete_x_tasks">Napusti i Izbriši %d Zadataka</string>
     <string name="empty_discover_description">Kreni do Otkrij kartice da pronađeš neke kojima se možeš pridružiti!</string>
-    <string name="six_months_one_time">Jednokratna pretplata od 6 mjeseci</string>
+    <string name="six_months_one_time">6 Mjeseci</string>
     <string name="limitations">Ograničenja</string>
-    <string name="user_is_blocked">Blokirao/la si ovog korisnika</string>
-    <string name="unblock_user">Odblokiraj Korisnika</string>
+    <string name="user_is_blocked">Blokirali ste ovog igrača.</string>
+    <string name="unblock_user">Odblokiraj Igrača</string>
     <string name="open_shop">Otvori Dućan</string>
     <string name="won_achievement_description"><b>%s</b> te odabrao/la kao pobjednika/cu. Tvoja pobjeda je zapisana u tvojim Postignućima.</string>
     <string name="pms_disabled">Privatne Poruke su onemogućene</string>
@@ -1052,7 +1052,7 @@
     <string name="challenge_task_name">%s Zadatak Izazova</string>
     <string name="pet_category">%s Ljubimci</string>
     <string name="block_user_title">Blokiraj %s\?</string>
-    <string name="block_user_description">Blokirani korisnik ti ne može slati Privatne Poruke, ali ćeš i dalje vidjeti njihove objave.</string>
+    <string name="block_user_description">Blokirani igrač ne može vam slati privatne poruke, ali i dalje ćete vidjeti njihove objave.</string>
     <string name="pms_disabled_description">Još uvijek možeš slati poruke, ali nitko ih ne može slati tebi. Možeš ih ponovo omogućiti u Postavkama.</string>
     <string name="view_gem_bundles">Pogledaj Pakete Dragulja</string>
     <string name="usually_x_gems">Obično %d Dragulja</string>
@@ -1061,7 +1061,7 @@
     <string name="dark_mode">Tamni Način Rada</string>
     <string name="submit_feedback">Pošalji povratne informacije</string>
     <string name="you">Ti</string>
-    <string name="user_is_blocked_explanation">Blokirani korisnik ti ne može slati Privatne Poruke ali ćeš i dalje vidjeti njihove objave.</string>
+    <string name="user_is_blocked_explanation">Blokirani igrač ne može vam slati privatne poruke, ali i dalje ćete vidjeti njihove objave.</string>
     <string name="invitation_title_no_leader">Pozvan/a si da se pridružiš u družinu</string>
     <string name="finish">Završi</string>
     <string name="purchase_immediately_description">Ovo će početi djelovati odmah nakon kupnje!</string>
@@ -1078,11 +1078,11 @@
     <string name="empty_equipment_description">Još nemaš ovakvu opremu. Možeš kupiti opremu iz dućana koristeći zlato koje si zaradio/la.</string>
     <string name="empty_challenge_list">Nisi član nikakvih Izazova.</string>
     <string name="damage_pending">%s štete čeka</string>
-    <string name="one_month_one_time">Jednokratna pretplata od 1 mjesec</string>
+    <string name="one_month_one_time">1 Mjesec</string>
     <string name="empty_guilds_list">Nisi član nikakvih Cehova.</string>
     <string name="sale_ends_in">Rasprodaja završava za %s</string>
-    <string name="three_months_one_time">Jednokratna pretplata od 3 mjeseca</string>
-    <string name="twelve_months_one_time">Jednokratna pretplata od 12 mjeseci</string>
+    <string name="three_months_one_time">3 Mjeseca</string>
+    <string name="twelve_months_one_time">12 Mjeseci</string>
     <string name="sidebar_teams">Timovi</string>
     <string name="team_information">Informacije o Timu</string>
     <string name="mystery_item_title">Otvoriš Mističnu Kutiju i nađeš…</string>
@@ -1101,7 +1101,7 @@
     <string name="public_profile">Javni Profil</string>
     <string name="about_me">O meni</string>
     <string name="account_info">Informacije o Računu</string>
-    <string name="apitoken_summary">Kopiraj Token. Pažljivo, ovo je zaporka!</string>
+    <string name="apitoken_summary">Zaporka token za programere i alate trećih strana.</string>
     <string name="mount_category">%s Jahače Životinje</string>
     <string name="disablePrivateMessages">Onemogući Privatne Poruke</string>
     <string name="fall_promo_info_instructions">Između %1$s i %2$s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
@@ -1119,7 +1119,7 @@
     <string name="removed_social_auth">Odspojen %s</string>
     <string name="password_added">Zaporka spremljena</string>
     <string name="add_email_and_password">Dodaj adresu e-pošte i zaporku</string>
-    <string name="password_not_matching">Zaporka treba biti upisana točno dva puta</string>
+    <string name="password_not_matching">Unesene zaporke se ne podudaraju</string>
     <string name="email_invalid">Nevažeća adresa e-pošte</string>
     <string name="successful_purchase_generic">Kupnja uspješna</string>
     <string name="starting_objectives">Započinjanje Ciljeva</string>
@@ -1151,8 +1151,7 @@
     <string name="reset_account_title">Jesi li siguran/na da želiš resetiranje\?</string>
     <string name="confirm_reset">Potvrdi resetiranje</string>
     <string name="forgot_password_hint_example">npr. zecnavike ili grifon@primjer.com</string>
-    <string name="insufficient_level_equipment_dialog">Ovaj artikl je dostupan samo za specifičnu klasu.
-\nKlasu možeš izabrati nakon 10. razine.</string>
+    <string name="insufficient_level_equipment_dialog">Ovaj predmet dostupan je samo određenoj klasi. Klasu možeš odabrati nakon 10. razine.</string>
     <string name="x_checkins">%d Prijava</string>
     <string name="send_invite">Pozovi</string>
     <string name="thanks_for_supporting">Hvala što podržavaš Habiticu</string>
@@ -1183,7 +1182,8 @@
     <string name="buy_set">Kupi set</string>
     <string name="tutorial_reset_confirmation">Početni vodiči su resetirani</string>
     <string name="you_ran_out_of_health">Ostao/la si bez Zdravlja!</string>
-    <string name="faint_broken_equipment">Razbijena oprema može se ponovno kupiti iz Nagrada</string>
+    <string name="faint_broken_equipment">Slomljena oprema može se ponovno kupiti
+\n na Tržnici.</string>
     <string name="account_reset">Resetiranje računa</string>
     <string name="avatar_skin_customization">Prilagodba kože avatara</string>
     <string name="avatar_shirt_customization">Prilagodba majice avatara</string>
@@ -1216,10 +1216,10 @@
     <string name="promote_to_manager">Promakni u Upravitelja</string>
     <string name="manager">Upravitelj</string>
     <string name="member_list">Popis članova</string>
-    <string name="ban_user">Zabrani Korisnika</string>
-    <string name="unban_user_confirm">Želiš li poništiti zabranu ovog korisnika\?</string>
-    <string name="mute_user_confirm">Želiš li ovom korisniku opozvati pristup chatu\?</string>
-    <string name="unban_user">Ukloni zabranu Korisnika</string>
+    <string name="ban_user">Blokiraj Igrača</string>
+    <string name="unban_user_confirm">Želite li odblokirati ovog igrača\?</string>
+    <string name="mute_user_confirm">Želite li opozvati pristup razgovoru za ovog igrača\?</string>
+    <string name="unban_user">Odblokiraj igrača</string>
     <string name="status">Status</string>
     <string name="regular_access">Normalan pristup</string>
     <string name="message_flagged">Poruka označena %d puta.</string>
@@ -1255,8 +1255,8 @@
     <string name="spooky_promo_info_prompt">Rasprodaja Dragulja se vratila na samom kraju ovogodišnje Jesenske gala zabave! Ovo je posljednja prilika da dobiješ više Dragulja nego ikad, pa se opskrbi dok traje!</string>
     <string name="fortify_shop">Napitak za jačanje</string>
     <string name="armoire_rate_equipment_description">Svaki mjesec dodaju se novi dijelovi opreme. Ako posjeduješ svu opremu, tada ćeš dobiti Hranu ili Iskustvo, izgledi 50/50.</string>
-    <string name="class_changed_description">Možeš upotrebljavati %s sposobnosti i kupovati opremu iz prodavaonica!</string>
-    <string name="change_class_selected_confirmation">Želiš li promijeniti svoju klasu u %1$s za 3 Dragulja\?</string>
+    <string name="class_changed_description">Sada možeš koristiti %s vještine i kupovati opremu u trgovinama. Stječite razine kako biste zaradili bodove vještina koje možete iskoristiti za jačanje svojih vještina.</string>
+    <string name="change_class_selected_confirmation">Želiš li promijeniti klasu u %1$s\?</string>
     <string name="subscribers_mythic_hourglasses"><i>Pretplatnici dobivaju Mistične pješčane satove prva tri dana u mjesecu.</i></string>
     <string name="stat_description">Svi Habitica likovi imaju četiri statistike koje utječu na aspekte igranja Habitice.
 \n
@@ -1280,9 +1280,9 @@
     <string name="daily_summary_description">Ovo je **%1$s** Zadatak koji ponavlja **%2$s%3$s**.</string>
     <string name="assigned_to">Dodijeljeno</string>
     <string name="edit_assignees">Uredi opunomoćenike</string>
-    <string name="ban_user_confirm">Želiš li zabraniti ovog korisnika\?</string>
+    <string name="ban_user_confirm">Želite li blokirati ovog igrača\?</string>
     <string name="onboarding_tasks">Uvodni Zadaci</string>
-    <string name="unmute_user_confirm">Želiš li ovom korisniku vratiti pristup chatu\?</string>
+    <string name="unmute_user_confirm">Želite li vratiti pristup razgovoru za ovog igrača\?</string>
     <string name="gryphatrice_description">Rijetki, Likujući Grifotron pridružuje se rođendanskoj zabavi! Nemoj propustiti svoju priliku za posjedovanje ovog ekskluzivnog animiranog Ljubimca.</string>
     <string name="jubilant_gryphatrice_confirmation">Kupio/la si Likujućeg Grifotrona!</string>
     <string name="birthday_limitations">Ovo je vremenski ograničen događaj koji počinje %1$s i završava %2$s. Ograničeno izdanje Likujućeg Grifotrona i deset Čarobnih napitaka za izlijeganje bit će dostupni za kupnju tijekom ovog vremena. Ostali darovi navedeni u odjeljku Četiri besplatno bit će automatski isporučeni na sve račune koji su bili aktivni 30 dana prije dana slanja dara. Računi stvoreni nakon slanja darova neće ih moći preuzeti.</string>
@@ -1333,11 +1333,11 @@
     <string name="visit_the_market">Posjeti tržnicu</string>
     <string name="exclusive_items_await">Čekaju vas ekskluzivni artikli i darovi</string>
     <string name="shadow_mute_user">Potajno utišaj</string>
-    <string name="mute_user">Utišaj Korisnika</string>
-    <string name="shadowmute_user_confirm">Želiš li potajno utišati ovog korisnika\?</string>
+    <string name="mute_user">Utišaj Igrača</string>
+    <string name="shadowmute_user_confirm">Želite li tajno utišati ovog igrača\?</string>
     <string name="unshadowmute_user_confirm">Želiš li prekinuti potajno utišavanje\?</string>
     <string name="unshadowmute_user">Prekini Potajno utišavanje</string>
-    <string name="unmute_user">Uključi zvuk korisnika</string>
+    <string name="unmute_user">Ukloni utišavanje igrača</string>
     <string name="shadow_muted_hidden">Potajno utišan/a, skriven/a</string>
     <string name="resume_damage">Nastavi s primanjem štete</string>
     <string name="resume_damage_2_title">Tvoji nizovi i brojači će se resetirati</string>
@@ -1358,7 +1358,7 @@
     <string name="invited">Pozvan/a/</string>
     <string name="invite_with_username_email">Pozovi s @korisnickoime ili emailom</string>
     <string name="habiticans_send_invite">Direktno pozovi igrače koje znaš</string>
-    <string name="username_or_email">Korisničko ime ili email adresa</string>
+    <string name="username_or_email">Korisničko ime ili e-mail</string>
     <string name="seeking_party_title">Tražiš Družinu\?</string>
     <string name="look_for_party">Pronađi Družinu</string>
     <string name="you_re_looking_for_party">Tražiš Družinu!</string>
@@ -1410,4 +1410,126 @@
         <item quantity="few">Ti, %d druge</item>
         <item quantity="other">Ti, %d drugih</item>
     </plurals>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Minuta</item>
+        <item quantity="few">%d Minute</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="x_hours">
+        <item quantity="one">%d Sat</item>
+        <item quantity="few">%d Sati</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="photo_url_description">Možeš prikazati sliku na svom Habitica profilu kako bi je drugi vidjeli dodavanjem poveznice na sliku ovdje.</string>
+    <string name="save_photo_url">Spremi URL fotografije</string>
+    <string name="change_email_description">Ovo je adresa e-pošte koju koristiš za prijavu u Habiticu, kao i za primanje obavijesti.</string>
+    <string name="change_username_description">Korisnička imena moraju imati od 1 do 20 znakova i sadržavati samo slova od a do z, brojeve od 0 do 9, crtice ili podcrte.</string>
+    <string name="change_display_name">Promijeni prikazano ime</string>
+    <string name="display_name_description">Ovo je ime koje će biti prikazano za tvoj avatar u Habitici. Za razliku od korisničkog imena, ne mora biti jedinstveni identifikator.</string>
+    <string name="password_change_info">Zaporke moraju imati 8 ili više znakova. Promjena zaporke odjavit će te sa svih ostalih uređaja i alata trećih strana koje možda koristiš.</string>
+    <string name="confirm_new_password">Potvrdi novu zaporku</string>
+    <string name="report_user_description">Ovo će također blokirati @%s</string>
+    <string name="report_message">Prijavi Poruku</string>
+    <string name="report_successful">%s Prijavljen</string>
+    <string name="report_failure">Prijava nije uspjela, pokušajte ponovo kasnije</string>
+    <string name="report_player_toolbar_title">Prijavite %s</string>
+    <string name="see_other_sub_options">Vidi ostale opcije pretplate</string>
+    <string name="use_on_party">Koristi na Grupi</string>
+    <string name="about_me_description">Dodaj kratak opis o sebi koji će se prikazati na tvom Habitica profilu kada ga drugi pregledaju.</string>
+    <string name="save_about_me">Spremi O Meni</string>
+    <string name="item_footer_description">Pogledaj [Tržnicu](/shops/market) da kupiš upravo one stvari koje ti trebaju!</string>
+    <string name="exact_alarm_system_settings_reminders">Podsjetnici mogu kasniti jer dozvole nisu omogućene. Dodirnite za pregled i ažuriranje dozvola.</string>
+    <string name="exact_alarm_system_settings_title">`Alarm &amp; Podsjetnici` onemogućeni`</string>
+    <string name="exact_alarm_system_settings_description">Dopustite `Alarms &amp; Podsjetnike` u aplikaciji Postavke kako biste osigurali da se podsjetnici pojavljuju točno u zakazano vrijeme</string>
+    <string name="sell_confirmation_title">Jeste li sigurni da želite prodati ovo %s\?</string>
+    <string name="opt_out_description">Ovo će te ostaviti bez dodijeljene klase. Klasu možeš ponovno odabrati tako da u bilo kojem trenutku omogućiš sustav klasa u Postavkama.</string>
+    <string name="choosing_class_progress">Odabir Klase</string>
+    <string name="change_class_message">Ovo će ti ukloniti trenutnu klasu i vratiti sve bodove za statistike, a zatim ti omogućiti da odabereš novu klasu</string>
+    <string name="change_class_confirmation_message">Ovo će promijeniti koja je oprema otključana u trgovinama i promijeniti tvoje dostupne vještine</string>
+    <string name="your_tags">Tvoje Oznake</string>
+    <string name="challenge_tags">Oznake Izazova</string>
+    <string name="leave_party_confirmation_quest">Jeste li sigurni da želite napustiti ovu zabavu\?</string>
+    <string name="rejoin_party_quest_leader">Nećeš se moći ponovno pridružiti ovoj grupi ako te ne pozovu.
+\n
+\nNapuštanjem grupe također ćeš prekinuti trenutnu pustolovinu.</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="benefits_end">Pogodnosti završavaju %s</string>
+    <string name="resubscribe_description_gift">Želiš li nastaviti primati pogodnosti pretplate\? Možeš pokrenuti trajnu pretplatu kako bi pogodnosti ostale aktivne.</string>
+    <string name="empty_potions_description">Završi zadatke, Pustolovine s napitcima ili kreni na [Tržnicu](/shops/market) za opskrbu!</string>
+    <string name="subscribe_incentive_button_armoire">Pretplati se da ponovno otvoriš besplatno!</string>
+    <string name="empty_food_description">Završi zadatke, kupi Ormar ili kreni na [Tržnicu](/shops/market) za opskrbu!</string>
+    <string name="subscribe_incentive_text_armoire">Kao pretplatnik dobivaš dodatnu priliku za otvaranje Ormara svaki put kada ga kupiš</string>
+    <string name="subscribe_second_armoire_open_text">Pretplatnici dobivaju dodatne prilike za Ormar i ove druge pogodnosti!</string>
+    <string name="subscribe_second_chance_incentive_text">Pretplatnici dobivaju drugu priliku za život svaki dan i ove druge pogodnosti!</string>
+    <string name="subscriber_benefit_used_faint">Već si iskoristio svoju drugu priliku danas. Ponovno će biti dostupna za %s</string>
+    <string name="quest_mechanics_boss_description">Izvršavajte bilo koju vrstu zadatka ili koristite vještine kako biste skupili štetu! Šteta će biti primijenjena pri vašem sljedećem dnevnom resetiranju. Snaga utječe na to koliko štete nanosite.</string>
+    <string name="quest_mechanics_collecting_description">Kada ste na Pustolovini skupljanja, izvršavajte zadatke za nasumičnu priliku da pronađete predmet za Pustolovinu. Predmeti koji čekaju bit će primijenjeni pri vašem sljedećem dnevnom resetiranju. Percepcija povećava šanse za pronalaženje predmeta.</string>
+    <string name="quest_mechanics_damage_title">Boss se obrušava zbog propuštenih Dnevnih zadataka</string>
+    <string name="subscribe_listitem3_description_alt">Uvijek budi u najnovijoj ekskluzivnoj opremi. Pretplati se sada da dobiješ %1$se %2$s!</string>
+    <string name="faint_loss_description_alt">Spustit ćeš se na razinu <b>%1$d</b>, izgubit ćeš <b>%2$d</b> zlata i svoje Iskustvo… Sve to možeš zaraditi natrag napornim radom!</string>
+    <string name="subscribe_listitemArmoire_description">Dvije su ti prilike da osvojiš novu opremu svaki put kada otvoriš Začarani ormar!</string>
+    <string name="open_profile">Otvori Profil</string>
+    <string name="food_footer_description">Pogledaj [Tržnicu](/shops/market) da kupiš hranu ili sedlo i trenutačno odgojiš svog Ljubimca!</string>
+    <string name="quest_mechanics_boss_title">Oštećivanje Bossa</string>
+    <string name="report_reason_title_challenge">Zašto prijavljujete ovaj izazov\?</string>
+    <string name="report_challenge_explanation">Trebate prijaviti samo izazov koji krši [Smjernice zajednice](https://habitica.com/static/community-guidelines) i/ili [Uvjete korištenja](https://habitica.com/static/terms). Podnošenje lažne prijave kršenje je Habitica Smjernica zajednice.</string>
+    <string name="report_player_title">Prijavi %s\?</string>
+    <string name="report_player">Prijavi Igrača</string>
+    <string name="watch_ad_to_hang_on">Gledaj oglas da izdržiš s 1 HP-om!</string>
+    <string name="quest_mechanics">Mehanika Pustolovina</string>
+    <string name="subriber_benefit_notification_faint">Drugu priliku dobio si s 1 HP-om!</string>
+    <string name="subscription_hourglasses_3month_timeframe">Pješčana ura za 3 mjeseca</string>
+    <string name="hatchingPotions_footer_description">Pogledaj [Tržnicu](/shops/market) da kupiš standardne i sezonske Napitke za izlijeganje!</string>
+    <string name="class_equipment_shop_dialog_new">Ovaj predmet dostupan je samo %s. Otvori Postavke da promijeniš klasu.</string>
+    <string name="insufficient_level_equipment_dialog_new">Ovaj predmet dostupan je samo %s. Klasu možeš odabrati nakon 10. razine.</string>
+    <string name="report_hint">Razlog prijave</string>
+    <string name="subscribe_listitemFaint">Iskoristi drugu priliku</string>
+    <string name="subscribe_listitemFaint_description">Izbjegni gubitak napretka uz trenutačno izlječenje kad jednom dnevno ostaneš bez HP-a!</string>
+    <string name="challenges">Izazovi</string>
+    <string name="group_tags">Grupne Oznake</string>
+    <string name="gems_promo_info_limitations_fixed">Ova promocija vrijedi samo tijekom ograničenog događaja. Ovaj događaj počinje %1$s (%2$s) i završava %3$s (%4$s). Promotivna ponuda dostupna je samo kada kupujete dragulje za sebe.</string>
+    <string name="share_avatar">Podijeli Avatara</string>
+    <string name="sub_perk">PRETPLATNIČKA POGODNOST</string>
+    <plurals name="x_days">
+        <item quantity="one">%d Dan</item>
+        <item quantity="few">%d Dana</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="empty_eggs_description">Završi zadatke, Pustolovine s jajima ili kreni na [Tržnicu](/shops/market) za opskrbu!</string>
+    <string name="visit_market">Posjeti Tržnicu</string>
+    <string name="enable_class_description">Odaberi klasu kako bi omogućio vještine, statistike i manu</string>
+    <string name="report_user_explanation">Trebate prijaviti samo igrača koji krši [Smjernice zajednice](https://habitica.com/static/community-guidelines) i/ili [Uvjete korištenja](https://habitica.com/static/terms). Podnošenje lažne prijave kršenje je Habitica Smjernica zajednice.</string>
+    <string name="no_x">Bez %s</string>
+    <string name="empty_special_description_subscribed">Pristup transformacijskim predmetima dobivaš tijekom Sezonskih Gala, a misteriozne kutije s pretplatničkom opremom isporučuju se na početku svakog mjeseca!</string>
+    <string name="quests_footer_title">Želiš više Pustolovina\?</string>
+    <string name="quest_mechanics_pausing_title">Zaustavljanje štete</string>
+    <string name="quest_mechanics_rage_title">Mjerači bijesa</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt;su te pozvali da se pridružiš grupi&lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="need_help_description">Možeš nas kontaktirati, a član našeg tima će se potruditi pomoći ti!</string>
+    <string name="report_reason_title_message">Zašto prijavljujete ovu poruku\?</string>
+    <string name="report_reason_title_player">Zašto prijavljujete ovog igrača\?</string>
+    <string name="empty_quests_description">Pustolovine dobivaš povećanjem razine, bonusima za prijavu ili u [Dućanu pustolovina](/shops/quests)!</string>
+    <string name="potions">napitci</string>
+    <string name="eggs_footer_description">Pogledaj [Tržnicu](/shops/market) da kupiš upravo jaja koja ti trebaju!</string>
+    <string name="subscriber_button_armoire">Otvori ponovno besplatno!</string>
+    <string name="subscriber_button_faint">Druga prilika: Izdrži s 1 HP-om!</string>
+    <string name="quest_mechanics_collecting_title">Skupljanje predmeta za Pustolovinu</string>
+    <string name="cancel_subscription_apple_description">Ne želiš više pretplatu\? Zbog načina plaćanja, morat ćeš otkazati pretplatu putem postavki pretplate za svoj Apple ID na svom iOS uređaju.</string>
+    <string name="rejoin_party_quest">Nećeš se moći ponovno pridružiti ovoj grupi ako te ne pozovu.
+\n
+\nNapuštanjem zabave također ćeš napustiti pustolovinu na kojoj se trenutno nalaziš.</string>
+    <string name="reset_account_description_new">Izgubit ćeš sve svoje razine, zlato i iskustvo. Svi tvoji zadaci i njihovi povijesni podaci bit će izbrisani (zadaci iz Izazova će ostati). Izgubit ćeš svu opremu, osim predmeta za pretplatnike i besplatnih prigodnih predmeta, ali moći ćeš je ponovno kupiti. Morat ćeš biti odgovarajuće klase da ponovno kupiš opremu specifičnu za tu klasu. Zadržat ćeš svoju trenutnu klasu, postignuća te ljubimce i jahaće životinje. Za potvrdu resetiranja, upiši svoju lozinku ispod.</string>
+    <string name="reset_account_description_no_pw">Izgubit ćeš sve svoje razine, zlato i iskustvo. Svi tvoji zadaci i njihovi povijesni podaci bit će izbrisani (zadaci iz Izazova će ostati). Izgubit ćeš svu opremu, osim predmeta za pretplatnike i besplatnih prigodnih predmeta, ali moći ćeš je ponovno kupiti. Morat ćeš biti odgovarajuće klase da ponovno kupiš opremu specifičnu za tu klasu. Zadržat ćeš svoju trenutnu klasu, postignuća te ljubimce i jahaće životinje. Za potvrdu resetiranja, upiši RESET ispod.</string>
+    <string name="register_tos_confirm">Pristaješ na naše <a href="https://habitica.com/static/terms">Uvjete korištenja</a> i pročitao/la si naša <a href="https://habitica.com/static/privacy">Pravila o privatnosti</a>.</string>
+    <string name="report_message_explanation">Trebate prijaviti samo objavu koja krši [Smjernice zajednice](https://habitica.com/static/community-guidelines) i/ili [Uvjete korištenja](https://habitica.com/static/terms). Podnošenje lažne prijave kršenje je Habitica Smjernica zajednice.</string>
+    <string name="use_skill">Koristi Vještinu</string>
+    <string name="item_footer_title">Ne dobivaš pravi %s od zadataka\?</string>
+    <string name="quests_footer_description">Pogledajte [Dućan pustolovina](/shops/quests) da vidite što je dostupno!</string>
+    <string name="customize_avatar">Prilagodi Avatar</string>
+    <string name="subscribe_listitemArmoire">Dvostruke nagrade iz Ormara</string>
+    <string name="quest_mechanics_pausing_description">"Ako se mučite s izvršavanjem Dnevnih zadataka, možete pauzirati štetu u Postavkama kako biste uzeli predah. Time ćete spriječiti Šefa da povrijedi vas ili druge, ali ćete i pauzirati vlastitu štetu. Drugi članovi koji propuste Dnevne zadatke i dalje će uzrokovati štetu, stoga budite oprezni! "</string>
+    <string name="subscribe_incentive_text_faint">Uz pretplatu, svaki dan dobivate drugu priliku da ne ostanete bez HP-a</string>
+    <string name="quest_mechanics_damage_description">Šteta Bossa izračunava se svaki put kada se član Grupe prijavi tijekom dana. Ta se šteta primjenjuje sljedeći put kada izvršite akciju koja se sinkronizira s poslužiteljem. Šteta Bossa bilježi se u razgovoru vaše Grupe.</string>
+    <string name="g1g1_promo_info_limitations_noutc">Ovo je događaj s ograničenim trajanjem koji počinje %1$s i završava %2$s. Ova promocija vrijedi samo kada darujete drugom Habiticanu. Ako vi ili vaš primatelj poklona već imate pretplatu, darovana pretplata dodat će mjesece kredita koji će biti iskorišteni tek nakon što trenutna pretplata bude otkazana ili istekne.</string>
 </resources>
