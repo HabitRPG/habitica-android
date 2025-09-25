@@ -392,10 +392,11 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                 itemView.context.getString(R.string.shop_armoire_title, className)
             if (armoireCount > 0) {
                 binding.descriptionView.text =
-                    itemView.context.getString(R.string.shop_armoire_description, armoireCount)
+                    itemView.context.getQuantityString(R.plurals.shop_armoire_description, armoireCount, armoireCount)
                 binding.footerLayout.visibility = View.VISIBLE
                 binding.iconView.visibility = View.VISIBLE
             } else {
+                //the following won't be necessary with getQuantityString
                 binding.descriptionView.text =
                     itemView.context.getString(R.string.shop_armoire_empty_description)
                 binding.footerLayout.visibility = View.INVISIBLE
