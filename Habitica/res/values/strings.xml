@@ -1448,7 +1448,7 @@
     <string name="equipment_class_locked">This equipment is class-locked</string>
     <string name="change_class_to_x">Change class to %s</string>
     <string name="shop_armoire_title">You own all %s gear</string>
-    <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, there's %d pieces of gear in the Enchanted Armoire to find!</string>
+    <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, there\'s %d pieces of gear in the Enchanted Armoire to find!</string>
     <string name="shop_armoire_empty_description">New gear is released during the seasonal Galas. The Enchanted Armoire gets new stock every month too!</string>
     <string name="unlock_gear_and_skills">Unlock %s gear and skills</string>
     <string name="rescind_invite">Cancel Invite</string>
