@@ -138,6 +138,11 @@ interface ApiClient {
         position: Int
     ): List<String>?
 
+    suspend fun postGroupTaskNewPosition(
+        id: String,
+        position: Int
+    ): List<String>?
+
     suspend fun scoreChecklistItem(
         taskId: String,
         itemId: String

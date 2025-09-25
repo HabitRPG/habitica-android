@@ -666,6 +666,13 @@ class ApiClientImpl(
         return process { apiService.postTaskNewPosition(id, position) }
     }
 
+    override suspend fun postGroupTaskNewPosition(
+        id: String,
+        position: Int
+    ): List<String>? {
+        return process { apiService.postGroupTaskNewPosition(id, position) }
+    }
+
     override suspend fun scoreChecklistItem(
         taskId: String,
         itemId: String
