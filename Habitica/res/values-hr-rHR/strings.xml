@@ -420,9 +420,9 @@
     <string name="quest_leader_header">Započeo/la %s</string>
     <string name="quest_abort_message">Jesi li siguran/na da želiš otkazati ovu pustolovinu\? Sav napredak će biti izgubljen. Pustolovni svitak će biti vraćen inventaru vlasnika pustolovine.</string>
     <string name="reloading_content">Sadržaj se ponovno učitava</string>
-    <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">m</string>
-    <string name="billion_abbrev">b</string>
+    <string name="thousand_abbrev">t</string>
+    <string name="million_abbrev">mil</string>
+    <string name="billion_abbrev">mlrd</string>
     <string name="available_until">Dostupno do %s</string>
     <string name="gems_left_max">Mjesečni Dragulji: %1$d/%2$d preostalo</string>
     <string name="gems_left_nomax">Mjesečni Dragulji: %d preostalo</string>
@@ -1128,7 +1128,7 @@
     <string name="task_list_mode">Vrste popisa zadataka</string>
     <string name="compact">Kompaktno</string>
     <string name="minimal">Minimalno</string>
-    <string name="trillion_abbrev">t</string>
+    <string name="trillion_abbrev">bil</string>
     <string name="push_notification_system_settings_reminders">Dopusti Habitica obavijesti u aplikaciji Postavke za primanje podsjetnika</string>
     <string name="push_notification_system_settings_title">Obavijesti onemogućene</string>
     <string name="enable_notifications">Omogući obavijesti</string>
@@ -1413,12 +1413,12 @@
     <plurals name="x_minutes">
         <item quantity="one">%d Minuta</item>
         <item quantity="few">%d Minute</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="x_hours">
         <item quantity="one">%d Sat</item>
         <item quantity="few">%d Sati</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="photo_url_description">Možeš prikazati sliku na svom Habitica profilu kako bi je drugi vidjeli dodavanjem poveznice na sliku ovdje.</string>
     <string name="save_photo_url">Spremi URL fotografije</string>
@@ -1494,7 +1494,7 @@
     <plurals name="x_days">
         <item quantity="one">%d Dan</item>
         <item quantity="few">%d Dana</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="empty_eggs_description">Završi zadatke, Pustolovine s jajima ili kreni na [Tržnicu](/shops/market) za opskrbu!</string>
     <string name="visit_market">Posjeti Tržnicu</string>
