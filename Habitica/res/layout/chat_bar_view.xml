@@ -33,6 +33,10 @@
                     android:paddingEnd="@dimen/spacing_medium"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
+                    android:maxHeight="300dp"
+                    android:scrollbars="vertical"
+                    android:scrollbarStyle="insideOverlay"
+                    android:overScrollMode="ifContentScrolls"
                     tools:height="200dp"/>
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
