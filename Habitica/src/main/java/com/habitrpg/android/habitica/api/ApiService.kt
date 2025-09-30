@@ -191,6 +191,12 @@ interface ApiService {
         @Path("position") position: Int
     ): Response<HabitResponse<List<String>>>
 
+    @POST("group-tasks/{id}/move/to/{position}")
+    suspend fun postGroupTaskNewPosition(
+        @Path("id") id: String,
+        @Path("position") position: Int
+    ): Response<HabitResponse<List<String>>>
+
     @POST("tasks/{taskId}/checklist/{itemId}/score")
     suspend fun scoreChecklistItem(
         @Path("taskId") taskId: String,
