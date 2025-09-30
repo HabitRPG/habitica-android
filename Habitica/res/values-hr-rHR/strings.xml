@@ -18,8 +18,8 @@
     <string name="pref_first_day_of_the_week_summary">Prvi dan tjedna u svim kalendarima</string>
     <string name="pref_reminder_header">Dnevni Podsjetnik</string>
     <string name="pref_reminder_checkbox">Aktiviraj Podsjetnik</string>
-    <string name="pref_reminder_picker">Postavi vrijeme podsjetnika</string>
-    <string name="pref_cds_header">Prilagođeni početak dana</string>
+    <string name="pref_reminder_picker">Postavi Vrijeme Podsjetnika</string>
+    <string name="pref_cds_header">Prilagođeni Početak Dana</string>
     <string name="pref_push_notifications_checkbox">Koristi push obavijesti</string>
     <string name="push_notifications">Push notifikacije</string>
     <string name="push_notifications_sum">Uredi postavke svojih push notifikacija</string>

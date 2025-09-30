@@ -21,7 +21,7 @@
     <string name="gold_capitalized">Zlato</string>
     <string name="trivial">Trivijalno</string>
     <string name="dailies">Dnevni zadaci</string>
-    <string name="todos">Zadaci</string>
+    <string name="todos">Obveze</string>
     <string name="user_level">Raz. %d</string>
     <string name="login_btn">Prijava</string>
     <string name="register_btn">Registriraj se</string>
@@ -46,7 +46,7 @@
     </plurals>
     <string name="create_task_title">Stvori Zadatak</string>
     <string name="reward">Nagrada</string>
-    <string name="todo">Zadaci</string>
+    <string name="todo">Obveza</string>
     <string name="new_task">Novi zadatak</string>
     <string name="avatar">Avatar</string>
     <string name="username">Korisničko ime</string>
@@ -70,9 +70,9 @@
     <string name="task">Zadatak</string>
     <string name="failed">Učitavanje nije uspjelo</string>
     <plurals name="x_todos">
-        <item quantity="one">%d zadatak</item>
-        <item quantity="few">%d zadata</item>
-        <item quantity="other">%d zadataka</item>
+        <item quantity="one">%d obveza</item>
+        <item quantity="few">%d obveza</item>
+        <item quantity="other">%d obveze</item>
     </plurals>
     <plurals name="x_rewards">
         <item quantity="one">%d nagrada</item>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_pets_and_mounts">Ljubimci &amp; Životinje za jahanje</string>
-    <string name="profile_pets_found">Ljubimaca pronađeno</string>
-    <string name="profile_mounts_tamed">jahačih životinja pripitomljeno</string>
+    <string name="profile_pets_and_mounts">Ljubimci i Jahaće životinje</string>
+    <string name="profile_pets_found">Pronađeni Ljubimci</string>
+    <string name="profile_mounts_tamed">Pripitomljene Jahaće životinje</string>
     <string name="profile_loading_data">Učitavanje podataka o članu…</string>
     <string name="profile_send_message_to">Pošalji poruku %s</string>
     <string name="profile_message_sent_to">Poruka poslana %s</string>
-    <string name="profile_level">Level:</string>
-    <string name="profile_class_bonus">Bonus klase:</string>
+    <string name="profile_level">Razina:</string>
+    <string name="profile_class_bonus">Bonus Klase:</string>
     <string name="profile_allocated">Raspodijeljeno:</string>
     <string name="profile_achievements">Postignuća</string>
 </resources>
