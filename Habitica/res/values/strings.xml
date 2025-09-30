@@ -1645,4 +1645,7 @@
         <item quantity="one">%d Item pending</item>
         <item quantity="other">%d Items pending</item>
     </plurals>
+
+    <string name="new_message">New message</string>
+    <string name="scroll_to_new_messages">Scroll to new messages</string>
 </resources>
