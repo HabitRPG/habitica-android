@@ -5,10 +5,10 @@
     <string name="tutorial_habits_2">Kada god izvršiš pozitivnu Naviku, dodirni + kako bi dobio iskustvo i zlato!</string>
     <string name="tutorial_habits_3">Ako pak posustaneš i napraviš negativnu naviku, dodir na - smanjit će zdravlje tvog avatara kako bi ostao odgovoran.</string>
     <string name="tutorial_habits_4">Pokušaj! Ostale vrste zadataka možeš istražiti putem donje navigacije.</string>
-    <string name="tutorial_dailies_1">Stvori Svakodnevne zadatke za one zadatke koji imaju rokove i koje trebaš izvršavati prema redovnom rasporedu.</string>
+    <string name="tutorial_dailies_1">Stvori Dnevne zadatke za one zadatke koji imaju rokove i koje trebaš izvršavati prema redovnom rasporedu.</string>
     <string name="tutorial_dailies_2">Budi oprezan - ako propustiš jedan, tvoj će avatar pretrpjeti štetu tijekom noći. Dosljedno ih označavaj kako bi dobio sjajne nagrade!</string>
-    <string name="tutorial_todos_1">Koristi Zadatke za praćenje obaveza koje trebaš obaviti samo jednom.</string>
-    <string name="tutorial_todos_2">Ako svoj zadatak moraš obaviti do određenog vremena, postavi mu rok. Izgleda da možeš označiti jedan — samo naprijed!</string>
+    <string name="tutorial_todos_1">Koristi Obveze za praćenje obaveza koje trebaš obaviti samo jednom.</string>
+    <string name="tutorial_todos_2">Ako svoju obvezu moraš obaviti do određenog vremena, postavi mu rok. Izgleda da možeš označiti jedan — samo naprijed!</string>
     <string name="tutorial_rewards_1">Kupuj opremu za svog avatara zlatom koje zaradiš!</string>
     <string name="tutorial_rewards_2">Možete izraditi i prilagođene nagrade iz stvarnog svijeta na temelju onoga što vas motivira.</string>
     <string name="tutorial_tasks_complete">Sve za sada. Ako vam treba podsjetnik, provjerite često postavljana pitanja.</string>
