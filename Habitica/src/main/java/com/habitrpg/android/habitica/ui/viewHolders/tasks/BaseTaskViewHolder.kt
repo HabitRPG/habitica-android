@@ -118,7 +118,7 @@ abstract class BaseTaskViewHolder(
             object : EllipsisTextView.EllipsisListener {
                 override fun ellipsisStateChanged(ellipses: Boolean) {
                     scope.launch(Dispatchers.Main.immediate) {
-                        if (ellipses && notesTextView.maxLines != 3) {
+                        if (ellipses && notesTextView.maxLines != 3 && !notesExpanded) {
                             notesTextView.maxLines = 3
                         }
                         expandNotesButton?.visibility =
