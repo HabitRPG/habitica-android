@@ -159,8 +159,11 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
             return
         }
 
+        val hasOwnershipFilter = filterOptions != null &&
+            (filterOptions.showOwned || filterOptions.notOwned) &&
+            !(filterOptions.showOwned && filterOptions.notOwned)
         val hasActiveFilters = filterOptions != null &&
-            (filterOptions.showOwned || filterOptions.notOwned || filterOptions.showByGroups.isNotEmpty())
+            (hasOwnershipFilter || filterOptions.showByGroups.isNotEmpty())
 
         context?.let { ctx ->
             if (hasActiveFilters) {

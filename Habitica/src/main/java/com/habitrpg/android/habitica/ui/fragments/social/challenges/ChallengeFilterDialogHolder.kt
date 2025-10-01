@@ -28,6 +28,21 @@ internal class ChallengeFilterDialogHolder private constructor(
         binding.challengeFilterNotOwned.setOnCheckedChangeListener { _, isChecked ->
             currentFilter?.notOwned = isChecked
         }
+
+        binding.clearButton.visibility = View.VISIBLE
+        binding.clearButton.setOnClickListener {
+            clearFilters()
+        }
+    }
+
+    private fun clearFilters() {
+        binding.challengeFilterOwned.isChecked = false
+        binding.challengeFilterNotOwned.isChecked = false
+        adapter?.checkedEntries?.clear()
+        adapter?.notifyDataSetChanged()
+        currentFilter?.showOwned = false
+        currentFilter?.notOwned = false
+        currentFilter?.showByGroups = emptyList()
     }
 
     fun bind(
