@@ -19,10 +19,14 @@ class HabiticaAutocompleteTextView(context: Context, attrs: AttributeSet?) :
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (hasFocus() && canScrollVertically(1) || canScrollVertically(-1)) {
-            parent?.requestDisallowInterceptTouchEvent(true)
+        if (hasFocus() && (canScrollVertically(1) || canScrollVertically(-1))) {
             when (event.action and MotionEvent.ACTION_MASK) {
-                MotionEvent.ACTION_UP -> {
+                MotionEvent.ACTION_MOVE -> {
+                    if (lineCount * lineHeight > height - paddingTop - paddingBottom) {
+                        parent?.requestDisallowInterceptTouchEvent(true)
+                    }
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     parent?.requestDisallowInterceptTouchEvent(false)
                 }
             }
