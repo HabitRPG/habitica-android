@@ -542,6 +542,9 @@
     <string name="description_optional">Description (optional)</string>
     <string name="new_challenge_title">New challenge title</string>
     <string name="ownership">Ownership</string>
+    <string name="membership">Membership</string>
+    <string name="participating">Participating</string>
+    <string name="not_participating_filter">Not Participating</string>
     <string name="inn">Inn</string>
     <string name="start_quest">Start a new Quest</string>
     <string name="leave_party">Leave Party</string>

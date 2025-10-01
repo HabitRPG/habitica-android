@@ -39,7 +39,7 @@ class ChallengesListViewAdapter(
         data[position].let { challenge ->
             holder.bind(
                 challenge,
-                challengeMemberships?.first { challenge.id == it.challengeID } != null
+                challengeMemberships?.any { it.challengeID == challenge.id } ?: false
             )
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {
@@ -60,9 +60,17 @@ class ChallengesListViewAdapter(
         }
     }
 
+    fun updateChallengeMemberships(memberships: List<ChallengeMembership>?) {
+        challengeMemberships = memberships
+        if (currentFilterOptions != null) {
+            filter(currentFilterOptions!!)
+        }
+    }
+
     fun filter(filterOptions: ChallengeFilterOptions) {
         val hasNoActiveFilters = filterOptions.showByGroups.isEmpty() &&
-            !filterOptions.showOwned && !filterOptions.notOwned
+            !filterOptions.showOwned && !filterOptions.notOwned &&
+            !filterOptions.showParticipating && !filterOptions.notParticipating
 
         if (hasNoActiveFilters) {
             currentFilterOptions = null
@@ -84,6 +92,17 @@ class ChallengesListViewAdapter(
                         challenge.leaderId == userId
                     } else {
                         challenge.leaderId != userId
+                    }
+                }
+            }
+
+            if (filterOptions.showParticipating != filterOptions.notParticipating) {
+                filtered = filtered.filter { challenge ->
+                    val isParticipating = challengeMemberships?.any { it.challengeID == challenge.id } ?: false
+                    if (filterOptions.showParticipating) {
+                        isParticipating
+                    } else {
+                        !isParticipating
                     }
                 }
             }

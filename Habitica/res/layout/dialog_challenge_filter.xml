@@ -53,6 +53,37 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/dialog_challenge_filter_group_item"
             tools:visibility="gone" />
+
+            <TextView
+                style="@style/Caption3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:height="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/membership"
+                android:textAllCaps="true" />
+
+            <CheckBox
+                style="@style/Subheader2"
+                android:id="@+id/challenge_filter_participating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/participating"
+                android:textColor="@color/text_primary"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"/>
+
+            <CheckBox
+                style="@style/Subheader2"
+                android:id="@+id/challenge_filter_not_participating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/not_participating_filter"
+                android:textColor="@color/text_primary"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"/>
+
             <TextView
                 style="@style/Caption3"
                 android:layout_width="wrap_content"

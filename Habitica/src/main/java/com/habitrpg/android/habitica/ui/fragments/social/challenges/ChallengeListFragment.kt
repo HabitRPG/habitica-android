@@ -121,6 +121,14 @@ class ChallengeListFragment :
                 }
         }
 
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect { user ->
+                user?.challenges?.let { memberships ->
+                    challengeAdapter?.updateChallengeMemberships(memberships)
+                }
+            }
+        }
+
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         challengeAdapter?.updateUnfilteredData(challenges)
