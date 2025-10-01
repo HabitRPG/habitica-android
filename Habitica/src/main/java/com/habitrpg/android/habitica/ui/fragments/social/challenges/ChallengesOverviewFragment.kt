@@ -8,9 +8,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.core.view.MenuItemCompat
+import android.graphics.PorterDuff
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -19,6 +18,8 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.common.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,6 +40,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     private var statePagerAdapter: FragmentStateAdapter? = null
     private var userChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
     private var availableChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
+    private var filterMenuItem: MenuItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,15 +81,8 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_challenges, menu)
 
-        @Suppress("Deprecation")
-        val badgeLayout =
-            MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as? RelativeLayout
-        if (badgeLayout != null) {
-            val filterCountTextView = badgeLayout.findViewById<TextView>(R.id.badge_textview)
-            filterCountTextView.text = null
-            filterCountTextView.visibility = View.GONE
-            badgeLayout.setOnClickListener { getActiveFragment()?.showFilterDialog() }
-        }
+        filterMenuItem = menu.findItem(R.id.action_search)
+        getActiveFragment()?.updateFilterBadge()
     }
 
     @Suppress("ReturnCount")
@@ -139,6 +134,11 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
                 }
             }
         binding?.viewPager?.adapter = statePagerAdapter
+        binding?.viewPager?.registerOnPageChangeCallback(object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                getActiveFragment()?.updateFilterBadge()
+            }
+        })
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
@@ -152,5 +152,32 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
             }
         }
         statePagerAdapter?.notifyDataSetChanged()
+    }
+
+    fun updateFilterBadge(filterOptions: ChallengeFilterOptions?) {
+        if (filterMenuItem == null) {
+            return
+        }
+
+        val hasActiveFilters = filterOptions != null &&
+            (filterOptions.showOwned || filterOptions.notOwned || filterOptions.showByGroups.isNotEmpty())
+
+        context?.let { ctx ->
+            if (hasActiveFilters) {
+                val filterIcon = ContextCompat.getDrawable(ctx, R.drawable.ic_filters_active)
+                filterIcon?.setTintWith(
+                    ctx.getThemeColor(R.attr.textColorPrimaryDark),
+                    PorterDuff.Mode.MULTIPLY
+                )
+                filterMenuItem?.setIcon(filterIcon)
+            } else {
+                val filterIcon = ContextCompat.getDrawable(ctx, R.drawable.ic_action_filter_list)
+                filterIcon?.setTintWith(
+                    ctx.getThemeColor(R.attr.headerTextColor),
+                    PorterDuff.Mode.MULTIPLY
+                )
+                filterMenuItem?.setIcon(filterIcon)
+            }
+        }
     }
 }

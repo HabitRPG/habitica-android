@@ -221,5 +221,10 @@ class ChallengeListFragment :
     private fun changeFilter(challengeFilterOptions: ChallengeFilterOptions) {
         filterOptions = challengeFilterOptions
         challengeAdapter?.filter(challengeFilterOptions)
+        updateFilterBadge()
+    }
+
+    fun updateFilterBadge() {
+        (parentFragment as? ChallengesOverviewFragment)?.updateFilterBadge(filterOptions)
     }
 }
