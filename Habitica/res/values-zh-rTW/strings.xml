@@ -1276,4 +1276,6 @@
     <string name="quest_mechanics_boss_title">對Boss造成傷害</string>
     <string name="quest_mechanics">副本機制</string>
     <string name="quest_mechanics_damage_title">錯過每日任務會讓Boss反擊</string>
+    <string name="reset_account_description_no_pw">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入RESET。</string>
+    <string name="reset_account_description_new">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入你的密碼。</string>
 </resources>
