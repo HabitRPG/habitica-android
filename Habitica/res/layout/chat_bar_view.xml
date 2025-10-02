@@ -33,7 +33,7 @@
                     android:paddingEnd="@dimen/spacing_medium"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
-                    android:maxHeight="300dp"
+                    android:maxHeight="250dp"
                     android:scrollbars="vertical"
                     android:scrollbarStyle="insideOverlay"
                     android:overScrollMode="ifContentScrolls"
