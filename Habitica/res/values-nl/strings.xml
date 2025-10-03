@@ -607,7 +607,7 @@
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
     <string name="visit_website">bezoek website</string>
-    <string name="gift_one_get_one">Schenk één, krijg één!</string>
+    <string name="gift_one_get_one">Geef er één, krijg er één</string>
     <string name="send_gift">Verzend geschenk</string>
     <string name="server">server</string>
     <string name="gift_confirmation_title">Je geschenk is verzonden!</string>
@@ -856,7 +856,7 @@
     <string name="report_explanation">Meld **alleen** een bericht dat de [Communityrichtlijnen](https://habitica.com/static/community-guidelines) en/of [Servicevoorwaarden](https://habitica.com/static/terms) schendt. Het ongepast melden van een bericht kan een overtreding opleveren.</string>
     <string name="gift_confirmation_text_sub_g1g1">Je hebt %1$s een %2$s-maand Habitica-abonnement gestuurd en hetzelfde abonnement is toegepast op je account voor onze Gift One Get One-promotie!</string>
     <string name="gift_gems_subtitle">Kies hieronder het edelsteenpakket dat je cadeau wilt doen!</string>
-    <string name="gift_subscription_subtitle">Kies hieronder het abonnement dat u wilt schenken! Deze aankoop wordt niet automatisch verlengd.</string>
+    <string name="gift_subscription_subtitle">Selecteer het abonnement dat je cadeau wilt doen! Dit abonnement wordt niet automatisch verlengd.</string>
     <string name="gift_one_get_one_detailed_description">Terwijl deze promotie actief is, ontvang je zelf, automatisch hetzelfde abonnement nadat je je cadeau hebt verzonden.</string>
     <string name="gift_one_get_one_description">Geef een sub cadeau en ontvang er een gratis evenement is nu bezig!</string>
     <string name="subscribe_gift_description">Wilt u de voordelen van een abonnement aan iemand anders geven\?</string>
@@ -1058,6 +1058,10 @@
     <string name="reset_account_description_no_pw">Je verliest al je Niveaus, Goud en Ervaring. Al je Taken en historische gegevens zullen worden verwijderd (Uitdagingen blijven bestaan). Je zult al je Uitrusting verliezen, behalve abonnementsitems en gratis Memorabilia, maar je kunt ze wel opnieuw kopen. Je moet van de juiste Klasse zijn om klassespecifieke Uitrusting opnieuw te kopen. Je behoudt je huidige Klasse, Prestaties, en je Huis- en Rijdieren. Typ hieronder RESET om het resetten te bevestigen.</string>
     <string name="forgot_password_hint_example">Bijv. habitrabbit of griffioen@example.com</string>
     <string name="month_reminder_title">Heb je behoefte aan verandering in je routine\?</string>
-    <string name="x_checkins">%d Checkins</string>
+    <string name="x_checkins">%d check-ins</string>
     <string name="month_reminder_text">Soms is een nieuwe start de beste optie, Habitica kan helpen!</string>
+    <string name="change_display_name">Weergavenaam aanpassen</string>
+    <string name="display_name_description">Dit is de naam die wordt weergegeven bij je Personage in Habitica. In tegenstelling tot je gebruikersnaam hoeft deze niet uniek te zijn.</string>
+    <string name="register_tos_confirm">Je gaat akkoord met onze <a href="https://habitica.com/static/terms">Algemene Voorwaarden</a> en ons <a href="https://habitica.com/static/privacy">Privacybeleid</a> en hebt deze gelezen.</string>
+    <string name="gift_confirmation_text_gems_new">Je hebt %s %s edelstenen gestuurd.</string>
 </resources>
