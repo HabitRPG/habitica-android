@@ -448,19 +448,19 @@
     <string name="con_abbrv">WEE</string>
     <string name="reset_account">Account Resetten</string>
     <string name="delete_account">Verwijder Account</string>
-    <string name="delete_account_description">Dit zal je account voor altijd wissen en het kan nooit meer hersteld worden! Resterende of uitgegeven Edelstenen zullen niet terugbetaald worden. Als je het zeker weet, typ je wachtwoord dan in het onderstaande tekstveld.</string>
+    <string name="delete_account_description">Dit zal je account voor altijd wissen en het kan nooit meer hersteld worden! Resterende of uitgegeven Edelstenen zullen niet terugbetaald worden. Als je het zeker weet, typ dan je wachtwoord in het onderstaande tekstveld.</string>
     <string name="reset_account_confirmation">Mijn Account Resetten</string>
     <string name="delete_account_confirmation">Verwijder mijn Account</string>
     <string name="danger_zone">Gevarenzone</string>
     <string name="resetting_account">Account aan het resetten</string>
     <string name="deleting_account">Account Verwijderen</string>
     <string name="insufficientGold">Je moet meer taken voltooien voordat je dit voorwerp kunt aanschaffen!</string>
-    <string name="insufficientGems">Je hebt meer Edelstenen nodig om dit voorwerp te kopen!</string>
+    <string name="insufficientGems">Je hebt meer Edelstenen nodig om dit voorwerp te kunnen kopen!</string>
     <string name="purchase_gems">Edelstenen kopen</string>
     <string name="insufficientHourglasses">Je hebt meer Mystieke Zandlopers nodig om dit voorwerp te kopen!</string>
     <string name="get_hourglasses">Krijg zandlopers</string>
     <string name="subscribe_for_hourglasses">Abonneer voor Zandlopers</string>
-    <string name="timetravelers_closed_description">Verdien een Mystieke zandloper voor elke drie maanden van opeenvolgende abbonering, en gebruik ze dan om voorwerpen, huisdieren en rijdieren met beperkte oplage uit het verleden en de toekomst vrij te spelen!</string>
+    <string name="timetravelers_closed_description">Ontvang iedere maand van je abonnement een Mystieke Zandloper, waarmee je limited edition-items en Huisdieren of Rijdieren uit het verleden kunt ontgrendelen... en de toekomst!</string>
     <string name="want_to_subscribe">Ik wil me abonneren</string>
     <string name="seasonal_closed_description">De Grote Gala\'s vinden dicht bij zonnewenden en nachteveningen plaats, dus kom dan terug om een leuk assortiment aan speciale seizoensgebonden voorwerpen te vinden!</string>
     <string name="come_back_soon">Kom snel terug!</string>
@@ -470,7 +470,7 @@
     <string name="fix_character_values">Personagewaarden herstellen</string>
     <string name="saving">Aan het opslaan</string>
     <string name="forgot_password_title">E-mail een link om je wachtwoord te resetten</string>
-    <string name="forgot_password_description">Voer het e-mail adres dat je gebruikte om je Habitica account te registreren in.</string>
+    <string name="forgot_password_description">Voer je gebruikersnaam of e-mailadres in waarmee je je bij Habitica hebt geregistreerd.</string>
     <string name="forgot_password_confirmation">Als je we e-mail adres in ons bestand hebben zijn de instructies om een nieuw wachtwoord in te stellen naar je e-mail gestuurd.</string>
     <string name="ok">Oké</string>
     <string name="profile">Profiel</string>
@@ -513,12 +513,13 @@
     <string name="class_equipment">Uitrusting</string>
     <string name="equipment_empty">Je hebt alle uitrusting al! Meer zal uitgebracht worden tijdens de Grote Galas, dicht bij de zonnestilstanden en nachteveningen.</string>
     <string name="classless">Klasseloos</string>
-    <string name="class_equipment_shop_dialog">Dit voorwerp is enkel beschikbaar voor een specifieke klasse.\n Je kunt van klasse veranderen bij je Instellingen.</string>
+    <string name="class_equipment_shop_dialog">Dit voorwerp is enkel beschikbaar voor een specifieke Klasse.
+\n Je kunt je Klasse aanpassen in de Instellingen.</string>
     <string name="class_gear_disclaimer">Je kunt enkel uitrusting kopen voor je huidige klasse</string>
     <string name="check_into_inn">Check in bij de Herberg</string>
     <string name="community_guidelines">gemeenschapsrichtlijnen</string>
     <string name="view_community_guidelines">Bekijk de gemeenschapsrichtlijnen</string>
-    <string name="guidelines_description">Habitica wenst ruimte te bieden aan gebruikers van alle leeftijden en achtergronden, vooral op openbare plekken zoals de Herberg. Als je hierover vragen hebt, raadpleeg dan onze richtlijnen.</string>
+    <string name="guidelines_description">Habitica streeft ernaar een gastvrije omgeving te creëren voor spelers van alle leeftijden en achtergronden. Als je vragen hebt, bekijk dan onze Gemeenschapsrichtlijnen.</string>
     <string name="helpful_links">Handige links</string>
     <string name="view_faq">Bekijk de FAQ</string>
     <string name="report_bug">Meld een bug</string>
@@ -585,7 +586,7 @@
     <string name="week_reminder_title">Hoe gaat het met je taken?</string>
     <string name="week_reminder_text">Pauzes zijn gezond, maar je kan nog steeds punten krijgen voor simpele activiteiten om levels omhoog te gaan en een coole uitrusting te krijgen.</string>
     <string name="last_login">Laatste Check-in</string>
-    <string name="total_checkins">Totaal aantal Check-ins</string>
+    <string name="total_checkins">Totaal aantal check-ins</string>
     <string name="two_handed">Tweehandig</string>
     <string name="usernamePromptTitle">Het is tijd om een gebruikersnaam te kiezen</string>
     <string name="usernamePromptWiki">Als je meer te weten wil komen over deze verandering, <a href="https://habitica.fandom.com/wiki/Player_Names">bezoek onze wiki.</a></string>
@@ -744,7 +745,7 @@
     <string name="unlock_previous">Vrijspelen door de Quest %d te voltooien</string>
     <string name="locked">Nog niet vrijgespeeld</string>
     <string name="quest_completed">Quest voltooid!</string>
-    <string name="delete_oauth_account_description">Dit verwijderd je account voor altijd en kan daarna nooit meer worden teruggezet. Edelstenen die op de bank staan of zijn uitgegeven worden niet terugbetaald. Als je zeker bent, typ dan DELETE in het tekstveld hieronder.</string>
+    <string name="delete_oauth_account_description">Dit zal je account voor altijd wissen en het kan nooit meer hersteld worden! Resterende of uitgegeven Edelstenen zullen niet terugbetaald worden. Als je het zeker weet, typ dan DELETE in het onderstaande tekstveld.</string>
     <string name="transfer_ownership_confirm_message">Hierdoor wordt %s de nieuwe Gezelschapsleider</string>
     <string name="joinedChallengeDescription">Je test ze door mee te doen aan een uitdaging!</string>
     <string name="joinedChallengeTitle">Deelgenomen aan een uitdaging</string>
@@ -1032,7 +1033,7 @@
     <string name="subscription_credit_canceling">Je huidige tegoed van <b>%d</b> maanden van je abonnement zullen na opzegging worden geactiveerd</string>
     <string name="challenges">Uitdagingen</string>
     <string name="reset_account_title">Weet je zeker dat je wilt resetten\?</string>
-    <string name="reset_account_description_new">Je verliest al jouw levels, goud en ervaringen. Al je taken en historische gegevens zullen worden verwijderd (Uitdagingen taken blijven bestaan). Je zult al je uitrusting verliezen, behalve Abonnement items en gratis herinneringsspullen, maar je zult het terug kunnen kopen. Je moet de juiste klasse zijn om de specifieke klasse uitrusting weer te kopen. Je behoudt je huidige klasse prestaties, en je huisdieren en rijdieren. Om de reset te bevestigen, typ je wachtwoord hier onder.</string>
+    <string name="reset_account_description_new">Je verliest al je Niveaus, Goud en Ervaring. Al je Taken en historische gegevens zullen worden verwijderd (Uitdagingen blijven bestaan). Je zult al je Uitrusting verliezen, behalve abonnementsitems en gratis Memorabilia, maar je kunt ze wel opnieuw kopen. Je moet van de juiste Klasse zijn om klassespecifieke Uitrusting opnieuw te kopen. Je behoudt je huidige Klasse, Prestaties, en je Huis- en Rijdieren. Typ hieronder je wachtwoord om het resetten te bevestigen.</string>
     <string name="leave_party_confirmation_quest">Weet je zeker dat je deze Groep wilt verlaten\?</string>
     <string name="rejoin_party_quest">Je kunt niet opnieuw lid worden van deze Groep zonder uitnodiging.
 \n
@@ -1047,4 +1048,16 @@
     <string name="reloaded_content">Content is opnieuw geladen</string>
     <string name="next_hourglass">Volgende Zandloper</string>
     <string name="available_for">Beschikbaar voor %s</string>
+    <string name="photo_url_description">Je kunt een afbeelding op je Habitica-profiel plaatsen zodat anderen deze kunnen zien. Voeg hier een link naar de afbeelding toe.</string>
+    <string name="save_photo_url">Foto URL opslaan</string>
+    <string name="change_email_description">Dit is het e-mailadres waarmee je inlogt op Habitica en waarop je meldingen ontvangt.</string>
+    <string name="class_equipment_shop_dialog_new">Dit item is alleen beschikbaar voor %s. Open Instellingen om je Klasse te wijzigen.</string>
+    <string name="insufficient_level_equipment_dialog">Dit item is alleen beschikbaar voor een specifieke Klasse. Je kunt een Klasse kiezen vanaf Niveau 10.</string>
+    <string name="insufficient_level_equipment_dialog_new">Dit item is alleen beschikbaar voor %s. Je kunt een Klasse kiezen vanaf Niveau 10.</string>
+    <string name="change_username_description">Een gebruikersnaam moet 1 tot 20 tekens lang zijn en mag alleen de letters a tot en met z, de cijfers 0 tot en met 9, koppeltekens en onderstrepingstekens bevatten.</string>
+    <string name="reset_account_description_no_pw">Je verliest al je Niveaus, Goud en Ervaring. Al je Taken en historische gegevens zullen worden verwijderd (Uitdagingen blijven bestaan). Je zult al je Uitrusting verliezen, behalve abonnementsitems en gratis Memorabilia, maar je kunt ze wel opnieuw kopen. Je moet van de juiste Klasse zijn om klassespecifieke Uitrusting opnieuw te kopen. Je behoudt je huidige Klasse, Prestaties, en je Huis- en Rijdieren. Typ hieronder RESET om het resetten te bevestigen.</string>
+    <string name="forgot_password_hint_example">Bijv. habitrabbit of griffioen@example.com</string>
+    <string name="month_reminder_title">Heb je behoefte aan verandering in je routine\?</string>
+    <string name="x_checkins">%d Checkins</string>
+    <string name="month_reminder_text">Soms is een nieuwe start de beste optie, Habitica kan helpen!</string>
 </resources>
