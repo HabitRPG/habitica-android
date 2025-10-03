@@ -981,9 +981,9 @@
     <string name="unsaved_changes">Niet-opgeslagen veranderingen</string>
     <string name="reset_counter">Teller resetten</string>
     <string name="leave_challenges_delete_tasks">Verlaat uitdagingen &amp; verwijder taken</string>
-    <string name="hourglasses_description">Mystieke zandlopers zijn een zeldzaam soort betaalmiddel dat je alleen ontvangt bij een abonnement op Habitica dat minstens drie opeenvolgende maanden duurt. Je kunt er in de Tijdreiziger\'s winkel voorafgaande uitrustingssets, huisdieren, rijdieren, geanimeerde acthergronden of zelfs speciale queestes voor kopen.
+    <string name="hourglasses_description">Mystieke Zandlopers zijn een extreem zeldzaam betaalmiddel die je alleen kunt ontvangen wanneer je je abonneert op Habitica. Je kunt ze in de Tijdreizigerswinkel gebruiken om oude Uitrustingssets, exclusieve Huisdieren, Rijdieren, geanimeerde Achtergronden of zelfs speciale Missies te kopen! Deze extraatjes zijn een geweldige manier om het hele jaar gemotiveerd te blijven en jezelf te belonen voor goed werk.
 \n
-\nJe kunt maximaal vier mystieke zandlopers per jaar ontvangen. Het tijdstip dat je ze krijgt hangt af van wanneer je abonnement wordt herniewd. Ze worden uitgezonden op de eerste dag van een nieuwe maand nadat je laatste abonnementsbetaling je heeft gequalificeerd voor een zandloper. Zie de [Abonnementen]-pagina voor meer details.</string>
+\nAbonnees ontvangen aan het begin van elke maand dat ze abonnementsvoordelen hebben een Mystieke Zandloper, samen met een heleboel andere voordelen. Bekijk zeker onze abonnementsopties als je geïnteresseerd bent in wat de Tijdreizigers te bieden hebben!</string>
     <string name="level_abbreviated">Niv. %d</string>
     <string name="enable_notifications">Notificaties inschakelen</string>
     <string name="push_notification_system_settings_description">Sta Habitica meldingen toe in Instellingen om pushnotificaties te ontvangen</string>
@@ -1063,5 +1063,44 @@
     <string name="change_display_name">Weergavenaam aanpassen</string>
     <string name="display_name_description">Dit is de naam die wordt weergegeven bij je Personage in Habitica. In tegenstelling tot je gebruikersnaam hoeft deze niet uniek te zijn.</string>
     <string name="register_tos_confirm">Je gaat akkoord met onze <a href="https://habitica.com/static/terms">Algemene Voorwaarden</a> en ons <a href="https://habitica.com/static/privacy">Privacybeleid</a> en hebt deze gelezen.</string>
-    <string name="gift_confirmation_text_gems_new">Je hebt %s %s edelstenen gestuurd.</string>
+    <string name="gift_confirmation_text_gems_new">Je hebt @%1$s %2$s Edelstenen gestuurd.</string>
+    <string name="password_change_info">Een wachtwoord moet minimaal 8 tekens lang zijn. Als je je wachtwoord wijzigt, wordt je afgemeld bij alle andere apparaten en tools van derden waar je gebruik van maakt.</string>
+    <string name="confirm_new_password">Wachtwoord bevestigen</string>
+    <string name="see_other_sub_options">Bekijk meer abonnementsopties</string>
+    <string name="benefits_end">Voordelen eindigen %s</string>
+    <string name="resubscribe_description_gift">Wilt u blijven profiteren van de abonnementsvoordelen\? U kunt een doorlopend abonnement afsluiten om uw voordelen te behouden.</string>
+    <string name="use_on_party">Gebruik in Groep</string>
+    <string name="report_reason_title_message">Waarom wil je dit bericht rapporteren\?</string>
+    <string name="report_player_title">%s rapporteren\?</string>
+    <string name="need_help_description">Je kunt contact met ons opnemen en een van onze teamleden zal je zo goed mogelijk helpen!</string>
+    <string name="report_player_toolbar_title">Rapporteer %s</string>
+    <string name="report_hint">Reden voor rapporteren</string>
+    <string name="report_reason_title_player">Waarom wil je deze speler rapporteren\?</string>
+    <string name="report_reason_title_challenge">Waarom wil je deze Uitdaging rapporteren\?</string>
+    <string name="report_user_description">Dit blokkeert ook @%s</string>
+    <string name="report_message">Bericht rapporteren</string>
+    <string name="report_successful">%s gerapporteerd</string>
+    <string name="report_failure">Rapporteren mislukt, probeer het later opnieuw</string>
+    <string name="report_player">Speler rapporteren</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; heeft je uitgenodigd om lid te worden van de Groep &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="report_user_explanation">Rapporteer alleen spelers die in strijd zijn met de [Gemeenschapsrichtlijnen](https://habitica.com/static/community-guidelines) en/of de [Algemene Voorwaarden](https://habitica.com/static/terms). Een valse melding is een schending van de Gemeenschapsrichtlijnen van Habitica.</string>
+    <string name="report_message_explanation">Rapporteer alleen berichten die in strijd zijn met de [Gemeenschapsrichtlijnen](https://habitica.com/static/community-guidelines) en/of de [Algemene Voorwaarden](https://habitica.com/static/terms). Een valse melding is een schending van de Gemeenschapsrichtlijnen van Habitica.</string>
+    <string name="report_challenge_explanation">Rapporteer alleen Uitdagingen die in strijd zijn met de [Gemeenschapsrichtlijnen](https://habitica.com/static/community-guidelines) en/of de [Algemene Voorwaarden](https://habitica.com/static/terms). Een valse melding is een schending van de Gemeenschapsrichtlijnen van Habitica.</string>
+    <string name="use_skill">Gebruik skill</string>
+    <string name="subscription_confirmation">Je bent voor 1 maand geabonneerd op Habitica</string>
+    <string name="leave_guild_challenges_confirmation">Wil je blijven deelnemen aan de Uitdaging als je het Gilde verlaat\?</string>
+    <string name="send_invite">Uitnodiging versturen</string>
+    <string name="subscribers_mythic_hourglasses"><i>Abonnees ontvangen Mystieke Zandlopers in de eerste drie dagen van de maand.</i></string>
+    <string name="adjust_counter">Reeks aanpassen</string>
+    <string name="rejoin_guild">Je kan deze Gilde opnieuw betreden vanaf de Gilden: Ontdek pagina</string>
+    <string name="subscriber_currency">Betaalmethode abonnement</string>
+    <string name="subscription_confirmation_multiple">Je bent voor %s maanden geabonneerd op Habitica</string>
+    <string name="gem_purchase_confirmation">Je hebt %s Edelstenen ontvangen.</string>
+    <string name="gems_description">Edelstenen zijn een betaalmiddel dat je koopt met echt geld. Ze laten je extra inhoud kopen binnen in Habitica en zijn - naast abonnementen - één van de grootste inkomstenbronnen voor het Habitica-team.
+\n
+\nAlle inhoud die je koopt met Edelstenen zijn puur en alleen voor de sier of kun je met de tijd ook gratis krijgen.
+\n
+\nJe kunt ook Edelstenen ontvangen als cadeaus van andere spelers en Uitdagingsprijzen, door mee te werken aan Habitica, of je te abonneren.</string>
+    <string name="clear_cache_description">Om het cachegeheugen te wissen open je de instellingen van je telefoon en ga je naar opslag &gt; apps &gt; Habitica. Klik dan op cachegeheugen legen.</string>
+    <string name="inbox_messages_title_single">Nieuw bericht van %1$s</string>
 </resources>
