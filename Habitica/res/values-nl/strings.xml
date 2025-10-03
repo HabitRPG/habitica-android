@@ -230,7 +230,7 @@
     <string name="class_changed">Je bent nu een %s!</string>
     <string name="choose_class">Kies een Klasse</string>
     <string name="dialog_go_back">Ga terug</string>
-    <string name="opt_out_confirmation">Weet je zeker dat je je wil afmelden?</string>
+    <string name="opt_out_confirmation">Wil je geen Klasse selecteren\?</string>
     <string name="change_class">Verander je klasse</string>
     <string name="change_class_description">Verander je klasse en krijg je eigenschapspunten terug voor 3 edelstenen.</string>
     <string name="enable_class">Klassesysteem aanzetten</string>
@@ -1017,5 +1017,7 @@
     <string name="sell_no_price">Verkopen</string>
     <string name="armoireFood_new">Je rommelt in het Kabinet en vindt Voedsel. Wat doet dat hier\?</string>
     <string name="create_new_party">Nieuwe Groep aanmaken</string>
-    <string name="class_changed_description">Je kan %s vaardigheden gebruiken en uitrusting kopen in de winkels!</string>
+    <string name="class_changed_description">Je kunt nu je %s vaardigheden gebruiken en Uitrusting kopen in winkels. Verhoog je niveau om punten te ontvangen waarmee je je vaardigheden kunt verbeteren.</string>
+    <string name="enable_class_description">Kies een klasse voor het ontgrendelen van vaardigheden, stats en mana</string>
+    <string name="opt_out_description">In dit geval wordt er geen Klasse aan je toegewezen. Je kunt op ieder moment alsnog een Klasse selecteren door het Klassensysteem te activeren in Instellingen.</string>
 </resources>
