@@ -209,14 +209,13 @@
     <string name="notification_pet_fed">Je hebt je %s gevoederd!</string>
     <string name="notification_purchase_reward">Je hebt een beloning gekocht</string>
     <string name="world_quest">Wereldqueeste</string>
-    <string name="inn_description">Een pauze nodig\? Check in bij Daniels Herberg om een paar van Habitica\'s moeilijkere spelmechanismen te pauzeren:
+    <string name="inn_description">Een pauze nodig\? Check in bij Daniels Herberg om enkele van Habitica\'s moeilijkere spelmechanismen te pauzeren:
 \n
-\n • Gemiste dagelijkse taken zullen je niet beschadigen
-\n • Taken zullen geen streaks verliezen of vervallen in kleur
-\n • Bazen zullen je geen schade doen voor je gemiste dagelijkse taken
-\n • Je schade aan de baas of verzamelvoorwerpen van queesten zullen in afwachting blijven tot je uitcheckt</string>
+\n • Gemiste Dagelijkse Taken zullen je niet beschadigen
+\n • Bazen zullen je geen schade doen voor je gemiste Dagelijkse Taken
+\n • Je schade aan de Baas of verzamelvoorwerpen van Queesten zullen blijven staan tot je uitcheckt</string>
     <string name="empty_items">Je hebt geen %s</string>
-    <string name="user_level_with_class">NIV %1$d %2$s</string>
+    <string name="user_level_with_class">Niv. %1$d %2$s</string>
     <string name="warrior">Krijger</string>
     <string name="rogue">Dief</string>
     <string name="mage">Magiër</string>
@@ -984,7 +983,7 @@
     <string name="hourglasses_description">Mystieke zandlopers zijn een zeldzaam soort betaalmiddel dat je alleen ontvangt bij een abonnement op Habitica dat minstens drie opeenvolgende maanden duurt. Je kunt er in de Tijdreiziger\'s winkel voorafgaande uitrustingssets, huisdieren, rijdieren, geanimeerde acthergronden of zelfs speciale queestes voor kopen.
 \n
 \nJe kunt maximaal vier mystieke zandlopers per jaar ontvangen. Het tijdstip dat je ze krijgt hangt af van wanneer je abonnement wordt herniewd. Ze worden uitgezonden op de eerste dag van een nieuwe maand nadat je laatste abonnementsbetaling je heeft gequalificeerd voor een zandloper. Zie de [Abonnementen]-pagina voor meer details.</string>
-    <string name="level_abbreviated">NIV</string>
+    <string name="level_abbreviated">Niv. %d</string>
     <string name="enable_notifications">Notificaties inschakelen</string>
     <string name="push_notification_system_settings_description">Sta Habitica meldingen toe in Instellingen om pushnotificaties te ontvangen</string>
     <string name="push_notification_system_settings_reminders">Sta Habitica meldingen toe in de Instellingen om herinneringen te ontvangen</string>
@@ -1001,4 +1000,22 @@
     <string name="exact_alarm_system_settings_description">Sta`Alarmen &amp; Herinneringen` toe in de app Instellingen om ervoor te zorgen dat de herinneringen op precies de juiste tijd verschijnen</string>
     <string name="quest_party_required_title">Je moet in een Groep zitten voordat je een Queeste kunt beginnen</string>
     <string name="quest_party_required_description">Als je eenmaal in een Groep zit, kan je zelf Queestes doen of vrienden uitnodigen om ook met hen Queestes te doen!</string>
+    <plurals name="x_minutes">
+        <item quantity="one">%d minuut</item>
+        <item quantity="other">%d minuten</item>
+    </plurals>
+    <string name="sell_confirmation_title">Weet je zeker dat je %s wilt verkopen\?</string>
+    <plurals name="x_hours">
+        <item quantity="one">%d uur</item>
+        <item quantity="other">%d uur</item>
+    </plurals>
+    <plurals name="x_days">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
+    <string name="armoireEquipment_new">Je vindt een zeldzaam stuk Uitrusting in het Kabinet!</string>
+    <string name="sell_no_price">Verkopen</string>
+    <string name="armoireFood_new">Je rommelt in het Kabinet en vindt Voedsel. Wat doet dat hier\?</string>
+    <string name="create_new_party">Nieuwe Groep aanmaken</string>
+    <string name="class_changed_description">Je kan %s vaardigheden gebruiken en uitrusting kopen in de winkels!</string>
 </resources>
