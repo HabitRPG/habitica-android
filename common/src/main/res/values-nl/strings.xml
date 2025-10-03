@@ -68,10 +68,14 @@
     <string name="LoginActivityName">Welkom</string>
     <string name="easy_sentence">makkelijk</string>
     <string name="emailAddress">Email adres</string>
-    <string name="confirmpassword">Bevestig wachtwoord</string>
+    <string name="confirmpassword">Wachtwoord bevestigen</string>
     <string name="login_btn_google">Inloggen met Google</string>
     <string name="logout">Uitloggen</string>
     <string name="user_level">Niveau %d</string>
     <string name="register_btn">Registreren</string>
     <string name="username">Gebruikersnaam</string>
+    <string name="login_validation_error_title">Verificatiefout</string>
+    <string name="failed">Laden mislukt</string>
+    <string name="logout_description">Uitloggen</string>
+    <string name="login_btn">Inloggen</string>
 </resources>
