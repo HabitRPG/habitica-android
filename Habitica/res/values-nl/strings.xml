@@ -322,13 +322,13 @@
     <string name="active">Actief</string>
     <string name="due">Tegen</string>
     <string name="cancel_subscription">Annuleer abonnement</string>
-    <string name="cancel_subscription_google_description">Wil je niet langer abonneren\? Je kan de optie om je abonnement stop te zetten vinden in de \"Mijn apps\" sectie van de Google Play Store. Alle maanden abonnementskrediet worden toegepast nadat uw abonnement is beëindigd.</string>
-    <string name="cancel_subscription_notgoogle_description">Wilt u zich niet meer abonneren\? Vanwege beperkingen op mobiele betalingen moet u annuleren via onze website. Tik hiervoor op de onderstaande knop, log in op uw account, tik op het gebruikerspictogram in de rechterbovenhoek en ga vervolgens naar Abonnement. Alle maanden abonnementskrediet worden toegepast nadat uw abonnement is beëindigd. We zullen je missen!</string>
+    <string name="cancel_subscription_google_description">Wil je geen abonnee blijven\? Je kunt je abonnement opzeggen in de Google Play Store onder \"Mijn apps en games\". Als je nog maanden tegoed hebt van je abonnement dan zullen deze na opzegging worden geactiveerd.</string>
+    <string name="cancel_subscription_notgoogle_description">Wil je geen abonnee blijven\? Vanwege je betaalmethode moet je je abonnement opzeggen via onze website. Klik hiervoor op de knop hieronder, log in op je account, klik op je spelersicoon rechtsboven en ga naar je abonnementsinstellingen. Als je nog maanden tegoed hebt van je abonnement dan zullen deze na opzegging worden geactiveerd.</string>
     <string name="visit_habitica_website">Bezoek Habitica Website</string>
     <string name="current_bonuses">Huidige bonussen</string>
     <string name="months_subscribed">Maanden geabonneerd</string>
     <string name="current_hourclasses">Huidige Mystieke Zandlopers</string>
-    <string name="monthly_gem_cap">Maandelijks edelsteenlimiet</string>
+    <string name="monthly_gem_cap">Maandelijks Edelstenenlimiet</string>
     <string name="inactive">inactief</string>
     <string name="one_month">1 maand</string>
     <string name="months">Maanden</string>
@@ -1029,5 +1029,22 @@
     <string name="change_class_message">Dit verwijdert je huidige Klasse en geeft alle Attribuutpunten terug. Hierna kun je een nieuwe Klasse kiezen</string>
     <string name="subscribe_listitemFaint_description">Behoud je voortgang met één keer per dag een directe genezing als je Levens opraken!</string>
     <string name="change_class_selected_confirmation">Wil je je Klasse veranderen naar %1$s\?</string>
-    <string name="subscription_credit_canceling">Jouw <b>+%d</b> maanden tegoed van het abonnement zullen worden geactiveerd naar het beëindigen.</string>
+    <string name="subscription_credit_canceling">Je huidige tegoed van <b>%d</b> maanden van je abonnement zullen na opzegging worden geactiveerd</string>
+    <string name="challenges">Uitdagingen</string>
+    <string name="reset_account_title">Weet je zeker dat je wilt resetten\?</string>
+    <string name="reset_account_description_new">Je verliest al jouw levels, goud en ervaringen. Al je taken en historische gegevens zullen worden verwijderd (Uitdagingen taken blijven bestaan). Je zult al je uitrusting verliezen, behalve Abonnement items en gratis herinneringsspullen, maar je zult het terug kunnen kopen. Je moet de juiste klasse zijn om de specifieke klasse uitrusting weer te kopen. Je behoudt je huidige klasse prestaties, en je huisdieren en rijdieren. Om de reset te bevestigen, typ je wachtwoord hier onder.</string>
+    <string name="leave_party_confirmation_quest">Weet je zeker dat je deze Groep wilt verlaten\?</string>
+    <string name="rejoin_party_quest">Je kunt niet opnieuw lid worden van deze Groep zonder uitnodiging.
+\n
+\nAls je deze Groep verlaat, kun je niet meer deelnemen aan je huidige Queeste.</string>
+    <string name="rejoin_party_quest_leader">Je kunt niet opnieuw lid worden van deze Groep zonder uitnodiging.
+\n
+\nAls je deze Groep verlaat wordt de huidige Queeste geannuleerd.</string>
+    <string name="leave_party_challenges_confirmation">Wil je blijven deelnemen aan de Uitdaging wanneer je de Groep verlaat\?</string>
+    <string name="discard_changes_to_task_message">Weet je zeker dat je de wijzigingen aan deze taak wilt verwerpen\?</string>
+    <string name="cancel_subscription_apple_description">Wil je geen abonnee blijven\? Vanwege je betaalmethode moet je je abonnement opzeggen met je Apple ID in de abonnementsinstellingen op je iOS-apparaat. Als je nog maanden tegoed hebt van je abonnement dan zullen deze na opzegging worden geactiveerd.</string>
+    <string name="confirm_reset">Resetten bevestigen</string>
+    <string name="reloaded_content">Content is opnieuw geladen</string>
+    <string name="next_hourglass">Volgende Zandloper</string>
+    <string name="available_for">Beschikbaar voor %s</string>
 </resources>
