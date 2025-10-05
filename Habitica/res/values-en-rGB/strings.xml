@@ -758,7 +758,7 @@
     <string name="unpin">Unpin</string>
     <string name="pin">Pin</string>
     <string name="levelup_title_10">Class System unlocked!</string>
-    <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
+    <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armour to help you on your journey</string>
     <string name="not_now">Not right now</string>
     <string name="delete_task">Delete Task</string>
     <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
@@ -1046,4 +1046,5 @@
     <string name="x_and_y">%1$s and %2$s</string>
     <string name="enable_notifications">Enable Notifications</string>
     <string name="push_notification_system_settings_description">Allow Habitica notifications in the Settings app to receive push notifications</string>
+    <string name="hurray">Hurrah!</string>
 </resources>
