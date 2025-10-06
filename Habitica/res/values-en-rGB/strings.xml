@@ -284,7 +284,7 @@
     <string name="subscriptions">Subscriptions</string>
     <string name="subscription_duration">Recurring every %s</string>
     <string name="subscribe">Subscribe</string>
-    <string name="subscribe_listitem1_description">Get up to 50 Gold-purchasable Gems in the Market to buy Quests, Customizations, Pets, and more!</string>
+    <string name="subscribe_listitem1_description">Get up to 50 Gold-purchasable Gems in the Market to buy Quests, Customisations, Pets, and more!</string>
     <string name="subscribe_listitem2_description">Earn Mystic Hourglasses to purchase items in the Time Traveler’s Shop!</string>
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
     <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
@@ -1000,7 +1000,7 @@
     <string name="first_drop_explanation1">Completing tasks gives you a chance to find eggs, hatching potions, and pet food.</string>
     <string name="purchasedEquipmentDescription">Equipment can be practical or just fashionable. Raise your stats to get all sorts of benefits to your avatar</string>
     <string name="fedPetDescription">Every Pet has a specific food they enjoy! Experiment to find out which will grow your Pet the fastest</string>
-    <string name="hatchedPetDescription">There are so many Pets to collect, you’re bound to have a favorite. If you feed them, they may just grow…</string>
+    <string name="hatchedPetDescription">There are so many Pets to collect, you’re bound to have a favourite. If you feed them, they may just grow…</string>
     <string name="completedTaskDescription">A task can be a Habit, Daily, or To Do. Continue completing them to receive all sorts of rewards!</string>
     <string name="createdTaskDescription">Keep it up! If you need help planning tasks, try thinking about what you’d like to do during a specific time of day</string>
     <string name="purchasedEquipmentTitle">Purchased Equipment</string>
@@ -1009,7 +1009,7 @@
     <string name="can_hatch_pet">Combine your %1$s Egg and %2$s Potion to hatch this pet!</string>
     <string name="createdTaskTitle">Created your first task</string>
     <string name="completedTaskTitle">Completed a task</string>
-    <string name="purchase_equipment_description">Equipment is a way to customize your avatar and improve your stats</string>
+    <string name="purchase_equipment_description">Equipment is a way to customise your avatar and improve your stats</string>
     <string name="feedPet_description">Complete tasks to get food! You can feed it to your pet from Pets &amp; Mounts</string>
     <string name="complete_task_description">Check off any of your tasks to earn rewards</string>
     <string name="hatch_pet_description">Complete tasks to get a Hatching Potion and Egg then hatch your Pet!</string>
@@ -1089,4 +1089,9 @@
     <string name="create_new_party">Create new party</string>
     <string name="discard">Discard</string>
     <string name="class_confirmation_price">Do you want to change your class to %1$s for %2$d Gems\?</string>
+    <string name="customization_shop_more">Check out the Customisation Shop for even more ways to customise your avatar!</string>
+    <string name="try_on_customize">You can try them on by customising your avatar.</string>
+    <string name="customize_avatar">Customise Avatar</string>
+    <string name="customization_shop_check_out">Head over to the Customisation Shop to browse the many ways you can customise your avatar!</string>
+    <string name="plenty_of_potions_description">We’re bringing back 10 of the community’s favourite Magic Hatching Potions. Head over to the Market to fill out your collection!</string>
 </resources>
