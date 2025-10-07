@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.login
 
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.animateDpAsState
@@ -13,6 +14,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -22,10 +24,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -38,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -74,6 +83,24 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
     var passwordFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
     var email by authenticationViewModel.email
     var emailFieldState by remember { mutableStateOf(LoginFieldState.DEFAULT) }
+    var showServerDialog by remember { mutableStateOf(false) }
+    var customServerUrl by remember { mutableStateOf(authenticationViewModel.currentServerSelection()) }
+    var unifiedPushUrl by remember { mutableStateOf(authenticationViewModel.currentUnifiedPushServer()) }
+    var serverError by remember { mutableStateOf<String?>(null) }
+    val invalidServerMessage = stringResource(R.string.custom_server_invalid)
+    val context = LocalContext.current
+    var devTapCount by remember { mutableStateOf(0) }
+    var devOptionsUnlocked by remember { mutableStateOf(authenticationViewModel.isDevOptionsUnlocked()) }
+    val requiredTapCount = 7
+
+    LaunchedEffect(showServerDialog) {
+        if (showServerDialog) {
+            customServerUrl = authenticationViewModel.currentServerSelection()
+            unifiedPushUrl = authenticationViewModel.currentUnifiedPushServer()
+            serverError = null
+            devTapCount = 0
+        }
+    }
     Box(modifier.fillMaxSize()) {
         AndroidView(
             factory = { context ->
@@ -124,6 +151,40 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
             ) {
                 Image(painterResource(R.drawable.arrow_back), contentDescription = null)
             }
+        }
+        Button(
+            {
+                if (showServerDialog) {
+                    return@Button
+                }
+                if (devOptionsUnlocked) {
+                    showServerDialog = true
+                    return@Button
+                }
+                val nextCount = devTapCount + 1
+                if (nextCount >= requiredTapCount) {
+                    devTapCount = 0
+                    devOptionsUnlocked = true
+                    authenticationViewModel.setDevOptionsUnlocked(true)
+                    Toast.makeText(context, context.getString(R.string.dev_options_unlocked), Toast.LENGTH_SHORT).show()
+                    showServerDialog = true
+                } else {
+                    devTapCount = nextCount
+                    val remaining = requiredTapCount - nextCount
+                    Toast.makeText(
+                        context,
+                        context.resources.getQuantityString(R.plurals.dev_options_taps_remaining, remaining, remaining),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            },
+            colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
+            modifier = Modifier.align(Alignment.TopEnd).padding(WindowInsets.systemBars.asPaddingValues())
+        ) {
+            Image(
+                painterResource(R.drawable.menu_settings),
+                contentDescription = stringResource(R.string.custom_server_content_description)
+            )
         }
         val logoPadding by animateDpAsState(
             if (loginScreenState == LoginScreenState.INITIAL) {
@@ -230,5 +291,112 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                 }
             }
         }
+    }
+    if (showServerDialog) {
+        val dialogContainer = Color(0xFF3B3B3B)
+        AlertDialog(
+            onDismissRequest = { showServerDialog = false },
+            title = { Text(stringResource(R.string.custom_server_title)) },
+            text = {
+                Column {
+                    Text(
+                        text = stringResource(R.string.dev_options_warning),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(bottom = 12.dp)
+                    )
+                    val containerColor = Color(0xFF3B3B3B)
+                    OutlinedTextField(
+                        value = customServerUrl,
+                        onValueChange = { customServerUrl = it },
+                        label = { Text(stringResource(R.string.custom_server_label), color = Color.White) },
+                        placeholder = { Text(stringResource(R.string.custom_server_placeholder), color = Color.White.copy(alpha = 0.6f)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = containerColor,
+                            unfocusedContainerColor = containerColor,
+                            focusedLabelColor = Color.White,
+                            unfocusedLabelColor = Color.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            cursorColor = MaterialTheme.colorScheme.primary,
+                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            focusedPlaceholderColor = Color.White.copy(alpha = 0.6f),
+                            unfocusedPlaceholderColor = Color.White.copy(alpha = 0.6f)
+                        )
+                    )
+                    if (serverError != null) {
+                        Text(
+                            serverError!!,
+                            color = MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = unifiedPushUrl,
+                        onValueChange = { unifiedPushUrl = it },
+                        label = { Text(stringResource(R.string.custom_up_server_label), color = Color.White) },
+                        placeholder = { Text(stringResource(R.string.custom_up_server_placeholder), color = Color.White.copy(alpha = 0.6f)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = containerColor,
+                            unfocusedContainerColor = containerColor,
+                            focusedLabelColor = Color.White,
+                            unfocusedLabelColor = Color.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            cursorColor = MaterialTheme.colorScheme.primary,
+                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            focusedPlaceholderColor = Color.White.copy(alpha = 0.6f),
+                            unfocusedPlaceholderColor = Color.White.copy(alpha = 0.6f)
+                        )
+                    )
+                }
+            },
+            containerColor = dialogContainer,
+            tonalElevation = 8.dp,
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val applied = authenticationViewModel.applyServerOverride(customServerUrl)
+                        if (applied) {
+                            authenticationViewModel.updateUnifiedPushServer(unifiedPushUrl)
+                            serverError = null
+                            showServerDialog = false
+                        } else {
+                            serverError = invalidServerMessage
+                        }
+                    }
+                ) {
+                    Text(stringResource(R.string.custom_server_apply))
+                }
+            },
+            dismissButton = {
+                Row {
+                    TextButton(
+                        onClick = {
+                            authenticationViewModel.resetServerOverride()
+                            authenticationViewModel.updateUnifiedPushServer(null)
+                            customServerUrl = authenticationViewModel.currentServerSelection()
+                            unifiedPushUrl = authenticationViewModel.currentUnifiedPushServer()
+                            serverError = null
+                            showServerDialog = false
+                        }
+                    ) {
+                        Text(stringResource(R.string.custom_server_reset))
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    TextButton(onClick = { showServerDialog = false }) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                }
+            }
+        )
     }
 }
