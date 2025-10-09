@@ -198,7 +198,7 @@
     <string name="notification_pet_fed">You fed your %s!</string>
     <string name="world_quest">World Quest</string>
     <string name="empty_items">You don\'t have any %s</string>
-    <string name="user_level_with_class">Lvl %1$d %2$s</string>
+    <string name="user_level_with_class">Lv. %1$d %2$s</string>
     <string name="warrior">Warrior</string>
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
@@ -209,15 +209,15 @@
     <string name="select_class">Select Class</string>
     <string name="opt_out_class">Opt Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
-    <string name="class_changed">You are now a %s!</string>
+    <string name="class_changed">You\'re a %s!</string>
     <string name="choose_class">Choose Class</string>
     <string name="dialog_go_back">Go Back</string>
-    <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
+    <string name="opt_out_confirmation">Opt out of the class system\?</string>
     <string name="change_class">Change your class</string>
     <string name="enable_class">Enable Class System</string>
     <string name="changing_class_progress">Changing Class</string>
     <string name="by_email">By Email</string>
-    <string name="invite_existing_users">Invite Existing Users</string>
+    <string name="invite_existing_users">Invite Existing players</string>
     <string name="send">Send</string>
     <string name="invite">Find Members</string>
     <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
@@ -227,9 +227,9 @@
     <string name="share_levelup">I got to level %d in #Habitica by improving my real-life habits!</string>
     <string name="share_hatched">I just hatched a %1$s %2$s pet in #Habitica by completing my real-life tasks!</string>
     <string name="share_raised">I just gained a %1$s mount in #Habitica by completing my real-life tasks!</string>
-    <string name="open_in_store">Open in Play Store</string>
-    <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
-    <string name="change_class_equipment_warning">Warning: You will no longer be able to buy equipment from the %s class.</string>
+    <string name="open_in_store">Open Play Store</string>
+    <string name="change_class_confirmation">Do you want to change class for 3 Gems\?</string>
+    <string name="change_class_equipment_warning">This will refund your stat points, switch which gear is unlocked in shops, and change your available skills.</string>
     <string name="confirm">Confirm</string>
     <string name="market">Market</string>
     <string name="timeTravelers">Time Travellers</string>
@@ -275,16 +275,16 @@
     <string name="belongs_to_challenge">Belongs to Challenge</string>
     <string name="has_reminder">Has Reminder</string>
     <string name="has_tag">Has Tag</string>
-    <string name="subscribe_title">Subscribing supports the developers and helps keep Habitica running</string>
-    <string name="subscribe_prompt">Become a subscriber to receive these exclusive benefits!</string>
-    <string name="subscribe_listitem1">Gold for Gems</string>
-    <string name="subscribe_listitem2">Mystic Hourglasses</string>
+    <string name="subscribe_title">Subscribing supports our small team and helps keep Habitica running</string>
+    <string name="subscribe_prompt">Stay motivated with even more rewards when you subscribe</string>
+    <string name="subscribe_listitem1">Free Monthly Gems</string>
+    <string name="subscribe_listitem2">Monthly Mystic Hourglass</string>
     <string name="subscribe_listitem3">Monthly Mystery Items</string>
     <string name="subscribe_listitem4">Special Subscriber Pet</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="subscription_duration">Recurring every %s</string>
     <string name="subscribe">Subscribe</string>
-    <string name="subscribe_listitem1_description">You’ll be able to buy Gems from the Market for 20 gold each!</string>
+    <string name="subscribe_listitem1_description">Get up to 50 Gold-purchasable Gems in the Market to buy Quests, Customisations, Pets, and more!</string>
     <string name="subscribe_listitem2_description">Earn Mystic Hourglasses to purchase items in the Time Traveler’s Shop!</string>
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
     <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
@@ -428,15 +428,14 @@
     <string name="notification_purchase_reward">You purchased a reward</string>
     <string name="inn_description">Need a break\? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:
 \n
-\n • Missed Dailies won’t damage you
-\n • Tasks won’t lose streaks or decay in colour
-\n • Bosses won’t do damage for your missed Dailies
-\n • Your boss damage or collection quest items will stay pending until check-out</string>
+\n • Your missed Dailies won\'t damage you (bosses will still do damage caused by other Party member\'s missed Dailies)
+\n • Your Task streaks and Habit counters will not reset
+\n • Your damage to the Quest boss or found collection items will remain pending until you check out of the Inn</string>
     <string name="warrior_description">Warriors score more critical hits and deal heavy damage to Bosses. Play a Warrior if you want to defeat monsters easily! Warriors benefit from a high Strength stat.</string>
     <string name="opting_out_progress">Opting Out</string>
     <string name="change_class_description">Change your class and refund your stat points for 3 gems.</string>
     <string name="invite_username_description">If you have friends already using Habitica, invite them by username here.</string>
-    <string name="empty_inbox">You don\'t have any messages. You can send a user a new message from their public chat messages!</string>
+    <string name="empty_inbox">You don\'t have any messages. You can send a player a new message from their public chat messages!</string>
     <string name="login_incentive">Unlock by logging into Habitica regularly</string>
     <string name="create_account">Unlock by creating an account</string>
     <string name="subscription_duration_norenew">For %s</string>
@@ -758,7 +757,7 @@
     <string name="unpin">Unpin</string>
     <string name="pin">Pin</string>
     <string name="levelup_title_10">Class System unlocked!</string>
-    <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
+    <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armour to help you on your journey</string>
     <string name="not_now">Not right now</string>
     <string name="delete_task">Delete Task</string>
     <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
@@ -847,11 +846,11 @@
     <string name="x_months">%d Months</string>
     <string name="subscribe_listitem5_description">Discover even more items in Habitica with a 2x bonus daily drop cap.</string>
     <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month!</string>
-    <string name="subscribe_listitem5">Double the Drops</string>
+    <string name="subscribe_listitem5">Special Pet &amp; More Drops</string>
     <string name="create_account_short">create an account</string>
     <string name="login_incentive_short_count">%d Checkins</string>
     <string name="login_incentive_short">log into Habitica regularly</string>
-    <string name="party_invite_short">Invite Friends</string>
+    <string name="party_invite_short">Find Members</string>
     <string name="login_incentive_count">Unlock by checking into Habitica %d times.</string>
     <string name="remaining_1hour">1h remaining</string>
     <string name="remaining_hours">%dh remaining</string>
@@ -1001,7 +1000,7 @@
     <string name="first_drop_explanation1">Completing tasks gives you a chance to find eggs, hatching potions, and pet food.</string>
     <string name="purchasedEquipmentDescription">Equipment can be practical or just fashionable. Raise your stats to get all sorts of benefits to your avatar</string>
     <string name="fedPetDescription">Every Pet has a specific food they enjoy! Experiment to find out which will grow your Pet the fastest</string>
-    <string name="hatchedPetDescription">There are so many Pets to collect, you’re bound to have a favorite. If you feed them, they may just grow…</string>
+    <string name="hatchedPetDescription">There are so many Pets to collect, you’re bound to have a favourite. If you feed them, they may just grow…</string>
     <string name="completedTaskDescription">A task can be a Habit, Daily, or To Do. Continue completing them to receive all sorts of rewards!</string>
     <string name="createdTaskDescription">Keep it up! If you need help planning tasks, try thinking about what you’d like to do during a specific time of day</string>
     <string name="purchasedEquipmentTitle">Purchased Equipment</string>
@@ -1010,7 +1009,7 @@
     <string name="can_hatch_pet">Combine your %1$s Egg and %2$s Potion to hatch this pet!</string>
     <string name="createdTaskTitle">Created your first task</string>
     <string name="completedTaskTitle">Completed a task</string>
-    <string name="purchase_equipment_description">Equipment is a way to customize your avatar and improve your stats</string>
+    <string name="purchase_equipment_description">Equipment is a way to customise your avatar and improve your stats</string>
     <string name="feedPet_description">Complete tasks to get food! You can feed it to your pet from Pets &amp; Mounts</string>
     <string name="complete_task_description">Check off any of your tasks to earn rewards</string>
     <string name="hatch_pet_description">Complete tasks to get a Hatching Potion and Egg then hatch your Pet!</string>
@@ -1046,4 +1045,53 @@
     <string name="x_and_y">%1$s and %2$s</string>
     <string name="enable_notifications">Enable Notifications</string>
     <string name="push_notification_system_settings_description">Allow Habitica notifications in the Settings app to receive push notifications</string>
+    <string name="hurray">Hurrah!</string>
+    <plurals name="x_minutes">
+        <item quantity="one">%d Minute</item>
+        <item quantity="other">%d Minutes</item>
+    </plurals>
+    <string name="exact_alarm_system_settings_reminders">Reminders may be delayed because permissions aren\'t enabled. Tap to view and update permissions.</string>
+    <string name="exact_alarm_system_settings_title">`Alarm &amp; Reminders` disabled`</string>
+    <string name="exact_alarm_system_settings_description">Allow `Alarms &amp; Reminders` in the Settings app to ensure reminders appear at the scheduled time exactly</string>
+    <string name="change_class_message">This will remove your current class and refund all stat points then let you select a new class</string>
+    <string name="your_tags">Your Tags</string>
+    <plurals name="x_days">
+        <item quantity="one">%d Day</item>
+        <item quantity="other">%d Days</item>
+    </plurals>
+    <string name="opt_out_description">This will leave you without an assigned class. You can choose a class again by enabling the class system from Settings at any time.</string>
+    <string name="choosing_class_progress">Choosing Class</string>
+    <string name="subscribe_listitemFaint">Get a Second Chance</string>
+    <string name="challenge_tags">Challenge Tags</string>
+    <string name="group_tags">Group Tags</string>
+    <plurals name="x_hours">
+        <item quantity="one">%d Hour</item>
+        <item quantity="other">%d Hours</item>
+    </plurals>
+    <string name="sell_confirmation_title">Are you sure you want to sell this %s\?</string>
+    <string name="enable_class_description">Select a class to enable skills, stats, and mana</string>
+    <string name="change_class_confirmation_message">This will switch which gear is unlocked in shops and change your available skills</string>
+    <string name="level_abbreviated">Lv. %d</string>
+    <string name="change_class_selected_confirmation">Do you want to change your class to %1$s\?</string>
+    <string name="usernames_party">%s\'s Party</string>
+    <string name="quest_party_required_title">You have to be in a Party before starting a Quest</string>
+    <string name="quest_party_required_description">Once in a Party, you can take on Quests by yourself or invite friends to Quest with them too!</string>
+    <string name="armoireEquipment_new">You find a piece of rare Equipment in the Armoire!</string>
+    <string name="class_changed_description">You can now use %s skills and purchase gear from shops. Gain levels to earn stat points you can use to power up your skills.</string>
+    <string name="quest_items_found">You\'ve found %d quest items</string>
+    <string name="push_notification_system_settings_reminders">Allow Habitica notifications in the Settings app to receive reminders</string>
+    <string name="push_notification_system_settings_title">Notifications Disabled</string>
+    <string name="title">Title</string>
+    <string name="positive_sentence">positive</string>
+    <string name="negative_sentence">negative</string>
+    <string name="armoireFood_new">You rummage in the Armoire and find food. What\'s that doing in here\?</string>
+    <string name="sell_no_price">Sell</string>
+    <string name="create_new_party">Create new party</string>
+    <string name="discard">Discard</string>
+    <string name="class_confirmation_price">Do you want to change your class to %1$s for %2$d Gems\?</string>
+    <string name="customization_shop_more">Check out the Customisation Shop for even more ways to customise your avatar!</string>
+    <string name="try_on_customize">You can try them on by customising your avatar.</string>
+    <string name="customize_avatar">Customise Avatar</string>
+    <string name="customization_shop_check_out">Head over to the Customisation Shop to browse the many ways you can customise your avatar!</string>
+    <string name="plenty_of_potions_description">We’re bringing back 10 of the community’s favourite Magic Hatching Potions. Head over to the Market to fill out your collection!</string>
 </resources>

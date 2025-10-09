@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">m</string>
-    <string name="billion_abbrev">b</string>
+    <string name="thousand_abbrev">t</string>
+    <string name="million_abbrev">mil</string>
+    <string name="billion_abbrev">mlrd</string>
     <string name="mystic_hourglasses">Mistični pješčani satovi</string>
     <string name="repeat_daily">Dnevno</string>
     <string name="monthly">Mjesečno</string>
     <string name="weekly">Tjedno</string>
-    <string name="daily">Dnevno</string>
+    <string name="daily">Dnevni zadatak</string>
     <string name="settings">Postavke</string>
-    <string name="user_level_long">Level %d</string>
+    <string name="user_level_long">Razina %d</string>
     <string name="action_edit">Uredi</string>
     <string name="action_cancel">Otkaži</string>
-    <string name="about_title">Više o</string>
-    <string name="are_you_sure">Jesi li siguran/na\?</string>
+    <string name="about_title">O</string>
+    <string name="are_you_sure">Jeste li sigurni\?</string>
     <string name="stats">Statistika</string>
-    <string name="trillion_abbrev">t</string>
+    <string name="trillion_abbrev">bil</string>
     <string name="gems">Dragulji</string>
-    <string name="gold_plural">Zlato</string>
+    <string name="gold_plural">zlato</string>
     <string name="gold_capitalized">Zlato</string>
     <string name="trivial">Trivijalno</string>
     <string name="dailies">Dnevni zadaci</string>
-    <string name="todos">Obaveze</string>
+    <string name="todos">Obveze</string>
     <string name="user_level">Raz. %d</string>
     <string name="login_btn">Prijava</string>
     <string name="register_btn">Registriraj se</string>
     <string name="LoginActivityName">Dobrodošli</string>
     <string name="save_task_x">Spremi %s</string>
     <string name="retry">Pokušaj ponovo</string>
-    <string name="quadrillion_abbrev">q</string>
+    <string name="quadrillion_abbrev">tril</string>
     <string name="easy">Lako</string>
     <string name="medium">Srednje</string>
     <string name="hard">Teško</string>
@@ -44,19 +44,19 @@
         <item quantity="few">%d dnevna zadatka</item>
         <item quantity="other">%d dnevnih zadataka</item>
     </plurals>
-    <string name="create_task_title">Stvori zadatak</string>
+    <string name="create_task_title">Stvori Zadatak</string>
     <string name="reward">Nagrada</string>
-    <string name="todo">Obaveza</string>
+    <string name="todo">Obveza</string>
     <string name="new_task">Novi zadatak</string>
     <string name="avatar">Avatar</string>
     <string name="username">Korisničko ime</string>
     <string name="email_username">Email/korisničko ime</string>
-    <string name="password">Lozinka</string>
+    <string name="password">Zaporka</string>
     <string name="emailAddress">Email adresa</string>
-    <string name="confirmpassword">Potvrdi lozinku</string>
-    <string name="login_btn_google">Prijavite se s Googleom</string>
+    <string name="confirmpassword">Ponovi zaporku</string>
+    <string name="login_btn_google">Prijavi se putem Googlea</string>
     <string name="logout">Odjava</string>
-    <string name="logout_description">Odjavite se iz svog računa</string>
+    <string name="logout_description">Odjavi se sa svog računa</string>
     <string name="login_validation_error_title">Pogreška provjere valjanosti</string>
     <string name="login_validation_error_fieldsmissing">Morate ispuniti sva polja.</string>
     <plurals name="x_habits">
@@ -64,15 +64,15 @@
         <item quantity="few">%d navike</item>
         <item quantity="other">%d navika</item>
     </plurals>
-    <string name="complete_task_title">Dovrši zadatak</string>
+    <string name="complete_task_title">Dovrši Zadatak</string>
     <string name="create_task">Stvori %s</string>
     <string name="new_task_x">Novi %s</string>
     <string name="task">Zadatak</string>
     <string name="failed">Učitavanje nije uspjelo</string>
     <plurals name="x_todos">
-        <item quantity="one">%d obaveza</item>
-        <item quantity="few">%d obaveze</item>
-        <item quantity="other">%d obaveza</item>
+        <item quantity="one">%d obveza</item>
+        <item quantity="few">%d obveza</item>
+        <item quantity="other">%d obveze</item>
     </plurals>
     <plurals name="x_rewards">
         <item quantity="one">%d nagrada</item>
@@ -80,7 +80,7 @@
         <item quantity="other">%d nagrada</item>
     </plurals>
     <plurals name="flagged_count">
-        <item quantity="one">Označeno jedanput</item>
+        <item quantity="one">Označeno %d put</item>
         <item quantity="few">Označeno %d puta, skriveno</item>
         <item quantity="other">Označeno %d puta, skriveno</item>
     </plurals>

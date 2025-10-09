@@ -688,7 +688,7 @@
     <string name="quest_completed">副本已完成！</string>
     <string name="not_participating">你沒有參加這個副本</string>
     <string name="login_incentive_short">定期登錄Habitica</string>
-    <string name="party_invite_short">尋找朋友</string>
+    <string name="party_invite_short">尋找隊友</string>
     <string name="login_incentive_count">通過在Habitica簽到%d次來解鎖。</string>
     <string name="remaining_1hour">剩餘1小時</string>
     <string name="remaining_hours">剩餘%dh小時</string>
@@ -1254,7 +1254,7 @@
     <string name="background">背景</string>
     <string name="birthday_set">生日套裝</string>
     <string name="you_equipped_x">你裝備了%s</string>
-    <string name="find_new_member">尋找隊員</string>
+    <string name="find_new_member">尋找隊友</string>
     <string name="find_more_members">尋找更多隊員</string>
     <string name="day_x">第 %d 天</string>
     <string name="purchase_gryphatrice_confirmation">用 %d 寶石購買節慶獅鷲？</string>
@@ -1265,4 +1265,17 @@
     <string name="subscription_credit_canceling">您的 <b>+%d</b> 個月訂閱將在取消後啟用</string>
     <string name="leave_party_confirmation_quest">你確定要離開這個隊伍\?</string>
     <string name="plus_two_gems">+2顆寶石</string>
+    <string name="quest_mechanics_boss_description">完成任何類型的任務或使用技能即可累積預期傷害！這些傷害將在你下一次的每日起始時間後生效。力量會影響你造成的傷害量。</string>
+    <string name="quest_mechanics_pausing_title">暫停傷害</string>
+    <string name="quest_mechanics_collecting_title">收集副本物品</string>
+    <string name="quest_mechanics_rage_description">某些高難度Boss的血量下方會出現橘色的怒氣條。怒氣條會在參與者錯過每日任務時逐漸填滿。一旦怒氣條全滿，Boss就會施展一次強力攻擊，造成額外傷害！</string>
+    <string name="quest_mechanics_pausing_description">"如果你最近難以完成每日任務，可以從設定中暫停傷害來稍作休息。這會防止Boss對你或其他成員造成傷害，但同樣也會暫停你對Boss造成的傷害。其他成員若有漏做每日任務，你仍然會承受這些傷害，所以請小心！ "</string>
+    <string name="quest_mechanics_damage_description">每當隊伍成員在新的每日起始時間後打卡，系統都會計算Boss造成的傷害。這些傷害會在你下一次執行與伺服器同步的動作時生效。Boss造成的傷害會記錄在你們隊伍的聊天室中。</string>
+    <string name="quest_mechanics_collecting_description">在收集型副本中，完成任務可隨機獲得副本物品。待處理的物品會在你下一次的每日起始時間後添加。感知能提升獲得道具的機率。</string>
+    <string name="quest_mechanics_rage_title">怒氣條</string>
+    <string name="quest_mechanics_boss_title">對Boss造成傷害</string>
+    <string name="quest_mechanics">副本機制</string>
+    <string name="quest_mechanics_damage_title">錯過每日任務會讓Boss反擊</string>
+    <string name="reset_account_description_no_pw">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入RESET。</string>
+    <string name="reset_account_description_new">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入你的密碼。</string>
 </resources>

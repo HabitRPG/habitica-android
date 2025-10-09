@@ -69,7 +69,7 @@
     <string name="task">Задание</string>
     <string name="failed">Не удалось загрузить</string>
     <string name="retry">Попробовать ещё</string>
-    <string name="confirmpassword">Подтвердите пароль</string>
+    <string name="confirmpassword">Повторите пароль</string>
     <string name="login_validation_error_fieldsmissing">Необходимо заполнить все поля.</string>
     <plurals name="x_rewards">
         <item quantity="one">%d Награда</item>

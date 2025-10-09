@@ -455,7 +455,7 @@
     <string name="insufficientHourglasses">Вам нужно больше мистических песочных очков чтобы купить этот предмет!</string>
     <string name="get_hourglasses">Получить песочные часы</string>
     <string name="subscribe_for_hourglasses">Оформите подписку для получения Мистических песочных часов</string>
-    <string name="timetravelers_closed_description">Зарабатывайте одни мистические песочные часы за каждые три последующие месяца подписки, чтобы потом использовать их для открытия труднодоступного снаряжения, питомцев и скакунов из прошлого… и даже будущего!</string>
+    <string name="timetravelers_closed_description">Зарабатывайте одни мистические песочные часы за каждый месяц подписки, чтобы использовать их для открытия особого снаряжения, питомцев и скакунов из прошлого… и даже будущего!</string>
     <string name="want_to_subscribe">Я хочу подписаться</string>
     <string name="seasonal_closed_description">Великие праздники случаются ближе к солнцестоянию и равноденствия, поэтому в это время возможно найти забавный ассортимент специальных сезонных предметов!</string>
     <string name="come_back_soon">Возвращайся скорее!</string>
@@ -1581,4 +1581,10 @@
     <string name="change_display_name">Изменить отображаемое имя</string>
     <string name="change_email_description">Это адрес электронной почты, который вы используете для входа в Habitica, а также для получения уведомлений.</string>
     <string name="register_tos_confirm">Вы соглашаетесь с нашими <a href="https://habitica.com/static/terms">Условиями использования</a> и ознакомились с <a href="https://habitica.com/static/privacy">Политикой конфиденциальности</a>.</string>
+    <string name="password_change_info">Пароль должен состоять из 8 или более символов. При смене пароля вы будете выведены из системы на всех других устройствах и в сторонних приложениях, которые вы используете.</string>
+    <string name="confirm_new_password">Подтвердите новый пароль</string>
+    <string name="about_me_description">Добавьте небольшую информацию о себе, которая будет отображаться в вашем профиле Habitica, когда другие пользователи будут его просматривать.</string>
+    <string name="save_about_me">Сохранить «Обо мне»</string>
+    <string name="use_skill">Использовать Навык</string>
+    <string name="subscribe_hourglass_incentive_text">Каждый месяц подписчики получают Мистические песочные часы, а также эксклюзивные подарки!</string>
 </resources>
