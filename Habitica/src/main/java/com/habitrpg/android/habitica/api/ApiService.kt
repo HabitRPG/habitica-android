@@ -525,6 +525,11 @@ interface ApiService {
         @Body pushDeviceData: Map<String, String>
     ): HabitResponse<List<Void>>
 
+    @POST("user/push-devices/test")
+    suspend fun sendUnifiedPushTest(
+        @Body data: Map<String, String>
+    ): HabitResponse<Void>
+
     @DELETE("user/push-devices/{regId}")
     suspend fun deletePushDevice(
         @Path("regId") regId: String

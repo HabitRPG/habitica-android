@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Habitica Support
+    url: https://habitica.com/static/contact
+    about: For questions about using Habitica, please contact our support team.
+  - name: Habitica Wiki
+    url: https://habitica.fandom.com/wiki/Habitica_Wiki
+    about: Check the wiki for information about Habitica features.
