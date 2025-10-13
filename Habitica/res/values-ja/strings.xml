@@ -1536,7 +1536,7 @@
     <string name="mages">魔道士</string>
     <string name="error_loading_gems">ジェムのロード中にエラーが発生しました</string>
     <string name="plus_two_gems">+2ジェム</string>
-    <string name="unlock_x_gems_per_month">毎月、市場で%dジェムを買えるようになります</string>
+    <string name="unlock_x_gems_per_month">毎月、市場でジェムを%d個アンロックできます</string>
     <string name="x_gems">%d ジェム</string>
     <string name="subscription_details_footer">有料会員は神秘の砂時計、ミステリーアイテム、市場のジェムの再入荷を月初めの2日以内に受け取ります</string>
     <string name="gem_cap">ジェムの上限</string>
