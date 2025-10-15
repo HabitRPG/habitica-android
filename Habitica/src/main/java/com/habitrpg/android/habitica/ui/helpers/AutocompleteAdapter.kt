@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
@@ -28,6 +29,7 @@ class AutocompleteAdapter(
     val remoteAutocomplete: Boolean = false
 ) : BaseAdapter(), Filterable {
     var chatMessages: List<ChatMessage> = arrayListOf()
+    var groupMembers: List<Member> = arrayListOf()
     private var userResults: List<FindUsernameResult> = arrayListOf()
     private var emojiResults: List<String> = arrayListOf()
     private var isAutocompletingUsers = true
@@ -55,7 +57,24 @@ class AutocompleteAdapter(
                     } else if (constraint[0] == '@') {
                         lastAutocomplete = Date().time
                         isAutocompletingUsers = true
-                        userResults =
+
+                        userResults = if (groupMembers.isNotEmpty()) {
+                            groupMembers
+                                .filter { member ->
+                                    member.username?.startsWith(constraint.toString().drop(1), ignoreCase = true) ?: false
+                                }
+                                .map { member ->
+                                    val result = FindUsernameResult()
+                                    result.id = member.id
+                                    result.authentication = Authentication()
+                                    result.authentication?.localAuthentication = LocalAuthentication()
+                                    result.authentication?.localAuthentication?.username = member.username
+                                    result.contributor = member.contributor
+                                    result.profile = Profile()
+                                    result.profile?.name = member.displayName
+                                    result
+                                }
+                        } else {
                             chatMessages
                                 .filter { it.isValid }
                                 .distinctBy {
@@ -73,6 +92,7 @@ class AutocompleteAdapter(
                                     result.profile?.name = message.user
                                     result
                                 }
+                        }
                         filterResults.values = userResults
                         filterResults.count = userResults.size
                     } else if (constraint[0] == ':') {

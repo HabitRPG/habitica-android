@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -122,6 +123,20 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         )
 
         viewModel.chatmessages.observe(viewLifecycleOwner) { setChatMessages(it) }
+
+        if (viewModel.groupViewType == GroupViewType.PARTY) {
+            (viewModel as? com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel)?.getMembersData()?.observe(viewLifecycleOwner) { members ->
+                binding?.chatBarView?.groupMembers = members
+            }
+        } else {
+            lifecycleScope.launchCatching {
+                viewModel.getGroupData().value?.id?.let { groupId ->
+                    socialRepository.getGroupMembers(groupId).collect { members ->
+                        binding?.chatBarView?.groupMembers = members
+                    }
+                }
+            }
+        }
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
             viewModel.updateUser("flags.communityGuidelinesAccepted", true)
