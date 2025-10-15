@@ -55,7 +55,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
                 path.contains("beard") -> AvatarView.LayerType.HAIR_BEARD
                 path.contains("mustache") -> AvatarView.LayerType.HAIR_MUSTACHE
                 path.contains("back") -> AvatarView.LayerType.BACK
-                path.contains("headAccessory") -> AvatarView.LayerType.HEAD
+                path.contains("headAccessory") -> AvatarView.LayerType.HEAD_ACCESSORY
                 else -> null
             }
         layerName?.let {
@@ -76,7 +76,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
                 }
             }
 
-            if (path.contains("hair")) {
+            if (path.contains("hair") && !path.contains("headAccessory")) {
                 layerMap[AvatarView.LayerType.HEAD] = ""
                 layerMap[AvatarView.LayerType.HEAD_ACCESSORY] = ""
             }

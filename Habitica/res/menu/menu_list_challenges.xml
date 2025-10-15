@@ -15,7 +15,6 @@
 
     <item android:id="@+id/action_search"
         android:icon="@drawable/ic_action_filter_list"
-        app:actionLayout="@layout/filter_menu_item"
         android:title="@string/filter"
         app:showAsAction="ifRoom" />
 </menu>

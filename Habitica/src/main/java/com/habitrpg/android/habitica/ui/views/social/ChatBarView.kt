@@ -153,16 +153,11 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
     }
 
     override fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets) {
-        val navInset = safeInsets.bottom
-        val imeOffset = if (visible) (height - navInset).coerceAtLeast(0) else 0
-
         updatePadding(
             left   = safeInsets.left,
             right  = safeInsets.right,
-            bottom = navInset
+            bottom = safeInsets.bottom
         )
-        
-        translationY = -imeOffset.toFloat()
     }
 
 }

@@ -148,7 +148,9 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 val ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                 val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
 
-                binding?.chatBarView?.translationY = -ime.toFloat()
+                val keyboardOffset = (ime - nav).coerceAtLeast(0)
+
+                binding?.chatBarView?.translationY = -keyboardOffset.toFloat()
                 binding?.chatBarView?.setPadding(
                     binding?.chatBarView!!.paddingLeft,
                     binding?.chatBarView!!.paddingTop,
@@ -156,15 +158,13 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                     nav
                 )
 
-
-                binding?.recyclerView?.translationY = -ime.toFloat()
-
+                binding?.recyclerView?.translationY = -keyboardOffset.toFloat()
 
                 binding?.recyclerView?.setPadding(
                     binding?.recyclerView!!.paddingLeft,
                     binding?.recyclerView!!.paddingTop,
                     binding?.recyclerView!!.paddingRight,
-                    ime + nav
+                    ime.coerceAtLeast(nav)
                 )
 
                 insets

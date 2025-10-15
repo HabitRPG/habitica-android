@@ -577,10 +577,26 @@ class AccountPreferenceFragment :
 
     private fun resetAccount(confirmationString: String) {
         val dialog = activity?.let { HabiticaProgressDialog.show(it, R.string.resetting_account) }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.resetAccount(confirmationString)
+        lifecycleScope.launchCatching({ throwable ->
             dialog?.dismiss()
-            accountDialog.dismiss()
+            if (throwable is HttpException && throwable.code() == 401) {
+                accountDialog.showIncorrectPasswordError(getString(R.string.incorrect_password))
+            } else {
+                val errorDialog = context?.let { HabiticaAlertDialog(it) }
+                errorDialog?.setTitle(R.string.authentication_error_title)
+                errorDialog?.setMessage(R.string.incorrect_password)
+                errorDialog?.addCloseButton()
+                errorDialog?.show()
+            }
+            ExceptionHandler.reportError(throwable)
+        }) {
+            val success = userRepository.resetAccount(confirmationString)
+            dialog?.dismiss()
+            if (success == true) {
+                accountDialog.dismiss()
+            } else {
+                accountDialog.showIncorrectPasswordError(getString(R.string.incorrect_password))
+            }
         }
     }
 
