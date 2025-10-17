@@ -304,10 +304,8 @@
     <string name="subscriptions">訂閱</string>
     <string name="subscription_duration">每%s重複出現</string>
     <string name="subscribe">加入會員</string>
-    <string name="subscribe_listitem1_description">您將可以從市場上以每枚20金幣的價格購買寶石！</string>
-    <string name="subscribe_listitem2_description">每個月你將會收到一件獨特的角色飾品！ 
-\n 
-\n另外每連續訂閱三個月，神秘的時空旅行者將授予你得到過去(和未來)飾品的資格。</string>
+    <string name="subscribe_listitem1_description">獲得最多50顆可購買的寶石，以在市場中購買任務、客製化、寵物等等！</string>
+    <string name="subscribe_listitem2_description">每個月你將會得到一個神秘沙漏用於在時間旅行者商店購買過去曾出現過的道具！</string>
     <string name="subscription_hourglasses">%d 個神秘沙漏</string>
     <string name="payment_method">付款方式</string>
     <string name="subscription">訂閱</string>
@@ -1259,7 +1257,7 @@
     <string name="day_x">第 %d 天</string>
     <string name="purchase_gryphatrice_confirmation">用 %d 寶石購買節慶獅鷲？</string>
     <string name="opt_out_description">這樣你就離開了你所選擇的職業。你隨時可以從設定裡再度啟動職業系統，並選擇一種職業。</string>
-    <string name="subscribe_listitemFaint_description">當你HP耗盡時，你仍有第二次機會。</string>
+    <string name="subscribe_listitemFaint_description">每天都可迴避一次因生命值歸零所導致的懲罰！</string>
     <string name="subscription_hourglasses_3month_timeframe">三個月內的神祕沙漏</string>
     <string name="challenges">挑戰</string>
     <string name="subscription_credit_canceling">您的 <b>+%d</b> 個月訂閱將在取消後啟用</string>
@@ -1278,4 +1276,5 @@
     <string name="quest_mechanics_damage_title">錯過每日任務會讓Boss反擊</string>
     <string name="reset_account_description_no_pw">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入RESET。</string>
     <string name="reset_account_description_new">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入你的密碼。</string>
+    <string name="subscribe_listitem3_description_alt">用最新的限定裝備保持盛裝打扮。現在訂閱 %1$s %2$s！</string>
 </resources>
