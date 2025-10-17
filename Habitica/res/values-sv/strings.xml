@@ -47,7 +47,7 @@
     <string name="negative_habit_form">Negativ ( - )</string>
     <string name="checklist">Checklista</string>
     <string name="reminders">Påminnelser</string>
-    <string name="attributes">Egenskaper</string>
+    <string name="attributes">Attribut</string>
     <string name="repeatables_frequency_daily">Dagligen</string>
     <string name="repeatables_frequency_weekly">Veckovis</string>
     <string name="repeatables_frequency_monthly">Månadsvis</string>
@@ -63,13 +63,13 @@
     <string name="sunday">Söndag</string>
     <string name="faint_subtitle">Förtvivla inte!</string>
     <string name="faint_header">Din Hälsa tog slut!</string>
-    <string name="faint_button">Ladda upp hälsan &amp;amp ; Försök igen</string>
+    <string name="faint_button">Fyll på Hälsa &amp; Försök igen</string>
     <string name="filter">Filter</string>
     <string name="used_skill_without_mana">Du använde %1$s.</string>
     <string name="new_checklist_item">Ny checklisteobjekt</string>
-    <string name="skill_progress_title">Använder en färdighet</string>
-    <string name="unlock_lvl_11">Låses upp vid nivå 11</string>
-    <string name="forgot_pw_btn">Glömt lösenord</string>
+    <string name="skill_progress_title">Använder Färdighet</string>
+    <string name="unlock_lvl_11">Lås upp vid nivå 11</string>
+    <string name="forgot_pw_btn">Glömt Lösenord</string>
     <string name="party">Sällskap</string>
     <string name="chat">Chatt</string>
     <string name="members">Medlemmar</string>
@@ -605,7 +605,7 @@
     <string name="how_it_works">Hur det funkar</string>
     <string name="x_to_y">%1$s till %2$s</string>
     <string name="block_user">Blockera Spelare</string>
-    <string name="tavern_inn_checkOut">Återaktivera dina dagliga uppgifter</string>
+    <string name="tavern_inn_checkOut">Återaktivera dina Dagliga uppgifter</string>
     <string name="learn_more">Lär Mer</string>
     <string name="member_group_plan">Medlem av en Grupp Planna</string>
     <string name="member">Medlem</string>
@@ -646,7 +646,7 @@
     <string name="enable_notifications">Aktivera aviseringar</string>
     <string name="title">Titel</string>
     <string name="on">På</string>
-    <string name="levelup_header">Du Har Nått Nivå %1$d!</string>
+    <string name="levelup_header">Du har nått Nivå %1$d!</string>
     <string name="sell_no_price">Sälj</string>
     <string name="create_new_party">Skapa ett nytt sällskap</string>
     <string name="evolved_pet_title">Du har tämjt %s, dags för en ridtur!</string>
@@ -665,4 +665,5 @@
     <string name="push_notification_system_settings_description">Tillåt Habitica-aviseringar i Inställningar för att ta emot push-notiser</string>
     <string name="positive_sentence">positiv</string>
     <string name="negative_sentence">negativ</string>
+    <string name="usernames_party">%s:s Sällskap</string>
 </resources>
