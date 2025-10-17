@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="tutorial_todos_1">Använd Att göra för att hålla reda på uppgifter som du bara behöver göra en gång.</string>
+    <string name="tutorial_party">Det är här du och dina vänner kan hålla varandra ansvariga för era mål och slåss mot monster med era uppgifter!</string>
+    <string name="tutorial_party_created">Välkommen till ditt Sällskap! Du kan hitta fler medlemmar i en lista med spelare som letar efter ett sällskap, eller bjuda in vänner direkt för att tjäna Basi-Lista uppdragsskriftrullen.
+\n
+\nBesök Supporten för att läsa mer om Sällskap.</string>
+    <string name="tutorial_habits_3">Om du råkar göra en negativ Vana, tryck på – för att minska din avatars hälsa så att du kan hålla dig ansvarig.</string>
+    <string name="tutorial_rewards_2">Du kan också skapa verkliga anpassade belöningar utifrån vad som motiverar dig.</string>
+    <string name="tutorial_rewards_1">Köp utrustning för din avatar med det guld du tjänar!</string>
+    <string name="tutorial_habits_1">Först upp är Vanor. Det kan vara positiva Vanor som du vill förbättra eller negativa Vanor som du vill sluta med.</string>
+    <string name="tutorial_skills">Färdigheter är speciella förmågor med kraftfulla effekter! Tryck på en färdighet för att använda den. Det kostar Mana (den blå stapeln), som du tjänar genom att logga in varje dag och slutföra dina riktiga uppgifter. Läsa FAQ i menyn för mer information!</string>
+    <string name="tutorial_stats">Tryck på den grå knappen för att fördela flera poäng på en gång, eller tryck på pilarna för att lägga till dem en poäng i taget.</string>
+    <string name="tutorial_dailies_1">Skapa Dagliga uppgifter för uppgifter som behöver göras på ett regelbundet schema.</string>
+    <string name="tutorial_tasks_complete">Det är allt för tillfället. Om du behöver en påminnelse, läs FAQ-avsnittet.</string>
+    <string name="tutorial_dailies_2">Var försiktig — om du missar en kommer din avatar att ta skada över natten. Att bocka av dem regelbundet ger fina Belöningar!</string>
+    <string name="tutorial_habits_2">Varje gång du gör en positiv Vana, tryck på + för att få Erfarenhet och Guld!</string>
+    <string name="tutorial_habits_4">Prova det! Du kan utforska de andra uppgiftstyperna via navigeringsfältet längst ner.</string>
+    <string name="tutorial_overview">Nu så! Jag har fyllt i några uppgifter baserat på dina intressent så att du kan starta på en gång. Klicka på en uppgift för att redigera eller lägga till nya uppgifter för din rutin.</string>
+    <string name="tutorial_todos_2">Om din Att göra måste vara färdig vid en viss tid, sätt en förfallodag. Du kan nu bocka av en — prova!</string>
+</resources>
