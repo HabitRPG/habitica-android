@@ -21,22 +21,22 @@
     <string name="pref_reminder_picker">Ställ in tid för påminnelse</string>
     <string name="pref_cds_header">Anpassad startdag</string>
     <string name="pref_push_notifications_checkbox">Använd push-notiser</string>
-    <string name="push_notifications">Pop-up-notifikationer</string>
-    <string name="push_notifications_sum">Ändra dina push-notifikationsinställningar</string>
+    <string name="push_notifications">Push-notiser</string>
+    <string name="push_notifications_sum">Ändra dina inställningar för push-notiser</string>
     <string name="preference_push_you_won_challenge">Du vann en Utmaning!</string>
     <string name="preference_push_received_a_private_message">Mottog ett privat meddelande</string>
-    <string name="preference_push_gifted_gems">Givna juveler</string>
-    <string name="preference_push_gifted_subscription">Givna abonnemang</string>
-    <string name="preference_push_invited_to_party">Inbjudan till Sällskap</string>
+    <string name="preference_push_gifted_gems">Givna Juveler</string>
+    <string name="preference_push_gifted_subscription">Givna prenumerationer</string>
+    <string name="preference_push_invited_to_party">Inbjuden till Sällskap</string>
     <string name="preference_push_invited_to_guild">Inbjuden till Gille</string>
-    <string name="preference_push_your_quest_has_begun">Ditt uppdrag har påbörjats</string>
-    <string name="preference_push_invited_to_quest">Inbjudan till uppdrag</string>
+    <string name="preference_push_your_quest_has_begun">Ditt Uppdrag har börjat</string>
+    <string name="preference_push_invited_to_quest">Inbjuden till Uppdrag</string>
     <!--Adding tasks-->
     <!--Network Errors-->
     <string name="network_error_no_network_body">Du är inte ansluten till internet.</string>
     <string name="internal_error_api">Serveranslutning tappad</string>
     <string name="authentication_error_title">Autentiseringsfel</string>
-    <string name="authentication_error_body">Ditt användarnamn och/eller lösenord var fel.</string>
+    <string name="authentication_error_body">Ditt Användarnamn och/eller Lösenord var fel.</string>
     <string name="save_changes">Spara</string>
     <string name="copy">Kopiera</string>
     <string name="notes">Anteckningar</string>
@@ -495,7 +495,7 @@
     <string name="adjust_streak">Justera Streak</string>
     <string name="new_password">Nya Lösenord</string>
     <string name="create_party">Skapa ett nytt Sällskap</string>
-    <string name="about_libraries">Biblioteker</string>
+    <string name="about_libraries">Bibliotek</string>
     <string name="g1g1_info_2">Hur det funkar</string>
     <string name="g1g1_info_3">Begränsningar</string>
     <string name="locked">Låst</string>
@@ -655,6 +655,14 @@
         <item quantity="one">Varje dag</item>
         <item quantity="other">Var %d dag</item>
     </plurals>
-    <string name="about_habitica_open_source">Habitica finns tillgänglig som programvara med öppen källkod på Github</string>
+    <string name="about_habitica_open_source">Habitica finns tillgänglig som programvara med öppen källkod på GitHub</string>
     <string name="levelup_detail">Genom att uppnå dina mål i verkliga livet så har du gått upp en nivå och är nu helt helad!</string>
+    <string name="exact_alarm_system_settings_title">`Larm &amp; Påminnelser` inaktiverade`</string>
+    <string name="exact_alarm_system_settings_reminders">Påminnelser kan bli försenade eftersom behörigheter inte är aktiverade. Tryck för att se och uppdatera behörigheterna.</string>
+    <string name="exact_alarm_system_settings_description">Tillåt `Larm &amp; Påminnelser` i Inställningar för att säkerställa att påminnelser visas vid schemalagd tid</string>
+    <string name="push_notification_system_settings_reminders">Tillåt Habitica-aviseringar i Inställningar för att ta emot påminnelser</string>
+    <string name="push_notification_system_settings_title">Aviseringar inaktiverade</string>
+    <string name="push_notification_system_settings_description">Tillåt Habitica-aviseringar i Inställningar för att ta emot push-notiser</string>
+    <string name="positive_sentence">positiv</string>
+    <string name="negative_sentence">negativ</string>
 </resources>
