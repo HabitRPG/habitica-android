@@ -1094,4 +1094,7 @@
     <string name="customize_avatar">Customise Avatar</string>
     <string name="customization_shop_check_out">Head over to the Customisation Shop to browse the many ways you can customise your avatar!</string>
     <string name="plenty_of_potions_description">We’re bringing back 10 of the community’s favourite Magic Hatching Potions. Head over to the Market to fill out your collection!</string>
+    <string name="avatar_mustaches">Moustaches</string>
+    <string name="avatar_mustache_customization">Avatar Moustache Customisation</string>
+    <string name="facial_hair_notes">This set includes all beards and moustaches</string>
 </resources>
