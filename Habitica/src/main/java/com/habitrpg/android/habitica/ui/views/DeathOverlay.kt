@@ -168,7 +168,7 @@ fun DeathOverlay(
             circleProgress.snapTo(0f)
             circleProgress.animateTo(
                 targetValue = 1f,
-                animationSpec = tween(durationMillis = 1000)
+                animationSpec = tween(durationMillis = 770)
             )
             launch {
                 waveProgress.animateTo(
@@ -177,7 +177,7 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(300)
+                delay(70)
                 launch {
                     ghostHeartProgress.animateTo(
                         targetValue = 1f,
@@ -192,14 +192,14 @@ fun DeathOverlay(
                 }
             }
             launch {
-                delay(300)
+                delay(70)
                 coinsProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 700)
                 )
             }
             launch {
-                delay(600)
+                delay(370)
                 goldCoinRightProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(
@@ -209,7 +209,7 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(700)
+                delay(470)
                 goldCoinLeftProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(
@@ -219,20 +219,20 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(640)
+                delay(410)
                 headerTextProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing)
                 )
             }
             launch {
-                delay(840)
+                delay(610)
                 uiElementsProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing)
                 )
             }
-            delay(1500)
+            delay(1270)
             launch {
                 bobbingProgress.animateTo(
                     targetValue = 1f,
@@ -358,6 +358,7 @@ fun DeathOverlay(
                           progress * progress * finalY.value
 
             val rotation = -150f * goldCoinLeftProgress.value
+            val coinBobbingOffset = (bobbingProgress.value * 5f).dp
 
             Image(
                 painter = painterResource(id = R.drawable.gold_coin),
@@ -366,7 +367,7 @@ fun DeathOverlay(
                     .size(coinSize)
                     .absoluteOffset(
                         x = currentX.dp - (coinSize / 2f),
-                        y = currentY.dp - (coinSize / 2f)
+                        y = currentY.dp - (coinSize / 2f) + coinBobbingOffset
                     )
                     .graphicsLayer {
                         rotationZ = rotation
@@ -397,6 +398,7 @@ fun DeathOverlay(
                           progress * progress * finalY.value
 
             val rotation = 158f * goldCoinLeftProgress.value
+            val coinBobbingOffset = (bobbingProgress.value * 5f).dp
 
             val coinSize = 60.dp
 
@@ -407,7 +409,49 @@ fun DeathOverlay(
                     .size(coinSize)
                     .absoluteOffset(
                         x = currentX.dp - (coinSize / 2f),
-                        y = currentY.dp - (coinSize / 2f)
+                        y = currentY.dp - (coinSize / 2f) + coinBobbingOffset
+                    )
+                    .graphicsLayer {
+                        rotationZ = rotation
+                    }
+            )
+        }
+
+        if (goldCoinRightProgress.value > 0f) {
+            val waveHeight = (configuration.screenHeightDp * 0.65f).dp
+            val waveTopPosition = configuration.screenHeightDp.dp - waveHeight
+
+            val finalX = configuration.screenWidthDp.dp - 60.dp
+            val finalY = waveTopPosition + 12.dp
+
+            val startX = -100.dp
+            val startY = configuration.screenHeightDp.dp + 100.dp
+
+            val controlX = (startX + finalX) / 2f + 80.dp
+            val controlY = (startY + finalY) / 2f + 40.dp
+
+            val progress = goldCoinRightProgress.value
+            val inverseProgress = 1f - progress
+            val currentX = inverseProgress * inverseProgress * startX.value +
+                          2f * inverseProgress * progress * controlX.value +
+                          progress * progress * finalX.value
+            val currentY = inverseProgress * inverseProgress * startY.value +
+                          2f * inverseProgress * progress * controlY.value +
+                          progress * progress * finalY.value
+
+            val rotation = -158f * goldCoinRightProgress.value
+            val coinBobbingOffset = (bobbingProgress.value * 5f).dp
+
+            val coinSize = 60.dp
+
+            Image(
+                painter = painterResource(id = R.drawable.gold_coin),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(coinSize)
+                    .absoluteOffset(
+                        x = currentX.dp - (coinSize / 2f),
+                        y = currentY.dp - (coinSize / 2f) + coinBobbingOffset
                     )
                     .graphicsLayer {
                         rotationZ = rotation
@@ -439,7 +483,7 @@ fun DeathOverlay(
                                 5000
                             )
                                 .setInitialRotationRange(0, 200)
-                                .setScaleRange(0.5f, 0.8f)
+                                .setScaleRange(0.7f, 1.1f)
                                 .setSpeedRange(0.01f, 0.03f)
                                 .setFadeOut(4000, android.view.animation.AccelerateInterpolator())
                                 .setSpeedModuleAndAngleRange(0.01f, 0.03f, 305, 305 + 80)
@@ -460,7 +504,7 @@ fun DeathOverlay(
                                 5000
                             )
                                 .setInitialRotationRange(0, 200)
-                                .setScaleRange(0.5f, 0.8f)
+                                .setScaleRange(0.7f, 1.1f)
                                 .setSpeedRange(0.01f, 0.03f)
                                 .setFadeOut(4000, android.view.animation.AccelerateInterpolator())
                                 .setSpeedModuleAndAngleRange(0.01f, 0.03f, 160, 160 + 80)
@@ -565,47 +609,6 @@ fun DeathOverlay(
                         .size((110 * baseScale).dp)
                 )
             }
-        }
-
-        if (goldCoinRightProgress.value > 0f) {
-            val waveHeight = (configuration.screenHeightDp * 0.65f).dp
-            val waveTopPosition = configuration.screenHeightDp.dp - waveHeight
-
-            val finalX = configuration.screenWidthDp.dp - 60.dp
-            val finalY = waveTopPosition + 12.dp
-
-            val startX = -100.dp
-            val startY = configuration.screenHeightDp.dp + 100.dp
-
-            val controlX = (startX + finalX) / 2f + 80.dp
-            val controlY = (startY + finalY) / 2f + 40.dp
-
-            val progress = goldCoinRightProgress.value
-            val inverseProgress = 1f - progress
-            val currentX = inverseProgress * inverseProgress * startX.value +
-                          2f * inverseProgress * progress * controlX.value +
-                          progress * progress * finalX.value
-            val currentY = inverseProgress * inverseProgress * startY.value +
-                          2f * inverseProgress * progress * controlY.value +
-                          progress * progress * finalY.value
-
-            val rotation = -158f * goldCoinRightProgress.value
-
-            val coinSize = 60.dp
-
-            Image(
-                painter = painterResource(id = R.drawable.gold_coin),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(coinSize)
-                    .absoluteOffset(
-                        x = currentX.dp - (coinSize / 2f),
-                        y = currentY.dp - (coinSize / 2f)
-                    )
-                    .graphicsLayer {
-                        rotationZ = rotation
-                    }
-            )
         }
 
         val red1Color = colorResource(id = R.color.red_1)
@@ -912,7 +915,7 @@ fun DeathOverlay(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, top = 3.dp, bottom = 24.dp),
+                            .padding(start = 16.dp, end = 16.dp, top = 3.dp, bottom = 32.dp),
                         color = Color(0xFF005158),
                         textAlign = TextAlign.Center,
                         style = TextStyle(
