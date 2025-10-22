@@ -101,6 +101,7 @@
     <string name="faint_subtitle">Don\'t despair!</string>
     <string name="faint_header">You ran out of Health!</string>
     <string name="faint_button">Refill Health &amp; Try Again</string>
+    <string name="faint_broken_gear_info">Broken gear can be repurchased from the Market</string>
 
     <string name="filter">Filter</string>
 
@@ -1302,7 +1303,7 @@
     <string name="you_ran_out_of_health">You ran out of Health!</string>
     <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
     <string name="faint_broken_equipment">Broken equipment can be repurchased \nfrom the Market</string>
-    <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and break <b>a piece of gear</b>… You can earn them all back with hard work!]]></string>
+    <string name="faint_loss_description"><![CDATA[You\'ll drop to <b>level %1$d, lose %2$d Gold, and break a piece of gear</b>… However, you can earn it all back with hard work!]]></string>
     <string name="faint_loss_description_alt"><![CDATA[You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and your Experience… You can earn them all back with hard work!]]></string>
     <string name="account_reset">Account Reset</string>
     <string name="avatar_skin_customization">Avatar Skin Customization</string>
@@ -1486,10 +1487,12 @@
     <string name="subscribe_second_armoire_open_text">Subscribers get extra chances at the Armoire and these other benefits!</string>
     <string name="subscriber_button_armoire">Open again for free!</string>
     <string name="subscriber_button_faint">Second chance: Hold on with 1HP!</string>
+    <string name="subscriber_button_faint_use">Use your Second Chance!</string>
     <string name="sub_perk">SUB PERK</string>
-    <string name="subscribe_incentive_text_faint">Get a second chance each day to avoid running out of HP with a subscription</string>
+    <string name="subscribe_incentive_text_faint">Subscribers get a Second Chance perk to avoid running out of HP once a day</string>
+    <string name="subscriber_benefit_available_faint">Your subscription lets you avoid running out of HP once a day!</string>
     <string name="subscribe_second_chance_incentive_text">Subscribers get a second chance at life each day and these other benefits!</string>
-    <string name="subscriber_benefit_used_faint">You already used your second chance today. It’s available again in %s</string>
+    <string name="subscriber_benefit_used_faint">Your Second Chance perk is still recharging! It\'ll be available again in %s.</string>
     <string name="subriber_benefit_notification_faint">You got a second chance with 1HP!</string>
     <string name="watch_ad_to_hang_on">Watch ad to hold on with 1HP!</string>
     <string name="quest_mechanics">Quest Mechanics</string>

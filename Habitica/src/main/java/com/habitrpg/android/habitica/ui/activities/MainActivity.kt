@@ -37,10 +37,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
@@ -67,7 +71,6 @@ import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.EventCategory
@@ -85,10 +88,12 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
+import com.habitrpg.android.habitica.ui.views.DeathOverlay
 import com.habitrpg.android.habitica.ui.views.GroupPlanMemberList
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -164,7 +169,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     lateinit var sharedPreferences: SharedPreferences
 
     lateinit var binding: ActivityMainBinding
-
+    
     val snackbarContainer: ViewGroup
         get() = binding.content.snackbarContainer
 
@@ -192,6 +197,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var userQuestStatus = UserQuestStatus.NO_QUEST
     private var lastNotificationOpen: Long? = null
     private var privacyActivityShown = false
+    private var showDeathOverlay by mutableStateOf(false)
+    private var deathOverlayComposeView: ComposeView? = null
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
@@ -801,7 +808,81 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             delay(1000L)
             if (!this@MainActivity.isFinishing && MainNavigationController.isReady && now - lastDeathDialogDisplay > 10000) {
                 lastDeathDialogDisplay = now
-                MainNavigationController.navigate(R.id.deathActivity)
+
+                if (deathOverlayComposeView == null) {
+                    val rootLayout = binding.root as? ViewGroup
+                    deathOverlayComposeView = ComposeView(this@MainActivity).apply {
+                        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                        setContent {
+                            HabiticaTheme {
+                                val user by viewModel.user.observeAsState(null)
+                                DeathOverlay(
+                                    isVisible = showDeathOverlay,
+                                    user = user,
+                                    appConfigManager = appConfigManager,
+                                    sharedPreferences = sharedPreferences,
+                                    onSubscribeClick = {
+                                        Analytics.sendEvent(
+                                            "View death sub CTA",
+                                            EventCategory.BEHAVIOUR,
+                                            HitType.EVENT
+                                        )
+                                        val subscriptionBottomSheet =
+                                            EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                                eventType =
+                                                    EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
+                                            }
+                                        subscriptionBottomSheet.show(
+                                            supportFragmentManager,
+                                            EventOutcomeSubscriptionBottomSheetFragment.TAG
+                                        )
+                                    },
+                                    onUseSecondChanceClick = {
+                                        Analytics.sendEvent(
+                                            "second chance perk",
+                                            EventCategory.BEHAVIOUR,
+                                            HitType.EVENT
+                                        )
+                                        sharedPreferences.edit {
+                                            putLong("last_sub_revive", Date().time)
+                                        }
+                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                            userRepository.updateUser("stats.hp", 1)
+                                            delay(1000)
+                                            HabiticaSnackbar.showSnackbar(
+                                                snackbarContainer,
+                                                getString(R.string.subscriber_benefit_success_faint),
+                                                HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
+                                                isSubscriberBenefit = true,
+                                                duration = 2500
+                                            )
+                                        }
+                                    },
+                                    onRefillHealthClick = {
+                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                            val brokenItem = userRepository.revive()
+                                            if (brokenItem != null) {
+                                                delay(500)
+                                                HabiticaSnackbar.showSnackbar(
+                                                    snackbarContainer,
+                                                    getString(R.string.revive_broken_equipment, brokenItem.text),
+                                                    HabiticaSnackbar.SnackbarDisplayType.BLACK
+                                                )
+                                            }
+                                        }
+                                    },
+                                    onAnimationComplete = {},
+                                    onDismissComplete = {
+                                        showDeathOverlay = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    rootLayout?.addView(deathOverlayComposeView)
+                }
+
+                showDeathOverlay = true
             }
         }
     }
