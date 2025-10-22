@@ -199,7 +199,7 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(370)
+                delay(270)
                 goldCoinRightProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(
@@ -209,7 +209,7 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(470)
+                delay(370)
                 goldCoinLeftProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(
@@ -219,14 +219,14 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(410)
+                delay(310)
                 headerTextProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing)
                 )
             }
             launch {
-                delay(610)
+                delay(510)
                 uiElementsProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing)
@@ -484,9 +484,9 @@ fun DeathOverlay(
                             )
                                 .setInitialRotationRange(0, 200)
                                 .setScaleRange(0.7f, 1.1f)
-                                .setSpeedRange(0.01f, 0.03f)
+                                .setSpeedRange(0.05f, 0.09f)
                                 .setFadeOut(4000, android.view.animation.AccelerateInterpolator())
-                                .setSpeedModuleAndAngleRange(0.01f, 0.03f, 305, 305 + 80)
+                                .setSpeedModuleAndAngleRange(0.05f, 0.09f, 305, 305 + 90)
                                 .emit(
                                     (screenWidth / 2).toInt(),
                                     heartCenterY.toInt(),
@@ -505,9 +505,9 @@ fun DeathOverlay(
                             )
                                 .setInitialRotationRange(0, 200)
                                 .setScaleRange(0.7f, 1.1f)
-                                .setSpeedRange(0.01f, 0.03f)
+                                .setSpeedRange(0.05f, 0.09f)
                                 .setFadeOut(4000, android.view.animation.AccelerateInterpolator())
-                                .setSpeedModuleAndAngleRange(0.01f, 0.03f, 160, 160 + 80)
+                                .setSpeedModuleAndAngleRange(0.05f, 0.09f, 160, 160 + 90)
                                 .emit(
                                     (screenWidth / 2).toInt(),
                                     heartCenterY.toInt(),
