@@ -27,7 +27,7 @@
     <string name="preference_push_received_a_private_message">Primljena Privatna poruka</string>
     <string name="preference_push_gifted_gems">Poklonjeni Dragulji</string>
     <string name="preference_push_gifted_subscription">Poklonjena Pretplata</string>
-    <string name="preference_push_invited_to_party">Pozvan/a u Družinu</string>
+    <string name="preference_push_invited_to_party">Pozvani u Grupu</string>
     <string name="preference_push_invited_to_guild">Pozvan/a u Ceh</string>
     <string name="preference_push_your_quest_has_begun">Tvoja Pustolovina je započela</string>
     <string name="preference_push_invited_to_quest">Pozvan/a na Pustolovinu</string>
@@ -81,7 +81,7 @@
     <string name="tavern_inn_rest">Pauziraj svoje Svakodnevne zadatke</string>
     <string name="reward_dialog_buy">Kupi</string>
     <string name="reward_dialog_dismiss">Zanemari</string>
-    <string name="party">Družina</string>
+    <string name="party">Grupa</string>
     <string name="chat">Chat</string>
     <string name="members">Članovi</string>
     <string name="yes">Da</string>
@@ -178,7 +178,7 @@
     <string name="wear_costume">Nosi Kostim </string>
     <string name="equipped">Opremljeno</string>
     <string name="quest_cancel_message">Jesi li siguran/na da želiš otkazati ovu pustolovinu\? Svi prihvaćeni pozivi će biti izgubljeni. Vlasnik pustolovine će zadržati pustolovni svitak u svom posjedu.</string>
-    <string name="quest_begin_message">Jesi li siguran/na? Samo %1$d od ukupno %2$d članova tvoje družine se pridružilo ovoj pustolovini! Pustolovine počinju automatski kad su se svi igrači pridružili ili pak odbili poziv.</string>
+    <string name="quest_begin_message">Jesi li sigurni\? Samo %1$d od ukupno %2$d članova tvoje grupe se pridružilo ovoj pustolovini! Pustolovine počinju automatski kad su se svi igrači pridružili ili pak odbili poziv.</string>
     <string name="ago_1day">Prije 1 d</string>
     <string name="ago_days">Prije %d d</string>
     <string name="ago_1Minute">Prije 1 m</string>
@@ -197,7 +197,7 @@
     <string name="sell">Prodaj(%d Zlatnika) </string>
     <string name="hatch_with_potion">Izlegni s napitkom</string>
     <string name="hatch_egg">Izlegni s jajetom</string>
-    <string name="invite_party">Pozovi družinu</string>
+    <string name="invite_party">Pozovi grupu</string>
     <string name="dialog_feeding">Nahrani %s s:</string>
     <string name="use_animal">Koristi</string>
     <string name="feed">Nahrani</string>
@@ -240,7 +240,7 @@
     <string name="send">Pošalji</string>
     <string name="invite">Nađi Članove</string>
     <string name="invite_username_description">Ako već imaš prijatelje koji koriste Habiticu, pozovi ih putem korisničkog imena ovdje.</string>
-    <string name="invite_email_description">Ako se tvoj prijatelj pridruži Habitici preko tvog e-maila, onda će automatski biti pozvani u tvoju družinu!</string>
+    <string name="invite_email_description">Ako se tvoj prijatelj pridruži Habitici preko tvog e-maila, onda će automatski biti pozvani u tvoju grupu!</string>
     <string name="add_invites">Dodaj Pozivnice</string>
     <string name="email">E-mail</string>
     <string name="share_using">Podijeli koristeći</string>
@@ -266,7 +266,7 @@
     <!--QR Strings-->
     <string name="choose_recipient_title">Odaberi primatelja poruke</string>
     <string name="action_continue">Nastavi</string>
-    <string name="invited_to_party">Pozvan/a si pridružiti se družini!</string>
+    <string name="invited_to_party">Pozvani ste pridružiti se grupi!</string>
     <string name="stats_widget_label">Statistike Habitice</string>
     <string name="add_task">Dodaj Zadatak</string>
     <string name="add_habit">Dodaj Naviku</string>
@@ -534,7 +534,7 @@
     <string name="stable_owner_long">Matt gospodar zvijeri</string>
     <string name="hide_boss_art">Sakrij umjetničke prikaze Bosa</string>
     <string name="active_world_boss">Aktivni Svjetski Bos</string>
-    <string name="no_party_description">Idi na pustolovine s prijateljima ili samostalno. Bori se protiv čudovišta, kreiraj Izazove i pomogni sebi zadržati odgovornost pomoću Družina.</string>
+    <string name="no_party_description">Idi na pustolovine s prijateljima ili samostalno. Bori se protiv čudovišta, kreiraj Izazove i pomogni sebi zadržati odgovornost pomoću Grupa.</string>
     <string name="no_party_title">Igraj Habiticu u Družini</string>
     <string name="join_party_description">Daj članu Družine korisničko ime ispod koje se nalazi ispod i oni će ti moći poslati pozivnicu</string>
     <string name="join_party_title">Želiš se priključiti Družini?</string>
@@ -680,7 +680,7 @@
     <string name="new_bailey_update">Novo Baileyino ažuriranje!</string>
     <string name="empty_description_habits_filtered">Nema Navika vidljivih uz tvoje trenutne filtere.</string>
     <string name="leave_party_challenges_confirmation">Želiš li nastaviti sudjelovati u Izazovu kad napustiš Družinu\?</string>
-    <string name="new_msg_party">Tvoja Družina, <b>%1$s</b>, ima nove objave</string>
+    <string name="new_msg_party">Tvoja Grupa, <b>%1$s</b>, ima nove objave</string>
     <string name="adjust_streak">Prilagodi niz</string>
     <string name="new_password">Nova zaporka</string>
     <string name="days">Dana</string>
@@ -731,7 +731,7 @@
     <string name="need_more_help">Trebaš još pomoći\?</string>
     <string name="report_explanation">**Samo** prijavi objave koje krše [Smjernice zajednice] (https://habitica.com/static/community-guidelines) i/ili [Pravila o korištenju] (https://habitica.com/static/terms). Neprikladne prijave objava ti mogu dati prekršaj.</string>
     <string name="special_items">Posebni predmeti</string>
-    <string name="party_challenges">Sudjeluješ u Izazovu Družine</string>
+    <string name="party_challenges">Sudjeluješ u Izazovu Grupe</string>
     <string name="reset_counter">Resetiraj brojač</string>
     <string name="adjust_counter">Prilagodi brojilo</string>
     <string name="use_item">Iskoristi predmet na članu družine</string>&gt;
@@ -920,7 +920,7 @@
     <string name="unlock_previous_short">Završi Pustolovinu %d</string>
     <string name="transfer">Prenesi</string>
     <string name="setup_task_habit_2">Dotakni ovdje da urediš ovo u lošu naviku koje se želiš riješiti</string>
-    <string name="partyOnDescription">Tvoja družina je narasla do 4 člana!</string>
+    <string name="partyOnDescription">Tvoja grupa je narasla do 4 člana!</string>
     <string name="level_unabbreviated">Level %d</string>
     <string name="details">Pojedinosti</string>
     <string name="sent_card">Poslao/la si %s</string>
@@ -966,7 +966,7 @@
     <string name="manual_sync_restart">Ručna Sinkronizacija ili Ponovno pokretanje</string>
     <string name="lets_get_started">Započnimo</string>
     <string name="create_task_description">Dodaj zadatak za nešto što želiš postignuti ovaj tjedan</string>
-    <string name="standard">Standardno</string>
+    <string name="standard">Standardni</string>
     <string name="game_mechanics">Mehanika Igre</string>
     <string name="manual_sync_restart_description">Ponekad aplikacija neće automatski ažurirati sadržaj. Pokušaj povući za osvježivanje ili prisilno zatvoriti aplikaciju te ju ponovno otvoriti.</string>
     <string name="percent_completed">%d%% Gotovo</string>
@@ -1136,13 +1136,13 @@
     <string name="title">Naslov</string>
     <string name="positive_sentence">pozitivna</string>
     <string name="negative_sentence">negativna</string>
-    <string name="usernames_party">Družina Habitikana %s</string>
-    <string name="quest_party_required_title">Moraš biti član družine prije započinjanja pustolovine</string>
-    <string name="quest_party_required_description">Kad si član družine, možeš sam pokrenuti Pustolovine ili pozvati prijatelje da idete zajedno!</string>
+    <string name="usernames_party">%s Grupa</string>
+    <string name="quest_party_required_title">Moraš biti član grupe prije započinjanja pustolovine</string>
+    <string name="quest_party_required_description">Kad si član grupe, možeš sam pokrenuti Pustolovine ili pozvati prijatelje da idete zajedno!</string>
     <string name="armoireEquipment_new">Našao/la si komad rijetke opreme u ormaru!</string>
     <string name="armoireFood_new">Premećući kroz ormar, našao/la si hranu. Pa što to radi ovdje\?</string>
     <string name="sell_no_price">Prodaj</string>
-    <string name="create_new_party">Stvori novu družinu</string>
+    <string name="create_new_party">Stvori novu grupu</string>
     <string name="habitica_official">Habitica - Službeno</string>
     <string name="academics">Akademici</string>
     <string name="creativity">Kreativnost</string>
@@ -1400,7 +1400,7 @@
     </plurals>
     <string name="pause_damage_2_description">Dnevni nizovi i brojači Navika će se povećavati jedino ako je ovo uključeno</string>
     <string name="habiticans_looking_party_empty">Nitko trenutno ne traži Družinu. Probaj provjeriti kasnije!</string>
-    <string name="seeking_party_description">Želiš biti dio Družine ali ne znaš druge igrače\? Dopusti vođama Družina da znaju da tražiš pozivnicu!</string>
+    <string name="seeking_party_description">Želiš biti dio Grupe ali ne znaš druge igrače\? Dopusti vođama Grupa da znaju da tražiš pozivnicu!</string>
     <string name="change_class_to_x">Promijeni klasu u %s</string>
     <string name="shop_armoire_title">Posjeduješ svu %s opremu</string>
     <string name="shop_armoire_empty_description">Nova oprema izlazi tijekom sezonskih Gala zabava. Začarani ormar dobiva također dobiva nove zalihe svaki mjesec!</string>

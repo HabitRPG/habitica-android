@@ -2,7 +2,7 @@
 <resources>
     <string name="sidebar_tasks">Zadaci</string>
     <string name="sidebar_skills">Vještine</string>
-    <string name="sidebar_section_social">Društvo</string>
+    <string name="sidebar_section_social">Društveno</string>
     <string name="sidebar_inbox">Poruke</string>
     <string name="sidebar_party">Grupa</string>
     <string name="sidebar_challenges">Izazovi</string>
