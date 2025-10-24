@@ -1062,6 +1062,8 @@
     <string name="gems_description">Gems are a currency purchased with real money that allow you to buy extra content within Habitica and are one of the main sources of financial support for the Habitica team alongside subscriptions.\n\nAll content purchased through Gems is purely cosmetic or can be obtained for free with time.\n\nYou can also receive Gems through gifts from other players, Challenge prizes, contributing to Habitica, or subscribing.</string>
     <string name="common_questions">Common Questions</string>
     <string name="game_mechanics">Game Mechanics</string>
+    <string name="search_questions">Search questions</string>
+    <string name="no_matching_questions">No matching questions found</string>
     <string name="subscriber_currency">Subscriber Currency</string>
     <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica. You can use them in the Time Travelers Shop to buy past Subscriber Gear sets, exclusive Pets, Mounts, animated Backgrounds, or even special Quests! These extra perks are a great way to stay motivated through the year and reward yourself for a job well done.\n\nSubscribers receive a Mystic Hourglass at the start of each month they have subscription benefits, along with a bunch of other perks. Be sure to check out our subscription options if you’re interested in what the Time Travelers have to offer!</string>
     <string name="clear_cache">Clear your Cache</string>
