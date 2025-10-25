@@ -1536,7 +1536,7 @@
     <string name="report_challenge_explanation">Você só deve reportar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou [Termos de Serviço](https://habitica.com/static/terms). Enviar um relatório falso é uma violação das Diretrizes da Comunidade de Habitica.</string>
     <string name="benefits_end">Benefícios terminam em %s</string>
     <string name="faint_loss_description_alt">Você cairá para o nível <b>%1$d</b>, perderá <b>%2$d</b> de Ouro, e sua Experiência… Mas você pode recuperar tudo com esforço!</string>
-    <string name="report_reason_title_challenge">Por que você está reportando este desafio\?</string>
+    <string name="report_reason_title_challenge">Por que você está denunciando este desafio\?</string>
     <string name="g1g1_promo_info_limitations_noutc">Este é um evento por tempo limitado que começa em %1$s e termina em %2$s. Esta promoção se aplica apenas quando você presenteia outro Habitican. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presente adicionará meses de crédito que só serão usados após o cancelamento ou expiração da assinatura atual.</string>
     <string name="best_deal">Melhor oferta</string>
     <string name="see_other_sub_options">Veja outras opções de assinatura</string>
@@ -1547,4 +1547,5 @@
     <string name="eggs_footer_description">Confira o [Mercado](/lojas/mercado) para comprar apenas os ovos que você precisa!</string>
     <string name="food_footer_description">Confira o [Mercado](/lojas/mercado) para comprar comida ou uma Sela para domar seu mascote instantaneamente!</string>
     <string name="hatchingPotions_footer_description">Confira o [Mercado](/lojas/mercado) para comprar Poções de Eclosão padrão e sazonais!</string>
+    <string name="use_on_party">Usar no Grupo</string>
 </resources>
