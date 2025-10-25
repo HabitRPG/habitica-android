@@ -3,9 +3,9 @@
     <string name="x_and_y">%1$s i %2$s</string>
     <string name="sign_in_on_phone">Prijavi se na telefonu</string>
     <string name="version_info">Verzija %1$s (%2$d)</string>
-    <string name="create_account">Stvori račun</string>
+    <string name="create_account">Izradi račun</string>
     <string name="other_options">Ostale opcije</string>
-    <string name="continue_text">Nastavite</string>
+    <string name="continue_text">Nastavi</string>
     <string name="you_ran_out_of_hp">Potrošili ste sav HP</string>
     <string name="day_start">Početak dana</string>
     <string name="task_type">Tip Zadatka</string>
