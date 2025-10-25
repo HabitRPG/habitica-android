@@ -666,4 +666,18 @@
     <string name="positive_sentence">positiv</string>
     <string name="negative_sentence">negativ</string>
     <string name="usernames_party">%s:s Sällskap</string>
+    <string name="change_class_selected_confirmation">Vill du byta Klass till %1$s\?</string>
+    <string name="quest_party_required_title">Du måste vara med i en grupp innan du kan påbörja ett uppdrag</string>
+    <string name="armoireEquipment_new">Du hittar en del av en sällsynt utrustning i vapenskåpet!</string>
+    <string name="armoireFood_new">Du går igenom vapenskåpet och hittar mat. Vad gör det här inne\?</string>
+    <string name="sell_confirmation_title">Är du säker på att du vill sälja denna %s\?</string>
+    <string name="opt_out_description">Det här kommer lämna dig utan en Klass. Du kan välja en Klass senare genom att när som helst slå på Klassystemet under Inställningar.</string>
+    <string name="enable_class_description">Välj en Klass för att få Färdigheter, Egenskaper, och Mana</string>
+    <string name="choosing_class_progress">Välja Klass</string>
+    <string name="quest_party_required_description">När du är med i en Grupp, kan du utföra Uppdrag själv eller bjuda in vänner och utföra Uppdrag tillsammans!</string>
+    <string name="level_abbreviated">Niv. %d</string>
+    <string name="opting_out_progress">Välj bort</string>
+    <string name="discard">Kasta bort</string>
+    <string name="warrior_description">Krigare slår fler kritiska träffar och gör stor skada mot bossar. Spela som Krigare om du vill besegra monster enkelt! Krigare gagnas av att ha höga Egenskaper i Styrka.</string>
+    <string name="class_changed_description">Du kan nu använda %s Färdigheter och köpa utrustning från butiker. Öka nivån för att få Egenskapspoäng du kan använda för att få kraftfullare färdigheter.</string>
 </resources>
