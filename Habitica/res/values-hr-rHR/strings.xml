@@ -744,51 +744,51 @@
     <string name="subscription_confirmation_multiple">Sada ste pretplaćeni %s mjeseca/i</string>
     <string name="gem_purchase_confirmation">Dobili ste %s dragulja.</string>
     <string name="preference_push_party_activity">Aktivnost Grupe</string>
-    <string name="contact_us">Kontaktiraj nas</string>
+    <string name="contact_us">Kontaktiraj Nas</string>
     <string name="profile_gift_subscription">Pokloni
 \nPretplatu</string>
     <string name="group_plan">Grupni Plan</string>
     <string name="gift_gems">Pokloni Dragulje</string>
-    <string name="health_description">Ovo predstavlja život tvojeg avatara. Neobavljanje Svakodnevnog Zadatka ili činjenje negativne Navike **smanjuje tvoje Zdravlje**.
+    <string name="health_description">Ovo predstavlja život vašeg avatara. Neobavljanje Dnevnih zadatka ili činjenje negativne Navike **smanjuje vaše Zdravlje**.
 \n
-\n**Ponovo dobij Zdravlje** povećanjem levela, korištenjem Zdravog Napitka, ili vještinom klase s mogućnosti liječenja.
+\n**Vrati Zdravlje** povećanjem razina, korištenjem Ljekovitog napitka, ili vještinom klase s mogućnosti liječenja.
 \n
-\nAko tvoje **Zdravlje dođe do 0**, izgubit ćeš level, svo Zlato, i jedan dio Opreme. Izgubljena oprema se može ponovno kupiti.</string>
+\nAko vaše**Zdravlje dođe do 0**, izgubit ćete razinu, svo Zlato, i jedan dio Opreme. Izgubljena oprema se može ponovno kupiti.</string>
     <string name="promo_subscription_buy_gems_prompt">Trebate Dragulja\?</string>
     <string name="purchase">Kupi</string>
-    <string name="emails">Obavijesti e-pošte</string>
+    <string name="emails">Email Obavijesti</string>
     <string name="remove">Ukloni</string>
-    <string name="common_fixes">Česta rješenja</string>
+    <string name="common_fixes">Česta Rješenja</string>
     <string name="unpin">Otkvači</string>
     <string name="save_20">Uštedi 20%</string>
     <string name="g1g1_info_3">Ograničenja</string>
     <string name="search_hint">Pretraži zadatke</string>
     <string name="confirm_deletion">Potvrdi brisanje</string>
-    <string name="gold_description">Zlato je **glavna valuta** u Habitici i daje ti da kupiš određenu opremu, pustolovine, predmete, ili čak prilagođene nagrade koje si sam/a napraviš.
+    <string name="gold_description">Zlato je **glavna valuta** u Habitici i daje vam da kupujete određenu opremu, pustolovine, predmete, ili čak prilagođene nagrade koje si sami dodjelite.
 \n
-\n**Zaradi Zlato** kroz izvršavanje zadataka ili pustolovina, ili kroz neke vještine Klasa. Viša **statistika Percepcije** povisuje količinu Zlata kojeg zaradiš.
+\n**Zaradite Zlato** kroz izvršavanje zadataka ili pustolovina, ili kroz neke vještine Klasa. Viša **statistika Percepcije** povisuje količinu Zlata kojeg zaradite.
 \n
-\nAko se pretplatiš na Habiticu, možeš čak koristiti Zlato da kupiš broj Dragulja određen dužinom vremena tijekom kojeg si pretplaćen/a.</string>
-    <string name="go_shopping">Idi u kupnju</string>
+\nAko se pretplatite na Habiticu, možete čak koristiti Zlato da kupite broj Dragulja određen dužinom vremena tijekom kojeg ste pretplaćeni.</string>
+    <string name="go_shopping">Idi u kupovinu</string>
     <string name="renew_subscription">Obnovi Pretplatu</string>
     <string name="achievement_title">Došli ste do Postignuća!</string>
     <string name="invite_to_guild">Pozovi u Klan</string>
-    <string name="get_help">Dođi do pomoći</string>
+    <string name="get_help">Dođi do Pomoći</string>
     <string name="setup_task_habit_1">Dodaj zadatak u Habiticu</string>
-    <string name="mana_description">Mana bodovi su otključani sustavom klasa na levelu 10 te ti daju da **koristiš Vještine** kada ih kreneš učiti nakon levela 11.
+    <string name="mana_description">Mana bodovi su otključani sustavom klasa na razini 10 te vam daju da **koristite Vještine** kada ih krenete učiti nakon razine 11.
 \n
-\nNeki **MP su obnovljeni** tijekom svakodnevnog resetiranja dana, no možeš ih osvojiti još izvršavanjem zadataka ili koristeći vještinu klase Čarobnjaka.</string>
+\nNeki **MP su obnovljeni** tijekom svakodnevnog resetiranja dana, no možete ih osvojiti još izvršavanjem zadataka ili koristeći vještinu klase Čarobnjaka.</string>
     <string name="owner">Vlasnik</string>
     <string name="health_points">Bodovi Zdravlja</string>
     <string name="preference_push_unjoined_guild_mention">\@Spomeni u nepridruženim Klanovima</string>
     <string name="copy_userid">Kopiraj ID Korisnika</string>
-    <string name="promo_g1g1_prompt">Pokloni Jednu, Dobij Jednu Događanje</string>
-    <string name="g1g1_duration">17. prosinca do 6. siječnja</string>
+    <string name="promo_g1g1_prompt">Promocija Pokloni jednu, Dobij jednu</string>
+    <string name="g1g1_duration">17. Prosinca do 6. Siječnja</string>
     <string name="left_guild">Napustili ste klan</string>
     <string name="complete">Završi</string>
     <string name="app_theme">Tema Aplikacije</string>
     <string name="accept">Prihvati</string>
-    <string name="pref_emails_checkbox">Koristi obavijesti e-pošte</string>
+    <string name="pref_emails_checkbox">Koristi Email Obavijesti</string>
     <string name="report_message_hint">Razlog za prijavu</string>
     <string name="mystery_sets">Mistični Setovi</string>
     <string name="leave_guild">Napusti Klan</string>
@@ -885,36 +885,36 @@
     <string name="member">Član</string>
     <string name="promo_g1g1_description">Poklonite pretplatu sad i dobit ćete istu pretplatu za sebe besplatno!</string>
     <string name="sale">Rasprodaja</string>
-    <string name="suggestions_feedback">Prijedlozi i povratne informacije</string>
+    <string name="suggestions_feedback">Prijedlozi i Povratne Informacije</string>
     <string name="support_bug_title">Stalno pokušavamo poboljšati naše aplikacije prema povratnim informacijama igrača ali ponekad se pojavi nekoliko grešaka…</string>
     <string name="experience_points">Bodovi Iskustva</string>
-    <string name="experience_description">Bodovi iskustva predstavljaju tvoj napredak i daju ti da napreduješ u levelu. Uglavnom ćeš **dobiti EXP*** iz završavanja zadataka ili pustolovina, ali postoje neke vještine klasa koji daju EXP.
+    <string name="experience_description">Bodovi iskustva predstavljaju vaš napredak i daju vam da napredujete u razini. Uglavnom ćete **dobiti EXP*** iz završavanja zadataka ili pustolovina, ali postoje neke vještine klasa koji daju EXP.
 \n
-\nZadaci više težine, ili crveno obojani zadaci će ti dati **više EXP-ja**. **Statistika Inteligencije** također povećava tvoj prag dobivanja EXP-ja.</string>
-    <string name="stat_allocation">Raspodjela statistike</string>
-    <string name="bugs_fixes_description">Je li nešto pošlo po krivom\? Provjeri za odgovore ovdje ili nam se obrati za pomoć.</string>
-    <string name="g1g1_info_1">U čast sezone darovanja vraćamo vrlo posebnu promociju. Sad kada nekome pokloniš pretplatu, dobiti ćeš istu pretplatu sam/a besplatno!</string>
-    <string name="send_bug_prompt">Pošalji prijavu greške i odgovorit ćemo ti!</string>
+\nZadaci više težine, ili crveno obojani zadaci će vam dati **više EXP-a**. **Statistika Inteligencije** također povećava vaš prag dobivanja EXP-a.</string>
+    <string name="stat_allocation">Raspodjela Statistike</string>
+    <string name="bugs_fixes_description">Je li pošlo nešto po zlu\? Provjerite odgovore ovdje ili nam se obratite za pomoć.</string>
+    <string name="g1g1_info_1">U čast sezone darovanja vraćamo vrlo posebnu promociju. Sada kada nekome poklonite pretplatu, dobit ćete istu pretplatu sami besplatno!</string>
+    <string name="send_bug_prompt">Pošaljite prijavu greške i odgovorit ćemo vam!</string>
     <string name="mana_points">Bodovi Mane</string>
     <string name="g1g1_info_2">Kako to funkcionira</string>
     <string name="overview">Pregled</string>
-    <string name="lets_go">Idemo</string>
-    <string name="g1g1_info_2_text">Dotakni ‘Pokloni Pretplatu’ i upiši korisničko ime računa kojemu želiš pokloniti. Tada, odaberi dužinu pretplate koju želiš pokloniti i naplati. Tvoj račun će automatski biti nagrađen istom levelom pretplate koji si upravo poklonio/la.</string>
-    <string name="how_best_habitica">Nisi siguran/a kako najbolje koristiti Habiticu\?</string>
+    <string name="lets_go">Krenimo</string>
+    <string name="g1g1_info_2_text">Dotaknite ‘Pokloni Pretplatu’ i upišite korisničko ime računa kojemu želite pokloniti. Tada, odaberite dužinu pretplate koju želite pokloniti i naplatite. Vaš račun će automatski biti nagrađen istom razinom pretplate koji ste upravo poklonili.</string>
+    <string name="how_best_habitica">Nisite sigurni kako najbolje koristiti Habiticu\?</string>
     <string name="x_months">%d Mjeseca/i</string>
-    <string name="g1g1_info_3_text">Ova promocija se samo primjenjuje kada pokloniš novom Habiticanu. Ako ti ili tvoj primatelj poklona već imate pretplatu, poklonjena pretplata će dodati mjesece kredita koji će biti iskorišteni samo nakon što je trenutna pretplata otkazana ili istekne.</string>
+    <string name="g1g1_info_3_text">Ova promocija se samo primjenjuje kada poklonite novom Habitičanu. Ako vi ili vaš primatelj poklona već imate pretplatu, poklonjena pretplata će dodati mjesece kredita koji će biti iskorišteni samo nakon što je trenutna pretplata otkazana ili istekne.</string>
     <string name="stats_currency">Statistike i Valuta</string>
-    <string name="limited_event">Ograničeno događanje</string>
+    <string name="limited_event">Ograničen događaj</string>
     <string name="learn_more">Saznaj više</string>
-    <string name="purchase_from_timetravel_shop">Možeš kupiti ovaj ukras iz Dućana Vremenskih Putnika</string>
+    <string name="purchase_from_timetravel_shop">Možete kupiti ovaj ukras iz Dućana Putnika kroz Vrijeme</string>
     <string name="preference_email_subscription_reminder">Podsjetnici Pretplate</string>
-    <string name="preference_email_onboarding">Pomoć s postavljanjem tvojeg Habitica Računa</string>
-    <string name="skill_unlocks_at">Vještina se otključa pri levelu %d</string>
+    <string name="preference_email_onboarding">Pomoć s postavljanjem vašeg Habitica Računa</string>
+    <string name="skill_unlocks_at">Vještina se otključava pri razini %d</string>
     <string name="locked">Zaključano</string>
     <string name="unlock_previous">Otključaj završavanjem Pustolovine %d</string>
-    <string name="unlock_level">Otključaj postignućem levela %d</string>
-    <string name="using_habitica_description">Mi ćemo objasniti osnove i odgovoriti na česta pitanja kako bismo te obavijestili o najvažnijem</string>
-    <string name="suggestions_feedback_description">Imaš li savjet kako bi značajke mogle raditi bolje ili ideju za nešto novo\? Reci nam!</string>
+    <string name="unlock_level">Otključaj postizanjem razina %d</string>
+    <string name="using_habitica_description">Mi ćemo objasniti osnove i odgovoriti na česta pitanja kako bismo vas obavijestili o najvažnijem</string>
+    <string name="suggestions_feedback_description">Imate li savjet kako bi značajke mogle raditi bolje ili ideju za nešto novo\? Reci nam!</string>
     <string name="take_me_back">Vrati me Nazad</string>
     <string name="gems_to_gift">Dragulji za pokloniti</string>
     <string name="streak">Niz</string>
@@ -923,7 +923,7 @@
     <string name="transfer">Prenesi</string>
     <string name="setup_task_habit_2">Dotaknite ovdje da uredite ovo u lošu naviku koje se želite riješiti</string>
     <string name="partyOnDescription">Vaša grupa je narasla na 4 člana!</string>
-    <string name="level_unabbreviated">Level %d</string>
+    <string name="level_unabbreviated">Razina %d</string>
     <string name="details">Pojedinosti</string>
     <string name="sent_card">Poslali ste %s</string>
     <string name="inbox_messages_title">%1$d Novih Poruka od %2$s</string>
@@ -933,184 +933,184 @@
     <string name="member_group_plan">Član Grupnog Plana</string>
     <string name="event">Događanje</string>
     <string name="gift_a_subscription">Pokloni Pretplatu</string>
-    <string name="preference_email_kicked_group">Izbačen/a iz grupe</string>
-    <string name="not_participating">Ne sudjeluješ</string>
+    <string name="preference_email_kicked_group">Izbačeni iz grupe</string>
+    <string name="not_participating">Ne sudjelujete</string>
     <string name="quest_completed">Pustolovina završena!</string>
     <string name="using_habitica">Korištenje Habitice</string>
     <string name="bugs_fixes">Greške i Ispravci</string>
     <string name="equip">Obuci</string>
     <string name="task_display">Prikaz popisa zadataka</string>
-    <string name="buy_all">Kupi sve</string>
-    <string name="first_drop_explanation1">Izvršavanje zadataka ti daje šansu da pronađeš jaja, čarobne napitke za izlijeganje, i hranu za ljubimce.</string>
+    <string name="buy_all">Kupi Sve</string>
+    <string name="first_drop_explanation1">Izvršavanje zadataka ti daje šansu da pronađete jaja, čarobne napitke za izlijeganje, i hranu za ljubimce.</string>
     <string name="currency">Valuta</string>
-    <string name="createdTaskTitle">Stvorio/la svoj prvi zadatak</string>
-    <string name="purchasedEquipmentTitle">Kupio/la Opremu</string>
-    <string name="your_progress">Tvoj Napredak</string>
+    <string name="createdTaskTitle">Stvorili ste svoj prvi zadatak</string>
+    <string name="purchasedEquipmentTitle">Kupili Opremu</string>
+    <string name="your_progress">Vaš Napredak</string>
     <string name="animal_ears">Životinjske Uši</string>
     <string name="hatch_pet_title">Izlezi novog ljubimca</string>
-    <string name="hourglasses_description">Mistificirani pješčani satovi iznimno su rijetka valuta koju možeš dobiti samo pretplatom na Habiticu. Možeš ih iskoristiti u Dućanu Vremenskih Putnika za kupnju starih setova Opreme za Pretplatnike, ekskluzivnih Ljubimaca, Jahaćih životinja, animiranih Pozadina ili čak posebnih Pustolovina! Ove dodatne pogodnosti sjajan su način da ostaneš motiviran/a tijekom cijele godine i nagradiš se za dobro obavljen posao.
+    <string name="hourglasses_description">Mistični Pješčani satovi iznimno su rijetka valuta koju možete dobiti samo pretplatom na Habiticu. Možete ih iskoristiti u Dućanu Vremenskih Putnika za kupnju starih setova Opreme za Pretplatnike, ekskluzivnih Ljubimaca, Jahaćih životinja, animiranih Pozadina ili čak posebnih Pustolovina! Ove dodatne pogodnosti sjajan su način da ostanete motivirani tijekom cijele godine i nagradite se za dobro obavljen posao.
 \n
-\nPretplatnici dobivaju Mistificirani pješčani sat na početku svakog mjeseca u kojem imaju pogodnosti pretplate, zajedno s hrpom drugih pogodnosti. Obavezno provjeri naše opcije pretplate ako te zanima što Vremenski Putnici nude!</string>
-    <string name="gems_description">Dragulji su valuta kupljena pravim novcem koji ti daju da kupiš dodatni sadržaj u Habitici, te su jedan od glavnih izvora financijske podrške za Habitica tim odmah kraj pretplata.
+\nPretplatnici dobivaju Mistični pješčani sat na početku svakog mjeseca u kojem imaju pogodnosti pretplate, zajedno s hrpom drugih pogodnosti. Obavezno provjerite naše opcije pretplate ako vas zanima što Vremenski Putnici nude!</string>
+    <string name="gems_description">Dragulji su valuta kupljena pravim novcem koji vam daju da kupujete dodatni sadržaj u Habitici, te su jedan od glavnih izvora financijske podrške za Habitica tim odmah kraj pretplata.
 \n
 \nSav sadržaj kupljen kroz Dragulje je samo kozmetički ili se može dobiti besplatno vremenom.
 \n
-\nTakođer možeš dobiti Dragulje iz poklona od drugih igrača, iz nagrada Izazova, doprinosom Habitici, ili pretplatom.</string>
+\nTakođer možete dobiti Dragulje iz poklona od drugih igrača, iz nagrada Izazova, doprinosom Habitici, ili pretplatom.</string>
     <string name="purchaseX">Kupi %d</string>
-    <string name="complete_for_gold">Završi da zaradiš &lt;font color=#EE9109&gt;&lt;b&gt;100 Zlatnika&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="complete_for_gold">Završite da zaradite &lt;font color=#EE9109&gt;&lt;b&gt;100 Zlata&lt;/b&gt;&lt;/font&gt;!</string>
     <string name="hatch">Izlezi</string>
     <string name="unhatched_pet">Neizležen Ljubimac</string>
     <string name="use_saddle">Daj Sedlo</string>
-    <string name="purchasedEquipmentDescription">Oprema može biti praktična ili samo otmjena. Povisi svoje statistike da tvoj avatar dobije svakakve prednosti</string>
-    <string name="hatch_pet_again">Ponovo izlezi Ljubimca</string>
+    <string name="purchasedEquipmentDescription">Oprema može biti praktična ili samo otmjena. Povisite svoje statistike da vaš avatar dobije svakakve prednosti</string>
+    <string name="hatch_pet_again">Ponovo Izlezi Ljubimca</string>
     <string name="subscriber_currency">Valuta Pretplatnika</string>
-    <string name="common_questions">Često postavljena pitanja</string>
+    <string name="common_questions">Česta Pitanja</string>
     <string name="manual_sync_restart">Ručna Sinkronizacija ili Ponovno pokretanje</string>
     <string name="lets_get_started">Započnimo</string>
-    <string name="create_task_description">Dodaj zadatak za nešto što želiš postignuti ovaj tjedan</string>
+    <string name="create_task_description">Dodajte zadatak za nešto što želite postignuti ovaj tjedan</string>
     <string name="standard">Standardni</string>
     <string name="game_mechanics">Mehanika Igre</string>
-    <string name="manual_sync_restart_description">Ponekad aplikacija neće automatski ažurirati sadržaj. Pokušaj povući za osvježivanje ili prisilno zatvoriti aplikaciju te ju ponovno otvoriti.</string>
+    <string name="manual_sync_restart_description">Ponekad aplikacija neće automatski ažurirati sadržaj. Pokušajte povući za osvježivanje ili prisilno zatvoriti aplikaciju te ju ponovno otvoriti.</string>
     <string name="percent_completed">%d%% Gotovo</string>
     <string name="premium_currency">Ekskluzivna Valuta</string>
     <string name="update_app">Ažuriraj Aplikaciju</string>
     <string name="support">Podrška</string>
-    <string name="complete_task_description">Označi bilo koji zadatak da zaradiš nagrade</string>
+    <string name="complete_task_description">Označite bilo koji zadatak da zaradite nagrade</string>
     <string name="could_not_find_user">Nije bilo moguće pronaći igrača</string>
     <string name="animal_tail">Životinjski Rep</string>
-    <string name="hatch_pet_description">Završi zadatke da dobiješ Čarobni napitak za izlijeganje i Jaje zatim izlezi svojeg Ljubimca!</string>
-    <string name="first_drop_explanation2">Pođi do svojih Predmeta i pokušaj kombinirati tvoje novo Jaje i Napitak za izlijeganje!</string>
+    <string name="hatch_pet_description">Završite zadatke da dobijete Čarobni napitak za izlijeganje i Jaje zatim izlezite svojeg Ljubimca!</string>
+    <string name="first_drop_explanation2">Pođite do svojih Predmeta i pokušajte kombinirati vaše novo Jaje i Napitak za izlijeganje!</string>
     <string name="avatar_headband">Traka za Kosu</string>
-    <string name="purchase_equipment_description">Oprema je način ukrašavanja tvojeg avatara i poboljšavanja tvojih statistika</string>
+    <string name="purchase_equipment_description">Oprema je način ukrašavanja vašeg avatara i poboljšavanja vaših statistika</string>
     <string name="go_to_items">Idi do Predmeta</string>
     <string name="avatar_accent">Naglasak</string>
-    <string name="completedTaskTitle">Završio/la zadatak</string>
-    <string name="first_drop_title">Pronašao/la si nove predmete!</string>
-    <string name="onboardingCompleteTitle">Zaradio/la si &lt;b&gt;5 Postignuća&lt;/b&gt; i &lt;font color=#EE9109&gt;&lt;b&gt;100 Zlatnika&lt;/b&gt;&lt;/font&gt; za svoj trud.</string>
-    <string name="read_more">Pročitaj više</string>
-    <string name="hatchedPetTitle">Izlegao/la Ljubimca</string>
-    <string name="onboardingCompleteDescription">Ako želiš još, pogledaj Postignuća i kreni skupljati!</string>
-    <string name="purchase_amount_error">Nisi u mogućnosti kupiti tu količinu.</string>
-    <string name="createdTaskDescription">Samo nastavi! Ako trebaš pomoć u planiranju zadataka, pokušaj razmisliti što želiš raditi u određeno doba dana</string>
+    <string name="completedTaskTitle">Završili zadatak</string>
+    <string name="first_drop_title">Pronašli ste nove predmete!</string>
+    <string name="onboardingCompleteTitle">Zaradili ste &lt;b&gt;5 Postignuća&lt;/b&gt; i &lt;font color=#EE9109&gt;&lt;b&gt;100 Zlata&lt;/b&gt;&lt;/font&gt; za vaš trud.</string>
+    <string name="read_more">Pročitaj Više</string>
+    <string name="hatchedPetTitle">Izlegli Ljubimca</string>
+    <string name="onboardingCompleteDescription">Ako želite još, pogledajte Postignuća i krenite sakupljati!</string>
+    <string name="purchase_amount_error">Niste u mogućnosti kupiti tu količinu.</string>
+    <string name="createdTaskDescription">Samo nastavite! Ako trebate pomoć u planiranju zadataka, pokušajte razmisliti što želite raditi u određeno doba dana</string>
     <string name="excess_items">Višak Predmeti</string>
-    <string name="completedTaskDescription">Zadatak može biti Navika, Svakodnevni zadatak ili Zadatak. Nastavi ih izvršavati da dobiješ svakakve nagrade!</string>
-    <string name="still_questions">Još uvijek imaš pitanje\?</string>
-    <string name="excessItemsXLeft">Trebaš samo %1$d %2$s da izležeš sve moguće ljubimce. Jesi li siguran/a da želiš kupiti %3$d\?</string>
+    <string name="completedTaskDescription">Zadatak može biti Navika, Dnevni zadatak ili Obaveza. Nastavite ih izvršavati da dobijete razne nagrade!</string>
+    <string name="still_questions">Još uvijek imate pitanje\?</string>
+    <string name="excessItemsXLeft">Trebate samo %1$d %2$s da izležete sve moguće ljubimce. Jeste li sigurni da želite kupiti %3$d\?</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
-    <string name="fedPetDescription">Svaki Ljubimac ima posebnu hranu u kojoj uživaju! Eksperimentiraj da saznaš od koje će tvoj ljubimac najbrže narasti</string>
-    <string name="excessItemsNoneLeft">Već imaš sve što trebaš za sve %1$s ljubimce. Jesi li siguran/a da želiš kupiti %2$d %3$ss\?</string>
+    <string name="fedPetDescription">Svaki Ljubimac ima posebnu hranu u kojoj uživaju! Eksperimentirajte da saznate od koje će vaš ljubimac najbrže narasti</string>
+    <string name="excessItemsNoneLeft">Već imate sve što trebate za sve %1$s ljubimce. Jeste li sigurni da želite kupiti %2$d %3$ss\?</string>
     <string name="delete_checklist_entry">Izbriši…</string>
-    <string name="suggest_pet_hatch_again_missing_both">Trebaš %1$s i %2$s Napitak da ponovno izlegneš ovog ljubimca</string>
+    <string name="suggest_pet_hatch_again_missing_both">Trebate %1$s i %2$s Napitak da ponovno izlegnete ovog ljubimca</string>
     <string name="unequip">Skini</string>
     <string name="getting_started">Početak</string>
-    <string name="suggest_pet_hatch_missing_egg">Još uvijek trebaš %s Jaje da izležeš ovog ljubimca</string>
-    <string name="can_hatch_pet">Kombiniraj svoje %1$s Jaje i %2$s Napitak da izlegneš ovog ljubimca!</string>
-    <string name="suggest_pet_hatch_missing_both">Trebaš %1$s i %2$s Napitak da izlegneš ovog ljubimca</string>
-    <string name="hatch_pet">Izlezi ljubimca</string>
-    <string name="suggest_pet_hatch_again_missing_egg">Još uvijek trebaš %s Jaje da ponovo izležeš ovog ljubimca</string>
+    <string name="suggest_pet_hatch_missing_egg">Još uvijek trebate %s Jaje da izležete ovog ljubimca</string>
+    <string name="can_hatch_pet">Kombiniraj svoje %1$s Jaje i %2$s Napitak da izlegnete ovog ljubimca!</string>
+    <string name="suggest_pet_hatch_missing_both">Trebate %1$s i %2$s Napitak da izlegnete ovog ljubimca</string>
+    <string name="hatch_pet">Izlezi Ljubimca</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Još uvijek trebate %s Jaje da ponovo izležete ovog ljubimca</string>
     <string name="magic_potions">Čarobni Napitci</string>
     <string name="hatch_your_pet">Izlezi svojeg Ljubimca</string>
-    <string name="suggest_pet_hatch_again_missing_potion">Još uvijek trebaš %s Napitak da ponovo izležeš ovog ljubimca</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Još uvijek trebate %s Napitak da ponovo izležete ovog ljubimca</string>
     <string name="magic_potion">Čarobni Napitak</string>
     <string name="feedPet_title">Nahrani ljubimca</string>
     <string name="purchase_equipment_title">Kupi Opremu</string>
-    <string name="wacky">Ćaknuto</string>
+    <string name="wacky">Ćaknuti</string>
     <string name="habitica_questions">Habitica Pitanja</string>
-    <string name="feedPet_description">Završi zadatke da dobiješ hranu! Možeš ju hraniti svojem ljubimcu u Štali</string>
-    <string name="adventure_guide_description_new">Ispuni ove ciljeve i zaradit ćeš &lt;b&gt;5 Postignuća&lt;/b&gt; i &lt;font color=#EE9109&gt;&lt;b&gt;100 Zlatnika&lt;/b&gt;&lt;/font&gt; kada završiš!</string>
-    <string name="fedPetTitle">Nahranio/la Ljubimca</string>
-    <string name="hatchedPetDescription">Ima toliko Ljubimaca za skupiti, sigurno ti je neki najdraži. Ako ih nahraniš, možda će narasti…</string>
-    <string name="suggest_pet_hatch_missing_potion">Još trebaš %s Napitak da izležeš ovog ljubimca</string>
-    <string name="terms_of_service">Uvjeti o korištenju usluge</string>
+    <string name="feedPet_description">Dovršite zadatke kako biste dobili hranu! Možete njome hraniti svog ljubimca u Ljubimci i Jahaće Životinje</string>
+    <string name="adventure_guide_description_new">Ispunite ove ciljeve i zaradit ćete &lt;b&gt;5 Postignuća&lt;/b&gt; i &lt;font color=#EE9109&gt;&lt;b&gt;100 Zlata&lt;/b&gt;&lt;/font&gt; kada završite!</string>
+    <string name="fedPetTitle">Nahranili Ljubimca</string>
+    <string name="hatchedPetDescription">Ima toliko Ljubimaca za skupiti, sigurno vam je neki najdraži. Ako ih nahranite, možda će narasti…</string>
+    <string name="suggest_pet_hatch_missing_potion">Još trebate %s Napitak da izležete ovog ljubimca</string>
+    <string name="terms_of_service">Uvjeti korištenja</string>
     <string name="delete_challenge_task_title">Izbriši Zadatak iz Izazova\?</string>
-    <string name="privacy_policy">Pravila o privatnosti</string>
-    <string name="gift_one_get_one_purchase_banner">Pokloni pretplatu i dobij pretplatu besplatno do %s</string>
+    <string name="privacy_policy">Politika Privatnosti</string>
+    <string name="gift_one_get_one_purchase_banner">Poklonite pretplatu i dobijte pretplatu besplatno do %s</string>
     <string name="theme_mode">Tema Načina Rada</string>
-    <string name="fortify_shop_description">Vrati sve zadatke na neutralnu vrijednost (žuta boja), i vrati svo izgubljeno Zdravlje</string>
-    <string name="all_tasks_completed">Završio/la si sve zadatke. Svaka čast!</string>
+    <string name="fortify_shop_description">Vratite sve zadatke na neutralnu vrijednost (žuta boja), i vratite svo izgubljeno Zdravlje</string>
+    <string name="all_tasks_completed">Završili ste sve zadatke. Svaka čast!</string>
     <string name="hurray">Hura!</string>
     <string name="theme_color">Boja Teme</string>
-    <string name="block_user">Blokiraj igrača</string>
+    <string name="block_user">Blokiraj Igrača</string>
     <string name="survey_title">Upitnik Habitica igračima</string>
     <string name="block">Blokiraj</string>
     <string name="something_new">Novo</string>
     <string name="leave_delete_task">Napusti i Izbriši Zadatak</string>
-    <string name="login_disclaimer">Prijavljivanjem, ukazuješ da si pročitao/la i slažeš se s <a href="https://habitica.com/static/terms">Uvjetima pružanja usluge</a> i <a href="https://habitica.com/static/privacy">Pravilima o privatnosti.</a></string>
+    <string name="login_disclaimer">Prijavljivanjem, ukazujete da ste pročitali i slažete se s <a href="https://habitica.com/static/terms">Uvjetima pružanja usluge</a> i <a href="https://habitica.com/static/privacy">Pravilima o privatnosti.</a></string>
     <string name="leave_delete_x_tasks">Napusti i Izbriši %d Zadataka</string>
-    <string name="empty_discover_description">Kreni do Otkrij kartice da pronađeš neke kojima se možeš pridružiti!</string>
+    <string name="empty_discover_description">Krenite do Otkrij kartice da pronađete neke kojima se možete pridružiti!</string>
     <string name="six_months_one_time">6 Mjeseci</string>
     <string name="limitations">Ograničenja</string>
     <string name="user_is_blocked">Blokirali ste ovog igrača</string>
     <string name="unblock_user">Odblokiraj Igrača</string>
     <string name="open_shop">Otvori Dućan</string>
-    <string name="won_achievement_description"><b>%s</b> te odabrao/la kao pobjednika/cu. Tvoja pobjeda je zapisana u tvojim Postignućima.</string>
+    <string name="won_achievement_description"><b>%s</b> vas je odabrali kao pobjednika/cu. Vaša pobjeda je zapisana u vašim Postignućima.</string>
     <string name="pms_disabled">Privatne Poruke su onemogućene</string>
-    <string name="caused_damage">Načinio/la si štetu bosu</string>
+    <string name="caused_damage">Načinili ste štetu bossu</string>
     <string name="how_it_works">Kako to funkcionira</string>
     <string name="broken_challenge">Nepostojeći Izazov</string>
-    <string name="broken_challenge_description">Ovo je jedan od %d Zadataka koji su dio Izazova koji više ne postoji. Što želiš učiniti s ovim preostalim zadacima\?</string>
+    <string name="broken_challenge_description">Ovo je jedan od %d Zadataka koji su dio Izazova koji više ne postoji. Što želite učiniti s ovim preostalim zadacima\?</string>
     <string name="keep_x_tasks">Zadrži %d Zadataka</string>
     <string name="delete_x_tasks">Izbriši %d Zadataka</string>
     <string name="challenge_task_name">%s Zadatak Izazova</string>
     <string name="pet_category">%s Ljubimci</string>
     <string name="block_user_title">Blokiraj %s\?</string>
-    <string name="block_user_description">Blokirani igrač Vam ne može slati privatne poruke, ali ćete i dalje vidjeti njegove objave</string>
-    <string name="pms_disabled_description">Još uvijek možeš slati poruke, ali nitko ih ne može slati tebi. Možeš ih ponovo omogućiti u Postavkama.</string>
+    <string name="block_user_description">Blokirani igrač vam ne mogu slati privatne poruke, ali ćete i dalje vidjeti njihove objave</string>
+    <string name="pms_disabled_description">Još uvijek možete slati poruke, ali nitko ih ne može slati vama. Možete ih ponovo omogućiti u Postavkama.</string>
     <string name="view_gem_bundles">Pogledaj Pakete Dragulja</string>
     <string name="usually_x_gems">Obično %d Dragulja</string>
-    <string name="spooky_promo_info_instructions">Između %1$s i %2$s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
+    <string name="spooky_promo_info_instructions">Između %1$s i %2$s, jednostavno kupite bilo koji paket Dragulja kao i obično i vaš račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
     <string name="x_to_y">%1$s do %2$s</string>
     <string name="dark_mode">Tamni Način Rada</string>
-    <string name="submit_feedback">Pošalji povratne informacije</string>
-    <string name="you">Ti</string>
+    <string name="submit_feedback">Pošalji Povratne Informacije</string>
+    <string name="you">Vi</string>
     <string name="user_is_blocked_explanation">Blokirani igrač ne može vam slati privatne poruke, ali i dalje ćete vidjeti njihove objave</string>
-    <string name="invitation_title_no_leader">Pozvan/a si da se pridružiš u družinu</string>
+    <string name="invitation_title_no_leader">Pozvani ste da se pridružite u grupi</string>
     <string name="finish">Završi</string>
     <string name="purchase_immediately_description">Ovo će početi djelovati odmah nakon kupnje!</string>
-    <string name="create_guild">Stvori Ceh</string>
-    <string name="won_achievement_description_noname">Odabran/a si za pobjednika! Tvoja pobjeda je zapisana u tvojim Postignućima.</string>
+    <string name="create_guild">Stvori Klan</string>
+    <string name="won_achievement_description_noname">Odabrani ste za pobjednika! Vaša pobjeda je zapisana u vašim Postignućima.</string>
     <string name="action_end_challenge">Završi Izazov</string>
-    <string name="create_guild_description">Da stvoriš Ceh, prijavi se na Habitica stranicu te stisni “Stvori” gumb na ekranu “Moji Cehovi” .</string>
+    <string name="create_guild_description">Da stvorite Klan, prijavi se na Habitica stranicu te stisnite “Stvori” gumb na ekranu “Moji Klanovi” .</string>
     <string name="claim_x_gems">Primi %d Dragulja</string>
-    <string name="g1g1_promo_info_prompt">U čast sezone darovanja vraćamo vrlo posebnu promociju. Sad kada nekome pokloniš pretplatu, dobiti ćeš istu pretplatu sam/a besplatno!</string>
-    <string name="end_challenge_description">Da završiš Izazov, prijavi se na Habitica stranicu te pritisni “Završi Izazov” gumb desno od ekrana Izazov.</string>
-    <string name="you_won_challenge">Pobijedio/la si u Izazovu</string>
+    <string name="g1g1_promo_info_prompt">U čast sezone darovanja vraćamo vrlo posebnu promociju. Sad kada nekome poklonite pretplatu, dobit ćete istu pretplatu sami besplatno!</string>
+    <string name="end_challenge_description">Da završite Izazov, prijavite se na Habitica stranicu te pritisnite “Završi Izazov” gumb desno od ekrana Izazov.</string>
+    <string name="you_won_challenge">Pobijedili ste u Izazovu</string>
     <string name="congratulations">Svaka čast!</string>
-    <string name="g1g1_promo_info_instructions">Dotakni ‘Pokloni Pretplatu’ i upiši korisničko ime računa kojemu želiš pokloniti. Tada, odaberi dužinu pretplate koju želiš pokloniti i naplati. Tvoj račun će automatski biti nagrađen istom levelom pretplate koji si upravo poklonio/la.</string>
-    <string name="empty_equipment_description">Još nemaš ovakvu opremu. Možeš kupiti opremu iz dućana koristeći zlato koje si zaradio/la.</string>
-    <string name="empty_challenge_list">Nisi član nikakvih Izazova.</string>
-    <string name="damage_pending">%s štete čeka</string>
+    <string name="g1g1_promo_info_instructions">Dotaknite ‘Pokloni Pretplatu’ i upišite korisničko ime računa kojemu želite pokloniti. Tada, odaberite grupu pretplate koju želite pokloniti i naplatite. Vaš račun će automatski biti nagrađen istom razinom pretplate koji ste upravo poklonili.</string>
+    <string name="empty_equipment_description">Još nemate ovakvu opremu. Možete kupiti opremu iz dućana koristeći zlato koje ste zaradili.</string>
+    <string name="empty_challenge_list">Niste član nikakvih Izazova.</string>
+    <string name="damage_pending">%s Štete na čekanju</string>
     <string name="one_month_one_time">1 Mjesec</string>
-    <string name="empty_guilds_list">Nisi član nikakvih Cehova.</string>
+    <string name="empty_guilds_list">Niste član nikakvih Klanova.</string>
     <string name="sale_ends_in">Rasprodaja završava za %s</string>
     <string name="three_months_one_time">3 Mjeseca</string>
     <string name="twelve_months_one_time">12 Mjeseci</string>
     <string name="sidebar_teams">Timovi</string>
     <string name="team_information">Informacije o Timu</string>
-    <string name="mystery_item_title">Otvoriš Mističnu Kutiju i nađeš…</string>
-    <string name="cant_like_own_message">Ne mogu ti se sviđati vlastite poruke</string>
-    <string name="quest_leave_message">Jesi li siguran/a da želiš napustiti Pustolovinu\? Sav tvoj napredak će biti izgubljen.</string>
-    <string name="quest_leave_message_nostart">Jesi li siguran/a da želiš napustiti Pustolovinu\? Nećeš moći sudjelovati.</string>
+    <string name="mystery_item_title">Otvorili ste Mističnu Kutiju i pronašli ste…</string>
+    <string name="cant_like_own_message">Ne možete lajkati vlastite poruke</string>
+    <string name="quest_leave_message">Jesi li sigurni da želite napustiti Pustolovinu\? Sav vaš napredak će biti izgubljen.</string>
+    <string name="quest_leave_message_nostart">Jeste li sigurni da želite napustiti Pustolovinu\? Nećete moći sudjelovati.</string>
     <string name="limited_potions_available">Dostupni sezonski predmeti</string>
     <string name="open_for">Otvoreno na %s</string>
     <string name="go_to_survey">Idi na Upitnik</string>
-    <string name="survey_menu_description">Ispuni ovaj petominutni upitnik da nam pomogneš rasti i primiš Postignuće!</string>
-    <string name="locked_equipment_shop_dialog">Moraš kupiti prethodne predmete u ovom nizu da otključaš</string>
+    <string name="survey_menu_description">Ispunite ovaj petominutni upitnik da nam pomognete rasti i primite Postignuće!</string>
+    <string name="locked_equipment_shop_dialog">Morate kupiti prethodne predmete u ovom nizu da otključate</string>
     <string name="avatar_style">Stil</string>
     <string name="empty_title">Trenutno nema ničega</string>
     <string name="x_remaining">%s ostaje</string>
     <string name="my_account">Moj Račun</string>
     <string name="public_profile">Javni Profil</string>
-    <string name="about_me">O meni</string>
+    <string name="about_me">O Meni</string>
     <string name="account_info">Informacije o Računu</string>
     <string name="apitoken_summary">Zaporka token za programere i alate trećih strana.</string>
     <string name="mount_category">%s Jahače Životinje</string>
     <string name="disablePrivateMessages">Onemogući Privatne Poruke</string>
-    <string name="fall_promo_info_instructions">Između %1$s i %2$s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
+    <string name="fall_promo_info_instructions">Između %1$s i %2$s, jednostavno kupite bilo koji paket Dragulja kao i obično i vaš račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
     <string name="open_website">Otvori Web Stranicu</string>
-    <string name="delete_challenge_task_description">Ovo je jedan od %1$d zadataka koji su dio “%2$s” Izazova. Moraš napustiti Izazov kako bi izbrisao/la ovaj zadatak.</string>
+    <string name="delete_challenge_task_description">Ovo je jedan od %1$d zadataka koji su dio “%2$s” Izazova. Morate napustiti Izazov kako bi izbrisali ovaj zadatak.</string>
     <string name="no_longer_available">Više nije dostupno</string>
-    <string name="login_methods">Načini prijave</string>
+    <string name="login_methods">Načini Prijave</string>
     <string name="not_connected">Nije spojeno</string>
     <string name="add_password">Dodaj zaporku</string>
     <string name="connect">Spoji</string>
@@ -1120,13 +1120,13 @@
     <string name="copied_to_clipboard">%s je kopirano u međuspremnik</string>
     <string name="removed_social_auth">Odspojen %s</string>
     <string name="password_added">Zaporka spremljena</string>
-    <string name="add_email_and_password">Dodaj adresu e-pošte i zaporku</string>
+    <string name="add_email_and_password">Dodaj Email i Zaporku</string>
     <string name="password_not_matching">Unesene zaporke se ne podudaraju</string>
-    <string name="email_invalid">Nevažeća adresa e-pošte</string>
+    <string name="email_invalid">Nevažeća Email adresa</string>
     <string name="successful_purchase_generic">Kupnja uspješna</string>
-    <string name="starting_objectives">Započinjanje Ciljeva</string>
+    <string name="starting_objectives">Početni Ciljevi</string>
     <string name="switch_class">Promijeni Klasu</string>
-    <string name="onboarding_objectives">Započinjanje Ciljeva</string>
+    <string name="onboarding_objectives">Početni Ciljevi</string>
     <string name="task_list_mode">Vrste popisa zadataka</string>
     <string name="compact">Kompaktno</string>
     <string name="minimal">Minimalno</string>
@@ -1157,35 +1157,35 @@
     <string name="x_checkins">%d Prijava</string>
     <string name="send_invite">Pozovi</string>
     <string name="thanks_for_supporting">Hvala Vam što podržavate Habiticu</string>
-    <string name="clear_cache">Očistite predmemoriju</string>
-    <string name="update_app_description">Neprestano izbacujemo nove popravke, stoga svakako provjeri Trgovinu Play da vidiš ima li dostupnih ažuriranja.</string>
-    <string name="onboardingComplete_achievement_title">Završio/la si svoje Uvodne Zadatke!</string>
+    <string name="clear_cache">Očistite Predmemoriju</string>
+    <string name="update_app_description">Neprestano izbacujemo nove popravke, stoga svakako provjerite Trgovinu Play da vidite ima li dostupnih ažuriranja.</string>
+    <string name="onboardingComplete_achievement_title">Završili ste svoje Uvodne Zadatke!</string>
     <string name="view_onboarding_tasks">Pogledaj Uvodne Zadatke</string>
     <string name="not_set" tools:override="true">Nije postavljeno</string>
-    <string name="are_you_sure_you_want_to_delete">Jesi li siguran/na da želiš potvrditi brisanje\?</string>
+    <string name="are_you_sure_you_want_to_delete">Jesi li sigurni da želite potvrditi brisanje\?</string>
     <string name="armoire_drop_rates">Šanse za dobitak iz Ormara</string>
     <string name="armoire">Ormar</string>
-    <string name="equipment_remaining">Preostalo opreme: %d</string>
+    <string name="equipment_remaining">Preostalo Opreme: %d</string>
     <string name="new_pieces_added_every_month">Novi komadi dodaju se svaki mjesec</string>
-    <string name="watch_ad">Pogledaj oglas</string>
+    <string name="watch_ad">Pogledaj Oglas</string>
     <string name="available_in">Dostupno u %s</string>
-    <string name="watch_ad_to_open">Pogledaj oglas za ponovno otvaranje</string>
-    <string name="watch_ad_to_revive">Pogledaj oglas za oživljavanje</string>
+    <string name="watch_ad_to_open">Pogledajte oglas za ponovno otvaranje</string>
+    <string name="watch_ad_to_revive">Pogledajte oglas za oživljavanje</string>
     <string name="enchanted_armoire_drop_rates">Šanse za dobitak iz Čarobnog Ormara</string>
     <string name="armoire_rate_equipment_title">60% Dio Opreme</string>
     <string name="armoire_rate_food_title">20% Hrana</string>
     <string name="armoire_rate_food_description">Dobit ćeš jednu od deset vrsta Hrane. Tijekom specijalnih događaja, normalna hrana će se promijeniti u kolače ili slatkiše.</string>
     <string name="armoire_rate_experience_title">20% Bodovi iskustva</string>
     <string name="armoire_rate_experience_description">Dobiveni iznos nasumično varira od 10 do 50</string>
-    <string name="day_start_adjustment">Prilagodba početka dana</string>
+    <string name="day_start_adjustment">Prilagodba Početka Dana</string>
     <string name="purchased">Kupljeno</string>
     <string name="april">Travanj</string>
     <string name="may">Svibanj</string>
-    <string name="buy_set">Kupi set</string>
-    <string name="tutorial_reset_confirmation">Početni vodiči su resetirani</string>
-    <string name="you_ran_out_of_health">Ostao/la si bez Zdravlja!</string>
+    <string name="buy_set">Kupi Set</string>
+    <string name="tutorial_reset_confirmation">Početni Vodiči su resetirani</string>
+    <string name="you_ran_out_of_health">Ostali ste bez Zdravlja!</string>
     <string name="faint_broken_equipment">Slomljena oprema može se ponovno kupiti
-\nna Tržnici</string>
+\niz Dućana</string>
     <string name="account_reset">Resetiranje računa</string>
     <string name="avatar_skin_customization">Prilagodba kože avatara</string>
     <string name="avatar_shirt_customization">Prilagodba majice avatara</string>
@@ -1254,27 +1254,27 @@
     <string name="go_to_settings">Otvori Postavke</string>
     <string name="resume_damage_1_title">Tvoji propušteni Dnevni zadaci neće te ozlijediti</string>
     <string name="todo_item_checkbox">Kontrolna lista Obaveza</string>
-    <string name="spooky_promo_info_prompt">Rasprodaja Dragulja se vratila na samom kraju ovogodišnje Jesenske gala zabave! Ovo je posljednja prilika da dobiješ više Dragulja nego ikad, pa se opskrbi dok traje!</string>
-    <string name="fortify_shop">Napitak za jačanje</string>
-    <string name="armoire_rate_equipment_description">Svaki mjesec dodaju se novi dijelovi opreme. Ako posjeduješ svu opremu, tada ćeš dobiti Hranu ili Iskustvo, izgledi 50/50.</string>
+    <string name="spooky_promo_info_prompt">Rasprodaja Dragulja se vratila na samom kraju ovogodišnje Jesenske gala zabave! Ovo je posljednja prilika da dobijete više Dragulja nego ikad, pa se opskrbite dok traje!</string>
+    <string name="fortify_shop">Napitak Ojačavanja</string>
+    <string name="armoire_rate_equipment_description">Svaki mjesec dodaju se novi dijelovi opreme. Ako posjedujete svu opremu, tada ćete dobiti Hranu ili Iskustvo, izgledi 50/50.</string>
     <string name="class_changed_description">Sada možete koristiti %s vještine i kupovati opremu u dućanima. Stječite razine kako biste zaradili bodove vještina koje možete iskoristiti za jačanje svojih vještina.</string>
     <string name="change_class_selected_confirmation">Želiš li promijeniti klasu u %1$s\?</string>
     <string name="subscribers_mythic_hourglasses"><i>Pretplatnici dobivaju Mistične pješčane satove prva tri dana u mjesecu.</i></string>
     <string name="stat_description">Svi Habitica likovi imaju četiri statistike koje utječu na aspekte igranja Habitice.
 \n
-\n**Snaga (STR)** utječe na kritične pogotke i povećava štetu nanesenu šefu misije. Ratnici i Rogues dobivaju STR od opreme svoje klase.
+\n**Snaga (SNG)** utječe na kritične pogotke i povećava štetu nanesenu Bossu Pustolovine. Ratnici i Lupeži dobivaju SNG od opreme svoje klase.
 \n
-\n**Constitution (CON)** podiže vaš HP i čini vas manje oštećenima. Iscjelitelji i ratnici dobivaju CON iz opreme svoje klase.
+\n**Konstitucija (KON)** podiže vaš HP i čini vas manje oštećenima. Iscjelitelji i ratnici dobivaju KON iz opreme svoje klase.
 \n
-\n**Inteligencija (INT)** povećava količinu EXP-a koji zaradite i daje vam više Mane. Magovi i iscjelitelji dobivaju INT od opreme svoje klase.
+\n**Inteligencija (INT)** povećava količinu EXP-a koji zaradite i daje vam više Mane. Čarobnjaci i iscjelitelji dobivaju INT od opreme svoje klase.
 \n
-\n**Percepcija (PER)** povećava zlato koje zaradite i stopu pronalaženja ispuštenih predmeta. Skitnice i magovi dobivaju PER od opreme svoje klase.
+\n**Percepcija (PER)** povećava zlato koje zaradite i stopu pronalaženja ispuštenih predmeta. Lupeži i Čarobnjaci dobivaju PER od opreme svoje klase.
 \n
-\nNakon razine 10, zarađujete 1 Stat Point na svakoj razini koju osvojite i koji možete staviti u bilo koju statistiku koju želite. Također možete opremiti opremu koja ima različite kombinacije poboljšanja statistike.</string>
+\nNakon razine 10, zarađujete 1 Bod Statistike na svakoj razini koju osvojite i koji možete staviti u bilo koju statistiku koju želite. Također možete opremiti opremu koja ima različite kombinacije poboljšanja statistike.</string>
     <string name="subscription_credit_canceling">Vaš kredit za pretplatu od <b>+%d</b> mjeseci aktivirat će se nakon otkazivanja</string>
-    <string name="fall_promo_info_prompt">Jesenska gala zabava je u punom jeku pa smo mislili da je savršeno vrijeme za Rasprodaju Dragulja! Sada ćeš svakom kupnjom dobiti više Dragulja nego ikada prije.</string>
-    <string name="clear_cache_description">Za brisanje predmemorije, otvori aplikaciju Postavke na telefonu. Idi na Pohrana &gt; Aplikacije &gt; Habitica, zatim dodirnite Očisti Predmemoriju.</string>
-    <string name="death_description">Ali možeš ih sve vratiti uz naporan rad! Sretno - bit ćeš super.</string>
+    <string name="fall_promo_info_prompt">Jesenska gala je u punom jeku pa smo mislili da je savršeno vrijeme za Rasprodaju Dragulja! Sada ćete svakom kupnjom dobiti više Dragulja nego ikada prije.</string>
+    <string name="clear_cache_description">Za brisanje predmemorije, otvorite aplikaciju Postavke na telefonu. Idite na Pohrana &gt; Aplikacije &gt; Habitica, zatim dodirnite Očisti Predmemoriju.</string>
+    <string name="death_description">Ali sve ih možete vratiti napornim radom! Sretno — bit ćete odlični.</string>
     <string name="faint_loss_description">Pasti ćeš na razinu <b>%1$d</b>, izgubiti <b>%2$d</b> Zlata i slomiti <b>dio opreme</b>... Možeš sve to zaraditi natrag napornim radom!</string>
     <string name="health_fitness">Zdravlje + Fitnes</string>
     <string name="time_management">Upravljanje vremenom + Odgovornost</string>
@@ -1291,19 +1291,19 @@
     <string name="purchase_gryphatrice_confirmation">Želiš li kupiti Likujućeg Grifotrona za %d Dragulja\?</string>
     <string name="resume_damage_1_description">Bosovi će te još uvijek moći ozlijediti ako ostali članovi
 \nDružine propuste svoje Dnevne zadatke</string>
-    <string name="launch_screen">Zaslon za pokretanje</string>
+    <string name="launch_screen">Početni Zaslon</string>
     <string name="daily_item_checkbox">Dnevna Kontrolna lista</string>
-    <string name="show_me">Pokaži mi</string>
-    <string name="background_filters">Pozadinski filteri</string>
+    <string name="show_me">Pokaži Mi</string>
+    <string name="background_filters">Pozadinski Filter</string>
     <string name="newest">Najnovije</string>
     <string name="oldest">Najstarije</string>
-    <string name="sort_by">Sortiraj prema</string>
+    <string name="sort_by">Sortiraj Prema</string>
     <string name="january">Siječanj</string>
     <string name="febuary">Veljača</string>
     <string name="march">Ožujak</string>
     <string name="november">Studeni</string>
     <string name="december">Prosinac</string>
-    <string name="cds_subtitle">Podesi kada se dan mijenja su slijedeći nakon zadanog vremena ponoći.</string>
+    <string name="cds_subtitle">Podesite kada se dan mijenja su slijedeći nakon zadanog vremena ponoći.</string>
     <string name="june">Lipanj</string>
     <string name="july">Srpanj</string>
     <string name="august">Kolovoz</string>
@@ -1437,7 +1437,7 @@
     <string name="report_player_toolbar_title">Prijavite %s</string>
     <string name="see_other_sub_options">Vidi ostale opcije pretplate</string>
     <string name="use_on_party">Koristi na Grupi</string>
-    <string name="about_me_description">Dodaj kratak opis o sebi koji će se prikazati na tvom Habitica profilu kada ga drugi pregledaju.</string>
+    <string name="about_me_description">Dodajte kratak opis o sebi koji će se prikazati na vašem Habitica profilu kada ga drugi pregledaju.</string>
     <string name="save_about_me">Spremi O Meni</string>
     <string name="item_footer_description">Pogledaj [Tržnicu](/shops/market) da kupiš upravo one stvari koje ti trebaju!</string>
     <string name="exact_alarm_system_settings_reminders">Podsjetnici mogu kasniti jer dozvole nisu omogućene. Dodirnite za pregled i ažuriranje dozvola.</string>
