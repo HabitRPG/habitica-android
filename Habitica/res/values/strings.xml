@@ -1641,4 +1641,19 @@
         <item quantity="one">%d Item pending</item>
         <item quantity="other">%d Items pending</item>
     </plurals>
+    <string name="custom_server_content_description">Server options</string>
+    <string name="custom_server_title">Server configuration</string>
+    <string name="custom_server_label">Server URL</string>
+    <string name="custom_server_placeholder">https://habitica.com</string>
+    <string name="custom_server_apply">Apply</string>
+    <string name="custom_server_reset">Reset to default</string>
+    <string name="custom_server_invalid">Couldn’t understand that server address. Include http:// or https:// and a host name.</string>
+    <string name="dev_options_warning">Warning: Only use these developer settings if you know what you’re doing.</string>
+    <plurals name="dev_options_taps_remaining">
+        <item quantity="one">Developer options unlock in %d tap.</item>
+        <item quantity="other">Developer options unlock in %d taps.</item>
+    </plurals>
+    <string name="dev_options_unlocked">Developer options unlocked.</string>
+    <string name="custom_up_server_label">UnifiedPush server URL</string>
+    <string name="custom_up_server_placeholder">https://example.com</string>
 </resources>
