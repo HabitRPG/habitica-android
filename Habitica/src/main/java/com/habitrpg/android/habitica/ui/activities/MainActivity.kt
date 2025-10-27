@@ -683,17 +683,58 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private fun setUserData(user: User?) {
         if (user != null) {
             val preferences = user.preferences
+            val serverLanguage = preferences?.language
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-            preferences?.language?.let { apiClient.languageCode = it }
-            if (preferences?.language != viewModel.preferenceLanguage) {
-                viewModel.preferenceLanguage = preferences?.language
-                val currentAppLocale = AppCompatDelegate.getApplicationLocales()
-                val serverLanguageTag = LanguageHelper.getLanguageTag(preferences?.language)
-                if (currentAppLocale.isEmpty || currentAppLocale[0]?.toLanguageTag() != serverLanguageTag) {
-                    val appLocale = LocaleListCompat.forLanguageTags(serverLanguageTag)
-                    AppCompatDelegate.setApplicationLocales(appLocale)
+            val currentAppLocale = AppCompatDelegate.getApplicationLocales()
+            val currentAppLanguageTag = if (!currentAppLocale.isEmpty) {
+                currentAppLocale[0]?.toLanguageTag()
+            } else null
+
+            val currentAppLanguagePref = when (currentAppLanguageTag) {
+                "iw" -> "iw"
+                "hr-HR" -> "hr"
+                "in" -> "in"
+                "pt-PT" -> "pt"
+                "pt-BR" -> "pt_BR"
+                "en-GB" -> "en_GB"
+                "zh-TW" -> "zh_TW"
+                else -> currentAppLanguageTag?.replace("-", "_")
+            }
+
+            val currentLanguageHelper = currentAppLanguagePref?.let { LanguageHelper(it) }
+            val currentServerLanguageCode = currentLanguageHelper?.languageCode
+
+            if (!currentAppLocale.isEmpty &&
+                currentServerLanguageCode != null &&
+                currentServerLanguageCode != serverLanguage) {
+
+                lifecycleScope.launchCatching {
+                    userRepository.updateLanguage(currentServerLanguageCode)
+                }
+
+                sharedPreferences.edit {
+                    putString("language", currentAppLanguagePref)
+                }
+
+                apiClient.languageCode = currentServerLanguageCode
+            } else {
+                serverLanguage?.let { apiClient.languageCode = it }
+
+                if (serverLanguage != viewModel.preferenceLanguage) {
+                    viewModel.preferenceLanguage = serverLanguage
+                    val serverLanguageTag = LanguageHelper.getLanguageTag(serverLanguage)
+                    if (currentAppLocale.isEmpty || currentAppLanguageTag != serverLanguageTag) {
+                        val appLocale = LocaleListCompat.forLanguageTags(serverLanguageTag)
+                        AppCompatDelegate.setApplicationLocales(appLocale)
+                    }
+
+                    sharedPreferences.edit {
+                        putString("language", serverLanguage)
+                    }
                 }
             }
+
             preferences?.sound?.let { soundManager.soundTheme = it }
 
             CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
