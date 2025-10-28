@@ -702,22 +702,19 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 else -> currentAppLanguageTag?.replace("-", "_")
             }
 
-            val currentLanguageHelper = currentAppLanguagePref?.let { LanguageHelper(it) }
-            val currentServerLanguageCode = currentLanguageHelper?.languageCode
-
             if (!currentAppLocale.isEmpty &&
-                currentServerLanguageCode != null &&
-                currentServerLanguageCode != serverLanguage) {
+                currentAppLanguagePref != null &&
+                currentAppLanguagePref != serverLanguage) {
 
                 lifecycleScope.launchCatching {
-                    userRepository.updateLanguage(currentServerLanguageCode)
+                    userRepository.updateLanguage(currentAppLanguagePref)
                 }
 
                 sharedPreferences.edit {
                     putString("language", currentAppLanguagePref)
                 }
 
-                apiClient.languageCode = currentServerLanguageCode
+                apiClient.languageCode = currentAppLanguagePref
             } else {
                 serverLanguage?.let { apiClient.languageCode = it }
 
