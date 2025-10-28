@@ -75,12 +75,6 @@
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
-            android:name=".ui.activities.DeathActivity"
-            android:parentActivityName=".ui.activities.MainActivity"
-            android:label="@string/faint_header"
-            tools:ignore="UnusedAttribute">
-        </activity>
-        <activity
             android:name=".ui.activities.BirthdayActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             tools:ignore="UnusedAttribute">

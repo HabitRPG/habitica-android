@@ -153,15 +153,24 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     }
 
     private fun setLocale() {
-        val savedLanguage = sharedPrefs.getString("language", "en")
+        val savedLanguage = sharedPrefs.getString("language", null)
         val currentAppLocales = AppCompatDelegate.getApplicationLocales()
-        
-        if (currentAppLocales.isEmpty || savedLanguage != null) {
+
+        if (savedLanguage != null) {
             val languageTag = LanguageHelper.getLanguageTag(savedLanguage)
-            val appLocale = LocaleListCompat.forLanguageTags(languageTag)
-            
-            if (currentAppLocales.isEmpty || currentAppLocales[0]?.toLanguageTag() != languageTag) {
+            val currentTag = if (!currentAppLocales.isEmpty) {
+                currentAppLocales[0]?.toLanguageTag()
+            } else null
+
+            if (currentTag != languageTag) {
+                val appLocale = LocaleListCompat.forLanguageTags(languageTag)
                 AppCompatDelegate.setApplicationLocales(appLocale)
+            }
+        } else if (currentAppLocales.isEmpty) {
+            val appLocale = LocaleListCompat.forLanguageTags("en")
+            AppCompatDelegate.setApplicationLocales(appLocale)
+            sharedPrefs.edit {
+                putString("language", "en")
             }
         }
     }
@@ -182,7 +191,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                         "zh-TW" -> "zh_TW"
                         else -> currentLanguageTag.replace("-", "_")
                     }
-                    
+
                     val savedLanguage = sharedPrefs.getString("language", "en")
                     if (savedLanguage != prefLanguage) {
                         sharedPrefs.edit {

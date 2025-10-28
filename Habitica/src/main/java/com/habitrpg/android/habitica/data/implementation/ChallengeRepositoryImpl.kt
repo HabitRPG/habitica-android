@@ -151,6 +151,7 @@ class ChallengeRepositoryImpl(
         val updatedChallenges = apiClient.updateChallenge(challenge)
         if (updatedChallenges != null) {
             localRepository.save(updatedChallenges)
+            retrieveChallengeTasks(challenge.id ?: "")
         }
         return updatedChallenges
     }
