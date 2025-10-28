@@ -125,7 +125,8 @@ abstract class BaseActivity : AppCompatActivity() {
             notificationsManager.displayNotificationEvents.collect {
                 if (ShowNotificationInteractor(
                         this@BaseActivity,
-                        lifecycleScope
+                        lifecycleScope,
+                        userRepository
                     ).handleNotification(it)
                 ) {
                     lifecycleScope.launch(ExceptionHandler.coroutine()) {

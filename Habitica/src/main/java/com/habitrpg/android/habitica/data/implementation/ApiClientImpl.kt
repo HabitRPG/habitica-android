@@ -1061,6 +1061,8 @@ class ApiClientImpl(
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
+    override suspend fun rebirth(): User? = process { apiService.rebirth() }
+
     override suspend fun resetAccount(password: String): Boolean {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = password

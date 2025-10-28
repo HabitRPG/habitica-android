@@ -136,6 +136,8 @@ interface UserRepository : BaseRepository {
 
     suspend fun reroll(): User?
 
+    suspend fun rebirth(): User?
+
     suspend fun retrieveTeamPlans(): List<TeamPlan>?
 
     fun getTeamPlans(): Flow<List<TeamPlan>>
