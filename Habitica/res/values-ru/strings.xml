@@ -1647,4 +1647,7 @@
     <string name="rescrubscribe_to_pick_up">Возобновите подписку, чтобы продолжить с того места, где остановились!</string>
     <string name="clear_cache_settings">Очистить кэш</string>
     <string name="todo_summary_description_duedate">Это **%1$s** задание, которое нужно выполнить до **%2$s**.</string>
+    <string name="switches_in_x">Обновление через %s</string>
+    <string name="preference_push_joined_group_plan_mention">\@Упоминания в групповых планах</string>
+    <string name="next_switch_in_x">Следующее обновление через %s</string>
 </resources>
