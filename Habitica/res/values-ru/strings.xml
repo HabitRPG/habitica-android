@@ -1159,7 +1159,7 @@
     <string name="watch_ad">Смотреть рекламу</string>
     <string name="watch_ad_to_open">Посмотрите рекламу, чтобы открыть снова</string>
     <string name="enchanted_armoire_drop_rates">Шансы выпадения из зачарованного сундука</string>
-    <string name="apitoken_summary">Скопировать токен. Будьте осторожны, это пароль!</string>
+    <string name="apitoken_summary">Токен доступа для разработчиков и сторонних инструментов.</string>
     <string name="added_social_auth">Добавлена аутентификация с помощью %s</string>
     <string name="copied_to_clipboard">Скопировано %s в буфер обмена</string>
     <string name="removed_social_auth">Отключен %s</string>
@@ -1589,4 +1589,6 @@
     <string name="subscribe_hourglass_incentive_text">Каждый месяц подписчики получают Мистические песочные часы, а также эксклюзивные подарки!</string>
     <string name="use_on_party">Применить к команде</string>
     <string name="g1g1_promo_info_limitations_noutc">Это временное событие, которое начинается %1$s и закончится %2$s. Акция действует только в том случае, если вы дарите подписку другому жителю Habitica. Если у вас или у получателя подарка уже есть подписка, то вам добавятся месяцы подаренной подписки, которой можно будет воспользоваться при условии отмены или окончания текущей.</string>
+    <string name="purchase_saddles_in_market">Сёдла мгновенно превращают питомца в скакуна. Их можно приобрести на Рынке.</string>
+    <string name="customizations">Персонализация</string>
 </resources>
