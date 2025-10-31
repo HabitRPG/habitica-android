@@ -1413,14 +1413,14 @@
         <item quantity="other">Ti, %d drugih</item>
     </plurals>
     <plurals name="x_minutes">
-        <item quantity="one">%d Minuta</item>
-        <item quantity="few">%d Minute</item>
-        <item quantity="other">%d Minuti</item>
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuta</item>
+        <item quantity="other"></item>
     </plurals>
     <plurals name="x_hours">
         <item quantity="one">%d Sat</item>
         <item quantity="few">%d Sati</item>
-        <item quantity="other">%d Sati</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="photo_url_description">Možete prikazati sliku na vašem Habitica profilu kako bi je drugi vidjeli dodavanjem poveznice na sliku ovdje.</string>
     <string name="save_photo_url">Spremi URL Fotografije</string>
@@ -1441,8 +1441,8 @@
     <string name="save_about_me">Spremi O Meni</string>
     <string name="item_footer_description">Pogledajte [Dućan](/shops/market) da kupite upravo one stvari koje vam trebaju!</string>
     <string name="exact_alarm_system_settings_reminders">Podsjetnici mogu kasniti jer dozvole nisu omogućene. Dodirnite za pregled i ažuriranje dozvola.</string>
-    <string name="exact_alarm_system_settings_title">`Alarm &amp; Podsjetnici` onemogućeni`</string>
-    <string name="exact_alarm_system_settings_description">Dopustite `Alarms &amp; Podsjetnike` u aplikaciji Postavke kako biste osigurali da se podsjetnici pojavljuju točno u zakazano vrijeme</string>
+    <string name="exact_alarm_system_settings_title">`Alarmi &amp; Podsjetnici` onemogućeni`</string>
+    <string name="exact_alarm_system_settings_description">Dopustite `Alarme &amp; Podsjetnike` u aplikaciji Postavke kako biste osigurali da se podsjetnici pojavljuju točno u zakazano vrijeme</string>
     <string name="sell_confirmation_title">Jeste li sigurni da želite prodati ovo %s\?</string>
     <string name="opt_out_description">Ovo će vas ostaviti bez dodijeljene klase. Klasu možete ponovno odabrati tako da u bilo kojem trenutku omogućite sustav klasa u Postavkama.</string>
     <string name="choosing_class_progress">Odabir Klase</string>
