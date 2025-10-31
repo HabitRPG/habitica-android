@@ -1587,4 +1587,5 @@
     <string name="save_about_me">Сохранить «Обо мне»</string>
     <string name="use_skill">Использовать Навык</string>
     <string name="subscribe_hourglass_incentive_text">Каждый месяц подписчики получают Мистические песочные часы, а также эксклюзивные подарки!</string>
+    <string name="use_on_party">Применить к команде</string>
 </resources>
