@@ -1257,7 +1257,7 @@
     <string name="spooky_promo_info_prompt">Rasprodaja Dragulja se vratila na samom kraju ovogodišnje Jesenske gala zabave! Ovo je posljednja prilika da dobijete više Dragulja nego ikad, pa se opskrbite dok traje!</string>
     <string name="fortify_shop">Napitak Ojačavanja</string>
     <string name="armoire_rate_equipment_description">Svaki mjesec dodaju se novi dijelovi opreme. Ako posjedujete svu opremu, tada ćete dobiti Hranu ili Iskustvo, izgledi 50/50.</string>
-    <string name="class_changed_description">Sada možete koristiti %s vještine i kupovati opremu u dućanima. Stječite razine kako biste zaradili bodove vještina koje možete iskoristiti za jačanje svojih vještina.</string>
+    <string name="class_changed_description">Možeš upotrebljavati %s sposobnosti i kupovati opremu iz trgovina!</string>
     <string name="change_class_selected_confirmation">Želiš li promijeniti klasu u %1$s\?</string>
     <string name="subscribers_mythic_hourglasses"><i>Pretplatnici dobivaju Mistične pješčane satove prva tri dana u mjesecu.</i></string>
     <string name="stat_description">Svi Habitica likovi imaju četiri statistike koje utječu na aspekte igranja Habitice.
@@ -1415,12 +1415,12 @@
     <plurals name="x_minutes">
         <item quantity="one">%d minuta</item>
         <item quantity="few">%d minuta</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="x_hours">
         <item quantity="one">%d Sat</item>
         <item quantity="few">%d Sati</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="photo_url_description">Možete prikazati sliku na vašem Habitica profilu kako bi je drugi vidjeli dodavanjem poveznice na sliku ovdje.</string>
     <string name="save_photo_url">Spremi URL Fotografije</string>
