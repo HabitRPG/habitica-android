@@ -422,9 +422,9 @@
     <string name="quest_leader_header">Započeli %s</string>
     <string name="quest_abort_message">Jesi li sigurni da želite otkazati ovu Pustolovinu\? Sav napredak će biti izgubljen. Pustolovni svitak će biti vraćen inventaru vlasnika pustolovine.</string>
     <string name="reloading_content">Sadržaj se Ponovno Učitava</string>
-    <string name="thousand_abbrev">t</string>
-    <string name="million_abbrev">mil</string>
-    <string name="billion_abbrev">mlrd</string>
+    <string name="thousand_abbrev">tis.</string>
+    <string name="million_abbrev">mil.</string>
+    <string name="billion_abbrev">mlrd.</string>
     <string name="available_until">Dostupno do %s</string>
     <string name="gems_left_max">Mjesečni Dragulji: %1$d/%2$d Preostalo</string>
     <string name="gems_left_nomax">Mjesečni Dragulji: %d Preostalo</string>
@@ -1130,7 +1130,7 @@
     <string name="task_list_mode">Vrste popisa zadataka</string>
     <string name="compact">Kompaktno</string>
     <string name="minimal">Minimalno</string>
-    <string name="trillion_abbrev">bil</string>
+    <string name="trillion_abbrev">bln.</string>
     <string name="push_notification_system_settings_reminders">Dopusti Habitica obavijesti u aplikaciji Postavke za primanje podsjetnika</string>
     <string name="push_notification_system_settings_title">Obavijesti Onemogućene</string>
     <string name="enable_notifications">Omogući Obavijesti</string>

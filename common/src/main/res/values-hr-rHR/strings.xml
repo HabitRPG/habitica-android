@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="thousand_abbrev">t</string>
-    <string name="million_abbrev">mil</string>
-    <string name="billion_abbrev">mlrd</string>
+    <string name="thousand_abbrev">tis.</string>
+    <string name="million_abbrev">mil.</string>
+    <string name="billion_abbrev">mlrd.</string>
     <string name="mystic_hourglasses">Mistični pješčani satovi</string>
     <string name="repeat_daily">Dnevno</string>
     <string name="monthly">Mjesečno</string>
@@ -15,7 +15,7 @@
     <string name="about_title">O</string>
     <string name="are_you_sure">Jeste li sigurni\?</string>
     <string name="stats">Statistika</string>
-    <string name="trillion_abbrev">bil</string>
+    <string name="trillion_abbrev">bln.</string>
     <string name="gems">Dragulji</string>
     <string name="gold_plural">zlato</string>
     <string name="gold_capitalized">Zlato</string>
