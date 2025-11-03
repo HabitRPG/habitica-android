@@ -15,18 +15,18 @@
     <string name="log_out_of_habitica">Odjavi se iz Habitice\?</string>
     <string name="continue_on_your_phone">Nastavi na telefonu</string>
     <string name="all_done_today">Sve gotovo za danas!</string>
-    <string name="starting_your_day">Započinjete dan...</string>
-    <string name="disconnected">Nepovezan</string>
+    <string name="starting_your_day">Početak vašeg dana...</string>
+    <string name="disconnected">Prekinuta veza</string>
     <string name="one_quest_item">1 predmet Pustolovine</string>
     <string name="x_quest_item">%d predmeta Pustolovina</string>
     <string name="ok">OK</string>
     <string name="how_did_you_do">Kako ste prošli\?</string>
     <string name="you_found">Pronašli ste…</string>
     <string name="syncing_account">Sinkronizacija Računa s Telefona</string>
-    <string name="some_x">neke %s</string>
+    <string name="some_x">nekoliko %s</string>
     <string name="edit_on_phone">Uredi na telefonu</string>
     <string name="sign_in">Prijavi se</string>
-    <string name="sign_in_description">Izradi popise zadataka i prati napredak uz svoj gamificirani avatar</string>
+    <string name="sign_in_description">Izradite popise zadataka i pratite napredak sa svojim gamificiranim avatarom</string>
     <string name="rya_description">Ima nedovršenih Dnevnih zadatka od jučer</string>
     <string name="review_dailies">Pregledaj Dnevne zadatke</string>
     <string name="check_on_phone">Provjeri na telefonu</string>
@@ -37,7 +37,7 @@
     <string name="no_tasks">Stvori %s za dodavanje na ovaj popis</string>
     <string name="an_egg">Jaje</string>
     <string name="a_potion">Napitak</string>
-    <string name="some_food">Malo Hrane</string>
+    <string name="some_food">Nešto Hrane</string>
     <string name="faint_description">Izgubili ste Razinu, XP i Zlato. Ne odustajte!</string>
-    <string name="levelup_description">Dosegli ste višu razinu zahvaljujući svojemu trudu!</string>
+    <string name="levelup_description">Dosegli ste višu razinu zahvaljujući svome trudu!</string>
 </resources>

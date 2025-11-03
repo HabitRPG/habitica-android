@@ -1398,7 +1398,7 @@
     <plurals name="people">
         <item quantity="one">%d osoba</item>
         <item quantity="few">%d ljudi</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="pause_damage_2_description">Dnevni nizovi i brojači Navika će se povećavati jedino ako je ovo uključeno</string>
     <string name="habiticans_looking_party_empty">Nitko trenutno ne traži Grupu. Probajte provjeriti kasnije!</string>

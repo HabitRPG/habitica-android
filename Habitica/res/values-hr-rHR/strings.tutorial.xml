@@ -2,7 +2,7 @@
 <resources>
     <string name="tutorial_overview">Odlično! Popunio sam vam neke zadatke na temelju vaših interesa. Pokušajte dodati još nekoliko svojih. Možete urediti bilo koji zadatak dodirom na naslov.</string>
     <string name="tutorial_habits_1">Prve su Navike. One mogu biti pozitivne navike koje želite poboljšati ili negativne navike koje želite prestati raditi.</string>
-    <string name="tutorial_habits_2">Kada god izvršite pozitivnu Naviku, dodirnite + kako bi dobili iskustvo i zlato!</string>
+    <string name="tutorial_habits_2">Kada god izvršite pozitivnu Naviku, dodirnite + kako biste dobili iskustvo i zlato!</string>
     <string name="tutorial_habits_3">Ako pak posustanete i napravite negativnu naviku, dodir na - smanjit će zdravlje vašeg avatara kako bi ostali odgovorni.</string>
     <string name="tutorial_habits_4">Pokušajte! Ostale vrste zadataka možete istražiti putem donje navigacije.</string>
     <string name="tutorial_dailies_1">Stvorite Dnevne zadatke za one zadatke koji imaju rokove i koje trebate izvršavati prema redovnom rasporedu.</string>
