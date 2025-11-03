@@ -14,7 +14,8 @@ fun SequentialClickBox(
     onTrigger: () -> Unit,
     modifier: Modifier = Modifier,
     onRemainingClicks: (Int) -> Unit = {},
-    clicksToTrigger: Int = 5,
+    clicksToShowCountdown: Int = 4,
+    clicksToTrigger: Int = 7,
     timeout: Long = 1_500L,
     content: @Composable (Modifier) -> Unit
 ) {
@@ -27,9 +28,16 @@ fun SequentialClickBox(
         }
         clicks++
         lastClickTime = currentTime
-        onRemainingClicks(clicksToTrigger - clicks)
+
+        val remaining = clicksToTrigger - clicks
+        // Only trigger the countdown toast after the user has clicked the logo 4 or more times
+        if (clicks >= clicksToShowCountdown) {
+            onRemainingClicks(remaining)
+        }
+
         if (clicks >= clicksToTrigger) {
-            clicks = 0
+            // After closing the preferences, let the user re-open by just clicking the logo once
+            clicks = clicksToTrigger - 1
             onTrigger()
         }
     }

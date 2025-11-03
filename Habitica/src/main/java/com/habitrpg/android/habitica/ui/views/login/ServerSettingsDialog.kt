@@ -66,8 +66,17 @@ fun ServerSettingsDialog(
                     fontSize = 24.sp,
                     lineHeight = 32.sp,
                 )
+                Text(
+                    text = "Warning: Accounts on custom servers are separate from your main Habitica.com account.",
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = MaterialTheme.colorScheme.error
+                    ),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .fillMaxWidth()
+                )
                 val (baseUrl, customUrl) = serverSettings
-                val radioOptions = listOf("$baseUrl (Base URL)", "Custom")
+                val radioOptions = listOf("$baseUrl (Default)", "Custom")
                 val (selectedOption, onOptionSelected) = remember {
                     mutableStateOf(
                         if (customUrl.isNullOrEmpty()) radioOptions.first() else radioOptions.last()
