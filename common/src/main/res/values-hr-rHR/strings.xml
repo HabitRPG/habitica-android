@@ -3,7 +3,7 @@
     <string name="thousand_abbrev">tis.</string>
     <string name="million_abbrev">mil.</string>
     <string name="billion_abbrev">mlrd.</string>
-    <string name="mystic_hourglasses">Mistični pješčani satovi</string>
+    <string name="mystic_hourglasses">Mistični Pješčani Satovi</string>
     <string name="repeat_daily">Dnevno</string>
     <string name="monthly">Mjesečno</string>
     <string name="weekly">Tjedno</string>
@@ -28,7 +28,7 @@
     <string name="LoginActivityName">Dobrodošli</string>
     <string name="save_task_x">Spremi %s</string>
     <string name="retry">Pokušaj ponovo</string>
-    <string name="quadrillion_abbrev">tril</string>
+    <string name="quadrillion_abbrev">bld.</string>
     <string name="easy">Lako</string>
     <string name="medium">Srednje</string>
     <string name="hard">Teško</string>
