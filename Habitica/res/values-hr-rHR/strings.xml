@@ -257,7 +257,7 @@
     <string name="empty_inbox">Nemate nijednu poruku. Možete poslati novu poruku igraču iz njihovih poruka u javnom razgovoru!</string>
     <string name="party_invite">Otključajte pozivanjem prijatelja</string>
     <string name="login_incentive">Otključajte redovitim prijavljivanjem u Habiticu</string>
-    <string name="create_account">Otključajte kreiranjem računa</string>
+    <string name="create_account">Otključaj kreiranjem računa</string>
     <string name="successful_purchase">Kupljen %1$s</string>
     <string name="chat_message_copied">Poruka je kopirana u Međuspremnik</string>
     <string name="edit_tag_btn_edit">Uredi</string>
