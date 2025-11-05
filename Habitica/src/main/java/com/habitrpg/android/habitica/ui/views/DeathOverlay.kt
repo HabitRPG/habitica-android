@@ -174,7 +174,7 @@ fun DeathOverlay(
     val screenWidth = with(density) { configuration.screenWidthDp.dp.toPx() }
     val screenHeight = with(density) { configuration.screenHeightDp.dp.toPx() }
 
-    val isSmallPhone = configuration.screenHeightDp < 650
+    val isSmallPhone = configuration.screenHeightDp < 780
     val fontScale = density.fontScale
     val effectiveFontScale = if (isSmallPhone && fontScale > 1.15f) 1.15f else fontScale
 
