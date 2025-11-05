@@ -55,6 +55,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -172,13 +175,20 @@ fun DeathOverlay(
     val screenHeight = with(density) { configuration.screenHeightDp.dp.toPx() }
 
     val isSmallPhone = configuration.screenHeightDp < 650
+    val fontScale = density.fontScale
+    val effectiveFontScale = if (isSmallPhone && fontScale > 1.15f) 1.15f else fontScale
+
     val waveHeightPercentage = if (isSmallPhone) 0.65f else 0.58f
     val ghostHeartSizeMultiplier = if (isSmallPhone) 0.75f else 1f
     val headerTextOffset = if (isSmallPhone) (-25).dp else 40.dp
     val subtextOffset = if (isSmallPhone) 25.dp else 104.dp
-    val headerTextSize = if (isSmallPhone) 24.sp else 30.sp
-    val subtextSize = if (isSmallPhone) 15.sp else 18.sp
-    val subtextLineHeight = if (isSmallPhone) 18.sp else 24.sp
+    val headerTextSize = if (isSmallPhone) (23 / fontScale * effectiveFontScale).sp else 30.sp
+    val subtextSize = if (isSmallPhone) (14 / fontScale * effectiveFontScale).sp else 18.sp
+    val subtextLineHeight = if (isSmallPhone) (17 / fontScale * effectiveFontScale).sp else 24.sp
+    val subtextMaxHeight = if (isSmallPhone) (configuration.screenHeightDp * 0.35f).dp else (configuration.screenHeightDp).dp
+    val buttonHeight = if (isSmallPhone) 50.dp else 60.dp
+    val refillButtonBottomPadding = if (isSmallPhone) 4.dp else 16.dp
+    val tealSectionTopPadding = if (isSmallPhone) 4.dp else 16.dp
 
     LaunchedEffect(isVisible) {
         if (isVisible) {
@@ -698,6 +708,7 @@ fun DeathOverlay(
                 .align(Alignment.Center)
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp)
+                .heightIn(max = subtextMaxHeight)
                 .offset(y = subtextOffset)
                 .graphicsLayer {
                     alpha = uiElementsProgress.value
@@ -740,16 +751,23 @@ fun DeathOverlay(
                 }
             }
 
-            Text(
-                text = annotatedString,
-                color = red1Color,
-                textAlign = TextAlign.Center,
-                style = TextStyle(
-                    fontSize = subtextSize,
-                    lineHeight = subtextLineHeight,
-                    letterSpacing = (-0.48).sp
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = annotatedString,
+                    color = red1Color,
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        fontSize = subtextSize,
+                        lineHeight = subtextLineHeight,
+                        letterSpacing = (-0.48).sp
+                    )
                 )
-            )
+            }
         }
 
         Column(
@@ -790,8 +808,8 @@ fun DeathOverlay(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp, bottom = 16.dp)
-                    .height(60.dp),
+                    .padding(start = 24.dp, end = 24.dp, bottom = refillButtonBottomPadding)
+                    .height(buttonHeight),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White
                 ),
@@ -822,7 +840,7 @@ fun DeathOverlay(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp)
+                    .padding(top = tealSectionTopPadding)
             ) {
                 Canvas(modifier = Modifier.matchParentSize()) {
                     val path = Path().apply {
@@ -861,7 +879,7 @@ fun DeathOverlay(
                                     onClick = {},
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(56.dp)
+                                        .height(buttonHeight)
                                         .graphicsLayer { alpha = 0.6f },
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = Color.White,
@@ -890,7 +908,7 @@ fun DeathOverlay(
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(56.dp),
+                                        .height(buttonHeight),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = Color.White
                                     ),
@@ -940,7 +958,7 @@ fun DeathOverlay(
                                     onClick = onSubscribeClick,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(56.dp),
+                                        .height(buttonHeight),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = Color.White
                                     ),
