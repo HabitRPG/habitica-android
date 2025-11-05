@@ -69,6 +69,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
     private var isFirstRefresh = true
+    private var hasPendingRefresh = false
     var autocompleteContext: String = ""
 
     override fun onViewCreated(
@@ -108,6 +109,13 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
+        binding?.newMessageIndicator?.setOnClickListener {
+            hasPendingRefresh = false
+            hideNewMessageIndicator()
+            binding?.recyclerView?.smoothScrollToPosition(0)
+            viewModel.retrieveGroupChat { }
+        }
+
         binding?.recyclerView?.addOnScrollListener(
             object :
                 androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
@@ -117,7 +125,18 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                     dy: Int
                 ) {
                     super.onScrolled(recyclerView, dx, dy)
-                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
+                    val wasScrolledToBottom = isScrolledToBottom
+                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() <= 3
+
+                    if (isScrolledToBottom && !wasScrolledToBottom && hasPendingRefresh) {
+                        hasPendingRefresh = false
+                        hideNewMessageIndicator()
+                        viewModel.retrieveGroupChat { }
+                    }
+
+                    if (isScrolledToBottom) {
+                        hideNewMessageIndicator()
+                    }
                 }
             }
         )
@@ -207,8 +226,11 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         viewModel.retrieveGroupChat {
             if (isScrolledToBottom || isFirstRefresh) {
                 binding?.recyclerView?.scrollToPosition(0)
+                isFirstRefresh = false
+            } else {
+                hasPendingRefresh = true
+                showNewMessageIndicator()
             }
-            isFirstRefresh = false
         }
     }
 
@@ -287,5 +309,33 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             chatText,
             { binding?.recyclerView?.scrollToPosition(0) }
         ) { binding?.chatBarView?.message = chatText }
+    }
+
+    private fun showNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility != View.VISIBLE) {
+                visibility = View.VISIBLE
+                alpha = 0f
+                translationY = 50f
+                animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(200)
+                    .start()
+            }
+        }
+    }
+
+    private fun hideNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility == View.VISIBLE) {
+                animate()
+                    .alpha(0f)
+                    .translationY(50f)
+                    .setDuration(200)
+                    .withEndAction { visibility = View.GONE }
+                    .start()
+            }
+        }
     }
 }

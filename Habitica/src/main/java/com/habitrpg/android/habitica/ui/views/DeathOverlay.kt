@@ -378,7 +378,7 @@ fun DeathOverlay(
         }
 
         if (goldCoinLeftProgress.value > 0f) {
-            val waveHeight = (configuration.screenHeightDp * 0.65f).dp
+            val waveHeight = (configuration.screenHeightDp * 0.58f).dp
             val waveTopPosition = configuration.screenHeightDp.dp - waveHeight
 
             val coinSize = 40.dp
@@ -420,7 +420,7 @@ fun DeathOverlay(
         }
 
         if (goldCoinLeftProgress.value > 0f) {
-            val waveHeight = (configuration.screenHeightDp * 0.65f).dp
+            val waveHeight = (configuration.screenHeightDp * 0.58f).dp
             val waveTopPosition = configuration.screenHeightDp.dp - waveHeight
 
             val finalX = 48.dp
@@ -462,7 +462,7 @@ fun DeathOverlay(
         }
 
         if (goldCoinRightProgress.value > 0f) {
-            val waveHeight = (configuration.screenHeightDp * 0.65f).dp
+            val waveHeight = (configuration.screenHeightDp * 0.58f).dp
             val waveTopPosition = configuration.screenHeightDp.dp - waveHeight
 
             val finalX = configuration.screenWidthDp.dp - 60.dp
@@ -512,7 +512,7 @@ fun DeathOverlay(
                             val screenWidth = configuration.screenWidthDp * density.density
                             val screenHeight = configuration.screenHeightDp * density.density
 
-                            val waveHeight = configuration.screenHeightDp * 0.65f * density.density
+                            val waveHeight = configuration.screenHeightDp * 0.58f * density.density
                             val waveTopPosition = screenHeight - waveHeight
                             val ghostHeartVerticalPosition = waveTopPosition / 2f
                             val heartCenterY = ghostHeartVerticalPosition + (55 * density.density)
@@ -566,7 +566,7 @@ fun DeathOverlay(
         }
 
         if (waveProgress.value > 0f) {
-            val waveHeight = (configuration.screenHeightDp * 0.65f).dp
+            val waveHeight = (configuration.screenHeightDp * 0.58f).dp
 
             val yellowOffset = with(density) {
                 (screenHeight * (1f - waveProgress.value)).toDp()
@@ -610,7 +610,7 @@ fun DeathOverlay(
         }
 
         if (ghostHeartProgress.value > 0f) {
-            val waveHeight = (configuration.screenHeightDp * 0.65f).dp
+            val waveHeight = (configuration.screenHeightDp * 0.58f).dp
 
             val waveTopPosition = configuration.screenHeightDp.dp - waveHeight
 
@@ -631,7 +631,7 @@ fun DeathOverlay(
                     .align(Alignment.TopCenter)
                     .width(configuration.screenWidthDp.dp)
                     .height((157 * baseScale).dp)
-                    .offset(y = ghostHeartOffset + bobbingOffset)
+                    .offset(y = ghostHeartOffset)
                     .graphicsLayer {
                         scaleX = currentScale
                         scaleY = currentScale
@@ -643,6 +643,7 @@ fun DeathOverlay(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(width = (90 * baseScale).dp, height = (132 * baseScale).dp)
+                        .offset(y = bobbingOffset)
                 )
 
                 Image(
@@ -657,13 +658,14 @@ fun DeathOverlay(
 
         val red1Color = colorResource(id = R.color.red_1)
 
-        val waveHeight = (configuration.screenHeightDp * 0.65f).dp
+        val waveHeight = (configuration.screenHeightDp * 0.58f).dp
         val waveTopPosition = configuration.screenHeightDp.dp - waveHeight
 
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
                 .fillMaxWidth()
+                .offset(y = 40.dp)
                 .graphicsLayer {
                     alpha = headerTextProgress.value
                     translationY = (1f - headerTextProgress.value) * 50f
@@ -687,7 +689,7 @@ fun DeathOverlay(
                 .align(Alignment.Center)
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp)
-                .offset(y = 64.dp)
+                .offset(y = 104.dp)
                 .graphicsLayer {
                     alpha = uiElementsProgress.value
                     translationY = (1f - uiElementsProgress.value) * 50f
@@ -853,13 +855,15 @@ fun DeathOverlay(
                                         .height(56.dp)
                                         .graphicsLayer { alpha = 0.6f },
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color.White
+                                        containerColor = Color.White,
+                                        disabledContainerColor = Color.White,
+                                        disabledContentColor = teal10Color
                                     ),
                                     shape = RoundedCornerShape(8.dp),
                                     enabled = false
                                 ) {
                                     Icon(
-                                        painter = painterResource(id = R.drawable.ic_clock_24dp),
+                                        painter = painterResource(id = R.drawable.clock_teal_icon),
                                         contentDescription = null,
                                         tint = teal10Color,
                                         modifier = Modifier.size(24.dp)
