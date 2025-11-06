@@ -84,6 +84,7 @@ constructor(
     }
 
     var gotNewMessages: Boolean = false
+    private var isLoadingOlderMessages: Boolean = false
 
     override fun onCleared() {
         socialRepository.close()
@@ -298,8 +299,40 @@ constructor(
             return
         }
         viewModelScope.launch(ExceptionHandler.coroutine()) {
-            val messages = socialRepository.retrieveGroupChat(groupID)
+            val messages = socialRepository.retrieveGroupChat(groupID, 50, null)
             chatMessagesLiveData.postValue(messages)
+            onComplete()
+        }
+    }
+
+    fun loadOlderMessages(onComplete: () -> Unit) {
+        if (isLoadingOlderMessages) {
+            onComplete()
+            return
+        }
+        var groupID = groupID
+        if (groupViewType == GroupViewType.PARTY) {
+            groupID = "party"
+        }
+        if (groupID.isNullOrEmpty()) {
+            onComplete()
+            return
+        }
+        val currentMessages = chatMessagesLiveData.value
+        if (currentMessages.isNullOrEmpty()) {
+            onComplete()
+            return
+        }
+        val oldestMessage = currentMessages.lastOrNull()
+        isLoadingOlderMessages = true
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            val olderMessages = socialRepository.retrieveGroupChat(groupID, 50, oldestMessage?.id)
+            if (!olderMessages.isNullOrEmpty()) {
+                val updatedList = currentMessages.toMutableList()
+                updatedList.addAll(olderMessages)
+                chatMessagesLiveData.postValue(updatedList)
+            }
+            isLoadingOlderMessages = false
             onComplete()
         }
     }

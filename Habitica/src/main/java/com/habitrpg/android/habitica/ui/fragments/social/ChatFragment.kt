@@ -137,6 +137,12 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                     if (isScrolledToBottom) {
                         hideNewMessageIndicator()
                     }
+
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = layoutManager.itemCount
+                    if (lastVisibleItemPosition >= totalItemCount - 5 && totalItemCount > 0) {
+                        viewModel.loadOlderMessages { }
+                    }
                 }
             }
         )

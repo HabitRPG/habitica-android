@@ -235,7 +235,11 @@ interface ApiClient {
         userID: String
     ): Void?
 
-    suspend fun listGroupChat(groupId: String): List<ChatMessage>?
+    suspend fun listGroupChat(
+        groupId: String,
+        limit: Int? = null,
+        before: String? = null
+    ): List<ChatMessage>?
 
     suspend fun joinGroup(groupId: String): Group?
 

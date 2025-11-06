@@ -335,7 +335,9 @@ interface ApiService {
 
     @GET("groups/{gid}/chat")
     suspend fun listGroupChat(
-        @Path("gid") groupId: String
+        @Path("gid") groupId: String,
+        @Query("limit") limit: Int? = null,
+        @Query("before") before: String? = null
     ): Response<HabitResponse<List<ChatMessage>>>
 
     @POST("groups/{gid}/join")

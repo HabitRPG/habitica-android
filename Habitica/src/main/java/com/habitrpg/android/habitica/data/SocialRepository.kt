@@ -17,7 +17,11 @@ import kotlinx.coroutines.flow.Flow
 interface SocialRepository : BaseRepository {
     fun getUserGroups(type: String?): Flow<List<Group>>
 
-    suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>?
+    suspend fun retrieveGroupChat(
+        groupId: String,
+        limit: Int? = 50,
+        before: String? = null
+    ): List<ChatMessage>?
 
     fun getGroupChat(groupId: String): Flow<List<ChatMessage>>
 
