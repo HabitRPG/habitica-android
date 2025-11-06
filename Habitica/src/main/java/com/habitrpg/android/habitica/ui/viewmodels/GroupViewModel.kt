@@ -299,8 +299,22 @@ constructor(
             return
         }
         viewModelScope.launch(ExceptionHandler.coroutine()) {
-            val messages = socialRepository.retrieveGroupChat(groupID, 50, null)
-            chatMessagesLiveData.postValue(messages)
+            val currentMessages = chatMessagesLiveData.value
+            if (currentMessages.isNullOrEmpty()) {
+                val messages = socialRepository.retrieveGroupChat(groupID, 50, null)
+                chatMessagesLiveData.postValue(messages)
+            } else {
+                val messages = socialRepository.retrieveGroupChat(groupID, 50, null)
+                if (!messages.isNullOrEmpty()) {
+                    val newestCurrentId = currentMessages.firstOrNull()?.id
+                    val newMessages = messages.takeWhile { it.id != newestCurrentId }
+                    if (newMessages.isNotEmpty()) {
+                        val updatedList = newMessages.toMutableList()
+                        updatedList.addAll(currentMessages)
+                        chatMessagesLiveData.postValue(updatedList)
+                    }
+                }
+            }
             onComplete()
         }
     }
