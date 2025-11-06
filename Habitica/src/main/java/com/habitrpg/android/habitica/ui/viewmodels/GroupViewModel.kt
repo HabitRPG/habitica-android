@@ -289,13 +289,13 @@ constructor(
         }
     }
 
-    fun retrieveGroupChat(onComplete: () -> Unit) {
+    fun retrieveGroupChat(onComplete: (hasNewMessages: Boolean) -> Unit) {
         var groupID = groupID
         if (groupViewType == GroupViewType.PARTY) {
             groupID = "party"
         }
         if (groupID.isNullOrEmpty()) {
-            onComplete()
+            onComplete(false)
             return
         }
         viewModelScope.launch(ExceptionHandler.coroutine()) {
@@ -303,6 +303,7 @@ constructor(
             if (currentMessages.isNullOrEmpty()) {
                 val messages = socialRepository.retrieveGroupChat(groupID, 50, null)
                 chatMessagesLiveData.postValue(messages)
+                onComplete(true)
             } else {
                 val messages = socialRepository.retrieveGroupChat(groupID, 50, null)
                 if (!messages.isNullOrEmpty()) {
@@ -312,10 +313,14 @@ constructor(
                         val updatedList = newMessages.toMutableList()
                         updatedList.addAll(currentMessages)
                         chatMessagesLiveData.postValue(updatedList)
+                        onComplete(true)
+                    } else {
+                        onComplete(false)
                     }
+                } else {
+                    onComplete(false)
                 }
             }
-            onComplete()
         }
     }
 

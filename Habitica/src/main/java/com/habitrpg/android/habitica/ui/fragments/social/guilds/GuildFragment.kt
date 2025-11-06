@@ -131,7 +131,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             }
 
             R.id.menu_guild_refresh -> {
-                viewModel.retrieveGroupChat { }
+                viewModel.retrieveGroupChat { _ -> }
                 viewModel.retrieveGroup { }
                 return true
             }
