@@ -643,7 +643,7 @@ fun DeathOverlay(
             val startY = -300.dp
             val ghostHeartOffset = startY + ((ghostHeartVerticalPosition - startY) * ghostHeartProgress.value)
 
-            val bobbingOffset = (bobbingProgress.value * 10f).dp
+            val bobbingOffset = ((bobbingProgress.value * 7f) - 11f).dp
 
             Box(
                 modifier = Modifier
@@ -670,7 +670,7 @@ fun DeathOverlay(
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .size((110 * baseScale).dp)
+                        .size((118 * baseScale).dp)
                 )
             }
         }
