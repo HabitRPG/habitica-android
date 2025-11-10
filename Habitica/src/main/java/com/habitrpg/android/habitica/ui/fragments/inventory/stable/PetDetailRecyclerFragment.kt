@@ -260,14 +260,12 @@ class PetDetailRecyclerFragment :
                 sharedPreferences.edit {
                     putInt("times_fed", petFeedings)
                 }
-                if (petFeedings >= 2) {
-                    userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
-                        val parentActivity = mainActivity
-                        val totalCheckIns = user?.loginIncentives
+                userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                    val parentActivity = mainActivity
+                    val totalCheckIns = user?.loginIncentives
 
-                        if (totalCheckIns != null && parentActivity != null) {
-                            reviewManager.requestReview(parentActivity, totalCheckIns)
-                        }
+                    if (totalCheckIns != null && parentActivity != null) {
+                        reviewManager.requestReview(parentActivity, totalCheckIns)
                     }
                 }
             }
