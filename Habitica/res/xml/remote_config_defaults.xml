@@ -139,7 +139,7 @@
     </entry>
     <entry>
         <key>reviewCheckingMinCount</key>
-        <value>2</value>
+        <value>1</value>
     </entry>
     <entry>
         <key>enableCustomizationShop</key>
@@ -148,10 +148,6 @@
     <entry>
         <key>showAltDeathText</key>
         <value>false</value>
-    </entry>
-    <entry>
-        <key>useNewAuthFlow</key>
-        <value>true</value>
     </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

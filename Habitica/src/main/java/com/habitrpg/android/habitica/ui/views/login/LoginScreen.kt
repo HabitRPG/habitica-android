@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ProvideTextStyle
@@ -64,7 +63,7 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow: Boolean, onNextOnboardingStep: (Boolean) -> Unit, onForgotPasswordClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardingStep: (Boolean) -> Unit, onForgotPasswordClicked: () -> Unit, modifier: Modifier = Modifier) {
     val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
 
     LaunchedEffect(authenticationViewModel) {
@@ -229,11 +228,7 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                         onSubmit = {
                             coroutineScope.launchCatching {
                                 if (loginScreenState == LoginScreenState.REGISTER) {
-                                    if (useNewAuthFlow) {
-                                        authenticationViewModel.checkEmail()
-                                    } else {
-                                        authenticationViewModel.register()
-                                    }
+                                    authenticationViewModel.checkEmail()
                                 } else {
                                     authenticationViewModel.login()
                                 }

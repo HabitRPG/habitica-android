@@ -100,7 +100,7 @@ fun DeathOverlay(
 
     val userLevel = user?.stats?.lvl?.toInt()
     val userGold = user?.stats?.gp?.toInt()
-    val isSubscribed = appConfigManager.enableFaintSubs() && user?.isSubscribed == true
+    val isSubscribed = user?.isSubscribed == true
 
     var hasUsedSecondChance by remember(user) {
         mutableStateOf(false)

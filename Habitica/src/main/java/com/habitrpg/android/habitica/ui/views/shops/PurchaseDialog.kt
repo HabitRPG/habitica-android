@@ -461,11 +461,7 @@ class PurchaseDialog(
         } else if (shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds") {
             observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
         } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "customizationSet") {
-            if (configManager.enableCustomizationShop()) {
-                observable = { userRepository.unlockPath(item.path ?: item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
-            } else {
-                observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
-            }
+            observable = { userRepository.unlockPath(item.path ?: item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "card") {
