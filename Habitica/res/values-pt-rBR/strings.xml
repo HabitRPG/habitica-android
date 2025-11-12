@@ -1056,9 +1056,9 @@
     <string name="team_information">Informações sobre Time</string>
     <string name="sidebar_teams">Times</string>
     <string name="twelve_months_one_time">Assinatura única de 12 meses</string>
-    <string name="six_months_one_time">Assinatura única de 6 meses</string>
+    <string name="six_months_one_time">6 Meses</string>
     <string name="three_months_one_time">3 meses</string>
-    <string name="one_month_one_time">1 mês</string>
+    <string name="one_month_one_time">1 Mês</string>
     <string name="gift_one_get_one_purchase_banner">Presenteie uma assinatura e receba uma assinatura de graça até %s</string>
     <string name="g1g1_promo_info_instructions">Clique em \"Dê uma assinatura de presente\" e escreva o nome de usuário da conta que você gostaria de presentar. Em seguida, escolha o plano que você deseja presentear e confira. Sua conta será automaticamente recompensada com o mesmo nível de assinatura que você acabou de presentear.</string>
     <string name="g1g1_promo_info_prompt">Em homenagem à temporada de doações, estamos trazendo de volta uma promoção muito especial. Agora, quando você dá uma assinatura de presente para alguém, você receberá uma igual gratuitamente!</string>
