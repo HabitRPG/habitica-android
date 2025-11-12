@@ -1124,13 +1124,13 @@
     <string name="sale_ends_in">A liquidação termina em %s</string>
     <string name="my_account">Minha conta</string>
     <string name="public_profile">Perfil público</string>
-    <string name="apitoken_summary">Copiar Token. Cuidado, isso é uma senha!</string>
+    <string name="apitoken_summary">Token de senha para desenvolvedores e ferramentas de terceiros.</string>
     <string name="added_social_auth">Autenticação %s adicionada</string>
     <string name="copied_to_clipboard">%s copiado para área de transferência</string>
     <string name="removed_social_auth">%s desconectado</string>
     <string name="password_added">Senha salva</string>
     <string name="add_email_and_password">Adicione e-mail e senha</string>
-    <string name="password_not_matching">A senha precisa ser digitada corretamente duas vezes</string>
+    <string name="password_not_matching">As senhas digitadas não coincidem</string>
     <string name="email_invalid">E-mail inválido</string>
     <string name="about_me">Sobre mim</string>
     <string name="account_info">Informação da Conta</string>
@@ -1206,8 +1206,8 @@
     <string name="tutorial_reset_confirmation">Seus tutoriais foram reiniciados</string>
     <string name="you_ran_out_of_health">Você perdeu sua Vida!</string>
     <string name="death_description">Você pode recuperá-la com trabalho duro! Boa sorte–você se sairá bem.</string>
-    <string name="faint_broken_equipment">Equipamento quebrado pode ser comprado novamente 
-\nem Recompensas</string>
+    <string name="faint_broken_equipment">Equipamento quebrado pode ser comprado novamente
+\nno Mercado</string>
     <string name="account_reset">Reinicio de conta</string>
     <string name="avatar_shirt_customization">Personalização da camiseta do avatar</string>
     <string name="avatar_beard_customization">Personalização da barba do avatar</string>
@@ -1537,7 +1537,7 @@
     <string name="benefits_end">Benefícios terminam em %s</string>
     <string name="faint_loss_description_alt">Você cairá para o nível <b>%1$d</b>, perderá <b>%2$d</b> de Ouro, e sua Experiência… Mas você pode recuperar tudo com esforço!</string>
     <string name="report_reason_title_challenge">Por que você está denunciando este desafio\?</string>
-    <string name="g1g1_promo_info_limitations_noutc">Este é um evento por tempo limitado que começa em %1$s e termina em %2$s. Esta promoção se aplica apenas quando você presenteia outro Habitican. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presente adicionará meses de crédito que só serão usados após o cancelamento ou expiração da assinatura atual.</string>
+    <string name="g1g1_promo_info_limitations_noutc">Este é um evento por tempo limitado que começa em %1$s e termina em %2$s. Esta promoção se aplica apenas quando você presenteia outro Habiticano. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presente adicionará meses de crédito que só serão usados após o cancelamento ou expiração da assinatura atual.</string>
     <string name="best_deal">Melhor oferta</string>
     <string name="see_other_sub_options">Veja outras opções de assinatura</string>
     <string name="resubscribe_description_gift">Quer continuar recebendo os benefícios da assinatura\? Você pode iniciar uma assinatura recorrente para manter seus benefícios ativos.</string>
@@ -1548,4 +1548,6 @@
     <string name="food_footer_description">Confira o [Mercado](/lojas/mercado) para comprar comida ou uma Sela para domar seu mascote instantaneamente!</string>
     <string name="hatchingPotions_footer_description">Confira o [Mercado](/lojas/mercado) para comprar Poções de Eclosão padrão e sazonais!</string>
     <string name="use_on_party">Usar no Grupo</string>
+    <string name="about_me_description">Adicione uma pequena descrição sobre você que aparecerá no seu perfil do Habitica quando outros o visualizarem.</string>
+    <string name="save_about_me">Salvar Sobre Mim</string>
 </resources>
