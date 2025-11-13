@@ -65,6 +65,9 @@ class Notification {
         ACHIEVEMENT_SEEING_RED("ACHIEVEMENT_SEEING_RED"),
         ACHIEVEMENT_RED_LETTER_DAY("ACHIEVEMENT_RED_LETTER_DAY"),
 
+        REBIRTH_ENABLED("REBIRTH_ENABLED"),
+        REBIRTH_ACHIEVEMENT("REBIRTH_ACHIEVEMENT"),
+
         FIRST_DROP("FIRST_DROPS"),
 
         // Custom notification types (created by this app)
@@ -120,6 +123,9 @@ class Notification {
             Type.ACHIEVEMENT_SKELETON_CREW.type -> AchievementData::class.java
             Type.ACHIEVEMENT_SEEING_RED.type -> AchievementData::class.java
             Type.ACHIEVEMENT_RED_LETTER_DAY.type -> AchievementData::class.java
+
+            Type.REBIRTH_ENABLED.type -> AchievementData::class.java
+            Type.REBIRTH_ACHIEVEMENT.type -> AchievementData::class.java
 
             else -> null
         }

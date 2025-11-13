@@ -286,6 +286,33 @@ class PurchaseDialog(
                     limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 }
             }
+        } else if (shopItem.purchaseType == "rebirth_orb" && shopItem.value > 0) {
+            val userLevel = user?.stats?.lvl ?: 0
+            if (userLevel >= 100) {
+                val lastFreeRebirth = user?.flags?.lastFreeRebirth
+                if (lastFreeRebirth != null) {
+                    val now = Date()
+                    val diffInMillis = now.time - lastFreeRebirth.time
+                    val daysSinceLastFreeRebirth = (diffInMillis / (1000 * 60 * 60 * 24)).toInt()
+                    val daysUntilFree = 45 - daysSinceLastFreeRebirth
+                    if (daysUntilFree > 0) {
+                        limitedTextView.visibility = View.VISIBLE
+                        limitedTextView.text = context.resources.getQuantityString(
+                            R.plurals.days_until_free_rebirth,
+                            daysUntilFree,
+                            daysUntilFree
+                        )
+                        limitedTextView.background = ContextCompat.getColor(context, R.color.blue_10).toDrawable()
+                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    } else {
+                        limitedTextView.visibility = View.GONE
+                    }
+                } else {
+                    limitedTextView.visibility = View.GONE
+                }
+            } else {
+                limitedTextView.visibility = View.GONE
+            }
         } else if ("gems" != shopItem.purchaseType) {
             limitedTextView.visibility = View.GONE
         }
@@ -406,7 +433,11 @@ class PurchaseDialog(
                                 return@remainingPurchaseQuantity
                             }
                         }
-                        buyItem(purchaseQuantity)
+                        if (shopItem.purchaseType == "rebirth_orb") {
+                            displayRebirthConfirmationDialog()
+                        } else {
+                            buyItem(purchaseQuantity)
+                        }
                     }
                 }
             } else {
@@ -454,6 +485,8 @@ class PurchaseDialog(
                 }
         } else if (shopItem.purchaseType == "fortify") {
             observable = { userRepository.reroll() }
+        } else if (shopItem.purchaseType == "rebirth_orb") {
+            observable = { userRepository.rebirth() }
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = { inventoryRepository.purchaseQuest(shopItem.key) }
         } else if (shopItem.purchaseType == "debuffPotion") {
@@ -555,6 +588,25 @@ class PurchaseDialog(
             context.getString(R.string.purchaseX, purchaseQuantity),
             isPrimary = true,
             isDestructive = false
+        ) { _, _ ->
+            buyItem(purchaseQuantity)
+        }
+        alert.addCancelButton()
+        alert.show()
+    }
+
+    private fun displayRebirthConfirmationDialog() {
+        val alert = HabiticaAlertDialog(context)
+        alert.setTitle(R.string.rebirth_confirm_title)
+        alert.setMessage(R.string.rebirth_confirm_message)
+        alert.addButton(
+            if (shopItem.value == 0) {
+                context.getString(R.string.rebirth_confirm_free)
+            } else {
+                context.getString(R.string.rebirth_confirm_gems, shopItem.value)
+            },
+            isPrimary = true,
+            isDestructive = true
         ) { _, _ ->
             buyItem(purchaseQuantity)
         }

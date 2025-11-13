@@ -402,6 +402,8 @@ interface ApiClient {
 
     suspend fun reroll(): User?
 
+    suspend fun rebirth(): User?
+
     suspend fun resetAccount(password: String): Boolean
 
     suspend fun deleteAccount(password: String): Void?

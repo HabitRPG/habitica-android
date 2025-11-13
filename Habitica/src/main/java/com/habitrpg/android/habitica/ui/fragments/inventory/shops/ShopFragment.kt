@@ -367,6 +367,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     }
                     specialCategory.items.add(item)
                     specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
+                    if (user?.flags?.rebirthEnabled == true) {
+                        specialCategory.items.add(ShopItem.makeRebirthItem(context?.resources, user))
+                    }
                     newShop.categories.add(specialCategory)
                 }
 

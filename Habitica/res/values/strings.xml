@@ -254,6 +254,10 @@
         <item quantity="one">%d Minute</item>
         <item quantity="other">%d Minutes</item>
     </plurals>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d day until FREE Orb of Rebirth</item>
+        <item quantity="other">%d days until FREE Orb of Rebirth</item>
+    </plurals>
 
     <string name="today">Today</string>
     <string name="sidebar_items">Items</string>
@@ -1182,6 +1186,17 @@
     <string name="invitation_title_no_leader">You were invited to join a party</string>
     <string name="fortify_shop">Fortify Potion</string>
     <string name="fortify_shop_description">Return all tasks to neutral value (yellow color), and restore all lost Health</string>
+    <string name="rebirth_shop">Orb of Rebirth</string>
+    <string name="rebirth_shop_description">Instantly restart your character as a Level 1 Warrior while retaining achievements, collectibles, and equipment. Your tasks will reset to their original status and all skill points and experience will be reset. If you are over Level 100, you can use the Orb once every 45 days for free. If you are between Level 50 and Level 99, you can use the Orb for 6 Gems.</string>
+    <string name="rebirth_confirm_title">Restart Your Adventure?</string>
+    <string name="rebirth_confirm_message">Are you sure you want to use the Orb of Rebirth?\n\nYou will:\n• Return to Level 1 as a Warrior\n• Reset all your stats and skill points\n• Lose all your gold and mana\n• Reset all task values and streaks\n\nYou will keep:\n• All your equipment, pets, and mounts\n• All your achievements\n• Your guild, party, and challenge memberships</string>
+    <string name="rebirth_confirm_free">Restart (FREE)</string>
+    <string name="rebirth_confirm_gems">Restart (%d Gems)</string>
+    <string name="rebirth_enabled_title">Rebirth: New Adventure Available!</string>
+    <string name="rebirth_enabled_description">You\'ve unlocked Rebirth! This special Market item allows you to begin a new game at level 1 while keeping all of the items, achievements, and pets that you\'ve collected so far.</string>
+    <string name="rebirth_achievement_title">You\'ve Been Reborn!</string>
+    <string name="rebirth_achievement_description">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest Level you\'ve attained is %2$d.</string>
+    <string name="rebirth_achievement_description_max">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest Level you\'ve attained is %2$d or higher.</string>
     <string name="purchase_immediately_description">This will take effect immediately after buying!</string>
     <string name="create_guild">Create Guild</string>
     <string name="create_guild_description">To create a Guild, log in to the Habitica website then tap the “Create” button on the “My Guilds” screen.</string>

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.EventCategory
@@ -16,6 +17,8 @@ import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.FirstDropDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.RebirthAchievementDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.RebirthEnabledDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -27,11 +30,13 @@ import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class ShowNotificationInteractor(
     private val activity: Activity,
-    private val lifecycleScope: LifecycleCoroutineScope
+    private val lifecycleScope: LifecycleCoroutineScope,
+    private val userRepository: UserRepository
 ) {
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
@@ -107,6 +112,9 @@ class ShowNotificationInteractor(
                 showAchievementDialog(
                     notification
                 )
+
+            Notification.Type.REBIRTH_ENABLED.type -> showRebirthEnabledDialog()
+            Notification.Type.REBIRTH_ACHIEVEMENT.type -> showRebirthAchievementDialog()
 
             Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
             else -> return false
@@ -193,6 +201,21 @@ class ShowNotificationInteractor(
         lifecycleScope.launch(context = Dispatchers.Main) {
             val dialog = WonChallengeDialog(activity)
             dialog.configure(notification.data as? ChallengeWonData)
+            dialog.enqueue()
+        }
+    }
+
+    private fun showRebirthEnabledDialog() {
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            val dialog = RebirthEnabledDialog(activity)
+            dialog.enqueue()
+        }
+    }
+
+    private fun showRebirthAchievementDialog() {
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            val user = userRepository.retrieveUser(forced = true)
+            val dialog = RebirthAchievementDialog(activity, user)
             dialog.enqueue()
         }
     }

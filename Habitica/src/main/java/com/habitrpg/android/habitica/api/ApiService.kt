@@ -706,6 +706,9 @@ interface ApiService {
     @POST("user/reroll")
     suspend fun reroll(): Response<HabitResponse<User>>
 
+    @POST("user/rebirth")
+    suspend fun rebirth(): Response<HabitResponse<User>>
+
     // Team Plans
 
     @GET("group-plans")
