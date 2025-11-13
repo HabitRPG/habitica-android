@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -239,8 +240,17 @@ class YesterdailyDialog private constructor(
             taskRepository: TaskRepository
         ) {
             if (userRepository != null && userId != null) {
-                MainScope().launchCatching {
+                val lifecycleOwner = activity as? LifecycleOwner ?: return
+                lifecycleOwner.lifecycleScope.launchCatching {
                     delay(500.toDuration(DurationUnit.MILLISECONDS))
+                    val lifecycle = lifecycleOwner.lifecycle
+                    if (!lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
+                        return@launchCatching
+                    }
+                    val hostActivity = activity
+                    if (hostActivity.isFinishing || hostActivity.isDestroyed) {
+                        return@launchCatching
+                    }
                     if (userRepository.isClosed) {
                         return@launchCatching
                     }
@@ -282,7 +292,7 @@ class YesterdailyDialog private constructor(
                         displayedDialog =
                             WeakReference(
                                 showDialog(
-                                    activity,
+                                    hostActivity,
                                     userRepository,
                                     taskRepository,
                                     sortedTasks
@@ -307,6 +317,9 @@ class YesterdailyDialog private constructor(
             dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
                 dialog.show()
+                dialog.setOnDismissListener {
+                    displayedDialog = null
+                }
             }
             return dialog
         }
