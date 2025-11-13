@@ -113,7 +113,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             hasPendingRefresh = false
             hideNewMessageIndicator()
             binding?.recyclerView?.smoothScrollToPosition(0)
-            viewModel.retrieveGroupChat { }
+            viewModel.retrieveGroupChat { _ -> }
         }
 
         binding?.recyclerView?.addOnScrollListener(
@@ -131,11 +131,17 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                     if (isScrolledToBottom && !wasScrolledToBottom && hasPendingRefresh) {
                         hasPendingRefresh = false
                         hideNewMessageIndicator()
-                        viewModel.retrieveGroupChat { }
+                        viewModel.retrieveGroupChat { _ -> }
                     }
 
                     if (isScrolledToBottom) {
                         hideNewMessageIndicator()
+                    }
+
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = layoutManager.itemCount
+                    if (lastVisibleItemPosition >= totalItemCount - 5 && totalItemCount > 0) {
+                        viewModel.loadOlderMessages { }
                     }
                 }
             }
@@ -223,11 +229,11 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun refresh() {
-        viewModel.retrieveGroupChat {
+        viewModel.retrieveGroupChat { hasNewMessages ->
             if (isScrolledToBottom || isFirstRefresh) {
                 binding?.recyclerView?.scrollToPosition(0)
                 isFirstRefresh = false
-            } else {
+            } else if (hasNewMessages) {
                 hasPendingRefresh = true
                 showNewMessageIndicator()
             }

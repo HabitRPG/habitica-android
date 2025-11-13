@@ -782,8 +782,12 @@ class ApiClientImpl(
         return processResponse(apiService.removeMemberFromGroup(groupID, userID))
     }
 
-    override suspend fun listGroupChat(groupId: String): List<ChatMessage>? {
-        return processResponse(apiService.listGroupChat(groupId))
+    override suspend fun listGroupChat(
+        groupId: String,
+        limit: Int?,
+        before: String?
+    ): List<ChatMessage>? {
+        return processResponse(apiService.listGroupChat(groupId, limit, before))
     }
 
     override suspend fun joinGroup(groupId: String): Group? {

@@ -84,8 +84,12 @@ class SocialRepositoryImpl(
         }
     }
 
-    override suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>? {
-        val messages = apiClient.listGroupChat(groupId)
+    override suspend fun retrieveGroupChat(
+        groupId: String,
+        limit: Int?,
+        before: String?
+    ): List<ChatMessage>? {
+        val messages = apiClient.listGroupChat(groupId, limit, before)
         messages?.forEach { it.groupId = groupId }
         return messages
     }
