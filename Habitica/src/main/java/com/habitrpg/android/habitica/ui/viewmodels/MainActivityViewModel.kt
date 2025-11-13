@@ -112,6 +112,7 @@ constructor(
                     }
                     Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
+                    pushNotificationManager.ensureUnifiedPushRegistration()
                     if (!pushNotificationManager.notificationPermissionEnabled()) {
                         if (sharedPreferences.getBoolean("usePushNotifications", true)) {
                             requestNotificationPermission.value = true

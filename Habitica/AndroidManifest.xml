@@ -323,6 +323,13 @@
             android:name=".widget.TodosWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service android:name=".widget.HabitButtonWidgetService"/>
+        <service
+            android:name=".helpers.notifications.HabiticaUnifiedPushService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.unifiedpush.android.connector.PUSH_EVENT" />
+            </intent-filter>
+        </service>
         <service android:name=".receivers.DeviceCommunicationService"
             android:enabled="true"
             android:exported="true">
