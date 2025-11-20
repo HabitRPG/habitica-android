@@ -163,7 +163,7 @@ class PurchaseDialog(
 
             val purchaseImmediatelyView = contentView.findViewById<View>(R.id.purchase_immediately_view)
             if (purchaseImmediatelyView != null) {
-                if (item.key == "fortify" || item.key == "potion") {
+                if (item.key == "fortify" || item.key == "potion" || item.key == "rebirth_orb") {
                     purchaseImmediatelyView.visibility = View.VISIBLE
                 } else {
                     purchaseImmediatelyView.visibility = View.GONE
@@ -302,8 +302,8 @@ class PurchaseDialog(
                             daysUntilFree,
                             daysUntilFree
                         )
-                        limitedTextView.background = ContextCompat.getColor(context, R.color.blue_10).toDrawable()
-                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                        limitedTextView.background = ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
+                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
                     } else {
                         limitedTextView.visibility = View.GONE
                     }
