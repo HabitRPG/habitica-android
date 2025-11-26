@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.shops
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.media.metrics.Event
 import android.view.View
@@ -47,6 +48,8 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
+import com.google.android.material.button.MaterialButton
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -163,7 +166,7 @@ class PurchaseDialog(
 
             val purchaseImmediatelyView = contentView.findViewById<View>(R.id.purchase_immediately_view)
             if (purchaseImmediatelyView != null) {
-                if (item.key == "fortify" || item.key == "potion") {
+                if (item.key == "fortify" || item.key == "potion" || item.key == "rebirth_orb") {
                     purchaseImmediatelyView.visibility = View.VISIBLE
                 } else {
                     purchaseImmediatelyView.visibility = View.GONE
@@ -302,8 +305,8 @@ class PurchaseDialog(
                             daysUntilFree,
                             daysUntilFree
                         )
-                        limitedTextView.background = ContextCompat.getColor(context, R.color.blue_10).toDrawable()
-                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                        limitedTextView.background = ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
+                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
                     } else {
                         limitedTextView.visibility = View.GONE
                     }
@@ -598,19 +601,41 @@ class PurchaseDialog(
     private fun displayRebirthConfirmationDialog() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.rebirth_confirm_title)
-        alert.setMessage(R.string.rebirth_confirm_message)
-        alert.addButton(
-            if (shopItem.value == 0) {
-                context.getString(R.string.rebirth_confirm_free)
-            } else {
-                context.getString(R.string.rebirth_confirm_gems, shopItem.value)
-            },
+        val rebirthContent = context.layoutInflater.inflate(R.layout.dialog_rebirth_confirmation, null)
+
+        val priceView = rebirthContent.findViewById<CurrencyView>(R.id.price_view)
+        priceView.currency = "gems"
+        priceView.value = shopItem.value.toDouble()
+        priceView.setTextColor(ContextCompat.getColor(context, R.color.text_green1_green500))
+        priceView.compoundDrawables[0]?.let { drawable ->
+            val width = 28.dpToPx(context)
+            val height = 28.dpToPx(context)
+            drawable.setBounds(0, 0, width, height)
+            priceView.setCompoundDrawables(drawable, null, null, null)
+        }
+
+        alert.setAdditionalContentView(rebirthContent)
+
+        val primaryButton = alert.addButton(
+            R.string.rebirth_confirm_use,
             isPrimary = true,
             isDestructive = true
         ) { _, _ ->
             buyItem(purchaseQuantity)
         }
-        alert.addCancelButton()
+        primaryButton.minHeight = context.resources.getDimensionPixelSize(R.dimen.button_height)
+        (primaryButton as? MaterialButton)?.cornerRadius = 8.dpToPx(context)
+        primaryButton.setTypeface(primaryButton.typeface, Typeface.NORMAL)
+
+        val secondaryButton = alert.addButton(
+            R.string.go_back,
+            isPrimary = false,
+            isDestructive = false
+        ) { dialog, _ ->
+            dialog.dismiss()
+        }
+        secondaryButton.setTypeface(null, Typeface.NORMAL)
+
         alert.show()
     }
 

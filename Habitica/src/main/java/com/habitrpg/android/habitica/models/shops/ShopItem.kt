@@ -73,7 +73,7 @@ open class ShopItem : RealmObject(), BaseObject {
     var setImageNames = RealmList<String>()
 
     val isTypeItem: Boolean
-        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType
+        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType || "rebirth_orb" == purchaseType
 
     val isTypeSpecial: Boolean
         get() = "special" == purchaseType

@@ -1,32 +1,32 @@
 package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
-import android.view.View
+import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.views.PixelArtView
 
 class RebirthEnabledDialog(context: Context) : HabiticaAlertDialog(context) {
-    private val binding: DialogAchievementDetailBinding =
-        DialogAchievementDetailBinding.inflate(context.layoutInflater)
+    private val rebirthContentView = context.layoutInflater.inflate(R.layout.dialog_rebirth_enabled, null)
 
     init {
-        binding.titleView.visibility = View.VISIBLE
-        setAdditionalContentView(binding.root)
+        setAdditionalContentView(rebirthContentView)
         configure()
     }
 
     private fun configure() {
         setTitle(R.string.rebirth_enabled_title)
-        binding.titleView.text = context.getString(R.string.rebirth_enabled_title)
-        binding.descriptionView.text = context.getString(R.string.rebirth_enabled_description).fromHtml()
-        binding.iconView.loadImage("rebirth_orb")
-        binding.achievementWrapper.visibility = View.VISIBLE
-        binding.onboardingDoneIcon.visibility = View.GONE
+        rebirthContentView.findViewById<TextView>(R.id.title_view).text = context.getString(R.string.rebirth_enabled_subtitle)
+        rebirthContentView.findViewById<TextView>(R.id.description_view).text = context.getString(R.string.rebirth_enabled_description).fromHtml()
+        rebirthContentView.findViewById<PixelArtView>(R.id.icon_view).loadImage("rebirth_orb")
 
         addButton(R.string.onwards, isPrimary = true, isDestructive = false) { _, _ ->
+        }
+        addButton(R.string.go_to_market, isPrimary = false, isDestructive = false) { _, _ ->
+            MainNavigationController.navigate(R.id.marketFragment)
         }
     }
 }
