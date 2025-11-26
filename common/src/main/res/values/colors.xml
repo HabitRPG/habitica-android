@@ -62,10 +62,12 @@
     <color name="green_600">#EBF5F5</color>
     <color name="green_500">#77f4c7</color>
     <color name="green_50012">#1f77f4c7</color>
+    <color name="green_50030">#4D77f4c7</color>
     <color name="green_400">#9AD9BA</color>
     <color name="green_100">#24CC8F</color>
     <color name="green_50">#20B780</color>
     <color name="green_10">#1CA372</color>
+    <color name="green_1030">#4D1CA372</color>
     <color name="green_5">#168059</color>
 
     <color name="teal_700">#F5FFFE</color>

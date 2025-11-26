@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large">
+
+    <TextView
+        android:id="@+id/reset_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/rebirth_confirm_reset_header"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/spacing_small" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_reset_item_1"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_reset_item_2"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_reset_item_3"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_reset_item_4"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/keep_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/rebirth_confirm_keep_header"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginBottom="@dimen/spacing_small" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_keep_item_1"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_keep_item_2"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_keep_item_3"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/spacing_small">
+        <View
+            android:layout_width="@dimen/bullet_size"
+            android:layout_height="@dimen/bullet_size"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/layout_rounded_bg_gray_50"
+            android:layout_marginTop="6dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rebirth_confirm_keep_item_4"
+            android:textColor="@color/text_ternary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/price_container"
+        android:layout_width="86dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:background="@drawable/bg_rebirth_gem_cost">
+
+        <com.habitrpg.android.habitica.ui.views.CurrencyView
+            android:id="@+id/price_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+</LinearLayout>

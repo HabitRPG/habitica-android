@@ -125,6 +125,7 @@
     <color name="dialog_background">@color/white</color>
     <color name="error_banner_background">@color/maroon_5</color>
     <color name="text_green1_green500">@color/green_1</color>
+    <color name="bg_green50030_green1030">@color/green_50030</color>
     <color name="text_gold">@color/yellow_1</color>
 
     <color name="purple400_purple500">@color/brand_400</color>
