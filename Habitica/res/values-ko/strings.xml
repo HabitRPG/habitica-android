@@ -674,7 +674,7 @@
     <string name="invite_to_guild">길드에 초대하기</string>
     <string name="guild_description">길드 설명</string>
     <string name="mystery_sets">미스터리 세트</string>
-    <string name="report_message_hint">신고 이유 (생략 가능)</string>
+    <string name="report_message_hint">신고 사유</string>
     <string name="report_message_title">%s 을(를) 규정 위반으로 신고하기:</string>
     <string name="report_explanation">해당 글이 [커뮤니티 방침](https://habitica.com/static/community-guidelines)이나 [이용 약관](https://habitica.com/static/terms)을 **위반했을 때만** 신고하세요. 허위 신고는 규정 위반으로 간주됩니다.</string>
     <string name="x_class">%s 직업</string>
@@ -1311,4 +1311,15 @@
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt;님이 그룹에 초대했습니다.&lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="need_help_description">저희에게 문의하시면 팀원이 최선을 다해 도와드리겠습니다!</string>
     <string name="level_abbreviated">Lv. %d</string>
+    <string name="report_reason_title_player">이 플레이어를 신고하는 이유는 무엇입니까\?</string>
+    <string name="report_reason_title_message">이 메시지를 신고하는 이유는 무엇입니까\?</string>
+    <string name="report_reason_title_challenge">이 도전을 신고하는 이유는 무엇입니까\?</string>
+    <string name="report_user_description">\@%s도 차답합니다</string>
+    <string name="report_failure">신고가 실패했습니다, 나중에 다시 시도해주세요</string>
+    <string name="report_player">플레이어 신고</string>
+    <string name="report_hint">신고 사유</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="report_message">메시지 신고</string>
+    <string name="report_successful">%s(이)가 신고되었습니다</string>
 </resources>
