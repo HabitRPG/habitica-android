@@ -202,7 +202,7 @@
     <string name="feed">餵</string>
     <string name="hatch_with">用%s孵化寵物</string>
     <string name="hatched_pet_title">你孵化了一隻 %1$s %2$s！</string>
-    <string name="evolved_pet_title">你馴服了%s，讓我們騎上牠吧！</string>
+    <string name="evolved_pet_title">你已經馴服%s，出去兜兜風吧！</string>
     <string name="close">關閉</string>
     <string name="share">分享</string>
     <string name="notification_pet_fed">你餵食了你的%s！</string>
