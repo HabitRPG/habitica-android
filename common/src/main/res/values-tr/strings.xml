@@ -5,7 +5,7 @@
     <string name="billion_abbrev">milyar</string>
     <string name="trillion_abbrev">t</string>
     <string name="mystic_hourglasses">Mistik Kum Saati</string>
-    <string name="repeat_daily">Günlük</string>
+    <string name="repeat_daily">Gündelik</string>
     <string name="monthly">Aylık</string>
     <string name="weekly">Haftalık</string>
     <string name="daily">Günlük</string>
@@ -36,7 +36,7 @@
     <string name="logout">Çıkış Yap</string>
     <string name="gold_capitalized">Altın</string>
     <string name="todo">Yapılacaklar</string>
-    <string name="confirmpassword">Şifreyi doğrula</string>
+    <string name="confirmpassword">Şifreyi tekrarla</string>
     <string name="medium">Orta</string>
     <string name="hard">Zor</string>
     <plurals name="x_dailies">

@@ -1325,5 +1325,10 @@
     <string name="exact_alarm_system_settings_description">Anımsatıcıların tam olarak planlanan zamanda görünmesi için Ayarlar uygulamasından `Alarmlar ve Anımsatıcılar`a izin verin.</string>
     <string name="sell_confirmation_title">Bunu %s karşılığında satmak ister misiniz\?</string>
     <string name="opt_out_description">Bu durumda atanan bir sınıfınız kalmayacak. İstediğiniz zaman Ayarlar\'dan sınıf sistemini etkinleştirerek yeniden bir sınıf seçebilirsiniz.</string>
-    <string name="enable_class_description">Bir sınıf seçerek yetenekleri,istatistikleri ve mana\'nı aktifleştirebilirsin</string>
+    <string name="enable_class_description">Bir sınıf seçerek yetenekleri, istatistikleri ve manayı etkinleştirebilirsin</string>
+    <string name="subscribe_listitemFaint_description">Günde bir kez canınız sıfıra düştüğünde, anlık iyileşme ile ilerlemenizi kaybetmeyi önleyin!</string>
+    <string name="subscribe_listitem3_description_alt">En son çıkan seçkin zırhları giyin. %1$s’in %2$s’ini almak için hemen abone olun!</string>
+    <string name="change_class_confirmation_message">Bu, mağazalarda hangi zırhın kilidinin açılacağını ve kullanılabilir yeteneklerinizi değiştirecektir</string>
+    <string name="subscribe_listitemFaint">İkinci Bir Şans Edin</string>
+    <string name="change_class_message">Bu senin şimdiki sınıfını kaldıracak ve tüm istatistik puanlarını iptal edecek. Ardından yeni bir sınıf seçebileceksin.</string>
 </resources>
