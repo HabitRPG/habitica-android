@@ -1320,4 +1320,10 @@
     <string name="challenge_tags">Mücadele Etiketleri</string>
     <string name="group_tags">Grup Etiketleri</string>
     <string name="choosing_class_progress">Sınıf Seçimi</string>
+    <string name="exact_alarm_system_settings_reminders">İzinler etkin olmadığı için anımsatıcılar gecikebilir. İzinleri görüntülemek ve güncellemek için tıklayın.</string>
+    <string name="exact_alarm_system_settings_title">`Alarmlar &amp; Anımsatıcılar` kapalı`</string>
+    <string name="exact_alarm_system_settings_description">Anımsatıcıların tam olarak planlanan zamanda görünmesi için Ayarlar uygulamasından `Alarmlar ve Anımsatıcılar`a izin verin.</string>
+    <string name="sell_confirmation_title">Bunu %s karşılığında satmak ister misiniz\?</string>
+    <string name="opt_out_description">Bu durumda atanan bir sınıfınız kalmayacak. İstediğiniz zaman Ayarlar\'dan sınıf sistemini etkinleştirerek yeniden bir sınıf seçebilirsiniz.</string>
+    <string name="enable_class_description">Yetenekleri, istatistikleri ve manayı etkinleştirmek için bir sınıf seç.</string>
 </resources>

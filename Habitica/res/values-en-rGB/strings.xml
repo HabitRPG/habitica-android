@@ -1097,4 +1097,15 @@
     <string name="avatar_mustaches">Moustaches</string>
     <string name="avatar_mustache_customization">Avatar Moustache Customisation</string>
     <string name="facial_hair_notes">This set includes all beards and moustaches</string>
+    <string name="cancel_subscription_apple_description">No longer want to subscribe\? Due to your payment method, you’ll need to unsubscribe through your Apple ID subscription settings on your iOS device.</string>
+    <string name="subscribe_listitem3_description_alt">Stay decked out in the latest exclusive gear. Subscribe now to get %1$s’s %2$s!</string>
+    <string name="subscribe_listitemFaint_description">Avoid losing your progress with an instant heal when you run out of HP once a day!</string>
+    <string name="challenges">Challenges</string>
+    <string name="use_item">Use Item on party member</string>&gt;
+    <string name="party_challenges">You\'re participating in a Party Challenge</string>
+    <string name="guild_challenges">You\'re participating in a Guild Challenge</string>
+    <string name="leave_delete_tasks">Leave &amp; Delete Tasks</string>
+    <string name="is_open">Open</string>
+    <string name="subscription_credit_canceling">Your <b>+%d</b> months of subscription credit will activate after canceling</string>
+    <string name="unsaved_changes">Unsaved Changes</string>
 </resources>
