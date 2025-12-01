@@ -67,6 +67,7 @@ constructor(
             field = value
             if (value != null) {
                 binding.startDateTextview.text = dateFormatter.format(value)
+                startDateCalendar.time = value
             } else {
                 binding.startDateTextview.text = null
             }
