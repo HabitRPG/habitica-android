@@ -215,7 +215,9 @@ class RealmSocialLocalRepository(realm: Realm) :
         user: User?,
         newValue: Boolean
     ) {
-        executeTransaction { user?.party?.quest?.rsvpNeeded = newValue }
+        if (user == null) return
+        val visitorUser = getLiveObject(user) ?: return
+        executeTransaction { visitorUser.party?.quest?.rsvpNeeded = newValue }
     }
 
     override fun likeMessage(

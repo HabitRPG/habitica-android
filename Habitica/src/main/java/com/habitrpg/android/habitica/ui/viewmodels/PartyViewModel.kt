@@ -62,7 +62,7 @@ constructor(
     fun acceptQuest() {
         groupID?.let { groupID ->
             viewModelScope.launchCatching {
-                socialRepository.acceptQuest(null, groupID)
+                socialRepository.acceptQuest(user.value, groupID)
                 socialRepository.retrieveGroup(groupID)
                 userRepository.retrieveUser()
             }
@@ -72,7 +72,7 @@ constructor(
     fun rejectQuest() {
         groupID?.let { groupID ->
             viewModelScope.launchCatching {
-                socialRepository.rejectQuest(null, groupID)
+                socialRepository.rejectQuest(user.value, groupID)
                 socialRepository.retrieveGroup(groupID)
                 userRepository.retrieveUser()
             }
