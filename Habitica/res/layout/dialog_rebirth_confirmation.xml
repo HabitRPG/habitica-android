@@ -8,13 +8,12 @@
 
     <TextView
         android:id="@+id/reset_header"
+        style="@style/Body4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/rebirth_confirm_reset_header"
-        android:textColor="@color/text_secondary"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textColor="@color/gray50_gray600"
         android:layout_marginBottom="@dimen/spacing_small" />
 
     <LinearLayout
@@ -23,8 +22,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
@@ -42,8 +41,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
@@ -61,8 +60,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
@@ -80,8 +79,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
@@ -95,13 +94,12 @@
 
     <TextView
         android:id="@+id/keep_header"
+        style="@style/Body4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/rebirth_confirm_keep_header"
-        android:textColor="@color/text_secondary"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textColor="@color/gray50_gray600"
         android:layout_marginTop="@dimen/spacing_large"
         android:layout_marginBottom="@dimen/spacing_small" />
 
@@ -111,8 +109,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
@@ -130,8 +128,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
@@ -149,8 +147,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
@@ -168,8 +166,8 @@
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/spacing_small">
         <View
-            android:layout_width="@dimen/bullet_size"
-            android:layout_height="@dimen/bullet_size"
+            android:layout_width="@dimen/bullet_size_small"
+            android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
             android:layout_marginTop="6dp"/>
