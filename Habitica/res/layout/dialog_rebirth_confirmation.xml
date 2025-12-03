@@ -26,6 +26,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -45,6 +46,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -64,6 +66,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -83,6 +86,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -113,6 +117,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -132,6 +137,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -151,6 +157,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -170,6 +177,7 @@
             android:layout_height="@dimen/bullet_size_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/layout_rounded_bg_gray_50"
+            android:backgroundTint="@color/text_ternary"
             android:layout_marginTop="6dp"/>
         <TextView
             android:layout_width="match_parent"
