@@ -221,8 +221,8 @@
     <string name="mage">Büyücü</string>
     <string name="healer">Şifacı</string>
     <string name="warrior_description">Savaşçılar daha ağır hasar ve daha fazla kritik vuruş vurur. Eğer canavarları kolayca yenmek istiyorsan savaşçı oynamalısın. Savaşçılar yüksek bir Güç niteliğinden yararlanır.</string>
-    <string name="mage_description">Büyücüler çabuk öğrenir, Tecrübe ve Seviyeleri diğer tüm sınıflardan hızlı kazanır. Ayrıca özel becerilerini kullanarak çok fazla Mana elde edebilirler. Alışkanlıkları taktiksel oyun açılarıyla oynamaktan keyif alıyorsan, veya seviye atlamaktan ve gelişmiş özelliklerin kilidini açmaktan motive oluyorsan bir büyücü olarak oynayabilirsin!</string>
-    <string name="rogue_description">Düzenbazlar servet biriktirmeyi, Altın kazanmayı herkesten daha fazla severler ve rastgele eşyalar bulmada uzmandırlar. Sembolik Gizlilik kabiliyetleri unutulan günlük görevlerin sonuçlarından sıyrılmasını sağlar. Eğer Ödüller ve Başarılardan, ganimet ve rozetler için uğraşmaktan motivasyon buluyorsan bir düzenbaz olarak oynayabilirsin!</string>
+    <string name="mage_description">Büyücüler, canavarlara hasar veren ve deneyim puanı ile mana\'yı artıran beceriler öğrenirler. Hızlı seviye atlamak seni motive ediyorsa, bir büyücü ol! Büyücüler yüksek zeka değerinden yarar görürler.</string>
+    <string name="rogue_description">Düzenbazlar, kendilerinin ve takımlarının daha fazla altın ve rastgele eşya bulmasını sağlayan beceriler öğrenirler. Çok fazla eşya ve altın istiyorsan Düzenbaz ol! Düzenbazlar yüksek Sezgi istatistiğinden yararlanır.</string>
     <string name="healer_description">Şifacılar hasarlara karşı su geçirmez bir şekilde karşı dururlar ve diğerlerine de bu korumayı sürdürürler. Unutulan Günlük Görevler ve Kötü Alışkanlıklar onları çok fazla ürkütmez ve başarısızlıklardan dolayı kaybedilen sağlıkları iyileştirirler. Takımdaki diğerlerine refakat etmekten hoşlanıyorsan veya çok çalışarak Ölümü atlatma fikri seni heyecanlandırıyorsa bir şifacı olarak oynayabilirsin!</string>
     <string name="select_class">Sınıf Seç</string>
     <string name="opt_out_class">Çekil</string>
@@ -254,7 +254,7 @@
     <string name="market">Pazar</string>
     <string name="timeTravelers">Zaman Yolcuları</string>
     <string name="seasonalShop">Mevsimsel Dükkan</string>
-    <string name="empty_inbox">Hiç mesajın yok. Bir kullanıcıya açık sohbet mesajlarından yeni bir mesaj gönderebilirsin!</string>
+    <string name="empty_inbox">Hiç iletin yok. Bir kullanıcıya açık sohbet mesajlarından yeni bir ileti gönderebilirsin!</string>
     <string name="party_invite">Arkadaşlarını davet ederek kilidini aç</string>
     <string name="login_incentive">Habitica\'ya düzenli girerek kilidini aç</string>
     <string name="create_account">Habitica\'ya katılarak kilidini aç</string>
@@ -299,7 +299,7 @@
     <string name="has_reminder">Hatırlatıcı Mevcut</string>
     <string name="has_tag">Etiket Mevcut</string>
     <string name="subscribe_title">Abone olmak küçük takımımızı destekliyor ve Habitica\'nın çalışmaya devam etmesini sağlıyor</string>
-    <string name="subscribe_prompt">Bu özel avantajlardan yararlanmak için abone olun!</string>
+    <string name="subscribe_prompt">Abone olduğunda çok daha fazla ödül kazanarak motive ol</string>
     <string name="subscribe_listitem1">Ücretsiz Aylık Elmaslar</string>
     <string name="subscribe_listitem2">Aylık Mistik Kum Saati</string>
     <string name="subscribe_listitem3">Aylık Gizemli Eşyalar</string>
@@ -307,21 +307,21 @@
     <string name="subscriptions">Abonelikler</string>
     <string name="subscription_duration">Her %s tekrar eder</string>
     <string name="subscribe">Abone Ol</string>
-    <string name="subscribe_listitem1_description">Artık marketten tanesi 20 altına elmas satın alabilirsin!</string>
-    <string name="subscribe_listitem2_description">Zaman Yolcuları dükkanından eşya satın alabilmek için Mistik Kum Saati kazan!</string>
+    <string name="subscribe_listitem1_description">Pazardan altın karşılığında satın alınabilen 50\'ye kadar mücevher kazan ve bu mücevherlerle Görevler, Özelleştirmeler, Evcil Hayvanlar ve daha fazlasını satın al!</string>
+    <string name="subscribe_listitem2_description">Ayda 1 adet Mistik Kum Saati kullanarak Zaman Yolcuları Dükkanı\'ndaki hiçbir ürünü kaçırma!</string>
     <string name="subscribe_listitem3_description">Şimdi abone olarak özel bir eşya seti kazan ve her ay yeni eşyalar kazan!</string>
     <string name="subscribe_listitem4_description">Abone olarak ve Kraliyet Moru Jackalope evcil hayvanını kazan.</string>
-    <string name="subscribe1month_gemcap">25 Elmas limiti</string>
-    <string name="subscribe3month_gemcap">30 Elmas limiti</string>
-    <string name="subscribe6month_gemcap">35 Elmas limiti</string>
-    <string name="subscribe12month_gemcap">45 Elmas limiti</string>
-    <string name="subscription_hourglasses">+%d Mistik Kum Saati</string>
+    <string name="subscribe1month_gemcap">Ayda 25 Elmas</string>
+    <string name="subscribe3month_gemcap">Ayda 30 Elmas</string>
+    <string name="subscribe6month_gemcap">Ayda 35 Elmas</string>
+    <string name="subscribe12month_gemcap">Ayda 45 Elmas</string>
+    <string name="subscription_hourglasses">%d Kum Saati</string>
     <string name="payment_method">Ödeme yöntemi</string>
     <string name="subscription">Abonelik</string>
     <string name="active">Etkin</string>
     <string name="cancel_subscription">Aboneliği İptal Et</string>
-    <string name="cancel_subscription_google_description">Aboneliğini Play Store uygulamasından iptal edebilirsin. Bütün abonelik kredilerin devam eden aboneliğin bitince kullanılacak.</string>
-    <string name="cancel_subscription_notgoogle_description">Artık abone olmak istemiyor musun\? Ödeme yönteminden dolayı, yalnızca web sitesi üzerinden aboneliğini iptal edebilirsin. Siteyi tarayıcında açmak için aşağıdaki düğmeyi tıkla, hesabına giriş yap, sağ üstteki kullanıcı ikonuna tıkla ve Abonelik kısmına gir. Seni özleyeceğiz!</string>
+    <string name="cancel_subscription_google_description">Artık abone olmak istemiyor musun\? Aboneliğini iptal etme seçeneğini Google Play Store uygulamasındaki Ödemeler ve Abonelikler bölümünde bulabilirsin. İptal işleminden sonra kalan abonelik bakiyen bitiş tarihine eklenecektir.</string>
+    <string name="cancel_subscription_notgoogle_description">Artık abone olmak istemiyor musun\? Ödeme yönteminden dolayı, web sitesi üzerinden aboneliğini iptal etmen gerekecek. Bunu yapmak için aşağıdaki tuşa dokun, hesabına giriş yap, sağ üst köşedeki oynatıcı simgesine dokun ve ardından Abonelikler bölümüne git. İptal işleminden sonra kalan abonelik kredin bitiş tarihine eklenecektir. Seni özleyeceğiz!</string>
     <string name="visit_habitica_website">Habitica Websitesini Ziyaret Et</string>
     <string name="current_bonuses">Şu An Sağlanan Faydalar</string>
     <string name="months_subscribed">Abone Olunan Aylar</string>
@@ -329,11 +329,11 @@
     <string name="monthly_gem_cap">Aylık Elmas Sınırı</string>
     <string name="inactive">Etkin Değil</string>
     <string name="one_month">1 Aylık</string>
-    <string name="months">%d Aylık</string>
-    <string name="month">ay</string>
-    <string name="three_months">3 aylık</string>
-    <string name="six_months">6 aylık</string>
-    <string name="twelve_months">12 aylık</string>
+    <string name="months">Ay</string>
+    <string name="month">Ay</string>
+    <string name="three_months">3 Aylık</string>
+    <string name="six_months">6 Aylık</string>
+    <string name="twelve_months">12 Aylık</string>
     <string name="subscribe_prompt_thanks">Abone olarak şunlardan faydalanırsın</string>
     <string name="subscription_status">Abonelik Durumu</string>
     <string name="challenge_leave_title">Mücadeleden Ayrıl</string>
@@ -456,12 +456,12 @@
     <string name="resetting_account">Hesap Sıfırlanıyor</string>
     <string name="deleting_account">Hesap Siliniyor</string>
     <string name="insufficientGold">Bu eşyanın fiyatını karşılayabilmek için daha fazla iş yapmalısın!</string>
-    <string name="insufficientGems">Bu eşyayı almak için daha çok elmasa ihtiyacın var!</string>
+    <string name="insufficientGems">Bunu almak için daha çok elmasa gereksinimin var!</string>
     <string name="purchase_gems">Elmas satın al</string>
     <string name="insufficientHourglasses">Bu eşyayı almak için daha çok Mistik Kum Saatine ihtiyacın var!</string>
     <string name="get_hourglasses">Kum Saatleri al</string>
     <string name="subscribe_for_hourglasses">Kum Saatleri için abone ol</string>
-    <string name="timetravelers_closed_description">Her 3 aylık devamlı üyelik başına bir Mistik Kum Saati kazan, daha sonra onu kullanarak sınırlı sayıdaki ekipmanların, hayvanların ve bineklerin kilidini aç, geçmişten …_ ve gelecekten!</string>
+    <string name="timetravelers_closed_description">Üyeliğinin her ayında bir Mistik Kum Saati kazan, daha sonra onu kullanarak sınırlı sayıdaki ekipmanların, hayvanların ve bineklerin kilidini aç, geçmişten …_ ve gelecekten!</string>
     <string name="want_to_subscribe">Abone olmak istiyorum</string>
     <string name="seasonal_closed_description">Büyük Galalar gündönümü ve ekinoks zamanlarına yakın gerçekleşirler, çeşit çeşit özel mevsimsel eşyalar bulmak için bu zamanlarda ziyaret et!</string>
     <string name="come_back_soon">Yakında yine gel!</string>
@@ -514,12 +514,12 @@
     <string name="class_equipment">Ekipman</string>
     <string name="equipment_empty">Tüm ekipmana zaten sahipsin! Daha fazlası gündönümü ve ekinoks zamanlarına yakın Büyük Galalarda satışa çıkacak.</string>
     <string name="classless">Sınıfsız</string>
-    <string name="class_equipment_shop_dialog">Bu eşya yalnızca belirli bir sınıf için geçerlidir.\nAyarlardan sınıfını değiştirebilirsin.</string>
+    <string name="class_equipment_shop_dialog">Bu eşya yalnızca belirli bir sınıf için geçerlidir. Ayarlardan sınıfını değiştirebilirsin.</string>
     <string name="class_gear_disclaimer">Yalnızca şu anki sınıfın için olan ekipmanları satın alabilirsin</string>
     <string name="check_into_inn">Han\'a Gir</string>
     <string name="community_guidelines">Topluluk Kuralları</string>
     <string name="view_community_guidelines">Topluluk Kuralları\'nı Gör</string>
-    <string name="guidelines_description">Habitica her yaştan ve kökenden kullanıcılar için konuksever bir çevre yaratmayı amaçlar, özellikle de Taverna gibi herkese açık alanlarda. Eğer herhangi bir sorun varsa, lütfen Topluluk Kuralları\'mıza göz at.</string>
+    <string name="guidelines_description">Habitica her yaştan ve kökenden kullanıcılar için konuksever bir çevre yaratmayı amaçlar. Eğer herhangi bir sorun varsa, lütfen Topluluk Kuralları\'mıza göz at.</string>
     <string name="helpful_links">Faydalı Bağlantılar</string>
     <string name="view_faq">SSS\'yi İncele</string>
     <string name="report_bug">Hata Bildir</string>
@@ -536,7 +536,7 @@
     <string name="strike_description_title">Öfke Saldırısı nedir?</string>
     <string name="strike_active_title">%s Saldırıya uğradı!</string>
     <string name="strike_active_description">Çok sevdiğimiz %1$s hüsrana uğradı çünkü %2$s, %3$s ve çevresini paramparça etti. Çabuk, canavarı yenmek ve yeniden inşaya yardım etmek için işlerine sarıl!</string>
-    <string name="questShop">Görev Dükkanı</string>
+    <string name="questShop">Görevler</string>
     <string name="market_owner_long">Tüccar Alex</string>
     <string name="tavern_owner_long">Hancı Daniel</string>
     <string name="stable_owner_long">Hayvan Terbiyecisi Matt</string>
@@ -623,9 +623,9 @@
     <string name="due">Son tarih</string>
     <string name="delete_oauth_account_description">Bu hesabını kalıcı olarak silecek ve geri dönüşü asla olmayacak! Hesabında bulunan veya harcanmış Elmasların geri ödenmesi yapılmayacak. Eğer kesin olarak eminsen, aşağıdaki metin kutusuna DELETE yaz.</string>
     <string name="gift_one_get_one_description">Bir abonelik hediye et ve bir bedava abonelik kazan etkinliği şimdi devam ediyor!</string>
-    <string name="gift_one_get_one">Bir hediye et, bir kazan!</string>
+    <string name="gift_one_get_one">Bir armağan et, bir kazan</string>
     <string name="gift_one_get_one_detailed_description">Bu promosyon aktifken, hediyeni gönderdikten sonra otomatik olarak eşlenmiş bir aboneliği teslim alacaksın.</string>
-    <string name="gift_subscription_subtitle">Aşağıdan hediye etmek istediğin aboneliği seç! Bu satın alım otomatik olarak yenilenmeyecek.</string>
+    <string name="gift_subscription_subtitle">Armağan etmek istediğin aboneliği seç! Bu satın alım yenilenmeyecek.</string>
     <string name="server">Sunucu</string>
     <string name="gift_confirmation_title">Hediyen gönderildi!</string>
     <string name="discover">Keşfet</string>
@@ -657,9 +657,9 @@
     <string name="on">Açık</string>
     <string name="network_error_no_network_body">İnternete bağlı değilsiniz.</string>
     <string name="x_months">%d Aylık</string>
-    <string name="subscribe_listitem5_description">2 kat eşya düşürme oranı ile daha çok Habitica eşyası keşfet.</string>
+    <string name="subscribe_listitem5_description">Kraliyet Moru Jackalope\'u edin ve evcil hayvan koleksiyonunu büyütmek için her gün iki kat daha fazla Yumurta, Kuluçka İksiri ve Yiyecek kazan!</string>
     <string name="subscribe_listitem3_description_new">Şimdi abone olarak %s\'ı elde edebilir ve her ay yeni eşyalar kazanabilirsin!</string>
-    <string name="subscribe_listitem5">İki kat eşya düşürme</string>
+    <string name="subscribe_listitem5">Özel Evcil Hayvan &amp; Daha Çok Eşya Kazanma</string>
     <string name="create_account_short">hesap oluştur</string>
     <string name="login_incentive_short">Habitica\'ya düzenli olarak giriş yap</string>
     <string name="party_invite_short">Üye Bul</string>
@@ -807,7 +807,7 @@
     <string name="suggest_pet_hatch_again_missing_potion">Bu hayvanı tekrar yumurtadan çıkarmak için bir %s İksirine ihtiyacın var</string>
     <string name="can_hatch_pet">Bu evcil hayvanı yumurtadan çıkarmak için %1$s Yumurtanı ve %2$s İksirini birleştir!</string>
     <string name="magic_potion">Büyülü İksir</string>
-    <string name="use_saddle">Eyer Kullan</string>
+    <string name="use_saddle">Eyer tak</string>
     <string name="pet_category">%s Evcil Hayvan</string>
     <string name="block">Engelle</string>
     <string name="pms_disabled_description">Yine de mesaj gönderebilirsiniz, ancak kimse bunları size gönderemez. Ayarlar\'dan tekrar etkinleştirebilirsiniz.</string>
@@ -815,8 +815,8 @@
     <string name="disablePrivateMessages">Özel Mesajları Devre Dışı Bırak</string>
     <string name="block_user_description">Engelli bir kullanıcı sana Özel Mesaj gönderemez ancak onun gönderilerini görebilirsin.</string>
     <string name="block_user_title">%s engellensin mi\?</string>
-    <string name="unblock_user">Kullanıcının engelini kaldır</string>
-    <string name="block_user">Kullanıcıyı engelle</string>
+    <string name="unblock_user">Oyuncunun engelini kaldır</string>
+    <string name="block_user">Oyuncuyu engelle</string>
     <string name="limitations">Sınırlamalar</string>
     <string name="gems_description">Değerli taşlar, Habitica\'da ekstra içerik satın almanıza izin veren ve aboneliklerin yanı sıra Habitica ekibi için ana finansal destek kaynaklarından biri olan gerçek parayla satın alınan bir para birimidir.
 \n
@@ -833,7 +833,7 @@
     <string name="go_to_items">Eşyalara Git</string>
     <string name="first_drop_explanation2">Eşyalarına git ve yeni Yumurtanı ve Kuluçka İksirini birleştirmeyi dene!</string>
     <string name="first_drop_explanation1">Görevleri tamamlamak sana yumurta, kuluçka iksirleri ve evcil hayvan yemi bulma şansı verir.</string>
-    <string name="could_not_find_user">Kullanıcı bulunamadı</string>
+    <string name="could_not_find_user">Oyuncu bulunamadı</string>
     <string name="update_app_description">Sürekli olarak yeni düzeltmeler yapıyoruz, bu nedenle herhangi bir güncelleme olup olmadığını görmek için Play Store\'u kontrol ettiğinizden emin olun.</string>
     <string name="gold_description">Altın, Habitica\'daki **ana para birimi biçimidir** ve belirli donanımları, görevleri, eşyaları ve hatta kendiniz için yaptığınız özel ödülleri satın almanıza izin verir.
 \n
@@ -926,7 +926,7 @@
     <string name="profile_gift_gems">Elmas
 \nHediye Et</string>
     <string name="gift_gems">Elmas Hediye Et</string>
-    <string name="see_other_options">Diğer Seçenekleri Gör</string>
+    <string name="see_other_options">Diğer seçenekleri gör</string>
     <string name="promo_subscription_buy_gems_prompt">Elmasa mı ihtiyacın var\?</string>
     <string name="search">Ara</string>
     <string name="reject">Reddet</string>
@@ -984,9 +984,9 @@
     <string name="manual_sync_restart_description">Bazen uygulama içeriği otomatik olarak güncellemeyebilir. Uygulamayı yenilemek veya kapatıp yeniden açmayı deneyin.</string>
     <string name="manual_sync_restart">Manuel Senkronizasyon veya Yeniden Başlatma</string>
     <string name="clear_cache_description">Önbelleğinizi temizlemek için telefonunuzun Ayarlar uygulamasını açın. Depolama&gt; Uygulamalar&gt; Habitica\'ya gidin ve Önbelleği Temizle\'ye dokunun.</string>
-    <string name="hourglasses_description">Mistik Kum Saati, yalnızca Habitica\'ya arka arkaya üç ay veya daha fazla abone olmak için alabileceğiniz son derece nadir bir para birimidir. Zaman Yolcusu\'nun mağazasında geçmiş teçhizat setleri, evcil hayvanlar, binekler, hareketli arka planlar ve hatta özel görevler satın almak için kullanılırlar.
+    <string name="hourglasses_description">Gizemli Kum Saatleri, yalnızca Habitica\'ya abone olarak elde edebileceğin son derece nadir bir para birimidir. Bunları Zaman Yolcuları Mağazasında geçmiş Abone Ekipman setlerini, özel Evcil Hayvanları, Binekler, animasyonlu Arka Planları veya hatta özel Görevleri satın almak için kullanabilirsin! Bu ek ayrıcalıklar, yıl boyunca motive kalmanın ve iyi bir iş çıkardığın için kendinizi ödüllendirmenin harika bir yoludur.
 \n
-\nYılda dört adede kadar Mistik Kum Saati alabilirsiniz. Ödüllendirildikleri zaman, abonelik yenileme programınıza bağlıdır. Sizi bir kum saati için uygun hale getiren son abonelik ödemenizden sonraki yeni ayın ilk gününde gönderilirler. Daha fazla ayrıntı için [Abonelik] sayfasına bakın.</string>
+\nAboneler, abonelik ayrıcalıklarına sahip oldukları her ayın başında bir Gizemli Kum Saati ve diğer birçok avantajı alırlar. Zaman Yolcularının sunduklarıyla ilgileniyorsan, abonelik seçeneklerimize göz atmayı unutma!</string>
     <string name="subscriber_currency">Abone Para Birimi</string>
     <string name="standard">Standart</string>
     <string name="stat_allocation">İstatistik Tahsisi</string>
@@ -1044,10 +1044,10 @@
     <string name="damage_pending">%s hasar bekliyor</string>
     <string name="x_remaining">%s kaldı</string>
     <string name="won_achievement_description"><![CDATA[<b>%s</b> seni kazanan olarak seçti! Zaferin başarımlarının arasına eklendi.]]></string>
-    <string name="twelve_months_one_time">12 aylık tek seferlik abonelik</string>
-    <string name="one_month_one_time">1 aylık tek seferlik abonelik</string>
-    <string name="three_months_one_time">3 aylık tek seferlik abonelik</string>
-    <string name="six_months_one_time">6 aylık tek seferlik abonelik</string>
+    <string name="twelve_months_one_time">12 Ay</string>
+    <string name="one_month_one_time">1 Ay</string>
+    <string name="three_months_one_time">3 Ay</string>
+    <string name="six_months_one_time">6 Ay</string>
     <string name="user_is_blocked_explanation">Engellenen bir kullanıcı sana özel mesaj gönderemez ancak onun gönderilerini görebilirsin.</string>
     <string name="about_me">Hakkımda</string>
     <string name="account_info">Hesap Bilgileri</string>
@@ -1206,8 +1206,7 @@
     <string name="subscription_credit_canceling">Sizin <b>+%d</b> aylık abonelik krediniz aboneliğinizi iptal ettikten sonra etkinleşecek</string>
     <string name="unsaved_changes">Kaydedilmemiş Değişiklikler</string>
     <string name="armoire_rate_equipment_description">Yeni Ekipman parçaları her ay eklenir. Eğer bütün Ekipmanlara sahipsen, o zaman Yem ya da Deneyim alırsın, 50/50 şans.</string>
-    <string name="insufficient_level_equipment_dialog">Bu eşya sadece özel bir sınıfa mevcut.
-\n10. Seviyeden sonra bir sınıf seçebilirsin.</string>
+    <string name="insufficient_level_equipment_dialog">Bu eşya sadece özel bir sınıfa mevcut. 10. Seviyeden sonra bir sınıf seçebilirsin.</string>
     <string name="armoire_rate_food_description">10 yem türünden birini alacaksın. Özel etkinliklerde, normal yemekler şeker veya pasta halleriyle değişir.</string>
     <string name="sell_no_price">Sat</string>
     <string name="create_new_party">Yeni takım oluştur</string>
@@ -1251,7 +1250,7 @@
     <string name="mor_gems_title">Bunu almak için daha fazla elmas lazım!</string>
     <string name="gems_support">Elmas satın almak bizim küçük Habitica takımımızı destekler</string>
     <string name="month_released">Yayımlandığı Ay</string>
-    <string name="faint_loss_description">Seviye <b>%1$d</b>\'e düşecek, <b>%2$d</b> Altın kaybedecek, ve <b>bir parça ekipman</b> kıracaksın…</string>
+    <string name="faint_loss_description">Seviyen <b>%1$d</b>\'e düşecek, <b>%2$d</b> Altın kaybedecek, ve <b>bir parça ekipman</b> kıracaksın… Tümünü sıkı çalışmayla geri kazanabilirsin!</string>
     <string name="account_reset">Hesap Sıfırlama</string>
     <string name="avatar_skin_customization">Avatar Kıyafeti Özelleştirme</string>
     <string name="delete_account_subscription_active">Aktif bir aboneliğin içindeyken hesabını silemezsin. Lütfen önce aboneliğini iptal et.</string>
@@ -1322,7 +1321,7 @@
     <string name="choosing_class_progress">Sınıf Seçimi</string>
     <string name="exact_alarm_system_settings_reminders">İzinler etkin olmadığı için anımsatıcılar gecikebilir. İzinleri görüntülemek ve güncellemek için tıklayın.</string>
     <string name="exact_alarm_system_settings_title">`Alarmlar &amp; Anımsatıcılar` kapalı`</string>
-    <string name="exact_alarm_system_settings_description">Anımsatıcıların tam olarak planlanan zamanda görünmesi için Ayarlar uygulamasından `Alarmlar ve Anımsatıcılar`a izin verin.</string>
+    <string name="exact_alarm_system_settings_description">Anımsatıcıların tam olarak planlanan zamanda görünmesi için Ayarlar uygulamasından `Alarmlar ve Anımsatıcılar`a izin ver</string>
     <string name="sell_confirmation_title">Bunu %s karşılığında satmak ister misiniz\?</string>
     <string name="opt_out_description">Bu durumda atanan bir sınıfınız kalmayacak. İstediğiniz zaman Ayarlar\'dan sınıf sistemini etkinleştirerek yeniden bir sınıf seçebilirsiniz.</string>
     <string name="enable_class_description">Bir sınıf seçerek yetenekleri, istatistikleri ve manayı etkinleştirebilirsin</string>
@@ -1330,5 +1329,12 @@
     <string name="subscribe_listitem3_description_alt">En son çıkan seçkin zırhları giyin. %1$s’in %2$s’ini almak için hemen abone olun!</string>
     <string name="change_class_confirmation_message">Bu, mağazalarda hangi zırhın kilidinin açılacağını ve kullanılabilir yeteneklerinizi değiştirecektir</string>
     <string name="subscribe_listitemFaint">İkinci Bir Şans Edin</string>
-    <string name="change_class_message">Bu senin şimdiki sınıfını kaldıracak ve tüm istatistik puanlarını iptal edecek. Ardından yeni bir sınıf seçebileceksin.</string>
+    <string name="change_class_message">Bu senin şimdiki sınıfını kaldıracak ve tüm istatistik puanlarını iptal edecek. Ardından yeni bir sınıf seçebileceksin</string>
+    <string name="api_token_is_password_info">Kamuya açık olarak paylaşma. Zaman zaman Kullanıcı ID\'n sorulabilir, ama asla API Token\'ini başkalarının görebileceği biçimde paylaşma, buna Github da dahil.</string>
+    <string name="chat_empty_state_description">Arkadaş canlısı olmayı ve Topluluk Kuralları\'na uymayı unutma.</string>
+    <string name="copy_token">Tokeni kopyala</string>
+    <string name="api_token_reset_info">Sıfırlamak için şifreni değiştirebilirsin. Sıfırladığında, kullandığın diğer cihazlarda Habitica hesabına yeniden girmen ve 3. parti araçlara yeni API Token\'ini sağlaman gerekecek.</string>
+    <string name="api_token_reset_title">Yeni bir API Token\'e gerek duyarsan</string>
+    <string name="api_token_is_password">API Token\'in bir şifre gibidir</string>
+    <string name="api_token_title">API Tokeni</string>
 </resources>
