@@ -116,7 +116,7 @@
     <string name="complete_tutorial">Anladım!</string>
     <string name="dismiss_tutorial">Daha sonra hatırlat</string>
     <string name="intro_1_subtitle">Hoş Geldin</string>
-    <string name="intro_1_description">Artık işlerini hallederken eğlenme zamanı. Hayatlarını adım adım iş yaparak geliştiren %s kişiye katıl.</string>
+    <string name="intro_1_description">Artık işlerini hallederken eğlenme zamanı. Hayatlarını geliştiren %s kişiye katıl.</string>
     <string name="intro_2_subtitle">Oyundaki gelişim</string>
     <string name="intro_2_title">Hayattaki gelişim</string>
     <string name="intro_2_description">Gerçek hayatındaki işlerini tamamlayarak oyun içindeki özellikleri aç. Zırh, evcil hayvan ve daha fazlasını hedeflerine ulaştığında ödül olarak kazan.</string>
@@ -257,7 +257,7 @@
     <string name="empty_inbox">Hiç iletin yok. Bir kullanıcıya açık sohbet mesajlarından yeni bir ileti gönderebilirsin!</string>
     <string name="party_invite">Arkadaşlarını davet ederek kilidini aç</string>
     <string name="login_incentive">Habitica\'ya düzenli girerek kilidini aç</string>
-    <string name="create_account">Habitica\'ya katılarak kilidini aç</string>
+    <string name="create_account">Hesap oluşturarak kilidini aç</string>
     <string name="successful_purchase">%1$s satın alındı</string>
     <string name="chat_message_copied">Mesaj Panoya kopyalandı</string>
     <string name="edit_tag_btn_edit">Düzenle</string>
@@ -417,7 +417,7 @@
     <string name="party_description">Takım Tanımı</string>
     <string name="number_participants">%1$d Katılımcı</string>
     <string name="welcome_back">Tekrar Hoş Geldin</string>
-    <string name="yesterdaililes_prompt">Dün yaptığınız günlük işlere bir göz atın:</string>
+    <string name="yesterdaililes_prompt">Dün yaptığın günlük işlere bir göz at:</string>
     <string name="start_day">Günüme Başla</string>
     <string name="leave_party_confirmation">Takımdan ayrılmak istediğine emin misin\?</string>
     <string name="pending">Beklemede</string>
@@ -463,7 +463,7 @@
     <string name="subscribe_for_hourglasses">Kum Saatleri için abone ol</string>
     <string name="timetravelers_closed_description">Üyeliğinin her ayında bir Mistik Kum Saati kazan, daha sonra onu kullanarak sınırlı sayıdaki ekipmanların, hayvanların ve bineklerin kilidini aç, geçmişten …_ ve gelecekten!</string>
     <string name="want_to_subscribe">Abone olmak istiyorum</string>
-    <string name="seasonal_closed_description">Büyük Galalar gündönümü ve ekinoks zamanlarına yakın gerçekleşirler, çeşit çeşit özel mevsimsel eşyalar bulmak için bu zamanlarda ziyaret et!</string>
+    <string name="seasonal_closed_description">Büyük Galalar gündönümü ve ekinoks zamanlarına yakın gerçekleşirler, çeşitli özel mevsimsel eşyalar bulmak için bu zamanlarda ziyaret et!</string>
     <string name="come_back_soon">Yakında yine gel!</string>
     <string name="level">Seviye</string>
     <string name="streak_label">21 Gün Tamamlama Serileri</string>
@@ -548,10 +548,10 @@
     <string name="join_party_title">Bir takıma katılmak ister misin?</string>
     <string name="insufficientSubscriberGems">Bu ay satın alabileceğin bütün Elmasları satın aldın. Her ayın ilk üç gününde daha fazlası erişimine açılacaktır. Aboneliğin için teşekkür ederiz!</string>
     <string name="world_boss_description_title">Dünya Canavarı nedir?</string>
-    <string name="world_boss_description_intro">Dünya Canavarı Habitica topluluğunu, işleriyle güçlü bir canavarı haklamak için bir araya getiren özel bir etkinliktir!</string>
+    <string name="world_boss_description_intro">Dünya Canavarı, Habitica topluluğunun güçlü bir canavarı haklamak için beraber çalıştığı özel bir etkinliktir!</string>
     <string name="world_boss_description_1">Canavara hasar vermek için işlerini tamamla</string>
     <string name="world_boss_description_2">Dünya Canavarı, aksattığın işlerin yüzünden sana hasar vermez ama Öfke barı yükselir. Eğer bar dolarsa, Canavar Habitica\'nın mağaza sahiplerinden birine saldırır!</string>
-    <string name="world_boss_description_3">Normal Görev Canavarları ile devam edebilirsin, vereceğin hasar ikisine de etki eder</string>
+    <string name="world_boss_description_3">Normal Görev Canavarlarına devam edebilirsin, vereceğin hasar ikisine de etki eder</string>
     <string name="world_boss_description_4">Dünya Canavarı ilerlemesini ve Öfke saldırılarını görmek için Tavernayı düzenli olarak kontrol et</string>
     <string name="world_boss_action_prompt">Özel ödüller kazanmak ve Habitica\'yı %s gazabından kurtarmak için Canavarı yen!</string>
     <string name="questShop_owner_long">Görev Rehberi Ian</string>
@@ -575,7 +575,7 @@
     <string name="daily_tip_2">Bir Günlük İşin ne sıklıkla tekrar edeceğini değiştirebilirsin. Nadir yapılan işler bile programlanabilir.</string>
     <string name="daily_tip_3">Günlük İşlerin için özel hatırlatmalar da ayarlayabilirsin.</string>
     <string name="daily_tip_4">Ara sıra işlerini yeniden değerlendirmenin seni doğru yolda tutma konusunda yardımı olabilir.</string>
-    <string name="daily_tip_5">Odaklanmana yardım etmesi için derin derin nefes al. Bunu yapabilirsin!</string>
+    <string name="daily_tip_5">Odaklanmana yardım etmesi için derin bir nefes al. Bunu yapabilirsin!</string>
     <string name="daily_tip_6">On dakikalık bir zamanlayıcı kurup bu süre zarfında ne kadarını bitirebildiğini görmeyi bir dene!</string>
     <string name="daily_tip_7">Seni onları kazanmaya isteklendirmesi için Ödüllerine Pazardan eşyalar tutturmayı dene!</string>
     <string name="daily_tip_8">Zorlu işlerde kendini daha çok ödüllendirmek için İş\'inin zorluk düzeyini değiştirebilirsin!</string>
@@ -593,7 +593,7 @@
     <string name="usernamePromptTitle">Kullanıcı adına karar verme vakti!</string>
     <string name="usernamePromptBody">Giriş isimleri artık görünen adının yanında görünecek ve davetiyelerde, sohbet @bahsetmelerinde ve mesajlaşmalarda kullanılacak eşsiz kullanıcı adlarına dönüştü.</string>
     <string name="usernamePromptWiki">Eğer bu değişim hakkında daha fazla şey öğrenmek istiyorsan, <a href="https://habitica.wikia.com/wiki/Player_Names">wikimizi ziyaret et.</a></string>
-    <string name="usernamePromptDisclaimer">Kullanıcı Adları <a href="https://habitica.com/static/terms">Hizmet Koşulları\'mıza</a> ve <a href="https://habitica.com/static/community-guidelines">Topluluk İlkeleri\'mize</a> uygun olmalıdır. Daha önce bir Giriş Adı belirlemediysen, Kullanıcı Adın otomatik olarak oluşturulmuştur.</string>
+    <string name="usernamePromptDisclaimer">&lt;a href=\"https://habitica.com/static/community-guidelines\"&gt;Kullanıcı Adları &lt;a href=\"https://habitica.com/static/terms\"&gt;Hizmet Koşulları\'mıza&lt;/a&gt; ve &lt;a href=\"https://habitica.com/static/community-guidelines\"&gt;Topluluk İlkeleri\'mize&lt;/a&gt; uygun olmalıdır. Daha önce bir Giriş Adı belirlemediysen, Kullanıcı Adın otomatik olarak oluşturulmuştur.</string>
     <string name="confirm_username_title">Geçerli kullanıcı adını onaylamak istediğine emin misin?</string>
     <string name="confirm_username_description">Kullanıcı adını onaylayarak onu davetlerde, sohbetlerde ve mesajlaşmalarda aleni hâle getiriyorsun. Kullanıcı adını istediğin her an ayarlardan değiştirebilirsin.</string>
     <string name="cancel">İptal </string>
@@ -656,8 +656,8 @@
     <string name="off">Kapalı</string>
     <string name="on">Açık</string>
     <string name="network_error_no_network_body">İnternete bağlı değilsiniz.</string>
-    <string name="x_months">%d Aylık</string>
-    <string name="subscribe_listitem5_description">Kraliyet Moru Jackalope\'u edin ve evcil hayvan koleksiyonunu büyütmek için her gün iki kat daha fazla Yumurta, Kuluçka İksiri ve Yiyecek kazan!</string>
+    <string name="x_months">%d Ay</string>
+    <string name="subscribe_listitem5_description">Kraliyet Moru Jackalope\'yi kapın ve her gün iki katı Yumurta, Yumurtlama İksiri ve Yem alarak Evcil Hayvan koleksiyonunuzu büyütün!</string>
     <string name="subscribe_listitem3_description_new">Şimdi abone olarak %s\'ı elde edebilir ve her ay yeni eşyalar kazanabilirsin!</string>
     <string name="subscribe_listitem5">Özel Evcil Hayvan &amp; Daha Çok Eşya Kazanma</string>
     <string name="create_account_short">hesap oluştur</string>
@@ -694,7 +694,7 @@
     <string name="gift_confirmation_text_sub">\@%1$s kullanıcısına %2$s aylık Habitica üyeliği hediye ettin.</string>
     <string name="gift_gems_subtitle">Hediye etmek istediğin elmas paketini seç!</string>
     <string name="insufficientGoldTitle">Yetersiz Altın</string>
-    <string name="challenge_leave_description">Bu Meydan Okumanın görevlerini kişisel görev panonuzda tutmayı veya ayrıldığınızda silmeyi seçebilirsiniz.</string>
+    <string name="challenge_leave_description">Bu Meydan Okumanın görevlerini kişisel görev panonda tutmayı veya ayrıldığında silmeyi seçebilirsin</string>
     <string name="login_incentive_count">Habitica\'ya %d kez giriş yaparak kilidi aç.</string>
     <string name="login_incentive_short_count">%d Giriş</string>
     <string name="number_responded">%1$d/%2$d Yanıtlandı</string>
@@ -735,7 +735,7 @@
     <string name="joinedGuildTitle">Bir Loncaya Katıldı</string>
     <string name="beastMasterTitle">Canavar Ustası</string>
     <string name="beastMasterDescription">Tüm evcil hayvanları toplayarak \"Canavar Ustası\" Başarısını kazandın!</string>
-    <string name="achievement_title">Bir başarınız var!</string>
+    <string name="achievement_title">Bir başarım kazandın!</string>
     <string name="view_achievements">Başarıları Görüntüle</string>
     <string name="see_what_s_new">Yenilikleri gör</string>
     <string name="mystery_item_received">Kutuyu açtın ve %s kazandın</string>
@@ -769,8 +769,8 @@
     <string name="setup_task_habit_2_notes">Veya düzenleme ekranından silin</string>
     <string name="setup_task_habit_1">Habitica\'ya bir görev ekle</string>
     <string name="cost">Ücret</string>
-    <string name="joined_guild">Loncaya katıldın</string>
-    <string name="left_guild">Loncadan ayrıldın</string>
+    <string name="joined_guild">Loncaya katıldınız</string>
+    <string name="left_guild">Loncadan ayrıldınız</string>
     <string name="leave_guild_confirmation">Loncadan ayrılmak istediğine emin misin\?</string>
     <string name="leave_guild">Loncadan Ayrıl</string>
     <string name="trillion_abbrev">t</string>
@@ -932,7 +932,7 @@
     <string name="reject">Reddet</string>
     <string name="accept">Kabul Et</string>
     <string name="setup_task_habit_2">Bunu bırakmak istediğiniz kötü bür alışkanlık olarak düzenlemek için buraya tıklayın</string>
-    <string name="update_available">Güncelleme uygun: %1$s (%2$d)</string>
+    <string name="update_available">Güncelleme mevcut: %1$s (%2$d)</string>
     <string name="streak">Seri</string>
     <string name="assigned_stat">Atanan İstatistik</string>
     <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için %s gidin!</string>
@@ -1026,7 +1026,7 @@
     <string name="promo_subscription_buy_gems_description">Altınla Mücevher satın almak, aylık gizemli öğeler almak, düşük limitleri artırmak ve daha fazlasını yapmak için Abone olun!</string>
     <string name="preference_push_party_activity">Parti Etkinliği</string>
     <string name="search_hint">Görevleri ara</string>
-    <string name="complete">Tamamlayınız</string>
+    <string name="complete">Tamamla</string>
     <string name="inviteFriendDescription">Maceranıza size katılan bir arkadaşınızı (veya arkadaşlarınızı) davet ettiniz!</string>
     <string name="inviteFriendTitle">Bir Arkadaş Davet Etti</string>
     <string name="triadBingoDescription">Tüm evcil hayvanları bulmak, tüm binekleri evcilleştirmek ve tüm evcil hayvanları yeniden bulmak için \"Üçlü Tam İsabet\" başarımını kazandınız!</string>
@@ -1052,20 +1052,20 @@
     <string name="about_me">Hakkımda</string>
     <string name="account_info">Hesap Bilgileri</string>
     <string name="add">Ekle</string>
-    <string name="added_social_auth">%s kimlik doğrulama eklendi.</string>
+    <string name="added_social_auth">%s kimlik doğrulama eklendi</string>
     <string name="add_email_and_password">Eposta ve Şifre ekle</string>
     <string name="add_password">Şifre ekle</string>
     <string name="adjust_counter">Sayacı Ayarla</string>
     <string name="quest_leave_message">Görevden ayrılmak istediğinizden emin misiniz? Tüm ilerlemeniz kaybolacak.</string>
     <string name="quest_leave_message_nostart">Görevden ayrılmak istediğinizden emin misiniz? Katılamayacaksınız.</string>
     <string name="available_for">%s için mevcuttur</string>
-    <string name="login_disclaimer">Kaydolarak, <a href="https://habitica.com/static/terms">Hizmet Şartlarını</a> ve <a href="https://habitica.com/static/privacy">Gizlilik Politikasını</a> okuyup kabul ettiğinizi belirtiyorsunuz.</string>
+    <string name="login_disclaimer">Kaydolarak, <a href="https://habitica.com/static/terms">Hizmet Şartlarını</a> ve <a href="https://habitica.com/static/privacy">Gizlilik Politikasını</a> okuyup kabul ettiğini belirtiyorsun</string>
     <string name="cant_like_own_message">Kendi mesajlarını beğenemezsin</string>
     <string name="claim_x_gems">%d Mücevher Al</string>
     <string name="congratulations">Tebrikler!</string>
     <string name="connect">Bağlan</string>
     <string name="copied_to_clipboard">%s panoya kopyalandı</string>
-    <string name="apitoken_summary">Tokeni Kopyala. Dikkatli olun, bu bir şifre!</string>
+    <string name="apitoken_summary">Geliştiriciler ve üçüncü taraf araçlar için şifre belirteci.</string>
     <string name="create_guild">Lonca Oluştur</string>
     <string name="daily_item_checkbox">Günlük Onay Kutusu</string>
     <string name="dark_mode">Karanlık Mod</string>
@@ -1099,7 +1099,7 @@
     <string name="open_for">%s için aç</string>
     <string name="open_shop">Dükkanı aç</string>
     <string name="open_website">Web Sitesini Aç</string>
-    <string name="password_not_matching">Parolanın iki kez doğru yazılması gerekiyor</string>
+    <string name="password_not_matching">Girilen şifreler eşleşmiyor</string>
     <string name="password_added">Şifre kaydedildi</string>
     <string name="privacy_policy">Gizlilik Politikası</string>
     <string name="public_profile">Açık profil</string>
@@ -1128,11 +1128,11 @@
     <string name="empty_challenge_list">Herhangi bir Mücadelenin üyesi değilsiniz.</string>
     <string name="empty_guilds_list">Herhangi bir Loncaya üye değilsiniz.</string>
     <string name="user_is_blocked">Bu oyuncuyu engelledin</string>
-    <string name="rejoin_guild">Bu loncaya Loncalar: Keşfet sayfasından yeniden katılabilirsiniz.</string>
+    <string name="rejoin_guild">Bu loncaya Loncalar: Keşfet sayfasından yeniden katılabilirsin</string>
     <string name="caused_damage">Canavara hasar verdin</string>
     <string name="all_tasks_completed">Tüm görevlerini tamamladın. Aferin!</string>
     <string name="empty_equipment_description">Henüz bu tür bir ekipmanınız yok. Kazandığınız altınları kullanarak marketten ekipman satın alabilirsiniz.</string>
-    <string name="locked_equipment_shop_dialog">Kilidi açmak için bu sıradaki önceki öğeleri satın almalısınız.</string>
+    <string name="locked_equipment_shop_dialog">Kilidi açmak için bu sıradaki önceki öğeleri satın almalısın</string>
     <string name="mystery_item_title">Gizemli Kutuyu açtın ve…</string>
     <string name="invitation_title_no_leader">Bir Takıma katılmaya davet edildiniz</string>
     <string name="won_achievement_description_noname">Kazanan olarak seçildiniz! Zaferiniz Başarımlarınıza kaydedildi.</string>
@@ -1146,14 +1146,14 @@
     <string name="push_notification_system_settings_title">Bildirimler Kapatıldı</string>
     <string name="positive_sentence">pozitif</string>
     <string name="negative_sentence">negatif</string>
-    <string name="usernames_party">%s\'in takımı</string>
-    <string name="discard">Sal</string>
-    <string name="quest_party_required_title">Bir Görev başlatmadan önce bir Takıda olmalısın</string>
+    <string name="usernames_party">%s Kullanıcısının Takımı</string>
+    <string name="discard">Terk Et</string>
+    <string name="quest_party_required_title">Bir Görev başlatmadan önce bir Takımda olman gerekir</string>
     <string name="quest_party_required_description">Bir takıma girince kendi başına Görevlere girebilir veya arkadaşlarına birlikte de Görevlere girebilirsiniz!</string>
     <string name="armoireFood_new">Gardırobu aradın ve yemek buldun. Peki burada ne arıyor\?</string>
     <string name="armoireEquipment_new">Gardıroptan nadir bir parça Ekipman buldun!</string>
     <string name="level_abbreviated">Sv. %d</string>
-    <string name="class_changed_description">%s yetenek kullanabilir ve mağazalardan eşya alabilirsin. Becerilerini geliştireceğin istatistik puanlarından kazanmak için seviye atla.</string>
+    <string name="class_changed_description">Artık %s becerilerini kullanabilir ve mağazalardan ekipman satın alabilirsin. Becerilerini güçlendirmek için kullanabileceğin istatistik puanlarını kazanmak için seviye atla.</string>
     <string name="change_class_selected_confirmation">Sınıfını %1$s\'ye değiştirmek istiyor musun\?</string>
     <string name="next_hourglass">Bir sonraki Kum Saati teslimi</string>
     <string name="use_item">Takım üyesi üzerinde eşya kullan</string>&gt;
@@ -1188,7 +1188,7 @@
     <string name="onboarding_objectives">Başlangıç Görevleri</string>
     <string name="task_list_mode">Görev listesi modu</string>
     <string name="compact">Sıkışık</string>
-    <string name="minimal">Minimal</string>
+    <string name="minimal">En Az</string>
     <string name="are_you_sure_you_want_to_delete">Silmek istediğine emin misin\?</string>
     <string name="armoire_drop_rates">Gardırop çıkış oranları</string>
     <string name="armoire">Gardırop</string>
@@ -1222,7 +1222,8 @@
     <string name="buy_set">Seti Satın Al</string>
     <string name="you_ran_out_of_health">Canın bitti!</string>
     <string name="death_description">Ama hepsini emeğinle geri alabilirsin! Bol şans—iyi iş çıkaracaksın.</string>
-    <string name="faint_broken_equipment">Kırık ekipman Ödüller\'den yeniden alınabilir</string>
+    <string name="faint_broken_equipment">Kırık ekipman yeniden alınabilir
+\nPazar\'dan</string>
     <string name="habitica_official">Habitica Resmî</string>
     <string name="academics">Akademik</string>
     <string name="advocacy_causes">Savunma + Nedenleri</string>
@@ -1263,15 +1264,15 @@
     <string name="positive_and_negative">pozitif ve negatif</string>
     <string name="completed_at">%s\'de tamamlandı</string>
     <string name="member_list">Üye Listesi</string>
-    <string name="ban_user">Kullanıcıyı Banla</string>
-    <string name="unmute_user">Kullanıcıyı Sessizden Çıkar</string>
+    <string name="ban_user">Oyuncuyu Yasakla</string>
+    <string name="unmute_user">Kullanıcının Susturmasını Kaldır</string>
     <string name="regular_access">Normal Erişim</string>
     <string name="amazon">Amazon</string>
     <string name="apple_pay">Apple Pay</string>
     <string name="google_pay">Google Pay</string>
     <string name="paypal">PayPal</string>
     <string name="stripe_payment">Stripe</string>
-    <string name="assigned_to_you_by">\@%1$s tarafından sana %2$s\'da ayarlandı</string>
+    <string name="assigned_to_you_by">\@%1$s kullanıcısı tarafından sana %2$s\'da ayarlandı</string>
     <string name="never">asla</string>
     <string name="on_x">%s\'de</string>
     <string name="on_weekdays">hafta içi</string>
@@ -1286,18 +1287,18 @@
     <string name="copy_shared_tasks">Paylaşılan görevleri kopyala</string>
     <string name="message_flagged">Mesaj %d kere işaretlendi.</string>
     <string name="on_every_day_of_week">haftanın her günü</string>
-    <string name="mute_user">Kullanıcıyı Sessize Al</string>
-    <string name="ban_user_confirm">Bu kullanıcıyı banlamak istiyor musun\?</string>
-    <string name="unban_user_confirm">Bu kullanıcının banını kaldırmak istiyor musun\?</string>
-    <string name="mute_user_confirm">Bu kullanıcının sohbet erişimini elinden almak istiyor musun\?</string>
-    <string name="unmute_user_confirm">Bu kullanıcıya sohbet erişimini geri vermek istiyor musun\?</string>
-    <string name="unban_user">Kullanıcı Banı Kaldır</string>
+    <string name="mute_user">Oyuncuyu Sustur</string>
+    <string name="ban_user_confirm">Bu oyuncuyu yasaklamak istiyor musun\?</string>
+    <string name="unban_user_confirm">Bu oyuncunun yasağını kaldırmak istiyor musun\?</string>
+    <string name="mute_user_confirm">Bu oyuncunun sohbet erişimini kaldırmak istiyor musun\?</string>
+    <string name="unmute_user_confirm">Bu oyuncunun sohbet erişimini açmak istiyor musun\?</string>
+    <string name="unban_user">Oyuncunun Yasağını Kaldır</string>
     <string name="status">Durum</string>
     <string name="promote_to_manager">Yöneticiye Yükselt</string>
     <string name="manager">Yönetici</string>
     <string name="birthday_title_description">Habitica\'nın 10\'uncu doğum gününü aşağıdaki hediye ve özel eşyalarla kutla!</string>
     <string name="limited_edition">Sınırlı Sayıda</string>
-    <string name="gryphatrice_description">Eğlenceli Grifatris doğum günü [\?\?\?]\'e katılıyor! Kendine özel animasyonlu evcil hayvan kazanma şansını kaçırma.</string>
+    <string name="gryphatrice_description">Nadir bulunan, Sevinçli Gripatris doğum günü partisine katılıyor! Bu özel animasyonlu evcil hayvana sahip olma şansını kaçırma.</string>
     <string name="buy_for">için Al</string>
     <string name="thanks_for_support">Desteğiniz için teşekkürler!</string>
     <string name="plenty_of_potions">Pek Çok İksir</string>
@@ -1384,4 +1385,8 @@
     <string name="report_reason_title_message">Bu iletiyi neden bildiriyorsun\?</string>
     <string name="report_reason_title_player">Bu oyuncuyu neden bildiriyorsun\?</string>
     <string name="see_other_sub_options">Diğer abonelik seçeneklerini gör</string>
+    <plurals name="repeat_daily">
+        <item quantity="one">her gün</item>
+        <item quantity="other">her %d günde bir</item>
+    </plurals>
 </resources>
