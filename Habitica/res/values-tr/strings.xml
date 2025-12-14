@@ -246,7 +246,7 @@
     <string name="share_using">Kullanımı paylaş</string>
     <string name="share_levelup">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %d. seviyeye yükseldim!</string>
     <string name="share_hatched">Gerçek hayatımdaki alışkanlıklarımı geliştirerek #Habitica içerisinde %1$s %2$s evcil hayvan ürettim!</string>
-    <string name="share_raised">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %1$s binek kazandım.</string>
+    <string name="share_raised">Gerçek hayatımdaki alışkanlıklarımı geliştirerek #Habitica içerisinde %1$s binek kazandım!</string>
     <string name="open_in_store">Play Store\'da aç</string>
     <string name="change_class_confirmation">Sınıfını 3 Elmasa değiştirmek istediğine emin misin\?</string>
     <string name="change_class_equipment_warning">Bu nitelik puanlarını geri verecek, mağazadan alınan eşyaları değiştirecek ve elindeki yetenekleri değiştirecek.</string>
