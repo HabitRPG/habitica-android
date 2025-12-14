@@ -223,7 +223,7 @@
     <string name="warrior_description">Savaşçılar daha ağır hasar ve daha fazla kritik vuruş vurur. Eğer canavarları kolayca yenmek istiyorsan savaşçı oynamalısın. Savaşçılar yüksek bir Güç niteliğinden yararlanır.</string>
     <string name="mage_description">Büyücüler, canavarlara hasar veren ve deneyim puanı ile mana\'yı artıran beceriler öğrenirler. Hızlı seviye atlamak seni motive ediyorsa, bir büyücü ol! Büyücüler yüksek zeka değerinden yarar görürler.</string>
     <string name="rogue_description">Düzenbazlar, kendilerinin ve takımlarının daha fazla altın ve rastgele eşya bulmasını sağlayan beceriler öğrenirler. Çok fazla eşya ve altın istiyorsan Düzenbaz ol! Düzenbazlar yüksek Sezgi istatistiğinden yararlanır.</string>
-    <string name="healer_description">Şifacılar hasarlara karşı su geçirmez bir şekilde karşı dururlar ve diğerlerine de bu korumayı sürdürürler. Unutulan Günlük Görevler ve Kötü Alışkanlıklar onları çok fazla ürkütmez ve başarısızlıklardan dolayı kaybedilen sağlıkları iyileştirirler. Takımdaki diğerlerine refakat etmekten hoşlanıyorsan veya çok çalışarak Ölümü atlatma fikri seni heyecanlandırıyorsa bir şifacı olarak oynayabilirsin!</string>
+    <string name="healer_description">Şifacılar, kendilerini ve gruplarını iyileştirebilecek ve koruyabilecek beceriler öğrenirler. Başkalarına yardım etmekten veya hasardan kaçınmaktan hoşlanıyorsan Şifacı ol! Şifacılar yüksek Dayanıklılık (Constitution) değerinden yararlanır.</string>
     <string name="select_class">Sınıf Seç</string>
     <string name="opt_out_class">Çekil</string>
     <string name="class_confirmation">Bir %s olmak istediğine emin misin?</string>
@@ -245,7 +245,7 @@
     <string name="email">E-posta</string>
     <string name="share_using">Kullanımı paylaş</string>
     <string name="share_levelup">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %d. seviyeye yükseldim!</string>
-    <string name="share_hatched">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %1$s %2$s evcil hayvan ürettim.</string>
+    <string name="share_hatched">Gerçek hayatımdaki alışkanlıklarımı geliştirerek #Habitica içerisinde %1$s %2$s evcil hayvan ürettim!</string>
     <string name="share_raised">Gerçek hayatımdaki alışkanlıklarımı geliştirerek Habitica içerisinde %1$s binek kazandım.</string>
     <string name="open_in_store">Play Store\'da aç</string>
     <string name="change_class_confirmation">Sınıfını 3 Elmasa değiştirmek istediğine emin misin\?</string>
@@ -813,7 +813,7 @@
     <string name="pms_disabled_description">Yine de mesaj gönderebilirsiniz, ancak kimse bunları size gönderemez. Ayarlar\'dan tekrar etkinleştirebilirsiniz.</string>
     <string name="pms_disabled">Özel Mesajlar devre dışı bırakıldı</string>
     <string name="disablePrivateMessages">Özel Mesajları Devre Dışı Bırak</string>
-    <string name="block_user_description">Engelli bir kullanıcı sana Özel Mesaj gönderemez ancak onun gönderilerini görebilirsin.</string>
+    <string name="block_user_description">Engelli bir oyuncu sana Özel İleti gönderemez ancak onun gönderilerini görebilirsin</string>
     <string name="block_user_title">%s engellensin mi\?</string>
     <string name="unblock_user">Oyuncunun engelini kaldır</string>
     <string name="block_user">Oyuncuyu engelle</string>
@@ -1048,7 +1048,7 @@
     <string name="one_month_one_time">1 Ay</string>
     <string name="three_months_one_time">3 Ay</string>
     <string name="six_months_one_time">6 Ay</string>
-    <string name="user_is_blocked_explanation">Engellenen bir kullanıcı sana özel mesaj gönderemez ancak onun gönderilerini görebilirsin.</string>
+    <string name="user_is_blocked_explanation">Engellenen bir oyuncu sana özel ileti gönderemez ancak onun gönderilerini görebilirsin</string>
     <string name="about_me">Hakkımda</string>
     <string name="account_info">Hesap Bilgileri</string>
     <string name="add">Ekle</string>
@@ -1127,7 +1127,7 @@
     <string name="quest_items_found">%d görev öğesi buldunuz</string>
     <string name="empty_challenge_list">Herhangi bir Mücadelenin üyesi değilsiniz.</string>
     <string name="empty_guilds_list">Herhangi bir Loncaya üye değilsiniz.</string>
-    <string name="user_is_blocked">Bu kullanıcıyı engellediniz</string>
+    <string name="user_is_blocked">Bu oyuncuyu engelledin</string>
     <string name="rejoin_guild">Bu loncaya Loncalar: Keşfet sayfasından yeniden katılabilirsiniz.</string>
     <string name="caused_damage">Canavara hasar verdin</string>
     <string name="all_tasks_completed">Tüm görevlerini tamamladın. Aferin!</string>
@@ -1153,7 +1153,7 @@
     <string name="armoireFood_new">Gardırobu aradın ve yemek buldun. Peki burada ne arıyor\?</string>
     <string name="armoireEquipment_new">Gardıroptan nadir bir parça Ekipman buldun!</string>
     <string name="level_abbreviated">Sv. %d</string>
-    <string name="class_changed_description">%s yetenek kullanabilir ve mağazalardan eşya alabilirsin!</string>
+    <string name="class_changed_description">%s yetenek kullanabilir ve mağazalardan eşya alabilirsin. Becerilerini geliştireceğin istatistik puanlarından kazanmak için seviye atla.</string>
     <string name="change_class_selected_confirmation">Sınıfını %1$s\'ye değiştirmek istiyor musun\?</string>
     <string name="next_hourglass">Bir sonraki Kum Saati teslimi</string>
     <string name="use_item">Takım üyesi üzerinde eşya kullan</string>&gt;
@@ -1337,4 +1337,51 @@
     <string name="api_token_reset_title">Yeni bir API Token\'e gerek duyarsan</string>
     <string name="api_token_is_password">API Token\'in bir şifre gibidir</string>
     <string name="api_token_title">API Tokeni</string>
+    <string name="reset_account_description_new">Tüm seviyeni, altınını ve deneyimini yitireceksin. Tüm görevlerin ve bunların geçmiş verileri silinecek (Meydan okuma görevleri kalacak). Tüm ekipmanını, abone ürünleri ve ücretsiz anı ürünleri hariç, yitirecek, ama geri alabileceksin. Sınıfa özgü ekipmanları yeniden satın almak için o sınıfta olman gerekecek. Mevcut sınıfın, başarıların, evcil hayvanların ve bineklerin korunacak. Sıfırlamayı onaylamak için lütfen aşağıdaki alana şifreni yazın.</string>
+    <string name="insufficient_level_equipment_dialog_new">Bu eşya yalnızca %s sınıfına açıktır. 10. seviyede bir sınıf seçebilirsin.</string>
+    <string name="display_name_description">Bu, Habitica avatarında gösterilecek ad. Kullanıcı adının aksine görünen adın benzersiz bir tanımlayıcı olmak zorunda değil.</string>
+    <string name="reset_account_description_no_pw">Tüm seviyeni, altınını ve deneyimini yitireceksin. Tüm görevlerin ve bunların geçmiş verileri silinecek (Meydan okuma görevleri kalacak). Tüm ekipmanını, abone ürünleri ve ücretsiz anı ürünleri hariç, yitirecek, ama geri alabileceksin. Sınıfa özgü ekipmanları yeniden satın almak için o sınıfta olman gerekecek. Mevcut sınıfın, başarıların, evcil hayvanların ve bineklerin korunacak. Sıfırlamayı onaylamak için lütfen aşağıdaki alana RESET yaz.</string>
+    <string name="photo_url_description">Buraya bir görselin bağlantısını ekleyerek Habitica profilinde bir görsel sergileyebilirsin.</string>
+    <string name="save_photo_url">Görsel URL\'sini kaydet</string>
+    <string name="change_email_description">Bu senin Habitica\'ya giriş yaptığın ve bildirim aldığın e-posta adresin.</string>
+    <string name="change_username_description">Kullanıcı adları 1-20 karakter arasında olmalıdır; a\'dan z\'ye harfler, 0\'dan 9\'a sayılar, tireler veya alt çizgiler içerebilir.</string>
+    <string name="change_display_name">Görünen Adı Değiştir</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; seni takımına çağırdı &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="password_change_info">Şifreler 8 ya da daha çok karakter içermelidir. Şifreni değiştirmek diğer cihazlardan ve kullanıyorsan 3. parti uygulamalardan çıkış yapmana neden olur.</string>
+    <string name="confirm_new_password">Yeni Şifreyi Onayla</string>
+    <string name="report_message_explanation">Yalnızca [Topluluk Kuralları](https://habitica.com/static/community-guidelines) ve/veya [Hizmet Şartlarını](https://habitica.com/static/terms) ihlal eden gönderileri bildirmelisin. Yanlış bildirimde bulunmak, Habitica\'nın Topluluk Kurallarının ihlalidir.</string>
+    <string name="use_on_party">Takımda kullan</string>
+    <string name="class_equipment_shop_dialog_new">Bu eşya yalnızca %s sınıfındakilere açıktır. Sınıfı değiştirmek için Ayarlar\'ı aç.</string>
+    <string name="need_help_description">Bizimle iletişime geçebilirsin. Ekibimizden bir üye sana yardımcı olmak için elinden gelenin en iyisini yapacaktır!</string>
+    <string name="report_challenge_explanation">Yalnızca [Topluluk Kuralları](https://habitica.com/static/community-guidelines) ve/veya [Hizmet Şartları](https://habitica.com/static/terms)\'nı ihlal eden bir sorunu bildirmelisin. Yanlış bildirim göndermek, Habitica\'nın Topluluk Kuralları\'nın ihlalidir.</string>
+    <string name="report_player_title">%s kullanıcısını bildir\?</string>
+    <string name="report_reason_title_challenge">Bu meydan okumayı neden bildiriyorsun\?</string>
+    <string name="report_user_description">Bu ayrıca @%s kullanıcısını engelleyecek</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="report_message">İletiyi Bildir</string>
+    <string name="report_successful">%s Bildirildi</string>
+    <string name="report_failure">Bildiri hata verdi, lütfen daha sonra yeniden dene</string>
+    <string name="report_player_toolbar_title">%s kullanıcısını bildir</string>
+    <string name="benefits_end">Ayrıcalıklar %s tarihinde sona eriyor</string>
+    <string name="subscription_hourglasses_3month_timeframe">Üç ayda Kum Saati</string>
+    <string name="leave_party_confirmation_quest">Bu takımdan ayrılmak istediğine emin misin\?</string>
+    <string name="rejoin_party_quest">Davet edilmediğin sürece bu takıma yeniden katılamayacaksın.
+\n
+\nTakımdan ayrılman, şu anda üzerinde çalıştığın görevi de bırakmana neden olacak.</string>
+    <string name="rejoin_party_quest_leader">Davet edilmediğin sürece bu takıma yeniden katılamayacaksın.
+\n
+\nPartiden ayrılmak mevcut görevi de iptal edecektir.</string>
+    <string name="resubscribe_description_gift">Abonelik ayrıcalıklarından yararlanmayı sürdürmek mi istiyorsun\? Ayrıcalıkların etkin kalması için yinelenen bir abonelik başlatabilirsin.</string>
+    <string name="gems_promo_info_limitations_fixed">Bu promosyon yalnızca sınırlı süreli etkinlik boyunca geçerlidir. Bu etkinlik %1$s (%2$s) tarihinde başlayacak ve %3$s (%4$s) tarihinde sona erecektir. Promosyon teklifi yalnızca kendin için Elmas satın aldığında geçerli olur.</string>
+    <string name="challenges">Meydan Okumalar</string>
+    <string name="report_hint">Bildiri nedeni</string>
+    <string name="use_skill">Beceriyi kullan</string>
+    <string name="cancel_subscription_apple_description">Artık abone olmak istemiyor musun\? Ödeme yöntemin nedeniyle iOS cihazındaki Apple ID abonelik ayarların üzerinden aboneliğini iptal etmen gerekecek.</string>
+    <string name="report_player">Oyuncuyu Bildir</string>
+    <string name="register_tos_confirm"><a href="https://habitica.com/static/terms">Hizmet Şartları</a>\'mızı kabul ettin ve <a href="https://habitica.com/static/privacy">Gizlilik Politikası</a>\'nı okudun.</string>
+    <string name="report_user_explanation">Yalnızca [Topluluk Kuralları](https://habitica.com/static/community-guidelines) ve/veya [Hizmet Şartları](https://habitica.com/static/terms) kurallarını ihlal eden oyuncuları bildirmelisin. Yanlış bildiri göndermek, Habitica\'nın Topluluk Kurallarının ihlalidir.</string>
+    <string name="report_reason_title_message">Bu iletiyi neden bildiriyorsun\?</string>
+    <string name="report_reason_title_player">Bu oyuncuyu neden bildiriyorsun\?</string>
+    <string name="see_other_sub_options">Diğer abonelik seçeneklerini gör</string>
 </resources>
