@@ -248,7 +248,7 @@
     <string name="share_hatched">Gerçek hayatımdaki alışkanlıklarımı geliştirerek #Habitica içerisinde %1$s %2$s evcil hayvan ürettim!</string>
     <string name="share_raised">Gerçek hayatımdaki alışkanlıklarımı geliştirerek #Habitica içerisinde %1$s binek kazandım!</string>
     <string name="open_in_store">Play Store\'da aç</string>
-    <string name="change_class_confirmation">Sınıfını 3 Elmasa değiştirmek istediğine emin misin\?</string>
+    <string name="change_class_confirmation">3 Elmasa sınıf değiştirmek istediğine emin misin\?</string>
     <string name="change_class_equipment_warning">Bu nitelik puanlarını geri verecek, mağazadan alınan eşyaları değiştirecek ve elindeki yetenekleri değiştirecek.</string>
     <string name="confirm">Onayla</string>
     <string name="market">Pazar</string>
@@ -311,10 +311,10 @@
     <string name="subscribe_listitem2_description">Ayda 1 adet Mistik Kum Saati kullanarak Zaman Yolcuları Dükkanı\'ndaki hiçbir ürünü kaçırma!</string>
     <string name="subscribe_listitem3_description">Şimdi abone olarak özel bir eşya seti kazan ve her ay yeni eşyalar kazan!</string>
     <string name="subscribe_listitem4_description">Abone olarak ve Kraliyet Moru Jackalope evcil hayvanını kazan.</string>
-    <string name="subscribe1month_gemcap">Ayda 25 Elmas</string>
-    <string name="subscribe3month_gemcap">Ayda 30 Elmas</string>
-    <string name="subscribe6month_gemcap">Ayda 35 Elmas</string>
-    <string name="subscribe12month_gemcap">Ayda 45 Elmas</string>
+    <string name="subscribe1month_gemcap">Ayda 25 elmas</string>
+    <string name="subscribe3month_gemcap">Ayda 30 elmas</string>
+    <string name="subscribe6month_gemcap">Ayda 35 elmas</string>
+    <string name="subscribe12month_gemcap">Ayda 45 elmas</string>
     <string name="subscription_hourglasses">%d Kum Saati</string>
     <string name="payment_method">Ödeme yöntemi</string>
     <string name="subscription">Abonelik</string>
@@ -417,7 +417,7 @@
     <string name="party_description">Takım Tanımı</string>
     <string name="number_participants">%1$d Katılımcı</string>
     <string name="welcome_back">Tekrar Hoş Geldin</string>
-    <string name="yesterdaililes_prompt">Dün yaptığın günlük işlere bir göz at:</string>
+    <string name="yesterdaililes_prompt">Dün yaptığın Günlük İşlere bir göz at:</string>
     <string name="start_day">Günüme Başla</string>
     <string name="leave_party_confirmation">Takımdan ayrılmak istediğine emin misin\?</string>
     <string name="pending">Beklemede</string>
@@ -694,7 +694,7 @@
     <string name="gift_confirmation_text_sub">\@%1$s kullanıcısına %2$s aylık Habitica üyeliği hediye ettin.</string>
     <string name="gift_gems_subtitle">Hediye etmek istediğin elmas paketini seç!</string>
     <string name="insufficientGoldTitle">Yetersiz Altın</string>
-    <string name="challenge_leave_description">Bu Meydan Okumanın görevlerini kişisel görev panonda tutmayı veya ayrıldığında silmeyi seçebilirsin</string>
+    <string name="challenge_leave_description">Bu mücadeleden ayrılırken görevleri tutabilirsin veya silebilirsin</string>
     <string name="login_incentive_count">Habitica\'ya %d kez giriş yaparak kilidi aç.</string>
     <string name="login_incentive_short_count">%d Giriş</string>
     <string name="number_responded">%1$d/%2$d Yanıtlandı</string>
@@ -768,7 +768,7 @@
     <string name="guild_summary">Lonca Özeti</string>
     <string name="setup_task_habit_2_notes">Veya düzenleme ekranından silin</string>
     <string name="setup_task_habit_1">Habitica\'ya bir görev ekle</string>
-    <string name="cost">Ücret</string>
+    <string name="cost">Fiyat</string>
     <string name="joined_guild">Loncaya katıldınız</string>
     <string name="left_guild">Loncadan ayrıldınız</string>
     <string name="leave_guild_confirmation">Loncadan ayrılmak istediğine emin misin\?</string>
@@ -1059,7 +1059,7 @@
     <string name="quest_leave_message">Görevden ayrılmak istediğinizden emin misiniz? Tüm ilerlemeniz kaybolacak.</string>
     <string name="quest_leave_message_nostart">Görevden ayrılmak istediğinizden emin misiniz? Katılamayacaksınız.</string>
     <string name="available_for">%s için mevcuttur</string>
-    <string name="login_disclaimer">Kaydolarak, <a href="https://habitica.com/static/terms">Hizmet Şartlarını</a> ve <a href="https://habitica.com/static/privacy">Gizlilik Politikasını</a> okuyup kabul ettiğini belirtiyorsun</string>
+    <string name="login_disclaimer">Kayıt olduğunuzda, Kullanım Şartları ve Gizlilik Politikası\'nı okuduğunuzu ve onayladığınızı belirtmiş oluyorsunuz.</string>
     <string name="cant_like_own_message">Kendi mesajlarını beğenemezsin</string>
     <string name="claim_x_gems">%d Mücevher Al</string>
     <string name="congratulations">Tebrikler!</string>
@@ -1148,7 +1148,7 @@
     <string name="negative_sentence">negatif</string>
     <string name="usernames_party">%s Kullanıcısının Takımı</string>
     <string name="discard">Terk Et</string>
-    <string name="quest_party_required_title">Bir Görev başlatmadan önce bir Takımda olman gerekir</string>
+    <string name="quest_party_required_title">Bir göreve başlamadan önce bir takımda olman gerekmektedir</string>
     <string name="quest_party_required_description">Bir takıma girince kendi başına Görevlere girebilir veya arkadaşlarına birlikte de Görevlere girebilirsiniz!</string>
     <string name="armoireFood_new">Gardırobu aradın ve yemek buldun. Peki burada ne arıyor\?</string>
     <string name="armoireEquipment_new">Gardıroptan nadir bir parça Ekipman buldun!</string>
