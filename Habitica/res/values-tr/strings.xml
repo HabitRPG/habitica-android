@@ -1389,4 +1389,25 @@
         <item quantity="one">her gün</item>
         <item quantity="other">her %d günde bir</item>
     </plurals>
+    <string name="about_me_description">Başkaları baktığında Habitica profilinde gözükecek kendin hakkında küçük bir tanıtım yazısı ekle.</string>
+    <string name="save_about_me">Hakkımdayı Kaydet</string>
+    <string name="gem_cap">Mücevher sınırı</string>
+    <string name="get_12_mystic_hourglasses">İlk 12 aylık abonelikten hemen sonra 12 Mistik Kumsaatleri al!</string>
+    <string name="twelve_mystic_hourglasses">12 Mistik Kumsaatleri</string>
+    <string name="thanks_for_subscribing">Abone olduğunuz için teşekkürler</string>
+    <string name="rescrubscribe_to_pick_up">Kaldığın yerden devam etmek için yeniden abone ol!</string>
+    <string name="gem_cap_extra">%1$d/%2$d Mücevher Sınırı</string>
+    <string name="open_habitica_website">Habitica Websitesini Aç</string>
+    <string name="valentines">Sevgililer günü</string>
+    <string name="nye">Yeni Yıl Arifesi</string>
+    <string name="search_equipment">Ekipman Ara</string>
+    <string name="faint_loss_description_alt">Seviyen <b>%1$d</b>\'e düşecek,<b>%2$d</b> Altın kaybedecek, ve deneyimini kaybedeceksin... Hepsini sıkı çalışmayla geri kazanabilirsin!</string>
+    <string name="auth_get_credentials_error">Doğrulama için bilgileri alma hatası.</string>
+    <string name="auth_invalid_credentials">Geçersiz bilgiler alındı.</string>
+    <string name="auth_unknown_error">Doğrulama olurken bilinmeyen hata.</string>
+    <string name="copy_tasks_description">Belirlenmiş ve açık görevleri kişisel görev listende göster</string>
+    <string name="g1g1_promo_info_limitations_noutc">Bu %1$s\'de başlayacak ve %2$s\'de bitecek sınırlı süreli bir etkinliktir. Bu promosyon sadece sen başka bir Habitican\'a hediye ettiğinde uygulanır. Eğer sen veya hediye ettiğin kişi zaten promosyona sahip ise, geçerli abonelik bittiğinde veya iptal edildiğinde hediye edilmiş abonelik eklenecektir.</string>
+    <string name="set">Belirle</string>
+    <string name="avatar_bangs_customization">Karakter Kahkülleri Özelleştirme</string>
+    <string name="tutorial_reset_confirmation">Öğreticilerin yenilendi</string>
 </resources>
