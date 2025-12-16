@@ -1469,7 +1469,7 @@
     <string name="unlock_gear_and_skills">%s kadar ekipman ve yetenek kilidi aç</string>
     <string name="username_or_email">Kullanıcı adı ya da eposta</string>
     <string name="seeking_party_description">Bir Takıma katılmak istiyor ama herhangi başka oyuncu tanımıyor musun\? Takım liderlerinin bir davet aradığını bildir!</string>
-    <string name="shop_armoire_description">Yeni ekipmanlar sezonluk galalarda gösterime sokulur. O zamana dek, %d kadar ekipman parçası Büyülü Gardırop\'ta bulunmayı bekliyor!</string>
+    <string name="shop_armoire_description">Yeni ekipmanlar sezonluk şenliklerde gösterime sokulur. O zamana dek, %d kadar ekipman parçası Efsunlu Gardırop\'ta bulunmayı bekliyor!</string>
     <string name="invited">Davet edildi</string>
     <string name="habiticans_send_invite">Doğrudan bildiğin kullanıcılara davet gönder</string>
     <string name="invite_with_username_email">\@Kullanıcı adı yada eposta ile davet et</string>
