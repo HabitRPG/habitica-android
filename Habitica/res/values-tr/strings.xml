@@ -593,7 +593,7 @@
     <string name="usernamePromptTitle">Kullanıcı adına karar verme vakti!</string>
     <string name="usernamePromptBody">Giriş isimleri artık görünen adının yanında görünecek ve davetiyelerde, sohbet @bahsetmelerinde ve mesajlaşmalarda kullanılacak eşsiz kullanıcı adlarına dönüştü.</string>
     <string name="usernamePromptWiki">Eğer bu değişim hakkında daha fazla şey öğrenmek istiyorsan, <a href="https://habitica.wikia.com/wiki/Player_Names">wikimizi ziyaret et.</a></string>
-    <string name="usernamePromptDisclaimer">&lt;a href=\"https://habitica.com/static/community-guidelines\"&gt;Kullanıcı Adları &lt;a href=\"https://habitica.com/static/terms\"&gt;Hizmet Koşulları\'mıza&lt;/a&gt; ve &lt;a href=\"https://habitica.com/static/community-guidelines\"&gt;Topluluk İlkeleri\'mize&lt;/a&gt; uygun olmalıdır. Daha önce bir Giriş Adı belirlemediysen, Kullanıcı Adın otomatik olarak oluşturulmuştur.</string>
+    <string name="usernamePromptDisclaimer">Kullanıcı Adları <a href="https://habitica.com/static/terms">Hizmet Koşulları\'mıza</a> ve <a href="https://habitica.com/static/community-guidelines">Topluluk İlkelerimiz\'e</a> uygun olmalıdır. Daha önce bir Giriş Adı belirlemediysen, Kullanıcı Adın otomatik olarak oluşturulmuştur.</string>
     <string name="confirm_username_title">Geçerli kullanıcı adını onaylamak istediğine emin misin?</string>
     <string name="confirm_username_description">Kullanıcı adını onaylayarak onu davetlerde, sohbetlerde ve mesajlaşmalarda aleni hâle getiriyorsun. Kullanıcı adını istediğin her an ayarlardan değiştirebilirsin.</string>
     <string name="cancel">İptal </string>
@@ -1059,7 +1059,7 @@
     <string name="quest_leave_message">Görevden ayrılmak istediğinizden emin misiniz? Tüm ilerlemeniz kaybolacak.</string>
     <string name="quest_leave_message_nostart">Görevden ayrılmak istediğinizden emin misiniz? Katılamayacaksınız.</string>
     <string name="available_for">%s için mevcuttur</string>
-    <string name="login_disclaimer">Kayıt olduğunuzda, Kullanım Şartları ve Gizlilik Politikası\'nı okuduğunuzu ve onayladığınızı belirtmiş oluyorsunuz.</string>
+    <string name="login_disclaimer">Kayıt olduğunuzda, <a href="https://habitica.com/static/terms">Kullanım Şartları</a> ve <a href="https://habitica.com/static/privacy">Gizlilik Politikası\'nı</a> okuduğunuzu ve onayladığınızı belirtmiş oluyorsunuz.</string>
     <string name="cant_like_own_message">Kendi mesajlarını beğenemezsin</string>
     <string name="claim_x_gems">%d Mücevher Al</string>
     <string name="congratulations">Tebrikler!</string>
@@ -1488,4 +1488,9 @@
     <string name="empty_quests_description">Seviye atlayarak, giriş bonuslarından veya [Görev Dükkanı](/shops/quests)\'ndan görevler al!</string>
     <string name="visit_faq">SSS\'i ziyaret et</string>
     <string name="contrib_tier_description">Eğer renkli bir görünür ada ve simgeye sahip bir hesap görürsen, o bir iştirakçi rütbesidir! Rütbeler Habitica\'ya yardımcı olmuş kişilere verilir, ya çevirmeyle, kodlamayla ya da sadece yardımsever olduğu için. Rütbe ne kadar yüksekse, oyuncu o kadar katkı sağlamış demektir.</string>
+    <string name="empty_food_description">Stoklamak için görev tamamla, Efsunlu Gardırop satın al, ya da [Market](/shops/market/)\'e git!</string>
+    <string name="item_footer_title">Doğru %s\'ı alamıyor musunuz\?</string>
+    <string name="empty_eggs_description">Stoklamak için görev, yumurta görevleri tamamla, ya da [Market](/shops/market)\'e git!</string>
+    <string name="item_footer_description">Tam da istediğiniz şeyleri satın almak için [Market](/shops/market)\'e bakın!</string>
+    <string name="empty_potions_description">Stoklamak için görev, iksir görevi tamamla, ya da [Market](/shops/market/)\'e git!</string>
 </resources>
