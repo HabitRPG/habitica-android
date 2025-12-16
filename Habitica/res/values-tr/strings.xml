@@ -1487,5 +1487,5 @@
     <string name="empty_special_description_subscribed">Sezonluk Gala etkinliklerinde dönüşüm eşyaları edin ve abonelere özel sürpriz kutulardan her ayın başında al!</string>
     <string name="empty_quests_description">Seviye atlayarak, giriş bonuslarından veya [Görev Dükkanı](/shops/quests)\'ndan görevler al!</string>
     <string name="visit_faq">SSS\'i ziyaret et</string>
-    <string name="contrib_tier_description">Eğer renkli bir kullanıcı adı ve simgesi olan bir hesap görürsen, o bir katkıda bulunanlar listesinde demektir! Seviyeler, çeviri, kodlama veya sadece yardımseverlik gibi konularda Habitica\'ya katkıda bulunan kişilere verilir. Seviye ne kadar yüksekse, oyuncunun katkısı o kadar fazladır.</string>
+    <string name="contrib_tier_description">Eğer renkli bir görünür ada ve simgeye sahip bir hesap görürsen, o bir iştirakçi rütbesidir! Rütbeler Habitica\'ya yardımcı olmuş kişilere verilir, ya çevirmeyle, kodlamayla ya da sadece yardımsever olduğu için. Rütbe ne kadar yüksekse, oyuncu o kadar katkı sağlamış demektir.</string>
 </resources>
