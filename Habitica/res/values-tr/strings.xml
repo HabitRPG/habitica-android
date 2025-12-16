@@ -1059,7 +1059,7 @@
     <string name="quest_leave_message">Görevden ayrılmak istediğinizden emin misiniz? Tüm ilerlemeniz kaybolacak.</string>
     <string name="quest_leave_message_nostart">Görevden ayrılmak istediğinizden emin misiniz? Katılamayacaksınız.</string>
     <string name="available_for">%s için mevcuttur</string>
-    <string name="login_disclaimer">Kayıt olduğunuzda, <a href="https://habitica.com/static/terms">Kullanım Şartları</a> ve <a href="https://habitica.com/static/privacy">Gizlilik Politikası\'nı</a> okuduğunuzu ve onayladığınızı belirtmiş oluyorsunuz.</string>
+    <string name="login_disclaimer">Kayıt olduğunda, <a href="https://habitica.com/static/terms">Kullanım Şartları</a> ve <a href="https://habitica.com/static/privacy">Gizlilik Politikası\'nı</a> okuduğunu ve onayladığını belirtmiş oluyorsun</string>
     <string name="cant_like_own_message">Kendi mesajlarını beğenemezsin</string>
     <string name="claim_x_gems">%d Mücevher Al</string>
     <string name="congratulations">Tebrikler!</string>
@@ -1423,7 +1423,8 @@
     <string name="find_new_member">Üyeler Bul</string>
     <string name="find_more_members">Daha fazla üyeler bul</string>
     <string name="resume_damage_1_title">Kaçırdığın Günlükler sana hasar vermeyecek</string>
-    <string name="resume_damage_1_description">Parti üyelerinin kaçırdığı Günlükler için bosslar yinede sana hasar verecek</string>
+    <string name="resume_damage_1_description">Parti üyelerinin kaçırdığı Günlükler için canavarlar
+\nYine de sana hasar verecek</string>
     <string name="go_to_settings">Ayarlara Git</string>
     <string name="resume_damage">Hasarı Devam Ettir</string>
     <string name="resume_damage_2_title">Serilerin ve sayaçların sıfırlanacak</string>
@@ -1468,7 +1469,7 @@
     <string name="unlock_gear_and_skills">%s kadar ekipman ve yetenek kilidi aç</string>
     <string name="username_or_email">Kullanıcı adı ya da eposta</string>
     <string name="seeking_party_description">Bir Takıma katılmak istiyor ama herhangi başka oyuncu tanımıyor musun\? Takım liderlerinin bir davet aradığını bildir!</string>
-    <string name="shop_armoire_description">Yeni ekipmanlar sezonluk şenliklerde gösterime sokulur. O zamana kadar, %d kadar ekipman parçası Efsunlu Gardırop\'ta bulunmayı bekliyor!</string>
+    <string name="shop_armoire_description">Yeni ekipmanlar sezonluk galalarda gösterime sokulur. O zamana dek, %d kadar ekipman parçası Büyülü Gardırop\'ta bulunmayı bekliyor!</string>
     <string name="invited">Davet edildi</string>
     <string name="habiticans_send_invite">Doğrudan bildiğin kullanıcılara davet gönder</string>
     <string name="invite_with_username_email">\@Kullanıcı adı yada eposta ile davet et</string>
@@ -1493,4 +1494,21 @@
     <string name="empty_eggs_description">Stoklamak için görev, yumurta görevleri tamamla, ya da [Market](/shops/market)\'e git!</string>
     <string name="item_footer_description">Tam da istediğiniz şeyleri satın almak için [Market](/shops/market)\'e bakın!</string>
     <string name="empty_potions_description">Stoklamak için görev, iksir görevi tamamla, ya da [Market](/shops/market/)\'e git!</string>
+    <string name="food_footer_description">Evcil hayvanını anında büyütmek için yiyecek veya eyer satın almak üzere [Pazar](/shops/market)\'a göz at!</string>
+    <string name="customize_avatar">Avatarı Özelleştir</string>
+    <string name="share_avatar">Avatarı Paylaş</string>
+    <string name="subscribe_listitemArmoire">Çift Gardırop Ödülleri</string>
+    <string name="potions">iksirler</string>
+    <string name="hatchingPotions_footer_description">Standart ve mevsimlik Kuluçka İksirleri satın almak için [Pazar](/shops/market)\'e göz at!</string>
+    <string name="open_profile">Profili Aç</string>
+    <string name="subscribe_listitemArmoire_description">Büyülü Gardırop\'u her açtığında yeni ekipman kazanmak için iki şans edin!</string>
+    <string name="subscribe_incentive_button_armoire">Abone ol, yeniden ücretsiz olarak aç!</string>
+    <string name="quests_footer_description">Nelerin olduğunu görmek için [Görev Dükkanı\'na](/shops/quests) göz at!</string>
+    <string name="quests_footer_title">Daha çok görev mi istiyorsun\?</string>
+    <string name="eggs_footer_description">İstediğin yumurtaları almak için [Pazar\'ı](/shops/market) kontrol et!</string>
+    <string name="subscribe_incentive_text_armoire">Abone olarak her satın alımında Gardıropta fazladan şans edin</string>
+    <plurals name="repeat_yearly">
+        <item quantity="one">her yıl</item>
+        <item quantity="other">her %d yılda bir</item>
+    </plurals>
 </resources>
