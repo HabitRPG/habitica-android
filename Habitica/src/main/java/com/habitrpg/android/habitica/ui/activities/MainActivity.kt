@@ -686,6 +686,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             val serverLanguage = preferences?.language
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
+            val savedLanguagePref = sharedPreferences.getString("language", null)
+
             val currentAppLocale = AppCompatDelegate.getApplicationLocales()
             val currentAppLanguageTag = if (!currentAppLocale.isEmpty) {
                 currentAppLocale[0]?.toLanguageTag()
@@ -702,10 +704,30 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 else -> currentAppLanguageTag?.replace("-", "_")
             }
 
-            if (!currentAppLocale.isEmpty &&
-                currentAppLanguagePref != null &&
-                currentAppLanguagePref != serverLanguage) {
+            if (savedLanguagePref != null && savedLanguagePref == currentAppLanguagePref) {
+                if (serverLanguage != null && serverLanguage != savedLanguagePref) {
+                    viewModel.preferenceLanguage = serverLanguage
+                    val serverLanguageTag = LanguageHelper.getLanguageTag(serverLanguage)
+                    val appLocale = LocaleListCompat.forLanguageTags(serverLanguageTag)
+                    AppCompatDelegate.setApplicationLocales(appLocale)
 
+                    sharedPreferences.edit {
+                        putString("language", serverLanguage)
+                    }
+                }
+                serverLanguage?.let { apiClient.languageCode = it }
+            } else if (savedLanguagePref != null && savedLanguagePref != currentAppLanguagePref) {
+                lifecycleScope.launchCatching {
+                    userRepository.updateLanguage(savedLanguagePref)
+                }
+                apiClient.languageCode = savedLanguagePref
+
+                val savedLanguageTag = LanguageHelper.getLanguageTag(savedLanguagePref)
+                if (currentAppLanguageTag != savedLanguageTag) {
+                    val appLocale = LocaleListCompat.forLanguageTags(savedLanguageTag)
+                    AppCompatDelegate.setApplicationLocales(appLocale)
+                }
+            } else if (currentAppLanguagePref != null && currentAppLanguagePref != serverLanguage) {
                 lifecycleScope.launchCatching {
                     userRepository.updateLanguage(currentAppLanguagePref)
                 }
@@ -715,21 +737,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 }
 
                 apiClient.languageCode = currentAppLanguagePref
-            } else {
-                serverLanguage?.let { apiClient.languageCode = it }
-
-                if (serverLanguage != viewModel.preferenceLanguage) {
-                    viewModel.preferenceLanguage = serverLanguage
-                    val serverLanguageTag = LanguageHelper.getLanguageTag(serverLanguage)
-                    if (currentAppLocale.isEmpty || currentAppLanguageTag != serverLanguageTag) {
-                        val appLocale = LocaleListCompat.forLanguageTags(serverLanguageTag)
-                        AppCompatDelegate.setApplicationLocales(appLocale)
-                    }
-
-                    sharedPreferences.edit {
-                        putString("language", serverLanguage)
-                    }
-                }
+            } else if (serverLanguage != null) {
+                apiClient.languageCode = serverLanguage
+                viewModel.preferenceLanguage = serverLanguage
             }
 
             preferences?.sound?.let { soundManager.soundTheme = it }

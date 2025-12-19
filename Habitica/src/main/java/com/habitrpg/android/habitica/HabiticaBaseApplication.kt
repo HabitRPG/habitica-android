@@ -152,6 +152,8 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         AdHandler.setup(sharedPrefs)
     }
 
+    private var isSettingLocale = false
+
     private fun setLocale() {
         val savedLanguage = sharedPrefs.getString("language", null)
         val currentAppLocales = AppCompatDelegate.getApplicationLocales()
@@ -163,21 +165,27 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             } else null
 
             if (currentTag != languageTag) {
+                isSettingLocale = true
                 val appLocale = LocaleListCompat.forLanguageTags(languageTag)
                 AppCompatDelegate.setApplicationLocales(appLocale)
+                isSettingLocale = false
             }
         } else if (currentAppLocales.isEmpty) {
+            isSettingLocale = true
             val appLocale = LocaleListCompat.forLanguageTags("en")
             AppCompatDelegate.setApplicationLocales(appLocale)
             sharedPrefs.edit {
                 putString("language", "en")
             }
+            isSettingLocale = false
         }
     }
-    
+
     private fun setupLocaleChangeListener() {
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                if (isSettingLocale) return
+
                 val currentLocales = AppCompatDelegate.getApplicationLocales()
                 if (!currentLocales.isEmpty) {
                     val currentLanguageTag = currentLocales[0]?.toLanguageTag() ?: "en"
@@ -192,15 +200,15 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                         else -> currentLanguageTag.replace("-", "_")
                     }
 
-                    val savedLanguage = sharedPrefs.getString("language", "en")
-                    if (savedLanguage != prefLanguage) {
+                    val savedLanguage = sharedPrefs.getString("language", null)
+                    if (savedLanguage == null) {
                         sharedPrefs.edit {
                             putString("language", prefLanguage)
                         }
                     }
                 }
             }
-            
+
             override fun onActivityStarted(activity: Activity) {}
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
