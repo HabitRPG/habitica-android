@@ -1106,6 +1106,6 @@
     <string name="guild_challenges">You\'re participating in a Guild Challenge</string>
     <string name="leave_delete_tasks">Leave &amp; Delete Tasks</string>
     <string name="is_open">Open</string>
-    <string name="subscription_credit_canceling">Your <b>+%d</b> months of subscription credit will activate after canceling</string>
+    <string name="subscription_credit_canceling">Your <b>+%d</b> months of subscription credit will activate after cancelling</string>
     <string name="unsaved_changes">Unsaved Changes</string>
 </resources>
