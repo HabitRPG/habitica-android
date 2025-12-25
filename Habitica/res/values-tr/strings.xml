@@ -1511,4 +1511,16 @@
         <item quantity="one">her yıl</item>
         <item quantity="other">her %d yılda bir</item>
     </plurals>
+    <string name="subscribe_second_chance_incentive_text">Aboneler her gün ikinci bir yaşam hakkı kazanır ve diğer ayrıcalıklardah yararlanır!</string>
+    <string name="subscriber_benefit_used_faint">Bugün zaten ikinci şansını kullandın. %s içerisinde yeniden kullanabilirsin</string>
+    <string name="quest_mechanics_boss_title">Bir Canavara Hasar Vermek</string>
+    <string name="quest_mechanics_boss_description">Herhangi bir görevi tamamla veya yeteneklerini kullanarak birikmiş hasarı artır! Hasar, bir sonraki gün uygulanacaktır. Güç ne kadar hasar vereceğini etkiler.</string>
+    <string name="subscriber_button_faint">İkinci şans: 1HP ile devam et!</string>
+    <string name="subscriber_button_armoire">Ücretsiz olarak yeniden aç!</string>
+    <string name="quest_mechanics_collecting_title">Görev Eşyaları Toplamak</string>
+    <string name="quest_mechanics">Görev İşleyişi</string>
+    <string name="subriber_benefit_notification_faint">1 sağlık puanı ile ikinci bir şans kazandın!</string>
+    <string name="watch_ad_to_hang_on">Bir reklam izle ve 1 sağlık puanı ile devam et!</string>
+    <string name="subscribe_incentive_text_faint">Abone olarak sağlığının tükenmesinin önüne geçmek için her gün ikinci bir şans kazan</string>
+    <string name="subscribe_second_armoire_open_text">Aboneler, gardıropta fazladan şans kazanır ve diğer ayrıcalıklardan yararlanır!</string>
 </resources>
