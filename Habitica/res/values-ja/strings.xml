@@ -562,7 +562,7 @@
     <string name="challenge_prize">チャレンジの賞品</string>
     <string name="challenge_categories">チャレンジのカテゴリ</string>
     <string name="created_challenge">作成されたチャレンジ</string>
-    <string name="joined">登録日</string>
+    <string name="joined">参加</string>
     <string name="public_challenge">公共のチャレンジ</string>
     <string name="short_name">短縮名</string>
     <string name="unlock_attribute_points">能力ポイントの割り当てはレベル10でアンロックされます</string>
