@@ -1523,4 +1523,7 @@
     <string name="watch_ad_to_hang_on">Bir reklam izle ve 1 sağlık puanı ile devam et!</string>
     <string name="subscribe_incentive_text_faint">Abone olarak sağlığının tükenmesinin önüne geçmek için her gün ikinci bir şans kazan</string>
     <string name="subscribe_second_armoire_open_text">Aboneler, gardıropta fazladan şans kazanır ve diğer ayrıcalıklardan yararlanır!</string>
+    <string name="quest_mechanics_damage_title">Canavarlar kaçırılan günlükler nedeniyle saldırır</string>
+    <string name="quest_mechanics_collecting_description">Bir Toplama Görevindeyken, görevlerini tamamlayarak rastgele bir şansla bir Görev öğesi bulabilirsin. Bekleyen öğeler bir sonraki gün sıfırlamanda uygulanacak. Algı, öğe bulma oranlarını artırır.</string>
+    <string name="sub_perk">Abonelik Ayrıcalığı</string>
 </resources>

@@ -13,4 +13,11 @@
     <string name="are_you_sure">Ești sigur(ă)\?</string>
     <string name="stats">Statistice</string>
     <string name="trivial">Banal</string>
+    <string name="trillion_abbrev">tln</string>
+    <string name="gold_plural">aur</string>
+    <string name="gold_capitalized">Aur</string>
+    <string name="easy">Ușor</string>
+    <string name="medium">Mediu</string>
+    <string name="hard">Greu</string>
+    <string name="quadrillion_abbrev">qln</string>
 </resources>

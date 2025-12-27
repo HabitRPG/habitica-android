@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="tutorial_habits_3">Dacă greșești și faci un obicei negativ, apăsând pe - vei reduce sănătatea avatarului tău pentru a te ajuta să rămâi responsabil.</string>
+    <string name="tutorial_stats">Apasă butonul gri pentru a aloca mai multe dintre statisticile tale simultan sau apasă pe săgeți pentru a le adăuga pe rând.</string>
+    <string name="tutorial_habits_1">Primul aspect este Obiceiurile. Acestea pot fi Obiceiuri pozitive pe care dorești să le îmbunătățești, sau Obiceiuri negative pe care dorești să le înlături.</string>
+    <string name="tutorial_habits_2">De fiecare dată când faci un Obicei pozitiv, atinge butonul + pentru a obține experiență și aur!</string>
+    <string name="tutorial_overview">Hai să începem! Am completat câteva sarcini pentru tine, pe baza intereselor tale. Încearcă să adaugi câteva proprii. Poți edita orice sarcină apăsând pe titlu.</string>
+    <string name="tutorial_habits_4">Fă o încercare! Poți explora celelalte tipuri de sarcini prin intermediul barei de navigare din partea de jos.</string>
+</resources>
