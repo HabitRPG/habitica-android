@@ -85,7 +85,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         val promo = appConfigManager.activePromo()
         if (promo != null) {
             binding?.let {
-                isGemSaleHappening = true
+                isGemSaleHappening = promo.promoType == PromoType.GEMS_AMOUNT
                 promo.configurePurchaseBanner(it)
                 if (promo.promoType != PromoType.SUBSCRIPTION) {
                     promo.configureGemView(it.gems4View.binding, 4)
