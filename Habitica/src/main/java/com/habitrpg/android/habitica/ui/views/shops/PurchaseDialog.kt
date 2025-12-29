@@ -313,6 +313,17 @@ class PurchaseDialog(
                 } else {
                     limitedTextView.visibility = View.GONE
                 }
+            } else if (userLevel in 50..99) {
+                val lastFreeRebirth = user?.flags?.lastFreeRebirth
+                if (lastFreeRebirth == null ||
+                    (Date().time - lastFreeRebirth.time) / (1000 * 60 * 60 * 24) >= 45) {
+                    limitedTextView.visibility = View.VISIBLE
+                    limitedTextView.text = context.getString(R.string.free_rebirth_at_level_100)
+                    limitedTextView.background = ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
+                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
+                } else {
+                    limitedTextView.visibility = View.GONE
+                }
             } else {
                 limitedTextView.visibility = View.GONE
             }
