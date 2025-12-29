@@ -147,7 +147,7 @@
     <string name="setup_task_school_1">Estudar/procrastinar</string>
     <string name="setup_task_school_2">Fazer a lição de casa</string>
     <string name="setup_task_school_3">Terminar tarefa para a aula</string>
-    <string name="setup_task_teams_1">Confirmar com a equipe</string>
+    <string name="setup_task_teams_1">Confirme com a equipe</string>
     <string name="setup_task_teams_2">Atualizar a equipe sobre o progresso</string>
     <string name="setup_task_teams_3">Completar projeto da equipe</string>
     <string name="setup_task_chores_1">Limpeza de 10 minutos</string>
@@ -209,9 +209,9 @@
     <string name="notification_pet_fed">Você alimentou seu/sua %s!</string>
     <string name="notification_purchase_reward">Você comprou uma recompensa</string>
     <string name="world_quest">Missão mundial</string>
-    <string name="inn_description">Precisa de um descanso\? Faça uma visita à Pousada do Daniel e pare algumas das mecânicas de jogo mais difíceis do Habitica.
+    <string name="inn_description">Precisa de uma pausa\? Faça uma visita à Pousada do Daniel e pause algumas das mecânicas de jogo mais difíceis do Habitica:
 \n
-\n • Diárias não feitas não lhe causarão dano (chefões ainda causam dano devido a diárias não feitas de outros membros do Grupo)
+\n • Tarefas diárias não feitas não lhe causarão dano (chefões ainda causam dano devido a diárias não feitas de outros membros do Grupo)
 \n • As tarefas não vão perder progresso e os contadores dos Hábitos não irão resetar
 \n • Seu dano ao chefão ou items de Missão de coleta ficarão acumulados até você voltar</string>
     <string name="empty_items">Você não tem nenhum %s</string>
@@ -220,8 +220,8 @@
     <string name="rogue">Ladino</string>
     <string name="mage">Mago(a)</string>
     <string name="healer">Curandeiro(a)</string>
-    <string name="warrior_description">Guerreiros causam mais danos críticos aos Chefões. Seja um Guerreiro se você quer derrotar monstros com facilidade! Guerreiros se beneficiam de um alto atributo de Força.</string>
-    <string name="mage_description">Magos(as) aprendem Habilidades que causam danos aos Chefões e aumentam EXP e Mana. Jogue como Mago(a) se você for motivado a passar de nível rapidamente! Magos(as) se beneficiam de um alto status de Inteligência.</string>
+    <string name="warrior_description">Guerreiros causam mais danos críticos aos Chefões. Seja um Guerreiro se você quer derrotar monstros com facilidade! Guerreiros tem a vantagem de um alto atributo de Força.</string>
+    <string name="mage_description">Magos(as) aprendem Habilidades que causam danos aos Chefões e aumentam EXP e Mana. Jogue como Mago(a) se você quiser passar de nível rapidamente! Magos(as) tem a vantagem de um alto status de Inteligência.</string>
     <string name="rogue_description">Ladinos aprendem Habilidades que permitem que eles e seu Grupo encontrem mais Ouro e tenham mais chances de encontrar itens aleatórios. Jogue como um Ladino ou Ladina se você quer encontrar muitos itens e grandes quantidades de Ouro! Ladinos se beneficiam de estatísticas altas em Percepção.</string>
     <string name="healer_description">Curandeiros(as) aprendem Habilidades que podem curar e proteger a si e a seu Grupo. Jogue como Curandeiro(a) se você gosta de ajudar os outros ou evitar danos! Curandeiros(as) se beneficiam de um alto status de Constituição.</string>
     <string name="select_class">Escolha sua Classe</string>
@@ -249,7 +249,7 @@
     <string name="share_raised">Eu acabei de ganhar um %1$s de montaria no #Habitica completando minhas tarefas da vida real!</string>
     <string name="open_in_store">Abrir na Play Store</string>
     <string name="change_class_confirmation">Você tem certeza que quer mudar a sua classe\? Isso irá custar 3 gemas.</string>
-    <string name="change_class_equipment_warning">Aviso: Você não poderá mais comprar equipamentos da classe %s.</string>
+    <string name="change_class_equipment_warning">Isso irá reembolsar seus pontos de atributos, mudar qual equipamento fica desbloqueado nas lojas e mudar suas habilidades disponíveis, pense bem antes de mudar de classe!</string>
     <string name="confirm">Confirmar</string>
     <string name="market">Mercado</string>
     <string name="timeTravelers">Viajantes do Tempo</string>
@@ -1255,13 +1255,13 @@
     </plurals>
     <string name="x_and_y">%1$s e %2$s</string>
     <string name="enable_notifications">Habilitar Notificações</string>
-    <string name="push_notification_system_settings_description">Habilite notificações do Habitica nas Configurações do aplicativo para receber notificações</string>
+    <string name="push_notification_system_settings_description">Permitir notificações do Habitica nas Configurações do aplicativo para receber notificações push</string>
     <string name="push_notification_system_settings_title">Notificações desabilitadas</string>
     <string name="title">Título</string>
     <string name="positive_sentence">positivo</string>
     <string name="negative_sentence">negativo</string>
     <string name="level_abbreviated">Nv. %d</string>
-    <string name="push_notification_system_settings_reminders">Habilite notificações do Habitica nas Configurações do aplicativo para receber lembretes</string>
+    <string name="push_notification_system_settings_reminders">Permitir notificações do Habitica nas Configurações do aplicativo para receber lembretes</string>
     <string name="class_changed_description">Agora você pode usar habilidades %s e comprar equipamentos em lojas. Avance de nível para ganhar pontos de atributo que você pode usar para fortalecer suas habilidades.</string>
     <string name="change_class_selected_confirmation">Você quer mudar sua classe para %1$s \?</string>
     <string name="subscribers_mythic_hourglasses"><i>Os assinantes recebem Ampulhetas Místicas nos primeiros três dias do mês.</i></string>
@@ -1518,7 +1518,7 @@
         <item quantity="many">%d Dias</item>
         <item quantity="other">%d Dias</item>
     </plurals>
-    <string name="exact_alarm_system_settings_reminders">Os lembretes podem ser adiados porque as permissões não estão ativadas. Toque para visualizar e atualizar as permissões.</string>
+    <string name="exact_alarm_system_settings_reminders">Os lembretes podem ser entregues com atraso porque as permissões não estão ativadas. Toque para visualizar e atualizar as permissões.</string>
     <string name="exact_alarm_system_settings_description">Permitir `Alarmes e Lembretes` no aplicativo Configurações para garantir que os lembretes apareçam exatamente no horário programado</string>
     <string name="subscribe_listitem3_description_alt">Fique por dentro dos últimos lançamentos exclusivos. Assine agora para ganhar %1$s de %2$s!</string>
     <string name="leave_party_confirmation_quest">Tem certeza que deseja sair deste grupo\?</string>
@@ -1602,7 +1602,7 @@
     <plurals name="items_pending">
         <item quantity="one">%d Item pendente</item>
         <item quantity="many">%d Itens pendentes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="tap_to_reload">Atualize para ver mais itens</string>
     <string name="customization_shop">Loja de Personalização</string>
