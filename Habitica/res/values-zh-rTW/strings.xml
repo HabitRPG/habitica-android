@@ -1277,4 +1277,57 @@
     <string name="reset_account_description_no_pw">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入RESET。</string>
     <string name="reset_account_description_new">你將失去所有等級、金幣與經驗值。你所有的任務及其歷史紀錄都將被刪除（挑戰任務將會保留）。你將失去所有裝備，訂閱者物品與免費紀念物品除外，但你可以重新購買這些裝備。若要重新購買特定職業裝備，你必須為對應的職業。你將保留目前的職業、成就，以及你的寵物與坐騎。若要確認重置，請在下方輸入你的密碼。</string>
     <string name="subscribe_listitem3_description_alt">用最新的限定裝備保持盛裝打扮。現在訂閱 %1$s %2$s！</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; 邀請你加入群組 &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="report_message">檢舉訊息</string>
+    <string name="photo_url_description">您可以在此處添加圖片連結，以便在您的 Habitica 個人檔案中顯示圖片供他人查看。</string>
+    <string name="save_photo_url">儲存相片網址</string>
+    <string name="change_email_description">這是您用來登入 Habitica 以及接收通知的電子郵件地址。</string>
+    <string name="insufficient_level_equipment_dialog">此物品僅限特定職業使用。您可以在達到 10 級後選擇職業。</string>
+    <string name="change_display_name">更改顯示名稱</string>
+    <string name="display_name_description">這是會在 Habitica 中為您的角色頭像顯示的名稱。與用戶名稱不同，顯示名稱不需要是唯一的。</string>
+    <string name="password_change_info">密碼長度必須為 8 個字元或以上。更改密碼將會登出您可能正在使用的任何其他裝置及第三方工具。</string>
+    <string name="confirm_new_password">確認新密碼</string>
+    <string name="need_help_description">您可以與我們聯繫，我們團隊的成員將竭誠為您提供協助！</string>
+    <string name="report_challenge_explanation">您應該只在挑戰違反 社群指南 (https://habitica.com/static/community-guidelines) 和/或 服務條款 (https://habitica.com/static/terms) 時進行檢舉。提交虛假檢舉屬於違反 Habitica 社群指南的行為。</string>
+    <string name="see_other_sub_options">查看其他訂閱選項</string>
+    <string name="benefits_end">福利將於 %s 結束</string>
+    <string name="use_on_party">對隊伍使用</string>
+    <string name="save_about_me">儲存個人介紹</string>
+    <string name="avatar_skin_customization">角色皮膚自訂</string>
+    <string name="change_username_description">用戶名稱長度必須為 1 至 20 個字元，且僅能包含英文字母 a 至 z、數字 0 至 9、連字號（-）或底線（_）。</string>
+    <string name="report_message_explanation">您應該只在貼文違反 社群指南 (https://habitica.com/static/community-guidelines) 和/或 服務條款 (https://habitica.com/static/terms) 時進行檢舉。提交虛假檢舉屬於違反 Habitica 社群指南的行為。</string>
+    <string name="g1g1_promo_info_limitations_noutc">這是一項限時活動，將於 %1$s 開始並於 %2$s 結束。此優惠僅適用於贈送給其他 Habitica 用戶。如果您或您的贈送對象已經擁有訂閱，贈送的訂閱將轉換為月份額度，並在目前的訂閱取消或過期後才開始使用。</string>
+    <string name="about_me_description">增加一段關於您自己的簡短介紹，當其他人查看您的 Habitica 個人檔案時將會看到它。</string>
+    <string name="insufficient_level_equipment_dialog_new">此物品僅適用於 %s。您可以在達到 10 級後選擇職業。</string>
+    <string name="class_equipment_shop_dialog_new">此物品僅適用於 %s。請前往「設定」更改職業。</string>
+    <string name="sort_by">排序依據</string>
+    <string name="report_player_title">要檢舉 %s 嗎？</string>
+    <string name="minimal">極簡</string>
+    <string name="day_start_adjustment">開始時間調整</string>
+    <string name="x_checkins">%d 次簽到</string>
+    <string name="report_reason_title_message">您為什麼要檢舉這則訊息？</string>
+    <string name="report_user_explanation">您應該只在玩家違反 社群指南 (https://habitica.com/static/community-guidelines) 和/或 服務條款 (https://habitica.com/static/terms) 時進行檢舉。提交虛假檢舉屬於違反 Habitica 社群指南的行為。</string>
+    <string name="report_reason_title_player">您為什麼要檢舉這位玩家？</string>
+    <string name="report_player">檢舉玩家</string>
+    <string name="report_hint">檢舉原因</string>
+    <string name="report_user_description">這也將同時封鎖 @%s</string>
+    <string name="resubscribe_description_gift">想要繼續享有訂閱福利嗎？您可以開啟自動續訂，以維持您的福利資格。</string>
+    <string name="use_skill">使用技能</string>
+    <string name="rejoin_party_quest">除非收到邀請，否則您將無法重新加入此隊伍。
+\n
+\n離開隊伍亦會令您退出目前正在進行的任務。</string>
+    <string name="rejoin_party_quest_leader">除非收到邀請，否則您將無法重新加入此隊伍。
+\n
+\n離開隊伍亦會導致目前的任務中斷。</string>
+    <string name="report_failure">檢舉失敗，請稍後再試</string>
+    <string name="report_player_toolbar_title">檢舉 %s</string>
+    <string name="report_successful">已檢舉 %s</string>
+    <string name="cancel_subscription_apple_description">不想再訂閱？由於您的付款方式限制，您需要透過 iOS 裝置上的 Apple ID 訂閱設定來取消訂閱。</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="register_tos_confirm">您同意我們的<a href="https://habitica.com/static/terms">服務條款</a>，並已閱讀我們的<a href="https://habitica.com/static/privacy">隱私權政策</a>。</string>
+    <string name="report_reason_title_challenge">您為什麼要檢舉這個挑戰？</string>
+    <string name="send_invite">發送邀請</string>
+    <string name="subscribers_mythic_hourglasses"><s>訂閱者將在每個月的前三天內收到神秘沙漏 (Mystic Hourglasses)。</s></string>
+    <string name="not_set" tools:override="true">未設定</string>
 </resources>

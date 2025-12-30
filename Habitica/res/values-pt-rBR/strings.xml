@@ -249,7 +249,7 @@
     <string name="share_raised">Eu acabei de ganhar um %1$s de montaria no #Habitica completando minhas tarefas da vida real!</string>
     <string name="open_in_store">Abrir na Play Store</string>
     <string name="change_class_confirmation">Você tem certeza que quer mudar a sua classe\? Isso irá custar 3 gemas.</string>
-    <string name="change_class_equipment_warning">Isso irá reembolsar seus pontos de atributos, mudar qual equipamento fica desbloqueado nas lojas e mudar suas habilidades disponíveis, pense bem antes de mudar de classe!</string>
+    <string name="change_class_equipment_warning">Isso irá reembolsar seus pontos de atributos, mudar quais equipamentos estão desbloqueados na loja, e mudar suas habilidades disponíveis.</string>
     <string name="confirm">Confirmar</string>
     <string name="market">Mercado</string>
     <string name="timeTravelers">Viajantes do Tempo</string>
@@ -300,8 +300,8 @@
     <string name="has_tag">Tem etiqueta</string>
     <string name="subscribe_title">Assinaturas dão suporte à nossa pequena equipe e ajudam a manter o Habitica funcionando</string>
     <string name="subscribe_prompt">Mantenha-se motivado com ainda mais recompensas ao assinar</string>
-    <string name="subscribe_listitem1">Gemas gratuitas mensalmente</string>
-    <string name="subscribe_listitem2">Ampulhetas Místicas mensais</string>
+    <string name="subscribe_listitem1">Gemas gratuitas mensais</string>
+    <string name="subscribe_listitem2">Ampulhetas Místicas Mensais</string>
     <string name="subscribe_listitem3">Itens Misteriosos Mensais</string>
     <string name="subscribe_listitem4">Mascote especial para assinantes</string>
     <string name="subscriptions">Assinaturas</string>
@@ -309,7 +309,7 @@
     <string name="subscription_duration_norenew">Por %s</string>
     <string name="subscribe">Assinar</string>
     <string name="subscribe_listitem1_description">Obtenha até 50 Gemas compráveis com Ouro no Mercado para comprar Missões, Personalizações, Mascotes e muito mais!</string>
-    <string name="subscribe_listitem2_description">Não perca nenhum item com 1 Ampulheta Mística por mês para usar na Loja dos Viajantes do Tempo!</string>
+    <string name="subscribe_listitem2_description">Nunca perca um item com 1 Ampulheta Mística mensal para usar na loja dos Viajante do Tempo!</string>
     <string name="subscribe_listitem3_description">Assine já para obter um conjunto exclusivo agora mesmo e receber novos itens todos os meses!</string>
     <string name="subscribe_listitem4_description">Receba o mascote Lebrílope Roxo Real quando se tornar um(a) novo(a) assinante.</string>
     <string name="subscribe1month_gemcap">25 Gemas por mês</string>
@@ -947,9 +947,9 @@
     <string name="manual_sync_restart">Sincronização manual ou reinicialização</string>
     <string name="clear_cache_description">Para limpar seu cache, abra as Configurações do aplicativo no seu celular. Vá até Armazenamento &gt; Aplicativos &gt; Habitica, então toque em \"Limpar cache\".</string>
     <string name="clear_cache">Limpar seu cache</string>
-    <string name="hourglasses_description">Ampulhetas Místicas são uma forma extremamente rara de moeda que você só pode receber se assinar o Habitica por três meses consecutivos ou mais. Elas são usadas na loja dos Viajantes do Tempo para comprar conjuntos de equipamentos lançados no passado, mascotes, montarias, cenários animados ou até mesmo missões especiais.
+    <string name="hourglasses_description">Ampulhetas Místicas são uma forma extremamente rara de moeda que você só recebe ao se inscrever no Habitica. Você pode usá-las na Loja dos Viajantes do Tempo para comprar conjuntos de Equipamentos de Assinantes antigos, Pets exclusivos, Montarias, Fundos animados ou até mesmo Missões especiais! Esses benefícios extras são uma ótima maneira de se manter motivado durante o ano e se recompensar por um trabalho bem feito.
 \n
-\nVocê pode receber até quatro Ampulhetas Místicas por ano. O tempo de recompensa é baseado na sua programação de renovação de assinaturas. Elas são enviadas no primeiro dia de um novo mês após o seu último pagamento de assinatura que te qualificou a receber uma ampulheta. Veja a página [Assinatura] para mais detalhes.</string>
+\nOs assinantes recebem uma Ampulheta Mística no início de cada mês em que possuem os benefícios da assinatura, juntamente com várias outras vantagens. Não deixe de conferir nossas opções de assinatura se estiver interessado no que os Viajantes do Tempo têm a oferecer!</string>
     <string name="delete_checklist_entry">Excluir…</string>
     <string name="still_questions">Você ainda tem alguma pergunta\?</string>
     <string name="purchase_amount_error">Você não pode comprar essa quantidade.</string>
@@ -1425,7 +1425,7 @@
     <string name="challenge_tags">Tags de Desafio</string>
     <string name="group_tags">Tags de Equipe</string>
     <string name="subscribe_listitemFaint">Tenha uma segunda chance</string>
-    <string name="subscribe_listitemFaint_description">Evite perder seu progresso com uma cura instantânea quando você ficar sem HP uma vez por dia!</string>
+    <string name="subscribe_listitemFaint_description">Evite perder seu progresso com uma cura instantânea quando você ficar sem vida uma vez por dia!</string>
     <string name="subscription_hourglasses_3month_timeframe">Ampulheta em 3 meses</string>
     <string name="challenges">Desafios</string>
     <string name="need_help_description">Você pode entrar em contato conosco, e um membro de nossa equipe fará o melhor possível para ajudar!</string>
@@ -1489,7 +1489,7 @@
     <string name="preference_email_content_release">Lançamentos de conteúdo + Eventos</string>
     <string name="subscriber_benefit_used_faint">Você já usou sua segunda chance hoje. Ela estará disponível novamente em %s</string>
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; convidou você para entrar no grupo &lt;b&gt;%1$s&lt;/b&gt;</string>
-    <string name="subscribe_listitemArmoire">Recompensas duplas no armário</string>
+    <string name="subscribe_listitemArmoire">O dobro de Recompensas no Armário</string>
     <string name="sub_perk">BENEFÍCIO SUB</string>
     <string name="subscribe_second_chance_incentive_text">Os assinantes têm uma segunda chance na vida todos os dias e esses outros benefícios!</string>
     <string name="watch_ad_to_hang_on">Assista ao anúncio para aguentar o 1HP!</string>
@@ -1535,7 +1535,7 @@
     <string name="confirm_new_password">Confirmar a nova senha</string>
     <string name="report_challenge_explanation">Você só deve reportar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou [Termos de Serviço](https://habitica.com/static/terms). Enviar um relatório falso é uma violação das Diretrizes da Comunidade de Habitica.</string>
     <string name="benefits_end">Benefícios terminam em %s</string>
-    <string name="faint_loss_description_alt">Você cairá para o nível <b>%1$d</b>, perderá <b>%2$d</b> de Ouro, e sua Experiência… Mas você pode recuperar tudo com esforço!</string>
+    <string name="faint_loss_description_alt">Você irá cair para o nível <b>%1$d</b>,, perderá <b>%2$d</b> Ouro e sua Experiência... Você pode recuperá-los com trabalho duro!</string>
     <string name="report_reason_title_challenge">Por que você está denunciando este desafio\?</string>
     <string name="g1g1_promo_info_limitations_noutc">Este é um evento por tempo limitado que começa em %1$s e termina em %2$s. Esta promoção se aplica apenas quando você presenteia outro Habiticano. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presente adicionará meses de crédito que só serão usados após o cancelamento ou expiração da assinatura atual.</string>
     <string name="best_deal">Melhor oferta</string>
@@ -1590,7 +1590,7 @@
     <string name="popular">Popular</string>
     <string name="two_gems_per_month">Ganhe +2 Gemas a cada mês que estiver inscrito</string>
     <string name="subscribe_listitem2_description_2">Ganhe Ampulhetas ao longo do tempo para comprar itens na Loja dos Viajantes do Tempo</string>
-    <string name="customizations_owner">Felicitus</string>
+    <string name="customizations_owner">Sucessos</string>
     <string name="healers">Curandeiros</string>
     <string name="try_on_next_season">Você pode experimentá-los customizando seu avatar. Não deixe de conferir mais tarde as opções da próxima temporada!</string>
     <string name="try_on_equipment">Você pode experimentá-los em Equipamentos. Novo estoque chega no início de cada mês!</string>
@@ -1602,7 +1602,7 @@
     <plurals name="items_pending">
         <item quantity="one">%d Item pendente</item>
         <item quantity="many">%d Itens pendentes</item>
-        <item quantity="other"/>
+        <item quantity="other">%d Itens pendentes</item>
     </plurals>
     <string name="tap_to_reload">Atualize para ver mais itens</string>
     <string name="customization_shop">Loja de Personalização</string>
