@@ -258,7 +258,7 @@
         <item quantity="one">%d day until FREE Orb of Rebirth</item>
         <item quantity="other">%d days until FREE Orb of Rebirth</item>
     </plurals>
-    <string name="free_rebirth_at_level_100">FREE Orb of Rebirth at level 100!</string>
+    <string name="free_rebirth_at_level_100">FREE Orb of Rebirth at level 100</string>
 
     <string name="today">Today</string>
     <string name="sidebar_items">Items</string>
