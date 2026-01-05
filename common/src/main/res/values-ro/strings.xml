@@ -20,4 +20,6 @@
     <string name="medium">Mediu</string>
     <string name="hard">Greu</string>
     <string name="quadrillion_abbrev">qln</string>
+    <string name="gems">Nestemate</string>
+    <string name="mystic_hourglasses">Clepsidră mistică</string>
 </resources>

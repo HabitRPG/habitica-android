@@ -6,4 +6,11 @@
     <string name="tutorial_habits_2">De fiecare dată când faci un Obicei pozitiv, atinge butonul + pentru a obține experiență și aur!</string>
     <string name="tutorial_overview">Hai să începem! Am completat câteva sarcini pentru tine, pe baza intereselor tale. Încearcă să adaugi câteva proprii. Poți edita orice sarcină apăsând pe titlu.</string>
     <string name="tutorial_habits_4">Fă o încercare! Poți explora celelalte tipuri de sarcini prin intermediul barei de navigare din partea de jos.</string>
+    <string name="tutorial_rewards_2">Poți de asemenea crea Recompense Personalizate bazate pe ce te motivează pe tine.</string>
+    <string name="tutorial_dailies_1">Creați Zilnice pentru sarcini urgente care trebuie efectuate conform unui program regulat.</string>
+    <string name="tutorial_tasks_complete">Asta e tot pentru moment. Dacă ai nevoie de o reamintire, consultă secțiunea Întrebări frecvente.</string>
+    <string name="tutorial_rewards_1">Cumpără echipament pentru avatarul tău cu Aurul acumulat!</string>
+    <string name="tutorial_todos_1">Utilizează lista cu Sarcini pentru a-ți organiza sarcinile pe care trebuie să le îndeplinești o singură dată.</string>
+    <string name="tutorial_dailies_2">Ai grijă - dacă ratezi una, avatarul tău va suferi daune peste noapte. Bifările lor în mod constant aduc recompense grozave!</string>
+    <string name="tutorial_todos_2">Dacă Sarcina trebuie finalizată până la o anumită dată, setează una. Se pare că ai ceva de bifat — fă-o!</string>
 </resources>
