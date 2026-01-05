@@ -6,11 +6,19 @@ import android.view.View
 class HapticFeedbackManager {
     companion object {
         fun tap(view: View) {
-            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            try {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            } catch (_: SecurityException) {
+                // some devices require VIBRATE permission for haptic feedback
+            }
         }
 
         fun longPress(view: View) {
-            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+            try {
+                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+            } catch (_: SecurityException) {
+                // some devices require VIBRATE permission for haptic feedback
+            }
         }
     }
 }
