@@ -7,7 +7,7 @@
     <string name="monthly">Lunar</string>
     <string name="weekly">Săptămânal</string>
     <string name="daily">Zilnic</string>
-    <string name="settings">Setari</string>
+    <string name="settings">Setări</string>
     <string name="action_edit">Editează</string>
     <string name="about_title">Despre</string>
     <string name="are_you_sure">Ești sigur(ă)\?</string>
@@ -22,4 +22,66 @@
     <string name="quadrillion_abbrev">qln</string>
     <string name="gems">Nestemate</string>
     <string name="mystic_hourglasses">Clepsidră mistică</string>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Recompensă</item>
+        <item quantity="few">%d Recompense</item>
+        <item quantity="other">%d Recompense</item>
+    </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">Semnalat de %d ori</item>
+        <item quantity="few">Semnalat de %d ori, ascuns</item>
+        <item quantity="other">Semnalat de %d ori, ascuns</item>
+    </plurals>
+    <string name="todo">Sarcină</string>
+    <string name="habits">Obiceiuri</string>
+    <string name="dailies">Zilnice</string>
+    <string name="todos">Sarcini</string>
+    <string name="rewards">Recompense</string>
+    <string name="habit">Obicei</string>
+    <string name="reward">Recompensă</string>
+    <string name="avatar">Avatar</string>
+    <string name="action_cancel">Anulează</string>
+    <string name="register_btn">Înregistrează-te</string>
+    <string name="username">Nume de utilizator</string>
+    <string name="email_username">Email/Nume de utilizator</string>
+    <string name="new_task_x">%s nou</string>
+    <string name="save_task_x">Salvați %s</string>
+    <string name="login_btn">Conectare</string>
+    <string name="task">Sarcină</string>
+    <string name="failed">Nu s-a putut încărca</string>
+    <string name="retry">Reîncercați</string>
+    <string name="easy_sentence">ușor</string>
+    <string name="medium_sentence">mediu</string>
+    <string name="hard_sentence">greu</string>
+    <string name="new_task">Sarcină nouă</string>
+    <string name="user_level">Lvl. %d</string>
+    <string name="trivial_sentence">trivial</string>
+    <string name="LoginActivityName">Bun venit</string>
+    <string name="user_level_long">Nivel %d</string>
+    <string name="password">Parolă</string>
+    <string name="emailAddress">Adresă de email</string>
+    <string name="complete_task_title">Finalizați o sarcină</string>
+    <string name="create_task">Creați %s</string>
+    <string name="confirmpassword">Repetă parola</string>
+    <string name="login_btn_google">Sign in with Google</string>
+    <string name="logout_description">Deconectați-vă din contul dvs</string>
+    <string name="login_validation_error_title">Eroare de validare</string>
+    <string name="login_validation_error_fieldsmissing">Trebuie să completați toate câmpurile.</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Obicei</item>
+        <item quantity="few">%d Obiceiuri</item>
+        <item quantity="other">%d Obiceiuri</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Zilnică</item>
+        <item quantity="few">%d Zilnice</item>
+        <item quantity="other">%d Zilnice</item>
+    </plurals>
+    <string name="create_task_title">Creați o sarcină</string>
+    <string name="logout">Deconectare</string>
+    <plurals name="x_todos">
+        <item quantity="one">%d Sarcină</item>
+        <item quantity="few">%d Sarcini</item>
+        <item quantity="other">%d Sarcini</item>
+    </plurals>
 </resources>
