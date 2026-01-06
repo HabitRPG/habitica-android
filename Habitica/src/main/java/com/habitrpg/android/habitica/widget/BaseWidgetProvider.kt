@@ -86,7 +86,8 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
                     data.experienceDelta,
                     data.healthDelta,
                     data.goldDelta,
-                    data.manaDelta
+                    data.manaDelta,
+                    data.questDamage
                 )
             val toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG)
             toast.show()

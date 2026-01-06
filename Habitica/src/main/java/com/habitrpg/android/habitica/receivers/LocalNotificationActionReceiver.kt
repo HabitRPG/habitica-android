@@ -136,7 +136,8 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                                     it.experienceDelta,
                                     it.healthDelta,
                                     it.goldDelta,
-                                    it.manaDelta
+                                    it.manaDelta,
+                                    it.questDamage
                                 )
                             showToast(pair.first)
                         }

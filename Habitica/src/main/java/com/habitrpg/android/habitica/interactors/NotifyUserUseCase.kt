@@ -180,7 +180,8 @@ constructor(
             xp: Double?,
             hp: Double?,
             gold: Double?,
-            mp: Double?
+            mp: Double?,
+            questDamage: Double? = null
         ): Pair<SpannableStringBuilder, SnackbarDisplayType> {
             val builder = SpannableStringBuilder()
             var displayType = SnackbarDisplayType.NORMAL
@@ -201,7 +202,10 @@ constructor(
                 builder.append(formatValue(gold)).append(" Gold")
             }
             if (mp != null && mp != 0.0) {
-                builder.append(formatValue(mp)).append(" Exp").append(" Mana")
+                builder.append(formatValue(mp)).append(" Mana")
+            }
+            if (questDamage != null && questDamage > 0) {
+                builder.append(formatValue(questDamage)).append(" Quest Damage")
             }
 
             return Pair(builder, displayType)
