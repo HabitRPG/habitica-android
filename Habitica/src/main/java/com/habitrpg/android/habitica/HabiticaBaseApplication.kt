@@ -330,12 +330,14 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 val lightMode = preferences.getString("theme_mode", "system")
                 val launchScreen = preferences.getString("launch_screen", "")
 
-                // set the user and refreshed token in the push manager, so we can remove the push device
-                if (deviceToken.isNotEmpty() && user != null) {
+                if (user != null) {
                     pushManager?.setUser(user)
+                }
+                if (deviceToken.isNotEmpty()) {
                     pushManager?.refreshedToken = deviceToken
                     pushManager?.removePushDeviceUsingStoredToken()
                 }
+                pushManager?.unregisterUnifiedPushEndpoint()
 
                 deleteDatabase(context)
                 preferences.edit {
