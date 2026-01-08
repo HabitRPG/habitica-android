@@ -47,6 +47,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -54,6 +55,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
+import com.habitrpg.android.habitica.ui.views.HabiticaDrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -177,6 +179,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     val viewModel: MainActivityViewModel by viewModels()
     private var sideAvatarView: AvatarView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
+    private var drawerLayout: HabiticaDrawerLayout? = null
+    private var isPersistentDrawerMode: Boolean? = null
     var drawerToggle: ActionBarDrawerToggle? = null
     var showBirthdayIcon = false
     var showBackButton: Boolean? = null
@@ -285,22 +289,23 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 userQuestStatus = it
             }
         }
-        val drawerLayout = findViewById<ViewGroup>(R.id.drawer_layout)
-        if (drawerLayout is DrawerLayout) {
+        val foundDrawerLayout = findViewById<ViewGroup>(R.id.drawer_layout)
+        if (foundDrawerLayout is HabiticaDrawerLayout) {
+            drawerLayout = foundDrawerLayout
             drawerFragment =
                 supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
-            drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout, notificationsViewModel)
+            drawerFragment?.setUp(R.id.navigation_drawer, foundDrawerLayout, notificationsViewModel)
 
             drawerToggle =
                 object : ActionBarDrawerToggle(
                     this,
-                    drawerLayout,
+                    foundDrawerLayout,
                     R.string.navigation_drawer_open,
                     R.string.navigation_drawer_close
                 ) {}
             // Set the drawer toggle as the DrawerListener
-            drawerToggle?.let { drawerLayout.addDrawerListener(it) }
-            drawerLayout.addDrawerListener(
+            drawerToggle?.let { foundDrawerLayout.addDrawerListener(it) }
+            foundDrawerLayout.addDrawerListener(
                 object : DrawerLayout.DrawerListener {
                     private var isOpeningDrawer: Boolean? = null
 
@@ -350,6 +355,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     }
                 }
             )
+
+            updateDrawerBehavior()
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -542,6 +549,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         drawerToggle?.onConfigurationChanged(newConfig)
+        updateDrawerBehavior()
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
+        updateDrawerBehavior()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -1084,5 +1097,51 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
             null -> {}
         }
+    }
+
+    private fun updateDrawerBehavior() {
+        val layout = drawerLayout ?: return
+        val navigationDrawer = findViewById<View>(R.id.navigation_drawer) ?: return
+        val contentView = binding.content.root
+
+        val currentWidthDp = resources.configuration.screenWidthDp
+        val shouldBePersistent = currentWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+
+        if (isPersistentDrawerMode != null && shouldBePersistent == isPersistentDrawerMode) return
+        isPersistentDrawerMode = shouldBePersistent
+
+        val drawerWidth = resources.getDimensionPixelSize(R.dimen.drawer_width)
+        val contentLayoutParams = contentView.layoutParams as? ViewGroup.MarginLayoutParams
+
+        if (shouldBePersistent) {
+            layout.isPersistentMode = true
+            layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, GravityCompat.START)
+            if (!layout.isDrawerOpen(GravityCompat.START)) {
+                layout.openDrawer(GravityCompat.START, false)
+            }
+            layout.setScrimColor(android.graphics.Color.TRANSPARENT)
+            contentLayoutParams?.marginStart = drawerWidth
+            contentView.layoutParams = contentLayoutParams
+            drawerToggle?.isDrawerIndicatorEnabled = false
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        } else {
+            layout.isPersistentMode = false
+            layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, GravityCompat.START)
+            if (layout.isDrawerOpen(GravityCompat.START)) {
+                layout.closeDrawer(GravityCompat.START, false)
+            }
+            layout.setScrimColor(DEFAULT_SCRIM_COLOR)
+            contentLayoutParams?.marginStart = 0
+            contentView.layoutParams = contentLayoutParams
+            drawerToggle?.isDrawerIndicatorEnabled = showBackButton != true
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+
+        drawerToggle?.syncState()
+    }
+
+    companion object {
+        private const val PERSISTENT_DRAWER_MIN_WIDTH_DP = 600
+        private const val DEFAULT_SCRIM_COLOR = 0x99000000.toInt()
     }
 }
