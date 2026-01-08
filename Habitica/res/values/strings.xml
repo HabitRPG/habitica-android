@@ -669,13 +669,13 @@
     <string name="perception_description">Increases item drop chance, daily item drop cap, task streak bonuses, and Gold earned when completing tasks.</string>
     <string name="buffs">Buffs</string>
     <string name="allocated">Allocated</string>
-    <string name="distribute_evenly">Distribute Evenly</string>
+    <string name="distribute_evenly">Distribute evenly</string>
     <string name="distribute_class">Distribute based on class</string>
     <string name="distribute_task">Distribute based on task activity</string>
     <string name="no_points_to_allocate">No Points to Allocate</string>
     <string name="points_to_allocate">%d Points to Allocate</string>
     <string name="distribute_evenly_help">Assigns the same number of points to each attribute.</string>
-    <string name="distribute_class_help">Assigns more points to the attributes important to your Class.</string>
+    <string name="distribute_class_help">Assigns more points to the attributes important to your class.</string>
     <string name="distribute_task_help">Assigns points based on the Strength, Intelligence, Constitution, and Perception categories associated with the tasks you complete.</string>
     <string name="allocating_points">Allocating Points</string>
     <string name="class_equipment">Equipment</string>
