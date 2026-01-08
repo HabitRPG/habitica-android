@@ -660,11 +660,11 @@
     <string name="character_build">Character Build</string>
     <string name="character_build_description">Each level earns you one point to assign to an attribute of your choice. You can do so manually, or let the game decide for you using one of the Automatic Allocation options.</string>
     <string name="strength">Strength</string>
-    <string name="strength_description">Increases critical hit chance and damage when scoring tasks. Also increases damage dealt to bosses.</string>
+    <string name="strength_description">Increases critical hit chance and damage when scoring tasks. Also increases damage dealt to Quest bosses.</string>
     <string name="intelligence">Intelligence</string>
-    <string name="intelligence_description">Increases Exp earned from tasks. Also increases your mana cap and mana regeneration rate.</string>
+    <string name="intelligence_description">Increases Experience earned from tasks. Also increases your Mana cap and Mana regeneration rate.</string>
     <string name="constitution">Constitution</string>
-    <string name="constitution_description">Reduces damage taken from missed Dailies and negative Habits. Does not reduce damage from bosses.</string>
+    <string name="constitution_description">Reduces damage taken from missed Dailies and negative Habits. Does not reduce damage from Quest bosses.</string>
     <string name="perception">Perception</string>
     <string name="perception_description">Increases item drop chance, daily item drop cap, task streak bonuses, and Gold earned when completing tasks.</string>
     <string name="buffs">Buffs</string>
