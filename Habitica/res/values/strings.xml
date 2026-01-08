@@ -148,6 +148,10 @@
     <string name="quest_begin">Begin Quest</string>
     <string name="quest_cancel">Cancel</string>
     <string name="quest_abort">Abort Quest</string>
+    <string name="quest_accepted">Quest accepted!</string>
+    <string name="quest_rejected">Quest rejected</string>
+    <string name="quest_accept_error">Could not accept quest. Please try again.</string>
+    <string name="quest_reject_error">Could not reject quest. Please try again.</string>
     <string name="version_info">Version %1$s (%2$d)</string>
 
     <string name="sidebar_help">Support</string>
