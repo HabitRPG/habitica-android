@@ -1255,7 +1255,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="other">Du und %d andere</item>
     </plurals>
     <string name="push_notification_system_settings_description">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um Push-Benachrichtigungen zu erhalten</string>
-    <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um, Erinnerungen zu erhalten</string>
+    <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen, um Erinnerungen zu erhalten</string>
     <string name="push_notification_system_settings_title">Benachrichtigungen wurden deaktiviert</string>
     <string name="class_changed_description">Du kannst nun deine Fertigkeit %s verwenden und Ausrüstungen im Shop erwerben. Erhöhe dein Level, um Punkte für die Aufwertung deiner Fertigkeiten zu erhalten.</string>
     <string name="enable_notifications">Benachrichtigungen aktivieren</string>
@@ -1314,7 +1314,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="report_reason_title_message">Warum meldest du diese Nachricht\?</string>
     <string name="report_reason_title_player">Warum meldest du diese/n Spieler*in\?</string>
     <string name="exact_alarm_system_settings_reminders">Erinnerungen können verspätet erscheinen, da die Berechtigung nicht gegeben wurde. Klicke um Berechtigungen anzuzeigen und zu ändern.</string>
-    <string name="exact_alarm_system_settings_description">Erlaube \"Wecker und Erinnerungen\" in der Einstellungen-App, damit Erinnerungen exakt zur richtigen Zeit erscheinen</string>
+    <string name="exact_alarm_system_settings_description">Erlaube \"Wecker und Erinnerungen\" in den Einstellungen, damit Erinnerungen pünktlich erscheinen</string>
     <string name="sell_confirmation_title">Bist du dir sicher, dass du %s verkaufen möchtest\?</string>
     <string name="leave_party_confirmation_quest">Bist du sicher, dass du diese Party verlassen willst\?</string>
     <string name="rejoin_party_quest">Du kannst dieser Party ohne Einladung nicht erneut beitreten.
