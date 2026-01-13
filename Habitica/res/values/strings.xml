@@ -148,6 +148,10 @@
     <string name="quest_begin">Begin Quest</string>
     <string name="quest_cancel">Cancel</string>
     <string name="quest_abort">Abort Quest</string>
+    <string name="quest_accepted">Quest accepted!</string>
+    <string name="quest_rejected">Quest rejected</string>
+    <string name="quest_accept_error">Could not accept quest. Please try again.</string>
+    <string name="quest_reject_error">Could not reject quest. Please try again.</string>
     <string name="version_info">Version %1$s (%2$d)</string>
 
     <string name="sidebar_help">Support</string>
@@ -258,7 +262,7 @@
         <item quantity="one">%d day until FREE Orb of Rebirth</item>
         <item quantity="other">%d days until FREE Orb of Rebirth</item>
     </plurals>
-    <string name="free_rebirth_at_level_100">FREE Orb of Rebirth at Level 100!</string>
+    <string name="free_rebirth_at_level_100">FREE Orb of Rebirth at level 100</string>
 
     <string name="today">Today</string>
     <string name="sidebar_items">Items</string>
@@ -656,22 +660,22 @@
     <string name="character_build">Character Build</string>
     <string name="character_build_description">Each level earns you one point to assign to an attribute of your choice. You can do so manually, or let the game decide for you using one of the Automatic Allocation options.</string>
     <string name="strength">Strength</string>
-    <string name="strength_description">Increases the bonus of critical hits and makes them more likely when scoring a task. Also increases damage dealt to bosses.</string>
+    <string name="strength_description">Increases critical hit chance and damage when scoring tasks. Also increases damage dealt to Quest bosses.</string>
     <string name="intelligence">Intelligence</string>
-    <string name="intelligence_description">Increases EXP earned from completing tasks. Also increases your mana cap and how fast mana regenerates over time.</string>
+    <string name="intelligence_description">Increases Experience earned from tasks. Also increases your Mana cap and Mana regeneration rate.</string>
     <string name="constitution">Constitution</string>
-    <string name="constitution_description">Decreases the amount of damage taken from your tasks. Does not decrease the damage received from bosses.</string>
+    <string name="constitution_description">Reduces damage taken from missed Dailies and negative Habits. Does not reduce damage from Quest bosses.</string>
     <string name="perception">Perception</string>
-    <string name="perception_description">Increases the likelihood of finding drops when completing Tasks, the daily drop-cap, Streak Bonuses, and the amount of gold awarded for Tasks.</string>
+    <string name="perception_description">Increases item drop chance, daily item drop cap, task streak bonuses, and Gold earned when completing tasks.</string>
     <string name="buffs">Buffs</string>
     <string name="allocated">Allocated</string>
-    <string name="distribute_evenly">Distribute Evenly</string>
+    <string name="distribute_evenly">Distribute evenly</string>
     <string name="distribute_class">Distribute based on class</string>
     <string name="distribute_task">Distribute based on task activity</string>
     <string name="no_points_to_allocate">No Points to Allocate</string>
     <string name="points_to_allocate">%d Points to Allocate</string>
     <string name="distribute_evenly_help">Assigns the same number of points to each attribute.</string>
-    <string name="distribute_class_help">Assigns more points to the attributes important to your Class.</string>
+    <string name="distribute_class_help">Assigns more points to the attributes important to your class.</string>
     <string name="distribute_task_help">Assigns points based on the Strength, Intelligence, Constitution, and Perception categories associated with the tasks you complete.</string>
     <string name="allocating_points">Allocating Points</string>
     <string name="class_equipment">Equipment</string>
@@ -1188,10 +1192,10 @@
     <string name="fortify_shop">Fortify Potion</string>
     <string name="fortify_shop_description">Return all tasks to neutral value (yellow color), and restore all lost Health</string>
     <string name="rebirth_shop">Orb of Rebirth</string>
-    <string name="rebirth_shop_description">Instantly restart your adventure as a Level 1 Warrior while retaining Achievements, Items, and Equipment. Your tasks will reset to yellow but will retain their history. All personal task streaks will reset. Your Gold, Experience, Mana, and the effects of all Skills will be removed.</string>
+    <string name="rebirth_shop_description">Instantly restart your adventure as a level 1 Warrior while retaining Achievements, Items, and Equipment. Your tasks will reset to yellow but will retain their history. All personal task streaks will reset. Your Gold, Experience, Mana, and the effects of all Skills will be removed.</string>
     <string name="rebirth_confirm_title">Are you sure you want to use the Orb of Rebirth?</string>
     <string name="rebirth_confirm_reset_header">You will reset:</string>
-    <string name="rebirth_confirm_reset_item_1">Your Levels and Class</string>
+    <string name="rebirth_confirm_reset_item_1">Your levels and class</string>
     <string name="rebirth_confirm_reset_item_2">All your Stat points</string>
     <string name="rebirth_confirm_reset_item_3">All your Gold and Mana</string>
     <string name="rebirth_confirm_reset_item_4">All task values and streaks</string>
@@ -1205,11 +1209,11 @@
     <string name="go_back">Go Back</string>
     <string name="rebirth_enabled_title">Orb of Rebirth Unlocked</string>
     <string name="rebirth_enabled_subtitle">A new adventure is available!</string>
-    <string name="rebirth_enabled_description">Use the Orb of Rebirth to breathe new life into your Habitica adventure once you feel you\'ve achieved it all! Begin again at Level 1 while keeping your tasks, Achievements, and Pets with this special item found in the Market.</string>
+    <string name="rebirth_enabled_description">Use the Orb of Rebirth to breathe new life into your Habitica adventure once you feel you\'ve achieved it all! Begin again at level 1 while keeping your tasks, Achievements, and Pets with this special item found in the Market.</string>
     <string name="go_to_market">Go to Market</string>
     <string name="rebirth_achievement_title">You\'ve Been Reborn!</string>
-    <string name="rebirth_achievement_description">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest Level you\'ve attained is %2$d.</string>
-    <string name="rebirth_achievement_description_max">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest Level you\'ve attained is %2$d or higher.</string>
+    <string name="rebirth_achievement_description">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest level you\'ve attained is %2$d.</string>
+    <string name="rebirth_achievement_description_max">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest level you\'ve attained is %2$d or higher.</string>
     <string name="purchase_immediately_description">This will take effect immediately after buying!</string>
     <string name="create_guild">Create Guild</string>
     <string name="create_guild_description">To create a Guild, log in to the Habitica website then tap the “Create” button on the “My Guilds” screen.</string>

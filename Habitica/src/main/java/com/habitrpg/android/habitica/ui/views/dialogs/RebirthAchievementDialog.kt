@@ -33,7 +33,7 @@ class RebirthAchievementDialog(context: Context, private val user: User?) : Habi
         }
 
         binding.descriptionView.text = description.fromHtml()
-        binding.iconView.loadImage("achievement-sun")
+        binding.iconView.loadImage("achievement-sun2x")
         binding.achievementWrapper.visibility = View.VISIBLE
         binding.onboardingDoneIcon.visibility = View.GONE
 

@@ -363,20 +363,16 @@ class PreferencesFragment :
             "language" -> {
                 val selectedLanguage = sharedPreferences.getString(key, "en") ?: "en"
                 val languageHelper = LanguageHelper(selectedLanguage)
-                
-                val languageTag = LanguageHelper.getLanguageTag(selectedLanguage)
-                val appLocale = LocaleListCompat.forLanguageTags(languageTag)
-                AppCompatDelegate.setApplicationLocales(appLocale)
-                
+
                 if (user?.preferences?.language != languageHelper.languageCode) {
                     lifecycleScope.launchCatching {
                         userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                        reloadContent(false)
                     }
                 }
+
                 val intent = Intent(activity, MainActivity::class.java)
-                this.startActivity(intent)
-                activity?.finishAffinity()
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
 
             "audioTheme" -> {

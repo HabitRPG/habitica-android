@@ -220,7 +220,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                         sectionHolder.divider?.visibility = View.VISIBLE
                     } else {
                         sectionHolder.spinnerAdapter = null
-                        if (obj.notes.isNotEmpty()) {
+                        if (obj.identifier.isEmpty() && obj.notes.isNotEmpty()) {
                             sectionHolder.notesView?.visibility = View.VISIBLE
                             sectionHolder.notesView?.text = obj.notes
                         } else {
