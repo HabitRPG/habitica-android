@@ -244,6 +244,8 @@
         <item>minimal</item>
     </string-array>
 
+    <bool name="isTabletUI">false</bool>
+
     <string-array name="challenge_category_values">
         <item>habitica_official</item>
         <item>academics</item>
