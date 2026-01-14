@@ -8,8 +8,8 @@
     <string name="PS_settings_title">Configurações</string>
     <string name="SP_userID_title">ID de usuário</string>
     <string name="SP_userID_summary">Seu ID de usuário</string>
-    <string name="SP_APIToken_title">API Token</string>
-    <string name="SP_APIToken_summary">Seu API Token</string>
+    <string name="SP_APIToken_title">Token de API</string>
+    <string name="SP_APIToken_summary">Seu Token de API</string>
     <string name="Language_title">Idioma</string>
     <string name="Language_summary">Mudar idioma do Habitica</string>
     <string name="PS_contact_title">Contate-me</string>
@@ -30,7 +30,7 @@
     <string name="preference_push_invited_to_party">Convidado(a) para um Grupo</string>
     <string name="preference_push_invited_to_guild">Convidado(a) para uma Guilda</string>
     <string name="preference_push_your_quest_has_begun">Sua missão começou</string>
-    <string name="preference_push_invited_to_quest">Convidado para missão</string>
+    <string name="preference_push_invited_to_quest">Convidado(a) para missão</string>
     <!--Adding tasks-->
     <string name="about_libraries">Bibliotecas</string>
     <string name="about_habitica_open_source">Habitica está disponível como software de código aberto no Github</string>
@@ -66,7 +66,7 @@
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
     <string name="levelup_header">Você alcançou o Nível %1$d!</string>
-    <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está totalmente curado!</string>
+    <string name="levelup_detail">Por completar seus objetivos da vida real, você subiu de nível e agora está com vida cheia!</string>
     <string name="onwards">Hurra!</string>
     <string name="faint_subtitle">Não se desespere!</string>
     <string name="faint_header">Você perdeu toda sua Vida!</string>
@@ -102,7 +102,7 @@
     <string name="avatar_size_broad">Largo</string>
     <string name="avatar_background">Cenário</string>
     <string name="purchase_customization">Comprar Personalização</string>
-    <string name="purchase_set_button">Desbloquear conjunto por %d gemas</string>
+    <string name="purchase_set_button">Desbloqueie o conjunto por %d gemas</string>
     <string name="purchase_button">Comprar</string>
     <string name="purchase_set_title">Comprar conjunto %s</string>
     <string name="due_date">Data limite</string>
@@ -152,7 +152,7 @@
     <string name="setup_task_teams_3">Completar projeto da equipe</string>
     <string name="setup_task_chores_1">Limpeza de 10 minutos</string>
     <string name="setup_task_chores_2">Lavar a louça</string>
-    <string name="setup_task_chores_3">Organizar armário</string>
+    <string name="setup_task_chores_3">Organizar o armário</string>
     <string name="setup_task_creativity_1">Estudar um guru</string>
     <string name="setup_task_creativity_2">Trabalhar em um projeto criativo</string>
     <string name="setup_task_creativity_3">Terminar um projeto criativo</string>
@@ -208,7 +208,7 @@
     <string name="share">Compartilhar</string>
     <string name="notification_pet_fed">Você alimentou seu/sua %s!</string>
     <string name="notification_purchase_reward">Você comprou uma recompensa</string>
-    <string name="world_quest">Missão mundial</string>
+    <string name="world_quest">Missão Global</string>
     <string name="inn_description">Precisa de uma pausa\? Faça uma visita à Pousada do Daniel e pause algumas das mecânicas de jogo mais difíceis do Habitica:
 \n
 \n • Tarefas diárias não feitas não lhe causarão dano (chefões ainda causam dano devido a diárias não feitas de outros membros do Grupo)
@@ -225,8 +225,8 @@
     <string name="rogue_description">Ladinos aprendem Habilidades que permitem que eles e seu Grupo encontrem mais Ouro e tenham mais chances de encontrar itens aleatórios. Jogue como um Ladino ou Ladina se você quer encontrar muitos itens e grandes quantidades de Ouro! Ladinos se beneficiam de estatísticas altas em Percepção.</string>
     <string name="healer_description">Curandeiros(as) aprendem Habilidades que podem curar e proteger a si e a seu Grupo. Jogue como Curandeiro(a) se você gosta de ajudar os outros ou evitar danos! Curandeiros(as) se beneficiam de um alto status de Constituição.</string>
     <string name="select_class">Escolha sua Classe</string>
-    <string name="opt_out_class">Decidir mais tarde</string>
-    <string name="class_confirmation">Você tem certeza que quer ser um(a) %s\?</string>
+    <string name="opt_out_class">Talvez depois</string>
+    <string name="class_confirmation">Tem certeza que quer ser um(a) %s\?</string>
     <string name="class_changed">Você é um(a) %s agora!</string>
     <string name="choose_class">Escolha a sua Classe</string>
     <string name="dialog_go_back">Voltar</string>
@@ -244,7 +244,7 @@
     <string name="add_invites">Adicionar convites</string>
     <string name="email">E-mail</string>
     <string name="share_using">Compartilhar via</string>
-    <string name="share_levelup">Eu cheguei ao nível %d no #Habitica, melhorando meus hábitos da vida real!</string>
+    <string name="share_levelup">Eu cheguei ao nível %d no #Habitica, melhorando meus hábitos na vida real!</string>
     <string name="share_hatched">Eu acabei de chocar um mascote de %1$s %2$s no #Habitica completando minhas tarefas da vida real!</string>
     <string name="share_raised">Eu acabei de ganhar um %1$s de montaria no #Habitica completando minhas tarefas da vida real!</string>
     <string name="open_in_store">Abrir na Play Store</string>
@@ -258,7 +258,7 @@
     <string name="party_invite">Desbloqueie convidando amigos (as)</string>
     <string name="login_incentive">Desbloqueia ao logar regularmente no Habitica</string>
     <string name="create_account">Desbloquear criando uma conta</string>
-    <string name="successful_purchase">Comprado %1$s</string>
+    <string name="successful_purchase">Você comprou %1$s</string>
     <string name="chat_message_copied">Mensagem copiada para a área de transferência</string>
     <string name="edit_tag_btn_edit">Editar</string>
     <string name="confirm_delete_tag_title">Você tem certeza?</string>
