@@ -67,7 +67,7 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow: Boolean, onNextOnboardingStep: (Boolean) -> Unit, onForgotPasswordClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardingStep: (Boolean) -> Unit, onForgotPasswordClicked: () -> Unit, modifier: Modifier = Modifier) {
     val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
 
     LaunchedEffect(authenticationViewModel) {
@@ -249,11 +249,7 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, useNewAuthFlow
                         onSubmit = {
                             coroutineScope.launchCatching {
                                 if (loginScreenState == LoginScreenState.REGISTER) {
-                                    if (useNewAuthFlow) {
-                                        authenticationViewModel.checkEmail()
-                                    } else {
-                                        authenticationViewModel.register()
-                                    }
+                                    authenticationViewModel.checkEmail()
                                 } else {
                                     authenticationViewModel.login()
                                 }

@@ -191,6 +191,12 @@ interface ApiService {
         @Path("position") position: Int
     ): Response<HabitResponse<List<String>>>
 
+    @POST("group-tasks/{id}/move/to/{position}")
+    suspend fun postGroupTaskNewPosition(
+        @Path("id") id: String,
+        @Path("position") position: Int
+    ): Response<HabitResponse<List<String>>>
+
     @POST("tasks/{taskId}/checklist/{itemId}/score")
     suspend fun scoreChecklistItem(
         @Path("taskId") taskId: String,
@@ -329,7 +335,9 @@ interface ApiService {
 
     @GET("groups/{gid}/chat")
     suspend fun listGroupChat(
-        @Path("gid") groupId: String
+        @Path("gid") groupId: String,
+        @Query("limit") limit: Int? = null,
+        @Query("before") before: String? = null
     ): Response<HabitResponse<List<ChatMessage>>>
 
     @POST("groups/{gid}/join")
@@ -699,6 +707,9 @@ interface ApiService {
 
     @POST("user/reroll")
     suspend fun reroll(): Response<HabitResponse<User>>
+
+    @POST("user/rebirth")
+    suspend fun rebirth(): Response<HabitResponse<User>>
 
     // Team Plans
 

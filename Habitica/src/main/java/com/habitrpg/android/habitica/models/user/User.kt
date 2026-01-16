@@ -74,6 +74,8 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
             field.forEach { it.userID = id }
         }
     var challengeAchievements = RealmList<String>()
+    var rebirths: Int = 0
+    var rebirthLevel: Int = 0
 
     @Ignore
     var pushDevices: List<PushDevice>? = null

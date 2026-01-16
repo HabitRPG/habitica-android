@@ -45,7 +45,6 @@ import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -101,7 +100,7 @@ class OnboardingActivity: BaseActivity() {
             }
         }
 
-        binding.composeView.setContent {
+        binding.root.setContent {
             val step by currentStep
             HabiticaTheme {
                 AnimatedContent(step,
@@ -120,7 +119,7 @@ class OnboardingActivity: BaseActivity() {
                             currentStep.value = OnboardingSteps.LOGIN
                         }
 
-                        OnboardingSteps.LOGIN -> LoginScreen(authenticationViewModel, configManager.useNewAuthFlow(),{ newUser ->
+                        OnboardingSteps.LOGIN -> LoginScreen(authenticationViewModel, { newUser ->
                             // We don't want them to resume onboarding if they are in the username step
                             preferences.edit {
                                 putInt("last_onboarding_step", -1)

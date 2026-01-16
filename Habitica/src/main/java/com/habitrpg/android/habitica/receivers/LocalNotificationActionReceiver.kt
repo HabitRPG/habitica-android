@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +35,6 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     @Inject
     lateinit var apiClient: ApiClient
 
-    private var user: User? = null
     private val groupID: String?
         get() = intent?.extras?.getString("groupID")
     private val senderID: String?
@@ -77,14 +75,42 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
             }
 
             context?.getString(R.string.accept_quest_invite) -> {
-                MainScope().launchCatching {
-                    socialRepository.acceptQuest(user)
+                val pendingResult = goAsync()
+                MainScope().launch {
+                    try {
+                        socialRepository.acceptQuest(null)
+                        userRepository.retrieveUser(withTasks = false)
+                        context?.let {
+                            Toast.makeText(it, R.string.quest_accepted, Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        ExceptionHandler.reportError(e)
+                        context?.let {
+                            Toast.makeText(it, R.string.quest_accept_error, Toast.LENGTH_LONG).show()
+                        }
+                    } finally {
+                        pendingResult.finish()
+                    }
                 }
             }
 
             context?.getString(R.string.reject_quest_invite) -> {
-                MainScope().launchCatching {
-                    socialRepository.rejectQuest(user)
+                val pendingResult = goAsync()
+                MainScope().launch {
+                    try {
+                        socialRepository.rejectQuest(null)
+                        userRepository.retrieveUser(withTasks = false)
+                        context?.let {
+                            Toast.makeText(it, R.string.quest_rejected, Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        ExceptionHandler.reportError(e)
+                        context?.let {
+                            Toast.makeText(it, R.string.quest_reject_error, Toast.LENGTH_LONG).show()
+                        }
+                    } finally {
+                        pendingResult.finish()
+                    }
                 }
             }
 
@@ -136,7 +162,8 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                                     it.experienceDelta,
                                     it.healthDelta,
                                     it.goldDelta,
-                                    it.manaDelta
+                                    it.manaDelta,
+                                    it.questDamage
                                 )
                             showToast(pair.first)
                         }

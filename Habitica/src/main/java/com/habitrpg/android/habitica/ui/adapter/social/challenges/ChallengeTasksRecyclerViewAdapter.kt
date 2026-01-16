@@ -97,10 +97,6 @@ class ChallengeTasksRecyclerViewAdapter(
         return viewHolder
     }
 
-    /**
-     * @param task
-     * @return true if task found&updated
-     */
     fun replaceTask(task: Task): Boolean {
         var i = 0
         while (i < (this.content?.size ?: 0)) {
@@ -117,6 +113,14 @@ class ChallengeTasksRecyclerViewAdapter(
         }
 
         return false
+    }
+
+    fun removeTask(task: Task): Boolean {
+        val removed = content?.remove(task) ?: false
+        if (removed) {
+            filter()
+        }
+        return removed
     }
 
     inner class AddItemViewHolder internal constructor(

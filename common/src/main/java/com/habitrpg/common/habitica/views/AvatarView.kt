@@ -99,7 +99,25 @@ class AvatarView : FrameLayout {
                 )
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             imageViewHolder.forEach {
-                val bitmap = (it.drawable as? BitmapDrawable)?.bitmap ?: return@forEach
+                val drawable = it.drawable ?: return@forEach
+                val bitmap = when (drawable) {
+                    is BitmapDrawable -> drawable.bitmap
+                    else -> {
+                        // Draw the current frame (for time traveler animated backgrounds)
+                        try {
+                            val width = drawable.intrinsicWidth
+                            val height = drawable.intrinsicHeight
+                            if (width <= 0 || height <= 0) return@forEach
+                            val tempBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                            val tempCanvas = Canvas(tempBitmap)
+                            drawable.setBounds(0, 0, width, height)
+                            drawable.draw(tempCanvas)
+                            tempBitmap
+                        } catch (e: Exception) {
+                            return@forEach
+                        }
+                    }
+                }
                 avatarCanvas?.drawBitmap(
                     bitmap,
                     Rect(0, 0, bitmap.width, bitmap.height),

@@ -21,6 +21,7 @@ class ChallengesListViewAdapter(
 ) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: List<Challenge>? = null
     private var challengeMemberships: List<ChallengeMembership>? = null
+    private var currentFilterOptions: ChallengeFilterOptions? = null
 
     var onOpenChallengeFragment: ((String) -> Unit)? = null
 
@@ -38,7 +39,7 @@ class ChallengesListViewAdapter(
         data[position].let { challenge ->
             holder.bind(
                 challenge,
-                challengeMemberships?.first { challenge.id == it.challengeID } != null
+                challengeMemberships?.any { it.challengeID == challenge.id } ?: false
             )
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {
@@ -51,26 +52,68 @@ class ChallengesListViewAdapter(
     }
 
     fun updateUnfilteredData(data: List<Challenge>?) {
-        this.data = data ?: emptyList()
         unfilteredData = data
+        if (currentFilterOptions != null) {
+            filter(currentFilterOptions!!)
+        } else {
+            this.data = data ?: emptyList()
+        }
+    }
+
+    fun updateChallengeMemberships(memberships: List<ChallengeMembership>?) {
+        challengeMemberships = memberships
+        if (currentFilterOptions != null) {
+            filter(currentFilterOptions!!)
+        }
     }
 
     fun filter(filterOptions: ChallengeFilterOptions) {
-        val all = unfilteredData ?: return
-        val activeIds = filterOptions.showByGroups.map { it.id }.toSet()
-        var filtered = all.filterByCategorySlugs(activeIds)
+        val hasNoActiveFilters = filterOptions.showByGroups.isEmpty() &&
+            !filterOptions.showOwned && !filterOptions.notOwned &&
+            !filterOptions.showParticipating && !filterOptions.notParticipating
 
-        if (filterOptions.showOwned != filterOptions.notOwned) {
-            filtered = filtered.filter { challenge ->
-                if (filterOptions.showOwned) {
-                    challenge.leaderId == userId
-                } else {
-                    challenge.leaderId != userId
+        if (hasNoActiveFilters) {
+            currentFilterOptions = null
+            this.data = unfilteredData ?: emptyList()
+        } else {
+            currentFilterOptions = filterOptions
+            val all = unfilteredData ?: return
+
+            var filtered = if (filterOptions.showByGroups.isEmpty()) {
+                all
+            } else {
+                val activeIds = filterOptions.showByGroups.map { it.id }.toSet()
+                all.filterByCategorySlugs(activeIds)
+            }
+
+            if (filterOptions.showOwned != filterOptions.notOwned) {
+                filtered = filtered.filter { challenge ->
+                    if (filterOptions.showOwned) {
+                        challenge.leaderId == userId
+                    } else {
+                        challenge.leaderId != userId
+                    }
                 }
             }
-        }
 
-        this.data = filtered
+            if (filterOptions.showParticipating != filterOptions.notParticipating) {
+                filtered = filtered.filter { challenge ->
+                    val isParticipating = challengeMemberships?.any { it.challengeID == challenge.id } ?: false
+                    if (filterOptions.showParticipating) {
+                        isParticipating
+                    } else {
+                        !isParticipating
+                    }
+                }
+            }
+
+            this.data = filtered
+        }
+    }
+
+    fun clearFilters() {
+        currentFilterOptions = null
+        this.data = unfilteredData ?: emptyList()
     }
 
     class ChallengeViewHolder internal constructor(

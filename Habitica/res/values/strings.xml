@@ -101,6 +101,7 @@
     <string name="faint_subtitle">Don\'t despair!</string>
     <string name="faint_header">You ran out of Health!</string>
     <string name="faint_button">Refill Health &amp; Try Again</string>
+    <string name="faint_broken_gear_info">Broken gear can be repurchased from the Market</string>
 
     <string name="filter">Filter</string>
 
@@ -147,6 +148,10 @@
     <string name="quest_begin">Begin Quest</string>
     <string name="quest_cancel">Cancel</string>
     <string name="quest_abort">Abort Quest</string>
+    <string name="quest_accepted">Quest accepted!</string>
+    <string name="quest_rejected">Quest rejected</string>
+    <string name="quest_accept_error">Could not accept quest. Please try again.</string>
+    <string name="quest_reject_error">Could not reject quest. Please try again.</string>
     <string name="version_info">Version %1$s (%2$d)</string>
 
     <string name="sidebar_help">Support</string>
@@ -253,6 +258,11 @@
         <item quantity="one">%d Minute</item>
         <item quantity="other">%d Minutes</item>
     </plurals>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d day until FREE Orb of Rebirth</item>
+        <item quantity="other">%d days until FREE Orb of Rebirth</item>
+    </plurals>
+    <string name="free_rebirth_at_level_100">FREE Orb of Rebirth at level 100</string>
 
     <string name="today">Today</string>
     <string name="sidebar_items">Items</string>
@@ -542,6 +552,9 @@
     <string name="description_optional">Description (optional)</string>
     <string name="new_challenge_title">New challenge title</string>
     <string name="ownership">Ownership</string>
+    <string name="membership">Membership</string>
+    <string name="participating">Participating</string>
+    <string name="not_participating_filter">Not Participating</string>
     <string name="inn">Inn</string>
     <string name="start_quest">Start a new Quest</string>
     <string name="leave_party">Leave Party</string>
@@ -647,22 +660,22 @@
     <string name="character_build">Character Build</string>
     <string name="character_build_description">Each level earns you one point to assign to an attribute of your choice. You can do so manually, or let the game decide for you using one of the Automatic Allocation options.</string>
     <string name="strength">Strength</string>
-    <string name="strength_description">Increases the bonus of critical hits and makes them more likely when scoring a task. Also increases damage dealt to bosses.</string>
+    <string name="strength_description">Increases critical hit chance and damage when scoring tasks. Also increases damage dealt to Quest bosses.</string>
     <string name="intelligence">Intelligence</string>
-    <string name="intelligence_description">Increases EXP earned from completing tasks. Also increases your mana cap and how fast mana regenerates over time.</string>
+    <string name="intelligence_description">Increases Experience earned from tasks. Also increases your Mana cap and Mana regeneration rate.</string>
     <string name="constitution">Constitution</string>
-    <string name="constitution_description">Decreases the amount of damage taken from your tasks. Does not decrease the damage received from bosses.</string>
+    <string name="constitution_description">Reduces damage taken from missed Dailies and negative Habits. Does not reduce damage from Quest bosses.</string>
     <string name="perception">Perception</string>
-    <string name="perception_description">Increases the likelihood of finding drops when completing Tasks, the daily drop-cap, Streak Bonuses, and the amount of gold awarded for Tasks.</string>
+    <string name="perception_description">Increases item drop chance, daily item drop cap, task streak bonuses, and Gold earned when completing tasks.</string>
     <string name="buffs">Buffs</string>
     <string name="allocated">Allocated</string>
-    <string name="distribute_evenly">Distribute Evenly</string>
+    <string name="distribute_evenly">Distribute evenly</string>
     <string name="distribute_class">Distribute based on class</string>
     <string name="distribute_task">Distribute based on task activity</string>
     <string name="no_points_to_allocate">No Points to Allocate</string>
     <string name="points_to_allocate">%d Points to Allocate</string>
     <string name="distribute_evenly_help">Assigns the same number of points to each attribute.</string>
-    <string name="distribute_class_help">Assigns more points to the attributes important to your Class.</string>
+    <string name="distribute_class_help">Assigns more points to the attributes important to your class.</string>
     <string name="distribute_task_help">Assigns points based on the Strength, Intelligence, Constitution, and Perception categories associated with the tasks you complete.</string>
     <string name="allocating_points">Allocating Points</string>
     <string name="class_equipment">Equipment</string>
@@ -1058,6 +1071,8 @@
     <string name="gems_description">Gems are a currency purchased with real money that allow you to buy extra content within Habitica and are one of the main sources of financial support for the Habitica team alongside subscriptions.\n\nAll content purchased through Gems is purely cosmetic or can be obtained for free with time.\n\nYou can also receive Gems through gifts from other players, Challenge prizes, contributing to Habitica, or subscribing.</string>
     <string name="common_questions">Common Questions</string>
     <string name="game_mechanics">Game Mechanics</string>
+    <string name="search_questions">Search questions</string>
+    <string name="no_matching_questions">No matching questions found</string>
     <string name="subscriber_currency">Subscriber Currency</string>
     <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica. You can use them in the Time Travelers Shop to buy past Subscriber Gear sets, exclusive Pets, Mounts, animated Backgrounds, or even special Quests! These extra perks are a great way to stay motivated through the year and reward yourself for a job well done.\n\nSubscribers receive a Mystic Hourglass at the start of each month they have subscription benefits, along with a bunch of other perks. Be sure to check out our subscription options if you’re interested in what the Time Travelers have to offer!</string>
     <string name="clear_cache">Clear your Cache</string>
@@ -1176,6 +1191,29 @@
     <string name="invitation_title_no_leader">You were invited to join a party</string>
     <string name="fortify_shop">Fortify Potion</string>
     <string name="fortify_shop_description">Return all tasks to neutral value (yellow color), and restore all lost Health</string>
+    <string name="rebirth_shop">Orb of Rebirth</string>
+    <string name="rebirth_shop_description">Instantly restart your adventure as a level 1 Warrior while retaining Achievements, Items, and Equipment. Your tasks will reset to yellow but will retain their history. All personal task streaks will reset. Your Gold, Experience, Mana, and the effects of all Skills will be removed.</string>
+    <string name="rebirth_confirm_title">Are you sure you want to use the Orb of Rebirth?</string>
+    <string name="rebirth_confirm_reset_header">You will reset:</string>
+    <string name="rebirth_confirm_reset_item_1">Your levels and class</string>
+    <string name="rebirth_confirm_reset_item_2">All your Stat points</string>
+    <string name="rebirth_confirm_reset_item_3">All your Gold and Mana</string>
+    <string name="rebirth_confirm_reset_item_4">All task values and streaks</string>
+    <string name="rebirth_confirm_keep_header">You will keep:</string>
+    <string name="rebirth_confirm_keep_item_1">Your task list</string>
+    <string name="rebirth_confirm_keep_item_2">All Equipment, Pets, and Mounts</string>
+    <string name="rebirth_confirm_keep_item_3">Your Achievements</string>
+    <string name="rebirth_confirm_keep_item_4">Your Party and Challenges</string>
+    <string name="rebirth_confirm_use">Use Orb Of Rebirth</string>
+    <string name="free">FREE</string>
+    <string name="go_back">Go Back</string>
+    <string name="rebirth_enabled_title">Orb of Rebirth Unlocked</string>
+    <string name="rebirth_enabled_subtitle">A new adventure is available!</string>
+    <string name="rebirth_enabled_description">Use the Orb of Rebirth to breathe new life into your Habitica adventure once you feel you\'ve achieved it all! Begin again at level 1 while keeping your tasks, Achievements, and Pets with this special item found in the Market.</string>
+    <string name="go_to_market">Go to Market</string>
+    <string name="rebirth_achievement_title">You\'ve Been Reborn!</string>
+    <string name="rebirth_achievement_description">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest level you\'ve attained is %2$d.</string>
+    <string name="rebirth_achievement_description_max">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest level you\'ve attained is %2$d or higher.</string>
     <string name="purchase_immediately_description">This will take effect immediately after buying!</string>
     <string name="create_guild">Create Guild</string>
     <string name="create_guild_description">To create a Guild, log in to the Habitica website then tap the “Create” button on the “My Guilds” screen.</string>
@@ -1299,7 +1337,7 @@
     <string name="you_ran_out_of_health">You ran out of Health!</string>
     <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
     <string name="faint_broken_equipment">Broken equipment can be repurchased \nfrom the Market</string>
-    <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and break <b>a piece of gear</b>… You can earn them all back with hard work!]]></string>
+    <string name="faint_loss_description"><![CDATA[You\'ll drop to <b>level %1$d, lose %2$d Gold, and break a piece of gear</b>… However, you can earn it all back with hard work!]]></string>
     <string name="faint_loss_description_alt"><![CDATA[You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and your Experience… You can earn them all back with hard work!]]></string>
     <string name="account_reset">Account Reset</string>
     <string name="avatar_skin_customization">Avatar Skin Customization</string>
@@ -1448,7 +1486,7 @@
     <string name="equipment_class_locked">This equipment is class-locked</string>
     <string name="change_class_to_x">Change class to %s</string>
     <string name="shop_armoire_title">You own all %s gear</string>
-    <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, theres %d pieces of gear in the Enchanted Armoire to find!</string>
+    <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, there\'s %d pieces of gear in the Enchanted Armoire to find!</string>
     <string name="shop_armoire_empty_description">New gear is released during the seasonal Galas. The Enchanted Armoire gets new stock every month too!</string>
     <string name="unlock_gear_and_skills">Unlock %s gear and skills</string>
     <string name="rescind_invite">Cancel Invite</string>
@@ -1483,10 +1521,12 @@
     <string name="subscribe_second_armoire_open_text">Subscribers get extra chances at the Armoire and these other benefits!</string>
     <string name="subscriber_button_armoire">Open again for free!</string>
     <string name="subscriber_button_faint">Second chance: Hold on with 1HP!</string>
+    <string name="subscriber_button_faint_use">Use your Second Chance!</string>
     <string name="sub_perk">SUB PERK</string>
-    <string name="subscribe_incentive_text_faint">Get a second chance each day to avoid running out of HP with a subscription</string>
+    <string name="subscribe_incentive_text_faint">Subscribers get a Second Chance perk to avoid running out of HP once a day</string>
+    <string name="subscriber_benefit_available_faint">Your subscription lets you avoid running out of HP once a day!</string>
     <string name="subscribe_second_chance_incentive_text">Subscribers get a second chance at life each day and these other benefits!</string>
-    <string name="subscriber_benefit_used_faint">You already used your second chance today. It’s available again in %s</string>
+    <string name="subscriber_benefit_used_faint">Your Second Chance perk is still recharging! It\'ll be available again in %s.</string>
     <string name="subriber_benefit_notification_faint">You got a second chance with 1HP!</string>
     <string name="watch_ad_to_hang_on">Watch ad to hold on with 1HP!</string>
     <string name="quest_mechanics">Quest Mechanics</string>
@@ -1645,4 +1685,7 @@
         <item quantity="one">%d Item pending</item>
         <item quantity="other">%d Items pending</item>
     </plurals>
+
+    <string name="new_message">New message</string>
+    <string name="scroll_to_new_messages">Scroll to new messages</string>
 </resources>

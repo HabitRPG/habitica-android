@@ -241,8 +241,7 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                                 selectedCustomizationSubcategoryIndex = index
                         }, {
                             viewModel.equipCustomization(it)
-                                userChangeCounter++
-                        })
+                                userChangeCounter++                       })
                     }
                 }
                 AnimatedContent(currentStep, modifier = Modifier.weight(1f)) {
@@ -268,7 +267,7 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                                 selectCategory = { category ->
                                     viewModel.selectTaskCategory(category)
                                 },
-                                modifier = Modifier.padding(top = 160.dp)
+                                modifier = Modifier.padding(top = 120.dp)
                             )
                     }
                 }
@@ -387,7 +386,7 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
             npc = {
                 Image(painterResource(R.drawable.justin_textbox), null)
             }, modifier = Modifier
-                    .padding(horizontal = 36.dp)
+                    .padding(horizontal = 30.dp)
                     .padding(top = 170.dp)
                     .padding(
                         top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
@@ -443,7 +442,7 @@ fun OnboardingTaskSelector(
     selectCategory: (String) -> Unit,
     modifier: Modifier = Modifier) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 180.dp),
+        columns = GridCells.Adaptive(minSize = 160.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         contentPadding = PaddingValues(horizontal = 19.dp),
@@ -458,7 +457,7 @@ fun OnboardingTaskSelector(
                 tween(300)
             }) { if (it) 4.dp else 0.dp }
             val m = Modifier
-                .border(borderWidth, borderColor, CircleShape)
+                .border(borderWidth, borderColor, RoundedCornerShape(30.dp))
             Text(
                 category.second,
                 textAlign = TextAlign.Center,
@@ -471,7 +470,7 @@ fun OnboardingTaskSelector(
                     .clickable {
                         selectCategory(category.first)
                     }
-                    .padding(20.dp)
+                    .padding(16.dp)
             )
         }
     }
@@ -851,7 +850,8 @@ fun SpeechBubble(
                 )
                 .padding(4.dp)
                 .background(Color.White, shape = RoundedCornerShape(8.dp))
-                .padding(24.dp)
+                .padding(bottom = 8.dp, top = 18.dp)
+                .padding(horizontal = 14.dp)
         )
         NamePlate(npcName, modifier = Modifier
             .padding(start = 28.dp, top = 30.dp))

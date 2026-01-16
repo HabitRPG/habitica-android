@@ -6,15 +6,13 @@ import androidx.core.os.bundleOf
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 
 enum class AnalyticsTarget {
-    AMPLITUDE,
-    FIREBASE
+    AMPLITUDE
 }
 
 enum class EventCategory(val key: String) {
@@ -31,8 +29,9 @@ enum class HitType(val key: String) {
 }
 
 object Analytics {
-    private lateinit var firebase: FirebaseAnalytics
     private lateinit var amplitude: Amplitude
+    private var hasConsent: Boolean = false
+    private var isInitialized: Boolean = false
 
     @JvmOverloads
     fun sendEvent(
@@ -42,7 +41,7 @@ object Analytics {
         additionalData: Map<String, Any>? = null,
         target: AnalyticsTarget? = null
     ) {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG || !hasConsent || !isInitialized) {
             return
         }
         val data =
@@ -61,15 +60,13 @@ object Analytics {
                     amplitude.track(eventAction, data)
                 }
             }
-            executeLambda(AnalyticsTarget.FIREBASE) {
-                if (target == null || target == AnalyticsTarget.FIREBASE) {
-                    firebase.logEvent(eventAction, bundleOf(*data.toList().toTypedArray()))
-                }
-            }
         }
     }
 
     fun sendNavigationEvent(page: String) {
+        if (!hasConsent || !isInitialized) {
+            return
+        }
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = page
         sendEvent("navigated $page", EventCategory.NAVIGATION, HitType.PAGEVIEW, additionalData)
@@ -84,10 +81,14 @@ object Analytics {
                     optOut = true,
                 )
             )
-        firebase = FirebaseAnalytics.getInstance(context)
+        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = false
+        isInitialized = true
     }
 
     fun identify(sharedPrefs: SharedPreferences) {
+        if (!hasConsent || !isInitialized) {
+            return
+        }
         val identify =
             Identify()
                 .setOnce("androidStore", BuildConfig.STORE)
@@ -100,24 +101,32 @@ object Analytics {
     }
 
     fun setUserID(userID: String) {
+        if (!hasConsent || !isInitialized) {
+            FirebaseCrashlytics.getInstance().setUserId(userID)
+            return
+        }
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.setUserId(userID)
         }
         FirebaseCrashlytics.getInstance().setUserId(userID)
-        executeLambda(AnalyticsTarget.FIREBASE) {
-            firebase.setUserId(userID)
+    }
+    
+    fun clearUserID() {
+        executeLambda(AnalyticsTarget.AMPLITUDE) {
+            amplitude.setUserId(null)
         }
+        FirebaseCrashlytics.getInstance().setUserId("")
     }
 
     fun setUserProperty(
         identifier: String,
         value: Any?
     ) {
+        if (!hasConsent || !isInitialized) {
+            return
+        }
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.identify(mapOf(identifier to value))
-        }
-        executeLambda(AnalyticsTarget.FIREBASE) {
-            firebase.setUserProperty(identifier, value?.toString())
         }
     }
 
@@ -131,9 +140,12 @@ object Analytics {
 
     fun setAnalyticsConsent(consents: Boolean?) {
         val isEnabled = consents == true
-        executeLambda(AnalyticsTarget.FIREBASE) {
-            firebase.setAnalyticsCollectionEnabled(isEnabled)
+        hasConsent = isEnabled
+        
+        if (!isInitialized) {
+            return
         }
+        
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.configuration.optOut = !isEnabled
@@ -144,7 +156,6 @@ object Analytics {
     private fun executeLambda(analyticsTarget: AnalyticsTarget, action: () -> Unit) {
         when (analyticsTarget) {
             AnalyticsTarget.AMPLITUDE -> if (!::amplitude.isInitialized) return
-            AnalyticsTarget.FIREBASE -> if (!::firebase.isInitialized) return
         }
         action()
     }

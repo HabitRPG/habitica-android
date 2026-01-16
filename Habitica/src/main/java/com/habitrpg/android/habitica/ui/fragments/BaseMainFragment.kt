@@ -15,7 +15,6 @@ import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
@@ -76,13 +75,6 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
             showToolbar()
             enableToolbarScrolling()
         }
-        Analytics.sendEvent(
-            "fragment_view",
-            EventCategory.NAVIGATION,
-            HitType.PAGEVIEW,
-            mapOf("fragment" to (this::class.java.canonicalName ?: "")),
-            AnalyticsTarget.FIREBASE
-        )
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }

@@ -31,6 +31,8 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import retrofit2.HttpException
 import javax.inject.Inject
 import kotlin.time.DurationUnit
@@ -84,6 +86,9 @@ constructor(
     }
 
     var gotNewMessages: Boolean = false
+    private var isLoadingOlderMessages: Boolean = false
+    private var isRetrievingChat: Boolean = false
+    private val chatUpdateMutex = Mutex()
 
     override fun onCleared() {
         socialRepository.close()
@@ -235,32 +240,44 @@ constructor(
     fun likeMessage(message: ChatMessage) {
         viewModelScope.launchCatching {
             val newMessage = socialRepository.likeMessage(message)
-            val index = chatMessagesLiveData.value?.indexOfFirst { it.id == newMessage?.id }
-            if (index == null || index < 0) {
+            if (newMessage == null) {
                 retrieveGroupChat { }
                 return@launchCatching
             }
-            val list = mutableListOf<ChatMessage>()
-            chatMessagesLiveData.value?.let { list.addAll(it) }
-            if (newMessage != null) {
-                list[index] = newMessage
+            chatUpdateMutex.withLock {
+                val list = chatMessagesLiveData.value?.toMutableList() ?: return@withLock
+                val index = list.indexOfFirst { it.id == newMessage.id }
+                if (index >= 0) {
+                    list[index] = newMessage
+                    chatMessagesLiveData.postValue(list)
+                }
             }
-            chatMessagesLiveData.postValue(list)
         }
     }
 
     fun deleteMessage(chatMessage: ChatMessage) {
-        val oldIndex = chatMessagesLiveData.value?.indexOf(chatMessage) ?: return
-        val list = chatMessagesLiveData.value?.toMutableList()
-        list?.remove(chatMessage)
-        chatMessagesLiveData.postValue(list)
         viewModelScope.launch(
             ExceptionHandler.coroutine {
-                list?.add(oldIndex, chatMessage)
-                chatMessagesLiveData.postValue(list)
+                viewModelScope.launch {
+                    chatUpdateMutex.withLock {
+                        val list = chatMessagesLiveData.value?.toMutableList() ?: return@withLock
+                        if (list.none { it.id == chatMessage.id }) {
+                            val insertIndex = list.indexOfFirst {
+                                (it.timestamp ?: 0L) < (chatMessage.timestamp ?: 0L)
+                            }.takeIf { it >= 0 } ?: list.size
+                            list.add(insertIndex, chatMessage)
+                            chatMessagesLiveData.postValue(list)
+                        }
+                    }
+                }
                 ExceptionHandler.reportError(it)
             }
         ) {
+            chatUpdateMutex.withLock {
+                val list = chatMessagesLiveData.value?.toMutableList() ?: return@withLock
+                list.removeAll { it.id == chatMessage.id }
+                chatMessagesLiveData.postValue(list)
+            }
             socialRepository.deleteMessage(chatMessage)
         }
     }
@@ -278,17 +295,77 @@ constructor(
                 }
             ) {
                 val response = socialRepository.postGroupChat(groupID, chatText)
-                val list = chatMessagesLiveData.value?.toMutableList()
                 if (response != null) {
-                    list?.add(0, response.message)
+                    chatUpdateMutex.withLock {
+                        val currentMessages = chatMessagesLiveData.value?.toMutableList() ?: mutableListOf()
+                        if (currentMessages.none { it.id == response.message.id }) {
+                            currentMessages.add(0, response.message)
+                            chatMessagesLiveData.postValue(currentMessages)
+                        }
+                    }
                 }
-                chatMessagesLiveData.postValue(list)
                 onComplete()
             }
         }
     }
 
-    fun retrieveGroupChat(onComplete: () -> Unit) {
+    fun retrieveGroupChat(onComplete: (hasNewMessages: Boolean) -> Unit) {
+        if (isRetrievingChat) {
+            onComplete(false)
+            return
+        }
+        var groupID = groupID
+        if (groupViewType == GroupViewType.PARTY) {
+            groupID = "party"
+        }
+        if (groupID.isNullOrEmpty()) {
+            onComplete(false)
+            return
+        }
+        isRetrievingChat = true
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            try {
+                val messages = socialRepository.retrieveGroupChat(groupID, 50, null)
+                if (!messages.isNullOrEmpty()) {
+                    chatUpdateMutex.withLock {
+                        val currentMessages = chatMessagesLiveData.value
+                        val updatedList = mergeAndDeduplicateMessages(messages, currentMessages)
+                        chatMessagesLiveData.postValue(updatedList)
+                    }
+                    onComplete(true)
+                } else {
+                    onComplete(chatMessagesLiveData.value.isNullOrEmpty())
+                }
+            } finally {
+                isRetrievingChat = false
+            }
+        }
+    }
+
+    private fun mergeAndDeduplicateMessages(
+        newMessages: List<ChatMessage>,
+        existingMessages: List<ChatMessage>?
+    ): List<ChatMessage> {
+        if (existingMessages.isNullOrEmpty()) {
+            return newMessages
+        }
+        val messageMap = LinkedHashMap<String, ChatMessage>()
+        for (message in newMessages) {
+            messageMap[message.id] = message
+        }
+        for (message in existingMessages) {
+            if (!messageMap.containsKey(message.id)) {
+                messageMap[message.id] = message
+            }
+        }
+        return messageMap.values.sortedByDescending { it.timestamp ?: 0L }
+    }
+
+    fun loadOlderMessages(onComplete: () -> Unit) {
+        if (isLoadingOlderMessages) {
+            onComplete()
+            return
+        }
         var groupID = groupID
         if (groupViewType == GroupViewType.PARTY) {
             groupID = "party"
@@ -297,9 +374,28 @@ constructor(
             onComplete()
             return
         }
+        val currentMessages = chatMessagesLiveData.value
+        if (currentMessages.isNullOrEmpty()) {
+            onComplete()
+            return
+        }
+        val oldestMessage = currentMessages.lastOrNull()
+        isLoadingOlderMessages = true
         viewModelScope.launch(ExceptionHandler.coroutine()) {
-            val messages = socialRepository.retrieveGroupChat(groupID)
-            chatMessagesLiveData.postValue(messages)
+            try {
+                val olderMessages = socialRepository.retrieveGroupChat(groupID, 50, oldestMessage?.id)
+                if (!olderMessages.isNullOrEmpty()) {
+                    chatUpdateMutex.withLock {
+                        val latestMessages = chatMessagesLiveData.value?.toMutableList() ?: mutableListOf()
+                        val existingIds = latestMessages.map { it.id }.toSet()
+                        val uniqueOlderMessages = olderMessages.filter { it.id !in existingIds }
+                        latestMessages.addAll(uniqueOlderMessages)
+                        chatMessagesLiveData.postValue(latestMessages)
+                    }
+                }
+            } finally {
+                isLoadingOlderMessages = false
+            }
             onComplete()
         }
     }

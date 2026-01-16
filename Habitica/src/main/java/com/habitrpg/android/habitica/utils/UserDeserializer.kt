@@ -203,6 +203,18 @@ class UserDeserializer : JsonDeserializer<User> {
                 }
                 user.challengeAchievements = challengeAchievements
             }
+            if (achievements.has("rebirths")) {
+                try {
+                    user.rebirths = achievements.get("rebirths").asInt
+                } catch (ignored: UnsupportedOperationException) {
+                }
+            }
+            if (achievements.has("rebirthLevel")) {
+                try {
+                    user.rebirthLevel = achievements.get("rebirthLevel").asInt
+                } catch (ignored: UnsupportedOperationException) {
+                }
+            }
         }
 
         if (obj.has("_ABTests")) {

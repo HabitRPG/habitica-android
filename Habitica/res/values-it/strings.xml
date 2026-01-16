@@ -1267,4 +1267,6 @@
     <string name="title">Titolo</string>
     <string name="positive_sentence">positivo</string>
     <string name="negative_sentence">negativo</string>
+    <string name="standard_backgrounds">Sfondi Standard</string>
+    <string name="monthly_backgrounds">Sfondi Mensili</string>
 </resources>

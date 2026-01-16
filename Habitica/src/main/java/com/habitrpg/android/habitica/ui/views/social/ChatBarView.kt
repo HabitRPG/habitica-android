@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatBarViewBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
@@ -46,6 +47,12 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
         get() = autocompleteAdapter?.chatMessages ?: listOf()
         set(value) {
             autocompleteAdapter?.chatMessages = value
+        }
+
+    var groupMembers: List<Member>
+        get() = autocompleteAdapter?.groupMembers ?: listOf()
+        set(value) {
+            autocompleteAdapter?.groupMembers = value
         }
 
     internal var maxChatLength = 3000L
@@ -78,6 +85,10 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
     }
 
     var autocompleteAdapter: AutocompleteAdapter? = null
+        set(value) {
+            field = value
+            binding.chatEditText.setAdapter(value)
+        }
 
     private fun setupView() {
         orientation = VERTICAL
@@ -89,20 +100,9 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
                 updateTextIndicator(binding.chatEditText.text.toString())
             }
         )
-        binding.chatEditText.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                sendButtonPressed()
-                if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    val inputService = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputService.hideSoftInputFromWindow(v.windowToken, 0)
-                }
-            }
-            true
-        }
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
 
-        binding.chatEditText.setAdapter(autocompleteAdapter)
         binding.chatEditText.threshold = 2
 
         binding.chatEditText.setTokenizer(AutocompleteTokenizer(listOf('@', ':')))
@@ -163,16 +163,11 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
     }
 
     override fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets) {
-        val navInset = safeInsets.bottom
-        val imeOffset = if (visible) (height - navInset).coerceAtLeast(0) else 0
-
         updatePadding(
             left   = safeInsets.left,
             right  = safeInsets.right,
-            bottom = navInset
+            bottom = safeInsets.bottom
         )
-        
-        translationY = -imeOffset.toFloat()
     }
 
 }

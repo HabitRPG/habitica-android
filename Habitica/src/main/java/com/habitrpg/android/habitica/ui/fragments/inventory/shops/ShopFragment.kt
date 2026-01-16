@@ -367,6 +367,18 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     }
                     specialCategory.items.add(item)
                     specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
+                    if (user?.flags?.rebirthEnabled == true) {
+                        specialCategory.items.add(ShopItem.makeRebirthItem(context?.resources, user))
+
+                        val userLevel = user.stats?.lvl ?: 0
+                        if (userLevel in 50..99) {
+                            val lastFreeRebirth = user.flags?.lastFreeRebirth
+                            if (lastFreeRebirth == null ||
+                                (java.util.Date().time - lastFreeRebirth.time) / (1000 * 60 * 60 * 24) >= 45) {
+                                specialCategory.notes = getString(R.string.free_rebirth_at_level_100)
+                            }
+                        }
+                    }
                     newShop.categories.add(specialCategory)
                 }
 

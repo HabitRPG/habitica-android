@@ -2,12 +2,13 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -45,7 +46,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -224,6 +224,7 @@ class PreferencesFragment :
                     HabiticaBaseApplication.deleteDatabase(context)
                     lifecycleScope.launchCatching {
                         userRepository.retrieveUser(true, forced = true)
+                        userRepository.retrieveTeamPlans()
                         (activity as? SnackbarActivity)?.showSnackbar(
                             content = context.getString(R.string.cleared_cache),
                             displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
@@ -240,6 +241,8 @@ class PreferencesFragment :
     private fun reloadContent(withConfirmation: Boolean) {
         lifecycleScope.launchCatching {
             contentRepository.retrieveContent(true)
+            contentRepository.retrieveWorldState(true)
+            userRepository.retrieveUser(true, true)
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloaded_content),
@@ -361,27 +364,18 @@ class PreferencesFragment :
             }
 
             "language" -> {
-                val languageHelper = LanguageHelper(sharedPreferences.getString(key, "en"))
+                val selectedLanguage = sharedPreferences.getString(key, "en") ?: "en"
+                val languageHelper = LanguageHelper(selectedLanguage)
 
-                Locale.setDefault(languageHelper.locale)
-                val configuration = Configuration()
-                configuration.setLocale(languageHelper.locale)
-                @Suppress("DEPRECATION")
-                activity?.resources?.updateConfiguration(
-                    configuration,
-                    activity?.resources?.displayMetrics
-                )
+                if (user?.preferences?.language != languageHelper.languageCode) {
+                    lifecycleScope.launchCatching {
+                        userRepository.updateLanguage(languageHelper.languageCode ?: "en")
+                    }
+                }
 
-                if (user?.preferences?.language == languageHelper.languageCode) {
-                    return
-                }
-                lifecycleScope.launchCatching {
-                    userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                    reloadContent(false)
-                }
                 val intent = Intent(activity, MainActivity::class.java)
-                this.startActivity(intent)
-                activity?.finishAffinity()
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
 
             "audioTheme" -> {

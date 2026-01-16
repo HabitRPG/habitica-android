@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
@@ -15,6 +14,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -81,8 +81,10 @@ class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferenc
                 putInt("usage_time_day_count", ++observedDays)
                 putLong("usage_time_daily_average", average)
             }
-            Analytics.setUserProperty("usage_time_daily_average", average)
-            Analytics.setUserProperty("usage_time_total", currentTotal)
+            if (sharedPreferences.getBoolean("analytics_consent_given", false)) {
+                Analytics.setUserProperty("usage_time_daily_average", average)
+                Analytics.setUserProperty("usage_time_total", currentTotal)
+            }
             current = 0
             currentDay = Date()
         }
@@ -124,12 +126,11 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 Analytics.initialize(this)
             } catch (ignored: Resources.NotFoundException) {
             }
-            Analytics.identify(sharedPrefs)
-            Analytics.setUserID(lazyApiHelper.hostConfig.userID)
         }
         registerActivityLifecycleCallbacks(this)
         setupRealm()
         setLocale()
+        setupLocaleChangeListener()
         setupRemoteConfig()
         setupNotifications()
         setupAdHandler()
@@ -143,7 +144,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             Analytics.logException(it)
         }
 
-        Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
         checkIfNewVersion()
     }
@@ -152,16 +152,70 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         AdHandler.setup(sharedPrefs)
     }
 
+    private var isSettingLocale = false
+
     private fun setLocale() {
-        val resources = resources
-        val configuration: Configuration = resources.configuration
-        val languageHelper = LanguageHelper(sharedPrefs.getString("language", "en"))
-        if (
-            configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
-        ) {
-            configuration.setLocale(languageHelper.locale)
-            resources.updateConfiguration(configuration, null)
+        val savedLanguage = sharedPrefs.getString("language", null)
+        val currentAppLocales = AppCompatDelegate.getApplicationLocales()
+
+        if (savedLanguage != null) {
+            val languageTag = LanguageHelper.getLanguageTag(savedLanguage)
+            val currentTag = if (!currentAppLocales.isEmpty) {
+                currentAppLocales[0]?.toLanguageTag()
+            } else null
+
+            if (currentTag != languageTag) {
+                isSettingLocale = true
+                val appLocale = LocaleListCompat.forLanguageTags(languageTag)
+                AppCompatDelegate.setApplicationLocales(appLocale)
+                isSettingLocale = false
+            }
+        } else if (currentAppLocales.isEmpty) {
+            isSettingLocale = true
+            val appLocale = LocaleListCompat.forLanguageTags("en")
+            AppCompatDelegate.setApplicationLocales(appLocale)
+            sharedPrefs.edit {
+                putString("language", "en")
+            }
+            isSettingLocale = false
         }
+    }
+
+    private fun setupLocaleChangeListener() {
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                if (isSettingLocale) return
+
+                val currentLocales = AppCompatDelegate.getApplicationLocales()
+                if (!currentLocales.isEmpty) {
+                    val currentLanguageTag = currentLocales[0]?.toLanguageTag() ?: "en"
+                    val prefLanguage = when (currentLanguageTag) {
+                        "iw" -> "iw"
+                        "hr-HR" -> "hr"
+                        "in" -> "in"
+                        "pt-PT" -> "pt"
+                        "pt-BR" -> "pt_BR"
+                        "en-GB" -> "en_GB"
+                        "zh-TW" -> "zh_TW"
+                        else -> currentLanguageTag.replace("-", "_")
+                    }
+
+                    val savedLanguage = sharedPrefs.getString("language", null)
+                    if (savedLanguage == null) {
+                        sharedPrefs.edit {
+                            putString("language", prefLanguage)
+                        }
+                    }
+                }
+            }
+
+            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityResumed(activity: Activity) {}
+            override fun onActivityPaused(activity: Activity) {}
+            override fun onActivityStopped(activity: Activity) {}
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+            override fun onActivityDestroyed(activity: Activity) {}
+        })
     }
 
     protected open fun setupRealm() {
@@ -338,13 +392,19 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 }
 
                 deleteDatabase(context)
+                
+                Analytics.setAnalyticsConsent(false)
+                Analytics.clearUserID()
+                
                 preferences.edit {
                     clear()
                     putBoolean("use_reminder", useReminder)
                     putString("reminder_time", reminderTime)
                     putString("theme_mode", lightMode)
                     putString("launch_screen", launchScreen)
+                    putBoolean("analytics_consent_given", false)
                 }
+                
                 pushManager?.clearUser()
 
                 instance?.lazyApiHelper?.updateAuthenticationCredentials(null, null)

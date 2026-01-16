@@ -161,24 +161,18 @@ class ArmoireActivity : BaseActivity() {
             binding.adButton.visibility = View.GONE
         }
 
-        if (appConfigManager.enableArmoireSubs()) {
-            if (!hasUsedExtraArmoire) {
-                userViewModel.user.observe(this) {
-                    if (it?.isSubscribed == true && binding.openArmoireSubscriberWrapper.visibility != View.INVISIBLE) {
-                        binding.openArmoireSubscriberWrapper.visibility = View.VISIBLE
-                        binding.unsubbedWrapper.visibility = View.GONE
-                        binding.dropRateButton.visibility = View.VISIBLE
-                    } else if (it?.isSubscribed == false) {
-                        binding.openArmoireSubscriberWrapper.visibility = View.GONE
-                        binding.unsubbedWrapper.visibility = View.VISIBLE
-                        binding.dropRateButton.visibility = View.GONE
-                    }
+        if (!hasUsedExtraArmoire) {
+            userViewModel.user.observe(this) {
+                if (it?.isSubscribed == true && binding.openArmoireSubscriberWrapper.visibility != View.INVISIBLE) {
+                    binding.openArmoireSubscriberWrapper.visibility = View.VISIBLE
+                    binding.unsubbedWrapper.visibility = View.GONE
+                    binding.dropRateButton.visibility = View.VISIBLE
+                } else if (it?.isSubscribed == false) {
+                    binding.openArmoireSubscriberWrapper.visibility = View.GONE
+                    binding.unsubbedWrapper.visibility = View.VISIBLE
+                    binding.dropRateButton.visibility = View.GONE
                 }
             }
-        } else {
-            binding.openArmoireSubscriberWrapper.visibility = View.GONE
-            binding.unsubbedWrapper.visibility = View.GONE
-            binding.dropRateButton.visibility = View.VISIBLE
         }
 
         binding.openArmoireSubscriberButton.setOnClickListener {

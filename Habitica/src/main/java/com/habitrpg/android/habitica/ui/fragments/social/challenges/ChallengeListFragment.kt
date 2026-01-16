@@ -121,6 +121,14 @@ class ChallengeListFragment :
                 }
         }
 
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect { user ->
+                user?.challenges?.let { memberships ->
+                    challengeAdapter?.updateChallengeMemberships(memberships)
+                }
+            }
+        }
+
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         challengeAdapter?.updateUnfilteredData(challenges)
@@ -221,5 +229,10 @@ class ChallengeListFragment :
     private fun changeFilter(challengeFilterOptions: ChallengeFilterOptions) {
         filterOptions = challengeFilterOptions
         challengeAdapter?.filter(challengeFilterOptions)
+        updateFilterBadge()
+    }
+
+    fun updateFilterBadge() {
+        (parentFragment as? ChallengesOverviewFragment)?.updateFilterBadge(filterOptions)
     }
 }

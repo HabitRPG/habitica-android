@@ -479,10 +479,18 @@ class ChallengeFormActivity : BaseActivity() {
 
     private val newTaskResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
-                if (task != null) {
-                    addOrUpdateTaskInList(task)
+            if (it.resultCode == RESULT_OK) {
+                val isDeleted = it.data?.getBooleanExtra(TaskFormActivity.TASK_DELETED_KEY, false) ?: false
+                if (isDeleted) {
+                    val taskId = it.data?.getStringExtra(TaskFormActivity.TASK_ID_KEY)
+                    if (taskId != null) {
+                        removeTaskFromList(taskId)
+                    }
+                } else {
+                    val task = it.data?.getParcelableExtra(TaskFormActivity.PARCELABLE_TASK, Task::class.java)
+                    if (task != null) {
+                        addOrUpdateTaskInList(task)
+                    }
                 }
             }
         }
@@ -531,8 +539,6 @@ class ChallengeFormActivity : BaseActivity() {
                     else -> addReward
                 }
             if (!isExistingTask) {
-                // If the task is new we create a unique id for it
-                // Doing it we solve the issue #1278
                 task.id = UUID.randomUUID().toString()
             }
 
@@ -542,9 +548,26 @@ class ChallengeFormActivity : BaseActivity() {
                 addedTasks[task.id ?: ""] = task
             }
         } else {
-            // don't need to add the task to updatedTasks if its already been added right now
             if (editMode && !addedTasks.containsKey(task.id)) {
                 updatedTasks[task.id ?: ""] = task
+            }
+        }
+    }
+
+    private fun removeTaskFromList(taskId: String) {
+        val taskToRemove = challengeTasks.taskList.find { it.id == taskId }
+        if (taskToRemove != null) {
+            challengeTasks.removeTask(taskToRemove)
+
+            if (editMode) {
+                if (addedTasks.containsKey(taskId)) {
+                    addedTasks.remove(taskId)
+                } else if (updatedTasks.containsKey(taskId)) {
+                    updatedTasks.remove(taskId)
+                    removedTasks[taskId] = taskToRemove
+                } else {
+                    removedTasks[taskId] = taskToRemove
+                }
             }
         }
     }

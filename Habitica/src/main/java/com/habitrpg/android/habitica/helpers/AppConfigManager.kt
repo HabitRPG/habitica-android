@@ -68,10 +68,6 @@ class AppConfigManager(contentRepository: ContentRepository) :
         return remoteConfig.getLong("lastVersionCode")
     }
 
-    fun noPartyLinkPartyGuild(): Boolean {
-        return remoteConfig.getBoolean("noPartyLinkPartyGuild")
-    }
-
     fun testingLevel(): AppTestingLevel {
         return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
     }
@@ -80,20 +76,8 @@ class AppConfigManager(contentRepository: ContentRepository) :
         return remoteConfig.getBoolean("enableLocalTaskScoring")
     }
 
-    fun insufficientGemPurchase(): Boolean {
-        return remoteConfig.getBoolean("insufficientGemPurchase")
-    }
-
-    fun insufficientGemPurchaseAdjust(): Boolean {
-        return remoteConfig.getBoolean("insufficientGemPurchaseAdjust")
-    }
-
     fun showSubscriptionBanner(): Boolean {
         return remoteConfig.getBoolean("showSubscriptionBanner")
-    }
-
-    fun minimumPasswordLength(): Int {
-        return remoteConfig.getLong("minimumPasswordLength").toInt()
     }
 
     fun enableTaskDisplayMode(): Boolean {
@@ -156,22 +140,6 @@ class AppConfigManager(contentRepository: ContentRepository) :
         return remoteConfig.getBoolean("enableArmoireAds")
     }
 
-    fun enableFaintAds(): Boolean {
-        return remoteConfig.getBoolean("enableFaintAds")
-    }
-
-    fun enableArmoireSubs(): Boolean {
-        return remoteConfig.getBoolean("enableArmoireSubs")
-    }
-
-    fun enableFaintSubs(): Boolean {
-        return remoteConfig.getBoolean("enableFaintSubs")
-    }
-
-    fun enableSpellAds(): Boolean {
-        return remoteConfig.getBoolean("enableSpellAds")
-    }
-
     fun hideChallenges(): Boolean {
         return remoteConfig.getBoolean("hideChallenges")
     }
@@ -190,15 +158,7 @@ class AppConfigManager(contentRepository: ContentRepository) :
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
     }
 
-    fun enableCustomizationShop(): Boolean {
-        return remoteConfig.getBoolean("enableCustomizationShop")
-    }
-
     fun showAltDeathText(): Boolean {
         return remoteConfig.getBoolean("showAltDeathText")
-    }
-
-    fun useNewAuthFlow(): Boolean {
-        return remoteConfig.getBoolean("useNewAuthFlow")
     }
 }

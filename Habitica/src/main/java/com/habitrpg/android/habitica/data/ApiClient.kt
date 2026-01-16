@@ -138,6 +138,11 @@ interface ApiClient {
         position: Int
     ): List<String>?
 
+    suspend fun postGroupTaskNewPosition(
+        id: String,
+        position: Int
+    ): List<String>?
+
     suspend fun scoreChecklistItem(
         taskId: String,
         itemId: String
@@ -230,7 +235,11 @@ interface ApiClient {
         userID: String
     ): Void?
 
-    suspend fun listGroupChat(groupId: String): List<ChatMessage>?
+    suspend fun listGroupChat(
+        groupId: String,
+        limit: Int? = null,
+        before: String? = null
+    ): List<ChatMessage>?
 
     suspend fun joinGroup(groupId: String): Group?
 
@@ -396,6 +405,8 @@ interface ApiClient {
     suspend fun runCron(): Void?
 
     suspend fun reroll(): User?
+
+    suspend fun rebirth(): User?
 
     suspend fun resetAccount(password: String): Boolean
 

@@ -208,11 +208,13 @@ object MarkdownParser {
     private val markdownRegex = "[*#_\\[`~]".toRegex()
     private val imageMarkdownRegex = """!\[.*?]\(.*?".*?"\)""".toRegex()
     private val markdownLinkRegex = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)".toRegex()
+    private val urlRegex = "https?://[^\\s]+".toRegex()
 
     fun containsMarkdown(text: String): Boolean {
         return text.contains(markdownRegex) ||
             text.contains(imageMarkdownRegex) ||
-            text.contains(markdownLinkRegex)
+            text.contains(markdownLinkRegex) ||
+            text.contains(urlRegex)
     }
 }
 

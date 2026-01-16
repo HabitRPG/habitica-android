@@ -428,11 +428,6 @@ class TaskFormActivity : BaseActivity() {
         }
 
         configureForm()
-
-        additionalScreenViewParams["task_type"] = taskType.value
-        additionalScreenViewParams["is_editing"] = if (isCreating) "false" else "true"
-        additionalScreenViewParams["is_challenge_task"] = if (isChallengeTask) "true" else "false"
-        additionalScreenViewParams["is_group_task"] = if (groupID != null) "true" else "false"
 }
 
     override fun onResume() {
@@ -885,6 +880,7 @@ class TaskFormActivity : BaseActivity() {
         alert.setTitle(R.string.are_you_sure)
         alert.addButton(R.string.delete_task, true, isDestructive = true) { _, _ ->
             if (task?.isValid != true) return@addButton
+
             task?.id?.let {
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.deleteTask(it)
@@ -892,6 +888,15 @@ class TaskFormActivity : BaseActivity() {
                     taskCopy?.let { taskAlarmManager.removeAlarmsForTask(it) }
                 }
             }
+
+            if (isChallengeTask) {
+                val resultIntent = Intent()
+                resultIntent.putExtra(TASK_TYPE_KEY, taskType.value)
+                resultIntent.putExtra(TASK_ID_KEY, task?.id)
+                resultIntent.putExtra(TASK_DELETED_KEY, true)
+                setResult(Activity.RESULT_OK, resultIntent)
+            }
+
             finish()
         }
         alert.addCancelButton()
@@ -1060,8 +1065,7 @@ class TaskFormActivity : BaseActivity() {
         const val IS_CHALLENGE_TASK = "isChallengeTask"
 
         const val PARCELABLE_TASK = "parcelable_task"
-
-        // in order to disable the event handler in MainActivity
+        const val TASK_DELETED_KEY = "task_deleted"
         const val SET_IGNORE_FLAG = "ignoreFlag"
     }
 }

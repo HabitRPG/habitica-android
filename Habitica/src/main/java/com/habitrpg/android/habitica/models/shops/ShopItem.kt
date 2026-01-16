@@ -73,7 +73,7 @@ open class ShopItem : RealmObject(), BaseObject {
     var setImageNames = RealmList<String>()
 
     val isTypeItem: Boolean
-        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType
+        get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType || "rebirth_orb" == purchaseType
 
     val isTypeSpecial: Boolean
         get() = "special" == purchaseType
@@ -184,6 +184,32 @@ open class ShopItem : RealmObject(), BaseObject {
             item.pinType = "fortify"
             item.path = "special.fortify"
             item.purchaseType = "fortify"
+            return item
+        }
+
+        private fun isFreeRebirth(user: User?): Boolean {
+            val userLevel = user?.stats?.lvl ?: 0
+            if (userLevel < 100) return false
+
+            val lastFreeRebirth = user?.flags?.lastFreeRebirth ?: return true
+            val now = Date()
+            val diffInMillis = now.time - lastFreeRebirth.time
+            val daysSinceLastFreeRebirth = diffInMillis / (1000 * 60 * 60 * 24)
+
+            return daysSinceLastFreeRebirth >= 45
+        }
+
+        fun makeRebirthItem(res: Resources?, user: User?): ShopItem {
+            val item = ShopItem()
+            item.key = "rebirth_orb"
+            item.text = res?.getString(R.string.rebirth_shop) ?: ""
+            item.notes = res?.getString(R.string.rebirth_shop_description) ?: ""
+            item.imageName = "rebirth_orb"
+            item.value = if (isFreeRebirth(user)) 0 else 6
+            item.currency = "gems"
+            item.pinType = "rebirth_orb"
+            item.path = "special.rebirth_orb"
+            item.purchaseType = "rebirth_orb"
             return item
         }
 

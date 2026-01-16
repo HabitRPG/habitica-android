@@ -666,6 +666,13 @@ class ApiClientImpl(
         return process { apiService.postTaskNewPosition(id, position) }
     }
 
+    override suspend fun postGroupTaskNewPosition(
+        id: String,
+        position: Int
+    ): List<String>? {
+        return process { apiService.postGroupTaskNewPosition(id, position) }
+    }
+
     override suspend fun scoreChecklistItem(
         taskId: String,
         itemId: String
@@ -775,8 +782,12 @@ class ApiClientImpl(
         return processResponse(apiService.removeMemberFromGroup(groupID, userID))
     }
 
-    override suspend fun listGroupChat(groupId: String): List<ChatMessage>? {
-        return processResponse(apiService.listGroupChat(groupId))
+    override suspend fun listGroupChat(
+        groupId: String,
+        limit: Int?,
+        before: String?
+    ): List<ChatMessage>? {
+        return processResponse(apiService.listGroupChat(groupId, limit, before))
     }
 
     override suspend fun joinGroup(groupId: String): Group? {
@@ -1053,6 +1064,8 @@ class ApiClientImpl(
     }
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
+
+    override suspend fun rebirth(): User? = process { apiService.rebirth() }
 
     override suspend fun resetAccount(password: String): Boolean {
         val updateObject = HashMap<String, String>()
