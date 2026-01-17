@@ -604,9 +604,9 @@
     <string name="challenge_leave_title">Покинути випробування</string>
     <string name="subscription_status">Статус підписки</string>
     <string name="subscribe_prompt_thanks">Ви отримуєте ці переваги за підписку</string>
-    <string name="twelve_months">12 місяців</string>
-    <string name="six_months">6 місяців</string>
-    <string name="three_months">3 місяці</string>
+    <string name="twelve_months">12 Місяців</string>
+    <string name="six_months">6 Місяців</string>
+    <string name="three_months">3 Місяці</string>
     <string name="month">Місяць</string>
     <string name="x_months">%d місяців</string>
     <string name="one_month">1 місяць</string>
@@ -1374,4 +1374,7 @@
     <string name="insufficient_level_equipment_dialog_new">Цей предмет доступний тільки для %s. Ви зможете обрати ваш клас після досягнення 10 рівня.</string>
     <string name="class_equipment_shop_dialog_new">Цей предмет доступний лише для %s. Відкрийте Налаштування щоб змінити ваш клас.</string>
     <string name="exact_alarm_system_settings_reminders">Нагадування можуть затримуватися через відсутність потрібних дозволів. Натисніть, щоб переглянути та оновити дозволи.</string>
+    <string name="rejoin_party_quest_leader">Ви не зможете повернутись у команду без повторного запрошення.
+\n
+\nКоли ви покинете команду, поточний квест теж скинеться.</string>
 </resources>
