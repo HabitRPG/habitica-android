@@ -1382,4 +1382,6 @@
     <string name="clear_cache_settings">Почистити Кеш</string>
     <string name="x_gems">%d Самоцвітів</string>
     <string name="customization_shop">Магазин Персоналізації</string>
+    <string name="share_avatar">Поширити аватара</string>
+    <string name="subscribe_listitemArmoire">Подвоїти нагороди зі скрині</string>
 </resources>
