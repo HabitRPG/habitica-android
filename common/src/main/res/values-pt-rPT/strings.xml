@@ -61,13 +61,23 @@
     <plurals name="x_habits">
         <item quantity="one">%d Hábito</item>
         <item quantity="many">%d Hábitos</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="email_username">Email/Nome de Usuário</string>
     <string name="avatar">Avatar</string>
     <plurals name="x_dailies">
         <item quantity="one">%d Diário</item>
         <item quantity="many">%d Diários</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Tarefas</item>
+        <item quantity="many">%d Tarefas</item>
+        <item quantity="other">%d Tarefas</item>
+    </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">%d vez, oculto</item>
+        <item quantity="many">%d vezes, oculto</item>
+        <item quantity="other">%d vezes, oculto</item>
     </plurals>
 </resources>

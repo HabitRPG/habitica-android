@@ -779,4 +779,5 @@
     <string name="guild_summary">Resumo da Guilda</string>
     <string name="guild_members">Membros da Guilda</string>
     <string name="invite_to_party">Convidar para um grupo</string>
+    <string name="exact_alarm_system_settings_reminders">Os lembretes podem sofrer atrasos porque as permissões não estão ativadas. Toque para ver e atualizar as permissões.</string>
 </resources>
