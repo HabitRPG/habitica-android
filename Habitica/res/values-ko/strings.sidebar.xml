@@ -16,4 +16,5 @@
     <string name="sidebar_stats">능력치</string>
     <string name="sidebar_subscription">구독</string>
     <string name="sidebar_gems">보석 구매</string>
+    <string name="sidebar_avatar_equipment">아바타 및 장비</string>
 </resources>
