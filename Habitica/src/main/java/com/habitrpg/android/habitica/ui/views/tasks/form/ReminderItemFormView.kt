@@ -23,6 +23,7 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.text.DateFormat
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
@@ -60,6 +61,11 @@ constructor(
                 )
             }
         }
+
+    private fun currentLocalDateTime(): LocalDateTime =
+        item.time
+            ?.let { LocalDateTime.parse(it, DateTimeFormatter.ISO_LOCAL_DATE_TIME) }
+            ?: LocalDateTime.now()
 
     var taskType = TaskType.DAILY
     var item: RemindersItem = RemindersItem()
@@ -130,30 +136,31 @@ constructor(
         binding.button.drawable.mutate().setTint(tintColor)
 
         binding.textView.setOnClickListener {
+            val ldt = currentLocalDateTime()
+
             if (taskType == TaskType.DAILY) {
-                val timePickerDialog =
-                    TimePickerDialog(
-                        context,
-                        this,
-                        item.getZonedDateTime()?.hour ?: ZonedDateTime.now().hour,
-                        item.getZonedDateTime()?.minute ?: ZonedDateTime.now().minute,
-                        android.text.format.DateFormat.is24HourFormat(context)
-                    )
-                timePickerDialog.show()
+                TimePickerDialog(
+                    context,
+                    this,
+                    ldt.hour,
+                    ldt.minute,
+                    android.text.format.DateFormat.is24HourFormat(context)
+                ).show()
             } else {
-                val zonedDateTime = (item.getZonedDateTime() ?: ZonedDateTime.now())
-                val timePickerDialog =
+                val datePickerDialog =
                     DatePickerDialog(
                         context,
                         this,
-                        zonedDateTime.year,
-                        zonedDateTime.monthValue - 1,
-                        zonedDateTime.dayOfMonth
+                        ldt.year,
+                        ldt.monthValue - 1,
+                        ldt.dayOfMonth
                     )
+
                 if ((firstDayOfWeek ?: -1) >= 0) {
-                    timePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0
+                    datePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0
                 }
-                timePickerDialog.show()
+
+                datePickerDialog.show()
             }
         }
         binding.textView.labelFor = binding.button.id
