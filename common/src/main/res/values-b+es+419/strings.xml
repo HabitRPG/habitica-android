@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">M</string>
-    <string name="billion_abbrev">B</string>
-    <string name="trillion_abbrev">T</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="trillion_abbrev">t</string>
     <string name="mystic_hourglasses">Relojes de arena Místicos</string>
     <string name="repeat_daily">Diariamente</string>
     <string name="monthly">Mensualmente</string>
@@ -36,7 +36,7 @@
     </plurals>
     <plurals name="x_todos">
         <item quantity="one">%d Tarea pendiente</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d Tareas pendientes</item>
     </plurals>
     <string name="gems">Gemas</string>
