@@ -169,14 +169,15 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                     toast?.cancel()
                     toast = Toast.makeText(context, message, Toast.LENGTH_SHORT).apply { show() }
                 }
+                val serverSettingsUnlockedText = stringResource(R.string.server_settings_unlocked)
                 SequentialClickBox(
                     onTrigger = {
-                        showToast("Server settings unlocked!")
+                        showToast(serverSettingsUnlockedText)
                         authenticationViewModel.onServerSettingsUnlocked()
                     },
                     onRemainingClicks = { remainingClicks ->
                         if (remainingClicks > 0) {
-                            showToast("You are $remainingClicks steps away from unlocking server settings.")
+                            showToast(context.getString(R.string.server_settings_unlock_remaining, remainingClicks))
                         }
                     },
                 ) { modifier ->
@@ -283,7 +284,7 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
     showServerSettingDialog?.let { serverSettings ->
         val baseUrl = context.getString(com.habitrpg.common.habitica.R.string.base_url)
         ServerSettingsDialog(
-            serverSettings = serverSettings.copy(baseUrl),
+            serverSettings = serverSettings.copy(baseUrl = baseUrl),
             onApply = authenticationViewModel::onServerSettingsChanged,
             onReset = { authenticationViewModel.onServerSettingsReset(baseUrl) },
             onDismissRequest = authenticationViewModel::onServerSettingsDismissed,

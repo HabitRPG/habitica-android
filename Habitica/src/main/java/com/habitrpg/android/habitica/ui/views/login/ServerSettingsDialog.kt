@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.views.login
 
 import android.content.res.Configuration
+import android.net.Uri
+import android.webkit.URLUtil
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,18 +21,21 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -62,12 +67,12 @@ fun ServerSettingsDialog(
                     .padding(top = 24.dp, bottom = 16.dp),
             ) {
                 Text(
-                    text = "Server",
+                    text = stringResource(R.string.server),
                     fontSize = 24.sp,
                     lineHeight = 32.sp,
                 )
                 Text(
-                    text = "Warning: Accounts on custom servers are separate from your main Habitica.com account.",
+                    text = stringResource(R.string.server_custom_warning),
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = MaterialTheme.colorScheme.error
                     ),
@@ -76,7 +81,9 @@ fun ServerSettingsDialog(
                         .fillMaxWidth()
                 )
                 val (baseUrl, customUrl) = serverSettings
-                val radioOptions = listOf("$baseUrl (Default)", "Custom")
+                val defaultLabel = stringResource(R.string.server_option_default, baseUrl)
+                val customLabel = stringResource(R.string.server_option_custom)
+                val radioOptions = listOf(defaultLabel, customLabel)
                 val (selectedOption, onOptionSelected) = remember {
                     mutableStateOf(
                         if (customUrl.isNullOrEmpty()) radioOptions.first() else radioOptions.last()
@@ -112,12 +119,24 @@ fun ServerSettingsDialog(
                     }
                 }
                 var input by remember { mutableStateOf(customUrl ?: "") }
+                val isCustomSelected = selectedOption == radioOptions.last()
+                val isValidUrl by remember {
+                    derivedStateOf {
+                        input.isBlank() || (URLUtil.isNetworkUrl(input) && Uri.parse(input).host != null)
+                    }
+                }
                 OutlinedTextField(
                     value = input,
                     onValueChange = { input = it },
-                    label = { Text("Enter custom server address") },
-                    supportingText = { Text("e.g. http://localhost:3000") },
-                    enabled = selectedOption == radioOptions.last(),
+                    label = { Text(stringResource(R.string.server_custom_address_label)) },
+                    supportingText = {
+                        Text(
+                            if (!isValidUrl) stringResource(R.string.server_url_invalid)
+                            else stringResource(R.string.server_custom_address_hint)
+                        )
+                    },
+                    isError = !isValidUrl,
+                    enabled = isCustomSelected,
                 )
                 Row(
                     modifier = Modifier
@@ -128,17 +147,17 @@ fun ServerSettingsDialog(
                     TextButton(
                         onClick = onDismissRequest,
                     ) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.cancel))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     val applyEnabled = if (customUrl == null) {
-                        selectedOption == radioOptions.last() && input.isNotBlank()
+                        isCustomSelected && input.isNotBlank() && isValidUrl
                     } else {
-                        selectedOption == radioOptions.first() || input != customUrl
+                        (selectedOption == radioOptions.first() || input != customUrl) && isValidUrl
                     }
                     TextButton(
                         onClick = {
-                            if (selectedOption == radioOptions.last()) {
+                            if (isCustomSelected) {
                                 onApply(input)
                             } else {
                                 onReset()
@@ -146,7 +165,7 @@ fun ServerSettingsDialog(
                         },
                         enabled = applyEnabled,
                     ) {
-                        Text("Apply")
+                        Text(stringResource(R.string.apply))
                     }
                 }
             }
