@@ -1,12 +1,9 @@
 <network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
     <debug-overrides>
         <trust-anchors>
-            <!-- Trust user added CAs while debuggable only -->
+            <!-- Trust added CAs while debuggable only -->
             <certificates src="user" />
         </trust-anchors>
     </debug-overrides>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">10.0.0.107</domain>
-        <domain includeSubdomains="true">localhost</domain>
-    </domain-config>
 </network-security-config>

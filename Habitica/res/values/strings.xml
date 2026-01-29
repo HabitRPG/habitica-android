@@ -811,6 +811,9 @@
     <string name="apply">Apply</string>
     <string name="server_settings_unlocked">Server settings unlocked!</string>
     <string name="server_settings_unlock_remaining">You are %d steps away from unlocking server settings.</string>
+    <string name="custom_server">Custom Server</string>
+    <string name="reset_server_to_default">Reset to Default</string>
+    <string name="reset_server_confirmation">Are you sure you want to reset the server to the default Habitica server? The app will restart.</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
     <string name="gift_confirmation_text_sub_g1g1">You sent %1$s a %2$s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
     <string name="gift_confirmation_text_sub">You sent @%1$s a %2$s-month Habitica subscription.</string>

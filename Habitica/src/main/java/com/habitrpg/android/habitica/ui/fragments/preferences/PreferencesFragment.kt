@@ -73,6 +73,7 @@ class PreferencesFragment :
     private var classSelectionPreference: Preference? = null
     private var customServerUrlDebugPreference: ListPreference? = null
     private var customServerUrlReleaseCategory: PreferenceCategory? = null
+    private var customServerUrlReleasePreference: Preference? = null
     private var taskListPreference: ListPreference? = null
 
     private val classSelectionResult =
@@ -110,7 +111,8 @@ class PreferencesFragment :
         customServerUrlDebugPreference?.isVisible = false
         customServerUrlDebugPreference?.summary = serverUrl
         customServerUrlReleaseCategory = findPreference("custom_server")
-        customServerUrlReleaseCategory?.title = serverUrl
+        customServerUrlReleasePreference = findPreference("custom_server_url")
+        customServerUrlReleasePreference?.summary = serverUrl
         
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference.entry ?: "Default"
@@ -217,6 +219,27 @@ class PreferencesFragment :
                     content = context?.getString(R.string.reloading_content)
                 )
                 reloadContent(true)
+            }
+
+            "custom_server_url" -> {
+                context?.let { context ->
+                    val dialog = HabiticaAlertDialog(context)
+                    dialog.setTitle(R.string.custom_server)
+                    dialog.setMessage(R.string.reset_server_confirmation)
+                    dialog.addButton(R.string.reset_server_to_default, isPrimary = true, isDestructive = true) { _, _ ->
+                        preferenceManager.sharedPreferences?.edit()?.remove("server_url")?.apply()
+                        val baseUrl = context.getString(com.habitrpg.common.habitica.R.string.base_url)
+                        apiClient.updateServerUrl(baseUrl)
+                        (activity as? MainActivity)?.let {
+                            it.reload()
+                        } ?: run {
+                            customServerUrlReleasePreference?.summary = null
+                            customServerUrlReleaseCategory?.isVisible = false
+                        }
+                    }
+                    dialog.addCancelButton()
+                    dialog.enqueue()
+                }
             }
 
             "clear_database" -> {
@@ -595,7 +618,7 @@ class PreferencesFragment :
             taskListPreference?.isVisible = true
         }
         if (BuildConfig.DEBUG.not()) {
-            customServerUrlReleaseCategory?.isVisible = customServerUrlReleaseCategory?.title.isNullOrEmpty().not()
+            customServerUrlReleaseCategory?.isVisible = customServerUrlReleasePreference?.summary.isNullOrEmpty()?.not() ?: false
         }
     }
 }
