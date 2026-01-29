@@ -22,16 +22,17 @@ class HostConfig {
 
     constructor(sharedPreferences: SharedPreferences, keyHelper: KeyHelper?, context: Context) {
         this.port = BuildConfig.PORT
+        val address = sharedPreferences.getString("server_url", null)
+        val addressValid = address.isNullOrBlank().not()
         if (BuildConfig.DEBUG) {
-            this.address = BuildConfig.BASE_URL
+            this.address = if (addressValid) address else BuildConfig.BASE_URL
             if (BuildConfig.TEST_USER_ID.isNotBlank()) {
                 userID = BuildConfig.TEST_USER_ID
                 apiKey = BuildConfig.TEST_USER_KEY
                 return
             }
         } else {
-            val address = sharedPreferences.getString("server_url", null)
-            if (!address.isNullOrEmpty()) {
+            if (addressValid) {
                 this.address = address
             } else {
                 this.address = context.getString(com.habitrpg.common.habitica.R.string.base_url)
