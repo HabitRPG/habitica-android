@@ -22,20 +22,19 @@ class HostConfig {
 
     constructor(sharedPreferences: SharedPreferences, keyHelper: KeyHelper?, context: Context) {
         this.port = BuildConfig.PORT
-        if (BuildConfig.DEBUG) {
-            this.address = BuildConfig.BASE_URL
-            if (BuildConfig.TEST_USER_ID.isNotBlank()) {
-                userID = BuildConfig.TEST_USER_ID
-                apiKey = BuildConfig.TEST_USER_KEY
-                return
-            }
-        } else {
-            val address = sharedPreferences.getString("server_url", null)
-            if (!address.isNullOrEmpty()) {
-                this.address = address
-            } else {
-                this.address = context.getString(com.habitrpg.common.habitica.R.string.base_url)
-            }
+        val storedAddress = sharedPreferences.getString("server_url", null)?.takeIf { it.isNotBlank() }
+
+        if (BuildConfig.DEBUG && BuildConfig.TEST_USER_ID.isNotBlank()) {
+            this.address = storedAddress ?: BuildConfig.BASE_URL
+            userID = BuildConfig.TEST_USER_ID
+            apiKey = BuildConfig.TEST_USER_KEY
+            return
+        }
+
+        this.address = when {
+            storedAddress != null -> storedAddress
+            BuildConfig.DEBUG -> BuildConfig.BASE_URL
+            else -> context.getString(com.habitrpg.common.habitica.R.string.base_url)
         }
         this.userID = sharedPreferences.getString(context.getString(com.habitrpg.common.habitica.R.string.SP_userID), null) ?: ""
         this.apiKey = loadAPIKey(sharedPreferences, keyHelper)

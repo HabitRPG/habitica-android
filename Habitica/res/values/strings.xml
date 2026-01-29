@@ -43,6 +43,15 @@
     <string name="preference_push_invited_to_guild">Invited to Guild</string>
     <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
     <string name="preference_push_invited_to_quest">Invited to Quest</string>
+    <string name="unified_push_provider_title">UnifiedPush provider</string>
+    <string name="unified_push_provider_summary">Choose which distributor to use for UnifiedPush notifications.</string>
+    <string name="unified_push_provider_disabled">UnifiedPush disabled</string>
+    <string name="unified_push_provider_unavailable">No UnifiedPush distributors found. Install a compatible distributor to enable this option.</string>
+    <string name="unified_push_test_action">Send test UnifiedPush notification</string>
+    <string name="unified_push_test_summary">Send a test UnifiedPush notification to confirm your setup.</string>
+    <string name="unified_push_test_unavailable">Install a UnifiedPush distributor to send test notifications.</string>
+    <string name="unified_push_test_success">UnifiedPush test notification sent.</string>
+    <string name="unified_push_test_error">Couldn’t send UnifiedPush test notification.</string>
 
     <string name="about_libraries">Libraries</string>
     <string name="about_habitica_open_source">Habitica is available as open source software on Github</string>
@@ -1641,4 +1650,19 @@
         <item quantity="one">%d Item pending</item>
         <item quantity="other">%d Items pending</item>
     </plurals>
+    <string name="custom_server_content_description">Server options</string>
+    <string name="custom_server_title">Server configuration</string>
+    <string name="custom_server_label">Server URL</string>
+    <string name="custom_server_placeholder">https://habitica.com</string>
+    <string name="custom_server_apply">Apply</string>
+    <string name="custom_server_reset">Reset to default</string>
+    <string name="custom_server_invalid">Couldn’t understand that server address. Include http:// or https:// and a host name.</string>
+    <string name="dev_options_warning">Warning: Only use these developer settings if you know what you’re doing.</string>
+    <plurals name="dev_options_taps_remaining">
+        <item quantity="one">Developer options unlock in %d tap.</item>
+        <item quantity="other">Developer options unlock in %d taps.</item>
+    </plurals>
+    <string name="dev_options_unlocked">Developer options unlocked.</string>
+    <string name="custom_up_server_label">UnifiedPush server URL</string>
+    <string name="custom_up_server_placeholder">https://example.com</string>
 </resources>

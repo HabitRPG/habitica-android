@@ -329,6 +329,11 @@ interface ApiClient {
     // Push notifications
     suspend fun addPushDevice(pushDeviceData: Map<String, String>): List<Void>?
 
+    suspend fun sendUnifiedPushTest(
+        regId: String? = null,
+        message: String? = null
+    ): Void?
+
     suspend fun deletePushDevice(regId: String): List<Void>?
 
     suspend fun getChallengeTasks(challengeId: String): TaskList?

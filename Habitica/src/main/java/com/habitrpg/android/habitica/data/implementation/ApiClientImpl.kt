@@ -918,6 +918,17 @@ class ApiClientImpl(
         return process { apiService.addPushDevice(pushDeviceData) }
     }
 
+    override suspend fun sendUnifiedPushTest(
+        regId: String?,
+        message: String?
+    ): Void? {
+        val body = mutableMapOf<String, String>()
+        body["type"] = "unifiedpush"
+        regId?.let { body["regId"] = it }
+        message?.takeIf { it.isNotBlank() }?.let { body["message"] = it }
+        return process { apiService.sendUnifiedPushTest(body) }
+    }
+
     override suspend fun deletePushDevice(regId: String): List<Void>? {
         return process { apiService.deletePushDevice(regId) }
     }

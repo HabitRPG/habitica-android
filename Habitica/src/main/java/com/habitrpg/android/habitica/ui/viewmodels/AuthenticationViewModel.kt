@@ -48,6 +48,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 @HiltViewModel
 class AuthenticationViewModel @Inject constructor(
@@ -77,6 +78,50 @@ class AuthenticationViewModel @Inject constructor(
     val isUsernameValid: Flow<Boolean?> = _isUsernameValid
     private var _usernameIssues = MutableStateFlow<String?>(null)
     val usernameIssues: Flow<String?> = _usernameIssues
+
+    fun currentServerSelection(): String {
+        return sharedPrefs.getString(SERVER_OVERRIDE_KEY, hostConfig.address) ?: hostConfig.address
+    }
+
+    fun isDevOptionsUnlocked(): Boolean {
+        return sharedPrefs.getBoolean(DEV_OPTIONS_UNLOCKED_KEY, false)
+    }
+
+    fun setDevOptionsUnlocked(unlocked: Boolean) {
+        sharedPrefs.edit {
+            putBoolean(DEV_OPTIONS_UNLOCKED_KEY, unlocked)
+        }
+    }
+
+    fun applyServerOverride(serverUrl: String?): Boolean {
+        val normalized = normalizeServerUrl(serverUrl)
+            ?: return false
+
+        sharedPrefs.edit {
+            putString(SERVER_OVERRIDE_KEY, normalized)
+        }
+
+        apiClient.updateServerUrl(normalized)
+        return true
+    }
+
+    fun resetServerOverride() {
+        sharedPrefs.edit {
+            remove(SERVER_OVERRIDE_KEY)
+            if (!isDevOptionsUnlocked()) {
+                remove(DEV_OPTIONS_UNLOCKED_KEY)
+            }
+        }
+        apiClient.updateServerUrl(BuildConfig.BASE_URL)
+    }
+
+    private fun normalizeServerUrl(input: String?): String? {
+        val trimmed = input?.trim()?.takeIf { it.isNotEmpty() } ?: return null
+        val candidate = if (trimmed.contains("://")) trimmed else "https://$trimmed"
+        val httpUrl = runCatching { candidate.toHttpUrlOrNull() }.getOrNull() ?: return null
+        val rebuilt = httpUrl.newBuilder().encodedPath("/").build().toString()
+        return rebuilt.trimEnd('/')
+    }
 
     fun validateInputs(
         username: String,
@@ -272,5 +317,10 @@ class AuthenticationViewModel @Inject constructor(
                 Log.e("AuthenticationViewModel", "Unexpected type of credential")
             }
         }
+    }
+
+    companion object {
+        private const val SERVER_OVERRIDE_KEY = "server_url"
+        private const val DEV_OPTIONS_UNLOCKED_KEY = "dev_options_unlocked"
     }
 }

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -25,6 +26,9 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
@@ -36,9 +40,11 @@ import java.util.Date
 import kotlin.math.abs
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
+import androidx.preference.PreferenceManager
 
 class YesterdailyDialog private constructor(
     context: Context,
+    private val userId: String,
     private val userRepository: UserRepository,
     private val taskRepository: TaskRepository,
     private val tasks: List<Task>
@@ -92,6 +98,7 @@ class YesterdailyDialog private constructor(
         MainScope().launch(ExceptionHandler.coroutine()) {
             userRepository.runCron(completedTasks)
         }
+        markShownToday(context, userId)
         displayedDialog = null
     }
 
@@ -231,6 +238,7 @@ class YesterdailyDialog private constructor(
     companion object {
         private var displayedDialog: WeakReference<YesterdailyDialog>? = null
         internal var lastCronRun: Date? = null
+        private val lastShownByUser: MutableMap<String, Long> = mutableMapOf()
 
         fun showDialogIfNeeded(
             activity: Activity,
@@ -239,9 +247,21 @@ class YesterdailyDialog private constructor(
             taskRepository: TaskRepository
         ) {
             if (userRepository != null && userId != null) {
-                MainScope().launchCatching {
+                val lifecycleOwner = activity as? LifecycleOwner ?: return
+                lifecycleOwner.lifecycleScope.launchCatching {
                     delay(500.toDuration(DurationUnit.MILLISECONDS))
+                    val lifecycle = lifecycleOwner.lifecycle
+                    if (!lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
+                        return@launchCatching
+                    }
+                    val hostActivity = activity
+                    if (hostActivity.isFinishing || hostActivity.isDestroyed) {
+                        return@launchCatching
+                    }
                     if (userRepository.isClosed) {
+                        return@launchCatching
+                    }
+                    if (hasShownToday(hostActivity, userId)) {
                         return@launchCatching
                     }
                     val user = userRepository.getUser().firstOrNull()
@@ -279,10 +299,12 @@ class YesterdailyDialog private constructor(
                     )
 
                     if (sortedTasks?.isNotEmpty() == true) {
+                        markShownToday(hostActivity, userId)
                         displayedDialog =
                             WeakReference(
                                 showDialog(
-                                    activity,
+                                    hostActivity,
+                                    userId,
                                     userRepository,
                                     taskRepository,
                                     sortedTasks
@@ -290,6 +312,7 @@ class YesterdailyDialog private constructor(
                             )
                     } else {
                         lastCronRun = Date()
+                        markShownToday(hostActivity, userId)
                         userRepository.runCron()
                     }
                 }
@@ -298,17 +321,55 @@ class YesterdailyDialog private constructor(
 
         private fun showDialog(
             activity: Activity,
+            userId: String,
             userRepository: UserRepository,
             taskRepository: TaskRepository,
             tasks: List<Task>
         ): YesterdailyDialog {
-            val dialog = YesterdailyDialog(activity, userRepository, taskRepository, tasks)
+            val dialog = YesterdailyDialog(activity, userId, userRepository, taskRepository, tasks)
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)
             if (!activity.isFinishing) {
                 dialog.show()
+                dialog.setOnDismissListener {
+                    displayedDialog = null
+                }
             }
             return dialog
         }
+
+        private fun hasShownToday(context: Context, userId: String): Boolean {
+            val lastShown = lastShownByUser[userId] ?: loadLastShown(context, userId)
+            if (lastShown == 0L) {
+                return false
+            }
+            val lastShownDate = Instant.ofEpochMilli(lastShown).atZone(ZoneId.systemDefault()).toLocalDate()
+            val today = LocalDate.now()
+            val hasShown = lastShownDate == today
+            if (hasShown) {
+                lastShownByUser[userId] = lastShown
+            }
+            return hasShown
+        }
+
+        private fun markShownToday(context: Context, userId: String) {
+            val now = System.currentTimeMillis()
+            lastShownByUser[userId] = now
+            PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putLong(prefKeyForUser(userId), now)
+                .apply()
+        }
+
+        private fun loadLastShown(context: Context, userId: String): Long {
+            val stored = PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(prefKeyForUser(userId), 0L)
+            if (stored != 0L) {
+                lastShownByUser[userId] = stored
+            }
+            return stored
+        }
+
+        private fun prefKeyForUser(userId: String): String = "yesterdaily_last_shown_$userId"
     }
 }

@@ -237,6 +237,17 @@
 
             <PreferenceCategory android:title="Push Notifications"
                 android:layout="@layout/preference_category">
+                <ListPreference
+                    android:key="preference_unified_push_provider"
+                    android:title="@string/unified_push_provider_title"
+                    android:summary="@string/unified_push_provider_summary"
+                    android:layout="@layout/preference_child_summary"
+                    android:dialogTitle="@string/unified_push_provider_title"/>
+                <Preference
+                    android:key="preference_unified_push_test"
+                    android:title="@string/unified_push_test_action"
+                    android:summary="@string/unified_push_test_summary"
+                    android:layout="@layout/preference_child_summary"/>
                 <CheckBoxPreference
                     android:key="preference_push_you_won_challenge"
                     android:defaultValue="true"

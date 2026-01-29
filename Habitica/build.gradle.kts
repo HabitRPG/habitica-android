@@ -177,6 +177,9 @@ dependencies {
     implementation(libs.credentials)
     implementation(libs.credentials.playServicesAuth)
     implementation(libs.googleid)
+    implementation(libs.unifiedpush.connector) {
+        exclude(group = "com.google.protobuf", module = "protobuf-java")
+    }
 
     implementation(libs.flexbox)
 
