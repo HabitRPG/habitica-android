@@ -1165,4 +1165,8 @@
     <string name="limitations">Beperkingen</string>
     <string name="fall_promo_info_prompt">Het Herfstgala is in volle gang. Daarom vonden we dit het perfecte moment voor onze allereerste Edelsteenuitverkoop! Nu kun je bij elke aankoop meer Edelstenen krijgen dan ooit tevoren.</string>
     <string name="view_gem_bundles">Bekijk Edelsteenbundels</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="gems_promo_info_limitations_fixed">Deze actie is alleen geldig gedurende het evenement. Het evenement begint op %1$s (%2$s) en eindigt op %3$s (%4$s). De actie is alleen beschikbaar wanneer je edelstenen voor jezelf koopt.</string>
+    <string name="spooky_promo_info_instructions">Tussen %1$s en %2$s kun je zoals gebruikelijk een Edelstenenpakket kopen, maar het promotiebedrag aan Edelstenen wordt dan aan je account toegevoegd. Meer Edelstenen om uit te geven, te delen of te sparen voor toekomstige updates!</string>
 </resources>
