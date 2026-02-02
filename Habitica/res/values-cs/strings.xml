@@ -496,4 +496,6 @@
     <string name="push_notification_system_settings_description">Povolte aplikaci Habitica v aplikaci Nastavení, aby vám byla povolena push notifikace.</string>
     <string name="push_notification_system_settings_reminders">Povolte oznámení Habitica v aplikaci Nastavení pro příjem připomenutí</string>
     <string name="push_notification_system_settings_title">Oznámení zakázána</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="ok">OK</string>
 </resources>
