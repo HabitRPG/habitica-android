@@ -408,4 +408,14 @@
             android:entryValues="@array/server_urls"
             android:layout="@layout/preference_child_summary" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="custom_server"
+        android:title="@string/custom_server"
+        android:layout="@layout/preference_category"
+        app:isPreferenceVisible="false">
+        <Preference
+            android:key="custom_server_url"
+            android:layout="@layout/preference_child_summary" />
+    </PreferenceCategory>
 </PreferenceScreen>

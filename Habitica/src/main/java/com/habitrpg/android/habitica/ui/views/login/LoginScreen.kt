@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.login
 
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.animateDpAsState
@@ -50,10 +51,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
+import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.SequentialClickBox
 import com.habitrpg.common.habitica.helpers.launchCatching
 
 enum class LoginScreenState {
@@ -160,12 +164,30 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth().padding(WindowInsets.systemBars.asPaddingValues()).padding(horizontal = 20.dp)
             ) {
-                Image(
-                    painterResource(R.drawable.login_logo),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = null,
-                    modifier = Modifier.padding(top = logoPadding).scale(logoScale)
-                )
+                var toast: Toast? by remember { mutableStateOf(null) }
+                fun showToast(message: String) {
+                    toast?.cancel()
+                    toast = Toast.makeText(context, message, Toast.LENGTH_SHORT).apply { show() }
+                }
+                val serverSettingsUnlockedText = stringResource(R.string.server_settings_unlocked)
+                SequentialClickBox(
+                    onTrigger = {
+                        showToast(serverSettingsUnlockedText)
+                        authenticationViewModel.onServerSettingsUnlocked()
+                    },
+                    onRemainingClicks = { remainingClicks ->
+                        if (remainingClicks > 0) {
+                            showToast(context.getString(R.string.server_settings_unlock_remaining, remainingClicks))
+                        }
+                    },
+                ) { modifier ->
+                    Image(
+                        painterResource(R.drawable.login_logo),
+                        contentScale = ContentScale.Fit,
+                        contentDescription = null,
+                        modifier = modifier.padding(top = logoPadding).scale(logoScale)
+                    )
+                }
                 AnimatedVisibility(
                     loginScreenState == LoginScreenState.INITIAL,
                     enter = fadeIn(tween(300, 500)) + expandVertically(tween(300, 500)),
@@ -257,5 +279,15 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                 }
             }
         }
+    }
+    val showServerSettingDialog: ServerSettings? by authenticationViewModel.showServerSettingsDialog.collectAsStateWithLifecycle(null)
+    showServerSettingDialog?.let { serverSettings ->
+        val baseUrl = context.getString(com.habitrpg.common.habitica.R.string.base_url)
+        ServerSettingsDialog(
+            serverSettings = serverSettings.copy(baseUrl = baseUrl),
+            onApply = authenticationViewModel::onServerSettingsChanged,
+            onReset = { authenticationViewModel.onServerSettingsReset(baseUrl) },
+            onDismissRequest = authenticationViewModel::onServerSettingsDismissed,
+        )
     }
 }

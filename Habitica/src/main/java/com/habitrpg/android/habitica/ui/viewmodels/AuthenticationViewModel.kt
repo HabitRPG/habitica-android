@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
-
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
@@ -33,15 +32,13 @@ import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.helpers.KeyHelper
-import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -69,6 +66,7 @@ class AuthenticationViewModel @Inject constructor(
     private val _authenticationSuccess = MutableStateFlow<Boolean?>(null)
     private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
     private var _usernameIssues = MutableStateFlow<String?>(null)
+    private val _showServerSettingsDialog: MutableStateFlow<ServerSettings?> = MutableStateFlow(null)
 
     val showAuthProgress: Flow<Boolean> = _showAuthProgress
     val authenticationError: Flow<AuthenticationErrors> = _authenticationError
@@ -78,6 +76,7 @@ class AuthenticationViewModel @Inject constructor(
         .onEach { _showAuthProgress.value = false }
     val isUsernameValid: Flow<Boolean?> = _isUsernameValid
     val usernameIssues: Flow<String?> = _usernameIssues
+    val showServerSettingsDialog: Flow<ServerSettings?> = _showServerSettingsDialog
 
     fun clearAuthenticationState() {
         _showAuthProgress.value = false
@@ -345,5 +344,28 @@ class AuthenticationViewModel @Inject constructor(
             username.value = ""
             _isUsernameValid.value = null
         }
+    }
+
+    fun onServerSettingsUnlocked() {
+        _showServerSettingsDialog.value = ServerSettings(
+            baseUrl = BuildConfig.BASE_URL,
+            customUrl = sharedPrefs.getString("server_url", null)
+        )
+    }
+
+    fun onServerSettingsChanged(newUrl: String) {
+        sharedPrefs.edit { putString("server_url", newUrl) }
+        apiClient.updateServerUrl(newAddress = newUrl)
+        onServerSettingsDismissed()
+    }
+
+    fun onServerSettingsReset(baseUrl: String) {
+        sharedPrefs.edit { remove("server_url") }
+        apiClient.updateServerUrl(newAddress = baseUrl)
+        onServerSettingsDismissed()
+    }
+
+    fun onServerSettingsDismissed() {
+        _showServerSettingsDialog.value = null
     }
 }
