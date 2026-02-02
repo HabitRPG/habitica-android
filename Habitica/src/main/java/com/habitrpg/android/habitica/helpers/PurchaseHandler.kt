@@ -12,6 +12,7 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesResponseListener
@@ -58,7 +59,7 @@ class PurchaseHandler(
     private val configManager: AppConfigManager
 ) : PurchasesUpdatedListener, PurchasesResponseListener {
     private var billingClient =
-        BillingClient.newBuilder(context).setListener(this).enablePendingPurchases().build()
+        BillingClient.newBuilder(context).setListener(this).enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()).build()
 
     override fun onPurchasesUpdated(
         result: BillingResult,
@@ -161,7 +162,9 @@ class PurchaseHandler(
             return
         }
         billingClientState = BillingClientState.CONNECTING
-        billingClient = BillingClient.newBuilder(context).setListener(this).enablePendingPurchases().build()
+        billingClient = BillingClient.newBuilder(context).setListener(this)
+            .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
+            .build()
         billingClient.startConnection(
             object : BillingClientStateListener {
                 override fun onBillingSetupFinished(billingResult: BillingResult) {

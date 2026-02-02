@@ -1,6 +1,11 @@
 package com.habitrpg.android.habitica.ui.views.setup
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,20 +24,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
@@ -44,37 +52,17 @@ import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.LoginFieldState
 import com.habitrpg.android.habitica.ui.views.LoginScreenField
+import com.habitrpg.android.habitica.ui.views.useDebounce
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-
-
-@Composable
-fun <T> T.useDebounce(
-    delayMillis: Long = 300L,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onChange: (T) -> Unit
-): T{
-    val state by rememberUpdatedState(this)
-
-    DisposableEffect(state){
-        val job = coroutineScope.launch {
-            delay(delayMillis)
-            onChange(state)
-        }
-        onDispose {
-            job.cancel()
-        }
-    }
-    return state
-}
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
 @Composable
 fun UsernameSelectionScreen(
@@ -85,11 +73,29 @@ fun UsernameSelectionScreen(
     var username by authenticationViewModel.username
     val isUsernameValid by authenticationViewModel.isUsernameValid.collectAsState(null)
     val usernameIssues by authenticationViewModel.usernameIssues.collectAsState(null)
+    val showAuthProgress by authenticationViewModel.showAuthProgress.collectAsState(false)
+
+    val scope = rememberCoroutineScope()
 
     username.useDebounce {
         if (it.length > 2) {
-            authenticationViewModel.checkUsername(it)
+            scope.launchCatching {
+                authenticationViewModel.checkUsername()
+            }
         }
+    }
+
+    val focusRequester = remember { FocusRequester() }
+    val scrollState = rememberScrollState()
+
+    LaunchedEffect(Unit) {
+        if (username.isEmpty() && authenticationViewModel.email.value.isNotBlank()) {
+            val email = authenticationViewModel.email.value
+            username = email.split("@").firstOrNull()?.replace("+", "_") ?: ""
+        } else if (username.isEmpty() && authenticationViewModel.user.value?.username?.isNotBlank() == true) {
+            username = authenticationViewModel.user.value?.username ?: ""
+        }
+        focusRequester.requestFocus()
     }
 
     var acceptedTerms by remember { mutableStateOf(false) }
@@ -110,11 +116,12 @@ fun UsernameSelectionScreen(
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 50.dp)
                 .padding(horizontal = 20.dp)
+                .verticalScroll(scrollState)
         ) {
             Image(
                 painter = painterResource(R.drawable.header_verify_username),
@@ -128,6 +135,14 @@ fun UsernameSelectionScreen(
                 fontWeight = FontWeight.SemiBold,
                 color = Color.White,
                 modifier = Modifier
+            )
+            Text(
+                text = stringResource(R.string.username_description),
+                fontSize = 16.sp,
+                color = colorResource(R.color.brand_600),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
             )
             LoginScreenField(
                 stringResource(R.string.username),
@@ -144,7 +159,7 @@ fun UsernameSelectionScreen(
                                 username = it
                                 authenticationViewModel.invalidateUsernameState()
                                 },
-                modifier = Modifier
+                modifier = Modifier.focusRequester(focusRequester)
             )
             AnimatedVisibility(usernameIssues?.isNotBlank() == true) {
                 Text(
@@ -157,68 +172,99 @@ fun UsernameSelectionScreen(
                         .padding(bottom = 12.dp)
                 )
             }
-            Text(
-                text = stringResource(R.string.username_description),
-                fontSize = 16.sp,
-                color = colorResource(R.color.brand_600),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-            )
-            Spacer(Modifier.weight(1f))
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 4.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .clickable {
-                            acceptedTerms = !acceptedTerms
-                        }
-                        .background(colorResource(R.color.brand_100), shape = HabiticaTheme.shapes.small)) {
-                    if (acceptedTerms) {
-                        Image(
-                            painter = painterResource(R.drawable.checkmark),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(Color.White),
+            Spacer(Modifier.weight(2f))
+            AnimatedContent(
+                showAuthProgress,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(220))
+                        .togetherWith(fadeOut())
+                },
+                modifier = Modifier.padding(bottom = 12.dp)
+            ) { isLoading ->
+                if (isLoading) {
+                    HabiticaCircularProgressView(indicatorSize = 64.dp)
+                } else {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically)) {
+                        TermsAndConditionsRow(
+                            acceptedTerms = acceptedTerms,
+                            onAcceptedTermsChange = { acceptedTerms = it },
                             modifier = Modifier
-                                .align(Alignment.Center)
+                                .fillMaxWidth()
                         )
+
+                        Button(
+                            onClick = {
+                                scope.launchCatching {
+                                    authenticationViewModel.completeRegistration()
+                                    authenticationViewModel.retrieveUser()
+                                    onNextOnboardingStep()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.White,
+                                contentColor = colorResource(R.color.gray_50),
+                                disabledContainerColor = Color.White.copy(alpha = 0.5f),
+                                disabledContentColor = colorResource(R.color.gray_50)
+                            ),
+                            enabled = isUsernameValid == true && acceptedTerms,
+                            shape = HabiticaTheme.shapes.large,
+                            contentPadding = PaddingValues(15.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text(stringResource(R.string.get_started), fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        }
                     }
                 }
-                Text(
-                    AnnotatedString.fromHtml(
-                        stringResource(R.string.register_tos_confirm),
-                        linkStyles = TextLinkStyles(style = SpanStyle(
-                            fontWeight = FontWeight.Bold,
-                            color = colorResource(R.color.white)
-                        ))
-                    ),
-                    fontSize = 16.sp,
-                    color = colorResource(R.color.brand_600),
-                    fontWeight = FontWeight.Normal,
-                )
-            }
-            Button(
-                onClick = onNextOnboardingStep,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = colorResource(R.color.gray_50),
-                    disabledContainerColor = Color.White.copy(alpha = 0.5f),
-                    disabledContentColor = colorResource(R.color.gray_50)
-                ),
-                enabled = isUsernameValid == true && acceptedTerms,
-                shape = HabiticaTheme.shapes.large,
-                contentPadding = PaddingValues(15.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-            ) {
-                Text(stringResource(R.string.get_started), fontSize = 18.sp, fontWeight = FontWeight.Bold)
             }
         }
+    }
+}
+
+@Composable
+fun TermsAndConditionsRow(
+    acceptedTerms: Boolean,
+    onAcceptedTermsChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        Box(
+            modifier = Modifier
+                .size(30.dp)
+                .clickable {
+                    onAcceptedTermsChange(!acceptedTerms)
+                }
+                .background(colorResource(R.color.brand_100), shape = HabiticaTheme.shapes.small)
+        ) {
+            if (acceptedTerms) {
+                Image(
+                    painter = painterResource(R.drawable.checkmark),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(Color.White),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
+        }
+        Text(
+            AnnotatedString.fromHtml(
+                "You confirm that you are at least 18 years old, and that you have read and agree to our <a href=\"https://habitica.com/static/terms\">Terms of Service</a> and <a href=\"https://habitica.com/static/privacy\">Privacy Policy</a>.",
+                linkStyles = TextLinkStyles(style = SpanStyle(
+                    fontWeight = FontWeight.Bold,
+                    textDecoration = TextDecoration.Underline,
+                    color = colorResource(R.color.white)
+                ))
+            ),
+            lineHeight = 20.sp,
+            fontSize = 16.sp,
+            color = colorResource(R.color.brand_600),
+            fontWeight = FontWeight.Normal,
+        )
     }
 }

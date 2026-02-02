@@ -6,6 +6,7 @@ import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
@@ -269,6 +270,75 @@ class TaskTest : WordSpec({
                         calendar.add(Calendar.MONTH, 5)
                         calendar.set(Calendar.DAY_OF_MONTH, 1)
                     }
+                }
+
+                "handle edge case for months with fewer days (e.g., February 30th)" {
+                    calendar.set(Calendar.MONTH, Calendar.JANUARY)
+                    calendar.set(Calendar.DAY_OF_MONTH, 30)
+                    if (calendar.before(Calendar.getInstance())) {
+                        calendar.add(Calendar.YEAR, 1)
+                    }
+                    daily.startDate = calendar.time
+                    daily.everyX = 1
+                    daily.setDaysOfMonth(listOf(30))
+
+                    reminder.time = fakeZDT?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+                    val occurrences = daily.getNextReminderOccurrences(reminder, 12, fakeZDT)
+                    occurrences?.size shouldBe 12
+                    
+                    occurrences?.forEach { occurrence ->
+                        val maxDayInMonth = occurrence.month.length(occurrence.toLocalDate().isLeapYear)
+                        if (maxDayInMonth >= 30) {
+                            occurrence.dayOfMonth shouldBe 30
+                        } else {
+                            occurrence.dayOfMonth shouldBe maxDayInMonth
+                        }
+                    }
+                    
+                    val febOccurrences = occurrences?.filter { it.monthValue == 2 } ?: emptyList()
+                    febOccurrences.size shouldBe 1
+                    
+                    val febOccurrence = febOccurrences.firstOrNull()
+                    febOccurrence shouldNotBe null
+                    val year = febOccurrence?.year ?: 0
+                    val expectedFebDays = if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) 29 else 28
+                    febOccurrence?.dayOfMonth shouldBe expectedFebDays
+                }
+
+                "ensure mutual exclusivity between daysOfMonth and weeksOfMonth" {
+                    daily.setDaysOfMonth(listOf(15))
+                    daily.getDaysOfMonth() shouldBe listOf(15)
+                    daily.getWeeksOfMonth() shouldBe emptyList()
+
+                    daily.setWeeksOfMonth(listOf(2))
+                    daily.getWeeksOfMonth() shouldBe listOf(2)
+                    daily.getDaysOfMonth() shouldBe emptyList()
+
+                    daily.setDaysOfMonth(listOf(20))
+                    daily.getDaysOfMonth() shouldBe listOf(20)
+                    daily.getWeeksOfMonth() shouldBe emptyList()
+                }
+
+                "correctly handle day-of-month scheduling regardless of start date weekday" {
+                    calendar.set(Calendar.YEAR, 2025)
+                    calendar.set(Calendar.MONTH, Calendar.JULY)
+                    calendar.set(Calendar.DAY_OF_MONTH, 12)
+                    daily.startDate = calendar.time
+                    daily.everyX = 1
+                    daily.setDaysOfMonth(listOf(12))
+
+                    reminder.time = fakeZDT?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+                    val occurrences = daily.getNextReminderOccurrences(reminder, 3, fakeZDT)
+                    occurrences?.size shouldBe 3
+                    
+                    occurrences?.forEach {
+                        it.dayOfMonth shouldBe 12
+                    }
+                    
+                    val weekdays = occurrences?.map { it.dayOfWeek }?.distinct() ?: emptyList()
+                    (weekdays.size > 1) shouldBe true
                 }
             }
 

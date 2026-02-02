@@ -99,7 +99,25 @@ class AvatarView : FrameLayout {
                 )
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             imageViewHolder.forEach {
-                val bitmap = (it.drawable as? BitmapDrawable)?.bitmap ?: return@forEach
+                val drawable = it.drawable ?: return@forEach
+                val bitmap = when (drawable) {
+                    is BitmapDrawable -> drawable.bitmap
+                    else -> {
+                        // Draw the current frame (for time traveler animated backgrounds)
+                        try {
+                            val width = drawable.intrinsicWidth
+                            val height = drawable.intrinsicHeight
+                            if (width <= 0 || height <= 0) return@forEach
+                            val tempBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                            val tempCanvas = Canvas(tempBitmap)
+                            drawable.setBounds(0, 0, width, height)
+                            drawable.draw(tempCanvas)
+                            tempBitmap
+                        } catch (e: Exception) {
+                            return@forEach
+                        }
+                    }
+                }
                 avatarCanvas?.drawBitmap(
                     bitmap,
                     Rect(0, 0, bitmap.width, bitmap.height),
@@ -123,10 +141,12 @@ class AvatarView : FrameLayout {
         init(attrs, defStyle)
     }
 
-    constructor(context: Context, showBackground: Boolean, showMount: Boolean, showPet: Boolean, canAnimate: Boolean = true) : super(context) {
+    constructor(context: Context, showBackground: Boolean, showMount: Boolean = true, showPet: Boolean = true, showSleeping: Boolean = true, canAnimate: Boolean = true) : super(context) {
+        init(null, 0)
         this.showBackground = showBackground
         this.showMount = showMount
         this.showPet = showPet
+        this.showSleeping = showSleeping
         this.canAnimate = canAnimate
     }
 
@@ -187,8 +207,7 @@ class AvatarView : FrameLayout {
             imageView.load(
                 DataBindingUtils.BASE_IMAGE_URL +
                     DataBindingUtils.getFullFilename(
-                        layerName,
-                        disableAnimations = !canAnimate
+                        layerName
                     )
             ) {
                 allowHardware(false)

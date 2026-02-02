@@ -1070,7 +1070,6 @@
     <string name="fortify_shop">Pozione di Fortificazione</string>
     <string name="invitation_title_no_leader">Sei stato invitato in una Squadra</string>
     <string name="you">Tu</string>
-    <string name="login_disclaimer">Iscrivendoti, dichiari di aver letto e accettato i <a href="https://habitica.com/static/terms">Termini di servizio</a> e l\'<a href="https://habitica.com/static/privacy">Informativa sulla privacy. </a></string>
     <string name="finish">Finito</string>
     <string name="submit_feedback">Invia Feedback</string>
     <string name="theme_color">Tema colorato</string>
@@ -1268,4 +1267,6 @@
     <string name="title">Titolo</string>
     <string name="positive_sentence">positivo</string>
     <string name="negative_sentence">negativo</string>
+    <string name="standard_backgrounds">Sfondi Standard</string>
+    <string name="monthly_backgrounds">Sfondi Mensili</string>
 </resources>

@@ -2,12 +2,13 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -45,7 +46,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,7 +71,9 @@ class PreferencesFragment :
     private var pushNotificationsPreference: PreferenceScreen? = null
     private var emailNotificationsPreference: PreferenceScreen? = null
     private var classSelectionPreference: Preference? = null
-    private var serverUrlPreference: ListPreference? = null
+    private var customServerUrlDebugPreference: ListPreference? = null
+    private var customServerUrlReleaseCategory: PreferenceCategory? = null
+    private var customServerUrlReleasePreference: Preference? = null
     private var taskListPreference: ListPreference? = null
 
     private val classSelectionResult =
@@ -102,25 +104,28 @@ class PreferencesFragment :
         classSelectionPreference = findPreference("choose_class")
 
         val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
-        weekdayPreference?.summary = weekdayPreference?.entry
+        weekdayPreference?.summary = weekdayPreference.entry
 
-        serverUrlPreference = findPreference("server_url") as? ListPreference
-        serverUrlPreference?.isVisible = false
-        serverUrlPreference?.summary =
-            preferenceManager.sharedPreferences?.getString("server_url", "")
-
+        val serverUrl = preferenceManager.sharedPreferences?.getString("server_url", "")
+        customServerUrlDebugPreference = findPreference("server_url") as? ListPreference
+        customServerUrlDebugPreference?.isVisible = false
+        customServerUrlDebugPreference?.summary = serverUrl
+        customServerUrlReleaseCategory = findPreference("custom_server")
+        customServerUrlReleasePreference = findPreference("custom_server_url")
+        customServerUrlReleasePreference?.summary = serverUrl
+        
         val themePreference = findPreference("theme_name") as? ListPreference
-        themePreference?.summary = themePreference?.entry ?: "Default"
+        themePreference?.summary = themePreference.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
-        themeModePreference?.summary = themeModePreference?.entry ?: "Follow System"
+        themeModePreference?.summary = themeModePreference.entry ?: "Follow System"
 
         val launchScreenPreference = findPreference("launch_screen") as? ListPreference
-        launchScreenPreference?.summary = launchScreenPreference?.entry ?: "Habits"
+        launchScreenPreference?.summary = launchScreenPreference.entry ?: "Habits"
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
         if (configManager.enableTaskDisplayMode()) {
             taskDisplayPreference?.isVisible = true
-            taskDisplayPreference?.summary = taskDisplayPreference?.entry
+            taskDisplayPreference?.summary = taskDisplayPreference.entry
         } else {
             taskDisplayPreference?.isVisible = false
         }
@@ -216,11 +221,33 @@ class PreferencesFragment :
                 reloadContent(true)
             }
 
+            "custom_server_url" -> {
+                context?.let { context ->
+                    val dialog = HabiticaAlertDialog(context)
+                    dialog.setTitle(R.string.custom_server)
+                    dialog.setMessage(R.string.reset_server_confirmation)
+                    dialog.addButton(R.string.reset_server_to_default, isPrimary = true, isDestructive = true) { _, _ ->
+                        preferenceManager.sharedPreferences?.edit()?.remove("server_url")?.apply()
+                        val baseUrl = context.getString(com.habitrpg.common.habitica.R.string.base_url)
+                        apiClient.updateServerUrl(baseUrl)
+                        (activity as? MainActivity)?.let {
+                            it.reload()
+                        } ?: run {
+                            customServerUrlReleasePreference?.summary = null
+                            customServerUrlReleaseCategory?.isVisible = false
+                        }
+                    }
+                    dialog.addCancelButton()
+                    dialog.enqueue()
+                }
+            }
+
             "clear_database" -> {
                 context?.let { context ->
                     HabiticaBaseApplication.deleteDatabase(context)
                     lifecycleScope.launchCatching {
-                        userRepository.retrieveUser(true, true)
+                        userRepository.retrieveUser(true, forced = true)
+                        userRepository.retrieveTeamPlans()
                         (activity as? SnackbarActivity)?.showSnackbar(
                             content = context.getString(R.string.cleared_cache),
                             displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
@@ -237,6 +264,8 @@ class PreferencesFragment :
     private fun reloadContent(withConfirmation: Boolean) {
         lifecycleScope.launchCatching {
             contentRepository.retrieveContent(true)
+            contentRepository.retrieveWorldState(true)
+            userRepository.retrieveUser(true, true)
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloaded_content),
@@ -272,7 +301,7 @@ class PreferencesFragment :
                 val alert = context?.let { HabiticaAlertDialog(it) }
                 alert?.setTitle(R.string.push_notification_system_settings_title)
                 alert?.setMessage(R.string.push_notification_system_settings_description)
-                alert?.addButton(R.string.open_settings, true, false) { _, _ ->
+                alert?.addButton(R.string.open_settings, true, isDestructive = false) { _, _ ->
                     val notifSettingIntent: Intent =
                         Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -354,31 +383,22 @@ class PreferencesFragment :
                     userRepository.changeCustomDayStart(hour)
                 }
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "language" -> {
-                val languageHelper = LanguageHelper(sharedPreferences.getString(key, "en"))
+                val selectedLanguage = sharedPreferences.getString(key, "en") ?: "en"
+                val languageHelper = LanguageHelper(selectedLanguage)
 
-                Locale.setDefault(languageHelper.locale)
-                val configuration = Configuration()
-                configuration.setLocale(languageHelper.locale)
-                @Suppress("DEPRECATION")
-                activity?.resources?.updateConfiguration(
-                    configuration,
-                    activity?.resources?.displayMetrics
-                )
+                if (user?.preferences?.language != languageHelper.languageCode) {
+                    lifecycleScope.launchCatching {
+                        userRepository.updateLanguage(languageHelper.languageCode ?: "en")
+                    }
+                }
 
-                if (user?.preferences?.language == languageHelper.languageCode) {
-                    return
-                }
-                lifecycleScope.launchCatching {
-                    userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                    reloadContent(false)
-                }
                 val intent = Intent(activity, MainActivity::class.java)
-                this.startActivity(intent)
-                activity?.finishAffinity()
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
 
             "audioTheme" -> {
@@ -409,12 +429,12 @@ class PreferencesFragment :
 
             "task_display" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "FirstDayOfTheWeek" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "disablePMs" -> {
@@ -428,7 +448,7 @@ class PreferencesFragment :
 
             "launch_screen" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry ?: "Habits"
+                preference?.summary = preference.entry ?: "Habits"
             }
         }
     }
@@ -436,7 +456,7 @@ class PreferencesFragment :
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
             if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                TimePreferenceDialogFragment.newInstance(this, preference.key)
                     .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
             }
         } else {
@@ -490,13 +510,13 @@ class PreferencesFragment :
         }
         val cdsTimePreference = findPreference("cds_time") as? ListPreference
         cdsTimePreference?.value = user?.preferences?.dayStart.toString()
-        cdsTimePreference?.summary = cdsTimePreference?.entry
+        cdsTimePreference?.summary = cdsTimePreference.entry
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language
-        languagePreference?.summary = languagePreference?.entry
+        languagePreference?.summary = languagePreference.entry
         val audioThemePreference = findPreference("audioTheme") as? ListPreference
         audioThemePreference?.value = user?.preferences?.sound
-        audioThemePreference?.summary = audioThemePreference?.entry
+        audioThemePreference?.summary = audioThemePreference.entry
 
         val preference = findPreference<Preference>("authentication")
         if (user?.flags?.verifiedUsername == true) {
@@ -594,8 +614,11 @@ class PreferencesFragment :
         }
 
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
-            serverUrlPreference?.isVisible = true
+            customServerUrlDebugPreference?.isVisible = true
             taskListPreference?.isVisible = true
+        }
+        if (BuildConfig.DEBUG.not()) {
+            customServerUrlReleaseCategory?.isVisible = customServerUrlReleasePreference?.summary.isNullOrEmpty()?.not() ?: false
         }
     }
 }

@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
+import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -137,12 +139,6 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
         binding?.reportBug?.setOnClickListener { MainNavigationController.navigate(R.id.bugFixFragment) }
         binding?.googlePlayStoreButton?.setOnClickListener { openGooglePlay() }
         binding?.updateAvailableWrapper?.setOnClickListener { openGooglePlay() }
-    }
-
-    private fun openBrowserLink(url: String) {
-        val uriUrl = url.toUri()
-        val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-        startActivity(launchBrowser)
     }
 
     private fun doTheThing() {

@@ -65,6 +65,9 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     lateinit var configManager: AppConfigManager
 
     private var chatAdapter: InboxAdapter? = null
+    private var isScrolledToBottom = true
+    private var isFirstRefresh = true
+    private var hasPendingRefresh = false
 
     private val viewModel: InboxViewModel by viewModels()
 
@@ -96,13 +99,38 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 }
         }
         chatAdapter = InboxAdapter(viewModel.user.value)
+
+        binding?.recyclerView?.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(
+                    recyclerView: RecyclerView,
+                    dx: Int,
+                    dy: Int
+                ) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val wasScrolledToBottom = isScrolledToBottom
+                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() <= 3
+
+                    if (isScrolledToBottom && !wasScrolledToBottom && hasPendingRefresh) {
+                        hasPendingRefresh = false
+                        hideNewMessageIndicator()
+                        viewModel.invalidateDataSource()
+                    }
+
+                    if (isScrolledToBottom) {
+                        hideNewMessageIndicator()
+                    }
+                }
+            }
+        )
+
         chatAdapter?.registerAdapterDataObserver(
             object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(
                     positionStart: Int,
                     itemCount: Int
                 ) {
-                    if (positionStart == 0) {
+                    if (positionStart == 0 && (isScrolledToBottom || isFirstRefresh)) {
                         binding?.recyclerView?.scrollToPosition(0)
                     }
                 }
@@ -117,6 +145,13 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             adapter.onDeleteMessage = { showDeleteConfirmationDialog(it) }
             adapter.onFlagMessage = { showFlagMessageBottomSheet(it) }
             adapter.onCopyMessage = { copyMessageToClipboard(it) }
+        }
+
+        binding?.newMessageIndicator?.setOnClickListener {
+            hasPendingRefresh = false
+            hideNewMessageIndicator()
+            binding?.recyclerView?.smoothScrollToPosition(0)
+            viewModel.invalidateDataSource()
         }
 
         viewModel.messages.observe(viewLifecycleOwner) {
@@ -220,7 +255,14 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             socialRepository.retrieveInboxMessages(viewModel.recipientID ?: "", 0)
-            viewModel.invalidateDataSource()
+
+            if (isScrolledToBottom || isFirstRefresh) {
+                viewModel.invalidateDataSource()
+                isFirstRefresh = false
+            } else {
+                hasPendingRefresh = true
+                showNewMessageIndicator()
+            }
         }
     }
 
@@ -294,5 +336,33 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     private fun openProfile() {
         viewModel.memberID?.let { FullProfileActivity.open(it) }
+    }
+
+    private fun showNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility != View.VISIBLE) {
+                visibility = View.VISIBLE
+                alpha = 0f
+                translationY = 50f
+                animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(200)
+                    .start()
+            }
+        }
+    }
+
+    private fun hideNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility == View.VISIBLE) {
+                animate()
+                    .alpha(0f)
+                    .translationY(50f)
+                    .setDuration(200)
+                    .withEndAction { visibility = View.GONE }
+                    .start()
+            }
+        }
     }
 }

@@ -31,12 +31,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
-import com.habitrpg.android.habitica.extensions.forceLocale
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AnalyticsTarget
@@ -50,7 +48,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
 import java.io.File
@@ -109,8 +106,6 @@ abstract class BaseActivity : AppCompatActivity() {
             enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
         }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
-        resources.forceLocale(this, languageHelper.locale)
         delegate.localNightMode =
             when (sharedPreferences.getString("theme_mode", "system")) {
                 "light" -> AppCompatDelegate.MODE_NIGHT_NO
@@ -130,7 +125,8 @@ abstract class BaseActivity : AppCompatActivity() {
             notificationsManager.displayNotificationEvents.collect {
                 if (ShowNotificationInteractor(
                         this@BaseActivity,
-                        lifecycleScope
+                        lifecycleScope,
+                        userRepository
                     ).handleNotification(it)
                 ) {
                     lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -166,26 +162,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
-        resources.forceLocale(this, languageHelper.locale)
     }
-
-    val additionalScreenViewParams = mutableMapOf<String, String>()
 
     override fun onResume() {
         super.onResume()
         isActivityVisible = true
         loadTheme(PreferenceManager.getDefaultSharedPreferences(this))
-
-        Analytics.sendEvent(
-            "screen_view",
-            EventCategory.NAVIGATION,
-            HitType.PAGEVIEW,
-            mapOf(
-                FirebaseAnalytics.Param.SCREEN_CLASS to (this::class.java.canonicalName ?: "")) + additionalScreenViewParams,
-            AnalyticsTarget.FIREBASE
-        )
     }
 
     override fun onPause() {

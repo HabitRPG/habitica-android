@@ -330,14 +330,12 @@ class ItemRecyclerFragment :
                     sharedPreferences.edit {
                         putInt("pets_hatched", hatchCount)
                     }
-                    if (hatchCount >= 2) {
-                        userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
-                            val parentActivity = activity as? MainActivity
-                            val totalCheckIns = user?.loginIncentives
+                    userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                        val parentActivity = activity as? MainActivity
+                        val totalCheckIns = user?.loginIncentives
 
-                            if (totalCheckIns != null && parentActivity != null) {
-                                reviewManager.requestReview(parentActivity, totalCheckIns)
-                            }
+                        if (totalCheckIns != null && parentActivity != null) {
+                            reviewManager.requestReview(parentActivity, totalCheckIns)
                         }
                     }
                 }

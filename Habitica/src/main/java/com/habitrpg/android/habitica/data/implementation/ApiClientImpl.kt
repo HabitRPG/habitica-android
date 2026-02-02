@@ -51,6 +51,7 @@ import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -59,6 +60,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Converter
 import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
@@ -81,23 +83,46 @@ class ApiClientImpl(
 
     private lateinit var apiService: ApiService
 
-    private fun <T> processResponse(habitResponse: HabitResponse<T>): T? {
-        habitResponse.notifications?.let {
+    private fun <T> processResponse(response: Response<HabitResponse<T>>): T? {
+        val habitResponse = response.body()
+        if (habitResponse == null && response.errorBody() != null) {
+            throw HttpException(response)
+        }
+        habitResponse?.statusCode = response.code()
+        habitResponse?.notifications?.let {
             notificationsManager.setNotifications(it)
         }
-        return habitResponse.data
+        return habitResponse?.data
     }
 
-    private suspend fun <T> process(apiCall: suspend () -> HabitResponse<T>): T? {
+    private suspend fun <T> process(apiCall: suspend () -> Response<HabitResponse<T>>): T? {
+        return process(apiCall, null, true, false)
+    }
+
+    private suspend fun <T> process(apiCall: suspend () -> Response<HabitResponse<T>>,
+                                    onError: ((Throwable) -> T?)? = null,
+                                    propagateError: Boolean = true,
+                                    returnOnError: Boolean = false): T? {
         try {
             return processResponse(apiCall())
         } catch (throwable: Throwable) {
-            accept(throwable)
+            if (onError != null) {
+                if (returnOnError) {
+                    return onError(throwable)
+                } else {
+                    onError(throwable)
+                }
+                if (propagateError) {
+                    accept(throwable)
+                }
+            } else {
+                accept(throwable)
+            }
         }
         return null
     }
 
-    private suspend fun <T> processWithIfSuccess(apiCall: suspend () -> HabitResponse<T>): Boolean {
+    private suspend fun <T> processWithIfSuccess(apiCall: suspend () -> Response<HabitResponse<T>>): Boolean {
         try {
             processResponse(apiCall())
             return true
@@ -256,7 +281,8 @@ class ApiClientImpl(
     override suspend fun connectSocial(
         network: String,
         userId: String,
-        accessToken: String
+        accessToken: String,
+        allowRegister: Boolean
     ): UserAuthResponse? {
         val auth = UserAuthSocial()
         auth.network = network
@@ -264,16 +290,36 @@ class ApiClientImpl(
         authResponse.client_id = userId
         authResponse.access_token = accessToken
         auth.authResponse = authResponse
+        auth.allowRegister = allowRegister
 
-        return process { this.apiService.connectSocial(auth) }
+        return try {
+            val response = this.apiService.connectSocial(auth)
+            if (response.code() == 404) {
+                UserAuthResponse().apply {
+                    userExists = false
+                }
+            } else if (response.body()?.data?.id?.isEmpty() == true) {
+                UserAuthResponse().apply {
+                    userExists = false
+                }
+            } else {
+                processResponse(response)
+            }
+        } catch(e: Exception) {
+            UserAuthResponse().apply {
+                userExists = false
+            }
+        }
     }
 
-    override suspend fun disconnectSocial(network: String): Void? {
-        return process { this.apiService.disconnectSocial(network) }
+    override suspend fun disconnectSocial(network: String): Boolean {
+        return this.apiService.disconnectSocial(network).code() == 200
     }
 
     override suspend fun loginApple(authToken: String): UserAuthResponse? {
-        return process { apiService.loginApple(mapOf(Pair("code", authToken))) }
+        return process { apiService.loginApple(mapOf("code" to authToken,
+            "allowRegister" to true
+            )) }
     }
 
     fun accept(throwable: Throwable) {
@@ -566,7 +612,7 @@ class ApiClientImpl(
         foodKey: String
     ): FeedResponse? {
         val response = apiService.feedPet(petKey, foodKey)
-        response.data?.message = response.message
+        response.body()?.data?.message = response.body()?.message
         return process { response }
     }
 
@@ -618,6 +664,13 @@ class ApiClientImpl(
         position: Int
     ): List<String>? {
         return process { apiService.postTaskNewPosition(id, position) }
+    }
+
+    override suspend fun postGroupTaskNewPosition(
+        id: String,
+        position: Int
+    ): List<String>? {
+        return process { apiService.postGroupTaskNewPosition(id, position) }
     }
 
     override suspend fun scoreChecklistItem(
@@ -729,8 +782,12 @@ class ApiClientImpl(
         return processResponse(apiService.removeMemberFromGroup(groupID, userID))
     }
 
-    override suspend fun listGroupChat(groupId: String): List<ChatMessage>? {
-        return processResponse(apiService.listGroupChat(groupId))
+    override suspend fun listGroupChat(
+        groupId: String,
+        limit: Int?,
+        before: String?
+    ): List<ChatMessage>? {
+        return processResponse(apiService.listGroupChat(groupId, limit, before))
     }
 
     override suspend fun joinGroup(groupId: String): Group? {
@@ -1008,6 +1065,8 @@ class ApiClientImpl(
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
+    override suspend fun rebirth(): User? = process { apiService.rebirth() }
+
     override suspend fun resetAccount(password: String): Boolean {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = password
@@ -1053,6 +1112,12 @@ class ApiClientImpl(
         val updateObject = HashMap<String, String>()
         updateObject["username"] = username
         return process { this.apiService.verifyUsername(updateObject) }
+    }
+
+    override suspend fun verifyEmail(email: String): VerifyEmailResponse? {
+        val updateObject = HashMap<String, String>()
+        updateObject["email"] = email
+        return process { this.apiService.verifyEmail(updateObject) }
     }
 
     override suspend fun updateEmail(

@@ -354,7 +354,8 @@ class TaskFilterDialog(
     }
 
     private fun setActiveFilter(activeFilter: String?) {
-        viewModel.setActiveFilter(taskType, activeFilter ?: Task.FILTER_ALL)
+        val defaultFilter = if (taskType == TaskType.TODO) Task.FILTER_ACTIVE else Task.FILTER_ALL
+        viewModel.setActiveFilter(taskType, activeFilter ?: defaultFilter)
         var checkedId = -1
         if (activeFilter == null) {
             checkedId = R.id.all_task_filter

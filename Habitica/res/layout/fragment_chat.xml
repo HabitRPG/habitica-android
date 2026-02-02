@@ -1,49 +1,98 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/chat_empty_container"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="invisible"
-        android:layout_weight="1"
-        android:paddingHorizontal="@dimen/spacing_large"
-        android:paddingVertical="@dimen/spacing_medium">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/chat_empty_title"
+        <LinearLayout
+            android:id="@+id/chat_empty_container"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginBottom="4dp"
-            android:text="@string/chat_empty_state_title"
-            android:textColor="@color/gray100_gray400"
-            android:textSize="17sp"
-            android:fontFamily="sans-serif-medium" />
+            android:visibility="invisible"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/spacing_large"
+            android:paddingVertical="@dimen/spacing_medium">
 
-        <TextView
-            android:id="@+id/chat_empty_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/chat_empty_state_description"
-            android:textColor="@color/gray200_gray400"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/chat_empty_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="4dp"
+                android:text="@string/chat_empty_state_title"
+                android:textColor="@color/gray100_gray400"
+                android:textSize="17sp"
+                android:fontFamily="sans-serif-medium" />
+
+            <TextView
+                android:id="@+id/chat_empty_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/chat_empty_state_description"
+                android:textColor="@color/gray200_gray400"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:windowInsetBottom="false" />
+        <com.habitrpg.android.habitica.ui.views.social.ChatBarView
+                android:id="@+id/chatBarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:windowInsetBottom="false" />
-    <com.habitrpg.android.habitica.ui.views.social.ChatBarView
-            android:id="@+id/chatBarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-</LinearLayout>
+    <com.google.android.material.card.MaterialCardView
+            android:id="@+id/newMessageIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="104dp"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardElevation="6dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="?attr/colorPrimary"
+            tools:visibility="visible">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
+
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+                    app:tint="@android:color/white"
+                    android:contentDescription="@string/scroll_to_new_messages" />
+
+            <TextView
+                    android:id="@+id/newMessageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/new_message"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

@@ -105,14 +105,12 @@ fun TypewriterText(
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
     lineHeight: TextUnit = TextUnit.Unspecified,
-    delay: Long = 30L,
+    delay: Long = 25L,
 ) {
     var textToDisplay by remember {
         mutableStateOf("")
     }
-    val textCharsList = remember {
-        text.splitToCodePoints()
-    }
+    val textCharsList = text.splitToCodePoints()
 
     LaunchedEffect(text,) {
             textCharsList.forEachIndexed { charIndex, _ ->

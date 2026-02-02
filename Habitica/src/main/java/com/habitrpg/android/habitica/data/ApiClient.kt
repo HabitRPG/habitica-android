@@ -35,6 +35,7 @@ import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import retrofit2.HttpException
 
@@ -137,6 +138,11 @@ interface ApiClient {
         position: Int
     ): List<String>?
 
+    suspend fun postGroupTaskNewPosition(
+        id: String,
+        position: Int
+    ): List<String>?
+
     suspend fun scoreChecklistItem(
         taskId: String,
         itemId: String
@@ -182,10 +188,11 @@ interface ApiClient {
     suspend fun connectSocial(
         network: String,
         userId: String,
-        accessToken: String
+        accessToken: String,
+        allowRegister: Boolean
     ): UserAuthResponse?
 
-    suspend fun disconnectSocial(network: String): Void?
+    suspend fun disconnectSocial(network: String): Boolean
 
     suspend fun loginApple(authToken: String): UserAuthResponse?
 
@@ -228,7 +235,11 @@ interface ApiClient {
         userID: String
     ): Void?
 
-    suspend fun listGroupChat(groupId: String): List<ChatMessage>?
+    suspend fun listGroupChat(
+        groupId: String,
+        limit: Int? = null,
+        before: String? = null
+    ): List<ChatMessage>?
 
     suspend fun joinGroup(groupId: String): Group?
 
@@ -395,6 +406,8 @@ interface ApiClient {
 
     suspend fun reroll(): User?
 
+    suspend fun rebirth(): User?
+
     suspend fun resetAccount(password: String): Boolean
 
     suspend fun deleteAccount(password: String): Void?
@@ -436,6 +449,7 @@ interface ApiClient {
     suspend fun retrieveMarketGear(): Shop?
 
     suspend fun verifyUsername(username: String): VerifyUsernameResponse?
+    suspend fun verifyEmail(email: String): VerifyEmailResponse?
 
     fun updateServerUrl(newAddress: String?)
 

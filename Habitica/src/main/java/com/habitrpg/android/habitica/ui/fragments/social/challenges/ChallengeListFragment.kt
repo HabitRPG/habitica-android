@@ -11,6 +11,8 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.extensions.toFilterGroups
+import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
@@ -23,6 +25,7 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -59,6 +62,7 @@ class ChallengeListFragment :
 
     private var challenges: List<Challenge>? = null
     private var filterGroups: MutableList<Group>? = null
+    private var categoryOptions: List<CategoryOption> = emptyList()
 
     private var filterOptions: ChallengeFilterOptions? = null
 
@@ -107,6 +111,22 @@ class ChallengeListFragment :
                     it.first?.let { tavern -> filterGroups?.add(tavern) }
                     filterGroups?.addAll(it.second)
                 }
+        }
+
+        lifecycleScope.launchCatching {
+            challengeRepository.getCategoryOptions()
+                .filter { it.isNotEmpty() }
+                .collect { categoryOptions ->
+                    this@ChallengeListFragment.categoryOptions = categoryOptions
+                }
+        }
+
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect { user ->
+                user?.challenges?.let { memberships ->
+                    challengeAdapter?.updateChallengeMemberships(memberships)
+                }
+            }
         }
 
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -191,10 +211,14 @@ class ChallengeListFragment :
     }
 
     internal fun showFilterDialog() {
-        activity?.let {
+        activity?.let { activity ->
+            val socialGroups = filterGroups ?: emptyList()
+            val categoryGroups = categoryOptions.toFilterGroups()
+            val allGroups: List<Group> = socialGroups + categoryGroups
+
             ChallengeFilterDialogHolder.showDialog(
-                it,
-                filterGroups ?: emptyList(),
+                activity,
+                allGroups,
                 filterOptions
             ) {
                 changeFilter(it)
@@ -205,5 +229,10 @@ class ChallengeListFragment :
     private fun changeFilter(challengeFilterOptions: ChallengeFilterOptions) {
         filterOptions = challengeFilterOptions
         challengeAdapter?.filter(challengeFilterOptions)
+        updateFilterBadge()
+    }
+
+    fun updateFilterBadge() {
+        (parentFragment as? ChallengesOverviewFragment)?.updateFilterBadge(filterOptions)
     }
 }

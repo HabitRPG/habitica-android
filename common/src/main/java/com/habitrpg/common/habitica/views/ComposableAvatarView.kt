@@ -10,12 +10,16 @@ import com.habitrpg.shared.habitica.models.Avatar
 fun ComposableAvatarView(
     avatar: Avatar?,
     configManager: AppConfigManager?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showBackground: Boolean = true,
+    showPet: Boolean = true,
+    showMount: Boolean = true,
+    showSleeping: Boolean = true
 ) {
     AndroidView(
         modifier = modifier, // Occupy the max size in the Compose UI tree
         factory = { context ->
-            val view = AvatarView(context)
+            val view = AvatarView(context, showBackground, showPet, showMount,showSleeping)
             view.configManager = configManager
             return@AndroidView view
         },

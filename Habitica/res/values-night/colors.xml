@@ -53,6 +53,7 @@
     <color name="text_red_maroon">@color/red_100</color>
     <color name="lightly_tinted_background">@color/brand_50</color>
     <color name="text_green1_green500">@color/green_500</color>
+    <color name="bg_green50030_green1030">@color/green_1030</color>
     <color name="dialog_background">@color/gray_10</color>
     <color name="armoire_text">@color/gray_400</color>
 
@@ -67,6 +68,7 @@
     <color name="gray200_gray400">@color/gray_400</color>
     <color name="gray600_gray10">@color/gray_10</color>
     <color name="gray600_gray50">@color/gray_50</color>
+    <color name="gray50_gray600">@color/gray_600</color>
     <color name="gray700_gray10">@color/gray_10</color>
     <color name="maroon100_red100">@color/red_100</color>
     <color name="brand_button">@color/brand_600</color>

@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -68,6 +69,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
     private var isFirstRefresh = true
+    private var hasPendingRefresh = false
     var autocompleteContext: String = ""
 
     override fun onViewCreated(
@@ -107,6 +109,13 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
+        binding?.newMessageIndicator?.setOnClickListener {
+            hasPendingRefresh = false
+            hideNewMessageIndicator()
+            binding?.recyclerView?.smoothScrollToPosition(0)
+            viewModel.retrieveGroupChat { _ -> }
+        }
+
         binding?.recyclerView?.addOnScrollListener(
             object :
                 androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
@@ -116,12 +125,43 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                     dy: Int
                 ) {
                     super.onScrolled(recyclerView, dx, dy)
-                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
+                    val wasScrolledToBottom = isScrolledToBottom
+                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() <= 3
+
+                    if (isScrolledToBottom && !wasScrolledToBottom && hasPendingRefresh) {
+                        hasPendingRefresh = false
+                        hideNewMessageIndicator()
+                        viewModel.retrieveGroupChat { _ -> }
+                    }
+
+                    if (isScrolledToBottom) {
+                        hideNewMessageIndicator()
+                    }
+
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = layoutManager.itemCount
+                    if (lastVisibleItemPosition >= totalItemCount - 5 && totalItemCount > 0) {
+                        viewModel.loadOlderMessages { }
+                    }
                 }
             }
         )
 
         viewModel.chatmessages.observe(viewLifecycleOwner) { setChatMessages(it) }
+
+        if (viewModel.groupViewType == GroupViewType.PARTY) {
+            (viewModel as? com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel)?.getMembersData()?.observe(viewLifecycleOwner) { members ->
+                binding?.chatBarView?.groupMembers = members
+            }
+        } else {
+            lifecycleScope.launchCatching {
+                viewModel.getGroupData().value?.id?.let { groupId ->
+                    socialRepository.getGroupMembers(groupId).collect { members ->
+                        binding?.chatBarView?.groupMembers = members
+                    }
+                }
+            }
+        }
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
             viewModel.updateUser("flags.communityGuidelinesAccepted", true)
@@ -148,7 +188,9 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 val ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                 val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
 
-                binding?.chatBarView?.translationY = -ime.toFloat()
+                val keyboardOffset = (ime - nav).coerceAtLeast(0)
+
+                binding?.chatBarView?.translationY = -keyboardOffset.toFloat()
                 binding?.chatBarView?.setPadding(
                     binding?.chatBarView!!.paddingLeft,
                     binding?.chatBarView!!.paddingTop,
@@ -156,15 +198,13 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                     nav
                 )
 
-
-                binding?.recyclerView?.translationY = -ime.toFloat()
-
+                binding?.recyclerView?.translationY = -keyboardOffset.toFloat()
 
                 binding?.recyclerView?.setPadding(
                     binding?.recyclerView!!.paddingLeft,
                     binding?.recyclerView!!.paddingTop,
                     binding?.recyclerView!!.paddingRight,
-                    ime + nav
+                    ime.coerceAtLeast(nav)
                 )
 
                 insets
@@ -189,11 +229,14 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun refresh() {
-        viewModel.retrieveGroupChat {
+        viewModel.retrieveGroupChat { hasNewMessages ->
             if (isScrolledToBottom || isFirstRefresh) {
                 binding?.recyclerView?.scrollToPosition(0)
+                isFirstRefresh = false
+            } else if (hasNewMessages) {
+                hasPendingRefresh = true
+                showNewMessageIndicator()
             }
-            isFirstRefresh = false
         }
     }
 
@@ -272,5 +315,33 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             chatText,
             { binding?.recyclerView?.scrollToPosition(0) }
         ) { binding?.chatBarView?.message = chatText }
+    }
+
+    private fun showNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility != View.VISIBLE) {
+                visibility = View.VISIBLE
+                alpha = 0f
+                translationY = 50f
+                animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(200)
+                    .start()
+            }
+        }
+    }
+
+    private fun hideNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility == View.VISIBLE) {
+                animate()
+                    .alpha(0f)
+                    .translationY(50f)
+                    .setDuration(200)
+                    .withEndAction { visibility = View.GONE }
+                    .start()
+            }
+        }
     }
 }

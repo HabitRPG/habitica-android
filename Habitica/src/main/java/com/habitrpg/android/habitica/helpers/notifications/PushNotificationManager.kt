@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.data.ApiClient
@@ -141,12 +143,29 @@ class PushNotificationManager(
         const val G1G1_PROMO_KEY = "g1g1Promo"
         const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
 
+        private fun isAppInForeground(): Boolean {
+            return ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+        }
+
+        private fun shouldSuppressNotification(identifier: String?): Boolean {
+            if (!isAppInForeground()) {
+                return false
+            }
+            return identifier == GROUP_ACTIVITY_NOTIFICATION_KEY ||
+                identifier == CHAT_MENTION_NOTIFICATION_KEY ||
+                identifier?.contains(RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY) == true
+        }
+
         fun displayNotification(
             remoteMessage: RemoteMessage,
             context: Context,
             pushNotificationManager: PushNotificationManager? = null
         ) {
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
+
+            if (shouldSuppressNotification(remoteMessageIdentifier)) {
+                return
+            }
 
             if (pushNotificationManager?.userIsSubscribedToNotificationType(remoteMessageIdentifier) != false) {
                 if (remoteMessage.data.containsKey("sendAnalytics")) {

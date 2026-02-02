@@ -250,6 +250,11 @@ class UserRepositoryImpl(
         return apiClient.reroll()
     }
 
+    override suspend fun rebirth(): User? {
+        apiClient.rebirth()
+        return retrieveUser(true, true)
+    }
+
     override suspend fun readNotifications(notificationIds: Map<String, List<String>>) = apiClient.readNotifications(notificationIds)
 
     override suspend fun seeNotifications(notificationIds: Map<String, List<String>>) = apiClient.seeNotifications(notificationIds)

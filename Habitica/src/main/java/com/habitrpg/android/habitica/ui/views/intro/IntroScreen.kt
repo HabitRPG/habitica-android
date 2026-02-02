@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -48,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.graphics.ColorUtils
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 
 @Composable
 fun IntroPage(
@@ -152,7 +154,7 @@ fun IntroScreen(onNextOnboardingStep: () -> Unit) {
                     page = page,
                     title = { Image(painterResource(R.drawable.intro_1_title), contentDescription = null) },
                     subtitle = { Text(stringResource(R.string.intro_1_subtitle)) },
-                    description = { Text(stringResource(R.string.intro_1_description)) },
+                    description = { Text(stringResource(R.string.intro_1_description, "6,000,000")) },
                     image = { Image(painterResource(R.drawable.intro_1), contentDescription = null) },
                     background = Brush.verticalGradient(listOf(colorResource(R.color.brand_400), colorResource(R.color.brand_200)))
                 )
@@ -225,8 +227,9 @@ fun IntroScreen(onNextOnboardingStep: () -> Unit) {
                     containerColor = Color.Black.copy(alpha = 0.4f),
                     contentColor = Color.White
                 ),
-
-                modifier = Modifier.fillMaxWidth()
+                shape = HabiticaTheme.shapes.large,
+                contentPadding = PaddingValues(15.dp),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
             ) {
                 if (pagerState.currentPage < pagerState.pageCount - 1) {
                     Text(stringResource(R.string.next_button), fontSize = 18.sp, fontWeight = FontWeight.Normal)

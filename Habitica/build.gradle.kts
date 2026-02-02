@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.lint.AndroidLintTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     `jacoco-report-aggregation`
@@ -128,11 +130,15 @@ android {
 
     bundle.language.enableSplit = false
     packaging.resources.excludes.add("META-INF/*")
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 }
 
 tasks.withType<AndroidLintTask> { enabled = false }
 tasks.withType<JavaCompile> { options.compilerArgs.addAll(listOf("-Xmaxerrs", "500")) }
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
 
 dependencies {
     implementation(projects.common)

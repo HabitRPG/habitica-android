@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import javax.inject.Inject
 
 class SubscriberBenefitView
 @JvmOverloads
@@ -32,17 +31,13 @@ constructor(
 
     val monthFormatter = SimpleDateFormat("MMMM", Locale.getDefault())
 
-    @Inject
-    lateinit var configManager: AppConfigManager
-
-    @Inject
-    lateinit var inventoryRepository: InventoryRepository
+    var configManager: AppConfigManager
+    var inventoryRepository: InventoryRepository
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface ThisEntryPoint {
         fun configManager(): AppConfigManager
-
         fun inventoryRepository(): InventoryRepository
     }
 
@@ -70,9 +65,6 @@ constructor(
         }
         binding.subBenefitsMysteryItemText.text =
             context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), context.getString(R.string.set))
-
-        binding.benefitArmoireWrapper.isVisible = configManager.enableArmoireSubs()
-        binding.benefitFaintWrapper.isVisible = configManager.enableFaintSubs()
     }
 
     fun hideDeathBenefit() {

@@ -392,7 +392,12 @@ class TaskRepositoryImpl(
         taskID: String,
         newPosition: Int
     ): List<String>? {
-        val positions = apiClient.postTaskNewPosition(taskID, newPosition) ?: return null
+        val task = getTask(taskID).firstOrNull()
+        val positions = if (task?.isGroupTask == true) {
+            apiClient.postGroupTaskNewPosition(taskID, newPosition)
+        } else {
+            apiClient.postTaskNewPosition(taskID, newPosition)
+        } ?: return null
         localRepository.updateTaskPositions(positions)
         return positions
     }

@@ -44,6 +44,8 @@ fun LoginForm(
     password: String,
     passwordFieldState: LoginFieldState,
     onPasswordChange: (String) -> Unit,
+    onGoogleLoginClicked: () -> Unit,
+    onForgotPasswordClicked: () -> Unit,
     isRegistering: Boolean,
     onSubmit: () -> Unit,
     showLoading: Boolean,
@@ -57,10 +59,13 @@ fun LoginForm(
         Button(
             {
                 onToggleFormType()
+                // Trigger revalidation
+                onEmailChange(email)
+                onPasswordChange(password)
             },
             colors = ButtonDefaults.textButtonColors(),
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier.Companion.fillMaxWidth().padding(top = 24.dp, bottom = 8.dp)
+            modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 8.dp)
         ) {
             ProvideTextStyle(TextStyle(fontSize=18.sp)) {
                 AnimatedContent(isRegistering) {
@@ -125,6 +130,7 @@ fun LoginForm(
                     contentDescription = stringResource(R.string.password)
                 )
             },
+            errorMessage = if (passwordFieldState == LoginFieldState.ERROR) stringResource(R.string.password_too_short, 8) else null,
             modifier = Modifier.Companion.fillMaxWidth(),
         )
         AnimatedVisibility(isRegistering) {
@@ -138,6 +144,8 @@ fun LoginForm(
                     confirmPassword == password && passwordFieldState == LoginFieldState.VALID -> LoginFieldState.VALID
                     else -> LoginFieldState.ERROR
                 },
+                errorMessage = if (confirmPassword.isNotBlank() && confirmPassword != password &&
+                        passwordFieldState == LoginFieldState.VALID) stringResource(R.string.password_not_matching) else null,
                 icon = {
                     Image(
                         painterResource(R.drawable.login_password),
@@ -152,13 +160,12 @@ fun LoginForm(
                 HabiticaCircularProgressView(indicatorSize = 64.dp, modifier = Modifier.padding(top = 30.dp))
             } else {
                 Button(
-                    {
-                        onSubmit()
-                    },
+                    onSubmit,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Companion.White,
                         contentColor = colorResource(R.color.gray_50),
                         disabledContainerColor = Color.White.copy(alpha = 0.5f),
+                        disabledContentColor = colorResource(R.color.gray_50)
                     ),
                     shape = HabiticaTheme.shapes.large,
                     contentPadding = PaddingValues(15.dp),
@@ -169,30 +176,24 @@ fun LoginForm(
                     },
                     modifier = Modifier.Companion.fillMaxWidth().padding(top = 30.dp)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.Companion.CenterVertically
-                    ) {
-                        if (isRegistering) {
-                            Text(
-                                stringResource(R.string.action_continue),
-                                fontWeight = FontWeight.Companion.Bold,
-                                fontSize = 18.sp
-                            )
-                        } else {
-                            Text(
-                                stringResource(R.string.login_btn), fontWeight = FontWeight.Companion.Bold,
-                                fontSize = 18.sp
-                            )
-                        }
+                    if (isRegistering) {
+                        Text(
+                            stringResource(R.string.action_continue),
+                            fontWeight = FontWeight.Companion.Bold,
+                            fontSize = 18.sp
+                        )
+                    } else {
+                        Text(
+                            stringResource(R.string.login_btn), fontWeight = FontWeight.Companion.Bold,
+                            fontSize = 18.sp
+                        )
                     }
                 }
             }
         }
         AnimatedVisibility(!isRegistering) {
             Button(
-                {
-                },
+                onGoogleLoginClicked,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Companion.White,
                     contentColor = colorResource(R.color.gray_50)
@@ -219,9 +220,7 @@ fun LoginForm(
         }
         AnimatedVisibility(!isRegistering) {
             Button(
-                {
-                    onToggleFormType()
-                },
+                onForgotPasswordClicked,
                 colors = ButtonDefaults.textButtonColors(),
                 contentPadding = PaddingValues(15.dp),
                 modifier = Modifier.Companion.fillMaxWidth()

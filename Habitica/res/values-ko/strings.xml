@@ -1093,7 +1093,6 @@
     <string name="user_is_blocked">이 유저를 차단했습니다</string>
     <string name="user_is_blocked_explanation">차단된 유저는 당신에게 쪽지를 보낼 수 없습니다. 하지만 여전히 여관이나 길드에선 차단된 유저의 글이 보일 것입니다.</string>
     <string name="finish">끝내기</string>
-    <string name="login_disclaimer">Habitica에 가입하는 것은 <a href="https://habitica.com/static/terms">서비스 약관(Terms of Service)</a>과 <a href="https://habitica.com/static/privacy">개인 정보 보호 정책(Privacy Policy)</a>을 읽고 동의했음을 나타냅니다.</string>
     <string name="theme_color">테마 색상</string>
     <string name="invitation_title_no_leader">파티에 참가 초대를 받았습니다</string>
     <string name="fortify_shop">강화 물약</string>

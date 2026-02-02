@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
+import com.habitrpg.android.habitica.models.social.CategoryOption
 import io.realm.RealmList
 
 /**
@@ -31,4 +32,5 @@ class ContentResult {
     var faq = RealmList<FAQArticle>()
     var special = RealmList<SpecialItem>()
     var mystery = RealmList<EquipmentSet>()
+    var categoryOptions = RealmList<CategoryOption>()
 }

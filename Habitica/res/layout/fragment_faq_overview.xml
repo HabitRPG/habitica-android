@@ -1,155 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.android.habitica.ui.views.HabiticaScrollView
-        android:id="@+id/nested_scroll_view"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<com.habitrpg.android.habitica.ui.views.HabiticaScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<LinearLayout
+
+    <LinearLayout
         android:id="@+id/scroll_content"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="?attr/colorContentBackground">
-    <include layout="@layout/shop_header"
-        android:id="@+id/npc_header"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@color/window_background"/>
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/game_mechanics"
-        style="@style/SectionHeaderCaps"
-        android:layout_marginTop="@dimen/spacing_large"/>
+        android:background="?attr/colorContentBackground"
+        android:orientation="vertical">
 
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/health_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="HP"
-        app:title="@string/health_points"
-        app:titleColor="@color/text_red"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        android:layout_marginTop="@dimen/spacing_medium"
-        app:description="@string/health_description"/>
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/experience_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="EXP"
-        app:title="@string/experience_points"
-        app:titleColor="@color/text_yellow"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        app:description="@string/experience_description"/>
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/mana_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="MP"
-        app:title="@string/mana_points"
-        app:titleColor="@color/text_blue"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        app:description="@string/mana_description"/>
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/gold_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="@string/currency"
-        app:title="@string/gold_capitalized"
-        app:titleColor="@color/text_orange"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        app:description="@string/gold_description"/>
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/gems_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="@string/premium_currency"
-        app:title="@string/gems"
-        app:titleColor="@color/text_green"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        app:description="@string/gems_description"/>
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/hourglasses_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="@string/subscriber_currency"
-        app:title="@string/mystic_hourglasses"
-        app:titleColor="@color/text_brand"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        app:description="@string/hourglasses_description"/>
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/stats_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="STR, CON, INT, PER"
-        app:title="@string/stat_allocation"
-        app:titleColor="@color/text_brown"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        app:description="@string/stat_description"/>
-    <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
-        android:id="@+id/contrib_tier_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitle="Habitica helpers"
-        app:title="@string/contributor_tiers"
-        app:titleColor="@color/text_teal"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        app:description="@string/contrib_tier_description"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/common_questions"
-        style="@style/SectionHeaderCaps"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginBottom="@dimen/spacing_medium"/>
-    <LinearLayout
-        android:id="@+id/faq_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="32dp"
-        android:paddingStart="32dp"
-        android:paddingEnd="32dp"
-        android:paddingBottom="32dp"
-        android:orientation="vertical"
-        android:background="?attr/colorWindowBackground"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_input_layout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/still_questions"
-            android:textColor="@color/text_primary"
-            style="@style/Subheader3"
-            android:layout_marginBottom="@dimen/spacing_small"/>
-    <TextView
-        android:id="@+id/more_help_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@color/text_secondary"
-        android:gravity="center"/>
-</LinearLayout>
-</LinearLayout>
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_small"
+            app:boxBackgroundColor="?attr/colorWindowBackground"
+            app:boxCornerRadiusBottomEnd="28dp"
+            app:boxCornerRadiusBottomStart="28dp"
+            app:boxCornerRadiusTopEnd="28dp"
+            app:boxCornerRadiusTopStart="28dp"
+            app:boxStrokeColor="?attr/colorContentBackgroundOffset"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="?attr/colorOnSurfaceVariant"
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/ic_search"
+            app:startIconTint="?attr/colorOnSurfaceVariant">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:hint="@string/search_questions"
+                android:imeOptions="actionSearch"
+                android:includeFontPadding="false"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <include
+            android:id="@+id/npc_header"
+            layout="@layout/shop_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/window_background" />
+
+        <LinearLayout
+            android:id="@+id/search_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="48dp"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_matching_questions"
+                android:textColor="@color/text_secondary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_results_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/original_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SectionHeaderCaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:text="@string/game_mechanics" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/health_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/health_description"
+                app:subtitle="HP"
+                app:title="@string/health_points"
+                app:titleColor="@color/text_red" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/experience_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/experience_description"
+                app:subtitle="EXP"
+                app:title="@string/experience_points"
+                app:titleColor="@color/text_yellow" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/mana_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/mana_description"
+                app:subtitle="MP"
+                app:title="@string/mana_points"
+                app:titleColor="@color/text_blue" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/gold_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/gold_description"
+                app:subtitle="@string/currency"
+                app:title="@string/gold_capitalized"
+                app:titleColor="@color/text_orange" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/gems_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/gems_description"
+                app:subtitle="@string/premium_currency"
+                app:title="@string/gems"
+                app:titleColor="@color/text_green" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/hourglasses_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/hourglasses_description"
+                app:subtitle="@string/subscriber_currency"
+                app:title="@string/mystic_hourglasses"
+                app:titleColor="@color/text_brand" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/stats_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/stat_description"
+                app:subtitle="STR, CON, INT, PER"
+                app:title="@string/stat_allocation"
+                app:titleColor="@color/text_brown" />
+
+            <com.habitrpg.android.habitica.ui.views.SupportCollapsibleSection
+                android:id="@+id/contrib_tier_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                app:description="@string/contrib_tier_description"
+                app:subtitle="Habitica helpers"
+                app:title="@string/contributor_tiers"
+                app:titleColor="@color/text_teal" />
+
+            <TextView
+                style="@style/SectionHeaderCaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:text="@string/common_questions" />
+
+            <LinearLayout
+                android:id="@+id/faq_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="?attr/colorWindowBackground"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="32dp"
+                android:paddingTop="32dp"
+                android:paddingEnd="32dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    style="@style/Subheader3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:text="@string/still_questions"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/more_help_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </com.habitrpg.android.habitica.ui.views.HabiticaScrollView>

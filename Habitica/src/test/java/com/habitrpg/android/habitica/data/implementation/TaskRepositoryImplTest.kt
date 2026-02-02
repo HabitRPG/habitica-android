@@ -12,9 +12,9 @@ import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import io.kotest.assertions.nondeterministic.eventually
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.WordSpec
-import io.kotest.framework.concurrency.eventually
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -27,6 +27,7 @@ import io.mockk.verify
 import io.realm.Realm
 import kotlinx.coroutines.flow.flowOf
 import java.util.UUID
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalKotest::class)
 class TaskRepositoryImplTest : WordSpec({
@@ -82,7 +83,7 @@ class TaskRepositoryImplTest : WordSpec({
             coEvery { apiClient.postTaskDirection(any(), "up") } returns TaskDirectionData()
             coEvery { localRepository.getUser("") } returns flowOf(user)
             repository.taskChecked(null, task, true, false, null)
-            eventually(5000) {
+            eventually(5000.milliseconds) {
                 localRepository.getUser("")
             }
         }

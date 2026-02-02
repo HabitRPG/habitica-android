@@ -187,11 +187,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     ?: 0
                 ) > 0 && counterDown != null && (counterDown ?: 0) > 0
             ) {
-                "+" + counterUp.toString() + " | -" + counterDown?.toString()
+                "+$counterUp | -$counterDown"
             } else if (counterUp != null && (counterUp ?: 0) > 0) {
-                "+" + counterUp.toString()
+                "+$counterUp"
             } else if (counterDown != null && (counterDown ?: 0) > 0) {
-                "-" + counterDown.toString()
+                "-$counterDown"
             } else if ((streak ?: 0) > 0) {
                 return streak.toString()
             } else {
@@ -389,7 +389,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         val now = today ?: ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
         var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val weekInMonth = getWeeksOfMonth()?.firstOrNull()?.toLong()
-        val weekdayInMonth = startDate.dayOfWeek
+        val weekdayInMonth = if (weekInMonth != null) startDate.dayOfWeek else null
+        val monthDays = getDaysOfMonth()
         val frequency = this.frequency ?: return null
         val everyX = this.everyX?.toLong() ?: 1L
         if (everyX == 0L) {
@@ -399,11 +400,14 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         startDate = startDate.withHour(reminderTime.hour).withMinute(reminderTime.minute)
         nextOccurence = startDate
         if (frequency == Frequency.MONTHLY) {
-            daysOfMonth?.let {
-                if (it.isEmpty()) return@let
-                nextOccurence = nextOccurence.withDayOfMonth(it.first())
+            monthDays?.let { days ->
+                if (days.isEmpty()) return@let
+                val targetDay = days.first().coerceAtMost(nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear))
+                nextOccurence = nextOccurence.withDayOfMonth(targetDay)
                 if (nextOccurence.isBefore(startDate)) {
                     nextOccurence = nextOccurence.plusMonths(1)
+                    val maxDay = nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear)
+                    nextOccurence = nextOccurence.withDayOfMonth(targetDay.coerceAtMost(maxDay))
                 }
             }
         }
@@ -445,12 +449,12 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                                 nextOccurence.withHour(reminderTime.hour)
                                     .withMinute(reminderTime.minute)
                             // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
-                            if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
+                            if (nextDueDate.isBefore(now) && occurrencesList.isEmpty()) {
                                 nextDueDate = nextDueDate.plusDays(1)
                             }
 
                             // If the reminder being scheduled is not the first iteration of the reminder, increment it by one day
-                            if (occurrencesList.size > 0) {
+                            if (occurrencesList.isNotEmpty()) {
                                 nextDueDate = nextDueDate.plusDays(1)
                             }
 
@@ -484,28 +488,60 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     }
 
                     Frequency.MONTHLY -> {
-                        while (nextOccurence.isBefore(now)) {
-                            nextOccurence = nextOccurence.plusMonths(everyX)
-                            if (weekInMonth != null && weekdayInMonth != null) {
-                                nextOccurence = nextOccurence.withDayOfMonth(1)
+                        if (monthDays?.isNotEmpty() == true) {
+                            while (nextOccurence.isBefore(now)) {
+                                nextOccurence = nextOccurence.plusMonths(everyX)
+                                val targetDay = monthDays.first()
+                                val maxDay = nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear)
+                                nextOccurence = nextOccurence.withDayOfMonth(targetDay.coerceAtMost(maxDay))
+                            }
+                            val todayWithTime =
+                                nextOccurence
+                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
+                                todayWithTime
+                            } else {
+                                nextOccurence = nextOccurence.plusMonths(everyX)
+                                val targetDay = monthDays.first()
+                                val maxDay = nextOccurence.month.length(nextOccurence.toLocalDate().isLeapYear)
+                                nextOccurence.withDayOfMonth(targetDay.coerceAtMost(maxDay))
+                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            }
+                        } else if (weekInMonth != null && weekdayInMonth != null) {
+                            while (nextOccurence.isBefore(now)) {
+                                nextOccurence = nextOccurence.plusMonths(everyX).withDayOfMonth(1)
                                 while (nextOccurence.dayOfWeek != weekdayInMonth) {
                                     nextOccurence = nextOccurence.plusDays(1)
                                 }
                                 nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                if (nextOccurence.monthValue != nextOccurence.minusWeeks(weekInMonth).monthValue) {
+                                    nextOccurence = nextOccurence.plusMonths(1).withDayOfMonth(1)
+                                    while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                        nextOccurence = nextOccurence.plusDays(1)
+                                    }
+                                    nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                }
                             }
-                        }
-                        val todayWithTime = nextOccurence
-                            .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
-                            todayWithTime
-                        } else if (weekInMonth != null && weekdayInMonth != null) {
-                            nextOccurence = nextOccurence.plusMonths(everyX)
-                                .withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                                .withDayOfMonth(1)
-                            while (nextOccurence.dayOfWeek != weekdayInMonth) {
-                                nextOccurence = nextOccurence.plusDays(1)
+                            val todayWithTime =
+                                nextOccurence
+                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            if (occurrencesList.isEmpty() && todayWithTime.isAfter(now)) {
+                                todayWithTime
+                            } else {
+                                nextOccurence = nextOccurence.plusMonths(everyX).withDayOfMonth(1)
+                                while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                    nextOccurence = nextOccurence.plusDays(1)
+                                }
+                                nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                if (nextOccurence.monthValue != nextOccurence.minusWeeks(weekInMonth).monthValue) {
+                                    nextOccurence = nextOccurence.plusMonths(1).withDayOfMonth(1)
+                                    while (nextOccurence.dayOfWeek != weekdayInMonth) {
+                                        nextOccurence = nextOccurence.plusDays(1)
+                                    }
+                                    nextOccurence = nextOccurence.plusWeeks(weekInMonth)
+                                }
+                                nextOccurence.withHour(reminderTime.hour).withMinute(reminderTime.minute)
                             }
-                            nextOccurence.plusWeeks(weekInMonth)
                         } else {
                             nextOccurence.plusMonths(everyX)
                                 .withHour(reminderTime.hour).withMinute(reminderTime.minute)
@@ -531,11 +567,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         }
 
         return occurrencesList
-    }
-
-    fun parseMarkdown() {
-        parsedText = MarkdownParser.parseMarkdown(text)
-        parsedNotes = MarkdownParser.parseMarkdown(notes)
     }
 
     fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
@@ -651,14 +682,14 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         dest.writeString(this.attribute?.value)
         dest.writeString(this.type?.value)
         dest.writeDouble(this.value)
-        dest.writeList(this.tags as? List<*>)
+        dest.writeList((this.tags as? MutableList<Tag>) ?: mutableListOf<Tag>())
         dest.writeLong(this.dateCreated?.time ?: -1)
         dest.writeInt(this.position)
         dest.writeValue(this.up)
         dest.writeValue(this.down)
         dest.writeByte(if (this.completed) 1.toByte() else 0.toByte())
-        dest.writeList(this.checklist as? List<*>)
-        dest.writeList(this.reminders as? List<*>)
+        dest.writeList(this.checklist as? MutableList<ChecklistItem> ?: mutableListOf<ChecklistItem>())
+        dest.writeList(this.reminders as? MutableList<RemindersItem> ?: mutableListOf<RemindersItem>())
         dest.writeString(this.frequency?.value)
         dest.writeValue(this.everyX)
         dest.writeString(this.daysOfMonthString)
@@ -683,7 +714,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.type = TaskType.from(`in`.readString() ?: "")
         this.value = `in`.readDouble()
         this.tags = RealmList()
-        `in`.readList(this.tags as List<*>, TaskTag::class.java.classLoader)
+        `in`.readList(this.tags as MutableList<Tag>, TaskTag::class.java.classLoader, Tag::class.java)
         val tmpDateCreated = `in`.readLong()
         this.dateCreated = if (tmpDateCreated == -1L) null else Date(tmpDateCreated)
         this.position = `in`.readInt()
@@ -691,9 +722,9 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.down = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
         this.completed = `in`.readByte().toInt() != 0
         this.checklist = RealmList()
-        `in`.readList(this.checklist as List<*>, ChecklistItem::class.java.classLoader)
+        `in`.readList(this.checklist as MutableList<ChecklistItem>, ChecklistItem::class.java.classLoader, ChecklistItem::class.java)
         this.reminders = RealmList()
-        `in`.readList(this.reminders as MutableList<Any?>, RemindersItem::class.java.classLoader)
+        `in`.readList(this.reminders as MutableList<RemindersItem>, RemindersItem::class.java.classLoader, RemindersItem::class.java)
         this.frequency = Frequency.from(`in`.readString() ?: "")
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
         this.daysOfMonthString = `in`.readString()
@@ -701,7 +732,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.streak = `in`.readValue(Int::class.java.classLoader) as? Int ?: 0
         val tmpStartDate = `in`.readLong()
         this.startDate = if (tmpStartDate == -1L) null else Date(tmpStartDate)
-        this.repeat = `in`.readParcelable(Days::class.java.classLoader)
+        this.repeat = `in`.readParcelable(Days::class.java.classLoader, Days::class.java)
         val tmpDuedate = `in`.readLong()
         this.dueDate = if (tmpDuedate == -1L) null else Date(tmpDuedate)
         this.id = `in`.readString()
@@ -713,6 +744,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.weeksOfMonth = weeksOfMonth
         if ((weeksOfMonth?.size ?: 0) > 0) {
             this.weeksOfMonthString = this.weeksOfMonth?.toString()
+            this.daysOfMonth = null
+            this.daysOfMonthString = "[]"
         } else {
             weeksOfMonthString = "[]"
         }
@@ -742,6 +775,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.daysOfMonth = daysOfMonth
         if ((daysOfMonth?.size ?: 0) > 0) {
             this.daysOfMonthString = this.daysOfMonth?.toString()
+            this.weeksOfMonth = null
+            this.weeksOfMonthString = "[]"
         } else {
             daysOfMonthString = "[]"
         }

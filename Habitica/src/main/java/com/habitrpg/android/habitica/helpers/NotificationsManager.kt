@@ -106,6 +106,8 @@ class MainNotificationsManager : NotificationsManager {
 
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                         Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
+                        Notification.Type.REBIRTH_ENABLED.type -> true
+                        Notification.Type.REBIRTH_ACHIEVEMENT.type -> true
                         Notification.Type.LOGIN_INCENTIVE.type -> true
                         Notification.Type.FIRST_DROP.type -> true
                         else -> false
