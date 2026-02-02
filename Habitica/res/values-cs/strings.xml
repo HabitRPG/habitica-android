@@ -20,7 +20,7 @@
     <string name="pref_reminder_checkbox">Aktivovat připomínku</string>
     <string name="pref_reminder_picker">Nastavit čas připomínky</string>
     <string name="pref_cds_header">Vlastní začátek dne</string>
-    <string name="pref_push_notifications_checkbox">Uživatelské oznámení</string>
+    <string name="pref_push_notifications_checkbox">Používejte push notifikace</string>
     <string name="push_notifications">Oznámen</string>
     <string name="push_notifications_sum">Nastav si notifikace</string>
     <string name="preference_push_you_won_challenge">Vyhrál jsi výzvu!</string>
@@ -489,4 +489,11 @@
     <string name="challenge_create_error_enough_gems">Nemáte dostatek drahokamů k vytvoření výzvy.</string>
     <string name="identify_your_challenge_with_a_tag">Dejte své výzvě krátké a výstižné jméno</string>
     <string name="challenge_create_error_tag">K vytvoření této výzvy potřebujete zvolit jméno.</string>
+    <string name="exact_alarm_system_settings_reminders">Připomenutí se mohou zpozdit, protože nejsou povolena oprávnění. Klepnutím zobrazíte a aktualizujete oprávnění.</string>
+    <string name="exact_alarm_system_settings_title">Budík a připomenutí zakázány</string>
+    <string name="exact_alarm_system_settings_description">V aplikaci Nastavení povolte „Budíky a připomenutí“, aby se připomenutí zobrazovala přesně v naplánovaný čas.</string>
+    <string name="enable_notifications">Povolit oznámení</string>
+    <string name="push_notification_system_settings_description">Povolte aplikaci Habitica v aplikaci Nastavení, aby vám byla povolena push notifikace.</string>
+    <string name="push_notification_system_settings_reminders">Povolte oznámení Habitica v aplikaci Nastavení pro příjem připomenutí</string>
+    <string name="push_notification_system_settings_title">Oznámení zakázána</string>
 </resources>
