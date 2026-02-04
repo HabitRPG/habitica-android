@@ -426,9 +426,9 @@
     <string name="character_build_description">För varje nivå tjänar du ett poäng att tilldela till en egenskap av ditt val. Du kan göra det manuellt eller låt spelet välja åt dig med hjälp av en av de Automatiska Fördelnings-alternativen.</string>
     <string name="strength">Styrka</string>
     <string name="intelligence">Intelligens</string>
-    <string name="intelligence_description">Ökar EXP intjänade från slutförning av uppgifter. Ökar också din mana-gräns och hur snabbt din mana regenererar över tiden.</string>
+    <string name="intelligence_description">Ökar erfarenhet som tjänas från uppgifter. Ökar också din Mana-gräns och Mana-återhämtningshastighet.</string>
     <string name="constitution">Tålighet</string>
-    <string name="constitution_description">Minskar skadan som du tar från dina uppgifter. Minskar inte skadan från bossar.</string>
+    <string name="constitution_description">Minskar skadan från missade Dagliga uppgifter och negativa Vanor. Minskar inte skadan från Uppdragsbossar.</string>
     <string name="perception">Uppmärksamhet</string>
     <string name="buffs">Buffar</string>
     <string name="allocated">Fördelade</string>
@@ -438,7 +438,7 @@
     <string name="no_points_to_allocate">Inga Poäng Att Fördela</string>
     <string name="points_to_allocate" formatted="false">%d Poäng Att Fördela</string>
     <string name="distribute_evenly_help">Fördelar samma antal poäng till varje egenskap.</string>
-    <string name="distribute_class_help">Fördelar mer poäng till egenskaper som är viktiga i din Klass.</string>
+    <string name="distribute_class_help">Fördelar mer poäng till egenskaper som är viktiga i din klass.</string>
     <string name="distribute_task_help">Tilldelar poäng baserat på Styrka, Intelligens, Tålighet och Uppmärksamhet kategorierna associerade med uppgifterna du slutför.</string>
     <string name="allocating_points">Fördelar Poäng</string>
     <string name="class_equipment">Utrustning</string>
@@ -689,4 +689,33 @@
     <string name="gem_purchase_subtitle">Juveler låter dig köpa roliga extragrejer till ditt konto</string>
     <string name="gem_purchase_listitem3">Uppdrag som belönar dig med husdjursägg</string>
     <string name="gem_purchase_listitem4">Möjligheten att byta klass innan du når nivå 100</string>
+    <string name="subscribe_listitem4">Speciellt prenumerantdjur</string>
+    <string name="change_username">Ändra Användarnamn</string>
+    <string name="subscribe_listitem2_description">Missa aldrig ett föremål med 1 Mystisk timglas per månad att använda i Tidsresenärens butik!</string>
+    <string name="subscribe_listitem3_description">Prenumerera nu för att få ett exklusivt set och ta emot nya föremål varje månad!</string>
+    <string name="subscribe_listitem4_description">Få husdjuret Kungliga lila Jackalope när du blir ny prenumerant.</string>
+    <string name="due">Förfaller</string>
+    <string name="delete_oauth_account_description">Detta kommer att Radera ditt konto för alltid och det kan aldrig återställas! Sparade eller använda Juveler återbetalas inte. Om du är helt säker, skriv DELETE i textrutan nedan.</string>
+    <string name="insufficientGoldTitle">Inte tillräckligt med Guld</string>
+    <string name="create_challenge">Skapa utmaning</string>
+    <string name="challenge_create_error_tavern_one_gem">Du behöver minst 1 juvel för att skapa en offentlig utmaning.</string>
+    <string name="subscribe_title">Att prenumerera stöder vårt lilla team och hjälper till att hålla Habitica igång</string>
+    <string name="identify_your_challenge_with_a_tag">Ge din utmaning ett kort namn</string>
+    <string name="challenge_create_error_tag">Du behöver ett kort namn för att skapa denna utmaning.</string>
+    <string name="streak_label">21-dagars streak</string>
+    <string name="forgot_password_confirmation">Om vi har din mailadress registrerad, så kommer instruktioner för att sätta ett nytt Lösenord ha skickats till din mail.</string>
+    <string name="strength_description">Ökar chansen till kritiska träffar och skadan vid slutförda uppgifter. Ökar också skadan mot Uppdragsbossar.</string>
+    <string name="perception_description">Ökar chansen att få föremål, den dagliga gränsen för föremålsdropp, bonusar från Task-streaks och Guld som tjänas vid slutförda uppgifter.</string>
+    <string name="check_into_inn">Checka in på värdshuset</string>
+    <string name="community_guidelines">Gemenskapens riktlinjer</string>
+    <string name="guidelines_description">Habitica strävar efter att skapa en välkomnande miljö för spelare i alla åldrar och med olika bakgrunder. Om du har några frågor, vänligen läs våra riktlinjer.</string>
+    <string name="helpful_links">Hjälpsamma länkar</string>
+    <string name="boss_art">Boss Konst</string>
+    <string name="no_party_description">Genomför uppdrag med vänner eller med dig själv. Slåss mot monster, skapa Utmaningar, och hjälp dig själv vara ansvarig genom Grupper.</string>
+    <string name="subscribe_listitem1_description">Få upp till 50 juveler som kan köpas med Guld i Marknaden för att köpa Uppdrag, Anpassningar, Husdjur och mer!</string>
+    <string name="pending_strike_title">Väntande Slag</string>
+    <string name="cancel_subscription_google_description">Vill du inte längre prenumerera\? Du kan avbryta din prenumeration genom att gå till Betalningar &amp; prenumerationer i Google Play Store-appen. Eventuella återstående månader med prenumerationskredit läggs till ditt slutdatum efter avbokningen.</string>
+    <string name="dailyDueDefaultView">Ställ in Dagliga uppgifter så att fliken Förfallna används som standard</string>
+    <string name="dailyDueDefaultViewDescription">Med det här alternativet inställt kommer Dagliga uppgifter som standard att visas under Förfallodag istället för Alla.</string>
+    <string name="fix_character_description">Om du har stött på ett fel eller gjort ett misstag som orättvist förändrat din karaktär kan du manuellt korrigera dessa värden här.</string>
 </resources>

@@ -78,4 +78,5 @@
     <string name="failed">Laden mislukt</string>
     <string name="logout_description">Uitloggen</string>
     <string name="login_btn">Inloggen</string>
+    <string name="quadrillion_abbrev">q</string>
 </resources>

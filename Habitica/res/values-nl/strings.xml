@@ -1169,4 +1169,14 @@
 \n@%2$s</string>
     <string name="gems_promo_info_limitations_fixed">Deze actie is alleen geldig gedurende het evenement. Het evenement begint op %1$s (%2$s) en eindigt op %3$s (%4$s). De actie is alleen beschikbaar wanneer je edelstenen voor jezelf koopt.</string>
     <string name="spooky_promo_info_instructions">Tussen %1$s en %2$s kun je zoals gebruikelijk een Edelstenenpakket kopen, maar het promotiebedrag aan Edelstenen wordt dan aan je account toegevoegd. Meer Edelstenen om uit te geven, te delen of te sparen voor toekomstige updates!</string>
+    <string name="quest_rejected">Queeste afgewezen</string>
+    <string name="quest_reject_error">Het is niet gelukt de queeste af te wijzen. Probeer alsjeblieft opnieuw.</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d dag tot aan GRATIS Bol der Hergeboorte</item>
+        <item quantity="other">%d dagen tot aan GRATIS Bol der Hergeboorte</item>
+    </plurals>
+    <string name="faint_broken_gear_info">Verloren uitrustingen kunnen opnieuw gekocht worden in de Marktplaats</string>
+    <string name="quest_accept_error">Het is niet gelukt om de queeste te accepteren. Probeer alsjeblieft opnieuw.</string>
+    <string name="free_rebirth_at_level_100">GRATIS Bol der Hergeboorte op level 100</string>
+    <string name="quest_accepted">Queeste geaccepteerd!</string>
 </resources>
