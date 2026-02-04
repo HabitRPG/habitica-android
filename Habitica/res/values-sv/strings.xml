@@ -680,4 +680,13 @@
     <string name="discard">Kasta bort</string>
     <string name="warrior_description">Krigare slår fler kritiska träffar och gör stor skada mot bossar. Spela som Krigare om du vill besegra monster enkelt! Krigare gagnas av att ha höga Egenskaper i Styrka.</string>
     <string name="class_changed_description">Du kan nu använda %s Färdigheter och köpa utrustning från butiker. Öka nivån för att få Egenskapspoäng du kan använda för att få kraftfullare färdigheter.</string>
+    <string name="inn_description">Behöver du en paus\? Spana in Daniels Värdshus för att pausa några av Habiticas svårare spelmekanismer:
+\n
+\n• Dina missade Dagliga uppgifter kommer inte att skada dig (bossar gör fortfarande skada från andra Gruppmedlemmars missade Dagliga uppgifter)
+\n• Dina Task-streaks och Habit-räknare kommer inte att återställas
+\n• Din skada på Uppdragsbossen eller insamlade föremål kommer att förbli väntande tills du lämnar Värdshuset</string>
+    <string name="gem_purchase_title">Att köpa juveler stödjer utvecklarna och hjälper till att hålla Habitica igång</string>
+    <string name="gem_purchase_subtitle">Juveler låter dig köpa roliga extragrejer till ditt konto</string>
+    <string name="gem_purchase_listitem3">Uppdrag som belönar dig med husdjursägg</string>
+    <string name="gem_purchase_listitem4">Möjligheten att byta klass innan du når nivå 100</string>
 </resources>
