@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
 import java.util.Date
@@ -26,6 +27,16 @@ class AppConfigManager(contentRepository: ContentRepository) :
             MainScope().launchCatching {
                 contentRepository.getWorldState().collect {
                     worldState = it
+
+                    worldState?.currentEvent?.spriteSubstitutions?.let { subs ->
+                        if (subs.isNotEmpty()) {
+                            val subMap = mutableMapOf<String, Map<String, String>>()
+                            subs.forEach { sub ->
+                                subMap[sub.key ?: ""] = sub.substitutions
+                            }
+                            SpriteSubstitutionManager.setSubstitutions(subMap)
+                        }
+                    }
                 }
             }
         } catch (_: java.lang.IllegalStateException) {
@@ -41,11 +52,6 @@ class AppConfigManager(contentRepository: ContentRepository) :
 
     fun maxChatLength(): Long {
         return remoteConfig.getLong("maxChatLength")
-    }
-
-    override fun spriteSubstitutions(): Map<String, Map<String, String>> {
-        val type = object : TypeToken<Map<String, Map<String, String>>>() {}.type
-        return Gson().fromJson(remoteConfig.getString("spriteSubstitutions"), type)
     }
 
     fun supportEmail(): String {

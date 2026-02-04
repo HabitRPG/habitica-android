@@ -2,11 +2,13 @@ package com.habitrpg.android.habitica.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.Strictness;
 import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.SpriteSubstitutionContext;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.WorldState;
@@ -56,6 +58,7 @@ import com.habitrpg.android.habitica.utils.QuestDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
 import com.habitrpg.android.habitica.utils.SocialAuthenticationDeserializer;
+import com.habitrpg.android.habitica.utils.SpriteSubstitutionContextListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
@@ -89,7 +92,7 @@ public class GSonFactoryCreator {
         }.getType();
         Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {
         }.getType();
-        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {
+        Type spriteSubstitutionContextListType = new TypeToken<RealmList<SpriteSubstitutionContext>>() {
         }.getType();
         Type challengeListType = new TypeToken<List<Challenge>>() {
         }.getType();
@@ -143,9 +146,10 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(FindUsernameResult.class, new FindUsernameResultDeserializer())
                 .registerTypeAdapter(Notification.class, new NotificationDeserializer())
                 .registerTypeAdapter(SocialAuthentication.class, new SocialAuthenticationDeserializer())
+                .registerTypeAdapter(spriteSubstitutionContextListType, new SpriteSubstitutionContextListDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .serializeNulls()
-                .setLenient()
+                .setStrictness(Strictness.LENIENT)
                 .create();
     }
 

@@ -8,9 +8,6 @@ import com.habitrpg.android.habitica.models.FAQArticle
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-/**
- * Created by viirus on 22/01/16.
- */
 class FAQArticleListDeserilializer : JsonDeserializer<List<FAQArticle>> {
     @Throws(JsonParseException::class)
     override fun deserialize(

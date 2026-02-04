@@ -251,7 +251,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
-        DataBindingUtils.configManager = appConfigManager
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val step = preferences.getInt("last_onboarding_step", 0)
