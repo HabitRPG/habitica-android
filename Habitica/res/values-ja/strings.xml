@@ -1620,4 +1620,34 @@
     <string name="resubscribe_for_hourglasses">神秘の砂時計をゲットし続けるには、有料プランに再登録してください</string>
     <string name="get_12_mystic_hourglasses">初めて12ヶ月間の有料プランに登録したとき、12個の神秘の砂時計をすぐにゲットしよう！</string>
     <string name="next_switch_in_x">あと%sで切り換えます</string>
+    <string name="faint_broken_gear_info">壊れた装備は市場から買い戻すことができます</string>
+    <string name="quest_accept_error">クエストを承認できませんでした。もう一度やり直してください。</string>
+    <string name="rebirth_confirm_reset_item_2">ステータスポイント</string>
+    <string name="new_message">新しいメッセージ</string>
+    <string name="category">カテゴリー</string>
+    <string name="quest_accepted">クエストを承認しました！</string>
+    <string name="quest_rejected">クエストを拒否しました</string>
+    <string name="quest_reject_error">クエストを拒否できませんでした。もう一度やり直してください。</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="other">無料の転生のオーブがもらえるまであと%d日</item>
+    </plurals>
+    <string name="free_rebirth_at_level_100">レベル100で転生のオーブが無料でもらえます</string>
+    <string name="participating">参加中</string>
+    <string name="server_option_custom">カスタム</string>
+    <string name="search_questions">質問を検索する</string>
+    <string name="no_matching_questions">一致する質問が見つかりませんでした</string>
+    <string name="rebirth_shop">転生のオーブ</string>
+    <string name="rebirth_confirm_title">本当に転生のオーブを使ってもいいですか？</string>
+    <string name="rebirth_confirm_reset_item_1">レベルとクラス</string>
+    <string name="rebirth_confirm_reset_item_3">ゴールドとマナ</string>
+    <string name="rebirth_confirm_reset_item_4">タスクの連続実行回数</string>
+    <string name="rebirth_confirm_keep_item_1">タスクリスト</string>
+    <string name="rebirth_confirm_keep_item_2">装備、ペット、そして乗騎</string>
+    <string name="rebirth_confirm_keep_item_3">実績</string>
+    <string name="rebirth_confirm_keep_item_4">パーティーとチャレンジ</string>
+    <string name="rebirth_confirm_use">転生のオーブを使う</string>
+    <string name="free">無料</string>
+    <string name="go_back">戻る</string>
+    <string name="rebirth_enabled_title">転生のオーブがアンロックされました</string>
+    <string name="go_to_market">市場に移動する</string>
 </resources>
