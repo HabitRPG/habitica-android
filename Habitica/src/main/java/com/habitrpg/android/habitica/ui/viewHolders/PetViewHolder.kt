@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.app.Activity
 import android.graphics.PorterDuff
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetDetailItemBinding
 import com.habitrpg.android.habitica.models.inventory.Animal
@@ -18,9 +18,9 @@ import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.stable.PetBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.inflate
+import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.internal.managers.ViewComponentManager
-import androidx.core.graphics.drawable.toDrawable
 
 class PetViewHolder(
     parent: ViewGroup,
@@ -80,7 +80,8 @@ class PetViewHolder(
         binding.titleTextView.visibility = View.GONE
         binding.root.contentDescription = item.text
 
-        val imageName = "stable_Pet-${item.animal}-${item.color}"
+        val name = "Pet-${item.animal}-${item.color}"
+        val imageName = "stable_${SpriteSubstitutionManager.substitute(name, "pets")}"
         if (trained > 0) {
             if (this.canRaiseToMount) {
                 binding.trainedProgressBar.visibility = View.VISIBLE

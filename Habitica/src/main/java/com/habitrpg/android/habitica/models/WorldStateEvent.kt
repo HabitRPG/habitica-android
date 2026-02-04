@@ -1,10 +1,18 @@
 package com.habitrpg.android.habitica.models
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmDictionary
+import io.realm.RealmList
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 import java.util.Date
+
+@RealmClass(embedded = true)
+open class SpriteSubstitutionContext: RealmObject() {
+    var key: String? = null
+    var substitutions = RealmDictionary<String>()
+}
 
 @RealmClass(embedded = true)
 open class WorldStateEvent : RealmObject(), BaseMainObject {
@@ -21,8 +29,8 @@ open class WorldStateEvent : RealmObject(), BaseMainObject {
     var promo: String? = null
     var season: String? = null
     var npcImageSuffix: String? = null
-    var aprilFools: String? = null
     var gear: Boolean = false
+    var spriteSubstitutions = RealmList<SpriteSubstitutionContext>()
 
     override val realmClass: Class<out RealmModel>
         get() = WorldStateEvent::class.java

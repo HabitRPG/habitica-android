@@ -12,9 +12,9 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.graphics.createBitmap
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil3.Image
@@ -28,8 +28,8 @@ import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.AppConfigManager
+import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.shared.habitica.models.Avatar
-import java.util.Date
 import java.util.EnumMap
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -61,17 +61,6 @@ class AvatarView : FrameLayout {
             return getLayerMap(avatar, true)
         }
 
-    private var spriteSubstitutions: Map<String, Map<String, String>> = HashMap()
-        get() {
-            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
-                field = (configManager ?: AppConfigManager()).spriteSubstitutions()
-                Log.i("AvatarView", field.toString())
-                lastSubstitutionCheck = Date()
-            }
-            return field
-        }
-    private var lastSubstitutionCheck: Date? = null
-
     private val originalRect: Rect
         get() =
             if (showMount || showPet) {
@@ -92,11 +81,7 @@ class AvatarView : FrameLayout {
             val canvasRect = Rect(0, 0, if (viewWidth > 0) viewWidth else 140.dpToPx(context), if (viewHeight > 0) viewHeight else 147.dpToPx(context))
             if (canvasRect.isEmpty) return null
             avatarBitmap =
-                Bitmap.createBitmap(
-                    canvasRect.width(),
-                    canvasRect.height(),
-                    Bitmap.Config.ARGB_8888
-                )
+                createBitmap(canvasRect.width(), canvasRect.height())
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             imageViewHolder.forEach {
                 val drawable = it.drawable ?: return@forEach
@@ -108,12 +93,12 @@ class AvatarView : FrameLayout {
                             val width = drawable.intrinsicWidth
                             val height = drawable.intrinsicHeight
                             if (width <= 0 || height <= 0) return@forEach
-                            val tempBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                            val tempBitmap = createBitmap(width, height)
                             val tempCanvas = Canvas(tempBitmap)
                             drawable.setBounds(0, 0, width, height)
                             drawable.draw(tempCanvas)
                             tempBitmap
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             return@forEach
                         }
                     }
@@ -253,7 +238,7 @@ class AvatarView : FrameLayout {
         avatar: Avatar,
         resetHasAttributes: Boolean
     ): Map<LayerType, String> {
-        val layerMap = getAvatarLayerMap(avatar, spriteSubstitutions)
+        val layerMap = getAvatarLayerMap(avatar)
 
         if (resetHasAttributes) {
             hasPet = false
@@ -263,7 +248,7 @@ class AvatarView : FrameLayout {
 
         var mountName = avatar.currentMount
         if (showMount && mountName?.isNotEmpty() == true) {
-            mountName = substituteOrReturn(spriteSubstitutions["mounts"], mountName)
+            mountName = SpriteSubstitutionManager.substitute(mountName, "mounts")
             layerMap[LayerType.MOUNT_BODY] = "Mount_Body_$mountName"
             layerMap[LayerType.MOUNT_HEAD] = "Mount_Head_$mountName"
             if (resetHasAttributes) hasMount = true
@@ -271,15 +256,15 @@ class AvatarView : FrameLayout {
 
         var petName = avatar.currentPet
         if (showPet && petName?.isNotEmpty() == true) {
-            petName = substituteOrReturn(spriteSubstitutions["pets"], petName)
-            layerMap[LayerType.PET] = "Pet-$petName"
+            petName = SpriteSubstitutionManager.substitute("Pet-$petName", "pets")
+            layerMap[LayerType.PET] = petName
             if (resetHasAttributes) hasPet = true
         }
 
         var backgroundName = avatar.preferences?.background
         if (showBackground && backgroundName?.isNotEmpty() == true) {
-            backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
-            layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
+            backgroundName = SpriteSubstitutionManager.substitute("background_$backgroundName", "backgrounds")
+            layerMap[LayerType.BACKGROUND] = backgroundName
             if (resetHasAttributes) hasBackground = true
         }
         if (!preview.isNullOrEmpty()) {
@@ -296,22 +281,9 @@ class AvatarView : FrameLayout {
         return layerMap
     }
 
-    private fun substituteOrReturn(
-        substitutions: Map<String, String>?,
-        name: String
-    ): String {
-        for (key in substitutions?.keys ?: arrayListOf()) {
-            if (name.contains(key)) {
-                return substitutions?.get(key) ?: name
-            }
-        }
-        return name
-    }
-
     @Suppress("ReturnCount")
     private fun getAvatarLayerMap(
         avatar: Avatar,
-        substitutions: Map<String, Map<String, String>>
     ): EnumMap<LayerType, String> {
         val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
@@ -351,8 +323,8 @@ class AvatarView : FrameLayout {
             }
         }
 
-        val substitutedVisualBuff = substitutions["visualBuff"]?.get("full")
-        if (substitutedVisualBuff != null) {
+        val substitutedVisualBuff = SpriteSubstitutionManager.substitute("full", "visualBuff")
+        if (substitutedVisualBuff != "full") {
             layerMap[LayerType.VISUAL_BUFF] = substitutedVisualBuff
             hasVisualBuffs = true
         }
