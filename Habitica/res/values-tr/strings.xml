@@ -257,7 +257,7 @@
     <string name="empty_inbox">Hiç iletin yok. Bir kullanıcıya açık sohbet mesajlarından yeni bir ileti gönderebilirsin!</string>
     <string name="party_invite">Arkadaşlarını davet ederek kilidini aç</string>
     <string name="login_incentive">Habitica\'ya düzenli girerek kilidini aç</string>
-    <string name="create_account">Hesap oluşturarak kilidi aç</string>
+    <string name="create_account">Bir hesap oluşturarak kilidi aç</string>
     <string name="successful_purchase">%1$s satın alındı</string>
     <string name="chat_message_copied">Mesaj Panoya kopyalandı</string>
     <string name="edit_tag_btn_edit">Düzenle</string>
@@ -495,20 +495,20 @@
     <string name="strength">Güç</string>
     <string name="strength_description">Puanlama görevi sırasında kritik vuruş olasılığını artırır. Ayrıca görev canavarlarına verilen hasarı da artırır.</string>
     <string name="intelligence">Zeka</string>
-    <string name="intelligence_description">"Görevlerden kazanılan TP\'yi arttırır. Aynı zamanda mana limitini ve zaman  mana yenilenme hızını da yükseltir."</string>
+    <string name="intelligence_description">Görevlerden kazanılan TP\'yi arttırır. Aynı zamanda mana limitini ve mana yenilenme hızını da yükseltir.</string>
     <string name="constitution">Bünye</string>
     <string name="constitution_description">Kaçırılan Günlüklerden aldığın hasar miktarını azaltır. Görev canavarlarından alınan hasarı azaltmaz.</string>
     <string name="perception">Sezgi</string>
     <string name="perception_description">Görev tamamladığında eşya bulma şansını, günlük ganimet limitini, Seri Bonuslarını ve görev başına kazanılan altın miktarını arttırır.</string>
     <string name="buffs">Kutsamalar</string>
     <string name="allocated">Dağıtılmış</string>
-    <string name="distribute_evenly">Eşit olarak dağıt</string>
+    <string name="distribute_evenly">Eşit dağıt</string>
     <string name="distribute_class">Sınıfına göre dağıt</string>
     <string name="distribute_task">İş aktivitesine göre dağıt</string>
     <string name="no_points_to_allocate">Dağıtılacak puan yok</string>
     <string name="points_to_allocate">Dağıtılacak %d Puan Var</string>
     <string name="distribute_evenly_help">Her özelliğe eşit miktarda puan dağıtır.</string>
-    <string name="distribute_class_help">Sınıfına uygun özelliklere daha fazla puan dağıtır.</string>
+    <string name="distribute_class_help">Sınıfına uygun özelliklere daha çok puan dağıtır.</string>
     <string name="distribute_task_help">Tamamladığın işlere atanmış Güç, Zeka, Bünye ve Sezgi kategorilerine göre puanları dağıtır.</string>
     <string name="allocating_points">Puanlar Dağıtılıyor</string>
     <string name="class_equipment">Ekipman</string>
@@ -1251,7 +1251,7 @@
     <string name="mor_gems_title">Bunu almak için daha fazla elmas lazım!</string>
     <string name="gems_support">Elmas satın almak bizim küçük Habitica takımımızı destekler</string>
     <string name="month_released">Yayımlandığı Ay</string>
-    <string name="faint_loss_description">Seviyen <b>%1$d</b>\'e düşecek, <b>%2$d</b> Altın kaybedecek, ve <b>bir parça ekipman</b> kıracaksın… Tümünü sıkı çalışmayla geri kazanabilirsin!</string>
+    <string name="faint_loss_description">Seviyen <b>%1$d. seviyeye düşecek %2$d altın yitireceksin ve bir parça ekipmanın kırılacak</b>... Ancak tümünü sıkı çalışmayla yeniden kazanabilirsin!</string>
     <string name="account_reset">Hesap Sıfırlama</string>
     <string name="avatar_skin_customization">Avatar Kıyafeti Özelleştirme</string>
     <string name="delete_account_subscription_active">Aktif bir aboneliğin içindeyken hesabını silemezsin. Lütfen önce aboneliğini iptal et.</string>
@@ -1469,7 +1469,7 @@
     <string name="unlock_gear_and_skills">%s kadar ekipman ve yetenek kilidi aç</string>
     <string name="username_or_email">Kullanıcı adı ya da eposta</string>
     <string name="seeking_party_description">Bir Takıma katılmak istiyor ama herhangi başka oyuncu tanımıyor musun\? Takım liderlerinin bir davet aradığını bildir!</string>
-    <string name="shop_armoire_description">Yeni ekipmanlar sezonluk şenliklerde gösterime sokulur. O zamana dek, %d kadar ekipman parçası Efsunlu Gardırop\'ta bulunmayı bekliyor!</string>
+    <string name="shop_armoire_description">Yeni ekipmanlar sezonluk şenliklerde yayınlanır. O zamana dek, %d kadar ekipman parçası Efsunlu Gardırop\'ta bulunmayı bekliyor!</string>
     <string name="invited">Davet edildi</string>
     <string name="habiticans_send_invite">Doğrudan bildiğin kullanıcılara davet gönder</string>
     <string name="invite_with_username_email">\@Kullanıcı adı yada eposta ile davet et</string>
@@ -1512,7 +1512,7 @@
         <item quantity="other">her %d yılda bir</item>
     </plurals>
     <string name="subscribe_second_chance_incentive_text">Aboneler her gün ikinci bir yaşam hakkı kazanır ve diğer ayrıcalıklardah yararlanır!</string>
-    <string name="subscriber_benefit_used_faint">Bugün zaten ikinci şansını kullandın. %s içerisinde yeniden kullanabilirsin</string>
+    <string name="subscriber_benefit_used_faint">İkinci şansın hala yükleniyor. %s içerisinde yeniden kullanabilirsin.</string>
     <string name="quest_mechanics_boss_title">Bir Canavara Hasar Vermek</string>
     <string name="quest_mechanics_boss_description">Herhangi bir görevi tamamla veya yeteneklerini kullanarak birikmiş hasarı artır! Hasar, bir sonraki gün uygulanacaktır. Güç ne kadar hasar vereceğini etkiler.</string>
     <string name="subscriber_button_faint">İkinci şans: 1HP ile devam et!</string>
@@ -1521,7 +1521,7 @@
     <string name="quest_mechanics">Görev İşleyişi</string>
     <string name="subriber_benefit_notification_faint">1 sağlık puanı ile ikinci bir şans kazandın!</string>
     <string name="watch_ad_to_hang_on">Bir reklam izle ve 1 sağlık puanı ile devam et!</string>
-    <string name="subscribe_incentive_text_faint">Abone olarak sağlığının tükenmesinin önüne geçmek için her gün ikinci bir şans kazan</string>
+    <string name="subscribe_incentive_text_faint">Aboneler sağlıklarının tükenmesinin önüne geçmek için her gün ikinci bir şans kazanır</string>
     <string name="subscribe_second_armoire_open_text">Aboneler, gardıropta fazladan şans kazanır ve diğer ayrıcalıklardan yararlanır!</string>
     <string name="quest_mechanics_damage_title">Canavarlar kaçırılan günlükler nedeniyle saldırır</string>
     <string name="quest_mechanics_collecting_description">Bir Toplama Görevindeyken, görevlerini tamamlayarak rastgele bir şansla bir Görev öğesi bulabilirsin. Bekleyen öğeler bir sonraki gün sıfırlamanda uygulanacak. Algı, öğe bulma oranlarını artırır.</string>
@@ -1600,7 +1600,7 @@
     <string name="max_gem_cap_text">Anında en yüksek mücevher sınırından başla</string>
     <plurals name="items_pending">
         <item quantity="one">%d eşya beklemede</item>
-        <item quantity="other">%d eşya beklemede</item>
+        <item quantity="other">%d sayıda eşya beklemede</item>
     </plurals>
     <string name="subscriber_benefit_success_faint">1 Sağlık Puanı ile ikinci bir şans kazandın!</string>
     <string name="subscribe_gems_for_gold_incentive_text">Altın karşılığında mücevher satın almak için abone ol ve diğer özel ayrıcalıklardan yararlan!</string>
@@ -1659,4 +1659,33 @@
     <string name="server_url_invalid">Lütfen http:// ya da https:// ile başlayan geçerli bir URL gir</string>
     <string name="reset_server_to_default">Varsayılana Sıfırla</string>
     <string name="reset_server_confirmation">Sunucuyu varsayılan Habitica sunucusuna sıfırlamak istediğine emin misin\? Uygulama yeniden başlatılacak.</string>
+    <string name="rebirth_shop_description">Alır almaz maceran 1. seviye Savaşçı olarak yeniden başlayacak. Başarımların, eşyaların ve ekipmanların korunacak. Görevlerin sarıya sıfırlanacak ama geçmişleri kalacak. Tüm kişisel görev serilerin sıfırlanacak. Altın, deneyim, mana ve kullandığın yeteneklerin etkileri temizlenecek.</string>
+    <string name="rebirth_confirm_title">Yeniden Doğuş Küresi\'ni kullanmak istediğine emin misin\?</string>
+    <string name="rebirth_confirm_reset_header">Şunları sıfırlayacaksın:</string>
+    <string name="rebirth_confirm_reset_item_1">Seviyen ile sınıfın</string>
+    <string name="rebirth_confirm_reset_item_2">Tüm istatistik puanların</string>
+    <string name="rebirth_confirm_reset_item_3">Tüm altının ile manan</string>
+    <string name="rebirth_confirm_reset_item_4">Tüm görev değerlerin ile serilerin</string>
+    <string name="rebirth_confirm_keep_header">Şunlar aynı kalacak:</string>
+    <string name="rebirth_confirm_keep_item_1">Görev listen</string>
+    <string name="rebirth_confirm_keep_item_2">Tüm ekipmanların, hayvanların ile bineklerin</string>
+    <string name="rebirth_confirm_keep_item_3">Başarımların</string>
+    <string name="rebirth_confirm_use">Yeniden Doğuş Küresi\'ni kullan</string>
+    <string name="free">ÜCRETSİZ</string>
+    <string name="go_back">Geri Git</string>
+    <string name="rebirth_enabled_title">Yeniden Doğuş Küresi\'nin kilidi açıldı</string>
+    <string name="go_to_market">Markete Git</string>
+    <string name="rebirth_achievement_title">Yeniden Doğdun!</string>
+    <string name="subscriber_button_faint_use">İkinci Şansını Kullan!</string>
+    <string name="subscriber_benefit_available_faint">Aboneliğin günde bir kez sağlığının bitmesini engeller!</string>
+    <string name="auth_invalid_credential_type">Geçersiz kimlik bilgisi türü alındı.</string>
+    <string name="auth_unknown_credential_type">Bilinmeyen kimlik bilgisi türü alındı.</string>
+    <string name="auth_missing_token">Boş belirteç alındı.</string>
+    <string name="scroll_to_new_messages">Yeni iletiler için kaydır</string>
+    <string name="rebirth_confirm_keep_item_4">Takımın ve meydan okumaların</string>
+    <string name="rebirth_enabled_subtitle">Yeni bir maceraya başlayabilirsin!</string>
+    <string name="rebirth_enabled_description">Habitica maceranda her şeyi başardığını hissettiğinde, Yeniden Doğuş Küresi\'ni kullanarak macerana yeni bir soluk getir! Pazardan bulabileceğin bu özel eşya ile görevlerini, başarımlarını ve evcil hayvanlarını koruyarak 1. seviyeden yeniden başla.</string>
+    <string name="rebirth_achievement_description">Yeni bir maceraya başladın! Bu yeniden doğuş senin için %1$d idi, ulaştığın en yüksek seviye ise %2$d oldu.</string>
+    <string name="rebirth_achievement_description_max">Yeni bir maceraya başladın! Bu yeniden doğuş senin için %1$d idi, ulaştığın en yüksek seviye ise %2$d veya daha yüksekti.</string>
+    <string name="new_message">Yeni ileti</string>
 </resources>

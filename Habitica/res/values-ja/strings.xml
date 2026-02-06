@@ -493,13 +493,13 @@
     <string name="character_build">キャラクターの設定</string>
     <string name="character_build_description">各レベルごとに、自由に割り当てることができるポイントが得られます。手動で割り当てることもできますが、自動割り当てによってゲームに割り当てを任せることも可能です。</string>
     <string name="strength">力</string>
-    <string name="strength_description">タスクを完了した時の会心の一撃のボーナスや発生率が増加します。また、ボスへ与えるダメージも増加します。</string>
+    <string name="strength_description">タスクを完了したときの会心の一撃の発生率やダメージが増加します。また、クエストのボスへ与えるダメージも増加します。</string>
     <string name="intelligence">知能</string>
     <string name="intelligence_description">タスクの完了によって得られる経験値が増加します。また、マナの上限と時間回復の早さが増加します。</string>
     <string name="constitution">体質</string>
-    <string name="constitution_description">タスクの失敗によって受けるダメージが減少します。ボスからのダメージは減少しません。</string>
+    <string name="constitution_description">タスクの失敗や悪い習慣によって受けるダメージが減少します。クエストのボスからのダメージは減少しません。</string>
     <string name="perception">知覚</string>
-    <string name="perception_description">タスクを完了した時に落とし物を見つける確率、１日ごとの落とし物上限、連続実行ボーナス、タスクから獲得するゴールドの量などが増加します。</string>
+    <string name="perception_description">タスクを完了したときに落とし物を見つける確率、１日ごとの落とし物上限、連続実行ボーナス、タスクから獲得するゴールドの量などが増加します。</string>
     <string name="buffs">バフ</string>
     <string name="allocated">割当済み</string>
     <string name="distribute_evenly">均等に分配する</string>
@@ -1650,4 +1650,13 @@
     <string name="go_back">戻る</string>
     <string name="rebirth_enabled_title">転生のオーブがアンロックされました</string>
     <string name="go_to_market">市場に移動する</string>
+    <string name="membership">メンバーシップ</string>
+    <string name="not_participating_filter">不参加</string>
+    <string name="server_option_default">%s（デフォルト）</string>
+    <string name="server_custom_address_hint">例：http://localhost:3000</string>
+    <string name="server_url_invalid">http:// または https:// で始まる有効なURLを入力してください</string>
+    <string name="apply">適用</string>
+    <string name="server_settings_unlocked">サーバー設定がアンロックされました！</string>
+    <string name="server_settings_unlock_remaining">サーバー設定をアンロックするまであと%dステップです。</string>
+    <string name="custom_server">カスタムサーバー</string>
 </resources>
