@@ -493,13 +493,13 @@
     <string name="character_build">Karakter Yapısı</string>
     <string name="character_build_description">Her seviye sana istediğin özelliğe ataman için bir puan kazandırır. Bunu elle yapabileceğin gibi, Otomatik Paylaştırma seçeneklerinden birini kullanarak oyunun senin için tercih etmesini de sağlayabilirsin.</string>
     <string name="strength">Güç</string>
-    <string name="strength_description">Kritik vuruşların bonusunu arttırır ve iş bitirince kritik vuruş yapma olasılığını yükseltir. Aynı zamanda canavarlara yaptığın hasarı da arttırır.</string>
+    <string name="strength_description">Puanlama görevi sırasında kritik vuruş olasılığını artırır. Ayrıca görev canavarlarına verilen hasarı da artırır.</string>
     <string name="intelligence">Zeka</string>
-    <string name="intelligence_description">İş bitirince kazandığın TP\'yi arttırır. Aynı zamanda mana limitini ve zaman içindeki mana yenilenme hızını da yükseltir.</string>
+    <string name="intelligence_description">"Görevlerden kazanılan TP\'yi arttırır. Aynı zamanda mana limitini ve zaman  mana yenilenme hızını da yükseltir."</string>
     <string name="constitution">Bünye</string>
-    <string name="constitution_description">İşlerinden aldığın hasar miktarını azaltır. Canavarlardan alınan hasarı azaltmaz.</string>
+    <string name="constitution_description">Kaçırılan Günlüklerden aldığın hasar miktarını azaltır. Görev canavarlarından alınan hasarı azaltmaz.</string>
     <string name="perception">Sezgi</string>
-    <string name="perception_description">İş bitirince eşya bulma şansını, günlük ganimet limitini, Seri Bonuslarını ve İş başına kazanılan altın miktarını arttırır.</string>
+    <string name="perception_description">Görev tamamladığında eşya bulma şansını, günlük ganimet limitini, Seri Bonuslarını ve görev başına kazanılan altın miktarını arttırır.</string>
     <string name="buffs">Kutsamalar</string>
     <string name="allocated">Dağıtılmış</string>
     <string name="distribute_evenly">Eşit olarak dağıt</string>
@@ -1630,4 +1630,33 @@
         <item quantity="one">her ay</item>
         <item quantity="other">her %d ayda bir</item>
     </plurals>
+    <string name="faint_broken_gear_info">Kırılan ekipman Market\'ten yeniden alınabilir</string>
+    <string name="quest_rejected">Görev reddedildi</string>
+    <string name="quest_reject_error">Görev reddedilemedi. Lütfen yeniden dene.</string>
+    <string name="free_rebirth_at_level_100">100. seviyede ÜCRETSİZ Yeniden Doğma Küresi</string>
+    <string name="membership">Üyelik</string>
+    <string name="participating">Katılımcı</string>
+    <string name="not_participating_filter">Katılımcı değil</string>
+    <string name="category">Kategori</string>
+    <string name="server_custom_warning">Uyarı: Özel sunuculardaki hesaplar, ana Habitica.com hesabından ayrıdır.</string>
+    <string name="server_option_default">%s (Varsayılan)</string>
+    <string name="server_option_custom">Özel</string>
+    <string name="server_custom_address_label">Özel sunucu adresi gir</string>
+    <string name="apply">Uygula</string>
+    <string name="server_settings_unlocked">Sunucu ayarlarının kilidi açıldı!</string>
+    <string name="server_settings_unlock_remaining">Sunucu ayarlarını açmaktan %d adım uzaksın.</string>
+    <string name="custom_server">Özel sunucu</string>
+    <string name="search_questions">Görev ara</string>
+    <string name="no_matching_questions">Eşleşen bir görev bulunamadı</string>
+    <string name="rebirth_shop">Yeniden Doğuş Küresi</string>
+    <string name="quest_accepted">Görev kabul edildi!</string>
+    <string name="quest_accept_error">Görev kabul edilemedi. Lütfen yeniden dene.</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">ÜCRETSİZ Yeniden Doğma Küresi\'ne %d gün kaldı</item>
+        <item quantity="other">ÜCRETSİZ Yeniden Doğma Küresi\'ne kalan gün: %d</item>
+    </plurals>
+    <string name="server_custom_address_hint">örn. http://localhost:3000</string>
+    <string name="server_url_invalid">Lütfen http:// ya da https:// ile başlayan geçerli bir URL gir</string>
+    <string name="reset_server_to_default">Varsayılana Sıfırla</string>
+    <string name="reset_server_confirmation">Sunucuyu varsayılan Habitica sunucusuna sıfırlamak istediğine emin misin\? Uygulama yeniden başlatılacak.</string>
 </resources>
