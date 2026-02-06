@@ -1231,7 +1231,7 @@
 \n買い戻すことができます</string>
     <string name="armoire_rate_experience_title">20% 経験値</string>
     <string name="armoire_rate_food_title">20% の食べ物</string>
-    <string name="faint_loss_description">レベル <b>%1$d</b> に下がり、<b>%2$d</b> ゴールドを失い、<b>装備が一つ</b> が壊れます…頑張ればすべて取り戻せます！</string>
+    <string name="faint_loss_description">レベル <b>%1$d に下がり、%2$d ゴールドを失い、装備が一つが壊れます</b>．．．しかし、頑張ればすべて取り戻せます！</string>
     <string name="armoire_rate_equipment_title">60% 装備品</string>
     <string name="academics">学術分野</string>
     <string name="advocacy_causes">主義主張</string>
@@ -1659,4 +1659,11 @@
     <string name="server_settings_unlocked">サーバー設定がアンロックされました！</string>
     <string name="server_settings_unlock_remaining">サーバー設定をアンロックするまであと%dステップです。</string>
     <string name="custom_server">カスタムサーバー</string>
+    <string name="rebirth_confirm_reset_header">リセットされる要素：</string>
+    <string name="rebirth_confirm_keep_header">保持される要素：</string>
+    <string name="rebirth_enabled_subtitle">新しい冒険が始められます！</string>
+    <string name="rebirth_achievement_title">復活されました！</string>
+    <string name="rebirth_achievement_description_max">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$d以上です。</string>
+    <string name="rebirth_achievement_description">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$dです。</string>
+    <string name="subscriber_button_faint_use">セカンドチャンスを使う！</string>
 </resources>
