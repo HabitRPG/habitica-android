@@ -1620,4 +1620,5 @@
     <string name="chat_empty_state_title">开始畅聊吧！</string>
     <string name="api_token_reset_info">通过修改密码即可重置令牌。重置后需要：在所有设备重新登录Habitica、向您使用的第三方工具提供新令牌。</string>
     <string name="chat_empty_state_description">请务必保持友善并遵循社区准则。</string>
+    <string name="faint_broken_gear_info">损坏的装备可在市场中重新购买</string>
 </resources>
