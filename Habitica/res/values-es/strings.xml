@@ -494,9 +494,9 @@
     <string name="character_build">Construcción de Personaje</string>
     <string name="character_build_description">Cada nivel te otorga un punto para asignar a un atributo a tu elección. Puedes hacerlo manualmente o dejar que el juego decida por ti usando la opción de Distribución Automática.</string>
     <string name="strength">Fuerza</string>
-    <string name="strength_description">Incrementa la posibilidad de asestar golpes críticos al sumar puntos en una tarea. También aumenta el daño que reciben los Jefes.</string>
+    <string name="strength_description">Incrementa la probabilidad de dar golpes críticos y causar daño al sumar puntos en tareas. También aumenta el daño que sufren los jefes.</string>
     <string name="intelligence">Inteligencia</string>
-    <string name="intelligence_description">Aumenta la exp ganada por completar tareas. También aumenta tu capacidad de maná y lo rápido que se regenera el maná al cabo del tiempo.</string>
+    <string name="intelligence_description">Aumenta la experiencia ganada al completar tareas. También aumenta tu capacidad de Mana y la velocidad de regeneración de tu Mana.</string>
     <string name="constitution">Constitución</string>
     <string name="constitution_description">Disminuye la cantidad de daño recibido de tus tareas. No disminuye el daño recibido de los jefes.</string>
     <string name="perception">Percepción</string>
@@ -1638,4 +1638,18 @@
     <string name="api_token_reset_title">Si necesitas un nuevo Token de API</string>
     <string name="api_token_reset_info">Puedes cambiar tu contraseña para así resetearlo. Una vez se ha reseteado necesitarás volver a entrar en cualquier dispositivo donde estuvieras usando Habitica y también proporcionar el nuevo Token de API a las herramientas de terceros que estuvieras usando.</string>
     <string name="copy_token">Copiar el Token</string>
+    <string name="membership">Membresía</string>
+    <string name="quest_accepted">¡Misión aceptada!</string>
+    <string name="faint_broken_gear_info">El equipamiento roto se puede readquirir en el Mercado</string>
+    <string name="quest_rejected">Misión rechazada</string>
+    <string name="quest_accept_error">No fue posible aceptar la misión. Por favor, intenta otra vez.</string>
+    <string name="quest_reject_error">No fue posible rechazar la misión. Por favor, intenta otra vez.</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d día hasta Orbe del Renacimiento gratuito</item>
+        <item quantity="many">%d días hasta Orbe del Renacimiento gratuito</item>
+        <item quantity="other">%d días hasta Orbe del Renacimiento gratuito</item>
+    </plurals>
+    <string name="free_rebirth_at_level_100">Orbe del Renacimiento gratuito en el nivel 100</string>
+    <string name="participating">Participando</string>
+    <string name="not_participating_filter">No participando</string>
 </resources>
