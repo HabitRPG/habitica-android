@@ -80,4 +80,8 @@
         <item quantity="many">%d vezes, oculto</item>
         <item quantity="other">%d vezes, oculto</item>
     </plurals>
+    <string name="new_task_x">Novo %s</string>
+    <string name="save_task_x">Salvar %s</string>
+    <string name="failed">Falha ao carregar</string>
+    <string name="retry">Tentar novamente</string>
 </resources>

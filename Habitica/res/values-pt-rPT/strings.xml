@@ -780,4 +780,23 @@
     <string name="guild_members">Membros da Guilda</string>
     <string name="invite_to_party">Convidar para um grupo</string>
     <string name="exact_alarm_system_settings_reminders">Os lembretes podem sofrer atrasos porque as permissões não estão ativadas. Toque para ver e atualizar as permissões.</string>
+    <string name="repeats">Repete</string>
+    <plurals name="repeat_yearly">
+        <item quantity="one">todo ano</item>
+        <item quantity="many">a cada %d anos</item>
+        <item quantity="other">a cada %d anos</item>
+    </plurals>
+    <plurals name="repeat_weekly">
+        <item quantity="one">toda semana</item>
+        <item quantity="many">a cada %d semanas</item>
+        <item quantity="other">a cada %d semanas</item>
+    </plurals>
+    <string name="on_every_day_of_week">todos os dias da semana</string>
+    <string name="report_challenge">Reportar Desafio</string>
+    <plurals name="repeat_monthly">
+        <item quantity="one">todo mês</item>
+        <item quantity="many">a cada %d meses</item>
+        <item quantity="other">a cada %d meses</item>
+    </plurals>
+    <string name="only_leader_create_challenge">Apenas o líder pode criar Desafios</string>
 </resources>
