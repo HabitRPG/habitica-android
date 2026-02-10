@@ -1108,4 +1108,8 @@
     <string name="is_open">Open</string>
     <string name="subscription_credit_canceling">Your <b>+%d</b> months of subscription credit will activate after cancelling</string>
     <string name="unsaved_changes">Unsaved Changes</string>
+    <string name="faint_broken_gear_info">Broken gear can be repurchased from the Market</string>
+    <string name="quest_accepted">Quest Accepted!</string>
+    <string name="quest_rejected">Quest rejected</string>
+    <string name="quest_accept_error">Could not accept quest. Please try again.</string>
 </resources>

@@ -1640,4 +1640,14 @@
     <string name="gem_cap_extra">%1$d/%2$d Limite de Gemas</string>
     <string name="api_token_is_password_info">Não compartilhe publicamente. Às vezes, você pode ser solicitado a informar seu ID de usuário, mas nunca publique seu Token de API onde outras pessoas possam vê-lo, inclusive no GitHub.</string>
     <string name="api_token_reset_info">Você pode alterar sua senha para redefini-la. Após redefini-la, você precisará fazer login novamente em todos os outros dispositivos em que usa o Habitica e fornecer o novo Token de API para ferramentas de terceiros que você possa usar.</string>
+    <string name="faint_broken_gear_info">Equipamentos quebrados podem ser recomprados no Mercado</string>
+    <string name="quest_accepted">Missão aceita!</string>
+    <string name="quest_rejected">Missão rejeitada</string>
+    <string name="quest_accept_error">Não foi possível aceitar a Missão. Por favor, tente novamente.</string>
+    <string name="quest_reject_error">Não foi possível rejeitar a Missão. Por favor, tente novamente.</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d dia até o Orbe do Renascimento GRATUITO</item>
+        <item quantity="many">%d dias até o Orbe do Renascimento GRATUITO</item>
+        <item quantity="other">%d dias até o Orbe do Renascimento GRATUITO</item>
+    </plurals>
 </resources>
