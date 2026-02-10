@@ -495,9 +495,9 @@
     <string name="character_build">Construção de Personagem</string>
     <string name="character_build_description">Cada nível lhe dá um ponto para aumentar um atributo de sua escolha. Você pode fazê-lo manualmente ou permitir que o aplicativo decida usando uma das opções de Distribuição Automática.</string>
     <string name="strength">Força</string>
-    <string name="strength_description">Aumenta o bônus de acertos críticos e a chance de ocorrê-los ao concluir uma tarefa. Também aumenta o dano causado a chefões.</string>
+    <string name="strength_description">Aumenta a chance e o dano de acertos críticos ao concluir tarefas. Também aumenta o dano causado a chefes de Missões.</string>
     <string name="intelligence">Inteligência</string>
-    <string name="intelligence_description">Aumenta a experiência obtida ao completar tarefas. Também aumenta seu limite e taxa de recuperação de mana.</string>
+    <string name="intelligence_description">Aumenta a Experiência ganha com tarefas. Também aumenta o limite de Mana e a taxa de regeneração de Mana.</string>
     <string name="constitution">Constituição</string>
     <string name="constitution_description">Diminui o dano recebido pelas tarefas. Não diminui o dano causado por chefões.</string>
     <string name="perception">Percepção</string>
@@ -1650,4 +1650,8 @@
         <item quantity="many">%d dias até o Orbe do Renascimento GRATUITO</item>
         <item quantity="other">%d dias até o Orbe do Renascimento GRATUITO</item>
     </plurals>
+    <string name="free_rebirth_at_level_100">Obre do renascimento grátis no nível 100</string>
+    <string name="membership">Assinatura</string>
+    <string name="participating">Participação</string>
+    <string name="not_participating_filter">Não participando</string>
 </resources>
