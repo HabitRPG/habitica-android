@@ -1446,7 +1446,7 @@
     <string name="subscribe_listitemArmoire_description">宝箱1個分の料金で、新装備を2個手に入れるチャンスがあります！</string>
     <string name="subscribe_incentive_button_armoire">有料会員になればもう一度無料でオープンできます！</string>
     <string name="subscriber_button_faint">セカンドチャンス：1HPで持ちこたえる！</string>
-    <string name="subscribe_incentive_text_faint">HP切れを防ぐために、有料プランで毎日セカンドチャンスを手に入れましょう</string>
+    <string name="subscribe_incentive_text_faint">有料会員は1日1回、HP切れを防ぐために、セカンドチャンスを使えます</string>
     <string name="subscribe_second_chance_incentive_text">有料会員は毎日、人生のセカンドチャンスを得ることができ、その他にも特典があります！</string>
     <string name="subscriber_benefit_used_faint">あなたは今日、すでにセカンドチャンスを使用済みです。%sで再度ご利用いただけます</string>
     <string name="subriber_benefit_notification_faint">1HPでセカンドチャンスを得ました！</string>
@@ -1666,4 +1666,8 @@
     <string name="rebirth_achievement_description_max">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$d以上です。</string>
     <string name="rebirth_achievement_description">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$dです。</string>
     <string name="subscriber_button_faint_use">セカンドチャンスを使う！</string>
+    <string name="reset_server_to_default">デフォルトに戻す</string>
+    <string name="auth_invalid_credential_type">認証情報が無効です。</string>
+    <string name="scroll_to_new_messages">新しいメッセージにスクロールする</string>
+    <string name="auth_unknown_credential_type">認証情報が不明です。</string>
 </resources>
