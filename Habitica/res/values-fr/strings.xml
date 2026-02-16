@@ -495,13 +495,13 @@
     <string name="character_build">Construction du personnage</string>
     <string name="character_build_description">Chaque niveau vous donne un point à assigner à un attribut de votre choix. Vous pouvez le faire manuellement, ou laisser le jeu décider pour vous en utilisant l\'une des options d\'attribution automatique.</string>
     <string name="strength">Force</string>
-    <string name="strength_description">Augmente le bonus des coups critiques et les rend plus probable lorsqu\'une tâche est validée. Augmente aussi les dégâts infligés aux boss.</string>
+    <string name="strength_description">Augmente les chances et dégâts de coups critiques lorsque de la complétion de tâches. Augmente également les dégâts infligés aux boss de Quête.</string>
     <string name="intelligence">Intelligence</string>
-    <string name="intelligence_description">Augmente l\'expérience reçue des tâches accompli. Augmente également votre limite de mana et sa vitesse de régénération au fil du temps.</string>
+    <string name="intelligence_description">Augmente l\'Expérience reçue des tâches. Augmente également votre limite de Mana et sa vitesse de régénération.</string>
     <string name="constitution">Constitution</string>
-    <string name="constitution_description">Diminue la quantité de dégâts reçue de vos tâches. Ne diminue pas les dégâts reçus des boss.</string>
+    <string name="constitution_description">Réduit les dégâts infligés par vos Quotidiennes manquées et vos Habitudes négatives. Ne diminue pas les dégâts infligés pas les boss de Quête.</string>
     <string name="perception">Perception</string>
-    <string name="perception_description">Augmente la probabilité de trouver du butin lorsqu\'une tâche est validée, la quantité de butin quotidien, le bonus des combos, et la quantité d\'or reçue par les tâches.</string>
+    <string name="perception_description">Augmente la probabilité de trouver des objets et la limite quotidienne pour leur obtention, les bonus de combo des tâches, et l\'Or obtenu en les accomplissant.</string>
     <string name="buffs">Bonus</string>
     <string name="allocated">Alloué</string>
     <string name="distribute_evenly">Répartir équitablement</string>
@@ -1209,7 +1209,7 @@
     <string name="tutorial_reset_confirmation">Vos tutoriels ont été réinitialisés</string>
     <string name="you_ran_out_of_health">Vous avez épuisé votre santé !</string>
     <string name="death_description">Mais vous pouvez tous les récupérer avec un peu de travail ! Bonne chance — vous allez y arriver.</string>
-    <string name="faint_loss_description">Vous redescendrez au niveau <b>%1$d</b>, perdrez <b>%2$d</b> Or, et briserez <b>une pièce d\'équipement</b>… Vous pourrez les obtenir à nouveau en travaillant dur !</string>
+    <string name="faint_loss_description">Vous redescendrez au <b>niveau %1$d, perdrez %2$d Or et briserez un élément d\'équipement</b>... Mais vous pourrez les obtenir à nouveau en travaillant dur !</string>
     <string name="account_reset">Réinitialisation du compte</string>
     <string name="avatar_skin_customization">Personnalisation de l\'apparence de l\'avatar</string>
     <string name="avatar_shirt_customization">Personnalisation de l\'habit de l\'avatar</string>
@@ -1496,7 +1496,7 @@
     <string name="subscribe_incentive_button_armoire">Abonnez-vous pour ouvrir à nouveau gratuitement !</string>
     <string name="subscriber_button_faint">Deuxième chance : Accrochez-vous avec 1 PV !</string>
     <string name="sub_perk">AVANTAGES D\'ABO</string>
-    <string name="subscribe_incentive_text_faint">Obtenez une seconde chance chaque jour de manquer de points de vie avec votre abonnement</string>
+    <string name="subscribe_incentive_text_faint">Les Abonné·e·s obtiennent un bonus Seconde Chance une fois par jour pour éviter de perdre tous leurs PV</string>
     <string name="subscribe_second_chance_incentive_text">Les abonné·e·s ont chaque jour une deuxième chance de vie et ces autres avantages !</string>
     <string name="watch_ad_to_hang_on">Regardez une publicité pour tenir le coup avec 1 PV !</string>
     <string name="quest_mechanics_collecting_title">Objets de Quête de Collecte</string>
@@ -1538,7 +1538,7 @@
     <string name="customizations_no_owned">Vous ne possédez aucun de ces objets</string>
     <string name="best_deal">Meilleure Offre</string>
     <string name="two_gems_per_month">Obtenez +2 Gemmes pour chaque mois durant lesquels vous avez été abonné·e</string>
-    <string name="subscriber_benefit_used_faint">Vous avez déjà utilisé votre deuxième chance aujourd\'hui. Elle sera de nouveau disponible dans %s</string>
+    <string name="subscriber_benefit_used_faint">Votre bonus Seconde Chance est en cours de recharge ! Il sera à nouveau disponible dans %s.</string>
     <string name="customize_avatar">Personnaliser l\'Avatar</string>
     <string name="search_equipment">Rechercher dans les Équipements</string>
     <string name="choose_member">Choisir l·e·a Membre</string>
@@ -1693,4 +1693,10 @@
     <string name="server_settings_unlock_remaining">Vous êtes à %d pas de débloquer les paramètres du serveur.</string>
     <string name="rebirth_shop_description">Recommencer instantanément votre aventure en tant qu\'un Guerri·er·ère de niveau 1, tout en gardé vos Succès, vos Objets et votre Équipement. Vos tâches seront réinitialisées à une valeur neutre (couleur jaune) cependant retiendront l\'historique. Tous vos combos de tâches seront réinitialisées. Votre Or, votre Expérience, votre Mana et tous effets de Compétences seront retirés.</string>
     <string name="rebirth_confirm_reset_item_4">Tous vos combos et valeurs de tâches</string>
+    <string name="subscriber_benefit_available_faint">Votre abonnement vous permet de ne pas perdre tous vos PV une fois par jour !</string>
+    <string name="auth_invalid_credential_type">Type de justificatif d’accès invalide reçu.</string>
+    <string name="auth_unknown_credential_type">Type de justificatif d’accès inconnu reçu.</string>
+    <string name="auth_missing_token">Jeton vide reçu.</string>
+    <string name="new_message">Nouveau message</string>
+    <string name="scroll_to_new_messages">Défiler vers nouveaux messages</string>
 </resources>
