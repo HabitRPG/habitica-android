@@ -186,6 +186,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     var showBackButton: Boolean? = null
         set(value) {
             if (field == value) return
+            field = value
+            if (isPersistentDrawerMode == true) {
+                drawerToggle?.isDrawerIndicatorEnabled = false
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                return
+            }
             if (value == true && showBirthdayIcon) {
                 drawerToggle?.isDrawerIndicatorEnabled = false
                 drawerToggle?.setHomeAsUpIndicator(R.drawable.arrow_back)
@@ -195,7 +201,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             } else {
                 drawerToggle?.isDrawerIndicatorEnabled = value != true
             }
-            field = value
         }
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
@@ -359,8 +364,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             updateDrawerBehavior()
         }
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        if (isPersistentDrawerMode != true) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setHomeButtonEnabled(true)
+        }
         setupNotifications()
         setupBottomnavigationLayoutListener()
 
@@ -561,10 +568,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
             true
         } else if (item.itemId == android.R.id.home) {
-            if (showBackButton != true) {
-                drawerFragment?.toggleDrawer()
-            } else {
+            if (showBackButton == true) {
                 MainNavigationController.navigateBack()
+            } else if (isPersistentDrawerMode != true) {
+                drawerFragment?.toggleDrawer()
             }
             true
         } else {
