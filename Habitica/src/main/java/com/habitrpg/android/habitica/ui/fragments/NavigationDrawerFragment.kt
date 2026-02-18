@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
+import android.content.res.Configuration
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -105,7 +106,15 @@ class NavigationDrawerFragment : DialogFragment() {
     val isDrawerOpen: Boolean
         get() = drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
 
-    private var isTabletUI: Boolean = false
+    private val shouldUsePersistentDrawer: Boolean
+        get() {
+            val activity = activity ?: return false
+            if (activity.isInMultiWindowMode) {
+                val config = resources.configuration
+                return config.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+            }
+            return resources.configuration.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val context = context
@@ -124,7 +133,6 @@ class NavigationDrawerFragment : DialogFragment() {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION)
             mFromSavedInstanceState = true
         }
-        isTabletUI = resources.getBoolean(R.bool.isTabletUI)
         setHasOptionsMenu(true)
     }
 
@@ -616,7 +624,7 @@ class NavigationDrawerFragment : DialogFragment() {
         openSelection: Boolean = true,
         preventReselection: Boolean = true
     ) {
-        if (!isTabletUI) {
+        if (!shouldUsePersistentDrawer) {
             closeDrawer()
         }
         if (adapter.selectedItem != null && adapter.selectedItem == transitionId && bundle == null && preventReselection) return
@@ -636,7 +644,7 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun startNotificationsActivity() {
-        if (!isTabletUI) {
+        if (!shouldUsePersistentDrawer) {
             closeDrawer()
         }
 
@@ -843,6 +851,8 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     companion object {
+        private const val PERSISTENT_DRAWER_MIN_WIDTH_DP = 600
+
         const val SIDEBAR_TASKS = "tasks"
         const val SIDEBAR_SKILLS = "skills"
         const val SIDEBAR_STATS = "stats"
