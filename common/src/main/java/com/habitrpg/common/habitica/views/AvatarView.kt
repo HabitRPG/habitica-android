@@ -254,9 +254,12 @@ class AvatarView : FrameLayout {
             if (resetHasAttributes) hasMount = true
         }
 
-        var petName = avatar.currentPet
-        if (showPet && petName?.isNotEmpty() == true) {
-            petName = SpriteSubstitutionManager.substitute("Pet-$petName", "pets")
+        val petName = if (avatar.currentPet?.isEmpty() == true) {
+            SpriteSubstitutionManager.substitute("", "pets")
+        } else {
+            SpriteSubstitutionManager.substitute("Pet-${avatar.currentPet}", "pets")
+        }
+        if (showPet && petName.isNotEmpty()) {
             layerMap[LayerType.PET] = petName
             if (resetHasAttributes) hasPet = true
         }
