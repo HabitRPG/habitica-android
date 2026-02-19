@@ -1198,7 +1198,7 @@
     <string name="armoire_rate_food_description">Você receberá um dos dez tipos de Comida. Durante eventos especiais, comidas normais irão mudar para seus equivalentes de bolo ou doce.</string>
     <string name="armoire_rate_experience_description">A quantidade ganha varia aleatoriamente de 10 até 50</string>
     <string name="purchased">Comprado</string>
-    <string name="show_me">Mostre-me</string>
+    <string name="show_me">Mostrar</string>
     <string name="january">Janeiro</string>
     <string name="febuary">Fevereiro</string>
     <string name="december">Dezembro</string>
@@ -1223,7 +1223,7 @@
     <string name="mor_gems_title">Você precisará de mais Gemas para comprar isso!</string>
     <string name="gems_support">Comprar Gemas ajuda nossa pequena equipe do Habitica</string>
     <string name="month_released">Lançamento do mês</string>
-    <string name="faint_loss_description">Você cairá para o <b>nível %1$d, perderá %2$d de Ouro e um do seus equipamentos será destruído</b>... A boa notícia é que poderá recuperar tudo com dedicação!</string>
+    <string name="faint_loss_description">Você cairá para o <b>nível %1$d, perderá %2$d de Ouro e uma peça dos seus equipamentos será destruída</b>... A boa notícia é que poderá recuperar tudo com dedicação!</string>
     <string name="avatar_skin_customization">Personalização da pele do avatar</string>
     <string name="incorrect_password">A senha está incorreta</string>
     <string name="habitica_official">Habitica Oficial</string>
@@ -1455,7 +1455,7 @@
     <string name="open_profile">Abrir Perfil</string>
     <string name="share_avatar">Compartilhar Avatar</string>
     <string name="subscribe_listitemArmoire_description">Tenha duas chances de obter novos equipamentos cada vez que você abre o Armário Encantado!</string>
-    <string name="subscribe_incentive_text_faint">Obtenha uma segunda chance a cada dia para evitar ficar sem HP com uma assinatura</string>
+    <string name="subscribe_incentive_text_faint">Assinantes têm um benefício de Segunda Chance para evitar ficar sem HP, uma vez por dia.</string>
     <string name="quest_mechanics_boss_description">Complete qualquer tipo de tarefa ou use habilidades para acumular dano pendente! O dano será aplicado na próxima reinicialização do seu dia. A Força afeta quanto dano você causa.</string>
     <string name="quest_mechanics_pausing_description">"Se estiver com dificuldades para concluir as Diárias, você pode pausar o dano das configurações para descansar. Isso evitará que o chefão machuque você ou outras pessoas, mas também pausará seu próprio dano. Outros membros que perderam as Diárias ainda causarão danos, portanto, tenha cuidado! "</string>
     <string name="quest_mechanics_collecting_description">Ao participar de uma Missão de Coleta, complete suas tarefas para ter uma chance aleatória de encontrar um item de missão. Itens pendentes serão aplicados na próxima reinicialização do seu dia. A Percepção aumenta a taxa de itens.</string>
@@ -1487,7 +1487,7 @@
     <string name="subscriber_benefit">BENEFÍCIO DE ASSINANTE</string>
     <string name="no_saddles">Você não possui nenhuma Sela</string>
     <string name="preference_email_content_release">Lançamentos de conteúdo + Eventos</string>
-    <string name="subscriber_benefit_used_faint">Você já usou sua segunda chance hoje. Ela estará disponível novamente em %s</string>
+    <string name="subscriber_benefit_used_faint">Seu benefício Segunda Chance ainda está recarregando! Estará disponível novamente em %s.</string>
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; convidou você para entrar no grupo &lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="subscribe_listitemArmoire">O dobro de Recompensas no Armário</string>
     <string name="sub_perk">BENEFÍCIO SUB</string>
@@ -1692,4 +1692,11 @@
     <string name="rebirth_shop_description">Reinicie instantaneamente sua aventura como um Guerreiro de nível 1, mantendo suas Conquistas, Itens e Equipamentos. Suas tarefas voltarão ao amarelo, mas manterão seu histórico. Todas as suas sequências pessoais de tarefas serão zeradas. Seu Ouro, Experiência, Mana e os efeitos de todas as Habilidades serão removidos.</string>
     <string name="rebirth_enabled_subtitle">Uma nova aventura está disponível!</string>
     <string name="rebirth_enabled_description">Use a Orbe do Renascimento para dar uma nova vida à sua aventura no Habitica quando sentir que já conquistou tudo! Recomece do nível 1 mantendo suas tarefas, Conquistas e Mascotes com este item especial encontrado no Mercado.</string>
+    <string name="subscriber_button_faint_use">Use sua Segunda Chance!</string>
+    <string name="subscriber_benefit_available_faint">Sua assinatura permite evitar ficar sem HP uma vez por dia!</string>
+    <string name="auth_unknown_credential_type">Tipo de credencial desconhecido recebido.</string>
+    <string name="auth_missing_token">Token vazio recebido.</string>
+    <string name="new_message">Nova mensagem</string>
+    <string name="scroll_to_new_messages">Ir para novas mensagens</string>
+    <string name="auth_invalid_credential_type">Tipo de credencial inválido recebido.</string>
 </resources>
