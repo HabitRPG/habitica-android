@@ -306,7 +306,7 @@
     <string name="active">Aktywne</string>
     <string name="cancel_subscription">Anuluj Subskrypcję</string>
     <string name="cancel_subscription_google_description">Nie chcesz już subskrybować\? Możesz znaleźć opcję anulowania subskrypcji, przechodząc do sekcji Płatności i subskrypcje w aplikacji Google Play Store. Wszelkie pozostałe miesiące kredytu subskrypcji zostaną dodane do daty zakończenia po anulowaniu.</string>
-    <string name="cancel_subscription_notgoogle_description">Nie chcesz dłużej subskrybować\? Z powodu ograniczeń w płatnościach mobilnych, musisz anulować subskrypcję poprzez stronę webową. Aby to zrobić, tapnij poniższy przycisk, zaloguj się na swoje konto, tapnij ikonę Użytkownika w prawym, górnym rogu i przejdź do Subskrypcji. Wszelkie uznania z miesięcznych subskrypcji zostaną zastosowane po zakończeniu Twojej subskrypcji. Będzie nam Ciebie brakowało!</string>
+    <string name="cancel_subscription_notgoogle_description">Nie chcesz dłużej subskrybować\? Ze względu na Twoją metodę płatności, musisz anulować subskrypcję poprzez stronę webową. Aby to zrobić, tapnij poniższy przycisk, zaloguj się na swoje konto, tapnij ikonę Użytkownika w prawym górnym rogu i przejdź do zakładki Subskrypcji. Wszelkie pozostałe uznania z miesięcznych subskrypcji przedłożą końcową datę subskrypcji po jej anulowaniu. Będzie nam Ciebie brakowało!</string>
     <string name="visit_habitica_website">Odwiedź Stronę Habitiki</string>
     <string name="current_bonuses">Obecne Dodatki</string>
     <string name="months_subscribed">Miesięcy subskrypcji</string>
@@ -315,10 +315,10 @@
     <string name="inactive">Nieaktywne</string>
     <string name="one_month">1 Miesiąc</string>
     <string name="months">Miesiące</string>
-    <string name="month">miesiąc</string>
-    <string name="three_months">3 miesiące</string>
-    <string name="six_months">6 miesięcy</string>
-    <string name="twelve_months">12 miesięcy</string>
+    <string name="month">Miesiąc</string>
+    <string name="three_months">3 Miesiące</string>
+    <string name="six_months">6 Miesięcy</string>
+    <string name="twelve_months">12 Miesięcy</string>
     <string name="subscribe_prompt_thanks">Za subskrypcję otrzymasz korzyści</string>
     <string name="subscription_status">Status Subskrypcji</string>
     <string name="challenge_leave_title">Opuść wyzwanie</string>
@@ -1213,4 +1213,23 @@
         <item quantity="many">co %d tygodni</item>
         <item quantity="other">co %d tygodni</item>
     </plurals>
+    <string name="quest_rejected">Misja odrzucona</string>
+    <string name="quest_reject_error">Nie udało się odrzucić misji. Spróbuj ponownie.</string>
+    <string name="free_rebirth_at_level_100">DARMOWA Kula Odrodzenia na poziomie 100</string>
+    <string name="membership">Członkostwo</string>
+    <string name="participating">Biorę udział</string>
+    <string name="not_participating_filter">Nie biorę udziału</string>
+    <string name="cancel_subscription_apple_description">Chcesz zrezygnować z subskrypcji\? Ze względu na Twoją metodę płatności, musisz anulować subskrypcję za pomocą Apple ID na Twoim urządzeniu iOS.</string>
+    <string name="faint_broken_gear_info">Zniszczone wyposażenie może zostać odkupione na Targu</string>
+    <string name="quest_accepted">Misja zaakceptowana!</string>
+    <string name="quest_accept_error">Nie udało się zaakceptować misji. Spróbuj ponownie.</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d dzień do DARMOWEJ Kuli Odrodzenia</item>
+        <item quantity="few">%d dni do DARMOWEJ Kuli Odrodzenia</item>
+        <item quantity="many">%d dni do DARMOWEJ Kuli Odrodzenia</item>
+        <item quantity="other">%d dni do DARMOWEJ Kuli Odrodzenia</item>
+    </plurals>
+    <string name="rejoin_party_quest_leader">Nie będziesz miał możliwości dołączenia ponownie do tej drużyny dopóki ktoś Cię nie zaprosi.
+\n
+\nOpuszczenie drużyny sprawi również, że obecna misja zostanie anulowana.</string>
 </resources>
