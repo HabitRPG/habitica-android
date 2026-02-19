@@ -1455,7 +1455,7 @@
     <string name="open_profile">Abrir Perfil</string>
     <string name="share_avatar">Compartilhar Avatar</string>
     <string name="subscribe_listitemArmoire_description">Tenha duas chances de obter novos equipamentos cada vez que você abre o Armário Encantado!</string>
-    <string name="subscribe_incentive_text_faint">Assinantes têm um benefício de Segunda Chance para evitar ficar sem HP, uma vez por dia.</string>
+    <string name="subscribe_incentive_text_faint">Assinantes têm o benefício \"Segunda Chance\" caso perca todo seu HP, uma vez por dia</string>
     <string name="quest_mechanics_boss_description">Complete qualquer tipo de tarefa ou use habilidades para acumular dano pendente! O dano será aplicado na próxima reinicialização do seu dia. A Força afeta quanto dano você causa.</string>
     <string name="quest_mechanics_pausing_description">"Se estiver com dificuldades para concluir as Diárias, você pode pausar o dano das configurações para descansar. Isso evitará que o chefão machuque você ou outras pessoas, mas também pausará seu próprio dano. Outros membros que perderam as Diárias ainda causarão danos, portanto, tenha cuidado! "</string>
     <string name="quest_mechanics_collecting_description">Ao participar de uma Missão de Coleta, complete suas tarefas para ter uma chance aleatória de encontrar um item de missão. Itens pendentes serão aplicados na próxima reinicialização do seu dia. A Percepção aumenta a taxa de itens.</string>
@@ -1535,7 +1535,7 @@
     <string name="confirm_new_password">Confirmar a nova senha</string>
     <string name="report_challenge_explanation">Você só deve reportar um desafio que viole as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou [Termos de Serviço](https://habitica.com/static/terms). Enviar um relatório falso é uma violação das Diretrizes da Comunidade de Habitica.</string>
     <string name="benefits_end">Benefícios terminam em %s</string>
-    <string name="faint_loss_description_alt">Você irá cair para o nível <b>%1$d</b>,, perderá <b>%2$d</b> Ouro e sua Experiência... Você pode recuperá-los com trabalho duro!</string>
+    <string name="faint_loss_description_alt">Você cairá para o nível <b>%1$d</b>, perderá <b>%2$d</b> Ouro e, sua Experiência... Se esforce e poderá recuperá-los!</string>
     <string name="report_reason_title_challenge">Por que você está denunciando este desafio\?</string>
     <string name="g1g1_promo_info_limitations_noutc">Este é um evento por tempo limitado que começa em %1$s e termina em %2$s. Esta promoção se aplica apenas quando você presenteia outro Habiticano. Se você ou o destinatário do presente já tiverem uma assinatura, a assinatura presente adicionará meses de crédito que só serão usados após o cancelamento ou expiração da assinatura atual.</string>
     <string name="best_deal">Melhor oferta</string>
