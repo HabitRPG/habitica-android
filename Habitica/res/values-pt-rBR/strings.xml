@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="action_refresh">Atualizar</string>
     <string name="XP_default">Experiência</string>
-    <string name="HP_default">Saúde</string>
+    <string name="HP_default">Vida</string>
     <string name="MP_default">Mana</string>
     <!--Prefs-->
     <string name="PS_settings_title">Configurações</string>
@@ -504,7 +504,7 @@
     <string name="perception_description">Aumenta a chance de drop de itens, o limite diário de itens obtidos, os bônus de sequência das tarefas e o Ouro ganho ao completar tarefas.</string>
     <string name="buffs">Buffs</string>
     <string name="allocated">Distribuído</string>
-    <string name="distribute_evenly">Distribuir Igualmente</string>
+    <string name="distribute_evenly">Distribuir igualmente</string>
     <string name="distribute_class">Distribuir baseado na classe</string>
     <string name="distribute_task">Distribuir baseado nas tarefas</string>
     <string name="no_points_to_allocate">Sem Pontos para Distribuir</string>
@@ -1410,7 +1410,7 @@
         <item quantity="many">A cada %d anos</item>
         <item quantity="other"/>
     </plurals>
-    <string name="shop_armoire_description">Novos equipamentos são lançados durante as Galas sazonais. Até lá, há %d peças de equipamento do Armário Encantado para encontrar!</string>
+    <string name="shop_armoire_description">Novos equipamentos são lançados com os Festivais de Temporada. Até lá, restam %d peças de equipamento para encontrar no Armário Encantado!</string>
     <string name="shop_armoire_empty_description">Novos equipamentos são lançados durante as Galas sazonais. O Armário Encantado recebe novos estoques todo mês também!</string>
     <string name="opt_out_description">Isso deixará você sem uma classe atribuída. Você pode escolher uma classe novamente ativando o sistema de classes nas Configurações a qualquer momento.</string>
     <string name="change_class_confirmation_message">Isso alterará quais equipamentos estão disponíveis em lojas e mudará suas habilidades disponíveis</string>
@@ -1454,7 +1454,7 @@
     <string name="potions">poções</string>
     <string name="open_profile">Abrir Perfil</string>
     <string name="share_avatar">Compartilhar Avatar</string>
-    <string name="subscribe_listitemArmoire_description">Tenha duas chances de obter novos equipamentos cada vez que você abre o Armário Encantado!</string>
+    <string name="subscribe_listitemArmoire_description">Saque em Dobro: ao abrir o Armário Encantado, ganhe uma segunda tentativa grátis!</string>
     <string name="subscribe_incentive_text_faint">Assinantes têm o benefício \"Segunda Chance\" caso perca todo seu HP, uma vez por dia</string>
     <string name="quest_mechanics_boss_description">Complete qualquer tipo de tarefa ou use habilidades para acumular dano pendente! O dano será aplicado na próxima reinicialização do seu dia. A Força afeta quanto dano você causa.</string>
     <string name="quest_mechanics_pausing_description">"Se estiver com dificuldades para concluir as Diárias, você pode pausar o dano das configurações para descansar. Isso evitará que o chefão machuque você ou outras pessoas, mas também pausará seu próprio dano. Outros membros que perderam as Diárias ainda causarão danos, portanto, tenha cuidado! "</string>
@@ -1466,7 +1466,7 @@
     <string name="subscribe_incentive_text_armoire">Obtenha uma chance extra no Armário cada vez que o comprar com uma assinatura</string>
     <string name="subscribe_second_armoire_open_text">Os assinantes têm chances extras no Armário e outros benefícios!</string>
     <string name="subscriber_button_armoire">Abra mais uma vez gratuitamente!</string>
-    <string name="subscriber_button_faint">Segunda chance: Aguente com 1 HP!</string>
+    <string name="subscriber_button_faint">Tenacidade: Resista com 1 de HP!</string>
     <string name="subriber_benefit_notification_faint">Você obteve uma segunda chance com 1HP!</string>
     <string name="quest_mechanics">Mecânica de Missões</string>
     <string name="quest_mechanics_boss_title">Causando Dano a um Chefão</string>
@@ -1693,7 +1693,7 @@
     <string name="rebirth_enabled_subtitle">Uma nova aventura está disponível!</string>
     <string name="rebirth_enabled_description">Use a Orbe do Renascimento para dar uma nova vida à sua aventura no Habitica quando sentir que já conquistou tudo! Recomece do nível 1 mantendo suas tarefas, Conquistas e Mascotes com este item especial encontrado no Mercado.</string>
     <string name="subscriber_button_faint_use">Use sua Segunda Chance!</string>
-    <string name="subscriber_benefit_available_faint">Com a passiva de assinante, você evita ficar sem HP uma vez por dia.</string>
+    <string name="subscriber_benefit_available_faint">Com a passiva de assinante, você evita ficar sem HP uma vez por dia!</string>
     <string name="auth_unknown_credential_type">Tipo de credencial desconhecido recebido.</string>
     <string name="auth_missing_token">Token vazio recebido.</string>
     <string name="new_message">Nova mensagem</string>
