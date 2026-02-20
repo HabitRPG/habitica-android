@@ -1254,14 +1254,14 @@
         <item quantity="other">Vocês, %d outros</item>
     </plurals>
     <string name="x_and_y">%1$s e %2$s</string>
-    <string name="enable_notifications">Habilitar Notificações</string>
-    <string name="push_notification_system_settings_description">Permitir notificações do Habitica nas Configurações do aplicativo para receber notificações push</string>
-    <string name="push_notification_system_settings_title">Notificações desabilitadas</string>
+    <string name="enable_notifications">Permitir Notificações</string>
+    <string name="push_notification_system_settings_description">Permitir as notificações do Habitica nas Configurações do aplicativo para receber notificações automáticas</string>
+    <string name="push_notification_system_settings_title">Notificações Desativadas</string>
     <string name="title">Título</string>
     <string name="positive_sentence">positivo</string>
     <string name="negative_sentence">negativo</string>
     <string name="level_abbreviated">Nv. %d</string>
-    <string name="push_notification_system_settings_reminders">Permitir notificações do Habitica nas Configurações do aplicativo para receber lembretes</string>
+    <string name="push_notification_system_settings_reminders">Permitir as notificações do Habitica nas Configurações do aplicativo para receber lembretes</string>
     <string name="class_changed_description">Agora você pode usar habilidades %s e comprar equipamentos em lojas. Avance de nível para ganhar pontos de atributo que você pode usar para fortalecer suas habilidades.</string>
     <string name="change_class_selected_confirmation">Você quer mudar sua classe para %1$s \?</string>
     <string name="subscribers_mythic_hourglasses"><i>Os assinantes recebem Ampulhetas Místicas nos primeiros três dias do mês.</i></string>
@@ -1464,7 +1464,7 @@
     <string name="customize_avatar">Personalizar Avatar</string>
     <string name="subscribe_incentive_button_armoire">Inscreva-se para abrir novamente gratuitamente!</string>
     <string name="subscribe_incentive_text_armoire">Obtenha uma chance extra no Armário cada vez que o comprar com uma assinatura</string>
-    <string name="subscribe_second_armoire_open_text">Os assinantes têm chances extras no Armário e outros benefícios!</string>
+    <string name="subscribe_second_armoire_open_text">Os assinantes têm chances extras no Armário entre outros benefícios!</string>
     <string name="subscriber_button_armoire">Abra mais uma vez gratuitamente!</string>
     <string name="subscriber_button_faint">Tenacidade: Resista com 1 de HP!</string>
     <string name="subriber_benefit_notification_faint">Você obteve uma segunda chance com 1HP!</string>
@@ -1518,7 +1518,7 @@
         <item quantity="many">%d Dias</item>
         <item quantity="other">%d Dias</item>
     </plurals>
-    <string name="exact_alarm_system_settings_reminders">Os lembretes podem ser entregues com atraso porque as permissões não estão ativadas. Toque para visualizar e atualizar as permissões.</string>
+    <string name="exact_alarm_system_settings_reminders">Para garantir que seus lembretes cheguem na hora, ative as permissões necessárias. Toque para configurar.</string>
     <string name="exact_alarm_system_settings_description">Permitir `Alarmes e Lembretes` no aplicativo Configurações para garantir que os lembretes apareçam exatamente no horário programado</string>
     <string name="subscribe_listitem3_description_alt">Fique por dentro dos últimos lançamentos exclusivos. Assine agora para ganhar %1$s de %2$s!</string>
     <string name="leave_party_confirmation_quest">Tem certeza que deseja sair deste grupo\?</string>

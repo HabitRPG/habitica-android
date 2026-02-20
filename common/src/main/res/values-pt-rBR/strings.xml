@@ -13,7 +13,7 @@
     <string name="daily">Diária</string>
     <string name="habit">Hábito</string>
     <string name="reward">Recompensa</string>
-    <string name="todo">Tarefa</string>
+    <string name="todo">Afazer</string>
     <string name="stats">Atributos</string>
     <string name="settings">Configurações</string>
     <string name="avatar">Avatar</string>
@@ -30,7 +30,7 @@
     <string name="hard">Difícil</string>
     <string name="habits">Hábitos</string>
     <string name="dailies">Diárias</string>
-    <string name="todos">Tarefas</string>
+    <string name="todos">Afazeres</string>
     <string name="rewards">Recompensas</string>
     <string name="new_task">Nova Tarefa</string>
     <string name="user_level">Nível %d</string>
@@ -40,7 +40,7 @@
     <string name="email_username">E-mail / Nome de usuário</string>
     <string name="password">Senha</string>
     <string name="emailAddress">Endereço de e-mail</string>
-    <string name="confirmpassword">Repita a senha</string>
+    <string name="confirmpassword">Confirme a senha</string>
     <string name="login_btn_google">Entrar com Google</string>
     <string name="logout">Sair</string>
     <string name="logout_description">Sair da sua conta</string>
