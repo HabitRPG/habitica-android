@@ -1492,7 +1492,7 @@
     <string name="subscribe_listitemArmoire">O dobro de Recompensas no Armário</string>
     <string name="sub_perk">BENEFÍCIO SUB</string>
     <string name="subscribe_second_chance_incentive_text">Os assinantes têm uma segunda chance na vida todos os dias e esses outros benefícios!</string>
-    <string name="watch_ad_to_hang_on">Assista ao anúncio para aguentar o 1HP!</string>
+    <string name="watch_ad_to_hang_on">Assista ao anúncio para resistir com 1 de HP!</string>
     <string name="clear_cache_settings">Limpar cache</string>
     <plurals name="x_minutes">
         <item quantity="one">%d Minuto</item>
@@ -1693,7 +1693,7 @@
     <string name="rebirth_enabled_subtitle">Uma nova aventura está disponível!</string>
     <string name="rebirth_enabled_description">Use a Orbe do Renascimento para dar uma nova vida à sua aventura no Habitica quando sentir que já conquistou tudo! Recomece do nível 1 mantendo suas tarefas, Conquistas e Mascotes com este item especial encontrado no Mercado.</string>
     <string name="subscriber_button_faint_use">Use sua Segunda Chance!</string>
-    <string name="subscriber_benefit_available_faint">Sua assinatura permite evitar ficar sem HP uma vez por dia!</string>
+    <string name="subscriber_benefit_available_faint">Com a passiva de assinante, você evita ficar sem HP uma vez por dia.</string>
     <string name="auth_unknown_credential_type">Tipo de credencial desconhecido recebido.</string>
     <string name="auth_missing_token">Token vazio recebido.</string>
     <string name="new_message">Nova mensagem</string>
