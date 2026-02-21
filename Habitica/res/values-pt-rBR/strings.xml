@@ -1466,7 +1466,7 @@
     <string name="subscribe_incentive_text_armoire">Obtenha uma chance extra no Armário cada vez que o comprar com uma assinatura</string>
     <string name="subscribe_second_armoire_open_text">Os assinantes têm chances extras no Armário entre outros benefícios!</string>
     <string name="subscriber_button_armoire">Abra mais uma vez gratuitamente!</string>
-    <string name="subscriber_button_faint">Tenacidade: Resista com 1 de HP!</string>
+    <string name="subscriber_button_faint">Sobrevida: Resista com 1 Ponto de Vida!</string>
     <string name="subriber_benefit_notification_faint">Você obteve uma segunda chance com 1HP!</string>
     <string name="quest_mechanics">Mecânica de Missões</string>
     <string name="quest_mechanics_boss_title">Causando Dano a um Chefão</string>
@@ -1692,7 +1692,7 @@
     <string name="rebirth_shop_description">Reinicie instantaneamente sua aventura como um Guerreiro de nível 1, mantendo suas Conquistas, Itens e Equipamentos. Suas tarefas voltarão ao amarelo, mas manterão seu histórico. Todas as suas sequências pessoais de tarefas serão zeradas. Seu Ouro, Experiência, Mana e os efeitos de todas as Habilidades serão removidos.</string>
     <string name="rebirth_enabled_subtitle">Uma nova aventura está disponível!</string>
     <string name="rebirth_enabled_description">Use a Orbe do Renascimento para dar uma nova vida à sua aventura no Habitica quando sentir que já conquistou tudo! Recomece do nível 1 mantendo suas tarefas, Conquistas e Mascotes com este item especial encontrado no Mercado.</string>
-    <string name="subscriber_button_faint_use">Use sua Segunda Chance!</string>
+    <string name="subscriber_button_faint_use">Ative sua Sobrevida!</string>
     <string name="subscriber_benefit_available_faint">Com a passiva de assinante, você evita ficar sem HP uma vez por dia!</string>
     <string name="auth_unknown_credential_type">Tipo de credencial desconhecido recebido.</string>
     <string name="auth_missing_token">Token vazio recebido.</string>
