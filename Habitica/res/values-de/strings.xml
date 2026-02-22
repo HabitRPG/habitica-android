@@ -1122,7 +1122,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="x_remaining">%s verbleibend</string>
     <string name="reset_counter">Zähler zurücksetzen</string>
     <string name="adjust_counter">Zähler anpassen</string>
-    <string name="apitoken_summary">Token kopieren. Bitte sei vorsichtig, das ist ein Passwort!</string>
+    <string name="apitoken_summary">Token kopieren. Bitte sei vorsichtig, das ist ein Passwort.</string>
     <string name="password_added">Passwort gespeichert</string>
     <string name="public_profile">Öffentliches Profil</string>
     <string name="about_me">Über mich</string>
