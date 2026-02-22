@@ -1397,7 +1397,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="quests_footer_description">Schau im [Quest-Shop](/shops/quests) vorbei, um zu sehen, was verfügbar ist!</string>
     <string name="eggs_footer_description">Schau im [Markt](/shops/market) vorbei, um genau die Eier zu kaufen, die du brauchst!</string>
     <string name="hatchingPotions_footer_description">Schau im [Markt](/shops/market) vorbei, um Standard- und saisonale Bruttränke zu kaufen!</string>
-    <string name="subscriber_benefit_used_faint">Du hast deine zweite Chance heute bereits genutzt. Sie ist wieder verfügbar in %s</string>
+    <string name="subscriber_benefit_used_faint">Dein „Zweite-Chance“-Bonus lädt sich noch auf. Sie ist wieder verfügbar in %s</string>
     <string name="quest_mechanics_collecting_title">Quest-Gegenstände sammeln</string>
     <string name="quest_mechanics_damage_title">Bosse schlagen zurück, wenn tägliche Aufgaben verpasst werden</string>
     <string name="buy_gems_with_gold">Kaufe Edelsteine mit Gold</string>
