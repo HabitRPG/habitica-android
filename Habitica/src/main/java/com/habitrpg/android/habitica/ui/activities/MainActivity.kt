@@ -1113,8 +1113,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val navigationDrawer = findViewById<View>(R.id.navigation_drawer) ?: return
         val contentView = binding.content.root
 
-        val currentWidthDp = resources.configuration.screenWidthDp
-        val shouldBePersistent = currentWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+        val config = resources.configuration
+        val shouldBePersistent = if (isInMultiWindowMode) {
+            config.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+        } else {
+            config.smallestScreenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+        }
 
         if (isPersistentDrawerMode != null && shouldBePersistent == isPersistentDrawerMode) return
         isPersistentDrawerMode = shouldBePersistent
