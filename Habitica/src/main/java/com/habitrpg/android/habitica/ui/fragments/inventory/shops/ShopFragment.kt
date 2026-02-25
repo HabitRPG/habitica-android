@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.helpers.ShopGridSpacingDecoration
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -157,6 +158,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.mainActivity = mainActivity
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+            val spacingPx = resources.getDimensionPixelSize(R.dimen.shop_item_spacing)
+            binding?.recyclerView?.addItemDecoration(ShopGridSpacingDecoration(spacingPx))
             adapter?.changeClassEvents = {
                 showClassChangeDialog(it)
             }
@@ -473,7 +476,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
         context?.let { context ->
-            val itemWidth: Float = context.resources.getDimension(R.dimen.reward_width)
+            val itemWidth: Float = context.resources.getDimension(R.dimen.shop_column_width)
 
             spanCount = (width / itemWidth).toInt()
         }
