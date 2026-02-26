@@ -1384,4 +1384,5 @@
     <string name="customization_shop">Магазин Персоналізації</string>
     <string name="share_avatar">Поширити аватара</string>
     <string name="subscribe_listitemArmoire">Подвоїти нагороди зі скрині</string>
+    <string name="exact_alarm_system_settings_title">`Будильник і нагадування` вимкнено`</string>
 </resources>
