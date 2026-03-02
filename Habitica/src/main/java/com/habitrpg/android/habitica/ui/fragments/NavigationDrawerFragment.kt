@@ -109,11 +109,12 @@ class NavigationDrawerFragment : DialogFragment() {
     private val shouldUsePersistentDrawer: Boolean
         get() {
             val activity = activity ?: return false
-            if (activity.isInMultiWindowMode) {
-                val config = resources.configuration
-                return config.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+            val config = resources.configuration
+            return if (activity.isInMultiWindowMode) {
+                config.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+            } else {
+                config.smallestScreenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
             }
-            return resources.configuration.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
