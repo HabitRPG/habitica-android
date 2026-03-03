@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
+import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
@@ -118,9 +119,6 @@ abstract class BaseTaskViewHolder(
             object : EllipsisTextView.EllipsisListener {
                 override fun ellipsisStateChanged(ellipses: Boolean) {
                     scope.launch(Dispatchers.Main.immediate) {
-                        if (ellipses && notesTextView.maxLines != 3 && !notesExpanded) {
-                            notesTextView.maxLines = 3
-                        }
                         expandNotesButton?.visibility =
                             if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                     }
@@ -132,10 +130,12 @@ abstract class BaseTaskViewHolder(
 
     private fun updateExpandedTaskLogic() {
         if (notesExpanded) {
-            notesTextView?.maxLines = 100
+            notesTextView?.ellipsize = null
+            notesTextView?.maxLines = Int.MAX_VALUE
             expandNotesButton?.text = context.getString(R.string.collapse_notes)
         } else {
-            notesTextView?.maxLines = 8
+            notesTextView?.ellipsize = TextUtils.TruncateAt.END
+            notesTextView?.maxLines = 3
             expandNotesButton?.text = context.getString(R.string.expand_notes)
         }
     }
@@ -160,7 +160,7 @@ abstract class BaseTaskViewHolder(
 
         expandNotesButton?.visibility = View.GONE
         notesExpanded = false
-        notesTextView?.maxLines = 8
+        notesTextView?.maxLines = 3
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
