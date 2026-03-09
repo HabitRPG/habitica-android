@@ -106,6 +106,10 @@ dependencies {
     implementation(libs.navigation.fragment)
 
     implementation(libs.google.play.auth)
+    implementation(libs.credentials)
+    implementation(libs.credentials.playServicesAuth)
+    implementation(libs.googleid)
+    implementation(libs.coroutine.play.services)
 
     implementation(libs.appcompat)
 
