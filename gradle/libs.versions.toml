@@ -83,6 +83,7 @@ core = { group = "androidx.core", name = "core", version.ref = "core_ktx" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core_ktx" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutine-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
 credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 credentials-playServicesAuth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desuggar" }
