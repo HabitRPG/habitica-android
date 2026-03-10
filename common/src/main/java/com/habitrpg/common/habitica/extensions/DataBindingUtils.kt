@@ -191,7 +191,9 @@ object DataBindingUtils {
         tempMap["quest_windup"] = "gif"
         tempMap["Pet-HatchingPotion_Windup"] = "gif"
         tempMap["Pet_HatchingPotion_Windup"] = "gif"
+        tempMap["Pet-HatchingPotion-Windup"] = "gif"
         tempMap["quest_solarSystem"] = "gif"
+        tempMap["quest_lostMasterclasser4"] = "gif"
         tempMap["quest_virtualpet"] = "gif"
         tempMap["Pet_HatchingPotion_VirtualPet"] = "gif"
         tempMap["Pet-Gryphatrice-Jubilant"] = "gif"
@@ -202,6 +204,9 @@ object DataBindingUtils {
         tempMap["Pet_HatchingPotion_Cryptid"] = "gif"
         tempMap["Mount_Head_Dragon-Hydra"] = "gif"
         tempMap["Mount_Body_Dragon-Hydra"] = "gif"
+        tempMap["quest_alien"] = "gif"
+        tempMap["Pet_HatchingPotion_Alien"] = "gif"
+        tempMap["Pet-HatchingPotion-Alien"] = "gif"
         FILEFORMAT_MAP = tempMap
 
         val tempNameMap = mutableMapOf<String, String>()

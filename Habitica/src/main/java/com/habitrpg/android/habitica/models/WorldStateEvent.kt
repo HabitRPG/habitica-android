@@ -29,6 +29,7 @@ open class WorldStateEvent : RealmObject(), BaseMainObject {
     var promo: String? = null
     var season: String? = null
     var npcImageSuffix: String? = null
+    var aprilFools: String? = null
     var gear: Boolean = false
     var spriteSubstitutions = RealmList<SpriteSubstitutionContext>()
 
