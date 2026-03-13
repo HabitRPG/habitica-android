@@ -14,33 +14,33 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
-import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.Date
 
 class AppConfigManager(contentRepository: ContentRepository) :
     com.habitrpg.common.habitica.helpers.AppConfigManager() {
     private var worldState: WorldState? = null
 
-    init {
-        try {
-            MainScope().launchCatching {
-                contentRepository.getWorldState().collect {
-                    worldState = it
+    private val scope = MainScope()
 
-                    worldState?.currentEvent?.spriteSubstitutions?.let { subs ->
-                        if (subs.isNotEmpty()) {
-                            val subMap = mutableMapOf<String, Map<String, String>>()
-                            subs.forEach { sub ->
-                                subMap[sub.key ?: ""] = sub.substitutions
-                            }
-                            SpriteSubstitutionManager.setSubstitutions(subMap)
+    init {
+        scope.launch {
+            contentRepository.getWorldState().collect {
+                worldState = it
+
+                worldState?.currentEvent?.spriteSubstitutions?.let { subs ->
+                    if (subs.isNotEmpty()) {
+                        val subMap = mutableMapOf<String, Map<String, String>>()
+                        subs.forEach { sub ->
+                            subMap[sub.key ?: ""] = sub.substitutions
                         }
+                        SpriteSubstitutionManager.setSubstitutions(subMap)
+                    } else {
+                        SpriteSubstitutionManager.setSubstitutions(emptyMap())
                     }
                 }
             }
-        } catch (_: java.lang.IllegalStateException) {
-            // pass
         }
     }
 

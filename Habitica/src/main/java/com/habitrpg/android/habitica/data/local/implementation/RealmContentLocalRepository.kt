@@ -42,7 +42,7 @@ open class RealmContentLocalRepository(realm: Realm) :
         return realm.where(WorldState::class.java)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.size > 0 }
+            .filter { it.isLoaded && it.isNotEmpty() }
             .map { it.first() }
             .filterNotNull()
     }
