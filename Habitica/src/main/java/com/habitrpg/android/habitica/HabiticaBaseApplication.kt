@@ -379,6 +379,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 val pushManager   = instance?.pushNotificationManager
                 val deviceToken   = preferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "") ?: ""
 
+                val serverURL = preferences.getString("server_url", null)
                 val useReminder = preferences.getBoolean("use_reminder", false)
                 val reminderTime = preferences.getString("reminder_time", "19:00")
                 val lightMode = preferences.getString("theme_mode", "system")
@@ -398,6 +399,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 
                 preferences.edit {
                     clear()
+                    putString("server_url", serverURL)
                     putBoolean("use_reminder", useReminder)
                     putString("reminder_time", reminderTime)
                     putString("theme_mode", lightMode)
