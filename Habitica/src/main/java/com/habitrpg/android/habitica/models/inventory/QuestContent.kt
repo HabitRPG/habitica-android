@@ -62,7 +62,7 @@ open class QuestContent : RealmObject(), Item {
     }
 
     fun hasGifImage(): Boolean {
-        val gifImageKeys = listOf("lostMasterclasser4", "alien")
+        val gifImageKeys = listOf("lostMasterclasser4")
         return gifImageKeys.contains(key)
     }
 }
