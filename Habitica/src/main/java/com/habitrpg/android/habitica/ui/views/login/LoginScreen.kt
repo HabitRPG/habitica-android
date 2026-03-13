@@ -137,6 +137,20 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                 Image(painterResource(R.drawable.arrow_back), contentDescription = null)
             }
         }
+        val customServerUrl by authenticationViewModel.customServerUrl.collectAsStateWithLifecycle()
+        customServerUrl?.let { url ->
+            if (url.isNotBlank()) {
+                Text(
+                    text = url,
+                    fontSize = 12.sp,
+                    color = Color.White.copy(alpha = 0.8f),
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(WindowInsets.systemBars.asPaddingValues())
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+        }
         val logoPadding by animateDpAsState(
             if (loginScreenState == LoginScreenState.INITIAL) {
                 120.dp

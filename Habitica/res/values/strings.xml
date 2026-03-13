@@ -802,14 +802,14 @@
     <string name="server_option_default">%s (Default)</string>
     <string name="server_option_custom">Custom</string>
     <string name="server_custom_address_label">Enter custom server address</string>
-    <string name="server_custom_address_hint">e.g. http://localhost:3000</string>
-    <string name="server_url_invalid">Please enter a valid URL starting with http:// or https://</string>
+    <string name="server_custom_address_hint">e.g. customserver.habitica.com</string>
+    <string name="server_url_invalid">Please enter a valid URL</string>
     <string name="apply">Apply</string>
     <string name="server_settings_unlocked">Server settings unlocked!</string>
     <string name="server_settings_unlock_remaining">You are %d steps away from unlocking server settings.</string>
     <string name="custom_server">Custom Server</string>
     <string name="reset_server_to_default">Reset to Default</string>
-    <string name="reset_server_confirmation">Are you sure you want to reset the server to the default Habitica server? The app will restart.</string>
+    <string name="reset_server_confirmation">Are you sure you want to reset the server to the default Habitica server? You will be logged out.</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
     <string name="gift_confirmation_text_sub_g1g1">You sent %1$s a %2$s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
     <string name="gift_confirmation_text_sub">You sent @%1$s a %2$s-month Habitica subscription.</string>

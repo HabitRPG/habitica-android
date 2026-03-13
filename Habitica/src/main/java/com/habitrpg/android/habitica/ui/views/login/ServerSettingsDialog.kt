@@ -40,6 +40,14 @@ import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 
+private fun normalizeUrl(url: String): String {
+    return if (url.isNotBlank() && !url.startsWith("http://") && !url.startsWith("https://")) {
+        "https://$url"
+    } else {
+        url
+    }
+}
+
 @Composable
 fun ServerSettingsDialog(
     serverSettings: ServerSettings,
@@ -122,7 +130,8 @@ fun ServerSettingsDialog(
                 val isCustomSelected = selectedOption == radioOptions.last()
                 val isValidUrl by remember {
                     derivedStateOf {
-                        input.isBlank() || (URLUtil.isNetworkUrl(input) && Uri.parse(input).host != null)
+                        val normalized = normalizeUrl(input)
+                        input.isBlank() || (URLUtil.isNetworkUrl(normalized) && Uri.parse(normalized).host != null)
                     }
                 }
                 OutlinedTextField(
@@ -158,7 +167,7 @@ fun ServerSettingsDialog(
                     TextButton(
                         onClick = {
                             if (isCustomSelected) {
-                                onApply(input)
+                                onApply(normalizeUrl(input))
                             } else {
                                 onReset()
                             }
