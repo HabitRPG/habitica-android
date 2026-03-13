@@ -70,6 +70,8 @@ class AuthenticationViewModel @Inject constructor(
     private val _showServerSettingsDialog: MutableStateFlow<ServerSettings?> = MutableStateFlow(null)
     private val _customServerUrl = MutableStateFlow(sharedPrefs.getString("server_url", null))
     val customServerUrl: StateFlow<String?> = _customServerUrl
+    private val _serverSettingsRevealed = MutableStateFlow(false)
+    val serverSettingsRevealed: StateFlow<Boolean> = _serverSettingsRevealed
 
     val showAuthProgress: Flow<Boolean> = _showAuthProgress
     val authenticationError: Flow<AuthenticationErrors> = _authenticationError
@@ -350,6 +352,11 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun onServerSettingsUnlocked() {
+        _serverSettingsRevealed.value = true
+        showServerSettings()
+    }
+
+    fun showServerSettings() {
         _showServerSettingsDialog.value = ServerSettings(
             baseUrl = BuildConfig.BASE_URL,
             customUrl = sharedPrefs.getString("server_url", null)

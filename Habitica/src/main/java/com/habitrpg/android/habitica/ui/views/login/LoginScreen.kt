@@ -13,6 +13,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -138,18 +139,19 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
             }
         }
         val customServerUrl by authenticationViewModel.customServerUrl.collectAsStateWithLifecycle()
-        customServerUrl?.let { url ->
-            if (url.isNotBlank()) {
-                Text(
-                    text = url,
-                    fontSize = 12.sp,
-                    color = Color.White.copy(alpha = 0.8f),
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(WindowInsets.systemBars.asPaddingValues())
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                )
-            }
+        val serverSettingsRevealed by authenticationViewModel.serverSettingsRevealed.collectAsStateWithLifecycle()
+        val hasCustomServer = customServerUrl?.isNotBlank() == true
+        if (hasCustomServer || serverSettingsRevealed) {
+            Text(
+                text = if (hasCustomServer) "⚙️ Custom" else "⚙️ Default",
+                fontSize = 12.sp,
+                color = Color.White.copy(alpha = 0.8f),
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(WindowInsets.systemBars.asPaddingValues())
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .clickable { authenticationViewModel.showServerSettings() }
+            )
         }
         val logoPadding by animateDpAsState(
             if (loginScreenState == LoginScreenState.INITIAL) {
