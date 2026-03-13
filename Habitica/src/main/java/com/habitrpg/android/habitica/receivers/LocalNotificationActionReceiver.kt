@@ -155,17 +155,22 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
 
             context?.getString(R.string.complete_task_action) -> {
                 taskID?.let {
+                    val pendingResult = goAsync()
                     MainScope().launch(ExceptionHandler.coroutine()) {
-                        taskRepository.taskChecked(null, it, up = true, force = false) {
-                            val pair =
-                                NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
-                                    it.experienceDelta,
-                                    it.healthDelta,
-                                    it.goldDelta,
-                                    it.manaDelta,
-                                    it.questDamage
-                                )
-                            showToast(pair.first)
+                        try {
+                            taskRepository.taskChecked(null, it, up = true, force = false) {
+                                val pair =
+                                    NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
+                                        it.experienceDelta,
+                                        it.healthDelta,
+                                        it.goldDelta,
+                                        it.manaDelta,
+                                        it.questDamage
+                                    )
+                                showToast(pair.first)
+                            }
+                        } finally {
+                            pendingResult.finish()
                         }
                     }
                 }
