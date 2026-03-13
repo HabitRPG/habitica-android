@@ -66,6 +66,7 @@ import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
@@ -261,8 +262,9 @@ fun PetBottomSheet(
                     label = "animalPosition"
                 )
             }
+            val petImageName = "stable_${SpriteSubstitutionManager.substitute("Pet-${pet.animal}-${pet.color}", "pets")}"
             PixelArtView(
-                imageName = "stable_Pet-${pet.animal}-${pet.color}",
+                imageName = petImageName,
                 modifier =
                 Modifier
                     .offset(0.dp, position.dp)
