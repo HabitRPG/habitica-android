@@ -16,8 +16,8 @@ class SpriteSubstitutionManager {
                         return entry.value
                     }
                 }
-                if (imageName.isEmpty() && context == "pets") {
-                    return subs["noPet"] ?: imageName
+                if ((imageName.isEmpty() || imageName == "Pet-") && context == "pets") {
+                    return subs["noPetAndroid"] ?: subs["noPet"] ?: imageName
                 }
                 return subs["default"] ?: imageName
             }
