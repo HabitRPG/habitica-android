@@ -254,7 +254,7 @@ class AvatarView : FrameLayout {
             if (resetHasAttributes) hasMount = true
         }
 
-        val petName = if (avatar.currentPet?.isEmpty() == true) {
+        val petName = if (avatar.currentPet?.isEmpty() != false) {
             SpriteSubstitutionManager.substitute("", "pets")
         } else {
             SpriteSubstitutionManager.substitute("Pet-${avatar.currentPet}", "pets")
