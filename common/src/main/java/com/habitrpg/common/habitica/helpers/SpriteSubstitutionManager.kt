@@ -11,6 +11,9 @@ class SpriteSubstitutionManager {
         fun substitute(imageName: String, context: String? = null): String {
             val subs = if (context != null) substitutions[context] else substitutions["general"]
             if (subs != null) {
+                subs[imageName]?.let {
+                    return it
+                }
                 for (entry in subs) {
                     if (imageName.startsWith(entry.key)) {
                         return entry.value
