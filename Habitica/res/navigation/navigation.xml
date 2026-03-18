@@ -105,6 +105,7 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment"
         android:label="@string/sidebar_avatar" >
         <deepLink app:uri="habitica.com/user/avatar" />
+        <deepLink app:uri="habitica.com/avatar/background" />
         <action
             android:id="@+id/openComposeAvatarDetail"
             app:destination="@id/ComposeAvatarCustomizationFragment" />
