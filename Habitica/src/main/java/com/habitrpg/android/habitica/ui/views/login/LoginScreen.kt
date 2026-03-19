@@ -144,8 +144,9 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
         if (hasCustomServer || serverSettingsRevealed) {
             Text(
                 text = if (hasCustomServer) "⚙️ Custom" else "⚙️ Default",
-                fontSize = 12.sp,
-                color = Color.White.copy(alpha = 0.8f),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color.White,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(WindowInsets.systemBars.asPaddingValues())
