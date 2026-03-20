@@ -194,11 +194,7 @@ class TasksFragment :
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText.isNullOrEmpty() && !viewModel.searchQuery.isNullOrEmpty()) {
-            searchMenuItem?.collapseActionView()
-            return true
-        }
-        viewModel.searchQuery = newText
+        viewModel.searchQuery = if (newText.isNullOrEmpty()) null else newText
         return true
     }
 
