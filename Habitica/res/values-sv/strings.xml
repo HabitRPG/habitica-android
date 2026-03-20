@@ -734,4 +734,6 @@
     <string name="login_incentive_short_count">%d Incheckningar</string>
     <string name="change_class_confirmation_message">Detta kommer ändra utrustningen som visar i affärer, samt dina tillgängliga färdigheter</string>
     <string name="your_tags">Dina Markeringar</string>
+    <string name="subscribe_listitemFaint">Fick en Till Chans</string>
+    <string name="subscribe_listitem5">Särskillt husdjur, samt fler Byten</string>
 </resources>
