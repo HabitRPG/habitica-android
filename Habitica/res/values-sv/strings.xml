@@ -718,4 +718,20 @@
     <string name="dailyDueDefaultView">Ställ in Dagliga uppgifter så att fliken Förfallna används som standard</string>
     <string name="dailyDueDefaultViewDescription">Med det här alternativet inställt kommer Dagliga uppgifter som standard att visas under Förfallodag istället för Alla.</string>
     <string name="fix_character_description">Om du har stött på ett fel eller gjort ett misstag som orättvist förändrat din karaktär kan du manuellt korrigera dessa värden här.</string>
+    <string name="faint_broken_gear_info">Trasig utrustning kan återköpas på Marknaden</string>
+    <string name="quest_accepted">Accepterat Uppdrag!</string>
+    <string name="quest_rejected">Uppdraget Nekat</string>
+    <string name="quest_accept_error">Uppdraget kunde inte accepteras. Försök igen.</string>
+    <string name="quest_reject_error">Uppdraget kunde inte nekas. Försök igen.</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d dag kvar tills GRATIS Återfödelsens Sfär</item>
+        <item quantity="other">%d dagar kvar tills GRATIS Återfödelsens Sfär</item>
+    </plurals>
+    <string name="free_rebirth_at_level_100">GRATIS Återfödelsens Sfär vid nivå 100</string>
+    <string name="quest_items_found">Du har funnit %d Uppdragsvaror</string>
+    <string name="change_class_message">Detta kommer ta bort din Klass och alla Egendomspoäng, du kan sedan välja en ny Klass</string>
+    <string name="login_incentive_count">Lås upp genom att gå in på Habitica %d gånger.</string>
+    <string name="login_incentive_short_count">%d Incheckningar</string>
+    <string name="change_class_confirmation_message">Detta kommer ändra utrustningen som visar i affärer, samt dina tillgängliga färdigheter</string>
+    <string name="your_tags">Dina Markeringar</string>
 </resources>
