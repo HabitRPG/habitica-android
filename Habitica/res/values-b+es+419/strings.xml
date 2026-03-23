@@ -30,7 +30,7 @@
     <string name="SP_APIToken_title">Token API</string>
     <string name="SP_userID_summary">Tu ID de Usuario</string>
     <string name="SP_APIToken_summary">Tu Token de API</string>
-    <string name="Language_summary">Cambiar lenguaje de Habitica</string>
+    <string name="Language_summary">Cambiar idioma</string>
     <string name="pref_reminder_picker">Establecer hora de recordatorio</string>
     <string name="pref_cds_header">Comienzo de día personalizado</string>
     <string name="pref_push_notifications_checkbox">Utilizar notificaciones emergentes</string>
