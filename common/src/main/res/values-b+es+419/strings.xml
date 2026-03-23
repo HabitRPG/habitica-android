@@ -76,4 +76,9 @@
     <string name="retry">Reintentar</string>
     <string name="task">Tarea</string>
     <string name="failed">Error al cargar</string>
+    <plurals name="flagged_count">
+        <item quantity="one">Un</item>
+        <item quantity="many">Varios</item>
+        <item quantity="other">Algunos</item>
+    </plurals>
 </resources>
