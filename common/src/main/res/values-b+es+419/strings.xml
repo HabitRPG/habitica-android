@@ -12,7 +12,7 @@
     <string name="settings">Ajustes</string>
     <string name="action_edit">Editar</string>
     <string name="action_cancel">Cancelar</string>
-    <string name="about_title">Sobre Habitica</string>
+    <string name="about_title">Acerca de</string>
     <string name="are_you_sure">¿Estás seguro\?</string>
     <string name="stats">Atributos</string>
     <string name="rewards">Recompensas</string>
@@ -28,6 +28,7 @@
     <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Hábito</item>
+        <item quantity="many">Hábitos</item>
         <item quantity="other">%d Hábitos</item>
     </plurals>
     <plurals name="x_dailies">
@@ -78,7 +79,7 @@
     <string name="failed">Error al cargar</string>
     <plurals name="flagged_count">
         <item quantity="one">Marcado %d vez</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Marcado %d veces, oculto</item>
     </plurals>
 </resources>
