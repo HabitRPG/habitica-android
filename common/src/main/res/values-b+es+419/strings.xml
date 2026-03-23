@@ -28,7 +28,7 @@
     <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Hábito</item>
-        <item quantity="many">Hábitos</item>
+        <item quantity="many">%d Hábitos</item>
         <item quantity="other">%d Hábitos</item>
     </plurals>
     <plurals name="x_dailies">
@@ -69,14 +69,14 @@
     <string name="logout_description">Salir de tu cuenta</string>
     <string name="login_validation_error_title">Error de validación</string>
     <string name="quadrillion_abbrev">q</string>
-    <string name="complete_task_title">Completa una tarea</string>
+    <string name="complete_task_title">Completa una Tarea</string>
     <string name="create_task_title">Crea una tarea</string>
     <string name="create_task">Crear %s</string>
     <string name="new_task_x">Nueva %s</string>
     <string name="save_task_x">Guardar %s</string>
     <string name="retry">Reintentar</string>
     <string name="task">Tarea</string>
-    <string name="failed">Error al cargar</string>
+    <string name="failed">Fallo al cargar</string>
     <plurals name="flagged_count">
         <item quantity="one">Marcado %d vez</item>
         <item quantity="many"/>
