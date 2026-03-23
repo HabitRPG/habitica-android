@@ -8,11 +8,11 @@
     <string name="repeat_daily">Diariamente</string>
     <string name="monthly">Mensualmente</string>
     <string name="weekly">Semanalmente</string>
-    <string name="daily">Diariamente</string>
+    <string name="daily">Tarea diaria</string>
     <string name="settings">Ajustes</string>
     <string name="action_edit">Editar</string>
     <string name="action_cancel">Cancelar</string>
-    <string name="about_title">Acerca de</string>
+    <string name="about_title">Sobre Habitica</string>
     <string name="are_you_sure">¿Estás seguro\?</string>
     <string name="stats">Atributos</string>
     <string name="rewards">Recompensas</string>
@@ -67,7 +67,7 @@
     <string name="login_btn_google">Iniciar sesión con Google</string>
     <string name="logout_description">Salir de tu cuenta</string>
     <string name="login_validation_error_title">Error de validación</string>
-    <string name="quadrillion_abbrev">Qd</string>
+    <string name="quadrillion_abbrev">q</string>
     <string name="complete_task_title">Completa una tarea</string>
     <string name="create_task_title">Crea una tarea</string>
     <string name="create_task">Crear %s</string>
@@ -77,8 +77,8 @@
     <string name="task">Tarea</string>
     <string name="failed">Error al cargar</string>
     <plurals name="flagged_count">
-        <item quantity="one">Un</item>
-        <item quantity="many">Varios</item>
-        <item quantity="other">Algunos</item>
+        <item quantity="one">Marcado %d vez</item>
+        <item quantity="many"></item>
+        <item quantity="other">Marcado %d veces, oculto</item>
     </plurals>
 </resources>
