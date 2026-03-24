@@ -79,7 +79,7 @@
     <string name="reminders">Recordatorios</string>
     <string name="checklist">Lista de verificación</string>
     <string name="attributes">Atributos</string>
-    <string name="repeatables_frequency_daily">Diaria</string>
+    <string name="repeatables_frequency_daily">Diariamente</string>
     <string name="repeatables_frequency_weekly">Semanal</string>
     <string name="repeatables_frequency_day_of_month">Día del Mes</string>
     <string name="repeatables_frequency_day_of_week">Día de la Semana</string>

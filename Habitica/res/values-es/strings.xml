@@ -498,9 +498,9 @@
     <string name="intelligence">Inteligencia</string>
     <string name="intelligence_description">Aumenta la experiencia ganada al completar tareas. También aumenta tu capacidad de Mana y la velocidad de regeneración de tu Mana.</string>
     <string name="constitution">Constitución</string>
-    <string name="constitution_description">Disminuye la cantidad de daño recibido de tus tareas. No disminuye el daño recibido de los jefes.</string>
+    <string name="constitution_description">Disminuye la cantidad de daño recibido por Tareas Diarias no completadas y Hábitos negativos. No disminuye el daño recibido por Jefes de Misión.</string>
     <string name="perception">Percepción</string>
-    <string name="perception_description">Aumenta la probabilidad de encontrar recompensas al completar Tareas, el límite máximo diario, las Bonificaciones de Racha y la cantidad de oro otorgada por las Tareas.</string>
+    <string name="perception_description">Aumenta la probabilidad de encontrar botín, el límite de botín diario, las bonificaciones por tareas completadas en racha, y la cantidad de Oro obtenido por completar Tareas.</string>
     <string name="buffs">Apoyos</string>
     <string name="allocated">Asignado</string>
     <string name="distribute_evenly">Distribuir uniformemente</string>
@@ -509,7 +509,7 @@
     <string name="no_points_to_allocate">No hay puntos que asignar</string>
     <string name="points_to_allocate">%d puntos por asignar</string>
     <string name="distribute_evenly_help">Asigna el mismo número de puntos a cada atributo.</string>
-    <string name="distribute_class_help">Asigna más puntos a los atributos importantes para tu Clase.</string>
+    <string name="distribute_class_help">Asigna más puntos a los atributos importantes para tu clase.</string>
     <string name="distribute_task_help">Asigna puntos según las categorías de Fuerza, Inteligencia, Constitución y Percepción asociadas con las tareas que cumples.</string>
     <string name="allocating_points">Asignación de Puntos</string>
     <string name="class_equipment">Equipamiento</string>
@@ -1652,4 +1652,14 @@
     <string name="free_rebirth_at_level_100">Orbe del Renacimiento gratuito en el nivel 100</string>
     <string name="participating">Participando</string>
     <string name="not_participating_filter">No participando</string>
+    <string name="category">Categoría</string>
+    <string name="server_option_default">%s (Por defecto)</string>
+    <string name="server_option_custom">Personalizado</string>
+    <string name="server_custom_address_label">Entrar a un servidor personalizado</string>
+    <string name="server_custom_address_hint">ej. http://localhost:3000</string>
+    <string name="apply">Aplicar</string>
+    <string name="server_settings_unlocked">¡Ajustes del Servidor desbloqueados!</string>
+    <string name="server_settings_unlock_remaining">Estás a %d pasos de desbloquear los ajustes del servidor.</string>
+    <string name="custom_server">Servidor Personalizado</string>
+    <string name="server_url_invalid">Por favor introduce una URL válida que empiece con http:// o https://</string>
 </resources>
