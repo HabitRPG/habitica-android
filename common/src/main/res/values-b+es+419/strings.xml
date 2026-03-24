@@ -23,7 +23,7 @@
         <item quantity="one">%d Recompensa</item>
         <item quantity="other">%d Recompensas</item>
     </plurals>
-    <string name="confirmpassword">Confirmar contraseña</string>
+    <string name="confirmpassword">Repetir contraseña</string>
     <string name="logout">Cerrar sesión</string>
     <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
     <plurals name="x_habits">
