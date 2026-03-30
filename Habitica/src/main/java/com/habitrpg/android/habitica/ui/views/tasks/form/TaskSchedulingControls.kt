@@ -206,6 +206,17 @@ constructor(
             val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
             weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
             daysOfMonth = null
+            weeklyRepeat = Days(default = false).apply {
+                when (startDateCalendar.get(Calendar.DAY_OF_WEEK)) {
+                    Calendar.MONDAY -> m = true
+                    Calendar.TUESDAY -> t = true
+                    Calendar.WEDNESDAY -> w = true
+                    Calendar.THURSDAY -> th = true
+                    Calendar.FRIDAY -> f = true
+                    Calendar.SATURDAY -> s = true
+                    Calendar.SUNDAY -> su = true
+                }
+            }
             generateSummary()
         }
 
