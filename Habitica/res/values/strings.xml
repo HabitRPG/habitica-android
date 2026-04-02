@@ -529,7 +529,7 @@
     <string name="reload_content">Reload Content</string>
     <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
     <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
-    <string name="repeat_summary" translatable="false">"Repeats %1$s every %2$s%3$s %4$s"</string>
+    <string name="repeat_summary" translatable="false">"Repeats every %1$s%2$s%3$s"</string>
 
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
@@ -1386,7 +1386,7 @@
     <string name="habit_summary_description">This is a **%1$s** Habit that is **%2$s**.</string>
     <string name="todo_summary_description_duedate">This is a **%1$s** Task that is due **%2$s**.</string>
     <string name="todo_summary_description">This is a **%1$s** Task that does not have a due date.</string>
-    <string name="daily_summary_description">This is a **%1$s** Task that repeats **%2$s%3$s**.</string>
+    <string name="daily_summary_description">This is a **%1$s** Task that repeats **%2$s%3$s**.%4$s</string>
     <string name="positive_and_negative">positive and negative</string>
     <string name="assigned_to">Assigned to</string>
     <string name="completed_at">Completed at %s</string>
@@ -1431,6 +1431,7 @@
     <string name="third">third</string>
     <string name="fourth">fourth</string>
     <string name="fifth">fifth</string>
+    <string name="fifth_week_warning">This task will not appear due during months with less %1$ss.</string>
     <string name="animated_gryphatrice_pet">Jubilant Gryphatrice Pet</string>
     <string name="birthday_title_description">Celebrate Habitica’s 10th birthday with gifts and exclusive items below!</string>
     <string name="limited_edition">Limited Edition</string>
@@ -1679,9 +1680,9 @@
         <item quantity="other">every %d weeks</item>
     </plurals>
     <plurals name="repeat_monthly">
-        <item quantity="one">every month</item>
-        <item quantity="two">every other month</item>
-        <item quantity="other">every %d months</item>
+        <item quantity="one">every Month</item>
+        <item quantity="two">every %d Months</item>
+        <item quantity="other">every %d Months</item>
     </plurals>
     <plurals name="repeat_yearly">
         <item quantity="one">every year</item>

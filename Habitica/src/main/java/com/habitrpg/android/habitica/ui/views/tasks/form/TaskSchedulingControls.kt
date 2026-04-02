@@ -59,6 +59,9 @@ constructor(
             field = value
             binding.startDateTextview.text = dateFormatter.format(value)
             startDateCalendar.time = value
+            if (weeksOfMonth?.isNotEmpty() == true) {
+                recalculateWeeksOfMonth()
+            }
             generateSummary()
         }
     private var startDateCalendar = Calendar.getInstance(LanguageHelper.systemLocale)
@@ -202,21 +205,8 @@ constructor(
         }
 
         binding.monthlyRepeatWeeks.setOnClickListener {
-            val dayOfMonth = startDateCalendar.get(Calendar.DAY_OF_MONTH)
-            val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
-            weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
             daysOfMonth = null
-            weeklyRepeat = Days(default = false).apply {
-                when (startDateCalendar.get(Calendar.DAY_OF_WEEK)) {
-                    Calendar.MONDAY -> m = true
-                    Calendar.TUESDAY -> t = true
-                    Calendar.WEDNESDAY -> w = true
-                    Calendar.THURSDAY -> th = true
-                    Calendar.FRIDAY -> f = true
-                    Calendar.SATURDAY -> s = true
-                    Calendar.SUNDAY -> su = true
-                }
-            }
+            recalculateWeeksOfMonth()
             generateSummary()
         }
 
@@ -351,6 +341,23 @@ constructor(
         }
     }
 
+    private fun recalculateWeeksOfMonth() {
+        val dayOfMonth = startDateCalendar.get(Calendar.DAY_OF_MONTH)
+        val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
+        weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
+        weeklyRepeat = Days(default = false).apply {
+            when (startDateCalendar.get(Calendar.DAY_OF_WEEK)) {
+                Calendar.MONDAY -> m = true
+                Calendar.TUESDAY -> t = true
+                Calendar.WEDNESDAY -> w = true
+                Calendar.THURSDAY -> th = true
+                Calendar.FRIDAY -> f = true
+                Calendar.SATURDAY -> s = true
+                Calendar.SUNDAY -> su = true
+            }
+        }
+    }
+
     private fun configureMonthlyRepeatViews() {
         if (daysOfMonth?.isEmpty() == false) {
             styleButtonAsActive(binding.monthlyRepeatDays)
@@ -398,7 +405,7 @@ constructor(
             when (frequency) {
                 Frequency.DAILY -> if (everyX == 1) "day" else "days"
                 Frequency.WEEKLY -> if (everyX == 1) "week" else "weeks"
-                Frequency.MONTHLY -> if (everyX == 1) "month" else "months"
+                Frequency.MONTHLY -> context.getString(if (everyX == 1) R.string.month else R.string.months)
                 Frequency.YEARLY -> if (everyX == 1) "year" else "years"
             }
 
@@ -439,7 +446,7 @@ constructor(
                     val formattedDate = formatter.format(arrayOf(date))
                     " on the $formattedDate"
                 } else {
-                    val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
+                    val week = (startDateCalendar.get(Calendar.DAY_OF_MONTH) - 1) / 7 + 1
                     val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
                     val formattedWeek = formatter.format(arrayOf(week))
                     val dayLongName =
@@ -448,20 +455,28 @@ constructor(
                             Calendar.LONG,
                             LanguageHelper.systemLocale
                         )
-                    " on the $formattedWeek week on $dayLongName"
+                    " on the $formattedWeek $dayLongName of the month"
                 }
         }
 
         val everyXString = if (everyX == 1) "" else "$everyX "
 
-        val summary =
+        var summary =
             resources.getString(
                 R.string.repeat_summary,
-                frequency,
                 everyXString,
                 frequencyQualifier,
                 weekdays
             )
+        if (frequency == Frequency.MONTHLY && weeksOfMonth?.contains(4) == true) {
+            val dayName =
+                startDateCalendar.getDisplayName(
+                    Calendar.DAY_OF_WEEK,
+                    Calendar.LONG,
+                    LanguageHelper.systemLocale
+                )
+            summary += ". " + context.getString(R.string.fifth_week_warning, dayName)
+        }
         binding.summaryTextview.text = summary
     }
 }
