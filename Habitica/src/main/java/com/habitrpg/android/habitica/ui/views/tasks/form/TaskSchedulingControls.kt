@@ -475,7 +475,7 @@ constructor(
                     Calendar.LONG,
                     LanguageHelper.systemLocale
                 )
-            summary += " " + context.getString(R.string.fifth_week_warning, dayName)
+            summary += ". " + context.getString(R.string.fifth_week_warning, dayName)
         }
         binding.summaryTextview.text = summary
     }
