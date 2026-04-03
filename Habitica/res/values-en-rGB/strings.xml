@@ -203,7 +203,7 @@
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
     <string name="healer">Healer</string>
-    <string name="mage_description">Mages learn Skills that damage Bosses and boost EXP and Mana. Play a Mage if you’re motivated by leveling up quickly! Mages benefit from a high Intelligence stat.</string>
+    <string name="mage_description">Mages learn Skills that damage Bosses and boost EXP and Mana. Play a Mage if you’re motivated by levelling up quickly! Mages benefit from a high Intelligence stat.</string>
     <string name="rogue_description">Rogues learn Skills that let them and their Party find more Gold and random drops. Play a Rogue if you want lots of items and Gold! Rogues benefit from a high Perception stat.</string>
     <string name="healer_description">Healers learn Skills that can heal and protect themselves and their Party. Play a Healer if you enjoy assisting others or avoiding damage! Healers benefit from a high Constitution stat.</string>
     <string name="select_class">Select Class</string>
@@ -285,7 +285,7 @@
     <string name="subscription_duration">Recurring every %s</string>
     <string name="subscribe">Subscribe</string>
     <string name="subscribe_listitem1_description">Get up to 50 Gold-purchasable Gems in the Market to buy Quests, Customisations, Pets, and more!</string>
-    <string name="subscribe_listitem2_description">Earn Never miss an item with 1 Mystic Hourglass a month to use in the Time Travelers Shop!</string>
+    <string name="subscribe_listitem2_description">Never miss an item with 1 Mystic Hourglass a month to use in the Time Travellers Shop!</string>
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
     <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
     <string name="subscription_hourglasses">+%d Mystic Hourglass</string>
@@ -530,7 +530,7 @@
     <string name="report_bug">Report a Bug</string>
     <string name="player_tiers">Player Tiers</string>
     <string name="staff_moderators">Staff and Moderators</string>
-    <string name="tiers_descriptions">The colored usernames you see in chat represent a person’s contributor tier. The higher the tier, the more the person has contributed to Habitica through art, code, the community, or more!</string>
+    <string name="tiers_descriptions">The coloured usernames you see in chat represent a person’s contributor tier. The higher the tier, the more the person has contributed to Habitica through art, code, the community, or more!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="world_boss">World Boss</string>
@@ -814,7 +814,7 @@
     <string name="limited_event">Limited event</string>
     <string name="g1g1_duration">Dec 17 to Jan 6</string>
     <string name="learn_more">Learn more</string>
-    <string name="purchase_from_timetravel_shop">You can purchase this customisation from the Time Travelers shop</string>
+    <string name="purchase_from_timetravel_shop">You can purchase this customisation from the Time Travellers shop</string>
     <string name="go_shopping">Go shopping</string>
     <string name="emails">Email Notifications</string>
     <string name="pref_emails_checkbox">Use Email Notifications</string>
@@ -888,9 +888,9 @@
     <string name="manual_sync_restart">Manual Sync or Restart</string>
     <string name="clear_cache_description">To clear your cache, open your phone’s Settings app. Go to Storage &gt; Apps &gt; Habitica, then tap Clear Cache.</string>
     <string name="clear_cache">Clear your Cache</string>
-    <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica for three consecutive months or more. They are used in the Time Traveler’s shop to buy past gear sets, pets, mounts, animated backgrounds, or even special quests.
+    <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica. You can use them in the Time Travellers Shop to buy past Subscriber Gear sets, exclusive Pets, Mounts, animated Backgrounds, or even special Quests! These extra perks are a great way to stay motivated through the year and reward yourself for a job well done.
 \n
-\nYou can receive up to four Mystic Hourglasses a year. The time they are rewarded is based on your subscription renewal schedule. They are sent out on the first day of a new month after your last subscription payment that qualified you for an hourglass. See the [Subscription] page for more details.</string>
+\nSubscribers receive a Mystic Hourglass at the start of each month they have subscription benefits, along with a bunch of other perks. Be sure to check out our subscription options if you’re interested in what the Time Travellers have to offer!</string>
     <string name="subscriber_currency">Subscriber Currency</string>
     <string name="game_mechanics">Game Mechanics</string>
     <string name="common_questions">Common Questions</string>
@@ -925,11 +925,11 @@
     <string name="mana_points">Mana Points</string>
     <string name="experience_description">Experience points represent your progress and allow you to level up. You’ll mainly **gain EXP** from completing tasks or quests, but there are also some class skills that give EXP.
 \n
-\nTasks of higher difficulty, or red-colored tasks will give you **more EXP**. The **Intelligence stat** also raises your rate of EXP gain.</string>
+\nTasks of higher difficulty, or red-coloured tasks will give you **more EXP**. The **Intelligence stat** also raises your rate of EXP gain.</string>
     <string name="experience_points">Experience Points</string>
     <string name="health_description">This represents your avatar’s life. Missing a Daily or doing a negative Habit **reduces your HP**.
 \n
-\n**Regain HP** by leveling up, using a Health Potion, or a class skill with healing ability.
+\n**Regain HP** by levelling up, using a Health Potion, or a class skill with healing ability.
 \n
 \nIf your **HP reaches 0** you will lose a level, all Gold, and one piece of equipment. Lost equipment can be re-purchased.</string>
     <string name="health_points">Health Points</string>
@@ -1118,4 +1118,11 @@
         <item quantity="one">%d day until FREE Orb of Rebirth</item>
         <item quantity="other">%d days until FREE Orb of Rebirth</item>
     </plurals>
+    <string name="empty_quests_description">Get Quests from levelling up, log in bonuses, or the [Quest Shop](/shops/quests)!</string>
+    <string name="subscribe_listitem2_description_2">Earn Hourglasses over time to purchase items in the Time Travellers Shop</string>
+    <string name="avatar_hair_colors">Hair Colours</string>
+    <string name="contrib_tier_description">If you see an account with a coloured display name and an icon, that’s a contributor tier! Tiers are given to people who help around Habitica, whether it be for translation, coding, or just being helpful. The higher the tier, the more the player has contributed.</string>
+    <string name="avatar_hair_color_customization">Avatar Hair Colour Customisation</string>
+    <string name="fortify_shop_description">Return all tasks to neutral value (yellow colour), and restore all lost Health</string>
+    <string name="theme_color">Theme Colour</string>
 </resources>
