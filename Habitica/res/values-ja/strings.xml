@@ -1670,4 +1670,5 @@
     <string name="auth_invalid_credential_type">認証情報が無効です。</string>
     <string name="scroll_to_new_messages">新しいメッセージにスクロールする</string>
     <string name="auth_unknown_credential_type">認証情報が不明です。</string>
+    <string name="rebirth_shop_description">実績、アイテム、装備は変わらず、レベル１からリスタートできます。タスクは元の状態に戻りますが、記録は残ります。個人用タスクの連続実行回数はリセットされます。ゴールド、経験値、マナ、そしてスキルからの効果は無くなります。</string>
 </resources>
