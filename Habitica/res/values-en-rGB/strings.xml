@@ -1125,4 +1125,5 @@
     <string name="avatar_hair_color_customization">Avatar Hair Colour Customisation</string>
     <string name="fortify_shop_description">Return all tasks to neutral value (yellow colour), and restore all lost Health</string>
     <string name="theme_color">Theme Colour</string>
+    <string name="getting_organized">Getting Organised</string>
 </resources>
