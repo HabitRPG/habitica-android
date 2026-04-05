@@ -977,7 +977,7 @@
     <string name="hatch_pet_title">ペットをかえす</string>
     <string name="delete_x_tasks">%dのタスクを削除する</string>
     <string name="keep_x_tasks">%dのタスクを残す</string>
-    <string name="broken_challenge_description">このタスクは%dチャレンジの一部です。このチャレンジは終了しました。残ったタスクをどうしますか？</string>
+    <string name="broken_challenge_description">これは終了したチャレンジに関する%dつのタスクのうちの一つです。残ったタスクをどうしますか？</string>
     <string name="pms_disabled">プライベートメッセージが無効になりました</string>
     <string name="disablePrivateMessages">プライベートメッセージを無効にする</string>
     <string name="block">ブロックする</string>
