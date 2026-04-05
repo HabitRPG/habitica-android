@@ -738,4 +738,7 @@
     <string name="subscribe_listitem5">Särskillt husdjur, samt fler Byten</string>
     <string name="group_tags">Grupp Taggar</string>
     <string name="challenge_tags">Utmanings Taggar</string>
+    <string name="subscribe_listitem3_description_alt">Fortsätt vara utsmyckad i den senaste exklusiva utrustningen för att få %1$s %2$s!</string>
+    <string name="subscribe_listitemFaint_description">Undvik att förlora dina framsteg genom att läka snabbt var gång du tar slut på HP en gång om dagen!</string>
+    <string name="subscribe_listitem3_description_new">Om du prenumererar nu får du %s och få nya föremål varje månad!</string>
 </resources>
