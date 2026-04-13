@@ -389,4 +389,9 @@
     <string name="cds_description">Tus Tareas Diarias se reiniciarán la primera vez que uses Habitica a las %1$s. ¡Asegúrate de completarlas todas antes de esta hora!</string>
     <string name="subscribe_prompt">Mantente motivado recibiendo incluso más recompensas al suscribirte</string>
     <string name="class_changed_description">Ahora puedes usar poderes de %s y comprar equipamiento exclusivo de clase en las tiendas. Sube de nivel para ganar puntos de atributo que puedes usar para potenciar tus poderes.</string>
+    <string name="new_checklist_item">Nueva sub tarea</string>
+    <string name="skill_progress_title">Usar habilidad</string>
+    <string name="setup_task_work_1">Procesar email</string>
+    <string name="setup_task_creativity_1">Estudia las técnicas de un profesional</string>
+    <string name="faint_broken_gear_info">El Equipamiento roto puede volver a comprarse en el Mercado</string>
 </resources>
