@@ -1658,7 +1658,7 @@
     <string name="apply">適用</string>
     <string name="server_settings_unlocked">サーバー設定がアンロックされました！</string>
     <string name="server_settings_unlock_remaining">サーバー設定をアンロックするまであと%dステップです。</string>
-    <string name="custom_server">カスタムサーバー</string>
+    <string name="custom_server">専用サーバー</string>
     <string name="rebirth_confirm_reset_header">リセットされる要素：</string>
     <string name="rebirth_confirm_keep_header">保持される要素：</string>
     <string name="rebirth_enabled_subtitle">新しい冒険が始められます！</string>
@@ -1671,4 +1671,6 @@
     <string name="scroll_to_new_messages">新しいメッセージにスクロールする</string>
     <string name="auth_unknown_credential_type">認証情報が不明です。</string>
     <string name="rebirth_shop_description">実績、アイテム、装備は変わらず、レベル１からリスタートできます。タスクは元の状態に戻りますが、記録は残ります。個人用タスクの連続実行回数はリセットされます。ゴールド、経験値、マナ、そしてスキルからの効果は無くなります。</string>
+    <string name="server_custom_address_label">専用サーバーのアドレスを入力してください</string>
+    <string name="server_custom_warning">注意：専用サーバーでのアカウントは Habitica.com のアカウントと別です。</string>
 </resources>
