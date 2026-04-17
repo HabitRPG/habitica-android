@@ -132,7 +132,7 @@
     <string name="setup_group_teams">Teams</string>
     <string name="setup_group_chores">Chores</string>
     <string name="setup_group_creativity">Creativity</string>
-    <string name="setup_task_work_1">Process email</string>
+    <string name="setup_task_work_1">Process e-mail</string>
     <string name="setup_task_work_2">Most important task</string>
     <string name="setup_task_work_3">Work Project</string>
     <string name="setup_task_exercise_1">10 min cardio</string>
@@ -216,13 +216,13 @@
     <string name="change_class">Change your class</string>
     <string name="enable_class">Enable Class System</string>
     <string name="changing_class_progress">Changing Class</string>
-    <string name="by_email">By Email</string>
+    <string name="by_email">By E-mail</string>
     <string name="invite_existing_users">Invite Existing players</string>
     <string name="send">Send</string>
     <string name="invite">Find Members</string>
-    <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
+    <string name="invite_email_description">If a friend joins Habitica via your e-mail, they\'ll automatically be invited to your party!</string>
     <string name="add_invites">Add Invites</string>
-    <string name="email">Email</string>
+    <string name="email">E-mail</string>
     <string name="share_using">Share using</string>
     <string name="share_levelup">I got to level %d in #Habitica by improving my real-life habits!</string>
     <string name="share_hatched">I just hatched a %1$s %2$s pet in #Habitica by completing my real-life tasks!</string>
@@ -474,9 +474,9 @@
     <string name="fix_character_description">If you’ve encountered a bug or made a mistake that unfairly changed your character, you can manually correct those values here.</string>
     <string name="fix_character_values">Fix Character Values</string>
     <string name="saving">Saving</string>
-    <string name="forgot_password_title">Email a Password Reset Link</string>
-    <string name="forgot_password_description">Enter your username or the email address you used to register your Habitica account.</string>
-    <string name="forgot_password_confirmation">If we have your email on file, instructions for setting a new password have been sent to your email.</string>
+    <string name="forgot_password_title">E-mail a Password Reset Link</string>
+    <string name="forgot_password_description">Enter your username or the e-mail address you used to register your Habitica account.</string>
+    <string name="forgot_password_confirmation">If we have your e-mail on file, instructions for setting a new password have been sent to your e-mail.</string>
     <string name="ok">OK</string>
     <string name="profile">Profile</string>
     <string name="profile_summary">Edit your public profile.</string>
@@ -488,7 +488,7 @@
     <string name="authentication">Authentication</string>
     <string name="authentication_summary">Change your authentication options.</string>
     <string name="change_password">Change Password</string>
-    <string name="change_email">Change Email Address</string>
+    <string name="change_email">Change E-mail Address</string>
     <string name="change_username">Change Username</string>
     <string name="change">Change</string>
     <string name="character_level">Character Level</string>
@@ -815,8 +815,8 @@
     <string name="learn_more">Learn more</string>
     <string name="purchase_from_timetravel_shop">You can purchase this customisation from the Time Travellers shop</string>
     <string name="go_shopping">Go shopping</string>
-    <string name="emails">Email Notifications</string>
-    <string name="pref_emails_checkbox">Use Email Notifications</string>
+    <string name="emails">E-mail Notifications</string>
+    <string name="pref_emails_checkbox">Use E-mail Notifications</string>
     <string name="preference_email_subscription_reminder">Subscription Reminders</string>
     <string name="preference_email_kicked_group">Kicked from group</string>
     <string name="preference_email_onboarding">Guidance with setting up your Habitica Account</string>
@@ -1160,4 +1160,10 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="user_is_blocked">You blocked this player</string>
     <string name="open_website">Open Website</string>
+    <string name="preference_email_content_release">Content releases + Events</string>
+    <string name="change_email_description">This is the e-mail address that you use to log in to Habitica, as well as receive notifications.</string>
+    <string name="invite_with_username_email">Invite with @username or e-mail</string>
+    <string name="username_or_email">Username or e-mail</string>
+    <string name="email_invalid">Invalid E-mail address</string>
+    <string name="add_email_and_password">Add E-mail and Password</string>
 </resources>
