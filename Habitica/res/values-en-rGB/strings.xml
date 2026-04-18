@@ -1166,4 +1166,5 @@
     <string name="username_or_email">Username or e-mail</string>
     <string name="email_invalid">Invalid E-mail address</string>
     <string name="add_email_and_password">Add E-mail and Password</string>
+    <string name="armoire_rate_food_description">You’ll receive one of the ten types of Food. During special events, normal foods will change to their cake or sweet counterparts.</string>
 </resources>
