@@ -1167,4 +1167,28 @@
     <string name="email_invalid">Invalid E-mail address</string>
     <string name="add_email_and_password">Add E-mail and Password</string>
     <string name="armoire_rate_food_description">You’ll receive one of the ten types of Food. During special events, normal foods will change to their cake or sweet counterparts.</string>
+    <string name="rejoin_party_quest">You will not be able to rejoin this party unless invited.
+\n
+\nLeaving the party will also make you leave the quest you are currently on.</string>
+    <string name="leave_party_confirmation_quest">Are you sure you want to leave this party\?</string>
+    <string name="rejoin_party_quest_leader">You will not be able to rejoin this party unless invited.
+\n
+\nLeaving the party will also abort the current quest.</string>
+    <string name="reset_account_description_no_pw">You will lose all your levels, Gold, and Experience. All your tasks and their historical data will be deleted (Challenge tasks will stay). You will lose all equipment, except Subscriber items and free commemorative items, but you will be able to buy it back. You will need to be the correct class to re-buy class-specific gear. You will keep your current class, Achievements, and your Pets and Mounts. To confirm reset, type RESET below.</string>
+    <string name="subscription_hourglasses_3month_timeframe">Hourglass in 3 months</string>
+    <string name="membership">Membership</string>
+    <string name="participating">Participating</string>
+    <string name="not_participating_filter">Not Participating</string>
+    <string name="reset_account_description_new">You will lose all your levels, Gold, and Experience. All your tasks and their historical data will be deleted (Challenge tasks will stay). You will lose all equipment, except Subscriber items and free commemorative items, but you will be able to buy it back. You will need to be the correct class to re-buy class-specific gear. You will keep your current class, Achievements, and your Pets and Mounts. To confirm reset, type your password below.</string>
+    <plurals name="repeat_daily">
+        <item quantity="one">every day</item>
+        <item quantity="other">every %d days</item>
+    </plurals>
+    <string name="discard_changes_to_task_message">Are you sure you want to discard changes to this task\?</string>
+    <string name="reset_account_title">Are you sure you want to reset\?</string>
+    <string name="leave_party_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Party\?</string>
+    <string name="rejoin_party">You will not be able to rejoin this party unless invited.</string>
+    <string name="available_for">Available for %s</string>
+    <string name="next_hourglass">Next Hourglass delivery</string>
+    <string name="confirm_reset">Confirm reset</string>
 </resources>

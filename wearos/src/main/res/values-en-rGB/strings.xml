@@ -31,4 +31,13 @@
     <string name="check_off_yesterday">Check off any you did yesterday:</string>
     <string name="levelup_description">You levelled up through all your hard work!</string>
     <string name="version_info">Version %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">Log out of Habitica\?</string>
+    <string name="no_tasks">Create a %s to add to this list</string>
+    <string name="an_egg">an Egg</string>
+    <string name="a_potion">a Potion</string>
+    <string name="some_food">Some Food</string>
+    <string name="continue_on_your_phone">Continue on your phone</string>
+    <string name="all_done_today">All done today!</string>
+    <string name="starting_your_day">Starting your Day…</string>
+    <string name="disconnected">Disconnected</string>
 </resources>
