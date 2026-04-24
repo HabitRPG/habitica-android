@@ -1191,4 +1191,56 @@
     <string name="available_for">Available for %s</string>
     <string name="next_hourglass">Next Hourglass delivery</string>
     <string name="confirm_reset">Confirm reset</string>
+    <string name="photo_url_description">You can display an image on your Habitica profile for others to see by adding a link to the image here.</string>
+    <string name="save_photo_url">Save Photo URL</string>
+    <string name="x_checkins">%d Checkins</string>
+    <string name="insufficient_level_equipment_dialog">This item is only available to a specific class. You can select a class after level 10.</string>
+    <string name="report_failure">Report failed; please try again later</string>
+    <string name="report_player_toolbar_title">Report %s</string>
+    <string name="gift_confirmation_text_gems_new">You sent @%1$s %2$s gems.</string>
+    <string name="subscription_confirmation">You are now subscribed for 1 month</string>
+    <string name="report_reason_title_player">Why are you reporting this player\?</string>
+    <string name="report_reason_title_message">Why are you reporting this message\?</string>
+    <string name="report_message">Report Message</string>
+    <string name="report_user_description">This will also block @%s</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="report_reason_title_challenge">Why are you reporting this challenge\?</string>
+    <string name="report_player_title">Report %s\?</string>
+    <string name="report_player">Report Player</string>
+    <string name="change_username_description">Usernames must be 1 to 20 characters, containing only letters a to z, numbers 0 to 9, hyphens, or underscores.</string>
+    <string name="insufficient_level_equipment_dialog_new">This item is only available to %s. You can select a class after level 10.</string>
+    <string name="need_help_description">You can contact us and a member of our team will do their best to help!</string>
+    <string name="report_message_explanation">You should only report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica’s Community Guidelines.</string>
+    <string name="report_user_explanation">You should only report a player that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica’s Community Guidelines.</string>
+    <string name="report_challenge_explanation">You should only report a challenge that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica’s Community Guidelines.</string>
+    <string name="class_equipment_shop_dialog_new">This item is only available to %s. Open Settings to change class.</string>
+    <string name="gem_purchase_confirmation">You gained %s gems.</string>
+    <string name="subscription_confirmation_multiple">You are now subscribed for %s months</string>
+    <string name="register_tos_confirm">You agree to our <a href="https://habitica.com/static/terms">Terms of Service</a> and have read our <a href="https://habitica.com/static/privacy">Privacy Policy</a>.</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; has invited you to join the group &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="report_successful">%s Reported</string>
+    <string name="category">Category</string>
+    <string name="change_display_name">Change Display Name</string>
+    <string name="display_name_description">This is the name that will be displayed for your avatar in Habitica. Unlike username, it does not have to be a unique identifier.</string>
+    <string name="server_custom_warning">Warning: Accounts on custom servers are separate from your main Habitica.com account.</string>
+    <string name="server_option_default">%s (Default)</string>
+    <string name="server_option_custom">Custom</string>
+    <string name="server_custom_address_label">Enter custom server address</string>
+    <string name="server_custom_address_hint">e.g. http://localhost:3000</string>
+    <string name="server_url_invalid">Please enter a valid URL starting with http:// or https://</string>
+    <string name="apply">Apply</string>
+    <string name="server_settings_unlocked">Server settings unlocked!</string>
+    <string name="server_settings_unlock_remaining">You are %d steps away from unlocking server settings.</string>
+    <string name="custom_server">Custom Server</string>
+    <string name="reset_server_to_default">Reset to Default</string>
+    <string name="reset_server_confirmation">Are you sure you want to reset the server to the default Habitica server\? The app will restart.</string>
+    <string name="password_change_info">Passwords must be 8 characters or more. Changing your password will log you out of any other devices and third-party tools you may use.</string>
+    <string name="confirm_new_password">Confirm new Password</string>
+    <string name="adjust_counter">Adjust Counter</string>
+    <string name="report_hint">Reason for report</string>
+    <string name="month_reminder_title">Need a change of routine\?</string>
+    <string name="month_reminder_text">Sometimes starting fresh is the best option; Habitica can help!</string>
+    <string name="reset_counter">Reset Counter</string>
+    <string name="forgot_password_hint_example">e.g., habitrabbit or gryphon@example.com</string>
 </resources>
