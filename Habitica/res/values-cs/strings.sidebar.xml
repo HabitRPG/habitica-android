@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="sidebar_tasks">Úkoly</string>
+    <string name="sidebar_equipment">Vybavení</string>
+    <string name="sidebar_section_inventory">inventář</string>
+    <string name="sidebar_stats">statistiky</string>
+    <string name="sidebar_skills">Schopnosti</string>
+    <string name="sidebar_about">o</string>
+    <string name="sidebar_inbox">Zprávy</string>
+    <string name="sidebar_shops">Obchody</string>
+    <string name="sidebar_avatar">Upravit postavu</string>
+    <string name="sidebar_news">Novinky</string>
+    <string name="sidebar_challenges">Výzvy</string>
 </resources>
