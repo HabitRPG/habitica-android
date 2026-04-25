@@ -498,4 +498,15 @@
     <string name="push_notification_system_settings_title">Oznámení zakázána</string>
     <string name="trillion_abbrev">t</string>
     <string name="ok">OK</string>
+    <string name="completed_at">Dokončeno na %s</string>
+    <string name="complete">Dokončit</string>
+    <string name="add">Přidat</string>
+    <string name="add_password">Přidat heslo</string>
+    <string name="disconnect">Odpojit</string>
+    <string name="six_months_one_time">6 měsíců</string>
+    <string name="twelve_months_one_time">12 měsíců</string>
+    <string name="createdTaskDescription">Jen tak dál! Pokud potřebujete pomoci s plánováním úkolů, zkuste zapřemýšlet nad tím, co by jste chtěl/a dělat v určitý čas dne</string>
+    <string name="reject">Odmítnout</string>
+    <string name="add_email_and_password">Přidat email a heslo</string>
+    <string name="discard">Odstranit</string>
 </resources>
