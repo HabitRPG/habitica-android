@@ -1305,4 +1305,18 @@
     <string name="caused_damage">You caused damage to the boss</string>
     <string name="damage_pending">%s Damage pending</string>
     <string name="empty_title">Nothing here yet</string>
+    <string name="about_me_description">Add a small blurb about yourself that will appear on your Habitica profile when others view it.</string>
+    <string name="save_about_me">Save About Me</string>
+    <string name="add_password">Add password</string>
+    <string name="not_set" tools:override="true">Not Set</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="sale_ends_in">Sale ends in %s</string>
+    <string name="x_remaining">%s remaining</string>
+    <string name="my_account">My Account</string>
+    <string name="public_profile">Public Profile</string>
+    <string name="about_me">About Me</string>
+    <string name="account_info">Account Info</string>
+    <string name="login_methods">Log-in Methods</string>
+    <string name="not_connected">Not connected</string>
 </resources>
