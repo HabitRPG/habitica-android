@@ -1288,4 +1288,21 @@
     <string name="inbox_messages_title_single">New Message from %1$s</string>
     <string name="leave_guild_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Guild\?</string>
     <string name="go_to_survey">Go to Survey</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="empty_discover_description">Head over to the Discover tab to find some to join!</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
+    <string name="todo_item_checkbox">Todo Checkbox</string>
+    <string name="avatar_style">Style</string>
+    <string name="empty_guilds_list">You aren’t a member of any Guilds.</string>
+    <string name="locked_equipment_shop_dialog">You must purchase the previous items in this sequence to unlock</string>
+    <string name="daily_item_checkbox">Daily Checkbox</string>
+    <string name="empty_equipment_description">You don’t have any equipment of this type yet. You can purchase equipment from the market using the gold you earned.</string>
+    <string name="survey_title">Habitica player survey</string>
+    <string name="survey_menu_description">Fill out this 5-minute survey to help us grow and receive an achievement!</string>
+    <string name="empty_challenge_list">You aren’t a member of any Challenges.</string>
+    <string name="open_shop">Open Shop</string>
+    <string name="caused_damage">You caused damage to the boss</string>
+    <string name="damage_pending">%s Damage pending</string>
+    <string name="empty_title">Nothing here yet</string>
 </resources>
