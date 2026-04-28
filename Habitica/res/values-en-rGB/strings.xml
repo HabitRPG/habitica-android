@@ -1346,4 +1346,35 @@
     <string name="apitoken_summary">Password token for developers and third-party tools.</string>
     <string name="added_social_auth">Added %s authentication</string>
     <string name="copied_to_clipboard">Copied %s to clipboard</string>
+    <string name="november">November</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="cds_subtitle">Adjust when your day switches over past the default time of midnight.</string>
+    <string name="buy_set">Buy Set</string>
+    <string name="tutorial_reset_confirmation">Your Tutorials were reset</string>
+    <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do very well.</string>
+    <string name="faint_broken_equipment">Broken equipment can be repurchased
+\nfrom the Market</string>
+    <string name="faint_loss_description">You’ll drop to <b>level %1$d, lose %2$d Gold, and break a piece of gear</b>… However, you can earn it all back with hard work!</string>
+    <string name="faint_loss_description_alt">You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and your Experience… You can earn them all back with hard work!</string>
+    <string name="account_reset">Account Reset</string>
+    <string name="background_filters">Background Filters</string>
+    <string name="newest">Newest</string>
+    <string name="oldest">Oldest</string>
+    <string name="sort_by">Sort By</string>
+    <string name="january">January</string>
+    <string name="armoire_rate_experience_title">20% Experience points</string>
+    <string name="armoire_rate_experience_description">The amount gained varies randomly from 10 to 50</string>
+    <string name="day_start_adjustment">Day Start Adjustment</string>
+    <string name="purchased">Purchased</string>
+    <string name="show_me">Show Me</string>
+    <string name="febuary">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="december">December</string>
+    <string name="you_ran_out_of_health">You ran out of Health!</string>
 </resources>
