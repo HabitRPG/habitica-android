@@ -20,7 +20,7 @@
     <string name="save">Save</string>
     <string name="sync_data">Sync Data</string>
     <string name="hide_task_rewards">Hide task rewards</string>
-    <string name="sign_in_on_phone">Sign in on phone</string>
+    <string name="sign_in_on_phone">Sign in on your phone</string>
     <string name="faint_description">You lost a Level, Exp, and Gold. Don’t give up!</string>
     <string name="day_start">Day start</string>
     <string name="rya_description">There are unfinished Dailies from yesterday</string>
