@@ -11,7 +11,6 @@ object WidgetActionKeys {
 }
 
 object WidgetStateKeys {
-    val dailiesCountShowRemaining = booleanPreferencesKey("daily_count_show_remaining")
     val addTaskSingleType = stringPreferencesKey("add_task_single_type")
     val habitButtonTaskId = stringPreferencesKey("habit_button_task_id")
 }

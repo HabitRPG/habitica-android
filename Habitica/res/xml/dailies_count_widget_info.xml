@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/glance_default_loading_layout"
-    android:minHeight="100dp"
-    android:minWidth="100dp"
-    android:targetCellWidth="2"
+    android:minWidth="180dp"
+    android:minHeight="110dp"
+    android:minResizeWidth="180dp"
+    android:minResizeHeight="110dp"
+    android:maxResizeWidth="320dp"
+    android:maxResizeHeight="110dp"
+    android:targetCellWidth="3"
     android:targetCellHeight="2"
     android:previewImage="@drawable/widget_dailies"
     android:previewLayout="@layout/widget_preview_dailies_count"
-    android:resizeMode="horizontal|vertical"
-    android:widgetCategory="home_screen"
-    android:configure="com.habitrpg.android.habitica.ui.activities.DailiesCountWidgetActivity" />
+    android:resizeMode="horizontal"
+    android:widgetCategory="home_screen" />

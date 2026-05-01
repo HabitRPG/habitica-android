@@ -249,12 +249,6 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.DailiesCountWidgetActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.activities.ReportMessageActivity"
             android:theme="@style/SheetDialog"

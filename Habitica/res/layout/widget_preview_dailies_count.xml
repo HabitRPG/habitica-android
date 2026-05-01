@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/widget_bg"
-    android:orientation="vertical"
-    android:gravity="bottom|start"
-    android:padding="12dp">
+    android:padding="8dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:textColor="@color/widget_dailies_purple" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dailies done"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="@color/widget_text" />
-
-    <Space android:layout_width="match_parent" android:layout_height="10dp" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:max="5"
-        android:progress="3"
-        android:progressTint="#FFBE5D"
-        android:progressBackgroundTint="@color/widget_progress_track" />
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_preview_dailies_tile"
+        android:orientation="vertical"
+        android:padding="14dp">
 
-    <Space android:layout_width="match_parent" android:layout_height="4dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:textColor="@color/widget_preview_scallop_glyph_tint" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dailies done"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/widget_preview_scallop_glyph_tint" />
+        </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2 left to do"
-        android:textSize="12sp"
-        android:textColor="@color/widget_text_secondary" />
-</LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:src="@drawable/widget_progress_squiggle_preview"
+            android:contentDescription="@null" />
+
+        <Space android:layout_width="match_parent" android:layout_height="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11 left to do"
+            android:textSize="11sp"
+            android:textColor="@color/widget_preview_scallop_glyph_tint" />
+    </LinearLayout>
+</FrameLayout>

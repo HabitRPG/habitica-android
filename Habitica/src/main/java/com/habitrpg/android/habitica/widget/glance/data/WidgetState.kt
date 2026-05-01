@@ -4,9 +4,6 @@ import android.content.Context
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
-import java.util.Calendar
-import java.util.Date
-import java.util.concurrent.TimeUnit
 
 data class StatsWidgetState(
     val hp: Float,
@@ -85,24 +82,4 @@ data class DailyCountWidgetState(
     val needsCron: Boolean,
 )
 
-fun computeNeedsCron(user: User?): Boolean {
-    if (user == null) return false
-    if (user.needsCron) return true
-    val lastCron = user.lastCron ?: return false
-    val dayStart = user.preferences?.dayStart ?: 0
-    val cal = Calendar.getInstance()
-    cal.time = lastCron
-    cal.set(Calendar.HOUR_OF_DAY, 0)
-    cal.set(Calendar.MINUTE, 0)
-    cal.set(Calendar.SECOND, 0)
-    cal.set(Calendar.MILLISECOND, 0)
-    val lastCronDay = cal.time
-    cal.time = Date()
-    cal.set(Calendar.HOUR_OF_DAY, 0)
-    cal.set(Calendar.MINUTE, 0)
-    cal.set(Calendar.SECOND, 0)
-    cal.set(Calendar.MILLISECOND, 0)
-    val today = cal.time
-    val daysSince = TimeUnit.MILLISECONDS.toDays(today.time - lastCronDay.time).toInt()
-    return daysSince > dayStart
-}
+fun computeNeedsCron(user: User?): Boolean = user?.needsCron == true
