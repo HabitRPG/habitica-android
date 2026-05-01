@@ -156,7 +156,14 @@ dependencies {
     //Dependency Injection
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(libs.hilt.work)
+    ksp(libs.hilt.compiler.androidx)
     compileOnly(libs.javax.annotation)
+
+    implementation(libs.glance.appwidget)
+    implementation(libs.glance.material3)
+
+    implementation(libs.work.runtime)
 
     //App Compatibility and Material Design
     implementation(libs.bundles.design)

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/widget_bg"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@null" />
+
+    <Space
+        android:layout_width="12dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/widget_icon_heart"
+                android:contentDescription="@null" />
+            <Space android:layout_width="8dp" android:layout_height="match_parent" />
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:layout_weight="1"
+                android:max="50"
+                android:progress="35"
+                android:progressTint="#FF6165"
+                android:progressBackgroundTint="@color/widget_progress_track" />
+        </LinearLayout>
+
+        <Space android:layout_width="match_parent" android:layout_height="14dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/widget_icon_experience"
+                android:contentDescription="@null" />
+            <Space android:layout_width="8dp" android:layout_height="match_parent" />
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="64"
+                android:progressTint="#FFBE5D"
+                android:progressBackgroundTint="@color/widget_progress_track" />
+        </LinearLayout>
+
+        <Space android:layout_width="match_parent" android:layout_height="14dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/widget_icon_mana"
+                android:contentDescription="@null" />
+            <Space android:layout_width="8dp" android:layout_height="match_parent" />
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="10dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="80"
+                android:progressTint="#50B5E9"
+                android:progressBackgroundTint="@color/widget_progress_track" />
+        </LinearLayout>
+
+        <Space android:layout_width="match_parent" android:layout_height="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lv. 42"
+                android:textSize="13sp"
+                android:textColor="@color/widget_text" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/widget_icon_gold"
+                android:contentDescription="@null" />
+            <Space android:layout_width="4dp" android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:textSize="13sp"
+                android:textColor="@color/widget_text" />
+
+            <Space android:layout_width="8dp" android:layout_height="match_parent" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/widget_icon_gem"
+                android:contentDescription="@null" />
+            <Space android:layout_width="4dp" android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textSize="13sp"
+                android:textColor="@color/widget_text" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

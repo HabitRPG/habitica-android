@@ -4,86 +4,106 @@ import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.habitrpg.android.habitica.databinding.WidgetConfigureAddTaskBinding
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddTaskWidgetActivity : AppCompatActivity() {
-    private var widgetId: Int = 0
+class AddTaskWidgetActivity : ComponentActivity() {
+    private var widgetId: Int = AppWidgetManager.INVALID_APPWIDGET_ID
 
-    private lateinit var binding: WidgetConfigureAddTaskBinding
-
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)
-        binding = WidgetConfigureAddTaskBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        val intent = intent
-        val extras = intent.extras
-        if (extras != null) {
-            widgetId =
-                extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID
-                )
-        }
-
-        // If this activity was started with an intent without an app widget ID,
-        // finish with an error.
+        widgetId = intent?.extras?.getInt(
+            AppWidgetManager.EXTRA_APPWIDGET_ID,
+            AppWidgetManager.INVALID_APPWIDGET_ID,
+        ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
         if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish()
+            return
         }
 
-        binding.addHabitButton.setOnClickListener { addHabitSelected() }
-        binding.addDailyButton.setOnClickListener { addDailySelected() }
-        binding.addTodoButton.setOnClickListener { addToDoSelected() }
-        binding.addRewardButton.setOnClickListener { addRewardSelected() }
+        setContent {
+            MaterialTheme {
+                AddTaskConfigContent(
+                    onSelected = { type -> finishWithSelection(type) },
+                )
+            }
+        }
     }
 
-    private fun addHabitSelected() {
-        finishWithSelection(TaskType.HABIT)
-    }
-
-    private fun addDailySelected() {
-        finishWithSelection(TaskType.DAILY)
-    }
-
-    private fun addToDoSelected() {
-        finishWithSelection(TaskType.TODO)
-    }
-
-    private fun addRewardSelected() {
-        finishWithSelection(TaskType.REWARD)
-    }
-
-    private fun finishWithSelection(selectedTaskType: TaskType) {
-        storeSelectedTaskType(selectedTaskType)
-
-        val resultValue = Intent()
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+    private fun finishWithSelection(type: TaskType) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit {
+            putString("add_task_widget_$widgetId", type.value)
+        }
+        val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         setResult(Activity.RESULT_OK, resultValue)
         finish()
 
-        val intent =
-            Intent(
-                AppWidgetManager.ACTION_APPWIDGET_UPDATE,
-                null,
-                this,
-                AddTaskWidgetProvider::class.java
-            )
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
-        sendBroadcast(intent)
+        val updateIntent = Intent(
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+            null,
+            this,
+            AddTaskWidgetProvider::class.java,
+        ).putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
+        sendBroadcast(updateIntent)
     }
+}
 
-    private fun storeSelectedTaskType(selectedTaskType: TaskType) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit {
-            putString("add_task_widget_$widgetId", selectedTaskType.value)
-        }
+@Composable
+private fun AddTaskConfigContent(onSelected: (TaskType) -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = "Choose task type",
+            style = MaterialTheme.typography.titleLarge,
+        )
+        Spacer(Modifier.height(24.dp))
+        TaskTypeButton("Habit", Color(0xFFF23035)) { onSelected(TaskType.HABIT) }
+        Spacer(Modifier.height(12.dp))
+        TaskTypeButton("Daily", Color(0xFFFFA624)) { onSelected(TaskType.DAILY) }
+        Spacer(Modifier.height(12.dp))
+        TaskTypeButton("To Do", Color(0xFF26A0AB)) { onSelected(TaskType.TODO) }
+        Spacer(Modifier.height(12.dp))
+        TaskTypeButton("Reward", Color(0xFF1CA372)) { onSelected(TaskType.REWARD) }
+    }
+}
+
+@Composable
+private fun TaskTypeButton(label: String, color: Color, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White),
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.fillMaxSize().height(56.dp),
+    ) {
+        Text(label, style = MaterialTheme.typography.titleMedium)
     }
 }

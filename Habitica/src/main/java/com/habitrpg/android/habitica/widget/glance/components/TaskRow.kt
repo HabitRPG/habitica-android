@@ -1,0 +1,96 @@
+package com.habitrpg.android.habitica.widget.glance.components
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.glance.GlanceModifier
+import androidx.glance.action.Action
+import androidx.glance.action.clickable
+import androidx.glance.appwidget.cornerRadius
+import androidx.glance.background
+import androidx.glance.layout.Alignment
+import androidx.glance.layout.Box
+import androidx.glance.layout.Row
+import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
+import androidx.glance.layout.padding
+import androidx.glance.layout.width
+import androidx.glance.text.FontWeight
+import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
+import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
+
+@Composable
+fun TaskRow(
+    text: String,
+    valueColor: Color,
+    checklistDoneCount: Int = 0,
+    checklistTotalCount: Int = 0,
+    showChecklistCount: Boolean = true,
+    onClick: Action,
+    modifier: GlanceModifier = GlanceModifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp)
+            .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = GlanceModifier
+                .width(4.dp)
+                .height(18.dp)
+                .cornerRadius(2.dp)
+                .background(ColorProvider(valueColor)),
+        ) {}
+        Spacer(GlanceModifier.width(8.dp))
+        Text(
+            text = text,
+            style = TextStyle(
+                color = WidgetColors.taskListTaskText,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Normal,
+            ),
+            maxLines = 2,
+            modifier = GlanceModifier.defaultWeight(),
+        )
+        if (showChecklistCount && checklistTotalCount > 0) {
+            Spacer(GlanceModifier.width(8.dp))
+            val isAllDone = checklistDoneCount == checklistTotalCount
+            Box(
+                modifier = GlanceModifier
+                    .cornerRadius(4.dp)
+                    .background(
+                        if (isAllDone) WidgetColors.checklistBackgroundDone
+                        else WidgetColors.checklistBackground,
+                    )
+                    .padding(horizontal = 4.dp, vertical = 2.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "$checklistDoneCount/$checklistTotalCount",
+                    style = TextStyle(
+                        color = if (isAllDone) WidgetColors.textSecondary else ColorProvider(Color.White),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal,
+                    ),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TaskRowSeparator() {
+    Box(
+        modifier = GlanceModifier
+            .fillMaxWidth()
+            .height(1.dp)
+            .padding(start = 12.dp)
+            .background(WidgetColors.separator),
+    ) {}
+}

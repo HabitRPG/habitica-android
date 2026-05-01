@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_bg">#2B2020</color>
+    <color name="widget_bg_secondary">#D5C8FF</color>
+    <color name="widget_card_bg">#1AD5C8FF</color>
+    <color name="widget_text">#D5C8FF</color>
+    <color name="widget_text_secondary">#BDA8FF</color>
+    <color name="widget_dailies_purple">#BDA8FF</color>
+    <color name="widget_progress_track">#434074</color>
+    <color name="widget_task_list_primary_text">#BDA8FF</color>
+    <color name="widget_task_list_secondary_text">#925CF3</color>
+    <color name="widget_task_list_task_text">#FFFFFF</color>
+    <color name="widget_separator">#4D925CF3</color>
+    <color name="widget_checklist_bg">#66D5C8FF</color>
+    <color name="widget_checklist_bg_done">#33D5C8FF</color>
+    <color name="widget_add_label_text">#99FFFFFF</color>
+</resources>
