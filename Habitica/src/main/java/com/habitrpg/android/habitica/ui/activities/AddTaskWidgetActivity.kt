@@ -3,30 +3,53 @@ package com.habitrpg.android.habitica.ui.activities
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
+import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskSingleGlanceWidget
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddTaskWidgetActivity : ComponentActivity() {
@@ -46,64 +69,141 @@ class AddTaskWidgetActivity : ComponentActivity() {
         }
 
         setContent {
-            MaterialTheme {
-                AddTaskConfigContent(
+            val context = LocalContext.current
+            val isDark = isSystemInDarkTheme()
+            val colors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            } else {
+                if (isDark) darkColorScheme() else lightColorScheme()
+            }
+            MaterialTheme(colorScheme = colors) {
+                AddTaskConfigSheet(
                     onSelected = { type -> finishWithSelection(type) },
+                    onDismissed = { finish() },
                 )
             }
         }
     }
 
     private fun finishWithSelection(type: TaskType) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit {
+        PreferenceManager.getDefaultSharedPreferences(this).edit(commit = true) {
             putString("add_task_widget_$widgetId", type.value)
         }
         val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         setResult(Activity.RESULT_OK, resultValue)
-        finish()
 
-        val updateIntent = Intent(
-            AppWidgetManager.ACTION_APPWIDGET_UPDATE,
-            null,
-            this,
-            AddTaskWidgetProvider::class.java,
-        ).putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
-        sendBroadcast(updateIntent)
+        lifecycleScope.launch {
+            runCatching {
+                val glanceId = GlanceAppWidgetManager(this@AddTaskWidgetActivity)
+                    .getGlanceIdBy(widgetId)
+                AddTaskSingleGlanceWidget().update(this@AddTaskWidgetActivity, glanceId)
+            }
+            finish()
+        }
+    }
+}
+
+private data class TaskTypeChoice(
+    val type: TaskType,
+    val label: String,
+    val iconResId: Int,
+    val brandColor: Color,
+)
+
+private val TASK_TYPE_CHOICES = listOf(
+    TaskTypeChoice(TaskType.HABIT, "Habit", R.drawable.widget_add_habit_glyph, Color(0xFFF23035)),
+    TaskTypeChoice(TaskType.DAILY, "Daily", R.drawable.widget_add_daily_glyph, Color(0xFFFFA624)),
+    TaskTypeChoice(TaskType.TODO, "To Do", R.drawable.widget_add_todo_glyph, Color(0xFF26A0AB)),
+    TaskTypeChoice(TaskType.REWARD, "Reward", R.drawable.widget_add_reward_glyph, Color(0xFF1CA372)),
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AddTaskConfigSheet(
+    onSelected: (TaskType) -> Unit,
+    onDismissed: () -> Unit,
+) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    ModalBottomSheet(
+        onDismissRequest = onDismissed,
+        sheetState = sheetState,
+        containerColor = MaterialTheme.colorScheme.surface,
+    ) {
+        SheetContent(onSelected = onSelected)
     }
 }
 
 @Composable
-private fun AddTaskConfigContent(onSelected: (TaskType) -> Unit) {
+private fun SheetContent(onSelected: (TaskType) -> Unit) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .padding(horizontal = 24.dp, vertical = 8.dp),
     ) {
         Text(
             text = "Choose task type",
             style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface,
         )
-        Spacer(Modifier.height(24.dp))
-        TaskTypeButton("Habit", Color(0xFFF23035)) { onSelected(TaskType.HABIT) }
-        Spacer(Modifier.height(12.dp))
-        TaskTypeButton("Daily", Color(0xFFFFA624)) { onSelected(TaskType.DAILY) }
-        Spacer(Modifier.height(12.dp))
-        TaskTypeButton("To Do", Color(0xFF26A0AB)) { onSelected(TaskType.TODO) }
-        Spacer(Modifier.height(12.dp))
-        TaskTypeButton("Reward", Color(0xFF1CA372)) { onSelected(TaskType.REWARD) }
+        Spacer(Modifier.height(4.dp))
+        Text(
+            text = "Tapping the widget will open the screen to add a new task of this type.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(20.dp))
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            items(TASK_TYPE_CHOICES) { choice ->
+                TaskTypeTile(choice = choice, onClick = { onSelected(choice.type) })
+            }
+        }
+        Spacer(Modifier.height(8.dp))
     }
 }
 
 @Composable
-private fun TaskTypeButton(label: String, color: Color, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White),
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.fillMaxSize().height(56.dp),
+private fun TaskTypeTile(choice: TaskTypeChoice, onClick: () -> Unit) {
+    val useDynamic = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val tileColor = if (useDynamic) MaterialTheme.colorScheme.primaryContainer else choice.brandColor
+    val iconTint = if (useDynamic) MaterialTheme.colorScheme.onPrimaryContainer else Color.White
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(label, style = MaterialTheme.typography.titleMedium)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f),
+            contentAlignment = Alignment.Center,
+        ) {
+            Image(
+                painter = painterResource(R.drawable.widget_tile_scallop),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                colorFilter = ColorFilter.tint(tileColor),
+            )
+            Image(
+                painter = painterResource(choice.iconResId),
+                contentDescription = choice.label,
+                modifier = Modifier.size(40.dp),
+                colorFilter = ColorFilter.tint(iconTint),
+            )
+        }
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = choice.label,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
     }
 }

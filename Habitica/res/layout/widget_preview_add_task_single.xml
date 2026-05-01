@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F23035"
-    android:orientation="vertical"
-    android:gravity="bottom|start"
-    android:paddingStart="14dp"
-    android:paddingEnd="14dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:padding="8dp">
 
     <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/widget_add_habit_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/widget_tile_scallop_preview"
         android:contentDescription="@null" />
 
-    <Space android:layout_width="match_parent" android:layout_height="4dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add new\nHabit"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/widget_add_label_text" />
-</LinearLayout>
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:src="@drawable/widget_add_habit_glyph"
+        android:tint="@color/widget_preview_scallop_glyph_tint"
+        android:contentDescription="@null" />
+</FrameLayout>
