@@ -298,37 +298,37 @@
     <string name="belongs_to_challenge">Appartiene alla Sfida</string>
     <string name="has_reminder">Ha promemoria</string>
     <string name="has_tag">Ha etichetta</string>
-    <string name="subscribe_title">Gli abbonamenti aiutano a supportare gli sviluppatori e a tenere Habitica in vita, grazie !</string>
-    <string name="subscribe_prompt">Abbonati per ottenere questi vantaggi esclusivi!</string>
-    <string name="subscribe_listitem1">Oro per gemme</string>
-    <string name="subscribe_listitem2">Clessidre Mistiche</string>
+    <string name="subscribe_title">Abbonandoti supporti il nostro piccolo team e aiuti a mantenere attivo Habitica</string>
+    <string name="subscribe_prompt">Abbonati per rimanere motivato con ancora più premi</string>
+    <string name="subscribe_listitem1">Gemme Gratis Mensili</string>
+    <string name="subscribe_listitem2">Clessidre Mistiche Mensili</string>
     <string name="subscribe_listitem3">Oggetti Misteriosi Mensili</string>
     <string name="subscribe_listitem4">Animale Speciale per Abbonati</string>
     <string name="subscriptions">Abbonamenti</string>
     <string name="subscription_duration">Ricorrente ogni %s</string>
     <string name="subscription_duration_norenew">Per %s</string>
     <string name="subscribe">Abbonati</string>
-    <string name="subscribe_listitem1_description">Potrai acquistare gemme al Mercato per 20 Oro ciascuna!</string>
-    <string name="subscribe_listitem2_description">Guadagna Clessidre Mistiche per comprare oggetti nel Negozio dei Viaggiatori del Tempo!</string>
+    <string name="subscribe_listitem1_description">Ottieni fino a 50 gemme acquistabili con Oro nel Mercato per comprare Missioni, Personalizzazioni, Animali e tanto altro ancora!</string>
+    <string name="subscribe_listitem2_description">Non perderti mai più alcun oggetto: ricevi 1 Clessidra Mistica al mese da utilizzare nel Negozio dei Viaggiatori del Tempo!</string>
     <string name="subscribe_listitem3_description">Abbonati ora per avere un\'esclusivo set e ricevere nuovi oggetti ogni mese!</string>
     <string name="subscribe_listitem4_description">Riceverai il Lepronte Porpora quando diventerai un nuovo abbonato.</string>
-    <string name="subscribe1month_gemcap">Limite di 25 Gemme</string>
-    <string name="subscribe3month_gemcap">Limite di 30 Gemme</string>
-    <string name="subscribe6month_gemcap">Limite di 35 Gemme</string>
-    <string name="subscribe12month_gemcap">Limite di 45 Gemme</string>
+    <string name="subscribe1month_gemcap">25 Gemme al mese</string>
+    <string name="subscribe3month_gemcap">30 Gemme al mese</string>
+    <string name="subscribe6month_gemcap">35 Gemme al mese</string>
+    <string name="subscribe12month_gemcap">45 Gemme al mese</string>
     <string name="subscription_hourglasses">+%d Clessidre</string>
     <string name="payment_method">Metodo di pagamento</string>
     <string name="subscription">Abbonamento</string>
     <string name="active">Attivo</string>
     <string name="due">Oggi</string>
     <string name="cancel_subscription">Annulla abbonamento</string>
-    <string name="cancel_subscription_google_description">Vuoi interrompere il tuo abbonamento\? Puoi trovare l\'opzione per annullare l\'abbonamento nella sezione \"Le mie app\" nel Google Play Store. Eventuali mesi di credito verranno applicati al termine dell\'abbonamento.</string>
-    <string name="cancel_subscription_notgoogle_description">Vuoi interrompere il tuo abbonamento\? A causa di vincoli sui pagamenti su dispositivi portatili dovrai annullare l\'iscrizione tramite il nostro sito Web. Clicca sul pulsante qui sotto, accedi al tuo account , clicca sull\'icona Utente in alto a destra e vai in Abbonamento. Eventuali mesi di credito verranno applicati al termine dell\'abbonamento. Ci mancherai!</string>
+    <string name="cancel_subscription_google_description">Puoi annullare il tuo abbonamento dall\'app Google Play Store. Gli eventuali mesi di credito di abbonamento verranno applicati al termine dell\'abbonamento ricorrente.</string>
+    <string name="cancel_subscription_notgoogle_description">Non vuoi più avere l\'abbonamento\? A causa del tuo metodo di pagamento, puoi cancellare il tuo abbonamento solo dal nostro sito web. Per farlo, fai click sul pulsante qui sotto, accedi al tuo account, fai click sull\'icona del giocatore in alto a destra e poi vai alla sezione Abbonamento. Eventuali mesi di credito residuo dell\'abbonamento saranno aggiunti alla tua data di scadenza dopo la cancellazione. Ci mancherai!</string>
     <string name="visit_habitica_website">Visita il sito web di Habitica</string>
     <string name="current_bonuses">Bonus attivi</string>
     <string name="months_subscribed">Mesi come abbonato</string>
     <string name="current_hourclasses">Clessidre Mistiche attuali</string>
-    <string name="monthly_gem_cap">Limite gemme mensile</string>
+    <string name="monthly_gem_cap">Limite Gemme Mensile</string>
     <string name="inactive">Inattivo</string>
     <string name="one_month">1 mese</string>
     <string name="months">Mesi</string>
@@ -456,12 +456,12 @@
     <string name="resetting_account">Resettando l\'account</string>
     <string name="deleting_account">Cancellazione account</string>
     <string name="insufficientGold">Hai bisogno di completare più attività per comprare questo oggetto!</string>
-    <string name="insufficientGems">Ti servono più Gemme per comprare questo oggetto!</string>
+    <string name="insufficientGems">Ti servono più Gemme per comprare questo!</string>
     <string name="purchase_gems">Compra gemme</string>
     <string name="insufficientHourglasses">Ti servono più Clessidre Mistiche per comprare questo oggetto!</string>
     <string name="get_hourglasses">Ottieni clessidre</string>
     <string name="subscribe_for_hourglasses">Abbonati per le Clessidre</string>
-    <string name="timetravelers_closed_description">Ottieni una Clessidra Mistica per ogni tre mesi di abbonamento consecutivi, che puoi usare per sbloccare elementi in edizione limitata come oggetti, animali e cavalcature del passato… o del futuro!</string>
+    <string name="timetravelers_closed_description">Ottieni una Clessidra Mistica per ogni mese di abbonamento, che puoi usare per sbloccare oggetti in edizione limitata, animali e cavalcature del passato… o del futuro!</string>
     <string name="want_to_subscribe">Voglio abbonarmi</string>
     <string name="seasonal_closed_description">I Gran Galà stagionali hanno luogo nei pressi dei solstizi e degli equinozi, quindi torna più avanti per trovare un vivace assortimento di oggetti stagionali!</string>
     <string name="come_back_soon">Torna presto!</string>
@@ -493,22 +493,22 @@
     <string name="character_build">Costruzione personaggio</string>
     <string name="character_build_description">Ogni volta che sali di livello ottieni un punto da assegnare ad un attributo a tua scelta. Puoi farlo manualmente, o lasciare che se ne occupi il gioco selezionando una delle opzioni di allocazione automatica.</string>
     <string name="strength">Forza</string>
-    <string name="strength_description">Aumenta il bonus dei colpi critici e li rende più probabili al completamento di un\'attività. Aumenta inoltre il danno inflitto ai Boss.</string>
+    <string name="strength_description">Aumenta la possibilità di colpi critici e li rende più probabili quando una attività viene completata. Inoltre aumenta il danno inflitto ai boss.</string>
     <string name="intelligence">Intelligenza</string>
-    <string name="intelligence_description">Aumenta l\'esperienza ottenuta dal completamento delle attività. Aumenta inoltre il tuo mana massimo e la sua velocità di rigenerazione.</string>
+    <string name="intelligence_description">Aumenta l\'Esperienza guadagnata dalle attività completate. Aumenta anche il Mana massimo e la sua velocità di rigenerazione nel tempo.</string>
     <string name="constitution">Costituzione</string>
-    <string name="constitution_description">Diminuisce i danni ricevuti dalle tue attività. Non riduce i danni ricevuti dai Boss.</string>
+    <string name="constitution_description">Diminuisce la quantità di danno subito dalle tue attività. Non diminuisce il danno subito dai boss.</string>
     <string name="perception">Percezione</string>
-    <string name="perception_description">Aumenta la probabilità di trovare drop (oggetti casuali) al completamento delle attività. Aumenta inoltre il limite di drop giornaliero, i bonus Serie e la quantità di Oro ottenuta dalle attività.</string>
+    <string name="perception_description">Aumenta la probabilità di ottenere oggetti, il numero massimo di oggetti al giorno, i bonus dati dalle serie e l\'Oro guadagnato per ogni attività completata.</string>
     <string name="buffs">Bonus</string>
     <string name="allocated">Allocati</string>
-    <string name="distribute_evenly">Distribuzione uniforme</string>
+    <string name="distribute_evenly">Distribuisci uniformemente</string>
     <string name="distribute_class">Distribuzione basata sulla Classe</string>
     <string name="distribute_task">Distribuzione basata sulle attività</string>
     <string name="no_points_to_allocate">Nessun punto da allocare</string>
     <string name="points_to_allocate">%d punti da allocare</string>
     <string name="distribute_evenly_help">Assegna lo stesso numero di punti ad ogni attributo.</string>
-    <string name="distribute_class_help">Assegna più punti agli attributi importanti per la tua Classe.</string>
+    <string name="distribute_class_help">Assegna più punti alle Statistiche più importanti per la tua classe.</string>
     <string name="distribute_task_help">Assegna punti in base alle categorie Forza, Intelligenza, Costituzione e Percezione associati alle attività che completi.</string>
     <string name="allocating_points">Allocando punti</string>
     <string name="class_equipment">Equipaggiamento</string>
@@ -519,7 +519,7 @@
     <string name="check_into_inn">Entra nella Locanda</string>
     <string name="community_guidelines">Linee Guida della Community</string>
     <string name="view_community_guidelines">Visualizza le Linee Guida della Community</string>
-    <string name="guidelines_description">Habitica cerca di creare un ambiente accogliente per utenti di tutte le età e di ogni provenienza, specialmente in spazi pubblici come la Taverna. Se hai delle domande, per favore controlla le nostre linee guida.</string>
+    <string name="guidelines_description">Habitica cerca di creare un ambiente accogliente per utenti di tutte le età e di ogni provenienza. Se hai delle domande, per favore controlla le nostre linee guida.</string>
     <string name="helpful_links">Link utili</string>
     <string name="view_faq">Vedi FAQ</string>
     <string name="report_bug">Segnala un bug</string>
@@ -535,7 +535,7 @@
     <string name="pending_strike_title">Serie in attesa</string>
     <string name="strike_description_title">Cos\'è un colpo furioso?</string>
     <string name="strike_active_title">%s è stato attaccato!</string>
-    <string name="strike_active_description" formatted="false">Il nostro beneamato %s era devastato quando il %s frantumò il %s. In fretta, finisci le tue attività per sconfiggere il mostro e aiutare la ricostruzione !!</string>
+    <string name="strike_active_description" formatted="false">Il nostro beneamato %1$s era devastato quando il %2$s frantumò il %3$s. In fretta, finisci le tue attività per sconfiggere il mostro e aiutare la ricostruzione!!</string>
     <string name="questShop">Missioni</string>
     <string name="market_owner_long">Alex il Mercante</string>
     <string name="tavern_owner_long">Daniel il Locandiere</string>
@@ -618,7 +618,7 @@
     <string name="gift_subscription">Regala un Abbonamento</string>
     <string name="gift_one_get_one_description">Evento Regala un Abbonamento e Ricevi un Abbonamento Gratuito in corso ora!</string>
     <string name="gift_title">A chi vorresti regalarlo?</string>
-    <string name="gift_one_get_one">Regalane uno, Ottienine uno per te!</string>
+    <string name="gift_one_get_one">Regalane uno, Ottienine uno per te</string>
     <string name="gift_one_get_one_detailed_description">Mentre questa promozione è attiva, riceverai un abbonamento corrispondente dopo aver mandato il tuo regalo.</string>
     <string name="gift_subscription_subtitle">Scegli l\'abbonamento che vorresti regalare qua sotto! Questo acquisto non si rinnoverà automaticamente.</string>
     <string name="send_gift">Invia un Regalo</string>
@@ -709,9 +709,9 @@
     <string name="register_btn_google">Accedi con Google</string>
     <string name="register_btn_fb">Accedi con Facebook</string>
     <string name="login_btn_apple">Accedi con Apple</string>
-    <string name="subscribe_listitem5_description">Scopri ancora più oggetti in Habitica con un bonus 2x sul limite di bottini giornalieri.</string>
+    <string name="subscribe_listitem5_description">Ottieni un Jackalope Viola Reale e il doppio delle Uova, Pozioni di Schiusa e Cibo ogni giorno per ampliare la tua collezione di Animali Domestici!</string>
     <string name="subscribe_listitem3_description_new">Abbonati ora per ottenere %s e ricevere nuovi articoli ogni mese!</string>
-    <string name="subscribe_listitem5">Raddoppia il Bottino</string>
+    <string name="subscribe_listitem5">Animali Speciali e Drop Ulteriori</string>
     <string name="create_account_short">Crea un Account</string>
     <string name="login_incentive_short_count">%d Accessi</string>
     <string name="login_incentive_short">Accedi ad Habitica regolarmente</string>
@@ -776,13 +776,13 @@
 \n
 \n**Forza (STR) ** influenza colpi critici e aumenta i danni inflitti al Boss di una Missione. Guerrieri e Ladri ottengono STR dalla loro equipaggiamento di classe.
 \n
-\n**Costituzione (CON)** aumenta i tuoi HP e ti fa subire meno danni. Guaritori e Guerrieri ottengono CON dal loro equipaggiamento di classe.
+\n**Costituzione (CON)** aumenta i tuoi PS e ti fa subire meno danni. Guaritori e Guerrieri ottengono CON dal loro equipaggiamento di classe.
 \n
 \n**Intelligenza (INT)** aumenta la quantità di EXP che guadagni e ti dà più Mana. Maghi e Guaritori ottengono INT dal loro equipaggiamento di classe.
 \n
 \n**Percezione (PER)** aumenta l\'Oro che guadagni e la probabilità di trovare oggetti. I Ladri e i Maghi guadagnano il PER dal loro equipaggiamento di classe.
 \n
-\nDopo il livello 10, guadagni 1 Punto Stat per ogni aumento di livello e lo puoi assegnare in qualsiasi Stat tu desideri. Puoi anche indossare equipaggiamento con diverse combinazioni per aumentare le tue statistiche.</string>
+\nDopo il livello 10, guadagni 1 Punto Attributo per ogni aumento di livello e lo puoi assegnare in qualsiasi Stat tu desideri. Puoi anche indossare equipaggiamento con diverse combinazioni per aumentare le tue statistiche.</string>
     <string name="stat_allocation">Assegnazione delle Statistiche</string>
     <string name="gold_description">L\'Oro è la **principale forma di valuta** all\'interno di Habitica e ti consente di acquistare determinati equipaggiamenti, missioni, oggetti o persino premi personalizzati che puoi crearti da solo.
 \n
@@ -792,16 +792,16 @@
     <string name="experience_description">I punti esperienza (EXP) rappresentano i tuoi progressi e ti consentono di salire di livello. Principalmente ** otterrai EXP ** completando compiti o missioni, ma ci sono anche alcune abilità di classe che danno EXP.
 \n
 \nAttività più difficili o attività di colore rosso ti daranno ** più EXP**. La **statistica dell\'Intelligenza** aumenta anche la quantita di EXP guadagnata.</string>
-    <string name="mana_description">I punti mana (MP) vengono sbloccati con il sistema di classe al livello 10 e ti consentono di **usare le Abilità** una volta imparate al livello 11.
+    <string name="mana_description">I punti mana (PM) vengono sbloccati con il sistema di classe al livello 10 e ti consentono di **usare le Abilità** una volta imparate al livello 11.
 \n
-\nAlcuni **MP vengono ripristinati** allo scadere di ogni giorno, ma puoi riguadagnarne di più completando le attività o usando un\'abilità della classe Mago.</string>
+\nAlcuni **PM vengono ripristinati** allo scadere di ogni giorno, ma puoi riguadagnarne di più completando le attività o usando un\'abilità della classe Mago.</string>
     <string name="mana_points">Punti Mana</string>
     <string name="experience_points">Punti esperienza</string>
-    <string name="health_description">Rappresentano la vita del tuo avatar. Una Attività giornaliera non completata o un\'abitudine negativa ** riducono i tuoi HP **.
+    <string name="health_description">Rappresentano la vita del tuo avatar. Una Attività giornaliera non completata o un\'abitudine negativa ** riducono i tuoi PS **.
 \n
-\n** Riacquista HP ** aumentando di livello, usando una Pozione di salute o un\'abilità di classe con abilità curativa.
+\n** Riacquista PS ** aumentando di livello, usando una Pozione di salute o un\'abilità di classe con abilità curativa.
 \n
-\nSe il tuo ** HP raggiunge lo 0 ** perderai un livello, tutto l\'oro e un pezzo di equipaggiamento. Le attrezzature perse possono essere riacquistate.</string>
+\nSe i tuoi ** PS raggiunge lo 0 ** perderai un livello, tutto l\'oro e un pezzo di equipaggiamento. Le attrezzature perse possono essere riacquistate.</string>
     <string name="health_points">Punti salute</string>
     <string name="stats_currency">Statistiche e valuta</string>
     <string name="how_best_habitica">Non sai come utilizzare al meglio Habitica\?</string>
@@ -1151,7 +1151,7 @@
     <string name="task_list_mode">Modalità lista attività</string>
     <string name="compact">Compatta</string>
     <string name="minimal">Minimizza</string>
-    <string name="next_hourglass">Prossima clessidra</string>
+    <string name="next_hourglass">Prossima Consegna della Clessidra</string>
     <string name="reset_account_title">Vuoi davvero resettare\?</string>
     <string name="confirm_reset">Conferma il reset</string>
     <string name="quest_party_required_title">Devi essere in una Squadra prima di iniziare una Missione</string>
@@ -1289,4 +1289,64 @@
     <string name="quest_rejected">Missione rifiutata</string>
     <string name="quest_accept_error">Impossibile accettare la missione. Riprova.</string>
     <string name="quest_reject_error">Impossibile rifiutare la missione. Riprova.</string>
+    <string name="save_photo_url">Salva URL della Foto</string>
+    <string name="change_username_description">Il Nome Utente deve essere composto da 1 a 20 caratteri, contenere solo lettere dalla a alla z, numeri da 0 a 9, trattini o trattini bassi.</string>
+    <string name="class_equipment_shop_dialog_new">Questo oggetto è disponibile solo per la classe %s. Vai nelle Impostazioni per cambiare la tua classe.</string>
+    <string name="change_display_name">Cambia il tuo Nome Pubblico</string>
+    <string name="sell_confirmation_title">Sei sicuro di voler vendere questo %s\?</string>
+    <string name="enable_class_description">Seleziona una classe per utilizzare abilità, attributi e mana</string>
+    <string name="opt_out_description">Questo ti lascerà senza una classe assegnata. Puoi scegliere nuovamente una classe abilitando il sistema delle classi dalle Impostazioni in qualsiasi momento.</string>
+    <string name="group_tags">Etichette di Gruppo</string>
+    <string name="subscription_credit_canceling">I tuoi <b>+%d</b> mesi di credito di abbonamento verranno attivati a seguito dell\'annullamento</string>
+    <string name="rejoin_party_quest">Non potrai rientrare in questa squadra a meno che tu non venga rinvitato.
+\n
+\nUscire dalla squadra comporterà anche l\'abbandono della missione in corso.</string>
+    <string name="leave_party_confirmation_quest">Sei sicuro di voler lasciare questa squadra\?</string>
+    <string name="rejoin_party_quest_leader">Non potrai rientrare in questo gruppo a meno che tu non venga rinvitato.
+\n
+\nAbbandonare il gruppo interromperà anche la missione in corso.</string>
+    <string name="reset_account_description_new">Perderai tutti i tuoi livelli, l\'Oro e i Punti esperienza. Tutte le tue attività e la loro cronologia dei progressi verranno cancellate (le attività delle Sfide rimarranno). Perderai inoltre tutto il tuo equipaggiamento ad eccezione degli oggetti per gli abbonati e gli oggetti commemorativi, ma potrai acquistarlo di nuovo. Dovrai avere la classe giusta per riacquistare l\'equipaggiamento specifico per una classe. Manterrai la tua classe, i tuoi animali e le cavalcature attuali. Per confermare il reset, inserisci la tua password qui sotto.</string>
+    <string name="photo_url_description">Puoi inserire un\'immagine sul tuo profilo di Habitica, in modo che altri possano vederla, aggiungendo qui il link all\'immagine.</string>
+    <string name="change_email_description">Questo è l\'indirizzo email che utilizzi per accedere ad Habitica e per ricevere le notifiche.</string>
+    <string name="insufficient_level_equipment_dialog_new">Questo oggetto è disponibile solo per la classe %s. Puoi selezionare una classe dopo il livello 10.</string>
+    <string name="display_name_description">Questo è il nome che verrà visualizzato per il tuo avatar in Habitica. A differenza del nome utente, non deve necessariamente essere un identificativo univoco.</string>
+    <string name="server_settings_unlock_remaining">Ti mancano %d passaggi per sbloccare le impostazioni del server.</string>
+    <string name="subscribe_listitem3_description_alt">Resta al passo con le ultime novità sull\'Equipaggiamento esclusivo. Abbonati ora per ricevere %1$s’s %2$s!</string>
+    <string name="subscribe_listitemFaint_description">Evita di perdere i tuoi progressi grazie a una cura istantanea che ti permette di recuperare Salute ogni volta che ne hai bisogno!</string>
+    <string name="change_class_message">Questa azione cancellerà la tua classe attuale e sarai risarcito di tutti i tuoi punti attributo. Dopodiché, potrai selezionare una nuova classe</string>
+    <string name="change_class_confirmation_message">Questo cambierà l\'equipaggiamento sbloccato nei negozi e cambierà le tue abilità disponibili</string>
+    <string name="choosing_class_progress">Scegli una Classe</string>
+    <string name="subscribe_listitemFaint">Ottieni una Seconda Possibilità</string>
+    <string name="subscription_hourglasses_3month_timeframe">Clessidra fra 3 mesi</string>
+    <string name="challenges">Sfide</string>
+    <string name="cancel_subscription_apple_description">A causa del metodo di pagamento utilizzato, dovrai annullare l\'abbonamento tramite le impostazioni del tuo ID Apple sul tuo dispositivo iOS.</string>
+    <string name="free_rebirth_at_level_100">Sfera della Rinascita GRATUITA al livello 100</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d giorno alla Sfera della Rinascita GRATUITA</item>
+        <item quantity="many">%d giorni alla Sfera della Rinascita GRATUITA</item>
+        <item quantity="other">%d giorni alla Sfera della Rinascita GRATUITA</item>
+    </plurals>
+    <string name="class_changed_description">Ora puoi utilizzare le abilità di %s e acquistare Equipaggiamento dai negozi. Avanza di livello per guadagnare punti attributo che puoi utilizzare per potenziare le tue abilità.</string>
+    <string name="your_tags">Le tue Etichette</string>
+    <string name="challenge_tags">Etichette di Sfida</string>
+    <string name="membership">Partecipazione</string>
+    <string name="participating">Sto partecipando</string>
+    <string name="not_participating_filter">Non sto partecipando</string>
+    <string name="reset_account_description_no_pw">Perderai tutti i tuoi livelli, l\'Oro e i Punti esperienza. Tutte le tue attività e la loro cronologia dei progressi verranno cancellate (le attività delle Sfide rimarranno). Perderai inoltre tutto il tuo equipaggiamento ad eccezione degli oggetti per gli abbonati e gli oggetti commemorativi, ma potrai acquistarlo di nuovo. Dovrai avere la classe giusta per riacquistare l\'equipaggiamento specifico per una classe. Manterrai la tua classe, i tuoi animali e le cavalcature attuali. Per confermare il reset, Digita RESET qui sotto.</string>
+    <string name="category">Categoria</string>
+    <string name="x_checkins">%d Accessi</string>
+    <string name="server_custom_warning">Attenzione: gli account sui server personalizzati sono separati dal tuo account principale su Habitica.com.</string>
+    <string name="server_option_default">%s (Default)</string>
+    <string name="server_option_custom">Personalizzato</string>
+    <string name="server_custom_address_label">Inserisci l\'indirizzo del server personalizzato</string>
+    <string name="server_custom_address_hint">es. http://localhost:3000</string>
+    <string name="server_url_invalid">Inserisci un URL valido che inizi con http:// o https://</string>
+    <string name="apply">Applica</string>
+    <string name="server_settings_unlocked">Impostazioni del server sbloccate!</string>
+    <string name="custom_server">Server Personalizzato</string>
+    <string name="reset_server_to_default">Resetta a Default</string>
+    <string name="register_tos_confirm">Accetti i nostri <a href="https://habitica.com/static/terms">Termini di Servizio</a> e dichiari di aver letto la nostra <a href="https://habitica.com/static/privacy">Privacy Policy</a>.</string>
+    <string name="level_abbreviated">Livello %d</string>
+    <string name="change_class_selected_confirmation">Vuoi cambiare la tua classe in %1$s\?</string>
+    <string name="insufficient_level_equipment_dialog">Questo oggetto è disponibile solo per una classe specifica. Puoi selezionare una classe dopo il livello 10.</string>
 </resources>
