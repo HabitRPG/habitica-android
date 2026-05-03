@@ -18,8 +18,8 @@
     <string name="you_ran_out_of_hp">Non hai più punto di vita</string>
     <string name="faint_description">Hai perso un Livello, esperienza e oro. Non arrenderti!</string>
     <string name="day_start">Inizio della giornata</string>
-    <string name="rya_description">Hai Attività giornaliere incompleta per ieri</string>
-    <string name="review_dailies">Vedi la mia Attività giornaliere</string>
+    <string name="rya_description">Hai Attività Giornaliere incomplete di ieri</string>
+    <string name="review_dailies">Vedi le tue Attività Giornaliere</string>
     <string name="some_food">Un po\' di cibo</string>
     <string name="continue_on_your_phone">Continua sul telefono</string>
     <string name="version_info">Versione %1$s (%2$d)</string>
