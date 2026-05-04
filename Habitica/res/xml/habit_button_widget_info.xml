@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/glance_default_loading_layout"
-    android:minHeight="60dp"
-    android:minWidth="180dp"
+    android:minWidth="218dp"
+    android:minHeight="70dp"
+    android:minResizeWidth="218dp"
+    android:minResizeHeight="70dp"
+    android:maxResizeWidth="360dp"
+    android:maxResizeHeight="160dp"
     android:targetCellWidth="3"
     android:targetCellHeight="1"
     android:resizeMode="horizontal|vertical"
     android:previewImage="@drawable/widget_habits"
     android:previewLayout="@layout/widget_preview_habit_button"
-    android:widgetCategory="home_screen"
-    android:configure="com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity" />
+    android:widgetCategory="home_screen" />

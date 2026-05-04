@@ -86,6 +86,23 @@ object AddTaskTileColors {
     val reward = Color(0xFF1CA372)
 }
 
+object HabitButtonBarColors {
+    val maroonLight = Color(0xFFDE3F3F)
+    val maroonMedium = Color(0xFFC92B2B)
+    val redLight = Color(0xFFFF6165)
+    val redMedium = Color(0xFFF74E52)
+    val orangeLight = Color(0xFFFF944C)
+    val orangeMedium = Color(0xFFFA8537)
+    val yellowLight = Color(0xFFFFBE5D)
+    val yellowMedium = Color(0xFFFFA624)
+    val greenLight = Color(0xFF24CC8F)
+    val greenMedium = Color(0xFF20B780)
+    val tealLight = Color(0xFF3BCAD7)
+    val tealMedium = Color(0xFF34B5C1)
+    val blueLight = Color(0xFF50B5E9)
+    val blueMedium = Color(0xFF46A7D9)
+}
+
 fun colorForTaskValue(value: Double): Color =
     when {
         value < -20.0 -> TaskValueBucketColors.maroon
@@ -96,3 +113,23 @@ fun colorForTaskValue(value: Double): Color =
         value < 10.0 -> TaskValueBucketColors.teal
         else -> TaskValueBucketColors.blue
     }
+
+fun colorForHabitValueLight(value: Double): Color = when {
+    value < -20.0 -> HabitButtonBarColors.maroonLight
+    value < -10.0 -> HabitButtonBarColors.redLight
+    value < -1.0 -> HabitButtonBarColors.orangeLight
+    value < 1.0 -> HabitButtonBarColors.yellowLight
+    value < 5.0 -> HabitButtonBarColors.greenLight
+    value < 10.0 -> HabitButtonBarColors.tealLight
+    else -> HabitButtonBarColors.blueLight
+}
+
+fun colorForHabitValueMedium(value: Double): Color = when {
+    value < -20.0 -> HabitButtonBarColors.maroonMedium
+    value < -10.0 -> HabitButtonBarColors.redMedium
+    value < -1.0 -> HabitButtonBarColors.orangeMedium
+    value < 1.0 -> HabitButtonBarColors.yellowMedium
+    value < 5.0 -> HabitButtonBarColors.greenMedium
+    value < 10.0 -> HabitButtonBarColors.tealMedium
+    else -> HabitButtonBarColors.blueMedium
+}

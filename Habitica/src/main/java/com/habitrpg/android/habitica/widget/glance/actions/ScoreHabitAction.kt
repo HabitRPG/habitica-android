@@ -3,7 +3,9 @@ package com.habitrpg.android.habitica.widget.glance.actions
 import android.content.Context
 import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.action.ActionCallback
+import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.widgets.HabitButtonGlanceWidget
@@ -28,6 +30,14 @@ class ScoreHabitAction : ActionCallback {
             force = false,
             notifyFunc = null,
         )
+
+        runCatching {
+            val task = entry.taskRepository().getTask(taskId).firstOrNull()
+            if (task != null) {
+                val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(glanceId)
+                HabitButtonWidgetCache.write(context, widgetId, task)
+            }
+        }
 
         HabitButtonGlanceWidget().update(context, glanceId)
     }

@@ -244,11 +244,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.HabitButtonWidgetActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.Habitica.TranslucentSheet"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.ReportMessageActivity"
             android:theme="@style/SheetDialog"

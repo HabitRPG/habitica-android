@@ -54,7 +54,7 @@ import kotlinx.coroutines.flow.firstOrNull
 class DailiesCountGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
     override val previewSizeMode: PreviewSizeMode = SizeMode.Responsive(
-        setOf(DpSize(180.dp, 110.dp), DpSize(320.dp, 110.dp)),
+        setOf(DpSize(218.dp, 204.dp), DpSize(320.dp, 204.dp)),
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -259,7 +259,7 @@ private fun GaugeBody(
                     style = TextStyle(
                         color = palette.primaryText,
                         fontSize = 64.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Medium,
                     ),
                 )
                 if (showSparkles) {
