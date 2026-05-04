@@ -369,6 +369,7 @@
     <string name="action_continue">Continue</string>
     <string name="invited_to_party">You were invited to join a party!</string>
     <string name="stats_widget_label">Habitica Stats</string>
+    <string name="avatar_widget_label">Habitica Avatar</string>
     <string name="add_task">Add Task</string>
     <string name="add_habit">Add Habit</string>
     <string name="add_daily">Add Daily</string>

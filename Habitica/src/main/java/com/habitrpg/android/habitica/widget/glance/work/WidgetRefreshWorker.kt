@@ -30,6 +30,7 @@ class WidgetRefreshWorker(
         val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
         AvatarBitmapCache.refreshIfNeeded(context, user)
         refreshAllWidgets(context)
+        AvatarWidgetRenderer.pushUpdate(context)
         return Result.success()
     }
 
@@ -52,6 +53,7 @@ class WidgetRefreshWorker(
             val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
             AvatarBitmapCache.refreshIfNeeded(context, user)
             refreshAllWidgets(context)
+            AvatarWidgetRenderer.pushUpdate(context)
         }
 
         private suspend fun refreshAllWidgets(context: Context) {
