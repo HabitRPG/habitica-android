@@ -238,11 +238,7 @@
 
         <activity android:name=".ui.activities.AddTaskWidgetActivity"
             android:theme="@style/Theme.Habitica.TranslucentSheet"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity>
+            android:exported="false" />
         <activity android:name=".ui.activities.HabitButtonWidgetActivity"
             android:theme="@style/Theme.Habitica.TranslucentSheet"
             android:exported="false" />

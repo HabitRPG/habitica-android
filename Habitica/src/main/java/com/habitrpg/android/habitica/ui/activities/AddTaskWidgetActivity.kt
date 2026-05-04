@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.Activity
 import android.appwidget.AppWidgetManager
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -47,6 +45,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskSingleGlanceWidget
+import com.habitrpg.android.habitica.widget.glance.work.AddTaskRefreshWorker
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -57,7 +56,6 @@ class AddTaskWidgetActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setResult(Activity.RESULT_CANCELED)
 
         widgetId = intent?.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -86,20 +84,20 @@ class AddTaskWidgetActivity : ComponentActivity() {
     }
 
     private fun finishWithSelection(type: TaskType) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit(commit = true) {
+        val appContext = applicationContext
+        PreferenceManager.getDefaultSharedPreferences(appContext).edit(commit = true) {
             putString("add_task_widget_$widgetId", type.value)
         }
-        val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-        setResult(Activity.RESULT_OK, resultValue)
 
+        val capturedWidgetId = widgetId
         lifecycleScope.launch {
             runCatching {
-                val glanceId = GlanceAppWidgetManager(this@AddTaskWidgetActivity)
-                    .getGlanceIdBy(widgetId)
-                AddTaskSingleGlanceWidget().update(this@AddTaskWidgetActivity, glanceId)
+                val glanceId = GlanceAppWidgetManager(appContext).getGlanceIdBy(capturedWidgetId)
+                AddTaskSingleGlanceWidget().update(appContext, glanceId)
             }
             finish()
         }
+        AddTaskRefreshWorker.enqueue(appContext)
     }
 }
 

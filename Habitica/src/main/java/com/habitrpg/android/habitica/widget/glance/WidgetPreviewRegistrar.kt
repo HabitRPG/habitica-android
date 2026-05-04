@@ -22,7 +22,7 @@ object WidgetPreviewRegistrar {
     private const val PREFS = "widget_previews"
     private const val LAST_KEY = "last_registered_token"
 
-    private const val REVISION = 4
+    private const val REVISION = 5
 
     private val RECEIVERS: List<KClass<out GlanceAppWidgetReceiver>> = listOf(
         AddTaskMultiWidgetReceiver::class,

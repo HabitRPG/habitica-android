@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.widget.glance.widgets
 
+import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -13,10 +15,12 @@ import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
+import androidx.glance.action.Action
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.SizeMode
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.provideContent
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -30,6 +34,7 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
@@ -41,9 +46,14 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
         val type = PreferenceManager.getDefaultSharedPreferences(context)
             .getString("add_task_widget_$widgetId", null)
+        val configureIntent = Intent(context, AddTaskWidgetActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+        }
+        val configureAction = actionStartActivity(configureIntent)
         provideContent {
             HabiticaWidgetTheme {
-                AddTaskSingleContent(type)
+                AddTaskSingleContent(type, onConfigure = configureAction)
             }
         }
     }
@@ -51,7 +61,7 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         provideContent {
             HabiticaWidgetTheme {
-                AddTaskSingleContent("habit")
+                AddTaskSingleContent("habit", onConfigure = openAppAction())
             }
         }
     }
@@ -75,10 +85,10 @@ private fun tileFor(type: String?): TileSpec? = when (type) {
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
-private fun AddTaskSingleContent(type: String?) {
+private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
     val tile = tileFor(type)
     if (tile == null) {
-        UnsetTaskTypeContent()
+        UnsetTaskTypeContent(onClick = onConfigure)
         return
     }
     val size = LocalSize.current
@@ -119,7 +129,7 @@ private fun AddTaskSingleContent(type: String?) {
 }
 
 @Composable
-private fun UnsetTaskTypeContent() {
+private fun UnsetTaskTypeContent(onClick: Action) {
     val widgetBackground: ColorProvider = if (MaterialYouEnabled) {
         GlanceTheme.colors.surfaceVariant
     } else {
@@ -133,7 +143,8 @@ private fun UnsetTaskTypeContent() {
     Column(
         modifier = GlanceModifier
             .fillMaxSize()
-            .padding(12.dp),
+            .padding(12.dp)
+            .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
