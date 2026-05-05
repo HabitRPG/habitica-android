@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.widget.glance.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
@@ -16,6 +17,7 @@ import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
+import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -27,33 +29,34 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 fun TaskRow(
     text: String,
     valueColor: Color,
+    primaryTextColor: ColorProvider = WidgetColors.taskListTaskText,
     checklistDoneCount: Int = 0,
     checklistTotalCount: Int = 0,
     showChecklistCount: Boolean = true,
     onClick: Action,
     modifier: GlanceModifier = GlanceModifier,
+    tileSize: Dp = 28.dp,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp)
+            .padding(vertical = 4.dp)
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = GlanceModifier
-                .width(4.dp)
-                .height(18.dp)
-                .cornerRadius(2.dp)
+                .size(tileSize)
+                .cornerRadius(8.dp)
                 .background(ColorProvider(valueColor)),
         ) {}
-        Spacer(GlanceModifier.width(8.dp))
+        Spacer(GlanceModifier.width(10.dp))
         Text(
             text = text,
             style = TextStyle(
-                color = WidgetColors.taskListTaskText,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Normal,
+                color = primaryTextColor,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
             ),
             maxLines = 2,
             modifier = GlanceModifier.defaultWeight(),

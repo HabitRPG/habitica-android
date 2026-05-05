@@ -1,20 +1,25 @@
 package com.habitrpg.android.habitica.widget.glance.widgets
 
 import android.content.Context
+import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.PreviewSizeMode
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
@@ -29,10 +34,10 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
-import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreTaskAction
@@ -42,13 +47,14 @@ import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
 import com.habitrpg.android.habitica.widget.glance.components.TaskRowSeparator
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
+import com.habitrpg.android.habitica.widget.glance.data.TaskWidgetItem
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.toWidgetItem
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
-import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValue
+import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueLight
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.flow.firstOrNull
@@ -57,6 +63,14 @@ abstract class TaskListGlanceWidget(
     private val taskType: TaskType,
 ) : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Responsive(
+        setOf(
+            DpSize(220.dp, 160.dp),
+            DpSize(300.dp, 200.dp),
+            DpSize(360.dp, 300.dp),
+        ),
+    )
+
+    override val previewSizeMode: PreviewSizeMode = SizeMode.Responsive(
         setOf(
             DpSize(220.dp, 160.dp),
             DpSize(300.dp, 200.dp),
@@ -88,107 +102,116 @@ abstract class TaskListGlanceWidget(
             }
         }
     }
+
+    override suspend fun providePreview(context: Context, widgetCategory: Int) {
+        val sample = TaskListWidgetState(
+            tasks = if (taskType == TaskType.DAILY) PREVIEW_DAILIES else PREVIEW_TODOS,
+            needsCron = false,
+        )
+        provideContent {
+            HabiticaWidgetTheme {
+                TaskListContent(sample, isDaily = taskType == TaskType.DAILY)
+            }
+        }
+    }
+
+    companion object {
+        private val PREVIEW_DAILIES = listOf(
+            TaskWidgetItem(id = "1", text = "Wake up at 8:30", value = 8.0, checklistTotal = 0, checklistDone = 0),
+            TaskWidgetItem(id = "2", text = "Go to the Gym", value = 0.0, checklistTotal = 0, checklistDone = 0),
+            TaskWidgetItem(id = "3", text = "Journal", value = 4.0, checklistTotal = 0, checklistDone = 0),
+        )
+        private val PREVIEW_TODOS = listOf(
+            TaskWidgetItem(id = "1", text = "Pick up groceries", value = 4.0, checklistTotal = 0, checklistDone = 0),
+            TaskWidgetItem(id = "2", text = "Email the team", value = 0.0, checklistTotal = 0, checklistDone = 0),
+            TaskWidgetItem(id = "3", text = "Plan weekend trip", value = 8.0, checklistTotal = 0, checklistDone = 0),
+        )
+    }
 }
 
 class DailyTaskListGlanceWidget : TaskListGlanceWidget(TaskType.DAILY)
 class TodoTaskListGlanceWidget : TaskListGlanceWidget(TaskType.TODO)
 
+private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+internal data class TaskListPalette(
+    val widgetBackground: ColorProvider,
+    val cardBackground: ColorProvider,
+    val titleText: ColorProvider,
+    val taskText: ColorProvider,
+    val secondaryText: ColorProvider,
+    val iconTint: ColorProvider?,
+)
+
+@Composable
+private fun rememberPalette(): TaskListPalette {
+    return if (MaterialYouEnabled) {
+        TaskListPalette(
+            widgetBackground = GlanceTheme.colors.secondaryContainer,
+            cardBackground = GlanceTheme.colors.background,
+            titleText = GlanceTheme.colors.onSecondaryContainer,
+            taskText = GlanceTheme.colors.onSecondaryContainer,
+            secondaryText = GlanceTheme.colors.onSurfaceVariant,
+            iconTint = GlanceTheme.colors.onSecondaryContainer,
+        )
+    } else {
+        TaskListPalette(
+            widgetBackground = WidgetColors.background,
+            cardBackground = WidgetColors.cardBackground,
+            titleText = WidgetColors.taskListPrimaryText,
+            taskText = WidgetColors.taskListTaskText,
+            secondaryText = WidgetColors.textSecondary,
+            iconTint = null,
+        )
+    }
+}
+
 @Composable
 private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val size = LocalSize.current
-    val isSidebarLayout = size.width < 300.dp
+    val palette = rememberPalette()
+    val isCompact = size.width < 260.dp
     val isLarge = size.height >= 280.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addLink = if (isDaily) "habitica://user/tasks/daily/add" else "habitica://user/tasks/todo/add"
+    val title = when {
+        !isDaily && isCompact -> "To Do's"
+        !isDaily -> "Your To Do's"
+        isCompact -> "Dailies"
+        else -> "Today's Dailies"
+    }
 
-    Box(
+    Column(
         modifier = GlanceModifier
             .fillMaxSize()
-            .background(WidgetColors.background)
-            .padding(12.dp),
+            .cornerRadius(20.dp)
+            .background(palette.widgetBackground)
+            .padding(horizontal = 14.dp, vertical = 12.dp),
     ) {
-        if (isSidebarLayout) {
-            Row(modifier = GlanceModifier.fillMaxSize()) {
-                TaskListSidebar(
-                    title = if (isDaily) "Dailies" else "To Do's",
-                    count = state.tasks.size,
-                    openListLink = openListLink,
-                    addLink = addLink,
-                )
-                Spacer(GlanceModifier.width(12.dp))
-                TaskListBody(
-                    state = state,
-                    isDaily = isDaily,
-                    isLarge = false,
-                    openListLink = openListLink,
-                )
-            }
-        } else {
-            Column(modifier = GlanceModifier.fillMaxSize()) {
-                TaskListHeader(
-                    title = if (isDaily) "Today's Dailies" else "Your To Do's",
-                    openListLink = openListLink,
-                    addLink = addLink,
-                )
-                Spacer(GlanceModifier.height(2.dp))
-                TaskListBody(
-                    state = state,
-                    isDaily = isDaily,
-                    isLarge = isLarge,
-                    openListLink = openListLink,
-                )
-            }
-        }
+        TaskListHeader(
+            title = title,
+            palette = palette,
+            openListLink = openListLink,
+            addLink = addLink,
+        )
+        Spacer(GlanceModifier.height(8.dp))
+        TaskListBody(
+            state = state,
+            isDaily = isDaily,
+            isLarge = isLarge,
+            palette = palette,
+            openListLink = openListLink,
+        )
     }
 }
 
 @Composable
-private fun TaskListSidebar(
+private fun TaskListHeader(
     title: String,
-    count: Int,
+    palette: TaskListPalette,
     openListLink: String,
     addLink: String,
 ) {
-    Column(
-        modifier = GlanceModifier
-            .width(60.dp)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.Start,
-    ) {
-        Text(
-            text = title,
-            style = TextStyle(
-                color = WidgetColors.textSecondary,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Medium,
-            ),
-            modifier = GlanceModifier
-                .padding(top = 4.dp)
-                .clickable(onClick = openAppAction(openListLink)),
-        )
-        Text(
-            text = count.toString(),
-            style = TextStyle(
-                color = WidgetColors.taskListSecondaryText,
-                fontSize = 34.sp,
-                fontWeight = FontWeight.Normal,
-            ),
-            modifier = GlanceModifier.clickable(onClick = openAppAction(openListLink)),
-        )
-        Spacer(GlanceModifier.defaultWeight())
-        Image(
-            provider = ImageProvider(R.drawable.widget_icon_add),
-            contentDescription = "Add task",
-            modifier = GlanceModifier
-                .size(28.dp)
-                .padding(bottom = 7.dp)
-                .clickable(onClick = openAppAction(addLink)),
-        )
-    }
-}
-
-@Composable
-private fun TaskListHeader(title: String, openListLink: String, addLink: String) {
     Row(
         modifier = GlanceModifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -196,8 +219,8 @@ private fun TaskListHeader(title: String, openListLink: String, addLink: String)
         Text(
             text = title,
             style = TextStyle(
-                color = WidgetColors.taskListPrimaryText,
-                fontSize = 20.sp,
+                color = palette.titleText,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
             ),
             modifier = GlanceModifier
@@ -208,8 +231,9 @@ private fun TaskListHeader(title: String, openListLink: String, addLink: String)
             provider = ImageProvider(R.drawable.widget_icon_add),
             contentDescription = "Add task",
             modifier = GlanceModifier
-                .size(24.dp)
+                .size(20.dp)
                 .clickable(onClick = openAppAction(addLink)),
+            colorFilter = palette.iconTint?.let { ColorFilter.tint(it) },
         )
     }
 }
@@ -219,21 +243,30 @@ private fun TaskListBody(
     state: TaskListWidgetState,
     isDaily: Boolean,
     isLarge: Boolean,
+    palette: TaskListPalette,
     openListLink: String,
 ) {
-    when {
-        state.needsCron && isDaily -> StartDayCard(
-            onClick = actionRunCallback<RunCronAction>(),
-        )
-        state.tasks.isEmpty() -> EmptyState(
-            message = if (isDaily) "All done today!" else "All done!",
-        )
-        else -> TaskListRows(
-            state = state,
-            isDaily = isDaily,
-            isLarge = isLarge,
-            openListLink = openListLink,
-        )
+    Box(modifier = GlanceModifier.fillMaxSize()) {
+        when {
+            state.needsCron && isDaily -> StartDayCard(
+                onClick = actionRunCallback<RunCronAction>(),
+                backgroundColor = palette.cardBackground,
+                textColor = palette.titleText,
+                iconTint = palette.iconTint,
+            )
+            state.tasks.isEmpty() -> EmptyState(
+                message = if (isDaily) "All done today!" else "All done!",
+                backgroundColor = palette.cardBackground,
+                textColor = palette.titleText,
+            )
+            else -> TaskListRows(
+                state = state,
+                isDaily = isDaily,
+                isLarge = isLarge,
+                palette = palette,
+                openListLink = openListLink,
+            )
+        }
     }
 }
 
@@ -242,6 +275,7 @@ private fun TaskListRows(
     state: TaskListWidgetState,
     isDaily: Boolean,
     isLarge: Boolean,
+    palette: TaskListPalette,
     openListLink: String,
 ) {
     val maxVisible = if (isLarge) 9 else 6
@@ -255,7 +289,8 @@ private fun TaskListRows(
                 Column(modifier = GlanceModifier.fillMaxWidth()) {
                     TaskRow(
                         text = task.text,
-                        valueColor = colorForTaskValue(task.value),
+                        valueColor = colorForTaskValueLight(task.value),
+                        primaryTextColor = palette.taskText,
                         checklistDoneCount = task.checklistDone,
                         checklistTotalCount = task.checklistTotal,
                         showChecklistCount = isLarge,
@@ -281,7 +316,7 @@ private fun TaskListRows(
             Text(
                 text = plural,
                 style = TextStyle(
-                    color = WidgetColors.dailiesPurple,
+                    color = palette.secondaryText,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Normal,
                 ),

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.widget.glance.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
@@ -22,6 +23,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 
@@ -29,12 +31,14 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 fun EmptyState(
     message: String,
     modifier: GlanceModifier = GlanceModifier,
+    backgroundColor: ColorProvider = WidgetColors.cardBackground,
+    textColor: ColorProvider = WidgetColors.text,
 ) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .cornerRadius(6.dp)
-            .background(WidgetColors.cardBackground),
+            .cornerRadius(16.dp)
+            .background(backgroundColor),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -50,9 +54,9 @@ fun EmptyState(
             Text(
                 text = message,
                 style = TextStyle(
-                    color = WidgetColors.text,
+                    color = textColor,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center,
                 ),
             )
@@ -61,12 +65,18 @@ fun EmptyState(
 }
 
 @Composable
-fun StartDayCard(onClick: Action, modifier: GlanceModifier = GlanceModifier) {
+fun StartDayCard(
+    onClick: Action,
+    modifier: GlanceModifier = GlanceModifier,
+    backgroundColor: ColorProvider = WidgetColors.cardBackground,
+    textColor: ColorProvider = WidgetColors.text,
+    iconTint: ColorProvider? = null,
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .cornerRadius(6.dp)
-            .background(WidgetColors.cardBackground)
+            .cornerRadius(16.dp)
+            .background(backgroundColor)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
@@ -79,13 +89,14 @@ fun StartDayCard(onClick: Action, modifier: GlanceModifier = GlanceModifier) {
                 provider = ImageProvider(R.drawable.widget_start_day),
                 contentDescription = "Start a new day",
                 modifier = GlanceModifier.size(36.dp),
+                colorFilter = iconTint?.let { ColorFilter.tint(it) },
             )
             Spacer(GlanceModifier.height(12.dp))
             Text(
                 text = "Start a new day",
                 style = TextStyle(
-                    color = WidgetColors.text,
-                    fontSize = 15.sp,
+                    color = textColor,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center,
                 ),
