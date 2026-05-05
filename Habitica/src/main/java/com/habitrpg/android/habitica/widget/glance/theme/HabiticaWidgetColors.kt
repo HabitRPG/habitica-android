@@ -124,6 +124,16 @@ fun colorForTaskValueLight(value: Double): Color = when {
     else -> HabitButtonBarColors.blueLight
 }
 
+fun colorForTaskValueMedium(value: Double): Color = when {
+    value < -20.0 -> HabitButtonBarColors.maroonMedium
+    value < -10.0 -> HabitButtonBarColors.redMedium
+    value < -1.0 -> HabitButtonBarColors.orangeMedium
+    value < 1.0 -> HabitButtonBarColors.yellowMedium
+    value < 5.0 -> HabitButtonBarColors.greenMedium
+    value < 10.0 -> HabitButtonBarColors.tealMedium
+    else -> HabitButtonBarColors.blueMedium
+}
+
 fun colorForHabitValueLight(value: Double): Color = when {
     value < -20.0 -> HabitButtonBarColors.maroonLight
     value < -10.0 -> HabitButtonBarColors.redLight

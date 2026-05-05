@@ -45,7 +45,6 @@ import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.components.EmptyState
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
-import com.habitrpg.android.habitica.widget.glance.components.TaskRowSeparator
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.TaskWidgetItem
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
@@ -55,6 +54,7 @@ import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueLight
+import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueMedium
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.flow.firstOrNull
@@ -170,7 +170,7 @@ private fun rememberPalette(): TaskListPalette {
 private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val size = LocalSize.current
     val palette = rememberPalette()
-    val isCompact = size.width < 260.dp
+    val isCompact = size.width < 230.dp
     val isLarge = size.height >= 280.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addLink = if (isDaily) "habitica://user/tasks/daily/add" else "habitica://user/tasks/todo/add"
@@ -186,7 +186,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             .fillMaxSize()
             .cornerRadius(20.dp)
             .background(palette.widgetBackground)
-            .padding(horizontal = 14.dp, vertical = 12.dp),
+            .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
         TaskListHeader(
             title = title,
@@ -213,14 +213,16 @@ private fun TaskListHeader(
     addLink: String,
 ) {
     Row(
-        modifier = GlanceModifier.fillMaxWidth(),
+        modifier = GlanceModifier
+            .fillMaxWidth()
+            .padding(start = 8.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = title,
             style = TextStyle(
                 color = palette.titleText,
-                fontSize = 16.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Medium,
             ),
             modifier = GlanceModifier
@@ -287,22 +289,31 @@ private fun TaskListRows(
             items(visible.size, itemId = { visible[it].id.hashCode().toLong() }) { index ->
                 val task = visible[index]
                 Column(modifier = GlanceModifier.fillMaxWidth()) {
-                    TaskRow(
-                        text = task.text,
-                        valueColor = colorForTaskValueLight(task.value),
-                        primaryTextColor = palette.taskText,
-                        checklistDoneCount = task.checklistDone,
-                        checklistTotalCount = task.checklistTotal,
-                        showChecklistCount = isLarge,
-                        onClick = actionRunCallback<ScoreTaskAction>(
-                            actionParametersOf(
-                                WidgetActionKeys.taskId to task.id,
-                                WidgetActionKeys.direction to TaskDirection.UP.text,
+                    Box(
+                        modifier = GlanceModifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                            .cornerRadius(17.5.dp)
+                            .background(palette.cardBackground),
+                    ) {
+                        TaskRow(
+                            text = task.text,
+                            valueColor = colorForTaskValueLight(task.value),
+                            valueBorderColor = colorForTaskValueMedium(task.value),
+                            primaryTextColor = palette.taskText,
+                            checklistDoneCount = task.checklistDone,
+                            checklistTotalCount = task.checklistTotal,
+                            showChecklistCount = isLarge,
+                            onClick = actionRunCallback<ScoreTaskAction>(
+                                actionParametersOf(
+                                    WidgetActionKeys.taskId to task.id,
+                                    WidgetActionKeys.direction to TaskDirection.UP.text,
+                                ),
                             ),
-                        ),
-                    )
+                        )
+                    }
                     if (index < visible.size - 1 || (isLarge && remaining > 0)) {
-                        TaskRowSeparator()
+                        Spacer(GlanceModifier.height(6.dp))
                     }
                 }
             }

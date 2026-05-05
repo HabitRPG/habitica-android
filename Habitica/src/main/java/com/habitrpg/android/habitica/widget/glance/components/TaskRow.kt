@@ -14,8 +14,8 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxWidth
-import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.layout.width
@@ -29,27 +29,36 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 fun TaskRow(
     text: String,
     valueColor: Color,
+    valueBorderColor: Color,
     primaryTextColor: ColorProvider = WidgetColors.taskListTaskText,
     checklistDoneCount: Int = 0,
     checklistTotalCount: Int = 0,
     showChecklistCount: Boolean = true,
     onClick: Action,
     modifier: GlanceModifier = GlanceModifier,
-    tileSize: Dp = 28.dp,
+    tileWidth: Dp = 44.dp,
+    innerSquareSize: Dp = 14.dp,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = GlanceModifier
-                .size(tileSize)
-                .cornerRadius(8.dp)
+                .width(tileWidth)
+                .fillMaxHeight()
                 .background(ColorProvider(valueColor)),
-        ) {}
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(
+                modifier = GlanceModifier
+                    .size(innerSquareSize)
+                    .cornerRadius(4.dp)
+                    .background(ColorProvider(valueBorderColor)),
+            ) {}
+        }
         Spacer(GlanceModifier.width(10.dp))
         Text(
             text = text,
@@ -84,16 +93,7 @@ fun TaskRow(
                 )
             }
         }
+        Spacer(GlanceModifier.width(12.dp))
     }
 }
 
-@Composable
-fun TaskRowSeparator() {
-    Box(
-        modifier = GlanceModifier
-            .fillMaxWidth()
-            .height(1.dp)
-            .padding(start = 12.dp)
-            .background(WidgetColors.separator),
-    ) {}
-}
