@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesCountWidgetReceiver
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
+import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -23,7 +24,7 @@ object WidgetPreviewRegistrar {
     private const val PREFS = "widget_previews"
     private const val LAST_KEY = "last_registered_token"
 
-    private const val REVISION = 8
+    private const val REVISION = 9
 
     private val RECEIVERS: List<KClass<out GlanceAppWidgetReceiver>> = listOf(
         AddTaskMultiWidgetReceiver::class,
@@ -31,6 +32,7 @@ object WidgetPreviewRegistrar {
         DailiesCountWidgetReceiver::class,
         DailiesWidgetProvider::class,
         HabitButtonWidgetProvider::class,
+        TodoListWidgetProvider::class,
     )
 
     fun registerIfNeeded(context: Context) {

@@ -2,90 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/widget_bg"
-    android:orientation="horizontal"
-    android:padding="12dp">
+    android:background="@drawable/widget_preview_dailies_tile"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="12dp">
 
     <LinearLayout
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="To Do's"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="@color/widget_text_secondary" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2"
-            android:textSize="34sp"
-            android:textColor="@color/widget_task_list_secondary_text" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="Your To Do's"
+            android:textSize="22sp"
+            android:textFontWeight="500"
+            android:textColor="@color/widget_preview_scallop_glyph_tint" />
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@drawable/widget_icon_add"
             android:contentDescription="@null" />
     </LinearLayout>
 
-    <Space android:layout_width="12dp" android:layout_height="match_parent" />
+    <Space android:layout_width="match_parent" android:layout_height="8dp" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp">
-            <View
-                android:layout_width="4dp"
-                android:layout_height="18dp"
-                android:background="#34B5C1" />
-            <Space android:layout_width="8dp" android:layout_height="match_parent" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Write blog post"
-                android:textSize="15sp"
-                android:textColor="@color/widget_task_list_task_text" />
-        </LinearLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/widget_preview_row_card"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="12dp"
-            android:background="@color/widget_separator" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/widget_preview_tab_left_blue" />
+        <Space android:layout_width="10dp" android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp">
-            <View
-                android:layout_width="4dp"
-                android:layout_height="18dp"
-                android:background="#46A7D9" />
-            <Space android:layout_width="8dp" android:layout_height="match_parent" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buy groceries"
-                android:textSize="15sp"
-                android:textColor="@color/widget_task_list_task_text" />
-        </LinearLayout>
+            android:text="Pick up groceries"
+            android:textSize="14sp"
+            android:textFontWeight="500"
+            android:textColor="@color/widget_preview_scallop_glyph_tint" />
+    </LinearLayout>
+
+    <Space android:layout_width="match_parent" android:layout_height="6dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/widget_preview_row_card"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <View
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/widget_preview_tab_left_yellow" />
+        <Space android:layout_width="10dp" android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email the team"
+            android:textSize="14sp"
+            android:textFontWeight="500"
+            android:textColor="@color/widget_preview_scallop_glyph_tint" />
+    </LinearLayout>
+
+    <Space android:layout_width="match_parent" android:layout_height="6dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/widget_preview_row_card"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <View
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/widget_preview_tab_left_green" />
+        <Space android:layout_width="10dp" android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Plan weekend trip"
+            android:textSize="14sp"
+            android:textFontWeight="500"
+            android:textColor="@color/widget_preview_scallop_glyph_tint" />
     </LinearLayout>
 </LinearLayout>

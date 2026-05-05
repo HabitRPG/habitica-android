@@ -37,7 +37,7 @@ fun EmptyState(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .cornerRadius(16.dp)
+            .cornerRadius(17.5.dp)
             .background(backgroundColor),
         contentAlignment = Alignment.Center,
     ) {
