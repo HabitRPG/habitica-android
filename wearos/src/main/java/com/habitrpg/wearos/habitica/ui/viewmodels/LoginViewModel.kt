@@ -1,24 +1,25 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
-import android.app.Activity
-import android.content.Intent
+import android.content.Context
 import android.content.SharedPreferences
-import androidx.activity.result.ActivityResultLauncher
+import android.os.Build
+import android.util.Log
 import androidx.core.content.edit
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.auth.GoogleAuthException
-import com.google.android.gms.auth.GoogleAuthUtil
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
-import com.google.android.gms.auth.UserRecoverableAuthException
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.common.GooglePlayServicesUtil
+import com.google.android.gms.auth.api.identity.AuthorizationRequest
+import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.Scopes
-import com.google.android.gms.common.UserRecoverableException
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
+import com.google.android.gms.common.api.Scope
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
@@ -29,11 +30,8 @@ import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,81 +48,73 @@ constructor(
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     lateinit var onLoginCompleted: () -> Unit
 
-    fun handleGoogleLogin(
-        activity: Activity,
-        pickAccountResult: ActivityResultLauncher<Intent>
-    ) {
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-        val client = GoogleSignIn.getClient(activity, gso)
-        pickAccountResult.launch(client.signInIntent)
-    }
+    val isGoogleLoginSupported: Boolean
+        get() = Build.VERSION.SDK_INT >= 34
 
-    fun handleGoogleLoginResult(
-        activity: Activity,
-        task: Task<GoogleSignInAccount>,
-        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?
-    ) {
-        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val account =
-                async {
-                    try {
-                        return@async task.getResult(
-                            ApiException::class.java
-                        )
-                    } catch (e: IOException) {
-                        return@async null
-                    } catch (e: GoogleAuthException) {
-                        if (recoverFromPlayServicesErrorResult != null) {
-                            handleGoogleAuthException(e, activity, recoverFromPlayServicesErrorResult)
-                        }
-                        return@async null
-                    } catch (e: UserRecoverableException) {
-                        return@async null
-                    }
-                }.await()
-            val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
-            val scopes = "oauth2:$scopesString"
-            val token =
-                withContext(Dispatchers.IO) {
-                    account?.account?.let { GoogleAuthUtil.getToken(activity, it, scopes) }
+    fun handleGoogleLogin(context: Context) {
+        if (!isGoogleLoginSupported) return
+
+        try {
+            val googleIdOption = GetSignInWithGoogleOption.Builder(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
+                .build()
+            val request = GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build()
+
+            viewModelScope.launch(exceptionBuilder.userFacing(this)) {
+                try {
+                    val result = CredentialManager.create(context).getCredential(
+                        request = request,
+                        context = context,
+                    )
+                    handleSignIn(context, result)
+                } catch (e: GetCredentialException) {
+                    Log.e("LoginViewModel", "Get Credential Exception", e)
+                } catch (e: ApiException) {
+                    Log.e("LoginViewModel", "API Exception", e)
                 }
-            val auth = UserAuthSocial()
-            auth.network = "google"
-            auth.authResponse = UserAuthSocialTokens()
-            auth.authResponse?.client_id = account?.email
-            auth.authResponse?.access_token = token
-            val response = apiClient.loginSocial(auth)
-            handleAuthResponse(response.responseData)
+            }
+        } catch (e: Exception) {
+            Log.e("LoginViewModel", "Failed to start Google login", e)
         }
     }
 
-    private fun handleGoogleAuthException(
-        e: Exception,
-        activity: Activity,
-        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>
-    ) {
-        if (e is GooglePlayServicesAvailabilityException) {
-            GoogleApiAvailability.getInstance()
-            GooglePlayServicesUtil.showErrorDialogFragment(
-                e.connectionStatusCode,
-                activity,
-                null,
-                REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR
-            ) {
+    private suspend fun handleSignIn(context: Context, result: GetCredentialResponse) {
+        val credential = result.credential
+
+        if (credential is CustomCredential &&
+            credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+        ) {
+            try {
+                val googleIdTokenCredential = GoogleIdTokenCredential
+                    .createFrom(credential.data)
+                val authorizationRequest = AuthorizationRequest.Builder()
+                    .requestOfflineAccess(BuildConfig.GOOGLE_AUTH_CLIENT_ID)
+                    .setRequestedScopes(
+                        listOf(
+                            Scope(Scopes.PROFILE),
+                            Scope(Scopes.EMAIL),
+                        )
+                    )
+                    .build()
+                val authResult = Identity.getAuthorizationClient(context)
+                    .authorize(authorizationRequest).await()
+                if (authResult?.accessToken != null) {
+                    val auth = UserAuthSocial()
+                    auth.network = "google"
+                    auth.authResponse = UserAuthSocialTokens()
+                    auth.authResponse?.client_id = googleIdTokenCredential.id
+                    auth.authResponse?.access_token = authResult.accessToken
+                    val response = apiClient.loginSocial(auth)
+                    handleAuthResponse(response.responseData)
+                } else {
+                    Log.e("LoginViewModel", "Received an empty access token response")
+                }
+            } catch (e: GoogleIdTokenParsingException) {
+                Log.e("LoginViewModel", "Invalid google id token response", e)
             }
-            return
-        } else if (e is UserRecoverableAuthException) {
-            // Unable to authenticate, such as when the user has not yet granted
-            // the app access to the account, but the user can fix this.
-            // Forward the user to an activity in Google Play services.
-            val intent = e.intent
-            if (intent != null) {
-                recoverFromPlayServicesErrorResult.launch(intent)
-            }
-            return
+        } else {
+            Log.e("LoginViewModel", "Unexpected credential type: $credential")
         }
     }
 
@@ -157,13 +147,8 @@ constructor(
             if ((encryptedKey?.length ?: 0) > 5) {
                 putString(user, encryptedKey)
             } else {
-                // Something might have gone wrong with encryption, so fall back to this.
                 putString("APIToken", api)
             }
         }
-    }
-
-    companion object {
-        private const val REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001
     }
 }

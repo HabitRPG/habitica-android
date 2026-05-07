@@ -4,7 +4,6 @@ import android.content.Context
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
-import com.habitrpg.android.habitica.helpers.AprilFoolsHandler
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
@@ -43,11 +42,6 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
             val state = apiClient.getWorldState() ?: return null
             lastWorldStateSync = now
             localRepository.save(state)
-            for (event in state.events) {
-                if (event.aprilFools != null && event.isCurrentlyActive) {
-                    AprilFoolsHandler.handle(event.aprilFools, event.end)
-                }
-            }
             return state
         }
         return null

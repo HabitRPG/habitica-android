@@ -35,6 +35,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -377,6 +378,9 @@ open class TaskRecyclerViewFragment :
                     newState: Int
                 ) {
                     super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        KeyboardUtil.dismissKeyboard(activity)
+                    }
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         binding?.refreshLayout?.isEnabled =
                             (activity as? MainActivity)?.isAppBarExpanded ?: false

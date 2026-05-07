@@ -88,9 +88,19 @@ class ItemRecyclerFragment :
 
     var user: User? = null
     var adapter: ItemRecyclerAdapter? = null
-    var itemType: String? = null
+    var itemType: String?
+        get() = arguments?.getString(ARG_ITEM_TYPE)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ARG_ITEM_TYPE, value)
+        }
     var transformationItems: MutableList<OwnedItem> = mutableListOf()
-    var itemTypeText: String? = null
+    var itemTypeText: String?
+        get() = arguments?.getString(ARG_ITEM_TYPE_TEXT)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ARG_ITEM_TYPE_TEXT, value)
+        }
     private var selectedSpecialItem: SpecialItem? = null
     private var specialSkills: MutableList<Skill> = mutableListOf()
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
@@ -114,11 +124,6 @@ class ItemRecyclerFragment :
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
-            this.itemTypeText = savedInstanceState.getString(ITEM_TYPE_TEXT_KEY, "")
-        }
         getSpecialSkills()
 
         binding?.refreshLayout?.setOnRefreshListener(this)
@@ -296,12 +301,6 @@ class ItemRecyclerFragment :
         parentFragmentManager.let { fragment.show(it, "hatchingDialog") }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(ITEM_TYPE_KEY, this.itemType)
-        outState.putString(ITEM_TYPE_TEXT_KEY, this.itemTypeText)
-    }
-
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -473,7 +472,7 @@ class ItemRecyclerFragment :
     }
 
     companion object {
-        private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
-        private const val ITEM_TYPE_TEXT_KEY = "CLASS_TYPE_TEXT_KEY"
+        const val ARG_ITEM_TYPE = "CLASS_TYPE_KEY"
+        const val ARG_ITEM_TYPE_TEXT = "CLASS_TYPE_TEXT_KEY"
     }
 }

@@ -58,18 +58,26 @@ class EllipsisTextView : AppCompatTextView {
         b: Int
     ) {
         super.layout(l, t, r, b)
+        checkEllipsis()
+    }
 
-        ellipses = false
-        val layout = layout
-        if (layout != null) {
-            val lines = layout.lineCount
-            if (lines >= maxLines) {
-                ellipses = true
+    override fun onTextChanged(
+        text: CharSequence?,
+        start: Int,
+        lengthBefore: Int,
+        lengthAfter: Int
+    ) {
+        super.onTextChanged(text, start, lengthBefore, lengthAfter)
+        post { checkEllipsis() }
+    }
+
+    private fun checkEllipsis() {
+        val newEllipsis = layout?.let { it.lineCount >= maxLines } ?: false
+        if (newEllipsis != ellipses) {
+            ellipses = newEllipsis
+            for (listener in ellipsesListeners) {
+                listener.ellipsisStateChanged(ellipses)
             }
-        }
-
-        for (listener in ellipsesListeners) {
-            listener.ellipsisStateChanged(ellipses)
         }
     }
 }

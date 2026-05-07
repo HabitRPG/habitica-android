@@ -230,12 +230,8 @@ class PreferencesFragment :
                         preferenceManager.sharedPreferences?.edit()?.remove("server_url")?.apply()
                         val baseUrl = context.getString(com.habitrpg.common.habitica.R.string.base_url)
                         apiClient.updateServerUrl(baseUrl)
-                        (activity as? MainActivity)?.let {
-                            it.reload()
-                        } ?: run {
-                            customServerUrlReleasePreference?.summary = null
-                            customServerUrlReleaseCategory?.isVisible = false
-                        }
+                        HabiticaBaseApplication.logout(context)
+                        activity?.finish()
                     }
                     dialog.addCancelButton()
                     dialog.enqueue()
@@ -423,8 +419,11 @@ class PreferencesFragment :
             }
 
             "server_url" -> {
-                apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
-                findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
+                val newUrl = sharedPreferences.getString(key, null)
+                if (!newUrl.isNullOrBlank()) {
+                    apiClient.updateServerUrl(newUrl)
+                }
+                findPreference<Preference>(key)?.summary = newUrl ?: ""
             }
 
             "task_display" -> {

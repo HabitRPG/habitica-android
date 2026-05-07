@@ -182,7 +182,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
             var canBuy = true
             if (!hasEgg) {
                 hatchPrice += getItemPrice(pet, egg, hasUnlockedEgg)
-                if (pet.type == "quest" && !hasUnlockedEgg) {
+                if (pet.type == "quest" && (!hasUnlockedEgg || pet.animal == "Egg")) {
                     canBuy = false
                 }
             }

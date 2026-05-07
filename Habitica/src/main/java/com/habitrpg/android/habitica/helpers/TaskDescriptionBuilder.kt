@@ -39,13 +39,22 @@ class TaskDescriptionBuilder(private val context: Context) {
                 }
             }
 
-            TaskType.DAILY ->
+            TaskType.DAILY -> {
+                val fifthWeekWarning =
+                    if (task.frequency == Frequency.MONTHLY && task.getWeeksOfMonth()?.firstOrNull() == 4) {
+                        val dayStrings = task.repeat?.dayStrings(context) ?: listOf()
+                        " " + context.getString(R.string.fifth_week_warning, joinToCount(dayStrings))
+                    } else {
+                        ""
+                    }
                 context.getString(
                     R.string.daily_summary_description,
                     describeDifficulty(task.priority),
                     describeRepeatInterval(task.frequency, task.everyX ?: 1),
-                    describeRepeatDays(task)
+                    describeRepeatDays(task),
+                    fifthWeekWarning
                 )
+            }
 
             else -> ""
         }
@@ -87,15 +96,8 @@ class TaskDescriptionBuilder(private val context: Context) {
                             }
                         context.getString(R.string.on_the_x, joinToCount(dayList))
                     } else if (task.getWeeksOfMonth()?.isNotEmpty() == true) {
-                        val occurrence =
-                            when (task.getWeeksOfMonth()?.first()) {
-                                0 -> context.getString(R.string.first)
-                                1 -> context.getString(R.string.second)
-                                2 -> context.getString(R.string.third)
-                                3 -> context.getString(R.string.fourth)
-                                4 -> context.getString(R.string.fifth)
-                                else -> return ""
-                            }
+                        val weekNumber = (task.getWeeksOfMonth()?.first() ?: 0) + 1
+                        val occurrence = withOrdinal(weekNumber)
                         val dayStrings = task.repeat?.dayStrings(context) ?: listOf()
 
                         context.getString(

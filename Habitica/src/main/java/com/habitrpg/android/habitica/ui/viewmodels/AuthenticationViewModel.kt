@@ -39,6 +39,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -67,6 +68,10 @@ class AuthenticationViewModel @Inject constructor(
     private val _isUsernameValid = MutableStateFlow<Boolean?>(null)
     private var _usernameIssues = MutableStateFlow<String?>(null)
     private val _showServerSettingsDialog: MutableStateFlow<ServerSettings?> = MutableStateFlow(null)
+    private val _customServerUrl = MutableStateFlow(sharedPrefs.getString("server_url", null))
+    val customServerUrl: StateFlow<String?> = _customServerUrl
+    private val _serverSettingsRevealed = MutableStateFlow(false)
+    val serverSettingsRevealed: StateFlow<Boolean> = _serverSettingsRevealed
 
     val showAuthProgress: Flow<Boolean> = _showAuthProgress
     val authenticationError: Flow<AuthenticationErrors> = _authenticationError
@@ -347,6 +352,11 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun onServerSettingsUnlocked() {
+        _serverSettingsRevealed.value = true
+        showServerSettings()
+    }
+
+    fun showServerSettings() {
         _showServerSettingsDialog.value = ServerSettings(
             baseUrl = BuildConfig.BASE_URL,
             customUrl = sharedPrefs.getString("server_url", null)
@@ -356,12 +366,14 @@ class AuthenticationViewModel @Inject constructor(
     fun onServerSettingsChanged(newUrl: String) {
         sharedPrefs.edit { putString("server_url", newUrl) }
         apiClient.updateServerUrl(newAddress = newUrl)
+        _customServerUrl.value = newUrl
         onServerSettingsDismissed()
     }
 
     fun onServerSettingsReset(baseUrl: String) {
         sharedPrefs.edit { remove("server_url") }
         apiClient.updateServerUrl(newAddress = baseUrl)
+        _customServerUrl.value = null
         onServerSettingsDismissed()
     }
 

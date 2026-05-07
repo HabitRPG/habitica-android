@@ -6,7 +6,10 @@ import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.icu.text.MessageFormat
 import android.os.Build
+import android.text.Editable
+import android.text.Html
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
@@ -59,6 +62,9 @@ constructor(
             field = value
             binding.startDateTextview.text = dateFormatter.format(value)
             startDateCalendar.time = value
+            if (weeksOfMonth?.isNotEmpty() == true) {
+                recalculateWeeksOfMonth()
+            }
             generateSummary()
         }
     private var startDateCalendar = Calendar.getInstance(LanguageHelper.systemLocale)
@@ -139,6 +145,14 @@ constructor(
         everyX = 1
         weeklyRepeat = Days()
 
+        binding.repeatsEveryEdittext.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                generateSummary()
+            }
+        })
+
         binding.repeatsEverySpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -202,10 +216,8 @@ constructor(
         }
 
         binding.monthlyRepeatWeeks.setOnClickListener {
-            val dayOfMonth = startDateCalendar.get(Calendar.DAY_OF_MONTH)
-            val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
-            weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
             daysOfMonth = null
+            recalculateWeeksOfMonth()
             generateSummary()
         }
 
@@ -340,6 +352,23 @@ constructor(
         }
     }
 
+    private fun recalculateWeeksOfMonth() {
+        val dayOfMonth = startDateCalendar.get(Calendar.DAY_OF_MONTH)
+        val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
+        weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
+        weeklyRepeat = Days(default = false).apply {
+            when (startDateCalendar.get(Calendar.DAY_OF_WEEK)) {
+                Calendar.MONDAY -> m = true
+                Calendar.TUESDAY -> t = true
+                Calendar.WEDNESDAY -> w = true
+                Calendar.THURSDAY -> th = true
+                Calendar.FRIDAY -> f = true
+                Calendar.SATURDAY -> s = true
+                Calendar.SUNDAY -> su = true
+            }
+        }
+    }
+
     private fun configureMonthlyRepeatViews() {
         if (daysOfMonth?.isEmpty() == false) {
             styleButtonAsActive(binding.monthlyRepeatDays)
@@ -387,7 +416,7 @@ constructor(
             when (frequency) {
                 Frequency.DAILY -> if (everyX == 1) "day" else "days"
                 Frequency.WEEKLY -> if (everyX == 1) "week" else "weeks"
-                Frequency.MONTHLY -> if (everyX == 1) "month" else "months"
+                Frequency.MONTHLY -> context.getString(if (everyX == 1) R.string.month else R.string.months)
                 Frequency.YEARLY -> if (everyX == 1) "year" else "years"
             }
 
@@ -415,7 +444,7 @@ constructor(
                 if (weeklyRepeat.su) {
                     weekdayStrings.add("Sunday")
                 }
-                " on " + TextUtils.join(", ", weekdayStrings)
+                " on <b>" + TextUtils.join(", ", weekdayStrings) + "</b>"
             } else {
                 ""
             }
@@ -426,9 +455,9 @@ constructor(
                     val date = startDateCalendar.get(Calendar.DATE)
                     val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
                     val formattedDate = formatter.format(arrayOf(date))
-                    " on the $formattedDate"
+                    " on the <b>$formattedDate</b>"
                 } else {
-                    val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
+                    val week = (startDateCalendar.get(Calendar.DAY_OF_MONTH) - 1) / 7 + 1
                     val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
                     val formattedWeek = formatter.format(arrayOf(week))
                     val dayLongName =
@@ -437,20 +466,22 @@ constructor(
                             Calendar.LONG,
                             LanguageHelper.systemLocale
                         )
-                    " on the $formattedWeek week on $dayLongName"
+                    " on the <b>$formattedWeek $dayLongName</b> of the month"
                 }
         }
 
         val everyXString = if (everyX == 1) "" else "$everyX "
 
-        val summary =
-            resources.getString(
-                R.string.repeat_summary,
-                frequency,
-                everyXString,
-                frequencyQualifier,
-                weekdays
-            )
-        binding.summaryTextview.text = summary
+        var summary = "Repeats every <b>$everyXString$frequencyQualifier</b>$weekdays."
+        if (frequency == Frequency.MONTHLY && weeksOfMonth?.contains(4) == true) {
+            val dayName =
+                startDateCalendar.getDisplayName(
+                    Calendar.DAY_OF_WEEK,
+                    Calendar.LONG,
+                    LanguageHelper.systemLocale
+                )
+            summary += " " + context.getString(R.string.fifth_week_warning, dayName)
+        }
+        binding.summaryTextview.text = Html.fromHtml(summary, Html.FROM_HTML_MODE_COMPACT)
     }
 }

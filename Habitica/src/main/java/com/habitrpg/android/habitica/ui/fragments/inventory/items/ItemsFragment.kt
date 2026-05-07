@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -62,23 +63,23 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             object : FragmentStateAdapter(fragmentManager, lifecycle) {
                 override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                     val fragment = ItemRecyclerFragment()
-
-                    fragment.itemType =
-                        when (position) {
-                            0 -> "eggs"
-                            1 -> "hatchingPotions"
-                            2 -> "food"
-                            3 -> "quests"
-                            4 -> "special"
-                            else -> ""
-                        }
-                    fragment.itemTypeText =
-                        if (position == 4 && isAdded) {
-                            getString(R.string.special_items)
-                        } else {
-                            getPageTitle(position)
-                        }
-
+                    val itemType = when (position) {
+                        0 -> "eggs"
+                        1 -> "hatchingPotions"
+                        2 -> "food"
+                        3 -> "quests"
+                        4 -> "special"
+                        else -> ""
+                    }
+                    val itemTypeText = if (position == 4 && isAdded) {
+                        getString(R.string.special_items)
+                    } else {
+                        getPageTitle(position)
+                    }
+                    fragment.arguments = bundleOf(
+                        ItemRecyclerFragment.ARG_ITEM_TYPE to itemType,
+                        ItemRecyclerFragment.ARG_ITEM_TYPE_TEXT to itemTypeText
+                    )
                     return fragment
                 }
 

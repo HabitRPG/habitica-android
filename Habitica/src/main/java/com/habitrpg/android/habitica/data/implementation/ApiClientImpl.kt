@@ -248,7 +248,7 @@ class ApiClientImpl(
     }
 
     override fun updateServerUrl(newAddress: String?) {
-        if (newAddress != null) {
+        if (!newAddress.isNullOrBlank()) {
             hostConfig.address = newAddress
             buildRetrofit()
         }

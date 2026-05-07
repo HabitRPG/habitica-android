@@ -68,7 +68,8 @@ class WorldStateSerialization : JsonDeserializer<WorldState> {
                     state.events = events
                 }
             }
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
         return state

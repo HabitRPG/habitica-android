@@ -63,6 +63,8 @@ class TasksFragment :
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
 
     private var filterMenuItem: MenuItem? = null
+    private var searchView: SearchView? = null
+    private var searchMenuItem: MenuItem? = null
 
     private val activeFragment: TaskRecyclerViewFragment?
         get() {
@@ -159,13 +161,20 @@ class TasksFragment :
         updateFilterIcon(taskType = getActiveTaskType())
 
         val item = menu.findItem(R.id.action_search)
+        searchMenuItem = item
         tintMenuIcon(item)
         val sv = item.actionView as? SearchView
+        searchView = sv
         sv?.setOnQueryTextListener(this)
         sv?.setIconifiedByDefault(false)
         item.setOnActionExpandListener(
             object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    if (sv?.hasFocus() == true) {
+                        sv.clearFocus()
+                        return false
+                    }
+                    viewModel.searchQuery = null
                     filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
                     return true
                 }
@@ -180,11 +189,12 @@ class TasksFragment :
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+        searchView?.clearFocus()
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        viewModel.searchQuery = newText
+        viewModel.searchQuery = if (newText.isNullOrEmpty()) null else newText
         return true
     }
 
@@ -248,6 +258,7 @@ class TasksFragment :
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
+                    searchMenuItem?.collapseActionView()
                     bottomNavigation?.selectedPosition = position
                     binding?.viewPager?.post {
                         updateFilterIcon(getTaskTypeFromTabPosition(position))
