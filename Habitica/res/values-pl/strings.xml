@@ -1213,7 +1213,6 @@
         <item quantity="many">co %d tygodni</item>
         <item quantity="other">co %d tygodni</item>
     </plurals>
-    <string name="quest_rejected">Misja odrzucona</string>
     <string name="quest_reject_error">Nie udało się odrzucić misji. Spróbuj ponownie.</string>
     <string name="free_rebirth_at_level_100">DARMOWA Kula Odrodzenia na poziomie 100</string>
     <string name="membership">Członkostwo</string>
@@ -1221,7 +1220,6 @@
     <string name="not_participating_filter">Nie biorę udziału</string>
     <string name="cancel_subscription_apple_description">Chcesz zrezygnować z subskrypcji\? Ze względu na Twoją metodę płatności, musisz anulować subskrypcję za pomocą Apple ID na Twoim urządzeniu iOS.</string>
     <string name="faint_broken_gear_info">Zniszczone wyposażenie może zostać odkupione na Targu</string>
-    <string name="quest_accepted">Misja zaakceptowana!</string>
     <string name="quest_accept_error">Nie udało się zaakceptować misji. Spróbuj ponownie.</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d dzień do DARMOWEJ Kuli Odrodzenia</item>

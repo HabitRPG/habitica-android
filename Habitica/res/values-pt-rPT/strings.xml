@@ -800,9 +800,7 @@
     </plurals>
     <string name="only_leader_create_challenge">Apenas o líder pode criar Desafios</string>
     <string name="faint_broken_gear_info">Equipamentos quebrados podem ser recomprados no Mercado</string>
-    <string name="quest_accepted">Missão aceita!</string>
     <string name="quest_rejected">Missão rejeitada</string>
-    <string name="quest_reject_error">Não foi possível rejeitar a missão. Por favor, tente novamente.</string>
     <string name="free_rebirth_at_level_100">Orbe do Renascimento GRATUITO no nível 100</string>
     <string name="change_class_confirmation_message">Isso mudará qual equipamento será desbloqueado nas lojas e alterará suas habilidades disponíveis</string>
     <string name="membership">Associação</string>
@@ -864,7 +862,6 @@
     <string name="opt_out_description">Isso deixará você sem uma aula atribuída. Você pode escolher uma turma novamente ativando o sistema de turmas em Configurações a qualquer momento.</string>
     <string name="change_class_message">Isso removerá sua classe atual e reembolsará todos os pontos de estatísticas e permitirá que você selecione uma nova classe</string>
     <string name="exact_alarm_system_settings_description">Permita `Alarmes e lembretes` no aplicativo Configurações para garantir que os lembretes apareçam exatamente no horário programado</string>
-    <string name="quest_accept_error">Não foi possível aceitar a missão. Por favor, tente novamente.</string>
     <string name="subscribe_listitemFaint_description">Evite perder seu progresso com uma cura instantânea quando ficar sem HP uma vez por dia!</string>
     <string name="class_equipment_shop_dialog_new">Este item está disponível apenas para %s. Abra Configurações para alterar a classe.</string>
     <string name="register_tos_confirm">Você concorda com nossos <a href="https://habitica.com/static/terms">Termos de Serviço</a> e leu nossa <a href="https://habitica.com/static/privacy">Política de Privacidade</a>.</string>
@@ -879,7 +876,7 @@
     <plurals name="x_days">
         <item quantity="one">%d dia</item>
         <item quantity="many">%d dias</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="your_tags">Suas tags</string>
     <string name="challenge_tags">Tags de desafio</string>

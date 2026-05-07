@@ -309,9 +309,7 @@
         <item quantity="many">%d Minutos</item>
         <item quantity="other">%d Minutos</item>
     </plurals>
-    <string name="quest_accepted">¡Misión aceptada!</string>
     <string name="quest_rejected">Misión rechazada</string>
-    <string name="quest_accept_error">No fue posible aceptar la misión. Por favor intenta más tarde.</string>
     <string name="quest_reject_error">No fue posible rechazar la misión. Por favor intenta más tarde.</string>
     <string name="avatar_setup_description">Así qué, ¿cómo te gustaría verte\? No te preocupes, puedes cambiar esto después.</string>
     <string name="quest_party_required_title">Debes pertener a un Equipo antes de empezar una Misión</string>

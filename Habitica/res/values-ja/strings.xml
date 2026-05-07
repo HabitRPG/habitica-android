@@ -1621,13 +1621,10 @@
     <string name="get_12_mystic_hourglasses">初めて12ヶ月間の有料プランに登録したとき、12個の神秘の砂時計をすぐにゲットしよう！</string>
     <string name="next_switch_in_x">あと%sで切り換えます</string>
     <string name="faint_broken_gear_info">壊れた装備は市場から買い戻すことができます</string>
-    <string name="quest_accept_error">クエストを承認できませんでした。もう一度やり直してください。</string>
     <string name="rebirth_confirm_reset_item_2">ステータスポイント</string>
     <string name="new_message">新しいメッセージ</string>
     <string name="category">カテゴリー</string>
-    <string name="quest_accepted">クエストを承認しました！</string>
     <string name="quest_rejected">クエストを拒否しました</string>
-    <string name="quest_reject_error">クエストを拒否できませんでした。もう一度やり直してください。</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="other">無料の転生のオーブがもらえるまであと%d日</item>
     </plurals>

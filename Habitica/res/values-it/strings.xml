@@ -1286,9 +1286,7 @@
         <item quantity="other">%d Minuti</item>
     </plurals>
     <string name="faint_broken_gear_info">L\'Equipaggiamento rotto può essere riacquistato dal Mercato</string>
-    <string name="quest_accepted">Missione accettata!</string>
     <string name="quest_rejected">Missione rifiutata</string>
-    <string name="quest_accept_error">Impossibile accettare la missione. Riprova.</string>
     <string name="quest_reject_error">Impossibile rifiutare la missione. Riprova.</string>
     <string name="save_photo_url">Salva URL della Foto</string>
     <string name="change_username_description">Il Nome Utente deve essere composto da 1 a 20 caratteri, contenere solo lettere dalla a alla z, numeri da 0 a 9, trattini o trattini bassi.</string>

@@ -1641,9 +1641,7 @@
     <string name="copy_token">Copier la Clé</string>
     <string name="api_token_is_password_info">Ne le partagez pas. Il est possible que votre ID d\'Utilisat·eur·rice vous soit demandé, mais ne postez jamais votre Clé API sur des pages publiques, pas même sur Github.</string>
     <string name="faint_broken_gear_info">L\'équipement endommagé peut être racheté depuis le Marché</string>
-    <string name="quest_reject_error">La quête n\'a pas pu être rejetée. Veuillez réessayer.</string>
     <string name="quest_accept_error">La quête n\'a pas pu être acceptée. Veuillez réessayer.</string>
-    <string name="quest_accepted">La quête est acceptée !</string>
     <string name="quest_rejected">La quête est rejetée</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d jour jusqu\'à l\'Orbe de Renaissance GRATUIT</item>
