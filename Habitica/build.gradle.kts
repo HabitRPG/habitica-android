@@ -88,6 +88,12 @@ android {
         }
     }
 
+    productFlavors {
+        named("prod") {
+            buildConfigField("String", "STAGING_KEY", "\"\"")
+        }
+    }
+
     sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")

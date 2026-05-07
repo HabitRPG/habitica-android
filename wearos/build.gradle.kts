@@ -47,6 +47,12 @@ android {
         }
     }
 
+    productFlavors {
+        named("prod") {
+            buildConfigField("String", "STAGING_KEY", "\"\"")
+        }
+    }
+
     buildFeatures {
         viewBinding = true
         buildConfig = true
