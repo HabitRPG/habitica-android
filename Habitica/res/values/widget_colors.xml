@@ -16,4 +16,8 @@
     <color name="widget_add_label_text">#99000000</color>
     <color name="widget_preview_scallop_tint">#D4E8C8</color>
     <color name="widget_preview_scallop_glyph_tint">#3D5A2C</color>
+    <color name="widget_level_chip_bg">#1CA372</color>
+    <color name="widget_level_chip_text">#FFFFFF</color>
+    <color name="widget_currency_chip_bg">#EDECEE</color>
+    <color name="widget_currency_chip_text">#4E4A57</color>
 </resources>

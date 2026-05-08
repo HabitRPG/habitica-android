@@ -9,6 +9,7 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.widget.AddTaskMultiWidgetReceiver
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
+import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesCountWidgetReceiver
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
@@ -24,11 +25,12 @@ object WidgetPreviewRegistrar {
     private const val PREFS = "widget_previews"
     private const val LAST_KEY = "last_registered_token"
 
-    private const val REVISION = 9
+    private const val REVISION = 10
 
     private val RECEIVERS: List<KClass<out GlanceAppWidgetReceiver>> = listOf(
         AddTaskMultiWidgetReceiver::class,
         AddTaskWidgetProvider::class,
+        AvatarStatsWidgetProvider::class,
         DailiesCountWidgetReceiver::class,
         DailiesWidgetProvider::class,
         HabitButtonWidgetProvider::class,

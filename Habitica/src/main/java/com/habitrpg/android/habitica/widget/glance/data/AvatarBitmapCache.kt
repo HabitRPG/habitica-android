@@ -3,10 +3,7 @@ package com.habitrpg.android.habitica.widget.glance.data
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.view.View
-import android.view.ViewGroup
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -20,6 +17,7 @@ object AvatarBitmapCache {
     private const val FILENAME = "widget_avatar.png"
     private const val HASH_FILENAME = "widget_avatar.hash"
     private const val RENDER_TIMEOUT_MS = 10_000L
+    private const val HASH_VERSION = "v2"
 
     fun cachedFile(context: Context): File =
         File(context.applicationContext.filesDir, FILENAME)
@@ -63,6 +61,7 @@ object AvatarBitmapCache {
         val equipped = user.items?.gear?.equipped
         val costume = user.items?.gear?.costume
         val parts = listOf(
+            HASH_VERSION,
             prefs?.background, prefs?.chair, prefs?.skin, prefs?.shirt, prefs?.size,
             prefs?.sleep?.toString(), prefs?.costume?.toString(),
             prefs?.hair?.color, prefs?.hair?.base?.toString(), prefs?.hair?.bangs?.toString(),
@@ -91,20 +90,12 @@ object AvatarBitmapCache {
                         showMount = true,
                         showPet = true,
                     )
-                    val width = 140.dpToPx(context.applicationContext)
-                    val height = 147.dpToPx(context.applicationContext)
-                    avatarView.layoutParams = ViewGroup.LayoutParams(width, height)
-                    avatarView.measure(
-                        View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                        View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY),
-                    )
-                    avatarView.layout(0, 0, width, height)
+                    avatarView.setAvatar(user)
                     avatarView.onAvatarImageReady { bitmap ->
                         if (cont.isActive) {
                             cont.resume(bitmap)
                         }
                     }
-                    avatarView.setAvatar(user)
                 }
             }
         }

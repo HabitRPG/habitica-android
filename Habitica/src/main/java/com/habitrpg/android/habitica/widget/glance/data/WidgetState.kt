@@ -17,8 +17,17 @@ data class StatsWidgetState(
     val gemsText: String,
     val hourglassesText: String,
     val hourglassCount: Int,
+    val showMp: Boolean,
+    val className: String?,
     val avatarBitmapPath: String? = null,
 ) {
+    val hpText: String get() = hp.toInt().toString()
+    val maxHpText: String get() = maxHp.toInt().toString()
+    val expText: String get() = exp.toInt().toString()
+    val toNextLevelText: String get() = toNextLevel.toInt().toString()
+    val mpText: String get() = mp.toInt().toString()
+    val maxMpText: String get() = maxMp.toInt().toString()
+
     companion object {
         val Empty = StatsWidgetState(
             hp = 0f, maxHp = 50f,
@@ -26,6 +35,8 @@ data class StatsWidgetState(
             mp = 0f, maxMp = 50f,
             level = 0,
             goldText = "0", gemsText = "0", hourglassesText = "0", hourglassCount = 0,
+            showMp = false,
+            className = null,
             avatarBitmapPath = null,
         )
 
@@ -34,6 +45,8 @@ data class StatsWidgetState(
             val gold = (s.gp ?: 0.0)
             val gems = ((user.balance) * 4).toInt()
             val hourglasses = user.hourglassCount
+            val classesDisabled = user.preferences?.disableClasses == true
+            val showMp = !classesDisabled && s.habitClass != null && (s.lvl ?: 0) >= 10
             return StatsWidgetState(
                 hp = (s.hp ?: 0.0).toFloat(),
                 maxHp = (s.maxHealth ?: 50).toFloat(),
@@ -46,6 +59,8 @@ data class StatsWidgetState(
                 gemsText = NumberAbbreviator.abbreviate(context, gems.toDouble(), numberOfDecimals = 0, minForAbbrevation = 1000),
                 hourglassesText = hourglasses.toString(),
                 hourglassCount = hourglasses,
+                showMp = showMp,
+                className = if (classesDisabled) null else s.habitClass,
                 avatarBitmapPath = avatarBitmapPath,
             )
         }

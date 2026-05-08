@@ -56,6 +56,10 @@ object WidgetColors {
     val checklistBackground = ColorProvider(R.color.widget_checklist_bg)
     val checklistBackgroundDone = ColorProvider(R.color.widget_checklist_bg_done)
     val addLabelText = ColorProvider(R.color.widget_add_label_text)
+    val levelChipBackground = ColorProvider(R.color.widget_level_chip_bg)
+    val levelChipText = ColorProvider(R.color.widget_level_chip_text)
+    val currencyChipBackground = ColorProvider(R.color.widget_currency_chip_bg)
+    val currencyChipText = ColorProvider(R.color.widget_currency_chip_text)
 }
 
 object WidgetBarColors {
