@@ -1286,7 +1286,6 @@
         <item quantity="other">%d Minuti</item>
     </plurals>
     <string name="faint_broken_gear_info">L\'Equipaggiamento rotto può essere riacquistato dal Mercato</string>
-    <string name="quest_rejected">Missione rifiutata</string>
     <string name="quest_reject_error">Impossibile rifiutare la missione. Riprova.</string>
     <string name="save_photo_url">Salva URL della Foto</string>
     <string name="change_username_description">Il Nome Utente deve essere composto da 1 a 20 caratteri, contenere solo lettere dalla a alla z, numeri da 0 a 9, trattini o trattini bassi.</string>
@@ -1338,8 +1337,8 @@
     <string name="server_option_default">%s (Default)</string>
     <string name="server_option_custom">Personalizzato</string>
     <string name="server_custom_address_label">Inserisci l\'indirizzo del server personalizzato</string>
-    <string name="server_custom_address_hint">es. http://localhost:3000</string>
-    <string name="server_url_invalid">Inserisci un URL valido che inizi con http:// o https://</string>
+    <string name="server_custom_address_hint">es. customserver.habitica.com</string>
+    <string name="server_url_invalid">Inserisci un URL valido</string>
     <string name="apply">Applica</string>
     <string name="server_settings_unlocked">Impostazioni del server sbloccate!</string>
     <string name="custom_server">Server Personalizzato</string>
@@ -1398,9 +1397,9 @@
         <item quantity="other">ogni %d settimane</item>
     </plurals>
     <plurals name="repeat_monthly">
-        <item quantity="one">ogni mese</item>
-        <item quantity="many">ogni %d mesi</item>
-        <item quantity="other">ogni %d mesi</item>
+        <item quantity="one">ogni Mese</item>
+        <item quantity="many">ogni %d Mesi</item>
+        <item quantity="other">ogni %d Mesi</item>
     </plurals>
     <string name="resubscribe_description_gift">Desideri continuare a usufruire dei vantaggi dell\'abbonamento\? Puoi attivare un abbonamento ricorrente per mantenere attivi i tuoi vantaggi.</string>
     <string name="report_user_explanation">È opportuno segnalare solo i giocatori che violano le [Linee Guida della Community](https://habitica.com/static/community-guidelines) e/o i [Termini di Servizio](https://habitica.com/static/terms). L\'invio di una segnalazione falsa costituisce una violazione delle Linee Guida della Community di Habitica.</string>
@@ -1555,7 +1554,7 @@
     <string name="max_gem_cap_text_gift">Loro iniziano subito con il limite massimo di Gemme</string>
     <string name="rescrubscribe_to_pick_up">Iscriviti di nuovo per riprendere da dove avevi interrotto!</string>
     <string name="gem_cap_extra">%1$d/%2$d Limite Gemme</string>
-    <string name="reset_server_confirmation">Sei sicuro di voler resettare il server e ritornare a quello predefinito di Habitica\? L\'app verrà riavviata.</string>
+    <string name="reset_server_confirmation">Vuoi davvero resettare il server e ritornare a quello predefinito di Habitica\? Verrai disconnesso/a.</string>
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; hai ricevuto un invito per unirti alla Squadra &lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="report_reason_title_message">Perché stai segnalando questo messaggio\?</string>
     <string name="report_reason_title_player">Perché stai segnalando questo giocatore\?</string>
@@ -1653,7 +1652,7 @@
     <string name="todo_summary_description_duedate">Si tratta di un\'attività **%1$s** che deve essere completata entro **%2$s**.</string>
     <string name="habit_summary_description">È un\'abitudine **%1$s** che è **%2$s**.</string>
     <string name="todo_summary_description">Si tratta di un\'attività **%1$s** che non ha una scadenza.</string>
-    <string name="daily_summary_description">Si tratta di un\'attività **%1$s** che si ripete **%2$s%3$s**.</string>
+    <string name="daily_summary_description">Si tratta di un\'Attività **%1$s** che si ripete **%2$s%3$s**.%4$s</string>
     <string name="positive_and_negative">positivo e negativo</string>
     <string name="assigned_to">Assegnato a</string>
     <string name="completed_at">Completato in %s</string>
@@ -1695,4 +1694,5 @@
     <string name="day_x">Giorno %d</string>
     <string name="a_party_robe">Una Veste da Festa</string>
     <string name="twenty_gems">20 Gemme</string>
+    <string name="fifth_week_warning">Questa attività non risulterà in scadenza durante i mesi con meno di %1$ss.</string>
 </resources>

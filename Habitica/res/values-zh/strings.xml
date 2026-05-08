@@ -1364,7 +1364,7 @@
     <string name="mute_user_confirm">你想要取消此玩家的聊天权限吗？</string>
     <string name="shadowmute_user_confirm">你想要隐形屏蔽此玩家吗？</string>
     <string name="unshadowmute_user">解除隐形屏蔽</string>
-    <string name="daily_summary_description">这是一项每**%2$s%3$s**重复的**%1$s**任务。</string>
+    <string name="daily_summary_description">这是一项每**%2$s%3$s**重复的**%1$s**任务。%4$s</string>
     <string name="positive_and_negative">积极和消极</string>
     <string name="amazon">亚马逊</string>
     <string name="x_and_y">%1$s和%2$s</string>
@@ -1621,7 +1621,6 @@
     <string name="api_token_reset_info">通过修改密码即可重置令牌。重置后需要：在所有设备重新登录Habitica、向您使用的第三方工具提供新令牌。</string>
     <string name="chat_empty_state_description">请务必保持友善并遵循社区准则。</string>
     <string name="faint_broken_gear_info">损坏的装备可在市场中重新购买</string>
-    <string name="quest_accepted">接受了副本邀请！</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="other">%d天后可免费获取重生之球</item>
     </plurals>
@@ -1630,8 +1629,8 @@
     <string name="server_option_default">%s（默认）</string>
     <string name="server_option_custom">自定义</string>
     <string name="server_custom_address_label">请输入自定义服务器地址</string>
-    <string name="server_custom_address_hint">例：http://localhost:3000</string>
-    <string name="server_url_invalid">请输入有效的 URL，需以 http:// 或 https:// 开头</string>
+    <string name="server_custom_address_hint">例：customserver.habitica.com</string>
+    <string name="server_url_invalid">请输入有效的 URL</string>
     <string name="apply">确认</string>
     <string name="server_settings_unlocked">服务器设置已解锁！</string>
     <string name="server_settings_unlock_remaining">还需%d步即可解锁服务器设置。</string>
@@ -1670,7 +1669,7 @@
     <string name="participating">参加中</string>
     <string name="not_participating_filter">未参与</string>
     <string name="server_custom_warning">警告：您在自定义服务器上的账户独立于您的 Habitica.com 主账户。</string>
-    <string name="reset_server_confirmation">确定要将服务器重置为默认的 Habitica 服务器吗？此操作将导致应用重启。</string>
+    <string name="reset_server_confirmation">确定要将服务器重置为默认的 Habitica 服务器吗？此操作将导致您的账号被登出。</string>
     <string name="rebirth_shop_description">你将立即作为一名1级战士重新开始冒险，但会保留所有的成就、物品与装备。你的任务会重置为黄色，但历史记录不会被重置。所有个人任务的连击次数也将清零。同时，你的金币、经验值、法力值及所有技能效果均会被移除。</string>
     <string name="rebirth_enabled_description">当你感觉已征服Habitica的全部内容时，不妨使用重生之球为你的冒险注入新活力！通过在商店获取的这个特殊道具，你将重启旅程回到1级，同时保留所有任务、成就和宠物。</string>
     <string name="auth_invalid_credential_type">提供的凭证类型有误。</string>

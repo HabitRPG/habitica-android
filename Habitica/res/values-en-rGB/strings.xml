@@ -1108,7 +1108,6 @@
     <string name="subscription_credit_canceling">Your <b>+%d</b> months of subscription credit will activate after cancelling</string>
     <string name="unsaved_changes">Unsaved Changes</string>
     <string name="faint_broken_gear_info">Broken gear can be repurchased from the Market</string>
-    <string name="quest_rejected">Quest rejected</string>
     <string name="quest_reject_error">Could not reject quest. Please try again.</string>
     <string name="free_rebirth_at_level_100">FREE Orb of Rebirth at level 100</string>
     <plurals name="days_until_free_rebirth">
@@ -1225,14 +1224,14 @@
     <string name="server_option_default">%s (Default)</string>
     <string name="server_option_custom">Custom</string>
     <string name="server_custom_address_label">Enter custom server address</string>
-    <string name="server_custom_address_hint">e.g. http://localhost:3000</string>
-    <string name="server_url_invalid">Please enter a valid URL starting with http:// or https://</string>
+    <string name="server_custom_address_hint">e.g. customserver.habitica.com</string>
+    <string name="server_url_invalid">Please enter a valid URL</string>
     <string name="apply">Apply</string>
     <string name="server_settings_unlocked">Server settings unlocked!</string>
     <string name="server_settings_unlock_remaining">You are %d steps away from unlocking server settings.</string>
     <string name="custom_server">Custom Server</string>
     <string name="reset_server_to_default">Reset to Default</string>
-    <string name="reset_server_confirmation">Are you sure you want to reset the server to the default Habitica server\? The app will restart.</string>
+    <string name="reset_server_confirmation">Are you sure you want to reset the server to the default Habitica server\? You will be logged out.</string>
     <string name="password_change_info">Passwords must be 8 characters or more. Changing your password will log you out of any other devices and third-party tools you may use.</string>
     <string name="confirm_new_password">Confirm new Password</string>
     <string name="adjust_counter">Adjust Counter</string>
@@ -1418,8 +1417,8 @@
         <item quantity="other">every %d weeks</item>
     </plurals>
     <plurals name="repeat_monthly">
-        <item quantity="one">every month</item>
-        <item quantity="other">every %d months</item>
+        <item quantity="one">every Month</item>
+        <item quantity="other">every %d Months</item>
     </plurals>
     <string name="habit_summary_description">This is a **%1$s** Habit that is **%2$s**.</string>
     <string name="self_improvement">Self Improvement</string>
@@ -1621,7 +1620,7 @@
     <string name="unable_to_delete">Unable to delete</string>
     <string name="delete_account_subscription_active">You can’t delete your account while you have an active subscription. Please cancel the subscription first.</string>
     <string name="go_to_subscription">Go to subscription</string>
-    <string name="daily_summary_description">This is a **%1$s** Task that repeats **%2$s%3$s**.</string>
+    <string name="daily_summary_description">This is a **%1$s** Task that repeats **%2$s%3$s**.%4$s</string>
     <string name="positive_and_negative">positive and negative</string>
     <string name="assigned_to">Assigned to</string>
     <string name="exclusive_items_await">Exclusive items and gifts await</string>
@@ -1686,4 +1685,5 @@
     <string name="buy_for_x">Buy for %s</string>
     <string name="buy_for">Buy for</string>
     <string name="visit_the_market">Visit the Market</string>
+    <string name="fifth_week_warning">This task will not appear due during months with fewer %1$ss.</string>
 </resources>
