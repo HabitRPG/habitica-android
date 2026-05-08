@@ -8,6 +8,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.habitrpg.android.habitica.widget.AvatarWidgetProvider
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskMultiGlanceWidget
@@ -30,7 +31,7 @@ class WidgetRefreshWorker(
         val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
         AvatarBitmapCache.refreshIfNeeded(context, user)
         refreshAllWidgets(context)
-        AvatarWidgetRenderer.pushUpdate(context)
+        AvatarWidgetProvider.renderAll(context)
         return Result.success()
     }
 
@@ -53,7 +54,7 @@ class WidgetRefreshWorker(
             val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
             AvatarBitmapCache.refreshIfNeeded(context, user)
             refreshAllWidgets(context)
-            AvatarWidgetRenderer.pushUpdate(context)
+            AvatarWidgetProvider.renderAll(context)
         }
 
         private suspend fun refreshAllWidgets(context: Context) {
