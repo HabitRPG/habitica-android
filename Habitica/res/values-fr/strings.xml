@@ -1287,7 +1287,7 @@
 \n@%2$s</string>
     <string name="ban_user">Bannir le joueur</string>
     <string name="your_tags">Tes catégories</string>
-    <string name="reset_account_description_new">Tu va perdre tout tes niveau, ton or et ton expérience. Toutes tes tâches et leur historique sera effacé (les tâches de défis resteront). Tu perdras tout ton équipement, sauf les items d\'abonné et tes objets commémoratifs, mais tu pourras les racheter. Tu auras besoin de reprendre la même classe et racheter tout son équipement. Tu garderas ta classe actuelle, tes succès, et tes familiers et montures. Pour confirmer le reset, écrit ton mot de passe en dessous.</string>
+    <string name="reset_account_description_new">Vous allez perdre vos niveaux, votre or et votre expérience. Toutes vos tâches et leur historique seront supprimées (les tâches provenant d\'un défi ne seront pas affectées). Vous allez perdre tout votre équipement, sauf les objets spéciaux d\'Abonnement et les objets commémoratifs gratuits, mais vous pourrez les racheter. Vous devrez être dans la classe correspondante pour acquérir un équipement spécifique à celle-ci. Vous garderez votre classe actuelle, vos Succès ainsi que vos Familiers et Montures. Pour confirmer la réinitialisation, entrez votre mot de passe ci-dessous.</string>
     <string name="change_class_confirmation_message">Cela changera l\'équipement débloqué dans les magasins et change tes compétences disponibles</string>
     <string name="not_set" tools:override="true">Non défini</string>
     <string name="todo_summary_description_duedate">Ceci est une tâche **%1$s** qui doit être complétée avant le **%2$s**.</string>
@@ -1376,11 +1376,11 @@
     <string name="for_for_free">Quatre Gratuitement</string>
     <string name="stripe_payment">Stripe</string>
     <string name="insufficient_level_equipment_dialog_new">Ce objet n\'est disponible que pour la classe %s. Vous pourrez choisir une classe après le niveau 10.</string>
-    <string name="reset_account_description_no_pw">Vous perdrez tous vos niveaux, votre Or et votre Expérience. Toutes vos tâches et leur historique seront supprimés (les tâches provenant d\'un défi ne seront pas affectées). Vous allez perdre tous vos équipements, sauf les objets d\'abonnement et les objets commémoratifs gratuits, mais vous aurez la possibilité de les racheter. Vous devrez être dans la classe correspondante pour racheter un équipement spécifique celle-ci. Vous garderez votre classe actuelle, vos Succès ainsi que vos Familiers et Montures. Pour confirmer la réinitialisation, écrivez RESET ci-dessous.</string>
+    <string name="reset_account_description_no_pw">Vous perdrez tous vos niveaux, votre Or et votre Expérience. Toutes vos tâches et leur historique seront supprimés (les tâches provenant d\'un défi ne seront pas affectées). Vous allez perdre tous vos équipements, sauf les objets d\'abonnement et les objets commémoratifs gratuits, mais vous aurez la possibilité de les racheter. Vous devrez être dans la classe correspondante pour racheter un équipement spécifique à celle-ci. Vous garderez votre classe actuelle, vos Succès ainsi que vos Familiers et Montures. Pour confirmer la réinitialisation, écrivez RESET ci-dessous.</string>
     <string name="class_equipment_shop_dialog_new">Ce objet n\'est disponible que pour la classe %s. Ouvrez les Paramètres pour changer de classe.</string>
     <string name="g1g1_promo_info_limitations_noutc">Il s\'agit d\'un événement limité dans le temps, qui démarre le %1$s et finit le %2$s. Cette promotion ne s\'applique que si vous offrez un abonnement à quelqu\'un d\'autre. Si vous ou l·e·a destinataire possède déjà un abonnement, l\'abonnement offert ajoutera des mois supplémentaires qui se déclencheront quand l\'abonnement en cours sera annulé ou expirera.</string>
     <string name="todo_summary_description">C\'est une Tâche **%1$s** qui n\'a pas de date butoir.</string>
-    <string name="daily_summary_description">C\'est une Tâche **%1$s** qui se répète **%2$s%3$s**.</string>
+    <string name="daily_summary_description">C\'est une Tâche **%1$s** qui se répète **%2$s%3$s**.%4$s</string>
     <string name="background">Arrière-plan</string>
     <string name="birthday_set">Ensemble d\'Anniversaire</string>
     <string name="you_equipped_x">Vous avez équipé %s</string>
@@ -1597,7 +1597,7 @@
     <plurals name="repeat_monthly">
         <item quantity="one">chaque mois</item>
         <item quantity="many">tous les %d mois</item>
-        <item quantity="other">tous les %d mois</item>
+        <item quantity="other">tous les %d Mois</item>
     </plurals>
     <plurals name="repeat_yearly">
         <item quantity="one">chaque année</item>
@@ -1641,7 +1641,6 @@
     <string name="copy_token">Copier la Clé</string>
     <string name="api_token_is_password_info">Ne le partagez pas. Il est possible que votre ID d\'Utilisat·eur·rice vous soit demandé, mais ne postez jamais votre Clé API sur des pages publiques, pas même sur Github.</string>
     <string name="faint_broken_gear_info">L\'équipement endommagé peut être racheté depuis le Marché</string>
-    <string name="quest_accept_error">La quête n\'a pas pu être acceptée. Veuillez réessayer.</string>
     <string name="quest_rejected">La quête est rejetée</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d jour jusqu\'à l\'Orbe de Renaissance GRATUIT</item>
@@ -1656,13 +1655,13 @@
     <string name="server_option_default">%s (Défaut)</string>
     <string name="server_option_custom">Customisé</string>
     <string name="server_custom_address_label">Entrez l\'adresse du serveur customisée</string>
-    <string name="server_custom_address_hint">p. ex. http://localhost:3000</string>
-    <string name="server_url_invalid">Veuillez inscrire l\'adresse URL en commençant par http:// ou https://</string>
+    <string name="server_custom_address_hint">e.g. customserver.habitica.com</string>
+    <string name="server_url_invalid">Veuillez renseigner une adresse URL conforme</string>
     <string name="apply">Appliquer</string>
     <string name="server_settings_unlocked">Paramètres du serveur débloqués !</string>
     <string name="custom_server">Serveur Customisé</string>
     <string name="reset_server_to_default">Réinitialiser valeurs par Défaut</string>
-    <string name="reset_server_confirmation">Voulez-vous vraiment vous réinitialiser le serveur au serveur Habitica par défaut \? L\'application va reprendre.</string>
+    <string name="reset_server_confirmation">Voulez-vous vraiment vous réinitialiser le serveur Habitica à celui par défaut \? Vous serez déconnecté·e.</string>
     <string name="search_questions">Rechercher dans les questions</string>
     <string name="no_matching_questions">Votre recherche n\'a donné aucun résultat</string>
     <string name="rebirth_shop">Orbe de Renaissance</string>
@@ -1697,4 +1696,5 @@
     <string name="auth_missing_token">Jeton vide reçu.</string>
     <string name="new_message">Nouveau message</string>
     <string name="scroll_to_new_messages">Défiler vers nouveaux messages</string>
+    <string name="fifth_week_warning">Cette tâche n\'apparaîtra pas comme \"à faire\" durant les mois comptant moins de %1$ss.</string>
 </resources>
