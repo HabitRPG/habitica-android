@@ -3,10 +3,12 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.Preferences
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -16,13 +18,14 @@ import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
-import androidx.glance.appwidget.PreviewSizeMode
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
+import androidx.glance.currentState
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -39,13 +42,11 @@ import com.habitrpg.android.habitica.widget.glance.actions.ScoreHabitAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.components.HabitButtonBar
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
-import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.colorForHabitValueLight
 import com.habitrpg.android.habitica.widget.glance.theme.colorForHabitValueMedium
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import kotlinx.coroutines.flow.firstOrNull
 
 class HabitButtonGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Responsive(
@@ -57,31 +58,8 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
         ),
     )
 
-    override val previewSizeMode: PreviewSizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(218.dp, 70.dp),
-            DpSize(360.dp, 70.dp),
-        ),
-    )
-
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
-        var cached = HabitButtonWidgetCache.read(context, widgetId)
-        if (cached == null) {
-            val legacyTaskId = androidx.preference.PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .getString("habit_button_widget_$widgetId", null)
-            if (!legacyTaskId.isNullOrEmpty()) {
-                val task = runCatching {
-                    widgetEntryPoint(context).taskRepository().getTask(legacyTaskId).firstOrNull()
-                }.getOrNull()
-                if (task != null) {
-                    HabitButtonWidgetCache.write(context, widgetId, task)
-                    cached = HabitButtonWidgetCache.read(context, widgetId)
-                }
-            }
-        }
-
         val configureIntent = Intent(context, HabitButtonWidgetActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
@@ -89,6 +67,8 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
         val configureAction = actionStartActivity(configureIntent)
 
         provideContent {
+            val cached = HabitButtonWidgetCache.fromPrefs(currentState<Preferences>())
+            Log.d("HabitButtonWidget", "provideGlance widgetId=$widgetId taskId=${cached?.taskId}")
             HabiticaWidgetTheme {
                 if (cached == null) {
                     UnconfiguredContent(onClick = configureAction)
@@ -112,21 +92,6 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
                         ),
                     )
                 }
-            }
-        }
-    }
-
-    override suspend fun providePreview(context: Context, widgetCategory: Int) {
-        provideContent {
-            HabiticaWidgetTheme {
-                HabitButtonContent(
-                    title = "Cook a healthy meal",
-                    showUp = true,
-                    showDown = true,
-                    value = 0.0,
-                    onUpClick = openAppAction("habitica://user/tasks/habit"),
-                    onDownClick = openAppAction("habitica://user/tasks/habit"),
-                )
             }
         }
     }

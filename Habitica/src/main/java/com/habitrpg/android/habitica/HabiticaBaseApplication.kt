@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.widget.glance.WidgetPreviewRegistrar
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -147,7 +146,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
 
         WidgetRefreshWorker.enqueue(this)
-        WidgetPreviewRegistrar.registerIfNeeded(this)
 
         checkIfNewVersion()
     }

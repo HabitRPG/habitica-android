@@ -6,6 +6,5 @@
     android:targetCellWidth="3"
     android:targetCellHeight="3"
     android:previewImage="@drawable/widget_todos"
-    android:previewLayout="@layout/widget_preview_todo_list"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

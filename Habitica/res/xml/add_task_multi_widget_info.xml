@@ -8,6 +8,5 @@
     android:targetCellWidth="4"
     android:targetCellHeight="1"
     android:previewImage="@drawable/widget_habits"
-    android:previewLayout="@layout/widget_preview_add_task_multi"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

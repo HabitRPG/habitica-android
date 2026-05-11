@@ -14,8 +14,13 @@
     <color name="widget_checklist_bg">#A5A1AC</color>
     <color name="widget_checklist_bg_done">#EDEDEE</color>
     <color name="widget_add_label_text">#99000000</color>
-    <color name="widget_preview_scallop_tint">#D4E8C8</color>
-    <color name="widget_preview_scallop_glyph_tint">#3D5A2C</color>
+    <color name="widget_preview_scallop_tint">#EDE7FB</color>
+    <color name="widget_preview_tile_tint">#DDD3F7</color>
+    <color name="widget_preview_scallop_glyph_tint">#6133B4</color>
+    <color name="widget_preview_daily_bg">#F9F9F9</color>
+    <color name="widget_preview_daily_primary_text">#343134</color>
+    <color name="widget_preview_daily_secondary_text">#4E4A57</color>
+    <color name="widget_preview_daily_tertiary_text">#878190</color>
     <color name="widget_level_chip_bg">#1CA372</color>
     <color name="widget_level_chip_text">#FFFFFF</color>
     <color name="widget_currency_chip_bg">#EDECEE</color>

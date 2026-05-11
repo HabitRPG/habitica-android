@@ -11,5 +11,6 @@
     android:targetCellHeight="1"
     android:resizeMode="horizontal|vertical"
     android:previewImage="@drawable/widget_habits"
-    android:previewLayout="@layout/widget_preview_habit_button"
+    android:configure="com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity"
+    android:widgetFeatures="reconfigurable"
     android:widgetCategory="home_screen" />

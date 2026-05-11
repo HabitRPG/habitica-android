@@ -4,16 +4,21 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.currentState
+import androidx.glance.layout.ContentScale
 import androidx.glance.LocalSize
 import androidx.glance.action.Action
 import androidx.glance.action.clickable
@@ -32,7 +37,6 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
@@ -44,26 +48,22 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
-        val type = PreferenceManager.getDefaultSharedPreferences(context)
-            .getString("add_task_widget_$widgetId", null)
         val configureIntent = Intent(context, AddTaskWidgetActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         }
         val configureAction = actionStartActivity(configureIntent)
         provideContent {
+            val type = currentState<Preferences>()[stringPreferencesKey(TASK_TYPE_KEY)]
+            Log.d("AddTaskWidget", "provideGlance widgetId=$widgetId type=$type")
             HabiticaWidgetTheme {
                 AddTaskSingleContent(type, onConfigure = configureAction)
             }
         }
     }
 
-    override suspend fun providePreview(context: Context, widgetCategory: Int) {
-        provideContent {
-            HabiticaWidgetTheme {
-                AddTaskSingleContent("habit", onConfigure = openAppAction())
-            }
-        }
+    companion object {
+        const val TASK_TYPE_KEY = "task_type"
     }
 }
 
@@ -93,16 +93,17 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
     }
     val size = LocalSize.current
     val shorter = if (size.width < size.height) size.width else size.height
+
     val iconSize = (shorter.value * 0.30f).coerceIn(20f, 72f).dp
     val tilePadding = (shorter.value * 0.06f).coerceIn(2f, 12f).dp
 
-    val tileColor: ColorProvider
+    val scallopTint: ColorProvider
     val iconTint: ColorProvider?
     if (MaterialYouEnabled) {
-        tileColor = GlanceTheme.colors.primaryContainer
+        scallopTint = GlanceTheme.colors.primaryContainer
         iconTint = GlanceTheme.colors.onPrimaryContainer
     } else {
-        tileColor = ColorProvider(tile.brandColor)
+        scallopTint = ColorProvider(tile.brandColor)
         iconTint = null
     }
 
@@ -117,7 +118,8 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
             provider = ImageProvider(R.drawable.widget_tile_scallop),
             contentDescription = null,
             modifier = GlanceModifier.fillMaxSize(),
-            colorFilter = ColorFilter.tint(tileColor),
+            contentScale = ContentScale.FillBounds,
+            colorFilter = ColorFilter.tint(scallopTint),
         )
         Image(
             provider = ImageProvider(tile.iconResId),

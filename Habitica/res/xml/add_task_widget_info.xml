@@ -8,6 +8,7 @@
     android:targetCellWidth="1"
     android:targetCellHeight="1"
     android:previewImage="@drawable/widget_habits"
-    android:previewLayout="@layout/widget_preview_add_task_single"
     android:resizeMode="horizontal|vertical"
+    android:configure="com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity"
+    android:widgetFeatures="reconfigurable"
     android:widgetCategory="home_screen" />

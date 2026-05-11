@@ -1,8 +1,12 @@
 package com.habitrpg.android.habitica.widget.glance.data
 
 import android.content.Context
-import androidx.core.content.edit
-import androidx.preference.PreferenceManager
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.glance.GlanceId
+import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.models.tasks.Task
 
 data class HabitButtonCachedTask(
@@ -14,34 +18,31 @@ data class HabitButtonCachedTask(
 )
 
 object HabitButtonWidgetCache {
-    private fun base(widgetId: Int) = "habit_button_widget_$widgetId"
-    private fun keyText(widgetId: Int) = "${base(widgetId)}_text"
-    private fun keyValue(widgetId: Int) = "${base(widgetId)}_value"
-    private fun keyUp(widgetId: Int) = "${base(widgetId)}_up"
-    private fun keyDown(widgetId: Int) = "${base(widgetId)}_down"
-    private fun keyHasCache(widgetId: Int) = "${base(widgetId)}_cached"
+    val KEY_TASK_ID = stringPreferencesKey("habit_task_id")
+    val KEY_TEXT = stringPreferencesKey("habit_text")
+    val KEY_VALUE = doublePreferencesKey("habit_value")
+    val KEY_UP = booleanPreferencesKey("habit_up")
+    val KEY_DOWN = booleanPreferencesKey("habit_down")
 
-    fun read(context: Context, widgetId: Int): HabitButtonCachedTask? {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val taskId = prefs.getString(base(widgetId), null)?.takeIf { it.isNotEmpty() }
-            ?: return null
-        if (!prefs.getBoolean(keyHasCache(widgetId), false)) return null
-        val text = prefs.getString(keyText(widgetId), "") ?: ""
-        val valueFloat = prefs.getFloat(keyValue(widgetId), 0f)
-        val up = prefs.getBoolean(keyUp(widgetId), true)
-        val down = prefs.getBoolean(keyDown(widgetId), true)
-        return HabitButtonCachedTask(taskId, text, valueFloat.toDouble(), up, down)
+    fun fromPrefs(prefs: Preferences): HabitButtonCachedTask? {
+        val taskId = prefs[KEY_TASK_ID]?.takeIf { it.isNotEmpty() } ?: return null
+        return HabitButtonCachedTask(
+            taskId = taskId,
+            text = prefs[KEY_TEXT] ?: "",
+            value = prefs[KEY_VALUE] ?: 0.0,
+            up = prefs[KEY_UP] ?: true,
+            down = prefs[KEY_DOWN] ?: true,
+        )
     }
 
-    fun write(context: Context, widgetId: Int, task: Task) {
+    suspend fun write(context: Context, glanceId: GlanceId, task: Task) {
         val taskId = task.id ?: return
-        PreferenceManager.getDefaultSharedPreferences(context).edit(commit = true) {
-            putString(base(widgetId), taskId)
-            putString(keyText(widgetId), task.text)
-            putFloat(keyValue(widgetId), task.value.toFloat())
-            putBoolean(keyUp(widgetId), task.up == true)
-            putBoolean(keyDown(widgetId), task.down == true)
-            putBoolean(keyHasCache(widgetId), true)
+        updateAppWidgetState(context, glanceId) { prefs ->
+            prefs[KEY_TASK_ID] = taskId
+            prefs[KEY_TEXT] = task.text
+            prefs[KEY_VALUE] = task.value
+            prefs[KEY_UP] = task.up == true
+            prefs[KEY_DOWN] = task.down == true
         }
     }
 }

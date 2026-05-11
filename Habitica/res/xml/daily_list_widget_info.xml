@@ -6,6 +6,5 @@
     android:targetCellWidth="3"
     android:targetCellHeight="3"
     android:previewImage="@drawable/widget_dailies"
-    android:previewLayout="@layout/widget_preview_daily_list"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

@@ -10,6 +10,5 @@
     android:targetCellWidth="3"
     android:targetCellHeight="3"
     android:previewImage="@drawable/widget_dailies"
-    android:previewLayout="@layout/widget_preview_dailies_count"
     android:resizeMode="horizontal"
     android:widgetCategory="home_screen" />

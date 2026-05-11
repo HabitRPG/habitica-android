@@ -3,15 +3,14 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.LocalSize
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.PreviewSizeMode
 import androidx.glance.appwidget.SizeMode
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Column
@@ -34,8 +33,6 @@ class AddTaskMultiGlanceWidget : GlanceAppWidget() {
 
     override val sizeMode: SizeMode = SizeMode.Exact
 
-    override val previewSizeMode: PreviewSizeMode = SizeMode.Responsive(PREVIEW_BUCKETS)
-
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
             HabiticaWidgetTheme {
@@ -44,22 +41,11 @@ class AddTaskMultiGlanceWidget : GlanceAppWidget() {
         }
     }
 
-    override suspend fun providePreview(context: Context, widgetCategory: Int) {
-        provideContent {
-            HabiticaWidgetTheme {
-                AddTaskMultiContent()
-            }
-        }
-    }
-
     companion object {
-        val PREVIEW_BUCKETS = setOf(
-            DpSize(250.dp, 60.dp),
-            DpSize(250.dp, 140.dp),
-        )
         internal val TALL_THRESHOLD = 130.dp
         internal val OUTER_PADDING = 8.dp
         internal val TILE_GAP = 8.dp
+        internal val CONTAINER_CORNER_RADIUS = 24.dp
     }
 }
 
@@ -123,6 +109,7 @@ private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
     Row(
         modifier = GlanceModifier
             .fillMaxSize()
+            .cornerRadius(AddTaskMultiGlanceWidget.CONTAINER_CORNER_RADIUS)
             .background(widgetBackground)
             .padding(outer),
     ) {
@@ -155,6 +142,7 @@ private fun GridLayout(
     Row(
         modifier = GlanceModifier
             .fillMaxSize()
+            .cornerRadius(AddTaskMultiGlanceWidget.CONTAINER_CORNER_RADIUS)
             .background(widgetBackground)
             .padding(outer),
     ) {

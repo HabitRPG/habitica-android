@@ -12,7 +12,6 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.PreviewSizeMode
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
@@ -59,10 +58,6 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
         setOf(SIZE_2x1, SIZE_3x1, SIZE_4x1, SIZE_5x1, SIZE_2x2, SIZE_3x2, SIZE_4x2, SIZE_5x2),
     )
 
-    override val previewSizeMode: PreviewSizeMode = SizeMode.Responsive(
-        setOf(SIZE_5x2, SIZE_3x2, SIZE_5x1),
-    )
-
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val state = runCatching {
             val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
@@ -76,24 +71,6 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
         provideContent {
             HabiticaWidgetTheme {
                 StatsContent(state)
-            }
-        }
-    }
-
-    override suspend fun providePreview(context: Context, widgetCategory: Int) {
-        val sample = StatsWidgetState(
-            hp = 50f, maxHp = 50f,
-            exp = 1286f, toNextLevel = 1500f,
-            mp = 128f, maxMp = 200f,
-            level = 34,
-            goldText = "1,256", gemsText = "32", hourglassesText = "2", hourglassCount = 2,
-            showMp = true,
-            className = "warrior",
-            avatarBitmapPath = null,
-        )
-        provideContent {
-            HabiticaWidgetTheme {
-                StatsContent(sample)
             }
         }
     }

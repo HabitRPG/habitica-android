@@ -17,7 +17,6 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.PreviewSizeMode
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
@@ -26,6 +25,7 @@ import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
@@ -53,9 +53,6 @@ import kotlinx.coroutines.flow.firstOrNull
 
 class DailiesCountGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
-    override val previewSizeMode: PreviewSizeMode = SizeMode.Responsive(
-        setOf(DpSize(218.dp, 204.dp), DpSize(320.dp, 204.dp)),
-    )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val entry = widgetEntryPoint(context)
@@ -77,15 +74,6 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
         provideContent {
             HabiticaWidgetTheme {
                 DailiesCountTile(state)
-            }
-        }
-    }
-
-    override suspend fun providePreview(context: Context, widgetCategory: Int) {
-        val sample = DailyCountWidgetState(totalDue = 20, completed = 9, needsCron = false)
-        provideContent {
-            HabiticaWidgetTheme {
-                DailiesCountTile(sample)
             }
         }
     }

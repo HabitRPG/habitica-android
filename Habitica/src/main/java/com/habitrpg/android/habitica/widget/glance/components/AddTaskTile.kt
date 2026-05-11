@@ -25,14 +25,14 @@ fun AddTaskTile(
     onClick: Action,
     modifier: GlanceModifier = GlanceModifier,
     iconTint: ColorProvider? = null,
-    cornerRadius: Dp = 28.dp,
+    cornerRadius: Dp = 17.5.dp,
     iconSize: Dp = 36.dp,
 ) {
     Column(
         modifier = modifier
             .cornerRadius(cornerRadius)
             .background(backgroundColor)
-            .padding(8.dp)
+            .padding(horizontal = 8.dp, vertical = 14.dp)
             .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,

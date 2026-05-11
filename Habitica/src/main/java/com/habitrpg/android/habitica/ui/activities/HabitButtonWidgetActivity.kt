@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -74,10 +77,16 @@ class HabitButtonWidgetActivity : ComponentActivity() {
             AppWidgetManager.EXTRA_APPWIDGET_ID,
             AppWidgetManager.INVALID_APPWIDGET_ID,
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+        Log.d("HabitButtonWidget", "ConfigActivity onCreate widgetId=$widgetId action=${intent?.action}")
         if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish()
             return
         }
+
+        setResult(
+            Activity.RESULT_CANCELED,
+            Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId),
+        )
 
         setContent {
             val context = LocalContext.current
@@ -107,12 +116,18 @@ class HabitButtonWidgetActivity : ComponentActivity() {
     private fun finishWithSelection(task: Task) {
         if (task.id == null) return
         val appContext = applicationContext
-        HabitButtonWidgetCache.write(appContext, widgetId, task)
+        Log.d("HabitButtonWidget", "finishWithSelection widgetId=$widgetId taskId=${task.id}")
+
+        setResult(
+            Activity.RESULT_OK,
+            Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId),
+        )
 
         val capturedWidgetId = widgetId
         lifecycleScope.launch {
             runCatching {
                 val glanceId = GlanceAppWidgetManager(appContext).getGlanceIdBy(capturedWidgetId)
+                HabitButtonWidgetCache.write(appContext, glanceId, task)
                 HabitButtonGlanceWidget().update(appContext, glanceId)
             }
             finish()

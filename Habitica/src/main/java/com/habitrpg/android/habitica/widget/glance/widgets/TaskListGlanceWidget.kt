@@ -16,7 +16,6 @@ import androidx.glance.LocalSize
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.PreviewSizeMode
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
@@ -29,6 +28,7 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -46,7 +46,6 @@ import com.habitrpg.android.habitica.widget.glance.components.EmptyState
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
-import com.habitrpg.android.habitica.widget.glance.data.TaskWidgetItem
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.toWidgetItem
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
@@ -63,14 +62,6 @@ abstract class TaskListGlanceWidget(
     private val taskType: TaskType,
 ) : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(220.dp, 160.dp),
-            DpSize(300.dp, 200.dp),
-            DpSize(360.dp, 300.dp),
-        ),
-    )
-
-    override val previewSizeMode: PreviewSizeMode = SizeMode.Responsive(
         setOf(
             DpSize(220.dp, 160.dp),
             DpSize(300.dp, 200.dp),
@@ -101,31 +92,6 @@ abstract class TaskListGlanceWidget(
                 TaskListContent(state, isDaily = taskType == TaskType.DAILY)
             }
         }
-    }
-
-    override suspend fun providePreview(context: Context, widgetCategory: Int) {
-        val sample = TaskListWidgetState(
-            tasks = if (taskType == TaskType.DAILY) PREVIEW_DAILIES else PREVIEW_TODOS,
-            needsCron = false,
-        )
-        provideContent {
-            HabiticaWidgetTheme {
-                TaskListContent(sample, isDaily = taskType == TaskType.DAILY)
-            }
-        }
-    }
-
-    companion object {
-        private val PREVIEW_DAILIES = listOf(
-            TaskWidgetItem(id = "1", text = "Wake up at 8:30", value = 8.0, checklistTotal = 0, checklistDone = 0),
-            TaskWidgetItem(id = "2", text = "Go to the Gym", value = 0.0, checklistTotal = 0, checklistDone = 0),
-            TaskWidgetItem(id = "3", text = "Journal", value = 4.0, checklistTotal = 0, checklistDone = 0),
-        )
-        private val PREVIEW_TODOS = listOf(
-            TaskWidgetItem(id = "1", text = "Pick up groceries", value = 4.0, checklistTotal = 0, checklistDone = 0),
-            TaskWidgetItem(id = "2", text = "Email the team", value = 0.0, checklistTotal = 0, checklistDone = 0),
-            TaskWidgetItem(id = "3", text = "Plan weekend trip", value = 8.0, checklistTotal = 0, checklistDone = 0),
-        )
     }
 }
 

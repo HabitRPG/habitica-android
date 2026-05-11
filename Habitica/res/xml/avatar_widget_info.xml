@@ -10,6 +10,5 @@
     android:targetCellWidth="4"
     android:targetCellHeight="2"
     android:previewImage="@drawable/widget_stats"
-    android:previewLayout="@layout/widget_preview_stats"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

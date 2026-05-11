@@ -1,8 +1,11 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -39,12 +42,13 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskSingleGlanceWidget
+import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskSingleGlanceWidget.Companion.TASK_TYPE_KEY
 import com.habitrpg.android.habitica.widget.glance.work.AddTaskRefreshWorker
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,10 +65,16 @@ class AddTaskWidgetActivity : ComponentActivity() {
             AppWidgetManager.EXTRA_APPWIDGET_ID,
             AppWidgetManager.INVALID_APPWIDGET_ID,
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
+        Log.d("AddTaskWidget", "ConfigActivity onCreate widgetId=$widgetId action=${intent?.action}")
         if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish()
             return
         }
+
+        setResult(
+            Activity.RESULT_CANCELED,
+            Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId),
+        )
 
         setContent {
             val context = LocalContext.current
@@ -85,14 +95,20 @@ class AddTaskWidgetActivity : ComponentActivity() {
 
     private fun finishWithSelection(type: TaskType) {
         val appContext = applicationContext
-        PreferenceManager.getDefaultSharedPreferences(appContext).edit(commit = true) {
-            putString("add_task_widget_$widgetId", type.value)
-        }
+        Log.d("AddTaskWidget", "finishWithSelection widgetId=$widgetId type=${type.value}")
+
+        setResult(
+            Activity.RESULT_OK,
+            Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId),
+        )
 
         val capturedWidgetId = widgetId
         lifecycleScope.launch {
             runCatching {
                 val glanceId = GlanceAppWidgetManager(appContext).getGlanceIdBy(capturedWidgetId)
+                updateAppWidgetState(appContext, glanceId) { prefs ->
+                    prefs[stringPreferencesKey(TASK_TYPE_KEY)] = type.value
+                }
                 AddTaskSingleGlanceWidget().update(appContext, glanceId)
             }
             finish()
