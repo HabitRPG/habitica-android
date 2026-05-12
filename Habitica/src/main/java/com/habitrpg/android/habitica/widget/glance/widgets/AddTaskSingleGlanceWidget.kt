@@ -96,6 +96,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
 
     val iconSize = (shorter.value * 0.30f).coerceIn(20f, 72f).dp
     val tilePadding = (shorter.value * 0.06f).coerceIn(2f, 12f).dp
+    val tileSide = shorter - tilePadding * 2
 
     val scallopTint: ColorProvider
     val iconTint: ColorProvider?
@@ -110,23 +111,27 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
-            .padding(tilePadding)
             .clickable(onClick = openAppAction(tile.deepLink)),
         contentAlignment = Alignment.Center,
     ) {
-        Image(
-            provider = ImageProvider(R.drawable.widget_tile_scallop),
-            contentDescription = null,
-            modifier = GlanceModifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds,
-            colorFilter = ColorFilter.tint(scallopTint),
-        )
-        Image(
-            provider = ImageProvider(tile.iconResId),
-            contentDescription = "Add new ${tile.name}",
-            modifier = GlanceModifier.size(iconSize),
-            colorFilter = iconTint?.let { ColorFilter.tint(it) },
-        )
+        Box(
+            modifier = GlanceModifier.size(tileSide),
+            contentAlignment = Alignment.Center,
+        ) {
+            Image(
+                provider = ImageProvider(R.drawable.widget_tile_scallop),
+                contentDescription = null,
+                modifier = GlanceModifier.fillMaxSize(),
+                contentScale = ContentScale.Fit,
+                colorFilter = ColorFilter.tint(scallopTint),
+            )
+            Image(
+                provider = ImageProvider(tile.iconResId),
+                contentDescription = "Add new ${tile.name}",
+                modifier = GlanceModifier.size(iconSize),
+                colorFilter = iconTint?.let { ColorFilter.tint(it) },
+            )
+        }
     }
 }
 
