@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="action_refresh">Опресняване</string>
+    <string name="action_refresh">Обновяване</string>
     <string name="XP_default">Опит</string>
     <string name="HP_default">Здраве</string>
     <string name="MP_default">Мана</string>
