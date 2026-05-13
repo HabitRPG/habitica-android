@@ -309,7 +309,6 @@
         <item quantity="many">%d Minutos</item>
         <item quantity="other">%d Minutos</item>
     </plurals>
-    <string name="quest_reject_error">No fue posible rechazar la misión. Por favor intenta más tarde.</string>
     <string name="avatar_setup_description">Así qué, ¿cómo te gustaría verte\? No te preocupes, puedes cambiar esto después.</string>
     <string name="quest_party_required_title">Debes pertener a un Equipo antes de empezar una Misión</string>
     <string name="ago_months">Hace %d meses</string>
@@ -418,4 +417,8 @@
     <string name="google_services_missing">Google play services no pudo ser encontrado.</string>
     <string name="subscribe_listitemFaint_description">¡Evita perder tu progreso con una curación instantánea al día cuando te quedes sin PV!</string>
     <string name="subscribe_listitem4_description">Recibirás un Jackalope Púrpura Real como mascota al convertirte en un nuevo suscriptor.</string>
+    <string name="cancel_subscription_apple_description">¿Deseas cancelar tu subscripción\? Debido a tu método de pago, deberás hacerlo a través de las configuraciones de subscripción de Apple ID en tu dispositivo iOS.</string>
+    <string name="visit_habitica_website">Visitar el sitio web de Habitica</string>
+    <string name="cancel_subscription_google_description">¿Deseas cancelar tu subscripción\? Puedes hacerlo desde la sección de Pagos y Subscripciones de la Google Play Store. Los meses restantes de crédito de suscripción se añadirán a la fecha de finalización tras la cancelación.</string>
+    <string name="cancel_subscription_notgoogle_description">¿Deseas cancelar tu subscripción\? Debido a tu método de pago, deberás hacerlo desde nuestro sitio web. Para ello, presiona el botón debajo, ingresa a tu cuenta, haz click en el icóno de jugador en la esquina superior derecha, y dirígete a la sección de Subscripción. Los meses restantes de crédito de suscripción se añadirán a la fecha de finalización tras la cancelación. ¡Te extrañaremos!</string>
 </resources>
