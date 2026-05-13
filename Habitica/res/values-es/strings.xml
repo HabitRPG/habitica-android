@@ -1223,7 +1223,7 @@
     <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; te ha invitado a unirte al grupo &lt;b&gt;%1$s&lt;/b&gt;</string>
     <string name="successful_purchase_generic">Compra exitosa</string>
     <string name="limited_edition">Edición Limitada</string>
-    <string name="subscriber_benefit_used_faint">Ya usaste tu segunda oportunidad hoy. Estará disponible denuevo en %s</string>
+    <string name="subscriber_benefit_used_faint">¡Segunda Oportunidad aún se está recargando! Estará disponible denuevo en %s.</string>
     <string name="subscribe_listitemFaint">Obtienes una Segunda Oportunidad</string>
     <string name="challenges">Desafíos</string>
     <string name="report_player_title">¿Reportar a %s\?</string>
@@ -1419,14 +1419,14 @@
     <string name="death_description">¡Pero puedes recuperarlos todos con trabajo duro! Buena suerte, lo harás muy bien.</string>
     <string name="faint_broken_equipment">El equipo roto se puede volver a comprar
 \ndesde el Mercado</string>
-    <string name="faint_loss_description">Bajarás a nivel <b>%1$d</b>, perderás <b>%2$d</b> oro y se <b>ha roto una pieza de equipo</b>... ¡Puedes recuperarlos todo con trabajo duro!</string>
+    <string name="faint_loss_description">Bajarás al <b>nivel %1$d, perderás %2$d Oro y se romperá una pieza de tu equipamiento</b>... Sin embargo, ¡puedes recuperarlo todo con trabajo duro!</string>
     <string name="manager">Encargado</string>
     <string name="armoire_rate_equipment_description">Cada mes se añaden nuevas piezas de equipamiento. Si tienes todas las piezas de equipo, obtendrás comida o experiencia, a una probabilidad de 50/50.</string>
     <string name="added_social_auth">Autenticación %s añadida</string>
     <string name="subscription_credit_canceling">Tus <b>+%d</b> meses de suscripción se activarán tras la cancelación</string>
     <string name="self_improvement">Mejora Personal</string>
     <string name="todo_summary_description">Esta es una **%1$s** Tarea que no tiene fecha de vencimiento.</string>
-    <string name="daily_summary_description">Esta es una **%1$s** Tarea que repite **%2$s%3$s**.</string>
+    <string name="daily_summary_description">Esta es una Tarea **%1$s** que se repite **%2$s%3$s**.%4$s</string>
     <string name="shadow_mute_user">Silenciar Sin Aviso</string>
     <string name="unban_user_confirm">¿Quieres volver a autorizar a este jugador\?</string>
     <string name="unmute_user_confirm">¿Quieres devolver el acceso al chat para este jugador\?</string>
@@ -1450,7 +1450,7 @@
     <string name="pause_damage_1_description">Los Monstruos aún así te producirán daño si otros miembros de tu Equipo no completan sus Tareas Diarias</string>
     <string name="seeking_hint">No dejes de buscar que alguien te invite a su Equipo o si no crea tu propio Equipo en cualquier momento</string>
     <string name="equipment_class_locked">Este equipamiento está reservado solo para una clase específica</string>
-    <string name="shop_armoire_description">El nuevo equipamiento se publica durante las diferentes Galas estaciónales. Hasta ese momento ¡hay %d piezas de Equipo en el Armario Encantado que aún puedes conseguir!</string>
+    <string name="shop_armoire_description">Equipamiento nuevo se publica durante las Galas estacionales. Hasta ese momento ¡hay %d piezas de Equipo en el Armario Encantado que aún puedes conseguir!</string>
     <string name="empty_special_description_subscribed">¡Obtén artículos para transformarte durante las Galas Estaciónales y las cajas misteriosas de equipamiento para suscriptores que se publican al inicio de cada mes!</string>
     <string name="empty_food_description">¡Completa las Tareas, compra en el Armario Encantado o dirígete a el [Mercado] (/tiendas/mercado) para aumentar tu inventario!</string>
     <string name="empty_potions_description">¡Completa las Tareas, las Misiones de Poción o dirígete a el [Mercado] (/tiendas/mercado) para aumentar tu inventario!</string>
@@ -1470,7 +1470,7 @@
     <string name="purchase_gryphatrice_confirmation">¿Comprar la Grifatriz Alegre por %d Gemas\?</string>
     <string name="shop_armoire_empty_description">El nuevo equipamiento se publica durante las diferentes Galas estaciónales. ¡Hasta ese momento puedes encontrar nuevas piezas de equipo en el Armario Encantado cada mes!</string>
     <string name="unlock_gear_and_skills">Desbloquea %s de equipamiento y habilidades</string>
-    <string name="subscribe_incentive_text_faint">Obtén cada día al estar suscrito una segunda oportunidad de evitar perder todos tus puntos de vida (HP)</string>
+    <string name="subscribe_incentive_text_faint">Los Subscriptores obtienen el beneficio de una Segunda Oportunidad para evitar quedarse sin PV una vez al día.</string>
     <string name="subscribe_second_chance_incentive_text">¡Los suscriptores obtienen cada día una segunda oportunidad de mantenerse con vida y otros beneficios!</string>
     <string name="no_x">Sin %s</string>
     <string name="item_footer_description">¡Mira en el [Mercado](/tiendas/mercado) para comprar lo que necesites!</string>
@@ -1597,9 +1597,9 @@
         <item quantity="other">cada %d semanas</item>
     </plurals>
     <plurals name="repeat_monthly">
-        <item quantity="one">cada mes</item>
-        <item quantity="many">cada %d meses</item>
-        <item quantity="other">cada %d meses</item>
+        <item quantity="one">cada Mes</item>
+        <item quantity="many">cada %d Meses</item>
+        <item quantity="other">cada %d Meses</item>
     </plurals>
     <plurals name="repeat_yearly">
         <item quantity="one">cada año</item>
@@ -1640,7 +1640,6 @@
     <string name="copy_token">Copiar el Token</string>
     <string name="membership">Membresía</string>
     <string name="faint_broken_gear_info">El equipamiento roto se puede readquirir en el Mercado</string>
-    <string name="quest_accept_error">No fue posible aceptar la misión. Por favor, intenta otra vez.</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d día hasta Orbe del Renacimiento gratuito</item>
         <item quantity="many">%d días hasta Orbe del Renacimiento gratuito</item>
@@ -1653,10 +1652,46 @@
     <string name="server_option_default">%s (Por defecto)</string>
     <string name="server_option_custom">Personalizado</string>
     <string name="server_custom_address_label">Entrar a un servidor personalizado</string>
-    <string name="server_custom_address_hint">ej. http://localhost:3000</string>
+    <string name="server_custom_address_hint">ej. servidorpersonalizado.habitica.com</string>
     <string name="apply">Aplicar</string>
     <string name="server_settings_unlocked">¡Ajustes del Servidor desbloqueados!</string>
     <string name="server_settings_unlock_remaining">Estás a %d pasos de desbloquear los ajustes del servidor.</string>
     <string name="custom_server">Servidor Personalizado</string>
-    <string name="server_url_invalid">Por favor introduce una URL válida que empiece con http:// o https://</string>
+    <string name="server_url_invalid">Por favor introduce una URL válida</string>
+    <string name="server_custom_warning">Aviso: Las cuentas en servidores personalizados son independientes a tu cuenta principal en Habitica.com.</string>
+    <string name="reset_server_to_default">Restablecer Predeterminado</string>
+    <string name="reset_server_confirmation">¿Seguro que quieres restablecer el servidor al predeterminado de Habitica\? Se terminará tu sesión.</string>
+    <string name="search_questions">Buscar preguntas</string>
+    <string name="no_matching_questions">No se han encontrado preguntas similares</string>
+    <string name="rebirth_shop">Orbe del Renacimiento</string>
+    <string name="rebirth_shop_description">Reinicia tu aventura instantáneamente como un Guerrero de nivel 1 a la vez que conservas Logros, Artículos, y Equipamiento. Tus tareas se volverán amarillas nuevamente, pero mantendrán su historial. Todas las rachas personales de tareas se reestablecerán. Tu Oro, Experiencia, Maná, y efectos de Habilidades serán removidos.</string>
+    <string name="rebirth_confirm_title">¿Estás seguro que quieres usar el Orbe del Renacimiento\?</string>
+    <string name="rebirth_confirm_reset_item_3">Todo tu Oro y Maná</string>
+    <string name="rebirth_confirm_reset_item_4">Todos los valores y rachas de tarea</string>
+    <string name="rebirth_confirm_reset_item_2">Todos tus Puntos de Atributo</string>
+    <string name="rebirth_confirm_keep_header">Conservarás:</string>
+    <string name="rebirth_confirm_keep_item_1">Tu lista de tareas</string>
+    <string name="rebirth_enabled_description">¡Usa el Orbe del Renacimiento para darle un toque de aire fresco a tu aventura en Habitica cuando sientas que ya lo has hecho todo! Comienza de nuevo desde el nivel 1 a la vez que mantienes tus tareas, Logros, y Mascotas con este artículo especial disponible en el Mercado.</string>
+    <string name="go_to_market">Ir al Mercado</string>
+    <string name="go_back">Volver</string>
+    <string name="rebirth_enabled_title">Orbe del Renacimiento Desbloqueado</string>
+    <string name="rebirth_enabled_subtitle">¡Una nueva aventura está disponible!</string>
+    <string name="rebirth_achievement_description">¡Has empezado una nueva aventura! Es tu renacimiento n. %1$d, y el nivel más alto que has alcanzado es %2$d.</string>
+    <string name="auth_invalid_credential_type">El tipo de credencial es incorrecto.</string>
+    <string name="scroll_to_new_messages">Ir a mensajes nuevos</string>
+    <string name="rebirth_confirm_reset_item_1">Tus niveles y clase</string>
+    <string name="rebirth_confirm_keep_item_2">Todo el Equipamiento, Mascotas, y Monturas</string>
+    <string name="rebirth_confirm_keep_item_3">Tus Logros</string>
+    <string name="rebirth_confirm_keep_item_4">Tu Equipo y Desafíos</string>
+    <string name="rebirth_confirm_use">Usar Orbe del Renacimiento</string>
+    <string name="free">GRATIS</string>
+    <string name="rebirth_achievement_title">¡Has Renacido!</string>
+    <string name="rebirth_achievement_description_max">¡Has empezado una nueva aventura! Es tu renacimiento n. %1$d, y el nivel más alto que has alcanzado es %2$d o superior.</string>
+    <string name="fifth_week_warning">Esta tarea no aparecerá pendiente durante meses con menos de %1$ssem.</string>
+    <string name="subscriber_button_faint_use">¡Usa tu Segunda Oportunidad!</string>
+    <string name="subscriber_benefit_available_faint">¡Tu subscripción te permite evitar quedarte sin PV una vez al día!</string>
+    <string name="auth_unknown_credential_type">El tipo de credencial es desconocido.</string>
+    <string name="auth_missing_token">Token requerido.</string>
+    <string name="new_message">Nuevo mensaje</string>
+    <string name="rebirth_confirm_reset_header">Se reestablecerán:</string>
 </resources>

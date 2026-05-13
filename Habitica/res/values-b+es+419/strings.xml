@@ -309,7 +309,6 @@
         <item quantity="many">%d Minutos</item>
         <item quantity="other">%d Minutos</item>
     </plurals>
-    <string name="quest_rejected">Misión rechazada</string>
     <string name="quest_reject_error">No fue posible rechazar la misión. Por favor intenta más tarde.</string>
     <string name="avatar_setup_description">Así qué, ¿cómo te gustaría verte\? No te preocupes, puedes cambiar esto después.</string>
     <string name="quest_party_required_title">Debes pertener a un Equipo antes de empezar una Misión</string>
@@ -389,7 +388,34 @@
     <string name="class_changed_description">Ahora puedes usar poderes de %s y comprar equipamiento exclusivo de clase en las tiendas. Sube de nivel para ganar puntos de atributo que puedes usar para potenciar tus poderes.</string>
     <string name="new_checklist_item">Nueva sub tarea</string>
     <string name="skill_progress_title">Usar habilidad</string>
-    <string name="setup_task_work_1">Procesar email</string>
+    <string name="setup_task_work_1">Organizar correo electrónico</string>
     <string name="setup_task_creativity_1">Estudia las técnicas de un profesional</string>
     <string name="faint_broken_gear_info">El Equipamiento roto puede volver a comprarse en el Mercado</string>
+    <string name="subscribe1month_gemcap">25 Gemas al mes</string>
+    <string name="active">Activa</string>
+    <string name="widget_habit_button">Habitica Hábito Realizado</string>
+    <string name="subscription_hourglasses">%d Relojes de Arena</string>
+    <string name="subscribe_listitem3_description_alt">Mantente a la última moda con los artículos exclusivos más recientes. ¡Suscríbete ahora para obtener %1$s %2$s!</string>
+    <string name="subscribe_listitem5_description">¡Obtén un Jackalope Púrpura Real más el doble de Huevos, Pociones de Eclosión, y Comida cada día para expandir tu colección de Mascotas!</string>
+    <string name="subscribe12month_gemcap">45 Gemas al mes</string>
+    <string name="subscribe3month_gemcap">30 Gemas al mes</string>
+    <string name="subscribe6month_gemcap">35 Gemas al mes</string>
+    <string name="payment_method">Método de pago</string>
+    <string name="subscription_hourglasses_3month_timeframe">Reloj de Arena en 3 meses</string>
+    <string name="due">Pendiente</string>
+    <string name="subscription">Subscripción</string>
+    <string name="subscription_credit_canceling">Tus <b>+%d</b> meses de crédito de subscripción se activarán después de cancelar</string>
+    <string name="cancel_subscription">Cancelar Subscripción</string>
+    <string name="inn_description">¿Necesitas un descanso\? Hospédate en la Posada de Daniel para pausar algunas de las mecánicas de juego más difíciles de Habitica:
+\n
+\n • Tus Tareas Diarias perdidas no te harán daño (los Jefes aún lo harán por Tareas Diarias perdidas de otros miembros de tu Equipo)
+\n • Tus rachas de Tareas y Hábitos no se restablecerán
+\n • El daño que hagas a Jefes de Misión o artículos de colección encontrados se quedarán pendientes hasta que registres tu salida del la Posada</string>
+    <string name="subscription_duration">Recurrente cada %s</string>
+    <string name="subscription_duration_norenew">Por %s</string>
+    <string name="widget_dailies">Habitica Tareas Diarias</string>
+    <string name="widget_todo_list">Habitica Lista de Tareas Pendientes</string>
+    <string name="google_services_missing">Google play services no pudo ser encontrado.</string>
+    <string name="subscribe_listitemFaint_description">¡Evita perder tu progreso con una curación instantánea al día cuando te quedes sin PV!</string>
+    <string name="subscribe_listitem4_description">Recibirás un Jackalope Púrpura Real como mascota al convertirte en un nuevo suscriptor.</string>
 </resources>
