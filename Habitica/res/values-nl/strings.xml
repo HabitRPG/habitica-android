@@ -290,7 +290,7 @@
     <string name="hatching_market_info">Krijg je niet de goede drops? Neem een kijkje op de Markt!</string>
     <string name="feeding_market_info">Ander voedsel nodig? Koop meer op de markt!</string>
     <string name="open_market">Open Markt</string>
-    <string name="cds_description">Je dagelijkse taken zullen worden gereset wanneer je Habitica voor het eerst gebruikt na %1$s. Zorg er voor dat je je dagelijkse taken voor dit tijdstip voltooit!</string>
+    <string name="cds_description">Je dagelijkse taken zullen worden gereset wanneer je Habitica voor het eerst gebruikt na %1$s. Zorg er voor dat je jouw dagelijkse taken voor dit tijdstip voltooit!</string>
     <string name="AudioTheme_title">Audiothema</string>
     <string name="AudioTheme_summary">Verander Habitica\'s audiothema</string>
     <!--Login Incentives-->
@@ -341,7 +341,7 @@
     <string name="challenge_leave_title">Verlaat uitdaging</string>
     <string name="remove_tasks">Verwijderen</string>
     <string name="keep_tasks">Houden</string>
-    <string name="my_challenges">Mijn uitdagingen</string>
+    <string name="my_challenges">Mijn Uitdagingen</string>
     <string name="official">Officieel</string>
     <string name="challenge">Uitdaging</string>
     <string name="not_part_of_a_challenge">Je maakt geen deel uit van uitdagingen op dit moment!</string>
@@ -506,15 +506,14 @@
     <string name="distribute_task">Verdelen op basis van activiteit van taken</string>
     <string name="no_points_to_allocate">Geen punten toe te wijzen</string>
     <string name="points_to_allocate">%dpunten toe te wijzen</string>
-    <string name="distribute_evenly_help">Wijst hetzelfde aantal punten toe aan elke eigenschap</string>
+    <string name="distribute_evenly_help">Wijst hetzelfde aantal punten toe aan elke eigenschap.</string>
     <string name="distribute_class_help">Wijst meer punten toe aan de eigenschappen die belangrijk zijn voor jou klasse.</string>
     <string name="distribute_task_help">Wijst punten toe op basis van de categorieën van Kracht, Intelligentie, Weerbaarheid en Perceptie die verbonden zijn aan de taken die je voltooit.</string>
     <string name="allocating_points">Punten aan het toewijzen</string>
     <string name="class_equipment">Uitrusting</string>
     <string name="equipment_empty">Je hebt alle uitrusting al! Meer zal uitgebracht worden tijdens de Grote Galas, dicht bij de zonnestilstanden en nachteveningen.</string>
     <string name="classless">Klasseloos</string>
-    <string name="class_equipment_shop_dialog">Dit voorwerp is enkel beschikbaar voor een specifieke Klasse.
-\n Je kunt je Klasse aanpassen in de Instellingen.</string>
+    <string name="class_equipment_shop_dialog">Dit voorwerp is enkel beschikbaar voor een specifieke Klasse. Je kunt je Klasse aanpassen in de Instellingen.</string>
     <string name="class_gear_disclaimer">Je kunt enkel uitrusting kopen voor je huidige klasse</string>
     <string name="check_into_inn">Check in bij de Herberg</string>
     <string name="community_guidelines">gemeenschapsrichtlijnen</string>
@@ -551,8 +550,8 @@
     <string name="world_boss_description_intro">Een Wereldbaas is een speciaal evenement waarbij de hele gemeenschap samenwerkt om een krachtig monster met hun taken te verslaan!</string>
     <string name="world_boss_description_1">Volbreng taken om de Baas te beschadigen</string>
     <string name="world_boss_description_2">Deze Baas zal jou niet schaden voor gemiste taken, maar zal zijn Woedemeter Omhoog doen gaan. Als deze vol is, zal de Baas één van onze winkeliers aanvallen!</string>
-    <string name="world_boss_description_3">Je kan verdergaan met normale Queeste-Bazen, jouw schade zal voor beiden tellen.</string>
-    <string name="world_boss_description_4">Check de Herberg om de vooruitgang en Woedeaanvallen van de Baas te zien.</string>
+    <string name="world_boss_description_3">Je kan verdergaan met normale Queeste-Bazen, jouw schade zal voor beiden tellen</string>
+    <string name="world_boss_description_4">Check de Herberg om de vooruitgang en Woedeaanvallen van de Baas te zien</string>
     <string name="world_boss_action_prompt">Versla de Baas om speciale beloningen te ontvangen en red Habitica van %s\'s terreur!</string>
     <string name="questShop_owner_long">Ian de queeste-gids</string>
     <string name="seasonalShop_owner_long">Seizoenstovenares</string>
@@ -761,7 +760,7 @@
     <string name="partyOnTitle">Ga aan de slag met je gezelschap</string>
     <string name="partyUpDescription">Je gaat over tot samenwerking met een groepsgenoot!</string>
     <string name="partyUpTitle">Verkrijg een gezelschap</string>
-    <string name="achievement_title">Je hebt een prestatie!</string>
+    <string name="achievement_title">Je hebt een Prestatie!</string>
     <string name="remove_member_confirm">Weet je zeker dat je %s uit de groep wilt verwijderen\?</string>
     <string name="transfer_ownership_confirm">Leiderschap Overdragen\?</string>
     <string name="transferred_ownership">Leiderschap overdragen aan %s</string>
@@ -790,7 +789,7 @@
     <string name="need_more_help">Heb je meer hulp nodig\?</string>
     <string name="need_help_header_description">Plaats in bericht in de %s om je vragen te laten beantwoorden door een medespeler.</string>
     <string name="update_available">Update beschikbaar: %1$s (%2$d)</string>
-    <string name="streak">Streak</string>
+    <string name="streak">Reeks</string>
     <string name="new_reminder">Nieuwe herinnering</string>
     <string name="checklist_text">Controlelijsttekst</string>
     <string name="take_me_back">Breng me terug</string>
@@ -857,7 +856,7 @@
     <string name="gift_confirmation_text_sub_g1g1">Je hebt %1$s een %2$s-maand Habitica-abonnement gestuurd en hetzelfde abonnement is toegepast op je account voor onze Gift One Get One-promotie!</string>
     <string name="gift_gems_subtitle">Kies hieronder het edelsteenpakket dat je cadeau wilt doen!</string>
     <string name="gift_subscription_subtitle">Selecteer het abonnement dat je cadeau wilt doen! Dit abonnement wordt niet automatisch verlengd.</string>
-    <string name="gift_one_get_one_detailed_description">Terwijl deze promotie actief is, ontvang je zelf, automatisch hetzelfde abonnement nadat je je cadeau hebt verzonden.</string>
+    <string name="gift_one_get_one_detailed_description">Terwijl deze promotie actief is, ontvang je zelf, automatisch hetzelfde abonnement nadat je jouw cadeau hebt verzonden.</string>
     <string name="gift_one_get_one_description">Geef een sub cadeau en ontvang er een gratis evenement is nu bezig!</string>
     <string name="subscribe_gift_description">Wilt u de voordelen van een abonnement aan iemand anders geven\?</string>
     <string name="welcomeNameTitle">Hoe moeten we je noemen\?</string>
@@ -882,7 +881,7 @@
     <string name="user_level_with_class_unabbreviated">Niveau %1$d %2$s</string>
     <string name="not_selected">Niet geselecteerd</string>
     <string name="selected">Geselecteerd</string>
-    <string name="challenge_leave_description">Je kunt ervoor kiezen om de taken van de challenge op je persoonlijke pagina te bewaren of om ze te verwijderen als je de challenge verlaat.</string>
+    <string name="challenge_leave_description">Je kunt ervoor kiezen om de taken van de Uitdaging op je persoonlijke pagina te bewaren of om ze te verwijderen als je de Uitdaging verlaat</string>
     <string name="off">Uit</string>
     <string name="on">Aan</string>
     <string name="mana_points">Manapunten</string>
@@ -1138,9 +1137,9 @@
     <string name="hatch_pet">Huisdier uitbroeden</string>
     <string name="manual_sync_restart_description">Soms werkt de app de inhoud niet automatisch bij. Probeer naar beneden te swipen om de app te verversen of sluit de app en start hem opnieuw op.</string>
     <string name="update_app">Update de app</string>
-    <string name="update_app_description">We zijn continu bezig met het uitbrengen van updates, dus houdt de Play Store in de gaten om te zien of er updates beschikbaar zijn</string>
+    <string name="update_app_description">We zijn continu bezig met het uitbrengen van updates, dus houdt de Play Store in de gaten om te zien of er updates beschikbaar zijn.</string>
     <string name="wacky">Maf</string>
-    <string name="fedPetDescription">Elk Huisdier houdt van bepaald Voedsel! Experimenteer en ontdek welk Voedsel jouw Huisdier het snelst laat groeien.</string>
+    <string name="fedPetDescription">Elk Huisdier houdt van bepaald Voedsel! Experimenteer en ontdek welk Voedsel jouw Huisdier het snelst laat groeien</string>
     <string name="keep_x_tasks">%d taken bewaren</string>
     <string name="delete_x_tasks">%d taken verwijderen</string>
     <string name="hatch_pet_again">Huisdier opnieuw uitbroeden</string>
@@ -1156,7 +1155,7 @@
     <string name="broken_challenge">Ontbrekende Uitdaging</string>
     <string name="broken_challenge_description">Dit is een van de %d taken die deel uitmaken van een Uitdaging die niet langer bestaat. Wat zou je willen doen met de overgebleven taken\?</string>
     <string name="block_user_title">%s blokkeren\?</string>
-    <string name="block_user_description">Een geblokkeerde speler kan je geen privéberichten sturen, maar je zult zijn of haar berichten nog wel kunnen zien.</string>
+    <string name="block_user_description">Een geblokkeerde speler kan je geen privéberichten sturen, maar je zult zijn of haar berichten nog wel kunnen zien</string>
     <string name="block">Blokkeren</string>
     <string name="pms_disabled">Privéberichten zijn uitgeschakeld</string>
     <string name="pms_disabled_description">Je kunt nog steeds berichten versturen, maar niemand kan ze naar jou sturen. Je kan dit weer inschakelen in Instellingen.</string>
@@ -1204,7 +1203,7 @@
     <string name="visit_the_market">Marktplaats bezoeken</string>
     <string name="participating">Deelnemer</string>
     <string name="category">Categorie</string>
-    <string name="server_custom_address_hint">bijv. http://localhost:3000</string>
+    <string name="server_custom_address_hint">bijv. customserver.habitica.com</string>
     <string name="theme_color">Themakleur</string>
     <string name="free">GRATIS</string>
     <string name="action_end_challenge">Uitdaging beëindigen</string>
@@ -1231,11 +1230,11 @@
     <string name="day_x">Dag %d</string>
     <string name="oldest">Oudste</string>
     <string name="avatar_beards">Baarden</string>
-    <string name="never">Nooit</string>
+    <string name="never">nooit</string>
     <string name="avatar_mustaches">Snoeren</string>
     <string name="spring">Lente</string>
     <string name="theme_mode">Thema modus</string>
-    <string name="you_won_challenge">Je hebt een uitdaging gewonnen</string>
+    <string name="you_won_challenge">Je hebt een Uitdaging gewonnen</string>
     <string name="september">September</string>
     <string name="december">December</string>
     <string name="november">November</string>
@@ -1246,8 +1245,8 @@
     <string name="list">Lijst</string>
     <string name="invited">Uitgenodigd</string>
     <plurals name="repeat_daily">
-        <item quantity="one">Elke dag</item>
-        <item quantity="other">Elke %d dagen</item>
+        <item quantity="one">elke dag</item>
+        <item quantity="other">elke %d dagen</item>
     </plurals>
     <string name="submit_feedback">Feedback verzenden</string>
     <string name="fortify_shop">Versterkingsdrankje</string>
@@ -1269,4 +1268,55 @@
     <string name="x_gems">%d Edelstenen</string>
     <string name="set">Verzameling</string>
     <string name="stripe_payment">Stripe</string>
+    <string name="undo">Ongedaan maken</string>
+    <string name="copy_token">Sleutel Kopiëren</string>
+    <string name="spooky_promo_info_prompt">De edelsteen uitverkoop is terug om het einde van het herfstgala van dit jaar te achtervolgen! Dit is een laatste kans om meer edelstenen dan ooit te krijgen, dus sla in zolang het duurt!</string>
+    <string name="sort_by">Sorteren Op</string>
+    <string name="animal_tails">Dierenstaarten</string>
+    <string name="available_in">Beschijkbaar in %s</string>
+    <string name="buy_set">Verzameling Kopen</string>
+    <string name="limited_edition">Beperkte Oplage</string>
+    <string name="animated_gryphatrice_pet">Juichende Gryphatrice Huisdier</string>
+    <string name="go_to_settings">Ga naar Instellingen</string>
+    <plurals name="people">
+        <item quantity="one">%d persoon</item>
+        <item quantity="other">%d personnen</item>
+    </plurals>
+    <plurals name="repeat_monthly">
+        <item quantity="one">elke Maand</item>
+        <item quantity="other">elke %d Maanden</item>
+    </plurals>
+    <plurals name="repeat_weekly">
+        <item quantity="one">elke week</item>
+        <item quantity="other">elke %d weken</item>
+    </plurals>
+    <string name="create_guild_description">Om een gilde aan te maken, log je in op de Habitica-website en tik je vervolgens op de knop \"Aanmaken\" op het scherm \"Mijn gilden\".</string>
+    <string name="end_challenge_description">Om een uitdaging te beëindigen, log je in op de Habitica-website en tik je op de knop \'Uitdaging beëindigen\' aan de rechterkant van het scherm van de uitdaging.</string>
+    <string name="won_achievement_description"><b>%s</b> heeft jou uitgeroepen tot winnaar! Je overwinning is opgenomen in je Prestaties.</string>
+    <string name="won_achievement_description_noname">Je bent uitgeroepen tot winnaar! Je overwinning is opgenomen in je Prestaties.</string>
+    <string name="claim_x_gems">Claim %d edelstenen</string>
+    <string name="terms_of_service">Algemene Voorwaarden</string>
+    <string name="you_ran_out_of_health">Je Gezondheidspunten zijn op!</string>
+    <string name="account_reset">Account Resetten</string>
+    <string name="find_more_members">Nog meer leden zoeken</string>
+    <string name="username_or_email">Gebruikersnaam of email</string>
+    <string name="seeking_party_title">Zoekt je een Gezelschap\?</string>
+    <string name="you_re_looking_for_party">Jij zoekt een Gezelschap!</string>
+    <string name="healers">Genezers</string>
+    <string name="warriors">Krijgers</string>
+    <string name="api_token_title">API-sleutel</string>
+    <plurals name="repeat_yearly">
+        <item quantity="one">Elke jaar</item>
+        <item quantity="other">Elke %d jaren</item>
+    </plurals>
+    <string name="new_message">Nieuw bericht</string>
+    <string name="about_me">Over Mij</string>
+    <string name="my_account">Mijn Account</string>
+    <string name="login_methods">Manieren om in te loggen</string>
+    <string name="user_is_blocked_explanation">Een geblokkeerde gebruiker kan je geen privé berichten meer sturen maar je kunt diens berichten nog wel in de herberg of gilde zien</string>
+    <string name="login_disclaimer">Door u aan te melden, geeft u aan dat u de <a href="https://habitica.com/static/terms">Algemene Voorwaarden</a> en <a href="https://habitica.com/static/privacy">Privacybeleid</a> hebt gelezen en hiermee akkoord gaat.</string>
+    <string name="sidebar_teams">Teams</string>
+    <string name="no_longer_available">Niet meer beschijkbaar</string>
+    <string name="background_filters">Achtergrond Filters</string>
+    <string name="buy_for_x">Koop voor %s</string>
 </resources>
