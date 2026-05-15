@@ -3,8 +3,6 @@ package com.habitrpg.android.habitica.ui.activities
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -103,10 +101,7 @@ import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
-import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
-import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
-import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
-import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
+import com.habitrpg.android.habitica.widget.WidgetUpdater
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
@@ -169,6 +164,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
+    @Inject
+    lateinit var widgetUpdater: WidgetUpdater
 
     lateinit var binding: ActivityMainBinding
     
@@ -663,7 +661,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     }
 
     override fun onPause() {
-        updateWidgets()
+        widgetUpdater.updateAllWidgets()
         super.onPause()
     }
 
@@ -678,23 +676,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     ) {
         resumeFromActivity = true
         super.startActivity(intent, options)
-    }
-
-    private fun updateWidgets() {
-        updateWidget(AvatarStatsWidgetProvider::class.java)
-        updateWidget(TodoListWidgetProvider::class.java)
-        updateWidget(DailiesWidgetProvider::class.java)
-        updateWidget(HabitButtonWidgetProvider::class.java)
-    }
-
-    private fun updateWidget(widgetClass: Class<*>) {
-        val intent = Intent(this, widgetClass)
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        val ids =
-            AppWidgetManager.getInstance(application)
-                .getAppWidgetIds(ComponentName(application, widgetClass))
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-        sendBroadcast(intent)
     }
 
     fun navigate(transitionId: Int) {

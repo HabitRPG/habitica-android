@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
+import com.habitrpg.android.habitica.widget.WidgetUpdater
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -40,11 +41,16 @@ class UserRepositoryImpl(
     apiClient: ApiClient,
     authenticationHandler: AuthenticationHandler,
     private val taskRepository: TaskRepository,
-    private val appConfigManager: AppConfigManager
+    private val appConfigManager: AppConfigManager,
+    private val widgetUpdater: WidgetUpdater
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
     companion object {
         private var lastReadNotification: String? = null
         private var lastSync: Date? = null
+    }
+
+    private fun refreshWidgetsAfterUserMutation() {
+        widgetUpdater.updateAllWidgets()
     }
 
     override fun getUser(): Flow<User?> = authenticationHandler.userIDFlow.flatMapLatest { getUser(it) }
@@ -57,6 +63,7 @@ class UserRepositoryImpl(
             (user.stats?.maxMP ?: 0) > 1
         ) {
             localRepository.saveUser(user)
+            refreshWidgetsAfterUserMutation()
         } else {
             retrieveUser(false, true)
         }
@@ -112,6 +119,7 @@ class UserRepositoryImpl(
                     taskRepository.saveTasks(id, tasksOrder, tasks)
                 }
             }
+            widgetUpdater.updateAllWidgets()
             val calendar = GregorianCalendar()
             val timeZone = calendar.timeZone
             val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
@@ -154,6 +162,7 @@ class UserRepositoryImpl(
         if (apiClient.sleep() == null) {
             localRepository.modify(user) { it.preferences?.sleep = !newValue }
         }
+        refreshWidgetsAfterUserMutation()
         return user
     }
 
@@ -213,6 +222,7 @@ class UserRepositoryImpl(
             liveUser.items = unlockResponse.items
             liveUser.balance = liveUser.balance - (price / 4.0)
         }
+        refreshWidgetsAfterUserMutation()
         return unlockResponse
     }
 
@@ -268,6 +278,7 @@ class UserRepositoryImpl(
             localRepository.executeTransaction {
                 liveUser.preferences?.dayStart = dayStartTime
             }
+            refreshWidgetsAfterUserMutation()
         }
         return liveUser
     }
@@ -305,6 +316,7 @@ class UserRepositoryImpl(
             liveUser.authentication?.localAuthentication?.username = newLoginName
             liveUser.flags?.verifiedUsername = true
         }
+        refreshWidgetsAfterUserMutation()
         return user
     }
 
@@ -333,6 +345,7 @@ class UserRepositoryImpl(
                 }
                 liveUser.stats?.points = liveUser.stats?.points?.dec()
             }
+            refreshWidgetsAfterUserMutation()
         }
         val stats = apiClient.allocatePoint(stat.value) ?: return null
         if (liveUser != null) {
@@ -344,6 +357,7 @@ class UserRepositoryImpl(
                 liveUser.stats?.points = stats.points
                 liveUser.stats?.mp = stats.mp
             }
+            refreshWidgetsAfterUserMutation()
         }
         return stats
     }
@@ -371,6 +385,7 @@ class UserRepositoryImpl(
                 liveUser.stats?.points = stats.points
                 liveUser.stats?.mp = stats.mp
             }
+            refreshWidgetsAfterUserMutation()
         }
         return stats
     }
@@ -382,6 +397,7 @@ class UserRepositoryImpl(
                 liveUser.needsCron = false
                 liveUser.lastCron = Date()
             }
+            refreshWidgetsAfterUserMutation()
         }
         if (tasks.isNotEmpty()) {
             val scoringList = mutableListOf<Map<String, String>>()
@@ -423,6 +439,7 @@ class UserRepositoryImpl(
                         "chair" -> user.preferences?.chair = identifier
                     }
                 }
+                refreshWidgetsAfterUserMutation()
             }
         }
         return if (type == "background") {
@@ -539,6 +556,7 @@ class UserRepositoryImpl(
         copiedUser.versionNumber = newUser.versionNumber
 
         localRepository.saveUser(copiedUser, false)
+        refreshWidgetsAfterUserMutation()
         return copiedUser
     }
 }

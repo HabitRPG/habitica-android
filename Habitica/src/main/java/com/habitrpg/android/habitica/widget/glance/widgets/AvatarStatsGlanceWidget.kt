@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
+import com.habitrpg.android.habitica.widget.glance.data.firstOrNullForWidget
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import android.os.Build
 import androidx.glance.GlanceTheme
@@ -53,7 +54,6 @@ import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 private val SIZE_2x1 = DpSize(100.dp, 40.dp)
@@ -79,7 +79,7 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
         }
         val rawState = withContext(Dispatchers.Main) {
             runCatching {
-                val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+                val user = widgetEntryPoint(context).userRepository().getUser().firstOrNullForWidget()
                 AvatarBitmapCache.refreshIfNeeded(context, user)
                 StatsWidgetState.fromUser(
                     context = context,

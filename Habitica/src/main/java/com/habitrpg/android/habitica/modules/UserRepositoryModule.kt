@@ -43,6 +43,7 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRep
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.widget.WidgetUpdater
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -71,13 +72,15 @@ class UserRepositoryModule {
         localRepository: TaskLocalRepository,
         apiClient: ApiClient,
         authenticationHandler: AuthenticationHandler,
-        appConfigManager: AppConfigManager
+        appConfigManager: AppConfigManager,
+        widgetUpdater: WidgetUpdater
     ): TaskRepository {
         return TaskRepositoryImpl(
             localRepository,
             apiClient,
             authenticationHandler,
-            appConfigManager
+            appConfigManager,
+            widgetUpdater
         )
     }
 
@@ -120,14 +123,16 @@ class UserRepositoryModule {
         apiClient: ApiClient,
         authenticationHandler: AuthenticationHandler,
         taskRepository: TaskRepository,
-        appConfigManager: AppConfigManager
+        appConfigManager: AppConfigManager,
+        widgetUpdater: WidgetUpdater
     ): UserRepository {
         return UserRepositoryImpl(
             localRepository,
             apiClient,
             authenticationHandler,
             taskRepository,
-            appConfigManager
+            appConfigManager,
+            widgetUpdater
         )
     }
 
