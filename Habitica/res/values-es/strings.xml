@@ -49,7 +49,7 @@
     <string name="start_date">Fecha de inicio</string>
     <string name="positive_habit_form">Positivo ( + )</string>
     <string name="negative_habit_form">Negativo ( - )</string>
-    <string name="checklist">Listado</string>
+    <string name="checklist">Lista de verificación</string>
     <string name="reminders">Recordatorios</string>
     <string name="attributes">Atributos</string>
     <string name="repeatables_frequency_daily">Diariamente</string>
@@ -66,13 +66,13 @@
     <string name="saturday">Sábado</string>
     <string name="sunday">Domingo</string>
     <string name="levelup_header">¡Has llegado al Nivel %1$d!</string>
-    <string name="levelup_detail">¡Cumpliendo tus metas en la vida real, has subido de nivel y tu salud está restaurada!</string>
-    <string name="onwards">¡Hurra!</string>
+    <string name="levelup_detail">¡Al cumplir tus metas en la vida real, has subido de nivel y tu salud está restaurada!</string>
+    <string name="onwards">¡Adelante!</string>
     <string name="faint_subtitle">¡No desesperes!</string>
     <string name="faint_header">¡Te has quedado sin puntos de salud!</string>
-    <string name="faint_button">Recuperar todos los puntos de salud y volver a intentarlo</string>
+    <string name="faint_button">Recuperar Salud e Intentar de Nuevo</string>
     <string name="filter">Filtro</string>
-    <string name="used_skill_without_mana">Has usado %1$s.</string>
+    <string name="used_skill_without_mana">Usaste %1$s.</string>
     <string name="new_checklist_item">Nuevo elemento de lista</string>
     <string name="reminder_title">Recuerda marcar tus tareas completadas</string>
     <string name="unlock_lvl_11">Se desbloquea en el nivel 11</string>
@@ -774,8 +774,8 @@
     <string name="empty_title_rewards_filtered">Sin recompensas</string>
     <string name="empty_description_todos_filtered">No se encontraron Tareas Pendientes que coincidan con los filtros actuales.</string>
     <string name="empty_title_todos_filtered">Sin Tareas Pendientes</string>
-    <string name="empty_description_dailies_filtered">Ninguna Tarea Diaria coincide con los filtros seleccionados.</string>
-    <string name="empty_title_dailies_filtered">Sin tareas diarias</string>
+    <string name="empty_description_dailies_filtered">No se encontraron Tareas Diarias que coincidan con los filtros actuales.</string>
+    <string name="empty_title_dailies_filtered">Sin Tareas Diarias</string>
     <string name="empty_description_habits_filtered">No se encontraron Hábitos que coincidan con los filtros actuales.</string>
     <string name="empty_title_habits_filtered">Sin hábitos</string>
     <string name="register_btn_google">Ingresa desde Google</string>
@@ -982,17 +982,17 @@
 \nSi te suscribes a Habitica, puedes incluso usar Oro para comprar un número de Gemas determinado por la cantidad de tiempo que has estado suscrito.</string>
     <string name="limitations">Limitaciones</string>
     <string name="delete_challenge_task_title">¿Eliminar Tarea del Desafío\?</string>
-    <string name="stat_description">Todos los personajes de Habitica tienen cuatro atributos que afectan los aspectos del juego de Habitica.
+    <string name="stat_description">"Todos los personajes de Habitica tienen cuatro atributos que afectan los aspectos del juego de Habitica.
 \n
 \nLa **Fuerza (STR)** Afecta los golpes críticos hechos a los Jefes de las Misiones. Guerreros y Rogues ganan STR con su equipamiento de clase.
 \n
 \nLa **Constitución (CON)** eleva tus HP y hace que recibas menos daño. Curanderos y Guerreros ganan CON con su equipamiento de clase.
 \n
-\nLa **Inteligencia (INT)** aumenta la cantidad de EXP que ganas y te da más Maná. Magos y curanderos ganan INT con su equipamiento de clase.
+\nLa **Inteligencia (INT)** aumenta la cantidad de  EXP que ganas y te da más Maná. Magos y curanderos ganan INT con su equipamiento de clase.
 \n
 \nLa **Percepción (PER)** incrementa el Oro que ganas y la frecuencia con la que encuentras artículos caídos. Rogues y Magos consiguen PER con el equipamiento de su clase.
 \n
-\nDespués del nivel 10, obtienes 1 Punto de Atributo por cada nivel que subas para que lo uses en cualquier atributo que quieras. También puedes utilizar equipamiento para aumentar diferentes atributos.</string>
+\nDespués del nivel 10, obtienes 1 Punto de Atributo por cada nivel que subas para que lo uses en cualquier atributo que quieras. También puedes utilizar equipamiento para aumentar diferentes atributos."</string>
     <string name="stat_allocation">Asignación de estadísticas</string>
     <string name="getting_started">Empezando</string>
     <string name="delete_checklist_entry">Eliminar…</string>
@@ -1392,7 +1392,7 @@
     <string name="cancel_subscription_apple_description">¿Ya no quieres seguir suscrito\? Debido al método de pago que usaste, tienes que cancelar la suscripción a través de los Ajustes de suscripciones de tu ID de Apple en tu dispositivo iOS.</string>
     <string name="report_message_explanation">Solo debes informar de una publicación si infringe las [Normas de la comunidad](https://habitica.com/static/community-guidelines) y/o [Condiciones del servicio](https://habitica.com/static/terms). Enviar una denuncia falsa es una violación de las Normas de la comunidad de Habitica.</string>
     <string name="resubscribe_description_gift">¿Te gustaría seguir recibiendo los beneficios de suscriptor\? Puedes contratar una suscripción recurrente para mantener los beneficios activos.</string>
-    <string name="class_equipment_shop_dialog_new">Este objeto solo está disponible para %s. Ve a Ajustes para cambiar de clase.</string>
+    <string name="class_equipment_shop_dialog_new">Este objeto solo está disponible para clase %s. Ve a Ajustes para cambiar de clase.</string>
     <string name="report_user_explanation">Solo debes informar de un jugador si infringe las [Normas de la comunidad](https://habitica.com/static/community-guidelines) y/o [Condiciones del servicio](https://habitica.com/static/terms). Enviar una denuncia falsa es una violación de las Normas de la comunidad de Habitica.</string>
     <string name="delete_account_subscription_active">No puedes eliminar tu cuenta mientras tengas una suscripción activa. Por favor, cancela la suscripción primero.</string>
     <string name="exact_alarm_system_settings_reminders">Los recordatorios puede que se retrasen ya que los permisos no están activados. Pulsa para ver y actualizar los permisos.</string>
@@ -1470,7 +1470,7 @@
     <string name="purchase_gryphatrice_confirmation">¿Comprar la Grifatriz Alegre por %d Gemas\?</string>
     <string name="shop_armoire_empty_description">El nuevo equipamiento se publica durante las diferentes Galas estaciónales. ¡Hasta ese momento puedes encontrar nuevas piezas de equipo en el Armario Encantado cada mes!</string>
     <string name="unlock_gear_and_skills">Desbloquea %s de equipamiento y habilidades</string>
-    <string name="subscribe_incentive_text_faint">Los Subscriptores obtienen el beneficio de una Segunda Oportunidad para evitar quedarse sin PV una vez al día.</string>
+    <string name="subscribe_incentive_text_faint">Los Subscriptores obtienen el beneficio de una Segunda Oportunidad para evitar quedarse sin PV una vez al día</string>
     <string name="subscribe_second_chance_incentive_text">¡Los suscriptores obtienen cada día una segunda oportunidad de mantenerse con vida y otros beneficios!</string>
     <string name="no_x">Sin %s</string>
     <string name="item_footer_description">¡Mira en el [Mercado](/tiendas/mercado) para comprar lo que necesites!</string>
