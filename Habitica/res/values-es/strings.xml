@@ -982,17 +982,17 @@
 \nSi te suscribes a Habitica, puedes incluso usar Oro para comprar un número de Gemas determinado por la cantidad de tiempo que has estado suscrito.</string>
     <string name="limitations">Limitaciones</string>
     <string name="delete_challenge_task_title">¿Eliminar Tarea del Desafío\?</string>
-    <string name="stat_description">"Todos los personajes de Habitica tienen cuatro atributos que afectan los aspectos del juego de Habitica.
+    <string name="stat_description">Todos los personajes de Habitica tienen cuatro atributos que afectan los aspectos del juego de Habitica.
 \n
-\nLa **Fuerza (STR)** Afecta los golpes críticos hechos a los Jefes de las Misiones. Guerreros y Rogues ganan STR con su equipamiento de clase.
+\nLa **Fuerza (STR)** afecta los golpes críticos hechos a los Jefes de Misión. Guerreros y Pícaros ganan FUE con su equipamiento de clase.
 \n
-\nLa **Constitución (CON)** eleva tus HP y hace que recibas menos daño. Curanderos y Guerreros ganan CON con su equipamiento de clase.
+\nLa **Constitución (CON)** eleva tus PV y hace que recibas menos daño. Sanadores y Guerreros ganan CON con su equipamiento de clase.
 \n
-\nLa **Inteligencia (INT)** aumenta la cantidad de  EXP que ganas y te da más Maná. Magos y curanderos ganan INT con su equipamiento de clase.
+\nLa **Inteligencia (INT)** aumenta la cantidad de EXP que ganas y te da más Maná. Magos y Sanadores ganan INT con su equipamiento de clase.
 \n
-\nLa **Percepción (PER)** incrementa el Oro que ganas y la frecuencia con la que encuentras artículos caídos. Rogues y Magos consiguen PER con el equipamiento de su clase.
+\nLa **Percepción (PER)** incrementa el Oro que ganas y la frecuencia con la que encuentras artículos de botín. Pícaros y Magos consiguen PER con el equipamiento de su clase.
 \n
-\nDespués del nivel 10, obtienes 1 Punto de Atributo por cada nivel que subas para que lo uses en cualquier atributo que quieras. También puedes utilizar equipamiento para aumentar diferentes atributos."</string>
+\nDespués del nivel 10, obtienes 1 Punto de Atributo por cada nivel que subas para que lo uses en cualquier atributo que quieras. También puedes utilizar equipamiento para aumentar diferentes atributos.</string>
     <string name="stat_allocation">Asignación de estadísticas</string>
     <string name="getting_started">Empezando</string>
     <string name="delete_checklist_entry">Eliminar…</string>
@@ -1011,7 +1011,7 @@
     <string name="wacky">Chiflado</string>
     <string name="your_progress">Tu progreso</string>
     <string name="guild_challenges">Estás participando en un desafío del gremio</string>
-    <string name="hatch_pet_title">Eclosiona una nueva mascota</string>
+    <string name="hatch_pet_title">Incubar una nueva mascota</string>
     <string name="rejoin_guild">Puedes realistarte al gremio desde el submenú \"Gremios &gt; Descubre Gremios\"</string>
     <string name="rejoin_party">No podrás volver a unirte al equipo a no ser que te vuelvan a invitar.</string>
     <string name="available_for">Disponible durante %s</string>
