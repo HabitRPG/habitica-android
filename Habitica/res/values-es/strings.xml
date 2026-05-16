@@ -882,7 +882,7 @@
     <string name="challenge_task_name">%s Tareas del Desafío</string>
     <string name="delete_x_tasks">Eliminar %d Tareas</string>
     <string name="keep_x_tasks">Mantener %d Tareas</string>
-    <string name="broken_challenge">Desafío Terminado</string>
+    <string name="broken_challenge">Desafío Roto</string>
     <string name="pms_disabled_description">Tu puedes enviar mensajes todavía, pero nadie puede enviartelas a ti. Puedes habilitarlo de nuevo desde Configuraciones.</string>
     <string name="pms_disabled">Los Mensajes Privados están deshabilitados</string>
     <string name="disablePrivateMessages">Desactivar Mensajes Privados</string>
@@ -1074,8 +1074,8 @@
     <string name="sidebar_teams">Equipos</string>
     <string name="you_won_challenge">Ganaste un desafío</string>
     <string name="empty_equipment_description">Aún no tienes ningún equipamiento de este tipo. Puedes comprar equipamiento en el mercado con el oro que has conseguido.</string>
-    <string name="hatchedPetDescription">Hay tantas mascotas para coleccionar que seguramente tendrás una favorita. Si los alimenta, es posible que simplemente crezcan…</string>
-    <string name="onboardingComplete_achievement_title">¡Has completado tus tareas de iniciación!</string>
+    <string name="hatchedPetDescription">Hay tantas Mascotas para coleccionar que seguramente tendrás una favorita. Si las alimentas, es posible que simplemente crezcan…</string>
+    <string name="onboardingComplete_achievement_title">¡Has completado tus Tareas de Iniciación!</string>
     <string name="finish">Terminar</string>
     <string name="something_new">Nuevo</string>
     <string name="survey_menu_description">¡Rellena este formulario de 5 minutos para ayudarnos a crecer y obtén por ello un logro!</string>
@@ -1095,7 +1095,7 @@
     <string name="claim_x_gems">Reclamar %d gemas</string>
     <string name="you">Tú</string>
     <string name="user_is_blocked">Has bloqueado a este jugador</string>
-    <string name="view_onboarding_tasks">Revisa tus tareas de iniciación</string>
+    <string name="view_onboarding_tasks">Ver Tareas de Iniciación</string>
     <string name="purchasedEquipmentDescription">El equipamiento puede ser práctico o simplemente moderno. Aumente sus estadísticas para obtener todo tipo de beneficios para su avatar</string>
     <string name="won_achievement_description">¡<b>%s</b> te seleccionó como el ganador! Tu victoria ha sido registrada en tus logros.</string>
     <string name="create_guild">Crear gremio</string>
@@ -1109,7 +1109,7 @@
     <string name="one_month_one_time">1 Mes</string>
     <string name="g1g1_promo_info_instructions">Pulsa sobre \"Regala una Suscripción\" y escribe el usuario de la cuenta a la que quieres regalársela. Luego, elige la duración de la suscripción que quieres regalar y realizar el pago. Tu cuenta será premiada automáticamente con una suscripción igual que la que acabas de regalar.</string>
     <string name="damage_pending">%s de daño restante</string>
-    <string name="hatch">Eclosiona</string>
+    <string name="hatch">Incubar</string>
     <string name="invitation_title_no_leader">Has sido invitado a unirte a un equipo</string>
     <string name="survey_title">Formulario para usuarios de Habitica</string>
     <string name="create_task_description">Agrega una tarea para algo que te gustaría lograr esta semana</string>
@@ -1154,7 +1154,7 @@
     <string name="class_changed_description">Ahora puedes usar habilidades de %s y comprar equipamiento específico en las tiendas. Aumenta tu nivel para ganar puntos de atributo, que sirven para mejorar tus habilidades.</string>
     <string name="subscribe_listitemFaint_description">¡Evita la pérdida de puntos de experiencia con una cura instantánea cuando se te acaben los PV una vez al día!</string>
     <string name="subscription_hourglasses_3month_timeframe">Relojes de arena en 3 meses</string>
-    <string name="about_me">Acerca de Mí</string>
+    <string name="about_me">Acerca De Mí</string>
     <string name="account_info">Información de la Cuenta</string>
     <string name="login_methods">Métodos de Inicio de Sesión</string>
     <string name="not_connected">No conectado</string>
