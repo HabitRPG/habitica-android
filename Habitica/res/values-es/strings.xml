@@ -1062,7 +1062,7 @@
     <string name="hurray">¡Vivaaa!</string>
     <string name="feedPet_description">¡Completa tus tareas para conseguir comida! Puedes alimentar a tus mascotas en el submenú \"Inventario &gt; Establo\"</string>
     <string name="daily_item_checkbox">Lista diaria</string>
-    <string name="hatch_pet_description">¡Completa tareas para obtener una poción para incubar y un huevo y luego incuba a tu mascota!</string>
+    <string name="hatch_pet_description">¡Completa tareas para obtener una Poción de Eclosión y un Huevo y luego incuba a tu mascota!</string>
     <string name="fortify_shop">Poción de fortalecimiento</string>
     <string name="theme_color">Color de tema</string>
     <string name="usually_x_gems">Normalmente %d gemas</string>
@@ -1074,7 +1074,7 @@
     <string name="sidebar_teams">Equipos</string>
     <string name="you_won_challenge">Ganaste un desafío</string>
     <string name="empty_equipment_description">Aún no tienes ningún equipamiento de este tipo. Puedes comprar equipamiento en el mercado con el oro que has conseguido.</string>
-    <string name="hatchedPetDescription">Hay muchas mascotas que coleccionar, pero puedes tener tu favorita. Si las alimentas, puede que crezcan…</string>
+    <string name="hatchedPetDescription">Hay tantas mascotas para coleccionar que seguramente tendrás una favorita. Si los alimenta, es posible que simplemente crezcan…</string>
     <string name="onboardingComplete_achievement_title">¡Has completado tus tareas de iniciación!</string>
     <string name="finish">Terminar</string>
     <string name="something_new">Nuevo</string>
