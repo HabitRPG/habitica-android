@@ -40,7 +40,9 @@ import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 
 private val SIZE_2x1 = DpSize(100.dp, 40.dp)
 private val SIZE_3x1 = DpSize(170.dp, 40.dp)
@@ -59,15 +61,17 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val state = runCatching {
-            val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
-            AvatarBitmapCache.refreshIfNeeded(context, user)
-            StatsWidgetState.fromUser(
-                context = context,
-                user = user,
-                avatarBitmapPath = AvatarBitmapCache.cachedFile(context).absolutePath,
-            )
-        }.getOrElse { StatsWidgetState.Empty }
+        val state = withContext(Dispatchers.Main) {
+            runCatching {
+                val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+                AvatarBitmapCache.refreshIfNeeded(context, user)
+                StatsWidgetState.fromUser(
+                    context = context,
+                    user = user,
+                    avatarBitmapPath = AvatarBitmapCache.cachedFile(context).absolutePath,
+                )
+            }.getOrElse { StatsWidgetState.Empty }
+        }
         provideContent {
             HabiticaWidgetTheme {
                 StatsContent(state)

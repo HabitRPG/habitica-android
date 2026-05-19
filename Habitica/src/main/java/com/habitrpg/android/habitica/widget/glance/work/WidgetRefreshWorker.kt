@@ -9,8 +9,11 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.habitrpg.android.habitica.widget.AvatarWidgetProvider
+import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
+import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskMultiGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskSingleGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.AvatarStatsGlanceWidget
@@ -30,6 +33,7 @@ class WidgetRefreshWorker(
         val context = applicationContext
         val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
         AvatarBitmapCache.refreshIfNeeded(context, user)
+        TaskListMemoryCache.clear()
         refreshAllWidgets(context)
         AvatarWidgetProvider.renderAll(context)
         return Result.success()
@@ -53,12 +57,24 @@ class WidgetRefreshWorker(
         suspend fun refreshAllWidgetsNow(context: Context) {
             val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
             AvatarBitmapCache.refreshIfNeeded(context, user)
+            TaskListMemoryCache.clear()
             refreshAllWidgets(context)
             AvatarWidgetProvider.renderAll(context)
         }
 
         private suspend fun refreshAllWidgets(context: Context) {
             val manager = GlanceAppWidgetManager(context)
+            val taskListClasses = listOf(
+                DailyTaskListGlanceWidget::class.java,
+                TodoTaskListGlanceWidget::class.java,
+            )
+            taskListClasses.forEach { cls ->
+                manager.getGlanceIds(cls).forEach { id ->
+                    updateAppWidgetState(context, id) { prefs ->
+                        prefs.remove(WidgetStateKeys.taskListHiddenIds)
+                    }
+                }
+            }
             val widgets: List<GlanceAppWidget> = listOf(
                 AvatarStatsGlanceWidget(),
                 DailyTaskListGlanceWidget(),

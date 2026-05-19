@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.widget.glance.state
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.glance.action.ActionParameters
 
 object WidgetActionKeys {
@@ -13,4 +14,5 @@ object WidgetActionKeys {
 object WidgetStateKeys {
     val addTaskSingleType = stringPreferencesKey("add_task_single_type")
     val habitButtonTaskId = stringPreferencesKey("habit_button_task_id")
+    val taskListHiddenIds = stringSetPreferencesKey("task_list_hidden_ids")
 }

@@ -49,27 +49,31 @@ import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 
 class DailiesCountGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val entry = widgetEntryPoint(context)
-        val user = entry.userRepository().getUser().firstOrNull()
-        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
-            ?.toTypedArray() ?: emptyArray()
-        val tasks = entry.taskRepository().getTasks(
-            taskType = TaskType.DAILY,
-            userID = user?.id,
-            includedGroupIDs = mirroredGroupIds,
-        ).firstOrNull().orEmpty().filter { it.isDue == true }
+        val state = withContext(Dispatchers.Main) {
+            val entry = widgetEntryPoint(context)
+            val user = entry.userRepository().getUser().firstOrNull()
+            val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
+                ?.toTypedArray() ?: emptyArray()
+            val tasks = entry.taskRepository().getTasks(
+                taskType = TaskType.DAILY,
+                userID = user?.id,
+                includedGroupIDs = mirroredGroupIds,
+            ).firstOrNull().orEmpty().filter { it.isDue == true }
 
-        val state = DailyCountWidgetState(
-            totalDue = tasks.size,
-            completed = tasks.count { it.completed },
-            needsCron = computeNeedsCron(user),
-        )
+            DailyCountWidgetState(
+                totalDue = tasks.size,
+                completed = tasks.count { it.completed },
+                needsCron = computeNeedsCron(user),
+            )
+        }
 
         provideContent {
             HabiticaWidgetTheme {

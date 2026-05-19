@@ -3,9 +3,14 @@ package com.habitrpg.android.habitica.widget.glance.actions
 import android.content.Context
 import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.action.ActionCallback
+import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
+import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
+import com.habitrpg.android.habitica.widget.glance.widgets.TodoTaskListGlanceWidget
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +26,18 @@ class ScoreTaskAction : ActionCallback {
         val taskId = parameters[WidgetActionKeys.taskId] ?: return
         val direction = parameters[WidgetActionKeys.direction] ?: TaskDirection.UP.text
         val up = direction == TaskDirection.UP.text
+
+        val manager = GlanceAppWidgetManager(context)
+        val taskListIds = buildList {
+            addAll(manager.getGlanceIds(DailyTaskListGlanceWidget::class.java))
+            addAll(manager.getGlanceIds(TodoTaskListGlanceWidget::class.java))
+        }
+        for (id in taskListIds) {
+            updateAppWidgetState(context, id) { prefs ->
+                val existing = prefs[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
+                prefs[WidgetStateKeys.taskListHiddenIds] = existing + taskId
+            }
+        }
 
         val entry = widgetEntryPoint(context)
         val result: TaskScoringResult? = withContext(Dispatchers.Main) {
