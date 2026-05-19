@@ -37,7 +37,7 @@ fun TaskRow(
     onClick: Action,
     modifier: GlanceModifier = GlanceModifier,
     tileWidth: Dp = 44.dp,
-    innerSquareSize: Dp = 14.dp,
+    innerSquareSize: Dp = 26.dp,
 ) {
     Row(
         modifier = modifier
@@ -55,7 +55,7 @@ fun TaskRow(
             Box(
                 modifier = GlanceModifier
                     .size(innerSquareSize)
-                    .cornerRadius(4.dp)
+                    .cornerRadius(8.dp)
                     .background(ColorProvider(valueBorderColor)),
             ) {}
         }
@@ -64,7 +64,7 @@ fun TaskRow(
             text = text,
             style = TextStyle(
                 color = primaryTextColor,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
             ),
             maxLines = 2,

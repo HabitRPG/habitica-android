@@ -137,7 +137,6 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val size = LocalSize.current
     val palette = rememberPalette()
     val isCompact = size.width < 230.dp
-    val isLarge = size.height >= 280.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addLink = if (isDaily) "habitica://user/tasks/daily/add" else "habitica://user/tasks/todo/add"
     val title = when {
@@ -160,13 +159,11 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             openListLink = openListLink,
             addLink = addLink,
         )
-        Spacer(GlanceModifier.height(8.dp))
+        Spacer(GlanceModifier.height(14.dp))
         TaskListBody(
             state = state,
             isDaily = isDaily,
-            isLarge = isLarge,
             palette = palette,
-            openListLink = openListLink,
         )
     }
 }
@@ -181,7 +178,7 @@ private fun TaskListHeader(
     Row(
         modifier = GlanceModifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp),
+            .padding(start = 14.dp, end = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -210,9 +207,7 @@ private fun TaskListHeader(
 private fun TaskListBody(
     state: TaskListWidgetState,
     isDaily: Boolean,
-    isLarge: Boolean,
     palette: TaskListPalette,
-    openListLink: String,
 ) {
     Box(modifier = GlanceModifier.fillMaxSize()) {
         when {
@@ -227,13 +222,7 @@ private fun TaskListBody(
                 backgroundColor = palette.cardBackground,
                 textColor = palette.titleText,
             )
-            else -> TaskListRows(
-                state = state,
-                isDaily = isDaily,
-                isLarge = isLarge,
-                palette = palette,
-                openListLink = openListLink,
-            )
+            else -> TaskListRows(state = state, palette = palette)
         }
     }
 }
@@ -241,66 +230,39 @@ private fun TaskListBody(
 @Composable
 private fun TaskListRows(
     state: TaskListWidgetState,
-    isDaily: Boolean,
-    isLarge: Boolean,
     palette: TaskListPalette,
-    openListLink: String,
 ) {
-    val maxVisible = if (isLarge) 9 else 6
-    val visible = state.tasks.take(maxVisible)
-    val remaining = state.tasks.size - visible.size
-
-    Column(modifier = GlanceModifier.fillMaxSize()) {
-        LazyColumn(modifier = GlanceModifier.defaultWeight().fillMaxWidth()) {
-            items(visible.size, itemId = { visible[it].id.hashCode().toLong() }) { index ->
-                val task = visible[index]
-                Column(modifier = GlanceModifier.fillMaxWidth()) {
-                    Box(
-                        modifier = GlanceModifier
-                            .fillMaxWidth()
-                            .height(48.dp)
-                            .cornerRadius(17.5.dp)
-                            .background(palette.cardBackground),
-                    ) {
-                        TaskRow(
-                            text = task.text,
-                            valueColor = colorForTaskValueLight(task.value),
-                            valueBorderColor = colorForTaskValueMedium(task.value),
-                            primaryTextColor = palette.taskText,
-                            checklistDoneCount = task.checklistDone,
-                            checklistTotalCount = task.checklistTotal,
-                            showChecklistCount = isLarge,
-                            onClick = actionRunCallback<ScoreTaskAction>(
-                                actionParametersOf(
-                                    WidgetActionKeys.taskId to task.id,
-                                    WidgetActionKeys.direction to TaskDirection.UP.text,
-                                ),
+    LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
+        items(state.tasks.size, itemId = { state.tasks[it].id.hashCode().toLong() }) { index ->
+            val task = state.tasks[index]
+            Column(modifier = GlanceModifier.fillMaxWidth()) {
+                Box(
+                    modifier = GlanceModifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .cornerRadius(17.5.dp)
+                        .background(palette.cardBackground),
+                ) {
+                    TaskRow(
+                        text = task.text,
+                        valueColor = colorForTaskValueLight(task.value),
+                        valueBorderColor = colorForTaskValueMedium(task.value),
+                        primaryTextColor = palette.taskText,
+                        checklistDoneCount = task.checklistDone,
+                        checklistTotalCount = task.checklistTotal,
+                        showChecklistCount = true,
+                        onClick = actionRunCallback<ScoreTaskAction>(
+                            actionParametersOf(
+                                WidgetActionKeys.taskId to task.id,
+                                WidgetActionKeys.direction to TaskDirection.UP.text,
                             ),
-                        )
-                    }
-                    if (index < visible.size - 1 || (isLarge && remaining > 0)) {
-                        Spacer(GlanceModifier.height(6.dp))
-                    }
+                        ),
+                    )
+                }
+                if (index < state.tasks.size - 1) {
+                    Spacer(GlanceModifier.height(6.dp))
                 }
             }
-        }
-        if (isLarge && remaining > 0) {
-            val plural = if (isDaily) {
-                if (remaining == 1) "1 more unfinished Daily" else "$remaining more unfinished Dailies"
-            } else {
-                if (remaining == 1) "1 more unfinished To Do" else "$remaining more unfinished To Do's"
-            }
-            Text(
-                text = plural,
-                style = TextStyle(
-                    color = palette.secondaryText,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
-                ),
-                modifier = GlanceModifier
-                    .padding(start = 12.dp, top = 6.dp)
-                    .clickable(onClick = openAppAction(openListLink)),
-            )
         }
     }
 }
