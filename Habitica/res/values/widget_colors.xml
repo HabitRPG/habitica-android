@@ -6,7 +6,7 @@
     <color name="widget_text">#686274</color>
     <color name="widget_text_secondary">#878190</color>
     <color name="widget_dailies_purple">#925CF3</color>
-    <color name="widget_progress_track">#EDECEE</color>
+    <color name="widget_progress_track">#C3C0C7</color>
     <color name="widget_task_list_primary_text">#343134</color>
     <color name="widget_task_list_secondary_text">#4E4A57</color>
     <color name="widget_task_list_task_text">#686274</color>

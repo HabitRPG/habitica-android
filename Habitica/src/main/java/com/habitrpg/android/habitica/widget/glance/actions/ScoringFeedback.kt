@@ -4,7 +4,10 @@ import android.content.Context
 import android.widget.Toast
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.widgets.AvatarStatsGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.DailiesCountGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
@@ -24,6 +27,35 @@ suspend fun showScoringToast(context: Context, result: TaskScoringResult?) {
     ).first
     withContext(Dispatchers.Main) {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+    }
+}
+
+suspend fun applyAvatarStatOverrides(
+    context: Context,
+    user: User?,
+    result: TaskScoringResult?,
+) {
+    if (user == null || result == null) return
+    val stats = user.stats ?: return
+    val realmHp = (stats.hp ?: 0.0).toFloat()
+    val realmExp = (stats.exp ?: 0.0).toFloat()
+    val realmMp = (stats.mp ?: 0.0).toFloat()
+    val realmGold = stats.gp ?: 0.0
+
+    val manager = GlanceAppWidgetManager(context)
+    val ids = manager.getGlanceIds(AvatarStatsGlanceWidget::class.java)
+    for (id in ids) {
+        updateAppWidgetState(context, id) { prefs ->
+            val baseHp = prefs[WidgetStateKeys.statOverrideHp] ?: realmHp
+            val baseExp = prefs[WidgetStateKeys.statOverrideExp] ?: realmExp
+            val baseMp = prefs[WidgetStateKeys.statOverrideMp] ?: realmMp
+            val baseGold = prefs[WidgetStateKeys.statOverrideGold] ?: realmGold
+            prefs[WidgetStateKeys.statOverrideHp] = baseHp + result.healthDelta.toFloat()
+            prefs[WidgetStateKeys.statOverrideExp] = baseExp + result.experienceDelta.toFloat()
+            prefs[WidgetStateKeys.statOverrideMp] = baseMp + result.manaDelta.toFloat()
+            prefs[WidgetStateKeys.statOverrideGold] = baseGold + result.goldDelta
+            prefs[WidgetStateKeys.statOverrideValid] = true
+        }
     }
 }
 

@@ -9,6 +9,7 @@ import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
+import com.habitrpg.android.habitica.widget.glance.widgets.DailiesCountGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.TodoTaskListGlanceWidget
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -28,11 +29,12 @@ class ScoreTaskAction : ActionCallback {
         val up = direction == TaskDirection.UP.text
 
         val manager = GlanceAppWidgetManager(context)
-        val taskListIds = buildList {
+        val optimisticTargets = buildList {
             addAll(manager.getGlanceIds(DailyTaskListGlanceWidget::class.java))
             addAll(manager.getGlanceIds(TodoTaskListGlanceWidget::class.java))
+            addAll(manager.getGlanceIds(DailiesCountGlanceWidget::class.java))
         }
-        for (id in taskListIds) {
+        for (id in optimisticTargets) {
             updateAppWidgetState(context, id) { prefs ->
                 val existing = prefs[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
                 prefs[WidgetStateKeys.taskListHiddenIds] = existing + taskId
@@ -42,13 +44,15 @@ class ScoreTaskAction : ActionCallback {
         val entry = widgetEntryPoint(context)
         val result: TaskScoringResult? = withContext(Dispatchers.Main) {
             val user = entry.userRepository().getUser().firstOrNull()
-            entry.taskRepository().taskChecked(
+            val res = entry.taskRepository().taskChecked(
                 user = user,
                 taskId = taskId,
                 up = up,
                 force = false,
                 notifyFunc = null,
             )
+            applyAvatarStatOverrides(context, user, res)
+            res
         }
 
         showScoringToast(context, result)

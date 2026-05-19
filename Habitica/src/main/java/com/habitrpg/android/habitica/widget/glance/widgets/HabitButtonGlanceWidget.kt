@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.DpSize
@@ -44,8 +45,10 @@ import com.habitrpg.android.habitica.widget.glance.components.HabitButtonBar
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
+import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForHabitValueLight
 import com.habitrpg.android.habitica.widget.glance.theme.colorForHabitValueMedium
+import androidx.glance.unit.ColorProvider
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
 class HabitButtonGlanceWidget : GlanceAppWidget() {
@@ -97,6 +100,16 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
     }
 }
 
+private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+@Composable
+private fun habitTileBackground(): ColorProvider =
+    if (MaterialYouEnabled) GlanceTheme.colors.background else WidgetColors.background
+
+@Composable
+private fun habitTitleText(): ColorProvider =
+    if (MaterialYouEnabled) GlanceTheme.colors.onBackground else WidgetColors.text
+
 @Composable
 private fun HabitButtonContent(
     title: String,
@@ -117,7 +130,7 @@ private fun HabitButtonContent(
         modifier = GlanceModifier
             .fillMaxSize()
             .cornerRadius(20.dp)
-            .background(GlanceTheme.colors.background),
+            .background(habitTileBackground()),
     ) {
         HabitButtonBar(
             showUp = showUp,
@@ -146,7 +159,7 @@ private fun TitleStrip(title: String, height: androidx.compose.ui.unit.Dp) {
         Text(
             text = title,
             style = TextStyle(
-                color = GlanceTheme.colors.onBackground,
+                color = habitTitleText(),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,
@@ -162,7 +175,7 @@ private fun UnconfiguredContent(onClick: Action) {
         modifier = GlanceModifier
             .fillMaxSize()
             .cornerRadius(20.dp)
-            .background(GlanceTheme.colors.background)
+            .background(habitTileBackground())
             .padding(12.dp)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
@@ -170,7 +183,7 @@ private fun UnconfiguredContent(onClick: Action) {
         Text(
             text = "Tap to configure habit",
             style = TextStyle(
-                color = GlanceTheme.colors.onBackground,
+                color = habitTitleText(),
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Medium,
             ),

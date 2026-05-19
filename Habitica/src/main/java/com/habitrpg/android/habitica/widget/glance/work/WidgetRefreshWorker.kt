@@ -64,15 +64,25 @@ class WidgetRefreshWorker(
 
         private suspend fun refreshAllWidgets(context: Context) {
             val manager = GlanceAppWidgetManager(context)
-            val taskListClasses = listOf(
+            val hiddenIdsClasses = listOf(
                 DailyTaskListGlanceWidget::class.java,
                 TodoTaskListGlanceWidget::class.java,
+                DailiesCountGlanceWidget::class.java,
             )
-            taskListClasses.forEach { cls ->
+            hiddenIdsClasses.forEach { cls ->
                 manager.getGlanceIds(cls).forEach { id ->
                     updateAppWidgetState(context, id) { prefs ->
                         prefs.remove(WidgetStateKeys.taskListHiddenIds)
                     }
+                }
+            }
+            manager.getGlanceIds(AvatarStatsGlanceWidget::class.java).forEach { id ->
+                updateAppWidgetState(context, id) { prefs ->
+                    prefs.remove(WidgetStateKeys.statOverrideValid)
+                    prefs.remove(WidgetStateKeys.statOverrideHp)
+                    prefs.remove(WidgetStateKeys.statOverrideExp)
+                    prefs.remove(WidgetStateKeys.statOverrideMp)
+                    prefs.remove(WidgetStateKeys.statOverrideGold)
                 }
             }
             val widgets: List<GlanceAppWidget> = listOf(

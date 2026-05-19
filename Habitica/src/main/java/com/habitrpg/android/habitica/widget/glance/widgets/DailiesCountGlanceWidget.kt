@@ -22,6 +22,8 @@ import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
+import androidx.datastore.preferences.core.Preferences
+import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -46,6 +48,7 @@ import com.habitrpg.android.habitica.widget.glance.components.SquiggleProgressBa
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -57,7 +60,7 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val state = withContext(Dispatchers.Main) {
+        val raw = withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
             val user = entry.userRepository().getUser().firstOrNull()
             val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
@@ -68,20 +71,33 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
                 includedGroupIDs = mirroredGroupIds,
             ).firstOrNull().orEmpty().filter { it.isDue == true }
 
-            DailyCountWidgetState(
-                totalDue = tasks.size,
-                completed = tasks.count { it.completed },
+            DailyCountRaw(
+                dueIds = tasks.mapNotNull { it.id }.toSet(),
+                completedIds = tasks.filter { it.completed }.mapNotNull { it.id }.toSet(),
                 needsCron = computeNeedsCron(user),
             )
         }
 
         provideContent {
+            val hiddenIds = currentState<Preferences>()[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
+            val effectiveCompleted = (raw.completedIds + hiddenIds.intersect(raw.dueIds)).size
+            val state = DailyCountWidgetState(
+                totalDue = raw.dueIds.size,
+                completed = effectiveCompleted,
+                needsCron = raw.needsCron,
+            )
             HabiticaWidgetTheme {
                 DailiesCountTile(state)
             }
         }
     }
 }
+
+private data class DailyCountRaw(
+    val dueIds: Set<String>,
+    val completedIds: Set<String>,
+    val needsCron: Boolean,
+)
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
@@ -90,6 +106,7 @@ internal data class DailiesTilePalette(
     val primaryText: ColorProvider,
     val secondaryText: ColorProvider,
     val iconTint: ColorProvider?,
+    val trackColor: ColorProvider,
 )
 
 @Composable
@@ -100,6 +117,7 @@ private fun rememberPalette(): DailiesTilePalette {
             primaryText = GlanceTheme.colors.onPrimaryContainer,
             secondaryText = GlanceTheme.colors.onPrimaryContainer,
             iconTint = GlanceTheme.colors.onPrimaryContainer,
+            trackColor = GlanceTheme.colors.outline,
         )
     } else {
         DailiesTilePalette(
@@ -107,6 +125,7 @@ private fun rememberPalette(): DailiesTilePalette {
             primaryText = ColorProvider(R.color.widget_text),
             secondaryText = ColorProvider(R.color.widget_text_secondary),
             iconTint = null,
+            trackColor = ColorProvider(R.color.widget_progress_track),
         )
     }
 }
@@ -245,7 +264,10 @@ private fun GaugeBody(
             modifier = GlanceModifier.defaultWeight().fillMaxWidth(),
             verticalAlignment = Alignment.Vertical.CenterVertically,
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = GlanceModifier.padding(start = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Text(
                     text = topNumber,
                     style = TextStyle(
@@ -267,15 +289,16 @@ private fun GaugeBody(
                 text = topLabel,
                 style = TextStyle(
                     color = palette.primaryText,
-                    fontSize = 15.sp,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
                 ),
+                modifier = GlanceModifier.padding(start = 4.dp),
             )
         }
         SquiggleProgressBar(
             progress = progress,
             fillColor = ColorProvider(progressColor),
-            trackColor = ColorProvider(R.color.widget_progress_track),
+            trackColor = palette.trackColor,
             availableWidth = barAvailableWidth,
         )
         Spacer(GlanceModifier.height(6.dp))
@@ -283,9 +306,10 @@ private fun GaugeBody(
             text = bottomCaption,
             style = TextStyle(
                 color = palette.secondaryText,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
             ),
+            modifier = GlanceModifier.padding(start = 4.dp),
         )
     }
 }

@@ -13,6 +13,7 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
+import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
@@ -29,7 +30,8 @@ fun SquiggleProgressBar(
     availableWidth: Dp,
     modifier: GlanceModifier = GlanceModifier,
     height: Dp = 12.dp,
-    trackThickness: Dp = 2.dp,
+    trackThickness: Dp = 3.dp,
+    gap: Dp = 6.dp,
 ) {
     val clamped = progress.coerceIn(0f, 1f)
     val filledWidth = (availableWidth * clamped).coerceAtLeast(0.dp)
@@ -49,6 +51,9 @@ fun SquiggleProgressBar(
             )
         }
         if (showTrack) {
+            if (clamped > 0f) {
+                Spacer(GlanceModifier.width(gap))
+            }
             Box(
                 modifier = GlanceModifier
                     .defaultWeight()

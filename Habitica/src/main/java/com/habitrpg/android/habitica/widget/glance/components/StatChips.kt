@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Row
@@ -17,7 +18,7 @@ import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import com.habitrpg.android.habitica.R
+import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 
@@ -27,6 +28,8 @@ fun LevelChip(
     className: String?,
     showFullLabel: Boolean,
     modifier: GlanceModifier = GlanceModifier,
+    backgroundColor: ColorProvider = WidgetColors.levelChipBackground,
+    textColor: ColorProvider = WidgetColors.levelChipText,
 ) {
     val classBitmap = when (className) {
         "warrior" -> runCatching { HabiticaIconsHelper.imageOfWarriorLightBg() }.getOrNull()
@@ -40,7 +43,8 @@ fun LevelChip(
     Row(
         modifier = modifier
             .height(24.dp)
-            .background(ImageProvider(R.drawable.widget_chip_level))
+            .cornerRadius(12.dp)
+            .background(backgroundColor)
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -55,7 +59,7 @@ fun LevelChip(
         Text(
             text = labelText,
             style = TextStyle(
-                color = WidgetColors.levelChipText,
+                color = textColor,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
             ),
@@ -68,11 +72,14 @@ fun CurrencyChip(
     iconResId: Int,
     text: String,
     modifier: GlanceModifier = GlanceModifier,
+    backgroundColor: ColorProvider = WidgetColors.currencyChipBackground,
+    textColor: ColorProvider = WidgetColors.currencyChipText,
 ) {
     Row(
         modifier = modifier
             .height(24.dp)
-            .background(ImageProvider(R.drawable.widget_chip_currency))
+            .cornerRadius(12.dp)
+            .background(backgroundColor)
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -85,7 +92,7 @@ fun CurrencyChip(
         Text(
             text = text,
             style = TextStyle(
-                color = WidgetColors.currencyChipText,
+                color = textColor,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
             ),

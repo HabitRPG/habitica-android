@@ -40,6 +40,7 @@ class ScoreHabitAction : ActionCallback {
                     HabitButtonWidgetCache.write(context, glanceId, task)
                 }
             }
+            applyAvatarStatOverrides(context, user, res)
             res
         }
 
