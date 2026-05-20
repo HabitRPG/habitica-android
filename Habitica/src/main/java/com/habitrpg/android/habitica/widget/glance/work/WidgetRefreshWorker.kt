@@ -21,7 +21,9 @@ import com.habitrpg.android.habitica.widget.glance.widgets.DailiesCountGlanceWid
 import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.HabitButtonGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.TodoTaskListGlanceWidget
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class WidgetRefreshWorker(
@@ -31,8 +33,10 @@ class WidgetRefreshWorker(
 
     override suspend fun doWork(): Result {
         val context = applicationContext
-        val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
-        AvatarBitmapCache.refreshIfNeeded(context, user)
+        withContext(Dispatchers.Main) {
+            val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+            AvatarBitmapCache.refreshIfNeeded(context, user)
+        }
         TaskListMemoryCache.clear()
         refreshAllWidgets(context)
         AvatarWidgetProvider.renderAll(context)
@@ -55,8 +59,10 @@ class WidgetRefreshWorker(
         }
 
         suspend fun refreshAllWidgetsNow(context: Context) {
-            val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
-            AvatarBitmapCache.refreshIfNeeded(context, user)
+            withContext(Dispatchers.Main) {
+                val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+                AvatarBitmapCache.refreshIfNeeded(context, user)
+            }
             TaskListMemoryCache.clear()
             refreshAllWidgets(context)
             AvatarWidgetProvider.renderAll(context)
