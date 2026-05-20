@@ -146,6 +146,9 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
 
         WidgetRefreshWorker.enqueue(this)
+        MainScope().launchCatching {
+            WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+        }
 
         checkIfNewVersion()
     }
