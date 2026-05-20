@@ -57,7 +57,15 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 class DailiesCountGlanceWidget : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Exact
+    override val sizeMode: SizeMode = SizeMode.Responsive(
+        setOf(
+            DpSize(218.dp, 110.dp),
+            DpSize(290.dp, 110.dp),
+            DpSize(360.dp, 110.dp),
+            DpSize(430.dp, 110.dp),
+            DpSize(500.dp, 110.dp),
+        ),
+    )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val raw = withContext(Dispatchers.Main) {

@@ -22,6 +22,8 @@ import androidx.glance.layout.width
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 
+private val SQUIGGLE_TILE_WIDTH: Dp = 25.dp
+
 @Composable
 fun SquiggleProgressBar(
     progress: Float,
@@ -34,24 +36,28 @@ fun SquiggleProgressBar(
     gap: Dp = 6.dp,
 ) {
     val clamped = progress.coerceIn(0f, 1f)
-    val filledWidth = (availableWidth * clamped).coerceAtLeast(0.dp)
+    val targetFillWidth = (availableWidth * clamped).coerceAtLeast(0.dp)
+    val tileWidthPx = SQUIGGLE_TILE_WIDTH.value
+    val tileCount = if (clamped <= 0f) 0 else {
+        (targetFillWidth.value / tileWidthPx).toInt().coerceAtLeast(1)
+    }
     val showTrack = clamped < 1f
 
     Row(
         modifier = modifier.fillMaxWidth().height(height),
         verticalAlignment = Alignment.Vertical.CenterVertically,
     ) {
-        if (clamped > 0f) {
+        repeat(tileCount) {
             Image(
-                provider = ImageProvider(R.drawable.widget_progress_squiggle),
+                provider = ImageProvider(R.drawable.widget_progress_squiggle_tile),
                 contentDescription = null,
-                modifier = GlanceModifier.width(filledWidth).fillMaxHeight(),
+                modifier = GlanceModifier.width(SQUIGGLE_TILE_WIDTH).fillMaxHeight(),
                 contentScale = ContentScale.FillBounds,
                 colorFilter = ColorFilter.tint(fillColor),
             )
         }
         if (showTrack) {
-            if (clamped > 0f) {
+            if (tileCount > 0) {
                 Spacer(GlanceModifier.width(gap))
             }
             Box(
