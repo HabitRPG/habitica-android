@@ -48,7 +48,6 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.util.Date
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -58,8 +57,12 @@ class PurchaseHandler(
     private val userViewModel: MainUserViewModel,
     private val configManager: AppConfigManager
 ) : PurchasesUpdatedListener, PurchasesResponseListener {
-    private var billingClient =
-        BillingClient.newBuilder(context).setListener(this).enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()).build()
+    private val billingClient =
+        BillingClient.newBuilder(context).setListener(this)
+            .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
+            .enableAutoServiceReconnection()
+            .build()
+    private val inventoryManager = InventoryManager(billingClient)
 
     override fun onPurchasesUpdated(
         result: BillingResult,
@@ -87,10 +90,9 @@ class PurchaseHandler(
                         .filterNotNull().take(1).collect {
                             val plan = it.purchased!!.plan
                             for (purchase in purchases) {
+                                val product = HabiticaProduct.forSku(purchase.products.firstOrNull() ?: "") ?: continue
                                 if (plan?.isActive == true &&
-                                    PurchaseTypes.allSubscriptionTypes.contains(
-                                            purchase.products.firstOrNull()
-                                        )
+                                    HabiticaProduct.allSubscriptionTypes.contains(product)
                                 ) {
                                     if (((plan.dateTerminated != null) == purchase.isAutoRenewing) ||
                                         mostRecentSub?.orderId != purchase.orderId ||
@@ -105,10 +107,6 @@ class PurchaseHandler(
                 }
             }
 
-            BillingClient.BillingResponseCode.USER_CANCELED -> {
-                return
-            }
-
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                     for (purchase in purchases) {
@@ -116,9 +114,9 @@ class PurchaseHandler(
                     }
                 }
             }
-
+            BillingClient.BillingResponseCode.USER_CANCELED,
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
-                startListening()
+                return
             }
 
             else -> {
@@ -131,88 +129,28 @@ class PurchaseHandler(
         startListening()
     }
 
-    private var billingClientState: BillingClientState = BillingClientState.UNINITIALIZED
-
-    private enum class BillingClientState {
-        UNINITIALIZED,
-        READY,
-        UNAVAILABLE,
-        DISCONNECTED,
-        CONNECTING
-        ;
-
-        val canMaybePurchase: Boolean
-            get() {
-                return this == UNINITIALIZED || this == READY || this == CONNECTING
-            }
-    }
-
-    private var listeningRetryCount = 0
-
     fun startListening() {
         if (billingClient.connectionState == BillingClient.ConnectionState.CONNECTING ||
-            billingClient.connectionState == BillingClient.ConnectionState.CONNECTED ||
-            billingClientState == BillingClientState.UNAVAILABLE
+            billingClient.connectionState == BillingClient.ConnectionState.CONNECTED
         ) {
             // Don't connect again if it's already connected
             return
         }
-        if (listeningRetryCount > 10) {
-            // Something is wrong
-            return
-        }
-        billingClientState = BillingClientState.CONNECTING
-        billingClient = BillingClient.newBuilder(context).setListener(this)
-            .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
-            .build()
         billingClient.startConnection(
             object : BillingClientStateListener {
                 override fun onBillingSetupFinished(billingResult: BillingResult) {
                     when (billingResult.responseCode) {
                         BillingClient.BillingResponseCode.OK -> {
-                            billingClientState = BillingClientState.READY
                             MainScope().launchCatching {
                                 queryPurchases()
                             }
                         }
-
-                        BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
-                            CoroutineScope(Dispatchers.IO).launchCatching {
-                                retryListening()
-                            }
-                        }
-
-                        BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> {
-                            CoroutineScope(Dispatchers.IO).launchCatching {
-                                retryListening()
-                            }
-                        }
-
-                        BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
-                            billingClientState = BillingClientState.UNAVAILABLE
-                        }
-
-                        else -> {
-                            billingClientState = BillingClientState.DISCONNECTED
-                        }
                     }
                 }
-
                 override fun onBillingServiceDisconnected() {
-                    billingClientState = BillingClientState.DISCONNECTED
-                    CoroutineScope(Dispatchers.IO).launchCatching {
-                        retryListening()
-                    }
                 }
             }
         )
-    }
-
-    private suspend fun retryListening() {
-        listeningRetryCount += 1
-        // try again after 30 seconds
-        delay(20.seconds)
-        startListening()
     }
 
     fun stopListening() {
@@ -221,10 +159,7 @@ class PurchaseHandler(
 
     suspend fun queryPurchases() {
         retryUntil {
-            if (billingClientState == BillingClientState.DISCONNECTED) {
-                startListening()
-            }
-            billingClientState.canMaybePurchase && billingClient.isReady
+            billingClient.isReady
         }
         val subResponse =
             billingClient.queryPurchasesAsync(
@@ -240,70 +175,42 @@ class PurchaseHandler(
         processPurchases(iapResponse.billingResult, iapResponse.purchasesList)
     }
 
-    suspend fun getGryphatriceSKU() =
-        getSKU(BillingClient.ProductType.INAPP, PurchaseTypes.JUBILANT_GRYPHATRICE)
+    suspend fun loadGryphatriceProduct() = inventoryManager.loadInAppProduct(HabiticaProduct.JUBILANT_GRYPHATRICE)
+    suspend fun loadGemProducts() = inventoryManager.loadGemProducts()
+    suspend fun loadSubscriptionProducts() = inventoryManager.loadSubscriptionProducts()
+    suspend fun loadInAppProduct(product: HabiticaProduct) = inventoryManager.loadInAppProduct(product)
 
-    suspend fun getAllGemSKUs() =
-        getSKUs(BillingClient.ProductType.INAPP, PurchaseTypes.allGemTypes)
-
-    suspend fun getAllSubscriptionProducts() =
-        getSKUs(BillingClient.ProductType.SUBS, PurchaseTypes.allSubscriptionTypes)
-
-    suspend fun getAllGiftSubscriptionProducts() =
-        getSKUs(BillingClient.ProductType.INAPP, PurchaseTypes.allSubscriptionNoRenewTypes)
-
-    suspend fun getInAppPurchaseSKU(identifier: String) =
-        getSKU(BillingClient.ProductType.INAPP, identifier)
-
-    private suspend fun getSKUs(
-        type: String,
-        identifiers: List<String>
-    ) =
-        loadInventory(type, identifiers) ?: emptyList()
-
-    private suspend fun getSKU(
-        type: String,
-        identifier: String
-    ): ProductDetails? {
-        val inventory = loadInventory(type, listOf(identifier))
-        return inventory?.firstOrNull()
+    suspend fun loadGiftSubscriptionProducts() = inventoryManager.loadGiftSubscriptionProducts()
+    private fun isSubscriptionUpgrade(
+        oldPurchase: Purchase,
+        newSkuDetails: ProductDetails
+    ): Boolean {
+        if (oldPurchase.products.firstOrNull() == null) return false
+        val oldSku = oldPurchase.products.first()
+        val oldProduct = HabiticaProduct.forSku(oldSku) ?: return false
+        val newProduct = HabiticaProduct.forSku(newSkuDetails.productId) ?: return false
+        if (!HabiticaProduct.allSubscriptionTypes.contains(oldProduct) ||
+            !HabiticaProduct.allSubscriptionTypes.contains(newProduct)
+        ) {
+            return false
+        }
+        val oldDuration = oldProduct.getSubscriptionDuration()
+        val newDuration = newProduct.getSubscriptionDuration()
+        return newDuration > oldDuration
     }
 
-    private suspend fun loadInventory(
-        type: String,
-        skus: List<String>
-    ): List<ProductDetails>? {
-        retryUntil(8, initialDelay = 500, maxDelay = 2000) {
-            if (billingClient.connectionState == BillingClient.ConnectionState.DISCONNECTED ||
-                billingClient.connectionState == BillingClient.ConnectionState.CLOSED
-            ) {
-                startListening()
-            }
-            billingClientState.canMaybePurchase && billingClient.isReady
+    private fun getReplacementMode(
+        oldPurchase: Purchase,
+        newSkuDetails: ProductDetails
+    ): Int {
+        return if (isSubscriptionUpgrade(oldPurchase, newSkuDetails)) {
+            BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.CHARGE_FULL_PRICE
+        } else {
+            BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.DEFERRED
         }
-        val params =
-            QueryProductDetailsParams.newBuilder().setProductList(
-                skus.map {
-                    Product.newBuilder().setProductId(it).setProductType(type).build()
-                }
-            ).build()
-        val skuDetailsResult =
-            withContext(Dispatchers.IO) {
-                billingClient.queryProductDetails(params)
-            }
-        if (skuDetailsResult.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
-            Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
-            CrashReporter.recordException(
-                Throwable(
-                    "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}"
-                )
-            )
-            return null
-        }
-        return skuDetailsResult.productDetailsList
     }
 
-    fun purchase(
+    suspend fun purchase(
         activity: Activity,
         skuDetails: ProductDetails,
         recipient: String? = null,
@@ -314,24 +221,42 @@ class PurchaseHandler(
         recipient?.let {
             addGift(skuDetails.productId, it, recipientUsername ?: it)
         }
-        val flowParams =
-            BillingFlowParams.newBuilder().setProductDetailsParamsList(
-                listOf(skuDetails).map {
-                    var params = BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(skuDetails)
-                    skuDetails.subscriptionOfferDetails?.first()?.offerToken?.let { offerToken ->
-                        params = params.setOfferToken(offerToken)
-                    }
-                    return@map params.build()
-                }
-            ).build()
-        billingClient.launchBillingFlow(activity, flowParams)
+        var productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+            .setProductDetails(skuDetails)
+        skuDetails.subscriptionOfferDetails?.first()?.offerToken?.let { offerToken ->
+            productDetailsParams = productDetailsParams.setOfferToken(offerToken)
+        }
+        var flowParams = BillingFlowParams.newBuilder()
+                .setObfuscatedAccountId(userViewModel.userID)
+
+        if (skuDetails.productType == BillingClient.ProductType.SUBS) {
+            val existingSub = checkForSubscription()
+            if (existingSub != null) {
+                productDetailsParams = productDetailsParams.setSubscriptionProductReplacementParams(
+                    BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.newBuilder()
+                        .setOldProductId(existingSub.purchaseToken)
+                        .setReplacementMode(getReplacementMode(existingSub, skuDetails))
+                        .build()
+                )
+                flowParams = flowParams.setSubscriptionUpdateParams(
+                    BillingFlowParams.SubscriptionUpdateParams.newBuilder()
+                        .setOldPurchaseToken(existingSub.purchaseToken)
+                        .build()
+                )
+            }
+        }
+
+        flowParams = flowParams.setProductDetailsParamsList(
+                listOf(productDetailsParams.build())
+            )
+        billingClient.launchBillingFlow(activity, flowParams.build())
     }
 
     private suspend fun consume(
         purchase: Purchase,
         retries: Int = 4
     ) {
-        retryUntil { billingClientState.canMaybePurchase && billingClient.isReady }
+        retryUntil { billingClient.isReady }
         val params = ConsumeParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
         val result = billingClient.consumePurchase(params)
         if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK && retries > 0) {
@@ -349,38 +274,37 @@ class PurchaseHandler(
 
     private fun handle(purchase: Purchase) {
         if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED ||
-            processedPurchases.contains(
-                    purchase.orderId
-                )
+            processedPurchases.contains(purchase.orderId)
         ) {
             return
         }
         purchase.orderId?.let { processedPurchases.add(it) }
         val sku = purchase.products.firstOrNull()
+        val product = HabiticaProduct.forSku(sku ?: "") ?: return
         when {
-            sku == PurchaseTypes.JUBILANT_GRYPHATRICE -> {
+            product == HabiticaProduct.JUBILANT_GRYPHATRICE -> {
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
                     try {
                         apiClient.validatePurchase(validationRequest)
-                        processedPurchase(purchase)
+                        processedPurchase()
                         val gift = removeGift(sku)
                         withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
-                        displayGryphatriceConfirmationDialog(purchase, gift?.third)
+                        displayGryphatriceConfirmationDialog(gift?.third)
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
                 }
             }
 
-            PurchaseTypes.allGemTypes.contains(sku) -> {
+            HabiticaProduct.allGemTypes.contains(product) -> {
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
                     try {
                         val response = apiClient.validatePurchase(validationRequest)
-                        processedPurchase(purchase)
+                        processedPurchase()
                         val gift = removeGift(sku)
                         withContext(Dispatchers.IO) {
                             consume(purchase)
@@ -394,12 +318,12 @@ class PurchaseHandler(
                 }
             }
 
-            PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {
+            HabiticaProduct.allSubscriptionNoRenewTypes.contains(product) -> {
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
                     try {
                         val response = apiClient.validateNoRenewSubscription(validationRequest)
-                        processedPurchase(purchase)
+                        processedPurchase()
                         val gift = removeGift(sku)
                         withContext(Dispatchers.IO) {
                             consume(purchase)
@@ -413,12 +337,12 @@ class PurchaseHandler(
                 }
             }
 
-            PurchaseTypes.allSubscriptionTypes.contains(sku) -> {
+            HabiticaProduct.allSubscriptionTypes.contains(product) -> {
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
                     try {
                         val response = apiClient.validateSubscription(validationRequest)
-                        processedPurchase(purchase)
+                        processedPurchase()
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             acknowledgePurchase(purchase)
                         }
@@ -446,9 +370,10 @@ class PurchaseHandler(
         }
     }
 
-    private fun processedPurchase(purchase: Purchase) {
+    private fun processedPurchase() {
         MainScope().launch(ExceptionHandler.coroutine()) {
-            userViewModel.userRepository.retrieveUser(false, true)
+            userViewModel.userRepository.retrieveUser(withTasks = false,
+                forced = true)
         }
     }
 
@@ -479,7 +404,7 @@ class PurchaseHandler(
                 if (throwable.code() == 401) {
                     val res = apiClient.getErrorResponse(throwable)
                     if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
-                        processedPurchase(purchase)
+                        processedPurchase()
                         removeGift(purchase.products.firstOrNull())
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             consume(purchase)
@@ -540,38 +465,7 @@ class PurchaseHandler(
         return userViewModel.userRepository.retrieveUser(false, true)
     }
 
-    private fun durationString(sku: String): String {
-        return when (sku) {
-            PurchaseTypes.SUBSCRIPTION_1_MONTH_NORENEW, PurchaseTypes.SUBSCRIPTION_1_MONTH -> "1"
-            PurchaseTypes.SUBSCRIPTION_3_MONTH_NORENEW, PurchaseTypes.SUBSCRIPTION_3_MONTH -> "3"
-            PurchaseTypes.SUBSCRIPTION_6_MONTH_NORENEW, PurchaseTypes.SUBSCRIPTION_6_MONTH -> "6"
-            PurchaseTypes.SUBSCRIPTION_12_MONTH_NORENEW, PurchaseTypes.SUBSCRIPTION_12_MONTH -> "12"
-            else -> ""
-        }
-    }
-
     private var isSaleGemPurchase = false
-
-    private fun gemAmountString(sku: String): String {
-        if (isSaleGemPurchase) {
-            isSaleGemPurchase = false
-            return when (sku) {
-                PurchaseTypes.PURCHASE_4_GEMS -> "5"
-                PurchaseTypes.PURCHASE_21_GEMS -> "30"
-                PurchaseTypes.PURCHASE_42_GEMS -> "60"
-                PurchaseTypes.PURCHASE_84_GEMS -> "125"
-                else -> ""
-            }
-        } else {
-            return when (sku) {
-                PurchaseTypes.PURCHASE_4_GEMS -> "4"
-                PurchaseTypes.PURCHASE_21_GEMS -> "21"
-                PurchaseTypes.PURCHASE_42_GEMS -> "42"
-                PurchaseTypes.PURCHASE_84_GEMS -> "84"
-                else -> ""
-            }
-        }
-    }
 
     private val displayedConfirmations = mutableListOf<String>()
 
@@ -589,10 +483,11 @@ class PurchaseHandler(
                 (context as? HabiticaBaseApplication)
                     ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launchCatching
             val sku = purchase.products.firstOrNull() ?: return@launchCatching
+            val product = HabiticaProduct.forSku(sku) ?: return@launchCatching
             var title = context.getString(R.string.successful_purchase_generic)
             val message =
                 when {
-                    PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {
+                    HabiticaProduct.allSubscriptionNoRenewTypes.contains(product) -> {
                         title = context.getString(R.string.gift_confirmation_title)
                         context.getString(
                             if (configManager.activePromo()?.identifier == "g1g1" && giftedToID != userViewModel.user.value?.id) {
@@ -601,32 +496,32 @@ class PurchaseHandler(
                                 R.string.gift_confirmation_text_sub
                             },
                             giftedTo,
-                            durationString(sku)
+                            product.getSubscriptionDuration().toString()
                         )
                     }
 
-                    PurchaseTypes.allSubscriptionTypes.contains(sku) -> {
-                        if (sku == PurchaseTypes.SUBSCRIPTION_1_MONTH) {
+                    HabiticaProduct.allSubscriptionTypes.contains(product) -> {
+                        if (sku == HabiticaProduct.SUBSCRIPTION_1_MONTH.sku) {
                             context.getString(R.string.subscription_confirmation)
                         } else {
                             context.getString(
                                 R.string.subscription_confirmation_multiple,
-                                durationString(sku)
+                                product.getSubscriptionDuration().toString()
                             )
                         }
                     }
 
-                    PurchaseTypes.allGemTypes.contains(sku) && giftedTo != null -> {
+                    HabiticaProduct.allGemTypes.contains(product) && giftedTo != null -> {
                         title = context.getString(R.string.gift_confirmation_title)
                         context.getString(
                             R.string.gift_confirmation_text_gems_new,
                             giftedTo,
-                            gemAmountString(sku)
+                            product.getGemAmount(isSaleGemPurchase).toString()
                         )
                     }
 
-                    PurchaseTypes.allGemTypes.contains(sku) && giftedTo == null -> {
-                        context.getString(R.string.gem_purchase_confirmation, gemAmountString(sku))
+                    HabiticaProduct.allGemTypes.contains(product) && giftedTo == null -> {
+                        context.getString(R.string.gem_purchase_confirmation, product.getGemAmount(isSaleGemPurchase).toString())
                     }
 
                     else -> null
@@ -649,7 +544,6 @@ class PurchaseHandler(
     }
 
     private fun displayGryphatriceConfirmationDialog(
-        purchase: Purchase,
         giftedTo: String? = null
     ) {
         MainScope().launch(ExceptionHandler.coroutine()) {

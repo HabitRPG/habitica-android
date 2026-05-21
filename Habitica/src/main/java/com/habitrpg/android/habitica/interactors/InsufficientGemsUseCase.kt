@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.interactors
 
 import android.app.Activity
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import javax.inject.Inject
 
@@ -15,11 +15,11 @@ constructor(
         val activity = requestValues.activity as? MainActivity ?: return
         val gemSku =
             if (requestValues.gemPrice > 4) {
-                PurchaseTypes.PURCHASE_21_GEMS
+                HabiticaProduct.PURCHASE_21_GEMS
             } else {
-                PurchaseTypes.PURCHASE_4_GEMS
+                HabiticaProduct.PURCHASE_4_GEMS
             }
-        val sku = purchaseHandler.getInAppPurchaseSKU(gemSku) ?: return
+        val sku = purchaseHandler.loadInAppProduct(gemSku) ?: return
         purchaseHandler.purchase(activity, sku)
     }
 

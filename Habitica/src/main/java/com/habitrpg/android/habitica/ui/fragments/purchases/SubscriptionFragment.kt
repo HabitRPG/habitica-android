@@ -12,12 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
@@ -29,7 +29,7 @@ import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -63,13 +62,10 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     @Inject
     lateinit var userRepository: UserRepository
-
     @Inject
     lateinit var appConfigManager: AppConfigManager
-
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -108,7 +104,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.content?.visitHabiticaWebsiteButton?.setOnClickListener {
             val url = context?.getString(R.string.base_url) + "/"
-            context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            context?.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
         }
 
         lifecycleScope.launchCatching {
@@ -188,7 +184,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun loadInventory() {
         CoroutineScope(Dispatchers.IO).launchCatching {
-            val subscriptions = purchaseHandler.getAllSubscriptionProducts()
+            val subscriptions = purchaseHandler.loadSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
                 binding?.content?.loadingIndicator?.visibility = View.GONE
@@ -235,36 +231,36 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun selectSubscription(sku: ProductDetails) {
-        if (this.selectedSubscriptionSku != null) {
-            val oldButton = buttonForSku(this.selectedSubscriptionSku)
+        selectedSubscriptionSku?.let {
+            val oldButton = buttonForSku(it)
             oldButton?.setIsSelected(false)
         }
         this.selectedSubscriptionSku = sku
-        val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
+        val subscriptionOptionButton = buttonForSku(sku)
         subscriptionOptionButton?.setIsSelected(true)
         if (binding?.content?.subscribeButton != null) {
             binding?.content?.subscribeButton?.isEnabled = true
         }
     }
 
-    private fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
-        return buttonForSku(sku?.productId)
+    private fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? {
+        return buttonForSku(sku.productId)
     }
 
-    private fun buttonForSku(sku: String?): SubscriptionOptionView? {
-        return when (sku) {
-            PurchaseTypes.SUBSCRIPTION_1_MONTH -> binding?.content?.subscription1month
-            PurchaseTypes.SUBSCRIPTION_3_MONTH -> binding?.content?.subscription3month
-            PurchaseTypes.SUBSCRIPTION_6_MONTH -> binding?.content?.subscription6month
-            PurchaseTypes.SUBSCRIPTION_12_MONTH -> binding?.content?.subscription12month
+    private fun buttonForSku(sku: String): SubscriptionOptionView? {
+        return when (HabiticaProduct.forSku(sku)) {
+            HabiticaProduct.SUBSCRIPTION_1_MONTH -> binding?.content?.subscription1month
+            HabiticaProduct.SUBSCRIPTION_3_MONTH -> binding?.content?.subscription3month
+            HabiticaProduct.SUBSCRIPTION_6_MONTH -> binding?.content?.subscription6month
+            HabiticaProduct.SUBSCRIPTION_12_MONTH -> binding?.content?.subscription12month
             else -> null
         }
     }
 
     private fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
-            activity?.let {
-                purchaseHandler.purchase(it, sku)
+            lifecycleScope.launchCatching {
+                purchaseHandler.purchase(requireActivity(), sku)
             }
         }
     }
@@ -373,7 +369,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 context.startActivity(intent)
             }
             alert.addCancelButton { _, _ ->
-                // context.dismissKeyboard()
             }
             alert.setAdditionalContentView(chooseRecipientDialogView)
             alert.show()

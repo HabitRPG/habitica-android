@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentBottomsheetSubscriptionBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -124,7 +124,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun loadInventory() {
         CoroutineScope(Dispatchers.IO).launchCatching {
-            val subscriptions = purchaseHandler.getAllSubscriptionProducts()
+            val subscriptions = purchaseHandler.loadSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
                 for (sku in subscriptions) {
@@ -163,33 +163,33 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     internal fun selectSubscription(sku: ProductDetails) {
-        if (this.selectedSubscriptionSku != null) {
-            val oldButton = buttonForSku(this.selectedSubscriptionSku)
+        selectedSubscriptionSku?.let {
+            val oldButton = buttonForSku(it)
             oldButton?.setIsSelected(false)
         }
         this.selectedSubscriptionSku = sku
-        val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
+        val subscriptionOptionButton = buttonForSku(sku)
         subscriptionOptionButton?.setIsSelected(true)
         binding.content.subscribeButton.isEnabled = true
     }
 
-    internal fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
-        return buttonForSku(sku?.productId)
+    internal fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? {
+        return buttonForSku(sku.productId)
     }
 
-    private fun buttonForSku(sku: String?): SubscriptionOptionView? {
-        return when (sku) {
-            PurchaseTypes.SUBSCRIPTION_1_MONTH -> binding.content.subscription1month
-            PurchaseTypes.SUBSCRIPTION_3_MONTH -> binding.content.subscription3month
-            PurchaseTypes.SUBSCRIPTION_12_MONTH -> binding.content.subscription12month
+    private fun buttonForSku(sku: String): SubscriptionOptionView? {
+        return when (HabiticaProduct.forSku(sku)) {
+            HabiticaProduct.SUBSCRIPTION_1_MONTH -> binding.content.subscription1month
+            HabiticaProduct.SUBSCRIPTION_3_MONTH -> binding.content.subscription3month
+            HabiticaProduct.SUBSCRIPTION_12_MONTH -> binding.content.subscription12month
             else -> null
         }
     }
 
     private fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
-            activity?.let {
-                purchaseHandler.purchase(it, sku)
+            lifecycleScope.launchCatching {
+                purchaseHandler.purchase(requireActivity(), sku)
                 dismiss()
             }
         }
