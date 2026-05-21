@@ -9,13 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.interactors.InsufficientGemsUseCase
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -88,14 +84,14 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
         val gemSku =
             if (gemPrice > 4) {
                 purchaseTextView.text = "21"
-                PurchaseTypes.PURCHASE_21_GEMS
+                HabiticaProduct.PURCHASE_21_GEMS
             } else {
                 purchaseTextView.text = "4"
-                PurchaseTypes.PURCHASE_4_GEMS
+                HabiticaProduct.PURCHASE_4_GEMS
             }
         CoroutineScope(Dispatchers.IO).launchCatching {
             val sku =
-                purchaseHandler.getInAppPurchaseSKU(gemSku)
+                purchaseHandler.loadInAppProduct(gemSku)
                     ?: return@launchCatching
             withContext(Dispatchers.Main) {
                 purchaseButton?.text = sku.oneTimePurchaseOfferDetails?.formattedPrice

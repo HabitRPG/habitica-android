@@ -112,7 +112,9 @@ class BirthdayActivity : BaseActivity() {
                     {
                         gryphatriceProductDetails?.let {
                             isPurchasing.value = true
-                            purchaseHandler.purchase(this, it)
+                            lifecycleScope.launchCatching {
+                                purchaseHandler.purchase(this@BirthdayActivity, it)
+                            }
                         }
                     },
                     {
@@ -175,7 +177,7 @@ class BirthdayActivity : BaseActivity() {
         }
 
         lifecycleScope.launchCatching {
-            gryphatriceProductDetails = purchaseHandler.getGryphatriceSKU()
+            gryphatriceProductDetails = purchaseHandler.loadGryphatriceProduct()
             price.value =
                 gryphatriceProductDetails?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
         }

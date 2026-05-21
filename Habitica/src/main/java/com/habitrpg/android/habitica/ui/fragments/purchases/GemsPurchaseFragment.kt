@@ -22,7 +22,7 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
@@ -143,7 +143,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             binding?.gemPurchaseOptions?.isVisible = false
         }
         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
-            val skus = purchaseHandler.getAllGemSKUs()
+            val skus = purchaseHandler.loadGemProducts()
             withContext(Dispatchers.Main) {
                 if (skus.isEmpty()) {
                     binding?.loadingIndicator?.isVisible = false
@@ -166,11 +166,11 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     private fun updateButtonLabel(sku: ProductDetails) {
         val matchingView: GemPurchaseOptionsView? =
-            when (sku.productId) {
-                PurchaseTypes.PURCHASE_4_GEMS -> binding?.gems4View
-                PurchaseTypes.PURCHASE_21_GEMS -> binding?.gems21View
-                PurchaseTypes.PURCHASE_42_GEMS -> binding?.gems42View
-                PurchaseTypes.PURCHASE_84_GEMS -> binding?.gems84View
+            when (HabiticaProduct.forSku(sku.productId)) {
+                HabiticaProduct.PURCHASE_4_GEMS -> binding?.gems4View
+                HabiticaProduct.PURCHASE_21_GEMS -> binding?.gems21View
+                HabiticaProduct.PURCHASE_42_GEMS -> binding?.gems42View
+                HabiticaProduct.PURCHASE_84_GEMS -> binding?.gems84View
                 else -> return
             }
         if (matchingView != null) {
@@ -183,7 +183,9 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     private fun purchaseGems(view: GemPurchaseOptionsView?) {
         val identifier = view?.sku ?: return
-        activity?.let { purchaseHandler.purchase(it, identifier, null, null, isGemSaleHappening) }
+        lifecycleScope.launchCatching {
+            purchaseHandler.purchase(requireActivity(), identifier, null, null, isGemSaleHappening)
+        }
     }
 
     private fun showGiftGemsDialog() {
