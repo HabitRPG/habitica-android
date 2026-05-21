@@ -31,6 +31,10 @@ fun TaskRow(
     valueColor: Color,
     valueBorderColor: Color,
     primaryTextColor: ColorProvider = WidgetColors.taskListTaskText,
+    checklistChipBackground: ColorProvider = WidgetColors.checklistBackground,
+    checklistChipBackgroundDone: ColorProvider = WidgetColors.checklistBackgroundDone,
+    checklistChipText: ColorProvider = ColorProvider(Color.White),
+    checklistChipTextDone: ColorProvider = WidgetColors.textSecondary,
     checklistDoneCount: Int = 0,
     checklistTotalCount: Int = 0,
     showChecklistCount: Boolean = true,
@@ -77,8 +81,8 @@ fun TaskRow(
                 modifier = GlanceModifier
                     .cornerRadius(4.dp)
                     .background(
-                        if (isAllDone) WidgetColors.checklistBackgroundDone
-                        else WidgetColors.checklistBackground,
+                        if (isAllDone) checklistChipBackgroundDone
+                        else checklistChipBackground,
                     )
                     .padding(horizontal = 4.dp, vertical = 2.dp),
                 contentAlignment = Alignment.Center,
@@ -86,7 +90,7 @@ fun TaskRow(
                 Text(
                     text = "$checklistDoneCount/$checklistTotalCount",
                     style = TextStyle(
-                        color = if (isAllDone) WidgetColors.textSecondary else ColorProvider(Color.White),
+                        color = if (isAllDone) checklistChipTextDone else checklistChipText,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal,
                     ),

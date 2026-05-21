@@ -121,18 +121,28 @@ internal data class TaskListPalette(
     val taskText: ColorProvider,
     val secondaryText: ColorProvider,
     val iconTint: ColorProvider?,
+    val cardIconTint: ColorProvider?,
+    val checklistChipBackground: ColorProvider,
+    val checklistChipBackgroundDone: ColorProvider,
+    val checklistChipText: ColorProvider,
+    val checklistChipTextDone: ColorProvider,
 )
 
 @Composable
 private fun rememberPalette(): TaskListPalette {
     return if (MaterialYouEnabled) {
         TaskListPalette(
-            widgetBackground = GlanceTheme.colors.secondaryContainer,
+            widgetBackground = GlanceTheme.colors.primaryContainer,
             cardBackground = GlanceTheme.colors.background,
-            titleText = GlanceTheme.colors.onSecondaryContainer,
-            taskText = GlanceTheme.colors.onSecondaryContainer,
+            titleText = GlanceTheme.colors.onPrimaryContainer,
+            taskText = GlanceTheme.colors.onBackground,
             secondaryText = GlanceTheme.colors.onSurfaceVariant,
-            iconTint = GlanceTheme.colors.onSecondaryContainer,
+            iconTint = GlanceTheme.colors.onPrimaryContainer,
+            cardIconTint = GlanceTheme.colors.onBackground,
+            checklistChipBackground = GlanceTheme.colors.secondaryContainer,
+            checklistChipBackgroundDone = GlanceTheme.colors.surfaceVariant,
+            checklistChipText = GlanceTheme.colors.onSecondaryContainer,
+            checklistChipTextDone = GlanceTheme.colors.onSurfaceVariant,
         )
     } else {
         TaskListPalette(
@@ -142,6 +152,11 @@ private fun rememberPalette(): TaskListPalette {
             taskText = WidgetColors.taskListTaskText,
             secondaryText = WidgetColors.textSecondary,
             iconTint = null,
+            cardIconTint = null,
+            checklistChipBackground = WidgetColors.checklistBackground,
+            checklistChipBackgroundDone = WidgetColors.checklistBackgroundDone,
+            checklistChipText = ColorProvider(androidx.compose.ui.graphics.Color.White),
+            checklistChipTextDone = WidgetColors.textSecondary,
         )
     }
 }
@@ -228,13 +243,13 @@ private fun TaskListBody(
             state.needsCron && isDaily -> StartDayCard(
                 onClick = actionRunCallback<RunCronAction>(),
                 backgroundColor = palette.cardBackground,
-                textColor = palette.titleText,
-                iconTint = palette.iconTint,
+                textColor = palette.taskText,
+                iconTint = palette.cardIconTint,
             )
             state.tasks.isEmpty() -> EmptyState(
                 message = if (isDaily) "All done today!" else "All done!",
                 backgroundColor = palette.cardBackground,
-                textColor = palette.titleText,
+                textColor = palette.taskText,
             )
             else -> TaskListRows(state = state, palette = palette)
         }
@@ -262,6 +277,10 @@ private fun TaskListRows(
                         valueColor = colorForTaskValueLight(task.value),
                         valueBorderColor = colorForTaskValueMedium(task.value),
                         primaryTextColor = palette.taskText,
+                        checklistChipBackground = palette.checklistChipBackground,
+                        checklistChipBackgroundDone = palette.checklistChipBackgroundDone,
+                        checklistChipText = palette.checklistChipText,
+                        checklistChipTextDone = palette.checklistChipTextDone,
                         checklistDoneCount = task.checklistDone,
                         checklistTotalCount = task.checklistTotal,
                         showChecklistCount = true,

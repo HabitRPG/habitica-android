@@ -73,19 +73,16 @@ private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
 private fun rememberPalette(brandColor: androidx.compose.ui.graphics.Color): TilePalette {
-    return if (MaterialYouEnabled) {
-        TilePalette(
-            widgetBackground = GlanceTheme.colors.background,
-            tileBackground = GlanceTheme.colors.primaryContainer,
-            iconTint = GlanceTheme.colors.onPrimaryContainer,
-        )
+    val widgetBackground = if (MaterialYouEnabled) {
+        GlanceTheme.colors.primaryContainer
     } else {
-        TilePalette(
-            widgetBackground = ColorProvider(R.color.widget_bg),
-            tileBackground = ColorProvider(brandColor),
-            iconTint = null,
-        )
+        ColorProvider(R.color.widget_bg)
     }
+    return TilePalette(
+        widgetBackground = widgetBackground,
+        tileBackground = ColorProvider(brandColor),
+        iconTint = null,
+    )
 }
 
 @Composable
