@@ -251,7 +251,7 @@ private fun TaskListBody(
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
             )
-            else -> TaskListRows(state = state, palette = palette)
+            else -> TaskListRows(state = state, palette = palette, isDaily = isDaily)
         }
     }
 }
@@ -260,7 +260,9 @@ private fun TaskListBody(
 private fun TaskListRows(
     state: TaskListWidgetState,
     palette: TaskListPalette,
+    isDaily: Boolean,
 ) {
+    val innerCornerRadius = if (isDaily) 8.dp else 13.dp
     LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
         items(state.tasks.size, itemId = { state.tasks[it].id.hashCode().toLong() }) { index ->
             val task = state.tasks[index]
@@ -284,6 +286,7 @@ private fun TaskListRows(
                         checklistDoneCount = task.checklistDone,
                         checklistTotalCount = task.checklistTotal,
                         showChecklistCount = true,
+                        innerCornerRadius = innerCornerRadius,
                         onClick = actionRunCallback<ScoreTaskAction>(
                             actionParametersOf(
                                 WidgetActionKeys.taskId to task.id,

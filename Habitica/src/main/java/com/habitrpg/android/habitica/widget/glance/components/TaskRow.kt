@@ -42,6 +42,7 @@ fun TaskRow(
     modifier: GlanceModifier = GlanceModifier,
     tileWidth: Dp = 44.dp,
     innerSquareSize: Dp = 26.dp,
+    innerCornerRadius: Dp = 8.dp,
 ) {
     Row(
         modifier = modifier
@@ -59,7 +60,7 @@ fun TaskRow(
             Box(
                 modifier = GlanceModifier
                     .size(innerSquareSize)
-                    .cornerRadius(8.dp)
+                    .cornerRadius(innerCornerRadius)
                     .background(ColorProvider(valueBorderColor)),
             ) {}
         }

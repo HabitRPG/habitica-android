@@ -260,7 +260,6 @@ private fun HorizontalLayout(
                     includeLevel = !layout.showAvatar,
                     showFullLevelLabel = layout.cols >= 5,
                     palette = palette,
-                    leadingIndent = iconAndSpacing,
                 )
             }
         }
@@ -352,10 +351,9 @@ private fun StatsFooter(
     includeLevel: Boolean,
     showFullLevelLabel: Boolean,
     palette: StatsInnerPalette,
-    leadingIndent: Dp = 0.dp,
 ) {
     Row(
-        modifier = GlanceModifier.fillMaxWidth().padding(start = leadingIndent),
+        modifier = GlanceModifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (includeLevel) {
@@ -370,12 +368,12 @@ private fun StatsFooter(
         }
         if (state.hourglassCount > 0) {
             CurrencyChip(
-                iconResId = R.drawable.widget_icon_hourglass,
+                iconResId = R.drawable.hourglass_fancy_left,
                 text = state.hourglassesText,
                 backgroundColor = palette.chipBackground,
                 textColor = palette.chipText,
             )
-            Spacer(GlanceModifier.defaultWeight())
+            Spacer(GlanceModifier.width(6.dp))
         }
         CurrencyChip(
             iconResId = R.drawable.widget_icon_gem,
@@ -383,7 +381,7 @@ private fun StatsFooter(
             backgroundColor = palette.chipBackground,
             textColor = palette.chipText,
         )
-        Spacer(GlanceModifier.defaultWeight())
+        Spacer(GlanceModifier.width(6.dp))
         CurrencyChip(
             iconResId = R.drawable.widget_icon_gold,
             text = state.goldText,

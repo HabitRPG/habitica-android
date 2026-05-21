@@ -93,6 +93,7 @@ fun CurrencyChip(
         Spacer(GlanceModifier.width(6.dp))
         Text(
             text = text,
+            maxLines = 1,
             style = TextStyle(
                 color = textColor,
                 fontSize = 14.sp,

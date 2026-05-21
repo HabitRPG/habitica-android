@@ -94,7 +94,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
     val size = LocalSize.current
     val shorter = if (size.width < size.height) size.width else size.height
 
-    val iconSize = (shorter.value * 0.30f).coerceIn(20f, 72f).dp
+    val iconSize = (shorter.value * 0.36f).coerceIn(24f, 84f).dp
     val tilePadding = (shorter.value * 0.06f).coerceIn(2f, 12f).dp
     val tileSide = shorter - tilePadding * 2
 
