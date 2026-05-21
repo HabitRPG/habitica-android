@@ -19,6 +19,7 @@ import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
+import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
@@ -29,6 +30,7 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 private val BAR_HEIGHT = 6.dp
+private val ICON_SIZE = 20.dp
 
 enum class StatRowMode {
     BarOnly,
@@ -54,15 +56,21 @@ fun StatRow(
     val progress = if (maxValue > 0f) (value / maxValue).coerceIn(0f, 1f) else 0f
     val fillColor = ColorProvider(barColor)
     val trackColor = if (MaterialYouEnabled) GlanceTheme.colors.outline else WidgetColors.progressTrack
+    val rowAlignment = if (mode == StatRowMode.LabelStackedValue) {
+        Alignment.Top
+    } else {
+        Alignment.CenterVertically
+    }
+    val barCenterOffset = (ICON_SIZE - BAR_HEIGHT) / 2
 
     Row(
         modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = rowAlignment,
     ) {
         Image(
             provider = ImageProvider(iconResId),
             contentDescription = label,
-            modifier = GlanceModifier.size(16.dp),
+            modifier = GlanceModifier.size(ICON_SIZE),
         )
         Spacer(GlanceModifier.width(8.dp))
 
@@ -73,7 +81,7 @@ fun StatRow(
                 }
             }
             StatRowMode.LabelStackedValue -> {
-                Column(modifier = GlanceModifier.defaultWeight()) {
+                Column(modifier = GlanceModifier.defaultWeight().padding(top = barCenterOffset)) {
                     StatProgressBar(progress, fillColor, trackColor)
                     Spacer(GlanceModifier.height(2.dp))
                     Row(modifier = GlanceModifier.fillMaxWidth()) {

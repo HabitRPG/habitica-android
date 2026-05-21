@@ -2,14 +2,15 @@
 <resources>
     <color name="widget_bg">#F9F9F9</color>
     <color name="widget_bg_secondary">#C3C0C7</color>
-    <color name="widget_card_bg">#1AC3C0C7</color>
+    <color name="widget_card_bg">#C3C0C7</color>
+    <color name="widget_task_list_add_icon">#4E4A57</color>
     <color name="widget_text">#686274</color>
-    <color name="widget_text_secondary">#878190</color>
+    <color name="widget_text_secondary">#A5A1AC</color>
     <color name="widget_dailies_purple">#925CF3</color>
     <color name="widget_progress_track">#C3C0C7</color>
-    <color name="widget_task_list_primary_text">#343134</color>
-    <color name="widget_task_list_secondary_text">#4E4A57</color>
-    <color name="widget_task_list_task_text">#686274</color>
+    <color name="widget_task_list_primary_text">#686274</color>
+    <color name="widget_task_list_secondary_text">#A5A1AC</color>
+    <color name="widget_task_list_task_text">#34313A</color>
     <color name="widget_separator">#4DC3C0C7</color>
     <color name="widget_checklist_bg">#A5A1AC</color>
     <color name="widget_checklist_bg_done">#EDEDEE</color>

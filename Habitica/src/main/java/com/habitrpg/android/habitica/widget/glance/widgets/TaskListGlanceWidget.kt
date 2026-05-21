@@ -151,7 +151,7 @@ private fun rememberPalette(): TaskListPalette {
             titleText = WidgetColors.taskListPrimaryText,
             taskText = WidgetColors.taskListTaskText,
             secondaryText = WidgetColors.textSecondary,
-            iconTint = null,
+            iconTint = ColorProvider(R.color.widget_task_list_add_icon),
             cardIconTint = null,
             checklistChipBackground = WidgetColors.checklistBackground,
             checklistChipBackgroundDone = WidgetColors.checklistBackgroundDone,

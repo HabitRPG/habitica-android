@@ -207,7 +207,7 @@ private fun CompactAvatarLayout(
     outerPadding: Dp,
     palette: StatsInnerPalette,
 ) {
-    val barWidth = (widgetWidth - outerPadding * 2 - 16.dp - 8.dp).coerceAtLeast(40.dp)
+    val barWidth = (widgetWidth - outerPadding * 2 - 20.dp - 8.dp).coerceAtLeast(40.dp)
     Column(
         modifier = GlanceModifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -228,7 +228,7 @@ private fun HorizontalLayout(
 ) {
     val avatarBoxWidth = if (layout.showAvatar) 124.dp else 0.dp
     val avatarSpacing = if (layout.showAvatar) 12.dp else 0.dp
-    val iconAndSpacing = 16.dp + 8.dp
+    val iconAndSpacing = 20.dp + 8.dp
     val barWidth = (widgetWidth - outerPadding * 2 - avatarBoxWidth - avatarSpacing - iconAndSpacing)
         .coerceAtLeast(40.dp)
 
@@ -244,6 +244,7 @@ private fun HorizontalLayout(
                     level = state.level,
                     className = state.className,
                     showFullLabel = true,
+                    modifier = GlanceModifier.width(124.dp),
                     backgroundColor = palette.levelChipBackground,
                     textColor = palette.levelChipText,
                 )
@@ -259,6 +260,7 @@ private fun HorizontalLayout(
                     includeLevel = !layout.showAvatar,
                     showFullLevelLabel = layout.cols >= 5,
                     palette = palette,
+                    leadingIndent = iconAndSpacing,
                 )
             }
         }
@@ -350,9 +352,10 @@ private fun StatsFooter(
     includeLevel: Boolean,
     showFullLevelLabel: Boolean,
     palette: StatsInnerPalette,
+    leadingIndent: Dp = 0.dp,
 ) {
     Row(
-        modifier = GlanceModifier.fillMaxWidth(),
+        modifier = GlanceModifier.fillMaxWidth().padding(start = leadingIndent),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (includeLevel) {
@@ -372,7 +375,7 @@ private fun StatsFooter(
                 backgroundColor = palette.chipBackground,
                 textColor = palette.chipText,
             )
-            Spacer(GlanceModifier.width(6.dp))
+            Spacer(GlanceModifier.defaultWeight())
         }
         CurrencyChip(
             iconResId = R.drawable.widget_icon_gem,
@@ -380,7 +383,7 @@ private fun StatsFooter(
             backgroundColor = palette.chipBackground,
             textColor = palette.chipText,
         )
-        Spacer(GlanceModifier.width(6.dp))
+        Spacer(GlanceModifier.defaultWeight())
         CurrencyChip(
             iconResId = R.drawable.widget_icon_gold,
             text = state.goldText,

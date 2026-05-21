@@ -42,17 +42,18 @@ fun LevelChip(
 
     Row(
         modifier = modifier
-            .height(24.dp)
-            .cornerRadius(12.dp)
+            .height(30.dp)
+            .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 10.dp),
+            .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        Spacer(GlanceModifier.defaultWeight())
         if (classBitmap != null) {
             Image(
                 provider = ImageProvider(classBitmap),
                 contentDescription = null,
-                modifier = GlanceModifier.size(14.dp),
+                modifier = GlanceModifier.size(18.dp),
             )
             Spacer(GlanceModifier.width(6.dp))
         }
@@ -60,10 +61,11 @@ fun LevelChip(
             text = labelText,
             style = TextStyle(
                 color = textColor,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
             ),
         )
+        Spacer(GlanceModifier.defaultWeight())
     }
 }
 
@@ -77,24 +79,24 @@ fun CurrencyChip(
 ) {
     Row(
         modifier = modifier
-            .height(24.dp)
-            .cornerRadius(12.dp)
+            .height(30.dp)
+            .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
             provider = ImageProvider(iconResId),
             contentDescription = null,
-            modifier = GlanceModifier.size(14.dp),
+            modifier = GlanceModifier.size(18.dp),
         )
-        Spacer(GlanceModifier.width(4.dp))
+        Spacer(GlanceModifier.width(6.dp))
         Text(
             text = text,
             style = TextStyle(
                 color = textColor,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
             ),
         )
     }

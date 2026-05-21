@@ -113,6 +113,7 @@ internal data class DailiesTilePalette(
     val tileBackground: ColorProvider,
     val primaryText: ColorProvider,
     val secondaryText: ColorProvider,
+    val accentNumber: ColorProvider,
     val iconTint: ColorProvider?,
     val trackColor: ColorProvider,
 )
@@ -124,6 +125,7 @@ private fun rememberPalette(): DailiesTilePalette {
             tileBackground = GlanceTheme.colors.primaryContainer,
             primaryText = GlanceTheme.colors.onPrimaryContainer,
             secondaryText = GlanceTheme.colors.onPrimaryContainer,
+            accentNumber = GlanceTheme.colors.onPrimaryContainer,
             iconTint = GlanceTheme.colors.onPrimaryContainer,
             trackColor = GlanceTheme.colors.outline,
         )
@@ -132,6 +134,7 @@ private fun rememberPalette(): DailiesTilePalette {
             tileBackground = ColorProvider(R.color.widget_bg),
             primaryText = ColorProvider(R.color.widget_text),
             secondaryText = ColorProvider(R.color.widget_text_secondary),
+            accentNumber = ColorProvider(R.color.widget_dailies_purple),
             iconTint = null,
             trackColor = ColorProvider(R.color.widget_progress_track),
         )
@@ -279,7 +282,7 @@ private fun GaugeBody(
                 Text(
                     text = topNumber,
                     style = TextStyle(
-                        color = palette.primaryText,
+                        color = palette.accentNumber,
                         fontSize = 64.sp,
                         fontWeight = FontWeight.Medium,
                     ),
