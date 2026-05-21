@@ -282,6 +282,14 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+        <receiver
+            android:name=".widget.glance.migration.WidgetUpgradeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".widget.AvatarStatsWidgetProvider"
             android:label="@string/stats_widget_label"
             android:exported="false">

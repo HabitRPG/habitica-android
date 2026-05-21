@@ -69,6 +69,7 @@ abstract class TaskListGlanceWidget(
 ) : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Responsive(
         setOf(
+            DpSize(120.dp, 120.dp),
             DpSize(220.dp, 160.dp),
             DpSize(300.dp, 200.dp),
             DpSize(360.dp, 300.dp),
@@ -165,6 +166,7 @@ private fun rememberPalette(): TaskListPalette {
 private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val size = LocalSize.current
     val palette = rememberPalette()
+    val isVeryCompact = size.width < 180.dp
     val isCompact = size.width < 230.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addLink = if (isDaily) "habitica://user/tasks/daily/add" else "habitica://user/tasks/todo/add"
@@ -180,15 +182,19 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             .fillMaxSize()
             .cornerRadius(20.dp)
             .background(palette.widgetBackground)
-            .padding(horizontal = 10.dp, vertical = 12.dp),
+            .padding(
+                horizontal = if (isVeryCompact) 6.dp else 10.dp,
+                vertical = if (isVeryCompact) 8.dp else 12.dp,
+            ),
     ) {
         TaskListHeader(
             title = title,
             palette = palette,
             openListLink = openListLink,
             addLink = addLink,
+            isVeryCompact = isVeryCompact,
         )
-        Spacer(GlanceModifier.height(14.dp))
+        Spacer(GlanceModifier.height(if (isVeryCompact) 8.dp else 14.dp))
         TaskListBody(
             state = state,
             isDaily = isDaily,
@@ -203,32 +209,35 @@ private fun TaskListHeader(
     palette: TaskListPalette,
     openListLink: String,
     addLink: String,
+    isVeryCompact: Boolean,
 ) {
     Row(
         modifier = GlanceModifier
             .fillMaxWidth()
-            .padding(start = 14.dp, end = 14.dp),
+            .padding(start = if (isVeryCompact) 6.dp else 14.dp, end = if (isVeryCompact) 6.dp else 14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = title,
             style = TextStyle(
                 color = palette.titleText,
-                fontSize = 22.sp,
+                fontSize = if (isVeryCompact) 15.sp else 22.sp,
                 fontWeight = FontWeight.Medium,
             ),
             modifier = GlanceModifier
                 .defaultWeight()
                 .clickable(onClick = openAppAction(openListLink)),
         )
-        Image(
-            provider = ImageProvider(R.drawable.widget_icon_add),
-            contentDescription = "Add task",
-            modifier = GlanceModifier
-                .size(20.dp)
-                .clickable(onClick = openAppAction(addLink)),
-            colorFilter = palette.iconTint?.let { ColorFilter.tint(it) },
-        )
+        if (!isVeryCompact) {
+            Image(
+                provider = ImageProvider(R.drawable.widget_icon_add),
+                contentDescription = "Add task",
+                modifier = GlanceModifier
+                    .size(20.dp)
+                    .clickable(onClick = openAppAction(addLink)),
+                colorFilter = palette.iconTint?.let { ColorFilter.tint(it) },
+            )
+        }
     }
 }
 

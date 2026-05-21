@@ -54,6 +54,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 class HabitButtonGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Responsive(
         setOf(
+            DpSize(120.dp, 40.dp),
             DpSize(218.dp, 70.dp),
             DpSize(360.dp, 70.dp),
             DpSize(218.dp, 160.dp),
@@ -121,6 +122,7 @@ private fun HabitButtonContent(
 ) {
     val size = LocalSize.current
     val isTall = size.height >= 130.dp
+    val isVeryCompact = size.height < 60.dp
     val titleFraction = if (isTall) 0.35f else 0.50f
     val titleHeight = size.height * titleFraction
     val barColor = colorForHabitValueLight(value)
@@ -142,7 +144,9 @@ private fun HabitButtonContent(
             onDownClick = onDownClick,
             modifier = GlanceModifier.fillMaxWidth().defaultWeight(),
         )
-        TitleStrip(title = title, height = titleHeight)
+        if (!isVeryCompact) {
+            TitleStrip(title = title, height = titleHeight)
+        }
     }
 }
 
