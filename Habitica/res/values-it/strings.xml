@@ -1256,7 +1256,7 @@
     <string name="exact_alarm_system_settings_reminders">I promemoria potrebbero essere ritardati perché le autorizzazioni non sono abilitate. Tocca per visualizzare e aggiornare le autorizzazioni.</string>
     <string name="exact_alarm_system_settings_title">`Allarme e Promemoria` disabilitati`</string>
     <string name="exact_alarm_system_settings_description">Consenti `Allarmi e Promemoria` nell\'app Impostazioni per assicurarti che i promemoria vengano mostrati esattamente all’orario programmato</string>
-    <string name="item_footer_title">Non riesci ad ottenere l\'oggetto giusto dalle attività\?</string>
+    <string name="item_footer_title">Non riesci ad ottenere il/la %s dalle attività\?</string>
     <string name="item_footer_description">Controlla il [Mercato](/shops/market) per comprare giusto quello che ti serve!</string>
     <string name="customization_shop_more">Controlla il Negozio Personalizzazioni per ancora più modi di personalizzare il tuo avatar!</string>
     <string name="quests_footer_description">Controlla il [Negozio Missioni](/shops/quests) per vedere cos\'è disponibile!</string>
