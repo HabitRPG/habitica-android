@@ -3,8 +3,10 @@ package com.habitrpg.android.habitica.widget.glance.work
 import android.content.Context
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -33,8 +35,9 @@ class WidgetRefreshWorker(
 
     override suspend fun doWork(): Result {
         val context = applicationContext
+        val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+        if (user == null) return Result.success()
         withContext(Dispatchers.Main) {
-            val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
             AvatarBitmapCache.refreshIfNeeded(context, user)
         }
         TaskListMemoryCache.clear()
@@ -48,9 +51,13 @@ class WidgetRefreshWorker(
         private val REFRESH_INTERVAL_MINUTES = 15L
 
         fun enqueue(context: Context) {
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .setRequiresBatteryNotLow(true)
+                .build()
             val request = PeriodicWorkRequestBuilder<WidgetRefreshWorker>(
                 REFRESH_INTERVAL_MINUTES, TimeUnit.MINUTES,
-            ).build()
+            ).setConstraints(constraints).build()
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 WORK_NAME,
                 ExistingPeriodicWorkPolicy.KEEP,
