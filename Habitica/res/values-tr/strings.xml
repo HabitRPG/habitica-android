@@ -1631,7 +1631,6 @@
         <item quantity="other">her %d ayda bir</item>
     </plurals>
     <string name="faint_broken_gear_info">Kırılan ekipman Market\'ten yeniden alınabilir</string>
-    <string name="quest_reject_error">Görev reddedilemedi. Lütfen yeniden dene.</string>
     <string name="free_rebirth_at_level_100">100. seviyede ÜCRETSİZ Yeniden Doğma Küresi</string>
     <string name="membership">Üyelik</string>
     <string name="participating">Katılımcı</string>
@@ -1648,7 +1647,6 @@
     <string name="search_questions">Görev ara</string>
     <string name="no_matching_questions">Eşleşen bir görev bulunamadı</string>
     <string name="rebirth_shop">Yeniden Doğuş Küresi</string>
-    <string name="quest_accept_error">Görev kabul edilemedi. Lütfen yeniden dene.</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">ÜCRETSİZ Yeniden Doğma Küresi\'ne %d gün kaldı</item>
         <item quantity="other">ÜCRETSİZ Yeniden Doğma Küresi\'ne kalan gün: %d</item>

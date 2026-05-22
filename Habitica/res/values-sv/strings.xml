@@ -719,7 +719,6 @@
     <string name="dailyDueDefaultViewDescription">Med det här alternativet inställt kommer Dagliga uppgifter som standard att visas under Förfallodag istället för Alla.</string>
     <string name="fix_character_description">Om du har stött på ett fel eller gjort ett misstag som orättvist förändrat din karaktär kan du manuellt korrigera dessa värden här.</string>
     <string name="faint_broken_gear_info">Trasig utrustning kan återköpas på Marknaden</string>
-    <string name="quest_rejected">Uppdraget Nekat</string>
     <string name="quest_reject_error">Uppdraget kunde inte nekas. Försök igen.</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d dag kvar tills GRATIS Återfödelsens Sfär</item>

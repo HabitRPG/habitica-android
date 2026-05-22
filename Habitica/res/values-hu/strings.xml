@@ -1630,9 +1630,7 @@
     <string name="api_token_is_password_info">Ne oszd meg nyilvánosan. Előfordulhat, hogy meg kell adnod a felhasználói azonosítódat, de soha ne tedd közzé az API tokened mások számára látható helyen, például a Githubon.</string>
     <string name="api_token_reset_info">A jelszavad megváltoztatásával visszaállíthatod. A visszaállítás után újra be kell jelentkezned minden olyan eszközön, ahol használod a Habiticát, és újra meg kell adnod az API tokent azokhoz a külső eszközökhöz, amiket használsz.</string>
     <string name="use_skill">Képesség használata</string>
-    <string name="quest_accept_error">Nem sikerült elfogadni a küldetést. Próbáld újra.</string>
     <string name="faint_broken_gear_info">Az elromlott felszerelést vissza lehet vásárolni a Piactéren</string>
-    <string name="quest_reject_error">Nem sikerült elutasítani a küldetést. Próbáld újra.</string>
     <string name="free_rebirth_at_level_100">INGYENES újjászületés gömb 100. szinten</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d nap az INGYENES újjászületés gömbjéig</item>

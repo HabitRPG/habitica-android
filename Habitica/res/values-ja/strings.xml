@@ -1624,7 +1624,6 @@
     <string name="rebirth_confirm_reset_item_2">ステータスポイント</string>
     <string name="new_message">新しいメッセージ</string>
     <string name="category">カテゴリー</string>
-    <string name="quest_rejected">クエストを拒否しました</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="other">無料の転生のオーブがもらえるまであと%d日</item>
     </plurals>

@@ -1108,7 +1108,6 @@
     <string name="subscription_credit_canceling">Your <b>+%d</b> months of subscription credit will activate after cancelling</string>
     <string name="unsaved_changes">Unsaved Changes</string>
     <string name="faint_broken_gear_info">Broken gear can be repurchased from the Market</string>
-    <string name="quest_reject_error">Could not reject quest. Please try again.</string>
     <string name="free_rebirth_at_level_100">FREE Orb of Rebirth at level 100</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d day until FREE Orb of Rebirth</item>
