@@ -9,6 +9,6 @@
     android:maxResizeHeight="80dp"
     android:targetCellWidth="3"
     android:targetCellHeight="2"
-    android:previewImage="@drawable/avatar_widget_preview"
+    android:previewImage="@drawable/widget_avatar"
     android:resizeMode="horizontal"
     android:widgetCategory="home_screen" />

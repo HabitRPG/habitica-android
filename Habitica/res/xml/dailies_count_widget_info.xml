@@ -5,6 +5,6 @@
     android:minHeight="110dp"
     android:targetCellWidth="2"
     android:targetCellHeight="2"
-    android:previewImage="@drawable/daily_summary_widget_preview"
+    android:previewImage="@drawable/widget_daily_summary"
     android:resizeMode="horizontal"
     android:widgetCategory="home_screen" />

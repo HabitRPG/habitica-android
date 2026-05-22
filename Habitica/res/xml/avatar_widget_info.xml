@@ -9,6 +9,6 @@
     android:maxResizeHeight="200dp"
     android:targetCellWidth="4"
     android:targetCellHeight="2"
-    android:previewImage="@drawable/stats_widget_preview"
+    android:previewImage="@drawable/widget_stats"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

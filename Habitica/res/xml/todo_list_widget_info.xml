@@ -5,6 +5,6 @@
     android:minWidth="220dp"
     android:targetCellWidth="3"
     android:targetCellHeight="2"
-    android:previewImage="@drawable/todos_list_widget_preview"
+    android:previewImage="@drawable/widget_todo"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

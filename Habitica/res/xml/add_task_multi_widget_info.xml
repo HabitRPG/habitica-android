@@ -7,6 +7,6 @@
     android:minResizeHeight="40dp"
     android:targetCellWidth="4"
     android:targetCellHeight="1"
-    android:previewImage="@drawable/new_task_multi_widget_preview"
+    android:previewImage="@drawable/widget_create_task_combined"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />
