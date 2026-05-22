@@ -1,12 +1,9 @@
 package com.habitrpg.android.habitica.widget
 
-import com.habitrpg.android.habitica.R
+import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
 
-class DailiesWidgetProvider : TaskListWidgetProvider() {
-    override val serviceClass: Class<*>
-        get() = DailiesWidgetService::class.java
-    override val providerClass: Class<*>
-        get() = DailiesWidgetProvider::class.java
-    override val titleResId: Int
-        get() = R.string.dailies
+class DailiesWidgetProvider : GlanceAppWidgetReceiver() {
+    override val glanceAppWidget: GlanceAppWidget = DailyTaskListGlanceWidget()
 }

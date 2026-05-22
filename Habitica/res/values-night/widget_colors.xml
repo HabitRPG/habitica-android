@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_bg">#2B203A</color>
+    <color name="widget_bg_secondary">#D5C8FF</color>
+    <color name="widget_card_bg">#BDA8FF</color>
+    <color name="widget_task_list_add_icon">#925CF3</color>
+    <color name="widget_text">#D5C8FF</color>
+    <color name="widget_text_secondary">#BDA8FF</color>
+    <color name="widget_dailies_purple">#925CF3</color>
+    <color name="widget_progress_track">#434074</color>
+    <color name="widget_task_list_primary_text">#D5C8FF</color>
+    <color name="widget_task_list_secondary_text">#BDA8FF</color>
+    <color name="widget_task_list_task_text">#FFFFFF</color>
+    <color name="widget_separator">#4D925CF3</color>
+    <color name="widget_checklist_bg">#66D5C8FF</color>
+    <color name="widget_checklist_bg_done">#33D5C8FF</color>
+    <color name="widget_add_label_text">#99FFFFFF</color>
+    <color name="widget_preview_scallop_tint">#3A2D6B</color>
+    <color name="widget_preview_tile_tint">#4A3D7B</color>
+    <color name="widget_preview_scallop_glyph_tint">#D5C8FF</color>
+    <color name="widget_preview_daily_bg">#2B2020</color>
+    <color name="widget_preview_daily_primary_text">#D5C8FF</color>
+    <color name="widget_preview_daily_secondary_text">#BDA8FF</color>
+    <color name="widget_preview_daily_tertiary_text">#878190</color>
+    <color name="widget_level_chip_bg">#20B780</color>
+    <color name="widget_level_chip_text">#FFFFFF</color>
+    <color name="widget_currency_chip_bg">#434074</color>
+    <color name="widget_currency_chip_text">#D5C8FF</color>
+</resources>

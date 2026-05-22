@@ -37,6 +37,8 @@ import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.widget.glance.migration.LegacyWidgetMigration
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
@@ -144,6 +146,11 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             Analytics.logException(it)
         }
 
+        WidgetRefreshWorker.enqueue(this)
+        MainScope().launchCatching {
+            LegacyWidgetMigration.runIfNeeded(this@HabiticaBaseApplication)
+            WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+        }
 
         checkIfNewVersion()
     }

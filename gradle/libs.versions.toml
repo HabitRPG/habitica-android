@@ -31,6 +31,7 @@ firebase_bom = "34.1.0"
 flexbox = "3.0.0"
 fragmentKtx = "1.8.9"
 fragmentTesting = "1.8.9"
+glance = "1.2.0-rc01"
 google-service = "4.4.3"
 googleid = "1.1.1"
 gson = "2.13.1"
@@ -65,6 +66,7 @@ swipeRefresh = "1.1.0"
 turbine = "1.2.1"
 wear = "1.3.0"
 wearInput = "1.1.0"
+workManager = "2.10.0"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
@@ -94,6 +96,8 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 firebase-perf = { group = "com.google.firebase", name = "firebase-perf" }
 flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
 fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glance" }
+glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "glance" }
 google-play-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play_auth" }
 google-play-review = { group = "com.google.android.play", name = "review", version.ref = "inAppReview" }
 google-play-review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "inAppReview" }
@@ -156,6 +160,9 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref =
 viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 wear = { module = "androidx.wear:wear", version.ref = "wear" }
 wear-input = { module = "androidx.wear:wear-input", version.ref = "wearInput" }
+work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
+hilt-work = { group = "androidx.hilt", name = "hilt-work", version = "1.2.0" }
+hilt-compiler-androidx = { group = "androidx.hilt", name = "hilt-compiler", version = "1.2.0" }
 
 ## Dependencies of included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

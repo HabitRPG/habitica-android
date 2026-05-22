@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/glance_default_loading_layout"
+    android:minWidth="40dp"
+    android:minHeight="40dp"
+    android:minResizeWidth="40dp"
+    android:minResizeHeight="40dp"
+    android:targetCellWidth="1"
+    android:targetCellHeight="1"
+    android:previewImage="@drawable/widget_new_task_single"
+    android:resizeMode="horizontal|vertical"
+    android:configure="com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity"
+    android:widgetFeatures="reconfigurable"
+    android:widgetCategory="home_screen" />

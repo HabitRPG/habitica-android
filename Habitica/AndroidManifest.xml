@@ -237,13 +237,15 @@
         </receiver>
 
         <activity android:name=".ui.activities.AddTaskWidgetActivity"
-            android:exported="false">
+            android:theme="@style/Theme.Habitica.TranslucentSheet"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.HabitButtonWidgetActivity"
-            android:exported="false">
+            android:theme="@style/Theme.Habitica.TranslucentSheet"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
@@ -280,6 +282,14 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+        <receiver
+            android:name=".widget.glance.migration.WidgetUpgradeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".widget.AvatarStatsWidgetProvider"
             android:label="@string/stats_widget_label"
             android:exported="false">
@@ -288,6 +298,15 @@
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/avatar_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.AvatarWidgetProvider"
+            android:label="@string/avatar_widget_label"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/avatar_image_widget_info" />
         </receiver>
         <receiver android:name=".widget.DailiesWidgetProvider"
             android:label="@string/widget_dailies"
@@ -316,14 +335,33 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/habit_button_widget_info" />
         </receiver>
-
-        <service
-            android:name=".widget.DailiesWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-        <service
-            android:name=".widget.TodosWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-        <service android:name=".widget.HabitButtonWidgetService"/>
+        <receiver android:name=".widget.DailiesCountWidgetReceiver"
+            android:label="@string/widget_dailies_count"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/dailies_count_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.AddTaskWidgetProvider"
+            android:label="@string/widget_add_task"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/add_task_widget_info" />
+        </receiver>
+        <receiver android:name=".widget.AddTaskMultiWidgetReceiver"
+            android:label="@string/widget_add_task_multi"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/add_task_multi_widget_info" />
+        </receiver>
         <service android:name=".receivers.DeviceCommunicationService"
             android:enabled="true"
             android:exported="true">
