@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_avatar"
+    android:minWidth="180dp"
+    android:minHeight="80dp"
+    android:minResizeWidth="180dp"
+    android:minResizeHeight="80dp"
+    android:maxResizeWidth="300dp"
+    android:maxResizeHeight="80dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
+    android:previewImage="@drawable/widget_avatar"
+    android:resizeMode="horizontal"
+    android:widgetCategory="home_screen" />

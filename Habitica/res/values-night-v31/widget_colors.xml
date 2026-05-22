@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_preview_scallop_tint">@android:color/system_accent1_800</color>
+    <color name="widget_preview_tile_tint">@android:color/system_accent1_700</color>
+    <color name="widget_preview_scallop_glyph_tint">@android:color/system_accent1_100</color>
+    <color name="widget_preview_daily_bg">@android:color/system_neutral1_900</color>
+    <color name="widget_preview_daily_primary_text">@android:color/system_neutral1_50</color>
+    <color name="widget_preview_daily_secondary_text">@android:color/system_accent1_200</color>
+    <color name="widget_preview_daily_tertiary_text">@android:color/system_neutral1_400</color>
+</resources>
