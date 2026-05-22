@@ -1685,4 +1685,8 @@
     <string name="buy_for">Buy for</string>
     <string name="visit_the_market">Visit the Market</string>
     <string name="fifth_week_warning">This task will not appear due during months with fewer %1$ss.</string>
+    <string name="avatar_widget_label">Habitica Avatar</string>
+    <string name="widget_dailies_count">Habitica Daily Count</string>
+    <string name="widget_add_task">Habitica Add Task</string>
+    <string name="widget_add_task_multi">Habitica Add Tasks</string>
 </resources>
