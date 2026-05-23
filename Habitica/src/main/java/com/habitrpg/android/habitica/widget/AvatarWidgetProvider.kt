@@ -13,6 +13,7 @@ import android.graphics.Paint
 import android.widget.RemoteViews
 import androidx.core.graphics.createBitmap
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -51,16 +52,23 @@ class AvatarWidgetProvider : AppWidgetProvider() {
             avatarView.onAvatarImageReady { bitmap ->
                 bitmap ?: return@onAvatarImageReady
                 val filled = zoomBitmap(bitmap, CONTENT_FILL_SCALE)
-                val openApp = PendingIntent.getActivity(
+                val targetIntent = if (!user.id.isNullOrEmpty()) {
+                    Intent(context.applicationContext, FullProfileActivity::class.java).apply {
+                        putExtra("userID", user.id)
+                    }
+                } else {
+                    Intent(context.applicationContext, MainActivity::class.java)
+                }
+                val openProfile = PendingIntent.getActivity(
                     context,
                     0,
-                    Intent(context.applicationContext, MainActivity::class.java),
+                    targetIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
                 appWidgetIds.forEach { id ->
                     val views = RemoteViews(context.packageName, R.layout.widget_avatar)
                     views.setImageViewBitmap(R.id.avatar_image, filled)
-                    views.setOnClickPendingIntent(R.id.avatar_root, openApp)
+                    views.setOnClickPendingIntent(R.id.avatar_root, openProfile)
                     appWidgetManager.updateAppWidget(id, views)
                 }
             }

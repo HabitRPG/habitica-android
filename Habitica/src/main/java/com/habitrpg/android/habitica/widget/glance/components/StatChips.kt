@@ -45,7 +45,7 @@ fun LevelChip(
             .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(GlanceModifier.defaultWeight())
@@ -71,7 +71,7 @@ fun LevelChip(
 
 @Composable
 fun CurrencyChip(
-    iconResId: Int,
+    iconProvider: androidx.glance.ImageProvider,
     text: String,
     modifier: GlanceModifier = GlanceModifier,
     backgroundColor: ColorProvider = WidgetColors.currencyChipBackground,
@@ -82,15 +82,15 @@ fun CurrencyChip(
             .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            provider = ImageProvider(iconResId),
+            provider = iconProvider,
             contentDescription = null,
             modifier = GlanceModifier.size(18.dp),
         )
-        Spacer(GlanceModifier.width(6.dp))
+        Spacer(GlanceModifier.width(4.dp))
         Text(
             text = text,
             maxLines = 1,

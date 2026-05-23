@@ -47,6 +47,7 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import androidx.datastore.preferences.core.Preferences
 import androidx.glance.currentState
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
@@ -385,22 +386,22 @@ private fun StatsFooter(
         }
         if (state.hourglassCount > 0) {
             CurrencyChip(
-                iconResId = R.drawable.hourglass_fancy_left,
+                iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),
                 text = state.hourglassesText,
                 backgroundColor = palette.chipBackground,
                 textColor = palette.chipText,
             )
-            Spacer(GlanceModifier.width(6.dp))
+            Spacer(GlanceModifier.width(4.dp))
         }
         CurrencyChip(
-            iconResId = R.drawable.widget_icon_gem,
+            iconProvider = ImageProvider(R.drawable.widget_icon_gem),
             text = state.gemsText,
             backgroundColor = palette.chipBackground,
             textColor = palette.chipText,
         )
-        Spacer(GlanceModifier.width(6.dp))
+        Spacer(GlanceModifier.width(4.dp))
         CurrencyChip(
-            iconResId = R.drawable.widget_icon_gold,
+            iconProvider = ImageProvider(R.drawable.widget_icon_gold),
             text = state.goldText,
             backgroundColor = palette.chipBackground,
             textColor = palette.chipText,

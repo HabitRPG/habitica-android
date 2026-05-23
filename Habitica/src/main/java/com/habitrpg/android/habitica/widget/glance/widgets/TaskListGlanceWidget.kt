@@ -44,6 +44,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreTaskAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.EmptyState
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
@@ -169,7 +170,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val isVeryCompact = size.width < 180.dp
     val isCompact = size.width < 230.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
-    val addLink = if (isDaily) "habitica://user/tasks/daily/add" else "habitica://user/tasks/todo/add"
+    val addTaskType = if (isDaily) "daily" else "todo"
     val title = when {
         !isDaily && isCompact -> "To Do's"
         !isDaily -> "Your To Do's"
@@ -191,7 +192,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             title = title,
             palette = palette,
             openListLink = openListLink,
-            addLink = addLink,
+            addTaskType = addTaskType,
             isVeryCompact = isVeryCompact,
         )
         Spacer(GlanceModifier.height(if (isVeryCompact) 8.dp else 14.dp))
@@ -208,7 +209,7 @@ private fun TaskListHeader(
     title: String,
     palette: TaskListPalette,
     openListLink: String,
-    addLink: String,
+    addTaskType: String,
     isVeryCompact: Boolean,
 ) {
     Row(
@@ -234,7 +235,7 @@ private fun TaskListHeader(
                 contentDescription = "Add task",
                 modifier = GlanceModifier
                     .size(20.dp)
-                    .clickable(onClick = openAppAction(addLink)),
+                    .clickable(onClick = openTaskFormAction(addTaskType)),
                 colorFilter = palette.iconTint?.let { ColorFilter.tint(it) },
             )
         }
