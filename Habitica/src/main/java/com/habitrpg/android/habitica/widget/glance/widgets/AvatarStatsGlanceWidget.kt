@@ -30,6 +30,7 @@ import androidx.glance.layout.size
 import androidx.glance.layout.width
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openProfileAction
 import com.habitrpg.android.habitica.widget.glance.components.CurrencyChip
 import com.habitrpg.android.habitica.widget.glance.components.LevelChip
 import com.habitrpg.android.habitica.widget.glance.components.StatRow
@@ -212,7 +213,13 @@ private fun CompactAvatarLayout(
         modifier = GlanceModifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AvatarImage(state = state, width = 88.dp, height = 92.dp, cornerRadius = 14.dp)
+        AvatarImage(
+            state = state,
+            width = 88.dp,
+            height = 92.dp,
+            cornerRadius = 14.dp,
+            modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
+        )
         Spacer(GlanceModifier.defaultWeight())
         StatBars(state = state, layout = layout, barWidth = barWidth, palette = palette)
     }
@@ -238,13 +245,21 @@ private fun HorizontalLayout(
     ) {
         if (layout.showAvatar) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                AvatarImage(state = state, width = 124.dp, height = 129.dp, cornerRadius = 16.dp)
+                AvatarImage(
+                    state = state,
+                    width = 124.dp,
+                    height = 129.dp,
+                    cornerRadius = 16.dp,
+                    modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
+                )
                 Spacer(GlanceModifier.height(6.dp))
                 LevelChip(
                     level = state.level,
                     className = state.className,
                     showFullLabel = true,
-                    modifier = GlanceModifier.width(124.dp),
+                    modifier = GlanceModifier
+                        .width(124.dp)
+                        .clickable(onClick = openProfileAction(state.userId)),
                     backgroundColor = palette.levelChipBackground,
                     textColor = palette.levelChipText,
                 )
@@ -324,6 +339,7 @@ private fun AvatarImage(
     width: Dp,
     height: Dp = width,
     cornerRadius: Dp = 0.dp,
+    modifier: GlanceModifier = GlanceModifier,
 ) {
     val bitmapFile = state.avatarBitmapPath?.let { java.io.File(it) }
     val bitmap = if (bitmapFile?.exists() == true) {
@@ -331,7 +347,7 @@ private fun AvatarImage(
     } else {
         null
     }
-    val baseModifier = GlanceModifier.width(width).height(height)
+    val baseModifier = modifier.width(width).height(height)
     val clippedModifier = if (cornerRadius > 0.dp) baseModifier.cornerRadius(cornerRadius) else baseModifier
     if (bitmap != null) {
         Image(
@@ -361,6 +377,7 @@ private fun StatsFooter(
                 level = state.level,
                 className = state.className,
                 showFullLabel = showFullLevelLabel,
+                modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
                 backgroundColor = palette.levelChipBackground,
                 textColor = palette.levelChipText,
             )

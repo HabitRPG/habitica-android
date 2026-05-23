@@ -39,7 +39,7 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity
-import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
@@ -71,14 +71,14 @@ private data class TileSpec(
     val name: String,
     val brandColor: Color,
     val iconResId: Int,
-    val deepLink: String,
+    val taskType: String,
 )
 
 private fun tileFor(type: String?): TileSpec? = when (type) {
-    "habit" -> TileSpec("Habit", AddTaskTileColors.habit, R.drawable.widget_add_habit_glyph, "habitica://user/tasks/habit/add")
-    "daily" -> TileSpec("Daily", AddTaskTileColors.daily, R.drawable.widget_add_daily_glyph, "habitica://user/tasks/daily/add")
-    "todo" -> TileSpec("Todo", AddTaskTileColors.todo, R.drawable.widget_add_todo_glyph, "habitica://user/tasks/todo/add")
-    "reward" -> TileSpec("Reward", AddTaskTileColors.reward, R.drawable.widget_add_reward_glyph, "habitica://user/tasks/reward/add")
+    "habit" -> TileSpec("Habit", AddTaskTileColors.habit, R.drawable.widget_add_habit_glyph, "habit")
+    "daily" -> TileSpec("Daily", AddTaskTileColors.daily, R.drawable.widget_add_daily_glyph, "daily")
+    "todo" -> TileSpec("Todo", AddTaskTileColors.todo, R.drawable.widget_add_todo_glyph, "todo")
+    "reward" -> TileSpec("Reward", AddTaskTileColors.reward, R.drawable.widget_add_reward_glyph, "reward")
     else -> null
 }
 
@@ -111,7 +111,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
-            .clickable(onClick = openAppAction(tile.deepLink)),
+            .clickable(onClick = openTaskFormAction(tile.taskType)),
         contentAlignment = Alignment.Center,
     ) {
         Box(

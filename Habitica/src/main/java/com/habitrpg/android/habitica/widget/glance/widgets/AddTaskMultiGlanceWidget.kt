@@ -24,7 +24,7 @@ import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.AddTaskTile
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
@@ -53,14 +53,14 @@ private data class AddTile(
     val label: String,
     val iconResId: Int,
     val backgroundColor: androidx.compose.ui.graphics.Color,
-    val deepLink: String,
+    val taskType: String,
 )
 
 private val ADD_TILES = listOf(
-    AddTile("Habit", R.drawable.widget_add_habit_glyph, AddTaskTileColors.habit, "habitica://user/tasks/habit/add"),
-    AddTile("Daily", R.drawable.widget_add_daily_glyph, AddTaskTileColors.daily, "habitica://user/tasks/daily/add"),
-    AddTile("To Do", R.drawable.widget_add_todo_glyph, AddTaskTileColors.todo, "habitica://user/tasks/todo/add"),
-    AddTile("Reward", R.drawable.widget_add_reward_glyph, AddTaskTileColors.reward, "habitica://user/tasks/reward/add"),
+    AddTile("Habit", R.drawable.widget_add_habit_glyph, AddTaskTileColors.habit, "habit"),
+    AddTile("Daily", R.drawable.widget_add_daily_glyph, AddTaskTileColors.daily, "daily"),
+    AddTile("To Do", R.drawable.widget_add_todo_glyph, AddTaskTileColors.todo, "todo"),
+    AddTile("Reward", R.drawable.widget_add_reward_glyph, AddTaskTileColors.reward, "reward"),
 )
 
 private data class TilePalette(
@@ -121,7 +121,7 @@ private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
                 iconResId = tile.iconResId,
                 backgroundColor = palette.tileBackground,
                 iconTint = palette.iconTint,
-                onClick = openAppAction(tile.deepLink),
+                onClick = openTaskFormAction(tile.taskType),
                 modifier = GlanceModifier.width(tileWidth).fillMaxHeight(),
             )
         }
@@ -180,7 +180,7 @@ private fun GridColumn(
             iconResId = top.iconResId,
             backgroundColor = topPalette.tileBackground,
             iconTint = topPalette.iconTint,
-            onClick = openAppAction(top.deepLink),
+            onClick = openTaskFormAction(top.taskType),
             modifier = GlanceModifier.fillMaxWidth().height(rowHeight),
         )
         Spacer(GlanceModifier.height(gap).fillMaxWidth())
@@ -189,7 +189,7 @@ private fun GridColumn(
             iconResId = bottom.iconResId,
             backgroundColor = bottomPalette.tileBackground,
             iconTint = bottomPalette.iconTint,
-            onClick = openAppAction(bottom.deepLink),
+            onClick = openTaskFormAction(bottom.taskType),
             modifier = GlanceModifier.fillMaxWidth().height(rowHeight),
         )
     }
