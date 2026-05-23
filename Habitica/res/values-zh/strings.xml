@@ -319,7 +319,7 @@
     <string name="active">进行中</string>
     <string name="cancel_subscription">取消订阅</string>
     <string name="cancel_subscription_google_description">不想继续订阅了？你可以在GooglePlay商店的付款和订阅栏目找到取消订阅的选项。任何结存的订阅将会被累加到你取消前的最后一天。</string>
-    <string name="cancel_subscription_notgoogle_description">不想继续订阅了？由于手机支付的限制，您只能通过我们的网站取消订阅。请点击下方按钮登录您的账号，点击右上角的用户图标，然后转到订阅。任何结存的订阅都将在订阅结束后生效。我们会想念您的！</string>
+    <string name="cancel_subscription_notgoogle_description">不想继续订阅了？由于支付方法的限制，您只能通过我们的网站取消订阅。请点击下方按钮登录您的账号，点击右上角的用户图标，然后转到订阅。订阅取消后，订阅将在剩余的订阅月份结束后终止。我们会想念您的！</string>
     <string name="visit_habitica_website">访问Habitica网页版</string>
     <string name="current_bonuses">现有的奖励</string>
     <string name="months_subscribed">订阅月数</string>
@@ -1206,7 +1206,7 @@
     <string name="death_description">但是你能通过努力把它们都赢回来！祝你好运——你会做好的。</string>
     <string name="faint_broken_equipment">丢失的装备可以重新购买
 \n来自奖励</string>
-    <string name="faint_loss_description">你将降至&lt;b&gt;%1$d级，失去%2$d&lt;/b&gt;金币，并失去一件装备&lt;/b&gt;……不过只要努力，这些都能重新赚回来！</string>
+    <string name="faint_loss_description">你将降至<b>%1$d级，失去%2$d金币，并失去一件装备</b>……不过只要努力，这些都能重新赚回来！</string>
     <string name="account_reset">账号重置</string>
     <string name="avatar_skin_customization">自定义头像皮肤</string>
     <string name="avatar_shirt_customization">自定义头像衬衣</string>
@@ -1441,7 +1441,7 @@
     <string name="rejoin_party_quest_leader">除非被邀请，否则你将不能重新加入该队伍。
 \n
 \n离开队伍还会终止你正在进行的副本。</string>
-    <string name="cancel_subscription_apple_description">不想继续订阅了？请通过您的iOS设备上的Apple ID订阅设置来取消订阅。</string>
+    <string name="cancel_subscription_apple_description">不想继续订阅了？由于您的支付方式，您需要到通过您iOS设备上的Apple ID的订阅设置来取消订阅。</string>
     <string name="exact_alarm_system_settings_reminders">如果未开启权限，提醒将可能会延迟。点击查看和设置权限。</string>
     <string name="sell_confirmation_title">你确定要售出%s吗\?</string>
     <string name="leave_party_confirmation_quest">你确定要离开此队伍吗？</string>
@@ -1503,8 +1503,8 @@
     <string name="tap_to_reload">刷新以查看新物品</string>
     <string name="report_challenge_explanation">您只能举报违反[《社区准则》](https://habitica.com/static/community-guidelines)和/或[《服务条款》](https://habitica.com/static/terms)的挑战。虚假举报行为本身是违反Habitica社区规范的。</string>
     <string name="report_reason_title_challenge">您举报该挑战任务的原因是？</string>
-    <string name="see_other_sub_options">查看其他订阅方案</string>
-    <string name="benefits_end">额外奖励将于%s结束</string>
+    <string name="see_other_sub_options">查看其他订阅选项</string>
+    <string name="benefits_end">%s 权益结束</string>
     <string name="resubscribe_description_gift">希望继续享受订阅权益？开启自动续订即可保持权益生效。</string>
     <string name="change_class_to_x">修改职业为%s</string>
     <string name="contrib_tier_description">若您看到带有彩色昵称和图标的账号，那便是贡献者等级！无论是通过翻译或编码等，为Habitica做出贡献的成员都会被授予等级。等级越高，代表该玩家的贡献越大。</string>
@@ -1673,4 +1673,9 @@
     <string name="rebirth_shop_description">你将立即作为一名1级战士重新开始冒险，但会保留所有的成就、物品与装备。你的任务会重置为黄色，但历史记录不会被重置。所有个人任务的连击次数也将清零。同时，你的金币、经验值、法力值及所有技能效果均会被移除。</string>
     <string name="rebirth_enabled_description">当你感觉已征服Habitica的全部内容时，不妨使用重生之球为你的冒险注入新活力！通过在商店获取的这个特殊道具，你将重启旅程回到1级，同时保留所有任务、成就和宠物。</string>
     <string name="auth_invalid_credential_type">提供的凭证类型有误。</string>
+    <string name="widget_dailies_count">Habitica 日常计数</string>
+    <string name="widget_add_task">Habitica 添加任务</string>
+    <string name="widget_add_task_multi">Habitica 添加多项任务</string>
+    <string name="fifth_week_warning">这个任务不会在少于%1$s天的月份中出现。</string>
+    <string name="avatar_widget_label">Habitica 头像</string>
 </resources>
