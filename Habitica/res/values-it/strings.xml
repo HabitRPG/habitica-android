@@ -1255,7 +1255,7 @@
     <string name="eggs_footer_description">Controlla il [Mercato](/shops/market) per comprare giusto le uova che ti servono!</string>
     <string name="exact_alarm_system_settings_reminders">I promemoria potrebbero essere ritardati perché le autorizzazioni non sono abilitate. Tocca per visualizzare e aggiornare le autorizzazioni.</string>
     <string name="exact_alarm_system_settings_title">`Allarme e Promemoria` disabilitati`</string>
-    <string name="exact_alarm_system_settings_description">Consenti `Allarmi e Promemoria` nell\'app Impostazioni per assicurarti che i promemoria vengano mostrati esattamente all’orario programmato</string>
+    <string name="exact_alarm_system_settings_description">Consenti `Allarmi e Promemoria` nelle Impostazioni per assicurarti che i promemoria vengano mostrati esattamente all’orario programmato</string>
     <string name="item_footer_title">Non riesci ad ottenere il/la %s dalle attività\?</string>
     <string name="item_footer_description">Controlla il [Mercato](/shops/market) per comprare giusto quello che ti serve!</string>
     <string name="customization_shop_more">Controlla il Negozio Personalizzazioni per ancora più modi di personalizzare il tuo avatar!</string>
@@ -1309,7 +1309,7 @@
     <string name="display_name_description">Questo è il nome che verrà visualizzato per il tuo avatar in Habitica. A differenza del nome utente, non deve necessariamente essere un identificativo univoco.</string>
     <string name="server_settings_unlock_remaining">Ti mancano %d passaggi per sbloccare le impostazioni del server.</string>
     <string name="subscribe_listitem3_description_alt">Resta al passo con le ultime novità sull\'Equipaggiamento esclusivo. Abbonati ora per ricevere %1$s’s %2$s!</string>
-    <string name="subscribe_listitemFaint_description">Evita di perdere i tuoi progressi grazie a una cura istantanea quando finisci la Salute una volta al giorno!</string>
+    <string name="subscribe_listitemFaint_description">Evita di perdere i tuoi progressi con una cura istantanea quando finisci la Salute una volta al giorno!</string>
     <string name="change_class_message">Questa azione cancellerà la tua classe attuale e sarai risarcito di tutti i tuoi punti attributo. Dopodiché, potrai selezionare una nuova classe</string>
     <string name="change_class_confirmation_message">Questo cambierà l\'equipaggiamento sbloccato nei negozi e cambierà le tue abilità disponibili</string>
     <string name="choosing_class_progress">Scegli una Classe</string>
@@ -1694,4 +1694,8 @@
     <string name="a_party_robe">Una Veste da Festa</string>
     <string name="twenty_gems">20 Gemme</string>
     <string name="fifth_week_warning">Questa attività non risulterà in scadenza durante i mesi con meno di %1$ss.</string>
+    <string name="avatar_widget_label">Avatar di Habitica</string>
+    <string name="widget_add_task">Aggiungi Attività di Habitica</string>
+    <string name="widget_add_task_multi">Aggiungi Attività di Habitica</string>
+    <string name="widget_dailies_count">Conteggio Giornaliero di Habitica</string>
 </resources>
