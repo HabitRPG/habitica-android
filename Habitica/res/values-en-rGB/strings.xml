@@ -587,7 +587,7 @@
     <string name="moderator">Moderator</string>
     <string name="staff">Staff</string>
     <string name="expand_notes">Read More</string>
-    <string name="collapse_notes">Show Less</string>
+    <string name="collapse_notes">Show Fewer</string>
     <string name="reset_streak">Reset Streak</string>
     <string name="week_reminder_title">Getting things done\?</string>
     <string name="week_reminder_text">Check them off in Habitica now for rewards and XP!</string>
