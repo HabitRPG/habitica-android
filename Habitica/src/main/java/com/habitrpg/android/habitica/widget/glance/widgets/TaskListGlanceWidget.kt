@@ -136,15 +136,15 @@ private fun rememberPalette(): TaskListPalette {
     return if (MaterialYouEnabled) {
         TaskListPalette(
             widgetBackground = GlanceTheme.colors.primaryContainer,
-            cardBackground = GlanceTheme.colors.background,
+            cardBackground = GlanceTheme.colors.secondaryContainer,
             titleText = GlanceTheme.colors.onPrimaryContainer,
-            taskText = GlanceTheme.colors.onBackground,
+            taskText = GlanceTheme.colors.onSecondaryContainer,
             secondaryText = GlanceTheme.colors.onSurfaceVariant,
             iconTint = GlanceTheme.colors.onPrimaryContainer,
-            cardIconTint = GlanceTheme.colors.onBackground,
-            checklistChipBackground = GlanceTheme.colors.secondaryContainer,
+            cardIconTint = GlanceTheme.colors.onSecondaryContainer,
+            checklistChipBackground = GlanceTheme.colors.tertiaryContainer,
             checklistChipBackgroundDone = GlanceTheme.colors.surfaceVariant,
-            checklistChipText = GlanceTheme.colors.onSecondaryContainer,
+            checklistChipText = GlanceTheme.colors.onTertiaryContainer,
             checklistChipTextDone = GlanceTheme.colors.onSurfaceVariant,
         )
     } else {

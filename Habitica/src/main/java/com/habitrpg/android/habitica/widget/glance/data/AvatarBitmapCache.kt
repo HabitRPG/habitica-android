@@ -3,6 +3,10 @@ package com.habitrpg.android.habitica.widget.glance.data
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.graphics.Paint
+import androidx.core.graphics.createBitmap
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +21,9 @@ object AvatarBitmapCache {
     private const val FILENAME = "widget_avatar.png"
     private const val HASH_FILENAME = "widget_avatar.hash"
     private const val RENDER_TIMEOUT_MS = 10_000L
-    private const val HASH_VERSION = "v2"
+    // Bump when the cached bitmap shape/scale changes so stale files are regenerated.
+    private const val HASH_VERSION = "v3"
+    private const val CONTENT_FILL_SCALE = 1.06f
 
     fun cachedFile(context: Context): File =
         File(context.applicationContext.filesDir, FILENAME)
@@ -41,15 +47,27 @@ object AvatarBitmapCache {
         val current = readHash(context)
         if (current == newHash && cachedFile(context).exists()) return
         val bitmap = renderAvatar(context, user) ?: return
+        val filled = zoomBitmap(bitmap, CONTENT_FILL_SCALE)
         withContext(Dispatchers.IO) {
             try {
                 FileOutputStream(cachedFile(context)).use { out ->
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                    filled.compress(Bitmap.CompressFormat.PNG, 100, out)
                 }
                 hashFile(context).writeText(newHash)
             } catch (t: Throwable) {
             }
         }
+    }
+
+    private fun zoomBitmap(src: Bitmap, scale: Float): Bitmap {
+        val out = createBitmap(src.width, src.height)
+        val canvas = Canvas(out)
+        val matrix = Matrix().apply {
+            postScale(scale, scale, src.width / 2f, src.height / 2f)
+        }
+        val paint = Paint().apply { isFilterBitmap = false }
+        canvas.drawBitmap(src, matrix, paint)
+        return out
     }
 
     private fun readHash(context: Context): String? = try {
