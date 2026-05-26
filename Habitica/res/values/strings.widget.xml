@@ -39,6 +39,10 @@
         <item quantity="other">%1$d done</item>
     </plurals>
 
+    <!-- Signed-out state (shown on every widget when no user is logged in) -->
+    <string name="widget_signed_out_title">Sign in to Habitica</string>
+    <string name="widget_signed_out_subtitle">Tap to open the app</string>
+
     <!-- Avatar / stats widget -->
     <string name="widget_level_short">Lv. %d</string>
     <string name="widget_stat_hp">HP</string>

@@ -44,9 +44,11 @@ import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.SquiggleProgressBar
 import com.habitrpg.android.habitica.widget.glance.components.pluralRes
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
@@ -70,6 +72,10 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        if (!WidgetAuth.isLoggedIn(context)) {
+            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
+            return
+        }
         val raw = withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
             val user = entry.userRepository().getUser().firstOrNull()

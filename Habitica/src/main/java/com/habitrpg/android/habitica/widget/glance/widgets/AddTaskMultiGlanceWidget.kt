@@ -24,8 +24,10 @@ import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.AddTaskTile
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
@@ -34,9 +36,10 @@ class AddTaskMultiGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val isLoggedIn = WidgetAuth.isLoggedIn(context)
         provideContent {
             HabiticaWidgetTheme {
-                AddTaskMultiContent()
+                AddTaskMultiContent(isLoggedIn = isLoggedIn)
             }
         }
     }
@@ -89,17 +92,20 @@ private fun rememberPalette(brandColor: androidx.compose.ui.graphics.Color): Til
 }
 
 @Composable
-private fun AddTaskMultiContent() {
+private fun AddTaskMultiContent(isLoggedIn: Boolean) {
     val size = LocalSize.current
     if (size.height >= AddTaskMultiGlanceWidget.TALL_THRESHOLD) {
-        GridLayout(size.width, size.height)
+        GridLayout(size.width, size.height, isLoggedIn)
     } else {
-        RowLayout(size.width)
+        RowLayout(size.width, isLoggedIn)
     }
 }
 
+private fun tileAction(taskType: String, isLoggedIn: Boolean) =
+    if (isLoggedIn) openTaskFormAction(taskType) else openAppAction()
+
 @Composable
-private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
+private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp, isLoggedIn: Boolean) {
     val outer = AddTaskMultiGlanceWidget.OUTER_PADDING
     val gap = AddTaskMultiGlanceWidget.TILE_GAP
     val tileWidth = ((widthAvailable - outer * 2 - gap * (ADD_TILES.size - 1)) / ADD_TILES.size)
@@ -121,7 +127,7 @@ private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
                 iconResId = tile.iconResId,
                 backgroundColor = palette.tileBackground,
                 iconTint = palette.iconTint,
-                onClick = openTaskFormAction(tile.taskType),
+                onClick = tileAction(tile.taskType, isLoggedIn),
                 modifier = GlanceModifier.width(tileWidth).fillMaxHeight(),
             )
         }
@@ -132,6 +138,7 @@ private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
 private fun GridLayout(
     widthAvailable: androidx.compose.ui.unit.Dp,
     heightAvailable: androidx.compose.ui.unit.Dp,
+    isLoggedIn: Boolean,
 ) {
     val outer = AddTaskMultiGlanceWidget.OUTER_PADDING
     val gap = AddTaskMultiGlanceWidget.TILE_GAP
@@ -152,6 +159,7 @@ private fun GridLayout(
             columnWidth = columnWidth,
             rowHeight = rowHeight,
             gap = gap,
+            isLoggedIn = isLoggedIn,
         )
         Spacer(GlanceModifier.width(gap).fillMaxHeight())
         GridColumn(
@@ -160,6 +168,7 @@ private fun GridLayout(
             columnWidth = columnWidth,
             rowHeight = rowHeight,
             gap = gap,
+            isLoggedIn = isLoggedIn,
         )
     }
 }
@@ -171,6 +180,7 @@ private fun GridColumn(
     columnWidth: androidx.compose.ui.unit.Dp,
     rowHeight: androidx.compose.ui.unit.Dp,
     gap: androidx.compose.ui.unit.Dp,
+    isLoggedIn: Boolean,
 ) {
     val topPalette = rememberPalette(top.backgroundColor)
     val bottomPalette = rememberPalette(bottom.backgroundColor)
@@ -180,7 +190,7 @@ private fun GridColumn(
             iconResId = top.iconResId,
             backgroundColor = topPalette.tileBackground,
             iconTint = topPalette.iconTint,
-            onClick = openTaskFormAction(top.taskType),
+            onClick = tileAction(top.taskType, isLoggedIn),
             modifier = GlanceModifier.fillMaxWidth().height(rowHeight),
         )
         Spacer(GlanceModifier.height(gap).fillMaxWidth())
@@ -189,7 +199,7 @@ private fun GridColumn(
             iconResId = bottom.iconResId,
             backgroundColor = bottomPalette.tileBackground,
             iconTint = bottomPalette.iconTint,
-            onClick = openTaskFormAction(bottom.taskType),
+            onClick = tileAction(bottom.taskType, isLoggedIn),
             modifier = GlanceModifier.fillMaxWidth().height(rowHeight),
         )
     }

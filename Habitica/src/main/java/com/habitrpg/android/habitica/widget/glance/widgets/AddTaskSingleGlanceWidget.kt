@@ -39,8 +39,10 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity
+import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
@@ -48,17 +50,22 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val isLoggedIn = WidgetAuth.isLoggedIn(context)
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
         val configureIntent = Intent(context, AddTaskWidgetActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         }
-        val configureAction = actionStartActivity(configureIntent)
+        val configureAction = if (isLoggedIn) actionStartActivity(configureIntent) else openAppAction()
         provideContent {
             val type = currentState<Preferences>()[stringPreferencesKey(TASK_TYPE_KEY)]
-            Log.d("AddTaskWidget", "provideGlance widgetId=$widgetId type=$type")
+            Log.d("AddTaskWidget", "provideGlance widgetId=$widgetId type=$type loggedIn=$isLoggedIn")
             HabiticaWidgetTheme {
-                AddTaskSingleContent(type, onConfigure = configureAction)
+                AddTaskSingleContent(
+                    type = type,
+                    onConfigure = configureAction,
+                    isLoggedIn = isLoggedIn,
+                )
             }
         }
     }
@@ -86,12 +93,13 @@ private fun tileFor(type: String?): TileSpec? = when (type) {
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
-private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
+private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn: Boolean) {
     val tile = tileFor(type)
     if (tile == null) {
         UnsetTaskTypeContent(onClick = onConfigure)
         return
     }
+    val tileAction = if (isLoggedIn) openTaskFormAction(tile.taskType) else openAppAction()
     val size = LocalSize.current
     val shorter = if (size.width < size.height) size.width else size.height
 
@@ -112,7 +120,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
-            .clickable(onClick = openTaskFormAction(tile.taskType)),
+            .clickable(onClick = tileAction),
         contentAlignment = Alignment.Center,
     ) {
         Box(

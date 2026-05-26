@@ -46,10 +46,12 @@ import com.habitrpg.android.habitica.widget.glance.actions.ScoreTaskAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.EmptyState
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.toWidgetItem
@@ -79,6 +81,10 @@ abstract class TaskListGlanceWidget(
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        if (!WidgetAuth.isLoggedIn(context)) {
+            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
+            return
+        }
         val state = TaskListMemoryCache.get(taskType) ?: withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
             val user = entry.userRepository().getUser().firstOrNull()

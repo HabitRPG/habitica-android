@@ -41,6 +41,11 @@ object AvatarBitmapCache {
         }
     }
 
+    fun clearCache(context: Context) {
+        runCatching { cachedFile(context).delete() }
+        runCatching { hashFile(context).delete() }
+    }
+
     suspend fun refreshIfNeeded(context: Context, user: User?) {
         if (user == null) return
         val newHash = hashOfUser(user)

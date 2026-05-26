@@ -71,6 +71,27 @@ class WidgetRefreshWorker(
             WorkManager.getInstance(context).enqueue(request)
         }
 
+        suspend fun clearAllForLogout(context: Context) {
+            AvatarBitmapCache.clearCache(context)
+            TaskListMemoryCache.clear()
+            val manager = GlanceAppWidgetManager(context)
+            val widgets: List<GlanceAppWidget> = listOf(
+                AvatarStatsGlanceWidget(),
+                DailyTaskListGlanceWidget(),
+                TodoTaskListGlanceWidget(),
+                DailiesCountGlanceWidget(),
+                AddTaskSingleGlanceWidget(),
+                AddTaskMultiGlanceWidget(),
+                HabitButtonGlanceWidget(),
+            )
+            widgets.forEach { widget ->
+                manager.getGlanceIds(widget.javaClass).forEach { id ->
+                    updateAppWidgetState(context, id) { prefs -> prefs.clear() }
+                    widget.update(context, id)
+                }
+            }
+        }
+
         suspend fun refreshAllWidgetsNow(context: Context) {
             withContext(Dispatchers.Main) {
                 val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()

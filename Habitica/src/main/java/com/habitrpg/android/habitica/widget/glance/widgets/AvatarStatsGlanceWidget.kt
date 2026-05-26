@@ -33,9 +33,11 @@ import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openProfileAction
 import com.habitrpg.android.habitica.widget.glance.components.CurrencyChip
 import com.habitrpg.android.habitica.widget.glance.components.LevelChip
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StatRow
 import com.habitrpg.android.habitica.widget.glance.components.StatRowMode
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
@@ -71,6 +73,10 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        if (!WidgetAuth.isLoggedIn(context)) {
+            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
+            return
+        }
         val rawState = withContext(Dispatchers.Main) {
             runCatching {
                 val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
