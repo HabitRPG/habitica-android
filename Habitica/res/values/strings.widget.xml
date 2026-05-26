@@ -7,7 +7,7 @@
 
     <!-- Add-task configuration sheet -->
     <string name="widget_config_add_task_title">Choose task type</string>
-    <string name="widget_config_add_task_description">Tapping the widget will open the screen to add a new task of this type.</string>
+    <string name="widget_config_add_task_description">Tap the widget to quickly add a new task of the type you pick.</string>
 
     <!-- Habit-button widget -->
     <string name="widget_unconfigured_choose_habit">Tap to configure habit</string>
