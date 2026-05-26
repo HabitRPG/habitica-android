@@ -39,6 +39,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.preferences.PauseResumeDamageView
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
@@ -391,6 +392,12 @@ class PreferencesFragment :
                         userRepository.updateLanguage(languageHelper.languageCode ?: "en")
                     }
                 }
+
+                val appContext = requireContext().applicationContext
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(LanguageHelper.getLanguageTag(selectedLanguage)),
+                )
+                WidgetRefreshWorker.enqueueOneTime(appContext)
 
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

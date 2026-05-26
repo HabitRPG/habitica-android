@@ -48,6 +48,7 @@ import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.EmptyState
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
@@ -172,10 +173,10 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addTaskType = if (isDaily) "daily" else "todo"
     val title = when {
-        !isDaily && isCompact -> "To Do's"
-        !isDaily -> "Your To Do's"
-        isCompact -> "Dailies"
-        else -> "Today's Dailies"
+        !isDaily && isCompact -> stringRes(R.string.todos)
+        !isDaily -> stringRes(R.string.widget_list_title_todos_full)
+        isCompact -> stringRes(R.string.dailies)
+        else -> stringRes(R.string.widget_list_title_dailies_full)
     }
 
     Column(
@@ -232,7 +233,7 @@ private fun TaskListHeader(
         if (!isVeryCompact) {
             Image(
                 provider = ImageProvider(R.drawable.widget_icon_add),
-                contentDescription = "Add task",
+                contentDescription = stringRes(R.string.widget_add_task_cd),
                 modifier = GlanceModifier
                     .size(20.dp)
                     .clickable(onClick = openTaskFormAction(addTaskType)),
@@ -257,7 +258,9 @@ private fun TaskListBody(
                 iconTint = palette.cardIconTint,
             )
             state.tasks.isEmpty() -> EmptyState(
-                message = if (isDaily) "All done today!" else "All done!",
+                message = stringRes(
+                    if (isDaily) R.string.widget_empty_dailies else R.string.widget_empty_todos,
+                ),
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
             )

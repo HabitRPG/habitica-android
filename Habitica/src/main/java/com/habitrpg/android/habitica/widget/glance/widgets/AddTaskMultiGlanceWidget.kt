@@ -50,17 +50,17 @@ class AddTaskMultiGlanceWidget : GlanceAppWidget() {
 }
 
 private data class AddTile(
-    val label: String,
+    val labelResId: Int,
     val iconResId: Int,
     val backgroundColor: androidx.compose.ui.graphics.Color,
     val taskType: String,
 )
 
 private val ADD_TILES = listOf(
-    AddTile("Habit", R.drawable.widget_add_habit_glyph, AddTaskTileColors.habit, "habit"),
-    AddTile("Daily", R.drawable.widget_add_daily_glyph, AddTaskTileColors.daily, "daily"),
-    AddTile("To Do", R.drawable.widget_add_todo_glyph, AddTaskTileColors.todo, "todo"),
-    AddTile("Reward", R.drawable.widget_add_reward_glyph, AddTaskTileColors.reward, "reward"),
+    AddTile(R.string.habit, R.drawable.widget_add_habit_glyph, AddTaskTileColors.habit, "habit"),
+    AddTile(R.string.daily, R.drawable.widget_add_daily_glyph, AddTaskTileColors.daily, "daily"),
+    AddTile(R.string.todo, R.drawable.widget_add_todo_glyph, AddTaskTileColors.todo, "todo"),
+    AddTile(R.string.reward, R.drawable.widget_add_reward_glyph, AddTaskTileColors.reward, "reward"),
 )
 
 private data class TilePalette(
@@ -117,7 +117,7 @@ private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
             if (index > 0) Spacer(GlanceModifier.width(gap).fillMaxHeight())
             val palette = rememberPalette(tile.backgroundColor)
             AddTaskTile(
-                label = tile.label,
+                labelResId = tile.labelResId,
                 iconResId = tile.iconResId,
                 backgroundColor = palette.tileBackground,
                 iconTint = palette.iconTint,
@@ -176,7 +176,7 @@ private fun GridColumn(
     val bottomPalette = rememberPalette(bottom.backgroundColor)
     Column(modifier = GlanceModifier.width(columnWidth).fillMaxHeight()) {
         AddTaskTile(
-            label = top.label,
+            labelResId = top.labelResId,
             iconResId = top.iconResId,
             backgroundColor = topPalette.tileBackground,
             iconTint = topPalette.iconTint,
@@ -185,7 +185,7 @@ private fun GridColumn(
         )
         Spacer(GlanceModifier.height(gap).fillMaxWidth())
         AddTaskTile(
-            label = bottom.label,
+            labelResId = bottom.labelResId,
             iconResId = bottom.iconResId,
             backgroundColor = bottomPalette.tileBackground,
             iconTint = bottomPalette.iconTint,

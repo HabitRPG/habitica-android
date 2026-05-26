@@ -40,6 +40,7 @@ import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity
 import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
@@ -68,17 +69,17 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
 }
 
 private data class TileSpec(
-    val name: String,
+    val nameResId: Int,
     val brandColor: Color,
     val iconResId: Int,
     val taskType: String,
 )
 
 private fun tileFor(type: String?): TileSpec? = when (type) {
-    "habit" -> TileSpec("Habit", AddTaskTileColors.habit, R.drawable.widget_add_habit_glyph, "habit")
-    "daily" -> TileSpec("Daily", AddTaskTileColors.daily, R.drawable.widget_add_daily_glyph, "daily")
-    "todo" -> TileSpec("Todo", AddTaskTileColors.todo, R.drawable.widget_add_todo_glyph, "todo")
-    "reward" -> TileSpec("Reward", AddTaskTileColors.reward, R.drawable.widget_add_reward_glyph, "reward")
+    "habit" -> TileSpec(R.string.habit, AddTaskTileColors.habit, R.drawable.widget_add_habit_glyph, "habit")
+    "daily" -> TileSpec(R.string.daily, AddTaskTileColors.daily, R.drawable.widget_add_daily_glyph, "daily")
+    "todo" -> TileSpec(R.string.widget_add_task_todo_compact, AddTaskTileColors.todo, R.drawable.widget_add_todo_glyph, "todo")
+    "reward" -> TileSpec(R.string.reward, AddTaskTileColors.reward, R.drawable.widget_add_reward_glyph, "reward")
     else -> null
 }
 
@@ -127,7 +128,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
             )
             Image(
                 provider = ImageProvider(tile.iconResId),
-                contentDescription = "Add new ${tile.name}",
+                contentDescription = stringRes(R.string.widget_add_new_task_cd, stringRes(tile.nameResId)),
                 modifier = GlanceModifier.size(iconSize),
                 colorFilter = iconTint?.let { ColorFilter.tint(it) },
             )
@@ -162,7 +163,7 @@ private fun UnsetTaskTypeContent(onClick: Action) {
             colorFilter = ColorFilter.tint(widgetBackground),
         )
         Text(
-            text = "Tap to choose task type",
+            text = stringRes(R.string.widget_unconfigured_choose_type),
             style = TextStyle(
                 color = textColor,
                 fontSize = 13.sp,

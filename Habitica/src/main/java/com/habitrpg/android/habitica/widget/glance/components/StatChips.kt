@@ -19,6 +19,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 
@@ -38,7 +39,10 @@ fun LevelChip(
         "rogue" -> runCatching { HabiticaIconsHelper.imageOfRogueLightBg() }.getOrNull()
         else -> null
     }
-    val labelText = if (showFullLabel) "Level $level" else "Lv. $level"
+    val labelText = stringRes(
+        if (showFullLabel) R.string.user_level_long else R.string.widget_level_short,
+        level,
+    )
 
     Row(
         modifier = modifier

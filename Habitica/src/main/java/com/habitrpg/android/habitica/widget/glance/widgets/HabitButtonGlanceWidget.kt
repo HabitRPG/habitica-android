@@ -42,6 +42,7 @@ import androidx.glance.text.TextStyle
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreHabitAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.components.HabitButtonBar
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
@@ -185,7 +186,7 @@ private fun UnconfiguredContent(onClick: Action) {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "Tap to configure habit",
+            text = stringRes(R.string.widget_unconfigured_choose_habit),
             style = TextStyle(
                 color = habitTitleText(),
                 fontSize = 13.sp,

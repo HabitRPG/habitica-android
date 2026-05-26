@@ -35,6 +35,7 @@ import com.habitrpg.android.habitica.widget.glance.components.CurrencyChip
 import com.habitrpg.android.habitica.widget.glance.components.LevelChip
 import com.habitrpg.android.habitica.widget.glance.components.StatRow
 import com.habitrpg.android.habitica.widget.glance.components.StatRowMode
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
@@ -292,7 +293,7 @@ private fun StatBars(
     val gap = if (layout.rowMode == StatRowMode.LabelStackedValue) 10.dp else 6.dp
     Column(modifier = GlanceModifier.fillMaxWidth()) {
         StatRow(
-            label = "HP",
+            label = stringRes(R.string.widget_stat_hp),
             value = state.hp,
             maxValue = state.maxHp,
             valueText = state.hpText,
@@ -305,7 +306,7 @@ private fun StatBars(
         )
         Spacer(GlanceModifier.height(gap))
         StatRow(
-            label = "EXP",
+            label = stringRes(R.string.widget_stat_exp),
             value = state.exp,
             maxValue = state.toNextLevel,
             valueText = state.expText,
@@ -319,7 +320,7 @@ private fun StatBars(
         if (state.showMp) {
             Spacer(GlanceModifier.height(gap))
             StatRow(
-                label = "MP",
+                label = stringRes(R.string.widget_stat_mp),
                 value = state.mp,
                 maxValue = state.maxMp,
                 valueText = state.mpText,
@@ -353,7 +354,7 @@ private fun AvatarImage(
     if (bitmap != null) {
         Image(
             provider = ImageProvider(bitmap),
-            contentDescription = "Avatar",
+            contentDescription = stringRes(R.string.avatar),
             modifier = clippedModifier,
             contentScale = ContentScale.Crop,
         )

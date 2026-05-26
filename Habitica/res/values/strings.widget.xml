@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Add-task widgets -->
+    <string name="widget_add_task_todo_compact">Todo</string>
+    <string name="widget_add_new_task_cd">Add new %1$s</string>
+    <string name="widget_unconfigured_choose_type">Tap to choose task type</string>
+
+    <!-- Add-task configuration sheet -->
+    <string name="widget_config_add_task_title">Choose task type</string>
+    <string name="widget_config_add_task_description">Tapping the widget will open the screen to add a new task of this type.</string>
+
+    <!-- Habit-button widget -->
+    <string name="widget_unconfigured_choose_habit">Tap to configure habit</string>
+    <string name="widget_score_up_cd">Score up</string>
+    <string name="widget_score_down_cd">Score down</string>
+
+    <!-- Habit-button configuration sheet -->
+    <string name="widget_config_habit_title">Choose a habit</string>
+    <string name="widget_config_habit_description">The widget will show this habit\'s name and let you score it from your home screen.</string>
+    <string name="widget_config_habit_empty">You don\'t have any habits yet. Create one in the app first.</string>
+
+    <!-- Task list widgets -->
+    <string name="widget_list_title_dailies_full">Today\'s Dailies</string>
+    <string name="widget_list_title_todos_full">Your To Do\'s</string>
+    <string name="widget_empty_dailies">All done today!</string>
+    <string name="widget_empty_todos">All done!</string>
+    <string name="widget_add_task_cd">Add task</string>
+
+    <!-- Dailies count widget -->
+    <string name="widget_start_day">Start a new day</string>
+    <string name="widget_dailies_done">Dailies done</string>
+    <string name="widget_dailies_left">Dailies left</string>
+    <plurals name="widget_dailies_left_to_do">
+        <item quantity="one">%1$d left to do</item>
+        <item quantity="other">%1$d left to do</item>
+    </plurals>
+    <plurals name="widget_dailies_count_done">
+        <item quantity="one">%1$d done</item>
+        <item quantity="other">%1$d done</item>
+    </plurals>
+
+    <!-- Avatar / stats widget -->
+    <string name="widget_level_short">Lv. %d</string>
+    <string name="widget_stat_hp">HP</string>
+    <string name="widget_stat_exp">EXP</string>
+    <string name="widget_stat_mp">MP</string>
+</resources>

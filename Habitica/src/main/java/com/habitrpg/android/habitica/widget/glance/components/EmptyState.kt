@@ -87,13 +87,13 @@ fun StartDayCard(
         ) {
             Image(
                 provider = ImageProvider(R.drawable.widget_start_day),
-                contentDescription = "Start a new day",
+                contentDescription = stringRes(R.string.widget_start_day),
                 modifier = GlanceModifier.size(36.dp),
                 colorFilter = iconTint?.let { ColorFilter.tint(it) },
             )
             Spacer(GlanceModifier.height(12.dp))
             Text(
-                text = "Start a new day",
+                text = stringRes(R.string.widget_start_day),
                 style = TextStyle(
                     color = textColor,
                     fontSize = 14.sp,

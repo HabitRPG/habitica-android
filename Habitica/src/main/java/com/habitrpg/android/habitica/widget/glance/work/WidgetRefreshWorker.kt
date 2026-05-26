@@ -7,6 +7,7 @@ import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -63,6 +64,11 @@ class WidgetRefreshWorker(
                 ExistingPeriodicWorkPolicy.KEEP,
                 request,
             )
+        }
+
+        fun enqueueOneTime(context: Context) {
+            val request = OneTimeWorkRequestBuilder<WidgetRefreshWorker>().build()
+            WorkManager.getInstance(context).enqueue(request)
         }
 
         suspend fun refreshAllWidgetsNow(context: Context) {

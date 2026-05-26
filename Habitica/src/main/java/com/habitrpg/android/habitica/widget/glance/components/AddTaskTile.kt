@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.widget.glance.components
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -19,7 +20,7 @@ import androidx.glance.unit.ColorProvider
 
 @Composable
 fun AddTaskTile(
-    label: String,
+    @StringRes labelResId: Int,
     iconResId: Int,
     backgroundColor: ColorProvider,
     onClick: Action,
@@ -39,7 +40,7 @@ fun AddTaskTile(
     ) {
         Image(
             provider = ImageProvider(iconResId),
-            contentDescription = label,
+            contentDescription = stringRes(labelResId),
             modifier = GlanceModifier.size(iconSize),
             colorFilter = iconTint?.let { ColorFilter.tint(it) },
         )
