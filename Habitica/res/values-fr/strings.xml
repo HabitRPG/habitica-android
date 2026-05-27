@@ -1696,4 +1696,8 @@
     <string name="new_message">Nouveau message</string>
     <string name="scroll_to_new_messages">Défiler vers nouveaux messages</string>
     <string name="fifth_week_warning">Cette tâche n\'apparaîtra pas comme \"à faire\" durant les mois comptant moins de %1$ss.</string>
+    <string name="avatar_widget_label">Avatar Habitica</string>
+    <string name="widget_dailies_count">Compteur Journalier Habitica</string>
+    <string name="widget_add_task">Ajouter une Tâche Habitica</string>
+    <string name="widget_add_task_multi">Ajouter des Tâches Habitica</string>
 </resources>

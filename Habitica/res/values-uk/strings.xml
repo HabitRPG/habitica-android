@@ -770,10 +770,10 @@
     <string name="distribute_task_help">Призначає очки відповідно до категорії (Сила, Інтелект, Витривалість та Сприйняття), пов\'язаної із завданнями, які ви виконаєте.</string>
     <string name="distribute_class_help">Призначає більше очок атрибутам, важливим для вашого класу.</string>
     <string name="distribute_evenly_help">Призначає однакову кількість очок кожному атрибуту.</string>
-    <string name="perception_description">Підвищує ймовірність знаходження випадкових предметів при виконанні завдань, щоденний шанс випадіння предметів, бонуси за серію і кількість золота, отриманого за завдання.</string>
-    <string name="constitution_description">Зменшує шкоду, завдану вашими незавершеними завданнями. Не зменшує шкоду, отриману від босів.</string>
-    <string name="intelligence_description">Збільшує досвід, зароблений за виконання завдань. Також збільшується вашу шкалу мани та швидкість її відновлення.</string>
-    <string name="strength_description">Збільшує бонус критичних ударів і робить їх більш імовірними при виконанні завдання. Також збільшує шкоду, завдану босам.</string>
+    <string name="perception_description">Збільшує шанс випадіння предметів, ліміт випадіння предметів за день, бонуси за серії виконання завдань, а також золото, отримане за виконання завдань.</string>
+    <string name="constitution_description">Зменшує шкоду, отриману від пропущених Щоденних завдань і негативних Звичок. Не зменшує шкоду від босів квестів.</string>
+    <string name="intelligence_description">Збільшує кількість досвіду, отриманого за виконання завдань. Також збільшує ваш ліміт мани та швидкість її відновлення.</string>
+    <string name="strength_description">Збільшує ймовірність критичного удару та шкоду під час виконання завдань. Також збільшує шкоду, що завдається босам квестів.</string>
     <string name="join_party_description">Дайте члену команди ім\'я користувача, вказане нижче, щоб вони могли надіслати Вам запрошення</string>
     <string name="no_party_description">Беріться за квест з друзями або власноруч. Боріться з монстрами, створюйте випробування і допомагайте собі залишатися підзвітними завдяки команді товаришів.</string>
     <string name="no_party_title">Грайте Habitica гуртом</string>
@@ -997,7 +997,7 @@
     <string name="invited_to_quest">Вас запросили на квест <b>%1$s</b></string>
     <string name="invited_to_party_notification">%1$s Вас запросили до команди <b>%2$s</b></string>
     <string name="gift_confirmation_text_sub_g1g1">Ви відправили %1$s %2$s-місячну підписку Habitica. Ця ж підписка була застосована до вашого облікового запису, завдяки участі в акції «Подаруйте підписку, отримайте підписку»!</string>
-    <string name="gift_subscription_subtitle">Виберіть підписку, яку хочете подарувати внизу! Ця покупка не буде продовжена автоматично.</string>
+    <string name="gift_subscription_subtitle">Виберіть підписку, яку хочете подарувати! Ця покупка не поновлюватиметься автоматично.</string>
     <string name="gift_one_get_one_detailed_description">Допоки ця акція активна, ви отримуєте відповідну підписку автоматично після відправки подарунка.</string>
     <string name="confirm_username_description">Підтвердження вашого Імені користувача дає змогу приймати запрошення, @згадки і повідомлення. Ви можете змінити ваше Ім\'я користувача в будь-який час у Налаштуваннях.</string>
     <string name="spooky_promo_info_prompt">Розпродаж самоцвітів повернувся до самого кінця цьогорічної гала-осені! Це останній шанс отримати більше самоцвітів, ніж будь-коли, тож запасіться, поки це триває!</string>
@@ -1427,4 +1427,44 @@
     <string name="not_participating_filter">Не бере участі</string>
     <string name="birthday_limitations">Це обмежена за часом подія, яка розпочнеться %1$s і закінчиться %2$s. Протягом цього часу можна буде придбати Обмежене видання Радісного Грифолиска та десять Магічних Інкубаційних еліксирів. Інші подарунки, зазначені в розділі «Чотири безкоштовно», будуть автоматично доставлені на всі акаунти, які були активними протягом 30 днів до дати надсилання подарунка. Акаунти, створені після надсилання подарунків, не зможуть їх отримати.</string>
     <string name="seeking_party_title">Хочете приєднатися до команди\?</string>
+    <string name="photo_url_description">Ви можете відобразити зображення у своєму профілі Habitica, щоб інші могли його бачити, додавши сюди посилання на нього.</string>
+    <string name="report_user_description">Це також заблокує @%s</string>
+    <string name="quest_mechanics_rage_description">Деякі складні боси мають помаранчеву шкалу Люті під рівнем їхнього здоров\'я (ОЗ). Ця шкала заповнюється, коли учасники пропускають Щоденні завдання. Коли вона заповниться повністю, бос здійснить страхітливу атаку, яка завдасть додаткової шкоди!</string>
+    <string name="report_message">Поскаржитися на повідомлення</string>
+    <string name="report_successful">%s повідомлено</string>
+    <string name="category">Категорія</string>
+    <string name="register_tos_confirm">Ви погоджуєтесь з <a href="https://habitica.com/static/terms">Умовами використання</a> та ознайомлені з <a href="https://habitica.com/static/privacy">Політикою конфіденційності</a>.</string>
+    <string name="server_custom_warning">Попередження: акаунти на спеціальних (власних) серверах є окремими від вашого основного акаунта на Habitica.com.</string>
+    <string name="display_name_description">Це ім\'я, яке відображатиметься для вашого аватара в Habitica. На відміну від імені користувача, воно не обов’язково має бути унікальним ідентифікатором.</string>
+    <string name="change_display_name">Змінити відображуване ім\'я</string>
+    <string name="server_option_default">%s (за замовчуванням)</string>
+    <string name="server_option_custom">Власні</string>
+    <string name="apply">Застосувати</string>
+    <string name="server_settings_unlocked">Налаштування сервера розблоковано!</string>
+    <string name="server_custom_address_label">Введіть адресу власного сервера</string>
+    <string name="server_settings_unlock_remaining">До розблокування налаштувань сервера залишилося %d кроків.</string>
+    <string name="custom_server">Власний Сервер</string>
+    <string name="server_custom_address_hint">наприклад, customserver.habitica.com</string>
+    <string name="server_url_invalid">Введіть дійсну URL-адресу</string>
+    <string name="reset_server_confirmation">Ви впевнені, що хочете скинути налаштування сервера до сервера Habitica за замовчуванням\? Ви будете вилогінені.</string>
+    <string name="password_change_info">Паролі повинні складатися з 8 символів або більше. Зміна пароля призведе до виходу з усіх інших пристроїв і інструментів сторонніх розробників, які ви можете використовувати.</string>
+    <string name="confirm_new_password">Підтвердьте новий пароль</string>
+    <string name="report_challenge_explanation">Ви повинні повідомляти лише про ті Випробування, що порушують [Правила спільноти](https://habitica.com/static/community-guidelines) та/або [Умови використання](https://habitica.com/static/terms). Подання неправдивого звіту є порушенням Правил спільноти Habitica.</string>
+    <string name="report_player_toolbar_title">Поскаржитися на %s</string>
+    <string name="quest_mechanics_damage_description">Шкода босу розраховується щоразу, коли учасник команди відмічається протягом дня. Ця шкода зараховується наступного разу, коли ви виконуєте дію, що синхронізується з сервером. Шкода босу записується у чаті вашої команди.</string>
+    <string name="quest_mechanics_collecting_description">Під час Квесту зі Збиранням, виконуйте свої завдання, щоб отримати випадковий шанс знайти предмет квесту. Очікувані предмети будуть зараховані під час наступного скидання дня. Сприйняття підвищує шанси на отримання предметів.</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; запросив вас приєднатися до групи &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="widget_dailies_count">Лічильник щоденних завдань Habitica</string>
+    <string name="widget_add_task">Додавання завдання до Habitica</string>
+    <string name="change_username_description">Ім’я користувача має містити від 1 до 20 символів і містити лише літери від a до z, цифри від 0 до 9, дефіси або підкреслення.</string>
+    <string name="report_reason_title_message">Чому ви скаржитеся на це повідомлення\?</string>
+    <string name="rebirth_enabled_description">Використовуйте Кулю Переродження, щоб вдихнути нове життя у свою пригоду в Habitica, коли відчуєте, що досягли всього! Почніть спочатку з 1-го рівня, зберігши свої завдання, досягнення та улюбленців за допомогою цього особливого предмета, який можна знайти на Ринку.</string>
+    <string name="avatar_widget_label">Аватар Habitica</string>
+    <string name="gems_promo_info_limitations_fixed">Ця акція діє лише під час події обмеженого часу. Подія розпочнеться %1$s (%2$s) і закінчиться %3$s (%4$s). Промо-пропозиція доступна лише при купівлі Самоцвітів для себе.</string>
+    <string name="widget_add_task_multi">Додавання завдань до Habitica</string>
+    <string name="report_reason_title_challenge">Чому ви скаржитеся на це випробування\?</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="report_failure">Не вдалося надіслати скаргу, будь ласка, спробуйте пізніше</string>
+    <string name="reset_server_to_default">Скинути до замовчування</string>
 </resources>
