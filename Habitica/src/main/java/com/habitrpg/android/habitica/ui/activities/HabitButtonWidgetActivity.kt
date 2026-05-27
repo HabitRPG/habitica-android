@@ -47,9 +47,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
@@ -165,13 +167,13 @@ private fun SheetContent(
             .padding(horizontal = 24.dp, vertical = 8.dp),
     ) {
         Text(
-            text = "Choose a habit",
+            text = stringResource(R.string.widget_config_habit_title),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
         Spacer(Modifier.height(4.dp))
         Text(
-            text = "The widget will show this habit's name and let you score it from your home screen.",
+            text = stringResource(R.string.widget_config_habit_description),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -203,7 +205,7 @@ private fun EmptyHabitsState() {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "You don't have any habits yet. Create one in the app first.",
+            text = stringResource(R.string.widget_config_habit_empty),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

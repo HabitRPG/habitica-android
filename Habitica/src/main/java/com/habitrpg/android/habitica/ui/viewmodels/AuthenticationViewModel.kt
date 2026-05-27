@@ -31,11 +31,13 @@ import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,6 +57,7 @@ class AuthenticationViewModel @Inject constructor(
     val configManager: AppConfigManager,
     val hostConfig: HostConfig,
     private val keyHelper: KeyHelper?,
+    @ApplicationContext private val appContext: Context,
 ) : ViewModel() {
     val email = mutableStateOf("")
     val password = mutableStateOf("")
@@ -222,6 +225,7 @@ class AuthenticationViewModel @Inject constructor(
                 putString("APIToken", api)
             }
         }
+        WidgetRefreshWorker.enqueueOneTime(appContext)
     }
 
     fun startGoogleAuth(context: Context, allowRegister: Boolean = false) {

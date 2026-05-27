@@ -20,6 +20,7 @@ data class StatsWidgetState(
     val showMp: Boolean,
     val className: String?,
     val avatarBitmapPath: String? = null,
+    val userId: String? = null,
 ) {
     val hpText: String get() = hp.toInt().toString()
     val maxHpText: String get() = maxHp.toInt().toString()
@@ -62,6 +63,7 @@ data class StatsWidgetState(
                 showMp = showMp,
                 className = if (classesDisabled) null else s.habitClass,
                 avatarBitmapPath = avatarBitmapPath,
+                userId = user.id,
             )
         }
     }

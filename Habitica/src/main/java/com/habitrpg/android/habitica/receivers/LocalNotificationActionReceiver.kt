@@ -119,6 +119,10 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
 
             context?.getString(R.string.complete_task_action) -> {
                 taskID?.let {
+                    userRepository.retrieveUser(withTasks = false, forced = true)
+                    if (userRepository.getUser().firstOrNull()?.needsCron == true) {
+                        userRepository.runCron()
+                    }
                     taskRepository.taskChecked(null, it, up = true, force = false) {
                         val pair =
                             NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(

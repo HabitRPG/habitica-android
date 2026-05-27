@@ -25,7 +25,9 @@ import androidx.glance.layout.width
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.AddTaskTile
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
@@ -34,9 +36,10 @@ class AddTaskMultiGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val isLoggedIn = WidgetAuth.isLoggedIn(context)
         provideContent {
             HabiticaWidgetTheme {
-                AddTaskMultiContent()
+                AddTaskMultiContent(isLoggedIn = isLoggedIn)
             }
         }
     }
@@ -50,17 +53,17 @@ class AddTaskMultiGlanceWidget : GlanceAppWidget() {
 }
 
 private data class AddTile(
-    val label: String,
+    val labelResId: Int,
     val iconResId: Int,
     val backgroundColor: androidx.compose.ui.graphics.Color,
-    val deepLink: String,
+    val taskType: String,
 )
 
 private val ADD_TILES = listOf(
-    AddTile("Habit", R.drawable.widget_add_habit_glyph, AddTaskTileColors.habit, "habitica://user/tasks/habit/add"),
-    AddTile("Daily", R.drawable.widget_add_daily_glyph, AddTaskTileColors.daily, "habitica://user/tasks/daily/add"),
-    AddTile("To Do", R.drawable.widget_add_todo_glyph, AddTaskTileColors.todo, "habitica://user/tasks/todo/add"),
-    AddTile("Reward", R.drawable.widget_add_reward_glyph, AddTaskTileColors.reward, "habitica://user/tasks/reward/add"),
+    AddTile(R.string.habit, R.drawable.widget_add_habit_glyph, AddTaskTileColors.habit, "habit"),
+    AddTile(R.string.daily, R.drawable.widget_add_daily_glyph, AddTaskTileColors.daily, "daily"),
+    AddTile(R.string.todo, R.drawable.widget_add_todo_glyph, AddTaskTileColors.todo, "todo"),
+    AddTile(R.string.reward, R.drawable.widget_add_reward_glyph, AddTaskTileColors.reward, "reward"),
 )
 
 private data class TilePalette(
@@ -89,17 +92,20 @@ private fun rememberPalette(brandColor: androidx.compose.ui.graphics.Color): Til
 }
 
 @Composable
-private fun AddTaskMultiContent() {
+private fun AddTaskMultiContent(isLoggedIn: Boolean) {
     val size = LocalSize.current
     if (size.height >= AddTaskMultiGlanceWidget.TALL_THRESHOLD) {
-        GridLayout(size.width, size.height)
+        GridLayout(size.width, size.height, isLoggedIn)
     } else {
-        RowLayout(size.width)
+        RowLayout(size.width, isLoggedIn)
     }
 }
 
+private fun tileAction(taskType: String, isLoggedIn: Boolean) =
+    if (isLoggedIn) openTaskFormAction(taskType) else openAppAction()
+
 @Composable
-private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
+private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp, isLoggedIn: Boolean) {
     val outer = AddTaskMultiGlanceWidget.OUTER_PADDING
     val gap = AddTaskMultiGlanceWidget.TILE_GAP
     val tileWidth = ((widthAvailable - outer * 2 - gap * (ADD_TILES.size - 1)) / ADD_TILES.size)
@@ -117,11 +123,11 @@ private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
             if (index > 0) Spacer(GlanceModifier.width(gap).fillMaxHeight())
             val palette = rememberPalette(tile.backgroundColor)
             AddTaskTile(
-                label = tile.label,
+                labelResId = tile.labelResId,
                 iconResId = tile.iconResId,
                 backgroundColor = palette.tileBackground,
                 iconTint = palette.iconTint,
-                onClick = openAppAction(tile.deepLink),
+                onClick = tileAction(tile.taskType, isLoggedIn),
                 modifier = GlanceModifier.width(tileWidth).fillMaxHeight(),
             )
         }
@@ -132,6 +138,7 @@ private fun RowLayout(widthAvailable: androidx.compose.ui.unit.Dp) {
 private fun GridLayout(
     widthAvailable: androidx.compose.ui.unit.Dp,
     heightAvailable: androidx.compose.ui.unit.Dp,
+    isLoggedIn: Boolean,
 ) {
     val outer = AddTaskMultiGlanceWidget.OUTER_PADDING
     val gap = AddTaskMultiGlanceWidget.TILE_GAP
@@ -152,6 +159,7 @@ private fun GridLayout(
             columnWidth = columnWidth,
             rowHeight = rowHeight,
             gap = gap,
+            isLoggedIn = isLoggedIn,
         )
         Spacer(GlanceModifier.width(gap).fillMaxHeight())
         GridColumn(
@@ -160,6 +168,7 @@ private fun GridLayout(
             columnWidth = columnWidth,
             rowHeight = rowHeight,
             gap = gap,
+            isLoggedIn = isLoggedIn,
         )
     }
 }
@@ -171,25 +180,26 @@ private fun GridColumn(
     columnWidth: androidx.compose.ui.unit.Dp,
     rowHeight: androidx.compose.ui.unit.Dp,
     gap: androidx.compose.ui.unit.Dp,
+    isLoggedIn: Boolean,
 ) {
     val topPalette = rememberPalette(top.backgroundColor)
     val bottomPalette = rememberPalette(bottom.backgroundColor)
     Column(modifier = GlanceModifier.width(columnWidth).fillMaxHeight()) {
         AddTaskTile(
-            label = top.label,
+            labelResId = top.labelResId,
             iconResId = top.iconResId,
             backgroundColor = topPalette.tileBackground,
             iconTint = topPalette.iconTint,
-            onClick = openAppAction(top.deepLink),
+            onClick = tileAction(top.taskType, isLoggedIn),
             modifier = GlanceModifier.fillMaxWidth().height(rowHeight),
         )
         Spacer(GlanceModifier.height(gap).fillMaxWidth())
         AddTaskTile(
-            label = bottom.label,
+            labelResId = bottom.labelResId,
             iconResId = bottom.iconResId,
             backgroundColor = bottomPalette.tileBackground,
             iconTint = bottomPalette.iconTint,
-            onClick = openAppAction(bottom.deepLink),
+            onClick = tileAction(bottom.taskType, isLoggedIn),
             modifier = GlanceModifier.fillMaxWidth().height(rowHeight),
         )
     }

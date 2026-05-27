@@ -21,6 +21,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 
@@ -33,8 +34,13 @@ fun DailyCountGauge(
     modifier: GlanceModifier = GlanceModifier,
 ) {
     val displayCount = if (showRemaining) (totalCount - completedCount) else completedCount
-    val midLabel = if (showRemaining) "Dailies left" else "Dailies done"
-    val bottomLabel = if (showRemaining) "$completedCount done" else "${totalCount - completedCount} left to do"
+    val remaining = totalCount - completedCount
+    val midLabel = stringRes(if (showRemaining) R.string.widget_dailies_left else R.string.widget_dailies_done)
+    val bottomLabel = if (showRemaining) {
+        pluralRes(R.plurals.widget_dailies_count_done, completedCount, completedCount)
+    } else {
+        pluralRes(R.plurals.widget_dailies_left_to_do, remaining, remaining)
+    }
 
     val barColors = listOf(WidgetBarColors.red, WidgetBarColors.yellow, WidgetBarColors.blue)
     val progress = if (totalCount > 0) (completedCount.toFloat() / totalCount).coerceIn(0f, 1f) else 0f

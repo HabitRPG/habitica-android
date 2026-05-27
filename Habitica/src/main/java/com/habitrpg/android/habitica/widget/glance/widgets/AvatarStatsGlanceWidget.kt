@@ -30,10 +30,14 @@ import androidx.glance.layout.size
 import androidx.glance.layout.width
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openProfileAction
 import com.habitrpg.android.habitica.widget.glance.components.CurrencyChip
 import com.habitrpg.android.habitica.widget.glance.components.LevelChip
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StatRow
 import com.habitrpg.android.habitica.widget.glance.components.StatRowMode
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
@@ -46,6 +50,7 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import androidx.datastore.preferences.core.Preferences
 import androidx.glance.currentState
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
@@ -68,6 +73,10 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        if (!WidgetAuth.isLoggedIn(context)) {
+            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
+            return
+        }
         val rawState = withContext(Dispatchers.Main) {
             runCatching {
                 val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
@@ -212,7 +221,13 @@ private fun CompactAvatarLayout(
         modifier = GlanceModifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AvatarImage(state = state, width = 88.dp, height = 92.dp, cornerRadius = 14.dp)
+        AvatarImage(
+            state = state,
+            width = 88.dp,
+            height = 92.dp,
+            cornerRadius = 14.dp,
+            modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
+        )
         Spacer(GlanceModifier.defaultWeight())
         StatBars(state = state, layout = layout, barWidth = barWidth, palette = palette)
     }
@@ -238,13 +253,21 @@ private fun HorizontalLayout(
     ) {
         if (layout.showAvatar) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                AvatarImage(state = state, width = 124.dp, height = 129.dp, cornerRadius = 16.dp)
+                AvatarImage(
+                    state = state,
+                    width = 124.dp,
+                    height = 129.dp,
+                    cornerRadius = 16.dp,
+                    modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
+                )
                 Spacer(GlanceModifier.height(6.dp))
                 LevelChip(
                     level = state.level,
                     className = state.className,
                     showFullLabel = true,
-                    modifier = GlanceModifier.width(124.dp),
+                    modifier = GlanceModifier
+                        .width(124.dp)
+                        .clickable(onClick = openProfileAction(state.userId)),
                     backgroundColor = palette.levelChipBackground,
                     textColor = palette.levelChipText,
                 )
@@ -276,7 +299,7 @@ private fun StatBars(
     val gap = if (layout.rowMode == StatRowMode.LabelStackedValue) 10.dp else 6.dp
     Column(modifier = GlanceModifier.fillMaxWidth()) {
         StatRow(
-            label = "HP",
+            label = stringRes(R.string.widget_stat_hp),
             value = state.hp,
             maxValue = state.maxHp,
             valueText = state.hpText,
@@ -289,7 +312,7 @@ private fun StatBars(
         )
         Spacer(GlanceModifier.height(gap))
         StatRow(
-            label = "EXP",
+            label = stringRes(R.string.widget_stat_exp),
             value = state.exp,
             maxValue = state.toNextLevel,
             valueText = state.expText,
@@ -303,7 +326,7 @@ private fun StatBars(
         if (state.showMp) {
             Spacer(GlanceModifier.height(gap))
             StatRow(
-                label = "MP",
+                label = stringRes(R.string.widget_stat_mp),
                 value = state.mp,
                 maxValue = state.maxMp,
                 valueText = state.mpText,
@@ -324,6 +347,7 @@ private fun AvatarImage(
     width: Dp,
     height: Dp = width,
     cornerRadius: Dp = 0.dp,
+    modifier: GlanceModifier = GlanceModifier,
 ) {
     val bitmapFile = state.avatarBitmapPath?.let { java.io.File(it) }
     val bitmap = if (bitmapFile?.exists() == true) {
@@ -331,12 +355,12 @@ private fun AvatarImage(
     } else {
         null
     }
-    val baseModifier = GlanceModifier.width(width).height(height)
+    val baseModifier = modifier.width(width).height(height)
     val clippedModifier = if (cornerRadius > 0.dp) baseModifier.cornerRadius(cornerRadius) else baseModifier
     if (bitmap != null) {
         Image(
             provider = ImageProvider(bitmap),
-            contentDescription = "Avatar",
+            contentDescription = stringRes(R.string.avatar),
             modifier = clippedModifier,
             contentScale = ContentScale.Crop,
         )
@@ -361,6 +385,7 @@ private fun StatsFooter(
                 level = state.level,
                 className = state.className,
                 showFullLabel = showFullLevelLabel,
+                modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
                 backgroundColor = palette.levelChipBackground,
                 textColor = palette.levelChipText,
             )
@@ -368,22 +393,22 @@ private fun StatsFooter(
         }
         if (state.hourglassCount > 0) {
             CurrencyChip(
-                iconResId = R.drawable.hourglass_fancy_left,
+                iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),
                 text = state.hourglassesText,
                 backgroundColor = palette.chipBackground,
                 textColor = palette.chipText,
             )
-            Spacer(GlanceModifier.width(6.dp))
+            Spacer(GlanceModifier.width(4.dp))
         }
         CurrencyChip(
-            iconResId = R.drawable.widget_icon_gem,
+            iconProvider = ImageProvider(R.drawable.widget_icon_gem),
             text = state.gemsText,
             backgroundColor = palette.chipBackground,
             textColor = palette.chipText,
         )
-        Spacer(GlanceModifier.width(6.dp))
+        Spacer(GlanceModifier.width(4.dp))
         CurrencyChip(
-            iconResId = R.drawable.widget_icon_gold,
+            iconProvider = ImageProvider(R.drawable.widget_icon_gold),
             text = state.goldText,
             backgroundColor = palette.chipBackground,
             textColor = palette.chipText,

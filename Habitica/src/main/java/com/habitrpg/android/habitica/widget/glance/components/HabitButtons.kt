@@ -25,6 +25,12 @@ import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 
 @Composable
+private fun scoreUpCd(): String = stringRes(R.string.widget_score_up_cd)
+
+@Composable
+private fun scoreDownCd(): String = stringRes(R.string.widget_score_down_cd)
+
+@Composable
 fun HabitButtonBar(
     showUp: Boolean,
     showDown: Boolean,
@@ -56,13 +62,13 @@ fun HabitButtonBar(
             )
             showUp -> SingleDirection(
                 glyphRes = R.drawable.habit_plus,
-                description = "Score up",
+                description = scoreUpCd(),
                 circleColor = circleColor,
                 onClick = onUpClick,
             )
             showDown -> SingleDirection(
                 glyphRes = R.drawable.habit_minus,
-                description = "Score down",
+                description = scoreDownCd(),
                 circleColor = circleColor,
                 onClick = onDownClick,
             )
@@ -79,14 +85,14 @@ private fun SplitDirections(
     Row(modifier = GlanceModifier.fillMaxSize()) {
         DirectionRegion(
             glyphRes = R.drawable.habit_minus,
-            description = "Score down",
+            description = scoreDownCd(),
             circleColor = circleColor,
             onClick = onDownClick,
             modifier = GlanceModifier.defaultWeight().fillMaxHeight(),
         )
         DirectionRegion(
             glyphRes = R.drawable.habit_plus,
-            description = "Score up",
+            description = scoreUpCd(),
             circleColor = circleColor,
             onClick = onUpClick,
             modifier = GlanceModifier.defaultWeight().fillMaxHeight(),
@@ -103,14 +109,14 @@ private fun StackedDirections(
     Column(modifier = GlanceModifier.fillMaxSize()) {
         DirectionRegion(
             glyphRes = R.drawable.habit_plus,
-            description = "Score up",
+            description = scoreUpCd(),
             circleColor = circleColor,
             onClick = onUpClick,
             modifier = GlanceModifier.defaultWeight().fillMaxWidth(),
         )
         DirectionRegion(
             glyphRes = R.drawable.habit_minus,
-            description = "Score down",
+            description = scoreDownCd(),
             circleColor = circleColor,
             onClick = onDownClick,
             modifier = GlanceModifier.defaultWeight().fillMaxWidth(),

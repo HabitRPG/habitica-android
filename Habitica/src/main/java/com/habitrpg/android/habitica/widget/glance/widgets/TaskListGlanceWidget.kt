@@ -44,10 +44,14 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreTaskAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.EmptyState
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.toWidgetItem
@@ -77,6 +81,10 @@ abstract class TaskListGlanceWidget(
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        if (!WidgetAuth.isLoggedIn(context)) {
+            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
+            return
+        }
         val state = TaskListMemoryCache.get(taskType) ?: withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
             val user = entry.userRepository().getUser().firstOrNull()
@@ -134,15 +142,15 @@ private fun rememberPalette(): TaskListPalette {
     return if (MaterialYouEnabled) {
         TaskListPalette(
             widgetBackground = GlanceTheme.colors.primaryContainer,
-            cardBackground = GlanceTheme.colors.background,
+            cardBackground = GlanceTheme.colors.secondaryContainer,
             titleText = GlanceTheme.colors.onPrimaryContainer,
-            taskText = GlanceTheme.colors.onBackground,
+            taskText = GlanceTheme.colors.onSecondaryContainer,
             secondaryText = GlanceTheme.colors.onSurfaceVariant,
             iconTint = GlanceTheme.colors.onPrimaryContainer,
-            cardIconTint = GlanceTheme.colors.onBackground,
-            checklistChipBackground = GlanceTheme.colors.secondaryContainer,
+            cardIconTint = GlanceTheme.colors.onSecondaryContainer,
+            checklistChipBackground = GlanceTheme.colors.tertiaryContainer,
             checklistChipBackgroundDone = GlanceTheme.colors.surfaceVariant,
-            checklistChipText = GlanceTheme.colors.onSecondaryContainer,
+            checklistChipText = GlanceTheme.colors.onTertiaryContainer,
             checklistChipTextDone = GlanceTheme.colors.onSurfaceVariant,
         )
     } else {
@@ -169,12 +177,12 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val isVeryCompact = size.width < 180.dp
     val isCompact = size.width < 230.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
-    val addLink = if (isDaily) "habitica://user/tasks/daily/add" else "habitica://user/tasks/todo/add"
+    val addTaskType = if (isDaily) "daily" else "todo"
     val title = when {
-        !isDaily && isCompact -> "To Do's"
-        !isDaily -> "Your To Do's"
-        isCompact -> "Dailies"
-        else -> "Today's Dailies"
+        !isDaily && isCompact -> stringRes(R.string.todos)
+        !isDaily -> stringRes(R.string.widget_list_title_todos_full)
+        isCompact -> stringRes(R.string.dailies)
+        else -> stringRes(R.string.widget_list_title_dailies_full)
     }
 
     Column(
@@ -191,7 +199,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             title = title,
             palette = palette,
             openListLink = openListLink,
-            addLink = addLink,
+            addTaskType = addTaskType,
             isVeryCompact = isVeryCompact,
         )
         Spacer(GlanceModifier.height(if (isVeryCompact) 8.dp else 14.dp))
@@ -208,7 +216,7 @@ private fun TaskListHeader(
     title: String,
     palette: TaskListPalette,
     openListLink: String,
-    addLink: String,
+    addTaskType: String,
     isVeryCompact: Boolean,
 ) {
     Row(
@@ -231,10 +239,10 @@ private fun TaskListHeader(
         if (!isVeryCompact) {
             Image(
                 provider = ImageProvider(R.drawable.widget_icon_add),
-                contentDescription = "Add task",
+                contentDescription = stringRes(R.string.widget_add_task_cd),
                 modifier = GlanceModifier
                     .size(20.dp)
-                    .clickable(onClick = openAppAction(addLink)),
+                    .clickable(onClick = openTaskFormAction(addTaskType)),
                 colorFilter = palette.iconTint?.let { ColorFilter.tint(it) },
             )
         }
@@ -256,7 +264,9 @@ private fun TaskListBody(
                 iconTint = palette.cardIconTint,
             )
             state.tasks.isEmpty() -> EmptyState(
-                message = if (isDaily) "All done today!" else "All done!",
+                message = stringRes(
+                    if (isDaily) R.string.widget_empty_dailies else R.string.widget_empty_todos,
+                ),
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
             )

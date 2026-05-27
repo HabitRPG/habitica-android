@@ -19,6 +19,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 
@@ -38,14 +39,17 @@ fun LevelChip(
         "rogue" -> runCatching { HabiticaIconsHelper.imageOfRogueLightBg() }.getOrNull()
         else -> null
     }
-    val labelText = if (showFullLabel) "Level $level" else "Lv. $level"
+    val labelText = stringRes(
+        if (showFullLabel) R.string.user_level_long else R.string.widget_level_short,
+        level,
+    )
 
     Row(
         modifier = modifier
             .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(GlanceModifier.defaultWeight())
@@ -71,7 +75,7 @@ fun LevelChip(
 
 @Composable
 fun CurrencyChip(
-    iconResId: Int,
+    iconProvider: androidx.glance.ImageProvider,
     text: String,
     modifier: GlanceModifier = GlanceModifier,
     backgroundColor: ColorProvider = WidgetColors.currencyChipBackground,
@@ -82,15 +86,15 @@ fun CurrencyChip(
             .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 12.dp),
+            .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            provider = ImageProvider(iconResId),
+            provider = iconProvider,
             contentDescription = null,
             modifier = GlanceModifier.size(18.dp),
         )
-        Spacer(GlanceModifier.width(6.dp))
+        Spacer(GlanceModifier.width(4.dp))
         Text(
             text = text,
             maxLines = 1,

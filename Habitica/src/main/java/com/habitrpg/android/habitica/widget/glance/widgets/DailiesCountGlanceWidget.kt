@@ -44,7 +44,11 @@ import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.SquiggleProgressBar
+import com.habitrpg.android.habitica.widget.glance.components.pluralRes
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
@@ -68,6 +72,10 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        if (!WidgetAuth.isLoggedIn(context)) {
+            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
+            return
+        }
         val raw = withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
             val user = entry.userRepository().getUser().firstOrNull()
@@ -189,13 +197,13 @@ private fun StartDayContent(palette: DailiesTilePalette, innerPadding: Dp) {
     ) {
         Image(
             provider = ImageProvider(R.drawable.widget_start_day),
-            contentDescription = "Start a new day",
+            contentDescription = stringRes(R.string.widget_start_day),
             modifier = GlanceModifier.size(36.dp),
             colorFilter = palette.iconTint?.let { ColorFilter.tint(it) },
         )
         Spacer(GlanceModifier.height(8.dp))
         Text(
-            text = "Start a new day",
+            text = stringRes(R.string.widget_start_day),
             style = TextStyle(
                 color = palette.primaryText,
                 fontSize = 15.sp,
@@ -218,8 +226,8 @@ private fun InProgressContent(
 
     GaugeBody(
         topNumber = state.completed.toString(),
-        topLabel = "Dailies done",
-        bottomCaption = "$remaining left to do",
+        topLabel = stringRes(R.string.widget_dailies_done),
+        bottomCaption = pluralRes(R.plurals.widget_dailies_left_to_do, remaining, remaining),
         progress = progress,
         progressColor = progressColor(progress),
         showSparkles = false,
@@ -239,8 +247,8 @@ private fun AllDoneContent(
 ) {
     GaugeBody(
         topNumber = totalCount.toString(),
-        topLabel = "Dailies done",
-        bottomCaption = "All done today!",
+        topLabel = stringRes(R.string.widget_dailies_done),
+        bottomCaption = stringRes(R.string.widget_empty_dailies),
         progress = 1f,
         progressColor = WidgetBarColors.purple,
         showSparkles = true,

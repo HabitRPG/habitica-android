@@ -41,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.appwidget.GlanceAppWidgetManager
@@ -119,16 +120,16 @@ class AddTaskWidgetActivity : ComponentActivity() {
 
 private data class TaskTypeChoice(
     val type: TaskType,
-    val label: String,
+    val labelResId: Int,
     val iconResId: Int,
     val brandColor: Color,
 )
 
 private val TASK_TYPE_CHOICES = listOf(
-    TaskTypeChoice(TaskType.HABIT, "Habit", R.drawable.widget_add_habit_glyph, Color(0xFFF23035)),
-    TaskTypeChoice(TaskType.DAILY, "Daily", R.drawable.widget_add_daily_glyph, Color(0xFFFFA624)),
-    TaskTypeChoice(TaskType.TODO, "To Do", R.drawable.widget_add_todo_glyph, Color(0xFF26A0AB)),
-    TaskTypeChoice(TaskType.REWARD, "Reward", R.drawable.widget_add_reward_glyph, Color(0xFF1CA372)),
+    TaskTypeChoice(TaskType.HABIT, R.string.habit, R.drawable.widget_add_habit_glyph, Color(0xFFF23035)),
+    TaskTypeChoice(TaskType.DAILY, R.string.daily, R.drawable.widget_add_daily_glyph, Color(0xFFFFA624)),
+    TaskTypeChoice(TaskType.TODO, R.string.todo, R.drawable.widget_add_todo_glyph, Color(0xFF26A0AB)),
+    TaskTypeChoice(TaskType.REWARD, R.string.reward, R.drawable.widget_add_reward_glyph, Color(0xFF1CA372)),
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -156,13 +157,13 @@ private fun SheetContent(onSelected: (TaskType) -> Unit) {
             .padding(horizontal = 24.dp, vertical = 8.dp),
     ) {
         Text(
-            text = "Choose task type",
+            text = stringResource(R.string.widget_config_add_task_title),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
         Spacer(Modifier.height(4.dp))
         Text(
-            text = "Tapping the widget will open the screen to add a new task of this type.",
+            text = stringResource(R.string.widget_config_add_task_description),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -208,14 +209,14 @@ private fun TaskTypeTile(choice: TaskTypeChoice, onClick: () -> Unit) {
             )
             Image(
                 painter = painterResource(choice.iconResId),
-                contentDescription = choice.label,
+                contentDescription = stringResource(choice.labelResId),
                 modifier = Modifier.size(40.dp),
                 colorFilter = ColorFilter.tint(iconTint),
             )
         }
         Spacer(Modifier.height(8.dp))
         Text(
-            text = choice.label,
+            text = stringResource(choice.labelResId),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
         )

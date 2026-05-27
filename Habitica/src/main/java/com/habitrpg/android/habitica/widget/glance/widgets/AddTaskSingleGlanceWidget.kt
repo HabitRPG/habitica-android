@@ -40,6 +40,9 @@ import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.activities.AddTaskWidgetActivity
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
+import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
@@ -47,17 +50,22 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val isLoggedIn = WidgetAuth.isLoggedIn(context)
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
         val configureIntent = Intent(context, AddTaskWidgetActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         }
-        val configureAction = actionStartActivity(configureIntent)
+        val configureAction = if (isLoggedIn) actionStartActivity(configureIntent) else openAppAction()
         provideContent {
             val type = currentState<Preferences>()[stringPreferencesKey(TASK_TYPE_KEY)]
-            Log.d("AddTaskWidget", "provideGlance widgetId=$widgetId type=$type")
+            Log.d("AddTaskWidget", "provideGlance widgetId=$widgetId type=$type loggedIn=$isLoggedIn")
             HabiticaWidgetTheme {
-                AddTaskSingleContent(type, onConfigure = configureAction)
+                AddTaskSingleContent(
+                    type = type,
+                    onConfigure = configureAction,
+                    isLoggedIn = isLoggedIn,
+                )
             }
         }
     }
@@ -68,29 +76,30 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
 }
 
 private data class TileSpec(
-    val name: String,
+    val nameResId: Int,
     val brandColor: Color,
     val iconResId: Int,
-    val deepLink: String,
+    val taskType: String,
 )
 
 private fun tileFor(type: String?): TileSpec? = when (type) {
-    "habit" -> TileSpec("Habit", AddTaskTileColors.habit, R.drawable.widget_add_habit_glyph, "habitica://user/tasks/habit/add")
-    "daily" -> TileSpec("Daily", AddTaskTileColors.daily, R.drawable.widget_add_daily_glyph, "habitica://user/tasks/daily/add")
-    "todo" -> TileSpec("Todo", AddTaskTileColors.todo, R.drawable.widget_add_todo_glyph, "habitica://user/tasks/todo/add")
-    "reward" -> TileSpec("Reward", AddTaskTileColors.reward, R.drawable.widget_add_reward_glyph, "habitica://user/tasks/reward/add")
+    "habit" -> TileSpec(R.string.habit, AddTaskTileColors.habit, R.drawable.widget_add_habit_glyph, "habit")
+    "daily" -> TileSpec(R.string.daily, AddTaskTileColors.daily, R.drawable.widget_add_daily_glyph, "daily")
+    "todo" -> TileSpec(R.string.widget_add_task_todo_compact, AddTaskTileColors.todo, R.drawable.widget_add_todo_glyph, "todo")
+    "reward" -> TileSpec(R.string.reward, AddTaskTileColors.reward, R.drawable.widget_add_reward_glyph, "reward")
     else -> null
 }
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
-private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
+private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn: Boolean) {
     val tile = tileFor(type)
     if (tile == null) {
         UnsetTaskTypeContent(onClick = onConfigure)
         return
     }
+    val tileAction = if (isLoggedIn) openTaskFormAction(tile.taskType) else openAppAction()
     val size = LocalSize.current
     val shorter = if (size.width < size.height) size.width else size.height
 
@@ -111,7 +120,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
-            .clickable(onClick = openAppAction(tile.deepLink)),
+            .clickable(onClick = tileAction),
         contentAlignment = Alignment.Center,
     ) {
         Box(
@@ -127,7 +136,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action) {
             )
             Image(
                 provider = ImageProvider(tile.iconResId),
-                contentDescription = "Add new ${tile.name}",
+                contentDescription = stringRes(R.string.widget_add_new_task_cd, stringRes(tile.nameResId)),
                 modifier = GlanceModifier.size(iconSize),
                 colorFilter = iconTint?.let { ColorFilter.tint(it) },
             )
@@ -162,7 +171,7 @@ private fun UnsetTaskTypeContent(onClick: Action) {
             colorFilter = ColorFilter.tint(widgetBackground),
         )
         Text(
-            text = "Tap to choose task type",
+            text = stringRes(R.string.widget_unconfigured_choose_type),
             style = TextStyle(
                 color = textColor,
                 fontSize = 13.sp,

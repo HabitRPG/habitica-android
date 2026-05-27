@@ -42,6 +42,9 @@ import androidx.glance.text.TextStyle
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreHabitAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.components.HabitButtonBar
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
@@ -63,6 +66,10 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        if (!WidgetAuth.isLoggedIn(context)) {
+            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
+            return
+        }
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
         val configureIntent = Intent(context, HabitButtonWidgetActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -185,7 +192,7 @@ private fun UnconfiguredContent(onClick: Action) {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "Tap to configure habit",
+            text = stringRes(R.string.widget_unconfigured_choose_habit),
             style = TextStyle(
                 color = habitTitleText(),
                 fontSize = 13.sp,
