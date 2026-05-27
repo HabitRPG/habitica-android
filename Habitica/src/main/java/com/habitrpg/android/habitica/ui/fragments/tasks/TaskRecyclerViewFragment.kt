@@ -229,6 +229,10 @@ open class TaskRecyclerViewFragment :
         itemTouchHelper?.attachToRecyclerView(binding?.recyclerView)
     }
 
+    private fun isReorderingAllowed(): Boolean {
+        return !(taskType == TaskType.TODO && viewModel.getActiveFilter(TaskType.TODO) == Task.FILTER_DATED)
+    }
+
     protected open fun getLayoutManager(context: Context?): androidx.recyclerview.widget.LinearLayoutManager {
         return androidx.recyclerview.widget.LinearLayoutManager(context)
     }
@@ -297,7 +301,7 @@ open class TaskRecyclerViewFragment :
                     return if ((
                         recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
                             ?: 0
-                        ) != 0
+                        ) != 0 || !isReorderingAllowed()
                     ) {
                         makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                     } else {
