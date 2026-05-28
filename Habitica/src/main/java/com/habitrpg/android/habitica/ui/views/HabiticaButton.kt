@@ -26,6 +26,7 @@ fun HabiticaButton(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(8.dp),
     fontSize: TextUnit = 16.sp,
+    enabled: Boolean = true,
     content: @Composable () -> Unit
 ) {
     Box(
@@ -33,7 +34,7 @@ fun HabiticaButton(
         modifier =
         modifier
             .background(background, HabiticaTheme.shapes.medium)
-            .clickable { onClick() }
+            .clickable(enabled) { onClick() }
             .fillMaxWidth()
             .padding(contentPadding)
     ) {

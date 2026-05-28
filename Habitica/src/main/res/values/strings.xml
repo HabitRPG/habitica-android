@@ -25,4 +25,14 @@
     <string name="accept_all">Accept All</string>
     <string name="habiticas_privacy_policy">Habitica\'s Privacy Policy</string>
     <string name="save_preferences">Save Preferences</string>
+    <string name="change_subscription_plan">Change your subscription plan</string>
+    <string name="change_subscription_duration">Change Subscription Plan</string>
+    <string name="continue_current_benefits">Continues current subscription benefits</string>
+    <string name="current_plan">Current Plan</string>
+    <string name="review_subscription_change_info">You\'ll be able to review upcoming charges before confirming your change in the next step</string>
+    <string name="subscriptions_renew_info">Subscriptions automatically renew until cancelled at the price of your newly selected plan.</string>
+    <string name="upgrade_subscription">Upgrade Subscription</string>
+    <string name="subscribe_again">Subscribe Again</string>
+    <string name="complete_purchase">Complete Purchase</string>
+    <string name="subscription_renew_review_info">Once we’ve confirmed your purchase, the payment will be charged \nto your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you agree to pay above.\n\nBy continuing you accept the Terms of Use and Privacy Policy.</string>
 </resources>

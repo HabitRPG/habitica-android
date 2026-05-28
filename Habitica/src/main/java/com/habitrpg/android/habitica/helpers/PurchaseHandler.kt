@@ -231,7 +231,7 @@ class PurchaseHandler(
 
         if (skuDetails.productType == BillingClient.ProductType.SUBS) {
             val existingSub = checkForSubscription()
-            if (existingSub != null) {
+            if (existingSub != null && existingSub.isAutoRenewing) {
                 productDetailsParams = productDetailsParams.setSubscriptionProductReplacementParams(
                     BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.newBuilder()
                         .setOldProductId(existingSub.purchaseToken)
@@ -430,7 +430,8 @@ class PurchaseHandler(
         val result =
             withContext(Dispatchers.IO) {
                 val params =
-                    QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS)
+                    QueryPurchasesParams.newBuilder()
+                        .setProductType(BillingClient.ProductType.SUBS)
                         .build()
                 billingClient.queryPurchasesAsync(params)
             }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.graphics.Color
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +22,8 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
+import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -88,6 +91,12 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         binding.content.headerImageView.visibility = View.GONE
         binding.content.subscriptionDisclaimerView.visibility = View.VISIBLE
         binding.content.seeMoreButton.visibility = View.VISIBLE
+
+        binding.content.subscriptionDetails.onUpdateSubscriptionsTapped = {
+            showAsBottomSheet(sheetColor = Color(requireContext().getColor(R.color.brand_300)), true) {
+                ChangeSubscriptionScreen()
+            }
+        }
 
         binding.content.seeMoreButton.setOnClickListener {
             MainNavigationController.navigate(

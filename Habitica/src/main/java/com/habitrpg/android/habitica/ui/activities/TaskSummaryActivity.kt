@@ -94,7 +94,7 @@ constructor(
     val configManager: AppConfigManager
 ) : BaseViewModel(userRepository, userViewModel) {
     val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
-    val taskValue: Double = savedStateHandle[TaskFormActivity.TASK_VALUE_KEY] ?: 0.0
+    val taskValue: Double = savedStateHandle[TASK_VALUE_KEY] ?: 0.0
 
     val task = taskRepository.getTask(taskID).asLiveData()
 
@@ -104,9 +104,7 @@ constructor(
 }
 
 @AndroidEntryPoint
-class TaskSummaryActivity : BaseActivity() {
-    override fun getLayoutResId(): Int? = null
-
+class TaskSummaryActivity : ComposeActivity() {
     private val viewModel: TaskSummaryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

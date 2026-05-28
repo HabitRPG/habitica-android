@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
+import com.habitrpg.android.habitica.R
+
 enum class HabiticaProduct(val sku: String) {
     JUBILANT_GRYPHATRICE("com.habitrpg.android.habitica.iap.pets.gryphatrice_jubilant"),
     PURCHASE_4_GEMS("com.habitrpg.android.habitica.iap.4gems"),
@@ -73,3 +75,12 @@ enum class HabiticaProduct(val sku: String) {
         }
     }
 }
+
+val HabiticaProduct.recurranceStringRes: Int
+    get() = when (this) {
+        HabiticaProduct.SUBSCRIPTION_1_MONTH -> R.string.one_month
+        HabiticaProduct.SUBSCRIPTION_3_MONTH -> R.string.three_months
+        HabiticaProduct.SUBSCRIPTION_6_MONTH -> R.string.six_months
+        HabiticaProduct.SUBSCRIPTION_12_MONTH -> R.string.twelve_months
+        else -> throw IllegalArgumentException("Not a subscription product")
+    }

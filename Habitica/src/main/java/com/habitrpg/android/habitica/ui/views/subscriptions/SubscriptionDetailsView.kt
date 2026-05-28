@@ -10,6 +10,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
 import com.habitrpg.android.habitica.extensions.toZonedDateTime
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.text.DateFormat
@@ -23,6 +25,7 @@ class SubscriptionDetailsView : LinearLayout {
     private var plan: SubscriptionPlan? = null
 
     var onShowSubscriptionOptions: (() -> Unit)? = null
+    var onUpdateSubscriptionsTapped: (() -> Unit)? = null
 
     var currentUserID: String? = null
 
@@ -37,6 +40,7 @@ class SubscriptionDetailsView : LinearLayout {
     private fun setupView() {
         binding = SubscriptionDetailsBinding.inflate(context.layoutInflater, this, true)
         binding.changeSubscriptionButton.setOnClickListener { changeSubscriptionButtonTapped() }
+        binding.updateSubscriptionButton.setOnClickListener { onUpdateSubscriptionsTapped?.invoke() }
         binding.heartIcon.setImageBitmap(HabiticaIconsHelper.imageOfHeartLarge())
     }
 
@@ -94,6 +98,7 @@ class SubscriptionDetailsView : LinearLayout {
             binding.subscriptionCreditCard.visibility = GONE
         }
 
+        binding.updateSubscriptionButton.visibility = GONE
         when (plan.paymentMethod) {
             "Amazon Payments" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_amazon)
@@ -110,6 +115,12 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
                 binding.subscriptionPaymentMethodTextview.text =
                     context.getString(R.string.google_pay)
+                binding.updateSubscriptionButton.visibility = VISIBLE
+                if (plan.isActive && plan.dateTerminated != null) {
+                    binding.updateSubscriptionButton.setText(R.string.subscribe_again)
+                } else {
+                    binding.updateSubscriptionButton.setText(R.string.change_subscription_plan)
+                }
             }
 
             "PayPal" -> {
@@ -128,6 +139,8 @@ class SubscriptionDetailsView : LinearLayout {
                     binding.paymentProcessorImageView.setImageResource(R.drawable.payment_gift)
                     binding.subscriptionPaymentMethodTextview.text =
                         context.getString(R.string.gifted)
+                    binding.updateSubscriptionButton.visibility = VISIBLE
+                    binding.updateSubscriptionButton.setText(R.string.upgrade_subscription)
                 } else {
                     binding.paymentProcessorWrapper.visibility = GONE
                 }
@@ -168,9 +181,6 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.changeSubscriptionButton.visibility = VISIBLE
             } else {
                 if (plan.isGroupPlanSub) {
-                    /*if (plan.ownerID == currentUserID) {
-                        binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan_owner)
-                    } else {*/
                     binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_group_plan)
                     binding.changeSubscriptionButton.visibility = GONE
                     // }
@@ -188,8 +198,7 @@ class SubscriptionDetailsView : LinearLayout {
             binding.changeSubscriptionTitle.setText(R.string.resubscribe)
             binding.changeSubscriptionDescription.setText(R.string.resubscribe_description)
             binding.changeSubscriptionButton.setText(R.string.renew_subscription)
-            // Hide the button until we improve the flow in 4.3
-            binding.changeSubscriptionWrapper.isVisible = false
+            binding.changeSubscriptionWrapper.visibility = GONE
         }
     }
 

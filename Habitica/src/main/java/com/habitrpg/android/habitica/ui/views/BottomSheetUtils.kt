@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsIgnoringVisibility
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -31,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -39,30 +44,41 @@ import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.Boolean
 
-// Extension for Activity
 fun Activity.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
     val viewGroup: ViewGroup = this.findViewById(android.R.id.content)
     addContentToView(viewGroup, content)
 }
 
-// Extension for Fragment
+fun Activity.showAsBottomSheet(sheetColor: Color, disableScroll: Boolean = false, content: @Composable (() -> Unit) -> Unit) {
+    val viewGroup: ViewGroup = this.findViewById(android.R.id.content)
+    addContentToView(viewGroup, content, sheetColor, disableScroll)
+}
+
 fun Fragment.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
     val viewGroup: ViewGroup = requireActivity().findViewById(android.R.id.content)
     addContentToView(viewGroup, content)
 }
 
-// Helper method
+fun Fragment.showAsBottomSheet(sheetColor: Color, disableScroll: Boolean = false, content: @Composable (() -> Unit) -> Unit) {
+    val viewGroup: ViewGroup = requireActivity().findViewById(android.R.id.content)
+    addContentToView(viewGroup, content, sheetColor, disableScroll)
+}
+
 private fun addContentToView(
     viewGroup: ViewGroup,
-    content: @Composable (() -> Unit) -> Unit
+    content: @Composable (() -> Unit) -> Unit,
+    sheetColor: Color? = null,
+    disableScroll: Boolean = false
 ) {
     viewGroup.addView(
         ComposeView(viewGroup.context).apply {
             setContent {
                 HabiticaTheme {
                     Column {
-                        BottomSheetWrapper(viewGroup, this@apply, content)
+                        BottomSheetWrapper(viewGroup,
+                            this@apply, sheetColor ?: HabiticaTheme.colors.windowBackground, disableScroll, content)
                     }
                 }
             }
@@ -75,6 +91,8 @@ private fun addContentToView(
 private fun BottomSheetWrapper(
     parent: ViewGroup,
     composeView: ComposeView,
+    sheetColor: Color = HabiticaTheme.colors.windowBackground,
+    disableScroll: Boolean = false,
     content: @Composable (() -> Unit) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -84,33 +102,23 @@ private fun BottomSheetWrapper(
 
     val radius = 20.dp
     ModalBottomSheet(
-        {},
-        containerColor = Color.Transparent,
+        {
+            coroutineScope.launch {
+                modalBottomSheetState.hide()
+            }
+        },
+        containerColor = sheetColor,
         scrimColor = colorResource(R.color.gray_5).copy(alpha = 0.3f),
         sheetState = modalBottomSheetState,
         shape = RoundedCornerShape(topStart = radius, topEnd = radius),
         contentWindowInsets = { WindowInsets(0) },
-        dragHandle = {},
         content = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
                 Modifier
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 4.dp)
-                    .background(
-                        HabiticaTheme.colors.windowBackground,
-                        RoundedCornerShape(topStart = radius, topEnd = radius)
-                    )
-                    .padding(vertical = 8.dp)
             ) {
-                Box(
-                    modifier =
-                    Modifier
-                        .padding(bottom = 16.dp)
-                        .background(colorResource(R.color.content_background_offset))
-                        .size(24.dp, 3.dp)
-                )
                 content {
                     // Action passed for clicking close button in the content
                     coroutineScope.launch {

@@ -119,7 +119,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 Color.parseColor("#24CC8F"),
                 Shader.TileMode.REPEAT
             )
-            binding.priceLabel.paint.setShader(shader)
+            binding.priceLabel.paint.shader = shader
         }
     }
 
@@ -130,12 +130,12 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     fun setFlagText(text: CharSequence?) {
         isPromoted = text?.isNotBlank() ?: false
         if (isPromoted) {
-            binding.flagFlap.visibility = View.VISIBLE
-            binding.flagTextview.visibility = View.VISIBLE
+            binding.flagFlap.visibility = VISIBLE
+            binding.flagTextview.visibility = VISIBLE
             binding.flagTextview.text = text
         } else {
-            binding.flagFlap.visibility = View.GONE
-            binding.flagTextview.visibility = View.GONE
+            binding.flagFlap.visibility = GONE
+            binding.flagTextview.visibility = GONE
         }
     }
 
@@ -152,7 +152,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
 
     fun animateBackgroundColor(colorFrom: Int, colorTo: Int) {
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-        colorAnimation.setDuration(350) // milliseconds
+        colorAnimation.duration = 350 // milliseconds
         colorAnimation.addUpdateListener { animator -> binding.root.backgroundTintList = ColorStateList.valueOf(animator.animatedValue as Int) }
         colorAnimation.start()
     }
