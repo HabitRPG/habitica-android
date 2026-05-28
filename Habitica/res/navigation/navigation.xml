@@ -178,6 +178,13 @@
             android:name="value"
             app:argType="string" />
     </activity>
+
+    <fragment
+        android:id="@+id/change_subscription_fragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.purchases.ChangeSubscriptionFragment"
+        android:label="@string/change_subscription_plan" >
+        <deepLink app:uri="habitica.com/user/settings/subscription/change" />
+    </fragment>
     <activity
         android:id="@+id/subscriptionPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"

@@ -76,7 +76,7 @@ import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BirthdayActivity : BaseActivity() {
+class BirthdayActivity : ComposeActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -94,8 +94,6 @@ class BirthdayActivity : BaseActivity() {
     private val hasGryphatrice = mutableStateOf(false)
     private val hasEquipped = mutableStateOf(false)
     private var gryphatriceProductDetails: ProductDetails? = null
-
-    override fun getLayoutResId(): Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

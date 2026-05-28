@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
@@ -36,6 +37,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
+import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -100,6 +102,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             }
         }
 
+        binding?.content?.subscriptionDetails?.onUpdateSubscriptionsTapped = {
+            showAsBottomSheet(sheetColor = Color(requireContext().getColor(R.color.brand_300)), true) {
+                ChangeSubscriptionScreen()
+            }
+        }
         binding?.content?.subscribeButton?.setOnClickListener { purchaseSubscription() }
 
         binding?.content?.visitHabiticaWebsiteButton?.setOnClickListener {

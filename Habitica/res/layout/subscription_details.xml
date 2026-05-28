@@ -48,74 +48,79 @@
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
-            style="@style/subscriptionBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+        style="@style/subscriptionBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                <TextView
+                        style="@style/subscriptionBoxText.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subscription" />
+                <TextView
+                        android:id="@+id/subscriptionDurationTextView"
+                        style="@style/subscriptionBoxText.Subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Recurring every 3 months" />
+            </LinearLayout>
             <TextView
-                    style="@style/subscriptionBoxText.Title"
+                    android:id="@+id/subscriptionStatusActive"
+                    style="@style/Pill.Selected.Green"
+                    android:background="@drawable/pill_bg_green_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/subscription" />
-
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/active" />
             <TextView
-                    android:id="@+id/subscriptionDurationTextView"
-                    style="@style/subscriptionBoxText.Subtitle"
+                    android:id="@+id/subscriptionStatusNotRecurring"
+                    style="@style/Pill.Selected.Yellow.Bright"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Recurring every 3 months" />
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/gifted"
+                    android:visibility="gone" />
+            <TextView
+                    android:id="@+id/subscriptionStatusInactive"
+                    style="@style/Pill.Selected.Red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/inactive"
+                    android:visibility="gone" />
+            <TextView
+                    android:id="@+id/subscriptionStatusCancelled"
+                    style="@style/Pill.Selected.Red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/cancelled"
+                    android:visibility="gone" />
+            <TextView
+                    android:id="@+id/subscription_status_group_plan"
+                    style="@style/Pill.Selected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/group_plan"
+                    android:visibility="gone" />
         </LinearLayout>
-
-        <TextView
-                android:id="@+id/subscriptionStatusActive"
-                style="@style/Pill.Selected.Green"
-                android:background="@drawable/pill_bg_green_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/active" />
-
-        <TextView
-                android:id="@+id/subscriptionStatusNotRecurring"
-                style="@style/Pill.Selected.Yellow.Bright"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/gifted"
-                android:visibility="gone" />
-
-        <TextView
-                android:id="@+id/subscriptionStatusInactive"
-                style="@style/Pill.Selected.Red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/inactive"
-                android:visibility="gone" />
-
-        <TextView
-                android:id="@+id/subscriptionStatusCancelled"
-                style="@style/Pill.Selected.Red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/cancelled"
-                android:visibility="gone" />
-
-        <TextView
-                android:id="@+id/subscription_status_group_plan"
-                style="@style/Pill.Selected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/group_plan"
-                android:visibility="gone" />
+        <Button
+            android:id="@+id/update_subscription_button"
+            style="@style/HabiticaButton.Yellow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/brand_100"
+            android:layout_marginTop="@dimen/spacing_medium" />
     </LinearLayout>
 
     <LinearLayout

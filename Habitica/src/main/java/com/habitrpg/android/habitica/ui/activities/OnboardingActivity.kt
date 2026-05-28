@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.addCallback
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.expandVertically
@@ -57,7 +58,7 @@ enum class OnboardingSteps(val id: Int) {
 }
 
 @AndroidEntryPoint
-class OnboardingActivity: BaseActivity() {
+class OnboardingActivity: ComposeActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     val authenticationViewModel: AuthenticationViewModel by viewModels()
@@ -68,15 +69,6 @@ class OnboardingActivity: BaseActivity() {
     lateinit var configManager: AppConfigManager
     @Inject
     lateinit var customizationRepository: SetupCustomizationRepository
-
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_login
-    }
-
-    override fun getContentView(layoutResId: Int?): View {
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        return binding.root
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +92,7 @@ class OnboardingActivity: BaseActivity() {
             }
         }
 
-        binding.root.setContent {
+        setContent {
             val step by currentStep
             HabiticaTheme {
                 AnimatedContent(step,
