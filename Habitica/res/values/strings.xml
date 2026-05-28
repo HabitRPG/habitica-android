@@ -1625,6 +1625,8 @@
     <string name="resubscribe_for_hourglasses">Subscribe again to continue receiving Mystic Hourglasses</string>
     <string name="max_gem_cap">Max Gem Cap</string>
     <string name="max_gem_cap_text">Instantly start at the max Gem Cap</string>
+    <string name="fifty_gems">50 Gems</string>
+    <string name="raises_gem_cap_text">Raises Gem Cap to 50 Gems per month</string>
     <string name="max_gem_cap_text_gift">They instantly start at the Max Gem Cap</string>
     <string name="chat_empty_state_title">Start chatting!</string>
     <string name="chat_empty_state_description">Remember to be friendly and follow the Community Guidelines.</string>
