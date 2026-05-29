@@ -1649,8 +1649,8 @@
     <string name="membership">メンバーシップ</string>
     <string name="not_participating_filter">不参加</string>
     <string name="server_option_default">%s（デフォルト）</string>
-    <string name="server_custom_address_hint">例：http://localhost:3000</string>
-    <string name="server_url_invalid">http:// または https:// で始まる有効なURLを入力してください</string>
+    <string name="server_custom_address_hint">例：customserver.habitica.com</string>
+    <string name="server_url_invalid">有効なURLを入力してください</string>
     <string name="apply">適用</string>
     <string name="server_settings_unlocked">サーバー設定がアンロックされました！</string>
     <string name="server_settings_unlock_remaining">サーバー設定をアンロックするまであと%dステップです。</string>
@@ -1669,4 +1669,7 @@
     <string name="rebirth_shop_description">実績、アイテム、装備は変わらず、レベル１からリスタートできます。タスクは元の状態に戻りますが、記録は残ります。個人用タスクの連続実行回数はリセットされます。ゴールド、経験値、マナ、そしてスキルからの効果は無くなります。</string>
     <string name="server_custom_address_label">専用サーバーのアドレスを入力してください</string>
     <string name="server_custom_warning">注意：専用サーバーでのアカウントは Habitica.com のアカウントと別です。</string>
+    <string name="avatar_widget_label">Habiticaのアバター</string>
+    <string name="widget_add_task">Habiticaにタスクを追加</string>
+    <string name="widget_add_task_multi">Habiticaにタスクを追加</string>
 </resources>
