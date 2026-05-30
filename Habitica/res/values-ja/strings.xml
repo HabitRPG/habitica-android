@@ -1658,7 +1658,7 @@
     <string name="rebirth_confirm_reset_header">リセットされる要素：</string>
     <string name="rebirth_confirm_keep_header">保持される要素：</string>
     <string name="rebirth_enabled_subtitle">新しい冒険が始められます！</string>
-    <string name="rebirth_achievement_title">復活されました！</string>
+    <string name="rebirth_achievement_title">復活しました！</string>
     <string name="rebirth_achievement_description_max">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$d以上です。</string>
     <string name="rebirth_achievement_description">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$dです。</string>
     <string name="subscriber_button_faint_use">セカンドチャンスを使う！</string>
