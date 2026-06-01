@@ -429,7 +429,7 @@ constructor(
     private fun acceptQuestInvitation() {
         party?.id?.let {
             viewModelScope.launchCatching {
-                socialRepository.acceptQuest(null, it)
+                socialRepository.acceptQuest(user.value, it)
                 refreshUser()
             }
         }
@@ -438,7 +438,7 @@ constructor(
     private fun rejectQuestInvitation() {
         party?.id?.let {
             viewModelScope.launchCatching {
-                socialRepository.rejectQuest(null, it)
+                socialRepository.rejectQuest(user.value, it)
                 refreshUser()
             }
         }
