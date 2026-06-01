@@ -407,21 +407,25 @@ class TaskRepositoryImpl(
 
     override fun updateTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)?
     ) {
         MainScope().launchCatching {
             val updatedTask = updateTask(task) ?: return@launchCatching
             handleAssignmentChanges(updatedTask, assignChanges)
+            onComplete?.invoke()
         }
     }
 
     override fun createTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)?
     ) {
         MainScope().launchCatching {
             val createdTask = createTask(task) ?: return@launchCatching
             handleAssignmentChanges(createdTask, assignChanges)
+            onComplete?.invoke()
         }
     }
 

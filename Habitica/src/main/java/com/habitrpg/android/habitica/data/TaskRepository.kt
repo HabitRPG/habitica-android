@@ -101,12 +101,14 @@ interface TaskRepository : BaseRepository {
 
     fun updateTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)? = null
     )
 
     fun createTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)? = null
     )
 
     fun getTaskCopies(): Flow<List<Task>>

@@ -650,6 +650,14 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         YesterdailyDialog.showDialogIfNeeded(this, viewModel.userViewModel.userID, userRepository, taskRepository)
+
+        val openTaskFormType = intent.getStringExtra(OPEN_TASK_FORM_TYPE)
+        if (openTaskFormType != null && viewModel.isAuthenticated) {
+            intent.removeExtra(OPEN_TASK_FORM_TYPE)
+            val formIntent = Intent(this, TaskFormActivity::class.java)
+            formIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, openTaskFormType)
+            startActivity(formIntent)
+        }
     }
 
     @RequiresApi(33)
@@ -1155,5 +1163,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     companion object {
         private const val PERSISTENT_DRAWER_MIN_WIDTH_DP = 600
         private const val DEFAULT_SCRIM_COLOR = 0x99000000.toInt()
+        const val OPEN_TASK_FORM_TYPE = "openTaskFormType"
     }
 }

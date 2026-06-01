@@ -842,10 +842,13 @@ class TaskFormActivity : BaseActivity() {
         }
 
         if (!isChallengeTask) {
+            val refreshWidgets: suspend () -> Unit = {
+                WidgetRefreshWorker.refreshAllWidgetsNow(applicationContext)
+            }
             if (isCreating) {
-                taskRepository.createTaskInBackground(thisTask, assignChanges)
+                taskRepository.createTaskInBackground(thisTask, assignChanges, refreshWidgets)
             } else {
-                taskRepository.updateTaskInBackground(thisTask, assignChanges)
+                taskRepository.updateTaskInBackground(thisTask, assignChanges, refreshWidgets)
             }
 
             if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {
@@ -855,7 +858,6 @@ class TaskFormActivity : BaseActivity() {
                 )
                 taskAlarmManager.scheduleAlarmsForTask(thisTask)
             }
-            WidgetRefreshWorker.enqueueOneTime(applicationContext)
         } else {
             resultIntent.putExtra(PARCELABLE_TASK, thisTask)
         }
