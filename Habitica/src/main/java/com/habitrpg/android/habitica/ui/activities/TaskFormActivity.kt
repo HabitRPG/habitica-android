@@ -69,6 +69,7 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.HabitScoringSelector
 import com.habitrpg.android.habitica.ui.views.tasks.form.LabeledValue
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskDifficultySelector
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskFormSelector
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -854,6 +855,7 @@ class TaskFormActivity : BaseActivity() {
                 )
                 taskAlarmManager.scheduleAlarmsForTask(thisTask)
             }
+            WidgetRefreshWorker.enqueueOneTime(applicationContext)
         } else {
             resultIntent.putExtra(PARCELABLE_TASK, thisTask)
         }
@@ -886,6 +888,7 @@ class TaskFormActivity : BaseActivity() {
                     taskRepository.deleteTask(it)
                     val taskCopy = task
                     taskCopy?.let { taskAlarmManager.removeAlarmsForTask(it) }
+                    WidgetRefreshWorker.enqueueOneTime(applicationContext)
                 }
             }
 
