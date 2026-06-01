@@ -843,7 +843,7 @@ class TaskFormActivity : BaseActivity() {
 
         if (!isChallengeTask) {
             val refreshWidgets: suspend () -> Unit = {
-                WidgetRefreshWorker.refreshAllWidgetsNow(applicationContext)
+                WidgetRefreshWorker.refreshTaskListWidgetsNow(applicationContext)
             }
             if (isCreating) {
                 taskRepository.createTaskInBackground(thisTask, assignChanges, refreshWidgets)

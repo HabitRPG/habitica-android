@@ -25,9 +25,11 @@ import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withTimeoutOrNull
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -413,6 +415,7 @@ class TaskRepositoryImpl(
         MainScope().launchCatching {
             val updatedTask = updateTask(task) ?: return@launchCatching
             handleAssignmentChanges(updatedTask, assignChanges)
+            awaitTaskPersisted(updatedTask)
             onComplete?.invoke()
         }
     }
@@ -425,7 +428,15 @@ class TaskRepositoryImpl(
         MainScope().launchCatching {
             val createdTask = createTask(task) ?: return@launchCatching
             handleAssignmentChanges(createdTask, assignChanges)
+            awaitTaskPersisted(createdTask)
             onComplete?.invoke()
+        }
+    }
+
+    private suspend fun awaitTaskPersisted(task: Task) {
+        val id = task.id ?: return
+        withTimeoutOrNull(3000) {
+            localRepository.getTasks(task.ownerID).first { tasks -> tasks.any { it.id == id } }
         }
     }
 
