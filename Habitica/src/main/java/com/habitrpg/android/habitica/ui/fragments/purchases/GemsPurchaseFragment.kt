@@ -37,7 +37,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -142,7 +141,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             binding?.loadingIndicator?.isVisible = true
             binding?.gemPurchaseOptions?.isVisible = false
         }
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val skus = purchaseHandler.loadGemProducts()
             withContext(Dispatchers.Main) {
                 if (skus.isEmpty()) {

@@ -45,7 +45,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -190,7 +189,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun loadInventory() {
-        CoroutineScope(Dispatchers.IO).launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val subscriptions = purchaseHandler.loadSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
@@ -335,16 +334,14 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun checkIfNeedsCancellation() {
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val newestSubscription = purchaseHandler.checkForSubscription()
             if (user?.purchased?.plan?.paymentMethod == "Google" &&
                 user?.purchased?.plan?.isActive == true &&
                 user?.purchased?.plan?.dateTerminated == null &&
                 (newestSubscription?.isAutoRenewing != true)
             ) {
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    purchaseHandler.cancelSubscription()
-                }
+                purchaseHandler.cancelSubscription()
             }
         }
     }
