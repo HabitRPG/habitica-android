@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.helpers
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.asFlow
+import androidx.preference.PreferenceManager
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
@@ -39,7 +39,8 @@ import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.Transaction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.take
@@ -48,6 +49,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.util.Date
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -57,6 +59,7 @@ class PurchaseHandler(
     private val userViewModel: MainUserViewModel,
     private val configManager: AppConfigManager
 ) : PurchasesUpdatedListener, PurchasesResponseListener {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val billingClient =
         BillingClient.newBuilder(context).setListener(this)
             .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
@@ -85,7 +88,7 @@ class PurchaseHandler(
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 val mostRecentSub = findMostRecentSubscription(purchases)
-                MainScope().launchCatching {
+                scope.launchCatching {
                     userViewModel.user.asFlow()
                         .filterNotNull().take(1).collect {
                             val plan = it.purchased!!.plan
@@ -108,7 +111,7 @@ class PurchaseHandler(
             }
 
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
-                CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
                     for (purchase in purchases) {
                         consume(purchase)
                     }
@@ -126,6 +129,8 @@ class PurchaseHandler(
     }
 
     init {
+        preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        loadPendingGifts()
         startListening()
     }
 
@@ -141,7 +146,7 @@ class PurchaseHandler(
                 override fun onBillingSetupFinished(billingResult: BillingResult) {
                     when (billingResult.responseCode) {
                         BillingClient.BillingResponseCode.OK -> {
-                            MainScope().launchCatching {
+                            scope.launchCatching {
                                 queryPurchases()
                             }
                         }
@@ -155,6 +160,7 @@ class PurchaseHandler(
 
     fun stopListening() {
         billingClient.endConnection()
+        scope.cancel()
     }
 
     suspend fun queryPurchases() {
@@ -270,21 +276,22 @@ class PurchaseHandler(
         }
     }
 
-    private var processedPurchases = mutableSetOf<String>()
+    private var processedPurchases = ConcurrentHashMap.newKeySet<String>()
 
     private fun handle(purchase: Purchase) {
+        val orderId = purchase.orderId ?: return
         if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED ||
-            processedPurchases.contains(purchase.orderId)
+            processedPurchases.contains(orderId)
         ) {
             return
         }
-        purchase.orderId?.let { processedPurchases.add(it) }
+        processedPurchases.add(orderId)
         val sku = purchase.products.firstOrNull()
         val product = HabiticaProduct.forSku(sku ?: "") ?: return
         when {
             product == HabiticaProduct.JUBILANT_GRYPHATRICE -> {
                 val validationRequest = buildValidationRequest(purchase)
-                MainScope().launchCatching {
+                scope.launchCatching {
                     try {
                         apiClient.validatePurchase(validationRequest)
                         processedPurchase()
@@ -301,7 +308,7 @@ class PurchaseHandler(
 
             HabiticaProduct.allGemTypes.contains(product) -> {
                 val validationRequest = buildValidationRequest(purchase)
-                MainScope().launchCatching {
+                scope.launchCatching {
                     try {
                         val response = apiClient.validatePurchase(validationRequest)
                         processedPurchase()
@@ -320,7 +327,7 @@ class PurchaseHandler(
 
             HabiticaProduct.allSubscriptionNoRenewTypes.contains(product) -> {
                 val validationRequest = buildValidationRequest(purchase)
-                MainScope().launchCatching {
+                scope.launchCatching {
                     try {
                         val response = apiClient.validateNoRenewSubscription(validationRequest)
                         processedPurchase()
@@ -339,11 +346,11 @@ class PurchaseHandler(
 
             HabiticaProduct.allSubscriptionTypes.contains(product) -> {
                 val validationRequest = buildValidationRequest(purchase)
-                MainScope().launchCatching {
+                scope.launchCatching {
                     try {
                         val response = apiClient.validateSubscription(validationRequest)
                         processedPurchase()
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
                             acknowledgePurchase(purchase)
                         }
                         if (response != null) {
@@ -371,7 +378,7 @@ class PurchaseHandler(
     }
 
     private fun processedPurchase() {
-        MainScope().launch(ExceptionHandler.coroutine()) {
+        scope.launch(ExceptionHandler.coroutine()) {
             userViewModel.userRepository.retrieveUser(withTasks = false,
                 forced = true)
         }
@@ -406,7 +413,7 @@ class PurchaseHandler(
                     if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                         processedPurchase()
                         removeGift(purchase.products.firstOrNull())
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
                             consume(purchase)
                         }
                         return
@@ -417,12 +424,12 @@ class PurchaseHandler(
             else -> {
                 // Handles other potential errors such as IOException or an exception
                 // thrown by billingClient.consumePurchase method that is not handled
-                CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
                     consume(purchase)
                 }
             }
         }
-        processedPurchases.remove(purchase.orderId)
+        purchase.orderId?.let { processedPurchases.remove(it) }
         CrashReporter.recordException(throwable)
     }
 
@@ -468,18 +475,19 @@ class PurchaseHandler(
 
     private var isSaleGemPurchase = false
 
-    private val displayedConfirmations = mutableListOf<String>()
+    private val displayedConfirmations = ConcurrentHashMap.newKeySet<String>()
 
     private fun displayConfirmationDialog(
         purchase: Purchase,
         giftedToID: String? = null,
         giftedTo: String? = null
     ) {
-        if (displayedConfirmations.contains(purchase.orderId)) {
+        val orderId = purchase.orderId ?: return
+        if (displayedConfirmations.contains(orderId)) {
             return
         }
-        purchase.orderId?.let { displayedConfirmations.add(it) }
-        CoroutineScope(Dispatchers.Main).launchCatching {
+        displayedConfirmations.add(orderId)
+        scope.launchCatching {
             val application =
                 (context as? HabiticaBaseApplication)
                     ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launchCatching
@@ -547,7 +555,7 @@ class PurchaseHandler(
     private fun displayGryphatriceConfirmationDialog(
         giftedTo: String? = null
     ) {
-        MainScope().launch(ExceptionHandler.coroutine()) {
+        scope.launch(ExceptionHandler.coroutine()) {
             val application =
                 (context as? HabiticaBaseApplication)
                     ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
@@ -572,7 +580,7 @@ class PurchaseHandler(
 
     companion object {
         private const val PENDING_GIFTS_KEY = "PENDING_GIFTS_DATED"
-        private var pendingGifts: MutableMap<String, Triple<Date, String, String>> = HashMap()
+        private var pendingGifts: MutableMap<String, Triple<Date, String, String>> = ConcurrentHashMap()
         private var preferences: SharedPreferences? = null
 
         fun addGift(
@@ -590,8 +598,32 @@ class PurchaseHandler(
             return gift
         }
 
+        private fun loadPendingGifts() {
+            val jsonString = preferences?.getString(PENDING_GIFTS_KEY, null) ?: return
+            try {
+                val jsonObject = JSONObject(jsonString)
+                val keys = jsonObject.keys()
+                while (keys.hasNext()) {
+                    val sku = keys.next()
+                    val giftJson = jsonObject.optJSONObject(sku) ?: continue
+                    val dateLong = giftJson.optLong("date")
+                    val userID = giftJson.optString("userID") ?: ""
+                    val username = giftJson.optString("username") ?: ""
+                    pendingGifts[sku] = Triple(Date(dateLong), userID, username)
+                }
+            } catch (_: Exception) {
+            }
+        }
+
         private fun savePendingGifts() {
-            val jsonObject = JSONObject(pendingGifts as Map<*, *>)
+            val jsonObject = JSONObject()
+            pendingGifts.forEach { (sku, triple) ->
+                val giftJson = JSONObject()
+                giftJson.put("date", triple.first.time)
+                giftJson.put("userID", triple.second)
+                giftJson.put("username", triple.third)
+                jsonObject.put(sku, giftJson)
+            }
             val jsonString = jsonObject.toString()
             preferences?.edit {
                 putString(PENDING_GIFTS_KEY, jsonString)
@@ -608,9 +640,11 @@ suspend fun retryUntil(
     block: suspend () -> Boolean
 ) {
     var currentDelay = initialDelay
-    repeat(times - 1) {
+    for (i in 0 until times) {
         if (block()) return
-        delay(currentDelay)
-        currentDelay = (currentDelay * factor).toLong().coerceAtMost(maxDelay)
+        if (i < times - 1) {
+            delay(currentDelay)
+            currentDelay = (currentDelay * factor).toLong().coerceAtMost(maxDelay)
+        }
     }
 }
