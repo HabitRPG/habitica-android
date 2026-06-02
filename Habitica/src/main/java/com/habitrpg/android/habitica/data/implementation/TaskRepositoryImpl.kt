@@ -43,6 +43,11 @@ class TaskRepositoryImpl(
     TaskRepository {
     private var lastTaskAction: Long = 0
 
+    override fun clear() {
+        super.clear()
+        lastTaskAction = 0
+    }
+
     override fun getTasks(
         taskType: TaskType,
         userID: String?,

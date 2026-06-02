@@ -13,16 +13,21 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.Date
 
 class AppConfigManager(contentRepository: ContentRepository) :
-    com.habitrpg.common.habitica.helpers.AppConfigManager() {
+    com.habitrpg.common.habitica.helpers.AppConfigManager(), Clearable {
     private var worldState: WorldState? = null
 
-    private val scope = MainScope()
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    }
 
     init {
         scope.launch {

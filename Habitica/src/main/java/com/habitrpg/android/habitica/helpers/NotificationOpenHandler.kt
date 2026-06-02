@@ -5,17 +5,17 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class NotificationOpenHandler {
     companion object {
+        private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
         fun handleOpenedByNotification(
             identifier: String,
             intent: Intent
         ) {
-            MainScope().launch(context = Dispatchers.Main) {
+            scope.launch(context = Dispatchers.Main) {
                 when (identifier) {
                     PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openNoPartyScreen()
                     PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openPartyScreen()

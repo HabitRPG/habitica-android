@@ -32,6 +32,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.IAPGift
@@ -58,8 +59,8 @@ class PurchaseHandler(
     private val apiClient: ApiClient,
     private val userViewModel: MainUserViewModel,
     private val configManager: AppConfigManager
-) : PurchasesUpdatedListener, PurchasesResponseListener {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+) : PurchasesUpdatedListener, PurchasesResponseListener, Clearable {
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val billingClient =
         BillingClient.newBuilder(context).setListener(this)
             .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
@@ -161,6 +162,13 @@ class PurchaseHandler(
     fun stopListening() {
         billingClient.endConnection()
         scope.cancel()
+    }
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        processedPurchases.clear()
+        displayedConfirmations.clear()
     }
 
     suspend fun queryPurchases() {

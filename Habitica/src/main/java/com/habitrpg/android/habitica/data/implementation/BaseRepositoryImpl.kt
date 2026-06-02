@@ -18,6 +18,9 @@ abstract class BaseRepositoryImpl<T : BaseLocalRepository>(
         this.localRepository.close()
     }
 
+    override fun clear() {
+    }
+
     override fun <T : BaseObject> getUnmanagedCopy(list: List<T>): List<T> {
         return localRepository.getUnmanagedCopy(list)
     }
