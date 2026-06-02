@@ -39,7 +39,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -201,7 +200,7 @@ class ArmoireActivity : BaseActivity() {
         }
         binding.equipButton.setOnClickListener {
             lastKey?.let { it1 ->
-                MainScope().launchCatching { inventoryRepository.equip("equipped", it1) }
+                lifecycleScope.launchCatching { inventoryRepository.equip("equipped", it1) }
             }
             finish()
         }
