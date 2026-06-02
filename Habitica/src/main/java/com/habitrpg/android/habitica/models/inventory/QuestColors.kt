@@ -1,10 +1,9 @@
 package com.habitrpg.android.habitica.models.inventory
 
-import android.graphics.Color
+import androidx.core.graphics.toColorInt
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import androidx.core.graphics.toColorInt
 
 /**
  * Created by phillip on 31.01.18.

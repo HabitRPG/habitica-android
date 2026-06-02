@@ -8,7 +8,6 @@ import android.view.WindowInsets
 import android.widget.FrameLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding

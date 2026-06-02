@@ -25,10 +25,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
 import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.api.HostConfig

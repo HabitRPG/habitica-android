@@ -18,7 +18,6 @@ package com.habitrpg.android.habitica.ui.helpers
 import android.app.Activity
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.os.Build
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView

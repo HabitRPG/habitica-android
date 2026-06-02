@@ -2,11 +2,11 @@ package com.habitrpg.android.habitica.models.promotions
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-import androidx.core.graphics.toColorInt
 
 class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String

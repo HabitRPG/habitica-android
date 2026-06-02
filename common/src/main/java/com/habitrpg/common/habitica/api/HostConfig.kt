@@ -2,7 +2,6 @@ package com.habitrpg.common.habitica.api
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.core.content.edit
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper

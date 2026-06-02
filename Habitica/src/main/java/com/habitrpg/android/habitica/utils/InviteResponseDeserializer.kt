@@ -1,11 +1,10 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.gson.JsonDeserializer
 import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class InviteResponseDeserializer : JsonDeserializer<InviteResponse> {

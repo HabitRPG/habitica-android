@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Shader
-import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.scale
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.NpcBannerBinding
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
@@ -15,8 +15,6 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
-import androidx.core.graphics.scale
-import androidx.core.graphics.drawable.toDrawable
 
 class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
     private val binding = NpcBannerBinding.inflate(context.layoutInflater, this)

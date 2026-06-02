@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -26,8 +27,6 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import androidx.core.view.isVisible
 
 abstract class BaseTaskViewHolder(
     itemView: View,

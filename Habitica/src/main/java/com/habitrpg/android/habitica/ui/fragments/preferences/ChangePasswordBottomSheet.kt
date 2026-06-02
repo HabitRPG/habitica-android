@@ -11,14 +11,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.ui.views.ChangePasswordScreen
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import androidx.compose.runtime.setValue
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import com.habitrpg.android.habitica.R
 
 class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPasswordChanged: (oldPassword: String, newPassword: String) -> Unit = { _, _ -> }) : BottomSheetDialogFragment() {
     override fun onStart() {

@@ -5,8 +5,8 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.widget.RemoteViews
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -16,7 +16,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.core.net.toUri
 
 @AndroidEntryPoint
 abstract class TaskListWidgetProvider : BaseWidgetProvider() {

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import androidx.core.net.toUri
-import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.extensions.openBrowserLink

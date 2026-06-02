@@ -4,25 +4,22 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.graphics.Typeface
-import android.os.Build
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseSubscriptionViewBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import androidx.core.graphics.toColorInt
 
 class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
     private val binding = PurchaseSubscriptionViewBinding.inflate(context.layoutInflater, this, true)

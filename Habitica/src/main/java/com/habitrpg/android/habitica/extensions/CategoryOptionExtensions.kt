@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.extensions
 
-import android.content.Context
 import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group

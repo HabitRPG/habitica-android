@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication

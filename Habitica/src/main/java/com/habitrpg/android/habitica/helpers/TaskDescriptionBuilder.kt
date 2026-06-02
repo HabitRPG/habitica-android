@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
 import android.icu.text.MessageFormat
-import android.os.Build
 import android.text.format.DateUtils
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
