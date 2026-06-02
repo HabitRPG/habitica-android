@@ -87,6 +87,7 @@ abstract class TaskListGlanceWidget(
         }
         val state = TaskListMemoryCache.get(taskType) ?: withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
+            entry.taskRepository().refreshLocalData()
             val user = entry.userRepository().getUser().firstOrNull()
             val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
                 ?.toTypedArray() ?: emptyArray()

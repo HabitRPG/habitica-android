@@ -45,6 +45,15 @@ class TaskRepositoryImpl(
     TaskRepository {
     private var lastTaskAction: Long = 0
 
+    override fun refreshLocalData() {
+        val r = localRepository.realm
+        if (r.isClosed) return
+        try {
+            r.refresh()
+        } catch (ignored: IllegalStateException) {
+        }
+    }
+
     override fun getTasks(
         taskType: TaskType,
         userID: String?,

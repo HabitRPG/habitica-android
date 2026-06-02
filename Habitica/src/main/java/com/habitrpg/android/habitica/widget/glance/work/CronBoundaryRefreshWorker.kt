@@ -42,6 +42,7 @@ class CronBoundaryRefreshWorker(
             return Result.retry()
         }
 
+        WidgetRefreshWorker.clearTaskListHiddenIds(context)
         WidgetRefreshWorker.refreshAllWidgetsNow(context)
 
         schedule(context, user?.preferences?.dayStart ?: 0)
