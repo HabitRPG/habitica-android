@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.app.Activity
 import android.content.res.Resources
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
 import com.habitrpg.android.habitica.models.inventory.Mount
@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.ui.views.stable.MountBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.inflate
 import dagger.hilt.android.internal.managers.ViewComponentManager
-import androidx.core.graphics.drawable.toDrawable
 
 class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) :
     androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)),

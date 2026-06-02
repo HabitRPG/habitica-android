@@ -35,7 +35,6 @@ import androidx.core.view.isGone
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CurvedTimeTextBinding
 import com.habitrpg.android.habitica.databinding.StraightTimeTextBinding
-import com.habitrpg.wearos.habitica.ui.views.TimeText.Clock
 import com.habitrpg.wearos.habitica.ui.views.TimeTextViewBinding.TimeTextCurvedViewBinding
 import com.habitrpg.wearos.habitica.ui.views.TimeTextViewBinding.TimeTextStraightViewBinding
 import java.util.Calendar

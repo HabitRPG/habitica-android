@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType

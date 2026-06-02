@@ -2,23 +2,22 @@ package com.habitrpg.android.habitica.ui.fragments.skills
 
 import android.app.Dialog
 import android.content.DialogInterface
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.core.graphics.drawable.toDrawable
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SkillDialog
 import com.habitrpg.common.habitica.extensions.asPainter
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import androidx.core.graphics.drawable.toDrawable
 
 class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
 

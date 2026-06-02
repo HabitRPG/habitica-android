@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.core.os.bundleOf
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify

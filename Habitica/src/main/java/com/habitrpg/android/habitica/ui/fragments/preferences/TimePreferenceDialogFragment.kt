@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.TimePicker

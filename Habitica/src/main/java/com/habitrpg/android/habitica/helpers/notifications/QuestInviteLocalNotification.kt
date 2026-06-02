@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.helpers.notifications
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 

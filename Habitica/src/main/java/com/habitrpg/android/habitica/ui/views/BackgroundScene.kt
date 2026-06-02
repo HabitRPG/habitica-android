@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views
 
-import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,9 +16,9 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.core.graphics.scale
 import com.habitrpg.android.habitica.R
 import java.util.Calendar
-import androidx.core.graphics.scale
 
 @Composable
 private fun getBackgroundPainter(): ImageBitmap {

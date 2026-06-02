@@ -1,6 +1,5 @@
 package com.habitrpg.common.habitica.helpers
 
-import android.os.Build
 import java.text.NumberFormat
 import java.util.Locale
 import kotlin.math.ceil

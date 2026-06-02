@@ -1,7 +1,6 @@
 package com.habitrpg.common.habitica.helpers
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import java.util.Locale
 

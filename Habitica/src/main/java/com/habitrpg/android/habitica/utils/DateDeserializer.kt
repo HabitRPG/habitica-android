@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.utils
 
-import android.os.Build
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement

@@ -4,10 +4,6 @@ import android.os.Build
 import android.view.View
 import android.view.Window
 import android.view.WindowInsetsController
-import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import kotlin.and
-import kotlin.or
 
 fun Window.updateStatusBarColor(
     color: Int,

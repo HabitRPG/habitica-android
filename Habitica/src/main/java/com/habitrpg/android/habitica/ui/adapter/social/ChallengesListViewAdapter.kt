@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFil
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.helpers.EmojiParser
-import io.realm.OrderedRealmCollection
 
 class ChallengesListViewAdapter(
     private val viewUserChallengesOnly: Boolean,

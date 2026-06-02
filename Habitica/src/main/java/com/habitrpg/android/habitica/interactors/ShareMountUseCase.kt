@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.interactors
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.core.graphics.createBitmap
 import androidx.core.view.doOnNextLayout
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
@@ -19,7 +19,6 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
-import androidx.core.graphics.createBitmap
 
 class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
     class RequestValues(val mountKey: String, val message: String, val context: Context) :

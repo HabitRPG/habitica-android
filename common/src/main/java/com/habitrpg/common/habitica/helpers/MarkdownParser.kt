@@ -2,12 +2,12 @@ package com.habitrpg.common.habitica.helpers
 
 import android.content.Context
 import android.graphics.Rect
-import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.widget.TextView
+import androidx.core.net.toUri
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.handleUrlClicks
 import io.noties.markwon.AbstractMarkwonPlugin
@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import androidx.core.net.toUri
 
 object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()

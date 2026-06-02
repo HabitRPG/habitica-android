@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models.shops
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmList
 import java.util.Date
 
 class ShopCategory {

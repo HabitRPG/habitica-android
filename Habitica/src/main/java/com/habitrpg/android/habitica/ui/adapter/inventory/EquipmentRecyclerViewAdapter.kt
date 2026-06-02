@@ -2,19 +2,18 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.GearListItemBinding
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.loadImage
-import androidx.core.graphics.drawable.toDrawable
 
 class EquipmentRecyclerViewAdapter :
     BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
