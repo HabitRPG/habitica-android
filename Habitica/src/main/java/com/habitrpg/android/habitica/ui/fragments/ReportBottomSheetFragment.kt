@@ -29,7 +29,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReportBottomSheetFragment : BottomSheetDialogFragment() {
-    private lateinit var binding: FragmentReportMessageBinding
+    private var _binding: FragmentReportMessageBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -53,8 +54,13 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentReportMessageBinding.inflate(inflater, container, false)
+        _binding = FragmentReportMessageBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
