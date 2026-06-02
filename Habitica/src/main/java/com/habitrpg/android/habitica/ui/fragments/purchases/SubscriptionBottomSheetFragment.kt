@@ -30,7 +30,6 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -132,7 +131,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun loadInventory() {
-        CoroutineScope(Dispatchers.IO).launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val subscriptions = purchaseHandler.loadSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
@@ -234,18 +233,21 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun checkIfNeedsCancellation() {
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val newestSubscription = purchaseHandler.checkForSubscription()
             if (user?.purchased?.plan?.paymentMethod == "Google" &&
                 user?.purchased?.plan?.isActive == true &&
                 user?.purchased?.plan?.dateTerminated == null &&
                 (newestSubscription?.isAutoRenewing != true)
             ) {
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    purchaseHandler.cancelSubscription()
-                }
+                purchaseHandler.cancelSubscription()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
