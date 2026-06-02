@@ -7,9 +7,8 @@ import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DisplayItemDropUseCase
@@ -33,7 +32,7 @@ constructor(private val soundManager: SoundManager) :
         }
 
         if (snackbarText.isNotEmpty()) {
-            MainScope().launch(context = Dispatchers.Main) {
+            withContext(Dispatchers.Main) {
                 delay(3000L)
                 HabiticaSnackbar.showSnackbar(
                     requestValues.snackbarTargetView,

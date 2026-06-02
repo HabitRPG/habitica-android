@@ -21,13 +21,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,31 +41,7 @@ import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import kotlinx.coroutines.MainScope
-import java.util.Calendar
 
-@Composable
-private fun getBackgroundPainter(): ImageBitmap {
-    val calendar = Calendar.getInstance()
-    val month = calendar.get(Calendar.MONTH)
-    return ImageBitmap.imageResource(
-        when (month) {
-            Calendar.JANUARY -> R.drawable.stable_tile_janurary
-            Calendar.FEBRUARY -> R.drawable.stable_tile_february
-            Calendar.MARCH -> R.drawable.stable_tile_march
-            Calendar.APRIL -> R.drawable.stable_tile_april
-            Calendar.MAY -> R.drawable.stable_tile_may
-            Calendar.JUNE -> R.drawable.stable_tile_june
-            Calendar.JULY -> R.drawable.stable_tile_july
-            Calendar.AUGUST -> R.drawable.stable_tile_august
-            Calendar.SEPTEMBER -> R.drawable.stable_tile_september
-            Calendar.OCTOBER -> R.drawable.stable_tile_october
-            Calendar.NOVEMBER -> R.drawable.stable_tile_november
-            Calendar.DECEMBER -> R.drawable.stable_tile_december
-            else -> R.drawable.stable_tile_may
-        }
-    )
-}
 
 @Composable
 fun MountBottomSheet(
@@ -152,13 +127,14 @@ fun MountBottomSheet(
             )
         }
         val context = LocalContext.current
+        val scope = rememberCoroutineScope()
         HabiticaButton(
             background = HabiticaTheme.colors.tintedUiSub,
             color = Color.White,
             contentPadding = PaddingValues(12.dp),
             modifier = Modifier.padding(bottom = 16.dp),
             onClick = {
-                MainScope().launchCatching {
+                scope.launchCatching {
                     ShareMountUseCase().callInteractor(
                         ShareMountUseCase.RequestValues(
                             mount.key,

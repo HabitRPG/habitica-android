@@ -70,7 +70,6 @@ import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlin.math.sin
 
@@ -350,13 +349,14 @@ fun PetBottomSheet(
             }
         }
         val context = LocalContext.current
+        val scope = rememberCoroutineScope()
         HabiticaButton(
             background = HabiticaTheme.colors.tintedUiSub,
             color = Color.White,
             contentPadding = PaddingValues(12.dp),
             modifier = Modifier.padding(bottom = 16.dp),
             onClick = {
-                MainScope().launchCatching {
+                scope.launchCatching {
                     SharePetUseCase().callInteractor(
                         SharePetUseCase.RequestValues(
                             pet.key,

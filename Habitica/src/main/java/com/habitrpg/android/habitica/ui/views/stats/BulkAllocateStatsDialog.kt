@@ -95,6 +95,7 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
         }
     }
 
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         getButton(BUTTON_POSITIVE).setOnClickListener {
