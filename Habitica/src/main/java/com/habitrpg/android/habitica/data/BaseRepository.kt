@@ -1,8 +1,9 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.common.habitica.helpers.Clearable
 
-interface BaseRepository {
+interface BaseRepository : Clearable {
     val isClosed: Boolean
 
     fun close()

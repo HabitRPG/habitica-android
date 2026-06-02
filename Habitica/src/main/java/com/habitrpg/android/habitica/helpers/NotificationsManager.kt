@@ -4,9 +4,10 @@ import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.Notification
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import java.lang.ref.WeakReference
 import java.util.Date
 
-interface NotificationsManager {
+interface NotificationsManager : Clearable {
     val displayNotificationEvents: Flow<Notification>
     var apiClient: WeakReference<ApiClient>?
 
@@ -32,8 +33,16 @@ interface NotificationsManager {
 }
 
 class MainNotificationsManager : NotificationsManager {
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val seenNotifications: MutableMap<String, Boolean> = HashMap()
     override var apiClient: WeakReference<ApiClient>? = null
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        seenNotifications.clear()
+        notificationsFlow.value = null
+    }
 
     private var lastNotificationHandling: Date? = null
     private val notificationsFlow = MutableStateFlow<List<Notification>?>(null)
@@ -122,7 +131,7 @@ class MainNotificationsManager : NotificationsManager {
     }
 
     private fun readNotification(notification: Notification) {
-        MainScope().launchCatching {
+        scope.launchCatching {
             displayedNotificationEvents.send(notification)
             seenNotifications[notification.id] = true
             apiClient?.get()?.readNotification(notification.id)

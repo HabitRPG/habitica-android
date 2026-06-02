@@ -5,13 +5,10 @@ import android.content.Intent
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.net.toUri
-import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
 import com.habitrpg.android.habitica.extensions.toZonedDateTime
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
-import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
-import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.text.DateFormat

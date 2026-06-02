@@ -49,7 +49,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
 import java.util.Date
 import javax.inject.Inject
@@ -114,6 +114,9 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     @Inject
     internal lateinit var authenticationHandler: AuthenticationHandler
+
+    @Inject
+    internal lateinit var clearables: Set<@JvmSuppressWildcards com.habitrpg.common.habitica.helpers.Clearable>
 
     private lateinit var lifecycleTracker: ApplicationLifecycleTracker
 
@@ -397,9 +400,13 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
 
         fun logout(context: Context, user: User? = null) {
-            MainScope().launchCatching {
+            val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+            scope.launchCatching {
                 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
                 val instance      = getInstance(context)
+
+                instance?.clearables?.forEach { it.clear() }
+
                 val pushManager   = instance?.pushNotificationManager
                 val deviceToken   = preferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "") ?: ""
 

@@ -1,17 +1,25 @@
 package com.habitrpg.android.habitica.helpers
 
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SoundManager
 @Inject
-constructor(var soundFileLoader: SoundFileLoader) {
+constructor(var soundFileLoader: SoundFileLoader) : Clearable {
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     var soundTheme: String = SOUND_THEME_OFF
 
     private val loadedSoundFiles: MutableMap<String, SoundFile> = HashMap()
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        loadedSoundFiles.clear()
+    }
 
     fun preloadAllFiles() {
         loadedSoundFiles.clear()
@@ -30,7 +38,7 @@ constructor(var soundFileLoader: SoundFileLoader) {
         soundFiles.add(SoundFile(soundTheme, SOUND_PLUS_HABIT))
         soundFiles.add(SoundFile(soundTheme, SOUND_REWARD))
         soundFiles.add(SoundFile(soundTheme, SOUND_TODO))
-        MainScope().launchCatching {
+        scope.launchCatching {
             soundFileLoader.download(soundFiles)
         }
     }
@@ -46,7 +54,7 @@ constructor(var soundFileLoader: SoundFileLoader) {
             val soundFiles = ArrayList<SoundFile>()
 
             soundFiles.add(SoundFile(soundTheme, type))
-            MainScope().launchCatching {
+            scope.launchCatching {
                 val newFiles = soundFileLoader.download(soundFiles)
                 val file = newFiles[0]
                 loadedSoundFiles[type] = file

@@ -12,18 +12,16 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.launch
 import java.time.DateTimeException
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -35,8 +33,15 @@ class TaskAlarmManager(
     private var context: Context,
     private var taskRepository: TaskRepository,
     private var authenticationHandler: AuthenticationHandler
-) {
+) : Clearable {
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    }
+
     private val upcomingReminderOccurrencesToSchedule = 3
 
     /**
@@ -57,7 +62,7 @@ class TaskAlarmManager(
      *             is processed to schedule the upcoming alarms.
      */
     private fun setAlarmsForTask(task: Task) {
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch(Dispatchers.IO) {
             val reminderOccurencesToSchedule =
                 if (task.type == TaskType.TODO) {
                     1
@@ -95,7 +100,7 @@ class TaskAlarmManager(
     }
 
     fun removeAlarmsForTask(task: Task) {
-        CoroutineScope(Dispatchers.IO).launchCatching {
+        scope.launchCatching(context = Dispatchers.IO) {
             task.reminders?.let { reminders ->
                 // Remove not only the immediate reminder, but also the next however many (upcomingReminderOccurrencesToSchedule) reminders
                 reminders.forEachIndexed { index, reminder ->
@@ -105,11 +110,10 @@ class TaskAlarmManager(
         }
     }
 
-    // This function is used from the TaskReceiver since we do not have access to the task
     // We currently only use this function to schedule the next reminder for dailies
     // We may be able to use repeating alarms instead of this in the future
     fun addAlarmForTaskId(taskId: String) {
-        MainScope().launch(ExceptionHandler.coroutine()) {
+        scope.launch(ExceptionHandler.coroutine()) {
             val task =
                 taskRepository.getTaskCopy(taskId)
                     .filter { task -> task.isValid && task.isManaged && TaskType.DAILY == task.type }
@@ -192,7 +196,7 @@ class TaskAlarmManager(
                 PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
             )
 
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch(Dispatchers.IO) {
             setAlarm(context, reminderZonedTime.toEpochMilli(), sender)
         }
     }

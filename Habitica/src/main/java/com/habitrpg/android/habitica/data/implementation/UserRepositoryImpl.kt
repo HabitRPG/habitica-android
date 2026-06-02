@@ -47,9 +47,13 @@ class UserRepositoryImpl(
     private val appConfigManager: AppConfigManager,
     private val context: Context
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
-    companion object {
-        private var lastReadNotification: String? = null
-        private var lastSync: Date? = null
+    private var lastReadNotification: String? = null
+    private var lastSync: Date? = null
+
+    override fun clear() {
+        super.clear()
+        lastReadNotification = null
+        lastSync = null
     }
 
     override fun getUser(): Flow<User?> = authenticationHandler.userIDFlow.flatMapLatest { getUser(it) }

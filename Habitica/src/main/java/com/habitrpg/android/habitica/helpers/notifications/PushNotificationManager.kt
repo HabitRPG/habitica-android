@@ -13,15 +13,17 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import java.io.IOException
 
 class PushNotificationManager(
     var apiClient: ApiClient,
     private val sharedPreferences: SharedPreferences,
     private val context: Context
-) {
+) : Clearable {
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     var refreshedToken: String = ""
         set(value) {
             if (value.isEmpty()) {
@@ -33,6 +35,12 @@ class PushNotificationManager(
                 putString(DEVICE_TOKEN_PREFERENCE_KEY, value)
             }
         }
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        clearUser()
+    }
     private var user: User? = null
 
     fun setUser(user: User) {
@@ -87,7 +95,7 @@ class PushNotificationManager(
         val pushDeviceData = HashMap<String, String>()
         pushDeviceData["regId"] = this.refreshedToken
         pushDeviceData["type"] = "android"
-        MainScope().launchCatching {
+        scope.launchCatching {
             apiClient.addPushDevice(pushDeviceData)
         }
     }

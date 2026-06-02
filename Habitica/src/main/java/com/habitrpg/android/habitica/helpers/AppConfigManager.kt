@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
@@ -23,7 +24,12 @@ class AppConfigManager(contentRepository: Provider<ContentRepository>) :
     com.habitrpg.common.habitica.helpers.AppConfigManager() {
     private var worldState: WorldState? = null
 
-    private val scope = MainScope()
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    }
 
     init {
         scope.launchCatching {
