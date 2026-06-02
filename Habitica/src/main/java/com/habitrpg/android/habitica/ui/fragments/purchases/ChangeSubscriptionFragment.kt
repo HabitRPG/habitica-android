@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.app.Activity
+import android.icu.util.Currency
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -73,9 +74,11 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.shared.habitica.extensions.round
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import java.math.RoundingMode
 import javax.inject.Inject
 
 
@@ -246,11 +249,13 @@ class ChangeSubscriptionViewModel @Inject constructor(
     fun estimatedYearlyPrice(): String {
         val details = productDetailsForProduct(HabiticaProduct.SUBSCRIPTION_1_MONTH) ?: return ""
         val monthlyPricePhase = details.subscriptionOfferDetails?.first()?.pricingPhases?.pricingPhaseList?.firstOrNull { it.priceAmountMicros > 0 } ?: return ""
-        val yearlyPriceMicros = monthlyPricePhase.priceAmountMicros * 12
-        return if (monthlyPricePhase.formattedPrice.indexOf(monthlyPricePhase.priceCurrencyCode) > 0) {
-            "${"%,.2f".format(yearlyPriceMicros.div(1_000_000.0))}${monthlyPricePhase.priceCurrencyCode} "
+        var yearlyPrice = (monthlyPricePhase.priceAmountMicros * 12).div(1_000_000.0)
+        yearlyPrice = yearlyPrice.round(0) - 0.01
+        val currency = Currency.getInstance(monthlyPricePhase.priceCurrencyCode)
+        return if (monthlyPricePhase.formattedPrice.indexOf(currency.symbol) > 0) {
+            "${"%,.2f".format(yearlyPrice)}${currency.symbol} "
         } else {
-            "${monthlyPricePhase.priceCurrencyCode}${"%,.2f".format(yearlyPriceMicros.div(1_000_000.0))}"
+            "${currency.symbol}${"%,.2f".format(yearlyPrice)}"
         }
     }
 }
@@ -344,14 +349,16 @@ fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSub
                     AnimatedVisibility(step == 0 || product == selectedSub) {
                         if (product == HabiticaProduct.SUBSCRIPTION_12_MONTH) {
                             ChangeSubscriptionOption(
-                                price = { Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                price = { Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                                     Text(details[product]?.formattedSubscriptionPrice ?: "", style = TextStyle(
-                                        brush = Brush.horizontalGradient(fancyGradienColorList)
+                                        brush = Brush.horizontalGradient(fancyGradienColorList),
+                                        fontSize = 22.sp,
+                                        fontWeight = FontWeight.Bold
                                     ))
                                     Text(viewModel.estimatedYearlyPrice(),
                                         textDecoration = TextDecoration.LineThrough,
-                                        color = colorResource(R.color.gray_400),
-                                        fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                                        color = colorResource(if (selectedSub == product) R.color.gray_400 else R.color.brand_600),
+                                        fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                                 } },
                                 recurringText = { Text(stringResource(R.string.subscription_duration, stringResource(product.recurranceStringRes))) },
                                 benefitLine =
