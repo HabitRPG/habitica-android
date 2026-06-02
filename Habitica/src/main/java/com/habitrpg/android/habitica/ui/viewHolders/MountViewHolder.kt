@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.ui.views.stable.MountBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.inflate
 import dagger.hilt.android.internal.managers.ViewComponentManager
+import androidx.core.graphics.drawable.toDrawable
 
 class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) :
     androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)),
@@ -53,10 +54,7 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
                 if (owned) {
                     it
                 } else {
-                    BitmapDrawable(
-                        itemView.context.resources,
-                        it.toBitmap().extractAlpha()
-                    )
+                    it.toBitmap().extractAlpha().toDrawable(itemView.context.resources)
                 }
             if (binding.imageView.tag == imageName) {
                 binding.imageView.bitmap = drawable.toBitmap()

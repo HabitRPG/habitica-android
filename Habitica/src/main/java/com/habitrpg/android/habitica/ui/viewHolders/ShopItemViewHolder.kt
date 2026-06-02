@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
+import androidx.core.view.isVisible
 
 class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     private val binding = RowShopitemBinding.bind(itemView)
@@ -123,7 +124,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             contentDescription += ", ${context.getString(R.string.gems_left_nomax, limitedLeft)}"
         }
 
-        if (binding.itemDetailIndicator.visibility == View.VISIBLE) {
+        if (binding.itemDetailIndicator.isVisible) {
             val layoutParams = binding.itemDetailIndicator.layoutParams
             layoutParams.width =
                 if (binding.itemDetailIndicator.text.isBlank()) {

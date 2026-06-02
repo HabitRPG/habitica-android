@@ -46,6 +46,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class ChallengeFormActivity : BaseActivity() {
@@ -344,7 +345,7 @@ class ChallengeFormActivity : BaseActivity() {
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
 
             supportActionBar.title = ""
-            supportActionBar.setBackgroundDrawable(ColorDrawable(getThemeColor(R.attr.colorPrimaryOffset)))
+            supportActionBar.setBackgroundDrawable(getThemeColor(R.attr.colorPrimaryOffset).toDrawable())
             supportActionBar.elevation = 0f
         }
 

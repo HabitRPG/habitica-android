@@ -24,6 +24,10 @@ import com.habitrpg.android.habitica.R
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import androidx.core.util.size
+import androidx.core.graphics.withTranslation
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.createBitmap
 
 // Adapted from https://github.com/justasm/DragLinearLayout
 
@@ -460,7 +464,7 @@ constructor(
 
     private fun previousDraggablePosition(position: Int): Int {
         val startIndex = draggableChildren.indexOfKey(position)
-        return if (startIndex < 1 || startIndex > draggableChildren.size()) {
+        return if (startIndex < 1 || startIndex > draggableChildren.size) {
             -1
         } else {
             draggableChildren.keyAt(
@@ -471,7 +475,7 @@ constructor(
 
     private fun nextDraggablePosition(position: Int): Int {
         val startIndex = draggableChildren.indexOfKey(position)
-        return if (startIndex < -1 || startIndex > draggableChildren.size() - 2) {
+        return if (startIndex < -1 || startIndex > draggableChildren.size - 2) {
             -1
         } else {
             draggableChildren.keyAt(
@@ -531,24 +535,22 @@ constructor(
         super.dispatchDraw(canvas)
 
         if (draggedItem.detecting && (draggedItem.dragging || draggedItem.settling())) {
-            canvas.save()
-            canvas.translate(0f, draggedItem.totalDragOffset.toFloat())
-            draggedItem.viewDrawable?.draw(canvas)
+            canvas.withTranslation(0f, draggedItem.totalDragOffset.toFloat()) {
+                draggedItem.viewDrawable?.draw(this)
 
-            val left = draggedItem.viewDrawable?.bounds?.left ?: 0
-            val right = draggedItem.viewDrawable?.bounds?.right ?: 0
-            val top = draggedItem.viewDrawable?.bounds?.top ?: 0
-            val bottom = draggedItem.viewDrawable?.bounds?.bottom ?: 0
+                val left = draggedItem.viewDrawable?.bounds?.left ?: 0
+                val right = draggedItem.viewDrawable?.bounds?.right ?: 0
+                val top = draggedItem.viewDrawable?.bounds?.top ?: 0
+                val bottom = draggedItem.viewDrawable?.bounds?.bottom ?: 0
 
-            dragBottomShadowDrawable?.setBounds(left, bottom, right, bottom + dragShadowHeight)
-            dragBottomShadowDrawable?.draw(canvas)
+                dragBottomShadowDrawable?.setBounds(left, bottom, right, bottom + dragShadowHeight)
+                dragBottomShadowDrawable?.draw(this)
 
-            if (null != dragTopShadowDrawable) {
-                dragTopShadowDrawable.setBounds(left, top - dragShadowHeight, right, top)
-                dragTopShadowDrawable.draw(canvas)
+                if (null != dragTopShadowDrawable) {
+                    dragTopShadowDrawable.setBounds(left, top - dragShadowHeight, right, top)
+                    dragTopShadowDrawable.draw(this)
+                }
             }
-
-            canvas.restore()
         }
     }
 
@@ -702,7 +704,7 @@ constructor(
 
         val bitmap = getBitmapFromView(view)
 
-        val drawable = BitmapDrawable(resources, bitmap)
+        val drawable = bitmap.toDrawable(resources)
 
         drawable.bounds = Rect(left, top, left + view.width, top + view.height)
 
@@ -737,7 +739,7 @@ constructor(
          * @return a bitmap showing a screenshot of the view passed in.
          */
         private fun getBitmapFromView(view: View): Bitmap {
-            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+            val bitmap = createBitmap(view.width, view.height)
             val canvas = Canvas(bitmap)
             view.draw(canvas)
             return bitmap

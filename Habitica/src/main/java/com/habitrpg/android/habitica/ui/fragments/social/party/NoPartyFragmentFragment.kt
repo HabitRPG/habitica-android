@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 import kotlin.math.roundToInt
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
@@ -134,10 +135,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                 val height = context.resources.getDimension(R.dimen.shop_height).toInt()
                 val width = (height * aspectRatio).roundToInt()
                 val bitmapDrawable =
-                    BitmapDrawable(
-                        context.resources,
-                        Bitmap.createScaledBitmap(bitmap, width, height, false)
-                    )
+                    Bitmap.createScaledBitmap(bitmap, width, height, false).toDrawable(context.resources)
                 bitmapDrawable.tileModeX = Shader.TileMode.REPEAT
                 if (binding?.noPartyBackground != null) {
                     binding?.noPartyBackground?.background = bitmapDrawable

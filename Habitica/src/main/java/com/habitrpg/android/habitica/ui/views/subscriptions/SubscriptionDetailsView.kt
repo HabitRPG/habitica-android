@@ -19,6 +19,7 @@ import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
+import androidx.core.net.toUri
 
 class SubscriptionDetailsView : LinearLayout {
     lateinit var binding: SubscriptionDetailsBinding
@@ -239,7 +240,7 @@ class SubscriptionDetailsView : LinearLayout {
                 } else {
                     context.getString(R.string.base_url) + "/"
                 }
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
         } else if (plan?.dateTerminated != null) {
             onShowSubscriptionOptions?.invoke()
         }

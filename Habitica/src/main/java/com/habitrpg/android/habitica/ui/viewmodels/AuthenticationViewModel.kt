@@ -189,11 +189,13 @@ class AuthenticationViewModel @Inject constructor(
         val wasRegistering = isRegistering.value
         retrieveUser()
         _authenticationSuccess.value = response.newUser
-        
-        if (wasRegistering) {
-            sharedPrefs.edit().putBoolean("pending_registration_event", true).apply()
-        } else {
-            sharedPrefs.edit().putBoolean("pending_login_event", true).apply()
+
+        sharedPrefs.edit {
+            if (wasRegistering) {
+                putBoolean("pending_registration_event", true)
+            } else {
+                putBoolean("pending_login_event", true)
+            }
         }
     }
 

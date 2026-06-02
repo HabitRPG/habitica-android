@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class AchievementsFragment :
@@ -87,7 +88,7 @@ class AchievementsFragment :
         adapter.useGridLayout = useGridLayout
         context?.let {
             binding?.recyclerView?.background =
-                ColorDrawable(ContextCompat.getColor(it, R.color.content_background))
+                ContextCompat.getColor(it, R.color.content_background).toDrawable()
         }
 
         layoutManager.spanSizeLookup =

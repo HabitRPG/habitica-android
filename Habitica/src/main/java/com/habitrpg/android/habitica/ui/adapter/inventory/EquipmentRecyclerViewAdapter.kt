@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.loadImage
+import androidx.core.graphics.drawable.toDrawable
 
 class EquipmentRecyclerViewAdapter :
     BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
@@ -49,10 +50,7 @@ class EquipmentRecyclerViewAdapter :
         init {
             context = itemView.context
             binding.twoHandedView.setCompoundDrawablesWithIntrinsicBounds(
-                BitmapDrawable(
-                    context.resources,
-                    HabiticaIconsHelper.imageOfTwoHandedIcon()
-                ),
+                HabiticaIconsHelper.imageOfTwoHandedIcon().toDrawable(context.resources),
                 null,
                 null,
                 null

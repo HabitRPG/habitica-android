@@ -16,6 +16,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 abstract class TaskListWidgetProvider : BaseWidgetProvider() {
@@ -80,7 +81,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             val intent = Intent(context, serviceClass)
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
+            intent.data = intent.toUri(Intent.URI_INTENT_SCHEME).toUri()
             val rv = RemoteViews(context.packageName, R.layout.widget_task_list)
             rv.setRemoteAdapter(R.id.list_view, intent)
             rv.setEmptyView(R.id.list_view, R.id.emptyView)
@@ -100,7 +101,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             val taskIntent = Intent(context, providerClass)
             taskIntent.action = DAILY_ACTION
             taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
+            intent.data = intent.toUri(Intent.URI_INTENT_SCHEME).toUri()
             val toastPendingIntent =
                 PendingIntent.getBroadcast(
                     context,

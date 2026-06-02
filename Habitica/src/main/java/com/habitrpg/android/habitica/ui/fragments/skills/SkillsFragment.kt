@@ -156,7 +156,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     activity.snackbarContainer,
                     null,
                     context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
-                    BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
+                    HabiticaIconsHelper.imageOfMagic().toDrawable(resources),
                     ContextCompat.getColor(it, R.color.blue_10),
                     "-" + usedSkill?.mana,
                     HabiticaSnackbar.SnackbarDisplayType.BLUE
@@ -171,7 +171,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     activity.snackbarContainer,
                     null,
                     context?.getString(R.string.caused_damage),
-                    BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
+                    HabiticaIconsHelper.imageOfDamage().toDrawable(resources),
                     ContextCompat.getColor(activity, R.color.green_10),
                     "+%.01f".format(response.damage),
                     HabiticaSnackbar.SnackbarDisplayType.SUCCESS

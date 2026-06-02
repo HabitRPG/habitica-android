@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.interactors
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.text.SpannableStringBuilder
 import android.view.Gravity
 import android.view.View
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.util.Pair
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
@@ -154,7 +154,7 @@ constructor(
             icon: Bitmap
         ): View {
             val textView = TextView(context)
-            val iconDrawable = BitmapDrawable(context.resources, icon)
+            val iconDrawable = icon.toDrawable(context.resources)
             textView.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
             val text: String =
                 if (value > 0) {

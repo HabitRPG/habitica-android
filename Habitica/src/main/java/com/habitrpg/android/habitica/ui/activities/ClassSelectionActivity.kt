@@ -34,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class ClassSelectionActivity : BaseActivity() {
@@ -138,7 +139,7 @@ class ClassSelectionActivity : BaseActivity() {
         healerOutfit.weapon = "weapon_healer_6"
         val healer = this.makeUser(preferences, healerOutfit)
         binding.healerAvatarView.setAvatar(healer)
-        val healerIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHealerLightBg())
+        val healerIcon = HabiticaIconsHelper.imageOfHealerLightBg().toDrawable(resources)
         binding.healerButton.setCompoundDrawablesWithIntrinsicBounds(healerIcon, null, null, null)
 
         val mageOutfit = Outfit()
@@ -147,7 +148,7 @@ class ClassSelectionActivity : BaseActivity() {
         mageOutfit.weapon = "weapon_wizard_6"
         val mage = this.makeUser(preferences, mageOutfit)
         binding.mageAvatarView.setAvatar(mage)
-        val mageIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfMageLightBg())
+        val mageIcon = HabiticaIconsHelper.imageOfMageLightBg().toDrawable(resources)
         binding.mageButton.setCompoundDrawablesWithIntrinsicBounds(mageIcon, null, null, null)
 
         val rogueOutfit = Outfit()
@@ -157,7 +158,7 @@ class ClassSelectionActivity : BaseActivity() {
         rogueOutfit.weapon = "weapon_rogue_6"
         val rogue = this.makeUser(preferences, rogueOutfit)
         binding.rogueAvatarView.setAvatar(rogue)
-        val rogueIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfRogueLightBg())
+        val rogueIcon = HabiticaIconsHelper.imageOfRogueLightBg().toDrawable(resources)
         binding.rogueButton.setCompoundDrawablesWithIntrinsicBounds(rogueIcon, null, null, null)
 
         val warriorOutfit = Outfit()
@@ -167,7 +168,7 @@ class ClassSelectionActivity : BaseActivity() {
         warriorOutfit.weapon = "weapon_warrior_6"
         val warrior = this.makeUser(preferences, warriorOutfit)
         binding.warriorAvatarView.setAvatar(warrior)
-        val warriorIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfWarriorLightBg())
+        val warriorIcon = HabiticaIconsHelper.imageOfWarriorLightBg().toDrawable(resources)
         binding.warriorButton.setCompoundDrawablesWithIntrinsicBounds(warriorIcon, null, null, null)
     }
 

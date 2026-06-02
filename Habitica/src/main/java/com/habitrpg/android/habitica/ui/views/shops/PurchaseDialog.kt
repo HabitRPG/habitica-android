@@ -338,12 +338,12 @@ class PurchaseDialog(
         set(value) {
             field = value
             if (isPinned) {
-                pinIcon.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfUnpinItem()))
+                pinIcon.setImageDrawable(HabiticaIconsHelper.imageOfUnpinItem().toDrawable(context.resources))
                 pinIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.text_red)
                 pinTextView.setTextColor(ContextCompat.getColor(context, R.color.text_red))
                 pinTextView.text = context.getText(R.string.unpin)
             } else {
-                pinIcon.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfPinItem()))
+                pinIcon.setImageDrawable(HabiticaIconsHelper.imageOfPinItem().toDrawable(context.resources))
                 pinIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.text_brand)
                 pinTextView.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
                 pinTextView.text = context.getText(R.string.pin)

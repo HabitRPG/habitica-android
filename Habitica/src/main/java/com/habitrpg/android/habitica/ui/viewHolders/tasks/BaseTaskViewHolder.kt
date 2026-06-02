@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.core.view.isVisible
 
 abstract class BaseTaskViewHolder(
     itemView: View,
@@ -88,7 +89,7 @@ abstract class BaseTaskViewHolder(
             if (specialTaskTextView?.visibility == View.VISIBLE) {
                 isVisible = true
             }
-            if (this.streakTextView.visibility == View.VISIBLE) {
+            if (this.streakTextView.isVisible) {
                 isVisible = true
             }
             return isVisible

@@ -16,6 +16,7 @@ import androidx.core.view.updateLayoutParams
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import androidx.core.graphics.drawable.toDrawable
 
 class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     var hideWhenEmpty: Boolean = false
@@ -107,7 +108,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         set(value) {
             field = value
             if (value != null) {
-                drawable = BitmapDrawable(resources, value)
+                drawable = value.toDrawable(resources)
                 this.setCompoundDrawablesWithIntrinsicBounds(
                     drawable,
                     null,

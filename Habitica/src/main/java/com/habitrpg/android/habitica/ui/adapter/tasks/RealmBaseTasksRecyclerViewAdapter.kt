@@ -21,6 +21,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import io.realm.OrderedRealmCollection
+import androidx.core.graphics.drawable.toDrawable
 
 abstract class RealmBaseTasksRecyclerViewAdapter(
     private val layoutResource: Int,
@@ -135,7 +136,7 @@ class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
 
     init {
         itemView.findViewById<TextView>(R.id.gold_textview).setCompoundDrawablesWithIntrinsicBounds(
-            BitmapDrawable(itemView.resources, HabiticaIconsHelper.imageOfGold()),
+            HabiticaIconsHelper.imageOfGold().toDrawable(itemView.resources),
             null,
             null,
             null

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.habitrpg.android.habitica.R
 import java.util.Calendar
+import androidx.core.graphics.scale
 
 @Composable
 private fun getBackgroundPainter(): ImageBitmap {
@@ -54,12 +55,7 @@ fun BackgroundScene(modifier: Modifier = Modifier) {
             .zIndex(1f),
         onDraw = {
             val bitmap =
-                Bitmap.createScaledBitmap(
-                    image.asAndroidBitmap(),
-                    image.width.dp.roundToPx(),
-                    124.dp.roundToPx(),
-                    false
-                )
+                image.asAndroidBitmap().scale(image.width.dp.roundToPx(), 124.dp.roundToPx(), false)
             val paint =
                 Paint().asFrameworkPaint().apply {
                     isAntiAlias = true
