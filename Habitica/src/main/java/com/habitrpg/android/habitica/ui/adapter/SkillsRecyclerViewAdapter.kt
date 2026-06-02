@@ -17,6 +17,7 @@ import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.loadImage
 import io.realm.RealmList
+import androidx.core.graphics.drawable.toDrawable
 
 class SkillsRecyclerViewAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -83,14 +84,11 @@ class SkillsRecyclerViewAdapter :
         private val binding = SkillListItemBinding.bind(itemView)
         private val context = itemView.context
         private val magicDrawable: Drawable =
-            BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMagic())
+            HabiticaIconsHelper.imageOfMagic().toDrawable(context.resources)
         private val lockDrawable: Drawable =
-            BitmapDrawable(
-                context.resources,
-                HabiticaIconsHelper.imageOfLocked(
-                    ContextCompat.getColor(context, R.color.text_dimmed)
-                )
-            )
+            HabiticaIconsHelper.imageOfLocked(
+                ContextCompat.getColor(context, R.color.text_dimmed)
+            ).toDrawable(context.resources)
         private var skill: Skill? = null
 
         init {

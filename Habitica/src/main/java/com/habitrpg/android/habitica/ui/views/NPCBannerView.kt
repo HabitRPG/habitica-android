@@ -15,6 +15,8 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import androidx.core.graphics.scale
+import androidx.core.graphics.drawable.toDrawable
 
 class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
     private val binding = NpcBannerBinding.inflate(context.layoutInflater, this)
@@ -48,7 +50,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(con
         DataBindingUtils.loadImage(context, identifier + "_background" + shopSpriteSuffix) {
             val aspectRatio = it.intrinsicWidth / it.intrinsicHeight.toFloat()
             val width = (height * aspectRatio).roundToInt()
-            val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it.toBitmap(), width, height, false))
+            val drawable = it.toBitmap().scale(width, height, false).toDrawable(context.resources)
             drawable.tileModeX = Shader.TileMode.REPEAT
             MainScope().launch {
                 binding.backgroundView.background = drawable
@@ -58,7 +60,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(con
         DataBindingUtils.loadImage(context, identifier + "_scene" + shopSpriteSuffix) {
             val aspectRatio = it.intrinsicWidth / it.intrinsicHeight.toFloat()
             val width = (height * aspectRatio).roundToInt()
-            val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it.toBitmap(), width, height, false))
+            val drawable = it.toBitmap().scale(width, height, false).toDrawable(context.resources)
             drawable.tileModeX = Shader.TileMode.CLAMP
             MainScope().launch {
                 binding.sceneView.background = drawable

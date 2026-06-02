@@ -3,10 +3,10 @@ package com.habitrpg.android.habitica.ui.viewHolders
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.drawable.BitmapDrawable
 import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -92,28 +92,28 @@ class ChatRecyclerMessageViewHolder(
             }
         }
         binding.replyButton.setCompoundDrawablesWithIntrinsicBounds(
-            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
+            HabiticaIconsHelper.imageOfChatReplyIcon().toDrawable(res),
             null,
             null,
             null
         )
         binding.copyButton.setOnClickListener { chatMessage?.let { onCopyMessage?.invoke(it) } }
         binding.copyButton.setCompoundDrawablesWithIntrinsicBounds(
-            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
+            HabiticaIconsHelper.imageOfChatCopyIcon().toDrawable(res),
             null,
             null,
             null
         )
         binding.reportButton.setOnClickListener { chatMessage?.let { onFlagMessage?.invoke(it) } }
         binding.reportButton.setCompoundDrawablesWithIntrinsicBounds(
-            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
+            HabiticaIconsHelper.imageOfChatReportIcon().toDrawable(res),
             null,
             null,
             null
         )
         binding.deleteButton.setOnClickListener { chatMessage?.let { onDeleteMessage?.invoke(it) } }
         binding.deleteButton.setCompoundDrawablesWithIntrinsicBounds(
-            BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
+            HabiticaIconsHelper.imageOfChatDeleteIcon().toDrawable(res),
             null,
             null,
             null

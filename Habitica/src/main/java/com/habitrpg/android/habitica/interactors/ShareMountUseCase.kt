@@ -19,6 +19,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
+import androidx.core.graphics.createBitmap
 
 class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
     class RequestValues(val mountKey: String, val message: String, val context: Context) :
@@ -49,11 +50,7 @@ class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
         mountWrapper.backgroundView.layout(0, 0, width, height)
         mountWrapper.mountImageview.layout(0, 0, width, height)
         val sharedImage =
-            Bitmap.createBitmap(
-                width,
-                height,
-                Bitmap.Config.ARGB_8888
-            )
+            createBitmap(width, height)
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (!mountWrapper.mountImageview.hasLoadedImages && attempts < 200) {

@@ -43,6 +43,7 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
+import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 open class ChatFragment : BaseFragment<FragmentChatBinding>() {
@@ -334,7 +335,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private fun hideNewMessageIndicator() {
         binding?.newMessageIndicator?.apply {
-            if (visibility == View.VISIBLE) {
+            if (isVisible) {
                 animate()
                     .alpha(0f)
                     .translationY(50f)

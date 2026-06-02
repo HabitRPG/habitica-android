@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import androidx.core.graphics.toColorInt
 
 class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String
@@ -122,8 +123,8 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
         binding.purchaseButton.setTextColor(ContextCompat.getColor(context, R.color.white))
-        binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
-        binding.gemLabel.setTextColor(Color.parseColor("#FEE2B6"))
+        binding.gemAmount.setTextColor("#FEE2B6".toColorInt())
+        binding.gemLabel.setTextColor("#FEE2B6".toColorInt())
         binding.footerTextView.visibility = View.VISIBLE
         binding.footerTextView.text = context.getString(R.string.usually_x_gems, regularAmount)
         when (regularAmount) {

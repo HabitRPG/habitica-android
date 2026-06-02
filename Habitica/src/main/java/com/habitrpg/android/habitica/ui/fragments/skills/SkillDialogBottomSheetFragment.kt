@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SkillDialog
 import com.habitrpg.common.habitica.extensions.asPainter
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import androidx.core.graphics.drawable.toDrawable
 
 class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -74,7 +75,7 @@ class SkillDialogBottomSheetFragment : BottomSheetDialogFragment() {
         val skillKey = args.getString(ARG_SKILL_KEY) ?: ""
         val skillPath = args.getString(ARG_SKILL_PATH) ?: ""
         val isTransformationItem = args.getBoolean(ARG_IS_TRANSFORMATION_ITEM, false)
-        val magicIcon: Drawable = BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic())
+        val magicIcon: Drawable = HabiticaIconsHelper.imageOfMagic().toDrawable(resources)
 
         setContent {
             HabiticaTheme {

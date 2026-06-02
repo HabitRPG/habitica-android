@@ -9,6 +9,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
+import androidx.core.view.isVisible
 
 class DailyViewHolder(
     itemView: View,
@@ -21,7 +22,7 @@ class DailyViewHolder(
     override val taskIconWrapperIsVisible: Boolean
         get() {
             var isVisible: Boolean = super.taskIconWrapperIsVisible
-            if (this.streakTextView.visibility == View.VISIBLE) {
+            if (this.streakTextView.isVisible) {
                 isVisible = true
             }
             return isVisible

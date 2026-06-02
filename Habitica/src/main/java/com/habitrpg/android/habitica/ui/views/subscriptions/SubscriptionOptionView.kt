@@ -22,6 +22,7 @@ import androidx.core.widget.TextViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseSubscriptionViewBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import androidx.core.graphics.toColorInt
 
 class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
     private val binding = PurchaseSubscriptionViewBinding.inflate(context.layoutInflater, this, true)
@@ -115,8 +116,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 0f,
                 binding.priceLabel.paint.measureText(text),
                 binding.priceLabel.lineHeight.toFloat(),
-                Color.parseColor("#2995CD"),
-                Color.parseColor("#24CC8F"),
+                "#2995CD".toColorInt(),
+                "#24CC8F".toColorInt(),
                 Shader.TileMode.REPEAT
             )
             binding.priceLabel.paint.shader = shader

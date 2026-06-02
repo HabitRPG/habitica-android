@@ -64,6 +64,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 open class TaskRecyclerViewFragment :
@@ -200,7 +201,7 @@ open class TaskRecyclerViewFragment :
                     activity.snackbarContainer,
                     null,
                     getString(R.string.notification_purchase_reward),
-                    BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
+                    HabiticaIconsHelper.imageOfGold().toDrawable(resources),
                     ContextCompat.getColor(activity, R.color.yellow_10),
                     "-$value",
                     HabiticaSnackbar.SnackbarDisplayType.DROP

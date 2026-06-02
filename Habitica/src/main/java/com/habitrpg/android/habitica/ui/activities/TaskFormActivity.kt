@@ -86,6 +86,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
+import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class TaskFormActivity : BaseActivity() {
@@ -227,7 +228,7 @@ class TaskFormActivity : BaseActivity() {
         }
         window.navigationBarColor = getThemeColor(R.attr.colorTintedBackground)
         binding.appbar.setBackgroundColor(upperTintColor)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
+        supportActionBar?.setBackgroundDrawable(upperTintColor.toDrawable())
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
 
         binding.exactAlarmDisabledContainer.background = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_task_form)

@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import androidx.core.net.toUri
 
 object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
@@ -184,17 +185,6 @@ object MarkdownParser {
         }
     }
 
-    fun hasCached(input: String?): Boolean {
-        if (input == null) {
-            return false
-        }
-        return try {
-            cache.containsKey(input.hashCode())
-        } catch (_: NullPointerException) {
-            false
-        }
-    }
-
     /**
      * Converts stylized CharSequence into markdown
      *
@@ -207,7 +197,7 @@ object MarkdownParser {
 
     private val markdownRegex = "[*#_\\[`~]".toRegex()
     private val imageMarkdownRegex = """!\[.*?]\(.*?".*?"\)""".toRegex()
-    private val markdownLinkRegex = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)".toRegex()
+    private val markdownLinkRegex = "\\[([^]]+)]\\(([^)]+)\\)".toRegex()
     private val urlRegex = "https?://[^\\s]+".toRegex()
 
     fun containsMarkdown(text: String): Boolean {
@@ -242,12 +232,12 @@ private fun handleUrlClicks(
 ) {
     val webpage =
         if (url.startsWith("/")) {
-            Uri.parse("${context.getString(R.string.base_url)}$url")
+            "${context.getString(R.string.base_url)}$url".toUri()
         } else {
-            if (Uri.parse(url).scheme == null) {
-                Uri.parse("http://$url")
+            if (url.toUri().scheme == null) {
+                "http://$url".toUri()
             } else {
-                Uri.parse(url)
+                url.toUri()
             }
         }
     MainNavigationController.navigate(webpage)

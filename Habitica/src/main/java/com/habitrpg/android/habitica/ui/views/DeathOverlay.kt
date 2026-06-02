@@ -83,6 +83,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 import kotlin.math.sqrt
+import androidx.core.graphics.drawable.toDrawable
 
 @Composable
 fun DeathOverlay(
@@ -539,10 +540,7 @@ fun DeathOverlay(
                             com.plattysoft.leonids.ParticleSystem(
                                 this,
                                 14,
-                                android.graphics.drawable.BitmapDrawable(
-                                    context.resources,
-                                    HabiticaIconsHelper.imageOfGold()
-                                ),
+                                HabiticaIconsHelper.imageOfGold().toDrawable(context.resources),
                                 5000
                             )
                                 .setInitialRotationRange(0, 200)
@@ -560,10 +558,7 @@ fun DeathOverlay(
                             com.plattysoft.leonids.ParticleSystem(
                                 this,
                                 14,
-                                android.graphics.drawable.BitmapDrawable(
-                                    context.resources,
-                                    HabiticaIconsHelper.imageOfGold()
-                                ),
+                                HabiticaIconsHelper.imageOfGold().toDrawable(context.resources),
                                 5000
                             )
                                 .setInitialRotationRange(0, 200)

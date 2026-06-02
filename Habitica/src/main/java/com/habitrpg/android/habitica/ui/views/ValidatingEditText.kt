@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ValidatingEditTextBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import androidx.core.view.isVisible
 
 class ValidatingEditText
 @JvmOverloads
@@ -60,7 +61,7 @@ constructor(
             showErrorIfNecessary()
         }
         binding.editText.doOnTextChanged { text, _, _, _ ->
-            if (binding.errorText.visibility == View.VISIBLE) {
+            if (binding.errorText.isVisible) {
                 showErrorIfNecessary(text.toString())
             }
         }

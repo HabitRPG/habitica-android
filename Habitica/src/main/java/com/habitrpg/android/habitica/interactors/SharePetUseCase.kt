@@ -21,6 +21,7 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
+import androidx.core.graphics.createBitmap
 
 class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
     class RequestValues(val petKey: String, val message: String, val context: Context) :
@@ -48,11 +49,7 @@ class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
             if (petWrapper.root.width > 0) petWrapper.root.width else 300.dpToPx(requestValues.context)
         val height = 124.dpToPx(requestValues.context)
         val sharedImage =
-            Bitmap.createBitmap(
-                width,
-                height,
-                Bitmap.Config.ARGB_8888
-            )
+            createBitmap(width, height)
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (petWrapper.petImageview.bitmap == null && attempts < 200) {

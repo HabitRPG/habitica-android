@@ -4,6 +4,7 @@ import android.graphics.Color
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import androidx.core.graphics.toColorInt
 
 /**
  * Created by phillip on 31.01.18.
@@ -19,18 +20,18 @@ open class QuestColors : RealmObject(), BaseObject {
 
     val darkColor: Int
         get() {
-            return Color.parseColor(dark)
+            return dark.toColorInt()
         }
     val mediumColor: Int
         get() {
-            return Color.parseColor(medium)
+            return medium.toColorInt()
         }
     val lightColor: Int
         get() {
-            return Color.parseColor(light)
+            return light.toColorInt()
         }
     val extraLightColor: Int
         get() {
-            return Color.parseColor(extralight)
+            return extralight.toColorInt()
         }
 }

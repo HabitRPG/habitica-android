@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import androidx.core.graphics.toColorInt
 
 class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String
@@ -106,7 +107,7 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
                 formatter.format(startDate),
                 formatter.format(endDate)
             )
-        binding.promoBannerDurationView.setTextColor(Color.parseColor("#FEE2B6"))
+        binding.promoBannerDurationView.setTextColor("#FEE2B6".toColorInt())
     }
 
     override fun configurePurchaseBanner(binding: FragmentSubscriptionBinding) {
@@ -121,8 +122,8 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
         binding.purchaseButton.setTextColor(ContextCompat.getColor(context, R.color.white))
-        binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
-        binding.gemLabel.setTextColor(Color.parseColor("#FEE2B6"))
+        binding.gemAmount.setTextColor("#FEE2B6".toColorInt())
+        binding.gemLabel.setTextColor("#FEE2B6".toColorInt())
         binding.footerTextView.visibility = View.VISIBLE
         binding.footerTextView.text = context.getString(R.string.usually_x_gems, regularAmount)
         when (regularAmount) {
@@ -172,7 +173,7 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
             )
         )
         fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
-        fragment.binding?.promoBannerDurationView?.setTextColor(Color.parseColor("#FEE2B6"))
+        fragment.binding?.promoBannerDurationView?.setTextColor("#FEE2B6".toColorInt())
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
         fragment.binding?.promoBannerDurationView?.text =
             context.getString(
@@ -187,7 +188,7 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
             )
         )
         fragment.binding?.promptText?.setText(R.string.fall_promo_info_prompt)
-        fragment.binding?.promptText?.setTextColor(Color.parseColor("#F78E2F"))
+        fragment.binding?.promptText?.setTextColor("#F78E2F".toColorInt())
         fragment.binding?.promptButton?.background = buttonDrawable(context)
         fragment.binding?.promptButton?.setText(R.string.view_gem_bundles)
         fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))

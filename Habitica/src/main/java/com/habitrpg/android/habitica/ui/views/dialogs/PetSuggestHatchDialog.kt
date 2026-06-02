@@ -30,6 +30,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import java.util.Locale
+import androidx.core.graphics.drawable.toDrawable
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
     @EntryPoint
@@ -244,7 +245,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         DataBindingUtils.loadImage(context, imageName) {
             val resources = context.resources ?: return@loadImage
             val drawable =
-                if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
+                if (hasMount) it else it.toBitmap().extractAlpha().toDrawable(resources)
             lifecycleScope.launchCatching {
                 binding.petView.bitmap = drawable.toBitmap()
             }
