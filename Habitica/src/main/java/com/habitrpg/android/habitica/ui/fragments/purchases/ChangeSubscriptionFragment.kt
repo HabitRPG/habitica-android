@@ -434,4 +434,9 @@ open class ChangeSubscriptionFragment : BottomSheetDialogFragment() {
         }
         return binding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

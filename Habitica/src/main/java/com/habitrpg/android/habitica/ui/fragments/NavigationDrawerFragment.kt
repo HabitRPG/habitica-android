@@ -733,6 +733,11 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     private fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
         adapter.getItemWithIdentifier(identifier)
 
