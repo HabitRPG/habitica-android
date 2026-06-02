@@ -494,13 +494,13 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="character_build">Charaktererstellung</string>
     <string name="character_build_description">Jedes Level bringt Dir einen Punkt, den Du einem Attribut Deiner Wahl zuschreiben kannst. Du kannst es selbst machen oder Du lässt das Spiel für Dich entscheiden, indem Du eine der Optionen der automatischen Zuweisung wählst.</string>
     <string name="strength">Stärke</string>
-    <string name="strength_description">Erhöht die Wahrscheinlichkeit und den Bonus kritischer Treffer beim Erledigen von Aufgaben. Erhöht außerdem den Schaden an Bossen.</string>
+    <string name="strength_description">Erhöht den Wahrscheinlichkeit und den Schaden kritischer Treffer beim Erledigen von Aufgaben. Erhöht außerdem den Schaden an Quest-Bossen.</string>
     <string name="intelligence">Intelligenz</string>
-    <string name="intelligence_description">Erhöht die gewonnenen Erfahrungspunkte beim Erledigen von Aufgaben. Erhöht außerdem Deine maximalen Manapunkte und die Manaregeneration.</string>
+    <string name="intelligence_description">Erhöht die gewonnenen Erfahrungspunkte von Aufgaben. Erhöht außerdem Deine maximalen Manapunkte und die Manaregeneration.</string>
     <string name="constitution">Ausdauer</string>
-    <string name="constitution_description">Verringert den erlittenen Schaden durch Deine Aufgaben. Verringert jedoch nicht den Schaden durch Bosse.</string>
+    <string name="constitution_description">Verringert den erlittenen Schaden von Deinen Täglichen Aufgaben und negativen Gewohnheiten. Verringert jedoch nicht den Schaden durch Quest-Bosse.</string>
     <string name="perception">Wahrnehmung</string>
-    <string name="perception_description">Erhöht die Wahrscheinlichkeit, Beute zu finden, wenn eine Aufgabe abgehakt wird, die tägliche Beuteobergrenze, Strähnenboni und die Menge an Gold für eine Aufgabe.</string>
+    <string name="perception_description">Erhöht die Chance auf Gegenstand-Drops, das tägliche Limit für Gegenstand-Drops, Boni für Aufgabenserien und verdientes Gold für eine Aufgabe.</string>
     <string name="buffs">Strähnenboni</string>
     <string name="allocated">Verteilt</string>
     <string name="distribute_evenly">Gleichmäßig verteilen</string>
@@ -1615,4 +1615,24 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="max_gem_cap">Max. Anzahl an Edelsteinen</string>
     <string name="max_gem_cap_text_gift">Sie beginnen direkt bei der max. Anzahl an Edelsteinen</string>
     <string name="subscriber_button_faint_use">Nutze deine zweite Chance!</string>
+    <string name="widget_add_task">Habitica Aufgabe hinzufügen</string>
+    <string name="widget_add_task_multi">Habitica Aufgaben hinzufügen</string>
+    <string name="faint_broken_gear_info">Defekte Ausrüstung kann im Markt erneut erworben werden.</string>
+    <string name="free_rebirth_at_level_100">Kostenlose Sphäre der Wiedergeburt bei Level 100.</string>
+    <string name="participating">Teilnehmend</string>
+    <string name="not_participating_filter">Nicht teilnehmend</string>
+    <string name="category">Kategorie</string>
+    <string name="change_display_name">Anzeigenamen ändern</string>
+    <string name="server_option_default">%s (Standard)</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d Tag bis zur einer Kostenlosen Sphäre der Wiedergeburt.</item>
+        <item quantity="other">%d Tage bis zur einer Kostenlosen Sphäre der Wiedergeburt.</item>
+    </plurals>
+    <string name="save_photo_url">Foto Webadresse speichern</string>
+    <string name="server_custom_warning">Warnung: Accounts auf angepassten Servern sind separat von deinem Hauptkonto auf Habitica.com.</string>
+    <string name="membership">Mitgliedsschaft</string>
+    <string name="photo_url_description">Du kannst ein Bild auf deinem Habitica Profil anzeigen, welches andere sehen können, indem du hier ein Link zum Bild hinzufügst.</string>
+    <string name="change_email_description">Das ist die E-Mail-Adresse welche du benutzt, um dich in Habitica einzuloggen und Benachrichtigungen zu erhalten.</string>
+    <string name="change_username_description">Benutzernamen müssen zwischen 1 und 20 Zeichen sein und dürfen nur Buchstaben von a bis z, Nummern von 0 bis 9, Bindestriche und Unterstriche enthalten.</string>
+    <string name="display_name_description">Das ist der Name, welcher für deinen Habitica Avatar angezeigt wird. Im Vergleich zum Benutzernamen, muss es keine eindeutige Kennzeichnung sein.</string>
 </resources>
