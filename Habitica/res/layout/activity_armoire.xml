@@ -181,15 +181,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <com.habitrpg.android.habitica.ui.views.ads.AdButton
-                android:id="@+id/ad_button"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="4dp"
-                app:currency="gold"
-                app:text="@string/watch_ad_to_open" />
-
             <LinearLayout
                 android:id="@+id/open_armoire_subscriber_wrapper"
                 android:layout_width="match_parent"
