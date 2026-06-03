@@ -454,6 +454,13 @@ class TasksFragment :
                     return index
                 }
             }
+            return when (taskType) {
+                TaskType.HABIT -> 0
+                TaskType.DAILY -> 1
+                TaskType.TODO -> 2
+                TaskType.REWARD -> 3
+                else -> -1
+            }
         }
         return -1
     }
