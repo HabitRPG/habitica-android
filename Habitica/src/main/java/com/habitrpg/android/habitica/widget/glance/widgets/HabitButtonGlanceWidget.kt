@@ -112,11 +112,11 @@ private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
 private fun habitTileBackground(): ColorProvider =
-    if (MaterialYouEnabled) GlanceTheme.colors.primaryContainer else WidgetColors.background
+    if (MaterialYouEnabled) GlanceTheme.colors.primary else WidgetColors.background
 
 @Composable
 private fun habitTitleText(): ColorProvider =
-    if (MaterialYouEnabled) GlanceTheme.colors.onPrimaryContainer else WidgetColors.text
+    if (MaterialYouEnabled) GlanceTheme.colors.onPrimary else WidgetColors.text
 
 @Composable
 private fun HabitButtonContent(

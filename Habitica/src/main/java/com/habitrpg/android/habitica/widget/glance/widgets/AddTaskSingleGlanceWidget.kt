@@ -110,8 +110,8 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
     val scallopTint: ColorProvider
     val iconTint: ColorProvider?
     if (MaterialYouEnabled) {
-        scallopTint = GlanceTheme.colors.primaryContainer
-        iconTint = GlanceTheme.colors.onPrimaryContainer
+        scallopTint = GlanceTheme.colors.primary
+        iconTint = GlanceTheme.colors.onPrimary
     } else {
         scallopTint = ColorProvider(tile.brandColor)
         iconTint = null

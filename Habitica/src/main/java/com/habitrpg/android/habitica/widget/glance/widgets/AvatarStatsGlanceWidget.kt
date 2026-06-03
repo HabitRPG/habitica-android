@@ -143,7 +143,7 @@ private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 private fun rememberInnerPalette(): StatsInnerPalette {
     return if (MaterialYouEnabled) {
         StatsInnerPalette(
-            labelText = GlanceTheme.colors.onPrimaryContainer,
+            labelText = GlanceTheme.colors.onPrimary,
             chipBackground = GlanceTheme.colors.secondaryContainer,
             chipText = GlanceTheme.colors.onSecondaryContainer,
             levelChipBackground = GlanceTheme.colors.tertiaryContainer,
@@ -188,7 +188,7 @@ private fun StatsContent(state: StatsWidgetState) {
     val palette = rememberInnerPalette()
 
     val tileBackground: ColorProvider = if (MaterialYouEnabled) {
-        GlanceTheme.colors.primaryContainer
+        GlanceTheme.colors.primary
     } else {
         WidgetColors.background
     }
@@ -216,7 +216,7 @@ private fun CompactAvatarLayout(
     outerPadding: Dp,
     palette: StatsInnerPalette,
 ) {
-    val barWidth = (widgetWidth - outerPadding * 2 - 20.dp - 8.dp).coerceAtLeast(40.dp)
+    val barWidth = (widgetWidth - outerPadding * 2 - 24.dp - 8.dp).coerceAtLeast(40.dp)
     Column(
         modifier = GlanceModifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -243,7 +243,7 @@ private fun HorizontalLayout(
 ) {
     val avatarBoxWidth = if (layout.showAvatar) 124.dp else 0.dp
     val avatarSpacing = if (layout.showAvatar) 12.dp else 0.dp
-    val iconAndSpacing = 20.dp + 8.dp
+    val iconAndSpacing = 24.dp + 8.dp
     val barWidth = (widgetWidth - outerPadding * 2 - avatarBoxWidth - avatarSpacing - iconAndSpacing)
         .coerceAtLeast(40.dp)
 
@@ -389,8 +389,8 @@ private fun StatsFooter(
                 backgroundColor = palette.levelChipBackground,
                 textColor = palette.levelChipText,
             )
-            Spacer(GlanceModifier.defaultWeight())
         }
+        Spacer(GlanceModifier.defaultWeight())
         if (state.hourglassCount > 0) {
             CurrencyChip(
                 iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),

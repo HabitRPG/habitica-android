@@ -79,8 +79,8 @@ private fun rememberPalette(brandColor: androidx.compose.ui.graphics.Color): Til
     return if (MaterialYouEnabled) {
         TilePalette(
             widgetBackground = GlanceTheme.colors.background,
-            tileBackground = GlanceTheme.colors.primaryContainer,
-            iconTint = GlanceTheme.colors.onPrimaryContainer,
+            tileBackground = GlanceTheme.colors.primary,
+            iconTint = GlanceTheme.colors.onPrimary,
         )
     } else {
         TilePalette(

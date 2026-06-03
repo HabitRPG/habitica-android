@@ -29,8 +29,8 @@ import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-private val BAR_HEIGHT = 6.dp
-private val ICON_SIZE = 20.dp
+private val BAR_HEIGHT = 9.dp
+private val ICON_SIZE = 24.dp
 
 enum class StatRowMode {
     BarOnly,
@@ -144,6 +144,6 @@ private fun StatProgressBar(
 
 private fun labelStyle(color: ColorProvider) = TextStyle(
     color = color,
-    fontSize = 11.sp,
-    fontWeight = FontWeight.Medium,
+    fontSize = 14.sp,
+    fontWeight = FontWeight.Bold,
 )

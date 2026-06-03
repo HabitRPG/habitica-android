@@ -130,11 +130,11 @@ internal data class DailiesTilePalette(
 private fun rememberPalette(): DailiesTilePalette {
     return if (MaterialYouEnabled) {
         DailiesTilePalette(
-            tileBackground = GlanceTheme.colors.primaryContainer,
-            primaryText = GlanceTheme.colors.onPrimaryContainer,
-            secondaryText = GlanceTheme.colors.onPrimaryContainer,
-            accentNumber = GlanceTheme.colors.onPrimaryContainer,
-            iconTint = GlanceTheme.colors.onPrimaryContainer,
+            tileBackground = GlanceTheme.colors.primary,
+            primaryText = GlanceTheme.colors.onPrimary,
+            secondaryText = GlanceTheme.colors.onPrimary,
+            accentNumber = GlanceTheme.colors.onPrimary,
+            iconTint = GlanceTheme.colors.onPrimary,
             trackColor = GlanceTheme.colors.outline,
         )
     } else {
