@@ -1666,4 +1666,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="rebirth_confirm_keep_item_3">Deine Errungenschaften</string>
     <string name="rebirth_confirm_keep_item_4">Deine Party und Herausforderungen</string>
     <string name="rebirth_confirm_use">Sphäre der Wiedergeburt benutzen</string>
+    <string name="avatar_widget_label">Habitica Avatar</string>
+    <string name="rebirth_achievement_description_max">Du hast ein neues Abenteuer angefangen! Das ist Wiedergeburt %1$d für dich und das höchste Level, welches du erreicht hast, ist %2$d oder mehr.</string>
+    <string name="rebirth_achievement_description">Du hast ein neues Abenteuer angefangen! Das ist Wiedergeburt %1$d für dich und das höchste Level, welches du erreicht hast, ist %2$d.</string>
+    <string name="go_to_market">Gehe zum Marktplatz</string>
+    <string name="rebirth_achievement_title">Du wurdest wiedergeboren!</string>
 </resources>
