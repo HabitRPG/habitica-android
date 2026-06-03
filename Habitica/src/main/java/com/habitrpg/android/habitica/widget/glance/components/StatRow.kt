@@ -91,10 +91,9 @@ fun StatRow(
                             style = labelStyle(labelTextColor),
                             modifier = GlanceModifier.defaultWeight(),
                         )
-                        Text(
-                            text = "$valueText / $maxText",
-                            style = labelStyle(labelTextColor),
-                        )
+                        Text(text = valueText, style = labelStyle(labelTextColor))
+                        Text(text = " / ", style = separatorStyle(labelTextColor))
+                        Text(text = maxText, style = labelStyle(labelTextColor))
                     }
                 }
             }
@@ -147,4 +146,10 @@ private fun labelStyle(color: ColorProvider) = TextStyle(
     color = color,
     fontSize = 14.sp,
     fontWeight = FontWeight.Bold,
+)
+
+private fun separatorStyle(color: ColorProvider) = TextStyle(
+    color = color,
+    fontSize = 14.sp,
+    fontWeight = FontWeight.Normal,
 )

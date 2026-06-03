@@ -332,6 +332,7 @@ private fun FullStatsLayout(
             includeLevel = true,
             showFullLevelLabel = true,
             palette = palette,
+            levelChipWidth = avatarWidth,
         )
     }
 }
@@ -442,17 +443,23 @@ private fun StatsFooter(
     includeLevel: Boolean,
     showFullLevelLabel: Boolean,
     palette: StatsInnerPalette,
+    levelChipWidth: Dp? = null,
 ) {
     Row(
         modifier = GlanceModifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (includeLevel) {
+            val levelModifier = (if (levelChipWidth != null) {
+                GlanceModifier.width(levelChipWidth)
+            } else {
+                GlanceModifier
+            }).clickable(onClick = openProfileAction(state.userId))
             LevelChip(
                 level = state.level,
                 className = state.className,
                 showFullLabel = showFullLevelLabel,
-                modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
+                modifier = levelModifier,
                 backgroundColor = palette.levelChipBackground,
                 textColor = palette.levelChipText,
             )
