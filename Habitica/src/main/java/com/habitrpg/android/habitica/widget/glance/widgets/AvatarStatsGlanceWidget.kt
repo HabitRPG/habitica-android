@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
@@ -22,6 +21,7 @@ import androidx.glance.layout.Column
 import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -56,21 +56,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
-private val SIZE_2x1 = DpSize(100.dp, 40.dp)
-private val SIZE_3x1 = DpSize(170.dp, 40.dp)
-private val SIZE_4x1 = DpSize(240.dp, 40.dp)
-private val SIZE_5x1 = DpSize(310.dp, 40.dp)
-private val SIZE_2x2 = DpSize(100.dp, 80.dp)
-private val SIZE_3x2 = DpSize(170.dp, 80.dp)
-private val SIZE_4x2 = DpSize(240.dp, 80.dp)
-private val SIZE_5x2 = DpSize(310.dp, 80.dp)
+private val TALL_THRESHOLD = 120.dp
 
 private const val OUTER_PADDING_DP = 12
+private const val COMPACT_OUTER_PADDING_DP = 8
 
 class AvatarStatsGlanceWidget : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(SIZE_2x1, SIZE_3x1, SIZE_4x1, SIZE_5x1, SIZE_2x2, SIZE_3x2, SIZE_4x2, SIZE_5x2),
-    )
+    override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         if (!WidgetAuth.isLoggedIn(context)) {
@@ -127,6 +119,7 @@ private data class StatsLayout(
     val showAvatar: Boolean,
     val avatarOnTop: Boolean,
     val showFooter: Boolean,
+    val barsFillHeight: Boolean,
 )
 
 private data class StatsInnerPalette(
@@ -161,30 +154,30 @@ private fun rememberInnerPalette(): StatsInnerPalette {
 }
 
 private fun pickLayout(width: Dp, height: Dp): StatsLayout {
-    val tall = height >= 80.dp
+    val tall = height >= TALL_THRESHOLD
     val cols = when {
         width >= 310.dp -> 5
         width >= 240.dp -> 4
         width >= 170.dp -> 3
         else -> 2
     }
-    val rowMode = when {
-        tall && cols >= 4 -> StatRowMode.LabelStackedValue
-        !tall && cols >= 5 -> StatRowMode.InlineValueMaxWithLabel
-        !tall && cols == 4 -> StatRowMode.InlineValueWithLabel
-        else -> StatRowMode.BarOnly
+    val rowMode = if (tall && cols >= 4) {
+        StatRowMode.LabelStackedValue
+    } else {
+        StatRowMode.BarOnly
     }
     val showAvatar = tall && (cols == 2 || cols >= 5)
     val avatarOnTop = showAvatar && cols == 2
     val showFooter = tall && cols >= 4
-    return StatsLayout(cols, tall, rowMode, showAvatar, avatarOnTop, showFooter)
+    val barsFillHeight = tall && rowMode == StatRowMode.BarOnly && !showAvatar
+    return StatsLayout(cols, tall, rowMode, showAvatar, avatarOnTop, showFooter, barsFillHeight)
 }
 
 @Composable
 private fun StatsContent(state: StatsWidgetState) {
     val size = LocalSize.current
     val layout = pickLayout(size.width, size.height)
-    val outerPadding = OUTER_PADDING_DP.dp
+    val outerPadding = if (layout.tall) OUTER_PADDING_DP.dp else COMPACT_OUTER_PADDING_DP.dp
     val palette = rememberInnerPalette()
 
     val tileBackground: ColorProvider = if (MaterialYouEnabled) {
@@ -274,7 +267,12 @@ private fun HorizontalLayout(
             }
             Spacer(GlanceModifier.width(12.dp))
         }
-        Column(modifier = GlanceModifier.defaultWeight()) {
+        val contentModifier = if (layout.barsFillHeight) {
+            GlanceModifier.defaultWeight().fillMaxHeight()
+        } else {
+            GlanceModifier.defaultWeight()
+        }
+        Column(modifier = contentModifier) {
             StatBars(state = state, layout = layout, barWidth = barWidth, palette = palette)
             if (layout.showFooter) {
                 Spacer(GlanceModifier.height(8.dp))
@@ -296,8 +294,24 @@ private fun StatBars(
     barWidth: Dp,
     palette: StatsInnerPalette,
 ) {
-    val gap = if (layout.rowMode == StatRowMode.LabelStackedValue) 10.dp else 6.dp
-    Column(modifier = GlanceModifier.fillMaxWidth()) {
+    val fill = layout.barsFillHeight
+    val iconSize = when {
+        !layout.tall -> 18.dp
+        fill -> 30.dp
+        else -> 24.dp
+    }
+    val gap = when {
+        !layout.tall -> 4.dp
+        layout.rowMode == StatRowMode.LabelStackedValue -> 10.dp
+        else -> 6.dp
+    }
+    val columnModifier = if (fill) {
+        GlanceModifier.fillMaxWidth().fillMaxHeight()
+    } else {
+        GlanceModifier.fillMaxWidth()
+    }
+    Column(modifier = columnModifier) {
+        if (fill) Spacer(GlanceModifier.defaultWeight())
         StatRow(
             label = stringRes(R.string.widget_stat_hp),
             value = state.hp,
@@ -309,8 +323,9 @@ private fun StatBars(
             mode = layout.rowMode,
             barAvailableWidth = barWidth,
             labelTextColor = palette.labelText,
+            iconSize = iconSize,
         )
-        Spacer(GlanceModifier.height(gap))
+        if (fill) Spacer(GlanceModifier.defaultWeight()) else Spacer(GlanceModifier.height(gap))
         StatRow(
             label = stringRes(R.string.widget_stat_exp),
             value = state.exp,
@@ -322,9 +337,10 @@ private fun StatBars(
             mode = layout.rowMode,
             barAvailableWidth = barWidth,
             labelTextColor = palette.labelText,
+            iconSize = iconSize,
         )
         if (state.showMp) {
-            Spacer(GlanceModifier.height(gap))
+            if (fill) Spacer(GlanceModifier.defaultWeight()) else Spacer(GlanceModifier.height(gap))
             StatRow(
                 label = stringRes(R.string.widget_stat_mp),
                 value = state.mp,
@@ -336,8 +352,10 @@ private fun StatBars(
                 mode = layout.rowMode,
                 barAvailableWidth = barWidth,
                 labelTextColor = palette.labelText,
+                iconSize = iconSize,
             )
         }
+        if (fill) Spacer(GlanceModifier.defaultWeight())
     }
 }
 

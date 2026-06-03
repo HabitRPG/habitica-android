@@ -52,6 +52,7 @@ fun StatRow(
     @Suppress("UNUSED_PARAMETER") barAvailableWidth: Dp,
     modifier: GlanceModifier = GlanceModifier,
     labelTextColor: ColorProvider = WidgetColors.text,
+    iconSize: Dp = ICON_SIZE,
 ) {
     val progress = if (maxValue > 0f) (value / maxValue).coerceIn(0f, 1f) else 0f
     val fillColor = ColorProvider(barColor)
@@ -61,7 +62,7 @@ fun StatRow(
     } else {
         Alignment.CenterVertically
     }
-    val barCenterOffset = (ICON_SIZE - BAR_HEIGHT) / 2
+    val barCenterOffset = (iconSize - BAR_HEIGHT) / 2
 
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -70,7 +71,7 @@ fun StatRow(
         Image(
             provider = ImageProvider(iconResId),
             contentDescription = label,
-            modifier = GlanceModifier.size(ICON_SIZE),
+            modifier = GlanceModifier.size(iconSize),
         )
         Spacer(GlanceModifier.width(8.dp))
 
