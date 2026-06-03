@@ -18,8 +18,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
-import com.habitrpg.android.habitica.helpers.AdHandler
-import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
@@ -28,7 +26,6 @@ import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
@@ -95,11 +92,7 @@ class ArmoireActivity : BaseActivity() {
             configure(lastType ?: "", lastKey ?: "", lastText ?: "", lastValue)
         }
         if (hasUsedExtraArmoire) {
-            if (binding.adButton.isVisible) {
-                binding.adButton.visibility = View.INVISIBLE
-            } else {
-                binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
-            }
+            binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
         }
     }
 
@@ -134,30 +127,6 @@ class ArmoireActivity : BaseActivity() {
 
         binding.progressView.setContent {
             HabiticaCircularProgressView(indicatorSize = 60.dp)
-        }
-
-        if (appConfigManager.enableArmoireAds()) {
-            val handler =
-                AdHandler(this, AdType.ARMOIRE) {
-                    if (!it) {
-                        return@AdHandler
-                    }
-                    giveUserArmoire()
-                }
-            handler.prepare {
-                if (it && binding.adButton.state == AdButton.State.LOADING) {
-                    binding.adButton.state = AdButton.State.READY
-                } else if (!it) {
-                    binding.adButton.visibility = View.INVISIBLE
-                }
-            }
-            binding.adButton.updateForAdType(AdType.ARMOIRE, lifecycleScope)
-            binding.adButton.setOnClickListener {
-                binding.adButton.state = AdButton.State.LOADING
-                handler.show()
-            }
-        } else {
-            binding.adButton.visibility = View.GONE
         }
 
         if (!hasUsedExtraArmoire) {
@@ -267,10 +236,7 @@ class ArmoireActivity : BaseActivity() {
 
         val user = userViewModel.user.value ?: return true
         val currentGold = user.stats?.gp ?: return true
-        if (binding.adButton.isVisible) {
-            binding.adButton.state = AdButton.State.UNAVAILABLE
-            binding.adButton.visibility = View.INVISIBLE
-        } else if (binding.openArmoireSubscriberWrapper.isVisible) {
+        if (binding.openArmoireSubscriberWrapper.isVisible) {
             binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {

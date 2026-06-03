@@ -28,7 +28,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.DateUtils
-import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager.Companion.DEVICE_TOKEN_PREFERENCE_KEY
@@ -44,8 +43,9 @@ import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
-import io.realm.RealmConfiguration
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import java.lang.ref.WeakReference
 import java.util.Date
 import javax.inject.Inject
@@ -131,12 +131,10 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             }
         }
         registerActivityLifecycleCallbacks(this)
-        setupRealm()
         setLocale()
         setupLocaleChangeListener()
         setupRemoteConfig()
         setupNotifications()
-        setupAdHandler()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
@@ -149,10 +147,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
 
         checkIfNewVersion()
-    }
-
-    private fun setupAdHandler() {
-        AdHandler.setup(sharedPrefs)
     }
 
     private var isSettingLocale = false
@@ -219,25 +213,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {}
         })
-    }
-
-    protected open fun setupRealm() {
-        Realm.init(this)
-        val builder =
-            RealmConfiguration.Builder()
-                .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded()
-                .allowWritesOnUiThread(true)
-                .compactOnLaunch { totalBytes, usedBytes ->
-                    // Compact if the file is over 100MB in size and less than 50% 'used'
-                    val oneHundredMB = 50 * 1024 * 1024
-                    (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5
-                }
-        try {
-            Realm.setDefaultConfiguration(builder.build())
-        } catch (ignored: UnsatisfiedLinkError) {
-            // Catch crash in tests
-        }
     }
 
     private fun checkIfNewVersion() {
