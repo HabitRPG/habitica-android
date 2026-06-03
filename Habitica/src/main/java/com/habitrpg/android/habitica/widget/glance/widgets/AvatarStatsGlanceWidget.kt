@@ -60,6 +60,7 @@ private val TALL_THRESHOLD = 120.dp
 
 private const val OUTER_PADDING_DP = 12
 private const val COMPACT_OUTER_PADDING_DP = 8
+private const val FULL_OUTER_PADDING_DP = 16
 
 class AvatarStatsGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
@@ -177,7 +178,11 @@ private fun pickLayout(width: Dp, height: Dp): StatsLayout {
 private fun StatsContent(state: StatsWidgetState) {
     val size = LocalSize.current
     val layout = pickLayout(size.width, size.height)
-    val outerPadding = if (layout.tall) OUTER_PADDING_DP.dp else COMPACT_OUTER_PADDING_DP.dp
+    val outerPadding = when {
+        !layout.tall -> COMPACT_OUTER_PADDING_DP.dp
+        layout.showAvatar && !layout.avatarOnTop -> FULL_OUTER_PADDING_DP.dp
+        else -> OUTER_PADDING_DP.dp
+    }
     val palette = rememberInnerPalette()
 
     val tileBackground: ColorProvider = if (MaterialYouEnabled) {
@@ -193,10 +198,13 @@ private fun StatsContent(state: StatsWidgetState) {
             .padding(outerPadding)
             .clickable(onClick = openAppAction()),
     ) {
-        if (layout.avatarOnTop) {
-            CompactAvatarLayout(state, layout, size.width, outerPadding, palette)
-        } else {
-            HorizontalLayout(state, layout, size.width, outerPadding, palette)
+        when {
+            layout.avatarOnTop ->
+                CompactAvatarLayout(state, layout, size.width, outerPadding, palette)
+            layout.showAvatar ->
+                FullStatsLayout(state, layout, size.width, outerPadding, palette)
+            else ->
+                HorizontalLayout(state, layout, size.width, outerPadding, palette)
         }
     }
 }
@@ -284,6 +292,47 @@ private fun HorizontalLayout(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun FullStatsLayout(
+    state: StatsWidgetState,
+    layout: StatsLayout,
+    widgetWidth: Dp,
+    outerPadding: Dp,
+    palette: StatsInnerPalette,
+) {
+    val avatarWidth = 124.dp
+    val avatarSpacing = 12.dp
+    val iconAndSpacing = 24.dp + 8.dp
+    val barWidth = (widgetWidth - outerPadding * 2 - avatarWidth - avatarSpacing - iconAndSpacing)
+        .coerceAtLeast(40.dp)
+
+    Column(modifier = GlanceModifier.fillMaxSize()) {
+        Row(
+            modifier = GlanceModifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            AvatarImage(
+                state = state,
+                width = avatarWidth,
+                height = 129.dp,
+                cornerRadius = 16.dp,
+                modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
+            )
+            Spacer(GlanceModifier.width(avatarSpacing))
+            Column(modifier = GlanceModifier.defaultWeight()) {
+                StatBars(state = state, layout = layout, barWidth = barWidth, palette = palette)
+            }
+        }
+        Spacer(GlanceModifier.defaultWeight())
+        StatsFooter(
+            state = state,
+            includeLevel = true,
+            showFullLevelLabel = true,
+            palette = palette,
+        )
     }
 }
 
