@@ -32,7 +32,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openProfileAction
 import com.habitrpg.android.habitica.widget.glance.components.CurrencyChip
+import com.habitrpg.android.habitica.widget.glance.components.CurrencyChipItem
 import com.habitrpg.android.habitica.widget.glance.components.LevelChip
+import com.habitrpg.android.habitica.widget.glance.components.MergedCurrencyChip
 import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StatRow
 import com.habitrpg.android.habitica.widget.glance.components.StatRowMode
@@ -289,6 +291,7 @@ private fun HorizontalLayout(
                     includeLevel = !layout.showAvatar,
                     showFullLevelLabel = layout.cols >= 5,
                     palette = palette,
+                    mergeCurrencyChips = true,
                 )
             }
         }
@@ -444,48 +447,88 @@ private fun StatsFooter(
     showFullLevelLabel: Boolean,
     palette: StatsInnerPalette,
     levelChipWidth: Dp? = null,
+    mergeCurrencyChips: Boolean = false,
 ) {
     Row(
         modifier = GlanceModifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        if (includeLevel) {
-            val levelModifier = (if (levelChipWidth != null) {
-                GlanceModifier.width(levelChipWidth)
-            } else {
-                GlanceModifier
-            }).clickable(onClick = openProfileAction(state.userId))
-            LevelChip(
-                level = state.level,
-                className = state.className,
-                showFullLabel = showFullLevelLabel,
-                modifier = levelModifier,
-                backgroundColor = palette.levelChipBackground,
-                textColor = palette.levelChipText,
-            )
+        val levelChip: @Composable () -> Unit = {
+            if (includeLevel) {
+                val levelModifier = (if (levelChipWidth != null) {
+                    GlanceModifier.width(levelChipWidth)
+                } else {
+                    GlanceModifier
+                }).clickable(onClick = openProfileAction(state.userId))
+                LevelChip(
+                    level = state.level,
+                    className = state.className,
+                    showFullLabel = showFullLevelLabel,
+                    modifier = levelModifier,
+                    backgroundColor = palette.levelChipBackground,
+                    textColor = palette.levelChipText,
+                )
+            }
         }
-        Spacer(GlanceModifier.defaultWeight())
-        if (state.hourglassCount > 0) {
+        if (mergeCurrencyChips) {
+            Box(
+                modifier = GlanceModifier.defaultWeight(),
+                contentAlignment = Alignment.CenterStart,
+            ) {
+                levelChip()
+            }
+            val items = buildList {
+                if (state.hourglassCount > 0) {
+                    add(
+                        CurrencyChipItem(
+                            iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),
+                            text = state.hourglassesText,
+                        ),
+                    )
+                }
+                add(
+                    CurrencyChipItem(
+                        iconProvider = ImageProvider(R.drawable.widget_icon_gem),
+                        text = state.gemsText,
+                    ),
+                )
+                add(
+                    CurrencyChipItem(
+                        iconProvider = ImageProvider(R.drawable.widget_icon_gold),
+                        text = state.goldText,
+                    ),
+                )
+            }
+            MergedCurrencyChip(
+                items = items,
+                backgroundColor = palette.chipBackground,
+                textColor = palette.chipText,
+            )
+        } else {
+            levelChip()
+            Spacer(GlanceModifier.defaultWeight())
+            if (state.hourglassCount > 0) {
+                CurrencyChip(
+                    iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),
+                    text = state.hourglassesText,
+                    backgroundColor = palette.chipBackground,
+                    textColor = palette.chipText,
+                )
+                Spacer(GlanceModifier.width(4.dp))
+            }
             CurrencyChip(
-                iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),
-                text = state.hourglassesText,
+                iconProvider = ImageProvider(R.drawable.widget_icon_gem),
+                text = state.gemsText,
                 backgroundColor = palette.chipBackground,
                 textColor = palette.chipText,
             )
             Spacer(GlanceModifier.width(4.dp))
+            CurrencyChip(
+                iconProvider = ImageProvider(R.drawable.widget_icon_gold),
+                text = state.goldText,
+                backgroundColor = palette.chipBackground,
+                textColor = palette.chipText,
+            )
         }
-        CurrencyChip(
-            iconProvider = ImageProvider(R.drawable.widget_icon_gem),
-            text = state.gemsText,
-            backgroundColor = palette.chipBackground,
-            textColor = palette.chipText,
-        )
-        Spacer(GlanceModifier.width(4.dp))
-        CurrencyChip(
-            iconProvider = ImageProvider(R.drawable.widget_icon_gold),
-            text = state.goldText,
-            backgroundColor = palette.chipBackground,
-            textColor = palette.chipText,
-        )
     }
 }

@@ -103,8 +103,8 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
     val size = LocalSize.current
     val shorter = if (size.width < size.height) size.width else size.height
 
-    val iconSize = (shorter.value * 0.36f).coerceIn(24f, 84f).dp
-    val tilePadding = (shorter.value * 0.06f).coerceIn(2f, 12f).dp
+    val iconSize = (shorter.value * 0.42f).coerceIn(28f, 240f).dp
+    val tilePadding = (shorter.value * 0.02f).coerceIn(0f, 4f).dp
     val tileSide = shorter - tilePadding * 2
 
     val scallopTint: ColorProvider

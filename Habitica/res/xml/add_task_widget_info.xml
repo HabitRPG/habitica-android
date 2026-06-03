@@ -5,6 +5,8 @@
     android:minHeight="40dp"
     android:minResizeWidth="40dp"
     android:minResizeHeight="40dp"
+    android:maxResizeWidth="320dp"
+    android:maxResizeHeight="320dp"
     android:targetCellWidth="1"
     android:targetCellHeight="1"
     android:previewImage="@drawable/widget_new_task_single"

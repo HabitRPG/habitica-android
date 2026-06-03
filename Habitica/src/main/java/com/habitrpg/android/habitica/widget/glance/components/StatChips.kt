@@ -57,7 +57,7 @@ fun LevelChip(
             Image(
                 provider = ImageProvider(classBitmap),
                 contentDescription = null,
-                modifier = GlanceModifier.size(18.dp),
+                modifier = GlanceModifier.size(22.dp),
             )
             Spacer(GlanceModifier.width(6.dp))
         }
@@ -104,5 +104,50 @@ fun CurrencyChip(
                 fontWeight = FontWeight.Bold,
             ),
         )
+    }
+}
+
+data class CurrencyChipItem(
+    val iconProvider: androidx.glance.ImageProvider,
+    val text: String,
+)
+
+@Composable
+fun MergedCurrencyChip(
+    items: List<CurrencyChipItem>,
+    modifier: GlanceModifier = GlanceModifier,
+    backgroundColor: ColorProvider = WidgetColors.currencyChipBackground,
+    textColor: ColorProvider = WidgetColors.currencyChipText,
+) {
+    Row(
+        modifier = modifier
+            .height(30.dp)
+            .cornerRadius(15.dp)
+            .background(backgroundColor)
+            .padding(horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        items.forEachIndexed { index, item ->
+            Row(
+                modifier = if (index > 0) GlanceModifier.padding(start = 10.dp) else GlanceModifier,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    provider = item.iconProvider,
+                    contentDescription = null,
+                    modifier = GlanceModifier.size(18.dp),
+                )
+                Spacer(GlanceModifier.width(4.dp))
+                Text(
+                    text = item.text,
+                    maxLines = 1,
+                    style = TextStyle(
+                        color = textColor,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
+                )
+            }
+        }
     }
 }
