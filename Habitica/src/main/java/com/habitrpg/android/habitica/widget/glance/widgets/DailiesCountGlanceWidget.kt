@@ -318,7 +318,8 @@ private fun GaugeBody(
             progress = progress,
             fillColor = ColorProvider(progressColor),
             trackColor = palette.trackColor,
-            availableWidth = barAvailableWidth,
+            availableWidth = barAvailableWidth - 8.dp,
+            modifier = GlanceModifier.padding(horizontal = 4.dp),
         )
         Spacer(GlanceModifier.height(6.dp))
         Text(
