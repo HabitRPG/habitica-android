@@ -51,13 +51,13 @@ import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
+import com.habitrpg.android.habitica.widget.glance.data.firstOrNullForWidget
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 class DailiesCountGlanceWidget : GlanceAppWidget() {
@@ -78,14 +78,14 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
         }
         val raw = withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
-            val user = entry.userRepository().getUser().firstOrNull()
+            val user = entry.userRepository().getUser().firstOrNullForWidget()
             val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
                 ?.toTypedArray() ?: emptyArray()
             val tasks = entry.taskRepository().getTasks(
                 taskType = TaskType.DAILY,
                 userID = user?.id,
                 includedGroupIDs = mirroredGroupIds,
-            ).firstOrNull().orEmpty().filter { it.isDue == true }
+            ).firstOrNullForWidget().orEmpty().filter { it.isDue == true }
 
             DailyCountRaw(
                 dueIds = tasks.mapNotNull { it.id }.toSet(),

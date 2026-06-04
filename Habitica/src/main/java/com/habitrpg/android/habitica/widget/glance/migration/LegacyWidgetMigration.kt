@@ -9,9 +9,9 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
+import com.habitrpg.android.habitica.widget.glance.data.firstOrNullForWidget
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.widgets.HabitButtonGlanceWidget
-import kotlinx.coroutines.flow.firstOrNull
 
 object LegacyWidgetMigration {
     private const val FLAG_PREFS = "widget_migration_flags"
@@ -40,7 +40,7 @@ object LegacyWidgetMigration {
         for (appWidgetId in widgetIds) {
             val legacyKey = LEGACY_HABIT_BUTTON_KEY_PREFIX + appWidgetId
             val taskId = legacy.getString(legacyKey, null) ?: continue
-            val task = taskRepo.getUnmanagedTask(taskId).firstOrNull() ?: continue
+            val task = taskRepo.getUnmanagedTask(taskId).firstOrNullForWidget() ?: continue
             val glanceId = runCatching { glanceManager.getGlanceIdBy(appWidgetId) }
                 .getOrNull() ?: continue
             HabitButtonWidgetCache.write(context, glanceId, task)

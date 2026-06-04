@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
+import com.habitrpg.android.habitica.widget.WidgetUpdater
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
@@ -38,7 +39,8 @@ class TaskRepositoryImpl(
     localRepository: TaskLocalRepository,
     apiClient: ApiClient,
     authenticationHandler: AuthenticationHandler,
-    val appConfigManager: AppConfigManager
+    val appConfigManager: AppConfigManager,
+    private val widgetUpdater: WidgetUpdater
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler),
     TaskRepository {
     private var lastTaskAction: Long = 0
@@ -60,6 +62,16 @@ class TaskRepositoryImpl(
         tasks: TaskList
     ) {
         localRepository.saveTasks(userId, order, tasks)
+        widgetUpdater.updateTaskListWidgets()
+    }
+
+    private fun saveTaskAndRefreshWidgets(task: Task) {
+        localRepository.save(task)
+        widgetUpdater.updateTaskListWidgets()
+    }
+
+    private fun refreshTaskListWidgets() {
+        widgetUpdater.updateTaskListWidgets()
     }
 
     override suspend fun retrieveTasks(
@@ -67,7 +79,7 @@ class TaskRepositoryImpl(
         tasksOrder: TasksOrder
     ): TaskList? {
         val tasks = apiClient.getTasks() ?: return null
-        this.localRepository.saveTasks(userId, tasksOrder, tasks)
+        saveTasks(userId, tasksOrder, tasks)
         return tasks
     }
 
@@ -88,7 +100,7 @@ class TaskRepositoryImpl(
     ): TaskList? {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         val taskList = this.apiClient.getTasks("dailys", formatter.format(dueDate)) ?: return null
-        this.localRepository.saveTasks(userId, tasksOrder, taskList)
+        saveTasks(userId, tasksOrder, taskList)
         return taskList
     }
 
@@ -237,6 +249,7 @@ class TaskRepositoryImpl(
                     ?: 0F
                 ) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
         }
+        widgetUpdater.updateAllWidgets()
     }
 
     override suspend fun markTaskNeedsWork(
@@ -251,7 +264,7 @@ class TaskRepositoryImpl(
                 it.completed = false
                 it.completedDate = null
             }
-            localRepository.save(savedTask)
+            saveTaskAndRefreshWidgets(savedTask)
         }
     }
 
@@ -274,6 +287,7 @@ class TaskRepositoryImpl(
         val updatedItem: ChecklistItem? = task?.checklist?.lastOrNull { itemId == it.id }
         if (updatedItem != null) {
             localRepository.save(updatedItem)
+            refreshTaskListWidgets()
         }
         return task
     }
@@ -304,7 +318,7 @@ class TaskRepositoryImpl(
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
         }
-        localRepository.save(task)
+        saveTaskAndRefreshWidgets(task)
 
         val savedTask =
             if (task.isGroupTask) {
@@ -315,11 +329,11 @@ class TaskRepositoryImpl(
         savedTask?.dateCreated = Date()
         if (savedTask != null) {
             savedTask.tags = task.tags
-            localRepository.save(savedTask)
+            saveTaskAndRefreshWidgets(savedTask)
         } else {
             task.hasErrored = true
             task.isSaving = false
-            localRepository.save(task)
+            saveTaskAndRefreshWidgets(task)
         }
         return savedTask
     }
@@ -338,18 +352,18 @@ class TaskRepositoryImpl(
         val unmanagedTask = localRepository.getUnmanagedCopy(task)
         unmanagedTask.isSaving = true
         unmanagedTask.hasErrored = false
-        localRepository.save(unmanagedTask)
+        saveTaskAndRefreshWidgets(unmanagedTask)
         val savedTask = apiClient.updateTask(id, unmanagedTask)
         savedTask?.position = task.position
         savedTask?.id = task.id
         savedTask?.ownerID = task.ownerID
         if (savedTask != null) {
             savedTask.tags = task.tags
-            localRepository.save(savedTask)
+            saveTaskAndRefreshWidgets(savedTask)
         } else {
             unmanagedTask.hasErrored = true
             unmanagedTask.isSaving = false
-            localRepository.save(unmanagedTask)
+            saveTaskAndRefreshWidgets(unmanagedTask)
         }
         return savedTask
     }
@@ -357,11 +371,12 @@ class TaskRepositoryImpl(
     override suspend fun deleteTask(taskId: String): Void? {
         apiClient.deleteTask(taskId) ?: return null
         localRepository.deleteTask(taskId)
+        refreshTaskListWidgets()
         return null
     }
 
     override fun saveTask(task: Task) {
-        localRepository.save(task)
+        saveTaskAndRefreshWidgets(task)
     }
 
     override suspend fun createTasks(newTasks: List<Task>) = apiClient.createTasks(newTasks)
@@ -371,6 +386,7 @@ class TaskRepositoryImpl(
         isCompleted: Boolean
     ) {
         localRepository.markTaskCompleted(taskId, isCompleted)
+        refreshTaskListWidgets()
     }
 
     override fun <T : BaseMainObject> modify(
@@ -378,6 +394,9 @@ class TaskRepositoryImpl(
         transaction: (T) -> Unit
     ) {
         localRepository.modify(obj, transaction)
+        if (obj is Task) {
+            refreshTaskListWidgets()
+        }
     }
 
     override fun swapTaskPosition(
@@ -385,6 +404,7 @@ class TaskRepositoryImpl(
         secondPosition: Int
     ) {
         localRepository.swapTaskPosition(firstPosition, secondPosition)
+        refreshTaskListWidgets()
     }
 
     override suspend fun updateTaskPosition(
@@ -399,6 +419,7 @@ class TaskRepositoryImpl(
             apiClient.postTaskNewPosition(taskID, newPosition)
         } ?: return null
         localRepository.updateTaskPositions(positions)
+        refreshTaskListWidgets()
         return positions
     }
 
@@ -436,7 +457,7 @@ class TaskRepositoryImpl(
             savedTask.id = task.id
             savedTask.ownerID = task.ownerID
             savedTask.position = task.position
-            localRepository.save(savedTask)
+            saveTaskAndRefreshWidgets(savedTask)
         }
 
         assignChanges["unassign"]?.let { unassignments ->
@@ -448,7 +469,7 @@ class TaskRepositoryImpl(
                 savedTask.id = task.id
                 savedTask.position = task.position
                 savedTask.ownerID = task.ownerID
-                localRepository.save(savedTask)
+                saveTaskAndRefreshWidgets(savedTask)
             }
         }
     }

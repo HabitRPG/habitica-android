@@ -54,6 +54,7 @@ import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
+import com.habitrpg.android.habitica.widget.glance.data.firstOrNullForWidget
 import com.habitrpg.android.habitica.widget.glance.data.toWidgetItem
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
@@ -65,7 +66,6 @@ import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueMedium
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 abstract class TaskListGlanceWidget(
@@ -87,14 +87,14 @@ abstract class TaskListGlanceWidget(
         }
         val state = TaskListMemoryCache.get(taskType) ?: withContext(Dispatchers.Main) {
             val entry = widgetEntryPoint(context)
-            val user = entry.userRepository().getUser().firstOrNull()
+            val user = entry.userRepository().getUser().firstOrNullForWidget()
             val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
                 ?.toTypedArray() ?: emptyArray()
             val raw = entry.taskRepository().getTasks(
                 taskType = taskType,
                 userID = user?.id,
                 includedGroupIDs = mirroredGroupIds,
-            ).firstOrNull().orEmpty()
+            ).firstOrNullForWidget().orEmpty()
             val visible = raw.filter {
                 !it.completed && (taskType != TaskType.DAILY || it.isDue == true)
             }
