@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.widget.AvatarWidgetProvider
 import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
+import com.habitrpg.android.habitica.widget.glance.data.loadTaskListState
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskMultiGlanceWidget
@@ -24,6 +25,7 @@ import com.habitrpg.android.habitica.widget.glance.widgets.DailiesCountGlanceWid
 import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.HabitButtonGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.TodoTaskListGlanceWidget
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
@@ -93,16 +95,17 @@ class WidgetRefreshWorker(
         }
 
         suspend fun refreshTaskListWidgetsNow(context: Context) {
-            TaskListMemoryCache.clear()
+            TaskListMemoryCache.put(TaskType.DAILY, loadTaskListState(context, TaskType.DAILY))
+            TaskListMemoryCache.put(TaskType.TODO, loadTaskListState(context, TaskType.TODO))
             val manager = GlanceAppWidgetManager(context)
-            val widgets: List<GlanceAppWidget> = listOf(
-                DailyTaskListGlanceWidget(),
-                TodoTaskListGlanceWidget(),
-                DailiesCountGlanceWidget(),
-            )
-            widgets.forEach { widget ->
-                manager.getGlanceIds(widget.javaClass).forEach { id ->
-                    widget.update(context, id)
+            val ids = buildList {
+                addAll(manager.getGlanceIds(DailyTaskListGlanceWidget::class.java))
+                addAll(manager.getGlanceIds(TodoTaskListGlanceWidget::class.java))
+            }
+            for (id in ids) {
+                updateAppWidgetState(context, id) { prefs ->
+                    prefs[WidgetStateKeys.refreshToken] =
+                        (prefs[WidgetStateKeys.refreshToken] ?: 0) + 1
                 }
             }
         }

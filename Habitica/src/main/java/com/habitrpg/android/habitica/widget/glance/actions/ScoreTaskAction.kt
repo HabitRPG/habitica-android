@@ -6,7 +6,6 @@ import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.state.updateAppWidgetState
-import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
@@ -55,8 +54,6 @@ class ScoreTaskAction : ActionCallback {
             applyAvatarStatOverrides(context, user, res)
             res
         }
-
-        TaskListMemoryCache.clear()
 
         showScoringToast(context, result)
         refreshStatsDependentWidgets(context)

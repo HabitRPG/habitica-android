@@ -7,7 +7,6 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.widgets.AvatarStatsGlanceWidget
@@ -105,6 +104,4 @@ suspend fun applyInAppScoreToWidgets(context: Context, taskId: String) {
             }
         }
     }
-
-    TaskListMemoryCache.clear()
 }

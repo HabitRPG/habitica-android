@@ -4,6 +4,10 @@ import android.content.Context
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 
 data class StatsWidgetState(
     val hp: Float,
@@ -100,3 +104,24 @@ data class DailyCountWidgetState(
 )
 
 fun computeNeedsCron(user: User?): Boolean = user?.needsCron == true
+
+suspend fun loadTaskListState(context: Context, taskType: TaskType): TaskListWidgetState =
+    withContext(Dispatchers.Main) {
+        val entry = widgetEntryPoint(context)
+        entry.taskRepository().refreshLocalData()
+        val user = entry.userRepository().getUser().firstOrNull()
+        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
+            ?.toTypedArray() ?: emptyArray()
+        val raw = entry.taskRepository().getTasks(
+            taskType = taskType,
+            userID = user?.id,
+            includedGroupIDs = mirroredGroupIds,
+        ).firstOrNull().orEmpty()
+        val visible = raw.filter {
+            !it.completed && (taskType != TaskType.DAILY || it.isDue == true)
+        }
+        TaskListWidgetState(
+            tasks = visible.map { it.toWidgetItem() },
+            needsCron = computeNeedsCron(user),
+        )
+    }
