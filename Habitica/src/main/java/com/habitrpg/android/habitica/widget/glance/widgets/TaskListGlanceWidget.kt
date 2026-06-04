@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.ColorFilter
@@ -71,14 +70,7 @@ import kotlinx.coroutines.withContext
 abstract class TaskListGlanceWidget(
     private val taskType: TaskType,
 ) : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(120.dp, 120.dp),
-            DpSize(220.dp, 160.dp),
-            DpSize(300.dp, 200.dp),
-            DpSize(360.dp, 300.dp),
-        ),
-    )
+    override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         if (!WidgetAuth.isLoggedIn(context)) {
@@ -123,6 +115,8 @@ class DailyTaskListGlanceWidget : TaskListGlanceWidget(TaskType.DAILY)
 class TodoTaskListGlanceWidget : TaskListGlanceWidget(TaskType.TODO)
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+private const val MAX_VISIBLE_TASKS = 15
 
 internal data class TaskListPalette(
     val widgetBackground: ColorProvider,
@@ -271,7 +265,11 @@ private fun TaskListBody(
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
             )
-            else -> TaskListRows(state = state, palette = palette, isDaily = isDaily)
+            else -> TaskListRows(
+                state = state,
+                palette = palette,
+                isDaily = isDaily,
+            )
         }
     }
 }
@@ -283,9 +281,15 @@ private fun TaskListRows(
     isDaily: Boolean,
 ) {
     val innerCornerRadius = if (isDaily) 8.dp else 13.dp
+    val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
+    val total = state.tasks.size
+    val showFooter = total > MAX_VISIBLE_TASKS
+    val shown = if (showFooter) state.tasks.take(MAX_VISIBLE_TASKS) else state.tasks
+    val moreCount = total - shown.size
+
     LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
-        items(state.tasks.size, itemId = { state.tasks[it].id.hashCode().toLong() }) { index ->
-            val task = state.tasks[index]
+        items(shown.size) { index ->
+            val task = shown[index]
             Column(modifier = GlanceModifier.fillMaxWidth()) {
                 Box(
                     modifier = GlanceModifier
@@ -315,10 +319,43 @@ private fun TaskListRows(
                         ),
                     )
                 }
-                if (index < state.tasks.size - 1) {
+                if (index < shown.size - 1 || showFooter) {
                     Spacer(GlanceModifier.height(6.dp))
                 }
             }
         }
+        if (showFooter) {
+            item {
+                ViewMoreFooter(
+                    moreCount = moreCount,
+                    textColor = palette.secondaryText,
+                    openListLink = openListLink,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ViewMoreFooter(
+    moreCount: Int,
+    textColor: ColorProvider,
+    openListLink: String,
+) {
+    Box(
+        modifier = GlanceModifier
+            .fillMaxWidth()
+            .height(28.dp)
+            .clickable(onClick = openAppAction(openListLink)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = stringRes(R.string.widget_view_more, moreCount),
+            style = TextStyle(
+                color = textColor,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Medium,
+            ),
+        )
     }
 }

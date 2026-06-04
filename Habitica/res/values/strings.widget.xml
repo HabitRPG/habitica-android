@@ -25,6 +25,7 @@
     <string name="widget_empty_dailies">All done today!</string>
     <string name="widget_empty_todos">All done!</string>
     <string name="widget_add_task_cd">Add task</string>
+    <string name="widget_view_more">+%1$d more</string>
 
     <!-- Dailies count widget -->
     <string name="widget_start_day">Start a new day</string>

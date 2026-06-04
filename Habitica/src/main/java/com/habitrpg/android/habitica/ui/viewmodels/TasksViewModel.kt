@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.text.format.DateUtils
@@ -19,12 +20,14 @@ import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.widget.glance.actions.applyInAppScoreToWidgets
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
@@ -45,7 +48,8 @@ constructor(
     val appConfigManager: AppConfigManager,
     val sharedPreferences: SharedPreferences,
     val contentRepository: ContentRepository,
-    private val taskAlarmManager: TaskAlarmManager
+    private val taskAlarmManager: TaskAlarmManager,
+    @ApplicationContext private val context: Context
 ) : BaseViewModel(userRepository, userViewModel), GroupPlanInfoProvider {
     private var owners: List<Pair<String, CharSequence>> = listOf()
     var canSwitchOwners = MutableLiveData<Boolean?>()
@@ -139,6 +143,7 @@ constructor(
                     }
                 }
             }
+            applyInAppScoreToWidgets(context, task.id ?: "")
         }
     }
 

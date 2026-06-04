@@ -7,6 +7,8 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
+import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.widgets.AvatarStatsGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.widgets.DailiesCountGlanceWidget
@@ -14,6 +16,7 @@ import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWi
 import com.habitrpg.android.habitica.widget.glance.widgets.TodoTaskListGlanceWidget
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 suspend fun showScoringToast(context: Context, result: TaskScoringResult?) {
@@ -72,4 +75,36 @@ suspend fun refreshStatsDependentWidgets(context: Context) {
             widget.update(context, id)
         }
     }
+}
+
+suspend fun applyInAppScoreToWidgets(context: Context, taskId: String) {
+    val manager = GlanceAppWidgetManager(context)
+    val listTargets = buildList {
+        addAll(manager.getGlanceIds(DailyTaskListGlanceWidget::class.java))
+        addAll(manager.getGlanceIds(TodoTaskListGlanceWidget::class.java))
+        addAll(manager.getGlanceIds(DailiesCountGlanceWidget::class.java))
+    }
+    for (id in listTargets) {
+        updateAppWidgetState(context, id) { prefs ->
+            val existing = prefs[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
+            prefs[WidgetStateKeys.taskListHiddenIds] = existing + taskId
+        }
+    }
+
+    val stats = withContext(Dispatchers.Main) {
+        widgetEntryPoint(context).userRepository().getUser().firstOrNull()?.stats
+    }
+    if (stats != null) {
+        manager.getGlanceIds(AvatarStatsGlanceWidget::class.java).forEach { id ->
+            updateAppWidgetState(context, id) { prefs ->
+                prefs[WidgetStateKeys.statOverrideHp] = (stats.hp ?: 0.0).toFloat()
+                prefs[WidgetStateKeys.statOverrideExp] = (stats.exp ?: 0.0).toFloat()
+                prefs[WidgetStateKeys.statOverrideMp] = (stats.mp ?: 0.0).toFloat()
+                prefs[WidgetStateKeys.statOverrideGold] = stats.gp ?: 0.0
+                prefs[WidgetStateKeys.statOverrideValid] = true
+            }
+        }
+    }
+
+    TaskListMemoryCache.clear()
 }
