@@ -139,7 +139,7 @@ private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 private fun rememberInnerPalette(): StatsInnerPalette {
     return if (MaterialYouEnabled) {
         StatsInnerPalette(
-            labelText = GlanceTheme.colors.onPrimary,
+            labelText = GlanceTheme.colors.onSurface,
             chipBackground = GlanceTheme.colors.secondaryContainer,
             chipText = GlanceTheme.colors.onSecondaryContainer,
             levelChipBackground = GlanceTheme.colors.tertiaryContainer,
@@ -188,7 +188,7 @@ private fun StatsContent(state: StatsWidgetState) {
     val palette = rememberInnerPalette()
 
     val tileBackground: ColorProvider = if (MaterialYouEnabled) {
-        GlanceTheme.colors.primary
+        GlanceTheme.colors.widgetBackground
     } else {
         WidgetColors.background
     }

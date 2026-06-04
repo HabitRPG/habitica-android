@@ -142,12 +142,12 @@ internal data class TaskListPalette(
 private fun rememberPalette(): TaskListPalette {
     return if (MaterialYouEnabled) {
         TaskListPalette(
-            widgetBackground = GlanceTheme.colors.primary,
+            widgetBackground = GlanceTheme.colors.widgetBackground,
             cardBackground = GlanceTheme.colors.secondaryContainer,
-            titleText = GlanceTheme.colors.onPrimary,
+            titleText = GlanceTheme.colors.onSurface,
             taskText = GlanceTheme.colors.onSecondaryContainer,
             secondaryText = GlanceTheme.colors.onSurfaceVariant,
-            iconTint = GlanceTheme.colors.onPrimary,
+            iconTint = GlanceTheme.colors.onSurface,
             cardIconTint = GlanceTheme.colors.onSecondaryContainer,
             checklistChipBackground = GlanceTheme.colors.tertiaryContainer,
             checklistChipBackgroundDone = GlanceTheme.colors.surfaceVariant,

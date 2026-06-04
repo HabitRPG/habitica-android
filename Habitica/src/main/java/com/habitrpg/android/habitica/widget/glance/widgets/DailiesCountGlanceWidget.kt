@@ -45,7 +45,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
-import com.habitrpg.android.habitica.widget.glance.components.SquiggleProgressBar
+import com.habitrpg.android.habitica.widget.glance.components.SegmentedProgressBar
 import com.habitrpg.android.habitica.widget.glance.components.pluralRes
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
@@ -130,11 +130,11 @@ internal data class DailiesTilePalette(
 private fun rememberPalette(): DailiesTilePalette {
     return if (MaterialYouEnabled) {
         DailiesTilePalette(
-            tileBackground = GlanceTheme.colors.primary,
-            primaryText = GlanceTheme.colors.onPrimary,
-            secondaryText = GlanceTheme.colors.onPrimary,
-            accentNumber = GlanceTheme.colors.onPrimary,
-            iconTint = GlanceTheme.colors.onPrimary,
+            tileBackground = GlanceTheme.colors.widgetBackground,
+            primaryText = GlanceTheme.colors.onSurface,
+            secondaryText = GlanceTheme.colors.onSurfaceVariant,
+            accentNumber = GlanceTheme.colors.primary,
+            iconTint = GlanceTheme.colors.onSurface,
             trackColor = GlanceTheme.colors.outline,
         )
     } else {
@@ -314,7 +314,7 @@ private fun GaugeBody(
                 modifier = GlanceModifier.padding(start = 4.dp),
             )
         }
-        SquiggleProgressBar(
+        SegmentedProgressBar(
             progress = progress,
             fillColor = ColorProvider(progressColor),
             trackColor = palette.trackColor,
