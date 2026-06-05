@@ -33,7 +33,9 @@ open class RepositoryModule {
                     val oneHundredMB = 50 * 1024 * 1024
                     (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5
                 }
-        return builder.build()
+        val config = builder.build()
+        Realm.setDefaultConfiguration(config)
+        return config
     }
     @Provides
     open fun providesRealm(config: RealmConfiguration): Realm {
