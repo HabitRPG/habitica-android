@@ -44,6 +44,7 @@ class WidgetRefreshWorker(
             AvatarBitmapCache.refreshIfNeeded(context, user)
         }
         TaskListMemoryCache.clear()
+        refreshTaskListWidgetsNow(context)
         refreshAllWidgets(context)
         AvatarWidgetProvider.renderAll(context)
         return Result.success()
@@ -95,8 +96,15 @@ class WidgetRefreshWorker(
         }
 
         suspend fun refreshTaskListWidgetsNow(context: Context) {
-            TaskListMemoryCache.put(TaskType.DAILY, loadTaskListState(context, TaskType.DAILY))
-            TaskListMemoryCache.put(TaskType.TODO, loadTaskListState(context, TaskType.TODO))
+            val dailyState = loadTaskListState(context, TaskType.DAILY)
+            val todoState = loadTaskListState(context, TaskType.TODO)
+            TaskListMemoryCache.put(TaskType.DAILY, dailyState)
+            TaskListMemoryCache.put(TaskType.TODO, todoState)
+            reconcileTaskListHiddenIds(
+                context,
+                dailyVisibleIds = dailyState.tasks.map { it.id }.toSet(),
+                todoVisibleIds = todoState.tasks.map { it.id }.toSet(),
+            )
             val manager = GlanceAppWidgetManager(context)
             val ids = buildList {
                 addAll(manager.getGlanceIds(DailyTaskListGlanceWidget::class.java))
@@ -107,6 +115,10 @@ class WidgetRefreshWorker(
                     prefs[WidgetStateKeys.refreshToken] =
                         (prefs[WidgetStateKeys.refreshToken] ?: 0) + 1
                 }
+            }
+            val summaryWidget = DailiesCountGlanceWidget()
+            manager.getGlanceIds(DailiesCountGlanceWidget::class.java).forEach { id ->
+                summaryWidget.update(context, id)
             }
         }
 
@@ -133,6 +145,31 @@ class WidgetRefreshWorker(
                     }
                 }
             }
+        }
+
+        suspend fun reconcileTaskListHiddenIds(
+            context: Context,
+            dailyVisibleIds: Set<String>,
+            todoVisibleIds: Set<String>,
+        ) {
+            val manager = GlanceAppWidgetManager(context)
+            suspend fun unhideVisible(cls: Class<out GlanceAppWidget>, visibleIds: Set<String>) {
+                manager.getGlanceIds(cls).forEach { id ->
+                    updateAppWidgetState(context, id) { prefs ->
+                        val existing = prefs[WidgetStateKeys.taskListHiddenIds]
+                            ?: return@updateAppWidgetState
+                        val next = existing - visibleIds
+                        if (next.isEmpty()) {
+                            prefs.remove(WidgetStateKeys.taskListHiddenIds)
+                        } else {
+                            prefs[WidgetStateKeys.taskListHiddenIds] = next
+                        }
+                    }
+                }
+            }
+            unhideVisible(DailyTaskListGlanceWidget::class.java, dailyVisibleIds)
+            unhideVisible(TodoTaskListGlanceWidget::class.java, todoVisibleIds)
+            unhideVisible(DailiesCountGlanceWidget::class.java, dailyVisibleIds)
         }
 
         private suspend fun refreshAllWidgets(context: Context) {

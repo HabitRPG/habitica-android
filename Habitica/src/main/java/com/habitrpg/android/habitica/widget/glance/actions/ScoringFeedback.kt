@@ -76,7 +76,7 @@ suspend fun refreshStatsDependentWidgets(context: Context) {
     }
 }
 
-suspend fun applyInAppScoreToWidgets(context: Context, taskId: String) {
+suspend fun applyInAppScoreToWidgets(context: Context, taskId: String, up: Boolean) {
     val manager = GlanceAppWidgetManager(context)
     val listTargets = buildList {
         addAll(manager.getGlanceIds(DailyTaskListGlanceWidget::class.java))
@@ -86,7 +86,8 @@ suspend fun applyInAppScoreToWidgets(context: Context, taskId: String) {
     for (id in listTargets) {
         updateAppWidgetState(context, id) { prefs ->
             val existing = prefs[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
-            prefs[WidgetStateKeys.taskListHiddenIds] = existing + taskId
+            prefs[WidgetStateKeys.taskListHiddenIds] =
+                if (up) existing + taskId else existing - taskId
         }
     }
 
@@ -104,4 +105,6 @@ suspend fun applyInAppScoreToWidgets(context: Context, taskId: String) {
             }
         }
     }
+
+    refreshStatsDependentWidgets(context)
 }

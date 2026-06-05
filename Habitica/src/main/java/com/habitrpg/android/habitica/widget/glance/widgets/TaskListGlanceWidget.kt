@@ -40,7 +40,6 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreTaskAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
@@ -232,7 +231,7 @@ private fun TaskListBody(
     Box(modifier = GlanceModifier.fillMaxSize()) {
         when {
             state.needsCron && isDaily -> StartDayCard(
-                onClick = actionRunCallback<RunCronAction>(),
+                onClick = openAppAction("habitica://user/tasks/daily"),
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
                 iconTint = palette.cardIconTint,

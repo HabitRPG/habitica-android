@@ -143,7 +143,7 @@ constructor(
                     }
                 }
             }
-            applyInAppScoreToWidgets(context, task.id ?: "")
+            applyInAppScoreToWidgets(context, task.id ?: "", direction == TaskDirection.UP)
         }
     }
 

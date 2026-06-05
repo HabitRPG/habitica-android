@@ -69,6 +69,21 @@ class CronBoundaryRefreshWorker(
             return cal.timeInMillis
         }
 
+        internal fun lastBoundaryMillis(dayStart: Int, now: Long): Long {
+            val hour = dayStart.coerceIn(0, 24) % 24
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = now
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+            cal.set(Calendar.MILLISECOND, 0)
+            cal.add(Calendar.MINUTE, BUFFER_MINUTES)
+            if (cal.timeInMillis > now) {
+                cal.add(Calendar.DAY_OF_YEAR, -1)
+            }
+            return cal.timeInMillis
+        }
+
         private suspend fun hasDailyWidgets(context: Context): Boolean {
             val manager = GlanceAppWidgetManager(context)
             return manager.getGlanceIds(DailyTaskListGlanceWidget::class.java).isNotEmpty() ||

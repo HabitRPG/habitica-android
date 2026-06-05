@@ -153,6 +153,19 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
             CronBoundaryRefreshWorker.scheduleFromCache(this@HabiticaBaseApplication)
         }
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            private var isInitialStart = true
+
+            override fun onStart(owner: LifecycleOwner) {
+                if (isInitialStart) {
+                    isInitialStart = false
+                    return
+                }
+                MainScope().launchCatching {
+                    WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+                }
+            }
+        })
 
         checkIfNewVersion()
     }

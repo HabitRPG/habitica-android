@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.widget.glance.data
 import android.content.Context
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.Dispatchers
@@ -103,7 +104,13 @@ data class DailyCountWidgetState(
     val needsCron: Boolean,
 )
 
-fun computeNeedsCron(user: User?): Boolean = user?.needsCron == true
+fun computeNeedsCron(user: User?, now: Long = System.currentTimeMillis()): Boolean {
+    if (user == null) return false
+    if (user.needsCron) return true
+    val lastCron = user.lastCron ?: return false
+    val dayStart = user.preferences?.dayStart ?: 0
+    return lastCron.time < CronBoundaryRefreshWorker.lastBoundaryMillis(dayStart, now)
+}
 
 suspend fun loadTaskListState(context: Context, taskType: TaskType): TaskListWidgetState =
     withContext(Dispatchers.Main) {

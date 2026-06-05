@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
+import android.content.Context
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -19,6 +20,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -40,7 +42,8 @@ class UserRepositoryImpl(
     apiClient: ApiClient,
     authenticationHandler: AuthenticationHandler,
     private val taskRepository: TaskRepository,
-    private val appConfigManager: AppConfigManager
+    private val appConfigManager: AppConfigManager,
+    private val context: Context
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
     companion object {
         private var lastReadNotification: String? = null
@@ -395,6 +398,7 @@ class UserRepositoryImpl(
         }
         apiClient.runCron()
         retrieveUser(true, true)
+        WidgetRefreshWorker.refreshAllWidgetsNow(context)
     }
 
     override suspend fun useCustomization(
