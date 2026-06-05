@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
@@ -43,7 +42,6 @@ import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
-import com.habitrpg.android.habitica.widget.glance.theme.AddTaskTileColors
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
 class AddTaskSingleGlanceWidget : GlanceAppWidget() {
@@ -77,16 +75,15 @@ class AddTaskSingleGlanceWidget : GlanceAppWidget() {
 
 private data class TileSpec(
     val nameResId: Int,
-    val brandColor: Color,
     val iconResId: Int,
     val taskType: String,
 )
 
 private fun tileFor(type: String?): TileSpec? = when (type) {
-    "habit" -> TileSpec(R.string.habit, AddTaskTileColors.habit, R.drawable.widget_add_habit_glyph, "habit")
-    "daily" -> TileSpec(R.string.daily, AddTaskTileColors.daily, R.drawable.widget_add_daily_glyph, "daily")
-    "todo" -> TileSpec(R.string.widget_add_task_todo_compact, AddTaskTileColors.todo, R.drawable.widget_add_todo_glyph, "todo")
-    "reward" -> TileSpec(R.string.reward, AddTaskTileColors.reward, R.drawable.widget_add_reward_glyph, "reward")
+    "habit" -> TileSpec(R.string.habit, R.drawable.widget_add_habit_glyph, "habit")
+    "daily" -> TileSpec(R.string.daily, R.drawable.widget_add_daily_glyph, "daily")
+    "todo" -> TileSpec(R.string.widget_add_task_todo_compact, R.drawable.widget_add_todo_glyph, "todo")
+    "reward" -> TileSpec(R.string.reward, R.drawable.widget_add_reward_glyph, "reward")
     else -> null
 }
 
@@ -101,20 +98,17 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
     }
     val tileAction = if (isLoggedIn) openTaskFormAction(tile.taskType) else openAppAction()
     val size = LocalSize.current
-    val shorter = if (size.width < size.height) size.width else size.height
-
-    val iconSize = (shorter.value * 0.42f).coerceIn(28f, 240f).dp
-    val tilePadding = (shorter.value * 0.02f).coerceIn(0f, 4f).dp
-    val tileSide = shorter - tilePadding * 2
+    val scallopSide = size.width
+    val iconSize = (size.width.value * 0.55f).coerceIn(28f, 240f).dp
 
     val scallopTint: ColorProvider
     val iconTint: ColorProvider?
     if (MaterialYouEnabled) {
-        scallopTint = GlanceTheme.colors.primary
-        iconTint = GlanceTheme.colors.onPrimary
+        scallopTint = GlanceTheme.colors.secondaryContainer
+        iconTint = GlanceTheme.colors.onSecondaryContainer
     } else {
-        scallopTint = ColorProvider(tile.brandColor)
-        iconTint = null
+        scallopTint = ColorProvider(R.color.widget_preview_scallop_tint)
+        iconTint = ColorProvider(R.color.widget_preview_scallop_glyph_tint)
     }
 
     Box(
@@ -124,7 +118,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
         contentAlignment = Alignment.Center,
     ) {
         Box(
-            modifier = GlanceModifier.size(tileSide),
+            modifier = GlanceModifier.size(scallopSide),
             contentAlignment = Alignment.Center,
         ) {
             Image(

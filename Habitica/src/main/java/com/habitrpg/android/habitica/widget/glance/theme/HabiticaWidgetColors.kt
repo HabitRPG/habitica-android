@@ -83,13 +83,6 @@ object TaskValueBucketColors {
     val blue = Color(0xFF46A7D9)
 }
 
-object AddTaskTileColors {
-    val habit = Color(0xFFF23035)
-    val daily = Color(0xFFFFA624)
-    val todo = Color(0xFF26A0AB)
-    val reward = Color(0xFF1CA372)
-}
-
 object HabitButtonBarColors {
     val maroonLight = Color(0xFFDE3F3F)
     val maroonMedium = Color(0xFFC92B2B)

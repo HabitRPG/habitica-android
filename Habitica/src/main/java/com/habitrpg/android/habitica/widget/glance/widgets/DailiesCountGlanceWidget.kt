@@ -160,27 +160,20 @@ private fun progressColor(progress: Float): Color = when {
 private fun DailiesCountTile(state: DailyCountWidgetState) {
     val palette = rememberPalette()
     val size = LocalSize.current
-    val outerPadding = 8.dp
     val tileInnerPadding = 14.dp
-    val barAvailableWidth = (size.width - outerPadding * 2 - tileInnerPadding * 2).coerceAtLeast(40.dp)
+    val barAvailableWidth = (size.width - tileInnerPadding * 2).coerceAtLeast(40.dp)
 
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
-            .padding(outerPadding),
+            .cornerRadius(20.dp)
+            .background(palette.tileBackground),
     ) {
-        Box(
-            modifier = GlanceModifier
-                .fillMaxSize()
-                .cornerRadius(20.dp)
-                .background(palette.tileBackground),
-        ) {
-            val isAllDone = state.totalDue > 0 && state.completed == state.totalDue
-            when {
-                state.needsCron -> StartDayContent(palette, tileInnerPadding)
-                isAllDone -> AllDoneContent(state.totalDue, palette, barAvailableWidth, tileInnerPadding)
-                else -> InProgressContent(state, palette, barAvailableWidth, tileInnerPadding)
-            }
+        val isAllDone = state.totalDue > 0 && state.completed == state.totalDue
+        when {
+            state.needsCron -> StartDayContent(palette, tileInnerPadding)
+            isAllDone -> AllDoneContent(state.totalDue, palette, barAvailableWidth, tileInnerPadding)
+            else -> InProgressContent(state, palette, barAvailableWidth, tileInnerPadding)
         }
     }
 }
