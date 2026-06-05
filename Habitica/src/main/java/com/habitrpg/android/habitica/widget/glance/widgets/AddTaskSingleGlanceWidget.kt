@@ -89,6 +89,8 @@ private fun tileFor(type: String?): TileSpec? = when (type) {
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
+private const val SCALLOP_FILL_SCALE = 1.25f
+
 @Composable
 private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn: Boolean) {
     val tile = tileFor(type)
@@ -98,8 +100,8 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
     }
     val tileAction = if (isLoggedIn) openTaskFormAction(tile.taskType) else openAppAction()
     val size = LocalSize.current
-    val scallopSide = size.width
-    val iconSize = (size.width.value * 0.55f).coerceIn(28f, 240f).dp
+    val scallopSide = minOf(size.width, size.height)
+    val iconSize = (scallopSide.value * 0.55f).coerceIn(28f, 240f).dp
 
     val scallopTint: ColorProvider
     val iconTint: ColorProvider?

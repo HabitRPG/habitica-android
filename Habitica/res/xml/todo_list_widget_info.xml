@@ -3,6 +3,7 @@
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minHeight="110dp"
     android:minWidth="220dp"
+    android:maxResizeWidth="240dp"
     android:targetCellWidth="3"
     android:targetCellHeight="2"
     android:previewImage="@drawable/widget_todo"

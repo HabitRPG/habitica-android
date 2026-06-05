@@ -38,6 +38,8 @@ import com.habitrpg.android.habitica.widget.glance.components.MergedCurrencyChip
 import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StatRow
 import com.habitrpg.android.habitica.widget.glance.components.StatRowMode
+import com.habitrpg.android.habitica.widget.glance.components.inlineValueColumnWidth
+import com.habitrpg.android.habitica.widget.glance.components.inlineValueText
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
@@ -142,8 +144,8 @@ private fun rememberInnerPalette(): StatsInnerPalette {
             labelText = GlanceTheme.colors.onSurface,
             chipBackground = GlanceTheme.colors.secondaryContainer,
             chipText = GlanceTheme.colors.onSecondaryContainer,
-            levelChipBackground = GlanceTheme.colors.tertiaryContainer,
-            levelChipText = GlanceTheme.colors.onTertiaryContainer,
+            levelChipBackground = GlanceTheme.colors.secondary,
+            levelChipText = GlanceTheme.colors.onSecondary,
         )
     } else {
         StatsInnerPalette(
@@ -164,10 +166,12 @@ private fun pickLayout(width: Dp, height: Dp): StatsLayout {
         width >= 170.dp -> 3
         else -> 2
     }
-    val rowMode = if (tall && cols >= 4) {
-        StatRowMode.LabelStackedValue
-    } else {
-        StatRowMode.BarOnly
+    val rowMode = when {
+        tall && cols >= 4 -> StatRowMode.LabelStackedValue
+        tall -> StatRowMode.BarOnly
+        cols >= 5 -> StatRowMode.InlineValueMaxWithLabel
+        cols == 4 -> StatRowMode.InlineValueWithLabel
+        else -> StatRowMode.BarOnly
     }
     val showAvatar = tall && (cols == 2 || cols >= 5)
     val avatarOnTop = showAvatar && cols == 2
@@ -219,7 +223,7 @@ private fun CompactAvatarLayout(
     outerPadding: Dp,
     palette: StatsInnerPalette,
 ) {
-    val barWidth = (widgetWidth - outerPadding * 2 - 24.dp - 8.dp).coerceAtLeast(40.dp)
+    val columnWidth = (widgetWidth - outerPadding * 2).coerceAtLeast(40.dp)
     Column(
         modifier = GlanceModifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -232,7 +236,7 @@ private fun CompactAvatarLayout(
             modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
         )
         Spacer(GlanceModifier.defaultWeight())
-        StatBars(state = state, layout = layout, barWidth = barWidth, palette = palette)
+        StatBars(state = state, layout = layout, columnWidth = columnWidth, palette = palette)
     }
 }
 
@@ -246,8 +250,7 @@ private fun HorizontalLayout(
 ) {
     val avatarBoxWidth = if (layout.showAvatar) 124.dp else 0.dp
     val avatarSpacing = if (layout.showAvatar) 12.dp else 0.dp
-    val iconAndSpacing = 24.dp + 8.dp
-    val barWidth = (widgetWidth - outerPadding * 2 - avatarBoxWidth - avatarSpacing - iconAndSpacing)
+    val columnWidth = (widgetWidth - outerPadding * 2 - avatarBoxWidth - avatarSpacing)
         .coerceAtLeast(40.dp)
 
     Row(
@@ -283,7 +286,7 @@ private fun HorizontalLayout(
             GlanceModifier.defaultWeight()
         }
         Column(modifier = contentModifier) {
-            StatBars(state = state, layout = layout, barWidth = barWidth, palette = palette)
+            StatBars(state = state, layout = layout, columnWidth = columnWidth, palette = palette)
             if (layout.showFooter) {
                 Spacer(GlanceModifier.height(8.dp))
                 StatsFooter(
@@ -308,8 +311,7 @@ private fun FullStatsLayout(
 ) {
     val avatarWidth = 124.dp
     val avatarSpacing = 12.dp
-    val iconAndSpacing = 24.dp + 8.dp
-    val barWidth = (widgetWidth - outerPadding * 2 - avatarWidth - avatarSpacing - iconAndSpacing)
+    val columnWidth = (widgetWidth - outerPadding * 2 - avatarWidth - avatarSpacing)
         .coerceAtLeast(40.dp)
 
     Column(modifier = GlanceModifier.fillMaxSize()) {
@@ -326,7 +328,7 @@ private fun FullStatsLayout(
             )
             Spacer(GlanceModifier.width(avatarSpacing))
             Column(modifier = GlanceModifier.defaultWeight()) {
-                StatBars(state = state, layout = layout, barWidth = barWidth, palette = palette)
+                StatBars(state = state, layout = layout, columnWidth = columnWidth, palette = palette)
             }
         }
         Spacer(GlanceModifier.defaultWeight())
@@ -344,7 +346,7 @@ private fun FullStatsLayout(
 private fun StatBars(
     state: StatsWidgetState,
     layout: StatsLayout,
-    barWidth: Dp,
+    columnWidth: Dp,
     palette: StatsInnerPalette,
 ) {
     val fill = layout.barsFillHeight
@@ -363,10 +365,32 @@ private fun StatBars(
     } else {
         GlanceModifier.fillMaxWidth()
     }
+    val hpLabel = stringRes(R.string.widget_stat_hp)
+    val expLabel = stringRes(R.string.widget_stat_exp)
+    val mpLabel = stringRes(R.string.widget_stat_mp)
+    val isInline = layout.rowMode == StatRowMode.InlineValueWithLabel ||
+        layout.rowMode == StatRowMode.InlineValueMaxWithLabel
+    val valueColumnWidth = if (isInline) {
+        val texts = buildList {
+            add(inlineValueText(layout.rowMode, state.hpText, state.maxHpText, hpLabel))
+            add(inlineValueText(layout.rowMode, state.expText, state.toNextLevelText, expLabel))
+            if (state.showMp) add(inlineValueText(layout.rowMode, state.mpText, state.maxMpText, mpLabel))
+        }
+        inlineValueColumnWidth(texts)
+    } else {
+        0.dp
+    }
+    val barAvailableWidth = (
+        columnWidth -
+            (if (isInline) 8.dp else 0.dp) -
+            iconSize -
+            8.dp -
+            (if (isInline) 4.dp + valueColumnWidth else 0.dp)
+    ).coerceAtLeast(16.dp)
     Column(modifier = columnModifier) {
         if (fill) Spacer(GlanceModifier.defaultWeight())
         StatRow(
-            label = stringRes(R.string.widget_stat_hp),
+            label = hpLabel,
             value = state.hp,
             maxValue = state.maxHp,
             valueText = state.hpText,
@@ -374,13 +398,14 @@ private fun StatBars(
             barColor = WidgetBarColors.red,
             iconResId = R.drawable.widget_icon_heart,
             mode = layout.rowMode,
-            barAvailableWidth = barWidth,
+            barAvailableWidth = barAvailableWidth,
             labelTextColor = palette.labelText,
             iconSize = iconSize,
+            valueColumnWidth = valueColumnWidth,
         )
         if (fill) Spacer(GlanceModifier.defaultWeight()) else Spacer(GlanceModifier.height(gap))
         StatRow(
-            label = stringRes(R.string.widget_stat_exp),
+            label = expLabel,
             value = state.exp,
             maxValue = state.toNextLevel,
             valueText = state.expText,
@@ -388,14 +413,15 @@ private fun StatBars(
             barColor = WidgetBarColors.yellow,
             iconResId = R.drawable.widget_icon_experience,
             mode = layout.rowMode,
-            barAvailableWidth = barWidth,
+            barAvailableWidth = barAvailableWidth,
             labelTextColor = palette.labelText,
             iconSize = iconSize,
+            valueColumnWidth = valueColumnWidth,
         )
         if (state.showMp) {
             if (fill) Spacer(GlanceModifier.defaultWeight()) else Spacer(GlanceModifier.height(gap))
             StatRow(
-                label = stringRes(R.string.widget_stat_mp),
+                label = mpLabel,
                 value = state.mp,
                 maxValue = state.maxMp,
                 valueText = state.mpText,
@@ -403,9 +429,10 @@ private fun StatBars(
                 barColor = WidgetBarColors.blue,
                 iconResId = R.drawable.widget_icon_mana,
                 mode = layout.rowMode,
-                barAvailableWidth = barWidth,
+                barAvailableWidth = barAvailableWidth,
                 labelTextColor = palette.labelText,
                 iconSize = iconSize,
+                valueColumnWidth = valueColumnWidth,
             )
         }
         if (fill) Spacer(GlanceModifier.defaultWeight())
