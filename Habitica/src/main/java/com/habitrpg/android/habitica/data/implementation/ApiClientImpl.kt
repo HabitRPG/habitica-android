@@ -561,7 +561,7 @@ class ApiClientImpl(
     val lastSubscribeCall: Date? = null
 
     override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? {
-        return if (lastSubscribeCall == null || Date().time - lastSubscribeCall.time > 60000) {
+        return if (lastSubscribeCall == null || Date().time - lastSubscribeCall.time > 6000) {
             process { apiService.validateSubscription(request) }
         } else {
             null

@@ -43,9 +43,7 @@ import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.MainScope
 import java.lang.ref.WeakReference
 import java.util.Date
 import javax.inject.Inject
@@ -351,8 +349,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
 
         fun logout(context: Context, user: User? = null) {
-            val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-            scope.launchCatching {
+            MainScope().launchCatching {
                 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
                 val instance      = getInstance(context)
 

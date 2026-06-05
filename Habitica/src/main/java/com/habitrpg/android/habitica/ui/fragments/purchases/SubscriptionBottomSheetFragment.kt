@@ -19,10 +19,9 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentBottomsheetSubscriptionBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -234,7 +233,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun checkIfNeedsCancellation() {
         viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val newestSubscription = purchaseHandler.checkForSubscription()
+            val newestSubscription = purchaseHandler.checkForSubscription(false)
             if (user?.purchased?.plan?.paymentMethod == "Google" &&
                 user?.purchased?.plan?.isActive == true &&
                 user?.purchased?.plan?.dateTerminated == null &&

@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 import android.app.Activity
 import android.icu.util.Currency
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +20,6 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +29,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,7 +42,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -57,6 +52,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.android.billingclient.api.ProductDetails
@@ -78,7 +74,6 @@ import com.habitrpg.shared.habitica.extensions.round
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.math.RoundingMode
 import javax.inject.Inject
 
 
@@ -189,6 +184,7 @@ class ChangeSubscriptionViewModel @Inject constructor(
         selectedPlan.value = plan
     }
 
+    var onDismiss: () -> Unit = {}
     val products = listOf(
         HabiticaProduct.SUBSCRIPTION_1_MONTH,
         HabiticaProduct.SUBSCRIPTION_3_MONTH,
@@ -239,6 +235,7 @@ class ChangeSubscriptionViewModel @Inject constructor(
         val details = productDetailsForProduct(selectedPlan.value) ?: return
         viewModelScope.launchCatching {
             purchaseHandler.purchase(activity, details)
+            onDismiss()
         }
     }
 
@@ -421,15 +418,20 @@ open class ChangeSubscriptionFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentComposeBinding? = null
     val binding get() = _binding!!
 
+    val viewModel: ChangeSubscriptionViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentComposeBinding.inflate(layoutInflater)
+        viewModel.onDismiss = {
+            dismiss()
+        }
         _binding?.root?.setContent {
             HabiticaTheme {
-                ChangeSubscriptionScreen()
+                ChangeSubscriptionScreen(viewModel = viewModel)
             }
         }
         return binding.root

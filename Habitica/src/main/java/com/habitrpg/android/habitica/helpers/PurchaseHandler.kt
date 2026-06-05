@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.helpers
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
-import androidx.lifecycle.asFlow
 import androidx.preference.PreferenceManager
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -17,12 +17,9 @@ import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesResponseListener
 import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.billingclient.api.QueryProductDetailsParams
-import com.android.billingclient.api.QueryProductDetailsParams.Product
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
-import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -43,8 +40,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -88,10 +83,8 @@ class PurchaseHandler(
     ) {
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                val mostRecentSub = findMostRecentSubscription(purchases)
                 scope.launchCatching {
-                    userViewModel.user.asFlow()
-                        .filterNotNull().take(1).collect {
+                    userViewModel.user.value?.let {
                             val plan = it.purchased!!.plan
                             for (purchase in purchases) {
                                 val product = HabiticaProduct.forSku(purchase.products.firstOrNull() ?: "") ?: continue
@@ -99,7 +92,6 @@ class PurchaseHandler(
                                     HabiticaProduct.allSubscriptionTypes.contains(product)
                                 ) {
                                     if (((plan.dateTerminated != null) == purchase.isAutoRenewing) ||
-                                        mostRecentSub?.orderId != purchase.orderId ||
                                         purchase.purchaseToken == plan.customerId
                                     ) {
                                         continue
@@ -180,6 +172,8 @@ class PurchaseHandler(
                 QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS)
                     .build()
             )
+        Log.d("PurchaseHandler", "Queried subscription purchases, response code: ${subResponse.billingResult.responseCode}")
+        Log.d("PurchaseHandler", "Subscription purchases found: ${subResponse.purchasesList.map { it.products.firstOrNull() }}")
         processPurchases(subResponse.billingResult, subResponse.purchasesList)
         val iapResponse =
             billingClient.queryPurchasesAsync(
@@ -187,6 +181,8 @@ class PurchaseHandler(
                     .build()
             )
         processPurchases(iapResponse.billingResult, iapResponse.purchasesList)
+        Log.d("PurchaseHandler", "Queried iap purchases, response code: ${iapResponse.billingResult.responseCode}")
+        Log.d("PurchaseHandler", "In-app purchases found: ${iapResponse.purchasesList.map { it.products.firstOrNull() }}")
     }
 
     suspend fun loadGryphatriceProduct() = inventoryManager.loadInAppProduct(HabiticaProduct.JUBILANT_GRYPHATRICE)
@@ -218,9 +214,11 @@ class PurchaseHandler(
         newSkuDetails: ProductDetails
     ): Int {
         return if (isSubscriptionUpgrade(oldPurchase, newSkuDetails)) {
+            Log.d("PurchaseHandler", "Subscription Upgrade: ${oldPurchase.products.firstOrNull()} -> ${newSkuDetails.productId}")
             BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.CHARGE_FULL_PRICE
         } else {
-            BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.DEFERRED
+            Log.d("PurchaseHandler", "Subscription Downgrade or Lateral Change: ${oldPurchase.products.firstOrNull()} -> ${newSkuDetails.productId}")
+            BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.WITH_TIME_PRORATION
         }
     }
 
@@ -248,7 +246,7 @@ class PurchaseHandler(
             if (existingSub != null && existingSub.isAutoRenewing) {
                 productDetailsParams = productDetailsParams.setSubscriptionProductReplacementParams(
                     BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.newBuilder()
-                        .setOldProductId(existingSub.purchaseToken)
+                        .setOldProductId(existingSub.products.first())
                         .setReplacementMode(getReplacementMode(existingSub, skuDetails))
                         .build()
                 )
@@ -273,6 +271,7 @@ class PurchaseHandler(
         retryUntil { billingClient.isReady }
         val params = ConsumeParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
         val result = billingClient.consumePurchase(params)
+        Log.d("PurchaseHandler", "Consume purchase ${purchase.products.firstOrNull()} result: ${result.billingResult.responseCode}, retries left: $retries")
         if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK && retries > 0) {
             delay(500)
             consume(purchase, retries - 1)
@@ -296,6 +295,7 @@ class PurchaseHandler(
         processedPurchases.add(orderId)
         val sku = purchase.products.firstOrNull()
         val product = HabiticaProduct.forSku(sku ?: "") ?: return
+        Log.d("PurchaseHandler", "Handling purchase: ${purchase.products.firstOrNull()}, orderId: $orderId, autoRenewing: ${purchase.isAutoRenewing}")
         when {
             product == HabiticaProduct.JUBILANT_GRYPHATRICE -> {
                 val validationRequest = buildValidationRequest(purchase)
@@ -319,6 +319,7 @@ class PurchaseHandler(
                 scope.launchCatching {
                     try {
                         val response = apiClient.validatePurchase(validationRequest)
+                        Log.d("PurchaseHandler", "Purchase validation response for ${purchase.products.firstOrNull()}: $response")
                         processedPurchase()
                         val gift = removeGift(sku)
                         withContext(Dispatchers.IO) {
@@ -338,6 +339,7 @@ class PurchaseHandler(
                 scope.launchCatching {
                     try {
                         val response = apiClient.validateNoRenewSubscription(validationRequest)
+                        Log.d("PurchaseHandler", "No-renew subscription validation response for ${purchase.products.firstOrNull()}: $response")
                         processedPurchase()
                         val gift = removeGift(sku)
                         withContext(Dispatchers.IO) {
@@ -357,6 +359,7 @@ class PurchaseHandler(
                 scope.launchCatching {
                     try {
                         val response = apiClient.validateSubscription(validationRequest)
+                        Log.d("PurchaseHandler", "Subscription validation response for ${purchase.products.firstOrNull()}: $response")
                         processedPurchase()
                         scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
                             acknowledgePurchase(purchase)
@@ -379,6 +382,7 @@ class PurchaseHandler(
         val params =
             AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
         val response = billingClient.acknowledgePurchase(params)
+        Log.d("PurchaseHandler", "Acknowledge purchase ${purchase.products.firstOrNull()} result: ${response.responseCode}, retries left: $retries")
         if (response.responseCode != BillingClient.BillingResponseCode.OK) {
             delay(500)
             acknowledgePurchase(purchase, retries - 1)
@@ -407,6 +411,7 @@ class PurchaseHandler(
                 removeGift(validationRequest.sku ?: "")
             }
         }
+        Log.d("PurchaseHandler", "Built validation request: ${validationRequest.sku}, gift: ${validationRequest.gift?.uuid}")
         return validationRequest
     }
 
@@ -441,7 +446,7 @@ class PurchaseHandler(
         CrashReporter.recordException(throwable)
     }
 
-    suspend fun checkForSubscription(): Purchase? {
+    suspend fun checkForSubscription(onlyAcknowledged: Boolean = true): Purchase? {
         val result =
             withContext(Dispatchers.IO) {
                 val params =
@@ -450,25 +455,29 @@ class PurchaseHandler(
                         .build()
                 billingClient.queryPurchasesAsync(params)
             }
-        val fallback: Purchase? = null
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            return findMostRecentSubscription(result.purchasesList)
+            return findMostRecentSubscription(result.purchasesList, onlyAcknowledged)
         }
-        return fallback
+        return null
     }
 
-    private fun findMostRecentSubscription(purchasesList: List<Purchase>): Purchase? {
-        val purchases =
-            purchasesList.filter { it.isAcknowledged }.sortedByDescending { it.purchaseTime }
+    private fun findMostRecentSubscription(purchasesList: List<Purchase>, onlyAcknowledged: Boolean = true): Purchase? {
+        var purchases = purchasesList
+        if (onlyAcknowledged) {
+            purchases = purchases.filter { it.isAcknowledged }
+        }
+        purchases = purchases.sortedByDescending { it.purchaseTime }
         var fallback: Purchase? = null
         // If there is a subscription that is still active, prioritise that. Otherwise return the most recent one.
         for (purchase in purchases) {
             if (purchase.isAutoRenewing) {
+                Log.d("PurchaseHandler", "Found active subscription: ${purchase.products.firstOrNull()}, orderId: ${purchase.orderId}")
                 return purchase
             } else if (!purchase.isAutoRenewing && fallback == null) {
                 fallback = purchase
             }
         }
+        Log.d("PurchaseHandler", "No active subscription found, returning most recent one: ${fallback?.products?.firstOrNull()}, orderId: ${fallback?.orderId}")
         return fallback
     }
 
@@ -477,6 +486,7 @@ class PurchaseHandler(
     suspend fun cancelSubscription(): User? {
         if (alreadyTriedCancellation) return null
         alreadyTriedCancellation = true
+        Log.d("PurchaseHandler", "Attempting to cancel subscription on server side")
         apiClient.cancelSubscription()
         return userViewModel.userRepository.retrieveUser(false, true)
     }
