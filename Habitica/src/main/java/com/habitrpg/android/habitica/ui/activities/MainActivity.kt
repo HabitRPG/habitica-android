@@ -104,6 +104,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
+import com.habitrpg.android.habitica.widget.DailiesCountWidgetReceiver
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
@@ -692,6 +693,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         updateWidget(AvatarStatsWidgetProvider::class.java)
         updateWidget(TodoListWidgetProvider::class.java)
         updateWidget(DailiesWidgetProvider::class.java)
+        updateWidget(DailiesCountWidgetReceiver::class.java)
         updateWidget(HabitButtonWidgetProvider::class.java)
     }
 
