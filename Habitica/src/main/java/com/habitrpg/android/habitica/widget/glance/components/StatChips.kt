@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.widget.glance.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
@@ -31,6 +32,7 @@ fun LevelChip(
     modifier: GlanceModifier = GlanceModifier,
     backgroundColor: ColorProvider = WidgetColors.levelChipBackground,
     textColor: ColorProvider = WidgetColors.levelChipText,
+    horizontalPadding: Dp = 8.dp,
 ) {
     val classBitmap = when (className) {
         "warrior" -> runCatching { HabiticaIconsHelper.imageOfWarriorLightBg() }.getOrNull()
@@ -49,7 +51,7 @@ fun LevelChip(
             .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = horizontalPadding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(GlanceModifier.defaultWeight())

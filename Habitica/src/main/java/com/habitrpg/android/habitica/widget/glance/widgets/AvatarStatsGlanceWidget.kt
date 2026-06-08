@@ -8,6 +8,7 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -145,12 +146,17 @@ private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 @Composable
 private fun rememberInnerPalette(): StatsInnerPalette {
     return if (MaterialYouEnabled) {
+        val context = LocalContext.current
         StatsInnerPalette(
             labelText = GlanceTheme.colors.onSurface,
-            chipBackground = GlanceTheme.colors.secondaryContainer,
-            chipText = GlanceTheme.colors.onSecondaryContainer,
-            levelChipBackground = GlanceTheme.colors.secondary,
-            levelChipText = GlanceTheme.colors.onSecondary,
+            chipBackground = ColorProvider(
+                GlanceTheme.colors.primary.getColor(context).copy(alpha = 0.3f),
+            ),
+            chipText = GlanceTheme.colors.onSurfaceVariant,
+            levelChipBackground = GlanceTheme.colors.primary,
+            levelChipText = ColorProvider(
+                GlanceTheme.colors.onPrimary.getColor(context).copy(alpha = 0.85f),
+            ),
         )
     } else {
         StatsInnerPalette(
@@ -508,6 +514,7 @@ private fun StatsFooter(
                     modifier = levelModifier,
                     backgroundColor = palette.levelChipBackground,
                     textColor = palette.levelChipText,
+                    horizontalPadding = if (mergeCurrencyChips) 12.dp else 8.dp,
                 )
             }
         }
