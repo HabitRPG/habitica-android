@@ -18,6 +18,7 @@ import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.currentState
 import androidx.glance.layout.ContentScale
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.Action
 import androidx.glance.action.clickable
@@ -101,15 +102,17 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
     val scallopSide = minOf(size.width, size.height)
     val iconSize = (scallopSide.value * 0.55f).coerceIn(28f, 240f).dp
 
+    val context = LocalContext.current
     val scallopTint: ColorProvider
-    val iconTint: ColorProvider?
+    val baseIconTint: ColorProvider
     if (MaterialYouEnabled) {
         scallopTint = GlanceTheme.colors.widgetBackground
-        iconTint = GlanceTheme.colors.primary
+        baseIconTint = GlanceTheme.colors.primary
     } else {
         scallopTint = ColorProvider(R.color.widget_bg)
-        iconTint = ColorProvider(R.color.widget_dailies_purple)
+        baseIconTint = ColorProvider(R.color.widget_dailies_purple)
     }
+    val iconTint = ColorProvider(baseIconTint.getColor(context).copy(alpha = 0.9f))
 
     Box(
         modifier = GlanceModifier
@@ -132,7 +135,7 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
                 provider = ImageProvider(tile.iconResId),
                 contentDescription = stringRes(R.string.widget_add_new_task_cd, stringRes(tile.nameResId)),
                 modifier = GlanceModifier.size(iconSize),
-                colorFilter = iconTint?.let { ColorFilter.tint(it) },
+                colorFilter = ColorFilter.tint(iconTint),
             )
         }
     }

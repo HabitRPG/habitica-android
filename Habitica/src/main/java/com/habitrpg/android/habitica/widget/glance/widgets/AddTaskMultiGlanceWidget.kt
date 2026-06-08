@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
@@ -74,19 +75,24 @@ private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
 private fun rememberPalette(): TilePalette {
-    return if (MaterialYouEnabled) {
-        TilePalette(
-            widgetBackground = GlanceTheme.colors.widgetBackground,
-            tileBackground = GlanceTheme.colors.secondaryContainer,
-            iconTint = GlanceTheme.colors.onSecondaryContainer,
-        )
+    val context = LocalContext.current
+    val widgetBackground: ColorProvider
+    val tileBackground: ColorProvider
+    val baseIconTint: ColorProvider
+    if (MaterialYouEnabled) {
+        widgetBackground = GlanceTheme.colors.widgetBackground
+        tileBackground = GlanceTheme.colors.secondaryContainer
+        baseIconTint = GlanceTheme.colors.primary
     } else {
-        TilePalette(
-            widgetBackground = ColorProvider(R.color.widget_bg),
-            tileBackground = ColorProvider(R.color.widget_preview_tile_tint),
-            iconTint = ColorProvider(R.color.widget_preview_scallop_glyph_tint),
-        )
+        widgetBackground = ColorProvider(R.color.widget_bg)
+        tileBackground = ColorProvider(R.color.widget_preview_tile_tint)
+        baseIconTint = ColorProvider(R.color.widget_dailies_purple)
     }
+    return TilePalette(
+        widgetBackground = widgetBackground,
+        tileBackground = tileBackground,
+        iconTint = ColorProvider(baseIconTint.getColor(context).copy(alpha = 0.9f)),
+    )
 }
 
 @Composable

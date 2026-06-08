@@ -291,7 +291,7 @@ private fun GaugeBody(
                     Image(
                         provider = ImageProvider(R.drawable.widget_sparkles),
                         contentDescription = null,
-                        modifier = GlanceModifier.size(48.dp),
+                        modifier = GlanceModifier.height(64.dp).width(43.dp),
                     )
                 }
             }
