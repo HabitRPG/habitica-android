@@ -89,8 +89,6 @@ private fun tileFor(type: String?): TileSpec? = when (type) {
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
-private const val SCALLOP_FILL_SCALE = 1.25f
-
 @Composable
 private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn: Boolean) {
     val tile = tileFor(type)
@@ -106,11 +104,11 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
     val scallopTint: ColorProvider
     val iconTint: ColorProvider?
     if (MaterialYouEnabled) {
-        scallopTint = GlanceTheme.colors.secondaryContainer
-        iconTint = GlanceTheme.colors.onSecondaryContainer
+        scallopTint = GlanceTheme.colors.widgetBackground
+        iconTint = GlanceTheme.colors.primary
     } else {
-        scallopTint = ColorProvider(R.color.widget_preview_scallop_tint)
-        iconTint = ColorProvider(R.color.widget_preview_scallop_glyph_tint)
+        scallopTint = ColorProvider(R.color.widget_bg)
+        iconTint = ColorProvider(R.color.widget_dailies_purple)
     }
 
     Box(
@@ -163,7 +161,7 @@ private fun UnsetTaskTypeContent(onClick: Action) {
         Image(
             provider = ImageProvider(R.drawable.widget_tile_scallop),
             contentDescription = null,
-            modifier = GlanceModifier.size(56.dp),
+            modifier = GlanceModifier.size(47.dp),
             colorFilter = ColorFilter.tint(widgetBackground),
         )
         Text(

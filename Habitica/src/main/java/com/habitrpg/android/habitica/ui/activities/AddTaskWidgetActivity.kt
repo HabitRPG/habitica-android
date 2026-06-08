@@ -210,7 +210,7 @@ private fun TaskTypeTile(choice: TaskTypeChoice, onClick: () -> Unit) {
             Image(
                 painter = painterResource(choice.iconResId),
                 contentDescription = stringResource(choice.labelResId),
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(48.dp),
                 colorFilter = ColorFilter.tint(iconTint),
             )
         }
