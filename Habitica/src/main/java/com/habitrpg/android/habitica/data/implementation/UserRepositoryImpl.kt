@@ -398,6 +398,9 @@ class UserRepositoryImpl(
         }
         apiClient.runCron()
         retrieveUser(true, true)
+        for (task in tasks) {
+            task.id?.let { taskRepository.markTaskCompleted(it, false) }
+        }
         WidgetRefreshWorker.refreshAllWidgetsNow(context)
     }
 

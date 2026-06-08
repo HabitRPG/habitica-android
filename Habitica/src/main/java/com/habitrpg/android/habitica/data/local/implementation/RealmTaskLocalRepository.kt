@@ -209,7 +209,7 @@ class RealmTaskLocalRepository(realm: Realm) :
         isCompleted: Boolean
     ) {
         val task = realm.where(Task::class.java).equalTo("id", taskId).findFirst()
-        executeTransaction { task?.completed = true }
+        executeTransaction { task?.completed = isCompleted }
     }
 
     override fun swapTaskPosition(
