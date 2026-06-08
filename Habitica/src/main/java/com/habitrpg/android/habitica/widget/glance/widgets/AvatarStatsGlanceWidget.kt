@@ -65,6 +65,8 @@ private val TALL_THRESHOLD = 120.dp
 private const val OUTER_PADDING_DP = 12
 private const val COMPACT_OUTER_PADDING_DP = 8
 private const val FULL_OUTER_PADDING_DP = 16
+private val HORIZONTAL_START_PADDING = 14.dp
+private val HORIZONTAL_END_PADDING = 20.dp
 
 private val DEFAULT_BAR_HEIGHT = 9.dp
 private val COMPACT_BAR_HEIGHT = 6.dp
@@ -187,11 +189,15 @@ private fun pickLayout(width: Dp, height: Dp): StatsLayout {
 private fun StatsContent(state: StatsWidgetState) {
     val size = LocalSize.current
     val layout = pickLayout(size.width, size.height)
-    val outerPadding = when {
+    val basePadding = when {
         !layout.tall -> COMPACT_OUTER_PADDING_DP.dp
         layout.showAvatar && !layout.avatarOnTop -> FULL_OUTER_PADDING_DP.dp
         else -> OUTER_PADDING_DP.dp
     }
+    val noAvatarHorizontal = !layout.avatarOnTop && !layout.showAvatar
+    val startPadding = if (noAvatarHorizontal) HORIZONTAL_START_PADDING else basePadding
+    val endPadding = if (noAvatarHorizontal) HORIZONTAL_END_PADDING else basePadding
+    val horizontalPadding = startPadding + endPadding
     val palette = rememberInnerPalette()
 
     val tileBackground: ColorProvider = if (MaterialYouEnabled) {
@@ -204,16 +210,16 @@ private fun StatsContent(state: StatsWidgetState) {
             .fillMaxSize()
             .cornerRadius(20.dp)
             .background(tileBackground)
-            .padding(outerPadding)
+            .padding(start = startPadding, end = endPadding, top = basePadding, bottom = basePadding)
             .clickable(onClick = openAppAction()),
     ) {
         when {
             layout.avatarOnTop ->
-                CompactAvatarLayout(state, layout, size.width, outerPadding, palette)
+                CompactAvatarLayout(state, layout, size.width, horizontalPadding, palette)
             layout.showAvatar ->
-                FullStatsLayout(state, layout, size.width, outerPadding, palette)
+                FullStatsLayout(state, layout, size.width, horizontalPadding, palette)
             else ->
-                HorizontalLayout(state, layout, size.width, outerPadding, palette)
+                HorizontalLayout(state, layout, size.width, horizontalPadding, palette)
         }
     }
 }
@@ -223,10 +229,10 @@ private fun CompactAvatarLayout(
     state: StatsWidgetState,
     layout: StatsLayout,
     widgetWidth: Dp,
-    outerPadding: Dp,
+    horizontalPadding: Dp,
     palette: StatsInnerPalette,
 ) {
-    val columnWidth = (widgetWidth - outerPadding * 2).coerceAtLeast(40.dp)
+    val columnWidth = (widgetWidth - horizontalPadding).coerceAtLeast(40.dp)
     Column(
         modifier = GlanceModifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -248,12 +254,12 @@ private fun HorizontalLayout(
     state: StatsWidgetState,
     layout: StatsLayout,
     widgetWidth: Dp,
-    outerPadding: Dp,
+    horizontalPadding: Dp,
     palette: StatsInnerPalette,
 ) {
     val avatarBoxWidth = if (layout.showAvatar) 124.dp else 0.dp
     val avatarSpacing = if (layout.showAvatar) 12.dp else 0.dp
-    val columnWidth = (widgetWidth - outerPadding * 2 - avatarBoxWidth - avatarSpacing)
+    val columnWidth = (widgetWidth - horizontalPadding - avatarBoxWidth - avatarSpacing)
         .coerceAtLeast(40.dp)
 
     Row(
@@ -309,12 +315,12 @@ private fun FullStatsLayout(
     state: StatsWidgetState,
     layout: StatsLayout,
     widgetWidth: Dp,
-    outerPadding: Dp,
+    horizontalPadding: Dp,
     palette: StatsInnerPalette,
 ) {
     val avatarWidth = 124.dp
     val avatarSpacing = 12.dp
-    val columnWidth = (widgetWidth - outerPadding * 2 - avatarWidth - avatarSpacing)
+    val columnWidth = (widgetWidth - horizontalPadding - avatarWidth - avatarSpacing)
         .coerceAtLeast(40.dp)
 
     Column(modifier = GlanceModifier.fillMaxSize()) {
