@@ -242,6 +242,7 @@ private fun TaskListBody(
                 ),
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
+                sparklesSize = if (isDaily) 56.dp else 40.dp,
             )
             else -> TaskListRows(
                 state = state,

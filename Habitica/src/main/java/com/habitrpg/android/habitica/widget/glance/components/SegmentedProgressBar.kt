@@ -29,7 +29,12 @@ fun SegmentedProgressBar(
     val clamped = progress.coerceIn(0f, 1f)
     val showFill = clamped > 0f
     val showTrack = clamped < 1f
-    val fillWidth = (availableWidth * clamped).coerceAtLeast(height)
+    val fillWidth = if (showTrack) {
+        val maxFillWidth = (availableWidth - gap - height).coerceAtLeast(height)
+        (availableWidth * clamped).coerceAtLeast(height).coerceAtMost(maxFillWidth)
+    } else {
+        availableWidth
+    }
 
     Row(
         modifier = modifier.fillMaxWidth().height(height),

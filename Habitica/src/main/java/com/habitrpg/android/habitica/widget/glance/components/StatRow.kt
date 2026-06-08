@@ -53,6 +53,7 @@ fun StatRow(
     labelTextColor: ColorProvider = WidgetColors.text,
     iconSize: Dp = ICON_SIZE,
     valueColumnWidth: Dp = 0.dp,
+    barHeight: Dp = BAR_HEIGHT,
 ) {
     val progress = if (maxValue > 0f) (value / maxValue).coerceIn(0f, 1f) else 0f
     val fillColor = ColorProvider(barColor)
@@ -62,7 +63,7 @@ fun StatRow(
     } else {
         Alignment.CenterVertically
     }
-    val barCenterOffset = (iconSize - BAR_HEIGHT) / 2
+    val barCenterOffset = (iconSize - barHeight) / 2
     val isInlineMode = mode == StatRowMode.InlineValueWithLabel ||
         mode == StatRowMode.InlineValueMaxWithLabel
     val rowModifier = if (isInlineMode) {
@@ -85,12 +86,12 @@ fun StatRow(
         when (mode) {
             StatRowMode.BarOnly -> {
                 Box(modifier = GlanceModifier.defaultWeight()) {
-                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = BAR_HEIGHT)
+                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = barHeight)
                 }
             }
             StatRowMode.LabelStackedValue -> {
                 Column(modifier = GlanceModifier.defaultWeight().padding(top = barCenterOffset)) {
-                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = BAR_HEIGHT)
+                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = barHeight)
                     Spacer(GlanceModifier.height(2.dp))
                     Row(modifier = GlanceModifier.fillMaxWidth()) {
                         Text(
@@ -107,7 +108,7 @@ fun StatRow(
             StatRowMode.InlineValueWithLabel,
             StatRowMode.InlineValueMaxWithLabel -> {
                 Box(modifier = GlanceModifier.defaultWeight()) {
-                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = BAR_HEIGHT)
+                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = barHeight)
                 }
                 Spacer(GlanceModifier.width(4.dp))
                 val valueModifier = if (valueColumnWidth > 0.dp) {

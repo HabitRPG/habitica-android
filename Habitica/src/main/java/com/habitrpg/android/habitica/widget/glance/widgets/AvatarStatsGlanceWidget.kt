@@ -66,6 +66,9 @@ private const val OUTER_PADDING_DP = 12
 private const val COMPACT_OUTER_PADDING_DP = 8
 private const val FULL_OUTER_PADDING_DP = 16
 
+private val DEFAULT_BAR_HEIGHT = 9.dp
+private val COMPACT_BAR_HEIGHT = 6.dp
+
 class AvatarStatsGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
@@ -355,6 +358,8 @@ private fun StatBars(
         fill -> 30.dp
         else -> 24.dp
     }
+    val useThinBar = layout.avatarOnTop || !layout.tall
+    val barHeight = if (useThinBar) COMPACT_BAR_HEIGHT else DEFAULT_BAR_HEIGHT
     val gap = when {
         !layout.tall -> 4.dp
         layout.rowMode == StatRowMode.LabelStackedValue -> 10.dp
@@ -402,6 +407,7 @@ private fun StatBars(
             labelTextColor = palette.labelText,
             iconSize = iconSize,
             valueColumnWidth = valueColumnWidth,
+            barHeight = barHeight,
         )
         if (fill) Spacer(GlanceModifier.defaultWeight()) else Spacer(GlanceModifier.height(gap))
         StatRow(
@@ -417,6 +423,7 @@ private fun StatBars(
             labelTextColor = palette.labelText,
             iconSize = iconSize,
             valueColumnWidth = valueColumnWidth,
+            barHeight = barHeight,
         )
         if (state.showMp) {
             if (fill) Spacer(GlanceModifier.defaultWeight()) else Spacer(GlanceModifier.height(gap))
@@ -433,6 +440,7 @@ private fun StatBars(
                 labelTextColor = palette.labelText,
                 iconSize = iconSize,
                 valueColumnWidth = valueColumnWidth,
+                barHeight = barHeight,
             )
         }
         if (fill) Spacer(GlanceModifier.defaultWeight())
