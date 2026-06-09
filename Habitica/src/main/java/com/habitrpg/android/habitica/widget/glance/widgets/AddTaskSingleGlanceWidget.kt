@@ -143,10 +143,15 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
 
 @Composable
 private fun UnsetTaskTypeContent(onClick: Action) {
-    val widgetBackground: ColorProvider = if (MaterialYouEnabled) {
-        GlanceTheme.colors.surfaceVariant
+    val badgeTint: ColorProvider = if (MaterialYouEnabled) {
+        GlanceTheme.colors.primary
     } else {
-        ColorProvider(R.color.widget_bg)
+        ColorProvider(R.color.widget_dailies_purple)
+    }
+    val badgeText: ColorProvider = if (MaterialYouEnabled) {
+        GlanceTheme.colors.onPrimary
+    } else {
+        ColorProvider(R.color.white)
     }
     val textColor: ColorProvider = if (MaterialYouEnabled) {
         GlanceTheme.colors.onSurfaceVariant
@@ -161,12 +166,25 @@ private fun UnsetTaskTypeContent(onClick: Action) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
-            provider = ImageProvider(R.drawable.widget_tile_scallop),
-            contentDescription = null,
-            modifier = GlanceModifier.size(47.dp),
-            colorFilter = ColorFilter.tint(widgetBackground),
-        )
+        Box(
+            modifier = GlanceModifier.size(44.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            Image(
+                provider = ImageProvider(R.drawable.widget_tile_scallop),
+                contentDescription = null,
+                modifier = GlanceModifier.fillMaxSize(),
+                colorFilter = ColorFilter.tint(badgeTint),
+            )
+            Text(
+                text = "+",
+                style = TextStyle(
+                    color = badgeText,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                ),
+            )
+        }
         Text(
             text = stringRes(R.string.widget_unconfigured_choose_type),
             style = TextStyle(
@@ -174,6 +192,7 @@ private fun UnsetTaskTypeContent(onClick: Action) {
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Medium,
             ),
+            modifier = GlanceModifier.padding(top = 6.dp),
         )
     }
 }
