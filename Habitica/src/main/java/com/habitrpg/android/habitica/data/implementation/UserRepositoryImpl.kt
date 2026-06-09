@@ -401,7 +401,7 @@ class UserRepositoryImpl(
         for (task in tasks) {
             task.id?.let { taskRepository.markTaskCompleted(it, false) }
         }
-        WidgetRefreshWorker.refreshAllWidgetsNow(context)
+        WidgetRefreshWorker.refreshAllWidgetsNow(context, reconcileHiddenIds = true)
     }
 
     override suspend fun useCustomization(

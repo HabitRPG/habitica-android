@@ -122,12 +122,26 @@ class WidgetRefreshWorker(
             }
         }
 
-        suspend fun refreshAllWidgetsNow(context: Context) {
+        suspend fun refreshAllWidgetsNow(
+            context: Context,
+            reconcileHiddenIds: Boolean = false,
+        ) {
             withContext(Dispatchers.Main) {
                 val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
                 AvatarBitmapCache.refreshIfNeeded(context, user)
             }
             TaskListMemoryCache.clear()
+            val dailyState = loadTaskListState(context, TaskType.DAILY)
+            val todoState = loadTaskListState(context, TaskType.TODO)
+            TaskListMemoryCache.put(TaskType.DAILY, dailyState)
+            TaskListMemoryCache.put(TaskType.TODO, todoState)
+            if (reconcileHiddenIds) {
+                reconcileTaskListHiddenIds(
+                    context,
+                    dailyVisibleIds = dailyState.tasks.map { it.id }.toSet(),
+                    todoVisibleIds = todoState.tasks.map { it.id }.toSet(),
+                )
+            }
             refreshAllWidgets(context)
             AvatarWidgetProvider.renderAll(context)
         }
