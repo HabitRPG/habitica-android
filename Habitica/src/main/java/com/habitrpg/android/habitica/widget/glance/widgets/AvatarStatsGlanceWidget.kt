@@ -54,7 +54,7 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import androidx.datastore.preferences.core.Preferences
 import androidx.glance.currentState
-import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
+import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import kotlinx.coroutines.Dispatchers
@@ -80,47 +80,13 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
             provideContent { HabiticaWidgetTheme { SignedOutContent() } }
             return
         }
-        val rawState = withContext(Dispatchers.Main) {
-            runCatching {
-                val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
-                AvatarBitmapCache.refreshIfNeeded(context, user)
-                StatsWidgetState.fromUser(
-                    context = context,
-                    user = user,
-                    avatarBitmapPath = AvatarBitmapCache.cachedFile(context).absolutePath,
-                )
-            }.getOrElse { StatsWidgetState.Empty }
-        }
         provideContent {
-            val prefs = currentState<Preferences>()
-            val state = if (prefs[WidgetStateKeys.statOverrideValid] == true) {
-                applyStatOverride(rawState, prefs, context)
-            } else {
-                rawState
-            }
+            val state = WidgetSnapshotStore.statsFrom(currentState()) ?: StatsWidgetState.Empty
             HabiticaWidgetTheme {
                 StatsContent(state)
             }
         }
     }
-}
-
-private fun applyStatOverride(
-    state: StatsWidgetState,
-    prefs: Preferences,
-    context: Context,
-): StatsWidgetState {
-    val hp = (prefs[WidgetStateKeys.statOverrideHp] ?: state.hp).coerceIn(0f, state.maxHp)
-    val exp = (prefs[WidgetStateKeys.statOverrideExp] ?: state.exp).coerceAtLeast(0f)
-    val mp = (prefs[WidgetStateKeys.statOverrideMp] ?: state.mp).coerceIn(0f, state.maxMp)
-    val gold = (prefs[WidgetStateKeys.statOverrideGold] ?: state.goldText.toDoubleOrNull() ?: 0.0).coerceAtLeast(0.0)
-    val goldText = NumberAbbreviator.abbreviate(context, gold, numberOfDecimals = 0, minForAbbrevation = 1000)
-    return state.copy(
-        hp = hp,
-        exp = exp,
-        mp = mp,
-        goldText = goldText,
-    )
 }
 
 private data class StatsLayout(

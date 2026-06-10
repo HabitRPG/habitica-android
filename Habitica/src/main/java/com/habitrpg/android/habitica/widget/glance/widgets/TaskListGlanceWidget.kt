@@ -48,12 +48,11 @@ import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
-import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
+import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.loadTaskListState
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
-import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueLight
@@ -71,19 +70,11 @@ abstract class TaskListGlanceWidget(
             provideContent { HabiticaWidgetTheme { SignedOutContent() } }
             return
         }
-        val initial = TaskListMemoryCache.get(taskType) ?: loadTaskListState(context, taskType).also {
-            TaskListMemoryCache.put(taskType, it)
-        }
-
         provideContent {
-            val prefs = currentState<Preferences>()
-            val state = TaskListMemoryCache.get(taskType) ?: initial
-            val hiddenIds = prefs[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
-            val filtered = if (hiddenIds.isEmpty()) state else state.copy(
-                tasks = state.tasks.filterNot { it.id in hiddenIds },
-            )
+            val state = WidgetSnapshotStore.taskListFrom(currentState())
+                ?: TaskListWidgetState(tasks = emptyList(), needsCron = false)
             HabiticaWidgetTheme {
-                TaskListContent(filtered, isDaily = taskType == TaskType.DAILY)
+                TaskListContent(state, isDaily = taskType == TaskType.DAILY)
             }
         }
     }

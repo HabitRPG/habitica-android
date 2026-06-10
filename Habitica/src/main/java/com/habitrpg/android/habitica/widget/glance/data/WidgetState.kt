@@ -132,3 +132,35 @@ suspend fun loadTaskListState(context: Context, taskType: TaskType): TaskListWid
             needsCron = computeNeedsCron(user),
         )
     }
+
+suspend fun loadStatsState(context: Context): StatsWidgetState =
+    withContext(Dispatchers.Main) {
+        runCatching {
+            val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+            AvatarBitmapCache.refreshIfNeeded(context, user)
+            StatsWidgetState.fromUser(
+                context = context,
+                user = user,
+                avatarBitmapPath = AvatarBitmapCache.cachedFile(context).absolutePath,
+            )
+        }.getOrElse { StatsWidgetState.Empty }
+    }
+
+suspend fun loadDailyCountState(context: Context): DailyCountWidgetState =
+    withContext(Dispatchers.Main) {
+        val entry = widgetEntryPoint(context)
+        entry.taskRepository().refreshLocalData()
+        val user = entry.userRepository().getUser().firstOrNull()
+        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
+            ?.toTypedArray() ?: emptyArray()
+        val due = entry.taskRepository().getTasks(
+            taskType = TaskType.DAILY,
+            userID = user?.id,
+            includedGroupIDs = mirroredGroupIds,
+        ).firstOrNull().orEmpty().filter { it.isDue == true }
+        DailyCountWidgetState(
+            totalDue = due.size,
+            completed = due.count { it.completed },
+            needsCron = computeNeedsCron(user),
+        )
+    }

@@ -39,6 +39,7 @@ import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.widget.glance.migration.LegacyWidgetMigration
 import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
+import com.habitrpg.android.habitica.widget.glance.work.WidgetDataCoordinator
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -148,6 +149,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
 
         WidgetRefreshWorker.enqueue(this)
+        WidgetDataCoordinator.start(this)
         MainScope().launchCatching {
             LegacyWidgetMigration.runIfNeeded(this@HabiticaBaseApplication)
             WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)

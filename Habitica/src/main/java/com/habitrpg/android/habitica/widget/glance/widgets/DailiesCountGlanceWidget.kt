@@ -50,7 +50,7 @@ import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
-import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
+import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -74,44 +74,15 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
             provideContent { HabiticaWidgetTheme { SignedOutContent() } }
             return
         }
-        val raw = withContext(Dispatchers.Main) {
-            val entry = widgetEntryPoint(context)
-            val user = entry.userRepository().getUser().firstOrNull()
-            val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
-                ?.toTypedArray() ?: emptyArray()
-            val tasks = entry.taskRepository().getTasks(
-                taskType = TaskType.DAILY,
-                userID = user?.id,
-                includedGroupIDs = mirroredGroupIds,
-            ).firstOrNull().orEmpty().filter { it.isDue == true }
-
-            DailyCountRaw(
-                dueIds = tasks.mapNotNull { it.id }.toSet(),
-                completedIds = tasks.filter { it.completed }.mapNotNull { it.id }.toSet(),
-                needsCron = computeNeedsCron(user),
-            )
-        }
-
         provideContent {
-            val hiddenIds = currentState<Preferences>()[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
-            val effectiveCompleted = (raw.completedIds + hiddenIds.intersect(raw.dueIds)).size
-            val state = DailyCountWidgetState(
-                totalDue = raw.dueIds.size,
-                completed = effectiveCompleted,
-                needsCron = raw.needsCron,
-            )
+            val state = WidgetSnapshotStore.dailyCountFrom(currentState())
+                ?: DailyCountWidgetState(totalDue = 0, completed = 0, needsCron = false)
             HabiticaWidgetTheme {
                 DailiesCountTile(state)
             }
         }
     }
 }
-
-private data class DailyCountRaw(
-    val dueIds: Set<String>,
-    val completedIds: Set<String>,
-    val needsCron: Boolean,
-)
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
