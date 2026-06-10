@@ -12,7 +12,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.habitrpg.android.habitica.widget.AvatarWidgetProvider
-import androidx.glance.appwidget.state.updateAppWidgetState
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateWriter
 import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
 import com.habitrpg.android.habitica.widget.glance.data.loadTaskListState
@@ -38,7 +38,9 @@ class WidgetRefreshWorker(
 
     override suspend fun doWork(): Result {
         val context = applicationContext
-        val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+        val user = withContext(Dispatchers.Main) {
+            widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+        }
         if (user == null) return Result.success()
         withContext(Dispatchers.Main) {
             AvatarBitmapCache.refreshIfNeeded(context, user)
@@ -89,7 +91,7 @@ class WidgetRefreshWorker(
             )
             widgets.forEach { widget ->
                 manager.getGlanceIds(widget.javaClass).forEach { id ->
-                    updateAppWidgetState(context, id) { prefs -> prefs.clear() }
+                    WidgetStateWriter.edit(context, id) { prefs -> prefs.clear() }
                     widget.update(context, id)
                 }
             }
@@ -111,7 +113,7 @@ class WidgetRefreshWorker(
                 addAll(manager.getGlanceIds(TodoTaskListGlanceWidget::class.java))
             }
             for (id in ids) {
-                updateAppWidgetState(context, id) { prefs ->
+                WidgetStateWriter.edit(context, id) { prefs ->
                     prefs[WidgetStateKeys.refreshToken] =
                         (prefs[WidgetStateKeys.refreshToken] ?: 0) + 1
                 }
@@ -154,7 +156,7 @@ class WidgetRefreshWorker(
                 DailiesCountGlanceWidget::class.java,
             ).forEach { cls ->
                 manager.getGlanceIds(cls).forEach { id ->
-                    updateAppWidgetState(context, id) { prefs ->
+                    WidgetStateWriter.edit(context, id) { prefs ->
                         prefs.remove(WidgetStateKeys.taskListHiddenIds)
                     }
                 }
@@ -169,9 +171,9 @@ class WidgetRefreshWorker(
             val manager = GlanceAppWidgetManager(context)
             suspend fun unhideVisible(cls: Class<out GlanceAppWidget>, visibleIds: Set<String>) {
                 manager.getGlanceIds(cls).forEach { id ->
-                    updateAppWidgetState(context, id) { prefs ->
+                    WidgetStateWriter.edit(context, id) { prefs ->
                         val existing = prefs[WidgetStateKeys.taskListHiddenIds]
-                            ?: return@updateAppWidgetState
+                            ?: return@edit
                         val next = existing - visibleIds
                         if (next.isEmpty()) {
                             prefs.remove(WidgetStateKeys.taskListHiddenIds)
@@ -189,7 +191,7 @@ class WidgetRefreshWorker(
         private suspend fun refreshAllWidgets(context: Context) {
             val manager = GlanceAppWidgetManager(context)
             manager.getGlanceIds(AvatarStatsGlanceWidget::class.java).forEach { id ->
-                updateAppWidgetState(context, id) { prefs ->
+                WidgetStateWriter.edit(context, id) { prefs ->
                     prefs.remove(WidgetStateKeys.statOverrideValid)
                     prefs.remove(WidgetStateKeys.statOverrideHp)
                     prefs.remove(WidgetStateKeys.statOverrideExp)

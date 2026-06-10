@@ -5,7 +5,7 @@ import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.action.ActionCallback
-import androidx.glance.appwidget.state.updateAppWidgetState
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateWriter
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
@@ -35,7 +35,7 @@ class ScoreTaskAction : ActionCallback {
             addAll(manager.getGlanceIds(DailiesCountGlanceWidget::class.java))
         }
         for (id in optimisticTargets) {
-            updateAppWidgetState(context, id) { prefs ->
+            WidgetStateWriter.edit(context, id) { prefs ->
                 val existing = prefs[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
                 prefs[WidgetStateKeys.taskListHiddenIds] = existing + taskId
             }

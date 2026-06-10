@@ -45,7 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.appwidget.GlanceAppWidgetManager
-import androidx.glance.appwidget.state.updateAppWidgetState
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateWriter
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.widgets.AddTaskSingleGlanceWidget
@@ -107,7 +107,7 @@ class AddTaskWidgetActivity : ComponentActivity() {
         lifecycleScope.launch {
             runCatching {
                 val glanceId = GlanceAppWidgetManager(appContext).getGlanceIdBy(capturedWidgetId)
-                updateAppWidgetState(appContext, glanceId) { prefs ->
+                WidgetStateWriter.edit(appContext, glanceId) { prefs ->
                     prefs[stringPreferencesKey(TASK_TYPE_KEY)] = type.value
                 }
                 AddTaskSingleGlanceWidget().update(appContext, glanceId)

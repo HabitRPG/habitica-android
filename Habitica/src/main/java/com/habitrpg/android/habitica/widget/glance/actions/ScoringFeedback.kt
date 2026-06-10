@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
-import androidx.glance.appwidget.state.updateAppWidgetState
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateWriter
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
@@ -47,7 +47,7 @@ suspend fun applyAvatarStatOverrides(
     val manager = GlanceAppWidgetManager(context)
     val ids = manager.getGlanceIds(AvatarStatsGlanceWidget::class.java)
     for (id in ids) {
-        updateAppWidgetState(context, id) { prefs ->
+        WidgetStateWriter.edit(context, id) { prefs ->
             val baseHp = prefs[WidgetStateKeys.statOverrideHp] ?: realmHp
             val baseExp = prefs[WidgetStateKeys.statOverrideExp] ?: realmExp
             val baseMp = prefs[WidgetStateKeys.statOverrideMp] ?: realmMp
@@ -84,7 +84,7 @@ suspend fun applyInAppScoreToWidgets(context: Context, taskId: String, up: Boole
         addAll(manager.getGlanceIds(DailiesCountGlanceWidget::class.java))
     }
     for (id in listTargets) {
-        updateAppWidgetState(context, id) { prefs ->
+        WidgetStateWriter.edit(context, id) { prefs ->
             val existing = prefs[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
             prefs[WidgetStateKeys.taskListHiddenIds] =
                 if (up) existing + taskId else existing - taskId
@@ -96,7 +96,7 @@ suspend fun applyInAppScoreToWidgets(context: Context, taskId: String, up: Boole
     }
     if (stats != null) {
         manager.getGlanceIds(AvatarStatsGlanceWidget::class.java).forEach { id ->
-            updateAppWidgetState(context, id) { prefs ->
+            WidgetStateWriter.edit(context, id) { prefs ->
                 prefs[WidgetStateKeys.statOverrideHp] = (stats.hp ?: 0.0).toFloat()
                 prefs[WidgetStateKeys.statOverrideExp] = (stats.exp ?: 0.0).toFloat()
                 prefs[WidgetStateKeys.statOverrideMp] = (stats.mp ?: 0.0).toFloat()
