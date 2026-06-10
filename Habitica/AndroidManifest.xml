@@ -236,18 +236,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receivers.WidgetCronAlarmReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.habitrpg.android.habitica.action.WIDGET_CRON_BOUNDARY" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
-            </intent-filter>
-        </receiver>
-
         <activity android:name=".ui.activities.AddTaskWidgetActivity"
             android:theme="@style/Theme.Habitica.TranslucentSheet"
             android:exported="true">
