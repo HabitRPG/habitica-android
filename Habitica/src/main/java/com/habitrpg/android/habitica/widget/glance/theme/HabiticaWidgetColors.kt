@@ -55,6 +55,7 @@ object WidgetColors {
     val separator = ColorProvider(R.color.widget_separator)
     val checklistBackground = ColorProvider(R.color.widget_checklist_bg)
     val checklistBackgroundDone = ColorProvider(R.color.widget_checklist_bg_done)
+    val checkboxFill = ColorProvider(R.color.widget_checkbox_fill)
     val addLabelText = ColorProvider(R.color.widget_add_label_text)
     val levelChipBackground = ColorProvider(R.color.widget_level_chip_bg)
     val levelChipText = ColorProvider(R.color.widget_level_chip_text)
@@ -119,16 +120,6 @@ fun colorForTaskValueLight(value: Double): Color = when {
     value < 5.0 -> HabitButtonBarColors.greenLight
     value < 10.0 -> HabitButtonBarColors.tealLight
     else -> HabitButtonBarColors.blueLight
-}
-
-fun colorForTaskValueMedium(value: Double): Color = when {
-    value < -20.0 -> HabitButtonBarColors.maroonMedium
-    value < -10.0 -> HabitButtonBarColors.redMedium
-    value < -1.0 -> HabitButtonBarColors.orangeMedium
-    value < 1.0 -> HabitButtonBarColors.yellowMedium
-    value < 5.0 -> HabitButtonBarColors.greenMedium
-    value < 10.0 -> HabitButtonBarColors.tealMedium
-    else -> HabitButtonBarColors.blueMedium
 }
 
 fun colorForHabitValueLight(value: Double): Color = when {

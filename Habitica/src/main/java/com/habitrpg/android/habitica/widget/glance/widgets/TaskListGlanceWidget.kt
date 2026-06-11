@@ -56,7 +56,6 @@ import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueLight
-import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueMedium
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 
@@ -271,7 +270,6 @@ private fun TaskListRows(
                     TaskRow(
                         text = task.text,
                         valueColor = colorForTaskValueLight(task.value),
-                        valueBorderColor = colorForTaskValueMedium(task.value),
                         primaryTextColor = palette.taskText,
                         checklistChipBackground = palette.checklistChipBackground,
                         checklistChipBackgroundDone = palette.checklistChipBackgroundDone,
