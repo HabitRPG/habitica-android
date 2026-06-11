@@ -18,6 +18,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
 
     @JvmField
     var planId: String? = null
+    var deferredPlanId: String? = null
     var active: Boolean? = null
     var gemsBought: Int? = null
     var extraMonths: Int? = null
@@ -26,6 +27,9 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     var mysteryItemCount = 0
     var additionalData: AdditionalSubscriptionInfo? = null
     var hourglassPromoReceived: Date? = null
+
+    var nextBillingDate: Date? = null
+    var nextPaymentProcessing: Date? = null
 
     @SerializedName("owner")
     var ownerID: String? = null

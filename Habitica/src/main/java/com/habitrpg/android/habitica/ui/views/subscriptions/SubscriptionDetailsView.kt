@@ -2,24 +2,19 @@ package com.habitrpg.android.habitica.ui.views.subscriptions
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
-import androidx.core.view.isVisible
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
 import com.habitrpg.android.habitica.extensions.toZonedDateTime
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
-import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
-import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
-import androidx.core.net.toUri
 
 class SubscriptionDetailsView : LinearLayout {
     lateinit var binding: SubscriptionDetailsBinding
@@ -115,8 +110,35 @@ class SubscriptionDetailsView : LinearLayout {
 
             "Google" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
-                binding.subscriptionPaymentMethodTextview.text =
-                    context.getString(R.string.google_pay)
+                val billingDate = plan.nextBillingDate
+                if (billingDate != null) {
+                    var paymentMethodString =
+                        context.getString(
+                            R.string.next_payment_date,
+                            DateFormat.getDateInstance().format(billingDate)
+                        )
+                    if (plan.deferredPlanId != null) {
+                        when (plan.deferredPlanId) {
+                            SubscriptionPlan.PLANID_BASIC, SubscriptionPlan.PLANID_BASICEARNED -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.month)
+                            )
+                            SubscriptionPlan.PLANID_BASIC3MONTH -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.three_months)
+                            )
+                            SubscriptionPlan.PLANID_BASIC6MONTH, SubscriptionPlan.PLANID_GOOGLE6MONTH -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.six_months)
+                            )
+                            SubscriptionPlan.PLANID_BASIC12MONTH -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.twelve_months)
+                            )
+                        }
+                    }
+                    binding.subscriptionPaymentMethodTextview.text = paymentMethodString
+                }
                 binding.updateSubscriptionButton.visibility = VISIBLE
                 if (plan.isActive && plan.dateTerminated != null) {
                     binding.updateSubscriptionButton.setText(R.string.subscribe_again)
