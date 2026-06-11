@@ -35,4 +35,9 @@
     <string name="subscribe_again">Subscribe Again</string>
     <string name="complete_purchase">Complete Purchase</string>
     <string name="subscription_renew_review_info">Once we’ve confirmed your purchase, the payment will be charged \nto your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you agree to pay above.\n\nBy continuing you accept the Terms of Use and Privacy Policy.</string>
+    <string name="subscription_change_gift_info">Any remaining time from your current subscription will be saved to your account as credit that will extend your benefit’s termination date only after cancelling your recurring subscription.</string>
+    <string name="subscription_change_hourglass_promo_gems_info">After purchase, 12 Mystic Hourglasses will be delivered to your account and the max amount of Gems you can buy in the Market will be set to 50.</string>
+    <string name="subscription_change_hourglass_promo_info">After purchase, 12 Mystic Hourglasses will be delivered to your account.</string>
+    <string name="next_payment_date">Next Payment %s</string>
+    <string name="will_change_to_x_duration">Will change to every %s</string>
 </resources>

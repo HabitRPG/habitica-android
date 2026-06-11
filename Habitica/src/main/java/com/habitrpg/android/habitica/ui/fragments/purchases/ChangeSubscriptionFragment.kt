@@ -200,6 +200,13 @@ class ChangeSubscriptionViewModel @Inject constructor(
 
     val productDetails = MutableStateFlow<Map<HabiticaProduct, ProductDetails>>(emptyMap())
 
+    val isEligableForHourglassPromo: Boolean
+        get() = activeSubscriptionPlan.value?.isEligableForHourglassPromo == true
+    val hadGiftedSubscription: Boolean
+        get() = activeSubscriptionPlan.value?.isGiftedSub == true
+    val totalGemCount: Int
+        get() = activeSubscriptionPlan.value?.totalNumberOfGems ?: 0
+
     init {
         val plan = userViewModel.user.value?.purchased?.plan
         currentPlan.value = when (plan?.planId) {
@@ -294,7 +301,21 @@ private fun ChangeSubscriptionReviewView(modifier: Modifier = Modifier,
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.padding(horizontal = 16.dp)) {
-        Text("Placeholder Text\n".repeat(15))
+        ProvideTextStyle(TextStyle(
+            color = colorResource(R.color.white),
+            fontSize = 14.sp,
+        )) {
+            Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                if (viewModel.hadGiftedSubscription) {
+                    Text(stringResource(R.string.subscription_change_gift_info))
+                }
+                if (viewModel.isEligableForHourglassPromo && viewModel.totalGemCount < 50) {
+                    Text(stringResource(R.string.subscription_change_hourglass_promo_gems_info))
+                } else if (viewModel.isEligableForHourglassPromo) {
+                    Text(stringResource(R.string.subscription_change_hourglass_promo_info))
+                }
+            }
+        }
         val activity = LocalActivity.current
         HabiticaButton(
             colorResource(R.color.yellow_100),

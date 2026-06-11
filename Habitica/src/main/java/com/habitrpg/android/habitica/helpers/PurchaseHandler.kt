@@ -218,7 +218,7 @@ class PurchaseHandler(
             BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.CHARGE_FULL_PRICE
         } else {
             Log.d("PurchaseHandler", "Subscription Downgrade or Lateral Change: ${oldPurchase.products.firstOrNull()} -> ${newSkuDetails.productId}")
-            BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.WITH_TIME_PRORATION
+            BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.DEFERRED
         }
     }
 
@@ -244,10 +244,14 @@ class PurchaseHandler(
         if (skuDetails.productType == BillingClient.ProductType.SUBS) {
             val existingSub = checkForSubscription()
             if (existingSub != null && existingSub.isAutoRenewing) {
+                val replacementMode = getReplacementMode(existingSub, skuDetails)
+                if (replacementMode == BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.DEFERRED) {
+                    deferredSubscriptionSku = existingSub.products.firstOrNull()
+                }
                 productDetailsParams = productDetailsParams.setSubscriptionProductReplacementParams(
                     BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.newBuilder()
                         .setOldProductId(existingSub.products.first())
-                        .setReplacementMode(getReplacementMode(existingSub, skuDetails))
+                        .setReplacementMode(replacementMode)
                         .build()
                 )
                 flowParams = flowParams.setSubscriptionUpdateParams(
@@ -356,6 +360,10 @@ class PurchaseHandler(
 
             HabiticaProduct.allSubscriptionTypes.contains(product) -> {
                 val validationRequest = buildValidationRequest(purchase)
+                if (deferredSubscriptionSku != null) {
+                    validationRequest.deferredSku = deferredSubscriptionSku
+                    deferredSubscriptionSku = null
+                }
                 scope.launchCatching {
                     try {
                         val response = apiClient.validateSubscription(validationRequest)
@@ -600,6 +608,7 @@ class PurchaseHandler(
         private const val PENDING_GIFTS_KEY = "PENDING_GIFTS_DATED"
         private var pendingGifts: MutableMap<String, Triple<Date, String, String>> = ConcurrentHashMap()
         private var preferences: SharedPreferences? = null
+        private var deferredSubscriptionSku: String? = null
 
         fun addGift(
             sku: String,

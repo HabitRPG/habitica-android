@@ -110,8 +110,35 @@ class SubscriptionDetailsView : LinearLayout {
 
             "Google" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
-                binding.subscriptionPaymentMethodTextview.text =
-                    context.getString(R.string.google_pay)
+                val billingDate = plan.nextBillingDate
+                if (billingDate != null) {
+                    var paymentMethodString =
+                        context.getString(
+                            R.string.next_payment_date,
+                            DateFormat.getDateInstance().format(billingDate)
+                        )
+                    if (plan.deferredPlanId != null) {
+                        when (plan.deferredPlanId) {
+                            SubscriptionPlan.PLANID_BASIC, SubscriptionPlan.PLANID_BASICEARNED -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.month)
+                            )
+                            SubscriptionPlan.PLANID_BASIC3MONTH -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.three_months)
+                            )
+                            SubscriptionPlan.PLANID_BASIC6MONTH, SubscriptionPlan.PLANID_GOOGLE6MONTH -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.six_months)
+                            )
+                            SubscriptionPlan.PLANID_BASIC12MONTH -> paymentMethodString += "\n" + context.getString(
+                                R.string.will_change_to_x_duration,
+                                context.getString(R.string.twelve_months)
+                            )
+                        }
+                    }
+                    binding.subscriptionPaymentMethodTextview.text = paymentMethodString
+                }
                 binding.updateSubscriptionButton.visibility = VISIBLE
                 if (plan.isActive && plan.dateTerminated != null) {
                     binding.updateSubscriptionButton.setText(R.string.subscribe_again)
