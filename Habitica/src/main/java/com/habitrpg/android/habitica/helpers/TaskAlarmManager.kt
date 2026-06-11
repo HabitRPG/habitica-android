@@ -25,8 +25,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.time.DateTimeException
+import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
@@ -156,12 +157,14 @@ class TaskAlarmManager(
     ) {
         if (remindersItem == null) return
 
-        val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        val reminderZonedTime = remindersItem.getLocalZonedDateTimeInstant()
+        val localDateTime =
+            remindersItem.time?.let { LocalDateTime.parse(it, DateTimeFormatter.ISO_LOCAL_DATE_TIME) }
+                ?: return
 
-        if (reminderZonedTime == null || reminderZonedTime.isBefore(now)) {
-            return
-        }
+        val reminderZonedTime = localDateTime.atZone(ZoneId.systemDefault()).toInstant()
+
+        if (reminderZonedTime.isBefore(Instant.now())) return
+
 
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
