@@ -184,14 +184,11 @@ class TaskRepositoryImpl(
             val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
             if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
-                if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
-                    bgTask.completeForUser(authenticationHandler.currentUserID ?: "", up)
-                    if (TaskType.DAILY == bgTask.type) {
-                        if (up) {
-                            bgTask.streak = (bgTask.streak ?: 0) + 1
-                        } else {
-                            bgTask.streak = (bgTask.streak ?: 0) - 1
-                        }
+                if (TaskType.DAILY == bgTask.type) {
+                    if (up) {
+                        bgTask.streak = (bgTask.streak ?: 0) + 1
+                    } else {
+                        bgTask.streak = (bgTask.streak ?: 0) - 1
                     }
                 } else if (TaskType.HABIT == bgTask.type) {
                     if (up) {
@@ -200,7 +197,10 @@ class TaskRepositoryImpl(
                         bgTask.counterDown = (bgTask.counterDown ?: 0) + 1
                     }
                 }
+            }
 
+            if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
+                bgTask.completeForUser(authenticationHandler.currentUserID ?: "", up)
                 if (bgTask.isGroupTask) {
                     val entry =
                         bgTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == user.id }
@@ -209,6 +209,27 @@ class TaskRepositoryImpl(
                         entry?.completedDate = Date()
                     } else {
                         entry?.completedDate = null
+                    }
+                }
+            }
+
+            val taskId = bgTask.id
+            if (taskId != null) {
+                it.where(Task::class.java).equalTo("id", taskId).findAll().forEach { sibling ->
+                    if (sibling.ownerID != bgTask.ownerID) {
+                        sibling.value = bgTask.value
+                        sibling.streak = bgTask.streak
+                        sibling.completed = bgTask.completed
+                        sibling.counterUp = bgTask.counterUp
+                        sibling.counterDown = bgTask.counterDown
+                        if (sibling.isGroupTask) {
+                            sibling.group?.assignedUsersDetail
+                                ?.firstOrNull { detail -> detail.assignedUserID == user.id }
+                                ?.let { detail ->
+                                    detail.completed = up
+                                    detail.completedDate = if (up) Date() else null
+                                }
+                        }
                     }
                 }
             }
