@@ -36,16 +36,11 @@ object WidgetDataCoordinator {
                         flowOf(Unit)
                     } else {
                         val repo = entry.taskRepository()
-                        val mirroredGroupIds = user.preferences?.tasks?.mirrorGroupTasks.orEmpty()
-                        val flows = buildList {
-                            add(repo.getTasks(TaskType.DAILY, user.id, emptyArray()))
-                            add(repo.getTasks(TaskType.TODO, user.id, emptyArray()))
-                            add(repo.getTasks(TaskType.HABIT, user.id, emptyArray()))
-                            for (groupID in mirroredGroupIds) {
-                                add(repo.getTasks(TaskType.DAILY, groupID, emptyArray()))
-                                add(repo.getTasks(TaskType.TODO, groupID, emptyArray()))
-                            }
-                        }
+                        val flows = listOf(
+                            repo.getTasks(TaskType.DAILY, user.id, emptyArray()),
+                            repo.getTasks(TaskType.TODO, user.id, emptyArray()),
+                            repo.getTasks(TaskType.HABIT, user.id, emptyArray()),
+                        )
                         combine(flows) { Unit }
                     }
                 }

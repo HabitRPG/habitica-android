@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.widget.glance.data
 
 import android.content.Context
-import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
@@ -118,7 +117,13 @@ suspend fun loadTaskListState(context: Context, taskType: TaskType): TaskListWid
         val entry = widgetEntryPoint(context)
         entry.taskRepository().refreshLocalData()
         val user = entry.userRepository().getUser().firstOrNull()
-        val raw = loadTasksWithMirroredGroups(entry.taskRepository(), taskType, user)
+        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
+            ?.toTypedArray() ?: emptyArray()
+        val raw = entry.taskRepository().getTasks(
+            taskType = taskType,
+            userID = user?.id,
+            includedGroupIDs = mirroredGroupIds,
+        ).firstOrNull().orEmpty()
         val visible = raw.filter {
             !it.completed(user?.id) && (taskType != TaskType.DAILY || it.isDue == true)
         }
@@ -127,45 +132,6 @@ suspend fun loadTaskListState(context: Context, taskType: TaskType): TaskListWid
             needsCron = computeNeedsCron(user),
         )
     }
-
-private suspend fun loadTasksWithMirroredGroups(
-    repository: TaskRepository,
-    taskType: TaskType,
-    user: User?,
-): List<Task> {
-    val userID = user?.id
-    val personal = repository.getTasks(taskType, userID, emptyArray()).firstOrNull().orEmpty()
-    val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks.orEmpty()
-    if (userID == null || mirroredGroupIds.isEmpty()) return personal
-
-    val groupCopies = LinkedHashMap<String, Task>()
-    for (groupID in mirroredGroupIds) {
-        val groupTasks = repository.getTasks(taskType, groupID, emptyArray()).firstOrNull().orEmpty()
-        for (task in groupTasks) {
-            val id = task.id ?: continue
-            if (task.isAssignedToUser(userID) && id !in groupCopies) {
-                groupCopies[id] = task
-            }
-        }
-    }
-
-    val result = mutableListOf<Task>()
-    val usedGroupIds = mutableSetOf<String>()
-    for (task in personal) {
-        val id = task.id
-        val groupCopy = id?.let { groupCopies[it] }
-        if (id != null && groupCopy != null) {
-            result.add(groupCopy)
-            usedGroupIds.add(id)
-        } else {
-            result.add(task)
-        }
-    }
-    for ((id, task) in groupCopies) {
-        if (id !in usedGroupIds) result.add(task)
-    }
-    return result
-}
 
 suspend fun loadStatsState(context: Context): StatsWidgetState =
     withContext(Dispatchers.Main) {
@@ -185,8 +151,13 @@ suspend fun loadDailyCountState(context: Context): DailyCountWidgetState =
         val entry = widgetEntryPoint(context)
         entry.taskRepository().refreshLocalData()
         val user = entry.userRepository().getUser().firstOrNull()
-        val due = loadTasksWithMirroredGroups(entry.taskRepository(), TaskType.DAILY, user)
-            .filter { it.isDue == true }
+        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
+            ?.toTypedArray() ?: emptyArray()
+        val due = entry.taskRepository().getTasks(
+            taskType = TaskType.DAILY,
+            userID = user?.id,
+            includedGroupIDs = mirroredGroupIds,
+        ).firstOrNull().orEmpty().filter { it.isDue == true }
         DailyCountWidgetState(
             totalDue = due.size,
             completed = due.count { it.completed(user?.id) },
