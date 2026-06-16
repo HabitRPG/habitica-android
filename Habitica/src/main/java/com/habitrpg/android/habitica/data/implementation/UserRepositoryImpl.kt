@@ -27,6 +27,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -398,9 +399,7 @@ class UserRepositoryImpl(
         }
         apiClient.runCron()
         retrieveUser(true, true)
-        for (task in tasks) {
-            task.id?.let { taskRepository.markTaskCompleted(it, false) }
-        }
+        delay(2000)
         WidgetRefreshWorker.refreshAllWidgetsNow(context, reconcileHiddenIds = true)
     }
 
