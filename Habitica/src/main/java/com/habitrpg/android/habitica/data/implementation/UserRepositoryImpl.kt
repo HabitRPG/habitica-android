@@ -400,7 +400,7 @@ class UserRepositoryImpl(
         apiClient.runCron()
         retrieveUser(true, true)
         delay(2000)
-        WidgetRefreshWorker.refreshAllWidgetsNow(context, reconcileHiddenIds = true)
+        WidgetRefreshWorker.refreshAllWidgetsNow(context)
     }
 
     override suspend fun useCustomization(

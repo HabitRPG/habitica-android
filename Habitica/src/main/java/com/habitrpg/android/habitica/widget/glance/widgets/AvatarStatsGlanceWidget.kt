@@ -43,9 +43,7 @@ import com.habitrpg.android.habitica.widget.glance.components.inlineValueColumnW
 import com.habitrpg.android.habitica.widget.glance.components.inlineValueText
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
-import com.habitrpg.android.habitica.widget.glance.data.AvatarBitmapCache
 import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
-import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import android.os.Build
 import androidx.glance.GlanceTheme
 import androidx.glance.unit.ColorProvider
@@ -56,10 +54,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.glance.currentState
 import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.helpers.NumberAbbreviator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.withContext
 
 private val TALL_THRESHOLD = 120.dp
 

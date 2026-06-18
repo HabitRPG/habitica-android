@@ -59,7 +59,7 @@ class WidgetRefreshWorker(
             WorkManager.getInstance(context).enqueue(request)
         }
 
-        suspend fun refreshAllWidgetsNow(context: Context, reconcileHiddenIds: Boolean = false) {
+        suspend fun refreshAllWidgetsNow(context: Context) {
             WidgetSnapshotPublisher.publishAll(context)
         }
 

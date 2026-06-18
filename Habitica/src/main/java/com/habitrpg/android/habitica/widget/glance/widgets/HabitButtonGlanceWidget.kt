@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
@@ -82,7 +81,6 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
 
         provideContent {
             val cached = HabitButtonWidgetCache.fromPrefs(currentState<Preferences>())
-            Log.d("HabitButtonWidget", "provideGlance widgetId=$widgetId taskId=${cached?.taskId}")
             HabiticaWidgetTheme {
                 if (cached == null) {
                     UnconfiguredContent(onClick = configureAction)
