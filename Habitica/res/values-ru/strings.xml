@@ -487,13 +487,13 @@
     <string name="character_build">Развитие персонажа</string>
     <string name="character_build_description">За каждый уровень вы получаете одно очко, которое можете распределить на характеристику по вашему выбору. Вы можете сделать это вручную или позволить игре решить за вас, используя опцию автоматическое распределение.</string>
     <string name="strength">Сила</string>
-    <string name="strength_description">Увеличивает бонус критических ударов и делает их более вероятными при подсчете заданий. Также увеличивает урон, нанесенный боссам.</string>
+    <string name="strength_description">Увеличивает бонус критических ударов и делает их более вероятными при подсчете заданий. Также увеличивает урон, наносимый боссам.</string>
     <string name="intelligence">Интеллект</string>
-    <string name="intelligence_description">Увеличивает опыт получаемый за выполнение заданий. Также увеличивает предел маны и скорость её восстановления.</string>
+    <string name="intelligence_description">Увеличивает количество опыта, получаемого за выполнение заданий. Также увеличивает максимальный запас маны и скорость её восстановления.</string>
     <string name="constitution">Телосложение</string>
-    <string name="constitution_description">Уменьшает количество урона получаемое от ваших заданий. Не уменьшает урон получаемый от боссов.</string>
+    <string name="constitution_description">Снижает урон, получаемый за невыполненные ежедневные задания и отрицательные привычки. Не снижает урон от боссов квестов.</string>
     <string name="perception">Восприятие</string>
-    <string name="perception_description">Увеличивает вероятность нахождения трофеев при выполнении заданий, ежедневный предел выпадения трофеев, бонус за серию, а также количество золота получаемое за задания.</string>
+    <string name="perception_description">Увеличивает шанс выпадения предметов, ежедневный предел выпадения трофеев, бонусы за серии задач и количество золота, получаемого за выполнение задач.</string>
     <string name="buffs">Баффы</string>
     <string name="allocated">Распределено</string>
     <string name="distribute_evenly">Распределять равномерно</string>
@@ -502,7 +502,7 @@
     <string name="no_points_to_allocate">Нет очков для распределения</string>
     <string name="points_to_allocate">%dочк. для распределения</string>
     <string name="distribute_evenly_help">Назначает одинаковое количество очков для каждой характеристики.</string>
-    <string name="distribute_class_help">Назначает больше очков на важные вашему классу характеристики.</string>
+    <string name="distribute_class_help">Присваивает больше баллов характеристикам, важным для вашего класса.</string>
     <string name="distribute_task_help">Назначаемые очки основываются на параметрах силы, интеллекта, телосложения и восприятии, связанных с выполняемыми вами задачами.</string>
     <string name="allocating_points">Распределение очков</string>
     <string name="class_equipment">Снаряжение</string>
@@ -1650,4 +1650,20 @@
     <string name="switches_in_x">Обновление через %s</string>
     <string name="preference_push_joined_group_plan_mention">\@Упоминания в групповых планах</string>
     <string name="next_switch_in_x">Следующее обновление через %s</string>
+    <string name="category">Категория</string>
+    <string name="faint_broken_gear_info">Сломанное снаряжение можно повторно приобрести на рынке</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="one">%d день до бесплатного Шара Возрождения</item>
+        <item quantity="few">%d дня до бесплатного Шара Возрождения</item>
+        <item quantity="many">%d дней до бесплатного Шара Возрождения</item>
+        <item quantity="other">%d дней до бесплатного Шара Возрождения</item>
+    </plurals>
+    <string name="avatar_widget_label">Аватар Habitica</string>
+    <string name="free_rebirth_at_level_100">Бесплатный Шар Возрождения на уровне 100</string>
+    <string name="widget_dailies_count">Количество ежедневных дел Habitica</string>
+    <string name="widget_add_task">Добавить задание Habitica</string>
+    <string name="widget_add_task_multi">Добавить задания Habitica</string>
+    <string name="membership">Участие</string>
+    <string name="participating">Участвующие</string>
+    <string name="not_participating_filter">Не участвующие</string>
 </resources>

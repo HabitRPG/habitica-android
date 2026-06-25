@@ -1298,7 +1298,7 @@
     <string name="habit_summary_description">Este é um Hábito **%1$s** que é **%2$s**.</string>
     <string name="todo_summary_description_duedate">Esta é uma Tarefa **%1$s** que possui prazo **%2$s**.</string>
     <string name="todo_summary_description">Esta é uma Tarefa **%1$s** que não possui prazo.</string>
-    <string name="daily_summary_description">Esta é uma Tarefa **%1$s** que se repete **%2$s %3$s**.</string>
+    <string name="daily_summary_description">Esta é uma Tarefa **%1$s** que se repete **%2$s %3$s**.%4$s</string>
     <string name="positive_and_negative">positivo e negativo</string>
     <string name="animated_gryphatrice_pet">Mascote Grifotriz Jubilante</string>
     <string name="completed_at">Completo em %s</string>
@@ -1654,8 +1654,8 @@
     <string name="server_option_custom">Personalizado</string>
     <string name="server_option_default">%s (Padrão)</string>
     <string name="server_custom_address_label">Insira o endereço do servidor personalizado</string>
-    <string name="server_custom_address_hint">Ex.: http://localhost:3000</string>
-    <string name="server_url_invalid">Por favor inserir uma URL válida começando com http:// ou https://</string>
+    <string name="server_custom_address_hint">Ex.: customserver.habitica.com</string>
+    <string name="server_url_invalid">Por favor inserir uma URL válida</string>
     <string name="apply">Aplicar</string>
     <string name="server_settings_unlocked">Configurações de servidor desbloqueadas!</string>
     <string name="server_settings_unlock_remaining">Faltam %d etapas para desbloquear as configurações de servidor.</string>
@@ -1681,7 +1681,7 @@
     <string name="rebirth_achievement_description">Você iniciou uma nova aventura! Este é seu %1$d Renascimento, e o nível mais alto que você alcançou foi %2$d.</string>
     <string name="rebirth_achievement_description_max">Você iniciou uma nova aventura! Este é seu %1$dº Renascimento, e o nível mais alto que você já alcançou foi %2$d ou mais.</string>
     <string name="server_custom_warning">Aviso: Contas em servidores personalizados são separadas da sua conta principal do Habitica.com.</string>
-    <string name="reset_server_confirmation">Tem certeza de que deseja restaurar o servidor padrão do Habitica\? O aplicativo será reiniciado.</string>
+    <string name="reset_server_confirmation">Tem certeza de que deseja restaurar o servidor padrão do Habitica? Você será desconectado.</string>
     <string name="search_questions">Pesquisar perguntas</string>
     <string name="rebirth_shop">Orbe do Renascimento</string>
     <string name="no_matching_questions">Nenhuma pergunta correspondente encontrada</string>
@@ -1695,4 +1695,9 @@
     <string name="new_message">Nova mensagem</string>
     <string name="scroll_to_new_messages">Ir para novas mensagens</string>
     <string name="auth_invalid_credential_type">Tipo de credencial inválido recebido.</string>
+    <string name="avatar_widget_label">Avatar do Habitica</string>
+    <string name="widget_dailies_count">Contagem Diária do Habitica</string>
+    <string name="widget_add_task">Habitica Adicionar Tarefa</string>
+    <string name="widget_add_task_multi">Habitica Adicionar Tarefas</string>
+    <string name="fifth_week_warning">Esta tarefa não aparecerá como pendente durante meses com menos %1$ss.</string>
 </resources>
