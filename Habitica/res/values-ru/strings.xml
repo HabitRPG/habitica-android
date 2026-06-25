@@ -1486,7 +1486,7 @@
     <string name="item_footer_description">Посетите [Рынок](/shops/market), чтобы купить нужные Вам вещи!</string>
     <string name="item_footer_title">Не получаете нужных %s от задач\?</string>
     <string name="subscribe_second_armoire_open_text">Подписчики получают дополнительные шансы в Сундуках, а также другие преимущества!</string>
-    <string name="subscriber_benefit_used_faint">Вы уже использовали свой второй шанс сегодня. Он будет доступен снова в %s</string>
+    <string name="subscriber_benefit_used_faint">Ваш перк «Второй шанс» всё ещё перезаряжается! Он будет доступен снова в %s.</string>
     <string name="quest_mechanics">Механика Квеста</string>
     <string name="error">Ошибка</string>
     <string name="quests_footer_title">Хотите больше Квестов\?</string>
@@ -1526,7 +1526,7 @@
     <string name="habiticans_send_invite">Отравьте личное приглашение напрямую игрокам, которых Вы знаете</string>
     <string name="quest_mechanics_damage_title">Боссы наносят урон Команде за каждое невыполненное Ежедневное Дело</string>
     <string name="subscribe_listitemArmoire_description">Получите в два раза больше шансов получить новое Снаряжение при каждом открытии Зачарованного Сундука!</string>
-    <string name="subscribe_incentive_text_faint">С подпиской Вы получите ежедневно получите второй шанс, чтобы не исчерпать полностью очки Здоровья</string>
+    <string name="subscribe_incentive_text_faint">Подписчики получают перк «Второй шанс», позволяющий один раз в день избежать потери всех очков здоровья</string>
     <string name="subriber_benefit_notification_faint">Вы получили второй шанс с одним очком Здоровья!</string>
     <string name="sub_perk">ПРЕИМУЩЕСТВА</string>
     <string name="quest_mechanics_boss_description">Урон накапливается, когда Вы выполняете любое собственное задание или используете определенные навыки (такие есть у опытного мага или воина)! Урон наносится на следующий день по возвращении . На количество урона от выполнения заданий влияет параметр Сила.</string>
@@ -1702,4 +1702,13 @@
     <string name="rebirth_achievement_title">Вы переродились!</string>
     <string name="rebirth_achievement_description">Вы начали новое приключение! Для вас это %1$d перерождение, а самый высокий уровень, которого вы достигли, — %2$d.</string>
     <string name="rebirth_achievement_description_max">Вы начали новое приключение! Для вас это %1$d перерождение, а максимальный уровень, которого вы достигли, — %2$d или выше.</string>
+    <string name="fifth_week_warning">Это задание не будет отображаться в \"текущих\" в месяцах, в которых меньше %1$s дней.</string>
+    <string name="subscriber_button_faint_use">Воспользуйтесь своим вторым шансом!</string>
+    <string name="subscriber_benefit_available_faint">Ваша подписка позволяет раз в день избежать полной потери очков здоровья!</string>
+    <string name="auth_invalid_credential_type">Недопустимый тип учетных данных.</string>
+    <string name="auth_unknown_credential_type">Неизвестный тип учетных данных.</string>
+    <string name="auth_missing_token">Получен пустой токен.</string>
+    <string name="new_message">Новое сообщение</string>
+    <string name="scroll_to_new_messages">Прокрутить до новых сообщений</string>
+    <string name="server_custom_address_hint">например, customserver.habitica.com</string>
 </resources>
