@@ -215,7 +215,7 @@ class InventoryRepositoryImpl(
     ): User? {
         localRepository.executeTransaction {
             val liveItem = localRepository.getLiveObject(ownedItem)
-            liveItem?.numberOwned = (liveItem?.numberOwned ?: 0) - 1
+            liveItem?.numberOwned = liveItem.numberOwned - 1
         }
         val user = apiClient.sellItem(item.type, item.key) ?: return null
         return localRepository.soldItem(currentUserID, user)
@@ -382,7 +382,7 @@ class InventoryRepositoryImpl(
             val user = localRepository.getLiveUser(currentUserID)
             localRepository.executeTransaction {
                 user?.purchased?.plan?.gemsBought =
-                    purchaseQuantity + (user?.purchased?.plan?.gemsBought ?: 0)
+                    purchaseQuantity + (user.purchased?.plan?.gemsBought ?: 0)
             }
         }
         return response

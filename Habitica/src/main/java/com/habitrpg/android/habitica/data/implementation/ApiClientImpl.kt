@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -305,7 +304,7 @@ class ApiClientImpl(
             } else {
                 processResponse(response)
             }
-        } catch(e: Exception) {
+        } catch(_: Exception) {
             UserAuthResponse().apply {
                 userExists = false
             }
@@ -924,7 +923,7 @@ class ApiClientImpl(
     override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? {
         // make sure a purchase attempt doesn't happen
         return if (lastPurchaseValidation == null || Date().time - lastPurchaseValidation.time > 5000) {
-            return process { apiService.validatePurchase(request) }
+            process { apiService.validatePurchase(request) }
         } else {
             null
         }

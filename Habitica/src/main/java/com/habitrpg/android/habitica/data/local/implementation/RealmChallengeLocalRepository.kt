@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
-import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
@@ -13,9 +12,9 @@ import io.realm.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 class RealmChallengeLocalRepository(realm: Realm) :
     RealmBaseLocalRepository(realm),
@@ -41,9 +40,7 @@ class RealmChallengeLocalRepository(realm: Realm) :
             .equalTo("challengeID", id)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded }
-            .map { it.first() }
-            .filterNotNull()
+            .filter { it.isLoaded }.mapNotNull { it.first() }
 
     override fun getChallengeMemberships(userId: String) =
         realm.where(ChallengeMembership::class.java)
@@ -57,9 +54,7 @@ class RealmChallengeLocalRepository(realm: Realm) :
             .equalTo("id", id)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-            .map { it.first() }
-            .filterNotNull()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.first() }
     }
 
     override fun getTasks(challengeID: String): Flow<List<Task>> {

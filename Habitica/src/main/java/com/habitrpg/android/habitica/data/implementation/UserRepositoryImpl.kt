@@ -36,6 +36,7 @@ import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class UserRepositoryImpl(
@@ -215,7 +216,7 @@ class UserRepositoryImpl(
             unlockResponse.preferences?.let { liveUser.preferences = it }
             liveUser.purchased = unlockResponse.purchased
             liveUser.items = unlockResponse.items
-            liveUser.balance = liveUser.balance - (price / 4.0)
+            liveUser.balance -= (price / 4.0)
         }
         return unlockResponse
     }
@@ -399,7 +400,7 @@ class UserRepositoryImpl(
         }
         apiClient.runCron()
         retrieveUser(true, true)
-        delay(2000)
+        delay(2.seconds)
         WidgetRefreshWorker.refreshAllWidgetsNow(context)
     }
 

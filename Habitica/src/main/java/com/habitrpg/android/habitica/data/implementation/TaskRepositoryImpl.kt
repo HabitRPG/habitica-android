@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import kotlin.time.Duration.Companion.seconds
 
 @ExperimentalCoroutinesApi
 class TaskRepositoryImpl(
@@ -50,7 +51,7 @@ class TaskRepositoryImpl(
         if (r.isClosed) return
         try {
             r.refresh()
-        } catch (ignored: IllegalStateException) {
+        } catch (_: IllegalStateException) {
         }
     }
 
@@ -465,7 +466,7 @@ class TaskRepositoryImpl(
 
     private suspend fun awaitTaskPersisted(task: Task) {
         val id = task.id ?: return
-        withTimeoutOrNull(3000) {
+        withTimeoutOrNull(3.seconds) {
             localRepository.getTasks(task.ownerID).first { tasks -> tasks.any { it.id == id } }
         }
     }
