@@ -1353,7 +1353,7 @@
     <string name="group_tags">Теги вашої групи</string>
     <string name="unlocks_x_gems_per_month">Вони отримають %d Самоцвітів на ринку щомісяця</string>
     <string name="twelve_mystic_hourglasses">12 таємничих пісочних годинників</string>
-    <string name="subscribe_listitemFaint">Отримай другий шанс</string>
+    <string name="subscribe_listitemFaint">Отримайте другий шанс</string>
     <string name="mages">Маги</string>
     <plurals name="repeat_daily">
         <item quantity="one">кожен день</item>
@@ -1634,7 +1634,7 @@
     <string name="rage">Лють</string>
     <string name="empty_special_description_subscribed">Отримуйте предмети для перевтілення під час Сезонних Урочистостей, а загадкові скрині зі спорядженням для підписників доставляються на початку кожного місяця!</string>
     <string name="subscribe_listitem2_description_2">Заробляйте Пісочні годинники поступово, щоб купувати предмети в Крамниці мандрівника у часі</string>
-    <string name="subscriber_benefit_success_faint">Ви отримали другий шанс із 1HP!</string>
+    <string name="subscriber_benefit_success_faint">Ви отримали другий шанс із 1 ОЗ!</string>
     <string name="revive_broken_equipment">Стан %s: зламано</string>
     <string name="subscription_benefit_armoire_sub">Ваша підписка дає вам додатковий шанс у Скрині!</string>
     <string name="quest_mechanics_boss_description">Виконуйте будь-які типи завдань або використовуйте навички, щоб накопичити очікувану шкоду! Шкода буде застосована під час вашого наступного щоденного оновлення. Сила впливає на те, скільки шкоди ви завдаєте.</string>
