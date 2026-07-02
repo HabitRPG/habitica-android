@@ -431,8 +431,8 @@
     <string name="quest_abort_message">Tem certeza que quer abortar a missão? Isso vai abortar para todos do seu grupo e todo o progresso será perdido. O pergaminho de missão será devolvido ao dono.</string>
     <string name="reloading_content">Recarregando Conteúdo</string>
     <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">mi</string>
-    <string name="billion_abbrev">bi</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
     <string name="available_until">Disponível até %s</string>
     <string name="gems_left_max">Gemas Mensais: %1$d/%2$d Restando</string>
     <string name="gems_left_nomax">Gemas Mensais: %d Restando</string>
