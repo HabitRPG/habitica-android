@@ -1316,7 +1316,7 @@
     <string name="user_is_blocked_explanation">Een geblokkeerde gebruiker kan je geen privé berichten meer sturen maar je kunt diens berichten nog wel in de herberg of gilde zien</string>
     <string name="login_disclaimer">Door u aan te melden, geeft u aan dat u de <a href="https://habitica.com/static/terms">Algemene Voorwaarden</a> en <a href="https://habitica.com/static/privacy">Privacybeleid</a> hebt gelezen en hiermee akkoord gaat.</string>
     <string name="sidebar_teams">Teams</string>
-    <string name="no_longer_available">Niet meer beschijkbaar</string>
+    <string name="no_longer_available">Niet meer beschikbaar</string>
     <string name="background_filters">Achtergrond Filters</string>
     <string name="buy_for_x">Koop voor %s</string>
     <string name="rebirth_shop">Bol der Hergeboorte</string>
@@ -1381,4 +1381,5 @@
     <string name="mental_health">Geestelijke Gezondheid + Zelfzorg</string>
     <string name="positive_and_negative">Positief en negatief</string>
     <string name="exclusive_items_await">Er staan wachten exclusief voorwerpen en cadeau\'s voor je</string>
+    <string name="sub_perk">ABONNEMENTSVOORDEEL</string>
 </resources>
