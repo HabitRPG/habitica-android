@@ -4,16 +4,12 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.text.Spannable
-import android.widget.Toast
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -27,9 +23,6 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
-
-    @Inject
-    lateinit var taskRepository: TaskRepository
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -116,32 +109,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     }
                 }
             }
-
-            context?.getString(R.string.complete_task_action) -> {
-                taskID?.let {
-                    userRepository.retrieveUser(withTasks = false, forced = true)
-                    if (userRepository.getUser().firstOrNull()?.needsCron == true) {
-                        userRepository.runCron()
-                    }
-                    taskRepository.taskChecked(null, it, up = true, force = false) {
-                        val pair =
-                            NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
-                                it.experienceDelta,
-                                it.healthDelta,
-                                it.goldDelta,
-                                it.manaDelta,
-                                it.questDamage
-                            )
-                        showToast(pair.first)
-                    }
-                }
-            }
         }
-    }
-
-    private fun showToast(text: Spannable) {
-        val toast = Toast.makeText(context, text, Toast.LENGTH_LONG)
-        toast.show()
     }
 
     private fun getMessageText(key: String?): String? {

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 class RealmUserLocalRepository(realm: Realm) :
     RealmBaseLocalRepository(realm),
@@ -35,9 +36,7 @@ class RealmUserLocalRepository(realm: Realm) :
                     .equalTo("id", it)
                     .findAll()
                     .toFlow()
-                    .filter { groups -> groups.size > 0 }
-                    .map { it.firstOrNull() }
-                    .filterNotNull()
+                    .filter { groups -> groups.isNotEmpty() }.mapNotNull { it.firstOrNull() }
             }
             .map {
                 when {
@@ -64,7 +63,7 @@ class RealmUserLocalRepository(realm: Realm) :
             .equalTo("id", userID)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.size > 0 }
+            .filter { it.isLoaded && it.isNotEmpty() }
             .map { it.first()?.questAchievements ?: emptyList() }
     }
 

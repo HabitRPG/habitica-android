@@ -90,12 +90,12 @@ class ChallengeRepositoryImpl(
     ) {
         val savedTasks: List<Task>? = when {
             addedTaskList.count() == 1 ->
-                listOf(
+                listOfNotNull(
                     apiClient.createChallengeTask(
                         challenge.id ?: "",
                         addedTaskList[0]
                     )
-                ).filterNotNull()
+                )
             else ->
                 apiClient.createChallengeTasks(
                     challenge.id ?: "",

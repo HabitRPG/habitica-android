@@ -26,7 +26,7 @@ interface BaseLocalRepository {
 
     fun <T : BaseObject> save(objects: List<T>)
 
-    fun <T : BaseObject> save(`object`: T)
+    fun <T : BaseObject> save(obj: T)
 
     fun <T : BaseMainObject> delete(obj: T)
 

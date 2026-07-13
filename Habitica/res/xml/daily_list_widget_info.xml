@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/glance_default_loading_layout"
-    android:minHeight="110dp"
     android:minWidth="220dp"
+    android:minHeight="110dp"
+    android:minResizeWidth="180dp"
+    android:minResizeHeight="110dp"
+    android:maxResizeWidth="290dp"
+    android:maxResizeHeight="480dp"
     android:targetCellWidth="3"
     android:targetCellHeight="2"
     android:previewImage="@drawable/widget_dailies"

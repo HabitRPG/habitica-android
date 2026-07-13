@@ -57,7 +57,7 @@ interface ApiService {
     // user API
 
     @GET("user/")
-    suspend fun getUser(): Response<HabitResponse<User>>
+    suspend fun getUser(@Query("fields") fields: String?): Response<HabitResponse<User>>
 
     @POST("user/stat-sync")
     suspend fun syncUserStats(): Response<HabitResponse<User>>
@@ -72,7 +72,7 @@ interface ApiService {
     suspend fun getInboxConversations(): Response<HabitResponse<List<InboxConversation>>>
 
     @GET("tasks/user")
-    suspend fun getTasks(): Response<HabitResponse<TaskList>>
+    suspend fun getTasks(@Query("history") history: Boolean?): Response<HabitResponse<TaskList>>
 
     @GET("world-state")
     suspend fun worldState(): Response<HabitResponse<WorldState>>

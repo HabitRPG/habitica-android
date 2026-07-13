@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 import java.util.Date
+import kotlin.math.max
 
 @RealmClass(embedded = true)
 open class SubscriptionPlan : RealmObject(), BaseObject {
@@ -23,6 +24,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     var extraMonths: Int? = null
     var quantity: Int? = null
     var consecutive: SubscriptionPlanConsecutive? = null
+    var cumulativeCount: Int? = null
     var mysteryItemCount = 0
     var additionalData: AdditionalSubscriptionInfo? = null
     var hourglassPromoReceived: Date? = null
@@ -64,6 +66,12 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     val isEligableForHourglassPromo: Boolean
         get() {
             return hourglassPromoReceived == null
+        }
+
+    val monthsSubscribed: Int
+        get() {
+            if (!isActive) return 0
+            return max((consecutive?.count ?: 0), (cumulativeCount ?: 0))
         }
 
     companion object {

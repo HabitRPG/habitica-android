@@ -3,7 +3,12 @@ package com.habitrpg.android.habitica.widget.glance.data
 import android.content.Context
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 
 data class StatsWidgetState(
     val hp: Float,
@@ -99,4 +104,63 @@ data class DailyCountWidgetState(
     val needsCron: Boolean,
 )
 
-fun computeNeedsCron(user: User?): Boolean = user?.needsCron == true
+fun computeNeedsCron(user: User?, now: Long = System.currentTimeMillis()): Boolean {
+    if (user == null) return false
+    if (user.needsCron) return true
+    val lastCron = user.lastCron ?: return false
+    val dayStart = user.preferences?.dayStart ?: 0
+    return lastCron.time < CronBoundaryRefreshWorker.lastBoundaryMillis(dayStart, now)
+}
+
+suspend fun loadTaskListState(context: Context, taskType: TaskType): TaskListWidgetState =
+    withContext(Dispatchers.Main) {
+        val entry = widgetEntryPoint(context)
+        entry.taskRepository().refreshLocalData()
+        val user = entry.userRepository().getUser().firstOrNull()
+        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
+            ?.toTypedArray() ?: emptyArray()
+        val raw = entry.taskRepository().getTasks(
+            taskType = taskType,
+            userID = user?.id,
+            includedGroupIDs = mirroredGroupIds,
+        ).firstOrNull().orEmpty()
+        val visible = raw.filter {
+            !it.completed(user?.id) && (taskType != TaskType.DAILY || it.isDue == true)
+        }
+        TaskListWidgetState(
+            tasks = visible.map { it.toWidgetItem() },
+            needsCron = computeNeedsCron(user),
+        )
+    }
+
+suspend fun loadStatsState(context: Context): StatsWidgetState =
+    withContext(Dispatchers.Main) {
+        runCatching {
+            val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+            AvatarBitmapCache.refreshIfNeeded(context, user)
+            StatsWidgetState.fromUser(
+                context = context,
+                user = user,
+                avatarBitmapPath = AvatarBitmapCache.cachedFile(context).absolutePath,
+            )
+        }.getOrElse { StatsWidgetState.Empty }
+    }
+
+suspend fun loadDailyCountState(context: Context): DailyCountWidgetState =
+    withContext(Dispatchers.Main) {
+        val entry = widgetEntryPoint(context)
+        entry.taskRepository().refreshLocalData()
+        val user = entry.userRepository().getUser().firstOrNull()
+        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
+            ?.toTypedArray() ?: emptyArray()
+        val due = entry.taskRepository().getTasks(
+            taskType = TaskType.DAILY,
+            userID = user?.id,
+            includedGroupIDs = mirroredGroupIds,
+        ).firstOrNull().orEmpty().filter { it.isDue == true }
+        DailyCountWidgetState(
+            totalDue = due.size,
+            completed = due.count { it.completed(user?.id) },
+            needsCron = computeNeedsCron(user),
+        )
+    }

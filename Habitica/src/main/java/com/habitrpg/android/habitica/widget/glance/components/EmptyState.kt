@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.widget.glance.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.ColorFilter
@@ -33,6 +34,7 @@ fun EmptyState(
     modifier: GlanceModifier = GlanceModifier,
     backgroundColor: ColorProvider = WidgetColors.cardBackground,
     textColor: ColorProvider = WidgetColors.text,
+    sparklesSize: Dp = 40.dp,
 ) {
     Box(
         modifier = modifier
@@ -48,7 +50,7 @@ fun EmptyState(
             Image(
                 provider = ImageProvider(R.drawable.widget_sparkles),
                 contentDescription = null,
-                modifier = GlanceModifier.size(40.dp),
+                modifier = GlanceModifier.size(sparklesSize),
             )
             Spacer(GlanceModifier.height(8.dp))
             Text(

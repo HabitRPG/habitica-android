@@ -15,8 +15,8 @@ import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 class RealmTaskLocalRepository(realm: Realm) :
     RealmBaseLocalRepository(realm),
@@ -188,9 +188,7 @@ class RealmTaskLocalRepository(realm: Realm) :
             return emptyFlow()
         }
         return realm.where(Task::class.java).equalTo("id", taskId).findAll().toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-            .map { it.first() }
-            .filterNotNull()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.first() }
     }
 
     override fun getTaskCopy(taskId: String): Flow<Task> {
@@ -209,7 +207,7 @@ class RealmTaskLocalRepository(realm: Realm) :
         isCompleted: Boolean
     ) {
         val task = realm.where(Task::class.java).equalTo("id", taskId).findFirst()
-        executeTransaction { task?.completed = true }
+        executeTransaction { task?.completed = isCompleted }
     }
 
     override fun swapTaskPosition(
@@ -235,9 +233,7 @@ class RealmTaskLocalRepository(realm: Realm) :
             .equalTo("position", position)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-            .map { it.first() }
-            .filterNotNull()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.first() }
     }
 
     override fun updateIsdue(daily: TaskList): TaskList {
@@ -275,9 +271,7 @@ class RealmTaskLocalRepository(realm: Realm) :
             .equalTo("id", userID)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
-            .map { users -> users.first() }
-            .filterNotNull()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }.mapNotNull { users -> users.first() }
     }
 
     override fun getTasksForChallenge(

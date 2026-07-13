@@ -38,6 +38,8 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.widget.glance.migration.LegacyWidgetMigration
+import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
+import com.habitrpg.android.habitica.widget.glance.work.WidgetDataCoordinator
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -147,10 +149,25 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
 
         WidgetRefreshWorker.enqueue(this)
+        WidgetDataCoordinator.start(this)
         MainScope().launchCatching {
             LegacyWidgetMigration.runIfNeeded(this@HabiticaBaseApplication)
             WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+            CronBoundaryRefreshWorker.scheduleFromCache(this@HabiticaBaseApplication)
         }
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            private var isInitialStart = true
+
+            override fun onStart(owner: LifecycleOwner) {
+                if (isInitialStart) {
+                    isInitialStart = false
+                    return
+                }
+                MainScope().launchCatching {
+                    WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+                }
+            }
+        })
 
         checkIfNewVersion()
     }
@@ -420,6 +437,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 instance?.authenticationHandler?.clear()
                 Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
                 runCatching { WidgetRefreshWorker.clearAllForLogout(context.applicationContext) }
+                runCatching { CronBoundaryRefreshWorker.cancel(context.applicationContext) }
                 startActivity(OnboardingActivity::class.java, context)
             }
         }

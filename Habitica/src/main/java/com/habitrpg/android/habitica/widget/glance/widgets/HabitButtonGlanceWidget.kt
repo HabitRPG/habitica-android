@@ -4,8 +4,8 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,10 +31,12 @@ import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
+import androidx.glance.layout.size
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
@@ -79,7 +81,6 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
 
         provideContent {
             val cached = HabitButtonWidgetCache.fromPrefs(currentState<Preferences>())
-            Log.d("HabitButtonWidget", "provideGlance widgetId=$widgetId taskId=${cached?.taskId}")
             HabiticaWidgetTheme {
                 if (cached == null) {
                     UnconfiguredContent(onClick = configureAction)
@@ -112,11 +113,19 @@ private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
 private fun habitTileBackground(): ColorProvider =
-    if (MaterialYouEnabled) GlanceTheme.colors.primaryContainer else WidgetColors.background
+    if (MaterialYouEnabled) GlanceTheme.colors.widgetBackground else WidgetColors.background
 
 @Composable
 private fun habitTitleText(): ColorProvider =
-    if (MaterialYouEnabled) GlanceTheme.colors.onPrimaryContainer else WidgetColors.text
+    if (MaterialYouEnabled) GlanceTheme.colors.onSurface else WidgetColors.text
+
+@Composable
+private fun unconfiguredBadgeBackground(): ColorProvider =
+    if (MaterialYouEnabled) GlanceTheme.colors.primary else ColorProvider(Color(0xFF925CF3))
+
+@Composable
+private fun unconfiguredBadgeText(): ColorProvider =
+    if (MaterialYouEnabled) GlanceTheme.colors.onPrimary else ColorProvider(Color.White)
 
 @Composable
 private fun HabitButtonContent(
@@ -182,22 +191,41 @@ private fun TitleStrip(title: String, height: androidx.compose.ui.unit.Dp) {
 
 @Composable
 private fun UnconfiguredContent(onClick: Action) {
-    Box(
+    Row(
         modifier = GlanceModifier
             .fillMaxSize()
             .cornerRadius(20.dp)
             .background(habitTileBackground())
-            .padding(12.dp)
+            .padding(horizontal = 12.dp)
             .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
+        Box(
+            modifier = GlanceModifier
+                .size(32.dp)
+                .cornerRadius(16.dp)
+                .background(unconfiguredBadgeBackground()),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = "+",
+                style = TextStyle(
+                    color = unconfiguredBadgeText(),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                ),
+            )
+        }
         Text(
             text = stringRes(R.string.widget_unconfigured_choose_habit),
             style = TextStyle(
                 color = habitTitleText(),
-                fontSize = 13.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
             ),
+            maxLines = 2,
+            modifier = GlanceModifier.padding(start = 10.dp),
         )
     }
 }

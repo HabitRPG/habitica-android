@@ -18,7 +18,6 @@ import androidx.glance.LocalSize
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
-import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
@@ -42,23 +41,16 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
-import com.habitrpg.android.habitica.widget.glance.components.SquiggleProgressBar
+import com.habitrpg.android.habitica.widget.glance.components.SegmentedProgressBar
 import com.habitrpg.android.habitica.widget.glance.components.pluralRes
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
-import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
-import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
-import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
+import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
-import com.habitrpg.shared.habitica.models.tasks.TaskType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.withContext
 
 class DailiesCountGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Responsive(
@@ -76,44 +68,15 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
             provideContent { HabiticaWidgetTheme { SignedOutContent() } }
             return
         }
-        val raw = withContext(Dispatchers.Main) {
-            val entry = widgetEntryPoint(context)
-            val user = entry.userRepository().getUser().firstOrNull()
-            val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
-                ?.toTypedArray() ?: emptyArray()
-            val tasks = entry.taskRepository().getTasks(
-                taskType = TaskType.DAILY,
-                userID = user?.id,
-                includedGroupIDs = mirroredGroupIds,
-            ).firstOrNull().orEmpty().filter { it.isDue == true }
-
-            DailyCountRaw(
-                dueIds = tasks.mapNotNull { it.id }.toSet(),
-                completedIds = tasks.filter { it.completed }.mapNotNull { it.id }.toSet(),
-                needsCron = computeNeedsCron(user),
-            )
-        }
-
         provideContent {
-            val hiddenIds = currentState<Preferences>()[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
-            val effectiveCompleted = (raw.completedIds + hiddenIds.intersect(raw.dueIds)).size
-            val state = DailyCountWidgetState(
-                totalDue = raw.dueIds.size,
-                completed = effectiveCompleted,
-                needsCron = raw.needsCron,
-            )
+            val state = WidgetSnapshotStore.dailyCountFrom(currentState())
+                ?: DailyCountWidgetState(totalDue = 0, completed = 0, needsCron = false)
             HabiticaWidgetTheme {
                 DailiesCountTile(state)
             }
         }
     }
 }
-
-private data class DailyCountRaw(
-    val dueIds: Set<String>,
-    val completedIds: Set<String>,
-    val needsCron: Boolean,
-)
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
@@ -130,11 +93,11 @@ internal data class DailiesTilePalette(
 private fun rememberPalette(): DailiesTilePalette {
     return if (MaterialYouEnabled) {
         DailiesTilePalette(
-            tileBackground = GlanceTheme.colors.primaryContainer,
-            primaryText = GlanceTheme.colors.onPrimaryContainer,
-            secondaryText = GlanceTheme.colors.onPrimaryContainer,
-            accentNumber = GlanceTheme.colors.onPrimaryContainer,
-            iconTint = GlanceTheme.colors.onPrimaryContainer,
+            tileBackground = GlanceTheme.colors.widgetBackground,
+            primaryText = GlanceTheme.colors.onSurface,
+            secondaryText = GlanceTheme.colors.onSurfaceVariant,
+            accentNumber = GlanceTheme.colors.primary,
+            iconTint = GlanceTheme.colors.onSurface,
             trackColor = GlanceTheme.colors.outline,
         )
     } else {
@@ -160,27 +123,20 @@ private fun progressColor(progress: Float): Color = when {
 private fun DailiesCountTile(state: DailyCountWidgetState) {
     val palette = rememberPalette()
     val size = LocalSize.current
-    val outerPadding = 8.dp
     val tileInnerPadding = 14.dp
-    val barAvailableWidth = (size.width - outerPadding * 2 - tileInnerPadding * 2).coerceAtLeast(40.dp)
+    val barAvailableWidth = (size.width - tileInnerPadding * 2).coerceAtLeast(40.dp)
 
     Box(
         modifier = GlanceModifier
             .fillMaxSize()
-            .padding(outerPadding),
+            .cornerRadius(20.dp)
+            .background(palette.tileBackground),
     ) {
-        Box(
-            modifier = GlanceModifier
-                .fillMaxSize()
-                .cornerRadius(20.dp)
-                .background(palette.tileBackground),
-        ) {
-            val isAllDone = state.totalDue > 0 && state.completed == state.totalDue
-            when {
-                state.needsCron -> StartDayContent(palette, tileInnerPadding)
-                isAllDone -> AllDoneContent(state.totalDue, palette, barAvailableWidth, tileInnerPadding)
-                else -> InProgressContent(state, palette, barAvailableWidth, tileInnerPadding)
-            }
+        val isAllDone = state.totalDue > 0 && state.completed == state.totalDue
+        when {
+            state.needsCron -> StartDayContent(palette, tileInnerPadding)
+            isAllDone -> AllDoneContent(state.totalDue, palette, barAvailableWidth, tileInnerPadding)
+            else -> InProgressContent(state, palette, barAvailableWidth, tileInnerPadding)
         }
     }
 }
@@ -191,7 +147,7 @@ private fun StartDayContent(palette: DailiesTilePalette, innerPadding: Dp) {
         modifier = GlanceModifier
             .fillMaxSize()
             .padding(innerPadding)
-            .clickable(onClick = actionRunCallback<RunCronAction>()),
+            .clickable(onClick = openAppAction("habitica://user/tasks/daily")),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -300,7 +256,7 @@ private fun GaugeBody(
                     Image(
                         provider = ImageProvider(R.drawable.widget_sparkles),
                         contentDescription = null,
-                        modifier = GlanceModifier.size(32.dp),
+                        modifier = GlanceModifier.height(64.dp).width(43.dp),
                     )
                 }
             }
@@ -314,11 +270,12 @@ private fun GaugeBody(
                 modifier = GlanceModifier.padding(start = 4.dp),
             )
         }
-        SquiggleProgressBar(
+        SegmentedProgressBar(
             progress = progress,
             fillColor = ColorProvider(progressColor),
             trackColor = palette.trackColor,
-            availableWidth = barAvailableWidth,
+            availableWidth = barAvailableWidth - 8.dp,
+            modifier = GlanceModifier.padding(horizontal = 4.dp),
         )
         Spacer(GlanceModifier.height(6.dp))
         Text(

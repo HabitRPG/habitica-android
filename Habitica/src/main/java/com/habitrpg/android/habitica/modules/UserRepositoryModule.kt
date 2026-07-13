@@ -120,14 +120,16 @@ class UserRepositoryModule {
         apiClient: ApiClient,
         authenticationHandler: AuthenticationHandler,
         taskRepository: TaskRepository,
-        appConfigManager: AppConfigManager
+        appConfigManager: AppConfigManager,
+        @ApplicationContext context: Context
     ): UserRepository {
         return UserRepositoryImpl(
             localRepository,
             apiClient,
             authenticationHandler,
             taskRepository,
-            appConfigManager
+            appConfigManager,
+            context
         )
     }
 
