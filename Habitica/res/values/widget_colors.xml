@@ -14,6 +14,7 @@
     <color name="widget_separator">#4DC3C0C7</color>
     <color name="widget_checklist_bg">#A5A1AC</color>
     <color name="widget_checklist_bg_done">#EDEDEE</color>
+    <color name="widget_checkbox_fill">#50FFFFFF</color>
     <color name="widget_add_label_text">#99000000</color>
     <color name="widget_preview_scallop_tint">#EDE7FB</color>
     <color name="widget_preview_tile_tint">#DDD3F7</color>

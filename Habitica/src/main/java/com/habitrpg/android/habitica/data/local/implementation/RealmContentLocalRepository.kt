@@ -7,8 +7,7 @@ import io.realm.Realm
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 open class RealmContentLocalRepository(realm: Realm) :
     RealmBaseLocalRepository(realm),
@@ -42,9 +41,7 @@ open class RealmContentLocalRepository(realm: Realm) :
         return realm.where(WorldState::class.java)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.isNotEmpty() }
-            .map { it.first() }
-            .filterNotNull()
+            .filter { it.isLoaded && it.isNotEmpty() }.mapNotNull { it.first() }
     }
 
     override fun saveWorldState(worldState: WorldState) {

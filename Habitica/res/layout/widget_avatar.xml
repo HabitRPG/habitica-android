@@ -6,10 +6,9 @@
 
     <ImageView
         android:id="@+id/avatar_image"
-        android:layout_width="135dp"
-        android:layout_height="141dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        android:background="@drawable/widget_avatar_tile" />
+        android:scaleType="fitCenter" />
 </FrameLayout>

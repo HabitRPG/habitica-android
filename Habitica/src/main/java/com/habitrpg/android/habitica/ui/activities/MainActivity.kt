@@ -104,6 +104,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
+import com.habitrpg.android.habitica.widget.DailiesCountWidgetReceiver
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
@@ -650,6 +651,14 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         YesterdailyDialog.showDialogIfNeeded(this, viewModel.userViewModel.userID, userRepository, taskRepository)
+
+        val openTaskFormType = intent.getStringExtra(OPEN_TASK_FORM_TYPE)
+        if (openTaskFormType != null && viewModel.isAuthenticated) {
+            intent.removeExtra(OPEN_TASK_FORM_TYPE)
+            val formIntent = Intent(this, TaskFormActivity::class.java)
+            formIntent.putExtra(TaskFormActivity.TASK_TYPE_KEY, openTaskFormType)
+            startActivity(formIntent)
+        }
     }
 
     @RequiresApi(33)
@@ -684,6 +693,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         updateWidget(AvatarStatsWidgetProvider::class.java)
         updateWidget(TodoListWidgetProvider::class.java)
         updateWidget(DailiesWidgetProvider::class.java)
+        updateWidget(DailiesCountWidgetReceiver::class.java)
         updateWidget(HabitButtonWidgetProvider::class.java)
     }
 
@@ -1155,5 +1165,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     companion object {
         private const val PERSISTENT_DRAWER_MIN_WIDTH_DP = 600
         private const val DEFAULT_SCRIM_COLOR = 0x99000000.toInt()
+        const val OPEN_TASK_FORM_TYPE = "openTaskFormType"
     }
 }

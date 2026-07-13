@@ -25,13 +25,16 @@ import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withTimeoutOrNull
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import kotlin.time.Duration.Companion.seconds
 
 @ExperimentalCoroutinesApi
 class TaskRepositoryImpl(
@@ -42,6 +45,15 @@ class TaskRepositoryImpl(
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler),
     TaskRepository {
     private var lastTaskAction: Long = 0
+
+    override fun refreshLocalData() {
+        val r = localRepository.realm
+        if (r.isClosed) return
+        try {
+            r.refresh()
+        } catch (_: IllegalStateException) {
+        }
+    }
 
     override fun getTasks(
         taskType: TaskType,
@@ -173,14 +185,11 @@ class TaskRepositoryImpl(
             val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
             if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
-                if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
-                    bgTask.completeForUser(authenticationHandler.currentUserID ?: "", up)
-                    if (TaskType.DAILY == bgTask.type) {
-                        if (up) {
-                            bgTask.streak = (bgTask.streak ?: 0) + 1
-                        } else {
-                            bgTask.streak = (bgTask.streak ?: 0) - 1
-                        }
+                if (TaskType.DAILY == bgTask.type) {
+                    if (up) {
+                        bgTask.streak = (bgTask.streak ?: 0) + 1
+                    } else {
+                        bgTask.streak = (bgTask.streak ?: 0) - 1
                     }
                 } else if (TaskType.HABIT == bgTask.type) {
                     if (up) {
@@ -189,7 +198,10 @@ class TaskRepositoryImpl(
                         bgTask.counterDown = (bgTask.counterDown ?: 0) + 1
                     }
                 }
+            }
 
+            if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
+                bgTask.completeForUser(authenticationHandler.currentUserID ?: "", up)
                 if (bgTask.isGroupTask) {
                     val entry =
                         bgTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == user.id }
@@ -198,6 +210,27 @@ class TaskRepositoryImpl(
                         entry?.completedDate = Date()
                     } else {
                         entry?.completedDate = null
+                    }
+                }
+            }
+
+            val taskId = bgTask.id
+            if (taskId != null) {
+                it.where(Task::class.java).equalTo("id", taskId).findAll().forEach { sibling ->
+                    if (sibling.ownerID != bgTask.ownerID) {
+                        sibling.value = bgTask.value
+                        sibling.streak = bgTask.streak
+                        sibling.completed = bgTask.completed
+                        sibling.counterUp = bgTask.counterUp
+                        sibling.counterDown = bgTask.counterDown
+                        if (sibling.isGroupTask) {
+                            sibling.group?.assignedUsersDetail
+                                ?.firstOrNull { detail -> detail.assignedUserID == user.id }
+                                ?.let { detail ->
+                                    detail.completed = up
+                                    detail.completedDate = if (up) Date() else null
+                                }
+                        }
                     }
                 }
             }
@@ -407,21 +440,34 @@ class TaskRepositoryImpl(
 
     override fun updateTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)?
     ) {
         MainScope().launchCatching {
             val updatedTask = updateTask(task) ?: return@launchCatching
             handleAssignmentChanges(updatedTask, assignChanges)
+            awaitTaskPersisted(updatedTask)
+            onComplete?.invoke()
         }
     }
 
     override fun createTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)?
     ) {
         MainScope().launchCatching {
             val createdTask = createTask(task) ?: return@launchCatching
             handleAssignmentChanges(createdTask, assignChanges)
+            awaitTaskPersisted(createdTask)
+            onComplete?.invoke()
+        }
+    }
+
+    private suspend fun awaitTaskPersisted(task: Task) {
+        val id = task.id ?: return
+        withTimeoutOrNull(3.seconds) {
+            localRepository.getTasks(task.ownerID).first { tasks -> tasks.any { it.id == id } }
         }
     }
 

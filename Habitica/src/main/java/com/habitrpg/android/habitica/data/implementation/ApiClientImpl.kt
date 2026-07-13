@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import android.util.Log
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -305,7 +304,7 @@ class ApiClientImpl(
             } else {
                 processResponse(response)
             }
-        } catch(e: Exception) {
+        } catch(_: Exception) {
             UserAuthResponse().apply {
                 userExists = false
             }
@@ -409,7 +408,7 @@ class ApiClientImpl(
     }
 
     override suspend fun retrieveUser(withTasks: Boolean): User? {
-        val user = process { apiService.getUser() }
+        val user = process { apiService.getUser("balance,items,permissions,challenges,lastCron,needsCron,loginIncentives,achievements,backer,contributor,purchased,invitations,party,profile,stats,tasksOrder,pushDevices,tags,pinnedItems,unpinnedItems,pinnedItemsOrder") }
         val tasks = getTasks()
         user?.tasks = tasks
         return user
@@ -623,7 +622,7 @@ class ApiClientImpl(
         return process { apiService.hatchPet(eggKey, hatchingPotionKey) }
     }
 
-    override suspend fun getTasks(): TaskList? = process { apiService.getTasks() }
+    override suspend fun getTasks(): TaskList? = process { apiService.getTasks(false) }
 
     override suspend fun getTasks(type: String): TaskList? {
         return process { apiService.getTasks(type) }
@@ -924,7 +923,7 @@ class ApiClientImpl(
     override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? {
         // make sure a purchase attempt doesn't happen
         return if (lastPurchaseValidation == null || Date().time - lastPurchaseValidation.time > 5000) {
-            return process { apiService.validatePurchase(request) }
+            process { apiService.validatePurchase(request) }
         } else {
             null
         }

@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.widgets.HabitButtonGlanceWidget
+import com.habitrpg.android.habitica.widget.glance.work.WidgetSnapshotPublisher
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import kotlinx.coroutines.Dispatchers
@@ -40,13 +41,11 @@ class ScoreHabitAction : ActionCallback {
                     HabitButtonWidgetCache.write(context, glanceId, task)
                 }
             }
-            applyAvatarStatOverrides(context, user, res)
             res
         }
 
         showScoringToast(context, result)
-
         HabitButtonGlanceWidget().update(context, glanceId)
-        refreshStatsDependentWidgets(context)
+        WidgetSnapshotPublisher.publishStats(context)
     }
 }

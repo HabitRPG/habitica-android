@@ -69,6 +69,7 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.HabitScoringSelector
 import com.habitrpg.android.habitica.ui.views.tasks.form.LabeledValue
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskDifficultySelector
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskFormSelector
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -841,10 +842,13 @@ class TaskFormActivity : BaseActivity() {
         }
 
         if (!isChallengeTask) {
+            val refreshWidgets: suspend () -> Unit = {
+                WidgetRefreshWorker.refreshTaskListWidgetsNow(applicationContext)
+            }
             if (isCreating) {
-                taskRepository.createTaskInBackground(thisTask, assignChanges)
+                taskRepository.createTaskInBackground(thisTask, assignChanges, refreshWidgets)
             } else {
-                taskRepository.updateTaskInBackground(thisTask, assignChanges)
+                taskRepository.updateTaskInBackground(thisTask, assignChanges, refreshWidgets)
             }
 
             if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {
@@ -886,6 +890,7 @@ class TaskFormActivity : BaseActivity() {
                     taskRepository.deleteTask(it)
                     val taskCopy = task
                     taskCopy?.let { taskAlarmManager.removeAlarmsForTask(it) }
+                    WidgetRefreshWorker.enqueueOneTime(applicationContext)
                 }
             }
 

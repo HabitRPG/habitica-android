@@ -33,7 +33,7 @@ fun AddTaskTile(
         modifier = modifier
             .cornerRadius(cornerRadius)
             .background(backgroundColor)
-            .padding(horizontal = 8.dp, vertical = 14.dp)
+            .padding(4.dp)
             .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,

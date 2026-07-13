@@ -7,8 +7,7 @@ import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 class RealmTutorialLocalRepository(realm: Realm) :
     RealmBaseLocalRepository(realm),
@@ -18,12 +17,10 @@ class RealmTutorialLocalRepository(realm: Realm) :
         return realm.where(TutorialStep::class.java).equalTo("identifier", key)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
-            .map { steps -> steps.first() }
-            .filterNotNull()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }.mapNotNull { steps -> steps.first() }
     }
 
-    override fun getTutorialSteps(keys: List<String>): Flow<out List<TutorialStep>> {
+    override fun getTutorialSteps(keys: List<String>): Flow<List<TutorialStep>> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(TutorialStep::class.java)
             .`in`("identifier", keys.toTypedArray())

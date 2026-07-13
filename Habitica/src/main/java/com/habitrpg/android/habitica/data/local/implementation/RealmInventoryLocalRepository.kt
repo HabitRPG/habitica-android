@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -50,7 +51,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .map { content -> content.first() }
     }
 
-    override fun getEquipment(searchedKeys: List<String>): Flow<out List<Equipment>> {
+    override fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .`in`("key", searchedKeys.toTypedArray())
             .findAll()
@@ -71,7 +72,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .map { it.count() }
     }
 
-    override fun getOwnedEquipment(type: String): Flow<out List<Equipment>> {
+    override fun getOwnedEquipment(type: String): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .equalTo("type", type)
             .equalTo("owned", true)
@@ -80,7 +81,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .filter { it.isLoaded }
     }
 
-    override fun getOwnedEquipment(): Flow<out List<Equipment>> {
+    override fun getOwnedEquipment(): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .equalTo("owned", true)
             .findAll()
@@ -91,7 +92,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun getEquipmentType(
         type: String,
         set: String
-    ): Flow<out List<Equipment>> {
+    ): Flow<List<Equipment>> {
         return realm.where(Equipment::class.java)
             .equalTo("type", type)
             .equalTo("gearSet", set)
@@ -142,13 +143,13 @@ class RealmInventoryLocalRepository(realm: Realm) :
     ): Flow<Map<String, OwnedItem>> {
         return queryUser(userID)
             .filterNotNull()
-            .map {
+            .map { user ->
                 val items = HashMap<String, OwnedItem>()
-                it.items?.eggs?.forEach { items[it.key + "-" + it.itemType] = it }
-                it.items?.food?.forEach { items[it.key + "-" + it.itemType] = it }
-                it.items?.hatchingPotions?.forEach { items[it.key + "-" + it.itemType] = it }
-                it.items?.quests?.forEach { items[it.key + "-" + it.itemType] = it }
-                it.items?.special?.forEach { items[it.key + "-" + it.itemType] = it }
+                user.items?.eggs?.forEach { items[it.key + "-" + it.itemType] = it }
+                user.items?.food?.forEach { items[it.key + "-" + it.itemType] = it }
+                user.items?.hatchingPotions?.forEach { items[it.key + "-" + it.itemType] = it }
+                user.items?.quests?.forEach { items[it.key + "-" + it.itemType] = it }
+                user.items?.special?.forEach { items[it.key + "-" + it.itemType] = it }
                 if (includeZero) {
                     items
                 } else {
@@ -162,9 +163,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .equalTo("key", key)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-            .map { it.first() }
-            .filterNotNull()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.first() }
     }
 
     override fun getMounts(): Flow<List<Mount>> {
@@ -199,8 +198,8 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun getOwnedMounts(userID: String): Flow<List<OwnedMount>> {
         return queryUser(userID)
-            .map {
-                it?.items?.mounts?.filter {
+            .map { user ->
+                user?.items?.mounts?.filter {
                     it.owned
                 } ?: emptyList()
             }
@@ -270,7 +269,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     ) {
         val liveItem = getLiveObject(item) ?: return
         amountToAdd?.let { amount ->
-            executeTransaction { liveItem.numberOwned = liveItem.numberOwned + amount }
+            executeTransaction { liveItem.numberOwned += amount }
         }
     }
 
@@ -319,9 +318,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         return realm.where(itemClass).equalTo("key", key)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-            .map { it.firstOrNull() as? Item }
-            .filterNotNull()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.firstOrNull() as? Item }
     }
 
     override fun decrementMysteryItemCount(user: User?) {
@@ -354,9 +351,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .equalTo("key", key)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded }
-            .map { it.firstOrNull() }
-            .filterNotNull()
+            .filter { it.isLoaded }.mapNotNull { it.firstOrNull() }
     }
 
     override fun saveInAppRewards(onlineItems: List<ShopItem>) {
@@ -453,7 +448,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .sort("mystery", Sort.DESCENDING)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.size > 0 }
+            .filter { it.isLoaded && it.isNotEmpty() }
             .map {
                 val format = SimpleDateFormat("yyyyMM", Locale.US)
                 it.first { equipment ->

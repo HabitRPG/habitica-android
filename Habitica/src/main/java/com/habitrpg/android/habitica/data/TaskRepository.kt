@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 interface TaskRepository : BaseRepository {
+    fun refreshLocalData()
+
     fun getTasks(
         taskType: TaskType,
         userID: String? = null,
@@ -101,12 +103,14 @@ interface TaskRepository : BaseRepository {
 
     fun updateTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)? = null
     )
 
     fun createTaskInBackground(
         task: Task,
-        assignChanges: Map<String, MutableList<String>>
+        assignChanges: Map<String, MutableList<String>>,
+        onComplete: (suspend () -> Unit)? = null
     )
 
     fun getTaskCopies(): Flow<List<Task>>

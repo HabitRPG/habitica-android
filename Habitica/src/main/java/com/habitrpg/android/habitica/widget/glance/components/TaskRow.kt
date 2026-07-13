@@ -29,7 +29,7 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 fun TaskRow(
     text: String,
     valueColor: Color,
-    valueBorderColor: Color,
+    dotFill: ColorProvider = WidgetColors.checkboxFill,
     primaryTextColor: ColorProvider = WidgetColors.taskListTaskText,
     checklistChipBackground: ColorProvider = WidgetColors.checklistBackground,
     checklistChipBackgroundDone: ColorProvider = WidgetColors.checklistBackgroundDone,
@@ -61,7 +61,7 @@ fun TaskRow(
                 modifier = GlanceModifier
                     .size(innerSquareSize)
                     .cornerRadius(innerCornerRadius)
-                    .background(ColorProvider(valueBorderColor)),
+                    .background(dotFill),
             ) {}
         }
         Spacer(GlanceModifier.width(10.dp))

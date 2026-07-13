@@ -6,8 +6,7 @@ import io.realm.Realm
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 class RealmFAQLocalRepository(realm: Realm) :
     RealmContentLocalRepository(realm),
@@ -17,9 +16,7 @@ class RealmFAQLocalRepository(realm: Realm) :
             .equalTo("position", position)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.count() > 0 }
-            .map { it.firstOrNull() }
-            .filterNotNull()
+            .filter { it.isLoaded && it.count() > 0 }.mapNotNull { it.firstOrNull() }
     }
 
     override val articles: Flow<List<FAQArticle>>

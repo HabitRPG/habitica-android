@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.ColorFilter
@@ -23,7 +22,6 @@ import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
-import androidx.datastore.preferences.core.Preferences
 import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -41,7 +39,6 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.widget.glance.actions.RunCronAction
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreTaskAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openTaskFormAction
@@ -50,69 +47,31 @@ import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
-import com.habitrpg.android.habitica.widget.glance.data.TaskListMemoryCache
+import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
-import com.habitrpg.android.habitica.widget.glance.data.computeNeedsCron
-import com.habitrpg.android.habitica.widget.glance.data.toWidgetItem
-import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
-import com.habitrpg.android.habitica.widget.glance.state.WidgetStateKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueLight
-import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueMedium
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.withContext
 
 abstract class TaskListGlanceWidget(
     private val taskType: TaskType,
 ) : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(120.dp, 120.dp),
-            DpSize(220.dp, 160.dp),
-            DpSize(300.dp, 200.dp),
-            DpSize(360.dp, 300.dp),
-        ),
-    )
+    override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         if (!WidgetAuth.isLoggedIn(context)) {
             provideContent { HabiticaWidgetTheme { SignedOutContent() } }
             return
         }
-        val state = TaskListMemoryCache.get(taskType) ?: withContext(Dispatchers.Main) {
-            val entry = widgetEntryPoint(context)
-            val user = entry.userRepository().getUser().firstOrNull()
-            val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
-                ?.toTypedArray() ?: emptyArray()
-            val raw = entry.taskRepository().getTasks(
-                taskType = taskType,
-                userID = user?.id,
-                includedGroupIDs = mirroredGroupIds,
-            ).firstOrNull().orEmpty()
-            val visible = raw.filter {
-                !it.completed && (taskType != TaskType.DAILY || it.isDue == true)
-            }
-            val fresh = TaskListWidgetState(
-                tasks = visible.map { it.toWidgetItem() },
-                needsCron = computeNeedsCron(user),
-            )
-            TaskListMemoryCache.put(taskType, fresh)
-            fresh
-        }
-
         provideContent {
-            val hiddenIds = currentState<Preferences>()[WidgetStateKeys.taskListHiddenIds] ?: emptySet()
-            val filtered = if (hiddenIds.isEmpty()) state else state.copy(
-                tasks = state.tasks.filterNot { it.id in hiddenIds },
-            )
+            val state = WidgetSnapshotStore.taskListFrom(currentState())
+                ?: TaskListWidgetState(tasks = emptyList(), needsCron = false)
             HabiticaWidgetTheme {
-                TaskListContent(filtered, isDaily = taskType == TaskType.DAILY)
+                TaskListContent(state, isDaily = taskType == TaskType.DAILY)
             }
         }
     }
@@ -122,6 +81,8 @@ class DailyTaskListGlanceWidget : TaskListGlanceWidget(TaskType.DAILY)
 class TodoTaskListGlanceWidget : TaskListGlanceWidget(TaskType.TODO)
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+private const val MAX_VISIBLE_TASKS = 15
 
 internal data class TaskListPalette(
     val widgetBackground: ColorProvider,
@@ -141,12 +102,12 @@ internal data class TaskListPalette(
 private fun rememberPalette(): TaskListPalette {
     return if (MaterialYouEnabled) {
         TaskListPalette(
-            widgetBackground = GlanceTheme.colors.primaryContainer,
+            widgetBackground = GlanceTheme.colors.widgetBackground,
             cardBackground = GlanceTheme.colors.secondaryContainer,
-            titleText = GlanceTheme.colors.onPrimaryContainer,
+            titleText = GlanceTheme.colors.onSurface,
             taskText = GlanceTheme.colors.onSecondaryContainer,
             secondaryText = GlanceTheme.colors.onSurfaceVariant,
-            iconTint = GlanceTheme.colors.onPrimaryContainer,
+            iconTint = GlanceTheme.colors.onSurface,
             cardIconTint = GlanceTheme.colors.onSecondaryContainer,
             checklistChipBackground = GlanceTheme.colors.tertiaryContainer,
             checklistChipBackgroundDone = GlanceTheme.colors.surfaceVariant,
@@ -258,7 +219,7 @@ private fun TaskListBody(
     Box(modifier = GlanceModifier.fillMaxSize()) {
         when {
             state.needsCron && isDaily -> StartDayCard(
-                onClick = actionRunCallback<RunCronAction>(),
+                onClick = openAppAction("habitica://user/tasks/daily"),
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
                 iconTint = palette.cardIconTint,
@@ -269,8 +230,13 @@ private fun TaskListBody(
                 ),
                 backgroundColor = palette.cardBackground,
                 textColor = palette.taskText,
+                sparklesSize = if (isDaily) 56.dp else 40.dp,
             )
-            else -> TaskListRows(state = state, palette = palette, isDaily = isDaily)
+            else -> TaskListRows(
+                state = state,
+                palette = palette,
+                isDaily = isDaily,
+            )
         }
     }
 }
@@ -282,9 +248,15 @@ private fun TaskListRows(
     isDaily: Boolean,
 ) {
     val innerCornerRadius = if (isDaily) 8.dp else 13.dp
+    val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
+    val total = state.tasks.size
+    val showFooter = total > MAX_VISIBLE_TASKS
+    val shown = if (showFooter) state.tasks.take(MAX_VISIBLE_TASKS) else state.tasks
+    val moreCount = total - shown.size
+
     LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
-        items(state.tasks.size, itemId = { state.tasks[it].id.hashCode().toLong() }) { index ->
-            val task = state.tasks[index]
+        items(shown.size) { index ->
+            val task = shown[index]
             Column(modifier = GlanceModifier.fillMaxWidth()) {
                 Box(
                     modifier = GlanceModifier
@@ -296,7 +268,6 @@ private fun TaskListRows(
                     TaskRow(
                         text = task.text,
                         valueColor = colorForTaskValueLight(task.value),
-                        valueBorderColor = colorForTaskValueMedium(task.value),
                         primaryTextColor = palette.taskText,
                         checklistChipBackground = palette.checklistChipBackground,
                         checklistChipBackgroundDone = palette.checklistChipBackgroundDone,
@@ -314,10 +285,43 @@ private fun TaskListRows(
                         ),
                     )
                 }
-                if (index < state.tasks.size - 1) {
+                if (index < shown.size - 1 || showFooter) {
                     Spacer(GlanceModifier.height(6.dp))
                 }
             }
         }
+        if (showFooter) {
+            item {
+                ViewMoreFooter(
+                    moreCount = moreCount,
+                    textColor = palette.secondaryText,
+                    openListLink = openListLink,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ViewMoreFooter(
+    moreCount: Int,
+    textColor: ColorProvider,
+    openListLink: String,
+) {
+    Box(
+        modifier = GlanceModifier
+            .fillMaxWidth()
+            .height(28.dp)
+            .clickable(onClick = openAppAction(openListLink)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = stringRes(R.string.widget_view_more, moreCount),
+            style = TextStyle(
+                color = textColor,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Medium,
+            ),
+        )
     }
 }

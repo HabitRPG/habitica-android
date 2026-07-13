@@ -189,7 +189,7 @@ constructor(private val context: Context) : SetupCustomizationRepository {
     private fun getResId(resName: String): Int {
         return try {
             context.resources.getIdentifier(resName, "drawable", context.packageName)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             -1
         }
     }

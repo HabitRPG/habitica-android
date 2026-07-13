@@ -108,8 +108,8 @@ class SocialRepositoryImpl(
         groupID: String?
     ): Void? {
         return when {
-            chatMessageID.isBlank() -> return null
-            currentUserID == BuildConfig.ANDROID_TESTING_UUID -> return null
+            chatMessageID.isBlank() -> null
+            currentUserID == BuildConfig.ANDROID_TESTING_UUID -> null
             else -> {
                 val data = mutableMapOf<String, String>()
                 data["comment"] = additionalInfo
