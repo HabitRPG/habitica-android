@@ -1,2 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="ok">OK</string>
+    <string name="syncing_account">Sinhronizacija naloga sa telefona</string>
+    <string name="how_did_you_do">Kako ste se snašli?</string>
+    <string name="you_found">Pronašli ste…</string>
+    <string name="one_quest_item">1 Predmet zadatka</string>
+    <string name="x_quest_item">%d Predmeti zadatka</string>
+    <string name="x_and_y">%1$s i %2$s</string>
+    <string name="some_x">neki %s</string>
+    <string name="edit_on_phone">Izmenite na telefonu</string>
+    <string name="sign_in">Prijavite se</string>
+    <string name="sign_in_description">Kreirajte liste zadataka i pratite napredak pomoću svog gejmificiranog avatara</string>
+    <string name="sign_in_on_phone">Prijavite se na telefonu</string>
+    <string name="other_options">Ostale opcije</string>
+    <string name="create_account">Kreirajte nalog</string>
+    <string name="continue_text">Nastavite</string>
+    <string name="you_ran_out_of_hp">Ponestalo ti je HP-a</string>
+    <string name="faint_description">Izgubili ste Nivo, Iskustvo, i Zlato. Ne odustajte!</string>
+    <string name="day_start">Početak dana</string>
+    <string name="rya_description">Postoje nepotpuni dnevni izveštaji od juče</string>
+    <string name="review_dailies">Pregledajte dnevne zadatke</string>
+    <string name="check_on_phone">Proverite telefon</string>
+    <string name="checklist_disclaimer">Kontrolne liste zadataka su dostupne na telefonu</string>
+    <string name="start_new_day">Započnite novi dan</string>
+    <string name="check_off_yesterday">Označite sve što ste uradili juče:</string>
+    <string name="task_type">Tip zadatka</string>
+    <string name="task_title_hint">Unesite naziv zadatka</string>
+    <string name="save">Sačuvajte</string>
+    <string name="sync_data">Sinhronizujte podatke</string>
+    <string name="hide_task_rewards">Sakrij nagrade zadatka</string>
+    <string name="version_info">Verzija %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">Odjavite se sa Habitike?</string>
+    <string name="no_tasks">Kreirajte %s da biste dodali na ovoj listi</string>
+    <string name="an_egg">Jaje</string>
+    <string name="a_potion">Napitak</string>
+    <string name="some_food">Nešto hrane</string>
+    <string name="continue_on_your_phone">Nastavite na telefonu</string>
+    <string name="levelup_description">Nivo gore! Napredovao si zahvaljujući svom trudu!</string>
+    <string name="all_done_today">Sve odrađeno danas!</string>
+    <string name="starting_your_day">Novi dan započinje...</string>
+    <string name="disconnected">Isključen</string>
+</resources>

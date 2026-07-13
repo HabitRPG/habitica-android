@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="store_title">Gejmifikujte vaše zadatke</string>
+    <string name="store_short_description">Tretirajte svoj život kao igru da biste ostali motivisani i organizovani!</string>
+    <string name="store_description">Tretirajte svoj život kao igru da biste ostali motivisani i organizovani! Habitica vam olakšava zabavu dok ostvarujete ciljeve. Unesite svoje navike, dnevne ciljeve i listu obaveza, a zatim kreirajte prilagođeni avatar. Označite zadatke da biste podigli nivo svog avatara i otključali funkcije kao što su oklop, kućni ljubimci, veštine, pa čak i zadaci! Borite se protiv čudovišta sa prijateljima da biste jedni druge držali odgovornim i koristite svoje zlato za nagrade u igri, poput opreme ili prilagođenih nagrada, poput gledanja epizode vaše omiljene TV emisije. Fleksibilna, društvena i zabavna, Habitica je savršen način da se motivišete da postignete bilo šta. Ako imate bilo kakvih pitanja, slobodno pošaljite povratne informacije na mobile@habitica.com! A ako uživate u našoj aplikaciji, bili bismo vam veoma zahvalni ako biste nam ostavili recenziju.</string>
+</resources>

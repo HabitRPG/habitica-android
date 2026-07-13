@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="gems">Dragulji</string>
+    <string name="gold_plural">zlato</string>
+    <string name="gold_capitalized">Zlato</string>
+    <string name="mystic_hourglasses">Mistični Peščani Satovi</string>
+    <string name="repeat_daily">Dnevni zadatak</string>
+    <string name="monthly">Mesečni</string>
+    <string name="weekly">Nedeljni</string>
+</resources>
