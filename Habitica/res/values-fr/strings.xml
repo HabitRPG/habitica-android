@@ -267,16 +267,16 @@
     <string name="choose_recipient_title">Choisissez un destinataire</string>
     <string name="action_continue">Continuer</string>
     <string name="invited_to_party">Vous avez été invité·e à rejoindre une équipe !</string>
-    <string name="stats_widget_label">Statistiques d\'Habitica</string>
+    <string name="stats_widget_label">Vos Attributs</string>
     <string name="add_task">Ajouter une tâche</string>
     <string name="add_habit">Ajouter une habitude</string>
     <string name="add_daily">Ajouter une quotidienne</string>
     <string name="add_todo">Ajouter une tâche à faire</string>
     <string name="add_reward">Ajouter une récompense</string>
     <string name="all_dailies_completed">Vous avez accompli toutes vos tâches quotidiennes. Bravo !</string>
-    <string name="widget_habit_button">Réaliser une tâche Habitica</string>
-    <string name="widget_dailies">Quotidiennes Habitica</string>
-    <string name="widget_todo_list">Liste des tâches à faire d\'Habitica</string>
+    <string name="widget_habit_button">Habitude Seule</string>
+    <string name="widget_dailies">Liste des Quotidiennes</string>
+    <string name="widget_todo_list">Liste des Tâches</string>
     <string name="google_services_missing">Le service Google Play n\'a pas pu être trouvé.</string>
     <string name="gem_purchase_toolbartitle">Acheter</string>
     <string name="gem_purchase_title">Acheter des gemmes soutient les développeurs et aide Habitica à fonctionner</string>
@@ -911,7 +911,7 @@
 \n
 \nSi vos **points de vie tombent à 0**, vous perdrez un niveau, tout votre or, et une pièce d\'équipement. L\'équipement perdu peut être racheté.</string>
     <string name="health_points">Points de vie</string>
-    <string name="stats_currency">Stats &amp; monnaie</string>
+    <string name="stats_currency"><![CDATA[Attributs et Monnaie]]></string>
     <string name="how_best_habitica">Des doutes sur la meilleure façon d\'utiliser Habitica \?</string>
     <string name="overview">Vue d\'ensemble</string>
     <string name="send_bug_prompt">Envoyez-nous un rapport d\'erreur et nous reviendrons vers vous !</string>
@@ -919,8 +919,8 @@
     <string name="support_bug_title">Nous essayons constamment d\'améliorer notre application en nous basant sur vos commentaires, mais parfois quelques bugs apparaissent…</string>
     <string name="lets_go">Allons-y</string>
     <string name="bugs_fixes_description">Quelque chose s\'est mal passé \? Trouvez des réponses ici ou contactez-nous pour de l\'aide.</string>
-    <string name="bugs_fixes">Anomalies &amp; corrections</string>
-    <string name="suggestions_feedback">Suggestions &amp; retours</string>
+    <string name="bugs_fixes"><![CDATA[Bugs et Corrections]]></string>
+    <string name="suggestions_feedback"><![CDATA[Suggestions et Retours]]></string>
     <string name="get_help">Obtenir de l\'aide</string>
     <string name="contact_us">Contactez-nous</string>
     <string name="suggestions_feedback_description">Vous avez des suggestions pour améliorer les fonctionnalités ou une idée pour quelque chose de nouveau \? Dites-le nous !</string>
@@ -1696,8 +1696,8 @@
     <string name="new_message">Nouveau message</string>
     <string name="scroll_to_new_messages">Défiler vers nouveaux messages</string>
     <string name="fifth_week_warning">Cette tâche n\'apparaîtra pas comme \"à faire\" durant les mois comptant moins de %1$ss.</string>
-    <string name="avatar_widget_label">Avatar Habitica</string>
-    <string name="widget_dailies_count">Compteur Journalier Habitica</string>
-    <string name="widget_add_task">Ajouter une Tâche Habitica</string>
-    <string name="widget_add_task_multi">Ajouter des Tâches Habitica</string>
+    <string name="avatar_widget_label">Votre Avatar</string>
+    <string name="widget_dailies_count">Résumé Journalier</string>
+    <string name="widget_add_task">Créer une Tâche (Seule)</string>
+    <string name="widget_add_task_multi">Créer une Tâche (Combinée)</string>
 </resources>
