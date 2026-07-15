@@ -995,7 +995,7 @@
     <string name="excess_items">Objets en surplus</string>
     <string name="onboardingComplete_achievement_title">Vous avez terminé vos tâches de démarrage !</string>
     <string name="onboardingCompleteDescription">Si vous en voulez plus, allez regarder vos succès et commencez à les collectionner !</string>
-    <string name="onboardingCompleteTitle">Vous avez reçu <b>5 Accomplissements</b> et <font color="#EE9109"><b>100 pièces d’or</b></font> pour vos efforts.</string>
+    <string name="onboardingCompleteTitle"><![CDATA[Vous avez reçu <b>5 Succès</b> et <font color="#EE9109"><b>100 Or</b></font> pour vos efforts.]]></string>
     <string name="first_drop_title">Vous avez trouvé de nouveaux objets !</string>
     <string name="go_to_items">Allez voir vos objets</string>
     <string name="first_drop_explanation2">Allez voir vos objets et essayez de combiner votre nouvel œuf et potion d’éclosion !</string>
@@ -1020,7 +1020,7 @@
     <string name="lets_get_started">Commençons</string>
     <string name="your_progress">Votre progression</string>
     <string name="getting_started">Pour commencer</string>
-    <string name="complete_for_gold">Remplissez cette tâche pour gagner &lt;font color=#EE9109&gt;&lt;b&gt;100 or&lt;/b&gt;&lt;/font&gt; !</string>
+    <string name="complete_for_gold"><![CDATA[Accomplissez ceci pour gagner <font color="#EE9109"><b>100 Or</b></font>!]]></string>
     <string name="onboarding_tasks">Tâches d\'Intégration</string>
     <string name="task_display">Affichage de liste des tâches</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
@@ -1137,7 +1137,7 @@
     <string name="unsaved_changes">Changements non sauvegardés</string>
     <string name="subscription_confirmation">Vous disposez maintenant d\'un mois d\'abonnement</string>
     <string name="gem_purchase_confirmation">Vous avez gagné %s gemmes.</string>
-    <string name="adventure_guide_description_new">Complétez ces objectifs et vous recevrez &lt;b&gt;5 succès&lt;/b&gt; et &lt;font color=#EE9109&gt;&lt;b&gt;100 Or&lt;/b&gt;&lt;/font&gt; lorsque vous aurez fini !</string>
+    <string name="adventure_guide_description_new"><![CDATA[Accomplissez ces objectifs et vous recevrez <b>5 Succès</b> et <font color="#EE9109"><b>100 Or</b></font> lorsque ce sera fait !]]></string>
     <string name="add">Ajouter</string>
     <string name="password_not_matching">Les mots de passe renseignés ne correspondent pas</string>
     <string name="email_invalid">Adresse mail invalide</string>
