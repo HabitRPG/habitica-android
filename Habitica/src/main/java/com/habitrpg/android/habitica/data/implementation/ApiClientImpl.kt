@@ -558,10 +558,10 @@ class ApiClientImpl(
         }
     }
 
-    val lastSubscribeCall: Date? = null
-
+    private var lastSubscribeCall: Date? = null
     override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? {
-        return if (lastSubscribeCall == null || Date().time - lastSubscribeCall.time > 6000) {
+        return if (Date().time - (lastSubscribeCall?.time ?: 0) > 6000) {
+            lastSubscribeCall = Date()
             process { apiService.validateSubscription(request) }
         } else {
             null
@@ -918,11 +918,11 @@ class ApiClientImpl(
         return process { apiService.leaveQuest(groupId) }
     }
 
-    private val lastPurchaseValidation: Date? = null
-
+    private var lastPurchaseValidation: Date? = null
     override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? {
         // make sure a purchase attempt doesn't happen
-        return if (lastPurchaseValidation == null || Date().time - lastPurchaseValidation.time > 5000) {
+        return if (Date().time - (lastPurchaseValidation?.time ?: 0) > 5000) {
+            lastPurchaseValidation = Date()
             return process { apiService.validatePurchase(request) }
         } else {
             null

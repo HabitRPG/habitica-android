@@ -46,6 +46,7 @@ import org.json.JSONObject
 import retrofit2.HttpException
 import java.util.Date
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -112,6 +113,7 @@ class PurchaseHandler(
             }
             BillingClient.BillingResponseCode.USER_CANCELED,
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
+                removeGift(purchases.firstOrNull()?.products?.firstOrNull())
                 return
             }
 
@@ -387,12 +389,15 @@ class PurchaseHandler(
         purchase: Purchase,
         retries: Int = 4
     ) {
+        if (retries == 0) {
+            return
+        }
         val params =
             AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
         val response = billingClient.acknowledgePurchase(params)
         Log.d("PurchaseHandler", "Acknowledge purchase ${purchase.products.firstOrNull()} result: ${response.responseCode}, retries left: $retries")
         if (response.responseCode != BillingClient.BillingResponseCode.OK) {
-            delay(500)
+            delay(500.milliseconds)
             acknowledgePurchase(purchase, retries - 1)
         }
     }
@@ -441,14 +446,6 @@ class PurchaseHandler(
                     }
                 }
             }
-
-            else -> {
-                // Handles other potential errors such as IOException or an exception
-                // thrown by billingClient.consumePurchase method that is not handled
-                scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
-                    consume(purchase)
-                }
-            }
         }
         purchase.orderId?.let { processedPurchases.remove(it) }
         CrashReporter.recordException(throwable)
@@ -466,7 +463,7 @@ class PurchaseHandler(
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             return findMostRecentSubscription(result.purchasesList, onlyAcknowledged)
         }
-        return null
+        throw Exception("Failed to query purchases")
     }
 
     private fun findMostRecentSubscription(purchasesList: List<Purchase>, onlyAcknowledged: Boolean = true): Purchase? {
@@ -496,6 +493,7 @@ class PurchaseHandler(
         alreadyTriedCancellation = true
         Log.d("PurchaseHandler", "Attempting to cancel subscription on server side")
         apiClient.cancelSubscription()
+        alreadyTriedCancellation = false
         return userViewModel.userRepository.retrieveUser(false, true)
     }
 

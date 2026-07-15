@@ -334,12 +334,9 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun checkIfNeedsCancellation() {
         viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val newestSubscription = purchaseHandler.checkForSubscription(false)
-            if (user?.purchased?.plan?.paymentMethod == "Google" &&
-                user?.purchased?.plan?.isActive == true &&
-                user?.purchased?.plan?.dateTerminated == null &&
-                (newestSubscription?.isAutoRenewing != true)
-            ) {
+            val newestSubscription = purchaseHandler.checkForSubscription(false) ?: return@launch
+            val plan = user?.purchased?.plan
+            if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null && !newestSubscription.isAutoRenewing) {
                 purchaseHandler.cancelSubscription()
             }
         }
