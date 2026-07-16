@@ -36,7 +36,10 @@ class CronBoundaryRefreshWorker(
         }
 
         val user = try {
-            widgetEntryPoint(context).userRepository().retrieveUser(withTasks = true, forced = true)
+            withContext(Dispatchers.Main) {
+                widgetEntryPoint(context).userRepository()
+                    .retrieveUser(withTasks = true, forced = true)
+            }
         } catch (e: Exception) {
             ExceptionHandler.reportError(e)
             return Result.retry()

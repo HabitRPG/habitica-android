@@ -24,6 +24,7 @@ import java.security.KeyStore
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateException
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -104,7 +105,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesRemoteConfigManager(contentRepository: ContentRepository): AppConfigManager {
+    fun providesRemoteConfigManager(contentRepository: Provider<ContentRepository>): AppConfigManager {
         return AppConfigManager(contentRepository)
     }
 

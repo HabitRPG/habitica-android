@@ -14,19 +14,20 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
+import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import java.util.Date
+import javax.inject.Provider
 
-class AppConfigManager(contentRepository: ContentRepository) :
+class AppConfigManager(contentRepository: Provider<ContentRepository>) :
     com.habitrpg.common.habitica.helpers.AppConfigManager() {
     private var worldState: WorldState? = null
 
     private val scope = MainScope()
 
     init {
-        scope.launch {
-            contentRepository.getWorldState().collect {
+        scope.launchCatching {
+            contentRepository.get().getWorldState().collect {
                 worldState = it
 
                 worldState?.currentEvent?.spriteSubstitutions?.let { subs ->

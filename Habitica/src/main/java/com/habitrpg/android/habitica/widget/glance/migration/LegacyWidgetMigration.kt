@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.widgets.HabitButtonGlanceWidget
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.withContext
 
 object LegacyWidgetMigration {
     private const val FLAG_PREFS = "widget_migration_flags"
@@ -26,12 +28,12 @@ object LegacyWidgetMigration {
             .onFailure { Log.w("LegacyWidgetMigration", "habit-button migration failed", it) }
     }
 
-    private suspend fun migrateHabitButton(context: Context) {
+    private suspend fun migrateHabitButton(context: Context) = withContext(Dispatchers.Main) {
         val legacy = PreferenceManager.getDefaultSharedPreferences(context)
         val widgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
             ComponentName(context, HabitButtonWidgetProvider::class.java),
         )
-        if (widgetIds.isEmpty()) return
+        if (widgetIds.isEmpty()) return@withContext
 
         val taskRepo = widgetEntryPoint(context).taskRepository()
         val glanceManager = GlanceAppWidgetManager(context)
