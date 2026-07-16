@@ -23,6 +23,12 @@ object WidgetSnapshotStore {
 
     fun dailyCountFrom(prefs: Preferences): DailyCountWidgetState? = decode(prefs[dailyCountKey], DailyCountWidgetState::class.java)
 
+    fun decodeStats(json: String): StatsWidgetState? = decode(json, StatsWidgetState::class.java)
+
+    fun decodeTaskList(json: String): TaskListWidgetState? = decode(json, TaskListWidgetState::class.java)
+
+    fun decodeDailyCount(json: String): DailyCountWidgetState? = decode(json, DailyCountWidgetState::class.java)
+
     private fun <T> decode(json: String?, type: Class<T>): T? =
         json?.let { runCatching { gson.fromJson(it, type) }.getOrNull() }
 }

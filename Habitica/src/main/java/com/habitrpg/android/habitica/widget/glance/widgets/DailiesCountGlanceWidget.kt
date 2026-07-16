@@ -48,7 +48,10 @@ import com.habitrpg.android.habitica.widget.glance.components.pluralRes
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
+import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
 import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
+import com.habitrpg.android.habitica.widget.glance.data.hydrateSnapshot
+import com.habitrpg.android.habitica.widget.glance.data.loadDailyCountStateOrNull
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 
@@ -64,15 +67,26 @@ class DailiesCountGlanceWidget : GlanceAppWidget() {
     )
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        if (!WidgetAuth.isLoggedIn(context)) {
-            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
-            return
+        val initial = if (WidgetAuth.isLoggedIn(context)) {
+            hydrateSnapshot(context, id, WidgetSnapshotStore.dailyCountKey) {
+                loadDailyCountStateOrNull(context)?.let { WidgetSnapshotStore.encodeDailyCount(it) }
+            }?.let { WidgetSnapshotStore.decodeDailyCount(it) }
+        } else {
+            null
         }
         provideContent {
-            val state = WidgetSnapshotStore.dailyCountFrom(currentState())
-                ?: DailyCountWidgetState(totalDue = 0, completed = 0, needsCron = false)
+            val loggedIn = WidgetAuth.isLoggedIn(context)
+            val state = if (loggedIn) {
+                WidgetSnapshotStore.dailyCountFrom(currentState()) ?: initial
+            } else {
+                null
+            }
             HabiticaWidgetTheme {
-                DailiesCountTile(state)
+                when {
+                    !loggedIn -> SignedOutContent()
+                    state == null -> WidgetLoadingContent()
+                    else -> DailiesCountTile(state)
+                }
             }
         }
     }

@@ -42,8 +42,11 @@ import com.habitrpg.android.habitica.widget.glance.components.StatRowMode
 import com.habitrpg.android.habitica.widget.glance.components.inlineValueColumnWidth
 import com.habitrpg.android.habitica.widget.glance.components.inlineValueText
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
+import com.habitrpg.android.habitica.widget.glance.data.hydrateSnapshot
+import com.habitrpg.android.habitica.widget.glance.data.loadStatsStateOrNull
 import android.os.Build
 import androidx.glance.GlanceTheme
 import androidx.glance.unit.ColorProvider
@@ -70,14 +73,26 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        if (!WidgetAuth.isLoggedIn(context)) {
-            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
-            return
+        val initial = if (WidgetAuth.isLoggedIn(context)) {
+            hydrateSnapshot(context, id, WidgetSnapshotStore.statsKey) {
+                loadStatsStateOrNull(context)?.let { WidgetSnapshotStore.encodeStats(it) }
+            }?.let { WidgetSnapshotStore.decodeStats(it) }
+        } else {
+            null
         }
         provideContent {
-            val state = WidgetSnapshotStore.statsFrom(currentState()) ?: StatsWidgetState.Empty
+            val loggedIn = WidgetAuth.isLoggedIn(context)
+            val state = if (loggedIn) {
+                WidgetSnapshotStore.statsFrom(currentState()) ?: initial
+            } else {
+                null
+            }
             HabiticaWidgetTheme {
-                StatsContent(state)
+                when {
+                    !loggedIn -> SignedOutContent()
+                    state == null -> WidgetLoadingContent()
+                    else -> StatsContent(state)
+                }
             }
         }
     }

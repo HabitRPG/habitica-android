@@ -3,11 +3,10 @@ package com.habitrpg.android.habitica.widget
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
 import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
 
-class DailiesWidgetProvider : GlanceAppWidgetReceiver() {
+class DailiesWidgetProvider : HydratingGlanceReceiver() {
     override val glanceAppWidget: GlanceAppWidget = DailyTaskListGlanceWidget()
 
     override fun onUpdate(

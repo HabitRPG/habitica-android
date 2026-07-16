@@ -4,8 +4,10 @@ import android.content.Context
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
@@ -35,19 +37,8 @@ data class StatsWidgetState(
     val maxMpText: String get() = maxMp.toInt().toString()
 
     companion object {
-        val Empty = StatsWidgetState(
-            hp = 0f, maxHp = 50f,
-            exp = 0f, toNextLevel = 50f,
-            mp = 0f, maxMp = 50f,
-            level = 0,
-            goldText = "0", gemsText = "0", hourglassesText = "0", hourglassCount = 0,
-            showMp = false,
-            className = null,
-            avatarBitmapPath = null,
-        )
-
-        fun fromUser(context: Context, user: User?, avatarBitmapPath: String? = null): StatsWidgetState {
-            val s = user?.stats ?: return Empty.copy(avatarBitmapPath = avatarBitmapPath)
+        fun fromUser(context: Context, user: User, avatarBitmapPath: String? = null): StatsWidgetState? {
+            val s = user.stats ?: return null
             val gold = (s.gp ?: 0.0)
             val gems = ((user.balance) * 4).toInt()
             val hourglasses = user.hourglassCount
@@ -112,55 +103,77 @@ fun computeNeedsCron(user: User?, now: Long = System.currentTimeMillis()): Boole
     return lastCron.time < CronBoundaryRefreshWorker.lastBoundaryMillis(dayStart, now)
 }
 
-suspend fun loadTaskListState(context: Context, taskType: TaskType): TaskListWidgetState =
+suspend fun loadTaskListStateOrNull(context: Context, taskType: TaskType): TaskListWidgetState? =
     withContext(Dispatchers.Main) {
-        val entry = widgetEntryPoint(context)
-        entry.taskRepository().refreshLocalData()
-        val user = entry.userRepository().getUser().firstOrNull()
-        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
-            ?.toTypedArray() ?: emptyArray()
-        val raw = entry.taskRepository().getTasks(
-            taskType = taskType,
-            userID = user?.id,
-            includedGroupIDs = mirroredGroupIds,
-        ).firstOrNull().orEmpty()
-        val visible = raw.filter {
-            !it.completed(user?.id) && (taskType != TaskType.DAILY || it.isDue == true)
+        try {
+            val entry = widgetEntryPoint(context)
+            entry.taskRepository().refreshLocalData()
+            val user = entry.userRepository().getUser().firstOrNull() ?: return@withContext null
+            val mirroredGroupIds = user.preferences?.tasks?.mirrorGroupTasks
+                ?.toTypedArray() ?: emptyArray()
+            val raw = entry.taskRepository().getTasks(
+                taskType = taskType,
+                userID = user.id,
+                includedGroupIDs = mirroredGroupIds,
+            ).firstOrNull() ?: return@withContext null
+            val visible = raw.filter {
+                !it.completed(user.id) && (taskType != TaskType.DAILY || it.isDue == true)
+            }
+            TaskListWidgetState(
+                tasks = visible.map { it.toWidgetItem() },
+                needsCron = computeNeedsCron(user),
+            )
+        } catch (cancellation: CancellationException) {
+            throw cancellation
+        } catch (throwable: Throwable) {
+            ExceptionHandler.reportError(throwable)
+            null
         }
-        TaskListWidgetState(
-            tasks = visible.map { it.toWidgetItem() },
-            needsCron = computeNeedsCron(user),
-        )
     }
 
-suspend fun loadStatsState(context: Context): StatsWidgetState =
+suspend fun loadStatsStateOrNull(context: Context): StatsWidgetState? =
     withContext(Dispatchers.Main) {
-        runCatching {
+        try {
             val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+                ?: return@withContext null
             AvatarBitmapCache.refreshIfNeeded(context, user)
             StatsWidgetState.fromUser(
                 context = context,
                 user = user,
                 avatarBitmapPath = AvatarBitmapCache.cachedFile(context).absolutePath,
             )
-        }.getOrElse { StatsWidgetState.Empty }
+        } catch (cancellation: CancellationException) {
+            throw cancellation
+        } catch (throwable: Throwable) {
+            ExceptionHandler.reportError(throwable)
+            null
+        }
     }
 
-suspend fun loadDailyCountState(context: Context): DailyCountWidgetState =
+suspend fun loadDailyCountStateOrNull(context: Context): DailyCountWidgetState? =
     withContext(Dispatchers.Main) {
-        val entry = widgetEntryPoint(context)
-        entry.taskRepository().refreshLocalData()
-        val user = entry.userRepository().getUser().firstOrNull()
-        val mirroredGroupIds = user?.preferences?.tasks?.mirrorGroupTasks
-            ?.toTypedArray() ?: emptyArray()
-        val due = entry.taskRepository().getTasks(
-            taskType = TaskType.DAILY,
-            userID = user?.id,
-            includedGroupIDs = mirroredGroupIds,
-        ).firstOrNull().orEmpty().filter { it.isDue == true }
-        DailyCountWidgetState(
-            totalDue = due.size,
-            completed = due.count { it.completed(user?.id) },
-            needsCron = computeNeedsCron(user),
-        )
+        try {
+            val entry = widgetEntryPoint(context)
+            entry.taskRepository().refreshLocalData()
+            val user = entry.userRepository().getUser().firstOrNull() ?: return@withContext null
+            val mirroredGroupIds = user.preferences?.tasks?.mirrorGroupTasks
+                ?.toTypedArray() ?: emptyArray()
+            val due = (
+                entry.taskRepository().getTasks(
+                    taskType = TaskType.DAILY,
+                    userID = user.id,
+                    includedGroupIDs = mirroredGroupIds,
+                ).firstOrNull() ?: return@withContext null
+                ).filter { it.isDue == true }
+            DailyCountWidgetState(
+                totalDue = due.size,
+                completed = due.count { it.completed(user.id) },
+                needsCron = computeNeedsCron(user),
+            )
+        } catch (cancellation: CancellationException) {
+            throw cancellation
+        } catch (throwable: Throwable) {
+            ExceptionHandler.reportError(throwable)
+            null
+        }
     }

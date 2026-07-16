@@ -47,9 +47,12 @@ import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
+import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
 import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
+import com.habitrpg.android.habitica.widget.glance.data.hydrateSnapshot
+import com.habitrpg.android.habitica.widget.glance.data.loadTaskListStateOrNull
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
@@ -63,15 +66,26 @@ abstract class TaskListGlanceWidget(
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        if (!WidgetAuth.isLoggedIn(context)) {
-            provideContent { HabiticaWidgetTheme { SignedOutContent() } }
-            return
+        val initial = if (WidgetAuth.isLoggedIn(context)) {
+            hydrateSnapshot(context, id, WidgetSnapshotStore.taskListKey) {
+                loadTaskListStateOrNull(context, taskType)?.let { WidgetSnapshotStore.encodeTaskList(it) }
+            }?.let { WidgetSnapshotStore.decodeTaskList(it) }
+        } else {
+            null
         }
         provideContent {
-            val state = WidgetSnapshotStore.taskListFrom(currentState())
-                ?: TaskListWidgetState(tasks = emptyList(), needsCron = false)
+            val loggedIn = WidgetAuth.isLoggedIn(context)
+            val state = if (loggedIn) {
+                WidgetSnapshotStore.taskListFrom(currentState()) ?: initial
+            } else {
+                null
+            }
             HabiticaWidgetTheme {
-                TaskListContent(state, isDaily = taskType == TaskType.DAILY)
+                when {
+                    !loggedIn -> SignedOutContent()
+                    state == null -> WidgetLoadingContent()
+                    else -> TaskListContent(state, isDaily = taskType == TaskType.DAILY)
+                }
             }
         }
     }

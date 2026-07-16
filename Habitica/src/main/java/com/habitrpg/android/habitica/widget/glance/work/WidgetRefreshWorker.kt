@@ -6,6 +6,7 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
@@ -37,6 +38,7 @@ class WidgetRefreshWorker(
 
     companion object {
         private const val WORK_NAME = "habitica_widget_refresh"
+        private const val HYDRATION_WORK_NAME = "habitica_widget_hydrate"
         private const val REFRESH_INTERVAL_MINUTES = 15L
 
         fun enqueue(context: Context) {
@@ -57,6 +59,15 @@ class WidgetRefreshWorker(
         fun enqueueOneTime(context: Context) {
             val request = OneTimeWorkRequestBuilder<WidgetRefreshWorker>().build()
             WorkManager.getInstance(context).enqueue(request)
+        }
+
+        fun enqueueHydration(context: Context) {
+            val request = OneTimeWorkRequestBuilder<WidgetRefreshWorker>().build()
+            WorkManager.getInstance(context).enqueueUniqueWork(
+                HYDRATION_WORK_NAME,
+                ExistingWorkPolicy.KEEP,
+                request,
+            )
         }
 
         suspend fun refreshAllWidgetsNow(context: Context) {

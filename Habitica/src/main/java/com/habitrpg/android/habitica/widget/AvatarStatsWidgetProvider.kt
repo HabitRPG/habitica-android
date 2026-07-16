@@ -1,9 +1,8 @@
 package com.habitrpg.android.habitica.widget
 
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import com.habitrpg.android.habitica.widget.glance.widgets.AvatarStatsGlanceWidget
 
-class AvatarStatsWidgetProvider : GlanceAppWidgetReceiver() {
+class AvatarStatsWidgetProvider : HydratingGlanceReceiver() {
     override val glanceAppWidget: GlanceAppWidget = AvatarStatsGlanceWidget()
 }

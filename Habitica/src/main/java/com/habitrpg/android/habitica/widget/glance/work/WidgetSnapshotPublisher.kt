@@ -9,9 +9,9 @@ import androidx.glance.state.PreferencesGlanceStateDefinition
 import com.habitrpg.android.habitica.widget.AvatarWidgetProvider
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
 import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
-import com.habitrpg.android.habitica.widget.glance.data.loadDailyCountState
-import com.habitrpg.android.habitica.widget.glance.data.loadStatsState
-import com.habitrpg.android.habitica.widget.glance.data.loadTaskListState
+import com.habitrpg.android.habitica.widget.glance.data.loadDailyCountStateOrNull
+import com.habitrpg.android.habitica.widget.glance.data.loadStatsStateOrNull
+import com.habitrpg.android.habitica.widget.glance.data.loadTaskListStateOrNull
 import com.habitrpg.android.habitica.widget.glance.data.widgetEntryPoint
 import com.habitrpg.android.habitica.widget.glance.state.WidgetStateWriter
 import com.habitrpg.android.habitica.widget.glance.widgets.AvatarStatsGlanceWidget
@@ -66,20 +66,42 @@ object WidgetSnapshotPublisher {
     }
 
     suspend fun publishStats(context: Context) {
-        val json = WidgetSnapshotStore.encodeStats(loadStatsState(context))
-        commit(context, AvatarStatsGlanceWidget(), WidgetSnapshotStore.statsKey, json)
+        val state = loadStatsStateOrNull(context) ?: return
+        commit(
+            context,
+            AvatarStatsGlanceWidget(),
+            WidgetSnapshotStore.statsKey,
+            WidgetSnapshotStore.encodeStats(state),
+        )
     }
 
     suspend fun publishTaskLists(context: Context) {
-        val daily = WidgetSnapshotStore.encodeTaskList(loadTaskListState(context, TaskType.DAILY))
-        val todo = WidgetSnapshotStore.encodeTaskList(loadTaskListState(context, TaskType.TODO))
-        commit(context, DailyTaskListGlanceWidget(), WidgetSnapshotStore.taskListKey, daily)
-        commit(context, TodoTaskListGlanceWidget(), WidgetSnapshotStore.taskListKey, todo)
+        loadTaskListStateOrNull(context, TaskType.DAILY)?.let {
+            commit(
+                context,
+                DailyTaskListGlanceWidget(),
+                WidgetSnapshotStore.taskListKey,
+                WidgetSnapshotStore.encodeTaskList(it),
+            )
+        }
+        loadTaskListStateOrNull(context, TaskType.TODO)?.let {
+            commit(
+                context,
+                TodoTaskListGlanceWidget(),
+                WidgetSnapshotStore.taskListKey,
+                WidgetSnapshotStore.encodeTaskList(it),
+            )
+        }
     }
 
     suspend fun publishDailyCount(context: Context) {
-        val json = WidgetSnapshotStore.encodeDailyCount(loadDailyCountState(context))
-        commit(context, DailiesCountGlanceWidget(), WidgetSnapshotStore.dailyCountKey, json)
+        val state = loadDailyCountStateOrNull(context) ?: return
+        commit(
+            context,
+            DailiesCountGlanceWidget(),
+            WidgetSnapshotStore.dailyCountKey,
+            WidgetSnapshotStore.encodeDailyCount(state),
+        )
     }
 
     suspend fun optimisticComplete(context: Context, taskId: String) {
