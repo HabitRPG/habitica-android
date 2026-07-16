@@ -266,16 +266,16 @@
     <string name="choose_recipient_title">选择收信人</string>
     <string name="action_continue">继续</string>
     <string name="invited_to_party">你被邀请加入队伍！</string>
-    <string name="stats_widget_label">Habitica属性</string>
+    <string name="stats_widget_label">你的属性</string>
     <string name="add_task">添加任务</string>
     <string name="add_habit">添加习惯</string>
     <string name="add_daily">添加日常任务</string>
     <string name="add_todo">添加待办事项</string>
     <string name="add_reward">添加奖励</string>
     <string name="all_dailies_completed">你已完成全部日常任务。干得好！</string>
-    <string name="widget_habit_button">Habitica完成习惯</string>
-    <string name="widget_dailies">Habitica日常任务</string>
-    <string name="widget_todo_list">Habitica待办事项</string>
+    <string name="widget_habit_button">一个习惯</string>
+    <string name="widget_dailies">日常任务</string>
+    <string name="widget_todo_list">待办事项</string>
     <string name="google_services_missing">找不到Google Play服务。</string>
     <string name="gem_purchase_toolbartitle">购买</string>
     <string name="gem_purchase_title">购买宝石可为开发人员提供支持，并帮助Habitica维持运营</string>
@@ -642,7 +642,7 @@
     <string name="new_msg_party">你的队伍<b>%1$s</b>有新信息</string>
     <string name="unallocated_stats_points">你有<b>%1$s未分配的属性点数</b></string>
     <string name="new_subscriber_item"><![CDATA[你有新的<b>神秘物品</b>]]></string>
-    <string name="invited_to_party_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt;邀请你加入队伍&lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="invited_to_party_notification"><![CDATA[<font color="#925CF3">%2$s</font>邀请你加入队伍<b>%1$s</b>]]></string>
     <string name="invited_to_quest">你被邀请参加副本<b>%1$s</b></string>
     <string name="x_class">%s职业</string>
     <string name="become_x">成为一名%s</string>
@@ -907,7 +907,7 @@
     <string name="hourglasses_description">神秘沙漏是一种极为稀有的货币，仅限订阅用户获取。你可在时空旅行者商店中购买往期订阅专属装备套装、专属宠物、坐骑、动画背景甚至特殊副本！这些超值特权将助您全年保持高效，为每个成就加冕！
 \n
 \n订阅用户将在每个享有订阅福利的月初收到1枚神秘沙漏，并享有多项特权。若对时空旅者提供的服务感兴趣，请务必查看我们的订阅选项！</string>
-    <string name="clear_cache_description">要清除缓存，请打开手机的应用设置。前往存储&gt;应用&gt;Habitica，然后点击清除缓存。</string>
+    <string name="clear_cache_description"><![CDATA[要清除缓存，请打开手机的“设置”。前往存储&gt;应用&gt;Habitica，然后点击清除缓存。]]></string>
     <string name="clear_cache">清除缓存</string>
     <string name="manual_sync_restart">手动同步或重启</string>
     <string name="update_app_description">我们会不断发布新的修复补丁，请查看Play Store以确认是否有可用的更新。</string>
@@ -968,7 +968,7 @@
     <string name="excess_items">物品超额</string>
     <string name="onboardingComplete_achievement_title">你已完成新手任务！</string>
     <string name="onboardingCompleteDescription">如果你想要更多成就，请查看成就列表并开始收集吧！</string>
-    <string name="onboardingCompleteTitle">你通过努力获得了&lt;b&gt;5项成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;。</string>
+    <string name="onboardingCompleteTitle"><![CDATA[你通过努力获得了<b>5项成就</b>和<font color="#EE9109"><b>100金币</b></font>。]]></string>
     <string name="first_drop_title">你找到了新物品！</string>
     <string name="go_to_items">前往物品栏</string>
     <string name="first_drop_explanation2">前往物品栏，尝试使用孵化药水孵化你新获得的宠物蛋！</string>
@@ -996,7 +996,7 @@
     <string name="your_progress">你的进度</string>
     <string name="onboarding_tasks">新手任务</string>
     <string name="getting_started">现在开始</string>
-    <string name="complete_for_gold">完成即可获得&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;！</string>
+    <string name="complete_for_gold"><![CDATA[完成即可获得<font color="#EE9109"><b>100金币</b></font>！]]></string>
     <string name="task_display">显示任务列表</string>
     <string name="pet_ownership_fraction">%1$d/%2$d</string>
     <string name="mount_category">%s坐骑</string>
@@ -1143,7 +1143,7 @@
     <string name="subscription_confirmation">你当前的订阅周期是1个月</string>
     <string name="subscription_confirmation_multiple">你当前的订阅周期是%s个月</string>
     <string name="gem_purchase_confirmation">你获得了%s颗宝石。</string>
-    <string name="adventure_guide_description_new">完成这些目标后，你将获得&lt;b&gt;5项成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金币&lt;/b&gt;&lt;/font&gt;！</string>
+    <string name="adventure_guide_description_new"><![CDATA[完成这些目标后，你将获得<b>5项成就</b>和<font color="#EE9109"><b>100金币</b></font>！]]></string>
     <string name="disconnect">断开连接</string>
     <string name="removed_social_auth">已断开%s的连接</string>
     <string name="password_added">密码已保存</string>
@@ -1450,7 +1450,7 @@
 \n离开队伍还会退出你正在进行的副本。</string>
     <string name="subscribe_listitem3_description_alt">用最新的专属装备装扮自己。立即订阅来获取%1$s的%2$s！</string>
     <string name="customizations">个性装扮</string>
-    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt;邀请你加入团队&lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color="#925CF3">%2$s</font>邀请你加入团队<b>%1$s</b>]]></string>
     <string name="potions">孵化药水</string>
     <string name="subscriber_button_armoire">免费再次开启！</string>
     <string name="subscriber_button_faint">续命机制：1HP极限锁血！</string>
@@ -1674,8 +1674,8 @@
     <string name="rebirth_enabled_description">当你感觉已征服Habitica的全部内容时，不妨使用重生之球为你的冒险注入新活力！通过在商店获取的这个特殊道具，你将重启旅程回到1级，同时保留所有任务、成就和宠物。</string>
     <string name="auth_invalid_credential_type">提供的凭证类型有误。</string>
     <string name="widget_dailies_count">Habitica 日常计数</string>
-    <string name="widget_add_task">Habitica 添加任务</string>
-    <string name="widget_add_task_multi">Habitica 添加多项任务</string>
+    <string name="widget_add_task">添加任务（单个）</string>
+    <string name="widget_add_task_multi">添加多项任务</string>
     <string name="fifth_week_warning">这个任务不会在少于%1$s天的月份中出现。</string>
-    <string name="avatar_widget_label">Habitica 头像</string>
+    <string name="avatar_widget_label">你的头像</string>
 </resources>
