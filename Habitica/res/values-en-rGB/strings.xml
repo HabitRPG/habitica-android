@@ -244,16 +244,16 @@
     <string name="choose_recipient_title">Choose Message Recipient</string>
     <string name="action_continue">Continue</string>
     <string name="invited_to_party">You were invited to join a party!</string>
-    <string name="stats_widget_label">Habitica Stats</string>
+    <string name="stats_widget_label">Your Stats</string>
     <string name="add_task">Add Task</string>
     <string name="add_habit">Add Habit</string>
     <string name="add_daily">Add Daily</string>
     <string name="add_todo">Add To Do</string>
     <string name="add_reward">Add Reward</string>
     <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
-    <string name="widget_habit_button">Habitica Do Habit</string>
-    <string name="widget_dailies">Habitica Dailies</string>
-    <string name="widget_todo_list">Habitica To Do List</string>
+    <string name="widget_habit_button">Single Habit</string>
+    <string name="widget_dailies">Dailies List</string>
+    <string name="widget_todo_list">To Do List</string>
     <string name="google_services_missing">Google Play services could not be found.</string>
     <string name="gem_purchase_toolbartitle">Purchase</string>
     <string name="gem_purchase_title">Buying gems supports the developers and helps keep Habitica running</string>
@@ -643,7 +643,7 @@
     <string name="new_msg_party"><![CDATA[Your Party, <b>%1$s</b>, has new posts]]></string>
     <string name="unallocated_stats_points"><![CDATA[You have <b>%1$s unallocated Stat Points</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[You have new <b>Mystery Items</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> has invited you to join the party <b>%2$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color="#925CF3">%2$s</font> has invited you to join the party <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[You were invited to the Quest <b>%1$s</b>]]></string>
     <string name="gift_a_subscription">Gift a Subscription</string>
     <string name="g1g1_info_1">In honour of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
@@ -992,7 +992,7 @@
     <string name="excess_items">Excess Items</string>
     <string name="onboardingComplete_achievement_title">If you want even more, check out Achievements and start collecting!</string>
     <string name="onboardingCompleteDescription">If you want even more, check out Achievements and start collecting!</string>
-    <string name="onboardingCompleteTitle">You earned &lt;b&gt;5 Achievements&lt;/b&gt; and &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt; for your efforts.</string>
+    <string name="onboardingCompleteTitle"><![CDATA[You earned <b>5 Achievements</b> and <font color="#EE9109"><b>100 Gold</b></font> for your efforts.]]></string>
     <string name="first_drop_title">You found new items!</string>
     <string name="go_to_items">Go to Items</string>
     <string name="first_drop_explanation2">Head to your Items and try combining your new Egg and Hatching Potion!</string>
@@ -1020,7 +1020,7 @@
     <string name="lets_get_started">Let\'s get started</string>
     <string name="your_progress">Your Progress</string>
     <string name="getting_started">Getting Started</string>
-    <string name="complete_for_gold">Complete to earn &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="complete_for_gold"><![CDATA[Complete to earn <font color="#EE9109"><b>100 Gold</b></font>!]]></string>
     <string name="task_display">Task list display</string>
     <string name="onboarding_tasks">Onboarding Tasks</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
@@ -1214,7 +1214,7 @@
     <string name="gem_purchase_confirmation">You gained %s gems.</string>
     <string name="subscription_confirmation_multiple">You are now subscribed for %s months</string>
     <string name="register_tos_confirm">You agree to our <a href="https://habitica.com/static/terms">Terms of Service</a> and have read our <a href="https://habitica.com/static/privacy">Privacy Policy</a>.</string>
-    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; has invited you to join the group &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color="#925CF3">%2$s</font> has invited you to join the group <b>%1$s</b>]]></string>
     <string name="report_successful">%s Reported</string>
     <string name="category">Category</string>
     <string name="change_display_name">Change Display Name</string>
@@ -1242,7 +1242,7 @@
     <string name="use_on_party">Use on Party</string>
     <string name="gems_promo_info_limitations_fixed">This promotion only applies during the limited time event. This event starts on %1$s (%2$s) and will end %3$s (%4$s). The promo offer is only available when buying Gems for yourself.</string>
     <string name="see_other_sub_options">See other subscription options</string>
-    <string name="adventure_guide_description_new">Complete these objectives and you’ll earn &lt;b&gt;5 Achievements&lt;/b&gt; and &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt; once you’re done!</string>
+    <string name="adventure_guide_description_new"><![CDATA[Complete these objectives and you’ll earn <b>5 Achievements</b> and <font color="#EE9109"><b>100 Gold</b></font> once you’re done!]]></string>
     <string name="launch_screen">Launch Screen</string>
     <string name="resubscribe_description_gift">Want to continue receiving subscription benefits\? You can start a recurring subscription to keep your benefits active.</string>
     <string name="subscribers_mythic_hourglasses"><i>Subscribers receive Mystic Hourglasses within the first three days of the month.</i></string>
@@ -1685,8 +1685,8 @@
     <string name="buy_for">Buy for</string>
     <string name="visit_the_market">Visit the Market</string>
     <string name="fifth_week_warning">This task will not appear due during months with fewer %1$ss.</string>
-    <string name="avatar_widget_label">Habitica Avatar</string>
-    <string name="widget_dailies_count">Habitica Daily Count</string>
-    <string name="widget_add_task">Habitica Add Task</string>
-    <string name="widget_add_task_multi">Habitica Add Tasks</string>
+    <string name="avatar_widget_label">Your Avatar</string>
+    <string name="widget_dailies_count">Daily Summary</string>
+    <string name="widget_add_task">Create a Task (Single)</string>
+    <string name="widget_add_task_multi">Create a Task (Combined)</string>
 </resources>
