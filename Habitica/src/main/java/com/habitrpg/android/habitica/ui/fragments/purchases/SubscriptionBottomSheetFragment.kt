@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.databinding.FragmentBottomsheetSubscription
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
+import com.habitrpg.android.habitica.helpers.getBaseOfferDetails
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
@@ -137,7 +138,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                 for (sku in subscriptions) {
                     updateButtonLabel(
                         sku,
-                        sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+                        sku.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
                             ?: ""
                     )
                 }
@@ -145,7 +146,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                     subscriptions
                         .filter { buttonForSku(it)?.isVisible == true }
                         .maxByOrNull {
-                            it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
+                            it.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
                                 ?: 0
                         }?.let { selectSubscription(it) }
                 }

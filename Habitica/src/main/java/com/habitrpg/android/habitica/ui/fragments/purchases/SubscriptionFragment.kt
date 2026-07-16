@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
+import com.habitrpg.android.habitica.helpers.getBaseOfferDetails
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -205,13 +206,13 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 for (sku in subscriptions) {
                     updateButtonLabel(
                         sku,
-                        sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+                        sku.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
                             ?: ""
                     )
                 }
                 if (selectedSubscriptionSku == null) {
                     subscriptions.maxByOrNull {
-                        it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
+                        it.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
                             ?: 0
                     }?.let { selectSubscription(it) }
                 }

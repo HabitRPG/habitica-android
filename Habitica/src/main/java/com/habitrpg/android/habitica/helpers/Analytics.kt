@@ -2,17 +2,10 @@ package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.amplitude.android.Amplitude
-import com.amplitude.android.Configuration
-import com.amplitude.android.events.Identify
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.R
 
-enum class AnalyticsTarget {
-    AMPLITUDE
-}
 
 enum class EventCategory(val key: String) {
     BEHAVIOUR("behaviour"),
@@ -28,7 +21,6 @@ enum class HitType(val key: String) {
 }
 
 object Analytics {
-    private lateinit var amplitude: Amplitude
     private var hasConsent: Boolean = false
     private var isInitialized: Boolean = false
 
@@ -38,7 +30,6 @@ object Analytics {
         category: EventCategory?,
         hitType: HitType?,
         additionalData: Map<String, Any>? = null,
-        target: AnalyticsTarget? = null
     ) {
         if (BuildConfig.DEBUG || !hasConsent || !isInitialized) {
             return
@@ -53,13 +44,6 @@ object Analytics {
         if (additionalData != null) {
             data.putAll(additionalData)
         }
-        if (eventAction != null) {
-            executeLambda(AnalyticsTarget.AMPLITUDE) {
-                if (target == null || target == AnalyticsTarget.AMPLITUDE) {
-                    amplitude.track(eventAction, data)
-                }
-            }
-        }
     }
 
     fun sendNavigationEvent(page: String) {
@@ -72,14 +56,6 @@ object Analytics {
     }
 
     fun initialize(context: Context) {
-        amplitude =
-            Amplitude(
-                Configuration(
-                    context.getString(R.string.amplitude_app_id),
-                    context,
-                    optOut = true,
-                )
-            )
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = false
         isInitialized = true
     }
@@ -88,15 +64,6 @@ object Analytics {
         if (!hasConsent || !isInitialized) {
             return
         }
-        val identify =
-            Identify()
-                .setOnce("androidStore", BuildConfig.STORE)
-        sharedPrefs.getString("launch_screen", "")?.let {
-            identify.set("launch_screen", it)
-        }
-        executeLambda(AnalyticsTarget.AMPLITUDE) {
-            amplitude.identify(identify)
-        }
     }
 
     fun setUserID(userID: String) {
@@ -104,16 +71,10 @@ object Analytics {
             FirebaseCrashlytics.getInstance().setUserId(userID)
             return
         }
-        executeLambda(AnalyticsTarget.AMPLITUDE) {
-            amplitude.setUserId(userID)
-        }
         FirebaseCrashlytics.getInstance().setUserId(userID)
     }
     
     fun clearUserID() {
-        executeLambda(AnalyticsTarget.AMPLITUDE) {
-            amplitude.setUserId(null)
-        }
         FirebaseCrashlytics.getInstance().setUserId("")
     }
 
@@ -123,9 +84,6 @@ object Analytics {
     ) {
         if (!hasConsent || !isInitialized) {
             return
-        }
-        executeLambda(AnalyticsTarget.AMPLITUDE) {
-            amplitude.identify(mapOf(identifier to value))
         }
     }
 
@@ -146,16 +104,5 @@ object Analytics {
         }
         
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
-        executeLambda(AnalyticsTarget.AMPLITUDE) {
-            amplitude.configuration.optOut = !isEnabled
-        }
-    }
-
-
-    private fun executeLambda(analyticsTarget: AnalyticsTarget, action: () -> Unit) {
-        when (analyticsTarget) {
-            AnalyticsTarget.AMPLITUDE -> if (!::amplitude.isInitialized) return
-        }
-        action()
     }
 }

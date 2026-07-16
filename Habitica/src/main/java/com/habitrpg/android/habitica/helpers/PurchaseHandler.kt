@@ -50,6 +50,10 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
+fun ProductDetails.getBaseOfferDetails(): ProductDetails.SubscriptionOfferDetails? {
+    return subscriptionOfferDetails?.firstOrNull { it.offerId == null || it.offerId == it.basePlanId }
+}
+
 class PurchaseHandler(
     private val context: Context,
     private val apiClient: ApiClient,

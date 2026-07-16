@@ -4,7 +4,6 @@ targetSdk = "36"
 wearOsTargetSdk = "34"
 
 agp = "8.12.1"
-amplitude = "1.22.2"
 androidTest = "1.7.0"
 androidTestMonitor = "1.8.0"
 androidTestRunner = "1.7.0"
@@ -70,7 +69,6 @@ workManager = "2.10.0"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
-amplitude-analytic = { group = "com.amplitude", name = "analytics-android", version.ref = "amplitude" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 billing = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
 coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
