@@ -45,6 +45,7 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -388,7 +389,7 @@ class PreferencesFragment :
                 val languageHelper = LanguageHelper(selectedLanguage)
 
                 if (user?.preferences?.language != languageHelper.languageCode) {
-                    lifecycleScope.launchCatching {
+                    MainScope().launchCatching {
                         userRepository.updateLanguage(languageHelper.languageCode ?: "en")
                     }
                 }
@@ -518,7 +519,8 @@ class PreferencesFragment :
         cdsTimePreference?.value = user?.preferences?.dayStart.toString()
         cdsTimePreference?.summary = cdsTimePreference.entry
         val languagePreference = findPreference("language") as? ListPreference
-        languagePreference?.value = user?.preferences?.language
+        val savedLanguage = preferenceManager.sharedPreferences?.getString("language", null)
+        languagePreference?.value = savedLanguage ?: user?.preferences?.language
         languagePreference?.summary = languagePreference.entry
         val audioThemePreference = findPreference("audioTheme") as? ListPreference
         audioThemePreference?.value = user?.preferences?.sound
