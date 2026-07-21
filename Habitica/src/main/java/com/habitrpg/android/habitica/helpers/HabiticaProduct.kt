@@ -27,6 +27,16 @@ enum class HabiticaProduct(val sku: String) {
             }
         }
 
+    fun getSubCode(): String {
+        return when (this) {
+            SUBSCRIPTION_1_MONTH -> "basic_earned"
+            SUBSCRIPTION_3_MONTH -> "basic_3mo"
+            SUBSCRIPTION_6_MONTH -> "basic_6mo"
+            SUBSCRIPTION_12_MONTH -> "basic_12mo"
+            else -> ""
+        }
+    }
+
     fun getGemAmount(isSaleGemPurchase: Boolean): Int {
         if (isSaleGemPurchase) {
             return when (this) {

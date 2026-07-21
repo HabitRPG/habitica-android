@@ -71,6 +71,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="Recurring every 3 months" />
+                <TextView
+                    android:id="@+id/subscriptionChangeNotif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plan_changing_next_renewal"
+                    style="@style/subscriptionBoxText.Subtitle"
+                    android:visibility="gone"
+                    android:textColor="@color/text_yellow"/>
             </LinearLayout>
             <TextView
                     android:id="@+id/subscriptionStatusActive"

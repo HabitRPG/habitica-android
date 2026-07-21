@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.icu.util.Currency
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -184,6 +185,8 @@ class ChangeSubscriptionViewModel @Inject constructor(
         selectedPlan.value = plan
     }
 
+    val isDowngrade: Boolean
+        get() = currentPlan.value != null && selectedPlan.value.getSubscriptionDuration() < (currentPlan.value?.getSubscriptionDuration() ?: 0)
     var onDismiss: () -> Unit = {}
     val products = listOf(
         HabiticaProduct.SUBSCRIPTION_1_MONTH,
@@ -209,13 +212,7 @@ class ChangeSubscriptionViewModel @Inject constructor(
 
     init {
         val plan = userViewModel.user.value?.purchased?.plan
-        currentPlan.value = when (plan?.planId) {
-            "basic_earned" -> HabiticaProduct.SUBSCRIPTION_1_MONTH
-            "basic_3mo" -> HabiticaProduct.SUBSCRIPTION_3_MONTH
-            "basic_6mo" -> HabiticaProduct.SUBSCRIPTION_6_MONTH
-            "basic_12mo" -> HabiticaProduct.SUBSCRIPTION_12_MONTH
-            else -> null
-        }
+        currentPlan.value = plan?.sku
         if (currentPlan.value != null) {
             activeSubscriptionPlan.value = plan
             selectedPlan.value = currentPlan.value!!
@@ -246,6 +243,12 @@ class ChangeSubscriptionViewModel @Inject constructor(
         }
     }
 
+    fun previousStep() {
+        if (currentStep.value >= 1) {
+            currentStep.value -= 1
+        }
+    }
+
     fun nextStep() {
         currentStep.value += 1
     }
@@ -269,7 +272,8 @@ private fun ChangeSubscriptionChoiceView(modifier: Modifier = Modifier,
                                          viewModel: ChangeSubscriptionViewModel = viewModel()) {
     val currentPlan by viewModel.currentPlan.collectAsState(null)
     val selectedSub by viewModel.selectedPlan.collectAsState()
-    val canContinue = selectedSub != currentPlan
+    val currentSubscription by viewModel.activeSubscriptionPlan.collectAsState()
+    val canContinue = selectedSub != currentPlan || currentSubscription?.dateTerminated == null
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.padding(horizontal = 16.dp)) {
@@ -299,8 +303,9 @@ private fun ChangeSubscriptionChoiceView(modifier: Modifier = Modifier,
 private fun ChangeSubscriptionReviewView(modifier: Modifier = Modifier,
                                          viewModel: ChangeSubscriptionViewModel = viewModel()) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(horizontal = 16.dp)) {
+        modifier = modifier.padding(horizontal = 16.dp).padding(top = 20.dp)) {
         ProvideTextStyle(TextStyle(
             color = colorResource(R.color.white),
             fontSize = 14.sp,
@@ -324,7 +329,6 @@ private fun ChangeSubscriptionReviewView(modifier: Modifier = Modifier,
                 activity?.let { viewModel.purchaseSubscription(it) }
             },
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier.padding(top = 20.dp),
         ) {
             Text(stringResource(R.string.complete_purchase))
         }
@@ -424,7 +428,7 @@ fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSub
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier.fillMaxWidth())
-        Text(stringResource(if (step == 0) R.string.subscriptions_renew_info else R.string.subscription_renew_review_info),
+        Text(stringResource(if (step == 0) R.string.subscriptions_renew_info else if (viewModel.isDowngrade) R.string.subscription_renew_review_info_downgrade else R.string.subscription_renew_review_info),
             color = colorResource(R.color.white),
             fontSize = 12.sp,
             modifier = Modifier.background(colorResource(R.color.brand_400))
@@ -461,5 +465,15 @@ open class ChangeSubscriptionFragment : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        viewModel.previousStep()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        viewModel.previousStep()
     }
 }

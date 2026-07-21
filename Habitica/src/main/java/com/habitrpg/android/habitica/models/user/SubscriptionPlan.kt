@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
@@ -26,6 +27,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     var quantity: Int? = null
     var consecutive: SubscriptionPlanConsecutive? = null
     var cumulativeCount: Int? = null
+    var deferred: SubscriptionPlanDeferred? = null
     var mysteryItemCount = 0
     var additionalData: AdditionalSubscriptionInfo? = null
     var hourglassPromoReceived: Date? = null
@@ -76,6 +78,15 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
         get() {
             if (!isActive) return 0
             return max((consecutive?.count ?: 0), (cumulativeCount ?: 0))
+        }
+
+    val sku: HabiticaProduct?
+        get() = when (planId) {
+            "basic_earned" -> HabiticaProduct.SUBSCRIPTION_1_MONTH
+            "basic_3mo" -> HabiticaProduct.SUBSCRIPTION_3_MONTH
+            "basic_6mo" -> HabiticaProduct.SUBSCRIPTION_6_MONTH
+            "basic_12mo" -> HabiticaProduct.SUBSCRIPTION_12_MONTH
+            else -> null
         }
 
     companion object {

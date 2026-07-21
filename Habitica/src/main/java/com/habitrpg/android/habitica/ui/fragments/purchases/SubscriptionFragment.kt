@@ -335,10 +335,13 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun checkIfNeedsCancellation() {
         viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val newestSubscription = purchaseHandler.checkForSubscription(false) ?: return@launch
+            val newestSubscription = purchaseHandler.checkForSubscription(false)
             val plan = user?.purchased?.plan
-            if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null && !newestSubscription.isAutoRenewing) {
+            val sub = HabiticaProduct.forSku(newestSubscription?.products?.firstOrNull() ?: "")
+            if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null && newestSubscription?.isAutoRenewing != true) {
                 purchaseHandler.cancelSubscription()
+            } else if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null && plan.planId != sub?.getSubCode()) {
+                purchaseHandler.updateSubscriptionPlan(newestSubscription)
             }
         }
     }

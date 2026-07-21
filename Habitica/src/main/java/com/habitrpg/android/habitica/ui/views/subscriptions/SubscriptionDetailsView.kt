@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
 import com.habitrpg.android.habitica.extensions.toZonedDateTime
@@ -67,6 +68,8 @@ class SubscriptionDetailsView : LinearLayout {
                 }
             }
         }
+
+        binding.subscriptionChangeNotif.isVisible = plan.deferred?.planId != null
 
         when {
             duration != null ->
@@ -249,12 +252,14 @@ class SubscriptionDetailsView : LinearLayout {
                     binding.subscriptionStatusGroupPlan.visibility = GONE
                 }
             }
+            binding.subscriptionStatusCancelled.visibility = GONE
             binding.subscriptionStatusInactive.visibility = GONE
         } else {
             binding.subscriptionStatusActive.visibility = GONE
             binding.subscriptionStatusInactive.visibility = VISIBLE
             binding.subscriptionStatusNotRecurring.visibility = GONE
             binding.subscriptionStatusGroupPlan.visibility = GONE
+            binding.subscriptionStatusCancelled.visibility = GONE
         }
     }
 
@@ -262,7 +267,7 @@ class SubscriptionDetailsView : LinearLayout {
         if (plan?.paymentMethod != null && plan?.dateTerminated == null) {
             val url =
                 if (plan?.paymentMethod == "Google") {
-                    "https://play.google.com/store/account/subscriptions"
+                    "https://play.google.com/store/account/subscriptions?package=com.habitrpg.android.habitica&sku=${plan?.sku}"
                 } else {
                     context.getString(R.string.base_url) + "/"
                 }

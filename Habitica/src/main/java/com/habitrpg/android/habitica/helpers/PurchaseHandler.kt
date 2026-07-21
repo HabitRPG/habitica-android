@@ -252,7 +252,7 @@ class PurchaseHandler(
             if (existingSub != null && existingSub.isAutoRenewing) {
                 val replacementMode = getReplacementMode(existingSub, skuDetails)
                 if (replacementMode == BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.DEFERRED) {
-                    deferredSubscriptionSku = existingSub.products.firstOrNull()
+                    deferredSubscriptionSku = skuDetails.productId
                 }
                 productDetailsParams = productDetailsParams.setSubscriptionProductReplacementParams(
                     BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.newBuilder()
@@ -368,7 +368,6 @@ class PurchaseHandler(
                 val validationRequest = buildValidationRequest(purchase)
                 if (deferredSubscriptionSku != null) {
                     validationRequest.deferredSku = deferredSubscriptionSku
-                    deferredSubscriptionSku = null
                 }
                 scope.launchCatching {
                     try {
@@ -538,13 +537,18 @@ class PurchaseHandler(
                     }
 
                     HabiticaProduct.allSubscriptionTypes.contains(product) -> {
-                        if (sku == HabiticaProduct.SUBSCRIPTION_1_MONTH.sku) {
-                            context.getString(R.string.subscription_confirmation)
+                        if (deferredSubscriptionSku != null) {
+                            deferredSubscriptionSku = null
+                            context.getString(R.string.subscription_changed_confirmation)
                         } else {
-                            context.getString(
-                                R.string.subscription_confirmation_multiple,
-                                product.getSubscriptionDuration().toString()
-                            )
+                            if (sku == HabiticaProduct.SUBSCRIPTION_1_MONTH.sku) {
+                                context.getString(R.string.subscription_confirmation)
+                            } else {
+                                context.getString(
+                                    R.string.subscription_confirmation_multiple,
+                                    product.getSubscriptionDuration().toString()
+                                )
+                            }
                         }
                     }
 
@@ -604,6 +608,10 @@ class PurchaseHandler(
                 alert.enqueue()
             }
         }
+    }
+
+    suspend fun updateSubscriptionPlan(purchase: Purchase?) {
+        purchase?.let { apiClient.validateSubscription(buildValidationRequest(it)) }
     }
 
     companion object {
