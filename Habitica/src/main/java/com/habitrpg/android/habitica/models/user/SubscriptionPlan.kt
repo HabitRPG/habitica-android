@@ -46,6 +46,8 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
             val today = Date()
             return customerId != null && (dateTerminated == null || dateTerminated!!.after(today) || active == true)
         }
+    val isTerminated: Boolean
+        get() = dateTerminated != null
 
     val totalNumberOfGemsAlways: Int
         get() {

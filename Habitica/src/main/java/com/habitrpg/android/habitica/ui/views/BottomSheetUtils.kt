@@ -62,25 +62,23 @@ private fun addContentToView(
     sheetColor: Color? = null,
     disableScroll: Boolean = false
 ) {
-    viewGroup.addView(
-        ComposeView(viewGroup.context).apply {
-            setContent {
-                HabiticaTheme {
-                    Column {
-                        BottomSheetWrapper(viewGroup,
-                            this@apply, sheetColor ?: HabiticaTheme.colors.windowBackground, disableScroll, content)
-                    }
-                }
+    val composeView = ComposeView(viewGroup.context)
+    viewGroup.addView(composeView)
+    composeView.setContent {
+        HabiticaTheme {
+            Column {
+                BottomSheetWrapper(dismissView = {
+                    viewGroup.removeView(composeView)
+                }, sheetColor ?: HabiticaTheme.colors.windowBackground, disableScroll, content)
             }
         }
-    )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun BottomSheetWrapper(
-    parent: ViewGroup,
-    composeView: ComposeView,
+    dismissView: () -> Unit,
     sheetColor: Color = HabiticaTheme.colors.windowBackground,
     disableScroll: Boolean = false,
     content: @Composable (() -> Unit) -> Unit
@@ -136,7 +134,7 @@ private fun BottomSheetWrapper(
             SheetValue.Hidden -> {
                 when {
                     isSheetOpened -> {
-                        parent.removeView(composeView)
+                       dismissView()
                     }
 
                     else -> {

@@ -16,12 +16,15 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import java.util.Date
 import javax.inject.Provider
 
 class AppConfigManager(contentRepository: Provider<ContentRepository>) :
-    com.habitrpg.common.habitica.helpers.AppConfigManager() {
+    com.habitrpg.common.habitica.helpers.AppConfigManager(), Clearable {
     private var worldState: WorldState? = null
 
     private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
