@@ -267,7 +267,7 @@ class SubscriptionDetailsView : LinearLayout {
         if (plan?.paymentMethod != null && plan?.dateTerminated == null) {
             val url =
                 if (plan?.paymentMethod == "Google") {
-                    "https://play.google.com/store/account/subscriptions?package=com.habitrpg.android.habitica&sku=${plan?.sku}"
+                    "https://play.google.com/store/account/subscriptions?package=com.habitrpg.android.habitica&sku=${plan?.habiticaProduct?.sku}"
                 } else {
                     context.getString(R.string.base_url) + "/"
                 }

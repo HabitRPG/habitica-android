@@ -38,9 +38,9 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     @SerializedName("owner")
     var ownerID: String? = null
     val isGroupPlanSub: Boolean
-        get() = customerId == "group-plan"
+        get() = customerId == "group-plan" || paymentMethod == "Group Plan"
     val isGiftedSub: Boolean
-        get() = customerId == "Gift"
+        get() = customerId == "Gift" || paymentMethod == "Gift"
     val isActive: Boolean
         get() {
             val today = Date()
@@ -80,7 +80,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
             return max((consecutive?.count ?: 0), (cumulativeCount ?: 0))
         }
 
-    val sku: HabiticaProduct?
+    val habiticaProduct: HabiticaProduct?
         get() = when (planId) {
             "basic_earned" -> HabiticaProduct.SUBSCRIPTION_1_MONTH
             "basic_3mo" -> HabiticaProduct.SUBSCRIPTION_3_MONTH

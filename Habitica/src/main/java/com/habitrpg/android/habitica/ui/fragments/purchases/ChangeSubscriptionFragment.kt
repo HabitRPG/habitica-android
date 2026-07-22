@@ -212,7 +212,7 @@ class ChangeSubscriptionViewModel @Inject constructor(
 
     init {
         val plan = userViewModel.user.value?.purchased?.plan
-        currentPlan.value = plan?.sku
+        currentPlan.value = plan?.habiticaProduct
         if (currentPlan.value != null) {
             activeSubscriptionPlan.value = plan
             selectedPlan.value = currentPlan.value!!

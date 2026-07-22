@@ -96,7 +96,7 @@ class PurchaseHandler(
                                 if (plan?.isActive == true &&
                                     HabiticaProduct.allSubscriptionTypes.contains(product)
                                 ) {
-                                    if (((plan.dateTerminated != null) == purchase.isAutoRenewing) ||
+                                    if (((plan.dateTerminated == null) == purchase.isAutoRenewing) ||
                                         purchase.purchaseToken == plan.customerId
                                     ) {
                                         continue
