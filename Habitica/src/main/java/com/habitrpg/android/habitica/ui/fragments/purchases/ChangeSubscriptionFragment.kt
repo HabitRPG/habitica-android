@@ -1,12 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.icu.util.Currency
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -33,7 +28,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,14 +48,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.android.billingclient.api.ProductDetails
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
 import com.habitrpg.android.habitica.extensions.formattedSubscriptionPrice
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
@@ -72,7 +65,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.extensions.round
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -181,12 +173,12 @@ class ChangeSubscriptionViewModel @Inject constructor(
     userViewModel: MainUserViewModel,
     private val purchaseHandler: PurchaseHandler
 ): BaseViewModel(userRepository, userViewModel) {
-    fun selectPlan(plan: HabiticaProduct) {
-        selectedPlan.value = plan
+    fun selectProduct(product: HabiticaProduct) {
+        selectedProduct.value = product
     }
 
     val isDowngrade: Boolean
-        get() = currentPlan.value != null && selectedPlan.value.getSubscriptionDuration() < (currentPlan.value?.getSubscriptionDuration() ?: 0)
+        get() = currentProduct.value != null && selectedProduct.value.getSubscriptionDuration() <= (currentProduct.value?.getSubscriptionDuration() ?: 0)
     var onDismiss: () -> Unit = {}
     val products = listOf(
         HabiticaProduct.SUBSCRIPTION_1_MONTH,
@@ -198,8 +190,8 @@ class ChangeSubscriptionViewModel @Inject constructor(
     val currentStep = MutableStateFlow(0)
 
     val activeSubscriptionPlan = MutableStateFlow<SubscriptionPlan?>(null)
-    val currentPlan = MutableStateFlow<HabiticaProduct?>(null)
-    val selectedPlan = MutableStateFlow(HabiticaProduct.SUBSCRIPTION_1_MONTH)
+    val currentProduct = MutableStateFlow<HabiticaProduct?>(null)
+    val selectedProduct = MutableStateFlow(HabiticaProduct.SUBSCRIPTION_1_MONTH)
 
     val productDetails = MutableStateFlow<Map<HabiticaProduct, ProductDetails>>(emptyMap())
 
@@ -212,10 +204,10 @@ class ChangeSubscriptionViewModel @Inject constructor(
 
     init {
         val plan = userViewModel.user.value?.purchased?.plan
-        currentPlan.value = plan?.habiticaProduct
-        if (currentPlan.value != null) {
+        currentProduct.value = plan?.habiticaProduct
+        if (currentProduct.value != null) {
             activeSubscriptionPlan.value = plan
-            selectedPlan.value = currentPlan.value!!
+            selectedProduct.value = currentProduct.value!!
         }
 
         viewModelScope.launchCatching {
@@ -236,7 +228,7 @@ class ChangeSubscriptionViewModel @Inject constructor(
     }
 
     fun purchaseSubscription(activity: Activity) {
-        val details = productDetailsForProduct(selectedPlan.value) ?: return
+        val details = productDetailsForProduct(selectedProduct.value) ?: return
         viewModelScope.launchCatching {
             purchaseHandler.purchase(activity, details)
             onDismiss()
@@ -269,10 +261,10 @@ class ChangeSubscriptionViewModel @Inject constructor(
 
 @Composable
 private fun ChangeSubscriptionChoiceView(modifier: Modifier = Modifier,
-                                         viewModel: ChangeSubscriptionViewModel = viewModel()) {
-    val currentPlan by viewModel.currentPlan.collectAsState(null)
-    val selectedSub by viewModel.selectedPlan.collectAsState()
-    val currentSubscription by viewModel.activeSubscriptionPlan.collectAsState()
+                                         viewModel: ChangeSubscriptionViewModel) {
+    val currentPlan by viewModel.currentProduct.collectAsStateWithLifecycle(null)
+    val selectedSub by viewModel.selectedProduct.collectAsStateWithLifecycle()
+    val currentSubscription by viewModel.activeSubscriptionPlan.collectAsStateWithLifecycle()
     val canContinue = selectedSub != currentPlan || currentSubscription?.dateTerminated == null
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -301,7 +293,9 @@ private fun ChangeSubscriptionChoiceView(modifier: Modifier = Modifier,
 
 @Composable
 private fun ChangeSubscriptionReviewView(modifier: Modifier = Modifier,
-                                         viewModel: ChangeSubscriptionViewModel = viewModel()) {
+                                         viewModel: ChangeSubscriptionViewModel) {
+    val selectedProduct by viewModel.selectedProduct.collectAsStateWithLifecycle()
+    val activePlan by viewModel.activeSubscriptionPlan.collectAsStateWithLifecycle()
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -312,7 +306,20 @@ private fun ChangeSubscriptionReviewView(modifier: Modifier = Modifier,
         )) {
             Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
                 if (viewModel.hadGiftedSubscription) {
+                    Text(stringResource(R.string.subscription_change_confirmation_gift, selectedProduct.getSubscriptionDuration()), fontWeight = FontWeight.Bold)
                     Text(stringResource(R.string.subscription_change_gift_info))
+                } else if (activePlan?.isTerminated == true) {
+                    if (viewModel.isDowngrade) {
+                        Text(stringResource(R.string.subscription_change_confirmation_reactivate_downgrade), fontWeight = FontWeight.Bold)
+                    } else {
+                        Text(stringResource(R.string.subscription_change_confirmation_reactivate_upgrade), fontWeight = FontWeight.Bold)
+                    }
+                } else {
+                    if (viewModel.isDowngrade) {
+                        Text(stringResource(R.string.subscription_change_confirmation_downgrade), fontWeight = FontWeight.Bold)
+                    } else {
+                        Text(stringResource(R.string.subscription_change_confirmation_upgrade), fontWeight = FontWeight.Bold)
+                    }
                 }
                 if (viewModel.isEligableForHourglassPromo && viewModel.totalGemCount < 50) {
                     Text(stringResource(R.string.subscription_change_hourglass_promo_gems_info))
@@ -337,8 +344,8 @@ private fun ChangeSubscriptionReviewView(modifier: Modifier = Modifier,
 
 @Composable
 fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSubscriptionViewModel = viewModel()) {
-    val step by viewModel.currentStep.collectAsState()
-    val activeSub by viewModel.activeSubscriptionPlan.collectAsState()
+    val step by viewModel.currentStep.collectAsStateWithLifecycle()
+    val activeSub by viewModel.activeSubscriptionPlan.collectAsStateWithLifecycle()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -363,10 +370,10 @@ fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSub
                 Box(modifier = Modifier.weight(1f).height(1.dp).background(colorResource(R.color.brand_400))) {}
             }
 
-            val currentPlan by viewModel.currentPlan.collectAsState(null)
-            val selectedSub by viewModel.selectedPlan.collectAsState()
+            val currentPlan by viewModel.currentProduct.collectAsStateWithLifecycle(null)
+            val selectedSub by viewModel.selectedProduct.collectAsStateWithLifecycle()
             Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.animateContentSize()) {
-                val details by viewModel.productDetails.collectAsState()
+                val details by viewModel.productDetails.collectAsStateWithLifecycle()
                 for (product in viewModel.products) {
                     AnimatedVisibility(step == 0 || product == selectedSub) {
                         if (product == HabiticaProduct.SUBSCRIPTION_12_MONTH) {
@@ -400,7 +407,7 @@ fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSub
                                 isCurrentPlan = currentPlan == product,
                                 selectedTextColor = colorResource(R.color.teal_1),
                                 modifier = Modifier.clickable {
-                                    viewModel.selectPlan(product)
+                                    viewModel.selectProduct(product)
                                 }
                             )
                         } else {
@@ -410,7 +417,7 @@ fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSub
                                 selected = selectedSub == product,
                                 isCurrentPlan = currentPlan == product,
                                 modifier = Modifier.clickable {
-                                    viewModel.selectPlan(product)
+                                    viewModel.selectProduct(product)
                                 }
                             )
                         }
@@ -436,44 +443,8 @@ fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSub
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom=20.dp))
     }
-}
 
-@AndroidEntryPoint
-open class ChangeSubscriptionFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentComposeBinding? = null
-    val binding get() = _binding!!
-
-    val viewModel: ChangeSubscriptionViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentComposeBinding.inflate(layoutInflater)
-        viewModel.onDismiss = {
-            dismiss()
-        }
-        _binding?.root?.setContent {
-            HabiticaTheme {
-                ChangeSubscriptionScreen(viewModel = viewModel)
-            }
-        }
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun dismiss() {
-        super.dismiss()
-        viewModel.previousStep()
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
+    LaunchedEffect(Unit) {
         viewModel.previousStep()
     }
 }
