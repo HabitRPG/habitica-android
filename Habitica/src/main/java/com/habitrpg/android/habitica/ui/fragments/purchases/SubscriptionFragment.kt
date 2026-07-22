@@ -103,7 +103,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.content?.subscriptionDetails?.onUpdateSubscriptionsTapped = {
             showAsBottomSheet(sheetColor = Color(requireContext().getColor(R.color.brand_300)), true) {
-                ChangeSubscriptionScreen()
+                ChangeSubscriptionScreen(it)
             }
         }
         binding?.content?.subscribeButton?.setOnClickListener { purchaseSubscription() }

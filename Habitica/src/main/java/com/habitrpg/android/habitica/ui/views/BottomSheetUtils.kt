@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
@@ -100,6 +101,9 @@ private fun BottomSheetWrapper(
         sheetState = modalBottomSheetState,
         shape = RoundedCornerShape(topStart = radius, topEnd = radius),
         contentWindowInsets = { WindowInsets(0) },
+        dragHandle = { BottomSheetDefaults.DragHandle(
+            color = if (sheetColor != HabiticaTheme.colors.windowBackground) colorResource(R.color.brand_100) else HabiticaTheme.colors.textSecondary
+        ) },
         content = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

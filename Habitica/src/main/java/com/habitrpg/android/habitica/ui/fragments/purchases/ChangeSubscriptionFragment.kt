@@ -265,7 +265,7 @@ private fun ChangeSubscriptionChoiceView(modifier: Modifier = Modifier,
     val currentPlan by viewModel.currentProduct.collectAsStateWithLifecycle(null)
     val selectedSub by viewModel.selectedProduct.collectAsStateWithLifecycle()
     val currentSubscription by viewModel.activeSubscriptionPlan.collectAsStateWithLifecycle()
-    val canContinue = selectedSub != currentPlan || currentSubscription?.dateTerminated == null
+    val canContinue = selectedSub != currentPlan || currentSubscription?.dateTerminated != null
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.padding(horizontal = 16.dp)) {
@@ -343,9 +343,10 @@ private fun ChangeSubscriptionReviewView(modifier: Modifier = Modifier,
  }
 
 @Composable
-fun ChangeSubscriptionScreen(modifier: Modifier = Modifier, viewModel: ChangeSubscriptionViewModel = viewModel()) {
+fun ChangeSubscriptionScreen(dismiss: () -> Unit, modifier: Modifier = Modifier, viewModel: ChangeSubscriptionViewModel = viewModel()) {
     val step by viewModel.currentStep.collectAsStateWithLifecycle()
     val activeSub by viewModel.activeSubscriptionPlan.collectAsStateWithLifecycle()
+    viewModel.onDismiss = dismiss
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
