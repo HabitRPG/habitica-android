@@ -5,16 +5,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,7 +46,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 enum class OnboardingSteps(val id: Int) {
     INTRO(1),
@@ -97,13 +94,9 @@ class OnboardingActivity: ComposeActivity() {
             HabiticaTheme {
                 AnimatedContent(step,
                     transitionSpec = {
-                        (expandVertically(
-                            initialHeight = { fullHeight -> (fullHeight * 0.3f).roundToInt() }
-                        ) + fadeIn())
+                        fadeIn()
                             .togetherWith(
-                                slideOutVertically(
-                                    targetOffsetY = { fullHeight -> (-fullHeight * 0.1f).roundToInt() }
-                                )
+                                fadeOut()
                             )
             },) {
                     when (it) {
