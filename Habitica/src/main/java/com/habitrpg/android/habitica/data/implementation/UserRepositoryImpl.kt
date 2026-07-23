@@ -433,8 +433,12 @@ class UserRepositoryImpl(
             }
         }
         return if (type == "background") {
-            apiClient.unlockPath("background.$identifier")
-            retrieveUser(false, true)
+            if (identifier.isBlank()) {
+                updateUser("preferences.background", "")
+            } else {
+                apiClient.unlockPath("background.$identifier")
+                retrieveUser(false, true)
+            }
         } else {
             var updatePath = "preferences.$type"
             if (category != null) {
