@@ -21,6 +21,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -141,12 +144,20 @@ fun MountBottomSheet(
                     label = "animalPosition"
                 )
             }
+            var mountCanvasWidth by remember(mount.key) { mutableStateOf(0) }
+            val standardCanvas = 105f
+            val templateScale =
+                if (mountCanvasWidth > standardCanvas) mountCanvasWidth / standardCanvas else 1f
+            val isOversizedTemplate = templateScale > 1f
+            val mountWidth = if (isOversizedTemplate) (81f * templateScale).dp else 81.dp
+            val mountHeight = if (isOversizedTemplate) (81f * templateScale).dp else 99.dp
             MountView(
                 mount,
+                onCanvasSizeLoaded = { mountCanvasWidth = it },
                 modifier =
                 Modifier
                     .offset(0.dp, position.dp)
-                    .size(81.dp, 99.dp)
+                    .size(mountWidth, mountHeight)
                     .align(Alignment.TopCenter)
                     .zIndex(2f)
             )

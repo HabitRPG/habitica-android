@@ -17,12 +17,16 @@ constructor(
 ) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
     private var targetRect = Rect(0, 0, 0, 0)
     var forceScaleUp: Boolean = false
+    var onBitmapLoaded: ((Bitmap) -> Unit)? = null
 
     var bitmap: Bitmap? = null
         set(value) {
             field = value
             updateTargetRect()
             invalidate()
+            if (value != null) {
+                onBitmapLoaded?.invoke(value)
+            }
         }
 
     private val paint: Paint by lazy {

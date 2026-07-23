@@ -21,6 +21,7 @@ constructor(
         get() {
             return bodyView.bitmap != null && headView.bitmap != null
         }
+    var onCanvasSizeLoaded: ((Int) -> Unit)? = null
     private val bodyView: PixelArtView = PixelArtView(context)
     private val headView: PixelArtView = PixelArtView(context)
 
@@ -30,6 +31,7 @@ constructor(
     }
 
     init {
+        bodyView.onBitmapLoaded = { onCanvasSizeLoaded?.invoke(it.width) }
         addView(bodyView)
         bodyView.layoutParams =
             LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -42,15 +44,17 @@ constructor(
 @Composable
 fun MountView(
     mount: Mount,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCanvasSizeLoaded: ((Int) -> Unit)? = null
 ) {
-    MountView(mount.key, modifier)
+    MountView(mount.key, modifier, onCanvasSizeLoaded)
 }
 
 @Composable
 fun MountView(
     mountKey: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCanvasSizeLoaded: ((Int) -> Unit)? = null
 ) {
     AndroidView(
         modifier = modifier,
@@ -58,6 +62,7 @@ fun MountView(
             MountView(context)
         },
         update = { view ->
+            view.onCanvasSizeLoaded = onCanvasSizeLoaded
             view.setMount(mountKey)
         }
     )
