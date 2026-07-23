@@ -101,10 +101,10 @@ class FixCharacterValuesActivity : BaseActivity() {
 
     private fun updateFields(user: User) {
         val stats = user.stats ?: return
-        binding.healthEditText.setText(stats.hp.toString())
-        binding.experienceEditText.setText(stats.exp.toString())
-        binding.goldEditText.setText(stats.gp.toString())
-        binding.manaEditText.setText(stats.mp.toString())
+        binding.healthEditText.setText(stats.hp?.toEditableString() ?: "0")
+        binding.experienceEditText.setText(stats.exp?.toEditableString() ?: "0")
+        binding.goldEditText.setText(stats.gp?.toEditableString() ?: "0")
+        binding.manaEditText.setText(stats.mp?.toEditableString() ?: "0")
         binding.levelEditText.setText(stats.lvl.toString())
         binding.streakEditText.setText(user.streakCount.toString())
 
@@ -159,6 +159,14 @@ class FixCharacterValuesActivity : BaseActivity() {
             stringValue.toDouble()
         } catch (_: NumberFormatException) {
             0.0
+        }
+    }
+
+    private fun Double.toEditableString(): String {
+        return if (this % 1.0 == 0.0) {
+            this.toLong().toString()
+        } else {
+            this.toString()
         }
     }
 }
