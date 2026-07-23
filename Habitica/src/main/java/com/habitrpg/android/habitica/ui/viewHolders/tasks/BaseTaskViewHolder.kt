@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -170,7 +171,7 @@ abstract class BaseTaskViewHolder(
         }
 
         val titleText = data.text ?: ""
-        if (!MarkdownParser.containsMarkdown(titleText)) {
+        if (!MarkdownParser.containsMarkdown(titleText) && !EmojiParser.containsEmoji(titleText)) {
             titleTextView.text = titleText
         } else {
             val parsedText = MarkdownParser.parseMarkdown(titleText)
@@ -180,7 +181,7 @@ abstract class BaseTaskViewHolder(
 
         if (displayMode != "minimal") {
             val notes = data.notes ?: ""
-            if (!MarkdownParser.containsMarkdown(notes)) {
+            if (!MarkdownParser.containsMarkdown(notes) && !EmojiParser.containsEmoji(notes)) {
                 notesTextView?.text = notes
             } else {
                 val parsedNotes = MarkdownParser.parseMarkdown(notes)
