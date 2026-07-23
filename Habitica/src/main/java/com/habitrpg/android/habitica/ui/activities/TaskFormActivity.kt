@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -259,6 +260,7 @@ class TaskFormActivity : BaseActivity() {
                 checkCanSave()
             }
         )
+        binding.spiWarningRow.setOnClickListener { showSPIDialog() }
         binding.textEditText.onFocusChangeListener =
             View.OnFocusChangeListener { _, isFocused ->
                 binding.textInputLayout.alpha = if (isFocused) 0.8f else 0.6f
@@ -905,6 +907,17 @@ class TaskFormActivity : BaseActivity() {
             finish()
         }
         alert.addCancelButton()
+        alert.show()
+    }
+
+    private fun showSPIDialog() {
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.avoid_spi)
+        alert.setMessage(R.string.avoid_spi_message)
+        alert.addButton(R.string.privacy_policy, true) { _, _ ->
+            openBrowserLink("https://habitica.com/static/privacy")
+        }
+        alert.addButton(R.string.close, false)
         alert.show()
     }
 

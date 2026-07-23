@@ -49,6 +49,34 @@
                     android:paddingEnd="@dimen/spacing_large"
                     android:paddingBottom="@dimen/spacing_large">
 
+                <LinearLayout
+                        android:id="@+id/spi_warning_row"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingTop="@dimen/spacing_small"
+                        android:paddingBottom="@dimen/spacing_medium">
+
+                    <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="6dp"
+                            android:src="@drawable/ic_warning_black"
+                            app:tint="?attr/colorPrimaryText"
+                            android:importantForAccessibility="no" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/avoid_spi"
+                            android:textColor="?attr/colorPrimaryText"
+                            android:textSize="14sp" />
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout"
                         android:layout_width="match_parent"
