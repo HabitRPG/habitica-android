@@ -40,6 +40,7 @@ import com.habitrpg.common.habitica.views.PixelArtView
 class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
+    private var isCastingSkill = false
 
     override var binding: FragmentRecyclerviewBinding? = null
 
@@ -60,6 +61,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     ): View? {
         adapter = SkillsRecyclerViewAdapter()
         adapter?.onUseSkill = { onSkillSelected(it) }
+        adapter?.onUseSkillDirectly = { castSkill(it) }
 
         this.tutorialStepIdentifier = "skills"
         this.tutorialTexts = listOf(getString(R.string.tutorial_skills))
@@ -116,25 +118,27 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             skillMpCost = "${skill.mana?.toInt() ?: 0} MP",
             resourceIcon = resourceIconDrawable,
             isTransformationItem = isTransformationItem,
-            onUseSkill = {
-                when {
-                    "special" == skill.habitClass -> {
-                        selectedSkill = skill
-                        val intent = Intent(mainActivity, SkillMemberActivity::class.java)
-                        memberSelectionResult.launch(intent)
-                    }
-
-                    skill.target == "task" -> {
-                        selectedSkill = skill
-                        val intent = Intent(mainActivity, SkillTasksActivity::class.java)
-                        taskSelectionResult.launch(intent)
-                    }
-
-                    else -> useSkill(skill)
-                }
-            }
+            onUseSkill = { castSkill(skill) }
         )
         bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
+    }
+
+    private fun castSkill(skill: Skill) {
+        when {
+            "special" == skill.habitClass -> {
+                selectedSkill = skill
+                val intent = Intent(mainActivity, SkillMemberActivity::class.java)
+                memberSelectionResult.launch(intent)
+            }
+
+            skill.target == "task" -> {
+                selectedSkill = skill
+                val intent = Intent(mainActivity, SkillTasksActivity::class.java)
+                taskSelectionResult.launch(intent)
+            }
+
+            else -> useSkill(skill)
+        }
     }
 
     private fun displaySkillResult(
@@ -204,15 +208,23 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         if (skill == null) {
             return
         }
+        if (isCastingSkill) {
+            return
+        }
+        isCastingSkill = true
         lifecycleScope.launchCatching {
-            val skillResponse =
-                if (taskId != null) {
-                    userRepository.useSkill(skill.key, skill.target, taskId)
-                } else {
-                    userRepository.useSkill(skill.key, skill.target)
+            try {
+                val skillResponse =
+                    if (taskId != null) {
+                        userRepository.useSkill(skill.key, skill.target, taskId)
+                    } else {
+                        userRepository.useSkill(skill.key, skill.target)
+                    }
+                if (skillResponse != null) {
+                    displaySkillResult(skill, skillResponse)
                 }
-            if (skillResponse != null) {
-                displaySkillResult(skill, skillResponse)
+            } finally {
+                isCastingSkill = false
             }
         }
     }
