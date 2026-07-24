@@ -267,16 +267,16 @@
     <string name="choose_recipient_title">Escolha o destinatário da mensagem</string>
     <string name="action_continue">Continuar</string>
     <string name="invited_to_party">Você foi convidado(a) para um grupo!</string>
-    <string name="stats_widget_label">Estatísticas do Habitica</string>
+    <string name="stats_widget_label">Seu desempenho</string>
     <string name="add_task">Adicionar Tarefa</string>
     <string name="add_habit">Adicionar Hábito</string>
     <string name="add_daily">Adicionar Diária</string>
     <string name="add_todo">Adicionar Afazer</string>
     <string name="add_reward">Adicionar Recompensa</string>
     <string name="all_dailies_completed">Você completou todas as suas Diárias. Parabéns!</string>
-    <string name="widget_habit_button">Habitica Hábitos</string>
-    <string name="widget_dailies">Habitica Diárias</string>
-    <string name="widget_todo_list">Habitica Lista de Afazeres</string>
+    <string name="widget_habit_button">Hábito</string>
+    <string name="widget_dailies">Lista de Diárias</string>
+    <string name="widget_todo_list">Lista de Afazeres</string>
     <string name="google_services_missing">Serviços da Google Play não foram encontrados.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">A compra de gemas apóia os desenvolvedores e ajuda a manter o Habitica funcionando</string>
@@ -1695,9 +1695,9 @@
     <string name="new_message">Nova mensagem</string>
     <string name="scroll_to_new_messages">Ir para novas mensagens</string>
     <string name="auth_invalid_credential_type">Tipo de credencial inválido recebido.</string>
-    <string name="avatar_widget_label">Avatar do Habitica</string>
-    <string name="widget_dailies_count">Contagem Diária do Habitica</string>
-    <string name="widget_add_task">Habitica Adicionar Tarefa</string>
-    <string name="widget_add_task_multi">Habitica Adicionar Tarefas</string>
+    <string name="avatar_widget_label">Seu avatar</string>
+    <string name="widget_dailies_count">Contagem Diária</string>
+    <string name="widget_add_task">Criar Tarefa</string>
+    <string name="widget_add_task_multi">Criar multitarefa</string>
     <string name="fifth_week_warning">Esta tarefa não aparecerá como pendente durante meses com menos %1$ss.</string>
 </resources>
