@@ -42,6 +42,7 @@
         <attr name="gemAmount" format="integer" />
         <attr name="priceText" format="string" />
         <attr name="gemDrawable" format="integer" />
+        <attr name="decoDrawable" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="SubscriptionOptionView">

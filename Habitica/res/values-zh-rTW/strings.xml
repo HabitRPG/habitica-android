@@ -1072,7 +1072,7 @@
     <string name="empty_challenge_list">您尚未成為任何挑戰中的一位成員。</string>
     <string name="todo_item_checkbox">待辦事項核取方塊</string>
     <string name="empty_equipment_description">您目前還尚未有任何這類型的裝備。您可以透過市集並使用您所賺取來的金幣去採購裝備。</string>
-    <string name="fall_promo_info_instructions">取決於 %1$s 和 %2$s，簡易的購物如同以往任何寶石組合包以及您的帳號將會被存入此促銷的寶石總數。有更多的寶石去消費，分享，或保存至未來給任何使用！</string>
+    <string name="gem_promo_info_instructions">取決於 %1$s 和 %2$s，簡易的購物如同以往任何寶石組合包以及您的帳號將會被存入此促銷的寶石總數。有更多的寶石去消費，分享，或保存至未來給任何使用！</string>
     <string name="terms_of_service">服務條款</string>
     <string name="privacy_policy">隱私權政策</string>
     <string name="all_tasks_completed">您已完成您全部的任務。做得好！</string>

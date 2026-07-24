@@ -1027,7 +1027,7 @@
     <string name="block_user_title">Block %s\?</string>
     <string name="unblock_user">Unblock Player</string>
     <string name="block_user">Block Player</string>
-    <string name="fall_promo_info_instructions">Between September %1$s and %2$s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="gem_promo_info_instructions">Between September %1$s and %2$s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="limitations">Limitations</string>
     <string name="how_it_works">How it works</string>
     <string name="x_to_y">%1$s to %2$s</string>

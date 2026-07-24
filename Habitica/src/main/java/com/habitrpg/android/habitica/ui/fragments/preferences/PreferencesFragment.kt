@@ -54,6 +54,7 @@ import javax.inject.Inject
 class PreferencesFragment :
     BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
+
     @Inject
     lateinit var contentRepository: ContentRepository
 
@@ -73,6 +74,7 @@ class PreferencesFragment :
     private var pushNotificationsPreference: PreferenceScreen? = null
     private var emailNotificationsPreference: PreferenceScreen? = null
     private var classSelectionPreference: Preference? = null
+    private var activePromoDebugPreference: ListPreference? = null
     private var customServerUrlDebugPreference: ListPreference? = null
     private var customServerUrlReleaseCategory: PreferenceCategory? = null
     private var customServerUrlReleasePreference: Preference? = null
@@ -115,6 +117,10 @@ class PreferencesFragment :
         customServerUrlReleaseCategory = findPreference("custom_server")
         customServerUrlReleasePreference = findPreference("custom_server_url")
         customServerUrlReleasePreference?.summary = serverUrl
+
+        activePromoDebugPreference = findPreference("active_promo")
+        activePromoDebugPreference?.isVisible = false
+        activePromoDebugPreference?.summary = activePromoDebugPreference?.entry
         
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference.entry ?: "Default"
@@ -434,6 +440,10 @@ class PreferencesFragment :
                 findPreference<Preference>(key)?.summary = newUrl ?: ""
             }
 
+            "active_promo" -> {
+                activePromoDebugPreference?.summary = activePromoDebugPreference?.entry
+            }
+
             "task_display" -> {
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference.entry
@@ -623,6 +633,7 @@ class PreferencesFragment :
 
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             customServerUrlDebugPreference?.isVisible = true
+            activePromoDebugPreference?.isVisible = true
             taskListPreference?.isVisible = true
         }
         if (BuildConfig.DEBUG.not()) {

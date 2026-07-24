@@ -1085,7 +1085,7 @@
     <string name="view_gem_bundles">보석 꾸러미 보기</string>
     <string name="usually_x_gems">보통 %d보석</string>
     <string name="x_to_y">%1$s부터 %2$s</string>
-    <string name="fall_promo_info_instructions">%1$s와(과) %2$s 사이에, 보석 꾸러미를 평소처럼 구입하면 더 많은 양의 보석이 적립됩니다. 더 많은 보석을 쓰고, 공유하고, 미래를 위해 모아두세요!</string>
+    <string name="gem_promo_info_instructions">%1$s와(과) %2$s 사이에, 보석 꾸러미를 평소처럼 구입하면 더 많은 양의 보석이 적립됩니다. 더 많은 보석을 쓰고, 공유하고, 미래를 위해 모아두세요!</string>
     <string name="spooky_promo_info_prompt">보석 세일이 올해 가을 축제 마지막을 장식하고 있습니다! 지금이 어느 때보다 보석을 많이 얻을 수 있는 마지막 기회이니, 끝나기 전에 보석을 쟁여두세요!</string>
     <string name="dark_mode">다크 모드</string>
     <string name="theme_mode">테마 모드</string>

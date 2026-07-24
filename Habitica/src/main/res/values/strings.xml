@@ -48,4 +48,10 @@
     <string name="subscription_change_confirmation_upgrade">Switching to this plan will immediately charge you the above amount. Any unused time from your current subscription will be calculated into your next renewal date.</string>
     <string name="subscription_change_confirmation_reactivate_upgrade">Switching to this plan will immediately charge you the above amount. Any unused time from your current subscription will be calculated into your next renewal date.</string>
     <string name="subscription_change_confirmation_reactivate_downgrade">Reactivating your subscription will charge you the above amount at your next renewal date.</string>
+    <string name="gem_subscriber_title">Psst, want the best deal on Gems?</string>
+    <string name="gem_subscriber_subtitle">Subscribers unlock the ability to use their Gold to buy up to 50 Gems a month in the Market!</string>
+    <string name="view_subscriptions">View Subscriptions</string>
+    <string name="gem_promo_menu_description">Get extra Gems with each purchase!</string>
+    <string name="view_offer">View Offer</string>
+    <string name="active_promo">Active Promo</string>
 </resources>

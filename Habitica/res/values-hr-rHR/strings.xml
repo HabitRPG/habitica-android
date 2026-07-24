@@ -1106,7 +1106,7 @@
     <string name="apitoken_summary">Zaporka token za programere i alate trećih strana.</string>
     <string name="mount_category">%s Jahače Životinje</string>
     <string name="disablePrivateMessages">Onemogući Privatne Poruke</string>
-    <string name="fall_promo_info_instructions">Između %1$s i %2$s, jednostavno kupite bilo koji paket Dragulja kao i obično i vaš račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
+    <string name="gem_promo_info_instructions">Između %1$s i %2$s, jednostavno kupite bilo koji paket Dragulja kao i obično i vaš račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
     <string name="open_website">Otvori Web Stranicu</string>
     <string name="delete_challenge_task_description">Ovo je jedan od %1$d zadataka koji su dio “%2$s” Izazova. Morate napustiti Izazov kako bi izbrisali ovaj zadatak.</string>
     <string name="no_longer_available">Više nije dostupno</string>

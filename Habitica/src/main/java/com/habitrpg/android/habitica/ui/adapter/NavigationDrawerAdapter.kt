@@ -147,7 +147,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 promoView.layoutParams =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        118.dpToPx(parent.context)
+                        148.dpToPx(parent.context)
                     )
                 PromoMenuViewHolder(promoView)
             }

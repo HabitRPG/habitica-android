@@ -407,6 +407,11 @@
             android:entries="@array/server_urls"
             android:entryValues="@array/server_urls"
             android:layout="@layout/preference_child_summary" />
+        <ListPreference android:title="@string/active_promo"
+            android:key="active_promo"
+            android:entries="@array/active_promo"
+            android:entryValues="@array/active_promo_keys"
+            android:layout="@layout/preference_child_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

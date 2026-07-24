@@ -13,6 +13,7 @@
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:gravity="center"
+        android:layout_marginTop="8dp"
         android:paddingStart="@dimen/spacing_large"
         android:paddingEnd="@dimen/spacing_large">
         <ImageView
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             style="@style/Body1"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:lineSpacingExtra="4dp"
             android:letterSpacing="0.015"
             android:textAlignment="center"

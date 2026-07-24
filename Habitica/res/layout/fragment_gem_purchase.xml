@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.android.habitica.ui.views.HabiticaScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nested_scroll_view"
@@ -8,6 +8,7 @@
     android:scrollbarSize="3dp"
     android:scrollbarThumbVertical="@color/scrollbarThumb"
     app:skipDirectchild="true"
+    android:background="@color/brand_300"
     android:scrollbars="vertical">
 
     <LinearLayout
@@ -122,7 +123,7 @@
                 android:id="@+id/header_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/gem_purchase_header"
+                android:src="@drawable/gem_purchase_header_dark"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp" />
 
@@ -132,44 +133,50 @@
                 android:text="@string/gem_purchase_subtitle"
                 android:gravity="center"
                 android:textStyle="normal|bold"
-                android:textColor="?colorPrimaryText"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="23dp"
-                android:layout_marginBottom="12dp"
                 android:layout_marginStart="@dimen/spacing_xlarge"
                 android:layout_marginEnd="@dimen/spacing_xlarge" />
 
-            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+        <include layout="@layout/separator_fancy" />
+
+            <TextView
                 android:text="@string/gem_purchase_listitem1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 style="@style/GemPurchaseListItem" />
 
-            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+            <TextView
                 android:text="@string/gem_purchase_listitem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 style="@style/GemPurchaseListItem" />
 
-            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+            <TextView
                 android:text="@string/gem_purchase_listitem3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 style="@style/GemPurchaseListItem" />
 
-            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+            <TextView
                 android:text="@string/gem_purchase_listitem4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 style="@style/GemPurchaseListItem" />
 
-            <com.habitrpg.android.habitica.ui.views.DayNightTextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no_billing_gems"
                 android:paddingTop="50dp"
                 android:paddingBottom="10dp"
+                android:textColor="@color/white"
                 android:visibility="gone" />
 
             <Button
@@ -222,6 +229,7 @@
                             android:layout_weight="1"
                             app:gemAmount="4"
                             app:gemDrawable="@drawable/gems_4"
+                            app:decoDrawable="@drawable/gems_4_sparkle"
                             android:layout_marginEnd="@dimen/spacing_large" />
 
                         <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
@@ -230,7 +238,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             app:gemAmount="21"
-                            app:gemDrawable="@drawable/gems_21" />
+                            app:gemDrawable="@drawable/gems_20"
+                            app:decoDrawable="@drawable/gems_20_sparkle" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -249,6 +258,7 @@
                             android:layout_weight="1"
                             app:gemAmount="42"
                             app:gemDrawable="@drawable/gems_42"
+                            app:decoDrawable="@drawable/gems_42_sparkle"
                             android:layout_marginEnd="@dimen/spacing_large" />
 
                         <com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
@@ -257,7 +267,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             app:gemAmount="84"
-                            app:gemDrawable="@drawable/gems_84" />
+                            app:gemDrawable="@drawable/gems_84"
+                            app:decoDrawable="@drawable/gems_84_sparkle" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -273,10 +284,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_quad"
+                android:textColor="@color/white"
                 android:text="@string/gems_gift_description"
                 android:gravity="center_horizontal"
                 android:layout_marginStart="@dimen/spacing_xlarge"
+                android:layout_marginBottom="10dp"
                 android:layout_marginEnd="@dimen/spacing_xlarge" />
 
             <Button
@@ -284,51 +296,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gift_gems"
-                android:background="@color/transparent"
-                android:textColor="?colorPrimaryText"
+                android:backgroundTint="@color/brand_200"
+                android:background="@drawable/button_background_brand_200"
+                android:textColor="@color/white"
                 android:textAllCaps="false" />
     </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/footer_hills"
-                android:layout_gravity="bottom">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/footer_stars_right"
-                    android:layout_gravity="center_horizontal"
-                    android:scaleType="fitCenter" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/footer_stars_left"
-                    android:layout_gravity="center_horizontal"
-                    android:scaleType="fitCenter" />
-            </FrameLayout>
-
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gem_footer_top"
+            android:layout_marginTop="24dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:background="@color/yellow_100" >
             <TextView
-                android:id="@+id/supportTextView"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingStart="41dp"
-                android:paddingEnd="41dp"
-                android:text="@string/gem_purchase_title"
+                android:text="@string/gem_subscriber_title"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:lineSpacingExtra="3dp"
-                android:textColor="@color/white"
-                style="@style/Caption2"
-                android:background="@color/brand_400"
-                android:drawablePadding="@dimen/spacing_medium" />
-
-        <View
-            android:id="@+id/bottom_spacing"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/yellow_1"/>
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/gem_subscriber_subtitle"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/yellow_1"
+                android:layout_marginBottom="11dp"/>
+            <Button
+                android:id="@+id/view_subscriptions_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/view_subscriptions"
+                style="@style/HabiticaButton.White"
+                android:textColor="@color/yellow_1"
+                android:textAllCaps="false" />
+        </LinearLayout>
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/brand_400" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/gem_footer_bottom"
+            android:background="@color/yellow_100"/>
     </LinearLayout>
-</com.habitrpg.android.habitica.ui.views.HabiticaScrollView>
+</ScrollView>

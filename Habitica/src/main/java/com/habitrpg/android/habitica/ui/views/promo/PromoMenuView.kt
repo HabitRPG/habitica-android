@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.promo
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -22,7 +21,7 @@ constructor(
     var canClose: Boolean = false
         set(value) {
             field = value
-            binding.closeButton.visibility = if (value) View.VISIBLE else View.GONE
+            binding.closeButton.visibility = if (value) VISIBLE else GONE
         }
     var binding: PromoMenuBinding = PromoMenuBinding.inflate(context.layoutInflater, this)
 
@@ -63,9 +62,9 @@ constructor(
     ) {
         if (drawable != null) {
             view.setImageDrawable(drawable)
-            view.visibility = View.VISIBLE
+            view.visibility = VISIBLE
         } else {
-            view.visibility = View.GONE
+            view.visibility = GONE
         }
     }
 
@@ -75,9 +74,9 @@ constructor(
     ) {
         if (text != null) {
             view.text = text
-            view.visibility = View.VISIBLE
+            view.visibility = VISIBLE
         } else {
-            view.visibility = View.GONE
+            view.visibility = GONE
         }
     }
 }

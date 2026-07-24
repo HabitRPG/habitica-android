@@ -28,6 +28,10 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
         if (iconRes != null) {
             binding.gemImage.setImageDrawable(iconRes)
         }
+        val decoDrawable = a.getDrawable(R.styleable.GemPurchaseOptionsView_decoDrawable)
+        if (decoDrawable != null) {
+            binding.decoImage.setImageDrawable(decoDrawable)
+        }
     }
 
     fun setOnPurchaseClickListener(listener: OnClickListener) {

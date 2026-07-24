@@ -62,6 +62,16 @@ fun getHabiticaPromotionFromKey(
     endDate: Date?
 ): HabiticaPromotion? {
     return when (key) {
+        "spring_extra_gems" ->
+            SpringExtraGemsHabiticaPromotion(
+                startDate,
+                endDate
+            )
+        "summer_extra_gems" ->
+            SummerExtraGemsHabiticaPromotion(
+                startDate,
+                endDate
+            )
         "fall_extra_gems", "fall2020", "testFall2020" ->
             FallExtraGemsHabiticaPromotion(
                 startDate,
@@ -73,7 +83,16 @@ fun getHabiticaPromotionFromKey(
                 startDate,
                 endDate
             )
-
+        "winter_extra_gems" ->
+            WinterExtraGemsHabiticaPromotion(
+                startDate,
+                endDate
+            )
+        "flash_extra_gems" ->
+            FlashExtraGemsHabiticaPromotion(
+                startDate,
+                endDate
+            )
         "g1g1" -> GiftOneGetOneHabiticaPromotion(startDate, endDate)
         "survey2021" -> Survey2021Promotion()
         else -> null

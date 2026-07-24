@@ -1087,7 +1087,7 @@
     <string name="x_to_y">%1$s-%2$s</string>
     <string name="how_it_works">Jak to działa</string>
     <string name="limitations">Ograniczenia</string>
-    <string name="fall_promo_info_instructions">Czas promocji: %1$s-%2$s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
+    <string name="gem_promo_info_instructions">Czas promocji: %1$s-%2$s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
     <string name="view_gem_bundles">Przejdź do pakietów Klejnotów</string>
     <string name="dark_mode">Tryb ciemny</string>
     <string name="theme_mode">Tryb motywu</string>

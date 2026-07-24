@@ -1139,7 +1139,7 @@
     <string name="hatchedPetDescription">Rengeteg kisállatot lehet összegyűjteni, biztosan lesz egy kedvenced. Ha megeteted őket, talán növekedni fognak…</string>
     <string name="see_other_options">Nézd meg a többi lehetőséget</string>
     <string name="cancel_subscription_group_plan">Ingyenes előfizetésed van, mert egy olyan csapat vagy csoport tagja vagy, amely rendelkezik csoportos előfizetéssel. Ez megszűnik, ha kilépsz vagy ha a tulajdonos megszünteti a csoportos előfizetést. Az extra előfizetési hónapjaid a csoportos előfizetés végén lesznek felhasználva.</string>
-    <string name="fall_promo_info_instructions">%1$s és %2$s között vásárolj bármilyen gyémántcsomagot a szokásos módon, és az akciós mennyiség automatikusan jóváírásra kerül a fiókodban. Még több gyémánt költésre, ajándékozásra vagy jövőbeli kiadásokra!</string>
+    <string name="gem_promo_info_instructions">%1$s és %2$s között vásárolj bármilyen gyémántcsomagot a szokásos módon, és az akciós mennyiség automatikusan jóváírásra kerül a fiókodban. Még több gyémánt költésre, ajándékozásra vagy jövőbeli kiadásokra!</string>
     <string name="gems_description">A gyémántok valódi pénzért megvásárolható pénznemek, amelyekkel extra tartalmakat vásárolhatsz a Habiticában. Az előfizetések mellett ezek biztosítják a Habitica csapatának egyik fő bevételi forrását.
 \n
 \nA gyémántokkal vásárolt összes tartalom kizárólag kozmetikai jellegű vagy idővel ingyenesen is megszerezhető.

@@ -1038,7 +1038,7 @@
     <string name="spooky_promo_info_instructions">Entre le %1$s et le %2$s, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
     <string name="view_gem_bundles">Voir les paquets de gemmes</string>
     <string name="fall_promo_info_prompt">Le gala d\'automne bat son plein, alors nous avons pensé que ce serait le moment idéal pour proposer notre toute première vente de gemmes ! Dès à présent, vous recevrez plus de gemmes qu\'auparavant pour chaque achat.</string>
-    <string name="fall_promo_info_instructions">Entre le %1$s et le %2$s, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
+    <string name="gem_promo_info_instructions">Entre le %1$s et le %2$s, achetez simplement n\'importe quel paquet de gemmes comme d\'habitude, et votre compte sera crédité du nombre de gemmes promotionnelles. Cela vous fera plus de gemmes à dépenser, partager, ou économiser pour de futurs objets !</string>
     <string name="how_it_works">Comment ça marche</string>
     <string name="x_to_y">%1$s à %2$s</string>
     <string name="usually_x_gems">Généralement %d gemmes</string>

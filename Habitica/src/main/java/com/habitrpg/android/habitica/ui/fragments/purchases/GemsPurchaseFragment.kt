@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -21,8 +22,8 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
@@ -31,8 +32,8 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
@@ -76,9 +77,10 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         binding?.gems84View?.setOnPurchaseClickListener { purchaseGems(binding?.gems84View) }
 
         binding?.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
-
-        if (context?.isUsingNightModeResources() == true) {
-            binding?.headerImageView?.setImageResource(R.drawable.gem_purchase_header_dark)
+        binding?.viewSubscriptionsButton?.setOnClickListener {
+            MainNavigationController.navigate(R.id.gemPurchaseActivity,
+                Bundle().apply { putBoolean("openSubscription", true) }
+            )
         }
 
         val promo = appConfigManager.activePromo()
@@ -92,6 +94,8 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
                     promo.configureGemView(it.gems42View.binding, 42)
                     promo.configureGemView(it.gems84View.binding, 84)
                 }
+                binding?.root?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray_1))
+                requireActivity().findViewById<View>(R.id.appbar).setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray_1))
             }
             binding?.promoBanner?.setOnClickListener {
                 val fragment = PromoInfoFragment()

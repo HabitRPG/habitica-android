@@ -232,6 +232,24 @@
         <item>https://turtle.habitica.com</item>
     </string-array>
 
+    <string-array name="active_promo_keys">
+        <item>spring_extra_gems</item>
+        <item>summer_extra_gems</item>
+        <item>fall_extra_gems</item>
+        <item>spooky_extra_gems</item>
+        <item>winter_extra_gems</item>
+        <item>flash_extra_gems</item>
+    </string-array>
+
+    <string-array name="active_promo">
+        <item>Spring Extra Gems</item>
+        <item>Summer Extra Gems</item>
+        <item>Fall Extra Gems</item>
+        <item>Spooky Extra Gems</item>
+        <item>Winter Extra Gems</item>
+        <item>Flash Extra Gems</item>
+    </string-array>
+
     <string-array name="task_list_modes">
         <item>@string/standard</item>
         <item>@string/compact</item>

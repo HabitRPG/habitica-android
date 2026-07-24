@@ -1128,7 +1128,7 @@
     <string name="leave_delete_task">Verlaten &amp; verwijder taak</string>
     <string name="pet_category">%s Huisdieren</string>
     <string name="usually_x_gems">Doorgaans %d Edelstenen</string>
-    <string name="fall_promo_info_instructions">Tussen %1$s en %2$s kun je zoals gebruikelijk een Edelstenenpakket kopen, maar het promotiebedrag aan Edelstenen wordt dan aan je account toegevoegd. Meer Edelstenen om uit te geven, te delen of te sparen voor toekomstige updates!</string>
+    <string name="gem_promo_info_instructions">Tussen %1$s en %2$s kun je zoals gebruikelijk een Edelstenenpakket kopen, maar het promotiebedrag aan Edelstenen wordt dan aan je account toegevoegd. Meer Edelstenen om uit te geven, te delen of te sparen voor toekomstige updates!</string>
     <string name="read_more">Meer lezen</string>
     <string name="disablePrivateMessages">Privéberichten uitschakelen</string>
     <string name="could_not_find_user">Speler kon niet worden gevonden</string>

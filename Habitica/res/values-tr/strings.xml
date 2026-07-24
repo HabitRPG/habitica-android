@@ -939,7 +939,7 @@
     <string name="spooky_promo_info_prompt">Değerli Taş Satışı, bu yılki Sonbahar Galasının en sonunda tekrar gündeme geldi! Bu, her zamankinden daha fazla Mücevher almak için son bir şans, bu yüzden bu süre boyunca stok yapın!</string>
     <string name="spooky_promo_info_instructions">%1$s ile %2$s arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="fall_promo_info_prompt">Sonbahar Galası tüm hızıyla devam ediyor, bu yüzden ilk Mücevher Satışımızı sunmak için mükemmel bir zaman olduğunu düşündük! Artık her satın alma işleminde her zamankinden daha fazla Mücevher kazanacaksınız.</string>
-    <string name="fall_promo_info_instructions">%1$s ve %2$s arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="gem_promo_info_instructions">%1$s ve %2$s arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="how_it_works">Nasıl çalışır</string>
     <string name="x_to_y">%1$s - %2$s</string>
     <string name="usually_x_gems">Genellikle %d Mücevher</string>

@@ -803,7 +803,7 @@
     <string name="gift_confirmation_text_sub_g1g1">Regalaste a %1$s una suscripción de %2$s meses y se ha aplicado la misma suscripción a tu cuenta por nuestra promoción de Regala Una Llévate Una Gratis.</string>
     <string name="join_party_description_guild">¡Da el nombre de usuario de abajo a un amigo o ve al %s para conocer a camaradas potenciales!</string>
     <string name="number_responded">%1$d/%2$d Respondido</string>
-    <string name="fall_promo_info_instructions">Entre el %1$s y el %2$s, compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de gemas. ¡Más Gemas para gastar, compartir o ahorrar para cualquier evento futuro!</string>
+    <string name="gem_promo_info_instructions">Entre el %1$s y el %2$s, compra cualquier paquete de gemas como de costumbre y tu cuenta será acreditada con la cantidad promocional de gemas. ¡Más Gemas para gastar, compartir o ahorrar para cualquier evento futuro!</string>
     <string name="spooky_promo_info_prompt">¡La Venta de Gemas está de vuelta para atormentar el final de la Gala de Otoño de este año! Esta es la última oportunidad de conseguir más Gemas que nunca ¡así que aprovecha mientras dure!</string>
     <string name="preference_email_onboarding">Orientación para establecer tu cuenta de Habitica</string>
     <string name="game_mechanics">Mecánicas del Juego</string>

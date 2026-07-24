@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
@@ -23,7 +24,7 @@ import kotlinx.coroutines.cancel
 import java.util.Date
 import javax.inject.Provider
 
-class AppConfigManager(contentRepository: Provider<ContentRepository>) :
+class AppConfigManager(contentRepository: Provider<ContentRepository>, private val sharedPreferences: SharedPreferences) :
     com.habitrpg.common.habitica.helpers.AppConfigManager(), Clearable {
     private var worldState: WorldState? = null
 
@@ -118,6 +119,13 @@ class AppConfigManager(contentRepository: Provider<ContentRepository>) :
     }
 
     fun activePromo(): HabiticaPromotion? {
+        val prefsPromo = sharedPreferences.getString("active_promo", null)
+        if (prefsPromo?.isNotBlank() == true) {
+            return getHabiticaPromotionFromKey(prefsPromo, null, null)
+        }
+        if (BuildConfig.ACTIVE_PROMO.isNotBlank()) {
+            return getHabiticaPromotionFromKey(BuildConfig.ACTIVE_PROMO, null, null)
+        }
         var promo: HabiticaPromotion? = null
         if (worldState?.isValid == true) {
             val allEvents = worldState?.events?.toMutableList() ?: mutableListOf()

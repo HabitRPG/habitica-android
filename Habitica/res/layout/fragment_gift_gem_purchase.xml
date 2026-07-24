@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:gemAmount="21"
-                    app:gemDrawable="@drawable/gems_21" />
+                    app:gemDrawable="@drawable/gems_20" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

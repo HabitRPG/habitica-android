@@ -12,12 +12,18 @@ import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GemPurchaseActivity : PurchaseActivity() {
+
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
+
     private var showSubscription: Boolean = false
 
     override fun getLayoutResId(): Int {
@@ -30,11 +36,13 @@ class GemPurchaseActivity : PurchaseActivity() {
         super.onCreate(savedInstanceState)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        if (showSubscription) {
-            setupToolbar(toolbar, Color.WHITE, ContextCompat.getColor(this, R.color.brand_300))
+        val promo = appConfigManager.activePromo()
+        val color = if (!showSubscription && promo != null) {
+            ContextCompat.getColor(this, R.color.gray_1)
         } else {
-            setupToolbar(toolbar)
+            ContextCompat.getColor(this, R.color.brand_300)
         }
+        setupToolbar(toolbar, Color.WHITE, color)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -53,15 +61,20 @@ class GemPurchaseActivity : PurchaseActivity() {
         val controller = WindowCompat.getInsetsController(window, window.decorView)
         controller.isAppearanceLightNavigationBars = false
 
-        if (showSubscription) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                controller.isAppearanceLightStatusBars = false
-                window.setNavigationBarDarkIcons(false)
-            } else {
-                window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
-            }
-            findViewById<View>(R.id.appbar).setBackgroundColor(ContextCompat.getColor(this, R.color.brand_300))
+        val promo = appConfigManager.activePromo()
+        val color = if (!showSubscription && promo != null) {
+            ContextCompat.getColor(this, R.color.gray_1)
+        } else {
+            ContextCompat.getColor(this, R.color.brand_300)
         }
+        setupToolbar(toolbar, Color.WHITE, color)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            controller.isAppearanceLightStatusBars = false
+            window.setNavigationBarDarkIcons(false)
+        } else {
+            window.updateStatusBarColor(color, false)
+        }
+        findViewById<View>(R.id.appbar).setBackgroundColor(color)
     }
 
     private fun createFragment(showSubscription: Boolean) {

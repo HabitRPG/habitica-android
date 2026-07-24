@@ -1035,7 +1035,7 @@
     <string name="spooky_promo_info_instructions">在%1$s至3%2$s期间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
     <string name="view_gem_bundles">查看宝石捆绑包</string>
     <string name="fall_promo_info_prompt">秋季盛典正在如火如荼的进行中，所以我们认为这是我们首次推出宝石特卖会的最佳时机！现在你每次购买都会获得比以往更多的宝石。现在你每次购买都将获得比以往更多的宝石。</string>
-    <string name="fall_promo_info_instructions">在%1$s至%2$s间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
+    <string name="gem_promo_info_instructions">在%1$s至%2$s间，只需像往常一样购买任何宝石捆绑包，你的账户就会记入促销金额赠送的宝石数。获得的更多宝石可以用来消费、赠送或未来使用！</string>
     <string name="limitations">限制</string>
     <string name="how_it_works">如何工作</string>
     <string name="x_to_y">%1$s致%2$s</string>

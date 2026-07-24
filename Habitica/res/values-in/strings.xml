@@ -1074,7 +1074,7 @@
     <string name="fedPetDescription">Setiap Peliharaan punya satu jenis makanan yang mereka sukai! Bereksperimenlah untuk mencari tahu mana yang tercepat menumbuhkan Peliharaanmu</string>
     <string name="first_drop_explanation1">Menyelesaikan tugas memberimu kesempatan untuk memperoleh telur, ramuan penetas, dan makanan peliharaan.</string>
     <string name="x_to_y">%1$s ke %2$s</string>
-    <string name="fall_promo_info_instructions">Antara %1$s dan %2$s, cukup beli paket Permata mana saja dan akumu akan dikirimkan Permata dengan jumlah permata promosi. Semakin banyak Permata untuk digunakan, dibagikan, atau disimpan untuk kebutuhan mendatang!</string>
+    <string name="gem_promo_info_instructions">Antara %1$s dan %2$s, cukup beli paket Permata mana saja dan akumu akan dikirimkan Permata dengan jumlah permata promosi. Semakin banyak Permata untuk digunakan, dibagikan, atau disimpan untuk kebutuhan mendatang!</string>
     <string name="manual_sync_restart">Sinkronisasi manual atau mulai ulang</string>
     <string name="update_app">Perbarui Aplikasi</string>
     <string name="hatch_your_pet">Tetaskan Peliharaanmu</string>
