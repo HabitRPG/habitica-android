@@ -267,16 +267,16 @@
     <string name="choose_recipient_title">Scegli destinatario messaggio</string>
     <string name="action_continue">Continua</string>
     <string name="invited_to_party">Hai ricevuto un invito per unirti a una squadra!</string>
-    <string name="stats_widget_label">Statistiche Habitica</string>
+    <string name="stats_widget_label">Le tue Statistiche</string>
     <string name="add_task">Aggiungi Attività</string>
     <string name="add_habit">Aggiungi Abitudine</string>
     <string name="add_daily">Aggiungi Attività Giornaliera</string>
     <string name="add_todo">Aggiungi una Cosa da Fare</string>
     <string name="add_reward">Aggiungi Ricompensa</string>
     <string name="all_dailies_completed">Hai completato tutte le tue Attività Giornaliere. Ottimo lavoro!</string>
-    <string name="widget_habit_button">Habitica esegui Abitudine</string>
-    <string name="widget_dailies">Habitica Attività Giornaliere</string>
-    <string name="widget_todo_list">Lista di Cose da Fare di Habitica</string>
+    <string name="widget_habit_button">Abitudine singola</string>
+    <string name="widget_dailies">Lista delle Attività Giornaliere</string>
+    <string name="widget_todo_list">Lista delle Cose da Fare</string>
     <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
     <string name="gem_purchase_toolbartitle">Acquista</string>
     <string name="gem_purchase_title">Comprando gemme supporti gli sviluppatori e tieni in vita Habitica</string>
@@ -635,7 +635,7 @@
     <string name="new_msg_party"><![CDATA[La tua squadra, <b>%1$s</b>, ha nuovi messaggi]]></string>
     <string name="unallocated_stats_points"><![CDATA[Hai <b>%1$s Punti Statistica non allocati</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Hai dei nuovi <b>Oggetti Misteriosi</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> hai ricevuto un invito per unirti alla Squadra <b>%2$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color="#925CF3">%2$s</font> hai ricevuto un invito per unirti alla squadra <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Hai ricevuto un invito per la missione <b>%1$s</b>]]></string>
     <string name="join_party_description_guild">Scrivi qui sotto il nome di un amico oppure vai in %s per incontrare potenziali compagni !</string>
     <string name="skill_progress_title">Sto usando un\'abilità</string>
@@ -756,7 +756,7 @@
     <string name="update_app">Aggiorna l\'App</string>
     <string name="manual_sync_restart_description">A volte l\'app non aggiorna automaticamente i contenuti. Prova a scorrere verso il basso per aggiornare o forza la chiusura dell\'app e riaprila.</string>
     <string name="manual_sync_restart">Sincronizzazione o riavvio</string>
-    <string name="clear_cache_description">Per cancellare la cache, apri le impostazioni del telefono. Vai su Archiviazione &gt; App &gt; Habitica e quindi tocca Cancella cache.</string>
+    <string name="clear_cache_description"><![CDATA[Per cancellare la cache, apri le Impostazioni del tuo telefono. Vai su Archiviazione, App e poi Habitica e premi Cancella Cache.]]></string>
     <string name="clear_cache">Cancella la cache</string>
     <string name="hourglasses_description">Le Clessitre Mistiche sono una valuta estremamente rara che si può ottenere solo abbonandosi ad Habitica. Puoi usarle nel Negozio dei Viaggiatori del Tempo per acquistare set di Equipaggiamento per Abbonati passati, Animali esclusivi, Cavalcature, Sfondi animati oe Missioni speciali! Questi vantaggi extra sono un ottimo modo per rimanere motivati durante l\'anno e premiarsi per il lavoro portato al termine.
 \n
@@ -811,7 +811,7 @@
     <string name="support_bug_title">Cerchiamo costantemente di migliorare le nostre app in base al feedback dei giocatori, ma a volte compaiono alcuni bug …</string>
     <string name="lets_go">Partiamo</string>
     <string name="bugs_fixes_description">Qualcosa è andato storto\? Controlla qui se ci sono le risposte che cerchi o contattaci per chiedere aiuto.</string>
-    <string name="bugs_fixes">Bug &amp; Correzioni</string>
+    <string name="bugs_fixes"><![CDATA[Bug e Correzioni]]></string>
     <string name="suggestions_feedback">Suggerimenti e feedback</string>
     <string name="get_help">Ottieni Aiuto</string>
     <string name="contact_us">Contattaci</string>
@@ -953,8 +953,8 @@
     <string name="empty_description_todos_filtered">Non ci sono Cose da Fare visibili con i filtri specificati.</string>
     <string name="empty_title_todos_filtered">Nessuna Cosa da fare</string>
     <string name="getting_started">Per Iniziare</string>
-    <string name="complete_for_gold">Completa per guadagnare &lt;font color=#EE9109&gt;&lt;b&gt;100 oro&lt;/b&gt;&lt;/font&gt;!</string>
-    <string name="onboardingCompleteTitle">Hai guadagnato &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Oro&lt;/b&gt;&lt;/font&gt; per i tuoi sforzi.</string>
+    <string name="complete_for_gold"><![CDATA[Completa per guadagnare <font color="#EE9109"><b>100 Oro</b></font>!]]></string>
+    <string name="onboardingCompleteTitle"><![CDATA[Hai guadagnato <b>5 Medaglie</b> e <font color="#EE9109"><b>100 Oro</b></font> per i tuoi sforzi.]]></string>
     <string name="first_drop_title">Hai trovato nuovi oggetti!</string>
     <string name="go_to_items">Vai agli Oggetti</string>
     <string name="first_drop_explanation2">Vai ai tuoi oggetti e prova a combinare la tua nuova Pozione di Schiusa con un Uovo!</string>
@@ -1127,7 +1127,7 @@
     <string name="damage_pending">%s danno in sospeso</string>
     <string name="discard">Scarta</string>
     <string name="class_confirmation_price">Vuoi cambiare la tua classe in %1$s per %2$d gemme\?</string>
-    <string name="adventure_guide_description_new">Completa questi obbiettivi e guadagnerai &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ori&lt;/b&gt;&lt;/font&gt; quando avrai finito!</string>
+    <string name="adventure_guide_description_new"><![CDATA[Completa questi obbiettivi e guadagnerai <b>5 Medaglie</b> e <font color="#EE9109"><b>100 Oro</b></font> quando avrai finito!]]></string>
     <string name="removed_social_auth">%s disconnesso</string>
     <string name="discard_changes_to_task_message">Sei sicuro/a di voler scartare le modifiche fatte a questa attività\?</string>
     <string name="password_not_matching">Le password inserite non corrispondono</string>
@@ -1554,7 +1554,7 @@
     <string name="rescrubscribe_to_pick_up">Iscriviti di nuovo per riprendere da dove avevi interrotto!</string>
     <string name="gem_cap_extra">%1$d/%2$d Limite Gemme</string>
     <string name="reset_server_confirmation">Vuoi davvero resettare il server e ritornare a quello predefinito di Habitica\? Verrai disconnesso/a.</string>
-    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; hai ricevuto un invito per unirti alla Squadra &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color="#925CF3">%2$s</font> hai ricevuto un invito per unirti al gruppo <b>%1$s</b>]]></string>
     <string name="report_reason_title_message">Perché stai segnalando questo messaggio\?</string>
     <string name="report_reason_title_player">Perché stai segnalando questo giocatore\?</string>
     <string name="report_formatted_name">%1$s
@@ -1694,8 +1694,8 @@
     <string name="a_party_robe">Una Veste da Festa</string>
     <string name="twenty_gems">20 Gemme</string>
     <string name="fifth_week_warning">Questa attività non risulterà in scadenza durante i mesi con meno di %1$ss.</string>
-    <string name="avatar_widget_label">Avatar di Habitica</string>
-    <string name="widget_add_task">Aggiungi Attività di Habitica</string>
-    <string name="widget_add_task_multi">Aggiungi Attività di Habitica</string>
-    <string name="widget_dailies_count">Conteggio Giornaliero di Habitica</string>
+    <string name="avatar_widget_label">Il tuo Avatar</string>
+    <string name="widget_add_task">Aggiungi un\'Attività (Singola)</string>
+    <string name="widget_add_task_multi">Aggiungi un\'Attività (Combinata)</string>
+    <string name="widget_dailies_count">Resoconto Giornaliero</string>
 </resources>
