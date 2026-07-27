@@ -267,16 +267,16 @@
     <string name="choose_recipient_title">Mesaj Alıcısını Seç</string>
     <string name="action_continue">Devam Et</string>
     <string name="invited_to_party">Bir takıma davet edildin!</string>
-    <string name="stats_widget_label">Habitica İstatistikleri</string>
+    <string name="stats_widget_label">İstatistiklerin</string>
     <string name="add_task">Görev Ekle</string>
     <string name="add_habit">Alışkanlık Ekle</string>
     <string name="add_daily">Günlük İş Ekle</string>
     <string name="add_todo">Yapılacak İş Ekle</string>
     <string name="add_reward">Ödül Ekle</string>
     <string name="all_dailies_completed">Tüm günlük işlerini tamamladın. Tebrikler!</string>
-    <string name="widget_habit_button">Habitica Alışkanlığı Yap</string>
-    <string name="widget_dailies">Habitica Günlük İşler</string>
-    <string name="widget_todo_list">Habitica Yapılacaklar Listesi</string>
+    <string name="widget_habit_button">Tek Alışkanlık</string>
+    <string name="widget_dailies">Günlükler Listesi</string>
+    <string name="widget_todo_list">Yapılacaklar Listesi</string>
     <string name="google_services_missing">Google play services bulunamadı.</string>
     <string name="gem_purchase_toolbartitle">Satın al</string>
     <string name="gem_purchase_title">Elmas satın almak geliştiricilere destek verir ve Habitica\'nın çalışmaya devam etmesine yardım eder</string>
@@ -714,7 +714,7 @@
     <string name="lets_get_started">Haydi başlayalım</string>
     <string name="your_progress">Senin İlerlemen</string>
     <string name="delete_checklist_entry">Sil…</string>
-    <string name="complete_for_gold">&lt;font color=#EE9109&gt;&lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazanmak için tamamlayın!</string>
+    <string name="complete_for_gold"><![CDATA[<font color="#EE9109"><b>100 Altın</b></font> kazanmak için tamamlayın!]]></string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
     <string name="buy_all">Hepsini Al</string>
     <string name="animal_ears">Hayvan Kulakları</string>
@@ -963,7 +963,7 @@
     <string name="excessItemsXLeft">Tüm olası evcil hayvanları yumurtadan çıkarmak için yalnızca %1$d %2$s gerekir. %3$d satın almak istediğinizden emin misiniz\?</string>
     <string name="excess_items">Fazla Öğeler</string>
     <string name="onboardingComplete_achievement_title">İlk Katılım Görevlerinizi tamamladınız!</string>
-    <string name="onboardingCompleteTitle">Çabalarınız karşılığında &lt;b&gt;5 Başarı&lt;/b&gt; ve &lt;font color = # EE9109&gt;&lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazandınız.</string>
+    <string name="onboardingCompleteTitle"><![CDATA[Çabalarınız karşılığında <b>5 Başarı</b> ve <font color="#EE9109"><b>100 Altın</b></font> kazandınız.]]></string>
     <string name="purchasedEquipmentDescription">Ekipman pratik veya modaya uygun olabilir. Avatarınıza her türlü avantajı sağlamak için niteliklerinizi yükseltin</string>
     <string name="fedPetDescription">Her evcil hayvanın zevk aldığı belirli bir yemeği vardır! Hangisinin en hızlı şekilde evcil hayvanınızı büyüteceğini bulmak için deneme yapın</string>
     <string name="hatchedPetDescription">Toplanacak o kadar çok Evcil Hayvan var ki, mutlaka bir favoriniz olacak. Onları beslerseniz, büyüyebilirler…</string>
@@ -1212,7 +1212,7 @@
     <string name="create_new_party">Yeni takım oluştur</string>
     <string name="reset_account_title">Sıfırlamak istediğine emin misin\?</string>
     <string name="confirm_reset">Sıfırlamayı doğrula</string>
-    <string name="adventure_guide_description_new">Bu görevleri tamamla ve &lt;b&gt;5 Başarı&lt;/b&gt; ve &lt;font color=#EE9109&gt;&lt;b&gt;100 Altın&lt;/b&gt;&lt;/font&gt; kazanacaksın!</string>
+    <string name="adventure_guide_description_new"><![CDATA[Bu görevleri tamamla ve tamamladığında <b>5 Başarı</b> ve <font color="#EE9109"><b>100 Altın</b></font> kazanacaksın!]]></string>
     <string name="august">Ağustos</string>
     <string name="september">Eylül</string>
     <string name="october">Ekim</string>
@@ -1260,7 +1260,7 @@
     <string name="todo_summary_description">Bu teslim tarihi olmayan **%1$s** bir görev.</string>
     <string name="todo_summary_description_duedate">Bu **%2$s**\'ye kadar olan **%1$s** bir görev.</string>
     <string name="habit_summary_description">Bu **%1$s** olan **%2$s** bir Alışkanlık.</string>
-    <string name="daily_summary_description">Bu **%2$s%3$s** tekrareden **%1$s** bir görev.</string>
+    <string name="daily_summary_description">Bu **%2$s%3$s**.%4$s tekrar eden bir **%1$s** Görevi</string>
     <string name="positive_and_negative">pozitif ve negatif</string>
     <string name="completed_at">%s\'de tamamlandı</string>
     <string name="member_list">Üye Listesi</string>
@@ -1347,7 +1347,7 @@
     <string name="change_email_description">Bu senin Habitica\'ya giriş yaptığın ve bildirim aldığın e-posta adresin.</string>
     <string name="change_username_description">Kullanıcı adları 1-20 karakter arasında olmalıdır; a\'dan z\'ye harfler, 0\'dan 9\'a sayılar, tireler veya alt çizgiler içerebilir.</string>
     <string name="change_display_name">Görünen Adı Değiştir</string>
-    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; seni takımına çağırdı &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color="#925CF3">%2$s</font> seni <b>%1$s</b> grubuna katılman için davet etti]]></string>
     <string name="password_change_info">Şifreler 8 ya da daha çok karakter içermelidir. Şifreni değiştirmek diğer cihazlardan ve kullanıyorsan 3. parti uygulamalardan çıkış yapmana neden olur.</string>
     <string name="confirm_new_password">Yeni Şifreyi Onayla</string>
     <string name="report_message_explanation">Yalnızca [Topluluk Kuralları](https://habitica.com/static/community-guidelines) ve/veya [Hizmet Şartlarını](https://habitica.com/static/terms) ihlal eden gönderileri bildirmelisin. Yanlış bildirimde bulunmak, Habitica\'nın Topluluk Kurallarının ihlalidir.</string>
@@ -1651,10 +1651,10 @@
         <item quantity="one">ÜCRETSİZ Yeniden Doğma Küresi\'ne %d gün kaldı</item>
         <item quantity="other">ÜCRETSİZ Yeniden Doğma Küresi\'ne kalan gün: %d</item>
     </plurals>
-    <string name="server_custom_address_hint">örn. http://localhost:3000</string>
-    <string name="server_url_invalid">Lütfen http:// ya da https:// ile başlayan geçerli bir URL gir</string>
+    <string name="server_custom_address_hint">örn. customserver.habitica.com</string>
+    <string name="server_url_invalid">Lütfen geçerli bir URL girin</string>
     <string name="reset_server_to_default">Varsayılana Sıfırla</string>
-    <string name="reset_server_confirmation">Sunucuyu varsayılan Habitica sunucusuna sıfırlamak istediğine emin misin\? Uygulama yeniden başlatılacak.</string>
+    <string name="reset_server_confirmation">Sunucuyu varsayılan Habitica sunucusuna sıfırlamak istediğine emin misin? Oturumun kapatılacak.</string>
     <string name="rebirth_shop_description">Alır almaz maceran 1. seviye Savaşçı olarak yeniden başlayacak. Başarımların, eşyaların ve ekipmanların korunacak. Görevlerin sarıya sıfırlanacak ama geçmişleri kalacak. Tüm kişisel görev serilerin sıfırlanacak. Altın, deneyim, mana ve kullandığın yeteneklerin etkileri temizlenecek.</string>
     <string name="rebirth_confirm_title">Yeniden Doğuş Küresi\'ni kullanmak istediğine emin misin\?</string>
     <string name="rebirth_confirm_reset_header">Şunları sıfırlayacaksın:</string>
@@ -1684,4 +1684,8 @@
     <string name="rebirth_achievement_description">Yeni bir maceraya başladın! Bu yeniden doğuş senin için %1$d idi, ulaştığın en yüksek seviye ise %2$d oldu.</string>
     <string name="rebirth_achievement_description_max">Yeni bir maceraya başladın! Bu yeniden doğuş senin için %1$d idi, ulaştığın en yüksek seviye ise %2$d veya daha yüksekti.</string>
     <string name="new_message">Yeni ileti</string>
+    <string name="avatar_widget_label">Avatarın</string>
+    <string name="widget_dailies_count">Günlük Özet</string>
+    <string name="widget_add_task">Görev Oluştur (Tek)</string>
+    <string name="widget_add_task_multi">Görev Oluştur (Birleşik)</string>
 </resources>
