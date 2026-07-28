@@ -32,6 +32,6 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : ExtraGe
     override fun configureInfoFragment(fragment: PromoInfoFragment) {
         super.configureInfoFragment(fragment)
         fragment.binding?.promptText?.setText(R.string.fall_promo_info_prompt)
-        fragment.binding?.promptText?.setTextColor("#F78E2F".toColorInt())
+        fragment.binding?.promoBannerSubtitleView?.setTextColor("#FEDEAD".toColorInt())
     }
 }

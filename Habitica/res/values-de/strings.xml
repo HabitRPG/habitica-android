@@ -1535,7 +1535,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="one">jedes Jahr</item>
         <item quantity="other">alle %d Jahre</item>
     </plurals>
-    <string name="faint_loss_description_alt">Du fällst auf Level <b>%1$d</b> zurück, verlierst <b>%2$d</b> Gold und deine Erfahrung ... Du kannst mit harter Arbeit alles wieder zurückerlangen!</string>
+    <string name="faint_loss_description_alt">Du fällst auf Level <b>%1$d</b> zurück, verlierst <b>%2$d</b> Gold und deine Erfahrung … Du kannst mit harter Arbeit alles wieder zurückerlangen!</string>
     <string name="gems_promo_info_limitations_fixed">Diese Aktion gilt nur während des zeitlich begrenzten Events. Das Event beginnt am %1$s (%2$s) und endet am %3$s (%4$s). Die Aktion gilt nur für Edelsteine welche du für dich selbst kaufst.</string>
     <string name="task_summary">Zusammenfassung der Aufgaben</string>
     <string name="habit_summary_description">Dies ist eine **%1$s** Gewohnheit, die **%2$s** ist.</string>

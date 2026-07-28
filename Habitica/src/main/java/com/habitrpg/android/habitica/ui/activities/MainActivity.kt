@@ -223,7 +223,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager ?: return@registerForActivityResult
                 if (!alarmManager.canScheduleExactAlarms()) {
                     val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null))
+                    intent.data = Uri.fromParts("package", applicationContext?.packageName, null)
                     startActivity(intent)
                 }
             }

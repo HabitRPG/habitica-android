@@ -21,7 +21,7 @@ abstract class HabiticaPromotion {
     val isActive: Boolean
         get() {
             val now = Date()
-            if (BuildConfig.TESTING_LEVEL == "staff") {
+            if (BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.DEBUG) {
                 return startDate.before(now)
             }
             return startDate.before(now) && endDate.after(now)
@@ -34,6 +34,7 @@ abstract class HabiticaPromotion {
 
     abstract fun pillBackgroundDrawable(context: Context): Drawable
 
+    abstract fun screenBackgroundColor(context: Context): Int
     abstract fun backgroundColor(context: Context): Int
 
     abstract fun promoBackgroundDrawable(context: Context): Drawable

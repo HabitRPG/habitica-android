@@ -13,9 +13,9 @@
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginTop="8dp"
-        android:paddingStart="@dimen/spacing_large"
-        android:paddingEnd="@dimen/spacing_large">
+        android:paddingTop="20dp"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp">
         <ImageView
             android:id="@+id/title_image_view"
             android:layout_width="wrap_content"
@@ -26,8 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            style="@style/SubHeader1"/>
         <ImageView
             android:id="@+id/description_image_view"
             android:layout_width="wrap_content"

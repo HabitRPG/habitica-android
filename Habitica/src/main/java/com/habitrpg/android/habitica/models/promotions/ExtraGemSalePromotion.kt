@@ -21,14 +21,17 @@ import java.util.Locale
 import java.util.TimeZone
 
 abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
-    override val promoType: PromoType
-        get() = PromoType.GEMS_AMOUNT
-    override val startDate: Date = startDate ?: DateUtils.createDate(2020, 8, 22)
-    override val endDate: Date = endDate ?: DateUtils.createDate(2020, 8, 30)
+    override val promoType = PromoType.GEMS_AMOUNT
+    override val startDate = startDate ?: DateUtils.createDate(2020, 8, 22)
+    override val endDate = endDate ?: DateUtils.createDate(2020, 8, 30)
 
     abstract val titleRes: Int
 
     open val amountTextColor = "#FEDEAD".toColorInt()
+
+    override fun screenBackgroundColor(context: Context): Int {
+        return ContextCompat.getColor(context, R.color.gray_1)
+    }
 
     override fun backgroundColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.gray_10)
@@ -123,7 +126,7 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.gemLabel.setTextColor(amountTextColor)
         binding.footerTextView.visibility = View.VISIBLE
         binding.footerTextView.text = context.getString(R.string.usually_x_gems, regularAmount)
-        binding.gemImage.setBackgroundResource(R.drawable.circle_gray_1)
+        binding.gemImage.setBackgroundResource(R.drawable.circle_gray_50)
         when (regularAmount) {
             4 -> {
                 binding.gemAmount.text = "5"
@@ -154,47 +157,48 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
 
     override fun configureInfoFragment(fragment: PromoInfoFragment) {
         val context = fragment.context ?: return
-        fragment.binding?.promoBanner?.background = promoBackgroundDrawable(context)
-        fragment.binding?.promoBannerLeftImage?.setImageDrawable(
+        val binding = fragment.binding ?: return
+        binding.root.setBackgroundColor(screenBackgroundColor(context))
+        binding.promoBanner.background = promoBackgroundDrawable(context)
+        binding.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
                 promoInfoLeftRes
             )
         )
-        fragment.binding?.promoBannerRightImage?.setImageDrawable(
+        binding.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
                 promoInfoRightRes
             )
         )
-        fragment.binding?.promoBannerTitleImage?.setImageDrawable(
+        binding.promoBannerTitleImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
                 titleRes
             )
         )
-        fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
-        fragment.binding?.promoBannerDurationView?.setTextColor("#FEDEAD".toColorInt())
+        binding.promoBannerSubtitleView.setText(R.string.limited_event)
+        binding.promoBannerDurationView.setTextColor("#FEDEAD".toColorInt())
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        fragment.binding?.promoBannerDurationView?.text =
+        binding.promoBannerDurationView.text =
             context.getString(
                 R.string.x_to_y,
                 formatter.format(startDate),
                 formatter.format(endDate)
             )
-        fragment.binding?.promoBannerDurationView?.setTextColor(
+        binding.promoBannerDurationView.setTextColor(
             ContextCompat.getColor(
                 context,
                 R.color.white
             )
         )
-        fragment.binding?.promptText?.setTextColor("#F78E2F".toColorInt())
-        fragment.binding?.promptButton?.background = buttonDrawable(context)
-        fragment.binding?.promptButton?.setText(R.string.view_gem_bundles)
-        fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))
-        fragment.binding?.promptButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
+        binding.promptButton.background = buttonDrawable(context)
+        binding.promptButton.setText(R.string.view_gem_bundles)
+        binding.promptButton.setTextColor(ContextCompat.getColor(context, R.color.black))
+        binding.promptButton.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
 
-        fragment.binding?.instructionDescriptionView?.text =
+        binding.instructionDescriptionView.text =
             context.getString(
                 R.string.gem_promo_info_instructions,
                 formatter.format(startDate),
@@ -204,7 +208,8 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
             SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.LONG)
         val utcTimeFormatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.LONG)
         utcTimeFormatter.timeZone = TimeZone.getTimeZone("UTC")
-        fragment.binding?.limitationsDescriptionView?.text =
+        fragment.activity?.findViewById<View>(R.id.appbar)?.setBackgroundColor(screenBackgroundColor(context))
+        binding.limitationsDescriptionView.text =
             context.getString(
                 R.string.gems_promo_info_limitations_fixed,
                 limitationsFormatter.format(startDate),

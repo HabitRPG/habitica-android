@@ -41,6 +41,6 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Extra
     override fun configureInfoFragment(fragment: PromoInfoFragment) {
         super.configureInfoFragment(fragment)
         fragment.binding?.promptText?.setText(R.string.spooky_promo_info_prompt)
-        fragment.binding?.promptText?.setTextColor("#F78E2F".toColorInt())
+        fragment.binding?.promoBannerSubtitleView?.setTextColor("#D5C8FF".toColorInt())
     }
 }

@@ -38,7 +38,7 @@ class GemPurchaseActivity : PurchaseActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val promo = appConfigManager.activePromo()
         val color = if (!showSubscription && promo != null) {
-            ContextCompat.getColor(this, R.color.gray_1)
+            promo.screenBackgroundColor(this)
         } else {
             ContextCompat.getColor(this, R.color.brand_300)
         }

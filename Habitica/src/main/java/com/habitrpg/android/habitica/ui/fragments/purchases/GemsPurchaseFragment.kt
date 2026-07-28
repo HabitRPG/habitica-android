@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -94,8 +93,8 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
                     promo.configureGemView(it.gems42View.binding, 42)
                     promo.configureGemView(it.gems84View.binding, 84)
                 }
-                binding?.root?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray_1))
-                requireActivity().findViewById<View>(R.id.appbar).setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray_1))
+                binding?.root?.setBackgroundColor(promo.screenBackgroundColor(requireContext()))
+                requireActivity().findViewById<View>(R.id.appbar).setBackgroundColor(promo.screenBackgroundColor(requireContext()))
             }
             binding?.promoBanner?.setOnClickListener {
                 val fragment = PromoInfoFragment()

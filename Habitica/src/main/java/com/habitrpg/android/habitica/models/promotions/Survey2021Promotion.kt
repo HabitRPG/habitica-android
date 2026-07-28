@@ -28,6 +28,10 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
         return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_pill_bg) ?: ShapeDrawable()
     }
 
+    override fun screenBackgroundColor(context: Context): Int {
+        return ContextCompat.getColor(context, R.color.blue_10)
+    }
+
     override fun backgroundColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.blue_1)
     }

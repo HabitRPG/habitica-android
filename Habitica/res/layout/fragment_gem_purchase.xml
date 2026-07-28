@@ -302,7 +302,7 @@
                 android:textAllCaps="false" />
     </LinearLayout>
 
-        <ImageView
+        <com.habitrpg.android.habitica.ui.views.AspectRatioWidthImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/gem_footer_top"
@@ -340,7 +340,7 @@
                 android:textColor="@color/yellow_1"
                 android:textAllCaps="false" />
         </LinearLayout>
-        <ImageView
+        <com.habitrpg.android.habitica.ui.views.AspectRatioWidthImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/gem_footer_bottom"

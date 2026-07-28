@@ -233,6 +233,7 @@
     </string-array>
 
     <string-array name="active_promo_keys">
+        <item />
         <item>spring_extra_gems</item>
         <item>summer_extra_gems</item>
         <item>fall_extra_gems</item>
@@ -242,6 +243,7 @@
     </string-array>
 
     <string-array name="active_promo">
+        <item>None (Follow Server)</item>
         <item>Spring Extra Gems</item>
         <item>Summer Extra Gems</item>
         <item>Fall Extra Gems</item>

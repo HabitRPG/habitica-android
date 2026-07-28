@@ -843,10 +843,12 @@
 
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">
         <item name="android:backgroundTint">@color/yellow_100</item>
+        <item name="android:textColor">@color/yellow_1</item>
     </style>
 
     <style name="HabiticaButton.Yellow.Small" parent="HabiticaButton.Small">
         <item name="android:backgroundTint">@color/yellow_100</item>
+        <item name="android:textColor">@color/yellow_1</item>
     </style>
 
     <style name="HabiticaButton.White" parent="HabiticaButton">

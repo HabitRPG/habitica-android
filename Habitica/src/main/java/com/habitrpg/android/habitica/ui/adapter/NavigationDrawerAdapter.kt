@@ -208,9 +208,13 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
                     pillView.background = drawerItem.pillBackground ?: ContextCompat.getDrawable(
                         itemView.context,
-                        R.drawable.pill_bg_purple_200
+                        R.drawable.pill_bg_purple
                     )
-                    pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
+                    if (drawerItem.pillBackground != null) {
+                        pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
+                    } else {
+                        pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
+                    }
                     pillView.setPadding(pL, pT, pR, pB)
                 }
             } else {

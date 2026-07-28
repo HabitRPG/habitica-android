@@ -31,6 +31,10 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_pill_bg) ?: ShapeDrawable()
     }
 
+    override fun screenBackgroundColor(context: Context): Int {
+        return ContextCompat.getColor(context, R.color.gray_1)
+    }
+
     override fun backgroundColor(context: Context): Int {
         return ContextCompat.getColor(context, R.color.gray_10)
     }
