@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -260,6 +261,15 @@ class TaskFormActivity : BaseActivity() {
                 checkCanSave()
             }
         )
+        binding.spiWarningText.paintFlags = binding.spiWarningText.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        val spiColor =
+            if (forcedTheme == "taskform" || forcedTheme == "maroon") {
+                Color.WHITE
+            } else {
+                getThemeColor(R.attr.toolbarContentColor)
+            }
+        binding.spiWarningText.setTextColor(spiColor)
+        binding.spiWarningIcon.imageTintList = ColorStateList.valueOf(spiColor)
         binding.spiWarningRow.setOnClickListener { showSPIDialog() }
         binding.textEditText.onFocusChangeListener =
             View.OnFocusChangeListener { _, isFocused ->
@@ -912,12 +922,12 @@ class TaskFormActivity : BaseActivity() {
 
     private fun showSPIDialog() {
         val alert = HabiticaAlertDialog(this)
-        alert.setTitle(R.string.avoid_spi)
+        alert.setTitle(R.string.avoid_spi_title)
         alert.setMessage(R.string.avoid_spi_message)
-        alert.addButton(R.string.privacy_policy, true) { _, _ ->
+        alert.addButton(R.string.got_it, true)
+        alert.addButton(R.string.review_privacy_policy, false) { _, _ ->
             openBrowserLink("https://habitica.com/static/privacy")
         }
-        alert.addButton(R.string.close, false)
         alert.show()
     }
 

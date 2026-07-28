@@ -1274,7 +1274,10 @@
     <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="avoid_spi">Avoid SPI</string>
+    <string name="avoid_spi_title">Sensitive Personal Information</string>
     <string name="avoid_spi_message">For your privacy, avoid sharing sensitive personal information (SPI) when using Habitica. All account data, including tasks, is saved to our servers so you can access it from any device.</string>
+    <string name="got_it">Got it</string>
+    <string name="review_privacy_policy">Review Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="damage_pending">%s Damage pending</string>
     <string name="x_remaining">%s remaining</string>
