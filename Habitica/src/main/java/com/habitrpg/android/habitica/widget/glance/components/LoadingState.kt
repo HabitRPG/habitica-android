@@ -16,10 +16,11 @@ fun WidgetLoadingContent(
     backgroundColor: ColorProvider = WidgetColors.cardBackground,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .cornerRadius(17.5.dp)
-            .background(backgroundColor),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .cornerRadius(17.5.dp)
+                .background(backgroundColor),
         content = {},
     )
 }

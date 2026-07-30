@@ -5,7 +5,9 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.Date
 
-open class Customization : RealmObject(), BaseObject {
+open class Customization :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var id: String? = null
     var identifier: String? = null
@@ -49,7 +51,7 @@ open class Customization : RealmObject(), BaseObject {
 
     fun getIconName(
         userSize: String?,
-        hairColor: String?
+        hairColor: String?,
     ): String? {
         if (this.type == "hair" && this.category == "color") {
             return "icon_color_hair_bangs_1_$identifier"
@@ -60,15 +62,21 @@ open class Customization : RealmObject(), BaseObject {
 
     fun getImageName(
         userSize: String?,
-        hairColor: String?
+        hairColor: String?,
     ): String? {
         if (!this.isValid) {
             return null
         }
         if (identifier?.isNotBlank() != true || identifier == "none" || identifier == "0") return null
         return when (type) {
-            "skin" -> return "skin_$identifier"
-            "shirt" -> return userSize + "_shirt_" + identifier
+            "skin" -> {
+                return "skin_$identifier"
+            }
+
+            "shirt" -> {
+                return userSize + "_shirt_" + identifier
+            }
+
             "hair" -> {
                 when (this.category) {
                     "color" -> "hair_bangs_1_$identifier"
@@ -77,15 +85,21 @@ open class Customization : RealmObject(), BaseObject {
                 }
             }
 
-            "background" -> return "background_$identifier"
-            "chair" -> return "chair_$identifier"
-            else -> null
+            "background" -> {
+                return "background_$identifier"
+            }
+
+            "chair" -> {
+                return "chair_$identifier"
+            }
+
+            else -> {
+                null
+            }
         }
     }
 
-    fun isUsable(purchased: Boolean): Boolean {
-        return price == null || price == 0 || purchased
-    }
+    fun isUsable(purchased: Boolean): Boolean = price == null || price == 0 || purchased
 
     val path: String
         get() {
@@ -96,7 +110,7 @@ open class Customization : RealmObject(), BaseObject {
                         path +
                             this.customizationSet?.substring(
                                 5,
-                                7
+                                7,
                             ) + this.customizationSet?.substring(0, 4)
                     } else {
                         path + "." + this.customizationSet

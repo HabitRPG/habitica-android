@@ -7,7 +7,10 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Outfit : RealmObject(), BaseObject, AvatarOutfit {
+open class Outfit :
+    RealmObject(),
+    BaseObject,
+    AvatarOutfit {
     override var armor: String = ""
     override var back: String = ""
     override var body: String = ""

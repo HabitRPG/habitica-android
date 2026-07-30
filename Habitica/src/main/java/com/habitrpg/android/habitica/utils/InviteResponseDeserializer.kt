@@ -11,21 +11,24 @@ class InviteResponseDeserializer : JsonDeserializer<InviteResponse> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
-    ): InviteResponse {
-        return when {
+        context: JsonDeserializationContext,
+    ): InviteResponse =
+        when {
             json.isJsonPrimitive && json.asJsonPrimitive.isString -> {
                 InviteResponse.EmailInvite(json.asString)
             }
+
             json.isJsonObject -> {
                 val obj = json.asJsonObject
                 InviteResponse.UserInvite(
-                    id      = obj["id"].asString,
-                    name    = obj["name"].asString,
-                    inviter = obj["inviter"].asString
+                    id = obj["id"].asString,
+                    name = obj["name"].asString,
+                    inviter = obj["inviter"].asString,
                 )
             }
-            else -> throw JsonParseException("Unexpected InviteResponse: $json")
+
+            else -> {
+                throw JsonParseException("Unexpected InviteResponse: $json")
+            }
         }
-    }
 }

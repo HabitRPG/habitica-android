@@ -21,14 +21,10 @@ import kotlin.random.Random
 object Animations {
     private fun randomFloat(
         min: Float,
-        max: Float
-    ): Float {
-        return min + Random.nextFloat() * (max - min)
-    }
+        max: Float,
+    ): Float = min + Random.nextFloat() * (max - min)
 
-    private fun animationScale(): Long {
-        return if (DataBindingUtils.disableAnimations) 0L else 1L
-    }
+    private fun animationScale(): Long = if (DataBindingUtils.disableAnimations) 0L else 1L
 
     fun bobbingAnimation(amount: Float = 8f): Animation {
         val anim = TranslateAnimation(0f, 0f, -amount, amount)
@@ -43,13 +39,30 @@ object Animations {
         val anim = AnimationSet(true)
         anim.interpolator = LinearInterpolator()
 
-        val translate = TranslateAnimation(randomFloat(-2f * intensity, 0f), randomFloat(0f, 2f * intensity), randomFloat(-1f * intensity, 0f), randomFloat(0f, 1f * intensity))
+        val translate =
+            TranslateAnimation(
+                randomFloat(-2f * intensity, 0f),
+                randomFloat(0f, 2f * intensity),
+                randomFloat(-1f * intensity, 0f),
+                randomFloat(
+                    0f,
+                    1f * intensity,
+                ),
+            )
         translate.duration = 70 * animationScale()
         translate.repeatCount = 5
         translate.repeatMode = REVERSE
         anim.addAnimation(translate)
 
-        val rotate = RotateAnimation(randomFloat(-0.4f * intensity, 0f), randomFloat(0f, 0.4f * intensity), RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f)
+        val rotate =
+            RotateAnimation(
+                randomFloat(-0.4f * intensity, 0f),
+                randomFloat(0f, 0.4f * intensity),
+                RELATIVE_TO_SELF,
+                0.5f,
+                RELATIVE_TO_SELF,
+                0.5f,
+            )
         rotate.duration = 70 * animationScale()
         rotate.repeatCount = 5
         rotate.repeatMode = REVERSE
@@ -60,7 +73,7 @@ object Animations {
 
     fun circularReveal(
         view: View,
-        duration: Long = 300
+        duration: Long = 300,
     ) {
         if (!view.isAttachedToWindow) return
         val cx = view.width / 2
@@ -75,7 +88,7 @@ object Animations {
 
     fun circularHide(
         view: View,
-        duration: Long = 300
+        duration: Long = 300,
     ) {
         val cx = view.width / 2
         val cy = view.height / 2

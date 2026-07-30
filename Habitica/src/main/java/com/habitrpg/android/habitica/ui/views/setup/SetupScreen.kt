@@ -105,10 +105,12 @@ import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
 @Composable
-fun SetupScreen(authViewModel: AuthenticationViewModel,
-                viewModel: SetupViewModel = viewModel(),
-                customizationRepository: SetupCustomizationRepository,
-                onNextOnboardingStep: () -> Unit) {
+fun SetupScreen(
+    authViewModel: AuthenticationViewModel,
+    viewModel: SetupViewModel = viewModel(),
+    customizationRepository: SetupCustomizationRepository,
+    onNextOnboardingStep: () -> Unit,
+) {
     val username by authViewModel.username
     var currentStep by remember { mutableIntStateOf(0) }
 
@@ -125,15 +127,16 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
     var selectedCustomizationSubcategory by remember { mutableStateOf("") }
     var selectedCustomizationSubcategoryIndex by remember { mutableIntStateOf(0) }
 
-    val taskCategories = listOf(
-        SetupViewModel.TYPE_WORK to stringResource(R.string.setup_group_work),
-        SetupViewModel.TYPE_EXERCISE to stringResource(R.string.setup_group_exercise),
-        SetupViewModel.TYPE_HEALTH to stringResource(R.string.setup_group_health),
-        SetupViewModel.TYPE_SCHOOL to stringResource(R.string.setup_group_school),
-        SetupViewModel.TYPE_TEAMS to stringResource(R.string.setup_group_teams),
-        SetupViewModel.TYPE_CHORES to stringResource(R.string.setup_group_chores),
-        SetupViewModel.TYPE_CREATIVITY to stringResource(R.string.setup_group_creativity),
-    )
+    val taskCategories =
+        listOf(
+            SetupViewModel.TYPE_WORK to stringResource(R.string.setup_group_work),
+            SetupViewModel.TYPE_EXERCISE to stringResource(R.string.setup_group_exercise),
+            SetupViewModel.TYPE_HEALTH to stringResource(R.string.setup_group_health),
+            SetupViewModel.TYPE_SCHOOL to stringResource(R.string.setup_group_school),
+            SetupViewModel.TYPE_TEAMS to stringResource(R.string.setup_group_teams),
+            SetupViewModel.TYPE_CHORES to stringResource(R.string.setup_group_chores),
+            SetupViewModel.TYPE_CREATIVITY to stringResource(R.string.setup_group_creativity),
+        )
     val selectedTaskCategories by viewModel.selectedTaskCategories.collectAsState()
 
     val img = ImageBitmap.imageResource(R.drawable.border_pixelated)
@@ -141,15 +144,16 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
     val bgColorTop = colorResource(R.color.brand_100)
     val bgColorMiddle = colorResource(R.color.brand_200)
     val bgColorBottom = colorResource(R.color.brand_300)
-    val pixelImage = remember {
-        ShaderBrush(
-            ImageShader(
-                img,
-                TileMode.Repeated,
-                TileMode.Repeated
+    val pixelImage =
+        remember {
+            ShaderBrush(
+                ImageShader(
+                    img,
+                    TileMode.Repeated,
+                    TileMode.Repeated,
+                ),
             )
-        )
-    }
+        }
 
     var userChangeCounter by remember { mutableIntStateOf(0) }
     val user by viewModel.user.collectAsState()
@@ -166,34 +170,36 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
         Box(
             Modifier
                 .fillMaxSize()
-                .background(colorResource(R.color.brand_300))
+                .background(colorResource(R.color.brand_300)),
         )
         return
     }
 
-    val text = if (currentStep == 0) {
-        stringResource(R.string.onboarding_step_avatar)
-    } else {
-        stringResource(R.string.onboarding_step_tasks)
-    }
+    val text =
+        if (currentStep == 0) {
+            stringResource(R.string.onboarding_step_avatar)
+        } else {
+            stringResource(R.string.onboarding_step_tasks)
+        }
     Box(
         Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .background(Color(0xFFC7E7FD))
-                .padding(
-                    top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
-                )
-                .padding(top = 48.dp)
+            modifier =
+                Modifier
+                    .background(Color(0xFFC7E7FD))
+                    .padding(
+                        top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding(),
+                    ).padding(top = 48.dp),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(bgColorMiddle)
-                    .weight(1f)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(bgColorMiddle)
+                        .weight(1f),
             ) {
                 Box(
                     Modifier
@@ -204,10 +210,10 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                                 ImageShader(
                                     ImageBitmap.imageResource(R.drawable.stable_background_spring),
                                     TileMode.Repeated,
-                                    TileMode.Repeated
-                                )
-                            )
-                        )
+                                    TileMode.Repeated,
+                                ),
+                            ),
+                        ),
                 ) {
                     Box(
                         Modifier
@@ -217,9 +223,9 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                             .drawBehind {
                                 drawRect(
                                     pixelImage,
-                                    colorFilter = ColorFilter.tint(if (currentStep == 0) bgColorTop else bgColorMiddle)
+                                    colorFilter = ColorFilter.tint(if (currentStep == 0) bgColorTop else bgColorMiddle),
                                 )
-                            }
+                            },
                     )
                 }
 
@@ -229,19 +235,24 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                             .fillMaxWidth()
                             .background(bgColorTop)
                             .padding(top = 170.dp)
-                            .padding(bottom = 26.dp)
+                            .padding(bottom = 26.dp),
                     ) {
-                        CustomizationCategoryView(customizationRepository,
+                        CustomizationCategoryView(
+                            customizationRepository,
                             selectedCustomizationCategory,
                             selectedCustomizationSubcategory,
                             selectedCustomizationSubcategoryIndex,
                             viewModel.getActiveCustomization(selectedCustomizationCategory, selectedCustomizationSubcategory),
-                            user, { category, index ->
+                            user,
+                            { category, index ->
                                 selectedCustomizationSubcategory = category
                                 selectedCustomizationSubcategoryIndex = index
-                        }, {
-                            viewModel.equipCustomization(it)
-                                userChangeCounter++                       })
+                            },
+                            {
+                                viewModel.equipCustomization(it)
+                                userChangeCounter++
+                            },
+                        )
                     }
                 }
                 AnimatedContent(currentStep, modifier = Modifier.weight(1f)) {
@@ -250,25 +261,26 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                             selectedCustomizationCategory,
                             { selectedCategory ->
                                 selectedCustomizationCategory = selectedCategory
-                                selectedCustomizationSubcategory = when (selectedCustomizationCategory) {
-                                    SetupCustomizationRepository.CATEGORY_SKIN -> SetupCustomizationRepository.SUBCATEGORY_COLOR
-                                    SetupCustomizationRepository.CATEGORY_HAIR -> SetupCustomizationRepository.SUBCATEGORY_COLOR
-                                    SetupCustomizationRepository.CATEGORY_BODY -> SetupCustomizationRepository.SUBCATEGORY_SHIRT
-                                    SetupCustomizationRepository.CATEGORY_EXTRAS -> SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
-                                    else -> ""
-                                }
+                                selectedCustomizationSubcategory =
+                                    when (selectedCustomizationCategory) {
+                                        SetupCustomizationRepository.CATEGORY_SKIN -> SetupCustomizationRepository.SUBCATEGORY_COLOR
+                                        SetupCustomizationRepository.CATEGORY_HAIR -> SetupCustomizationRepository.SUBCATEGORY_COLOR
+                                        SetupCustomizationRepository.CATEGORY_BODY -> SetupCustomizationRepository.SUBCATEGORY_SHIRT
+                                        SetupCustomizationRepository.CATEGORY_EXTRAS -> SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
+                                        else -> ""
+                                    }
                                 selectedCustomizationSubcategoryIndex = 0
-                            }
+                            },
                         )
                     } else {
-                            OnboardingTaskSelector(
-                                taskCategories,
-                                selectedTaskCategories,
-                                selectCategory = { category ->
-                                    viewModel.selectTaskCategory(category)
-                                },
-                                modifier = Modifier.padding(top = 120.dp)
-                            )
+                        OnboardingTaskSelector(
+                            taskCategories,
+                            selectedTaskCategories,
+                            selectCategory = { category ->
+                                viewModel.selectTaskCategory(category)
+                            },
+                            modifier = Modifier.padding(top = 120.dp),
+                        )
                     }
                 }
             }
@@ -280,66 +292,73 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
                     .drawBehind {
                         drawRect(
                             pixelImage,
-                            colorFilter = ColorFilter.tint(bgColorBottom)
+                            colorFilter = ColorFilter.tint(bgColorBottom),
                         )
-                    }
+                    },
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .background(bgColorBottom)
-                    .animateContentSize()
-                    .fillMaxWidth()
-                    .padding(
-                        bottom = WindowInsets.systemBars.asPaddingValues()
-                            .calculateBottomPadding()
-                    )
+                modifier =
+                    Modifier
+                        .background(bgColorBottom)
+                        .animateContentSize()
+                        .fillMaxWidth()
+                        .padding(
+                            bottom =
+                                WindowInsets.systemBars
+                                    .asPaddingValues()
+                                    .calculateBottomPadding(),
+                        ),
             ) {
                 Row(
                     Modifier
                         .wrapContentHeight()
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     repeat(2) { iteration ->
                         val color =
                             (if (currentStep == iteration) Color.White else Color.Black).copy(
-                                alpha = 0.4f
+                                alpha = 0.4f,
                             )
                         Box(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .rotate(45f)
-                                .clip(RectangleShape)
-                                .background(color)
-                                .size(8.dp)
+                            modifier =
+                                Modifier
+                                    .padding(8.dp)
+                                    .rotate(45f)
+                                    .clip(RectangleShape)
+                                    .background(color)
+                                    .size(8.dp),
                         )
                     }
                 }
                 Button(
                     onClick = {
-                        currentStep = if (currentStep == 0) {
-                            1
-                        } else {
-                            2
-                        }
+                        currentStep =
+                            if (currentStep == 0) {
+                                1
+                            } else {
+                                2
+                            }
                     },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(R.color.white),
-                        contentColor = colorResource(R.color.gray_50)
-                    ),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = colorResource(R.color.white),
+                            contentColor = colorResource(R.color.gray_50),
+                        ),
                     shape = HabiticaTheme.shapes.large,
                     contentPadding = PaddingValues(15.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .padding(bottom = 18.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp)
+                            .padding(bottom = 18.dp),
                 ) {
                     Text(
                         stringResource(if (currentStep == 0) R.string.next_button else R.string.finish),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
             }
@@ -347,66 +366,75 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .padding(
-                    top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
-                )
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+                    .padding(
+                        top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding(),
+                    ),
         ) {
             Text(
                 "@${ user?.username ?: username }",
                 color = colorResource(R.color.brand_600),
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .border(
-                        6.dp,
-                        colorResource(R.color.brand_400),
-                        shape = RoundedCornerShape(14.dp)
-                    )
-                    .padding(6.dp)
-                    .background(
-                        colorResource(R.color.brand_50),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(horizontal = 20.dp, vertical = 12.dp)
-                    .widthIn(min = 120.dp)
+                modifier =
+                    Modifier
+                        .border(
+                            6.dp,
+                            colorResource(R.color.brand_400),
+                            shape = RoundedCornerShape(14.dp),
+                        ).padding(6.dp)
+                        .background(
+                            colorResource(R.color.brand_50),
+                            shape = RoundedCornerShape(8.dp),
+                        ).padding(horizontal = 20.dp, vertical = 12.dp)
+                        .widthIn(min = 120.dp),
             )
             key(userChangeCounter) {
                 ComposableAvatarView(
-                    user, null, showBackground = false, showPet = false, showMount = false,
-                    modifier = Modifier.size(120.dp).padding(top = 20.dp, end = 12.dp)
+                    user,
+                    null,
+                    showBackground = false,
+                    showPet = false,
+                    showMount = false,
+                    modifier = Modifier.size(120.dp).padding(top = 20.dp, end = 12.dp),
                 )
             }
         }
 
         SpeechBubble(
-            text, { Text("Justin") },
+            text,
+            { Text("Justin") },
             npc = {
                 Image(painterResource(R.drawable.justin_textbox), null)
-            }, modifier = Modifier
+            },
+            modifier =
+                Modifier
                     .padding(horizontal = 30.dp)
                     .padding(top = 170.dp)
                     .padding(
-                        top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
-                    )
+                        top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding(),
+                    ),
         )
         AnimatedVisibility(
             currentStep != 0,
-            enter = fadeIn(), exit = fadeOut(),
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .padding(
-                    top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding()
-                )
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier =
+                Modifier
+                    .padding(top = 12.dp)
+                    .padding(
+                        top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding(),
+                    ),
         ) {
             Button(
                 {
                     currentStep = 0
                 },
                 colors = ButtonDefaults.textButtonColors(),
-                modifier = Modifier.align(Alignment.TopStart)
+                modifier = Modifier.align(Alignment.TopStart),
             ) {
                 Image(
                     painterResource(R.drawable.arrow_back),
@@ -418,16 +446,19 @@ fun SetupScreen(authViewModel: AuthenticationViewModel,
         AnimatedVisibility(
             currentStep == 2,
             enter = expandVertically(expandFrom = Alignment.Bottom) + fadeIn(),
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
         ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(bgColorBottom)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(bgColorBottom),
             ) {
-                AnimatedVisibility(currentStep == 2,
-                    enter = fadeIn(tween(300, delayMillis = 400))) {
+                AnimatedVisibility(
+                    currentStep == 2,
+                    enter = fadeIn(tween(300, delayMillis = 400)),
+                ) {
                     HabiticaCircularProgressView(indicatorSize = 75.dp)
                 }
             }
@@ -440,14 +471,16 @@ fun OnboardingTaskSelector(
     taskCategories: List<Pair<String, String>>,
     selectedCategories: Set<String>,
     selectCategory: (String) -> Unit,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier,
+) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 160.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         contentPadding = PaddingValues(horizontal = 19.dp),
-        modifier = modifier
-            .fillMaxSize()
+        modifier =
+            modifier
+                .fillMaxSize(),
     ) {
         items(taskCategories) { category ->
             val isSelected = selectedCategories.contains(category.first)
@@ -456,21 +489,24 @@ fun OnboardingTaskSelector(
             val borderWidth by transition.animateDp({
                 tween(300)
             }) { if (it) 4.dp else 0.dp }
-            val m = Modifier
-                .border(borderWidth, borderColor, RoundedCornerShape(30.dp))
+            val m =
+                Modifier
+                    .border(borderWidth, borderColor, RoundedCornerShape(30.dp))
             Text(
                 category.second,
                 textAlign = TextAlign.Center,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
                 color = if (isSelected) colorResource(R.color.brand_200) else colorResource(R.color.white),
-                modifier = m
-                    .fillMaxWidth()
-                    .background(if (isSelected) colorResource(R.color.white) else colorResource(R.color.brand_100), RoundedCornerShape(30.dp))
-                    .clickable {
-                        selectCategory(category.first)
-                    }
-                    .padding(16.dp)
+                modifier =
+                    m
+                        .fillMaxWidth()
+                        .background(
+                            if (isSelected) colorResource(R.color.white) else colorResource(R.color.brand_100),
+                            RoundedCornerShape(30.dp),
+                        ).clickable {
+                            selectCategory(category.first)
+                        }.padding(16.dp),
             )
         }
     }
@@ -481,15 +517,15 @@ fun CustomizationSubcategorySelector(
     selectedCategory: String,
     selectedTabIndex: Int,
     selectTab: (Int, String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val unselected = Color.White.copy(0.5f)
     AnimatedContent(selectedCategory, modifier = modifier) {
         ProvideTextStyle(
             TextStyle(
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Normal
-            )
+                fontWeight = FontWeight.Normal,
+            ),
         ) {
             TabRow(
                 selectedTabIndex,
@@ -502,10 +538,11 @@ fun CustomizationSubcategorySelector(
                             Modifier.tabIndicatorOffset(positions[selectedTabIndex]),
                             width = 60.dp,
                             height = 2.dp,
-                            color = colorResource(R.color.brand_400)
+                            color = colorResource(R.color.brand_400),
                         )
                     }
-                }) {
+                },
+            ) {
                 when (it) {
                     SetupCustomizationRepository.CATEGORY_BODY -> {
                         Tab(
@@ -514,12 +551,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     0,
-                                    SetupCustomizationRepository.SUBCATEGORY_SHIRT
+                                    SetupCustomizationRepository.SUBCATEGORY_SHIRT,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_shirt).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                     }
@@ -531,12 +569,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     0,
-                                    SetupCustomizationRepository.SUBCATEGORY_COLOR
+                                    SetupCustomizationRepository.SUBCATEGORY_COLOR,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_hair_color).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                         Tab(
@@ -545,12 +584,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     1,
-                                    SetupCustomizationRepository.SUBCATEGORY_BANGS
+                                    SetupCustomizationRepository.SUBCATEGORY_BANGS,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_hair_bangs).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                         Tab(
@@ -559,12 +599,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     2,
-                                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL
+                                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_hair_ponytail).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                     }
@@ -576,12 +617,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     0,
-                                    SetupCustomizationRepository.SUBCATEGORY_COLOR
+                                    SetupCustomizationRepository.SUBCATEGORY_COLOR,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_skin_color).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                     }
@@ -593,12 +635,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     0,
-                                    SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR
+                                    SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_wheelchair).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                         Tab(
@@ -607,12 +650,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     1,
-                                    SetupCustomizationRepository.SUBCATEGORY_FLOWER
+                                    SetupCustomizationRepository.SUBCATEGORY_FLOWER,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_flower).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                         Tab(
@@ -621,12 +665,13 @@ fun CustomizationSubcategorySelector(
                             onClick = {
                                 selectTab(
                                     2,
-                                    SetupCustomizationRepository.SUBCATEGORY_GLASSES
+                                    SetupCustomizationRepository.SUBCATEGORY_GLASSES,
                                 )
-                            }) {
+                            },
+                        ) {
                             Text(
                                 stringResource(R.string.avatar_glasses).uppercase(),
-                                modifier = Modifier.padding(bottom = 8.dp)
+                                modifier = Modifier.padding(bottom = 8.dp),
                             )
                         }
                     }
@@ -637,26 +682,30 @@ fun CustomizationSubcategorySelector(
 }
 
 @Composable
-fun CustomizationCategoryView(customizationRepository: SetupCustomizationRepository,
-                              selectedCategory: String,
-                              selectedSubcategory: String,
-                                selectedSubcategoryTabIndex: Int,
-                              selectedItem: String,
-                              user: User?,
-                              selectSubcategory: (String, Int) -> Unit,
-                              selectCustomization: (SetupCustomization) -> Unit,
-                              modifier: Modifier = Modifier) {
+fun CustomizationCategoryView(
+    customizationRepository: SetupCustomizationRepository,
+    selectedCategory: String,
+    selectedSubcategory: String,
+    selectedSubcategoryTabIndex: Int,
+    selectedItem: String,
+    user: User?,
+    selectSubcategory: (String, Int) -> Unit,
+    selectCustomization: (SetupCustomization) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(verticalArrangement = Arrangement.spacedBy(26.dp)) {
-        CustomizationSubcategorySelector(selectedCategory, selectedSubcategoryTabIndex,{ index, tab ->
+        CustomizationSubcategorySelector(selectedCategory, selectedSubcategoryTabIndex, { index, tab ->
             selectSubcategory(tab, index)
         })
         AnimatedContent(
             selectedCategory,
             transitionSpec = {
-                (fadeIn(animationSpec = tween(220, delayMillis = 400)) +
-                        scaleIn(initialScale = 0.92f, animationSpec = tween(220, delayMillis = 400)))
-                    .togetherWith(fadeOut(animationSpec = tween(90)))
-            }) { category ->
+                (
+                    fadeIn(animationSpec = tween(220, delayMillis = 400)) +
+                        scaleIn(initialScale = 0.92f, animationSpec = tween(220, delayMillis = 400))
+                ).togetherWith(fadeOut(animationSpec = tween(90)))
+            },
+        ) { category ->
             val scrollState = rememberScrollState()
             AnimatedContent(
                 selectedSubcategory,
@@ -667,31 +716,33 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                         } else {
                             AnimatedContentTransitionScope.SlideDirection.Start
                         },
-                        tween(400, 300)
+                        tween(400, 300),
+                    ).togetherWith(
+                        slideOutOfContainer(
+                            if (targetState > initialState) {
+                                AnimatedContentTransitionScope.SlideDirection.End
+                            } else {
+                                AnimatedContentTransitionScope.SlideDirection.Start
+                            },
+                            tween(400, easing = LinearOutSlowInEasing),
+                        ),
                     )
-                        .togetherWith(
-                            slideOutOfContainer(
-                                if (targetState > initialState) {
-                                    AnimatedContentTransitionScope.SlideDirection.End
-                                } else {
-                                    AnimatedContentTransitionScope.SlideDirection.Start
-                                }, tween(400, easing = LinearOutSlowInEasing)
-                            )
-                        )
                 },
             ) { it ->
-                val items = if (user != null) {
-                    customizationRepository.getCustomizations(category, it, user)
-                } else {
-                    emptyList()
-                }
+                val items =
+                    if (user != null) {
+                        customizationRepository.getCustomizations(category, it, user)
+                    } else {
+                        emptyList()
+                    }
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(top = 12.dp)
-                        .horizontalScroll(scrollState)
+                    modifier =
+                        modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp)
+                            .horizontalScroll(scrollState),
                 ) {
                     Spacer(modifier = Modifier.width(20.dp))
                     for (item in items) {
@@ -700,20 +751,21 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                         val borderWidth by transition.animateDp({
                             tween(300)
                         }) { if (it) 4.dp else 0.dp }
-                        val m = Modifier
-                            .size(68.dp)
-                            .border(borderWidth, borderColor, CircleShape)
-                            .padding(4.dp)
-                            .background(Color.White, CircleShape)
-                            .clickable {
-                                selectCustomization(item)
-                            }
+                        val m =
+                            Modifier
+                                .size(68.dp)
+                                .border(borderWidth, borderColor, CircleShape)
+                                .padding(4.dp)
+                                .background(Color.White, CircleShape)
+                                .clickable {
+                                    selectCustomization(item)
+                                }
                         if (item.drawableId != null && item.drawableId != 0) {
                             Image(
                                 painterResource(item.drawableId ?: R.drawable.creator_blank_face),
                                 contentDescription = null,
                                 contentScale = ContentScale.None,
-                                modifier = m
+                                modifier = m,
                             )
                         } else if (item.colorId != null && item.colorId != 0) {
                             val color = colorResource(item.colorId ?: R.color.brand_400)
@@ -725,7 +777,7 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
                                 painterResource(R.drawable.notification_close),
                                 contentDescription = null,
                                 contentScale = ContentScale.None,
-                                modifier = m
+                                modifier = m,
                             )
                         }
                     }
@@ -740,40 +792,44 @@ fun CustomizationCategoryView(customizationRepository: SetupCustomizationReposit
 fun CustomizationCategorySelector(
     selectedCategory: String,
     onCategorySelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 31.dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = 31.dp),
     ) {
-        val categories = listOf(
-            Pair(SetupCustomizationRepository.CATEGORY_SKIN, Pair(stringResource(R.string.avatar_skin), R.drawable.icon_skin)),
-            Pair(SetupCustomizationRepository.CATEGORY_HAIR, Pair(stringResource(R.string.avatar_hair), R.drawable.icon_hair)),
-            Pair(SetupCustomizationRepository.CATEGORY_BODY, Pair(stringResource(R.string.avatar_body), R.drawable.icon_body)),
-            Pair(
-                SetupCustomizationRepository.CATEGORY_EXTRAS,
-                Pair(stringResource(R.string.avatar_extras), R.drawable.icon_extras)
+        val categories =
+            listOf(
+                Pair(SetupCustomizationRepository.CATEGORY_SKIN, Pair(stringResource(R.string.avatar_skin), R.drawable.icon_skin)),
+                Pair(SetupCustomizationRepository.CATEGORY_HAIR, Pair(stringResource(R.string.avatar_hair), R.drawable.icon_hair)),
+                Pair(SetupCustomizationRepository.CATEGORY_BODY, Pair(stringResource(R.string.avatar_body), R.drawable.icon_body)),
+                Pair(
+                    SetupCustomizationRepository.CATEGORY_EXTRAS,
+                    Pair(stringResource(R.string.avatar_extras), R.drawable.icon_extras),
+                ),
             )
-        )
         categories.forEach { category ->
             val isSelected = selectedCategory == category.first
             val color = if (isSelected) Color.White else Color.White.copy(0.5f)
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .clickable {
-                        if (!isSelected) {
-                            onCategorySelected(category.first)
-                        }
-                    }
-                    .padding(8.dp)) {
+                modifier =
+                    Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable {
+                            if (!isSelected) {
+                                onCategorySelected(category.first)
+                            }
+                        }.padding(8.dp),
+            ) {
                 Image(
-                    painterResource(category.second.second), contentDescription = null,
-                    colorFilter = ColorFilter.tint(color)
+                    painterResource(category.second.second),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(color),
                 )
                 Text(
                     category.second.first.uppercase(),
@@ -782,7 +838,7 @@ fun CustomizationCategorySelector(
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
                     letterSpacing = 1.3.sp,
-                    modifier = Modifier.padding(top = 18.dp)
+                    modifier = Modifier.padding(top = 18.dp),
                 )
             }
         }
@@ -790,20 +846,24 @@ fun CustomizationCategorySelector(
 }
 
 @Composable
-fun NamePlate(npcName: @Composable () -> Unit, modifier: Modifier = Modifier) {
-    val namePlateBackground = ContextCompat.getDrawable(
-        LocalContext.current,
-        R.drawable.name_plate
-    )
+fun NamePlate(
+    npcName: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val namePlateBackground =
+        ContextCompat.getDrawable(
+            LocalContext.current,
+            R.drawable.name_plate,
+        )
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
-        .drawBehind {
-            namePlateBackground?.updateBounds(0, 0, size.width.toInt(), size.height.toInt())
-            namePlateBackground?.draw(drawContext.canvas.nativeCanvas)
-        }
-        .padding(horizontal = 28.dp)
-        .heightIn(28.dp)
+        modifier =
+            modifier
+                .drawBehind {
+                    namePlateBackground?.updateBounds(0, 0, size.width.toInt(), size.height.toInt())
+                    namePlateBackground?.draw(drawContext.canvas.nativeCanvas)
+                }.padding(horizontal = 28.dp)
+                .heightIn(28.dp),
     ) {
         ProvideTextStyle(TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color.White)) {
             npcName()
@@ -824,46 +884,56 @@ fun SpeechBubble(
     text: String,
     npcName: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    npc: @Composable (() -> Unit)? = null
+    npc: @Composable (() -> Unit)? = null,
 ) {
     Box(modifier = modifier) {
         npc?.let { npc ->
             Box(
-                modifier = Modifier.align(Alignment.TopEnd)
-                    .padding(end = 30.dp)
+                modifier =
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(end = 30.dp),
             ) {
                 npc()
             }
         }
         TypewriterText(
-            text, fontSize = 16.sp,
+            text,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             lineHeight = 21.sp,
             color = colorResource(R.color.yellow_1),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 42.dp)
-                .border(
-                    width = 4.dp,
-                    colorResource(R.color.yellow_10),
-                    shape = RoundedCornerShape(12.dp)
-                )
-                .padding(4.dp)
-                .background(Color.White, shape = RoundedCornerShape(8.dp))
-                .padding(bottom = 8.dp, top = 18.dp)
-                .padding(horizontal = 14.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 42.dp)
+                    .border(
+                        width = 4.dp,
+                        colorResource(R.color.yellow_10),
+                        shape = RoundedCornerShape(12.dp),
+                    ).padding(4.dp)
+                    .background(Color.White, shape = RoundedCornerShape(8.dp))
+                    .padding(bottom = 8.dp, top = 18.dp)
+                    .padding(horizontal = 14.dp),
         )
-        NamePlate(npcName, modifier = Modifier
-            .padding(start = 28.dp, top = 30.dp))
+        NamePlate(
+            npcName,
+            modifier =
+                Modifier
+                    .padding(start = 28.dp, top = 30.dp),
+        )
     }
 }
 
 @Composable
 @Preview(device = "spec:width=600dp,height=300dp,dpi=320,orientation=portrait")
 fun SpeechBubblePreview() {
-    SpeechBubble("Hello World",
+    SpeechBubble(
+        "Hello World",
         npcName = { Text("Justin") },
         npc = {
             Image(painterResource(R.drawable.justin_textbox), null)
-    }, modifier = Modifier.fillMaxWidth())
+        },
+        modifier = Modifier.fillMaxWidth(),
+    )
 }

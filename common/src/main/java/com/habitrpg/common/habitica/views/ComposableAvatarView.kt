@@ -14,12 +14,12 @@ fun ComposableAvatarView(
     showBackground: Boolean = true,
     showPet: Boolean = true,
     showMount: Boolean = true,
-    showSleeping: Boolean = true
+    showSleeping: Boolean = true,
 ) {
     AndroidView(
         modifier = modifier, // Occupy the max size in the Compose UI tree
         factory = { context ->
-            val view = AvatarView(context, showBackground, showPet, showMount,showSleeping)
+            val view = AvatarView(context, showBackground, showPet, showMount, showSleeping)
             view.configManager = configManager
             return@AndroidView view
         },
@@ -27,6 +27,6 @@ fun ComposableAvatarView(
             if (avatar != null) {
                 view.setAvatar(avatar)
             }
-        }
+        },
     )
 }

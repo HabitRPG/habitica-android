@@ -25,71 +25,69 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InboxViewModel
-@Inject
-constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel,
-    val socialRepository: SocialRepository
-) : BaseViewModel(userRepository, userViewModel) {
-    val recipientID: String? = savedStateHandle["userID"]
-    val recipientUsername: String? = savedStateHandle["username"]
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+        val socialRepository: SocialRepository,
+    ) : BaseViewModel(userRepository, userViewModel) {
+        val recipientID: String? = savedStateHandle["userID"]
+        val recipientUsername: String? = savedStateHandle["username"]
 
-    private var memberIDFlow = MutableStateFlow<String?>(null)
-    val memberIDState: StateFlow<String?> = memberIDFlow
+        private var memberIDFlow = MutableStateFlow<String?>(null)
+        val memberIDState: StateFlow<String?> = memberIDFlow
 
-    private val config =
-        PagingConfig(pageSize = 10, enablePlaceholders = false)
-    private var messagesDataSource = MessagesDataSource(socialRepository, memberID, ChatMessage())
-    val messages: LiveData<PagingData<ChatMessage>> =
-        Pager(
-            config,
-            null
-        ) {
-            messagesDataSource = MessagesDataSource(socialRepository, memberID, ChatMessage())
-            messagesDataSource
-        }.liveData
-    private val member =
-        memberIDFlow
-            .filterNotNull()
-            .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
-            .asLiveData()
+        private val config =
+            PagingConfig(pageSize = 10, enablePlaceholders = false)
+        private var messagesDataSource = MessagesDataSource(socialRepository, memberID, ChatMessage())
+        val messages: LiveData<PagingData<ChatMessage>> =
+            Pager(
+                config,
+                null,
+            ) {
+                messagesDataSource = MessagesDataSource(socialRepository, memberID, ChatMessage())
+                messagesDataSource
+            }.liveData
+        private val member =
+            memberIDFlow
+                .filterNotNull()
+                .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
+                .asLiveData()
 
-    fun setMemberID(memberID: String) {
-        if (memberID == memberIDState.value) return
-        memberIDFlow.value = memberID
-    }
+        fun setMemberID(memberID: String) {
+            if (memberID == memberIDState.value) return
+            memberIDFlow.value = memberID
+        }
 
-    val memberID: String?
-        get() = memberIDFlow.value
+        val memberID: String?
+            get() = memberIDFlow.value
 
-    fun invalidateDataSource() {
-        messagesDataSource.invalidate()
-    }
+        fun invalidateDataSource() {
+            messagesDataSource.invalidate()
+        }
 
-    init {
-        if (recipientID?.isNotBlank() == true) {
-            setMemberID(recipientID)
-        } else if (recipientUsername?.isNotBlank() == true) {
-            viewModelScope.launch(ExceptionHandler.coroutine()) {
-                val member = socialRepository.retrieveMember(recipientUsername, false)
-                setMemberID(member?.id ?: "")
-                invalidateDataSource()
+        init {
+            if (recipientID?.isNotBlank() == true) {
+                setMemberID(recipientID)
+            } else if (recipientUsername?.isNotBlank() == true) {
+                viewModelScope.launch(ExceptionHandler.coroutine()) {
+                    val member = socialRepository.retrieveMember(recipientUsername, false)
+                    setMemberID(member?.id ?: "")
+                    invalidateDataSource()
+                }
             }
         }
     }
-}
 
 class MessagesDataSource(
     val socialRepository: SocialRepository,
     var recipientID: String?,
-    var footer: ChatMessage?
+    var footer: ChatMessage?,
 ) : PagingSource<Int, ChatMessage>() {
     private var lastFetchWasEnd = false
 
-    override fun getRefreshKey(state: PagingState<Int, ChatMessage>): Int? {
-        return 0
-    }
+    override fun getRefreshKey(state: PagingState<Int, ChatMessage>): Int? = 0
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ChatMessage> {
         if (lastFetchWasEnd) {
@@ -101,13 +99,14 @@ class MessagesDataSource(
         val page = params.key ?: 0
         val messages =
             socialRepository.retrieveInboxMessages(recipientID ?: "", page) ?: return LoadResult.Error(
-                Exception("Failed to retrieve messages")
+                Exception("Failed to retrieve messages"),
             )
-        val nextPage = if (messages.size < 10) {
-            null
-        } else {
-            page + 1
-        }
+        val nextPage =
+            if (messages.size < 10) {
+                null
+            } else {
+                page + 1
+            }
         return LoadResult.Page(messages, if (page > 0) page - 1 else null, nextPage)
     }
 }

@@ -5,28 +5,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 
-class DailiesRecyclerViewHolder(layoutResource: Int, viewModel: TasksViewModel) : RealmBaseTasksRecyclerViewAdapter(layoutResource, viewModel) {
+class DailiesRecyclerViewHolder(
+    layoutResource: Int,
+    viewModel: TasksViewModel,
+) : RealmBaseTasksRecyclerViewAdapter(layoutResource, viewModel) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return if (viewType == 0) {
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        if (viewType == 0) {
             DailyViewHolder(
                 getContentView(parent),
                 { task, direction -> taskScoreEvents?.invoke(task, direction) },
                 { task, item -> checklistItemScoreEvents?.invoke(task, item) },
-                {
-                        task, view ->
+                { task, view ->
                     taskOpenEvents?.invoke(task, view)
                 },
-                {
-                        task ->
+                { task ->
                     brokenTaskEvents?.invoke(task)
                 },
-                viewModel
+                viewModel,
             )
         } else {
             super.onCreateViewHolder(parent, viewType)
         }
-    }
 }

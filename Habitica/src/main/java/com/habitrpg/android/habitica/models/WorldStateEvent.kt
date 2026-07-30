@@ -9,13 +9,15 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class SpriteSubstitutionContext: RealmObject() {
+open class SpriteSubstitutionContext : RealmObject() {
     var key: String? = null
     var substitutions = RealmDictionary<String>()
 }
 
 @RealmClass(embedded = true)
-open class WorldStateEvent : RealmObject(), BaseMainObject {
+open class WorldStateEvent :
+    RealmObject(),
+    BaseMainObject {
     val isCurrentlyActive: Boolean
         get() {
             val now = Date()

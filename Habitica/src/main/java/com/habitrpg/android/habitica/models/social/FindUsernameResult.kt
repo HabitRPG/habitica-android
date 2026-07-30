@@ -18,7 +18,5 @@ class FindUsernameResult {
     val formattedUsername: String?
         get() = if (username != null) "@$username" else null
 
-    override fun toString(): String {
-        return "@${authentication?.localAuthentication?.username ?: ""}"
-    }
+    override fun toString(): String = "@${authentication?.localAuthentication?.username ?: ""}"
 }

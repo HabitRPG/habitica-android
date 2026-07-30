@@ -13,12 +13,15 @@ class TutorialStepListDeserializer : JsonDeserializer<List<TutorialStep>> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): List<TutorialStep> {
         val steps = RealmList<TutorialStep>()
         for (group in listOf("common", "android")) {
             if (json.asJsonObject.has(group)) {
-                for (entry in json.asJsonObject.get(group).asJsonObject.entrySet()) {
+                for (entry in json.asJsonObject
+                    .get(group)
+                    .asJsonObject
+                    .entrySet()) {
                     steps.add(parseStep(group, entry))
                 }
             }
@@ -29,7 +32,7 @@ class TutorialStepListDeserializer : JsonDeserializer<List<TutorialStep>> {
 
     private fun parseStep(
         group: String,
-        entry: MutableMap.MutableEntry<String, JsonElement>
+        entry: MutableMap.MutableEntry<String, JsonElement>,
     ): TutorialStep {
         val article = TutorialStep()
         article.tutorialGroup = group

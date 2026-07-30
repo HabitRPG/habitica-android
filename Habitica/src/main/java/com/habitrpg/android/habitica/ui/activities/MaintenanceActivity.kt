@@ -27,9 +27,7 @@ class MaintenanceActivity : BaseActivity() {
 
     private var isDeprecationNotice: Boolean = false
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_maintenance
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_maintenance
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityMaintenanceBinding.inflate(layoutInflater)
@@ -78,8 +76,8 @@ class MaintenanceActivity : BaseActivity() {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
-                )
+                    "https://play.google.com/store/apps/details?id=$appPackageName".toUri(),
+                ),
             )
         }
     }

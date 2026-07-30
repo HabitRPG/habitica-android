@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -8,7 +9,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.graphics.PorterDuff
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.setTintWith
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,10 +32,8 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentViewpagerBinding {
-        return FragmentViewpagerBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding = FragmentViewpagerBinding.inflate(inflater, container, false)
 
     private var statePagerAdapter: FragmentStateAdapter? = null
     private var userChallengesFragment: ChallengeListFragment? = ChallengeListFragment()
@@ -45,7 +43,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -54,7 +52,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -76,7 +74,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_challenges, menu)
@@ -108,37 +106,35 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getActiveFragment(): ChallengeListFragment? {
-        return if (binding?.viewPager?.currentItem == 0) {
+    private fun getActiveFragment(): ChallengeListFragment? =
+        if (binding?.viewPager?.currentItem == 0) {
             userChallengesFragment
         } else {
             availableChallengesFragment
         }
-    }
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
         statePagerAdapter =
             object : FragmentStateAdapter(fragmentManager, lifecycle) {
-                override fun createFragment(position: Int): Fragment {
-                    return if (position == 0) {
+                override fun createFragment(position: Int): Fragment =
+                    if (position == 0) {
                         userChallengesFragment
                     } else {
                         availableChallengesFragment
                     } ?: Fragment()
-                }
 
-                override fun getItemCount(): Int {
-                    return 2
-                }
+                override fun getItemCount(): Int = 2
             }
         binding?.viewPager?.adapter = statePagerAdapter
-        binding?.viewPager?.registerOnPageChangeCallback(object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                getActiveFragment()?.updateFilterBadge()
-            }
-        })
+        binding?.viewPager?.registerOnPageChangeCallback(
+            object : androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    getActiveFragment()?.updateFilterBadge()
+                }
+            },
+        )
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
@@ -159,28 +155,31 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
             return
         }
 
-        val hasOwnershipFilter = filterOptions != null &&
-            (filterOptions.showOwned || filterOptions.notOwned) &&
-            !(filterOptions.showOwned && filterOptions.notOwned)
-        val hasMembershipFilter = filterOptions != null &&
-            (filterOptions.showParticipating || filterOptions.notParticipating) &&
-            !(filterOptions.showParticipating && filterOptions.notParticipating)
-        val hasActiveFilters = filterOptions != null &&
-            (hasOwnershipFilter || hasMembershipFilter || filterOptions.showByGroups.isNotEmpty())
+        val hasOwnershipFilter =
+            filterOptions != null &&
+                (filterOptions.showOwned || filterOptions.notOwned) &&
+                !(filterOptions.showOwned && filterOptions.notOwned)
+        val hasMembershipFilter =
+            filterOptions != null &&
+                (filterOptions.showParticipating || filterOptions.notParticipating) &&
+                !(filterOptions.showParticipating && filterOptions.notParticipating)
+        val hasActiveFilters =
+            filterOptions != null &&
+                (hasOwnershipFilter || hasMembershipFilter || filterOptions.showByGroups.isNotEmpty())
 
         context?.let { ctx ->
             if (hasActiveFilters) {
                 val filterIcon = ContextCompat.getDrawable(ctx, R.drawable.ic_filters_active)
                 filterIcon?.setTintWith(
                     ctx.getThemeColor(R.attr.textColorPrimaryDark),
-                    PorterDuff.Mode.MULTIPLY
+                    PorterDuff.Mode.MULTIPLY,
                 )
                 filterMenuItem?.setIcon(filterIcon)
             } else {
                 val filterIcon = ContextCompat.getDrawable(ctx, R.drawable.ic_action_filter_list)
                 filterIcon?.setTintWith(
                     ctx.getThemeColor(R.attr.headerTextColor),
-                    PorterDuff.Mode.MULTIPLY
+                    PorterDuff.Mode.MULTIPLY,
                 )
                 filterMenuItem?.setIcon(filterIcon)
             }

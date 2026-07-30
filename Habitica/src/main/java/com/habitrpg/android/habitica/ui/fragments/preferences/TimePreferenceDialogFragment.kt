@@ -28,7 +28,10 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
     override fun onCreateDialogView(context: Context): View {
         picker = TimePicker(context)
-        picker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context))
+        picker.setIs24HourView(
+            android.text.format.DateFormat
+                .is24HourFormat(context),
+        )
         return picker
     }
 
@@ -60,7 +63,7 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
         fun newInstance(
             preferenceFragment: PreferenceFragmentCompat,
-            key: String
+            key: String,
         ): TimePreferenceDialogFragment {
             val fragment = TimePreferenceDialogFragment()
             val arguments = Bundle(1)

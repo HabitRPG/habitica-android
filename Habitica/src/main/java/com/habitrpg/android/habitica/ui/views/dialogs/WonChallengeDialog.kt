@@ -11,7 +11,9 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
+class WonChallengeDialog(
+    context: Context,
+) : HabiticaAlertDialog(context) {
     fun configure(data: ChallengeWonData?) {
         val imageView = additionalContentView?.findViewById<PixelArtView>(R.id.achievement_view)
         imageView?.loadImage("achievement-karaoke-2x")

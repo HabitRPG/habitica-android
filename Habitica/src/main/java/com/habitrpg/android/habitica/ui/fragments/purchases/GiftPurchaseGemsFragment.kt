@@ -7,8 +7,8 @@ import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemPurchaseBinding
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -29,10 +29,8 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentGiftGemPurchaseBinding {
-        return FragmentGiftGemPurchaseBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentGiftGemPurchaseBinding = FragmentGiftGemPurchaseBinding.inflate(inflater, container, false)
 
     var giftedMember: Member? = null
         @SuppressLint("SetTextI18n")
@@ -65,7 +63,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String
+        price: String,
     ) {
         val matchingView: GemPurchaseOptionsView? =
             when (HabiticaProduct.forSku(sku.productId)) {
@@ -87,7 +85,8 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     private fun purchaseGems(sku: ProductDetails) {
         giftedMember?.id?.let {
             lifecycleScope.launchCatching {
-                purchaseHandler?.purchase(requireActivity(), sku, it, giftedMember?.username) }
+                purchaseHandler?.purchase(requireActivity(), sku, it, giftedMember?.username)
+            }
         }
     }
 }

@@ -67,7 +67,7 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
             hiddenSpan,
             0,
             stringBuilder?.length ?: 0,
-            Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE,
         )
         index = 0
 
@@ -109,16 +109,17 @@ fun TypewriterText(
     }
     val textCharsList = text.splitToCodePoints()
 
-    LaunchedEffect(text,) {
-            textCharsList.forEachIndexed { charIndex, _ ->
-                textToDisplay = textCharsList
+    LaunchedEffect(text) {
+        textCharsList.forEachIndexed { charIndex, _ ->
+            textToDisplay =
+                textCharsList
                     .take(
                         n = charIndex + 1,
                     ).joinToString(
                         separator = "",
                     )
-                delay(delay)
-            }
+            delay(delay)
+        }
     }
 
     Box(modifier = modifier) {
@@ -149,10 +150,9 @@ fun TypewriterText(
     }
 }
 
-fun String.splitToCodePoints(): List<String> {
-    return codePoints()
+fun String.splitToCodePoints(): List<String> =
+    codePoints()
         .toList()
         .map {
             String(Character.toChars(it))
         }
-}

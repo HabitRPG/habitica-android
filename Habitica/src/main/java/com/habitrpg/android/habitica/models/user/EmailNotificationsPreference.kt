@@ -5,7 +5,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class EmailNotificationsPreference : RealmObject(), BaseObject {
+open class EmailNotificationsPreference :
+    RealmObject(),
+    BaseObject {
     var unsubscribeFromAll: Boolean = false
     var invitedParty: Boolean = false
     var invitedQuest: Boolean = false

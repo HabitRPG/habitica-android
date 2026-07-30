@@ -14,7 +14,7 @@ enum class PromoType {
     GEMS_AMOUNT,
     GEMS_PRICE,
     SUBSCRIPTION,
-    SURVEY
+    SURVEY,
 }
 
 abstract class HabiticaPromotion {
@@ -35,6 +35,7 @@ abstract class HabiticaPromotion {
     abstract fun pillBackgroundDrawable(context: Context): Drawable
 
     abstract fun screenBackgroundColor(context: Context): Int
+
     abstract fun backgroundColor(context: Context): Int
 
     abstract fun promoBackgroundDrawable(context: Context): Drawable
@@ -51,7 +52,7 @@ abstract class HabiticaPromotion {
 
     abstract fun configureGemView(
         binding: PurchaseGemViewBinding,
-        regularAmount: Int
+        regularAmount: Int,
     )
 
     abstract fun configureInfoFragment(fragment: PromoInfoFragment)
@@ -60,45 +61,63 @@ abstract class HabiticaPromotion {
 fun getHabiticaPromotionFromKey(
     key: String,
     startDate: Date?,
-    endDate: Date?
-): HabiticaPromotion? {
-    return when (key) {
-        "spring_extra_gems" ->
+    endDate: Date?,
+): HabiticaPromotion? =
+    when (key) {
+        "spring_extra_gems" -> {
             SpringExtraGemsHabiticaPromotion(
                 startDate,
-                endDate
+                endDate,
             )
-        "summer_extra_gems" ->
+        }
+
+        "summer_extra_gems" -> {
             SummerExtraGemsHabiticaPromotion(
                 startDate,
-                endDate
+                endDate,
             )
-        "fall_extra_gems", "fall2020", "testFall2020" ->
+        }
+
+        "fall_extra_gems", "fall2020", "testFall2020" -> {
             FallExtraGemsHabiticaPromotion(
                 startDate,
-                endDate
+                endDate,
             )
+        }
 
-        "spooky_extra_gems", "fall2020SecondPromo", "spooky2020" ->
+        "spooky_extra_gems", "fall2020SecondPromo", "spooky2020" -> {
             SpookyExtraGemsHabiticaPromotion(
                 startDate,
-                endDate
+                endDate,
             )
-        "winter_extra_gems" ->
+        }
+
+        "winter_extra_gems" -> {
             WinterExtraGemsHabiticaPromotion(
                 startDate,
-                endDate
+                endDate,
             )
-        "flash_extra_gems" ->
+        }
+
+        "flash_extra_gems" -> {
             FlashExtraGemsHabiticaPromotion(
                 startDate,
-                endDate
+                endDate,
             )
-        "g1g1" -> GiftOneGetOneHabiticaPromotion(startDate, endDate)
-        "survey2021" -> Survey2021Promotion()
-        else -> null
+        }
+
+        "g1g1" -> {
+            GiftOneGetOneHabiticaPromotion(startDate, endDate)
+        }
+
+        "survey2021" -> {
+            Survey2021Promotion()
+        }
+
+        else -> {
+            null
+        }
     }
-}
 
 interface HabiticaWebPromotion {
     var url: String?

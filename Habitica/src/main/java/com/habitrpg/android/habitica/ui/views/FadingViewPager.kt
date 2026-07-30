@@ -39,11 +39,7 @@ class FadingViewPager : ViewPager {
         }
     }
 
-    override fun onTouchEvent(ev: MotionEvent): Boolean {
-        return false
-    }
+    override fun onTouchEvent(ev: MotionEvent): Boolean = false
 
-    override fun onInterceptHoverEvent(event: MotionEvent): Boolean {
-        return false
-    }
+    override fun onInterceptHoverEvent(event: MotionEvent): Boolean = false
 }

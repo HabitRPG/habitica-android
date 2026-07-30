@@ -16,7 +16,7 @@ fun String.parseToZonedDateTime(): ZonedDateTime? {
         formatter().parseBest(
             this,
             ZonedDateTime::from,
-            LocalDateTime::from
+            LocalDateTime::from,
         )
     return if (parsed is ZonedDateTime) {
         parsed
@@ -26,12 +26,11 @@ fun String.parseToZonedDateTime(): ZonedDateTime? {
     }
 }
 
-fun Date.toZonedDateTime(): ZonedDateTime? {
-    return this.toInstant().atZone(ZoneId.systemDefault())
-}
+fun Date.toZonedDateTime(): ZonedDateTime? = this.toInstant().atZone(ZoneId.systemDefault())
 
 fun formatter(): DateTimeFormatter =
-    DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+    DateTimeFormatterBuilder()
+        .append(DateTimeFormatter.ISO_LOCAL_DATE)
         .appendPattern("['T'][' ']")
         .append(DateTimeFormatter.ISO_LOCAL_TIME)
         .appendPattern("[XX]")

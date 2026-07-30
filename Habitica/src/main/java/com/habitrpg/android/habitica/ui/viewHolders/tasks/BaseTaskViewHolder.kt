@@ -33,8 +33,9 @@ abstract class BaseTaskViewHolder(
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var openTaskFunc: ((Task, View) -> Unit),
     var brokenTaskFunc: ((Task) -> Unit),
-    var assignedTextProvider: GroupPlanInfoProvider?
-) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
+    var assignedTextProvider: GroupPlanInfoProvider?,
+) : BindableViewHolder<Task>(itemView),
+    View.OnTouchListener {
     private val scope = MainScope()
 
     var task: Task? = null
@@ -123,7 +124,7 @@ abstract class BaseTaskViewHolder(
                             if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                     }
                 }
-            }
+            },
         )
         context = itemView.context
     }
@@ -143,7 +144,7 @@ abstract class BaseTaskViewHolder(
     override fun bind(
         data: Task,
         position: Int,
-        displayMode: String
+        displayMode: String,
     ) {
         bind(data, position, displayMode, null)
     }
@@ -152,7 +153,7 @@ abstract class BaseTaskViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?
+        ownerID: String?,
     ) {
         notesExpanded = false
         task = data
@@ -232,14 +233,18 @@ abstract class BaseTaskViewHolder(
             assignedTextView.text =
                 assignedTextProvider?.assignedTextForTask(
                     context.resources,
-                    data.group?.assignedUsers ?: emptyList()
+                    data.group?.assignedUsers ?: emptyList(),
                 )
             assignedTextView.visibility = View.VISIBLE
         } else {
             assignedTextView.visibility = View.GONE
         }
 
-        val completedCount = data.group?.assignedUsersDetail?.filter { it.completed }?.size ?: 0
+        val completedCount =
+            data.group
+                ?.assignedUsersDetail
+                ?.filter { it.completed }
+                ?.size ?: 0
         if (completedCount > 0) {
             completedCountTextView.text =
                 "$completedCount/${data.group?.assignedUsersDetail?.size}"
@@ -263,7 +268,7 @@ abstract class BaseTaskViewHolder(
 
     override fun onTouch(
         view: View?,
-        motionEvent: MotionEvent?
+        motionEvent: MotionEvent?,
     ): Boolean {
         if (motionEvent != null) {
             if (motionEvent.action != MotionEvent.ACTION_UP) return true
@@ -312,7 +317,7 @@ abstract class BaseTaskViewHolder(
 
     open fun setDisabled(
         openTaskDisabled: Boolean,
-        taskActionsDisabled: Boolean
+        taskActionsDisabled: Boolean,
     ) {
         this.openTaskDisabled = openTaskDisabled
         this.taskActionsDisabled = taskActionsDisabled

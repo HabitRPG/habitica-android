@@ -32,7 +32,7 @@ interface TextViewWrapper {
  * A [TextViewWrapper] wrapping a [CurvedTextView].
  */
 class CurvedTextViewWrapper(
-    override val view: CurvedTextView
+    override val view: CurvedTextView,
 ) : TextViewWrapper {
     override var text: CharSequence?
         get() = view.text
@@ -51,7 +51,7 @@ class CurvedTextViewWrapper(
  * A [TextViewWrapper] wrapping a [TextView].
  */
 class NormalTextViewWrapper(
-    override val view: TextView
+    override val view: TextView,
 ) : TextViewWrapper {
     override var text: CharSequence?
         get() = view.text

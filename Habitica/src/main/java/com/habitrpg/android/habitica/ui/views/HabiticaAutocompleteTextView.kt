@@ -8,9 +8,10 @@ import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
 import kotlin.math.abs
 
-class HabiticaAutocompleteTextView(context: Context, attrs: AttributeSet?) :
-    AppCompatMultiAutoCompleteTextView(context, attrs) {
-
+class HabiticaAutocompleteTextView(
+    context: Context,
+    attrs: AttributeSet?,
+) : AppCompatMultiAutoCompleteTextView(context, attrs) {
     private var lastY = 0f
     private var isScrolling = false
 
@@ -31,6 +32,7 @@ class HabiticaAutocompleteTextView(context: Context, attrs: AttributeSet?) :
                 lastY = event.y
                 isScrolling = false
             }
+
             MotionEvent.ACTION_MOVE -> {
                 val deltaY = abs(event.y - lastY)
                 if (deltaY > 10 && !isScrolling) {
@@ -41,6 +43,7 @@ class HabiticaAutocompleteTextView(context: Context, attrs: AttributeSet?) :
                     parent?.requestDisallowInterceptTouchEvent(true)
                 }
             }
+
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 parent?.requestDisallowInterceptTouchEvent(false)
                 isScrolling = false

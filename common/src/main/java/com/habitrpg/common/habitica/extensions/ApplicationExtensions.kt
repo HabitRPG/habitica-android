@@ -13,7 +13,8 @@ import com.habitrpg.common.habitica.BuildConfig
 
 fun Application.setupCoil() {
     var builder =
-        ImageLoader.Builder(this)
+        ImageLoader
+            .Builder(this)
             .allowHardware(false)
             .crossfade(false)
             .components {

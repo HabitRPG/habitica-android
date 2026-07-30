@@ -47,15 +47,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-enum class OnboardingSteps(val id: Int) {
+enum class OnboardingSteps(
+    val id: Int,
+) {
     INTRO(1),
     LOGIN(2),
     USERNAME(3),
-    SETUP(4)
+    SETUP(4),
 }
 
 @AndroidEntryPoint
-class OnboardingActivity: ComposeActivity() {
+class OnboardingActivity : ComposeActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     val authenticationViewModel: AuthenticationViewModel by viewModels()
@@ -64,6 +66,7 @@ class OnboardingActivity: ComposeActivity() {
 
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var customizationRepository: SetupCustomizationRepository
 
@@ -85,54 +88,68 @@ class OnboardingActivity: ComposeActivity() {
         lifecycleScope.launchCatching {
             authenticationViewModel.authenticationError
                 .collect {
-                showError(it)
-            }
+                    showError(it)
+                }
         }
 
         setContent {
             val step by currentStep
             HabiticaTheme {
-                AnimatedContent(step,
+                AnimatedContent(
+                    step,
                     transitionSpec = {
                         fadeIn()
                             .togetherWith(
-                                fadeOut()
+                                fadeOut(),
                             )
-            },) {
+                    },
+                ) {
                     when (it) {
-                        OnboardingSteps.INTRO -> IntroScreen {
-                            currentStep.value = OnboardingSteps.LOGIN
+                        OnboardingSteps.INTRO -> {
+                            IntroScreen {
+                                currentStep.value = OnboardingSteps.LOGIN
+                            }
                         }
 
-                        OnboardingSteps.LOGIN -> LoginScreen(authenticationViewModel, { newUser ->
-                            // We don't want them to resume onboarding if they are in the username step
-                            preferences.edit {
-                                putInt("last_onboarding_step", -1)
-                            }
-                            if (newUser) {
-                                lifecycleScope.launchCatching {
-                                    authenticationViewModel.prefillUsername()
-                                    currentStep.value = OnboardingSteps.USERNAME
+                        OnboardingSteps.LOGIN -> {
+                            LoginScreen(authenticationViewModel, { newUser ->
+                                // We don't want them to resume onboarding if they are in the username step
+                                preferences.edit {
+                                    putInt("last_onboarding_step", -1)
                                 }
-                            } else {
-                                startMainActivity()
-                            }
-                        }, {
-                            onForgotPasswordClicked()
-                        })
-                        OnboardingSteps.USERNAME -> UsernameSelectionScreen(authenticationViewModel,
-                            {
-                                currentStep.value = OnboardingSteps.LOGIN
+                                if (newUser) {
+                                    lifecycleScope.launchCatching {
+                                        authenticationViewModel.prefillUsername()
+                                        currentStep.value = OnboardingSteps.USERNAME
+                                    }
+                                } else {
+                                    startMainActivity()
+                                }
                             }, {
-                                currentStep.value = OnboardingSteps.SETUP
-                            }
-                        )
-                        OnboardingSteps.SETUP -> SetupScreen(authenticationViewModel, customizationRepository = customizationRepository) {
+                                onForgotPasswordClicked()
+                            })
+                        }
+
+                        OnboardingSteps.USERNAME -> {
+                            UsernameSelectionScreen(
+                                authenticationViewModel,
+                                {
+                                    currentStep.value = OnboardingSteps.LOGIN
+                                },
+                                {
+                                    currentStep.value = OnboardingSteps.SETUP
+                                },
+                            )
+                        }
+
+                        OnboardingSteps.SETUP -> {
+                            SetupScreen(authenticationViewModel, customizationRepository = customizationRepository) {
                                 preferences.edit {
                                     putInt("last_onboarding_step", -1)
                                 }
                                 startMainActivity()
                             }
+                        }
                     }
                 }
             }
@@ -140,14 +157,21 @@ class OnboardingActivity: ComposeActivity() {
 
         onBackPressedDispatcher.addCallback(this) {
             when (currentStep.value) {
-                OnboardingSteps.INTRO -> finish()
+                OnboardingSteps.INTRO -> {
+                    finish()
+                }
+
                 OnboardingSteps.LOGIN -> {
                     currentStep.value = OnboardingSteps.INTRO
                 }
+
                 OnboardingSteps.USERNAME -> {
                     currentStep.value = OnboardingSteps.LOGIN
                 }
-                OnboardingSteps.SETUP -> finish()
+
+                OnboardingSteps.SETUP -> {
+                    finish()
+                }
             }
         }
     }
@@ -268,7 +292,6 @@ fun AuthenticationErrors.translatedMessage(context: Context): String {
         AuthenticationErrors.INVALID_CREDENTIAL_TYPE -> context.getString(R.string.auth_invalid_credential_type)
         AuthenticationErrors.UNKNOWN_CREDENTIAL_TYPE -> context.getString(R.string.auth_unknown_credential_type)
         AuthenticationErrors.MISSING_TOKEN -> context.getString(R.string.auth_missing_token)
-
         AuthenticationErrors.INVALID_EMAIL -> context.getString(R.string.login_validation_error_invalidemail)
         AuthenticationErrors.MISSING_FIELDS -> context.getString(R.string.login_validation_error_fieldsmissing)
         AuthenticationErrors.PASSWORD_MISMATCH -> context.getString(R.string.password_not_matching)

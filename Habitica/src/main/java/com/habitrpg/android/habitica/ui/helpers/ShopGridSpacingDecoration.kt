@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class ShopGridSpacingDecoration(
-    private val spacing: Int
+    private val spacing: Int,
 ) : RecyclerView.ItemDecoration() {
-
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         val layoutManager = parent.layoutManager as? GridLayoutManager ?: return
         val position = parent.getChildAdapterPosition(view)

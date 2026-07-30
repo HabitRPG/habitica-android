@@ -6,8 +6,10 @@ import android.content.Intent
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 
-class GuildInviteLocalNotification(context: Context, identifier: String?) :
-    HabiticaLocalNotification(context, identifier) {
+class GuildInviteLocalNotification(
+    context: Context,
+    identifier: String?,
+) : HabiticaLocalNotification(context, identifier) {
     override fun configureMainIntent(intent: Intent) {
         super.configureMainIntent(intent)
         intent.putExtra("groupID", data?.get("groupID"))
@@ -15,7 +17,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
 
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>
+        data: Map<String, String>,
     ) {
         super.setNotificationActions(notificationId, data)
         val res = context.resources
@@ -30,7 +32,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 acceptInviteIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
             )
         notificationBuilder.addAction(0, "Accept", pendingIntentAccept)
 
@@ -43,7 +45,7 @@ class GuildInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode() + 1,
                 rejectInviteIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
             )
         notificationBuilder.addAction(0, "Reject", pendingIntentReject)
     }

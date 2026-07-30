@@ -3,8 +3,6 @@ package com.habitrpg.android.habitica.ui.views.shops
 import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
-import android.media.metrics.Event
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -12,8 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.button.MaterialButton
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -47,7 +45,6 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
-import com.google.android.material.button.MaterialButton
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -73,7 +70,7 @@ import kotlin.time.toDuration
 class PurchaseDialog(
     context: Context,
     val item: ShopItem,
-    private val parentActivity: AppCompatActivity? = null
+    private val parentActivity: AppCompatActivity? = null,
 ) : HabiticaAlertDialog(context) {
     private val inventoryRepository: InventoryRepository
     private val userRepository: UserRepository
@@ -115,7 +112,10 @@ class PurchaseDialog(
 
             val contentView: PurchaseDialogContent
             when {
-                shopItem.isTypeItem || shopItem.isTypeSpecial || shopItem.isTypeBundle -> contentView = PurchaseDialogItemContent(context)
+                shopItem.isTypeItem || shopItem.isTypeSpecial || shopItem.isTypeBundle -> {
+                    contentView = PurchaseDialogItemContent(context)
+                }
+
                 shopItem.isTypeQuest -> {
                     contentView = PurchaseDialogQuestContent(context)
                     MainScope().launch(ExceptionHandler.coroutine()) {
@@ -125,15 +125,19 @@ class PurchaseDialog(
                         }
                     }
                 }
-                shopItem.isTypeGear && (shopItem.categoryIdentifier == "animalTails" || shopItem.categoryIdentifier == "animalEars" ) -> {
+
+                shopItem.isTypeGear && (shopItem.categoryIdentifier == "animalTails" || shopItem.categoryIdentifier == "animalEars") -> {
                     contentView = PurchaseDialogCustomizationContent(context)
                     contentView.setItem(shopItem)
                 }
+
                 shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
                     if (shopItem.purchaseType == "mystery_set") {
                         lifecycleScope.launchCatching {
-                            inventoryRepository.getEquipment(shopItem.key).firstOrNull()
+                            inventoryRepository
+                                .getEquipment(shopItem.key)
+                                .firstOrNull()
                                 ?.let { contentView.setEquipment(it) }
                         }
                     } else {
@@ -141,13 +145,26 @@ class PurchaseDialog(
                     }
                     checkGearClass()
                 }
-                "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
+
+                "gems" == shopItem.purchaseType -> {
+                    contentView = PurchaseDialogGemsContent(context)
+                }
+
                 "background" == shopItem.purchaseType || "backgrounds" == shopItem.purchaseType -> {
                     contentView = PurchaseDialogBackgroundContent(context)
                 }
-                "customization" == shopItem.purchaseType -> contentView = PurchaseDialogCustomizationContent(context)
-                "customizationSet" == shopItem.purchaseType -> contentView = PurchaseDialogCustomizationSetContent(context)
-                else -> contentView = PurchaseDialogBaseContent(context)
+
+                "customization" == shopItem.purchaseType -> {
+                    contentView = PurchaseDialogCustomizationContent(context)
+                }
+
+                "customizationSet" == shopItem.purchaseType -> {
+                    contentView = PurchaseDialogCustomizationSetContent(context)
+                }
+
+                else -> {
+                    contentView = PurchaseDialogBaseContent(context)
+                }
             }
 
             val stepperView = contentView.findViewById<StepperValueFormView>(R.id.stepper_view)
@@ -179,20 +196,22 @@ class PurchaseDialog(
             setLimitedTextView()
         }
 
-    private fun findSnackBarActivity(context: Context): SnackbarActivity? {
-        return when (context) {
+    private fun findSnackBarActivity(context: Context): SnackbarActivity? =
+        when (context) {
             is SnackbarActivity -> context
             is ViewComponentManager.FragmentContextWrapper -> findSnackBarActivity(context.baseContext)
             else -> (context.applicationContext as? HabiticaBaseApplication)?.currentActivity?.get() as? SnackbarActivity
         }
-    }
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface PurchaseDialogEntryPoint {
         fun inventoryRepository(): InventoryRepository
+
         fun userRepository(): UserRepository
+
         fun soundManager(): SoundManager
+
         fun configManager(): AppConfigManager
     }
 
@@ -200,7 +219,7 @@ class PurchaseDialog(
         val hiltEntryPoint =
             EntryPointAccessors.fromApplication(
                 context,
-                PurchaseDialogEntryPoint::class.java
+                PurchaseDialogEntryPoint::class.java,
             )
         inventoryRepository = hiltEntryPoint.inventoryRepository()
         userRepository = hiltEntryPoint.userRepository()
@@ -246,7 +265,11 @@ class PurchaseDialog(
         if (user == null) return
 
         val userLvl = user?.stats?.lvl ?: 0
-        if (shopItem.habitClass != null && shopItem.specialClass != null && (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.specialClass) {
+        if (shopItem.habitClass != null && shopItem.specialClass != null &&
+            (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") &&
+            shopItem.habitClass != "armoire" &&
+            user?.stats?.habitClass != shopItem.specialClass
+        ) {
             val classDisclaimerView = contentView.findViewById<TextView>(R.id.class_disclaimer_view)
             val className = getTranslatedClassNamePlural(context.resources, shopItem.specialClass ?: "")
             classDisclaimerView.text =
@@ -279,9 +302,24 @@ class PurchaseDialog(
             buyLabel.text = context.getString(R.string.locked)
             priceLabel.visibility = View.GONE
             limitedTextView.visibility = View.GONE
-            if (shopItem.isTypeGear && shopItem.key.last().toString().toIntOrNull() != null) {
-                val previousKey = "${shopItem.key.dropLast(1)}${(shopItem.key.last().toString().toIntOrNull() ?: 1) - 1}"
-                if (user?.items?.gear?.owned?.find { it.key == previousKey }?.owned != true) {
+            if (shopItem.isTypeGear && shopItem.key
+                    .last()
+                    .toString()
+                    .toIntOrNull() != null
+            ) {
+                val previousKey = "${shopItem.key.dropLast(1)}${(
+                    shopItem.key
+                        .last()
+                        .toString()
+                        .toIntOrNull() ?: 1
+                ) - 1}"
+                if (user
+                        ?.items
+                        ?.gear
+                        ?.owned
+                        ?.find { it.key == previousKey }
+                        ?.owned != true
+                ) {
                     limitedTextView.visibility = View.VISIBLE
                     limitedTextView.text = context.getString(R.string.locked_equipment_shop_dialog)
                     limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
@@ -299,11 +337,12 @@ class PurchaseDialog(
                     val daysUntilFree = 45 - daysSinceLastFreeRebirth
                     if (daysUntilFree > 0) {
                         limitedTextView.visibility = View.VISIBLE
-                        limitedTextView.text = context.resources.getQuantityString(
-                            R.plurals.days_until_free_rebirth,
-                            daysUntilFree,
-                            daysUntilFree
-                        )
+                        limitedTextView.text =
+                            context.resources.getQuantityString(
+                                R.plurals.days_until_free_rebirth,
+                                daysUntilFree,
+                                daysUntilFree,
+                            )
                         limitedTextView.background = ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
                         limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
                     } else {
@@ -315,7 +354,8 @@ class PurchaseDialog(
             } else if (userLevel in 50..99) {
                 val lastFreeRebirth = user?.flags?.lastFreeRebirth
                 if (lastFreeRebirth == null ||
-                    (Date().time - lastFreeRebirth.time) / (1000 * 60 * 60 * 24) >= 45) {
+                    (Date().time - lastFreeRebirth.time) / (1000 * 60 * 60 * 24) >= 45
+                ) {
                     limitedTextView.visibility = View.VISIBLE
                     limitedTextView.text = context.getString(R.string.free_rebirth_at_level_100)
                     limitedTextView.background = ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
@@ -418,9 +458,15 @@ class PurchaseDialog(
         setLimitedTextView()
 
         if (additionalContentView is PurchaseDialogBackgroundContent) {
-            (additionalContentView as PurchaseDialogBackgroundContent).setAvatarWithBackgroundPreview(userRepository.getUnmanagedCopy(user), shopItem)
+            (additionalContentView as PurchaseDialogBackgroundContent).setAvatarWithBackgroundPreview(
+                userRepository.getUnmanagedCopy(user),
+                shopItem,
+            )
         } else if (additionalContentView is PurchaseDialogCustomizationContent) {
-            (additionalContentView as PurchaseDialogCustomizationContent).setAvatarWithPreview(userRepository.getUnmanagedCopy(user), shopItem)
+            (additionalContentView as PurchaseDialogCustomizationContent).setAvatarWithPreview(
+                userRepository.getUnmanagedCopy(user),
+                shopItem,
+            )
         }
     }
 
@@ -462,11 +508,21 @@ class PurchaseDialog(
                             InsufficientGoldDialog(context).show()
                         }
                     }
-                    "gold" == shopItem.currency -> InsufficientGoldDialog(context).show()
+
+                    "gold" == shopItem.currency -> {
+                        InsufficientGoldDialog(context).show()
+                    }
+
                     "gems" == shopItem.currency -> {
-                        Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "purchase modal", "item" to shopItem.key))
+                        Analytics.sendEvent(
+                            "show insufficient gems modal",
+                            EventCategory.BEHAVIOUR,
+                            HitType.EVENT,
+                            mapOf("reason" to "purchase modal", "item" to shopItem.key),
+                        )
                         parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
                     }
+
                     "hourglasses" == shopItem.currency -> {
                         if (user?.isSubscribed == true) {
                             InsufficientHourglassesDialog(context).show()
@@ -475,7 +531,9 @@ class PurchaseDialog(
                                 EventOutcomeSubscriptionBottomSheetFragment().apply {
                                     eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
                                 }
-                            parentActivity?.let { activity -> subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG) }
+                            parentActivity?.let { activity ->
+                                subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                            }
                         }
                     }
                 }
@@ -489,7 +547,9 @@ class PurchaseDialog(
         HapticFeedbackManager.tap(buyButton)
         val snackbarText = arrayOf("")
         val observable: (suspend () -> Any?)
-        if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
+        if (shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType ||
+            shopItem.currency == "hourglasses"
+        ) {
             observable =
                 if (shopItem.purchaseType == "gear") {
                     { inventoryRepository.purchaseMysterySet(shopItem.key) }
@@ -520,12 +580,13 @@ class PurchaseDialog(
                 if (shopItem.key == "armoire" && buyResponse != null) {
                     MainNavigationController.navigate(
                         R.id.armoireActivity,
-                        ArmoireActivityDirections.openArmoireActivity(
-                            buyResponse.armoire["type"] ?: "",
-                            buyResponse.armoire["dropText"] ?: "",
-                            buyResponse.armoire["dropKey"] ?: "",
-                            buyResponse.armoire["value"] ?: ""
-                        ).arguments
+                        ArmoireActivityDirections
+                            .openArmoireActivity(
+                                buyResponse.armoire["type"] ?: "",
+                                buyResponse.armoire["dropText"] ?: "",
+                                buyResponse.armoire["dropKey"] ?: "",
+                                buyResponse.armoire["value"] ?: "",
+                            ).arguments,
                     )
                 }
             }
@@ -564,7 +625,7 @@ class PurchaseDialog(
             rightIcon = priceLabel.compoundDrawables[0],
             rightTextColor = rightTextColor,
             rightText = "-" + priceLabel.text,
-            isCelebratory = true
+            isCelebratory = true,
         )
         inventoryRepository.retrieveInAppRewards()
         userRepository.retrieveUser(forced = true)
@@ -600,7 +661,7 @@ class PurchaseDialog(
         alert.addButton(
             context.getString(R.string.purchaseX, purchaseQuantity),
             isPrimary = true,
-            isDestructive = false
+            isDestructive = false,
         ) { _, _ ->
             buyItem(purchaseQuantity)
         }
@@ -626,24 +687,26 @@ class PurchaseDialog(
 
         alert.setAdditionalContentView(rebirthContent)
 
-        val primaryButton = alert.addButton(
-            R.string.rebirth_confirm_use,
-            isPrimary = true,
-            isDestructive = true
-        ) { _, _ ->
-            buyItem(purchaseQuantity)
-        }
+        val primaryButton =
+            alert.addButton(
+                R.string.rebirth_confirm_use,
+                isPrimary = true,
+                isDestructive = true,
+            ) { _, _ ->
+                buyItem(purchaseQuantity)
+            }
         primaryButton.minHeight = context.resources.getDimensionPixelSize(R.dimen.button_height)
         (primaryButton as? MaterialButton)?.cornerRadius = 8.dpToPx(context)
         primaryButton.setTypeface(primaryButton.typeface, Typeface.NORMAL)
 
-        val secondaryButton = alert.addButton(
-            R.string.go_back,
-            isPrimary = false,
-            isDestructive = false
-        ) { dialog, _ ->
-            dialog.dismiss()
-        }
+        val secondaryButton =
+            alert.addButton(
+                R.string.go_back,
+                isPrimary = false,
+                isDestructive = false,
+            ) { dialog, _ ->
+                dialog.dismiss()
+            }
         secondaryButton.setTypeface(null, Typeface.NORMAL)
 
         alert.show()

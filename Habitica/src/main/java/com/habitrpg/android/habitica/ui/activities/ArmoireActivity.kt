@@ -40,6 +40,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class ArmoireActivity : BaseActivity() {
@@ -117,8 +118,11 @@ class ArmoireActivity : BaseActivity() {
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainContent) { v, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
-                or WindowInsetsCompat.Type.displayCutout())
+            val insets =
+                windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
             v.updatePadding(top = insets.top)
             binding.unsubbedWrapper.updatePadding(bottom = insets.bottom)
             binding.dropRateButton.updatePadding(bottom = insets.bottom)
@@ -147,7 +151,7 @@ class ArmoireActivity : BaseActivity() {
             Analytics.sendEvent("Free armoire perk", EventCategory.BEHAVIOUR, HitType.EVENT)
             giveUserArmoire()
             lifecycleScope.launchCatching {
-                delay(400)
+                delay(400.milliseconds)
                 binding.openArmoireSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
             }
         }
@@ -160,7 +164,7 @@ class ArmoireActivity : BaseActivity() {
                 }
             subscriptionBottomSheet.show(
                 supportFragmentManager,
-                EventOutcomeSubscriptionBottomSheetFragment.TAG
+                EventOutcomeSubscriptionBottomSheetFragment.TAG,
             )
         }
 
@@ -193,10 +197,11 @@ class ArmoireActivity : BaseActivity() {
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.dropRateButton) { v, windowInsets ->
-            val insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-                    + WindowInsetsCompat.Type.displayCutout()
-            )
+            val insets =
+                windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() +
+                        WindowInsetsCompat.Type.displayCutout(),
+                )
             v.updatePadding(bottom = insets.bottom)
             consumeWindowInsetsAbove30(windowInsets)
         }
@@ -247,7 +252,7 @@ class ArmoireActivity : BaseActivity() {
                 buyResponse.armoire["type"] ?: "",
                 buyResponse.armoire["dropKey"] ?: "",
                 buyResponse.armoire["dropText"] ?: "",
-                buyResponse.armoire["value"] ?: ""
+                buyResponse.armoire["value"] ?: "",
             )
             hasAnimatedChanges = false
             gold = null
@@ -268,10 +273,8 @@ class ArmoireActivity : BaseActivity() {
         val gold = gold?.toInt()
         if (hasAnimatedChanges) return
         if (gold != null && decreaseGold) {
-            /**
-             * We are adding 100 as the gold is already "deducted" before the animation starts,
-             * and animating to show the current user's gold amount.
-             */
+            // We are adding 100 as the gold is already "deducted" before the animation starts,
+            // and animating to show the current user's gold amount.
             binding.goldView.value = (gold + 100).toDouble()
             binding.goldView.value = (gold).toDouble()
         }
@@ -290,7 +293,7 @@ class ArmoireActivity : BaseActivity() {
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
             },
-            500
+            500,
         )
 
         binding.iconView.startAnimation(Animations.bobbingAnimation())
@@ -327,15 +330,14 @@ class ArmoireActivity : BaseActivity() {
 
     private fun createParticles(
         container: FrameLayout,
-        resource: Int
+        resource: Int,
     ) {
         ParticleSystem(
             container,
             30,
             ContextCompat.getDrawable(this, resource),
-            6000
-        )
-            .setRotationSpeed(144f)
+            6000,
+        ).setRotationSpeed(144f)
             .setScaleRange(1.0f, 1.6f)
             .setSpeedByComponentsRange(-0.15f, 0.15f, 0.15f, 0.45f)
             .setFadeOut(200, AccelerateInterpolator())
@@ -346,7 +348,7 @@ class ArmoireActivity : BaseActivity() {
         type: String,
         key: String,
         text: String,
-        value: String? = ""
+        value: String? = "",
     ) {
         lastType = type
         lastKey = key

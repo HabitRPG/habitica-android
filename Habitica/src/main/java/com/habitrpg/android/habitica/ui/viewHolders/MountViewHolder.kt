@@ -15,8 +15,10 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.inflate
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
-class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) :
-    androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)),
+class MountViewHolder(
+    parent: ViewGroup,
+    private val onEquip: ((String) -> Unit)?,
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)),
     View.OnClickListener {
     private var binding: MountOverviewItemBinding = MountOverviewItemBinding.bind(itemView)
     private var owned: Boolean = false
@@ -32,7 +34,7 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
     fun bind(
         item: Mount,
         owned: Boolean,
-        currentMount: String?
+        currentMount: String?,
     ) {
         animal = item
         this.owned = owned
@@ -73,12 +75,12 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
                 } else {
                     context
                 } as Activity
-                ).showAsBottomSheet {
+            ).showAsBottomSheet {
                 MountBottomSheet(
                     pet,
                     currentMount.equals(animal?.key),
                     onEquip,
-                    it
+                    it,
                 )
             }
         }

@@ -21,7 +21,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseSubscriptionViewBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
-class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+class SubscriptionOptionView(
+    context: Context,
+    attrs: AttributeSet,
+) : FrameLayout(context, attrs) {
     private val binding = PurchaseSubscriptionViewBinding.inflate(context.layoutInflater, this, true)
 
     var sku: String? = null
@@ -39,25 +42,28 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         }
 
     init {
-        val a = context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.SubscriptionOptionView,
-            0,
-            0
-        )
+        val a =
+            context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.SubscriptionOptionView,
+                0,
+                0,
+            )
 
         isGifted = a.getBoolean(R.styleable.SubscriptionOptionView_isGifted, false)
 
         if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {
-            binding.descriptionTextView.text = context.getString(
-                R.string.subscription_duration_norenew,
-                a.getText(R.styleable.SubscriptionOptionView_recurringText)
-            )
+            binding.descriptionTextView.text =
+                context.getString(
+                    R.string.subscription_duration_norenew,
+                    a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                )
         } else {
-            binding.descriptionTextView.text = context.getString(
-                R.string.subscription_duration,
-                a.getText(R.styleable.SubscriptionOptionView_recurringText)
-            )
+            binding.descriptionTextView.text =
+                context.getString(
+                    R.string.subscription_duration,
+                    a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                )
         }
 
         gemCap = a.getInteger(R.styleable.SubscriptionOptionView_gemCapText, 24)
@@ -65,30 +71,35 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         setAddtlGemText(false)
         setFlagText(a.getText(R.styleable.SubscriptionOptionView_flagText))
 
-        binding.selectedIndicator.translationX = -binding.selectedIndicator.drawable.intrinsicWidth.toFloat()
+        binding.selectedIndicator.translationX =
+            -binding.selectedIndicator.drawable.intrinsicWidth
+                .toFloat()
     }
 
     private fun updateGemCapText() {
-        binding.gemCapTextView.text = highlightText(
-            context.getString(if (isGifted) R.string.unlocks_x_gems_per_month else R.string.unlock_x_gems_per_month, gemCap),
-            context.getString(R.string.x_gems, gemCap),
-            ContextCompat.getColor(context, if (isSubscriptionSelected) R.color.yellow_5 else R.color.white)
-        )
+        binding.gemCapTextView.text =
+            highlightText(
+                context.getString(if (isGifted) R.string.unlocks_x_gems_per_month else R.string.unlock_x_gems_per_month, gemCap),
+                context.getString(R.string.x_gems, gemCap),
+                ContextCompat.getColor(context, if (isSubscriptionSelected) R.color.yellow_5 else R.color.white),
+            )
     }
 
     private fun setAddtlGemText(isSelected: Boolean) {
         if (gemCap == 50) {
-            binding.hourglassTextView.text = highlightText(
-                context.getString(if (isGifted) R.string.max_gem_cap_text_gift else R.string.max_gem_cap_text),
-                context.getString(R.string.gem_cap),
-                ContextCompat.getColor(context, if (isSelected) R.color.yellow_5 else R.color.white)
-            )
+            binding.hourglassTextView.text =
+                highlightText(
+                    context.getString(if (isGifted) R.string.max_gem_cap_text_gift else R.string.max_gem_cap_text),
+                    context.getString(R.string.gem_cap),
+                    ContextCompat.getColor(context, if (isSelected) R.color.yellow_5 else R.color.white),
+                )
         } else {
-            binding.hourglassTextView.text = highlightText(
-                context.getString(if (isGifted) R.string.two_gems_per_month_gift else R.string.two_gems_per_month),
-                context.getString(R.string.plus_two_gems),
-                ContextCompat.getColor(context, if (isSelected) R.color.yellow_5 else R.color.white)
-            )
+            binding.hourglassTextView.text =
+                highlightText(
+                    context.getString(if (isGifted) R.string.two_gems_per_month_gift else R.string.two_gems_per_month),
+                    context.getString(R.string.plus_two_gems),
+                    ContextCompat.getColor(context, if (isSelected) R.color.yellow_5 else R.color.white),
+                )
         }
     }
 
@@ -98,25 +109,27 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
 
     fun showHourglassPromo(show: Boolean) {
         binding.hourglassPromoView.isVisible = show
-        binding.hourglassPromoView.text = highlightText(
-            context.getString(R.string.get_12_mystic_hourglasses),
-            context.getString(R.string.twelve_mystic_hourglasses),
-            ContextCompat.getColor(context, R.color.teal_1)
-        )
+        binding.hourglassPromoView.text =
+            highlightText(
+                context.getString(R.string.get_12_mystic_hourglasses),
+                context.getString(R.string.twelve_mystic_hourglasses),
+                ContextCompat.getColor(context, R.color.teal_1),
+            )
     }
 
     fun setPriceText(text: String) {
         binding.priceLabel.text = text
         if (isPromoted) {
-            val shader: Shader = LinearGradient(
-                0f,
-                0f,
-                binding.priceLabel.paint.measureText(text),
-                binding.priceLabel.lineHeight.toFloat(),
-                "#2995CD".toColorInt(),
-                "#24CC8F".toColorInt(),
-                Shader.TileMode.REPEAT
-            )
+            val shader: Shader =
+                LinearGradient(
+                    0f,
+                    0f,
+                    binding.priceLabel.paint.measureText(text),
+                    binding.priceLabel.lineHeight.toFloat(),
+                    "#2995CD".toColorInt(),
+                    "#24CC8F".toColorInt(),
+                    Shader.TileMode.REPEAT,
+                )
             binding.priceLabel.paint.shader = shader
         }
     }
@@ -137,7 +150,11 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         }
     }
 
-    private fun highlightText(text: String, substring: String, color: Int): Spannable {
+    private fun highlightText(
+        text: String,
+        substring: String,
+        color: Int,
+    ): Spannable {
         val spannable = SpannableString(text)
         val start = text.indexOf(substring)
         if (start != -1) {
@@ -148,10 +165,16 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         return spannable
     }
 
-    fun animateBackgroundColor(colorFrom: Int, colorTo: Int) {
+    fun animateBackgroundColor(
+        colorFrom: Int,
+        colorTo: Int,
+    ) {
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
         colorAnimation.duration = 350 // milliseconds
-        colorAnimation.addUpdateListener { animator -> binding.root.backgroundTintList = ColorStateList.valueOf(animator.animatedValue as Int) }
+        colorAnimation.addUpdateListener { animator ->
+            binding.root.backgroundTintList =
+                ColorStateList.valueOf(animator.animatedValue as Int)
+        }
         colorAnimation.start()
     }
 
@@ -159,7 +182,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         if (isSubscriptionSelected == purchased) return
         isSubscriptionSelected = purchased
         if (purchased) {
-            binding.selectedIndicator.animate()
+            binding.selectedIndicator
+                .animate()
                 .withStartAction { binding.selectedIndicator.alpha = 1f }
                 .translationX(0f)
                 .setDuration(250)
@@ -167,11 +191,12 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
                 .start()
             animateBackgroundColor(ContextCompat.getColor(context, R.color.brand_200), ContextCompat.getColor(context, R.color.white))
             binding.root.setBackgroundResource(R.drawable.subscription_box_bg_selected)
-            val textColor = if (isPromoted) {
-                ContextCompat.getColor(context, R.color.teal_1)
-            } else {
-                ContextCompat.getColor(context, R.color.brand_300)
-            }
+            val textColor =
+                if (isPromoted) {
+                    ContextCompat.getColor(context, R.color.teal_1)
+                } else {
+                    ContextCompat.getColor(context, R.color.brand_300)
+                }
             binding.gemCapTextView.setTextColor(textColor)
             binding.hourglassTextView.setTextColor(textColor)
             setAddtlGemText(true)
@@ -180,41 +205,51 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             }
             binding.descriptionTextView.setTextColor(textColor)
             TextViewCompat.setCompoundDrawableTintList(binding.gemCapTextView, ContextCompat.getColorStateList(context, R.color.yellow_100))
-            TextViewCompat.setCompoundDrawableTintList(binding.hourglassTextView, ContextCompat.getColorStateList(context, R.color.yellow_100))
+            TextViewCompat.setCompoundDrawableTintList(
+                binding.hourglassTextView,
+                ContextCompat.getColorStateList(context, R.color.yellow_100),
+            )
         } else {
-            binding.selectedIndicator.animate()
+            binding.selectedIndicator
+                .animate()
                 .alpha(0f)
                 .setStartDelay(0)
                 .setDuration(200)
                 .withEndAction {
-                    binding.selectedIndicator.translationX = -binding.selectedIndicator.drawable.intrinsicWidth.toFloat()
-                }
-                .start()
+                    binding.selectedIndicator.translationX =
+                        -binding.selectedIndicator.drawable.intrinsicWidth
+                            .toFloat()
+                }.start()
             animateBackgroundColor(ContextCompat.getColor(context, R.color.white), ContextCompat.getColor(context, R.color.brand_200))
             binding.gemCapTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.brand_600
-                )
+                    R.color.brand_600,
+                ),
             )
             binding.hourglassTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.brand_600
-                )
+                    R.color.brand_600,
+                ),
             )
             setAddtlGemText(false)
             if (!isPromoted) {
-                binding.priceLabel.setTextColor(ContextCompat.getColor(context, if (isPromoted) R.color.promo_gradient else R.color.brand_600))
+                binding.priceLabel.setTextColor(
+                    ContextCompat.getColor(context, if (isPromoted) R.color.promo_gradient else R.color.brand_600),
+                )
             }
             binding.descriptionTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.brand_600
-                )
+                    R.color.brand_600,
+                ),
             )
             TextViewCompat.setCompoundDrawableTintList(binding.gemCapTextView, ContextCompat.getColorStateList(context, R.color.brand_400))
-            TextViewCompat.setCompoundDrawableTintList(binding.hourglassTextView, ContextCompat.getColorStateList(context, R.color.brand_400))
+            TextViewCompat.setCompoundDrawableTintList(
+                binding.hourglassTextView,
+                ContextCompat.getColorStateList(context, R.color.brand_400),
+            )
         }
     }
 }

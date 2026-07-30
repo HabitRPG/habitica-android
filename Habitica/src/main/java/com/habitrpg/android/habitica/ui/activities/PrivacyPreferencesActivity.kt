@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -49,19 +50,15 @@ import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import javax.inject.Inject
-import androidx.core.content.edit
 
 @AndroidEntryPoint
-class PrivacyPreferencesActivity: BaseActivity() {
+class PrivacyPreferencesActivity : BaseActivity() {
     @Inject
     lateinit var sharedPrefs: SharedPreferences
-    
+
     private lateinit var binding: ActivityComposeBinding
 
-    override fun getLayoutResId(): Int? {
-        return R.layout.activity_compose
-    }
-
+    override fun getLayoutResId(): Int? = R.layout.activity_compose
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityComposeBinding.inflate(layoutInflater)
@@ -82,14 +79,14 @@ class PrivacyPreferencesActivity: BaseActivity() {
                             .verticalScroll(rememberScrollState())
                             .padding(horizontal = 12.dp)
                             .padding(top = 60.dp)
-                            .windowInsetsPadding(WindowInsets.systemBars)
+                            .windowInsetsPadding(WindowInsets.systemBars),
                 ) {
                     Column(
                         horizontalAlignment = Alignment.Start,
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 13.dp)
+                                .padding(horizontal = 13.dp),
                     ) {
                         Text(
                             stringResource(R.string.your_privacy_preferences),
@@ -101,7 +98,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                             modifier =
                                 Modifier
                                     .padding(bottom = 20.dp)
-                                    .fillMaxWidth()
+                                    .fillMaxWidth(),
                         )
                         Text(
                             stringResource(R.string.your_privacy_preferences_description_full),
@@ -113,7 +110,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                             modifier =
                                 Modifier
                                     .padding(bottom = 18.dp)
-                                    .fillMaxWidth()
+                                    .fillMaxWidth(),
                         )
                     }
                     PrivacyToggleView(
@@ -121,7 +118,7 @@ class PrivacyPreferencesActivity: BaseActivity() {
                         description = stringResource(R.string.performance_analytics_description),
                         isChecked = analyticsConsent,
                         onCheckedChange = { analyticsConsent = it },
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
                     )
                     PrivacyToggleView(
                         title = stringResource(R.string.strictly_necessary_analytics),
@@ -129,18 +126,28 @@ class PrivacyPreferencesActivity: BaseActivity() {
                         isChecked = true,
                         onCheckedChange = {},
                         disabled = true,
-                        modifier = Modifier.padding(bottom = 18.dp)
+                        modifier = Modifier.padding(bottom = 18.dp),
                     )
                     AnimatedContent(isSaving) {
                         if (it) {
-                            HabiticaCircularProgressView(modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(), indicatorSize = 80.dp)
+                            HabiticaCircularProgressView(
+                                modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(),
+                                indicatorSize = 80.dp,
+                            )
                         } else {
                             Column {
-                                val colors = if (LocalContext.current.isUsingNightModeResources()) {
-                                    ButtonDefaults.buttonColors().copy(containerColor = Color.White, contentColor = colorResource(R.color.gray_50))
-                                } else {
-                                    ButtonDefaults.buttonColors().copy(containerColor = colorResource(R.color.gray_600), contentColor = HabiticaTheme.colors.textPrimary)
-                                }
+                                val colors =
+                                    if (LocalContext.current.isUsingNightModeResources()) {
+                                        ButtonDefaults.buttonColors().copy(
+                                            containerColor = Color.White,
+                                            contentColor = colorResource(R.color.gray_50),
+                                        )
+                                    } else {
+                                        ButtonDefaults.buttonColors().copy(
+                                            containerColor = colorResource(R.color.gray_600),
+                                            contentColor = HabiticaTheme.colors.textPrimary,
+                                        )
+                                    }
                                 Button(
                                     {
                                         analyticsConsent = true
@@ -148,13 +155,14 @@ class PrivacyPreferencesActivity: BaseActivity() {
                                             delay(500)
                                             isSaving = true
                                             Analytics.setAnalyticsConsent(true)
-                                            sharedPrefs.edit { putBoolean("analytics_consent_given", true)}
+                                            sharedPrefs.edit { putBoolean("analytics_consent_given", true) }
                                             userRepository.updateUser("preferences.analyticsConsent", true)
                                             finish()
                                         }
-                                    }, colors = colors,
+                                    },
+                                    colors = colors,
                                     shape = HabiticaTheme.shapes.small,
-                                    modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth().heightIn(60.dp)
+                                    modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth().heightIn(60.dp),
                                 ) {
                                     Text(stringResource(R.string.accept_all), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                                 }
@@ -167,9 +175,10 @@ class PrivacyPreferencesActivity: BaseActivity() {
                                             userRepository.updateUser("preferences.analyticsConsent", analyticsConsent)
                                             finish()
                                         }
-                                    }, colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.brand_400)),
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.brand_400)),
                                     shape = HabiticaTheme.shapes.small,
-                                    modifier = Modifier.padding(bottom = 15.dp).fillMaxWidth().heightIn(60.dp)
+                                    modifier = Modifier.padding(bottom = 15.dp).fillMaxWidth().heightIn(60.dp),
                                 ) {
                                     Text(stringResource(R.string.save_preferences), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                                 }
@@ -181,8 +190,11 @@ class PrivacyPreferencesActivity: BaseActivity() {
                         {
                             openBrowserLink("https://habitica.com/static/privacy")
                         },
-                        colors = ButtonDefaults.textButtonColors(contentColor = colorResource(if (isUsingNightModeResources()) R.color.brand_500 else R.color.brand_400)),
-                        modifier = Modifier.padding(bottom = 20.dp).fillMaxWidth()
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                contentColor = colorResource(if (isUsingNightModeResources()) R.color.brand_500 else R.color.brand_400),
+                            ),
+                        modifier = Modifier.padding(bottom = 20.dp).fillMaxWidth(),
                     ) {
                         Text(stringResource(R.string.habiticas_privacy_policy), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     }

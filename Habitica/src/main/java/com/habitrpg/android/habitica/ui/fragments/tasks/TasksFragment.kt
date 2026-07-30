@@ -54,10 +54,8 @@ class TasksFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentViewpagerBinding {
-        return FragmentViewpagerBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding = FragmentViewpagerBinding.inflate(inflater, container, false)
 
     private var refreshItem: MenuItem? = null
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
@@ -72,7 +70,11 @@ class TasksFragment :
             if (fragment == null) {
                 if (isAdded) {
                     fragment =
-                        (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + binding?.viewPager?.currentItem) as? TaskRecyclerViewFragment)
+                        (
+                            childFragmentManager.findFragmentByTag(
+                                "android:switcher:" + R.id.viewPager + ":" + binding?.viewPager?.currentItem,
+                            ) as? TaskRecyclerViewFragment
+                        )
                 }
             }
             return fragment
@@ -81,7 +83,7 @@ class TasksFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = false
         this.usesBottomNavigation = true
@@ -90,7 +92,7 @@ class TasksFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         loadTaskLists()
@@ -148,7 +150,7 @@ class TasksFragment :
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         if (viewModel.isPersonalBoard) {
@@ -184,7 +186,7 @@ class TasksFragment :
                     filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
                     return true
                 }
-            }
+            },
         )
     }
 
@@ -198,8 +200,8 @@ class TasksFragment :
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
             R.id.action_filter -> {
                 showFilterDialog()
                 true
@@ -211,9 +213,10 @@ class TasksFragment :
                 true
             }
 
-            else -> super.onOptionsItemSelected(item)
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
-    }
 
     private fun showFilterDialog() {
         context?.let {
@@ -264,7 +267,7 @@ class TasksFragment :
                         updateFilterIcon(getTaskTypeFromTabPosition(position))
                     }
                 }
-            }
+            },
         )
     }
 
@@ -278,7 +281,7 @@ class TasksFragment :
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)
                 filterIcon?.setTintWith(
                     it.getThemeColor(R.attr.headerTextColor),
-                    PorterDuff.Mode.MULTIPLY
+                    PorterDuff.Mode.MULTIPLY,
                 )
                 filterMenuItem?.setIcon(filterIcon)
             }
@@ -287,7 +290,7 @@ class TasksFragment :
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_filters_active)
                 filterIcon?.setTintWith(
                     it.getThemeColor(R.attr.textColorPrimaryDark),
-                    PorterDuff.Mode.MULTIPLY
+                    PorterDuff.Mode.MULTIPLY,
                 )
                 filterMenuItem?.setIcon(filterIcon)
             }
@@ -299,7 +302,8 @@ class TasksFragment :
             return
         }
         lifecycleScope.launchCatching {
-            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards"))
+            tutorialRepository
+                .getTutorialSteps(listOf("habits", "dailies", "todos", "rewards"))
                 .collect { tutorialSteps ->
                     val activeTutorialFragments = ArrayList<TaskType>()
                     for (step in tutorialSteps) {
@@ -326,7 +330,9 @@ class TasksFragment :
                                     TaskType.REWARD
                                 }
 
-                                else -> TaskType.HABIT
+                                else -> {
+                                    TaskType.HABIT
+                                }
                             }
                         val tab = bottomNavigation?.tabWithId(id)
                         if (step.shouldDisplay) {
@@ -364,7 +370,7 @@ class TasksFragment :
             "open create task form",
             EventCategory.BEHAVIOUR,
             HitType.EVENT,
-            additionalData
+            additionalData,
         )
 
         val bundle = Bundle()
@@ -392,8 +398,7 @@ class TasksFragment :
             else -> null
         }
 
-    private fun getActiveTaskType(): TaskType =
-        getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: TaskType.HABIT
+    private fun getActiveTaskType(): TaskType = getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: TaskType.HABIT
 
     //endregion Events
 
@@ -404,7 +409,7 @@ class TasksFragment :
 
     private fun onTaskCreatedResult(
         resultCode: Int,
-        data: Intent?
+        data: Intent?,
     ) {
         if (resultCode == Activity.RESULT_OK) {
             val taskTypeValue = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
@@ -421,15 +426,15 @@ class TasksFragment :
 
             if (!DateUtils.isToday(
                     viewModel.sharedPreferences.getLong(
-                            "last_creation_reporting",
-                            0
-                        )
+                        "last_creation_reporting",
+                        0,
+                    ),
                 )
             ) {
                 Analytics.sendEvent(
                     "task created",
                     EventCategory.BEHAVIOUR,
-                    HitType.EVENT
+                    HitType.EVENT,
                 )
                 viewModel.sharedPreferences.edit {
                     putLong("last_creation_reporting", Date().time)
@@ -476,7 +481,7 @@ class TasksFragment :
 
     override fun onTabSelected(
         taskType: TaskType,
-        smooth: Boolean
+        smooth: Boolean,
     ) {
         val newItem =
             when (taskType) {
@@ -499,7 +504,7 @@ class TasksFragment :
             mainActivity?.title = viewModel.ownerTitle
             MainNavigationController.updateLabel(
                 R.id.tasksFragment,
-                viewModel.ownerTitle.toString()
+                viewModel.ownerTitle.toString(),
             )
         }
         val teamPlan = viewModel.teamPlans[viewModel.ownerID.value]

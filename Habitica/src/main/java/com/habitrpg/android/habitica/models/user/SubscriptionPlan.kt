@@ -9,7 +9,9 @@ import java.util.Date
 import kotlin.math.max
 
 @RealmClass(embedded = true)
-open class SubscriptionPlan : RealmObject(), BaseObject {
+open class SubscriptionPlan :
+    RealmObject(),
+    BaseObject {
     var customerId: String? = null
     var dateCreated: Date? = null
     var dateUpdated: Date? = null
@@ -83,13 +85,14 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
         }
 
     val habiticaProduct: HabiticaProduct?
-        get() = when (planId) {
-            "basic_earned" -> HabiticaProduct.SUBSCRIPTION_1_MONTH
-            "basic_3mo" -> HabiticaProduct.SUBSCRIPTION_3_MONTH
-            "basic_6mo" -> HabiticaProduct.SUBSCRIPTION_6_MONTH
-            "basic_12mo" -> HabiticaProduct.SUBSCRIPTION_12_MONTH
-            else -> null
-        }
+        get() =
+            when (planId) {
+                "basic_earned" -> HabiticaProduct.SUBSCRIPTION_1_MONTH
+                "basic_3mo" -> HabiticaProduct.SUBSCRIPTION_3_MONTH
+                "basic_6mo" -> HabiticaProduct.SUBSCRIPTION_6_MONTH
+                "basic_12mo" -> HabiticaProduct.SUBSCRIPTION_12_MONTH
+                else -> null
+            }
 
     companion object {
         const val PLANID_BASIC = "basic"

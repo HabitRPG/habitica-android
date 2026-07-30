@@ -8,7 +8,9 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class GroupAssignedDetails : RealmObject(), BaseObject {
+open class GroupAssignedDetails :
+    RealmObject(),
+    BaseObject {
     var assignedDate: Date? = null
     var assignedUsername: String? = null
     var assignedUserID: String? = null
@@ -18,10 +20,10 @@ open class GroupAssignedDetails : RealmObject(), BaseObject {
 }
 
 @RealmClass(embedded = true)
-open class TaskGroupPlan : RealmObject(), BaseObject {
-    fun assignedDetailsFor(userID: String): GroupAssignedDetails? {
-        return assignedUsersDetail.firstOrNull { it.assignedUserID == userID }
-    }
+open class TaskGroupPlan :
+    RealmObject(),
+    BaseObject {
+    fun assignedDetailsFor(userID: String): GroupAssignedDetails? = assignedUsersDetail.firstOrNull { it.assignedUserID == userID }
 
     @SerializedName("id")
     var groupID: String? = null

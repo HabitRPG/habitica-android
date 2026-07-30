@@ -24,13 +24,13 @@ class HabiticaListPreference : ListPreference {
         val subtitleText = TextView(context)
         subtitleText.setText(R.string.cds_subtitle)
         val builder =
-            AlertDialog.Builder(context)
+            AlertDialog
+                .Builder(context)
                 .setSingleChoiceItems(entries, getValueIndex() + 1) { dialog, index ->
                     val actualIndex = max(0, index - 1)
                     setValueIndex(actualIndex)
                     dialog.dismiss()
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+                }.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
                 .setTitle(title)
 
         val dialog = builder.create()

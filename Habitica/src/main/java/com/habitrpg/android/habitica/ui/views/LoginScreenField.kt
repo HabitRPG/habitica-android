@@ -65,39 +65,40 @@ private fun LoginDecorationBox(
     icon: @Composable (() -> Unit)? = null,
     colors: TextFieldColors,
     interactionSource: MutableInteractionSource,
-    innerTextField: @Composable () -> Unit) {
-        TextFieldDefaults.DecorationBox(
-            value = value,
-            innerTextField = innerTextField,
-            placeholder = { Text(label, fontSize = 18.sp, fontWeight = FontWeight.Normal) },
-            enabled = true,
-            singleLine = true,
-            visualTransformation = VisualTransformation.None,
-            interactionSource = interactionSource,
-            shape = HabiticaTheme.shapes.large,
-            prefix = prefix,
-            leadingIcon = icon,
-            suffix = {
-                AnimatedContent(Pair(state, focused)) { (it, focused) ->
-                    if (it == LoginFieldState.ERROR && !focused) {
-                        Image(
-                            painterResource(R.drawable.ic_close_white_18dp),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(colorResource(R.color.red_100))
-                        )
-                    } else if (it == LoginFieldState.VALID) {
-                        Image(
-                            painterResource(R.drawable.checkmark),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(colorResource(R.color.green_50))
-                        )
-                    } else if (it == LoginFieldState.LOADING) {
-                        HabiticaCircularProgressView(indicatorSize = 20.dp, strokeWidth = 2.dp)
-                    }
+    innerTextField: @Composable () -> Unit,
+) {
+    TextFieldDefaults.DecorationBox(
+        value = value,
+        innerTextField = innerTextField,
+        placeholder = { Text(label, fontSize = 18.sp, fontWeight = FontWeight.Normal) },
+        enabled = true,
+        singleLine = true,
+        visualTransformation = VisualTransformation.None,
+        interactionSource = interactionSource,
+        shape = HabiticaTheme.shapes.large,
+        prefix = prefix,
+        leadingIcon = icon,
+        suffix = {
+            AnimatedContent(Pair(state, focused)) { (it, focused) ->
+                if (it == LoginFieldState.ERROR && !focused) {
+                    Image(
+                        painterResource(R.drawable.ic_close_white_18dp),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(colorResource(R.color.red_100)),
+                    )
+                } else if (it == LoginFieldState.VALID) {
+                    Image(
+                        painterResource(R.drawable.checkmark),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(colorResource(R.color.green_50)),
+                    )
+                } else if (it == LoginFieldState.LOADING) {
+                    HabiticaCircularProgressView(indicatorSize = 20.dp, strokeWidth = 2.dp)
                 }
-            },
-            colors = colors
-        )
+            }
+        },
+        colors = colors,
+    )
 }
 
 @Composable
@@ -121,79 +122,93 @@ fun LoginScreenField(
     }
 
     val containerColor = colorResource(R.color.brand_100)
-    val keyboardOptions = if (hideInput) {
-        KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password, autoCorrectEnabled = false)
-    } else {
-        KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email, autoCorrectEnabled = false)
-    }
+    val keyboardOptions =
+        if (hideInput) {
+            KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password, autoCorrectEnabled = false)
+        } else {
+            KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email, autoCorrectEnabled = false)
+        }
     var stillShowInput by remember { mutableStateOf(false) }
     val showInput = !hideInput || stillShowInput
 
-    val colors = TextFieldDefaults.colors(
-        unfocusedContainerColor = containerColor,
-        focusedContainerColor = containerColor,
-        errorContainerColor = containerColor,
-        unfocusedTextColor = Color.White,
-        focusedTextColor = Color.White,
-        errorTextColor = colorResource(R.color.red_500),
-        unfocusedPlaceholderColor = colorResource(R.color.brand_600),
-        focusedPlaceholderColor = colorResource(R.color.brand_600).copy(alpha = 0.5f),
-        unfocusedIndicatorColor = Color.Transparent,
-        focusedIndicatorColor = Color.Transparent,
-        errorIndicatorColor = Color.Transparent,
-        unfocusedTrailingIconColor = colorResource(R.color.brand_100),
-        cursorColor = Color.White,
-        selectionColors = TextSelectionColors(
-            handleColor = colorResource(R.color.white),
-            backgroundColor = colorResource(R.color.brand_600).copy(alpha = 0.3f)
-        ),
-    )
+    val colors =
+        TextFieldDefaults.colors(
+            unfocusedContainerColor = containerColor,
+            focusedContainerColor = containerColor,
+            errorContainerColor = containerColor,
+            unfocusedTextColor = Color.White,
+            focusedTextColor = Color.White,
+            errorTextColor = colorResource(R.color.red_500),
+            unfocusedPlaceholderColor = colorResource(R.color.brand_600),
+            focusedPlaceholderColor = colorResource(R.color.brand_600).copy(alpha = 0.5f),
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent,
+            unfocusedTrailingIconColor = colorResource(R.color.brand_100),
+            cursorColor = Color.White,
+            selectionColors =
+                TextSelectionColors(
+                    handleColor = colorResource(R.color.white),
+                    backgroundColor = colorResource(R.color.brand_600).copy(alpha = 0.3f),
+                ),
+        )
 
-    val mergedTextStyle = TextStyle(
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Normal
-    ).merge(TextStyle(color = if (focused) colors.focusedTextColor else colors.unfocusedTextColor))
+    val mergedTextStyle =
+        TextStyle(
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Normal,
+        ).merge(TextStyle(color = if (focused) colors.focusedTextColor else colors.unfocusedTextColor))
 
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         if (hideInput) {
             BasicSecureTextField(
                 state = textFieldState,
-                textObfuscationMode = if (showInput) {
-                    TextObfuscationMode.Visible
-                } else {
-                    TextObfuscationMode.RevealLastTyped
-                },
+                textObfuscationMode =
+                    if (showInput) {
+                        TextObfuscationMode.Visible
+                    } else {
+                        TextObfuscationMode.RevealLastTyped
+                    },
                 cursorBrush = SolidColor(Color.White),
                 textStyle = mergedTextStyle,
                 keyboardOptions = keyboardOptions,
-                modifier = Modifier.fillMaxWidth().heightIn(min = 60.dp)
-                    .onFocusChanged {
-                        focused = it.isFocused
-                    },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 60.dp)
+                        .onFocusChanged {
+                            focused = it.isFocused
+                        },
                 decorator = {
                     LoginDecorationBox(value, label, state, focused, prefix, {
-                        Box(modifier = Modifier.clickable {
-                            stillShowInput = !stillShowInput
-                        }) {
+                        Box(
+                            modifier =
+                                Modifier.clickable {
+                                    stillShowInput = !stillShowInput
+                                },
+                        ) {
                             icon?.invoke()
                         }
                     }, colors, interactionSource, it)
-                }
+                },
             )
         } else {
             BasicTextField(
                 state = textFieldState,
                 textStyle = mergedTextStyle,
                 cursorBrush = SolidColor(Color.White),
-                modifier = Modifier.fillMaxWidth().heightIn(min = 60.dp)
-                    .onFocusChanged {
-                        focused = it.isFocused
-                    },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 60.dp)
+                        .onFocusChanged {
+                            focused = it.isFocused
+                        },
                 keyboardOptions = keyboardOptions,
                 lineLimits = TextFieldLineLimits.SingleLine,
                 decorator = { innerTextField ->
                     LoginDecorationBox(value, label, state, focused, prefix, icon, colors, interactionSource, innerTextField)
-                }
+                },
             )
         }
         AnimatedVisibility(errorMessage != null && !focused) {
@@ -201,7 +216,7 @@ fun LoginScreenField(
                 text = errorMessage ?: "",
                 color = colorResource(R.color.red_500),
                 fontSize = 14.sp,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp),
             )
         }
     }
@@ -216,28 +231,35 @@ fun LoginScreenFieldPreview() {
             value = "",
             icon = {
                 Image(painterResource(R.drawable.login_email), contentDescription = null)
-            }, onValueChange = {}
+            },
+            onValueChange = {},
         )
         LoginScreenField(
             label = "Email",
             value = "test@test.com",
             icon = {
                 Image(painterResource(R.drawable.login_email), contentDescription = null)
-            }, onValueChange = {}, state = LoginFieldState.VALID
+            },
+            onValueChange = {},
+            state = LoginFieldState.VALID,
         )
         LoginScreenField(
             label = "Email",
             value = "test@test.com",
             icon = {
                 Image(painterResource(R.drawable.login_email), contentDescription = null)
-            }, onValueChange = {}, state = LoginFieldState.ERROR
+            },
+            onValueChange = {},
+            state = LoginFieldState.ERROR,
         )
         LoginScreenField(
             label = "Username",
             value = "Bla",
             icon = {
                 Image(painterResource(R.drawable.login_username), contentDescription = null)
-            }, onValueChange = {}, state = LoginFieldState.LOADING
+            },
+            onValueChange = {},
+            state = LoginFieldState.LOADING,
         )
         LoginScreenField(
             label = "Password",
@@ -245,7 +267,8 @@ fun LoginScreenFieldPreview() {
             hideInput = true,
             icon = {
                 Image(painterResource(R.drawable.login_password), contentDescription = null)
-            }, onValueChange = {}
+            },
+            onValueChange = {},
         )
         LoginScreenField(
             label = "Password",
@@ -253,7 +276,8 @@ fun LoginScreenFieldPreview() {
             hideInput = true,
             icon = {
                 Image(painterResource(R.drawable.login_password), contentDescription = null)
-            }, onValueChange = {}
+            },
+            onValueChange = {},
         )
     }
 }

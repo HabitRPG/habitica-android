@@ -9,15 +9,16 @@ import java.text.DateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctxt, attrs) {
+class TimePreference(
+    ctxt: Context,
+    attrs: AttributeSet?,
+) : DialogPreference(ctxt, attrs) {
     private var timeval: String? = null
 
     override fun onGetDefaultValue(
         a: TypedArray,
-        index: Int
-    ): Any {
-        return a.getString(index)!!
-    }
+        index: Int,
+    ): Any = a.getString(index)!!
 
     override fun onSetInitialValue(defaultValue: Any?) {
         timeval = null
@@ -55,13 +56,9 @@ class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctx
     }
 
     companion object {
-        fun getHour(timeval: String?): Int {
-            return timeval?.split(":")?.get(0)?.toInt() ?: 0
-        }
+        fun getHour(timeval: String?): Int = timeval?.split(":")?.get(0)?.toInt() ?: 0
 
-        fun getMinute(timeval: String?): Int {
-            return timeval?.split(":")?.get(1)?.toInt() ?: 0
-        }
+        fun getMinute(timeval: String?): Int = timeval?.split(":")?.get(1)?.toInt() ?: 0
     }
 
     init {

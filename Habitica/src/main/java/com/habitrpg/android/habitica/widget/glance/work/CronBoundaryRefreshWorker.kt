@@ -28,22 +28,23 @@ class CronBoundaryRefreshWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
-
     override suspend fun doWork(): Result {
         val context = applicationContext
         if (!WidgetAuth.isLoggedIn(context) || !hasDailyWidgets(context)) {
             return Result.success()
         }
 
-        val user = try {
-            withContext(Dispatchers.Main) {
-                widgetEntryPoint(context).userRepository()
-                    .retrieveUser(withTasks = true, forced = true)
+        val user =
+            try {
+                withContext(Dispatchers.Main) {
+                    widgetEntryPoint(context)
+                        .userRepository()
+                        .retrieveUser(withTasks = true, forced = true)
+                }
+            } catch (e: Exception) {
+                ExceptionHandler.reportError(e)
+                return Result.retry()
             }
-        } catch (e: Exception) {
-            ExceptionHandler.reportError(e)
-            return Result.retry()
-        }
 
         WidgetSnapshotPublisher.publishAll(context)
 
@@ -56,7 +57,10 @@ class CronBoundaryRefreshWorker(
 
         private const val BUFFER_MINUTES = 2
 
-        internal fun nextBoundaryMillis(dayStart: Int, now: Long): Long {
+        internal fun nextBoundaryMillis(
+            dayStart: Int,
+            now: Long,
+        ): Long {
             val hour = dayStart.coerceIn(0, 24) % 24
             val cal = Calendar.getInstance()
             cal.timeInMillis = now
@@ -71,7 +75,10 @@ class CronBoundaryRefreshWorker(
             return cal.timeInMillis
         }
 
-        internal fun lastBoundaryMillis(dayStart: Int, now: Long): Long {
+        internal fun lastBoundaryMillis(
+            dayStart: Int,
+            now: Long,
+        ): Long {
             val hour = dayStart.coerceIn(0, 24) % 24
             val cal = Calendar.getInstance()
             cal.timeInMillis = now
@@ -97,9 +104,10 @@ class CronBoundaryRefreshWorker(
                 cancel(context)
                 return
             }
-            val user = withContext(Dispatchers.Main) {
-                widgetEntryPoint(context).userRepository().getUser().firstOrNull()
-            }
+            val user =
+                withContext(Dispatchers.Main) {
+                    widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+                }
             schedule(context, user?.preferences?.dayStart ?: 0)
         }
 
@@ -110,17 +118,23 @@ class CronBoundaryRefreshWorker(
             }
         }
 
-        fun schedule(context: Context, dayStart: Int) {
+        fun schedule(
+            context: Context,
+            dayStart: Int,
+        ) {
             val now = Date().time
             val delay = (nextBoundaryMillis(dayStart, now) - now).coerceAtLeast(0)
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-            val request = OneTimeWorkRequestBuilder<CronBoundaryRefreshWorker>()
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-                .setConstraints(constraints)
-                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.MINUTES)
-                .build()
+            val constraints =
+                Constraints
+                    .Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            val request =
+                OneTimeWorkRequestBuilder<CronBoundaryRefreshWorker>()
+                    .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                    .setConstraints(constraints)
+                    .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.MINUTES)
+                    .build()
             WorkManager.getInstance(context).enqueueUniqueWork(
                 WORK_NAME,
                 ExistingWorkPolicy.REPLACE,

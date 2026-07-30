@@ -8,20 +8,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
 
-class RealmFAQLocalRepository(realm: Realm) :
-    RealmContentLocalRepository(realm),
+class RealmFAQLocalRepository(
+    realm: Realm,
+) : RealmContentLocalRepository(realm),
     FAQLocalRepository {
-    override fun getArticle(position: Int): Flow<FAQArticle> {
-        return realm.where(FAQArticle::class.java)
+    override fun getArticle(position: Int): Flow<FAQArticle> =
+        realm
+            .where(FAQArticle::class.java)
             .equalTo("position", position)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.count() > 0 }.mapNotNull { it.firstOrNull() }
-    }
+            .filter { it.isLoaded && it.count() > 0 }
+            .mapNotNull { it.firstOrNull() }
 
     override val articles: Flow<List<FAQArticle>>
         get() =
-            realm.where(FAQArticle::class.java)
+            realm
+                .where(FAQArticle::class.java)
                 .findAll()
                 .toFlow()
                 .filter { it.isLoaded }

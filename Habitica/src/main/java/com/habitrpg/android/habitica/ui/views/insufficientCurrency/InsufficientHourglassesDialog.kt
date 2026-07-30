@@ -8,7 +8,9 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 
-class InsufficientHourglassesDialog(context: Context) : InsufficientCurrencyDialog(context) {
+class InsufficientHourglassesDialog(
+    context: Context,
+) : InsufficientCurrencyDialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         imageView.setImageBitmap(HabiticaIconsHelper.imageOfHourglassShop())
@@ -16,11 +18,11 @@ class InsufficientHourglassesDialog(context: Context) : InsufficientCurrencyDial
 
         addButton(
             R.string.get_hourglasses,
-            true
+            true,
         ) { _, _ ->
             MainNavigationController.navigate(
                 R.id.gemPurchaseActivity,
-                bundleOf(Pair("openSubscription", true))
+                bundleOf(Pair("openSubscription", true)),
             )
         }
         addCloseButton()

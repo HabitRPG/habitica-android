@@ -54,7 +54,7 @@ fun LoginForm(
     var confirmPassword by remember { mutableStateOf("") }
     Column(
         horizontalAlignment = Alignment.Companion.CenterHorizontally,
-        modifier = modifier.widthIn(max = 480.dp)
+        modifier = modifier.widthIn(max = 480.dp),
     ) {
         Button(
             {
@@ -65,30 +65,30 @@ fun LoginForm(
             },
             colors = ButtonDefaults.textButtonColors(),
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 8.dp)
+            modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 8.dp),
         ) {
-            ProvideTextStyle(TextStyle(fontSize=18.sp)) {
+            ProvideTextStyle(TextStyle(fontSize = 18.sp)) {
                 AnimatedContent(isRegistering) {
                     if (it) {
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(
                                 stringResource(R.string.already_have_an_account),
-                                color = colorResource(R.color.brand_600)
+                                color = colorResource(R.color.brand_600),
                             )
                             Text(
                                 stringResource(R.string.login_btn),
-                                color = colorResource(R.color.white)
+                                color = colorResource(R.color.white),
                             )
                         }
                     } else {
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             Text(
                                 stringResource(R.string.need_an_account),
-                                color = colorResource(R.color.brand_600)
+                                color = colorResource(R.color.brand_600),
                             )
                             Text(
                                 stringResource(R.string.register_btn),
-                                color = colorResource(R.color.white)
+                                color = colorResource(R.color.white),
                             )
                         }
                     }
@@ -105,16 +105,15 @@ fun LoginForm(
                     if (it) {
                         Image(
                             painterResource(R.drawable.login_email),
-                            contentDescription = stringResource(R.string.email)
+                            contentDescription = stringResource(R.string.email),
                         )
                     } else {
                         Image(
                             painterResource(R.drawable.login_username),
-                            contentDescription = stringResource(R.string.email)
+                            contentDescription = stringResource(R.string.email),
                         )
                     }
                 }
-
             },
             modifier = Modifier.Companion.fillMaxWidth().padding(bottom = 10.dp),
         )
@@ -127,7 +126,7 @@ fun LoginForm(
             icon = {
                 Image(
                     painterResource(R.drawable.login_password),
-                    contentDescription = stringResource(R.string.password)
+                    contentDescription = stringResource(R.string.password),
                 )
             },
             errorMessage = if (passwordFieldState == LoginFieldState.ERROR) stringResource(R.string.password_too_short, 8) else null,
@@ -139,17 +138,24 @@ fun LoginForm(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
                 hideInput = true,
-                state = when {
-                    confirmPassword.isEmpty() -> LoginFieldState.DEFAULT
-                    confirmPassword == password && passwordFieldState == LoginFieldState.VALID -> LoginFieldState.VALID
-                    else -> LoginFieldState.ERROR
-                },
-                errorMessage = if (confirmPassword.isNotBlank() && confirmPassword != password &&
-                        passwordFieldState == LoginFieldState.VALID) stringResource(R.string.password_not_matching) else null,
+                state =
+                    when {
+                        confirmPassword.isEmpty() -> LoginFieldState.DEFAULT
+                        confirmPassword == password && passwordFieldState == LoginFieldState.VALID -> LoginFieldState.VALID
+                        else -> LoginFieldState.ERROR
+                    },
+                errorMessage =
+                    if (confirmPassword.isNotBlank() && confirmPassword != password &&
+                        passwordFieldState == LoginFieldState.VALID
+                    ) {
+                        stringResource(R.string.password_not_matching)
+                    } else {
+                        null
+                    },
                 icon = {
                     Image(
                         painterResource(R.drawable.login_password),
-                        contentDescription = stringResource(R.string.confirmpassword)
+                        contentDescription = stringResource(R.string.confirmpassword),
                     )
                 },
                 modifier = Modifier.Companion.fillMaxWidth().padding(top = 10.dp),
@@ -161,31 +167,37 @@ fun LoginForm(
             } else {
                 Button(
                     onSubmit,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Companion.White,
-                        contentColor = colorResource(R.color.gray_50),
-                        disabledContainerColor = Color.White.copy(alpha = 0.5f),
-                        disabledContentColor = colorResource(R.color.gray_50)
-                    ),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = Color.Companion.White,
+                            contentColor = colorResource(R.color.gray_50),
+                            disabledContainerColor = Color.White.copy(alpha = 0.5f),
+                            disabledContentColor = colorResource(R.color.gray_50),
+                        ),
                     shape = HabiticaTheme.shapes.large,
                     contentPadding = PaddingValues(15.dp),
-                    enabled = if (isRegistering) {
-                        (emailFieldState == LoginFieldState.VALID && passwordFieldState == LoginFieldState.VALID && password == confirmPassword)
-                    } else {
-                        (email.isNotBlank() && password.isNotBlank())
-                    },
-                    modifier = Modifier.Companion.fillMaxWidth().padding(top = 30.dp)
+                    enabled =
+                        if (isRegistering) {
+                            (
+                                emailFieldState == LoginFieldState.VALID && passwordFieldState == LoginFieldState.VALID &&
+                                    password == confirmPassword
+                            )
+                        } else {
+                            (email.isNotBlank() && password.isNotBlank())
+                        },
+                    modifier = Modifier.Companion.fillMaxWidth().padding(top = 30.dp),
                 ) {
                     if (isRegistering) {
                         Text(
                             stringResource(R.string.action_continue),
                             fontWeight = FontWeight.Companion.Bold,
-                            fontSize = 18.sp
+                            fontSize = 18.sp,
                         )
                     } else {
                         Text(
-                            stringResource(R.string.login_btn), fontWeight = FontWeight.Companion.Bold,
-                            fontSize = 18.sp
+                            stringResource(R.string.login_btn),
+                            fontWeight = FontWeight.Companion.Bold,
+                            fontSize = 18.sp,
                         )
                     }
                 }
@@ -194,26 +206,31 @@ fun LoginForm(
         AnimatedVisibility(!isRegistering) {
             Button(
                 onGoogleLoginClicked,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Companion.White,
-                    contentColor = colorResource(R.color.gray_50)
-                ),
+                colors =
+                    ButtonDefaults.buttonColors(
+                        containerColor = Color.Companion.White,
+                        contentColor = colorResource(R.color.gray_50),
+                    ),
                 shape = HabiticaTheme.shapes.large,
                 contentPadding = PaddingValues(15.dp),
-                modifier = Modifier.Companion.widthIn(max = 480.dp).fillMaxWidth().padding(top = 10.dp)
+                modifier =
+                    Modifier.Companion
+                        .widthIn(max = 480.dp)
+                        .fillMaxWidth()
+                        .padding(top = 10.dp),
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.Companion.CenterVertically
+                    verticalAlignment = Alignment.Companion.CenterVertically,
                 ) {
                     Image(
                         painterResource(R.drawable.googleg_standard_color_18),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                     Text(
                         stringResource(R.string.continue_with_google),
                         fontWeight = FontWeight.Companion.Bold,
-                        fontSize = 18.sp
+                        fontSize = 18.sp,
                     )
                 }
             }
@@ -223,12 +240,12 @@ fun LoginForm(
                 onForgotPasswordClicked,
                 colors = ButtonDefaults.textButtonColors(),
                 contentPadding = PaddingValues(15.dp),
-                modifier = Modifier.Companion.fillMaxWidth()
+                modifier = Modifier.Companion.fillMaxWidth(),
             ) {
                 Text(
                     stringResource(R.string.forgot_pw_btn),
                     color = colorResource(R.color.white),
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
             }
         }

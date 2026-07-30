@@ -5,6 +5,4 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.drawable.toDrawable
 
-fun Bitmap.asDrawable(resources: Resources): Drawable {
-    return this.toDrawable(resources)
-}
+fun Bitmap.asDrawable(resources: Resources): Drawable = this.toDrawable(resources)

@@ -49,7 +49,7 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 fun ChangePasswordScreen(
     onBack: () -> Unit,
     onSave: (oldPassword: String, newPassword: String) -> Unit,
-    onForgotPassword: () -> Unit
+    onForgotPassword: () -> Unit,
 ) {
     val colors = HabiticaTheme.colors
     val backgroundColor = colors.windowBackground
@@ -69,39 +69,42 @@ fun ChangePasswordScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = backgroundColor
+        color = backgroundColor,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             IconButton(
                 onClick = onBack,
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(Alignment.TopStart)
-                    .padding(start = 22.dp, top = 16.dp)
+                modifier =
+                    Modifier
+                        .size(48.dp)
+                        .align(Alignment.TopStart)
+                        .padding(start = 22.dp, top = 16.dp),
             ) {
                 Icon(
                     painterResource(id = R.drawable.arrow_back),
                     contentDescription = stringResource(R.string.action_back),
-                    tint = textColor
+                    tint = textColor,
                 )
             }
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        top = 16.dp + 40.dp + 8.dp
-                    )
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = 16.dp + 40.dp + 8.dp,
+                        ),
             ) {
                 Text(
                     text = stringResource(R.string.change_password),
                     fontWeight = FontWeight.Bold,
                     fontSize = 28.sp,
                     color = textColor,
-                    modifier = Modifier
-                        .align(Alignment.Start)
-                        .padding(start = 6.dp, bottom = 12.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 6.dp, bottom = 12.dp),
                 )
 
                 Text(
@@ -110,9 +113,10 @@ fun ChangePasswordScreen(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Normal,
                     lineHeight = 20.sp,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(start = 6.dp,bottom = 22.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(start = 6.dp, bottom = 22.dp),
                 )
 
                 PasswordField(
@@ -122,7 +126,7 @@ fun ChangePasswordScreen(
                     fieldColor = fieldColor,
                     labelColor = labelColor,
                     textColor = textColor,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
 
                 PasswordField(
@@ -134,7 +138,7 @@ fun ChangePasswordScreen(
                     textColor = textColor,
                     isError = attemptedSave && !passwordValid,
                     errorMessage = if (attemptedSave && !passwordValid) stringResource(R.string.password_too_short, 8) else null,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 PasswordField(
                     label = stringResource(R.string.confirm_new_password),
@@ -145,7 +149,7 @@ fun ChangePasswordScreen(
                     textColor = textColor,
                     isError = attemptedSave && !passwordsMatch,
                     errorMessage = if (attemptedSave && !passwordsMatch) stringResource(R.string.password_not_matching) else null,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(modifier = Modifier.padding(top = 24.dp))
                 Button(
@@ -154,22 +158,24 @@ fun ChangePasswordScreen(
                         if (canSave) onSave(oldPassword, newPassword)
                     },
                     enabled = true,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.brand_400),
-                        disabledContainerColor = colorResource(id = R.color.brand_400),
-                        contentColor           = Color.White,
-                        disabledContentColor   = Color.White
-                    ),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.brand_400),
+                            disabledContainerColor = colorResource(id = R.color.brand_400),
+                            contentColor = Color.White,
+                            disabledContentColor = Color.White,
+                        ),
                     shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(60.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.change_password),
                         color = Color.White,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
                     )
                 }
 
@@ -177,20 +183,19 @@ fun ChangePasswordScreen(
 
                 TextButton(
                     onClick = onForgotPassword,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
                 ) {
                     Text(
                         text = stringResource(R.string.forgot_pw_btn),
                         color = buttonColor,
                         fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
                     )
                 }
             }
         }
     }
 }
-
 
 @Composable
 fun PasswordField(
@@ -202,19 +207,23 @@ fun PasswordField(
     textColor: Color,
     isError: Boolean = false,
     errorMessage: String? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val onTextChangedColor = if (value.isNotBlank())
-        colorResource(id = R.color.purple400_purple500)
-    else
-        colorResource(id = R.color.gray_400)
+    val onTextChangedColor =
+        if (value.isNotBlank()) {
+            colorResource(id = R.color.purple400_purple500)
+        } else {
+            colorResource(id = R.color.gray_400)
+        }
 
     AndroidView(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
         factory = { ctx ->
-            LayoutInflater.from(ctx)
+            LayoutInflater
+                .from(ctx)
                 .inflate(R.layout.component_text_input, null, false)
         },
         update = { view ->
@@ -253,7 +262,7 @@ fun PasswordField(
 
             til.setBoxStrokeWidth(2)
             edit.setTextColor(textColor.toArgb())
-        }
+        },
     )
 }
 
@@ -264,7 +273,7 @@ fun ChangePasswordScreenPreview() {
         ChangePasswordScreen(
             onBack = {},
             onSave = { _, _ -> },
-            onForgotPassword = {}
+            onForgotPassword = {},
         )
     }
 }

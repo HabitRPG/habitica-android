@@ -7,35 +7,37 @@ import androidx.glance.material3.ColorProviders
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 
-private val LightColors = lightColorScheme(
-    primary = Color(0xFF925CF3),
-    onPrimary = Color.White,
-    secondary = Color(0xFF6133B4),
-    onSecondary = Color.White,
-    background = Color(0xFFF9F9F9),
-    onBackground = Color(0xFF686274),
-    surface = Color(0xFFF9F9F9),
-    onSurface = Color(0xFF686274),
-    surfaceVariant = Color(0xFFC3C0C7),
-    onSurfaceVariant = Color(0xFF878190),
-    error = Color(0xFFF74E52),
-    onError = Color.White,
-)
+private val LightColors =
+    lightColorScheme(
+        primary = Color(0xFF925CF3),
+        onPrimary = Color.White,
+        secondary = Color(0xFF6133B4),
+        onSecondary = Color.White,
+        background = Color(0xFFF9F9F9),
+        onBackground = Color(0xFF686274),
+        surface = Color(0xFFF9F9F9),
+        onSurface = Color(0xFF686274),
+        surfaceVariant = Color(0xFFC3C0C7),
+        onSurfaceVariant = Color(0xFF878190),
+        error = Color(0xFFF74E52),
+        onError = Color.White,
+    )
 
-private val DarkColors = darkColorScheme(
-    primary = Color(0xFFBDA8FF),
-    onPrimary = Color(0xFF36205D),
-    secondary = Color(0xFF925CF3),
-    onSecondary = Color.White,
-    background = Color(0xFF2B2020),
-    onBackground = Color(0xFFD5C8FF),
-    surface = Color(0xFF2B2020),
-    onSurface = Color(0xFFD5C8FF),
-    surfaceVariant = Color(0xFF434074),
-    onSurfaceVariant = Color(0xFFBDA8FF),
-    error = Color(0xFFFF6165),
-    onError = Color.White,
-)
+private val DarkColors =
+    darkColorScheme(
+        primary = Color(0xFFBDA8FF),
+        onPrimary = Color(0xFF36205D),
+        secondary = Color(0xFF925CF3),
+        onSecondary = Color.White,
+        background = Color(0xFF2B2020),
+        onBackground = Color(0xFFD5C8FF),
+        surface = Color(0xFF2B2020),
+        onSurface = Color(0xFFD5C8FF),
+        surfaceVariant = Color(0xFF434074),
+        onSurfaceVariant = Color(0xFFBDA8FF),
+        error = Color(0xFFFF6165),
+        onError = Color.White,
+    )
 
 object HabiticaWidgetColorScheme {
     val colors = ColorProviders(light = LightColors, dark = DarkColors)
@@ -112,32 +114,35 @@ fun colorForTaskValue(value: Double): Color =
         else -> TaskValueBucketColors.blue
     }
 
-fun colorForTaskValueLight(value: Double): Color = when {
-    value < -20.0 -> HabitButtonBarColors.maroonLight
-    value < -10.0 -> HabitButtonBarColors.redLight
-    value < -1.0 -> HabitButtonBarColors.orangeLight
-    value < 1.0 -> HabitButtonBarColors.yellowLight
-    value < 5.0 -> HabitButtonBarColors.greenLight
-    value < 10.0 -> HabitButtonBarColors.tealLight
-    else -> HabitButtonBarColors.blueLight
-}
+fun colorForTaskValueLight(value: Double): Color =
+    when {
+        value < -20.0 -> HabitButtonBarColors.maroonLight
+        value < -10.0 -> HabitButtonBarColors.redLight
+        value < -1.0 -> HabitButtonBarColors.orangeLight
+        value < 1.0 -> HabitButtonBarColors.yellowLight
+        value < 5.0 -> HabitButtonBarColors.greenLight
+        value < 10.0 -> HabitButtonBarColors.tealLight
+        else -> HabitButtonBarColors.blueLight
+    }
 
-fun colorForHabitValueLight(value: Double): Color = when {
-    value < -20.0 -> HabitButtonBarColors.maroonLight
-    value < -10.0 -> HabitButtonBarColors.redLight
-    value < -1.0 -> HabitButtonBarColors.orangeLight
-    value < 1.0 -> HabitButtonBarColors.yellowLight
-    value < 5.0 -> HabitButtonBarColors.greenLight
-    value < 10.0 -> HabitButtonBarColors.tealLight
-    else -> HabitButtonBarColors.blueLight
-}
+fun colorForHabitValueLight(value: Double): Color =
+    when {
+        value < -20.0 -> HabitButtonBarColors.maroonLight
+        value < -10.0 -> HabitButtonBarColors.redLight
+        value < -1.0 -> HabitButtonBarColors.orangeLight
+        value < 1.0 -> HabitButtonBarColors.yellowLight
+        value < 5.0 -> HabitButtonBarColors.greenLight
+        value < 10.0 -> HabitButtonBarColors.tealLight
+        else -> HabitButtonBarColors.blueLight
+    }
 
-fun colorForHabitValueMedium(value: Double): Color = when {
-    value < -20.0 -> HabitButtonBarColors.maroonMedium
-    value < -10.0 -> HabitButtonBarColors.redMedium
-    value < -1.0 -> HabitButtonBarColors.orangeMedium
-    value < 1.0 -> HabitButtonBarColors.yellowMedium
-    value < 5.0 -> HabitButtonBarColors.greenMedium
-    value < 10.0 -> HabitButtonBarColors.tealMedium
-    else -> HabitButtonBarColors.blueMedium
-}
+fun colorForHabitValueMedium(value: Double): Color =
+    when {
+        value < -20.0 -> HabitButtonBarColors.maroonMedium
+        value < -10.0 -> HabitButtonBarColors.redMedium
+        value < -1.0 -> HabitButtonBarColors.orangeMedium
+        value < 1.0 -> HabitButtonBarColors.yellowMedium
+        value < 5.0 -> HabitButtonBarColors.greenMedium
+        value < 10.0 -> HabitButtonBarColors.tealMedium
+        else -> HabitButtonBarColors.blueMedium
+    }

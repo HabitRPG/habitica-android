@@ -48,10 +48,8 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentGemPurchaseBinding {
-        return FragmentGemPurchaseBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentGemPurchaseBinding = FragmentGemPurchaseBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -66,7 +64,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,8 +75,9 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
         binding?.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
         binding?.viewSubscriptionsButton?.setOnClickListener {
-            MainNavigationController.navigate(R.id.gemPurchaseActivity,
-                Bundle().apply { putBoolean("openSubscription", true) }
+            MainNavigationController.navigate(
+                R.id.gemPurchaseActivity,
+                Bundle().apply { putBoolean("openSubscription", true) },
             )
         }
 
@@ -117,7 +116,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
                         Modifier
                             .padding(horizontal = 20.dp)
                             .clip(HabiticaTheme.shapes.medium)
-                            .padding(bottom = 20.dp)
+                            .padding(bottom = 20.dp),
                     )
                 }
             }
@@ -175,7 +174,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             }
         if (matchingView != null) {
             matchingView.setPurchaseButtonText(
-                sku.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+                sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
             )
             matchingView.sku = sku
         }

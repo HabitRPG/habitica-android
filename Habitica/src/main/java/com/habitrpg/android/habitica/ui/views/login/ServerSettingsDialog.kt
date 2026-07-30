@@ -35,19 +35,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.net.toUri
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.theme.HabiticaTheme
-import androidx.core.net.toUri
 
-private fun normalizeUrl(url: String): String {
-    return if (url.isNotBlank() && !url.startsWith("http://") && !url.startsWith("https://")) {
+private fun normalizeUrl(url: String): String =
+    if (url.isNotBlank() && !url.startsWith("http://") && !url.startsWith("https://")) {
         "https://$url"
     } else {
         url
     }
-}
 
 @Composable
 fun ServerSettingsDialog(
@@ -58,22 +57,25 @@ fun ServerSettingsDialog(
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = DialogProperties(
-            dismissOnClickOutside = false,
-        ),
+        properties =
+            DialogProperties(
+                dismissOnClickOutside = false,
+            ),
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = HabiticaTheme.colors.windowBackground,
-                contentColor = MaterialTheme.colorScheme.onSurface,
-            )
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = HabiticaTheme.colors.windowBackground,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                ),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(top = 24.dp, bottom = 16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp)
+                        .padding(top = 24.dp, bottom = 16.dp),
             ) {
                 Text(
                     text = stringResource(R.string.server),
@@ -82,38 +84,43 @@ fun ServerSettingsDialog(
                 )
                 Text(
                     text = stringResource(R.string.server_custom_warning),
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.error
-                    ),
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth()
+                    style =
+                        MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.error,
+                        ),
+                    modifier =
+                        Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(),
                 )
                 val (baseUrl, customUrl) = serverSettings
                 val defaultLabel = stringResource(R.string.server_option_default, baseUrl)
                 val customLabel = stringResource(R.string.server_option_custom)
                 val radioOptions = listOf(defaultLabel, customLabel)
-                val (selectedOption, onOptionSelected) = remember {
-                    mutableStateOf(
-                        if (customUrl.isNullOrEmpty()) radioOptions.first() else radioOptions.last()
-                    )
-                }
+                val (selectedOption, onOptionSelected) =
+                    remember {
+                        mutableStateOf(
+                            if (customUrl.isNullOrEmpty()) radioOptions.first() else radioOptions.last(),
+                        )
+                    }
                 Column(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .selectableGroup()
+                    modifier =
+                        Modifier
+                            .padding(top = 16.dp)
+                            .selectableGroup(),
                 ) {
                     radioOptions.forEach { option ->
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(56.dp)
-                                .selectable(
-                                    selected = (option == selectedOption),
-                                    onClick = { onOptionSelected(option) },
-                                    role = Role.RadioButton
-                                ),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(56.dp)
+                                    .selectable(
+                                        selected = (option == selectedOption),
+                                        onClick = { onOptionSelected(option) },
+                                        role = Role.RadioButton,
+                                    ),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(
                                 selected = (option == selectedOption),
@@ -122,7 +129,7 @@ fun ServerSettingsDialog(
                             Text(
                                 text = option,
                                 style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(start = 16.dp)
+                                modifier = Modifier.padding(start = 16.dp),
                             )
                         }
                     }
@@ -141,17 +148,21 @@ fun ServerSettingsDialog(
                     label = { Text(stringResource(R.string.server_custom_address_label)) },
                     supportingText = {
                         Text(
-                            if (!isValidUrl) stringResource(R.string.server_url_invalid)
-                            else stringResource(R.string.server_custom_address_hint)
+                            if (!isValidUrl) {
+                                stringResource(R.string.server_url_invalid)
+                            } else {
+                                stringResource(R.string.server_custom_address_hint)
+                            },
                         )
                     },
                     isError = !isValidUrl,
                     enabled = isCustomSelected,
                 )
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
                     horizontalArrangement = Arrangement.End,
                 ) {
                     TextButton(
@@ -160,11 +171,12 @@ fun ServerSettingsDialog(
                         Text(stringResource(R.string.cancel))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    val applyEnabled = if (customUrl == null) {
-                        isCustomSelected && input.isNotBlank() && isValidUrl
-                    } else {
-                        (selectedOption == radioOptions.first() || input != customUrl) && isValidUrl
-                    }
+                    val applyEnabled =
+                        if (customUrl == null) {
+                            isCustomSelected && input.isNotBlank() && isValidUrl
+                        } else {
+                            (selectedOption == radioOptions.first() || input != customUrl) && isValidUrl
+                        }
                     TextButton(
                         onClick = {
                             if (isCustomSelected) {
@@ -185,16 +197,18 @@ fun ServerSettingsDialog(
 
 @Preview
 @Preview(
-    name = "Night", uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+    name = "Night",
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
 )
 @Composable
 private fun ServerSettingsDialogPreview() {
     HabiticaTheme {
         ServerSettingsDialog(
-            serverSettings = ServerSettings(
-                baseUrl = "https://habitica.com/",
-                customUrl = null
-            ),
+            serverSettings =
+                ServerSettings(
+                    baseUrl = "https://habitica.com/",
+                    customUrl = null,
+                ),
             onApply = {},
             onReset = {},
             onDismissRequest = {},
@@ -204,16 +218,18 @@ private fun ServerSettingsDialogPreview() {
 
 @Preview
 @Preview(
-    name = "Night", uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+    name = "Night",
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
 )
 @Composable
 private fun ServerSettingsDialogPreviewCustomUrl() {
     HabiticaTheme {
         ServerSettingsDialog(
-            serverSettings = ServerSettings(
-                baseUrl = "https://habitica.com/",
-                customUrl = "localhost:3000",
-            ),
+            serverSettings =
+                ServerSettings(
+                    baseUrl = "https://habitica.com/",
+                    customUrl = "localhost:3000",
+                ),
             onApply = {},
             onReset = {},
             onDismissRequest = {},

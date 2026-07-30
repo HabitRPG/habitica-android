@@ -17,24 +17,24 @@ interface TaskRepository : BaseRepository {
     fun getTasks(
         taskType: TaskType,
         userID: String? = null,
-        includedGroupIDs: Array<String>
+        includedGroupIDs: Array<String>,
     ): Flow<List<Task>>
 
     fun saveTasks(
         userId: String,
         order: TasksOrder,
-        tasks: TaskList
+        tasks: TaskList,
     )
 
     suspend fun retrieveTasks(
         userId: String,
-        tasksOrder: TasksOrder
+        tasksOrder: TasksOrder,
     ): TaskList?
 
     suspend fun retrieveTasks(
         userId: String,
         tasksOrder: TasksOrder,
-        dueDate: Date
+        dueDate: Date,
     ): TaskList?
 
     suspend fun taskChecked(
@@ -42,7 +42,7 @@ interface TaskRepository : BaseRepository {
         task: Task,
         up: Boolean,
         force: Boolean,
-        notifyFunc: ((TaskScoringResult) -> Unit)?
+        notifyFunc: ((TaskScoringResult) -> Unit)?,
     ): TaskScoringResult?
 
     suspend fun taskChecked(
@@ -50,12 +50,12 @@ interface TaskRepository : BaseRepository {
         taskId: String,
         up: Boolean,
         force: Boolean,
-        notifyFunc: ((TaskScoringResult) -> Unit)?
+        notifyFunc: ((TaskScoringResult) -> Unit)?,
     ): TaskScoringResult?
 
     suspend fun scoreChecklistItem(
         taskId: String,
-        itemId: String
+        itemId: String,
     ): Task?
 
     fun getTask(taskId: String): Flow<Task>
@@ -64,12 +64,12 @@ interface TaskRepository : BaseRepository {
 
     suspend fun createTask(
         task: Task,
-        force: Boolean = false
+        force: Boolean = false,
     ): Task?
 
     suspend fun updateTask(
         task: Task,
-        force: Boolean = false
+        force: Boolean = false,
     ): Task?
 
     suspend fun deleteTask(taskId: String): Void?
@@ -80,23 +80,23 @@ interface TaskRepository : BaseRepository {
 
     fun markTaskCompleted(
         taskId: String,
-        isCompleted: Boolean
+        isCompleted: Boolean,
     )
 
     fun <T : BaseMainObject> modify(
         obj: T,
-        transaction: (T) -> Unit
+        transaction: (T) -> Unit,
     )
 
     fun swapTaskPosition(
         firstPosition: Int,
-        secondPosition: Int
+        secondPosition: Int,
     )
 
     suspend fun updateTaskPosition(
         taskType: TaskType,
         taskID: String,
-        newPosition: Int
+        newPosition: Int,
     ): List<String>?
 
     fun getUnmanagedTask(taskid: String): Flow<Task>
@@ -104,13 +104,13 @@ interface TaskRepository : BaseRepository {
     fun updateTaskInBackground(
         task: Task,
         assignChanges: Map<String, MutableList<String>>,
-        onComplete: (suspend () -> Unit)? = null
+        onComplete: (suspend () -> Unit)? = null,
     )
 
     fun createTaskInBackground(
         task: Task,
         assignChanges: Map<String, MutableList<String>>,
-        onComplete: (suspend () -> Unit)? = null
+        onComplete: (suspend () -> Unit)? = null,
     )
 
     fun getTaskCopies(): Flow<List<Task>>
@@ -125,7 +125,7 @@ interface TaskRepository : BaseRepository {
 
     suspend fun unlinkAllTasks(
         challengeID: String?,
-        keepOption: String
+        keepOption: String,
     ): Void?
 
     fun getTasksForChallenge(challengeID: String?): Flow<List<Task>>
@@ -134,6 +134,6 @@ interface TaskRepository : BaseRepository {
 
     suspend fun markTaskNeedsWork(
         task: Task,
-        userID: String
+        userID: String,
     )
 }

@@ -10,8 +10,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.BottomSheetWrapperBinding
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 
-open class HabiticaBottomSheetDialog(context: Context) :
-    BottomSheetDialog(context, R.style.SheetDialog) {
+open class HabiticaBottomSheetDialog(
+    context: Context,
+) : BottomSheetDialog(context, R.style.SheetDialog) {
     private val wrapperBinding = BottomSheetWrapperBinding.inflate(layoutInflater)
 
     init {
@@ -21,7 +22,8 @@ open class HabiticaBottomSheetDialog(context: Context) :
             v.updatePadding(
                 left = insets.left,
                 right = insets.right,
-                bottom = insets.bottom)
+                bottom = insets.bottom,
+            )
             consumeWindowInsetsAbove30(windowInsets)
         }
     }
@@ -31,7 +33,6 @@ open class HabiticaBottomSheetDialog(context: Context) :
         set(value) {
             wrapperBinding.grabber.visibility = value
         }
-
 
     override fun setContentView(view: View) {
         wrapperBinding.container.addView(view)

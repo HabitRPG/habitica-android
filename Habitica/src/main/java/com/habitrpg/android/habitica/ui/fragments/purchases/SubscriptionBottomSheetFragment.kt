@@ -61,7 +61,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentBottomsheetSubscriptionBinding.inflate(layoutInflater)
         return binding.root
@@ -69,13 +69,15 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.content.subscriptionOptions.visibility = View.GONE
         binding.content.subscribeButton.setOnClickListener { purchaseSubscription() }
-        binding.content.subscriptionDisclaimerView.setMarkdown("Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).")
+        binding.content.subscriptionDisclaimerView.setMarkdown(
+            "Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).",
+        )
 
         lifecycleScope.launchCatching {
             userRepository.getUser().collect { user ->
@@ -100,7 +102,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         binding.content.seeMoreButton.setOnClickListener {
             MainNavigationController.navigate(
                 R.id.gemPurchaseActivity,
-                bundleOf(Pair("openSubscription", true))
+                bundleOf(Pair("openSubscription", true)),
             )
         }
     }
@@ -138,15 +140,25 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                 for (sku in subscriptions) {
                     updateButtonLabel(
                         sku,
-                        sku.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
-                            ?: ""
+                        sku
+                            .getBaseOfferDetails()
+                            ?.pricingPhases
+                            ?.pricingPhaseList
+                            ?.firstOrNull()
+                            ?.formattedPrice
+                            ?: "",
                     )
                 }
                 if (selectedSubscriptionSku == null) {
                     subscriptions
                         .filter { buttonForSku(it)?.isVisible == true }
                         .maxByOrNull {
-                            it.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
+                            it
+                                .getBaseOfferDetails()
+                                ?.pricingPhases
+                                ?.pricingPhaseList
+                                ?.firstOrNull()
+                                ?.priceAmountMicros
                                 ?: 0
                         }?.let { selectSubscription(it) }
                 }
@@ -158,7 +170,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String
+        price: String,
     ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
@@ -181,18 +193,15 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         binding.content.subscribeButton.isEnabled = true
     }
 
-    internal fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? {
-        return buttonForSku(sku.productId)
-    }
+    internal fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? = buttonForSku(sku.productId)
 
-    private fun buttonForSku(sku: String): SubscriptionOptionView? {
-        return when (HabiticaProduct.forSku(sku)) {
+    private fun buttonForSku(sku: String): SubscriptionOptionView? =
+        when (HabiticaProduct.forSku(sku)) {
             HabiticaProduct.SUBSCRIPTION_1_MONTH -> binding.content.subscription1month
             HabiticaProduct.SUBSCRIPTION_3_MONTH -> binding.content.subscription3month
             HabiticaProduct.SUBSCRIPTION_12_MONTH -> binding.content.subscription12month
             else -> null
         }
-    }
 
     private fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->

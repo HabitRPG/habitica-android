@@ -18,9 +18,11 @@ pluginManagement {
         mavenLocal()
     }
     resolutionStrategy.eachPlugin {
-        if (requested.id.id == "realm-android") useModule(
-            "io.realm:realm-gradle-plugin:${requested.version}"
-        )
+        if (requested.id.id == "realm-android") {
+            useModule(
+                "io.realm:realm-gradle-plugin:${requested.version}",
+            )
+        }
     }
 }
 

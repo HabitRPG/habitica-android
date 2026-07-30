@@ -14,8 +14,8 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
-import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
@@ -50,28 +50,39 @@ fun HabitButtonBar(
             colorFilter = ColorFilter.tint(ColorProvider(barColor)),
         )
         when {
-            showUp && showDown && isTall -> StackedDirections(
-                circleColor = circleColor,
-                onUpClick = onUpClick,
-                onDownClick = onDownClick,
-            )
-            showUp && showDown -> SplitDirections(
-                circleColor = circleColor,
-                onUpClick = onUpClick,
-                onDownClick = onDownClick,
-            )
-            showUp -> SingleDirection(
-                glyphRes = R.drawable.habit_plus,
-                description = scoreUpCd(),
-                circleColor = circleColor,
-                onClick = onUpClick,
-            )
-            showDown -> SingleDirection(
-                glyphRes = R.drawable.habit_minus,
-                description = scoreDownCd(),
-                circleColor = circleColor,
-                onClick = onDownClick,
-            )
+            showUp && showDown && isTall -> {
+                StackedDirections(
+                    circleColor = circleColor,
+                    onUpClick = onUpClick,
+                    onDownClick = onDownClick,
+                )
+            }
+
+            showUp && showDown -> {
+                SplitDirections(
+                    circleColor = circleColor,
+                    onUpClick = onUpClick,
+                    onDownClick = onDownClick,
+                )
+            }
+
+            showUp -> {
+                SingleDirection(
+                    glyphRes = R.drawable.habit_plus,
+                    description = scoreUpCd(),
+                    circleColor = circleColor,
+                    onClick = onUpClick,
+                )
+            }
+
+            showDown -> {
+                SingleDirection(
+                    glyphRes = R.drawable.habit_minus,
+                    description = scoreDownCd(),
+                    circleColor = circleColor,
+                    onClick = onDownClick,
+                )
+            }
         }
     }
 }
@@ -155,10 +166,11 @@ private fun DirectionRegion(
         contentAlignment = Alignment.Center,
     ) {
         Box(
-            modifier = GlanceModifier
-                .size(circleSize)
-                .cornerRadius(circleSize / 2)
-                .background(ColorProvider(circleColor)),
+            modifier =
+                GlanceModifier
+                    .size(circleSize)
+                    .cornerRadius(circleSize / 2)
+                    .background(ColorProvider(circleColor)),
             contentAlignment = Alignment.Center,
         ) {
             Image(

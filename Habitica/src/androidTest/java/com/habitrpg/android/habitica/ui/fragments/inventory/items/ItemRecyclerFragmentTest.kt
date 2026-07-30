@@ -36,28 +36,26 @@ private val KTextView.text: CharSequence?
         (
             this.view.perform(
                 object : ViewAction {
-                    override fun getConstraints(): Matcher<View> {
-                        return isA(TextView::class.java)
-                    }
+                    override fun getConstraints(): Matcher<View> = isA(TextView::class.java)
 
-                    override fun getDescription(): String {
-                        return "getting text from a TextView"
-                    }
+                    override fun getDescription(): String = "getting text from a TextView"
 
                     override fun perform(
                         uiController: UiController?,
-                        view: View?
+                        view: View?,
                     ) {
                         val tv = view as TextView
                         string = tv.text
                     }
-                }
+                },
             )
-            )
+        )
         return string
     }
 
-class ItemItem(parent: Matcher<View>) : KRecyclerItem<ItemItem>(parent) {
+class ItemItem(
+    parent: Matcher<View>,
+) : KRecyclerItem<ItemItem>(parent) {
     val title = KTextView(parent) { withId(R.id.titleTextView) }
     val owned = KTextView(parent) { withId(R.id.ownedTextView) }
 }
@@ -67,8 +65,8 @@ class ItemScreen : Screen<ItemScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-                itemType(::ItemItem)
-            })
+            itemType(::ItemItem)
+        })
 }
 
 internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment, FragmentRecyclerviewBinding, ItemScreen>(false) {

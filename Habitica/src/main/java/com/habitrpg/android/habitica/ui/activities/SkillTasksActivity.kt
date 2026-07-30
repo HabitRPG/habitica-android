@@ -27,9 +27,7 @@ class SkillTasksActivity : BaseActivity() {
 
     internal var viewFragmentsDictionary = SparseArray<SkillTasksRecyclerViewFragment>()
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_skill_tasks
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_skill_tasks
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +58,7 @@ class SkillTasksActivity : BaseActivity() {
                     return fragment
                 }
 
-                override fun getItemCount(): Int {
-                    return 3
-                }
+                override fun getItemCount(): Int = 3
             }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -84,12 +80,11 @@ class SkillTasksActivity : BaseActivity() {
         finish()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        if (item.itemId == android.R.id.home) {
             onBackPressed()
             true
         } else {
             super.onOptionsItemSelected(item)
         }
-    }
 }

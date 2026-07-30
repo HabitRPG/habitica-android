@@ -84,10 +84,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentItemsDialogBinding {
-        return FragmentItemsDialogBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentItemsDialogBinding = FragmentItemsDialogBinding.inflate(inflater, container, false)
 
     override fun onDestroy() {
         inventoryRepository.close()
@@ -97,7 +95,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         when {
             this.isHatching -> {
@@ -119,7 +117,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -130,8 +128,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 HitType.EVENT,
                 mapOf(
                     "area" to "empty",
-                    "type" to (itemType ?: "")
-                )
+                    "type" to (itemType ?: ""),
+                ),
             )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
@@ -159,7 +157,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                     else -> null
                 },
                 false,
-                if (itemType == "special") null else buttonMethod
+                if (itemType == "special") null else buttonMethod,
             )
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
@@ -257,8 +255,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                     HitType.EVENT,
                     mapOf(
                         "area" to "bottom",
-                        "type" to (itemType ?: "")
-                    )
+                        "type" to (itemType ?: ""),
+                    ),
                 )
                 if (itemType == "quests") {
                     MainNavigationController.navigate(R.id.questShopFragment)
@@ -278,8 +276,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                     FeedPetUseCase.RequestValues(
                         pet,
                         food,
-                        activity
-                    )
+                        activity,
+                    ),
                 )
             onFeedResult?.invoke(result)
         }
@@ -303,7 +301,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     private fun hatchPet(
         potion: HatchingPotion,
-        egg: Egg
+        egg: Egg,
     ) {
         dismiss()
         val activity = activity ?: return
@@ -312,8 +310,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 HatchPetUseCase.RequestValues(
                     potion,
                     egg,
-                    activity
-                )
+                    activity,
+                ),
             )
         }
     }
@@ -330,7 +328,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             }
         itemType?.let { type ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedItems(type)
+                inventoryRepository
+                    .getOwnedItems(type)
                     .onEach { items ->
                         val filteredItems =
                             if (isFeeding) {
@@ -339,12 +338,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                                 items.distinctBy { it.key }
                             }
                         adapter?.data = filteredItems
-                    }
-                    .map { items -> items.mapNotNull { it.key } }
+                    }.map { items -> items.mapNotNull { it.key } }
                     .map {
                         inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
-                    }
-                    .collect {
+                    }.collect {
                         val itemMap = mutableMapOf<String, Item>()
                         for (item in it ?: emptyList()) {
                             itemMap[item.key] = item
@@ -356,11 +353,13 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
             }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedPets().map { ownedPets ->
-                    val petMap = mutableMapOf<String, OwnedPet>()
-                    ownedPets.forEach { petMap[it.key ?: ""] = it }
-                    return@map petMap
-                }.collect { adapter?.setOwnedPets(it) }
+                inventoryRepository
+                    .getOwnedPets()
+                    .map { ownedPets ->
+                        val petMap = mutableMapOf<String, OwnedPet>()
+                        ownedPets.forEach { petMap[it.key ?: ""] = it }
+                        return@map petMap
+                    }.collect { adapter?.setOwnedPets(it) }
             }
         }
     }
@@ -369,7 +368,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         MainNavigationController.navigate(R.id.marketFragment)
     }
 
-    private fun showSellItemConfirmation(item: Item, ownedItem: OwnedItem) {
+    private fun showSellItemConfirmation(
+        item: Item,
+        ownedItem: OwnedItem,
+    ) {
         val dialog = HabiticaAlertDialog(requireContext())
         dialog.setTitle(getString(R.string.sell_confirmation_title, item.text))
         dialog.addButton(getString(R.string.sell, item.value), isPrimary = true, isDestructive = true) { _, _ ->

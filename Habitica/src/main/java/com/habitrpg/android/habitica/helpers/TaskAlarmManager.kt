@@ -18,10 +18,14 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import java.time.DateTimeException
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -32,7 +36,7 @@ import java.util.Date
 class TaskAlarmManager(
     private var context: Context,
     private var taskRepository: TaskRepository,
-    private var authenticationHandler: AuthenticationHandler
+    private var authenticationHandler: AuthenticationHandler,
 ) : Clearable {
     private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
@@ -90,7 +94,7 @@ class TaskAlarmManager(
 
     fun cancelRemovedRemindersAlarms(
         oldReminders: List<RemindersItem>,
-        newReminders: List<RemindersItem>
+        newReminders: List<RemindersItem>,
     ) {
         val newReminderIds = newReminders.mapNotNull { it.id }.toSet()
         val removedReminders = oldReminders.filter { it.id != null && it.id !in newReminderIds }
@@ -115,7 +119,8 @@ class TaskAlarmManager(
     fun addAlarmForTaskId(taskId: String) {
         scope.launch(ExceptionHandler.coroutine()) {
             val task =
-                taskRepository.getTaskCopy(taskId)
+                taskRepository
+                    .getTaskCopy(taskId)
                     .filter { task -> task.isValid && task.isManaged && TaskType.DAILY == task.type }
                     .first()
             setAlarmsForTask(task)
@@ -156,7 +161,7 @@ class TaskAlarmManager(
     private fun setAlarmForRemindersItem(
         reminderItemTask: Task,
         remindersItem: RemindersItem?,
-        occurrenceIndex: Int
+        occurrenceIndex: Int,
     ) {
         if (remindersItem == null) return
 
@@ -181,7 +186,7 @@ class TaskAlarmManager(
                 context,
                 intentId,
                 intent,
-                PendingIntent.FLAG_NO_CREATE + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_NO_CREATE + PendingIntent.FLAG_IMMUTABLE,
             )
         if (previousSender != null) {
             previousSender.cancel()
@@ -193,7 +198,7 @@ class TaskAlarmManager(
                 context,
                 intentId,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
             )
 
         scope.launch(Dispatchers.IO) {
@@ -203,7 +208,7 @@ class TaskAlarmManager(
 
     private fun removeAlarmForRemindersItem(
         remindersItem: RemindersItem,
-        occurrenceIndex: Int? = null
+        occurrenceIndex: Int? = null,
     ) {
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
@@ -212,19 +217,19 @@ class TaskAlarmManager(
                 (
                     remindersItem.id?.hashCode()
                         ?: (0 and 0xfffffff)
-                    ) + occurrenceIndex
+                ) + occurrenceIndex
             } else {
                 (
                     remindersItem.id?.hashCode()
                         ?: (0 and 0xfffffff)
-                    )
+                )
             }
         val sender =
             PendingIntent.getBroadcast(
                 context,
                 intentId,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
             )
         val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         sender.cancel()
@@ -265,7 +270,7 @@ class TaskAlarmManager(
                         context,
                         0,
                         notificationIntent,
-                        PendingIntent.FLAG_NO_CREATE + PendingIntent.FLAG_IMMUTABLE
+                        PendingIntent.FLAG_NO_CREATE + PendingIntent.FLAG_IMMUTABLE,
                     )
                 if (previousSender != null) {
                     previousSender.cancel()
@@ -277,7 +282,7 @@ class TaskAlarmManager(
                         context,
                         0,
                         notificationIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                        PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
                     )
 
                 setAlarm(context, triggerTime, pendingIntent)
@@ -295,7 +300,7 @@ class TaskAlarmManager(
         private fun setAlarm(
             context: Context,
             time: Long,
-            pendingIntent: PendingIntent?
+            pendingIntent: PendingIntent?,
         ) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
@@ -314,14 +319,14 @@ class TaskAlarmManager(
                     HLogger.log(
                         LogLevel.DEBUG,
                         "TaskAlarmManager",
-                        "setAlarm: Scheduling for $time using setExact ${Date().time}"
+                        "setAlarm: Scheduling for $time using setExact ${Date().time}",
                     )
                 } else {
                     alarmManager.setAndAllowWhileIdle(notificationType, time, pendingIntent)
                     HLogger.log(
                         LogLevel.DEBUG,
                         "TaskAlarmManager",
-                        "setAlarm: Scheduling for $time using setAndAllowWhileIdle"
+                        "setAlarm: Scheduling for $time using setAndAllowWhileIdle",
                     )
                 }
             } catch (ex: Exception) {
@@ -332,11 +337,12 @@ class TaskAlarmManager(
                                 notificationType,
                                 time,
                                 600000,
-                                pendingIntent
+                                pendingIntent,
                             )
                         } catch (_: IllegalStateException) {
                         }
                     }
+
                     else -> {
                         throw ex
                     }

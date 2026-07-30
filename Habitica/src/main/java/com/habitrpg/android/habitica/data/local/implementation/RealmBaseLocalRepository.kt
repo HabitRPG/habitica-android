@@ -14,8 +14,9 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import java.util.concurrent.atomic.AtomicBoolean
 
-abstract class RealmBaseLocalRepository internal constructor(override var realm: Realm) :
-    BaseLocalRepository {
+abstract class RealmBaseLocalRepository internal constructor(
+    override var realm: Realm,
+) : BaseLocalRepository {
     override val isClosed: Boolean
         get() = realm.isClosed
 
@@ -30,13 +31,12 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         }
     }
 
-    override fun <T : BaseObject> getUnmanagedCopy(managedObject: T): T {
-        return if (managedObject is RealmObject && managedObject.isManaged && managedObject.isValid) {
+    override fun <T : BaseObject> getUnmanagedCopy(managedObject: T): T =
+        if (managedObject is RealmObject && managedObject.isManaged && managedObject.isValid) {
             realm.copyFromRealm(managedObject)
         } else {
             managedObject
         }
-    }
 
     override fun <T : BaseObject> getUnmanagedCopy(list: List<T>): List<T> {
         if (isClosed) {
@@ -52,7 +52,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
 
     private fun <T : RealmModel> copy(
         realm: Realm,
-        obj: T
+        obj: T,
     ) {
         try {
             realm.insertOrUpdate(obj)
@@ -98,7 +98,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
 
     override fun <T : BaseMainObject> modify(
         obj: T,
-        transaction: (T) -> Unit
+        transaction: (T) -> Unit,
     ) {
         if (isClosed) {
             return
@@ -119,26 +119,25 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         }
     }
 
-    override fun getLiveUser(id: String): User? {
-        return realm.where(User::class.java).equalTo("id", id).findFirst()
-    }
+    override fun getLiveUser(id: String): User? = realm.where(User::class.java).equalTo("id", id).findFirst()
 
     override fun <T : BaseObject> getLiveObject(obj: T): T? {
         if (isClosed) return null
         if (obj !is RealmObject || !obj.isManaged) return obj
         val baseObject = obj as? BaseMainObject ?: return null
         @Suppress("UNCHECKED_CAST")
-        return realm.where(baseObject.realmClass)
+        return realm
+            .where(baseObject.realmClass)
             .equalTo(baseObject.primaryIdentifierName, baseObject.primaryIdentifier)
             .findFirst() as? T
     }
 
-    fun queryUser(userID: String): Flow<User?> {
-        return realm.where(User::class.java)
+    fun queryUser(userID: String): Flow<User?> =
+        realm
+            .where(User::class.java)
             .equalTo("id", userID)
             .findAll()
             .toFlow()
             .filter { it.isLoaded && it.isValid && !it.isEmpty() }
             .map { it.firstOrNull() }
-    }
 }

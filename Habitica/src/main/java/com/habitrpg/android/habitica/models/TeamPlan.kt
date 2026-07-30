@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class TeamPlan : RealmObject(), BaseObject {
+open class TeamPlan :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var id: String = ""
 
@@ -24,7 +26,5 @@ open class TeamPlan : RealmObject(), BaseObject {
         return super.equals(other)
     }
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+    override fun hashCode(): Int = id.hashCode()
 }

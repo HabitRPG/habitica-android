@@ -29,6 +29,8 @@ object WidgetSnapshotStore {
 
     fun decodeDailyCount(json: String): DailyCountWidgetState? = decode(json, DailyCountWidgetState::class.java)
 
-    private fun <T> decode(json: String?, type: Class<T>): T? =
-        json?.let { runCatching { gson.fromJson(it, type) }.getOrNull() }
+    private fun <T> decode(
+        json: String?,
+        type: Class<T>,
+    ): T? = json?.let { runCatching { gson.fromJson(it, type) }.getOrNull() }
 }

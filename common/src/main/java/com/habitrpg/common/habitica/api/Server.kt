@@ -22,7 +22,5 @@ class Server {
         addr = server.toString()
     }
 
-    override fun toString(): String {
-        return addr
-    }
+    override fun toString(): String = addr
 }

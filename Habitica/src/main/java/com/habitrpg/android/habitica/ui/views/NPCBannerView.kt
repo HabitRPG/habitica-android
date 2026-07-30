@@ -16,7 +16,10 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
+class NPCBannerView(
+    context: Context,
+    attrs: AttributeSet?,
+) : RelativeLayout(context, attrs) {
     private val binding = NpcBannerBinding.inflate(context.layoutInflater, this)
 
     var shopSpriteSuffix: String? = null

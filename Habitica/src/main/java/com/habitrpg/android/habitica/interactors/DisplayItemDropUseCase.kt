@@ -12,44 +12,45 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DisplayItemDropUseCase
-@Inject
-constructor(private val soundManager: SoundManager) :
-    UseCase<DisplayItemDropUseCase.RequestValues, Unit>() {
-    override suspend fun run(requestValues: RequestValues) {
-        val data = requestValues.data
-        val snackbarText = StringBuilder(data?.drop?.dialog ?: "")
+    @Inject
+    constructor(
+        private val soundManager: SoundManager,
+    ) : UseCase<DisplayItemDropUseCase.RequestValues, Unit>() {
+        override suspend fun run(requestValues: RequestValues) {
+            val data = requestValues.data
+            val snackbarText = StringBuilder(data?.drop?.dialog ?: "")
 
-        if ((data?.questItemsFound ?: 0) > 0 && requestValues.showQuestItems) {
+            if ((data?.questItemsFound ?: 0) > 0 && requestValues.showQuestItems) {
+                if (snackbarText.isNotEmpty()) {
+                    snackbarText.append('\n')
+                }
+                snackbarText.append(
+                    requestValues.context.getString(
+                        R.string.quest_items_found,
+                        data!!.questItemsFound,
+                    ),
+                )
+            }
+
             if (snackbarText.isNotEmpty()) {
-                snackbarText.append('\n')
+                withContext(Dispatchers.Main) {
+                    delay(3000L)
+                    HabiticaSnackbar.showSnackbar(
+                        requestValues.snackbarTargetView,
+                        snackbarText,
+                        HabiticaSnackbar.SnackbarDisplayType.DROP,
+                        true,
+                    )
+                    soundManager.loadAndPlayAudio(SoundManager.SOUND_ITEM_DROP)
+                }
             }
-            snackbarText.append(
-                requestValues.context.getString(
-                    R.string.quest_items_found,
-                    data!!.questItemsFound
-                )
-            )
+            return
         }
 
-        if (snackbarText.isNotEmpty()) {
-            withContext(Dispatchers.Main) {
-                delay(3000L)
-                HabiticaSnackbar.showSnackbar(
-                    requestValues.snackbarTargetView,
-                    snackbarText,
-                    HabiticaSnackbar.SnackbarDisplayType.DROP,
-                    true
-                )
-                soundManager.loadAndPlayAudio(SoundManager.SOUND_ITEM_DROP)
-            }
-        }
-        return
+        class RequestValues(
+            val data: TaskScoringResult?,
+            val context: AppCompatActivity,
+            val snackbarTargetView: ViewGroup,
+            val showQuestItems: Boolean,
+        ) : UseCase.RequestValues
     }
-
-    class RequestValues(
-        val data: TaskScoringResult?,
-        val context: AppCompatActivity,
-        val snackbarTargetView: ViewGroup,
-        val showQuestItems: Boolean
-    ) : UseCase.RequestValues
-}

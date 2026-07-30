@@ -26,8 +26,6 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.currentState
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -41,42 +39,49 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import androidx.glance.unit.ColorProvider
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.activities.HabitButtonWidgetActivity
 import com.habitrpg.android.habitica.widget.glance.actions.ScoreHabitAction
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.components.HabitButtonBar
 import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
-import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.HabitButtonWidgetCache
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForHabitValueLight
 import com.habitrpg.android.habitica.widget.glance.theme.colorForHabitValueMedium
-import androidx.glance.unit.ColorProvider
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
 class HabitButtonGlanceWidget : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(120.dp, 40.dp),
-            DpSize(218.dp, 70.dp),
-            DpSize(360.dp, 70.dp),
-            DpSize(218.dp, 160.dp),
-            DpSize(360.dp, 160.dp),
-        ),
-    )
+    override val sizeMode: SizeMode =
+        SizeMode.Responsive(
+            setOf(
+                DpSize(120.dp, 40.dp),
+                DpSize(218.dp, 70.dp),
+                DpSize(360.dp, 70.dp),
+                DpSize(218.dp, 160.dp),
+                DpSize(360.dp, 160.dp),
+            ),
+        )
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId,
+    ) {
         if (!WidgetAuth.isLoggedIn(context)) {
             provideContent { HabiticaWidgetTheme { SignedOutContent() } }
             return
         }
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
-        val configureIntent = Intent(context, HabitButtonWidgetActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-        }
+        val configureIntent =
+            Intent(context, HabitButtonWidgetActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+            }
         val configureAction = actionStartActivity(configureIntent)
 
         provideContent {
@@ -90,18 +95,20 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
                         showUp = cached.up,
                         showDown = cached.down,
                         value = cached.value,
-                        onUpClick = actionRunCallback<ScoreHabitAction>(
-                            actionParametersOf(
-                                WidgetActionKeys.taskId to cached.taskId,
-                                WidgetActionKeys.direction to TaskDirection.UP.text,
+                        onUpClick =
+                            actionRunCallback<ScoreHabitAction>(
+                                actionParametersOf(
+                                    WidgetActionKeys.taskId to cached.taskId,
+                                    WidgetActionKeys.direction to TaskDirection.UP.text,
+                                ),
                             ),
-                        ),
-                        onDownClick = actionRunCallback<ScoreHabitAction>(
-                            actionParametersOf(
-                                WidgetActionKeys.taskId to cached.taskId,
-                                WidgetActionKeys.direction to TaskDirection.DOWN.text,
+                        onDownClick =
+                            actionRunCallback<ScoreHabitAction>(
+                                actionParametersOf(
+                                    WidgetActionKeys.taskId to cached.taskId,
+                                    WidgetActionKeys.direction to TaskDirection.DOWN.text,
+                                ),
                             ),
-                        ),
                     )
                 }
             }
@@ -112,20 +119,17 @@ class HabitButtonGlanceWidget : GlanceAppWidget() {
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
-private fun habitTileBackground(): ColorProvider =
-    if (MaterialYouEnabled) GlanceTheme.colors.widgetBackground else WidgetColors.background
+private fun habitTileBackground(): ColorProvider = if (MaterialYouEnabled) GlanceTheme.colors.widgetBackground else WidgetColors.background
 
 @Composable
-private fun habitTitleText(): ColorProvider =
-    if (MaterialYouEnabled) GlanceTheme.colors.onSurface else WidgetColors.text
+private fun habitTitleText(): ColorProvider = if (MaterialYouEnabled) GlanceTheme.colors.onSurface else WidgetColors.text
 
 @Composable
 private fun unconfiguredBadgeBackground(): ColorProvider =
     if (MaterialYouEnabled) GlanceTheme.colors.primary else ColorProvider(Color(0xFF925CF3))
 
 @Composable
-private fun unconfiguredBadgeText(): ColorProvider =
-    if (MaterialYouEnabled) GlanceTheme.colors.onPrimary else ColorProvider(Color.White)
+private fun unconfiguredBadgeText(): ColorProvider = if (MaterialYouEnabled) GlanceTheme.colors.onPrimary else ColorProvider(Color.White)
 
 @Composable
 private fun HabitButtonContent(
@@ -145,10 +149,11 @@ private fun HabitButtonContent(
     val circleColor = colorForHabitValueMedium(value)
 
     Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .cornerRadius(20.dp)
-            .background(habitTileBackground()),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .cornerRadius(20.dp)
+                .background(habitTileBackground()),
     ) {
         HabitButtonBar(
             showUp = showUp,
@@ -167,23 +172,28 @@ private fun HabitButtonContent(
 }
 
 @Composable
-private fun TitleStrip(title: String, height: androidx.compose.ui.unit.Dp) {
+private fun TitleStrip(
+    title: String,
+    height: androidx.compose.ui.unit.Dp,
+) {
     Box(
-        modifier = GlanceModifier
-            .fillMaxWidth()
-            .height(height)
-            .padding(horizontal = 14.dp)
-            .clickable(onClick = openAppAction("habitica://user/tasks/habit")),
+        modifier =
+            GlanceModifier
+                .fillMaxWidth()
+                .height(height)
+                .padding(horizontal = 14.dp)
+                .clickable(onClick = openAppAction("habitica://user/tasks/habit")),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = title,
-            style = TextStyle(
-                color = habitTitleText(),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Center,
-            ),
+            style =
+                TextStyle(
+                    color = habitTitleText(),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Center,
+                ),
             maxLines = 2,
         )
     }
@@ -192,38 +202,42 @@ private fun TitleStrip(title: String, height: androidx.compose.ui.unit.Dp) {
 @Composable
 private fun UnconfiguredContent(onClick: Action) {
     Row(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .cornerRadius(20.dp)
-            .background(habitTileBackground())
-            .padding(horizontal = 12.dp)
-            .clickable(onClick = onClick),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .cornerRadius(20.dp)
+                .background(habitTileBackground())
+                .padding(horizontal = 12.dp)
+                .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = GlanceModifier
-                .size(32.dp)
-                .cornerRadius(16.dp)
-                .background(unconfiguredBadgeBackground()),
+            modifier =
+                GlanceModifier
+                    .size(32.dp)
+                    .cornerRadius(16.dp)
+                    .background(unconfiguredBadgeBackground()),
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = "+",
-                style = TextStyle(
-                    color = unconfiguredBadgeText(),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
+                style =
+                    TextStyle(
+                        color = unconfiguredBadgeText(),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
             )
         }
         Text(
             text = stringRes(R.string.widget_unconfigured_choose_habit),
-            style = TextStyle(
-                color = habitTitleText(),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-            ),
+            style =
+                TextStyle(
+                    color = habitTitleText(),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
             maxLines = 2,
             modifier = GlanceModifier.padding(start = 10.dp),
         )

@@ -23,15 +23,13 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentFaqDetailBinding {
-        return FragmentFaqDetailBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentFaqDetailBinding = FragmentFaqDetailBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         showsBackButton = true
@@ -40,7 +38,7 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 

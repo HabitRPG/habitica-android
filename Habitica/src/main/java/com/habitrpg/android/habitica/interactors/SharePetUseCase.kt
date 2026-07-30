@@ -23,8 +23,11 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 
 class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
-    class RequestValues(val petKey: String, val message: String, val context: Context) :
-        UseCase.RequestValues
+    class RequestValues(
+        val petKey: String,
+        val message: String,
+        val context: Context,
+    ) : UseCase.RequestValues
 
     override suspend fun run(requestValues: RequestValues) {
         val petWrapper = PetImageviewBinding.inflate(requestValues.context.layoutInflater)
@@ -58,10 +61,12 @@ class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
         petWrapper.root.doOnNextLayout {
             petWrapper.root.draw(canvas)
             (
-                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
-                    requestValues.context
-                )?.currentActivity?.get()
-                )?.shareContent("pet", requestValues.message, sharedImage)
+                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication
+                    .getInstance(
+                        requestValues.context,
+                    )?.currentActivity
+                    ?.get()
+            )?.shareContent("pet", requestValues.message, sharedImage)
             containerView?.removeView(petWrapper.root)
         }
         val m = FrameLayout.LayoutParams(width, height)

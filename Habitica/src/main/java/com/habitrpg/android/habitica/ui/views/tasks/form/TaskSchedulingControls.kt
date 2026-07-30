@@ -37,451 +37,466 @@ import java.util.Collections
 import java.util.Date
 
 class TaskSchedulingControls
-@JvmOverloads
-constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), DatePickerDialog.OnDateSetListener {
-    private val binding = TaskFormTaskSchedulingBinding.inflate(context.layoutInflater, this)
-    var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+    ) : LinearLayout(context, attrs, defStyleAttr),
+        DatePickerDialog.OnDateSetListener {
+        private val binding = TaskFormTaskSchedulingBinding.inflate(context.layoutInflater, this)
+        var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
 
-    private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, LanguageHelper.systemLocale)
-    private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
+        private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, LanguageHelper.systemLocale)
+        private val frequencyAdapter = SimpleSpinnerAdapter(context, R.array.repeatables_frequencies)
 
-    var taskType = TaskType.DAILY
-        set(value) {
-            field = value
-            configureViewsForType()
-            if (value == TaskType.TODO) {
-                dueDate = null
-            }
-        }
-    var startDate = Date()
-        set(value) {
-            field = value
-            binding.startDateTextview.text = dateFormatter.format(value)
-            startDateCalendar.time = value
-            if (weeksOfMonth?.isNotEmpty() == true) {
-                recalculateWeeksOfMonth()
-            }
-            generateSummary()
-        }
-    private var startDateCalendar = Calendar.getInstance(LanguageHelper.systemLocale)
-    var dueDate: Date? = null
-        set(value) {
-            field = value
-            if (value != null) {
-                binding.startDateTextview.text = dateFormatter.format(value)
-                startDateCalendar.time = value
-            } else {
-                binding.startDateTextview.text = null
-            }
-        }
-    var frequency = Frequency.DAILY
-        set(value) {
-            field = value
-            binding.repeatsEverySpinner.setSelection(
-                when (value) {
-                    Frequency.WEEKLY -> 1
-                    Frequency.MONTHLY -> 2
-                    Frequency.YEARLY -> 3
-                    else -> 0
-                }
-            )
-            configureViewsForFrequency()
-            generateSummary()
-        }
-    var everyX
-        get() = (binding.repeatsEveryEdittext.text ?: "1").toString().toIntOrNull() ?: 1
-        set(value) {
-            try {
-                binding.repeatsEveryEdittext.setText(value.toString())
-            } catch (e: NumberFormatException) {
-                binding.repeatsEveryEdittext.setText("1")
-            }
-            generateSummary()
-        }
-    var weeklyRepeat: Days = Days()
-        set(value) {
-            field = value
-            createWeeklyRepeatViews()
-            generateSummary()
-        }
-
-    var daysOfMonth: List<Int>? = null
-        set(value) {
-            field = value
-            configureMonthlyRepeatViews()
-            generateSummary()
-        }
-    var weeksOfMonth: List<Int>? = null
-        set(value) {
-            field = value
-            configureMonthlyRepeatViews()
-            generateSummary()
-        }
-
-    var firstDayOfWeek: Int = -1
-        set(value) {
-            field = value
-            if (value >= 0) {
-                val codes = (1..7).toList()
-                Collections.rotate(codes, -firstDayOfWeek + 1)
-                weekdayOrder = codes
-            }
-        }
-
-    private val weekdays: Array<String> by lazy {
-        DateFormatSymbols().weekdays
-    }
-    private var weekdayOrder: List<Int> = (1..7).toList()
-
-    init {
-        binding.repeatsEverySpinner.adapter = frequencyAdapter
-
-        frequency = Frequency.WEEKLY
-        startDate = Date()
-        everyX = 1
-        weeklyRepeat = Days()
-
-        binding.repeatsEveryEdittext.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                generateSummary()
-            }
-        })
-
-        binding.repeatsEverySpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    frequency = frequency
-                }
-
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    frequency =
-                        when (position) {
-                            1 -> Frequency.WEEKLY
-                            2 -> Frequency.MONTHLY
-                            3 -> Frequency.YEARLY
-                            else -> Frequency.DAILY
-                        }
-                }
-            }
-
-        binding.startDateWrapper.setOnClickListener {
-            val datePickerDialog =
-                DatePickerDialog(
-                    context,
-                    this,
-                    startDateCalendar.get(Calendar.YEAR),
-                    startDateCalendar.get(Calendar.MONTH),
-                    startDateCalendar.get(Calendar.DAY_OF_MONTH)
-                )
-            datePickerDialog.setButton(
-                DialogInterface.BUTTON_NEUTRAL,
-                resources.getString(R.string.today)
-            ) { _, _ ->
-                if (taskType == TaskType.TODO) {
-                    dueDate = Date()
-                } else {
-                    startDate = Date()
-                }
-            }
-
-            if (firstDayOfWeek >= 0) {
-                datePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek
-            }
-            if (taskType == TaskType.TODO) {
-                datePickerDialog.setButton(
-                    DialogInterface.BUTTON_NEUTRAL,
-                    resources.getString(R.string.clear)
-                ) { _, _ ->
+        var taskType = TaskType.DAILY
+            set(value) {
+                field = value
+                configureViewsForType()
+                if (value == TaskType.TODO) {
                     dueDate = null
                 }
             }
-            datePickerDialog.show()
-        }
-
-        binding.monthlyRepeatDays.setOnClickListener {
-            daysOfMonth = mutableListOf(startDateCalendar.get(Calendar.DATE))
-            weeksOfMonth = null
-            generateSummary()
-        }
-
-        binding.monthlyRepeatWeeks.setOnClickListener {
-            daysOfMonth = null
-            recalculateWeeksOfMonth()
-            generateSummary()
-        }
-
-        orientation = VERTICAL
-        configureViewsForType()
-        configureViewsForFrequency()
-    }
-
-    override fun setEnabled(isEnabled: Boolean) {
-        super.setEnabled(isEnabled)
-        for (button in binding.weeklyRepeatWrapper.children) {
-            button.isEnabled = isEnabled
-        }
-        binding.startDateWrapper.isEnabled = isEnabled
-        binding.monthlyRepeatDays.isEnabled = isEnabled
-        binding.monthlyRepeatWeeks.isEnabled = isEnabled
-    }
-
-    private fun configureViewsForType() {
-        binding.startDateTitle.text =
-            context.getString(if (taskType == TaskType.DAILY) R.string.start_date else R.string.due_date)
-        binding.repeatsEveryWrapper.visibility =
-            if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
-        binding.summaryTextview.visibility =
-            if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
-        binding.weeklyRepeatWrapper.visibility =
-            if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
-    }
-
-    override fun onDateSet(
-        view: DatePicker?,
-        year: Int,
-        month: Int,
-        dayOfMonth: Int
-    ) {
-        startDateCalendar.set(year, month, dayOfMonth)
-        if (taskType == TaskType.TODO) {
-            dueDate = startDateCalendar.time
-        } else {
-            startDate = startDateCalendar.time
-        }
-    }
-
-    private fun configureViewsForFrequency() {
-        binding.repeatsEveryTitle.text =
-            context.getText(
-                when (frequency) {
-                    Frequency.WEEKLY -> R.string.weeks
-                    Frequency.MONTHLY -> R.string.months
-                    Frequency.YEARLY -> R.string.years
-                    else -> R.string.days
+        var startDate = Date()
+            set(value) {
+                field = value
+                binding.startDateTextview.text = dateFormatter.format(value)
+                startDateCalendar.time = value
+                if (weeksOfMonth?.isNotEmpty() == true) {
+                    recalculateWeeksOfMonth()
                 }
-            )
-        binding.weeklyRepeatWrapper.visibility =
-            if (frequency == Frequency.WEEKLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
-        binding.monthlyRepeatWrapper.visibility =
-            if (frequency == Frequency.MONTHLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
-        if (frequency == Frequency.WEEKLY) {
-            createWeeklyRepeatViews()
-        } else if (frequency == Frequency.MONTHLY) {
-            if (weeksOfMonth?.isNotEmpty() != true && daysOfMonth?.isNotEmpty() != true) {
-                daysOfMonth = listOf(startDateCalendar.get(Calendar.DATE))
+                generateSummary()
             }
-        }
-    }
-
-    private fun setWeekdayActive(
-        weekday: Int,
-        isActive: Boolean
-    ) {
-        when (weekday) {
-            2 -> weeklyRepeat.m = isActive
-            3 -> weeklyRepeat.t = isActive
-            4 -> weeklyRepeat.w = isActive
-            5 -> weeklyRepeat.th = isActive
-            6 -> weeklyRepeat.f = isActive
-            7 -> weeklyRepeat.s = isActive
-            1 -> weeklyRepeat.su = isActive
-        }
-        createWeeklyRepeatViews()
-        binding.weeklyRepeatWrapper.findViewWithTag<TextView>(weekday).sendAccessibilityEvent(
-            AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION
-        )
-        generateSummary()
-    }
-
-    private fun isWeekdayActive(weekday: Int): Boolean {
-        return when (weekday) {
-            2 -> weeklyRepeat.m
-            3 -> weeklyRepeat.t
-            4 -> weeklyRepeat.w
-            5 -> weeklyRepeat.th
-            6 -> weeklyRepeat.f
-            7 -> weeklyRepeat.s
-            1 -> weeklyRepeat.su
-            else -> false
-        }
-    }
-
-    private fun createWeeklyRepeatViews() {
-        binding.weeklyRepeatWrapper.removeAllViews()
-        val size = 32.dpToPx(context)
-        val lastWeekday = weekdayOrder.last()
-        for (weekdayCode in weekdayOrder) {
-            val button = TextView(context, null, 0, R.style.TaskFormWeekdayButton)
-            val isActive = isWeekdayActive(weekdayCode)
-            val layoutParams = LayoutParams(size, size)
-            button.layoutParams = layoutParams
-            button.text = weekdays[weekdayCode].first().uppercaseChar().toString()
-            button.contentDescription = toContentDescription(weekdays[weekdayCode], isActive)
-            button.tag = weekdayCode
-            if (isActive) {
-                button.background =
-                    ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle_selected)
-                button.setTextColor(context.getThemeColor(R.attr.tintedUiDetails))
-            } else {
-                button.background =
-                    ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle)
-                button.setTextColor(context.getThemeColor(R.attr.textColorTintedSecondary))
-            }
-            button.setOnClickListener {
-                setWeekdayActive(weekdayCode, !isActive)
-            }
-            binding.weeklyRepeatWrapper.addView(button)
-            if (weekdayCode != lastWeekday) {
-                val space = Space(context)
-                val spaceLayoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT)
-                spaceLayoutParams.weight = 1f
-                space.layoutParams = spaceLayoutParams
-                binding.weeklyRepeatWrapper.addView(space)
-            }
-        }
-    }
-
-    private fun recalculateWeeksOfMonth() {
-        val dayOfMonth = startDateCalendar.get(Calendar.DAY_OF_MONTH)
-        val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
-        weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
-        weeklyRepeat = Days(default = false).apply {
-            when (startDateCalendar.get(Calendar.DAY_OF_WEEK)) {
-                Calendar.MONDAY -> m = true
-                Calendar.TUESDAY -> t = true
-                Calendar.WEDNESDAY -> w = true
-                Calendar.THURSDAY -> th = true
-                Calendar.FRIDAY -> f = true
-                Calendar.SATURDAY -> s = true
-                Calendar.SUNDAY -> su = true
-            }
-        }
-    }
-
-    private fun configureMonthlyRepeatViews() {
-        if (daysOfMonth?.isEmpty() == false) {
-            styleButtonAsActive(binding.monthlyRepeatDays)
-        } else {
-            styleButtonAsInactive(binding.monthlyRepeatDays)
-        }
-        if (weeksOfMonth?.isEmpty() == false) {
-            styleButtonAsActive(binding.monthlyRepeatWeeks)
-        } else {
-            styleButtonAsInactive(binding.monthlyRepeatWeeks)
-        }
-    }
-
-    private fun styleButtonAsActive(button: TextView) {
-        button.setTextColor(context.getThemeColor(R.attr.tintedUiDetails))
-        button.backgroundTintList =
-            ColorStateList.valueOf(context.getThemeColor(R.attr.tintedUiMain))
-        button.contentDescription = toContentDescription(button.text, true)
-    }
-
-    private fun styleButtonAsInactive(button: TextView) {
-        button.setTextColor(context.getThemeColor(R.attr.textColorTintedSecondary))
-        button.backgroundTintList =
-            ColorStateList.valueOf(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
-        button.contentDescription = toContentDescription(button.text, false)
-    }
-
-    private fun toContentDescription(
-        buttonText: CharSequence,
-        isActive: Boolean
-    ): String {
-        val statusString =
-            if (isActive) {
-                context.getString(R.string.selected)
-            } else {
-                context.getString(R.string.not_selected)
-            }
-        return "$buttonText, $statusString"
-    }
-
-    private fun generateSummary() {
-        var frequencyQualifier = ""
-
-        frequencyQualifier =
-            when (frequency) {
-                Frequency.DAILY -> if (everyX == 1) "day" else "days"
-                Frequency.WEEKLY -> if (everyX == 1) "week" else "weeks"
-                Frequency.MONTHLY -> context.getString(if (everyX == 1) R.string.month else R.string.months)
-                Frequency.YEARLY -> if (everyX == 1) "year" else "years"
-            }
-
-        var weekdays =
-            if (frequency == Frequency.WEEKLY) {
-                val weekdayStrings = ArrayList<String>()
-                if (weeklyRepeat.m) {
-                    weekdayStrings.add("Monday")
-                }
-                if (weeklyRepeat.t) {
-                    weekdayStrings.add("Tuesday")
-                }
-                if (weeklyRepeat.w) {
-                    weekdayStrings.add("Wednesday")
-                }
-                if (weeklyRepeat.th) {
-                    weekdayStrings.add("Thursday")
-                }
-                if (weeklyRepeat.f) {
-                    weekdayStrings.add("Friday")
-                }
-                if (weeklyRepeat.s) {
-                    weekdayStrings.add("Saturday")
-                }
-                if (weeklyRepeat.su) {
-                    weekdayStrings.add("Sunday")
-                }
-                " on <b>" + TextUtils.join(", ", weekdayStrings) + "</b>"
-            } else {
-                ""
-            }
-
-        if (frequency == Frequency.MONTHLY) {
-            weekdays =
-                if (daysOfMonth?.isNotEmpty() == true) {
-                    val date = startDateCalendar.get(Calendar.DATE)
-                    val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
-                    val formattedDate = formatter.format(arrayOf(date))
-                    " on the <b>$formattedDate</b>"
+        private var startDateCalendar = Calendar.getInstance(LanguageHelper.systemLocale)
+        var dueDate: Date? = null
+            set(value) {
+                field = value
+                if (value != null) {
+                    binding.startDateTextview.text = dateFormatter.format(value)
+                    startDateCalendar.time = value
                 } else {
-                    val week = (startDateCalendar.get(Calendar.DAY_OF_MONTH) - 1) / 7 + 1
-                    val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
-                    val formattedWeek = formatter.format(arrayOf(week))
-                    val dayLongName =
-                        startDateCalendar.getDisplayName(
-                            Calendar.DAY_OF_WEEK,
-                            Calendar.LONG,
-                            LanguageHelper.systemLocale
-                        )
-                    " on the <b>$formattedWeek $dayLongName</b> of the month"
+                    binding.startDateTextview.text = null
+                }
+            }
+        var frequency = Frequency.DAILY
+            set(value) {
+                field = value
+                binding.repeatsEverySpinner.setSelection(
+                    when (value) {
+                        Frequency.WEEKLY -> 1
+                        Frequency.MONTHLY -> 2
+                        Frequency.YEARLY -> 3
+                        else -> 0
+                    },
+                )
+                configureViewsForFrequency()
+                generateSummary()
+            }
+        var everyX
+            get() = (binding.repeatsEveryEdittext.text ?: "1").toString().toIntOrNull() ?: 1
+            set(value) {
+                try {
+                    binding.repeatsEveryEdittext.setText(value.toString())
+                } catch (e: NumberFormatException) {
+                    binding.repeatsEveryEdittext.setText("1")
+                }
+                generateSummary()
+            }
+        var weeklyRepeat: Days = Days()
+            set(value) {
+                field = value
+                createWeeklyRepeatViews()
+                generateSummary()
+            }
+
+        var daysOfMonth: List<Int>? = null
+            set(value) {
+                field = value
+                configureMonthlyRepeatViews()
+                generateSummary()
+            }
+        var weeksOfMonth: List<Int>? = null
+            set(value) {
+                field = value
+                configureMonthlyRepeatViews()
+                generateSummary()
+            }
+
+        var firstDayOfWeek: Int = -1
+            set(value) {
+                field = value
+                if (value >= 0) {
+                    val codes = (1..7).toList()
+                    Collections.rotate(codes, -firstDayOfWeek + 1)
+                    weekdayOrder = codes
+                }
+            }
+
+        private val weekdays: Array<String> by lazy {
+            DateFormatSymbols().weekdays
+        }
+        private var weekdayOrder: List<Int> = (1..7).toList()
+
+        init {
+            binding.repeatsEverySpinner.adapter = frequencyAdapter
+
+            frequency = Frequency.WEEKLY
+            startDate = Date()
+            everyX = 1
+            weeklyRepeat = Days()
+
+            binding.repeatsEveryEdittext.addTextChangedListener(
+                object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int,
+                    ) {}
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int,
+                    ) {}
+
+                    override fun afterTextChanged(s: Editable?) {
+                        generateSummary()
+                    }
+                },
+            )
+
+            binding.repeatsEverySpinner.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        frequency = frequency
+                    }
+
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long,
+                    ) {
+                        frequency =
+                            when (position) {
+                                1 -> Frequency.WEEKLY
+                                2 -> Frequency.MONTHLY
+                                3 -> Frequency.YEARLY
+                                else -> Frequency.DAILY
+                            }
+                    }
+                }
+
+            binding.startDateWrapper.setOnClickListener {
+                val datePickerDialog =
+                    DatePickerDialog(
+                        context,
+                        this,
+                        startDateCalendar.get(Calendar.YEAR),
+                        startDateCalendar.get(Calendar.MONTH),
+                        startDateCalendar.get(Calendar.DAY_OF_MONTH),
+                    )
+                datePickerDialog.setButton(
+                    DialogInterface.BUTTON_NEUTRAL,
+                    resources.getString(R.string.today),
+                ) { _, _ ->
+                    if (taskType == TaskType.TODO) {
+                        dueDate = Date()
+                    } else {
+                        startDate = Date()
+                    }
+                }
+
+                if (firstDayOfWeek >= 0) {
+                    datePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek
+                }
+                if (taskType == TaskType.TODO) {
+                    datePickerDialog.setButton(
+                        DialogInterface.BUTTON_NEUTRAL,
+                        resources.getString(R.string.clear),
+                    ) { _, _ ->
+                        dueDate = null
+                    }
+                }
+                datePickerDialog.show()
+            }
+
+            binding.monthlyRepeatDays.setOnClickListener {
+                daysOfMonth = mutableListOf(startDateCalendar.get(Calendar.DATE))
+                weeksOfMonth = null
+                generateSummary()
+            }
+
+            binding.monthlyRepeatWeeks.setOnClickListener {
+                daysOfMonth = null
+                recalculateWeeksOfMonth()
+                generateSummary()
+            }
+
+            orientation = VERTICAL
+            configureViewsForType()
+            configureViewsForFrequency()
+        }
+
+        override fun setEnabled(isEnabled: Boolean) {
+            super.setEnabled(isEnabled)
+            for (button in binding.weeklyRepeatWrapper.children) {
+                button.isEnabled = isEnabled
+            }
+            binding.startDateWrapper.isEnabled = isEnabled
+            binding.monthlyRepeatDays.isEnabled = isEnabled
+            binding.monthlyRepeatWeeks.isEnabled = isEnabled
+        }
+
+        private fun configureViewsForType() {
+            binding.startDateTitle.text =
+                context.getString(if (taskType == TaskType.DAILY) R.string.start_date else R.string.due_date)
+            binding.repeatsEveryWrapper.visibility =
+                if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+            binding.summaryTextview.visibility =
+                if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+            binding.weeklyRepeatWrapper.visibility =
+                if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+        }
+
+        override fun onDateSet(
+            view: DatePicker?,
+            year: Int,
+            month: Int,
+            dayOfMonth: Int,
+        ) {
+            startDateCalendar.set(year, month, dayOfMonth)
+            if (taskType == TaskType.TODO) {
+                dueDate = startDateCalendar.time
+            } else {
+                startDate = startDateCalendar.time
+            }
+        }
+
+        private fun configureViewsForFrequency() {
+            binding.repeatsEveryTitle.text =
+                context.getText(
+                    when (frequency) {
+                        Frequency.WEEKLY -> R.string.weeks
+                        Frequency.MONTHLY -> R.string.months
+                        Frequency.YEARLY -> R.string.years
+                        else -> R.string.days
+                    },
+                )
+            binding.weeklyRepeatWrapper.visibility =
+                if (frequency == Frequency.WEEKLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+            binding.monthlyRepeatWrapper.visibility =
+                if (frequency == Frequency.MONTHLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+            if (frequency == Frequency.WEEKLY) {
+                createWeeklyRepeatViews()
+            } else if (frequency == Frequency.MONTHLY) {
+                if (weeksOfMonth?.isNotEmpty() != true && daysOfMonth?.isNotEmpty() != true) {
+                    daysOfMonth = listOf(startDateCalendar.get(Calendar.DATE))
+                }
+            }
+        }
+
+        private fun setWeekdayActive(
+            weekday: Int,
+            isActive: Boolean,
+        ) {
+            when (weekday) {
+                2 -> weeklyRepeat.m = isActive
+                3 -> weeklyRepeat.t = isActive
+                4 -> weeklyRepeat.w = isActive
+                5 -> weeklyRepeat.th = isActive
+                6 -> weeklyRepeat.f = isActive
+                7 -> weeklyRepeat.s = isActive
+                1 -> weeklyRepeat.su = isActive
+            }
+            createWeeklyRepeatViews()
+            binding.weeklyRepeatWrapper.findViewWithTag<TextView>(weekday).sendAccessibilityEvent(
+                AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION,
+            )
+            generateSummary()
+        }
+
+        private fun isWeekdayActive(weekday: Int): Boolean =
+            when (weekday) {
+                2 -> weeklyRepeat.m
+                3 -> weeklyRepeat.t
+                4 -> weeklyRepeat.w
+                5 -> weeklyRepeat.th
+                6 -> weeklyRepeat.f
+                7 -> weeklyRepeat.s
+                1 -> weeklyRepeat.su
+                else -> false
+            }
+
+        private fun createWeeklyRepeatViews() {
+            binding.weeklyRepeatWrapper.removeAllViews()
+            val size = 32.dpToPx(context)
+            val lastWeekday = weekdayOrder.last()
+            for (weekdayCode in weekdayOrder) {
+                val button = TextView(context, null, 0, R.style.TaskFormWeekdayButton)
+                val isActive = isWeekdayActive(weekdayCode)
+                val layoutParams = LayoutParams(size, size)
+                button.layoutParams = layoutParams
+                button.text = weekdays[weekdayCode].first().uppercaseChar().toString()
+                button.contentDescription = toContentDescription(weekdays[weekdayCode], isActive)
+                button.tag = weekdayCode
+                if (isActive) {
+                    button.background =
+                        ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle_selected)
+                    button.setTextColor(context.getThemeColor(R.attr.tintedUiDetails))
+                } else {
+                    button.background =
+                        ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle)
+                    button.setTextColor(context.getThemeColor(R.attr.textColorTintedSecondary))
+                }
+                button.setOnClickListener {
+                    setWeekdayActive(weekdayCode, !isActive)
+                }
+                binding.weeklyRepeatWrapper.addView(button)
+                if (weekdayCode != lastWeekday) {
+                    val space = Space(context)
+                    val spaceLayoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT)
+                    spaceLayoutParams.weight = 1f
+                    space.layoutParams = spaceLayoutParams
+                    binding.weeklyRepeatWrapper.addView(space)
+                }
+            }
+        }
+
+        private fun recalculateWeeksOfMonth() {
+            val dayOfMonth = startDateCalendar.get(Calendar.DAY_OF_MONTH)
+            val zeroBasedWeekIdx = (dayOfMonth - 1) / 7
+            weeksOfMonth = mutableListOf(zeroBasedWeekIdx)
+            weeklyRepeat =
+                Days(default = false).apply {
+                    when (startDateCalendar.get(Calendar.DAY_OF_WEEK)) {
+                        Calendar.MONDAY -> m = true
+                        Calendar.TUESDAY -> t = true
+                        Calendar.WEDNESDAY -> w = true
+                        Calendar.THURSDAY -> th = true
+                        Calendar.FRIDAY -> f = true
+                        Calendar.SATURDAY -> s = true
+                        Calendar.SUNDAY -> su = true
+                    }
                 }
         }
 
-        val everyXString = if (everyX == 1) "" else "$everyX "
-
-        var summary = "Repeats every <b>$everyXString$frequencyQualifier</b>$weekdays."
-        if (frequency == Frequency.MONTHLY && weeksOfMonth?.contains(4) == true) {
-            val dayName =
-                startDateCalendar.getDisplayName(
-                    Calendar.DAY_OF_WEEK,
-                    Calendar.LONG,
-                    LanguageHelper.systemLocale
-                )
-            summary += " " + context.getString(R.string.fifth_week_warning, dayName)
+        private fun configureMonthlyRepeatViews() {
+            if (daysOfMonth?.isEmpty() == false) {
+                styleButtonAsActive(binding.monthlyRepeatDays)
+            } else {
+                styleButtonAsInactive(binding.monthlyRepeatDays)
+            }
+            if (weeksOfMonth?.isEmpty() == false) {
+                styleButtonAsActive(binding.monthlyRepeatWeeks)
+            } else {
+                styleButtonAsInactive(binding.monthlyRepeatWeeks)
+            }
         }
-        binding.summaryTextview.text = Html.fromHtml(summary, Html.FROM_HTML_MODE_COMPACT)
+
+        private fun styleButtonAsActive(button: TextView) {
+            button.setTextColor(context.getThemeColor(R.attr.tintedUiDetails))
+            button.backgroundTintList =
+                ColorStateList.valueOf(context.getThemeColor(R.attr.tintedUiMain))
+            button.contentDescription = toContentDescription(button.text, true)
+        }
+
+        private fun styleButtonAsInactive(button: TextView) {
+            button.setTextColor(context.getThemeColor(R.attr.textColorTintedSecondary))
+            button.backgroundTintList =
+                ColorStateList.valueOf(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
+            button.contentDescription = toContentDescription(button.text, false)
+        }
+
+        private fun toContentDescription(
+            buttonText: CharSequence,
+            isActive: Boolean,
+        ): String {
+            val statusString =
+                if (isActive) {
+                    context.getString(R.string.selected)
+                } else {
+                    context.getString(R.string.not_selected)
+                }
+            return "$buttonText, $statusString"
+        }
+
+        private fun generateSummary() {
+            var frequencyQualifier = ""
+
+            frequencyQualifier =
+                when (frequency) {
+                    Frequency.DAILY -> if (everyX == 1) "day" else "days"
+                    Frequency.WEEKLY -> if (everyX == 1) "week" else "weeks"
+                    Frequency.MONTHLY -> context.getString(if (everyX == 1) R.string.month else R.string.months)
+                    Frequency.YEARLY -> if (everyX == 1) "year" else "years"
+                }
+
+            var weekdays =
+                if (frequency == Frequency.WEEKLY) {
+                    val weekdayStrings = ArrayList<String>()
+                    if (weeklyRepeat.m) {
+                        weekdayStrings.add("Monday")
+                    }
+                    if (weeklyRepeat.t) {
+                        weekdayStrings.add("Tuesday")
+                    }
+                    if (weeklyRepeat.w) {
+                        weekdayStrings.add("Wednesday")
+                    }
+                    if (weeklyRepeat.th) {
+                        weekdayStrings.add("Thursday")
+                    }
+                    if (weeklyRepeat.f) {
+                        weekdayStrings.add("Friday")
+                    }
+                    if (weeklyRepeat.s) {
+                        weekdayStrings.add("Saturday")
+                    }
+                    if (weeklyRepeat.su) {
+                        weekdayStrings.add("Sunday")
+                    }
+                    " on <b>" + TextUtils.join(", ", weekdayStrings) + "</b>"
+                } else {
+                    ""
+                }
+
+            if (frequency == Frequency.MONTHLY) {
+                weekdays =
+                    if (daysOfMonth?.isNotEmpty() == true) {
+                        val date = startDateCalendar.get(Calendar.DATE)
+                        val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
+                        val formattedDate = formatter.format(arrayOf(date))
+                        " on the <b>$formattedDate</b>"
+                    } else {
+                        val week = (startDateCalendar.get(Calendar.DAY_OF_MONTH) - 1) / 7 + 1
+                        val formatter = MessageFormat("{0,ordinal}", LanguageHelper.systemLocale)
+                        val formattedWeek = formatter.format(arrayOf(week))
+                        val dayLongName =
+                            startDateCalendar.getDisplayName(
+                                Calendar.DAY_OF_WEEK,
+                                Calendar.LONG,
+                                LanguageHelper.systemLocale,
+                            )
+                        " on the <b>$formattedWeek $dayLongName</b> of the month"
+                    }
+            }
+
+            val everyXString = if (everyX == 1) "" else "$everyX "
+
+            var summary = "Repeats every <b>$everyXString$frequencyQualifier</b>$weekdays."
+            if (frequency == Frequency.MONTHLY && weeksOfMonth?.contains(4) == true) {
+                val dayName =
+                    startDateCalendar.getDisplayName(
+                        Calendar.DAY_OF_WEEK,
+                        Calendar.LONG,
+                        LanguageHelper.systemLocale,
+                    )
+                summary += " " + context.getString(R.string.fifth_week_warning, dayName)
+            }
+            binding.summaryTextview.text = Html.fromHtml(summary, Html.FROM_HTML_MODE_COMPACT)
+        }
     }
-}

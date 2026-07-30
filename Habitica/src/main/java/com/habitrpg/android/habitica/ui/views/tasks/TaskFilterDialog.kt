@@ -33,7 +33,7 @@ import java.util.UUID
 class TaskFilterDialog(
     context: Context,
     private val repository: TagRepository,
-    private val showTags: Boolean
+    private val showTags: Boolean,
 ) : HabiticaBottomSheetDialog(context) {
     lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
@@ -134,25 +134,27 @@ class TaskFilterDialog(
             ColorStateList(
                 arrayOf(
                     intArrayOf(-android.R.attr.state_checked), // disabled
-                    intArrayOf(android.R.attr.state_checked) // enabled
+                    intArrayOf(android.R.attr.state_checked), // enabled
                 ),
                 intArrayOf(
                     Color.LTGRAY, // disabled
-                    context.getThemeColor(R.attr.colorAccent) // enabled
-                )
+                    context.getThemeColor(R.attr.colorAccent), // enabled
+                ),
             )
         val leftPadding =
-            TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                12f,
-                context.resources.displayMetrics
-            ).toInt()
+            TypedValue
+                .applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    12f,
+                    context.resources.displayMetrics,
+                ).toInt()
         val verticalPadding =
-            TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                8f,
-                context.resources.displayMetrics
-            ).toInt()
+            TypedValue
+                .applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    8f,
+                    context.resources.displayMetrics,
+                ).toInt()
         sortTagPositions()
         for (tag in tags) {
             if (tag.id.isBlank()) {
@@ -171,7 +173,7 @@ class TaskFilterDialog(
                     tagCheckbox.paddingLeft + leftPadding,
                     verticalPadding,
                     tagCheckbox.paddingRight,
-                    verticalPadding
+                    verticalPadding,
                 )
                 tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
@@ -260,7 +262,7 @@ class TaskFilterDialog(
     private fun createTagEditView(
         inflater: LayoutInflater,
         index: Int,
-        tag: Tag
+        tag: Tag,
     ) {
         if (tag.id.isBlank()) {
             // This is a title tag ("Challenge", "Group", "Your Tags", etc)
@@ -278,8 +280,8 @@ class TaskFilterDialog(
                 editBinding.editText.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.disabled_background
-                    )
+                        R.color.disabled_background,
+                    ),
                 )
                 editBinding.deleteButton.isEnabled = false
                 editBinding.deleteButton.alpha = .50f
@@ -291,8 +293,8 @@ class TaskFilterDialog(
                 editBinding.editText.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_secondary
-                    )
+                        R.color.text_secondary,
+                    ),
                 )
                 editBinding.editText.addTextChangedListener(
                     OnChangeTextWatcher { s, _, _, _ ->
@@ -307,7 +309,7 @@ class TaskFilterDialog(
                             editedTags[changedTag.id] = changedTag
                         }
                         tags[index] = changedTag
-                    }
+                    },
                 )
                 editBinding.deleteButton.setOnClickListener {
                     deletedTags.add(tag.id)
@@ -361,19 +363,27 @@ class TaskFilterDialog(
             checkedId = R.id.all_task_filter
         } else {
             when (activeFilter) {
-                Task.FILTER_ALL -> checkedId = R.id.all_task_filter
-                Task.FILTER_WEAK, Task.FILTER_DATED -> checkedId = R.id.second_task_filter
-                Task.FILTER_STRONG, Task.FILTER_GRAY, Task.FILTER_COMPLETED ->
+                Task.FILTER_ALL -> {
+                    checkedId = R.id.all_task_filter
+                }
+
+                Task.FILTER_WEAK, Task.FILTER_DATED -> {
+                    checkedId = R.id.second_task_filter
+                }
+
+                Task.FILTER_STRONG, Task.FILTER_GRAY, Task.FILTER_COMPLETED -> {
                     checkedId =
                         R.id.third_task_filter
+                }
 
-                Task.FILTER_ACTIVE ->
+                Task.FILTER_ACTIVE -> {
                     checkedId =
                         if (taskType == TaskType.DAILY) {
                             R.id.second_task_filter
                         } else {
                             R.id.all_task_filter
                         }
+                }
             }
         }
         binding.taskFilterWrapper.check(checkedId)
@@ -381,32 +391,35 @@ class TaskFilterDialog(
     }
 
     private fun onCheckedChanged(
-        @IdRes checkedId: Int
+        @IdRes checkedId: Int,
     ) {
         val newFilter =
             when (checkedId) {
-                R.id.second_task_filter ->
+                R.id.second_task_filter -> {
                     when (taskType) {
                         TaskType.HABIT -> Task.FILTER_WEAK
                         TaskType.DAILY -> Task.FILTER_ACTIVE
                         TaskType.TODO -> Task.FILTER_DATED
                         else -> Task.FILTER_ALL
                     }
+                }
 
-                R.id.third_task_filter ->
+                R.id.third_task_filter -> {
                     when (taskType) {
                         TaskType.HABIT -> Task.FILTER_STRONG
                         TaskType.DAILY -> Task.FILTER_GRAY
                         TaskType.TODO -> Task.FILTER_COMPLETED
                         else -> Task.FILTER_ALL
                     }
+                }
 
-                else ->
+                else -> {
                     if (taskType != TaskType.TODO) {
                         Task.FILTER_ALL
                     } else {
                         Task.FILTER_ACTIVE
                     }
+                }
             }
         viewModel.setActiveFilter(taskType, newFilter)
         filtersChanged()
@@ -472,7 +485,7 @@ class TaskFilterDialog(
                 context.getThemeColor(R.attr.colorAccent)
             } else {
                 ContextCompat.getColor(context, R.color.text_dimmed)
-            }
+            },
         )
     }
 }

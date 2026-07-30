@@ -8,7 +8,10 @@ class SpriteSubstitutionManager {
             substitutions = subs
         }
 
-        fun substitute(imageName: String, context: String? = null): String {
+        fun substitute(
+            imageName: String,
+            context: String? = null,
+        ): String {
             val subs = if (context != null) substitutions[context] else substitutions["general"]
             if (subs != null) {
                 subs[imageName]?.let {

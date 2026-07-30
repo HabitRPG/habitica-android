@@ -68,7 +68,12 @@ enum class LoginScreenState {
 }
 
 @Composable
-fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardingStep: (Boolean) -> Unit, onForgotPasswordClicked: () -> Unit, modifier: Modifier = Modifier) {
+fun LoginScreen(
+    authenticationViewModel: AuthenticationViewModel,
+    onNextOnboardingStep: (Boolean) -> Unit,
+    onForgotPasswordClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val showLoading by authenticationViewModel.showAuthProgress.collectAsState(false)
 
     LaunchedEffect(authenticationViewModel) {
@@ -97,14 +102,14 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
             modifier = Modifier.fillMaxSize(),
         )
         Column(
-            modifier = Modifier.fillMaxSize().align(Alignment.BottomCenter)
+            modifier = Modifier.fillMaxSize().align(Alignment.BottomCenter),
         ) {
             Spacer(modifier = Modifier.weight(1f))
             Image(
                 painterResource(R.drawable.login_background),
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
-                modifier = Modifier.height(318.dp)
+                modifier = Modifier.height(318.dp),
             )
             AnimatedVisibility(
                 loginScreenState == LoginScreenState.INITIAL,
@@ -112,28 +117,30 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                 exit = shrinkVertically(shrinkTowards = Alignment.Top),
             ) {
                 Box(
-                    modifier = Modifier.fillMaxWidth().height(200.dp).background(
+                    modifier =
+                        Modifier.fillMaxWidth().height(200.dp).background(
                             Brush.verticalGradient(
                                 listOf(
                                     Color(0xFFA995EA),
-                                    colorResource(R.color.brand_400)
-                                )
-                            )
-                        )
+                                    colorResource(R.color.brand_400),
+                                ),
+                            ),
+                        ),
                 )
             }
         }
         AnimatedVisibility(
             loginScreenState != LoginScreenState.INITIAL,
-            enter = fadeIn(), exit = fadeOut(),
-            modifier = Modifier.padding(WindowInsets.systemBars.asPaddingValues())
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier.padding(WindowInsets.systemBars.asPaddingValues()),
         ) {
             Button(
                 {
                     loginScreenState = LoginScreenState.INITIAL
                 },
                 colors = ButtonDefaults.textButtonColors(contentColor = Color.White),
-                modifier = Modifier.align(Alignment.TopStart)
+                modifier = Modifier.align(Alignment.TopStart),
             ) {
                 Image(painterResource(R.drawable.arrow_back), contentDescription = null)
             }
@@ -147,11 +154,12 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color.White,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(WindowInsets.systemBars.asPaddingValues())
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .clickable { authenticationViewModel.showServerSettings() }
+                modifier =
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(WindowInsets.systemBars.asPaddingValues())
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .clickable { authenticationViewModel.showServerSettings() },
             )
         }
         val logoPadding by animateDpAsState(
@@ -160,28 +168,33 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
             } else {
                 50.dp
             },
-            animationSpec = tween(
-                delayMillis = if (loginScreenState == LoginScreenState.INITIAL) 400 else 0,
-                easing = EaseInOut
-            ),
-            label = "padding"
+            animationSpec =
+                tween(
+                    delayMillis = if (loginScreenState == LoginScreenState.INITIAL) 400 else 0,
+                    easing = EaseInOut,
+                ),
+            label = "padding",
         )
-        val logoScale by animateFloatAsState(if (loginScreenState == LoginScreenState.INITIAL) {
+        val logoScale by animateFloatAsState(
+            if (loginScreenState == LoginScreenState.INITIAL) {
                 1f
             } else {
                 0.66f
             },
-            animationSpec = tween(
-                delayMillis = if (loginScreenState == LoginScreenState.INITIAL) 400 else 0,
-                easing = EaseInOut
-            ),
-            label = "logoScale")
+            animationSpec =
+                tween(
+                    delayMillis = if (loginScreenState == LoginScreenState.INITIAL) 400 else 0,
+                    easing = EaseInOut,
+                ),
+            label = "logoScale",
+        )
         ProvideTextStyle(TextStyle(fontSize = 18.sp)) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth().padding(WindowInsets.systemBars.asPaddingValues()).padding(horizontal = 20.dp)
+                modifier = Modifier.fillMaxWidth().padding(WindowInsets.systemBars.asPaddingValues()).padding(horizontal = 20.dp),
             ) {
                 var toast: Toast? by remember { mutableStateOf(null) }
+
                 fun showToast(message: String) {
                     toast?.cancel()
                     toast = Toast.makeText(context, message, Toast.LENGTH_SHORT).apply { show() }
@@ -202,13 +215,13 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                         painterResource(R.drawable.login_logo),
                         contentScale = ContentScale.Fit,
                         contentDescription = null,
-                        modifier = modifier.padding(top = logoPadding).scale(logoScale)
+                        modifier = modifier.padding(top = logoPadding).scale(logoScale),
                     )
                 }
                 AnimatedVisibility(
                     loginScreenState == LoginScreenState.INITIAL,
                     enter = fadeIn(tween(300, 500)) + expandVertically(tween(300, 500)),
-                    exit = fadeOut()
+                    exit = fadeOut(),
                 ) {
                     Text(
                         stringResource(R.string.enjoy_getting_things_done),
@@ -217,14 +230,16 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                         fontWeight = FontWeight.SemiBold,
                         color = colorResource(R.color.brand_600),
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 30.dp)
-                            .padding(horizontal = 30.dp)
+                        modifier =
+                            Modifier
+                                .padding(top = 30.dp)
+                                .padding(horizontal = 30.dp),
                     )
                 }
                 AnimatedVisibility(
                     loginScreenState != LoginScreenState.INITIAL,
                     enter = fadeIn(tween(300, 400)),
-                    exit = fadeOut()
+                    exit = fadeOut(),
                 ) {
                     LoginForm(
                         onToggleFormType = {
@@ -235,33 +250,35 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                         emailFieldState = emailFieldState,
                         onEmailChange = {
                             email = it
-                            emailFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
-                                if (it.isEmpty()) {
-                                    LoginFieldState.DEFAULT
-                                } else if (Patterns.EMAIL_ADDRESS.matcher(it).matches()) {
-                                    LoginFieldState.VALID
+                            emailFieldState =
+                                if (loginScreenState == LoginScreenState.REGISTER) {
+                                    if (it.isEmpty()) {
+                                        LoginFieldState.DEFAULT
+                                    } else if (Patterns.EMAIL_ADDRESS.matcher(it).matches()) {
+                                        LoginFieldState.VALID
+                                    } else {
+                                        LoginFieldState.ERROR
+                                    }
                                 } else {
-                                    LoginFieldState.ERROR
+                                    LoginFieldState.DEFAULT
                                 }
-                            } else {
-                                LoginFieldState.DEFAULT
-                            }
                         },
                         password = password,
                         passwordFieldState = passwordFieldState,
                         onPasswordChange = {
                             password = it
-                            passwordFieldState = if (loginScreenState == LoginScreenState.REGISTER) {
-                                if (it.isEmpty()) {
-                                    LoginFieldState.DEFAULT
-                                } else if (it.length >= 8) {
-                                    LoginFieldState.VALID
+                            passwordFieldState =
+                                if (loginScreenState == LoginScreenState.REGISTER) {
+                                    if (it.isEmpty()) {
+                                        LoginFieldState.DEFAULT
+                                    } else if (it.length >= 8) {
+                                        LoginFieldState.VALID
+                                    } else {
+                                        LoginFieldState.ERROR
+                                    }
                                 } else {
-                                    LoginFieldState.ERROR
+                                    LoginFieldState.DEFAULT
                                 }
-                            } else {
-                                LoginFieldState.DEFAULT
-                            }
                         },
                         isRegistering = loginScreenState == LoginScreenState.REGISTER,
                         onSubmit = {
@@ -277,14 +294,14 @@ fun LoginScreen(authenticationViewModel: AuthenticationViewModel, onNextOnboardi
                         onGoogleLoginClicked = {
                             authenticationViewModel.startGoogleAuth(context)
                         },
-                        onForgotPasswordClicked = onForgotPasswordClicked
+                        onForgotPasswordClicked = onForgotPasswordClicked,
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 AnimatedVisibility(
                     loginScreenState == LoginScreenState.INITIAL,
                     enter = fadeIn(tween(300, 500)) + expandVertically(tween(300, 400), clip = false),
-                    exit = fadeOut() + shrinkVertically(tween(300, 200), clip = false)
+                    exit = fadeOut() + shrinkVertically(tween(300, 200), clip = false),
                 ) {
                     LoginInitialButtons({
                         loginScreenState = LoginScreenState.LOGIN

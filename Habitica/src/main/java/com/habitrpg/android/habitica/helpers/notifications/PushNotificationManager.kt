@@ -15,13 +15,16 @@ import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import java.io.IOException
 
 class PushNotificationManager(
     var apiClient: ApiClient,
     private val sharedPreferences: SharedPreferences,
-    private val context: Context
+    private val context: Context,
 ) : Clearable {
     private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     var refreshedToken: String = ""
@@ -41,6 +44,7 @@ class PushNotificationManager(
         scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         clearUser()
     }
+
     private var user: User? = null
 
     fun setUser(user: User) {
@@ -151,9 +155,11 @@ class PushNotificationManager(
         const val G1G1_PROMO_KEY = "g1g1Promo"
         const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
 
-        private fun isAppInForeground(): Boolean {
-            return ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
-        }
+        private fun isAppInForeground(): Boolean =
+            ProcessLifecycleOwner
+                .get()
+                .lifecycle.currentState
+                .isAtLeast(Lifecycle.State.STARTED)
 
         private fun shouldSuppressNotification(identifier: String?): Boolean {
             if (!isAppInForeground()) {
@@ -167,7 +173,7 @@ class PushNotificationManager(
         fun displayNotification(
             remoteMessage: RemoteMessage,
             context: Context,
-            pushNotificationManager: PushNotificationManager? = null
+            pushNotificationManager: PushNotificationManager? = null,
         ) {
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
 
@@ -183,7 +189,7 @@ class PushNotificationManager(
                         "receive notification",
                         EventCategory.BEHAVIOUR,
                         HitType.EVENT,
-                        additionalData
+                        additionalData,
                     )
                 }
 
@@ -191,7 +197,7 @@ class PushNotificationManager(
                 val localNotification =
                     notificationFactory.build(
                         remoteMessageIdentifier,
-                        context
+                        context,
                     )
                 localNotification.setExtras(remoteMessage.data)
                 val notification = remoteMessage.notification
@@ -199,13 +205,13 @@ class PushNotificationManager(
                     localNotification.notifyLocally(
                         notification.title ?: remoteMessage.data["title"],
                         notification.body ?: remoteMessage.data["body"],
-                        remoteMessage.data
+                        remoteMessage.data,
                     )
                 } else {
                     localNotification.notifyLocally(
                         remoteMessage.data["title"],
                         remoteMessage.data["body"],
-                        remoteMessage.data
+                        remoteMessage.data,
                     )
                 }
             }

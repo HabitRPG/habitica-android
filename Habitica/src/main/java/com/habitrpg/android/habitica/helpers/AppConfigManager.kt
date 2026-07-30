@@ -24,8 +24,11 @@ import kotlinx.coroutines.cancel
 import java.util.Date
 import javax.inject.Provider
 
-class AppConfigManager(contentRepository: Provider<ContentRepository>, private val sharedPreferences: SharedPreferences) :
-    com.habitrpg.common.habitica.helpers.AppConfigManager(), Clearable {
+class AppConfigManager(
+    contentRepository: Provider<ContentRepository>,
+    private val sharedPreferences: SharedPreferences,
+) : com.habitrpg.common.habitica.helpers.AppConfigManager(),
+    Clearable {
     private var worldState: WorldState? = null
 
     private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
@@ -57,66 +60,40 @@ class AppConfigManager(contentRepository: Provider<ContentRepository>, private v
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
 
-    fun shopSpriteSuffix(): String? {
-        return worldState?.findNpcImageSuffix()
-    }
+    fun shopSpriteSuffix(): String? = worldState?.findNpcImageSuffix()
 
-    fun maxChatLength(): Long {
-        return remoteConfig.getLong("maxChatLength")
-    }
+    fun maxChatLength(): Long = remoteConfig.getLong("maxChatLength")
 
-    fun supportEmail(): String {
-        return remoteConfig.getString("supportEmail")
-    }
+    fun supportEmail(): String = remoteConfig.getString("supportEmail")
 
-    fun enableUsernameAutocomplete(): Boolean {
-        return remoteConfig.getBoolean("enableUsernameAutocomplete")
-    }
+    fun enableUsernameAutocomplete(): Boolean = remoteConfig.getBoolean("enableUsernameAutocomplete")
 
-    fun enableLocalChanges(): Boolean {
-        return remoteConfig.getBoolean("enableLocalChanges")
-    }
+    fun enableLocalChanges(): Boolean = remoteConfig.getBoolean("enableLocalChanges")
 
-    fun lastVersionNumber(): String {
-        return remoteConfig.getString("lastVersionNumber")
-    }
+    fun lastVersionNumber(): String = remoteConfig.getString("lastVersionNumber")
 
-    fun lastVersionCode(): Long {
-        return remoteConfig.getLong("lastVersionCode")
-    }
+    fun lastVersionCode(): Long = remoteConfig.getLong("lastVersionCode")
 
-    fun testingLevel(): AppTestingLevel {
-        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
-    }
+    fun testingLevel(): AppTestingLevel = AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
 
-    fun enableLocalTaskScoring(): Boolean {
-        return remoteConfig.getBoolean("enableLocalTaskScoring")
-    }
+    fun enableLocalTaskScoring(): Boolean = remoteConfig.getBoolean("enableLocalTaskScoring")
 
-    fun showSubscriptionBanner(): Boolean {
-        return remoteConfig.getBoolean("showSubscriptionBanner")
-    }
+    fun showSubscriptionBanner(): Boolean = remoteConfig.getBoolean("showSubscriptionBanner")
 
-    fun enableTaskDisplayMode(): Boolean {
-        return remoteConfig.getBoolean("enableTaskDisplayMode") || testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
-    }
+    fun enableTaskDisplayMode(): Boolean =
+        remoteConfig.getBoolean("enableTaskDisplayMode") || testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
 
-    fun feedbackURL(): String {
-        return remoteConfig.getString("feedbackURL")
-    }
+    fun feedbackURL(): String = remoteConfig.getString("feedbackURL")
 
-    fun surveyURL(): String {
-        return remoteConfig.getString("surveyURL")
-    }
+    fun surveyURL(): String = remoteConfig.getString("surveyURL")
 
-    fun taskDisplayMode(context: Context): String {
-        return if (enableTaskDisplayMode()) {
+    fun taskDisplayMode(context: Context): String =
+        if (enableTaskDisplayMode()) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             preferences.getString("task_display", "standard") ?: "standard"
         } else {
             "standard"
         }
-    }
 
     fun activePromo(): HabiticaPromotion? {
         val prefsPromo = sharedPreferences.getString("active_promo", null)
@@ -136,7 +113,7 @@ class AppConfigManager(contentRepository: Provider<ContentRepository>, private v
                     getHabiticaPromotionFromKey(
                         event.promo ?: event.eventKey ?: "",
                         event.start,
-                        event.end
+                        event.end,
                     )
                 if (thisPromo != null) {
                     promo = thisPromo
@@ -160,21 +137,13 @@ class AppConfigManager(contentRepository: Provider<ContentRepository>, private v
         return Gson().fromJson(remoteConfig.getString("knownIssues"), type)
     }
 
-    fun enableArmoireAds(): Boolean {
-        return remoteConfig.getBoolean("enableArmoireAds")
-    }
+    fun enableArmoireAds(): Boolean = remoteConfig.getBoolean("enableArmoireAds")
 
-    fun hideChallenges(): Boolean {
-        return remoteConfig.getBoolean("hideChallenges")
-    }
+    fun hideChallenges(): Boolean = remoteConfig.getBoolean("hideChallenges")
 
-    fun enableReviewPrompt(): Boolean {
-        return remoteConfig.getBoolean("enableReviewPrompt")
-    }
+    fun enableReviewPrompt(): Boolean = remoteConfig.getBoolean("enableReviewPrompt")
 
-    fun reviewCheckingMinCount(): Long {
-        return remoteConfig.getLong("reviewCheckingMinCount")
-    }
+    fun reviewCheckingMinCount(): Long = remoteConfig.getLong("reviewCheckingMinCount")
 
     fun getBirthdayEvent(): WorldStateEvent? {
         val events =
@@ -182,7 +151,5 @@ class AppConfigManager(contentRepository: Provider<ContentRepository>, private v
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
     }
 
-    fun showAltDeathText(): Boolean {
-        return remoteConfig.getBoolean("showAltDeathText")
-    }
+    fun showAltDeathText(): Boolean = remoteConfig.getBoolean("showAltDeathText")
 }

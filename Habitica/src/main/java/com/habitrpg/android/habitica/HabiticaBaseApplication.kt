@@ -52,8 +52,9 @@ import java.lang.ref.WeakReference
 import java.util.Date
 import javax.inject.Inject
 
-class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferences) :
-    DefaultLifecycleObserver {
+class ApplicationLifecycleTracker(
+    private val sharedPreferences: SharedPreferences,
+) : DefaultLifecycleObserver {
     private var lastResumeTime = 0L
 
     override fun onResume(owner: LifecycleOwner) {
@@ -100,7 +101,9 @@ class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferenc
 }
 
 @HiltAndroidApp
-abstract class HabiticaBaseApplication : Application(), Application.ActivityLifecycleCallbacks {
+abstract class HabiticaBaseApplication :
+    Application(),
+    Application.ActivityLifecycleCallbacks {
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
 
@@ -154,19 +157,21 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
             CronBoundaryRefreshWorker.scheduleFromCache(this@HabiticaBaseApplication)
         }
-        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
-            private var isInitialStart = true
+        ProcessLifecycleOwner.get().lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                private var isInitialStart = true
 
-            override fun onStart(owner: LifecycleOwner) {
-                if (isInitialStart) {
-                    isInitialStart = false
-                    return
+                override fun onStart(owner: LifecycleOwner) {
+                    if (isInitialStart) {
+                        isInitialStart = false
+                        return
+                    }
+                    MainScope().launchCatching {
+                        WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+                    }
                 }
-                MainScope().launchCatching {
-                    WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
-                }
-            }
-        })
+            },
+        )
 
         checkIfNewVersion()
     }
@@ -179,9 +184,12 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         if (savedLanguage != null) {
             val languageTag = LanguageHelper.getLanguageTag(savedLanguage)
-            val currentTag = if (!currentAppLocales.isEmpty) {
-                currentAppLocales[0]?.toLanguageTag()
-            } else null
+            val currentTag =
+                if (!currentAppLocales.isEmpty) {
+                    currentAppLocales[0]?.toLanguageTag()
+                } else {
+                    null
+                }
 
             if (currentTag != languageTag) {
                 isSettingLocale = true
@@ -201,40 +209,54 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     }
 
     private fun setupLocaleChangeListener() {
-        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                if (isSettingLocale) return
+        registerActivityLifecycleCallbacks(
+            object : ActivityLifecycleCallbacks {
+                override fun onActivityCreated(
+                    activity: Activity,
+                    savedInstanceState: Bundle?,
+                ) {
+                    if (isSettingLocale) return
 
-                val currentLocales = AppCompatDelegate.getApplicationLocales()
-                if (!currentLocales.isEmpty) {
-                    val currentLanguageTag = currentLocales[0]?.toLanguageTag() ?: "en"
-                    val prefLanguage = when (currentLanguageTag) {
-                        "iw" -> "iw"
-                        "hr-HR" -> "hr"
-                        "in" -> "in"
-                        "pt-PT" -> "pt"
-                        "pt-BR" -> "pt_BR"
-                        "en-GB" -> "en_GB"
-                        "zh-TW" -> "zh_TW"
-                        else -> currentLanguageTag.replace("-", "_")
-                    }
+                    val currentLocales = AppCompatDelegate.getApplicationLocales()
+                    if (!currentLocales.isEmpty) {
+                        val currentLanguageTag = currentLocales[0]?.toLanguageTag() ?: "en"
+                        val prefLanguage =
+                            when (currentLanguageTag) {
+                                "iw" -> "iw"
+                                "hr-HR" -> "hr"
+                                "in" -> "in"
+                                "pt-PT" -> "pt"
+                                "pt-BR" -> "pt_BR"
+                                "en-GB" -> "en_GB"
+                                "zh-TW" -> "zh_TW"
+                                else -> currentLanguageTag.replace("-", "_")
+                            }
 
-                    val savedLanguage = sharedPrefs.getString("language", null)
-                    if (savedLanguage == null) {
-                        sharedPrefs.edit {
-                            putString("language", prefLanguage)
+                        val savedLanguage = sharedPrefs.getString("language", null)
+                        if (savedLanguage == null) {
+                            sharedPrefs.edit {
+                                putString("language", prefLanguage)
+                            }
                         }
                     }
                 }
-            }
 
-            override fun onActivityStarted(activity: Activity) {}
-            override fun onActivityResumed(activity: Activity) {}
-            override fun onActivityPaused(activity: Activity) {}
-            override fun onActivityStopped(activity: Activity) {}
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-            override fun onActivityDestroyed(activity: Activity) {}
-        })
+                override fun onActivityStarted(activity: Activity) {}
+
+                override fun onActivityResumed(activity: Activity) {}
+
+                override fun onActivityPaused(activity: Activity) {}
+
+                override fun onActivityStopped(activity: Activity) {}
+
+                override fun onActivitySaveInstanceState(
+                    activity: Activity,
+                    outState: Bundle,
+                ) {}
+
+                override fun onActivityDestroyed(activity: Activity) {}
+            },
+        )
     }
 
     private fun checkIfNewVersion() {
@@ -262,24 +284,21 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     override fun openOrCreateDatabase(
         name: String,
         mode: Int,
-        factory: SQLiteDatabase.CursorFactory?
-    ): SQLiteDatabase {
-        return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
-    }
+        factory: SQLiteDatabase.CursorFactory?,
+    ): SQLiteDatabase = super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
 
     override fun openOrCreateDatabase(
         name: String,
         mode: Int,
         factory: SQLiteDatabase.CursorFactory?,
-        errorHandler: DatabaseErrorHandler?
-    ): SQLiteDatabase {
-        return super.openOrCreateDatabase(
+        errorHandler: DatabaseErrorHandler?,
+    ): SQLiteDatabase =
+        super.openOrCreateDatabase(
             getDatabasePath(name).absolutePath,
             mode,
             factory,
-            errorHandler
+            errorHandler,
         )
-    }
 
     // endregion
 
@@ -297,21 +316,23 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     private fun setupRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings =
-            FirebaseRemoteConfigSettings.Builder()
+            FirebaseRemoteConfigSettings
+                .Builder()
                 .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 1800)
                 .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()
-        remoteConfig.addOnConfigUpdateListener(object : ConfigUpdateListener {
+        remoteConfig.addOnConfigUpdateListener(
+            object : ConfigUpdateListener {
+                override fun onUpdate(configUpdate: ConfigUpdate) {
+                    remoteConfig.activate()
+                }
 
-            override fun onUpdate(configUpdate: ConfigUpdate) {
-                remoteConfig.activate()
-            }
-
-            override fun onError(error: FirebaseRemoteConfigException) {
-            }
-        })
+                override fun onError(error: FirebaseRemoteConfigException) {
+                }
+            },
+        )
     }
 
     private fun setupNotifications() {
@@ -345,7 +366,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onActivityCreated(
         p0: Activity,
-        p1: Bundle?
+        p1: Bundle?,
     ) {
     }
 
@@ -354,7 +375,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onActivitySaveInstanceState(
         p0: Activity,
-        p1: Bundle
+        p1: Bundle,
     ) {
     }
 
@@ -362,9 +383,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     }
 
     companion object {
-        fun getInstance(context: Context): HabiticaBaseApplication? {
-            return context.applicationContext as? HabiticaBaseApplication
-        }
+        fun getInstance(context: Context): HabiticaBaseApplication? = context.applicationContext as? HabiticaBaseApplication
 
         fun deleteDatabase(context: Context) {
             val realm = Realm.getDefaultInstance()
@@ -372,15 +391,18 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             realm.close()
         }
 
-        fun logout(context: Context, user: User? = null) {
+        fun logout(
+            context: Context,
+            user: User? = null,
+        ) {
             MainScope().launchCatching {
                 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-                val instance      = getInstance(context)
+                val instance = getInstance(context)
 
                 instance?.clearables?.forEach { it.clear() }
 
-                val pushManager   = instance?.pushNotificationManager
-                val deviceToken   = preferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "") ?: ""
+                val pushManager = instance?.pushNotificationManager
+                val deviceToken = preferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "") ?: ""
 
                 val serverURL = preferences.getString("server_url", null)
                 val useReminder = preferences.getBoolean("use_reminder", false)
@@ -396,10 +418,10 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 }
 
                 deleteDatabase(context)
-                
+
                 Analytics.setAnalyticsConsent(false)
                 Analytics.clearUserID()
-                
+
                 preferences.edit {
                     clear()
                     putString("server_url", serverURL)
@@ -409,7 +431,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                     putString("launch_screen", launchScreen)
                     putBoolean("analytics_consent_given", false)
                 }
-                
+
                 pushManager?.clearUser()
 
                 instance?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
@@ -423,7 +445,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         private fun startActivity(
             activityClass: Class<*>,
-            context: Context
+            context: Context,
         ) {
             val intent = Intent(context, activityClass)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -40,10 +40,8 @@ class AchievementsFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
 
     private var menuID: Int = 0
     private lateinit var adapter: AchievementsAdapter
@@ -57,7 +55,7 @@ class AchievementsFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         adapter = AchievementsAdapter()
@@ -77,7 +75,7 @@ class AchievementsFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -92,25 +90,26 @@ class AchievementsFragment :
 
         layoutManager.spanSizeLookup =
             object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (adapter.getItemViewType(position) == 1) {
+                override fun getSpanSize(position: Int): Int =
+                    if (adapter.getItemViewType(position) == 1) {
                         1
                     } else {
                         2
                     }
-                }
             }
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.getAchievements()
+            userRepository
+                .getAchievements()
                 .combine(userRepository.getQuestAchievements()) { achievements, questAchievements ->
                     return@combine Pair(achievements, questAchievements)
                 }.combine(
-                    userRepository.getQuestAchievements()
+                    userRepository
+                        .getQuestAchievements()
                         .map { it.mapNotNull { achievement -> achievement.questKey } }
-                        .map { inventoryRepository.getQuestContent(it).firstOrNull() }
+                        .map { inventoryRepository.getQuestContent(it).firstOrNull() },
                 ) { achievements, content ->
                     Pair(achievements, content)
                 }.collect {
@@ -125,7 +124,7 @@ class AchievementsFragment :
                                     categoryIdentifier,
                                     achievements.count { check ->
                                         check.category == categoryIdentifier && check.earned
-                                    }
+                                    },
                                 )
                             entries.add(category)
                             lastCategory = categoryIdentifier
@@ -139,7 +138,7 @@ class AchievementsFragment :
                             val questContent = it.second?.firstOrNull { achievement.questKey == it.key }
                             achievement.title = questContent?.text
                             achievement
-                        }
+                        },
                     )
 
                     val user = userViewModel.user.value
@@ -157,7 +156,7 @@ class AchievementsFragment :
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         if (useGridLayout) {
             val menuItem = menu.add(R.string.switch_to_list_view)

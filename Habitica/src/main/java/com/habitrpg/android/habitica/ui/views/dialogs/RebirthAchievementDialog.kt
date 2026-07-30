@@ -10,7 +10,10 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 
-class RebirthAchievementDialog(context: Context, private val user: User?) : HabiticaAlertDialog(context) {
+class RebirthAchievementDialog(
+    context: Context,
+    private val user: User?,
+) : HabiticaAlertDialog(context) {
     private val binding: DialogAchievementDetailBinding =
         DialogAchievementDetailBinding.inflate(context.layoutInflater)
 
@@ -26,11 +29,12 @@ class RebirthAchievementDialog(context: Context, private val user: User?) : Habi
 
         val rebirthCount = user?.rebirths ?: 0
         val rebirthLevel = user?.rebirthLevel ?: 0
-        val description = if (rebirthLevel >= 100) {
-            context.getString(R.string.rebirth_achievement_description_max, rebirthCount, 100)
-        } else {
-            context.getString(R.string.rebirth_achievement_description, rebirthCount, rebirthLevel)
-        }
+        val description =
+            if (rebirthLevel >= 100) {
+                context.getString(R.string.rebirth_achievement_description_max, rebirthCount, 100)
+            } else {
+                context.getString(R.string.rebirth_achievement_description, rebirthCount, rebirthLevel)
+            }
 
         binding.descriptionView.text = description.fromHtml()
         binding.iconView.loadImage("achievement-sun2x")

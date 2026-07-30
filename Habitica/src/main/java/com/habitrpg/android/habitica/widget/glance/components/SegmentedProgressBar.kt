@@ -29,12 +29,13 @@ fun SegmentedProgressBar(
     val clamped = progress.coerceIn(0f, 1f)
     val showFill = clamped > 0f
     val showTrack = clamped < 1f
-    val fillWidth = if (showTrack) {
-        val maxFillWidth = (availableWidth - gap - height).coerceAtLeast(height)
-        (availableWidth * clamped).coerceAtLeast(height).coerceAtMost(maxFillWidth)
-    } else {
-        availableWidth
-    }
+    val fillWidth =
+        if (showTrack) {
+            val maxFillWidth = (availableWidth - gap - height).coerceAtLeast(height)
+            (availableWidth * clamped).coerceAtLeast(height).coerceAtMost(maxFillWidth)
+        } else {
+            availableWidth
+        }
 
     Row(
         modifier = modifier.fillMaxWidth().height(height),
@@ -42,11 +43,12 @@ fun SegmentedProgressBar(
     ) {
         if (showFill) {
             Box(
-                modifier = GlanceModifier
-                    .width(fillWidth)
-                    .fillMaxHeight()
-                    .cornerRadius(height / 2)
-                    .background(fillColor),
+                modifier =
+                    GlanceModifier
+                        .width(fillWidth)
+                        .fillMaxHeight()
+                        .cornerRadius(height / 2)
+                        .background(fillColor),
             ) {}
         }
         if (showFill && showTrack) {
@@ -54,11 +56,12 @@ fun SegmentedProgressBar(
         }
         if (showTrack) {
             Box(
-                modifier = GlanceModifier
-                    .defaultWeight()
-                    .fillMaxHeight()
-                    .cornerRadius(height / 2)
-                    .background(trackColor),
+                modifier =
+                    GlanceModifier
+                        .defaultWeight()
+                        .fillMaxHeight()
+                        .cornerRadius(height / 2)
+                        .background(trackColor),
             ) {}
         }
     }

@@ -33,22 +33,26 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
 @Composable
-fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean) -> Unit, isSettingConsent: Boolean,
-                           modifier: Modifier = Modifier) {
+fun PrivacyPreferenceSheet(
+    analyticsConsent: Boolean,
+    onConsentChanged: (Boolean) -> Unit,
+    isSettingConsent: Boolean,
+    modifier: Modifier = Modifier,
+) {
     Column(
         horizontalAlignment = Alignment.Start,
         modifier =
             modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp)
-                .padding(bottom = 24.dp)
+                .padding(bottom = 24.dp),
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
             modifier =
                 modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 13.dp)
+                    .padding(horizontal = 13.dp),
         ) {
             Text(
                 stringResource(R.string.your_privacy_preferences),
@@ -58,14 +62,25 @@ fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean
                 modifier =
                     Modifier
                         .padding(bottom = 18.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
             )
             Text(
                 AnnotatedString.fromHtml(
                     stringResource(R.string.your_privacy_preferences_description),
-                    linkStyles = TextLinkStyles(style = SpanStyle(
-                        color = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_500) else colorResource(R.color.brand_400)
-                    ))
+                    linkStyles =
+                        TextLinkStyles(
+                            style =
+                                SpanStyle(
+                                    color =
+                                        if (LocalContext.current.isUsingNightModeResources()) {
+                                            colorResource(
+                                                R.color.brand_500,
+                                            )
+                                        } else {
+                                            colorResource(R.color.brand_400)
+                                        },
+                                ),
+                        ),
                 ),
                 color = HabiticaTheme.colors.textPrimary,
                 fontSize = 16.sp,
@@ -75,7 +90,7 @@ fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean
                 modifier =
                     Modifier
                         .padding(bottom = 18.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
             )
         }
         PrivacyToggleView(
@@ -84,53 +99,113 @@ fun PrivacyPreferenceSheet(analyticsConsent: Boolean, onConsentChanged: (Boolean
             isChecked = analyticsConsent,
             onCheckedChange = { onConsentChanged(it) },
             isSetting = isSettingConsent,
-            modifier = Modifier.padding(bottom = 8.dp)
-            )
+            modifier = Modifier.padding(bottom = 8.dp),
+        )
         PrivacyToggleView(
             title = stringResource(R.string.strictly_necessary_analytics),
             description = stringResource(R.string.strictly_necessary_analytics_description),
             isChecked = true,
             onCheckedChange = {},
-            disabled = true
+            disabled = true,
         )
     }
 }
 
 @Composable
-fun PrivacyToggleView(title: String, description: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit, modifier: Modifier = Modifier, disabled: Boolean = false, isSetting: Boolean = false) {
-    Row(modifier = modifier.fillMaxWidth()
-        .background(colorResource(if (LocalContext.current.isUsingNightModeResources()) R.color.gray_10 else R.color.gray_700), RoundedCornerShape(16.dp))
-        .padding(vertical =16.dp)
-        .padding(start = 16.dp, end = 12.dp)) {
+fun PrivacyToggleView(
+    title: String,
+    description: String,
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    disabled: Boolean = false,
+    isSetting: Boolean = false,
+) {
+    Row(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(
+                    colorResource(if (LocalContext.current.isUsingNightModeResources()) R.color.gray_10 else R.color.gray_700),
+                    RoundedCornerShape(16.dp),
+                ).padding(vertical = 16.dp)
+                .padding(start = 16.dp, end = 12.dp),
+    ) {
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = title,
                 fontSize = 18.sp,
                 color = HabiticaTheme.colors.textPrimary,
-                modifier = Modifier.padding(bottom = 2.dp)
+                modifier = Modifier.padding(bottom = 2.dp),
             )
             Text(
                 text = description,
                 style = HabiticaTheme.typography.bodyMedium,
-                color = HabiticaTheme.colors.textSecondary
+                color = HabiticaTheme.colors.textSecondary,
             )
         }
         Spacer(Modifier.width(8.dp))
         if (isSetting) {
             HabiticaCircularProgressView(indicatorSize = 48.dp, modifier = Modifier.align(Alignment.CenterVertically))
         } else {
-            Switch(checked = isChecked,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_100) else colorResource(R.color.white),
-                    uncheckedThumbColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.gray_300) else colorResource(R.color.gray_200),
-                    checkedTrackColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_400) else colorResource(R.color.brand_100),
-                    checkedBorderColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.brand_400) else colorResource(R.color.brand_100),
-                    uncheckedTrackColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.gray_50) else colorResource(R.color.gray_500),
-                    uncheckedBorderColor = if (LocalContext.current.isUsingNightModeResources()) colorResource(R.color.gray_300) else colorResource(R.color.gray_200)
-                ),
-                onCheckedChange = { if (!disabled) onCheckedChange(!isChecked) }, modifier = Modifier.align(Alignment.CenterVertically).alpha(if (disabled) 0.5f else 1f),)
+            Switch(
+                checked = isChecked,
+                colors =
+                    SwitchDefaults.colors(
+                        checkedThumbColor =
+                            if (LocalContext.current.isUsingNightModeResources()) {
+                                colorResource(
+                                    R.color.brand_100,
+                                )
+                            } else {
+                                colorResource(R.color.white)
+                            },
+                        uncheckedThumbColor =
+                            if (LocalContext.current.isUsingNightModeResources()) {
+                                colorResource(
+                                    R.color.gray_300,
+                                )
+                            } else {
+                                colorResource(R.color.gray_200)
+                            },
+                        checkedTrackColor =
+                            if (LocalContext.current.isUsingNightModeResources()) {
+                                colorResource(
+                                    R.color.brand_400,
+                                )
+                            } else {
+                                colorResource(R.color.brand_100)
+                            },
+                        checkedBorderColor =
+                            if (LocalContext.current.isUsingNightModeResources()) {
+                                colorResource(
+                                    R.color.brand_400,
+                                )
+                            } else {
+                                colorResource(R.color.brand_100)
+                            },
+                        uncheckedTrackColor =
+                            if (LocalContext.current.isUsingNightModeResources()) {
+                                colorResource(
+                                    R.color.gray_50,
+                                )
+                            } else {
+                                colorResource(R.color.gray_500)
+                            },
+                        uncheckedBorderColor =
+                            if (LocalContext.current.isUsingNightModeResources()) {
+                                colorResource(
+                                    R.color.gray_300,
+                                )
+                            } else {
+                                colorResource(R.color.gray_200)
+                            },
+                    ),
+                onCheckedChange = { if (!disabled) onCheckedChange(!isChecked) },
+                modifier = Modifier.align(Alignment.CenterVertically).alpha(if (disabled) 0.5f else 1f),
+            )
         }
     }
 }

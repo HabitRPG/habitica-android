@@ -122,7 +122,7 @@ class NavigationDrawerFragment : DialogFragment() {
             if (context != null) {
                 NavigationDrawerAdapter(
                     context.getThemeColor(R.attr.colorPrimaryText),
-                    context.getThemeColor(R.attr.colorPrimaryOffset)
+                    context.getThemeColor(R.attr.colorPrimaryOffset),
                 )
             } else {
                 NavigationDrawerAdapter(0, 0)
@@ -138,14 +138,14 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? = inflater.inflate(R.layout.drawer_main, container, false) as? ViewGroup
 
     private var updatingJobs = mutableMapOf<String, Job>()
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding = DrawerMainBinding.bind(view)
@@ -160,8 +160,11 @@ class NavigationDrawerFragment : DialogFragment() {
 
         binding?.menuHeaderView?.let {
             ViewCompat.setOnApplyWindowInsetsListener(it) { v, windowInsets ->
-                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
-                    or WindowInsetsCompat.Type.displayCutout())
+                val insets =
+                    windowInsets.getInsets(
+                        WindowInsetsCompat.Type.systemBars()
+                            or WindowInsetsCompat.Type.displayCutout(),
+                    )
                 v.updatePadding(top = insets.top)
                 consumeWindowInsetsAbove30(windowInsets)
             }
@@ -169,13 +172,14 @@ class NavigationDrawerFragment : DialogFragment() {
 
         binding?.recyclerView?.let {
             ViewCompat.setOnApplyWindowInsetsListener(it) { v, insets ->
-                val bars = insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                            or WindowInsetsCompat.Type.displayCutout()
-                )
+                val bars =
+                    insets.getInsets(
+                        WindowInsetsCompat.Type.systemBars()
+                            or WindowInsetsCompat.Type.displayCutout(),
+                    )
                 v.updatePadding(
                     bottom = bars.bottom,
-                    left = bars.left
+                    left = bars.left,
                 )
                 consumeWindowInsetsAbove30(insets)
             }
@@ -192,9 +196,10 @@ class NavigationDrawerFragment : DialogFragment() {
         }
 
         lifecycleScope.launchCatching {
-            contentRepository.getWorldState()
+            contentRepository
+                .getWorldState()
                 .combine(
-                    inventoryRepository.getAvailableLimitedItems()
+                    inventoryRepository.getAvailableLimitedItems(),
                 ) { state, items -> Pair(state, items) }
                 .collect { (worldState, items) ->
                     val gearEvent = worldState.events.firstOrNull { it.gear }
@@ -205,7 +210,7 @@ class NavigationDrawerFragment : DialogFragment() {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
                         if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) {
                             1.toDuration(
-                                DurationUnit.SECONDS
+                                DurationUnit.SECONDS,
                             )
                         } else {
                             1.toDuration(DurationUnit.MINUTES)
@@ -234,18 +239,19 @@ class NavigationDrawerFragment : DialogFragment() {
                     val season = worldState.getCurrentSeason()
                     if (season != null) {
                         getItemWithIdentifier(SIDEBAR_SHOPS_SEASONAL)?.let { seasonalItem ->
-                            val seasonID = when (season) {
-                                "winter" -> R.string.winter
-                                "spring" -> R.string.spring
-                                "summer" -> R.string.summer
-                                "fall" -> R.string.fall
-                                "nye" -> R.string.winter
-                                "birthday" -> R.string.winter
-                                "valentines" -> R.string.winter
-                                "habitoween" -> R.string.fall
-                                "thanksgiving" -> R.string.fall
-                                else -> R.string.open
-                            }
+                            val seasonID =
+                                when (season) {
+                                    "winter" -> R.string.winter
+                                    "spring" -> R.string.spring
+                                    "summer" -> R.string.summer
+                                    "fall" -> R.string.fall
+                                    "nye" -> R.string.winter
+                                    "birthday" -> R.string.winter
+                                    "valentines" -> R.string.winter
+                                    "habitoween" -> R.string.fall
+                                    "thanksgiving" -> R.string.fall
+                                    else -> R.string.open
+                                }
                             seasonalItem.pillText = requireContext().getString(seasonID)
                             adapter.updateItem(seasonalItem)
                         }
@@ -264,7 +270,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 R.id.inboxFragment,
                 null,
                 true,
-                preventReselection = false
+                preventReselection = false,
             )
         }
         binding?.settingsButtonWrapper?.setOnClickListener {
@@ -272,7 +278,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 R.id.prefsActivity,
                 null,
                 true,
-                preventReselection = false
+                preventReselection = false,
             )
         }
         binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
@@ -282,7 +288,7 @@ class NavigationDrawerFragment : DialogFragment() {
         key: String,
         endingCondition: () -> Boolean,
         delayFunc: () -> Duration,
-        function: () -> Unit
+        function: () -> Unit,
     ) {
         function()
         if (updatingJobs[key]?.isActive == true) {
@@ -299,7 +305,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun updateSeasonalMenuEntries(
         gearEvent: WorldStateEvent?,
-        items: List<Item>
+        items: List<Item>,
     ) {
         val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return
         val item = items.firstOrNull()
@@ -339,8 +345,8 @@ class NavigationDrawerFragment : DialogFragment() {
                 item.isVisible = false
             } else {
                 if ((
-                    user.stats?.lvl
-                        ?: 0
+                        user.stats?.lvl
+                            ?: 0
                     ) < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)
                 ) {
                     item.pillText = getString(R.string.unlock_lvl_11)
@@ -375,7 +381,10 @@ class NavigationDrawerFragment : DialogFragment() {
             if (daysDiff <= 30) {
                 context?.let {
                     subscriptionItem?.subtitle =
-                        user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
+                        user.purchased
+                            ?.plan
+                            ?.dateTerminated
+                            ?.getRemainingString(it.resources)
                     subscriptionItem?.subtitleTextColor =
                         when {
                             daysDiff <= 2 -> ContextCompat.getColor(it, R.color.red_100)
@@ -427,29 +436,29 @@ class NavigationDrawerFragment : DialogFragment() {
                 HabiticaDrawerItem(
                     R.id.tasksFragment,
                     SIDEBAR_TASKS,
-                    context.getString(R.string.sidebar_tasks)
-                )
+                    context.getString(R.string.sidebar_tasks),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.skillsFragment,
                     SIDEBAR_SKILLS,
-                    context.getString(R.string.sidebar_skills)
-                )
+                    context.getString(R.string.sidebar_skills),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.statsFragment,
                     SIDEBAR_STATS,
-                    context.getString(R.string.sidebar_stats)
-                )
+                    context.getString(R.string.sidebar_stats),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.achievementsFragment,
                     SIDEBAR_ACHIEVEMENTS,
-                    context.getString(R.string.sidebar_achievements)
-                )
+                    context.getString(R.string.sidebar_achievements),
+                ),
             )
 
             items.add(
@@ -457,44 +466,45 @@ class NavigationDrawerFragment : DialogFragment() {
                     0,
                     SIDEBAR_INVENTORY,
                     context.getString(R.string.sidebar_shops),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.marketFragment,
                     SIDEBAR_SHOPS_MARKET,
-                    context.getString(R.string.market)
-                )
+                    context.getString(R.string.market),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.questShopFragment,
                     SIDEBAR_SHOPS_QUEST,
-                    context.getString(R.string.questShop)
+                    context.getString(R.string.questShop),
+                ),
+            )
+            val customizationShopItem =
+                HabiticaDrawerItem(
+                    R.id.customizationsShopFragment,
+                    SIDEBAR_SHOPS_CUSTOMIZATIONS,
+                    context.getString(R.string.customizations),
                 )
-            )
-            val customizationShopItem = HabiticaDrawerItem(
-                R.id.customizationsShopFragment,
-                SIDEBAR_SHOPS_CUSTOMIZATIONS,
-                context.getString(R.string.customizations)
-            )
             items.add(
-                customizationShopItem
+                customizationShopItem,
             )
             val seasonalShopEntry =
                 HabiticaDrawerItem(
                     R.id.seasonalShopFragment,
                     SIDEBAR_SHOPS_SEASONAL,
-                    context.getString(R.string.seasonalShop)
+                    context.getString(R.string.seasonalShop),
                 )
             items.add(seasonalShopEntry)
             items.add(
                 HabiticaDrawerItem(
                     R.id.timeTravelersShopFragment,
                     SIDEBAR_SHOPS_TIMETRAVEL,
-                    context.getString(R.string.timeTravelers)
-                )
+                    context.getString(R.string.timeTravelers),
+                ),
             )
 
             items.add(
@@ -502,73 +512,73 @@ class NavigationDrawerFragment : DialogFragment() {
                     0,
                     SIDEBAR_INVENTORY,
                     context.getString(R.string.sidebar_section_inventory),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.avatarOverviewFragment,
                     SIDEBAR_AVATAR,
-                    context.getString(R.string.sidebar_avatar)
-                )
+                    context.getString(R.string.sidebar_avatar),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.equipmentOverviewFragment,
                     SIDEBAR_EQUIPMENT,
-                    context.getString(R.string.sidebar_equipment)
-                )
+                    context.getString(R.string.sidebar_equipment),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.itemsFragment,
                     SIDEBAR_ITEMS,
-                    context.getString(R.string.sidebar_items)
-                )
+                    context.getString(R.string.sidebar_items),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.stableFragment,
                     SIDEBAR_STABLE,
-                    context.getString(R.string.sidebar_stable)
-                )
+                    context.getString(R.string.sidebar_stable),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.gemPurchaseActivity,
                     SIDEBAR_GEMS,
-                    context.getString(R.string.sidebar_gems)
-                )
+                    context.getString(R.string.sidebar_gems),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.subscriptionPurchaseActivity,
                     SIDEBAR_SUBSCRIPTION,
-                    context.getString(R.string.sidebar_subscription)
-                )
+                    context.getString(R.string.sidebar_subscription),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     0,
                     SIDEBAR_SOCIAL,
                     context.getString(R.string.sidebar_section_social),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.partyFragment,
                     SIDEBAR_PARTY,
-                    context.getString(R.string.sidebar_party)
-                )
+                    context.getString(R.string.sidebar_party),
+                ),
             )
             if (!configManager.hideChallenges()) {
                 items.add(
                     HabiticaDrawerItem(
                         R.id.challengesOverviewFragment,
                         SIDEBAR_CHALLENGES,
-                        context.getString(R.string.sidebar_challenges)
-                    )
+                        context.getString(R.string.sidebar_challenges),
+                    ),
                 )
             }
 
@@ -577,29 +587,29 @@ class NavigationDrawerFragment : DialogFragment() {
                     0,
                     SIDEBAR_ABOUT_HEADER,
                     context.getString(R.string.sidebar_about),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.newsFragment,
                     SIDEBAR_NEWS,
-                    context.getString(R.string.sidebar_news)
-                )
+                    context.getString(R.string.sidebar_news),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.supportMainFragment,
                     SIDEBAR_HELP,
-                    context.getString(R.string.sidebar_help)
-                )
+                    context.getString(R.string.sidebar_help),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.aboutFragment,
                     SIDEBAR_ABOUT,
-                    context.getString(R.string.sidebar_about)
-                )
+                    context.getString(R.string.sidebar_about),
+                ),
             )
         }
 
@@ -621,7 +631,7 @@ class NavigationDrawerFragment : DialogFragment() {
         transitionId: Int?,
         bundle: Bundle? = null,
         openSelection: Boolean = true,
-        preventReselection: Boolean = true
+        preventReselection: Boolean = true,
     ) {
         if (!shouldUsePersistentDrawer) {
             closeDrawer()
@@ -661,7 +671,7 @@ class NavigationDrawerFragment : DialogFragment() {
             if (it.resultCode == Activity.RESULT_OK) {
                 (activity as? MainActivity)?.notificationsViewModel?.click(
                     it.data?.getStringExtra("notificationId") ?: "",
-                    MainNavigationController
+                    MainNavigationController,
                 )
             }
         }
@@ -675,7 +685,7 @@ class NavigationDrawerFragment : DialogFragment() {
     fun setUp(
         fragmentId: Int,
         drawerLayout: DrawerLayout,
-        viewModel: NotificationsViewModel
+        viewModel: NotificationsViewModel,
     ) {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
@@ -718,6 +728,7 @@ class NavigationDrawerFragment : DialogFragment() {
             containerView?.isVisible = false
         }
     }
+
     fun toggleDrawer() {
         val containerView = fragmentContainerView
         if (containerView != null && containerView.parent is DrawerLayout) {
@@ -736,8 +747,7 @@ class NavigationDrawerFragment : DialogFragment() {
         binding = null
     }
 
-    private fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
-        adapter.getItemWithIdentifier(identifier)
+    private fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? = adapter.getItemWithIdentifier(identifier)
 
     private fun setDisplayName(name: String?) {
         if (!name.isNullOrEmpty()) {
@@ -839,7 +849,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     promotedItem.subtitle =
                         context?.getString(
                             R.string.sale_ends_in,
-                            activePromo.endDate.getShortRemainingString()
+                            activePromo.endDate.getShortRemainingString(),
                         )
                     adapter.updateItem(promotedItem)
                 } else {

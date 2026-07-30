@@ -7,7 +7,9 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class WorldState : RealmObject(), BaseObject {
+open class WorldState :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var id = "habitica"
     var worldBossKey: String = ""
@@ -37,7 +39,5 @@ open class WorldState : RealmObject(), BaseObject {
         return null
     }
 
-    fun getCurrentSeason(): String? {
-        return events.firstOrNull { it?.season != null }?.season ?: currentEvent?.season
-    }
+    fun getCurrentSeason(): String? = events.firstOrNull { it?.season != null }?.season ?: currentEvent?.season
 }

@@ -49,10 +49,8 @@ class ChallengeListFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
 
     private var challengeAdapter: ChallengesListViewAdapter? = null
     private var viewUserChallengesOnly: Boolean = false
@@ -77,7 +75,7 @@ class ChallengeListFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState?.containsKey("viewUserChallengesOnly") == true) {
@@ -92,7 +90,7 @@ class ChallengeListFragment :
             binding?.recyclerView?.emptyItem =
                 EmptyItem(
                     getString(R.string.empty_challenge_list),
-                    getString(R.string.empty_discover_description)
+                    getString(R.string.empty_discover_description),
                 )
         }
         binding?.recyclerView?.layoutManager =
@@ -103,7 +101,8 @@ class ChallengeListFragment :
         }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            socialRepository.getGroup(Group.TAVERN_ID)
+            socialRepository
+                .getGroup(Group.TAVERN_ID)
                 .combine(socialRepository.getUserGroups("guild")) { tavern, guilds ->
                     return@combine Pair(tavern, guilds)
                 }.collect {
@@ -114,7 +113,8 @@ class ChallengeListFragment :
         }
 
         lifecycleScope.launchCatching {
-            challengeRepository.getCategoryOptions()
+            challengeRepository
+                .getCategoryOptions()
                 .filter { it.isNotEmpty() }
                 .collect { categoryOptions ->
                     this@ChallengeListFragment.categoryOptions = categoryOptions
@@ -138,7 +138,7 @@ class ChallengeListFragment :
             object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(
                     recyclerView: RecyclerView,
-                    newState: Int
+                    newState: Int,
                 ) {
                     super.onScrollStateChanged(recyclerView, newState)
 
@@ -146,7 +146,7 @@ class ChallengeListFragment :
                         retrieveChallengesPage()
                     }
                 }
-            }
+            },
         )
 
         retrieveChallengesPage(true)
@@ -155,14 +155,13 @@ class ChallengeListFragment :
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean("viewUserChallengesOnly", viewUserChallengesOnly)
         super.onSaveInstanceState(outState)
-
     }
 
     private fun openDetailFragment(challengeID: String) {
         MainNavigationController.navigate(
             ChallengesOverviewFragmentDirections.openChallengeDetail(
-                challengeID
-            )
+                challengeID,
+            ),
         )
     }
 
@@ -219,7 +218,7 @@ class ChallengeListFragment :
             ChallengeFilterDialogHolder.showDialog(
                 activity,
                 allGroups,
-                filterOptions
+                filterOptions,
             ) {
                 changeFilter(it)
             }

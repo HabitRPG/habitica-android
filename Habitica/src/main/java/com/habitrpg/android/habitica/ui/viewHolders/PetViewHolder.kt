@@ -26,7 +26,7 @@ class PetViewHolder(
     parent: ViewGroup,
     private val onEquip: ((String) -> Unit)?,
     private val onFeed: (suspend (Pet, Food?) -> FeedResponse?)?,
-    private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
+    private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?,
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)),
     View.OnClickListener {
     private var hasMount: Boolean = false
@@ -59,7 +59,7 @@ class PetViewHolder(
         hasUnlockedEgg: Boolean,
         hasUnlockedPotion: Boolean,
         hasMount: Boolean,
-        currentPet: String?
+        currentPet: String?,
     ) {
         this.animal = item
         this.trained = trained
@@ -126,7 +126,7 @@ class PetViewHolder(
                 } else {
                     context
                 } as Activity
-                ).showAsBottomSheet {
+            ).showAsBottomSheet {
                 PetBottomSheet(
                     pet,
                     trained,
@@ -135,7 +135,7 @@ class PetViewHolder(
                     ownsSaddles,
                     onEquip,
                     onFeed,
-                    it
+                    it,
                 )
             }
         }
@@ -154,7 +154,7 @@ class PetViewHolder(
                     potionCount,
                     hasUnlockedEgg,
                     hasUnlockedPotion,
-                    hasMount
+                    hasMount,
                 )
                 dialog.show()
             }

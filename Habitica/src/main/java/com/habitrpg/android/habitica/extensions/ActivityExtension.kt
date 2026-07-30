@@ -17,7 +17,10 @@ fun Activity.hideKeyboard() {
     imm.hideSoftInputFromWindow(window.decorView.windowToken, 0)
 }
 
-fun AppCompatActivity.lifecycleLaunchWhen(state: Lifecycle.State, function: suspend CoroutineScope.() -> Unit) {
+fun AppCompatActivity.lifecycleLaunchWhen(
+    state: Lifecycle.State,
+    function: suspend CoroutineScope.() -> Unit,
+) {
     lifecycleScope.launchCatching {
         repeatOnLifecycle(state, function)
     }

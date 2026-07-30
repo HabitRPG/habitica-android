@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.Preferences
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
@@ -21,7 +22,6 @@ import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
-import androidx.datastore.preferences.core.Preferences
 import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -42,13 +42,13 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
-import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.SegmentedProgressBar
+import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
+import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
 import com.habitrpg.android.habitica.widget.glance.components.pluralRes
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
-import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.DailyCountWidgetState
-import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.widget.glance.data.hydrateSnapshot
 import com.habitrpg.android.habitica.widget.glance.data.loadDailyCountStateOrNull
@@ -56,31 +56,37 @@ import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 
 class DailiesCountGlanceWidget : GlanceAppWidget() {
-    override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(
-            DpSize(218.dp, 110.dp),
-            DpSize(290.dp, 110.dp),
-            DpSize(360.dp, 110.dp),
-            DpSize(430.dp, 110.dp),
-            DpSize(500.dp, 110.dp),
-        ),
-    )
+    override val sizeMode: SizeMode =
+        SizeMode.Responsive(
+            setOf(
+                DpSize(218.dp, 110.dp),
+                DpSize(290.dp, 110.dp),
+                DpSize(360.dp, 110.dp),
+                DpSize(430.dp, 110.dp),
+                DpSize(500.dp, 110.dp),
+            ),
+        )
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val initial = if (WidgetAuth.isLoggedIn(context)) {
-            hydrateSnapshot(context, id, WidgetSnapshotStore.dailyCountKey) {
-                loadDailyCountStateOrNull(context)?.let { WidgetSnapshotStore.encodeDailyCount(it) }
-            }?.let { WidgetSnapshotStore.decodeDailyCount(it) }
-        } else {
-            null
-        }
-        provideContent {
-            val loggedIn = WidgetAuth.isLoggedIn(context)
-            val state = if (loggedIn) {
-                WidgetSnapshotStore.dailyCountFrom(currentState()) ?: initial
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId,
+    ) {
+        val initial =
+            if (WidgetAuth.isLoggedIn(context)) {
+                hydrateSnapshot(context, id, WidgetSnapshotStore.dailyCountKey) {
+                    loadDailyCountStateOrNull(context)?.let { WidgetSnapshotStore.encodeDailyCount(it) }
+                }?.let { WidgetSnapshotStore.decodeDailyCount(it) }
             } else {
                 null
             }
+        provideContent {
+            val loggedIn = WidgetAuth.isLoggedIn(context)
+            val state =
+                if (loggedIn) {
+                    WidgetSnapshotStore.dailyCountFrom(currentState()) ?: initial
+                } else {
+                    null
+                }
             HabiticaWidgetTheme {
                 when {
                     !loggedIn -> SignedOutContent()
@@ -104,8 +110,8 @@ internal data class DailiesTilePalette(
 )
 
 @Composable
-private fun rememberPalette(): DailiesTilePalette {
-    return if (MaterialYouEnabled) {
+private fun rememberPalette(): DailiesTilePalette =
+    if (MaterialYouEnabled) {
         DailiesTilePalette(
             tileBackground = GlanceTheme.colors.widgetBackground,
             primaryText = GlanceTheme.colors.onSurface,
@@ -124,14 +130,14 @@ private fun rememberPalette(): DailiesTilePalette {
             trackColor = ColorProvider(R.color.widget_progress_track),
         )
     }
-}
 
-private fun progressColor(progress: Float): Color = when {
-    progress >= 1.0f -> WidgetBarColors.purple
-    progress >= 0.67f -> WidgetBarColors.blue
-    progress >= 0.34f -> WidgetBarColors.orange
-    else -> WidgetBarColors.red
-}
+private fun progressColor(progress: Float): Color =
+    when {
+        progress >= 1.0f -> WidgetBarColors.purple
+        progress >= 0.67f -> WidgetBarColors.blue
+        progress >= 0.34f -> WidgetBarColors.orange
+        else -> WidgetBarColors.red
+    }
 
 @Composable
 private fun DailiesCountTile(state: DailyCountWidgetState) {
@@ -141,10 +147,11 @@ private fun DailiesCountTile(state: DailyCountWidgetState) {
     val barAvailableWidth = (size.width - tileInnerPadding * 2).coerceAtLeast(40.dp)
 
     Box(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .cornerRadius(20.dp)
-            .background(palette.tileBackground),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .cornerRadius(20.dp)
+                .background(palette.tileBackground),
     ) {
         val isAllDone = state.totalDue > 0 && state.completed == state.totalDue
         when {
@@ -156,12 +163,16 @@ private fun DailiesCountTile(state: DailyCountWidgetState) {
 }
 
 @Composable
-private fun StartDayContent(palette: DailiesTilePalette, innerPadding: Dp) {
+private fun StartDayContent(
+    palette: DailiesTilePalette,
+    innerPadding: Dp,
+) {
     Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .clickable(onClick = openAppAction("habitica://user/tasks/daily")),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .clickable(onClick = openAppAction("habitica://user/tasks/daily")),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -174,12 +185,13 @@ private fun StartDayContent(palette: DailiesTilePalette, innerPadding: Dp) {
         Spacer(GlanceModifier.height(8.dp))
         Text(
             text = stringRes(R.string.widget_start_day),
-            style = TextStyle(
-                color = palette.primaryText,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Medium,
-                textAlign = TextAlign.Center,
-            ),
+            style =
+                TextStyle(
+                    color = palette.primaryText,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Center,
+                ),
         )
     }
 }
@@ -243,10 +255,11 @@ private fun GaugeBody(
     onClick: androidx.glance.action.Action,
 ) {
     Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .clickable(onClick = onClick),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .clickable(onClick = onClick),
         horizontalAlignment = Alignment.Start,
     ) {
         Column(
@@ -259,11 +272,12 @@ private fun GaugeBody(
             ) {
                 Text(
                     text = topNumber,
-                    style = TextStyle(
-                        color = palette.accentNumber,
-                        fontSize = 64.sp,
-                        fontWeight = FontWeight.Medium,
-                    ),
+                    style =
+                        TextStyle(
+                            color = palette.accentNumber,
+                            fontSize = 64.sp,
+                            fontWeight = FontWeight.Medium,
+                        ),
                 )
                 if (showSparkles) {
                     Spacer(GlanceModifier.width(6.dp))
@@ -276,11 +290,12 @@ private fun GaugeBody(
             }
             Text(
                 text = topLabel,
-                style = TextStyle(
-                    color = palette.primaryText,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium,
-                ),
+                style =
+                    TextStyle(
+                        color = palette.primaryText,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Medium,
+                    ),
                 modifier = GlanceModifier.padding(start = 4.dp),
             )
         }
@@ -294,11 +309,12 @@ private fun GaugeBody(
         Spacer(GlanceModifier.height(6.dp))
         Text(
             text = bottomCaption,
-            style = TextStyle(
-                color = palette.secondaryText,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-            ),
+            style =
+                TextStyle(
+                    color = palette.secondaryText,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
             modifier = GlanceModifier.padding(start = 4.dp),
         )
     }

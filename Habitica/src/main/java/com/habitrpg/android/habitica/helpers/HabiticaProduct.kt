@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.R
 
-enum class HabiticaProduct(val sku: String) {
+enum class HabiticaProduct(
+    val sku: String,
+) {
     JUBILANT_GRYPHATRICE("com.habitrpg.android.habitica.iap.pets.gryphatrice_jubilant"),
     PURCHASE_4_GEMS("com.habitrpg.android.habitica.iap.4gems"),
     PURCHASE_21_GEMS("com.habitrpg.android.habitica.iap.21gems"),
@@ -15,27 +17,26 @@ enum class HabiticaProduct(val sku: String) {
     SUBSCRIPTION_1_MONTH_NORENEW("com.habitrpg.android.habitica.norenew_subscription.1month"),
     SUBSCRIPTION_3_MONTH_NORENEW("com.habitrpg.android.habitica.norenew_subscription.3month"),
     SUBSCRIPTION_6_MONTH_NORENEW("com.habitrpg.android.habitica.norenew_subscription.6month"),
-    SUBSCRIPTION_12_MONTH_NORENEW("com.habitrpg.android.habitica.norenew_subscription.12month");
+    SUBSCRIPTION_12_MONTH_NORENEW("com.habitrpg.android.habitica.norenew_subscription.12month"),
+    ;
 
-    fun getSubscriptionDuration(): Int {
-            return when (this) {
-                SUBSCRIPTION_1_MONTH, SUBSCRIPTION_1_MONTH_NORENEW -> 1
-                SUBSCRIPTION_3_MONTH, SUBSCRIPTION_3_MONTH_NORENEW -> 3
-                SUBSCRIPTION_6_MONTH, SUBSCRIPTION_6_MONTH_NORENEW -> 6
-                SUBSCRIPTION_12_MONTH, SUBSCRIPTION_12_MONTH_NORENEW -> 12
-                else -> 0
-            }
+    fun getSubscriptionDuration(): Int =
+        when (this) {
+            SUBSCRIPTION_1_MONTH, SUBSCRIPTION_1_MONTH_NORENEW -> 1
+            SUBSCRIPTION_3_MONTH, SUBSCRIPTION_3_MONTH_NORENEW -> 3
+            SUBSCRIPTION_6_MONTH, SUBSCRIPTION_6_MONTH_NORENEW -> 6
+            SUBSCRIPTION_12_MONTH, SUBSCRIPTION_12_MONTH_NORENEW -> 12
+            else -> 0
         }
 
-    fun getSubCode(): String {
-        return when (this) {
+    fun getSubCode(): String =
+        when (this) {
             SUBSCRIPTION_1_MONTH -> "basic_earned"
             SUBSCRIPTION_3_MONTH -> "basic_3mo"
             SUBSCRIPTION_6_MONTH -> "basic_6mo"
             SUBSCRIPTION_12_MONTH -> "basic_12mo"
             else -> ""
         }
-    }
 
     fun getGemAmount(isSaleGemPurchase: Boolean): Int {
         if (isSaleGemPurchase) {
@@ -63,34 +64,33 @@ enum class HabiticaProduct(val sku: String) {
                 SUBSCRIPTION_1_MONTH,
                 SUBSCRIPTION_3_MONTH,
                 SUBSCRIPTION_6_MONTH,
-                SUBSCRIPTION_12_MONTH
+                SUBSCRIPTION_12_MONTH,
             )
         var allSubscriptionNoRenewTypes =
             listOf(
                 SUBSCRIPTION_1_MONTH_NORENEW,
                 SUBSCRIPTION_3_MONTH_NORENEW,
                 SUBSCRIPTION_6_MONTH_NORENEW,
-                SUBSCRIPTION_12_MONTH_NORENEW
+                SUBSCRIPTION_12_MONTH_NORENEW,
             )
         val allGemTypes =
             listOf(
                 PURCHASE_4_GEMS,
                 PURCHASE_21_GEMS,
                 PURCHASE_42_GEMS,
-                PURCHASE_84_GEMS
+                PURCHASE_84_GEMS,
             )
 
-        fun forSku(sku: String): HabiticaProduct? {
-            return entries.firstOrNull { it.sku == sku }
-        }
+        fun forSku(sku: String): HabiticaProduct? = entries.firstOrNull { it.sku == sku }
     }
 }
 
 val HabiticaProduct.recurranceStringRes: Int
-    get() = when (this) {
-        HabiticaProduct.SUBSCRIPTION_1_MONTH -> R.string.one_month
-        HabiticaProduct.SUBSCRIPTION_3_MONTH -> R.string.three_months
-        HabiticaProduct.SUBSCRIPTION_6_MONTH -> R.string.six_months
-        HabiticaProduct.SUBSCRIPTION_12_MONTH -> R.string.twelve_months
-        else -> throw IllegalArgumentException("Not a subscription product")
-    }
+    get() =
+        when (this) {
+            HabiticaProduct.SUBSCRIPTION_1_MONTH -> R.string.one_month
+            HabiticaProduct.SUBSCRIPTION_3_MONTH -> R.string.three_months
+            HabiticaProduct.SUBSCRIPTION_6_MONTH -> R.string.six_months
+            HabiticaProduct.SUBSCRIPTION_12_MONTH -> R.string.twelve_months
+            else -> throw IllegalArgumentException("Not a subscription product")
+        }

@@ -28,31 +28,34 @@ object LegacyWidgetMigration {
             .onFailure { Log.w("LegacyWidgetMigration", "habit-button migration failed", it) }
     }
 
-    private suspend fun migrateHabitButton(context: Context) = withContext(Dispatchers.Main) {
-        val legacy = PreferenceManager.getDefaultSharedPreferences(context)
-        val widgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
-            ComponentName(context, HabitButtonWidgetProvider::class.java),
-        )
-        if (widgetIds.isEmpty()) return@withContext
+    private suspend fun migrateHabitButton(context: Context) =
+        withContext(Dispatchers.Main) {
+            val legacy = PreferenceManager.getDefaultSharedPreferences(context)
+            val widgetIds =
+                AppWidgetManager.getInstance(context).getAppWidgetIds(
+                    ComponentName(context, HabitButtonWidgetProvider::class.java),
+                )
+            if (widgetIds.isEmpty()) return@withContext
 
-        val taskRepo = widgetEntryPoint(context).taskRepository()
-        val glanceManager = GlanceAppWidgetManager(context)
-        val widget = HabitButtonGlanceWidget()
+            val taskRepo = widgetEntryPoint(context).taskRepository()
+            val glanceManager = GlanceAppWidgetManager(context)
+            val widget = HabitButtonGlanceWidget()
 
-        for (appWidgetId in widgetIds) {
-            val legacyKey = LEGACY_HABIT_BUTTON_KEY_PREFIX + appWidgetId
-            val taskId = legacy.getString(legacyKey, null) ?: continue
-            val task = taskRepo.getUnmanagedTask(taskId).firstOrNull() ?: continue
-            val glanceId = runCatching { glanceManager.getGlanceIdBy(appWidgetId) }
-                .getOrNull() ?: continue
-            HabitButtonWidgetCache.write(context, glanceId, task)
-            widget.update(context, glanceId)
-        }
-
-        legacy.edit {
             for (appWidgetId in widgetIds) {
-                remove(LEGACY_HABIT_BUTTON_KEY_PREFIX + appWidgetId)
+                val legacyKey = LEGACY_HABIT_BUTTON_KEY_PREFIX + appWidgetId
+                val taskId = legacy.getString(legacyKey, null) ?: continue
+                val task = taskRepo.getUnmanagedTask(taskId).firstOrNull() ?: continue
+                val glanceId =
+                    runCatching { glanceManager.getGlanceIdBy(appWidgetId) }
+                        .getOrNull() ?: continue
+                HabitButtonWidgetCache.write(context, glanceId, task)
+                widget.update(context, glanceId)
+            }
+
+            legacy.edit {
+                for (appWidgetId in widgetIds) {
+                    remove(LEGACY_HABIT_BUTTON_KEY_PREFIX + appWidgetId)
+                }
             }
         }
-    }
 }

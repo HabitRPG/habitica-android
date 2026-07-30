@@ -67,15 +67,13 @@ class PetDetailRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = false
         if (savedInstanceState != null) {
@@ -91,7 +89,7 @@ class PetDetailRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -109,26 +107,29 @@ class PetDetailRecyclerFragment :
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
         layoutManager?.spanSizeLookup =
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(
-                            position
+                override fun getSpanSize(position: Int): Int =
+                    if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(
+                            position,
                         ) == 1
                     ) {
                         layoutManager?.spanCount ?: 1
                     } else {
                         1
                     }
-                }
             }
         binding?.recyclerView?.layoutManager = layoutManager
         adapter.animalIngredientsRetriever = { animal, callback ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val egg =
-                    inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
-                        .firstOrNull()?.firstOrNull() as? Egg
+                    inventoryRepository
+                        .getItems(Egg::class.java, arrayOf(animal.animal))
+                        .firstOrNull()
+                        ?.firstOrNull() as? Egg
                 val potion =
-                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color))
-                        .firstOrNull()?.firstOrNull() as? HatchingPotion
+                    inventoryRepository
+                        .getItems(HatchingPotion::class.java, arrayOf(animal.color))
+                        .firstOrNull()
+                        ?.firstOrNull() as? HatchingPotion
                 callback(Pair(egg, potion))
             }
         }
@@ -146,7 +147,7 @@ class PetDetailRecyclerFragment :
         adapter.onFeed = { pet, food ->
             showFeedingDialog(
                 pet,
-                food
+                food,
             )
         }
 
@@ -185,7 +186,8 @@ class PetDetailRecyclerFragment :
     private fun loadItems() {
         if (animalType?.isNotEmpty() == true || animalGroup?.isNotEmpty() == true) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedMounts()
+                inventoryRepository
+                    .getOwnedMounts()
                     .map { ownedMounts ->
                         val mountMap = mutableMapOf<String, OwnedMount>()
                         ownedMounts.forEach { mountMap[it.key ?: ""] = it }
@@ -197,16 +199,19 @@ class PetDetailRecyclerFragment :
             }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val mounts =
-                    inventoryRepository.getMounts(
-                        animalType,
-                        animalGroup,
-                        animalColor
-                    ).firstOrNull() ?: emptyList()
+                    inventoryRepository
+                        .getMounts(
+                            animalType,
+                            animalGroup,
+                            animalColor,
+                        ).firstOrNull() ?: emptyList()
                 adapter.setExistingMounts(mounts)
                 val pets =
-                    inventoryRepository.getPets(animalType, animalGroup, animalColor)
+                    inventoryRepository
+                        .getPets(animalType, animalGroup, animalColor)
                         .firstOrNull() ?: emptyList()
-                inventoryRepository.getOwnedPets()
+                inventoryRepository
+                    .getOwnedPets()
                     .map { ownedPets ->
                         val petMap = mutableMapOf<String, OwnedPet>()
                         ownedPets.forEach { petMap[it.key ?: ""] = it }
@@ -222,7 +227,7 @@ class PetDetailRecyclerFragment :
                                 currentSection =
                                     StableSection(
                                         pet.type,
-                                        "pets"
+                                        "pets",
                                     )
                                 items.add(currentSection)
                             }
@@ -243,17 +248,18 @@ class PetDetailRecyclerFragment :
 
     private suspend fun showFeedingDialog(
         pet: Pet,
-        food: Food?
+        food: Food?,
     ): FeedResponse? {
         if (food != null) {
             val context = mainActivity ?: context ?: return null
-            val response = feedPetUseCase.callInteractor(
-                FeedPetUseCase.RequestValues(
-                    pet,
-                    food,
-                    context
+            val response =
+                feedPetUseCase.callInteractor(
+                    FeedPetUseCase.RequestValues(
+                        pet,
+                        food,
+                        context,
+                    ),
                 )
-            )
             if (isAdded) {
                 var petFeedings = sharedPreferences.getInt("times_fed", 0)
                 petFeedings += 1

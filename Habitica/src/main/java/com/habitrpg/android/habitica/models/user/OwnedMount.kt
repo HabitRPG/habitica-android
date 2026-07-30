@@ -4,7 +4,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class OwnedMount : RealmObject(), OwnedObject {
+open class OwnedMount :
+    RealmObject(),
+    OwnedObject {
     override var userID: String? = null
     override var key: String? = null
 

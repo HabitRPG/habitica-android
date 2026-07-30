@@ -6,7 +6,10 @@ import android.media.MediaPlayer
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import java.io.File
 
-class SoundFile(val theme: String, private val fileName: String) {
+class SoundFile(
+    val theme: String,
+    private val fileName: String,
+) {
     private var player: MediaPlayer? = null
     var file: File? = null
     private var playerPrepared: Boolean = false
@@ -37,7 +40,8 @@ class SoundFile(val theme: String, private val fileName: String) {
         try {
             player?.setDataSource(file?.path)
             val attributes =
-                AudioAttributes.Builder()
+                AudioAttributes
+                    .Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .setLegacyStreamType(AudioManager.STREAM_MUSIC)
                     .build()

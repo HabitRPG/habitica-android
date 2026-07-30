@@ -4,7 +4,10 @@ actual class HParcel {
     actual fun writeByte(byte: Byte) {
     }
 
-    actual fun writeParcelable(drop: HParcelable?, flags: Int) {
+    actual fun writeParcelable(
+        drop: HParcelable?,
+        flags: Int,
+    ) {
     }
 
     actual fun writeDouble(experienceDelta: Double) {

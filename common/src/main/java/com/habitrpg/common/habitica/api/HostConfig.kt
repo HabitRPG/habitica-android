@@ -43,9 +43,9 @@ class HostConfig {
 
     private fun loadAPIKey(
         sharedPreferences: SharedPreferences,
-        keyHelper: KeyHelper?
-    ): String {
-        return if (sharedPreferences.contains(userID)) {
+        keyHelper: KeyHelper?,
+    ): String =
+        if (sharedPreferences.contains(userID)) {
             val encryptedKey = sharedPreferences.getString(userID, null)
             if (encryptedKey?.isNotBlank() == true) {
                 keyHelper?.decrypt(encryptedKey)
@@ -63,7 +63,6 @@ class HostConfig {
             }
             key
         } ?: ""
-    }
 
     constructor(address: String, port: String, api: String, user: String) {
         this.address = address
@@ -72,7 +71,5 @@ class HostConfig {
         this.userID = user
     }
 
-    fun hasAuthentication(): Boolean {
-        return userID.isNotEmpty() && apiKey.isNotEmpty()
-    }
+    fun hasAuthentication(): Boolean = userID.isNotEmpty() && apiKey.isNotEmpty()
 }

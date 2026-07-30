@@ -6,7 +6,9 @@ import com.habitrpg.android.habitica.databinding.DialogPurchaseContentItemBindin
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class PurchaseDialogBaseContent(context: Context) : PurchaseDialogContent(context) {
+class PurchaseDialogBaseContent(
+    context: Context,
+) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseContentItemBinding.inflate(context.layoutInflater, this)
     override val imageView: PixelArtView
         get() = binding.imageView

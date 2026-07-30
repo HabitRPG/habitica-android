@@ -6,8 +6,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.GlanceId
-import com.habitrpg.android.habitica.widget.glance.state.WidgetStateWriter
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.widget.glance.state.WidgetStateWriter
 
 data class HabitButtonCachedTask(
     val taskId: String,
@@ -35,7 +35,11 @@ object HabitButtonWidgetCache {
         )
     }
 
-    suspend fun write(context: Context, glanceId: GlanceId, task: Task) {
+    suspend fun write(
+        context: Context,
+        glanceId: GlanceId,
+        task: Task,
+    ) {
         val taskId = task.id ?: return
         WidgetStateWriter.edit(context, glanceId) { prefs ->
             prefs[KEY_TASK_ID] = taskId

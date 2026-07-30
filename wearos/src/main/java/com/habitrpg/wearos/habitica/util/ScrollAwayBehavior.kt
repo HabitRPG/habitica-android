@@ -8,18 +8,18 @@ import androidx.core.view.ViewCompat
 import kotlin.math.max
 import kotlin.math.min
 
-class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
-    CoordinatorLayout.Behavior<V>(context, attrs) {
+class ScrollAwayBehavior<V : View>(
+    context: Context,
+    attrs: AttributeSet,
+) : CoordinatorLayout.Behavior<V>(context, attrs) {
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout,
         child: V,
         directTargetChild: View,
         target: View,
         axes: Int,
-        type: Int
-    ): Boolean {
-        return axes == ViewCompat.SCROLL_AXIS_VERTICAL
-    }
+        type: Int,
+    ): Boolean = axes == ViewCompat.SCROLL_AXIS_VERTICAL
 
     override fun onNestedPreScroll(
         coordinatorLayout: CoordinatorLayout,
@@ -28,7 +28,7 @@ class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
         dx: Int,
         dy: Int,
         consumed: IntArray,
-        type: Int
+        type: Int,
     ) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
         child.translationY =
@@ -39,7 +39,7 @@ class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
         coordinatorLayout: CoordinatorLayout,
         child: V,
         target: View,
-        type: Int
+        type: Int,
     ) {
         super.onStopNestedScroll(coordinatorLayout, child, target, type)
         if (child.translationY != 0f && child.translationY != child.height.toFloat()) {

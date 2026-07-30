@@ -13,15 +13,16 @@ import kotlinx.coroutines.launch
 fun <T> T.useDebounce(
     delayMillis: Long = 300L,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onChange: (T) -> Unit
-): T{
+    onChange: (T) -> Unit,
+): T {
     val state by rememberUpdatedState(this)
 
     DisposableEffect(state) {
-        val job = coroutineScope.launch {
-            delay(delayMillis)
-            onChange(state)
-        }
+        val job =
+            coroutineScope.launch {
+                delay(delayMillis)
+                onChange(state)
+            }
         onDispose {
             job.cancel()
         }

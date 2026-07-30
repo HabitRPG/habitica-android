@@ -12,6 +12,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface WidgetEntryPoint {
     fun userRepository(): UserRepository
+
     fun taskRepository(): TaskRepository
 }
 

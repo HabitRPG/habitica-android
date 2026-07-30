@@ -43,9 +43,8 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                         }
                     }
                 }
-            }
+            },
         )
-
 
         binding.ryaButton.setOnClickListener {
             binding.titleView.text = getString(R.string.check_off_yesterday)
@@ -71,7 +70,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                 Intent(this, RYAActivity::class.java)
                     .apply {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
+                    },
             )
         }
         super.onDestroy()

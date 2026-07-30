@@ -6,18 +6,21 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 
-
-enum class EventCategory(val key: String) {
+enum class EventCategory(
+    val key: String,
+) {
     BEHAVIOUR("behaviour"),
-    NAVIGATION("navigation")
+    NAVIGATION("navigation"),
 }
 
-enum class HitType(val key: String) {
+enum class HitType(
+    val key: String,
+) {
     EVENT("event"),
     PAGEVIEW("pageview"),
     CREATE_WIDGET("create"),
     REMOVE_WIDGET("remove"),
-    UPDATE_WIDGET("update")
+    UPDATE_WIDGET("update"),
 }
 
 object Analytics {
@@ -39,7 +42,7 @@ object Analytics {
                 "eventAction" to eventAction,
                 "eventCategory" to category?.key,
                 "hitType" to hitType?.key,
-                "status" to "displayed"
+                "status" to "displayed",
             )
         if (additionalData != null) {
             data.putAll(additionalData)
@@ -73,14 +76,14 @@ object Analytics {
         }
         FirebaseCrashlytics.getInstance().setUserId(userID)
     }
-    
+
     fun clearUserID() {
         FirebaseCrashlytics.getInstance().setUserId("")
     }
 
     fun setUserProperty(
         identifier: String,
-        value: Any?
+        value: Any?,
     ) {
         if (!hasConsent || !isInitialized) {
             return
@@ -98,11 +101,11 @@ object Analytics {
     fun setAnalyticsConsent(consents: Boolean?) {
         val isEnabled = consents == true
         hasConsent = isEnabled
-        
+
         if (!isInitialized) {
             return
         }
-        
+
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
     }
 }

@@ -37,7 +37,7 @@ class TaskReceiver : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")
         val extras = intent.extras
@@ -60,7 +60,7 @@ class TaskReceiver : BroadcastReceiver() {
 
     private fun createNotification(
         context: Context,
-        task: Task
+        task: Task,
     ) {
         val intent = Intent(context, MainActivity::class.java)
         HLogger.log(LogLevel.INFO, this::javaClass.name, "Create Notification")
@@ -71,20 +71,21 @@ class TaskReceiver : BroadcastReceiver() {
                 context,
                 System.currentTimeMillis().toInt(),
                 intent,
-                PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_IMMUTABLE,
             )
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         var notificationBuilder =
-            NotificationCompat.Builder(context, "default")
+            NotificationCompat
+                .Builder(context, "default")
                 .setSmallIcon(R.drawable.ic_gryphon_white)
                 .setColor(ContextCompat.getColor(context, R.color.brand_300))
                 .setContentTitle(task.text)
                 .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(task.notes)
-                )
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                    NotificationCompat
+                        .BigTextStyle()
+                        .bigText(task.notes),
+                ).setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSound(soundUri)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
@@ -96,7 +97,11 @@ class TaskReceiver : BroadcastReceiver() {
     }
 }
 
-fun NotificationManagerCompat.safeNotify(context: Context, code: Int, notification: Notification) {
+fun NotificationManagerCompat.safeNotify(
+    context: Context,
+    code: Int,
+    notification: Notification,
+) {
     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
         return
     }

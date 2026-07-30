@@ -28,29 +28,32 @@ object WidgetDataCoordinator {
     fun start(context: Context) {
         if (job?.isActive == true) return
         val appContext = context.applicationContext
-        job = scope.launch(ExceptionHandler.coroutine()) {
-            val entry = widgetEntryPoint(appContext)
-            entry.userRepository().getUser()
-                .flatMapLatest { user ->
-                    if (user == null) {
-                        flowOf(Unit)
-                    } else {
-                        val repo = entry.taskRepository()
-                        val flows = listOf(
-                            repo.getTasks(TaskType.DAILY, user.id, emptyArray()),
-                            repo.getTasks(TaskType.TODO, user.id, emptyArray()),
-                            repo.getTasks(TaskType.HABIT, user.id, emptyArray()),
-                        )
-                        combine(flows) { Unit }
+        job =
+            scope.launch(ExceptionHandler.coroutine()) {
+                val entry = widgetEntryPoint(appContext)
+                entry
+                    .userRepository()
+                    .getUser()
+                    .flatMapLatest { user ->
+                        if (user == null) {
+                            flowOf(Unit)
+                        } else {
+                            val repo = entry.taskRepository()
+                            val flows =
+                                listOf(
+                                    repo.getTasks(TaskType.DAILY, user.id, emptyArray()),
+                                    repo.getTasks(TaskType.TODO, user.id, emptyArray()),
+                                    repo.getTasks(TaskType.HABIT, user.id, emptyArray()),
+                                )
+                            combine(flows) { Unit }
+                        }
+                    }.debounce(DEBOUNCE_MS)
+                    .collectLatest {
+                        if (WidgetAuth.isLoggedIn(appContext)) {
+                            runCatching { WidgetSnapshotPublisher.publishAll(appContext) }
+                        }
                     }
-                }
-                .debounce(DEBOUNCE_MS)
-                .collectLatest {
-                    if (WidgetAuth.isLoggedIn(appContext)) {
-                        runCatching { WidgetSnapshotPublisher.publishAll(appContext) }
-                    }
-                }
-        }
+            }
     }
 
     fun stop() {

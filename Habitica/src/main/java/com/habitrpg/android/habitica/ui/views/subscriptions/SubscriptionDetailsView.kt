@@ -72,17 +72,22 @@ class SubscriptionDetailsView : LinearLayout {
         binding.subscriptionChangeNotif.isVisible = plan.deferred?.planId != null
 
         when {
-            duration != null ->
+            duration != null -> {
                 binding.subscriptionDurationTextView.text =
                     resources.getString(R.string.subscription_duration, duration)
+            }
 
-            plan.isGroupPlanSub -> binding.subscriptionDurationTextView.setText(R.string.member_group_plan)
-            plan.dateTerminated != null ->
+            plan.isGroupPlanSub -> {
+                binding.subscriptionDurationTextView.setText(R.string.member_group_plan)
+            }
+
+            plan.dateTerminated != null -> {
                 binding.subscriptionDurationTextView.text =
                     resources.getString(
                         R.string.benefits_end,
-                        DateFormat.getDateInstance().format(plan.dateTerminated ?: Date())
+                        DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()),
                     )
+            }
         }
 
         if ((plan.extraMonths ?: 0) > 0) {
@@ -115,10 +120,11 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
                 val billingDate = plan.nextBillingDate
                 if (billingDate != null && billingDate > Date()) {
-                    binding.subscriptionPaymentMethodTextview.text = context.getString(
-                        R.string.next_payment_date,
-                        DateFormat.getDateInstance().format(billingDate)
-                    )
+                    binding.subscriptionPaymentMethodTextview.text =
+                        context.getString(
+                            R.string.next_payment_date,
+                            DateFormat.getDateInstance().format(billingDate),
+                        )
                 } else {
                     context.getString(R.string.google_pay)
                 }
@@ -160,7 +166,8 @@ class SubscriptionDetailsView : LinearLayout {
 
         val now = LocalDate.now()
         val nextHourglassDate =
-            now.plusMonths(plan.monthsUntilNextHourglass.toLong())
+            now
+                .plusMonths(plan.monthsUntilNextHourglass.toLong())
                 .withDayOfMonth(1)
         val terminatedLocalDate = plan.dateTerminated?.toZonedDateTime()?.toLocalDate()
         if (plan.isActive && (terminatedLocalDate == null || nextHourglassDate.isBefore(terminatedLocalDate))) {

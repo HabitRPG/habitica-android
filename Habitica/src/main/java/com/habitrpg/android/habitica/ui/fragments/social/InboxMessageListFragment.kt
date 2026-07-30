@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -46,7 +47,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
-import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>() {
@@ -54,10 +54,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentInboxMessageListBinding {
-        return FragmentInboxMessageListBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentInboxMessageListBinding = FragmentInboxMessageListBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -75,7 +73,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -83,7 +81,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -93,7 +91,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            socialRepository.getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "")
+            socialRepository
+                .getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "")
                 .collect {
                     mainActivity?.title = it?.displayName
                     chatAdapter?.replyToUser = it
@@ -106,7 +105,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 override fun onScrolled(
                     recyclerView: RecyclerView,
                     dx: Int,
-                    dy: Int
+                    dy: Int,
                 ) {
                     super.onScrolled(recyclerView, dx, dy)
                     val wasScrolledToBottom = isScrolledToBottom
@@ -122,20 +121,20 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                         hideNewMessageIndicator()
                     }
                 }
-            }
+            },
         )
 
         chatAdapter?.registerAdapterDataObserver(
             object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(
                     positionStart: Int,
-                    itemCount: Int
+                    itemCount: Int,
                 ) {
                     if (positionStart == 0 && (isScrolledToBottom || isFirstRefresh)) {
                         binding?.recyclerView?.scrollToPosition(0)
                     }
                 }
-            }
+            },
         )
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -163,7 +162,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         }
 
         chatAdapter?.addLoadStateListener { loadStates ->
-            val isEmpty = loadStates.refresh is LoadState.NotLoading &&
+            val isEmpty =
+                loadStates.refresh is LoadState.NotLoading &&
                     loadStates.append.endOfPaginationReached &&
                     chatAdapter?.itemCount == 0
 
@@ -197,7 +197,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     binding?.chatBarView?.paddingLeft ?: 0,
                     binding?.chatBarView?.paddingTop ?: 0,
                     binding?.chatBarView?.paddingRight ?: 0,
-                    nav
+                    nav,
                 )
 
                 binding?.recyclerView?.translationY = -ime.toFloat()
@@ -206,7 +206,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     binding?.recyclerView?.paddingLeft ?: 0,
                     binding?.recyclerView?.paddingTop ?: 0,
                     binding?.recyclerView?.paddingRight ?: 0,
-                    ime + nav
+                    ime + nav,
                 )
 
                 insets
@@ -230,7 +230,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         this.mainActivity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -280,7 +280,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                         alert.show()
                     }
                     binding?.chatBarView?.message = chatText
-                }
+                },
             ) {
                 socialRepository.postPrivateMessage(userID, chatText)
                 delay(200.toDuration(DurationUnit.MILLISECONDS))
@@ -298,7 +298,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             showSnackbar(
                 activity.snackbarContainer,
                 getString(R.string.chat_message_copied),
-                HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                HabiticaSnackbar.SnackbarDisplayType.NORMAL,
             )
         }
     }
@@ -312,7 +312,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 messageText = chatMessage.text ?: "",
                 groupId = chatMessage.groupId ?: "",
                 userIdBeingReported = chatMessage.userID ?: "",
-                sourceView = this::class.simpleName ?: ""
+                sourceView = this::class.simpleName ?: "",
             )
 
         reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)

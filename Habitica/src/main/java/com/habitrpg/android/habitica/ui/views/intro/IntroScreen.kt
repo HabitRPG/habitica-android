@@ -58,17 +58,21 @@ fun IntroPage(
     image: @Composable () -> Unit,
     background: Brush,
 ) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 40.dp), contentAlignment = Alignment.Center) {
+    Box(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 40.dp),
+        contentAlignment = Alignment.Center,
+    ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             ProvideTextStyle(
                 TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
-                    color = Color.White
-                )
+                    color = Color.White,
+                ),
             ) {
                 subtitle()
             }
@@ -78,8 +82,8 @@ fun IntroPage(
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    color = Color.White
-                )
+                    color = Color.White,
+                ),
             ) {
                 title()
             }
@@ -92,8 +96,8 @@ fun IntroPage(
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
                     color = Color.White,
-                    lineHeight = 20.sp
-                )
+                    lineHeight = 20.sp,
+                ),
             ) {
                 description()
             }
@@ -101,7 +105,10 @@ fun IntroPage(
     }
 }
 
-fun Color.blend(topColor: Color, ratio: Float = 0.5f): Color {
+fun Color.blend(
+    topColor: Color,
+    ratio: Float = 0.5f,
+): Color {
     if (ratio == 0f) return this
     if (ratio == 1f) return topColor
     val intColor = ColorUtils.blendARGB(toArgb(), topColor.toArgb(), ratio)
@@ -141,73 +148,85 @@ fun IntroScreen(onNextOnboardingStep: () -> Unit) {
             bottomColor = colorResource(R.color.red_10).blend(colorResource(R.color.blue_10), -pageOffset)
         }
     }
-    Box(Modifier.fillMaxSize().background(
-        Brush.verticalGradient(
-            listOf(topColor, bottomColor)
-        )
-    )) {
+    Box(
+        Modifier.fillMaxSize().background(
+            Brush.verticalGradient(
+                listOf(topColor, bottomColor),
+            ),
+        ),
+    ) {
         HorizontalPager(pagerState) { page ->
             when (page) {
-                0 -> IntroPage(
-                    page = page,
-                    title = { Image(painterResource(R.drawable.intro_1_title), contentDescription = null) },
-                    subtitle = { Text(stringResource(R.string.intro_1_subtitle)) },
-                    description = { Text(stringResource(R.string.intro_1_description, "6,000,000")) },
-                    image = { Image(painterResource(R.drawable.intro_1), contentDescription = null) },
-                    background = Brush.verticalGradient(listOf(colorResource(R.color.brand_400), colorResource(R.color.brand_200)))
-                )
+                0 -> {
+                    IntroPage(
+                        page = page,
+                        title = { Image(painterResource(R.drawable.intro_1_title), contentDescription = null) },
+                        subtitle = { Text(stringResource(R.string.intro_1_subtitle)) },
+                        description = { Text(stringResource(R.string.intro_1_description, "6,000,000")) },
+                        image = { Image(painterResource(R.drawable.intro_1), contentDescription = null) },
+                        background = Brush.verticalGradient(listOf(colorResource(R.color.brand_400), colorResource(R.color.brand_200))),
+                    )
+                }
 
-                1 -> IntroPage(
-                    page = page,
-                    title = { Text(stringResource(R.string.intro_2_title)) },
-                    subtitle = { Text(stringResource(R.string.intro_2_subtitle)) },
-                    description = { Text(stringResource(R.string.intro_2_description)) },
-                    image = { Image(painterResource(R.drawable.intro_2), contentDescription = null) },
-                    background = Brush.verticalGradient(listOf(colorResource(R.color.blue_100), colorResource(R.color.blue_50)))
-                )
+                1 -> {
+                    IntroPage(
+                        page = page,
+                        title = { Text(stringResource(R.string.intro_2_title)) },
+                        subtitle = { Text(stringResource(R.string.intro_2_subtitle)) },
+                        description = { Text(stringResource(R.string.intro_2_description)) },
+                        image = { Image(painterResource(R.drawable.intro_2), contentDescription = null) },
+                        background = Brush.verticalGradient(listOf(colorResource(R.color.blue_100), colorResource(R.color.blue_50))),
+                    )
+                }
 
-                2 -> IntroPage(
-                    page = page,
-                    title = { Text(stringResource(R.string.intro_3_title)) },
-                    subtitle = { Text(stringResource(R.string.intro_3_subtitle)) },
-                    description = { Text(stringResource(R.string.intro_3_description)) },
-                    image = { Image(painterResource(R.drawable.intro_3), contentDescription = null) },
-                    background = Brush.verticalGradient(listOf(colorResource(R.color.red_100), colorResource(R.color.red_50)))
-                )
+                2 -> {
+                    IntroPage(
+                        page = page,
+                        title = { Text(stringResource(R.string.intro_3_title)) },
+                        subtitle = { Text(stringResource(R.string.intro_3_subtitle)) },
+                        description = { Text(stringResource(R.string.intro_3_description)) },
+                        image = { Image(painterResource(R.drawable.intro_3), contentDescription = null) },
+                        background = Brush.verticalGradient(listOf(colorResource(R.color.red_100), colorResource(R.color.red_50))),
+                    )
+                }
             }
         }
-            Button(
-                onClick = {
-                    onNextOnboardingStep()
-                },
-                modifier = Modifier
+        Button(
+            onClick = {
+                onNextOnboardingStep()
+            },
+            modifier =
+                Modifier
                     .align(Alignment.TopEnd)
                     .padding(WindowInsets.systemBars.asPaddingValues()),
-                colors = ButtonDefaults.textButtonColors(),
-            ) {
-                Text(stringResource(R.string.skip_button), color = Color.White, fontSize = 18.sp)
-            }
+            colors = ButtonDefaults.textButtonColors(),
+        ) {
+            Text(stringResource(R.string.skip_button), color = Color.White, fontSize = 18.sp)
+        }
 
-        Column(Modifier
-            .align(Alignment.BottomCenter)
-            .padding(WindowInsets.systemBars.asPaddingValues())
-            .padding(horizontal = 20.dp)) {
+        Column(
+            Modifier
+                .align(Alignment.BottomCenter)
+                .padding(WindowInsets.systemBars.asPaddingValues())
+                .padding(horizontal = 20.dp),
+        ) {
             Row(
                 Modifier
                     .wrapContentHeight()
                     .fillMaxWidth()
                     .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
             ) {
                 repeat(pagerState.pageCount) { iteration ->
                     val color = (if (pagerState.currentPage == iteration) Color.Black else Color.White).copy(alpha = 0.6f)
                     Box(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .rotate(45f)
-                            .clip(RectangleShape)
-                            .background(color)
-                            .size(8.dp)
+                        modifier =
+                            Modifier
+                                .padding(8.dp)
+                                .rotate(45f)
+                                .clip(RectangleShape)
+                                .background(color)
+                                .size(8.dp),
                     )
                 }
             }
@@ -221,13 +240,14 @@ fun IntroScreen(onNextOnboardingStep: () -> Unit) {
                         onNextOnboardingStep()
                     }
                 },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black.copy(alpha = 0.4f),
-                    contentColor = Color.White
-                ),
+                colors =
+                    ButtonDefaults.buttonColors(
+                        containerColor = Color.Black.copy(alpha = 0.4f),
+                        contentColor = Color.White,
+                    ),
                 shape = HabiticaTheme.shapes.large,
                 contentPadding = PaddingValues(15.dp),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
             ) {
                 if (pagerState.currentPage < pagerState.pageCount - 1) {
                     Text(stringResource(R.string.next_button), fontSize = 18.sp, fontWeight = FontWeight.Normal)

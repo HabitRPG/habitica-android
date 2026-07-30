@@ -9,7 +9,10 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Authentication : RealmObject(), BaseObject, AvatarAuthentication {
+open class Authentication :
+    RealmObject(),
+    BaseObject,
+    AvatarAuthentication {
     fun findFirstSocialEmail(): String? {
         for (auth in listOf(googleAuthentication, appleAuthentication, facebookAuthentication)) {
             if (auth?.emails?.isNotEmpty() == true) {

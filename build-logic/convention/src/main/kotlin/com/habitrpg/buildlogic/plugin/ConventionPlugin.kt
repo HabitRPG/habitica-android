@@ -17,69 +17,80 @@ import org.gradle.kotlin.dsl.withType
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 class ConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project): Unit = with(target) {
-
-        with(pluginManager) {
-            apply("io.gitlab.arturbosch.detekt")
-            apply("org.jlleitschuh.gradle.ktlint")
-        }
-
-        configure<KtlintExtension> {
-            filter {
-                exclude { entry -> entry.file.toString().contains("generated") }
+    override fun apply(target: Project): Unit =
+        with(target) {
+            with(pluginManager) {
+                apply("io.gitlab.arturbosch.detekt")
+                apply("org.jlleitschuh.gradle.ktlint")
             }
-        }
 
-        tasks.withType<Detekt> {
-            source = fileTree("$projectDir/src/main/java")
-            config = files("${rootProject.rootDir}/detekt.yml")
-            baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
-            reports {
-                xml.required.set(false)
-                html.required.set(true)
-                html.outputLocation.set(layout.buildDirectory.file("reports/detekt.html"))
-                txt.required.set(false)
-                sarif.required.set(true)
-                sarif.outputLocation.set(layout.buildDirectory.file("reports/detekt.sarif"))
-            }
-        }
-
-        tasks.withType<Test> {
-            outputs.upToDateWhen { false }
-            testLogging {
-                showStandardStreams = true
-                events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
-            }
-            addTestListener(object : TestListener {
-                override fun beforeSuite(suite: TestDescriptor) = Unit
-
-                override fun beforeTest(testDescriptor: TestDescriptor) = Unit
-
-                override fun afterTest(testDescriptor: TestDescriptor, result: TestResult) = Unit
-
-                override fun afterSuite(suite: TestDescriptor, result: TestResult) {
-                    if (suite.parent == null) {
-                        val output = buildString {
-                            append("Results: ${result.resultType} ")
-                            append("(${result.testCount} tests, ")
-                            append("${result.successfulTestCount} passed, ")
-                            append("${result.failedTestCount} failed, ")
-                            append("${result.skippedTestCount} skipped)")
-                        }
-                        val startItem = "|  "
-                        val endItem = "  |"
-                        val repeatLength = startItem.length + output.length + endItem.length
-                        println(buildString {
-                            append("\n")
-                            repeat(repeatLength) { append("—") }
-                            append("\n")
-                            append(startItem + output + endItem)
-                            append("\n")
-                            repeat(repeatLength) { append("—") }
-                        })
-                    }
+            configure<KtlintExtension> {
+                filter {
+                    exclude { entry -> entry.file.toString().contains("generated") }
                 }
-            })
+            }
+
+            tasks.withType<Detekt> {
+                source = fileTree("$projectDir/src/main/java")
+                config = files("${rootProject.rootDir}/detekt.yml")
+                baseline = file("${rootProject.projectDir}/detekt_baseline.xml")
+                reports {
+                    xml.required.set(false)
+                    html.required.set(true)
+                    html.outputLocation.set(layout.buildDirectory.file("reports/detekt.html"))
+                    txt.required.set(false)
+                    sarif.required.set(true)
+                    sarif.outputLocation.set(layout.buildDirectory.file("reports/detekt.sarif"))
+                }
+            }
+
+            tasks.withType<Test> {
+                outputs.upToDateWhen { false }
+                testLogging {
+                    showStandardStreams = true
+                    events.addAll(listOf(PASSED, SKIPPED, FAILED, STANDARD_ERROR))
+                }
+                addTestListener(
+                    object : TestListener {
+                        override fun beforeSuite(suite: TestDescriptor) = Unit
+
+                        override fun beforeTest(testDescriptor: TestDescriptor) = Unit
+
+                        override fun afterTest(
+                            testDescriptor: TestDescriptor,
+                            result: TestResult,
+                        ) = Unit
+
+                        override fun afterSuite(
+                            suite: TestDescriptor,
+                            result: TestResult,
+                        ) {
+                            if (suite.parent == null) {
+                                val output =
+                                    buildString {
+                                        append("Results: ${result.resultType} ")
+                                        append("(${result.testCount} tests, ")
+                                        append("${result.successfulTestCount} passed, ")
+                                        append("${result.failedTestCount} failed, ")
+                                        append("${result.skippedTestCount} skipped)")
+                                    }
+                                val startItem = "|  "
+                                val endItem = "  |"
+                                val repeatLength = startItem.length + output.length + endItem.length
+                                println(
+                                    buildString {
+                                        append("\n")
+                                        repeat(repeatLength) { append("—") }
+                                        append("\n")
+                                        append(startItem + output + endItem)
+                                        append("\n")
+                                        repeat(repeatLength) { append("—") }
+                                    },
+                                )
+                            }
+                        }
+                    },
+                )
+            }
         }
-    }
 }

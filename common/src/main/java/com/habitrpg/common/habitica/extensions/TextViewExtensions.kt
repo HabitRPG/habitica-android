@@ -9,7 +9,9 @@ import android.text.style.URLSpan
 import android.view.View
 import android.widget.TextView
 
-class HabiticaClickableSpan(val onClickAction: () -> Unit) : ClickableSpan() {
+class HabiticaClickableSpan(
+    val onClickAction: () -> Unit,
+) : ClickableSpan() {
     override fun onClick(widget: View) {
         onClickAction()
     }
@@ -33,7 +35,7 @@ fun TextView.handleUrlClicks(onClicked: ((String) -> Unit)? = null) {
                     },
                     getSpanStart(it),
                     getSpanEnd(it),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE,
                 )
                 // remove old URLSpan
                 removeSpan(it)

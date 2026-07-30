@@ -42,12 +42,13 @@ fun SignedOutContent(modifier: GlanceModifier = GlanceModifier) {
         subtitleColor = WidgetColors.textSecondary
     }
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .cornerRadius(20.dp)
-            .background(background)
-            .padding(16.dp)
-            .clickable(onClick = openAppAction()),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .cornerRadius(20.dp)
+                .background(background)
+                .padding(16.dp)
+                .clickable(onClick = openAppAction()),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -56,22 +57,24 @@ fun SignedOutContent(modifier: GlanceModifier = GlanceModifier) {
         ) {
             Text(
                 text = stringRes(R.string.widget_signed_out_title),
-                style = TextStyle(
-                    color = titleColor,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Center,
-                ),
+                style =
+                    TextStyle(
+                        color = titleColor,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center,
+                    ),
             )
             Spacer(GlanceModifier.height(4.dp))
             Text(
                 text = stringRes(R.string.widget_signed_out_subtitle),
-                style = TextStyle(
-                    color = subtitleColor,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                ),
+                style =
+                    TextStyle(
+                        color = subtitleColor,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Center,
+                    ),
             )
         }
     }

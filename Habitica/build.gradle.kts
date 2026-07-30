@@ -3,38 +3,119 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     `jacoco-report-aggregation`
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.android.application.get().pluginId)
-    id(libs.plugins.hilt.get().pluginId)
-    id(libs.plugins.navigation.get().pluginId)
-    id(libs.plugins.ksp.get().pluginId)
+    id(
+        libs.plugins.kotlin.android
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.android.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.hilt
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.navigation
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.ksp
+            .get()
+            .pluginId,
+    )
     id("kotlin-parcelize")
     id("kotlin-kapt")
-    id(libs.plugins.kotlin.compose.get().pluginId)
-    id(libs.plugins.realm.get().pluginId)
-    id(libs.plugins.habitrpg.application.get().pluginId)
-    id(libs.plugins.habitrpg.convention.get().pluginId)
-    id(libs.plugins.crashlytics.get().pluginId)
-    id(libs.plugins.firebase.perf.get().pluginId)
-    id(libs.plugins.google.service.get().pluginId)
+    id(
+        libs.plugins.kotlin.compose
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.realm
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.convention
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.crashlytics
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.firebase.perf
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.google.service
+            .get()
+            .pluginId,
+    )
 }
 
 android {
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk =
+        libs.versions.targetSdk
+            .get()
+            .toInt()
     namespace = "com.habitrpg.android.habitica"
 
     defaultConfig {
         applicationId = "com.habitrpg.android.habitica"
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
         vectorDrawables.useSupportLibrary = true
 
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        targetSdk =
+            libs.versions.targetSdk
+                .get()
+                .toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters.addAll(
-            listOf("en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "hu", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "uk", "zh", "zh-rTW")
+            listOf(
+                "en",
+                "bg",
+                "de",
+                "en-rGB",
+                "es",
+                "fr",
+                "hr-rHR",
+                "hu",
+                "in",
+                "it",
+                "iw",
+                "ja",
+                "ko",
+                "lt",
+                "nl",
+                "pl",
+                "pt-rBR",
+                "pt-rPT",
+                "ru",
+                "tr",
+                "uk",
+                "zh",
+                "zh-rTW",
+            ),
         )
 
         buildConfigField("String", "STORE", "\"google\"")
@@ -51,7 +132,7 @@ android {
     buildTypes {
         debug {
             // Keep it commented!
-            //applicationIdSuffix ".debug"
+            // applicationIdSuffix ".debug"
             isDebuggable = true
             isMinifyEnabled = false
             // Disable fabric build ID generation for debug builds
@@ -147,14 +228,22 @@ dependencies {
 
     implementation(fileTree("../common/libs") { include("*.jar") })
 
-    //Networking
+    // Networking
     implementation(libs.bundles.okhttp)
 
-    //REST API handling
-    implementation(libs.retrofit) { exclude(module = libs.okhttp.asProvider().get().group) }
+    // REST API handling
+    implementation(libs.retrofit) {
+        exclude(
+            module =
+                libs.okhttp
+                    .asProvider()
+                    .get()
+                    .group,
+        )
+    }
     implementation(libs.retrofit.converter.gson)
 
-    //Dependency Injection
+    // Dependency Injection
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.work)
@@ -166,10 +255,10 @@ dependencies {
 
     implementation(libs.work.runtime)
 
-    //App Compatibility and Material Design
+    // App Compatibility and Material Design
     implementation(libs.bundles.design)
 
-    //Desugaring
+    // Desugaring
     coreLibraryDesugaring(libs.desugar)
 
     // IAP Handling / Verification
@@ -179,7 +268,7 @@ dependencies {
 
     implementation(libs.shimmer)
 
-    //Leak Detection
+    // Leak Detection
     debugImplementation(libs.leakcanary)
 
     // Google Services
@@ -219,7 +308,7 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
 
-    //Tests
+    // Tests
     testImplementation(libs.bundles.test.implementation)
     androidTestImplementation(libs.bundles.android.test.implementation)
     androidTestImplementation(libs.kaspresso) { exclude(module = "protobuf-lite") }

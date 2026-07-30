@@ -36,15 +36,13 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentViewpagerBinding {
-        return FragmentViewpagerBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding = FragmentViewpagerBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -53,14 +51,14 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(
-            viewLifecycleOwner
+            viewLifecycleOwner,
         ) {
             updateGroupUI(it)
         }
@@ -110,7 +108,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         val group = viewModel.getGroupData().value
@@ -178,8 +176,8 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
         viewPagerAdapter =
             object : FragmentStateAdapter(fragmentManager, lifecycle) {
-                override fun createFragment(position: Int): Fragment {
-                    return when (position) {
+                override fun createFragment(position: Int): Fragment =
+                    when (position) {
                         0 -> {
                             detailFragment = PartyDetailFragment()
                             detailFragment
@@ -189,13 +187,12 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                             PartyChatFragment()
                         }
 
-                        else -> Fragment()
+                        else -> {
+                            Fragment()
+                        }
                     } ?: Fragment()
-                }
 
-                override fun getItemCount(): Int {
-                    return 2
-                }
+                override fun getItemCount(): Int = 2
             }
         binding?.viewPager?.adapter = viewPagerAdapter
 

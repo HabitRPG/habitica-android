@@ -17,10 +17,8 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentPromoInfoBinding {
-        return FragmentPromoInfoBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentPromoInfoBinding = FragmentPromoInfoBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -28,7 +26,7 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         this.hasDarkNavUI = true
@@ -39,7 +37,7 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val promo = configManager.activePromo()

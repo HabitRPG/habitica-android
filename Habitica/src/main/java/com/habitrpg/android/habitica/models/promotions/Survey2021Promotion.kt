@@ -14,7 +14,9 @@ import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import java.util.Date
 
-class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
+class Survey2021Promotion :
+    HabiticaPromotion(),
+    HabiticaWebPromotion {
     override val identifier: String
         get() = "survey2021"
     override val promoType: PromoType
@@ -24,27 +26,20 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
 
     override var url: String? = null
 
-    override fun pillBackgroundDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_pill_bg) ?: ShapeDrawable()
-    }
+    override fun pillBackgroundDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.g1g1_promo_pill_bg) ?: ShapeDrawable()
 
-    override fun screenBackgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.blue_10)
-    }
+    override fun screenBackgroundColor(context: Context): Int = ContextCompat.getColor(context, R.color.blue_10)
 
-    override fun backgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.blue_1)
-    }
+    override fun backgroundColor(context: Context): Int = ContextCompat.getColor(context, R.color.blue_1)
 
-    override fun promoBackgroundDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_background)
+    override fun promoBackgroundDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.g1g1_promo_background)
             ?: ShapeDrawable()
-    }
 
-    override fun buttonDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
+    override fun buttonDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
             ?: ShapeDrawable()
-    }
 
     override fun configurePromoMenuView(view: PromoMenuView) {
         val context = view.context
@@ -56,7 +51,7 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
 
         view.setDecoration(
             ContextCompat.getDrawable(context, R.drawable.survey_art_left),
-            ContextCompat.getDrawable(context, R.drawable.survey_art_right)
+            ContextCompat.getDrawable(context, R.drawable.survey_art_right),
         )
 
         view.binding.button.backgroundTintList =
@@ -71,7 +66,7 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
     override fun menuOnNavigation(context: Context) {
         MainNavigationController.navigate(
             R.id.promoWebFragment,
-            PromoWebFragmentArgs.Builder(url ?: "").build().toBundle()
+            PromoWebFragmentArgs.Builder(url ?: "").build().toBundle(),
         )
     }
 
@@ -83,7 +78,7 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
 
     override fun configureGemView(
         binding: PurchaseGemViewBinding,
-        regularAmount: Int
+        regularAmount: Int,
     ) {
     }
 

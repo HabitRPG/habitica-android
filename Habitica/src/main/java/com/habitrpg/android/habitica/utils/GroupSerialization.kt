@@ -18,12 +18,14 @@ import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
+class GroupSerialization :
+    JsonDeserializer<Group>,
+    JsonSerializer<Group> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Group {
         val group = Group()
         val obj = json.asJsonObject
@@ -61,7 +63,12 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 group.leaderID = leader.get("_id").asString
                 if (leader.has("profile") && !leader.get("profile").isJsonNull) {
                     if (leader.get("profile").asJsonObject.has("name")) {
-                        group.leaderName = leader.get("profile").asJsonObject.get("name").asString
+                        group.leaderName =
+                            leader
+                                .get("profile")
+                                .asJsonObject
+                                .get("name")
+                                .asString
                     }
                 }
             }
@@ -83,7 +90,7 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 val realm = Realm.getDefaultInstance()
                 val dbMembers =
                     realm.copyFromRealm(
-                        realm.where(Member::class.java).equalTo("party.id", group.id).findAll()
+                        realm.where(Member::class.java).equalTo("party.id", group.id).findAll(),
                     )
                 realm.close()
                 dbMembers.forEach { member ->
@@ -149,7 +156,7 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
     override fun serialize(
         src: Group,
         typeOfSrc: Type,
-        context: JsonSerializationContext
+        context: JsonSerializationContext,
     ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("name", src.name)

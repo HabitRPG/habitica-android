@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import androidx.core.os.LocaleListCompat
 import java.util.Locale
 
-class LanguageHelper(languageSharedPref: String?) {
+class LanguageHelper(
+    languageSharedPref: String?,
+) {
     var locale: Locale
         private set
     var languageCode: String? = null
@@ -18,18 +20,22 @@ class LanguageHelper(languageSharedPref: String?) {
                 locale = Locale("iw")
                 languageCode = "he"
             }
+
             "hr" -> {
                 locale = Locale("hr", "HR")
                 languageCode = "hr"
             }
+
             "in" -> {
                 locale = Locale("in")
                 languageCode = "id"
             }
+
             "pt" -> {
                 locale = Locale("pt", "PT")
                 languageCode = "pt"
             }
+
             else -> {
                 locale =
                     if (pref.contains("_")) {
@@ -52,9 +58,9 @@ class LanguageHelper(languageSharedPref: String?) {
         init {
             systemLocale = Locale.getDefault()
         }
-        
-        fun getLanguageTag(languagePref: String?): String {
-            return when (languagePref) {
+
+        fun getLanguageTag(languagePref: String?): String =
+            when (languagePref) {
                 "iw" -> "iw"
                 "hr" -> "hr-HR"
                 "in" -> "in"
@@ -64,6 +70,5 @@ class LanguageHelper(languageSharedPref: String?) {
                 "zh_TW" -> "zh-TW"
                 else -> languagePref?.replace("_", "-") ?: "en"
             }
-        }
     }
 }

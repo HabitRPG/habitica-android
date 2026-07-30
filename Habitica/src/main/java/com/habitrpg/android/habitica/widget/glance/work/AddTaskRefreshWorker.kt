@@ -14,7 +14,6 @@ class AddTaskRefreshWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
-
     override suspend fun doWork(): Result {
         runCatching {
             AddTaskSingleGlanceWidget().updateAll(applicationContext)
@@ -26,9 +25,10 @@ class AddTaskRefreshWorker(
         private const val WORK_NAME = "add_task_widget_refresh"
 
         fun enqueue(context: Context) {
-            val request = OneTimeWorkRequestBuilder<AddTaskRefreshWorker>()
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                .build()
+            val request =
+                OneTimeWorkRequestBuilder<AddTaskRefreshWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .build()
             WorkManager.getInstance(context).enqueueUniqueWork(
                 WORK_NAME,
                 ExistingWorkPolicy.REPLACE,

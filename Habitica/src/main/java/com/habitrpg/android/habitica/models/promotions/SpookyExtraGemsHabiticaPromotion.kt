@@ -9,7 +9,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import java.util.Date
 
-class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : ExtraGemSalePromotion(startDate, endDate) {
+class SpookyExtraGemsHabiticaPromotion(
+    startDate: Date?,
+    endDate: Date?,
+) : ExtraGemSalePromotion(startDate, endDate) {
     override val identifier: String
         get() = "spooky_extra_gems"
     override val titleRes: Int
@@ -29,14 +32,12 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Extra
     override val promoInfoLeftRes = R.drawable.spooky_promo_info_left
     override val promoInfoRightRes = R.drawable.spooky_promo_info_right
 
-    override fun pillBackgroundDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.spooky_promo_pill_bg) ?: ShapeDrawable()
-    }
+    override fun pillBackgroundDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.spooky_promo_pill_bg) ?: ShapeDrawable()
 
-    override fun buttonDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.spooky_promo_button_bg)
+    override fun buttonDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.spooky_promo_button_bg)
             ?: ShapeDrawable()
-    }
 
     override fun configureInfoFragment(fragment: PromoInfoFragment) {
         super.configureInfoFragment(fragment)

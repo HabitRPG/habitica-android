@@ -38,7 +38,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         this.intent = intent
         this.context = context
@@ -112,9 +112,8 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun getMessageText(key: String?): String? {
-        return intent?.let {
+    private fun getMessageText(key: String?): String? =
+        intent?.let {
             RemoteInput.getResultsFromIntent(it)?.getCharSequence(key)?.toString()
         }
-    }
 }

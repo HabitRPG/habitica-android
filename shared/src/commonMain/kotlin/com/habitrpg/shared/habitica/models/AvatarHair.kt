@@ -8,7 +8,5 @@ interface AvatarHair {
     var flower: Int
     var color: String?
 
-    fun isAvailable(hairId: Int): Boolean {
-        return hairId > 0
-    }
+    fun isAvailable(hairId: Int): Boolean = hairId > 0
 }

@@ -13,12 +13,12 @@ sealed class SearchableFAQItem {
         override val subtitle: String?,
         val description: String,
         val collapsibleSection: SupportCollapsibleSection,
-        override val matchSnippet: String? = null
+        override val matchSnippet: String? = null,
     ) : SearchableFAQItem()
 
     data class NavigableItem(
         val article: FAQArticle,
-        override val matchSnippet: String? = null
+        override val matchSnippet: String? = null,
     ) : SearchableFAQItem() {
         override val title: String
             get() = article.question ?: ""

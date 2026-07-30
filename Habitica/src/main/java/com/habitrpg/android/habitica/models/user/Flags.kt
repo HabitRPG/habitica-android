@@ -9,7 +9,10 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class Flags : RealmObject(), BaseObject, AvatarFlags {
+open class Flags :
+    RealmObject(),
+    BaseObject,
+    AvatarFlags {
     var tutorial: RealmList<TutorialStep>? = null
     var showTour = false
     var dropsEnabled = false

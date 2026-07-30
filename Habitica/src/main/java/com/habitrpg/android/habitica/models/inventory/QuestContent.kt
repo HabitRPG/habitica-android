@@ -4,7 +4,9 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class QuestContent : RealmObject(), Item {
+open class QuestContent :
+    RealmObject(),
+    Item {
     @PrimaryKey
     override var key: String = ""
         set(value) {

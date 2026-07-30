@@ -23,7 +23,7 @@ class ChallengeTasksRecyclerViewAdapter(
     newContext: Context,
     userID: String,
     private val openTaskDisabled: Boolean,
-    private val taskActionsDisabled: Boolean
+    private val taskActionsDisabled: Boolean,
 ) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>(TaskType.HABIT, viewModel, layoutResource, newContext, userID) {
     val taskList: MutableList<Task>
         get() = content?.map { t -> t }?.toMutableList() ?: mutableListOf()
@@ -45,7 +45,7 @@ class ChallengeTasksRecyclerViewAdapter(
 
     fun addTaskUnder(
         taskToAdd: Task,
-        taskAbove: Task?
+        taskAbove: Task?,
     ): Int {
         val position = content?.indexOfFirst { t -> t.id == taskAbove?.id } ?: 0
 
@@ -55,7 +55,10 @@ class ChallengeTasksRecyclerViewAdapter(
         return position
     }
 
-    override fun onBindViewHolder(holder: BindableViewHolder<Task>, position: Int) {
+    override fun onBindViewHolder(
+        holder: BindableViewHolder<Task>,
+        position: Int,
+    ) {
         if (holder is RewardViewHolder) {
             val task = filteredContent?.get(position)
             holder.isLocked = true
@@ -69,28 +72,41 @@ class ChallengeTasksRecyclerViewAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): BindableViewHolder<Task> {
         val viewHolder: BindableViewHolder<Task> =
             when (viewType) {
-                TYPE_HABIT ->
+                TYPE_HABIT -> {
                     HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }, { task, _ ->
                         onTaskOpen?.invoke(task)
                     }, {}, null)
-                TYPE_DAILY ->
+                }
+
+                TYPE_DAILY -> {
                     DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }, { task, _ ->
                         onTaskOpen?.invoke(task)
                     }, { }, null)
-                TYPE_TODO ->
+                }
+
+                TYPE_TODO -> {
                     TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }, { task, _ ->
                         onTaskOpen?.invoke(task)
                     }, {}, null)
-                TYPE_REWARD ->
+                }
+
+                TYPE_REWARD -> {
                     RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }, { task, _ ->
                         onTaskOpen?.invoke(task)
                     }, { }, null)
-                TYPE_ADD_ITEM -> AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), onAddItem)
-                else -> DividerViewHolder(getContentView(parent, R.layout.challenge_task_divider))
+                }
+
+                TYPE_ADD_ITEM -> {
+                    AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), onAddItem)
+                }
+
+                else -> {
+                    DividerViewHolder(getContentView(parent, R.layout.challenge_task_divider))
+                }
             }
 
         (viewHolder as? BaseTaskViewHolder)?.setDisabled(openTaskDisabled, taskActionsDisabled)
@@ -125,7 +141,7 @@ class ChallengeTasksRecyclerViewAdapter(
 
     inner class AddItemViewHolder internal constructor(
         itemView: View,
-        private val callback: ((Task) -> Unit)?
+        private val callback: ((Task) -> Unit)?,
     ) : BindableViewHolder<Task>(itemView) {
         private val addBtn: Button = itemView.findViewById(R.id.btn_add_task)
         private var newTask: Task? = null
@@ -138,20 +154,22 @@ class ChallengeTasksRecyclerViewAdapter(
         override fun bind(
             data: Task,
             position: Int,
-            displayMode: String
+            displayMode: String,
         ) {
             this.newTask = data
             addBtn.text = data.text
         }
     }
 
-    private class DividerViewHolder(itemView: View) : BindableViewHolder<Task>(itemView) {
+    private class DividerViewHolder(
+        itemView: View,
+    ) : BindableViewHolder<Task>(itemView) {
         private val dividerName: TextView = itemView.findViewById(R.id.divider_name)
 
         override fun bind(
             data: Task,
             position: Int,
-            displayMode: String
+            displayMode: String,
         ) {
             dividerName.text = data.text
         }

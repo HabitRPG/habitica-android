@@ -18,13 +18,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 open class RepositoryModule {
-
     @Singleton
     @Provides
-    fun initRealm(@ApplicationContext context: Context): RealmConfiguration {
+    fun initRealm(
+        @ApplicationContext context: Context,
+    ): RealmConfiguration {
         Realm.init(context)
         val builder =
-            RealmConfiguration.Builder()
+            RealmConfiguration
+                .Builder()
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
                 .allowWritesOnUiThread(true)
@@ -37,28 +39,24 @@ open class RepositoryModule {
         Realm.setDefaultConfiguration(config)
         return config
     }
-    @Provides
-    open fun providesRealm(config: RealmConfiguration): Realm {
-        return Realm.getInstance(config)
-    }
 
     @Provides
-    fun providesContentLocalRepository(realm: Realm): ContentLocalRepository {
-        return RealmContentLocalRepository(realm)
-    }
+    open fun providesRealm(config: RealmConfiguration): Realm = Realm.getInstance(config)
+
+    @Provides
+    fun providesContentLocalRepository(realm: Realm): ContentLocalRepository = RealmContentLocalRepository(realm)
 
     @Provides
     fun providesContentRepository(
         contentLocalRepository: ContentLocalRepository,
         apiClient: ApiClient,
         @ApplicationContext context: Context,
-        authenticationHandler: AuthenticationHandler
-    ): ContentRepository {
-        return ContentRepositoryImpl(
+        authenticationHandler: AuthenticationHandler,
+    ): ContentRepository =
+        ContentRepositoryImpl(
             contentLocalRepository,
             apiClient,
             context,
-            authenticationHandler
+            authenticationHandler,
         )
-    }
 }

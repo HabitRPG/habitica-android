@@ -7,7 +7,9 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
+class FirstDropDialog(
+    context: Context,
+) : HabiticaAlertDialog(context) {
     private var eggView: PixelArtView?
     private var hatchingPotionView: PixelArtView?
 
@@ -26,7 +28,7 @@ class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
 
     fun configure(
         egg: String,
-        hatchingPotion: String
+        hatchingPotion: String,
     ) {
         eggView?.loadImage("Pet_Egg_$egg")
         hatchingPotionView?.loadImage("Pet_HatchingPotion_$hatchingPotion")

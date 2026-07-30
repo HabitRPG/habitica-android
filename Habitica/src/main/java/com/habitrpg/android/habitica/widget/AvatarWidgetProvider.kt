@@ -39,34 +39,38 @@ class AvatarWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray,
     ) {
         MainScope().launchCatching {
-            val user = widgetEntryPoint(context.applicationContext)
-                .userRepository()
-                .getUser()
-                .firstOrNull() ?: return@launchCatching
+            val user =
+                widgetEntryPoint(context.applicationContext)
+                    .userRepository()
+                    .getUser()
+                    .firstOrNull() ?: return@launchCatching
 
-            val avatarView = AvatarView(
-                context.applicationContext,
-                showBackground = true,
-                showMount = true,
-                showPet = true,
-            )
+            val avatarView =
+                AvatarView(
+                    context.applicationContext,
+                    showBackground = true,
+                    showMount = true,
+                    showPet = true,
+                )
             avatarView.setAvatar(user)
             avatarView.onAvatarImageReady { bitmap ->
                 bitmap ?: return@onAvatarImageReady
                 val square = roundedSquare(bitmap)
-                val targetIntent = if (!user.id.isNullOrEmpty()) {
-                    Intent(context.applicationContext, FullProfileActivity::class.java).apply {
-                        putExtra("userID", user.id)
+                val targetIntent =
+                    if (!user.id.isNullOrEmpty()) {
+                        Intent(context.applicationContext, FullProfileActivity::class.java).apply {
+                            putExtra("userID", user.id)
+                        }
+                    } else {
+                        Intent(context.applicationContext, MainActivity::class.java)
                     }
-                } else {
-                    Intent(context.applicationContext, MainActivity::class.java)
-                }
-                val openProfile = PendingIntent.getActivity(
-                    context,
-                    0,
-                    targetIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-                )
+                val openProfile =
+                    PendingIntent.getActivity(
+                        context,
+                        0,
+                        targetIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                    )
                 appWidgetIds.forEach { id ->
                     val views = RemoteViews(context.packageName, R.layout.widget_avatar)
                     views.setImageViewBitmap(R.id.avatar_image, square)

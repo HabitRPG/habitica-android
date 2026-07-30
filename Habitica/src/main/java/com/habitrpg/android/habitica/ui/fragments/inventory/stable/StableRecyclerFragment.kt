@@ -54,10 +54,8 @@ class StableRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
 
     override fun onDestroy() {
         inventoryRepository.close()
@@ -66,29 +64,28 @@ class StableRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.emptyItem =
             EmptyItem(
-                getString(R.string.empty_items, itemTypeText ?: viewModel.itemType)
+                getString(R.string.empty_items, itemTypeText ?: viewModel.itemType),
             )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         val layoutManager = GridLayoutManager(activity, 4)
         layoutManager.spanSizeLookup =
             object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
-                            position
+                override fun getSpanSize(position: Int): Int =
+                    if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
+                            position,
                         ) == 1
                     ) {
                         layoutManager.spanCount
                     } else {
                         1
                     }
-                }
             }
 
         binding?.recyclerView?.layoutManager = layoutManager
@@ -102,13 +99,17 @@ class StableRecyclerFragment :
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     val egg =
-                        inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
-                            .firstOrNull()?.firstOrNull() as? Egg
+                        inventoryRepository
+                            .getItems(Egg::class.java, arrayOf(animal.animal))
+                            .firstOrNull()
+                            ?.firstOrNull() as? Egg
                     val potion =
-                        inventoryRepository.getItems(
-                            HatchingPotion::class.java,
-                            arrayOf(animal.color)
-                        ).firstOrNull()?.firstOrNull() as? HatchingPotion
+                        inventoryRepository
+                            .getItems(
+                                HatchingPotion::class.java,
+                                arrayOf(animal.color),
+                            ).firstOrNull()
+                            ?.firstOrNull() as? HatchingPotion
                     callback(Pair(egg, potion))
                 }
             }
@@ -122,7 +123,7 @@ class StableRecyclerFragment :
                     lifecycleScope.launchCatching {
                         inventoryRepository.equip(
                             if (viewModel.itemType == "pets") "pet" else "mount",
-                            it
+                            it,
                         )
                     }
                 }

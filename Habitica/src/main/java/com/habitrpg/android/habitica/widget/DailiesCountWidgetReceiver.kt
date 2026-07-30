@@ -12,13 +12,16 @@ class DailiesCountWidgetReceiver : HydratingGlanceReceiver() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
+        appWidgetIds: IntArray,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         CronBoundaryRefreshWorker.scheduleFromCacheAsync(context)
     }
 
-    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+    override fun onDeleted(
+        context: Context,
+        appWidgetIds: IntArray,
+    ) {
         super.onDeleted(context, appWidgetIds)
         CronBoundaryRefreshWorker.scheduleFromCacheAsync(context)
     }

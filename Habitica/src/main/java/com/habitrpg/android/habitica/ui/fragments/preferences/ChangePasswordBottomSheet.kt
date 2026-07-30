@@ -19,25 +19,31 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.ui.views.ChangePasswordScreen
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 
-class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPasswordChanged: (oldPassword: String, newPassword: String) -> Unit = { _, _ -> }) : BottomSheetDialogFragment() {
+class ChangePasswordBottomSheet(
+    val onForgotPassword: () -> Unit = {},
+    val onPasswordChanged: (oldPassword: String, newPassword: String) -> Unit = { _, _ -> },
+) : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
 
-        val nightModeFlags = requireContext()
-            .resources
-            .configuration
-            .uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val nightModeFlags =
+            requireContext()
+                .resources
+                .configuration
+                .uiMode and Configuration.UI_MODE_NIGHT_MASK
 
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_NO) {
             dialog?.window?.let { window ->
-                window.statusBarColor = ContextCompat.getColor(
-                    requireContext(),
-                    android.R.color.transparent
-                )
-                window.navigationBarColor = ContextCompat.getColor(
-                    requireContext(),
-                    android.R.color.transparent
-                )
+                window.statusBarColor =
+                    ContextCompat.getColor(
+                        requireContext(),
+                        android.R.color.transparent,
+                    )
+                window.navigationBarColor =
+                    ContextCompat.getColor(
+                        requireContext(),
+                        android.R.color.transparent,
+                    )
 
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     isAppearanceLightStatusBars = true
@@ -49,7 +55,9 @@ class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPas
         dialog?.let { dlg ->
             val bottomSheet = dlg.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.layoutParams?.height = ViewGroup.LayoutParams.MATCH_PARENT
-            val behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheet!!)
+            val behavior =
+                com.google.android.material.bottomsheet.BottomSheetBehavior
+                    .from(bottomSheet!!)
             behavior.state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
             behavior.isDraggable = false
             behavior.skipCollapsed = true
@@ -59,16 +67,16 @@ class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPas
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
+        savedInstanceState: Bundle?,
+    ): View =
+        ComposeView(requireContext()).apply {
             setContent {
                 HabiticaTheme {
                     var visible by remember { mutableStateOf(false) }
                     LaunchedEffect(Unit) { visible = true }
                     AnimatedVisibility(
                         visible = visible,
-                        enter = fadeIn()
+                        enter = fadeIn(),
                     ) {
                         ChangePasswordScreen(
                             onBack = { dismiss() },
@@ -79,14 +87,12 @@ class ChangePasswordBottomSheet(val onForgotPassword: () -> Unit = {}, val onPas
                             onForgotPassword = {
                                 onForgotPassword()
                                 dismiss()
-                            }
+                            },
                         )
                     }
                 }
             }
         }
-    }
-
 
     companion object {
         const val TAG = "ChangePasswordFragment"

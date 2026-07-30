@@ -7,5 +7,5 @@ open class ChallengeCategory(
     @PrimaryKey
     var id: String = "",
     var slug: String = "",
-    var name: String = ""
+    var name: String = "",
 ) : RealmObject()

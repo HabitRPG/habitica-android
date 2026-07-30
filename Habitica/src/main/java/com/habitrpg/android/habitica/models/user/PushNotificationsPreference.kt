@@ -5,7 +5,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class PushNotificationsPreference : RealmObject(), BaseObject {
+open class PushNotificationsPreference :
+    RealmObject(),
+    BaseObject {
     var unsubscribeFromAll: Boolean = false
     var invitedParty: Boolean = false
     var invitedQuest: Boolean = false
@@ -39,8 +41,8 @@ open class PushNotificationsPreference : RealmObject(), BaseObject {
         return enabled
     }
 
-    fun mapOfKeys(): Map<String, Boolean> {
-        return mapOf(
+    fun mapOfKeys(): Map<String, Boolean> =
+        mapOf(
             "unsubscribeFromAll" to unsubscribeFromAll,
             "invitedParty" to invitedParty,
             "invitedQuest" to invitedQuest,
@@ -55,7 +57,6 @@ open class PushNotificationsPreference : RealmObject(), BaseObject {
             "mentionParty" to mentionParty,
             "mentionJoinedGuild" to mentionJoinedGuild,
             "mentionUnjoinedGuild" to mentionUnjoinedGuild,
-            "contentRelease" to contentRelease
+            "contentRelease" to contentRelease,
         )
-    }
 }

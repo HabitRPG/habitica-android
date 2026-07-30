@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
@@ -20,7 +21,6 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
@@ -28,10 +28,8 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentSupportBugFixBinding {
-        return FragmentSupportBugFixBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentSupportBugFixBinding = FragmentSupportBugFixBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var appConfigManager: AppConfigManager
@@ -42,7 +40,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         showsBackButton = true
@@ -51,7 +49,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,7 +63,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
             issueBinding.root.setOnClickListener {
                 MainNavigationController.navigate(
                     R.id.FAQDetailFragment,
-                    bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"]))
+                    bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"])),
                 )
             }
             binding?.knownIssuesLayout?.addView(issueBinding.root)
@@ -74,10 +72,12 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     private val versionName: String by lazy {
         try {
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionName
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionName
                 ?: ""
         } catch (_: PackageManager.NameNotFoundException) {
             ""
@@ -87,10 +87,12 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionCode
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionCode
                 ?: 0
         } catch (_: PackageManager.NameNotFoundException) {
             0
@@ -111,8 +113,8 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                         getString(
                             R.string.version_info,
                             versionName,
-                            versionCode
-                        )
+                            versionCode,
+                        ),
                 )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
@@ -131,9 +133,9 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                             (
                                 user.stats?.habitClass
                                     ?: "None"
-                                )
+                            )
                         }
-                        )
+                    ),
                 ) +
                 newLine + Uri.encode("Damage paused: " + (user.preferences?.sleep ?: false)) +
                 newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
@@ -141,7 +143,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
                 newLine + Uri.encode("Analytics Enabled: " + (user.preferences?.analyticsConsent ?: "No Response")) +
                 newLine +
                 Uri.encode(
-                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
+                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0),
                 )
         }
 

@@ -38,10 +38,8 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentGiftGemBalanceBinding {
-        return FragmentGiftGemBalanceBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentGiftGemBalanceBinding = FragmentGiftGemBalanceBinding.inflate(inflater, container, false)
 
     var giftedMember: Member? = null
         @SuppressLint("SetTextI18n")
@@ -62,7 +60,7 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.giftButton?.setOnClickListener { sendGift() }
@@ -73,7 +71,13 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         if (isGifting) return
         isGifting = true
         try {
-            val amount = binding?.giftEditText?.text.toString().trim().toInt()
+            val amount =
+                binding
+                    ?.giftEditText
+                    ?.text
+                    .toString()
+                    .trim()
+                    .toInt()
             giftedMember?.id?.let {
                 activity?.lifecycleScope?.launchCatching({
                     isGifting = false
@@ -86,8 +90,8 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
                         getString(
                             R.string.gift_confirmation_text_gems_new,
                             giftedMember?.username,
-                            amount.toString()
-                        )
+                            amount.toString(),
+                        ),
                     )
                     dialog?.addCloseButton { _, _ ->
                         activity?.finish()

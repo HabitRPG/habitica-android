@@ -10,7 +10,9 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class Group : RealmObject(), BaseMainObject {
+open class Group :
+    RealmObject(),
+    BaseMainObject {
     val isGroupPlan: Boolean
         get() {
             return purchased?.isActive == true
@@ -55,9 +57,7 @@ open class Group : RealmObject(), BaseMainObject {
         return id == group?.id
     }
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+    override fun hashCode(): Int = id.hashCode()
 
     fun hasTaskEditPrivileges(userID: String): Boolean {
         if (isLeader(userID)) {
@@ -66,9 +66,7 @@ open class Group : RealmObject(), BaseMainObject {
         return isManager(userID)
     }
 
-    fun canManageManagers(userID: String): Boolean {
-        return isLeader(userID)
-    }
+    fun canManageManagers(userID: String): Boolean = isLeader(userID)
 
     fun isLeader(userID: String): Boolean = leaderID == userID
 

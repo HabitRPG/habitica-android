@@ -52,7 +52,7 @@ interface ApiClient {
 
     suspend fun getUserChallenges(
         page: Int,
-        memberOnly: Boolean
+        memberOnly: Boolean,
     ): List<Challenge>?
 
     suspend fun getWorldState(): WorldState?
@@ -69,23 +69,23 @@ interface ApiClient {
 
     suspend fun equipItem(
         type: String,
-        itemKey: String
+        itemKey: String,
     ): Items?
 
     suspend fun buyItem(
         itemKey: String,
-        purchaseQuantity: Int
+        purchaseQuantity: Int,
     ): BuyResponse?
 
     suspend fun purchaseItem(
         type: String,
         itemKey: String,
-        purchaseQuantity: Int
+        purchaseQuantity: Int,
     ): Void?
 
     suspend fun purchaseHourglassItem(
         type: String,
-        itemKey: String
+        itemKey: String,
     ): Void?
 
     suspend fun purchaseMysterySet(itemKey: String): Void?
@@ -102,24 +102,24 @@ interface ApiClient {
 
     suspend fun sellItem(
         itemType: String,
-        itemKey: String
+        itemKey: String,
     ): User?
 
     suspend fun feedPet(
         petKey: String,
-        foodKey: String
+        foodKey: String,
     ): FeedResponse?
 
     suspend fun hatchPet(
         eggKey: String,
-        hatchingPotionKey: String
+        hatchingPotionKey: String,
     ): Items?
 
     suspend fun getTasks(type: String): TaskList?
 
     suspend fun getTasks(
         type: String,
-        dueDate: String
+        dueDate: String,
     ): TaskList?
 
     suspend fun unlockPath(path: String): UnlockResponse?
@@ -128,38 +128,38 @@ interface ApiClient {
 
     suspend fun postTaskDirection(
         id: String,
-        direction: String
+        direction: String,
     ): TaskDirectionData?
 
     suspend fun bulkScoreTasks(data: List<Map<String, String>>): BulkTaskScoringData?
 
     suspend fun postTaskNewPosition(
         id: String,
-        position: Int
+        position: Int,
     ): List<String>?
 
     suspend fun postGroupTaskNewPosition(
         id: String,
-        position: Int
+        position: Int,
     ): List<String>?
 
     suspend fun scoreChecklistItem(
         taskId: String,
-        itemId: String
+        itemId: String,
     ): Task?
 
     suspend fun createTask(item: Task): Task?
 
     suspend fun createGroupTask(
         groupId: String,
-        item: Task
+        item: Task,
     ): Task?
 
     suspend fun createTasks(tasks: List<Task>): List<Task>?
 
     suspend fun updateTask(
         id: String,
-        item: Task
+        item: Task,
     ): Task?
 
     suspend fun deleteTask(id: String): Void?
@@ -168,7 +168,7 @@ interface ApiClient {
 
     suspend fun updateTag(
         id: String,
-        tag: Tag
+        tag: Tag,
     ): Tag?
 
     suspend fun deleteTag(id: String): Void?
@@ -177,19 +177,19 @@ interface ApiClient {
         username: String,
         email: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
     ): UserAuthResponse?
 
     suspend fun connectUser(
         username: String,
-        password: String
+        password: String,
     ): UserAuthResponse?
 
     suspend fun connectSocial(
         network: String,
         userId: String,
         accessToken: String,
-        allowRegister: Boolean
+        allowRegister: Boolean,
     ): UserAuthResponse?
 
     suspend fun disconnectSocial(network: String): Boolean
@@ -203,12 +203,12 @@ interface ApiClient {
     suspend fun useSkill(
         skillName: String,
         targetType: String,
-        targetId: String
+        targetId: String,
     ): SkillResponse?
 
     suspend fun useSkill(
         skillName: String,
-        targetType: String
+        targetType: String,
     ): SkillResponse?
 
     suspend fun changeClass(className: String?): User?
@@ -227,77 +227,77 @@ interface ApiClient {
 
     suspend fun updateGroup(
         id: String,
-        item: Group
+        item: Group,
     ): Group?
 
     suspend fun removeMemberFromGroup(
         groupID: String,
-        userID: String
+        userID: String,
     ): Void?
 
     suspend fun listGroupChat(
         groupId: String,
         limit: Int? = null,
-        before: String? = null
+        before: String? = null,
     ): List<ChatMessage>?
 
     suspend fun joinGroup(groupId: String): Group?
 
     suspend fun leaveGroup(
         groupId: String,
-        keepChallenges: String
+        keepChallenges: String,
     ): Void?
 
     suspend fun postGroupChat(
         groupId: String,
-        message: Map<String, String>
+        message: Map<String, String>,
     ): PostChatMessageResult?
 
     suspend fun deleteMessage(
         groupId: String,
-        messageId: String
+        messageId: String,
     ): Void?
 
     suspend fun deleteInboxMessage(id: String): Void?
 
     suspend fun getGroupMembers(
         groupId: String,
-        includeAllPublicFields: Boolean?
+        includeAllPublicFields: Boolean?,
     ): List<Member>?
 
     suspend fun getGroupMembers(
         groupId: String,
         includeAllPublicFields: Boolean?,
-        lastId: String
+        lastId: String,
     ): List<Member>?
 
     // Like returns the full chat list
     suspend fun likeMessage(
         groupId: String,
-        mid: String
+        mid: String,
     ): ChatMessage?
 
     suspend fun flagMessage(
         groupId: String,
         mid: String,
-        data: MutableMap<String, String>
+        data: MutableMap<String, String>,
     ): Void?
 
     suspend fun flagInboxMessage(
         mid: String,
-        data: MutableMap<String, String>
+        data: MutableMap<String, String>,
     ): Void?
 
     suspend fun reportMember(
         mid: String,
-        data: Map<String, String>
+        data: Map<String, String>,
     ): Void?
 
     suspend fun seenMessages(groupId: String): Void?
 
     suspend fun inviteToGroup(
         groupId: String,
-        inviteData: Map<String, Any>
+        inviteData: Map<String, Any>,
     ): List<InviteResponse>?
 
     suspend fun rejectGroupInvite(groupId: String): Void?
@@ -310,12 +310,12 @@ interface ApiClient {
 
     suspend fun forceStartQuest(
         groupId: String,
-        group: Group
+        group: Group,
     ): Quest?
 
     suspend fun inviteToQuest(
         groupId: String,
-        questKey: String
+        questKey: String,
     ): Quest?
 
     suspend fun abortQuest(groupId: String): Quest?
@@ -350,19 +350,19 @@ interface ApiClient {
 
     suspend fun leaveChallenge(
         challengeId: String,
-        body: LeaveChallengeBody
+        body: LeaveChallengeBody,
     ): Void?
 
     suspend fun createChallenge(challenge: Challenge): Challenge?
 
     suspend fun createChallengeTasks(
         challengeId: String,
-        tasks: List<Task>
+        tasks: List<Task>,
     ): List<Task>?
 
     suspend fun createChallengeTask(
         challengeId: String,
-        task: Task
+        task: Task,
     ): Task?
 
     suspend fun updateChallenge(challenge: Challenge): Challenge?
@@ -386,7 +386,7 @@ interface ApiClient {
 
     fun updateAuthenticationCredentials(
         userID: String?,
-        apiToken: String?
+        apiToken: String?,
     )
 
     fun hasAuthenticationKeys(): Boolean
@@ -395,7 +395,7 @@ interface ApiClient {
 
     suspend fun retrieveInboxMessages(
         uuid: String,
-        page: Int
+        page: Int,
     ): List<ChatMessage>?
 
     suspend fun retrieveInboxConversations(): List<InboxConversation>?
@@ -414,27 +414,27 @@ interface ApiClient {
 
     suspend fun togglePinnedItem(
         pinType: String,
-        path: String
+        path: String,
     ): Void?
 
     suspend fun sendPasswordResetEmail(email: String): Void?
 
     suspend fun updateLoginName(
         newLoginName: String,
-        password: String
+        password: String,
     ): Void?
 
     suspend fun updateUsername(newLoginName: String): Void?
 
     suspend fun updateEmail(
         newEmail: String,
-        password: String
+        password: String,
     ): Void?
 
     suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String
+        newPasswordConfirmation: String,
     ): UserAuthResponse?
 
     suspend fun allocatePoint(stat: String): Stats?
@@ -443,12 +443,13 @@ interface ApiClient {
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int
+        perception: Int,
     ): Stats?
 
     suspend fun retrieveMarketGear(): Shop?
 
     suspend fun verifyUsername(username: String): VerifyUsernameResponse?
+
     suspend fun verifyEmail(email: String): VerifyEmailResponse?
 
     fun updateServerUrl(newAddress: String?)
@@ -456,17 +457,17 @@ interface ApiClient {
     suspend fun findUsernames(
         username: String,
         context: String?,
-        id: String?
+        id: String?,
     ): List<FindUsernameResult>?
 
     suspend fun transferGems(
         giftedID: String,
-        amount: Int
+        amount: Int,
     ): Void?
 
     suspend fun unlinkAllTasks(
         challengeID: String?,
-        keepOption: String
+        keepOption: String,
     ): Void?
 
     suspend fun blockMember(userID: String): List<String>?
@@ -477,37 +478,37 @@ interface ApiClient {
 
     suspend fun assignToTask(
         taskId: String,
-        ids: List<String>
+        ids: List<String>,
     ): Task?
 
     suspend fun unassignFromTask(
         taskId: String,
-        userID: String
+        userID: String,
     ): Task?
 
     suspend fun updateMember(
         memberID: String,
-        updateData: Map<String, Map<String, Boolean>>
+        updateData: Map<String, Map<String, Boolean>>,
     ): Member?
 
     suspend fun getHallMember(userId: String): Member?
 
     suspend fun markTaskNeedsWork(
         taskID: String,
-        userID: String
+        userID: String,
     ): Task?
 
     suspend fun retrievePartySeekingUsers(page: Int): List<Member>?
 
     suspend fun getGroupInvites(
         groupId: String,
-        includeAllPublicFields: Boolean?
+        includeAllPublicFields: Boolean?,
     ): List<Member>?
 
     suspend fun syncUserStats(): User?
 
     suspend fun reportChallenge(
         challengeid: String,
-        updateData: Map<String, String>
+        updateData: Map<String, String>,
     ): Void?
 }

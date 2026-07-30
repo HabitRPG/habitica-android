@@ -5,18 +5,40 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.habitrpg.convention.get().pluginId)
-    id(libs.plugins.android.library.get().pluginId)
-    id(libs.plugins.kotlin.compose.get().pluginId)
+    id(
+        libs.plugins.kotlin.android
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.convention
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.android.library
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.kotlin.compose
+            .get()
+            .pluginId,
+    )
 }
 
 android {
     namespace = "com.habitrpg.common.habitica"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk =
+        libs.versions.targetSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 

@@ -21,26 +21,35 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return when (viewType) {
-            0 -> SectionViewHolder(parent.inflate(R.layout.achievement_section_header))
-            3 -> QuestAchievementViewHolder(parent.inflate(R.layout.achievement_quest_item))
-            4 -> ChallengeAchievementViewHolder(parent.inflate(R.layout.achievement_challenge_item))
-            else ->
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        when (viewType) {
+            0 -> {
+                SectionViewHolder(parent.inflate(R.layout.achievement_section_header))
+            }
+
+            3 -> {
+                QuestAchievementViewHolder(parent.inflate(R.layout.achievement_quest_item))
+            }
+
+            4 -> {
+                ChallengeAchievementViewHolder(parent.inflate(R.layout.achievement_challenge_item))
+            }
+
+            else -> {
                 AchievementViewHolder(
                     if (useGridLayout) {
                         parent.inflate(R.layout.achievement_grid_item)
                     } else {
                         parent.inflate(R.layout.achievement_list_item)
-                    }
+                    },
                 )
+            }
         }
-    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         when (val entry = entries[position]) {
             is Achievement -> (holder as? AchievementViewHolder)?.bind(entry)
@@ -50,9 +59,7 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int {
-        return entries.size
-    }
+    override fun getItemCount(): Int = entries.size
 
     override fun getItemViewType(position: Int): Int {
         if (entries.size <= position) return 0
@@ -68,7 +75,9 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SectionViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         private var binding = AchievementSectionHeaderBinding.bind(itemView)
 
         fun bind(category: Pair<*, *>) {
@@ -77,8 +86,9 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class AchievementViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView),
+    class AchievementViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         private var achievement: Achievement? = null
 
@@ -124,7 +134,9 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class QuestAchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class QuestAchievementViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         private var binding = AchievementQuestItemBinding.bind(itemView)
         private var achievement: QuestAchievement? = null
 
@@ -135,7 +147,9 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class ChallengeAchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ChallengeAchievementViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         private var binding = AchievementChallengeItemBinding.bind(itemView)
 
         fun bind(challengeName: String) {

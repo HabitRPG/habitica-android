@@ -28,10 +28,14 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+open class ChatRecyclerViewHolder(
+    itemView: View,
+) : RecyclerView.ViewHolder(itemView)
 
-class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) :
-    ChatRecyclerViewHolder(itemView) {
+class ChatRecyclerIntroViewHolder(
+    itemView: View,
+    replyToUUID: String,
+) : ChatRecyclerViewHolder(itemView) {
     private val binding = TavernChatIntroItemBinding.bind(itemView)
 
     var onOpenProfile: ((String) -> Unit)? = null
@@ -54,7 +58,7 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) :
 class ChatRecyclerMessageViewHolder(
     itemView: View,
     private var userId: String,
-    private val isGroupChat: Boolean
+    private val isGroupChat: Boolean,
 ) : ChatRecyclerViewHolder(itemView) {
     val binding = ChatItemBinding.bind(itemView)
 
@@ -95,28 +99,28 @@ class ChatRecyclerMessageViewHolder(
             HabiticaIconsHelper.imageOfChatReplyIcon().toDrawable(res),
             null,
             null,
-            null
+            null,
         )
         binding.copyButton.setOnClickListener { chatMessage?.let { onCopyMessage?.invoke(it) } }
         binding.copyButton.setCompoundDrawablesWithIntrinsicBounds(
             HabiticaIconsHelper.imageOfChatCopyIcon().toDrawable(res),
             null,
             null,
-            null
+            null,
         )
         binding.reportButton.setOnClickListener { chatMessage?.let { onFlagMessage?.invoke(it) } }
         binding.reportButton.setCompoundDrawablesWithIntrinsicBounds(
             HabiticaIconsHelper.imageOfChatReportIcon().toDrawable(res),
             null,
             null,
-            null
+            null,
         )
         binding.deleteButton.setOnClickListener { chatMessage?.let { onDeleteMessage?.invoke(it) } }
         binding.deleteButton.setCompoundDrawablesWithIntrinsicBounds(
             HabiticaIconsHelper.imageOfChatDeleteIcon().toDrawable(res),
             null,
             null,
-            null
+            null,
         )
     }
 
@@ -124,7 +128,7 @@ class ChatRecyclerMessageViewHolder(
         msg: ChatMessage,
         uuid: String,
         user: User?,
-        isExpanded: Boolean
+        isExpanded: Boolean,
     ) {
         chatMessage = msg
         this.user = user
@@ -175,7 +179,9 @@ class ChatRecyclerMessageViewHolder(
                 binding.modView.setScaledPadding(context, 12, 4, 12, 4)
             }
 
-            else -> binding.modView.visibility = View.GONE
+            else -> {
+                binding.modView.visibility = View.GONE
+            }
         }
 
         if (wasSent) {
@@ -184,7 +190,7 @@ class ChatRecyclerMessageViewHolder(
                 64.dpToPx(context),
                 itemView.paddingTop,
                 itemView.paddingRight,
-                itemView.paddingBottom
+                itemView.paddingBottom,
             )
         } else {
             val displayMetrics = res.displayMetrics
@@ -201,7 +207,7 @@ class ChatRecyclerMessageViewHolder(
                 16.dpToPx(context),
                 itemView.paddingTop,
                 itemView.paddingRight,
-                itemView.paddingBottom
+                itemView.paddingBottom,
             )
         }
 
@@ -220,8 +226,8 @@ class ChatRecyclerMessageViewHolder(
         val username = user?.formattedUsername
         binding.messageWrapper.background =
             if ((name != null && msg.text?.contains("@$name") == true) || (
-                username != null && msg.text?.contains(
-                        username
+                    username != null && msg.text?.contains(
+                        username,
                     ) == true
                 )
             ) {
@@ -253,15 +259,15 @@ class ChatRecyclerMessageViewHolder(
                 binding.flagCountTextview.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_orange
-                    )
+                        R.color.text_orange,
+                    ),
                 )
             } else {
                 binding.flagCountTextview.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_red
-                    )
+                        R.color.text_red,
+                    ),
                 )
             }
         } else {
@@ -269,9 +275,7 @@ class ChatRecyclerMessageViewHolder(
         }
     }
 
-    private fun messageWasSent(): Boolean {
-        return chatMessage?.sent == true || chatMessage?.uuid == userId
-    }
+    private fun messageWasSent(): Boolean = chatMessage?.sent == true || chatMessage?.uuid == userId
 
     private fun setLikeProperties() {
         binding.likeBackgroundLayout.visibility = if (isGroupChat) View.VISIBLE else View.INVISIBLE
@@ -296,12 +300,12 @@ class ChatRecyclerMessageViewHolder(
 
         DataBindingUtils.setRoundedBackground(
             binding.likeBackgroundLayout,
-            ContextCompat.getColor(context, backgroundColorRes)
+            ContextCompat.getColor(context, backgroundColorRes),
         )
         binding.tvLikes.setTextColor(ContextCompat.getColor(context, foregroundColorRes))
     }
 
-    private fun shouldShowDelete(): Boolean {
-        return chatMessage?.isSystemMessage != true && (chatMessage?.uuid == userId || user?.contributor?.admin == true || chatMessage?.isInboxMessage == true)
-    }
+    private fun shouldShowDelete(): Boolean =
+        chatMessage?.isSystemMessage != true &&
+            (chatMessage?.uuid == userId || user?.contributor?.admin == true || chatMessage?.isInboxMessage == true)
 }

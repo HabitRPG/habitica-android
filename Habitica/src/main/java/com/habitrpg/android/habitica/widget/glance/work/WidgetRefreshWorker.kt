@@ -28,7 +28,6 @@ class WidgetRefreshWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
-
     override suspend fun doWork(): Result {
         val context = applicationContext
         if (!WidgetAuth.isLoggedIn(context)) return Result.success()
@@ -42,13 +41,17 @@ class WidgetRefreshWorker(
         private const val REFRESH_INTERVAL_MINUTES = 15L
 
         fun enqueue(context: Context) {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .setRequiresBatteryNotLow(true)
-                .build()
-            val request = PeriodicWorkRequestBuilder<WidgetRefreshWorker>(
-                REFRESH_INTERVAL_MINUTES, TimeUnit.MINUTES,
-            ).setConstraints(constraints).build()
+            val constraints =
+                Constraints
+                    .Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiresBatteryNotLow(true)
+                    .build()
+            val request =
+                PeriodicWorkRequestBuilder<WidgetRefreshWorker>(
+                    REFRESH_INTERVAL_MINUTES,
+                    TimeUnit.MINUTES,
+                ).setConstraints(constraints).build()
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 WORK_NAME,
                 ExistingPeriodicWorkPolicy.KEEP,
@@ -82,15 +85,16 @@ class WidgetRefreshWorker(
         suspend fun clearAllForLogout(context: Context) {
             AvatarBitmapCache.clearCache(context)
             val manager = GlanceAppWidgetManager(context)
-            val widgets: List<GlanceAppWidget> = listOf(
-                AvatarStatsGlanceWidget(),
-                DailyTaskListGlanceWidget(),
-                TodoTaskListGlanceWidget(),
-                DailiesCountGlanceWidget(),
-                AddTaskSingleGlanceWidget(),
-                AddTaskMultiGlanceWidget(),
-                HabitButtonGlanceWidget(),
-            )
+            val widgets: List<GlanceAppWidget> =
+                listOf(
+                    AvatarStatsGlanceWidget(),
+                    DailyTaskListGlanceWidget(),
+                    TodoTaskListGlanceWidget(),
+                    DailiesCountGlanceWidget(),
+                    AddTaskSingleGlanceWidget(),
+                    AddTaskMultiGlanceWidget(),
+                    HabitButtonGlanceWidget(),
+                )
             widgets.forEach { widget ->
                 manager.getGlanceIds(widget.javaClass).forEach { id ->
                     WidgetStateWriter.edit(context, id) { prefs -> prefs.clear() }

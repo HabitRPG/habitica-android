@@ -6,13 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.glance.LocalContext
 
 @Composable
-fun stringRes(@StringRes id: Int): String =
-    LocalContext.current.getString(id)
+fun stringRes(
+    @StringRes id: Int,
+): String = LocalContext.current.getString(id)
 
 @Composable
-fun stringRes(@StringRes id: Int, vararg formatArgs: Any): String =
-    LocalContext.current.getString(id, *formatArgs)
+fun stringRes(
+    @StringRes id: Int,
+    vararg formatArgs: Any,
+): String = LocalContext.current.getString(id, *formatArgs)
 
 @Composable
-fun pluralRes(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any): String =
-    LocalContext.current.resources.getQuantityString(id, quantity, *formatArgs)
+fun pluralRes(
+    @PluralsRes id: Int,
+    quantity: Int,
+    vararg formatArgs: Any,
+): String = LocalContext.current.resources.getQuantityString(id, quantity, *formatArgs)

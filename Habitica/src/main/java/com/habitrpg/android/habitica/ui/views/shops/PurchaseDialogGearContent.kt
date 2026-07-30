@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.views.PixelArtView
 
-internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogContent(context) {
+internal class PurchaseDialogGearContent(
+    context: Context,
+) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseContentGearBinding.inflate(context.layoutInflater, this)
     override val imageView: PixelArtView
         get() = binding.imageView
@@ -41,7 +43,7 @@ internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogConte
     private fun configureFieldsForValue(
         labelView: TextView?,
         valueTextView: TextView?,
-        value: Int
+        value: Int,
     ) {
         valueTextView?.text = "+$value"
         if (value == 0) {

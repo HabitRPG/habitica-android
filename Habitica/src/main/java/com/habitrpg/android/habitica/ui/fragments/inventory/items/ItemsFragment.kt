@@ -19,15 +19,13 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentViewpagerBinding {
-        return FragmentViewpagerBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding = FragmentViewpagerBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -36,7 +34,7 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -63,29 +61,30 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             object : FragmentStateAdapter(fragmentManager, lifecycle) {
                 override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                     val fragment = ItemRecyclerFragment()
-                    val itemType = when (position) {
-                        0 -> "eggs"
-                        1 -> "hatchingPotions"
-                        2 -> "food"
-                        3 -> "quests"
-                        4 -> "special"
-                        else -> ""
-                    }
-                    val itemTypeText = if (position == 4 && isAdded) {
-                        getString(R.string.special_items)
-                    } else {
-                        getPageTitle(position)
-                    }
-                    fragment.arguments = bundleOf(
-                        ItemRecyclerFragment.ARG_ITEM_TYPE to itemType,
-                        ItemRecyclerFragment.ARG_ITEM_TYPE_TEXT to itemTypeText
-                    )
+                    val itemType =
+                        when (position) {
+                            0 -> "eggs"
+                            1 -> "hatchingPotions"
+                            2 -> "food"
+                            3 -> "quests"
+                            4 -> "special"
+                            else -> ""
+                        }
+                    val itemTypeText =
+                        if (position == 4 && isAdded) {
+                            getString(R.string.special_items)
+                        } else {
+                            getPageTitle(position)
+                        }
+                    fragment.arguments =
+                        bundleOf(
+                            ItemRecyclerFragment.ARG_ITEM_TYPE to itemType,
+                            ItemRecyclerFragment.ARG_ITEM_TYPE_TEXT to itemTypeText,
+                        )
                     return fragment
                 }
 
-                override fun getItemCount(): Int {
-                    return 5
-                }
+                override fun getItemCount(): Int = 5
             }
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
@@ -97,8 +96,8 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         tabLayout?.tabMode = TabLayout.MODE_SCROLLABLE
     }
 
-    private fun getPageTitle(position: Int): String {
-        return when (position) {
+    private fun getPageTitle(position: Int): String =
+        when (position) {
             0 -> mainActivity?.getString(R.string.eggs)
             1 -> mainActivity?.getString(R.string.hatching_potions)
             2 -> mainActivity?.getString(R.string.food)
@@ -106,5 +105,4 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             4 -> mainActivity?.getString(R.string.special)
             else -> ""
         } ?: ""
-    }
 }

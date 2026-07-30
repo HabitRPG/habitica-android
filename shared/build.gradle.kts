@@ -3,17 +3,36 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
-    id(libs.plugins.android.kotlin.multiplatform.library.get().pluginId)
+    id(
+        libs.plugins.android.kotlin.multiplatform.library
+            .get()
+            .pluginId,
+    )
     id("kotlin-parcelize")
-    id(libs.plugins.ksp.get().pluginId)
-    id(libs.plugins.habitrpg.convention.get().pluginId)
-    id(libs.plugins.kotest.get().pluginId)
+    id(
+        libs.plugins.ksp
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.convention
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.kotest
+            .get()
+            .pluginId,
+    )
 }
 
 kotlin {
     android {
         namespace = "com.habitrpg.shared.habitica"
-        compileSdk = libs.versions.targetSdk.get().toInt()
+        compileSdk =
+            libs.versions.targetSdk
+                .get()
+                .toInt()
         minSdk = 21
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)

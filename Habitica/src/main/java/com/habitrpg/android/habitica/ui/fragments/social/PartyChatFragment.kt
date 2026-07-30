@@ -5,6 +5,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 
 class PartyChatFragment : ChatFragment() {
     override val viewModel: PartyViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+        ownerProducer = { requireParentFragment() },
     )
 }

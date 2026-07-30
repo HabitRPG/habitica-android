@@ -16,8 +16,9 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
     localRepository: T,
     apiClient: ApiClient,
     context: Context,
-    authenticationHandler: AuthenticationHandler
-) : BaseRepositoryImpl<T>(localRepository, apiClient, authenticationHandler), ContentRepository {
+    authenticationHandler: AuthenticationHandler,
+) : BaseRepositoryImpl<T>(localRepository, apiClient, authenticationHandler),
+    ContentRepository {
     private val mysteryItem = SpecialItem.makeMysteryItem(context)
 
     private var lastContentSync = 0L
@@ -47,7 +48,5 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
         return null
     }
 
-    override fun getWorldState(): Flow<WorldState> {
-        return localRepository.getWorldState()
-    }
+    override fun getWorldState(): Flow<WorldState> = localRepository.getWorldState()
 }

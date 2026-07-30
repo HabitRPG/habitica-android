@@ -24,18 +24,17 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return if (viewType == 0) {
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        if (viewType == 0) {
             SectionViewHolder(parent.inflate(R.layout.profile_achievement_category))
         } else {
             AchievementViewHolder(parent.inflate(R.layout.profile_achievement_item))
         }
-    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         val obj = this.itemList[position]
         if (obj.javaClass == String::class.java) {
@@ -54,12 +53,11 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 
-    internal class AchievementViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView),
+    internal class AchievementViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         private val binding = ProfileAchievementItemBinding.bind(itemView)
         private var achievement: Achievement? = null

@@ -16,7 +16,7 @@ import com.habitrpg.common.habitica.helpers.EmojiParser
 
 class ChallengesListViewAdapter(
     private val viewUserChallengesOnly: Boolean,
-    private val userId: String
+    private val userId: String,
 ) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: List<Challenge>? = null
     private var challengeMemberships: List<ChallengeMembership>? = null
@@ -26,19 +26,17 @@ class ChallengesListViewAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): ChallengeViewHolder {
-        return ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
-    }
+        viewType: Int,
+    ): ChallengeViewHolder = ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
 
     override fun onBindViewHolder(
         holder: ChallengeViewHolder,
-        position: Int
+        position: Int,
     ) {
         data[position].let { challenge ->
             holder.bind(
                 challenge,
-                challengeMemberships?.any { it.challengeID == challenge.id } ?: false
+                challengeMemberships?.any { it.challengeID == challenge.id } ?: false,
             )
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {
@@ -67,9 +65,10 @@ class ChallengesListViewAdapter(
     }
 
     fun filter(filterOptions: ChallengeFilterOptions) {
-        val hasNoActiveFilters = filterOptions.showByGroups.isEmpty() &&
-            !filterOptions.showOwned && !filterOptions.notOwned &&
-            !filterOptions.showParticipating && !filterOptions.notParticipating
+        val hasNoActiveFilters =
+            filterOptions.showByGroups.isEmpty() &&
+                !filterOptions.showOwned && !filterOptions.notOwned &&
+                !filterOptions.showParticipating && !filterOptions.notParticipating
 
         if (hasNoActiveFilters) {
             currentFilterOptions = null
@@ -78,32 +77,35 @@ class ChallengesListViewAdapter(
             currentFilterOptions = filterOptions
             val all = unfilteredData ?: return
 
-            var filtered = if (filterOptions.showByGroups.isEmpty()) {
-                all
-            } else {
-                val activeIds = filterOptions.showByGroups.map { it.id }.toSet()
-                all.filterByCategorySlugs(activeIds)
-            }
+            var filtered =
+                if (filterOptions.showByGroups.isEmpty()) {
+                    all
+                } else {
+                    val activeIds = filterOptions.showByGroups.map { it.id }.toSet()
+                    all.filterByCategorySlugs(activeIds)
+                }
 
             if (filterOptions.showOwned != filterOptions.notOwned) {
-                filtered = filtered.filter { challenge ->
-                    if (filterOptions.showOwned) {
-                        challenge.leaderId == userId
-                    } else {
-                        challenge.leaderId != userId
+                filtered =
+                    filtered.filter { challenge ->
+                        if (filterOptions.showOwned) {
+                            challenge.leaderId == userId
+                        } else {
+                            challenge.leaderId != userId
+                        }
                     }
-                }
             }
 
             if (filterOptions.showParticipating != filterOptions.notParticipating) {
-                filtered = filtered.filter { challenge ->
-                    val isParticipating = challengeMemberships?.any { it.challengeID == challenge.id } ?: false
-                    if (filterOptions.showParticipating) {
-                        isParticipating
-                    } else {
-                        !isParticipating
+                filtered =
+                    filtered.filter { challenge ->
+                        val isParticipating = challengeMemberships?.any { it.challengeID == challenge.id } ?: false
+                        if (filterOptions.showParticipating) {
+                            isParticipating
+                        } else {
+                            !isParticipating
+                        }
                     }
-                }
             }
 
             this.data = filtered
@@ -117,7 +119,7 @@ class ChallengesListViewAdapter(
 
     class ChallengeViewHolder internal constructor(
         itemView: View,
-        private val viewUserChallengesOnly: Boolean
+        private val viewUserChallengesOnly: Boolean,
     ) : RecyclerView.ViewHolder(itemView) {
         private val binding = ChallengeItemBinding.bind(itemView)
 
@@ -129,7 +131,7 @@ class ChallengesListViewAdapter(
 
         fun bind(
             challenge: Challenge,
-            isParticipating: Boolean
+            isParticipating: Boolean,
         ) {
             this.challenge = challenge
 

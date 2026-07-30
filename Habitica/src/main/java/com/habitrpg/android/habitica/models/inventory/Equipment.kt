@@ -6,7 +6,9 @@ import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Equipment : RealmObject(), BaseMainObject {
+open class Equipment :
+    RealmObject(),
+    BaseMainObject {
     var value: Double = 0.toDouble()
     var type: String? = ""
 

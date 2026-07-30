@@ -10,7 +10,9 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import java.util.Date
 
-open class Challenge : RealmObject(), BaseMainObject {
+open class Challenge :
+    RealmObject(),
+    BaseMainObject {
     @PrimaryKey
     var id: String? = null
     var name: String? = null
@@ -44,22 +46,34 @@ open class Challenge : RealmObject(), BaseMainObject {
         val map = HashMap<String, Array<String>>()
 
         if (dailyList?.isNotEmpty() == true) {
-            dailyList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+            dailyList
+                ?.split(",".toRegex())
+                ?.dropLastWhile { it.isEmpty() }
+                ?.toTypedArray()
                 ?.let { map[TASK_ORDER_DAILYS] }
         }
 
         if (habitList?.isNotEmpty() == true) {
-            habitList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+            habitList
+                ?.split(",".toRegex())
+                ?.dropLastWhile { it.isEmpty() }
+                ?.toTypedArray()
                 ?.let { map[TASK_ORDER_HABITS] }
         }
 
         if (rewardList?.isNotEmpty() == true) {
-            rewardList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+            rewardList
+                ?.split(",".toRegex())
+                ?.dropLastWhile { it.isEmpty() }
+                ?.toTypedArray()
                 ?.let { map[TASK_ORDER_REWARDS] }
         }
 
         if (todoList?.isNotEmpty() == true) {
-            todoList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+            todoList
+                ?.split(",".toRegex())
+                ?.dropLastWhile { it.isEmpty() }
+                ?.toTypedArray()
                 ?.let { map[TASK_ORDER_TODOS] }
         }
 
@@ -73,17 +87,14 @@ open class Challenge : RealmObject(), BaseMainObject {
     override val primaryIdentifierName: String
         get() = "id"
 
-    override fun equals(other: Any?): Boolean {
-        return if (other?.javaClass == Challenge::class.java && this.id != null) {
+    override fun equals(other: Any?): Boolean =
+        if (other?.javaClass == Challenge::class.java && this.id != null) {
             this.id == (other as Challenge).id
         } else {
             super.equals(other)
         }
-    }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 
     companion object {
         const val TASK_ORDER_HABITS = "habits"

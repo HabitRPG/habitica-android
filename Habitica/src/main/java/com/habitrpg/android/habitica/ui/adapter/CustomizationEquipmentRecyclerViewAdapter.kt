@@ -32,7 +32,7 @@ class CustomizationEquipmentRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         val viewID: Int = R.layout.customization_grid_item
 
@@ -42,14 +42,12 @@ class CustomizationEquipmentRecyclerViewAdapter :
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         (holder as EquipmentViewHolder).bind(equipmentList[position])
     }
 
-    override fun getItemCount(): Int {
-        return equipmentList.size
-    }
+    override fun getItemCount(): Int = equipmentList.size
 
     override fun getItemViewType(position: Int): Int {
         if (equipmentList.size <= position) return 0
@@ -67,8 +65,10 @@ class CustomizationEquipmentRecyclerViewAdapter :
         this.notifyDataSetChanged()
     }
 
-    internal inner class EquipmentViewHolder(itemView: View) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class EquipmentViewHolder(
+        itemView: View,
+    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         private val binding = CustomizationGridItemBinding.bind(itemView)
         var equipment: Equipment? = null
 
@@ -102,7 +102,7 @@ class CustomizationEquipmentRecyclerViewAdapter :
                 binding.wrapper.background =
                     ContextCompat.getDrawable(
                         itemView.context,
-                        R.drawable.layout_rounded_bg_window_tint_border
+                        R.drawable.layout_rounded_bg_window_tint_border,
                     )
             } else {
                 binding.wrapper.background =
@@ -120,8 +120,8 @@ class CustomizationEquipmentRecyclerViewAdapter :
             if (equipment?.owned != true && (itemValue ?: 0.0) > 0.0) {
                 onShowPurchaseDialog?.invoke(
                     ShopItem.fromAnimalEquipment(
-                        equipment
-                    )
+                        equipment,
+                    ),
                 )
                 return
             }

@@ -20,8 +20,10 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.inflate
 import java.util.Date
 
-class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NavigationDrawerAdapter(
+    tintColor: Int,
+    backgroundTintColor: Int,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var tintColor: Int = tintColor
         set(value) {
             field = value
@@ -54,14 +56,11 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
     var activePromo: HabiticaPromotion? = null
     var currentEvent: WorldStateEvent? = null
 
-    fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
-        items.find { it.identifier == identifier }
+    fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? = items.find { it.identifier == identifier }
 
-    private fun getItemPosition(identifier: String): Int =
-        items.indexOfFirst { it.identifier == identifier }
+    private fun getItemPosition(identifier: String): Int = items.indexOfFirst { it.identifier == identifier }
 
-    private fun getVisibleItemPosition(identifier: String): Int =
-        items.filter { it.isVisible }.indexOfFirst { it.identifier == identifier }
+    private fun getVisibleItemPosition(identifier: String): Int = items.filter { it.isVisible }.indexOfFirst { it.identifier == identifier }
 
     fun updateItem(item: HabiticaDrawerItem) {
         val position = getItemPosition(item.identifier)
@@ -77,7 +76,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         val drawerItem = getItem(position)
         when {
@@ -119,25 +118,24 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
     override fun getItemCount(): Int = items.count { it.isVisible }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).isHeader) {
+    override fun getItemViewType(position: Int): Int =
+        if (getItem(position).isHeader) {
             1
         } else {
             getItem(position).itemViewType ?: 0
         }
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return when (viewType) {
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        when (viewType) {
             2 -> {
                 val itemView = SubscriptionBuyGemsPromoView(parent.context)
                 itemView.layoutParams =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        148.dpToPx(parent.context)
+                        148.dpToPx(parent.context),
                     )
                 SubscriptionBuyGemsPromoViewHolder(itemView)
             }
@@ -147,18 +145,27 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 promoView.layoutParams =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        148.dpToPx(parent.context)
+                        148.dpToPx(parent.context),
                     )
                 PromoMenuViewHolder(promoView)
             }
 
-            6 -> ComposableViewHolder(ComposeView(parent.context))
-            1 -> SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
-            else -> DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
-        }
-    }
+            6 -> {
+                ComposableViewHolder(ComposeView(parent.context))
+            }
 
-    class DrawerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            1 -> {
+                SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
+            }
+
+            else -> {
+                DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
+            }
+        }
+
+    class DrawerItemViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         var tintColor: Int = 0
 
         private val titleTextView: TextView? = itemView.findViewById(R.id.titleTextView)
@@ -168,7 +175,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
         fun bind(
             drawerItem: HabiticaDrawerItem,
-            isSelected: Boolean
+            isSelected: Boolean,
         ) {
             titleTextView?.text = drawerItem.text
 
@@ -176,8 +183,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 itemView.setBackgroundColor(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.content_background_offset
-                    )
+                        R.color.content_background_offset,
+                    ),
                 )
                 itemView.background.alpha = 69
                 titleTextView?.setTextColor(tintColor)
@@ -185,14 +192,14 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
                 itemView.setBackgroundColor(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.content_background
-                    )
+                        R.color.content_background,
+                    ),
                 )
                 titleTextView?.setTextColor(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.text_primary
-                    )
+                        R.color.text_primary,
+                    ),
                 )
             }
 
@@ -208,7 +215,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
 
                     pillView.background = drawerItem.pillBackground ?: ContextCompat.getDrawable(
                         itemView.context,
-                        R.drawable.pill_bg_purple
+                        R.drawable.pill_bg_purple,
                     )
                     if (drawerItem.pillBackground != null) {
                         pillView.setTextColor(ContextCompat.getColor(itemView.context, R.color.black))
@@ -233,7 +240,9 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) :
         }
     }
 
-    class SectionHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SectionHeaderViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         var backgroundTintColor: Int = 0
 
         fun bind(drawerItem: HabiticaDrawerItem) {

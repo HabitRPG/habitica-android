@@ -12,7 +12,7 @@ class MarketFragment : ShopFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         shopIdentifier = Shop.MARKET
         return super.onCreateView(inflater, container, savedInstanceState)

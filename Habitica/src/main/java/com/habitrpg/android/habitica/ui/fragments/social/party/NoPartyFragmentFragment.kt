@@ -44,15 +44,13 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentNoPartyBinding {
-        return FragmentNoPartyBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentNoPartyBinding = FragmentNoPartyBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -60,7 +58,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -74,7 +72,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                 parentFragmentManager.popBackStack()
                 MainNavigationController.navigate(
                     R.id.partyFragment,
-                    bundleOf(Pair("partyID", userViewModel.partyID))
+                    bundleOf(Pair("partyID", userViewModel.partyID)),
                 )
             }
         }
@@ -155,7 +153,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                                 bundle.getString("leader"),
                                 "party",
                                 bundle.getString("privacy"),
-                                bundle.getBoolean("leaderCreateChallenge")
+                                bundle.getBoolean("leaderCreateChallenge"),
                             )
                         userRepository.retrieveUser(false, true)
                         if (isAdded) {
@@ -163,7 +161,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                         }
                         MainNavigationController.navigate(
                             R.id.partyFragment,
-                            bundleOf(Pair("partyID", group?.id))
+                            bundleOf(Pair("partyID", group?.id)),
                         )
                     }
                 }

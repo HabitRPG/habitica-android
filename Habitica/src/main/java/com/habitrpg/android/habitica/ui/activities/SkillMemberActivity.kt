@@ -34,9 +34,7 @@ class SkillMemberActivity : BaseActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_skill_members
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_skill_members
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivitySkillMembersBinding.inflate(layoutInflater)
@@ -65,7 +63,8 @@ class SkillMemberActivity : BaseActivity() {
         binding.recyclerView.adapter = viewAdapter
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.getUser()
+            userRepository
+                .getUser()
                 .map { it?.party?.id }
                 .filterNotNull()
                 .take(1)

@@ -11,26 +11,27 @@ import io.mockk.mockk
 private const val FAKE_STANDARD = "Standard"
 private const val FAKE_PREMIUM = "premium"
 
-class PetTest : WordSpec({
-    val pet: Pet = Pet()
-    lateinit var mockContext: Context
-    beforeEach {
-        mockContext = mockk()
-    }
-    "getTranslatedType" should {
-        "return standard" {
-            pet.type = "drop"
-            every { mockContext.getString(R.string.standard) } returns FAKE_STANDARD
-
-            val result = pet.getTranslatedType(mockContext)
-            result shouldBe FAKE_STANDARD
+class PetTest :
+    WordSpec({
+        val pet: Pet = Pet()
+        lateinit var mockContext: Context
+        beforeEach {
+            mockContext = mockk()
         }
+        "getTranslatedType" should {
+            "return standard" {
+                pet.type = "drop"
+                every { mockContext.getString(R.string.standard) } returns FAKE_STANDARD
 
-        "return premium without context" {
-            pet.type = "premium"
+                val result = pet.getTranslatedType(mockContext)
+                result shouldBe FAKE_STANDARD
+            }
 
-            val result = pet.getTranslatedType(null)
-            result shouldBe FAKE_PREMIUM
+            "return premium without context" {
+                pet.type = "premium"
+
+                val result = pet.getTranslatedType(null)
+                result shouldBe FAKE_PREMIUM
+            }
         }
-    }
-})
+    })

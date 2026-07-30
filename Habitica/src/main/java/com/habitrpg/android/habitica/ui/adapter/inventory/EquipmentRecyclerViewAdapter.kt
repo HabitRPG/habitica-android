@@ -15,8 +15,7 @@ import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.loadImage
 
-class EquipmentRecyclerViewAdapter :
-    BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
+class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
     var equippedGear: String? = null
     var isCostume: Boolean? = null
     var type: String? = null
@@ -25,7 +24,7 @@ class EquipmentRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): GearViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.gear_list_item, parent, false)
@@ -34,13 +33,14 @@ class EquipmentRecyclerViewAdapter :
 
     override fun onBindViewHolder(
         holder: GearViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.bind(data[position])
     }
 
-    inner class GearViewHolder(itemView: View) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class GearViewHolder(
+        itemView: View,
+    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         private val binding = GearListItemBinding.bind(itemView)
 
         var gear: Equipment? = null
@@ -52,7 +52,7 @@ class EquipmentRecyclerViewAdapter :
                 HabiticaIconsHelper.imageOfTwoHandedIcon().toDrawable(context.resources),
                 null,
                 null,
-                null
+                null,
             )
             itemView.setOnClickListener {
                 val key = gear?.key
@@ -79,8 +79,8 @@ class EquipmentRecyclerViewAdapter :
                 binding.gearContainer.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.lightly_tinted_background
-                    )
+                        R.color.lightly_tinted_background,
+                    ),
                 )
                 binding.gearIconBackgroundView.background =
                     ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
@@ -102,7 +102,7 @@ class EquipmentRecyclerViewAdapter :
         private fun set(
             label: TextView,
             valueTextView: TextView,
-            value: Int
+            value: Int,
         ) {
             if (value > 0) {
                 label.visibility = View.VISIBLE

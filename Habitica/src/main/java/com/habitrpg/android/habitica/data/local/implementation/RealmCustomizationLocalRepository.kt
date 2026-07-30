@@ -8,16 +8,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import java.util.Date
 
-class RealmCustomizationLocalRepository(realm: Realm) :
-    RealmContentLocalRepository(realm),
+class RealmCustomizationLocalRepository(
+    realm: Realm,
+) : RealmContentLocalRepository(realm),
     CustomizationLocalRepository {
     override fun getCustomizations(
         type: String,
         category: String?,
-        onlyAvailable: Boolean
+        onlyAvailable: Boolean,
     ): Flow<List<Customization>> {
         var query =
-            realm.where(Customization::class.java)
+            realm
+                .where(Customization::class.java)
                 .equalTo("type", type)
                 .equalTo("category", category)
         if (onlyAvailable) {

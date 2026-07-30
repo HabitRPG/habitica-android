@@ -21,7 +21,9 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 
-class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
+class ChatBarView :
+    LinearLayout,
+    OnImeVisibilityChangedListener {
     var hasAcceptedGuidelines: Boolean = false
         set(value) {
             field = value
@@ -91,7 +93,7 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
             OnChangeTextWatcher { _, _, _, _ ->
                 setSendButtonEnabled(binding.chatEditText.text.isNotEmpty() && binding.chatEditText.text.length <= maxChatLength)
                 updateTextIndicator(binding.chatEditText.text.toString())
-            }
+            },
         )
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
@@ -155,12 +157,15 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
         }
     }
 
-    override fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets) {
+    override fun onImeVisibilityChanged(
+        visible: Boolean,
+        height: Int,
+        safeInsets: Insets,
+    ) {
         updatePadding(
-            left   = safeInsets.left,
-            right  = safeInsets.right,
-            bottom = safeInsets.bottom
+            left = safeInsets.left,
+            right = safeInsets.right,
+            bottom = safeInsets.bottom,
         )
     }
-
 }

@@ -27,24 +27,24 @@ fun HabiticaButton(
     contentPadding: PaddingValues = PaddingValues(8.dp),
     fontSize: TextUnit = 16.sp,
     enabled: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
-        modifier
-            .background(background, HabiticaTheme.shapes.medium)
-            .clickable(enabled) { onClick() }
-            .fillMaxWidth()
-            .padding(contentPadding)
+            modifier
+                .background(background, HabiticaTheme.shapes.medium)
+                .clickable(enabled) { onClick() }
+                .fillMaxWidth()
+                .padding(contentPadding),
     ) {
         ProvideTextStyle(
             value =
-            TextStyle(
-                fontSize = fontSize,
-                fontWeight = FontWeight.SemiBold,
-                color = color
-            )
+                TextStyle(
+                    fontSize = fontSize,
+                    fontWeight = FontWeight.SemiBold,
+                    color = color,
+                ),
         ) {
             content()
         }

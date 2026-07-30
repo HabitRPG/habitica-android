@@ -17,7 +17,9 @@ import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
 
 class Notification {
-    enum class Type(val type: String) {
+    enum class Type(
+        val type: String,
+    ) {
         // Notification types coming from the server
         LOGIN_INCENTIVE("LOGIN_INCENTIVE"),
         NEW_STUFF("NEW_STUFF"),
@@ -73,7 +75,7 @@ class Notification {
         // Custom notification types (created by this app)
         GUILD_INVITATION("GUILD_INVITATION"),
         PARTY_INVITATION("PARTY_INVITATION"),
-        QUEST_INVITATION("QUEST_INVITATION")
+        QUEST_INVITATION("QUEST_INVITATION"),
     }
 
     var id: String = ""
@@ -83,8 +85,8 @@ class Notification {
 
     var data: NotificationData? = null
 
-    fun getDataType(): java.lang.reflect.Type? {
-        return when (type) {
+    fun getDataType(): java.lang.reflect.Type? =
+        when (type) {
             Type.LOGIN_INCENTIVE.type -> LoginIncentiveData::class.java
             Type.NEW_STUFF.type -> NewStuffData::class.java
             Type.NEW_CHAT_MESSAGE.type -> NewChatMessageData::class.java
@@ -99,7 +101,6 @@ class Notification {
             Type.ACHIEVEMENT_GENERIC.type -> AchievementData::class.java
             Type.WON_CHALLENGE.type -> ChallengeWonData::class.java
             Type.ITEM_RECEIVED.type -> ItemReceivedData::class.java
-
             Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> AchievementData::class.java
             Type.ACHIEVEMENT_BACK_TO_BASICS.type -> AchievementData::class.java
             Type.ACHIEVEMENT_JUST_ADD_WATER.type -> AchievementData::class.java
@@ -123,13 +124,10 @@ class Notification {
             Type.ACHIEVEMENT_SKELETON_CREW.type -> AchievementData::class.java
             Type.ACHIEVEMENT_SEEING_RED.type -> AchievementData::class.java
             Type.ACHIEVEMENT_RED_LETTER_DAY.type -> AchievementData::class.java
-
             Type.REBIRTH_ENABLED.type -> AchievementData::class.java
             Type.REBIRTH_ACHIEVEMENT.type -> AchievementData::class.java
-
             else -> null
         }
-    }
 
     val priority: Int
         get() {

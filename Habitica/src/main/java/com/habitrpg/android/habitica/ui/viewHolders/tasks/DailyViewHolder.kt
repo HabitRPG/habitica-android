@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -9,7 +10,6 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
-import androidx.core.view.isVisible
 
 class DailyViewHolder(
     itemView: View,
@@ -17,7 +17,7 @@ class DailyViewHolder(
     scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?
+    assignedTextProvider: GroupPlanInfoProvider?,
 ) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
     override val taskIconWrapperIsVisible: Boolean
         get() {
@@ -32,7 +32,7 @@ class DailyViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?
+        ownerID: String?,
     ) {
         this.task = data
         setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
@@ -52,7 +52,7 @@ class DailyViewHolder(
                         calendar.get(Calendar.DATE),
                         it.getZonedDateTime()?.hour ?: 0,
                         it.getZonedDateTime()?.minute ?: 0,
-                        0
+                        0,
                     )
                     now < calendar.time
                 } ?: data.reminders?.first()
@@ -73,10 +73,8 @@ class DailyViewHolder(
 
     override fun shouldDisplayAsActive(
         task: Task?,
-        userID: String?
-    ): Boolean {
-        return task?.isDisplayedActiveForUser(userID) ?: false
-    }
+        userID: String?,
+    ): Boolean = task?.isDisplayedActiveForUser(userID) ?: false
 
     override fun configureSpecialTaskTextView(task: Task) {
         super.configureSpecialTaskTextView(task)

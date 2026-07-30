@@ -45,33 +45,37 @@ fun TaskRow(
     innerCornerRadius: Dp = 8.dp,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = GlanceModifier
-                .width(tileWidth)
-                .fillMaxHeight()
-                .background(ColorProvider(valueColor)),
+            modifier =
+                GlanceModifier
+                    .width(tileWidth)
+                    .fillMaxHeight()
+                    .background(ColorProvider(valueColor)),
             contentAlignment = Alignment.Center,
         ) {
             Box(
-                modifier = GlanceModifier
-                    .size(innerSquareSize)
-                    .cornerRadius(innerCornerRadius)
-                    .background(dotFill),
+                modifier =
+                    GlanceModifier
+                        .size(innerSquareSize)
+                        .cornerRadius(innerCornerRadius)
+                        .background(dotFill),
             ) {}
         }
         Spacer(GlanceModifier.width(10.dp))
         Text(
             text = text,
-            style = TextStyle(
-                color = primaryTextColor,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-            ),
+            style =
+                TextStyle(
+                    color = primaryTextColor,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
             maxLines = 2,
             modifier = GlanceModifier.defaultWeight(),
         )
@@ -79,26 +83,29 @@ fun TaskRow(
             Spacer(GlanceModifier.width(8.dp))
             val isAllDone = checklistDoneCount == checklistTotalCount
             Box(
-                modifier = GlanceModifier
-                    .cornerRadius(4.dp)
-                    .background(
-                        if (isAllDone) checklistChipBackgroundDone
-                        else checklistChipBackground,
-                    )
-                    .padding(horizontal = 4.dp, vertical = 2.dp),
+                modifier =
+                    GlanceModifier
+                        .cornerRadius(4.dp)
+                        .background(
+                            if (isAllDone) {
+                                checklistChipBackgroundDone
+                            } else {
+                                checklistChipBackground
+                            },
+                        ).padding(horizontal = 4.dp, vertical = 2.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = "$checklistDoneCount/$checklistTotalCount",
-                    style = TextStyle(
-                        color = if (isAllDone) checklistChipTextDone else checklistChipText,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Normal,
-                    ),
+                    style =
+                        TextStyle(
+                            color = if (isAllDone) checklistChipTextDone else checklistChipText,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Normal,
+                        ),
                 )
             }
         }
         Spacer(GlanceModifier.width(12.dp))
     }
 }
-

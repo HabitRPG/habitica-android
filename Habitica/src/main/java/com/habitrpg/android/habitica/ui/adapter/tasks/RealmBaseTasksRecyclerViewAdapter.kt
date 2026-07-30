@@ -23,8 +23,9 @@ import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter(
     private val layoutResource: Int,
-    val viewModel: TasksViewModel
-) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+    val viewModel: TasksViewModel,
+) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(),
+    TaskRecyclerViewAdapter {
     private var unfilteredData: List<Task>? = null
     override var showAdventureGuide = false
         set(value) {
@@ -63,7 +64,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): RecyclerView.ViewHolder {
         val binding =
             AdventureGuideMenuBannerBinding.inflate(parent.context.layoutInflater, parent, false)
@@ -72,7 +73,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         val item = getItem(position)
         if (item != null && holder is BaseTaskViewHolder) {
@@ -88,9 +89,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return data.size + if (showAdventureGuide) 1 else 0
-    }
+    override fun getItemCount(): Int = data.size + if (showAdventureGuide) 1 else 0
 
     override fun getItem(position: Int): Task? {
         if (showAdventureGuide && position == 0) {
@@ -110,9 +109,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 
     private fun getContentView(
         parent: ViewGroup,
-        layoutResource: Int
-    ): View =
-        LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
+        layoutResource: Int,
+    ): View = LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     final override fun filter() {
         val unfilteredData = this.unfilteredData ?: return
@@ -128,7 +126,9 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     }
 }
 
-class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class AdventureGuideViewHolder(
+    itemView: View,
+) : RecyclerView.ViewHolder(itemView) {
     private var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
     private var countView: TextView = itemView.findViewById(R.id.count_view)
 
@@ -137,7 +137,7 @@ class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
             HabiticaIconsHelper.imageOfGold().toDrawable(itemView.resources),
             null,
             null,
-            null
+            null,
         )
         itemView.findViewById<TextView>(R.id.gold_textview).compoundDrawablePadding =
             4.dpToPx(itemView.context)

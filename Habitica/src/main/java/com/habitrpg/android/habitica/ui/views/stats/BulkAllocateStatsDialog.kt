@@ -17,8 +17,10 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
-class BulkAllocateStatsDialog(context: Context, private val userRepository: UserRepository) :
-    AlertDialog(context) {
+class BulkAllocateStatsDialog(
+    context: Context,
+    private val userRepository: UserRepository,
+) : AlertDialog(context) {
     private val binding = DialogBulkAllocateBinding.inflate(context.layoutInflater)
 
     private val allocatedPoints: Int
@@ -53,12 +55,13 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
     private fun saveChanges() {
         getButton(BUTTON_POSITIVE).isEnabled = false
         lifecycleScope.launchCatching {
-            val result = userRepository.bulkAllocatePoints(
-                binding.strengthSliderView.currentValue,
-                binding.intelligenceSliderView.currentValue,
-                binding.constitutionSliderView.currentValue,
-                binding.perceptionSliderView.currentValue
-            )
+            val result =
+                userRepository.bulkAllocatePoints(
+                    binding.strengthSliderView.currentValue,
+                    binding.intelligenceSliderView.currentValue,
+                    binding.constitutionSliderView.currentValue,
+                    binding.perceptionSliderView.currentValue,
+                )
             dismiss()
         }
     }
@@ -66,7 +69,8 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MainScope().launch(ExceptionHandler.coroutine()) {
-            userRepository.getUser()
+            userRepository
+                .getUser()
                 .filterNotNull()
                 .collect {
                     pointsToAllocate = it.stats?.points ?: 0
@@ -94,7 +98,6 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
             updateTitle()
         }
     }
-
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -130,14 +133,13 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
 
     private fun getSliderWithHigherValue(
         firstSlider: StatsSliderView?,
-        secondSlider: StatsSliderView?
-    ): StatsSliderView? {
-        return if ((firstSlider?.currentValue ?: 0) > (secondSlider?.currentValue ?: 0)) {
+        secondSlider: StatsSliderView?,
+    ): StatsSliderView? =
+        if ((firstSlider?.currentValue ?: 0) > (secondSlider?.currentValue ?: 0)) {
             firstSlider
         } else {
             secondSlider
         }
-    }
 
     @SuppressLint("SetTextI18n")
     private fun updateTitle() {
@@ -148,8 +150,8 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
             binding.titleView.setBackgroundColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.disabled_background
-                )
+                    R.color.disabled_background,
+                ),
             )
         }
 

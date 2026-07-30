@@ -6,7 +6,10 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Hair : RealmObject, BaseObject, AvatarHair {
+open class Hair :
+    RealmObject,
+    BaseObject,
+    AvatarHair {
     final override var mustache: Int = 0
     final override var beard: Int = 0
     final override var bangs: Int = 0

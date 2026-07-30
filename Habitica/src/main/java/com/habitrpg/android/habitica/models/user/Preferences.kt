@@ -7,7 +7,10 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
+open class Preferences :
+    RealmObject(),
+    AvatarPreferences,
+    BaseObject {
     override var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
     override var costume: Boolean = false

@@ -39,21 +39,20 @@ class AppModule {
     fun providesHostConfig(
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
-        @ApplicationContext context: Context
-    ): HostConfig {
-        return HostConfig(sharedPreferences, keyHelper, context)
-    }
+        @ApplicationContext context: Context,
+    ): HostConfig = HostConfig(sharedPreferences, keyHelper, context)
 
     @Provides
-    fun providesConverterFactory(moshi: Moshi): Converter.Factory {
-        return MoshiConverterFactory.create(
-            moshi
-        ).asLenient()
-    }
+    fun providesConverterFactory(moshi: Moshi): Converter.Factory =
+        MoshiConverterFactory
+            .create(
+                moshi,
+            ).asLenient()
 
     @Provides
-    fun providesMoshi(): Moshi {
-        return Moshi.Builder()
+    fun providesMoshi(): Moshi =
+        Moshi
+            .Builder()
             .add(WrappedTasklistAdapter())
             .add(customDateAdapter)
             .add(FrequencyAdapter())
@@ -61,7 +60,6 @@ class AppModule {
             .add(AttributeAdapter())
             .addLast(KotlinJsonAdapterFactory())
             .build()
-    }
 
     @Provides
     @Singleton
@@ -69,23 +67,20 @@ class AppModule {
         hostConfig: HostConfig,
         @ApplicationContext context: Context,
         converter: Converter.Factory,
-        appStateManager: AppStateManager
-    ): ApiClient {
-        return ApiClient(
+        appStateManager: AppStateManager,
+    ): ApiClient =
+        ApiClient(
             converter,
             hostConfig,
             appStateManager,
-            context
+            context,
         )
-    }
 
     @Provides
     @Singleton
     fun provideSharedPreferences(
-        @ApplicationContext context: Context
-    ): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-    }
+        @ApplicationContext context: Context,
+    ): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     @Provides
     fun provideKeyStore(): KeyStore? {
@@ -109,18 +104,15 @@ class AppModule {
     fun provideKeyHelper(
         @ApplicationContext context: Context,
         sharedPreferences: SharedPreferences,
-        keyStore: KeyStore?
-    ): KeyHelper? {
-        return if (keyStore == null) {
+        keyStore: KeyStore?,
+    ): KeyHelper? =
+        if (keyStore == null) {
             null
         } else {
             KeyHelper.getInstance(context, sharedPreferences, keyStore)
         }
-    }
 
     @Provides
     @Singleton
-    fun provideTestingLevel(): AppTestingLevel {
-        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
-    }
+    fun provideTestingLevel(): AppTestingLevel = AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
 }

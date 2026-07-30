@@ -40,15 +40,13 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentAboutBinding {
-        return FragmentAboutBinding.inflate(layoutInflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentAboutBinding = FragmentAboutBinding.inflate(layoutInflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -60,23 +58,27 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
         binding?.versionInfo?.setOnClickListener {
             versionNumberTappedCount += 1
             when (versionNumberTappedCount) {
-                1 ->
+                1 -> {
                     context?.let { context ->
                         Toast.makeText(context, "Oh! You tapped me!", Toast.LENGTH_SHORT).show()
                     }
+                }
 
-                in 5..7 ->
+                in 5..7 -> {
                     context?.let { context ->
-                        Toast.makeText(
-                            context,
-                            "Only ${8 - versionNumberTappedCount} taps left!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast
+                            .makeText(
+                                context,
+                                "Only ${8 - versionNumberTappedCount} taps left!",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                     }
+                }
 
                 8 -> {
                     context?.let { context ->
-                        Toast.makeText(context, "You were blessed with cats!", Toast.LENGTH_SHORT)
+                        Toast
+                            .makeText(context, "You were blessed with cats!", Toast.LENGTH_SHORT)
                             .show()
                     }
                     doTheThing()
@@ -88,10 +90,12 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     private val versionName: String by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionName ?: ""
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionName ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
         }
@@ -100,10 +104,12 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionCode ?: 0
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionCode ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0
         }
@@ -111,7 +117,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -123,7 +129,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
                 getString(
                     R.string.update_available,
                     appConfigManager.lastVersionNumber(),
-                    appConfigManager.lastVersionCode()
+                    appConfigManager.lastVersionCode(),
                 )
         } else {
             binding?.updateAvailableWrapper?.visibility = View.GONE

@@ -16,7 +16,9 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(context) {
+class PurchaseDialogQuestContent(
+    context: Context,
+) : PurchaseDialogContent(context) {
     private val binding = DialogPurchaseContentQuestBinding.inflate(context.layoutInflater, this)
     override val imageView: PixelArtView
         get() = binding.imageView
@@ -49,7 +51,8 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
         if (questContent.drop != null && questContent.drop?.items != null) {
-            questContent.drop?.items
+            questContent.drop
+                ?.items
                 ?.filterNot { it.onlyOwner }
                 ?.forEach { addRewardsRow(inflater, it, binding.rewardsList) }
 
@@ -70,7 +73,7 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
                     inflater?.inflate(
                         R.layout.row_quest_reward_imageview,
                         binding.rewardsList,
-                        false
+                        false,
                     ) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
@@ -86,7 +89,7 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
                     inflater?.inflate(
                         R.layout.row_quest_reward_imageview,
                         binding.rewardsList,
-                        false
+                        false,
                     ) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
@@ -101,7 +104,7 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
     private fun addRewardsRow(
         inflater: LayoutInflater?,
         item: QuestDropItem,
-        containerView: ViewGroup?
+        containerView: ViewGroup?,
     ) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
         val imageView = view?.findViewById(R.id.imageView) as? PixelArtView

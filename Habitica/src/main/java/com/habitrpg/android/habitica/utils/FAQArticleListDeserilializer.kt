@@ -13,10 +13,13 @@ class FAQArticleListDeserilializer : JsonDeserializer<List<FAQArticle>> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): List<FAQArticle> {
         val articles = RealmList<FAQArticle>()
-        for ((position, e) in json.asJsonObject.get("questions").asJsonArray.withIndex()) {
+        for ((position, e) in json.asJsonObject
+            .get("questions")
+            .asJsonArray
+            .withIndex()) {
             val obj = e.asJsonObject
             val article = FAQArticle()
             article.position = position

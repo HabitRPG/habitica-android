@@ -32,10 +32,12 @@ import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 
 class AddTaskMultiGlanceWidget : GlanceAppWidget() {
-
     override val sizeMode: SizeMode = SizeMode.Exact
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId,
+    ) {
         val isLoggedIn = WidgetAuth.isLoggedIn(context)
         provideContent {
             HabiticaWidgetTheme {
@@ -58,12 +60,13 @@ private data class AddTile(
     val taskType: String,
 )
 
-private val ADD_TILES = listOf(
-    AddTile(R.string.habit, R.drawable.widget_add_habit_glyph, "habit"),
-    AddTile(R.string.daily, R.drawable.widget_add_daily_glyph, "daily"),
-    AddTile(R.string.todo, R.drawable.widget_add_todo_glyph, "todo"),
-    AddTile(R.string.reward, R.drawable.widget_add_reward_glyph, "reward"),
-)
+private val ADD_TILES =
+    listOf(
+        AddTile(R.string.habit, R.drawable.widget_add_habit_glyph, "habit"),
+        AddTile(R.string.daily, R.drawable.widget_add_daily_glyph, "daily"),
+        AddTile(R.string.todo, R.drawable.widget_add_todo_glyph, "todo"),
+        AddTile(R.string.reward, R.drawable.widget_add_reward_glyph, "reward"),
+    )
 
 private data class TilePalette(
     val widgetBackground: ColorProvider,
@@ -108,8 +111,10 @@ private fun AddTaskMultiContent(isLoggedIn: Boolean) {
 private fun addTileIconSize(shorterSide: androidx.compose.ui.unit.Dp): androidx.compose.ui.unit.Dp =
     (shorterSide.value * 0.66f).coerceIn(16f, 120f).dp
 
-private fun tileAction(taskType: String, isLoggedIn: Boolean) =
-    if (isLoggedIn) openTaskFormAction(taskType) else openAppAction()
+private fun tileAction(
+    taskType: String,
+    isLoggedIn: Boolean,
+) = if (isLoggedIn) openTaskFormAction(taskType) else openAppAction()
 
 @Composable
 private fun RowLayout(
@@ -119,18 +124,20 @@ private fun RowLayout(
 ) {
     val outer = AddTaskMultiGlanceWidget.OUTER_PADDING
     val gap = AddTaskMultiGlanceWidget.TILE_GAP
-    val tileWidth = ((widthAvailable - outer * 2 - gap * (ADD_TILES.size - 1)) / ADD_TILES.size)
-        .coerceAtLeast(32.dp)
+    val tileWidth =
+        ((widthAvailable - outer * 2 - gap * (ADD_TILES.size - 1)) / ADD_TILES.size)
+            .coerceAtLeast(32.dp)
     val tileHeight = (heightAvailable - outer * 2).coerceAtLeast(32.dp)
     val iconSize = addTileIconSize(minOf(tileWidth, tileHeight))
     val palette = rememberPalette()
 
     Row(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .cornerRadius(AddTaskMultiGlanceWidget.CONTAINER_CORNER_RADIUS)
-            .background(palette.widgetBackground)
-            .padding(outer),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .cornerRadius(AddTaskMultiGlanceWidget.CONTAINER_CORNER_RADIUS)
+                .background(palette.widgetBackground)
+                .padding(outer),
     ) {
         ADD_TILES.forEachIndexed { index, tile ->
             if (index > 0) Spacer(GlanceModifier.width(gap).fillMaxHeight())
@@ -160,11 +167,12 @@ private fun GridLayout(
     val widgetBackground = rememberPalette().widgetBackground
 
     Row(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .cornerRadius(AddTaskMultiGlanceWidget.CONTAINER_CORNER_RADIUS)
-            .background(widgetBackground)
-            .padding(outer),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .cornerRadius(AddTaskMultiGlanceWidget.CONTAINER_CORNER_RADIUS)
+                .background(widgetBackground)
+                .padding(outer),
     ) {
         GridColumn(
             top = ADD_TILES[0],

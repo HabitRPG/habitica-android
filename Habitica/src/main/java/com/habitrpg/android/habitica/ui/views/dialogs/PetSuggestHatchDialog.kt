@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -30,9 +31,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import java.util.Locale
-import androidx.core.graphics.drawable.toDrawable
 
-class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
+class PetSuggestHatchDialog(
+    context: Context,
+) : HabiticaAlertDialog(context) {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface PetSuggestHatchDialogEntryPoint {
@@ -55,7 +57,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         val hiltEntryPoint =
             EntryPointAccessors.fromApplication(
                 context,
-                PetSuggestHatchDialogEntryPoint::class.java
+                PetSuggestHatchDialogEntryPoint::class.java,
             )
         hatchPetUseCase = hiltEntryPoint.useCase()
         userViewModel = hiltEntryPoint.mainUserViewModel()
@@ -78,7 +80,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         potionCount: Int,
         hasUnlockedEgg: Boolean,
         hasUnlockedPotion: Boolean,
-        hasMount: Boolean
+        hasMount: Boolean,
     ) {
         binding.eggView.loadImage("Pet_Egg_${pet.animal}")
         binding.hatchingPotionView.loadImage("Pet_HatchingPotion_${pet.color}")
@@ -94,7 +96,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
             egg?.text ?: pet.animal.replaceFirstChar {
                 if (it.isLowerCase()) {
                     it.titlecase(
-                        Locale.getDefault()
+                        Locale.getDefault(),
                     )
                 } else {
                     it.toString()
@@ -104,7 +106,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
             potion?.text ?: pet.color.replaceFirstChar {
                 if (it.isLowerCase()) {
                     it.titlecase(
-                        Locale.getDefault()
+                        Locale.getDefault(),
                     )
                 } else {
                     it.toString()
@@ -129,7 +131,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 context.getString(
                     R.string.can_hatch_pet,
                     eggName,
-                    potionName
+                    potionName,
                 )
             addButton(R.string.hatch, true, false) { _, _ ->
                 val thisPotion = potion ?: return@addButton
@@ -150,7 +152,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                         context.getString(
                             R.string.suggest_pet_hatch_again_missing_both,
                             eggName,
-                            potionName
+                            potionName,
                         )
                 } else if (!hasEgg) {
                     binding.descriptionView.text =
@@ -159,7 +161,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     binding.descriptionView.text =
                         context.getString(
                             R.string.suggest_pet_hatch_again_missing_potion,
-                            potionName
+                            potionName,
                         )
                 }
             } else {
@@ -168,7 +170,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                         context.getString(
                             R.string.suggest_pet_hatch_missing_both,
                             eggName,
-                            potionName
+                            potionName,
                         )
                 } else if (!hasEgg) {
                     binding.descriptionView.text =
@@ -203,17 +205,19 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 addButton(binding.root, true) { _, _ ->
                     val activity =
                         (getActivity() as? MainActivity) ?: (
-                            HabiticaBaseApplication.getInstance(
-                                context
-                            )?.currentActivity?.get() as? MainActivity
-                            ) ?: return@addButton
+                            HabiticaBaseApplication
+                                .getInstance(
+                                    context,
+                                )?.currentActivity
+                                ?.get() as? MainActivity
+                        ) ?: return@addButton
                     if ((userViewModel.user.value?.gemCount ?: hatchPrice) < hatchPrice) {
                         InsufficientGemsDialog(activity, hatchPrice).show()
                         Analytics.sendEvent(
                             "show insufficient gems modal",
                             EventCategory.BEHAVIOUR,
                             HitType.EVENT,
-                            mapOf("reason" to "pet suggest modal")
+                            mapOf("reason" to "pet suggest modal"),
                         )
                         return@addButton
                     }
@@ -227,7 +231,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                             activity.inventoryRepository.purchaseItem(
                                 "hatchingPotions",
                                 thisPotion.key,
-                                1
+                                1,
                             )
                         }
                         activity.userRepository.retrieveUser(true, forced = true)
@@ -254,15 +258,15 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
     private fun hatchPet(
         potion: HatchingPotion,
-        egg: Egg
+        egg: Egg,
     ) {
         longLivingScope.launchCatching {
             hatchPetUseCase.callInteractor(
                 HatchPetUseCase.RequestValues(
                     potion,
                     egg,
-                    context
-                )
+                    context,
+                ),
             )
         }
     }
@@ -270,7 +274,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
     private fun getItemPrice(
         pet: Animal,
         item: Item?,
-        hasUnlocked: Boolean
+        hasUnlocked: Boolean,
     ): Int {
         if (pet.type == "drop" || (pet.type == "quest" && hasUnlocked)) {
             return item?.value ?: 0

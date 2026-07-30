@@ -20,28 +20,27 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GemPurchaseActivity : PurchaseActivity() {
-
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
     private var showSubscription: Boolean = false
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_gem_purchase
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_gem_purchase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.brand_200))
-        showSubscription = !(intent.extras?.containsKey("openSubscription") == true && intent.extras?.getBoolean("openSubscription") == false)
+        showSubscription =
+            !(intent.extras?.containsKey("openSubscription") == true && intent.extras?.getBoolean("openSubscription") == false)
         super.onCreate(savedInstanceState)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val promo = appConfigManager.activePromo()
-        val color = if (!showSubscription && promo != null) {
-            promo.screenBackgroundColor(this)
-        } else {
-            ContextCompat.getColor(this, R.color.brand_300)
-        }
+        val color =
+            if (!showSubscription && promo != null) {
+                promo.screenBackgroundColor(this)
+            } else {
+                ContextCompat.getColor(this, R.color.brand_300)
+            }
         setupToolbar(toolbar, Color.WHITE, color)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -62,11 +61,12 @@ class GemPurchaseActivity : PurchaseActivity() {
         controller.isAppearanceLightNavigationBars = false
 
         val promo = appConfigManager.activePromo()
-        val color = if (!showSubscription && promo != null) {
-            ContextCompat.getColor(this, R.color.gray_1)
-        } else {
-            ContextCompat.getColor(this, R.color.brand_300)
-        }
+        val color =
+            if (!showSubscription && promo != null) {
+                ContextCompat.getColor(this, R.color.gray_1)
+            } else {
+                ContextCompat.getColor(this, R.color.brand_300)
+            }
         setupToolbar(toolbar, Color.WHITE, color)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             controller.isAppearanceLightStatusBars = false

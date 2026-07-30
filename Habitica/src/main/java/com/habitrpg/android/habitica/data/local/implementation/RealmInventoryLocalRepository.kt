@@ -32,35 +32,38 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class RealmInventoryLocalRepository(realm: Realm) :
-    RealmContentLocalRepository(realm),
+class RealmInventoryLocalRepository(
+    realm: Realm,
+) : RealmContentLocalRepository(realm),
     InventoryLocalRepository {
-    override fun getQuestContent(keys: List<String>): Flow<List<QuestContent>> {
-        return realm.where(QuestContent::class.java)
+    override fun getQuestContent(keys: List<String>): Flow<List<QuestContent>> =
+        realm
+            .where(QuestContent::class.java)
             .`in`("key", keys.toTypedArray())
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
-    override fun getQuestContent(key: String): Flow<QuestContent?> {
-        return realm.where(QuestContent::class.java).equalTo("key", key)
+    override fun getQuestContent(key: String): Flow<QuestContent?> =
+        realm
+            .where(QuestContent::class.java)
+            .equalTo("key", key)
             .findAll()
             .toFlow()
             .filter { content -> content.isLoaded && content.isValid && !content.isEmpty() }
             .map { content -> content.first() }
-    }
 
-    override fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>> {
-        return realm.where(Equipment::class.java)
+    override fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>> =
+        realm
+            .where(Equipment::class.java)
             .`in`("key", searchedKeys.toTypedArray())
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
-    override fun getArmoireRemainingCount(): Flow<Int> {
-        return realm.where(Equipment::class.java)
+    override fun getArmoireRemainingCount(): Flow<Int> =
+        realm
+            .where(Equipment::class.java)
             .equalTo("klass", "armoire")
             .beginGroup()
             .equalTo("owned", false)
@@ -70,43 +73,42 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .findAll()
             .toFlow()
             .map { it.count() }
-    }
 
-    override fun getOwnedEquipment(type: String): Flow<List<Equipment>> {
-        return realm.where(Equipment::class.java)
+    override fun getOwnedEquipment(type: String): Flow<List<Equipment>> =
+        realm
+            .where(Equipment::class.java)
             .equalTo("type", type)
             .equalTo("owned", true)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
-    override fun getOwnedEquipment(): Flow<List<Equipment>> {
-        return realm.where(Equipment::class.java)
+    override fun getOwnedEquipment(): Flow<List<Equipment>> =
+        realm
+            .where(Equipment::class.java)
             .equalTo("owned", true)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
     override fun getEquipmentType(
         type: String,
-        set: String
-    ): Flow<List<Equipment>> {
-        return realm.where(Equipment::class.java)
+        set: String,
+    ): Flow<List<Equipment>> =
+        realm
+            .where(Equipment::class.java)
             .equalTo("type", type)
             .equalTo("gearSet", set)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
     override fun getOwnedItems(
         itemType: String,
         userID: String,
-        includeZero: Boolean
-    ): Flow<List<OwnedItem>> {
-        return queryUser(userID).map {
+        includeZero: Boolean,
+    ): Flow<List<OwnedItem>> =
+        queryUser(userID).map {
             val items =
                 when (itemType) {
                     "eggs" -> it?.items?.eggs
@@ -122,26 +124,30 @@ class RealmInventoryLocalRepository(realm: Realm) :
                 items.filter { it.numberOwned > 0 }
             }
         }
-    }
 
-    override fun getItems(itemClass: Class<out Item>): Flow<List<Item>> {
-        return realm.where(itemClass).findAll().toFlow()
+    override fun getItems(itemClass: Class<out Item>): Flow<List<Item>> =
+        realm
+            .where(itemClass)
+            .findAll()
+            .toFlow()
             .filter { it.isLoaded }
-    }
 
     override fun getItems(
         itemClass: Class<out Item>,
-        keys: Array<String>
-    ): Flow<List<Item>> {
-        return realm.where(itemClass).`in`("key", keys).findAll().toFlow()
+        keys: Array<String>,
+    ): Flow<List<Item>> =
+        realm
+            .where(itemClass)
+            .`in`("key", keys)
+            .findAll()
+            .toFlow()
             .filter { it.isLoaded }
-    }
 
     override fun getOwnedItems(
         userID: String,
-        includeZero: Boolean
-    ): Flow<Map<String, OwnedItem>> {
-        return queryUser(userID)
+        includeZero: Boolean,
+    ): Flow<Map<String, OwnedItem>> =
+        queryUser(userID)
             .filterNotNull()
             .map { user ->
                 val items = HashMap<String, OwnedItem>()
@@ -156,31 +162,32 @@ class RealmInventoryLocalRepository(realm: Realm) :
                     items.filter { it.value.numberOwned > 0 }
                 }
             }
-    }
 
-    override fun getEquipment(key: String): Flow<Equipment> {
-        return realm.where(Equipment::class.java)
+    override fun getEquipment(key: String): Flow<Equipment> =
+        realm
+            .where(Equipment::class.java)
             .equalTo("key", key)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.first() }
-    }
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .mapNotNull { it.first() }
 
-    override fun getMounts(): Flow<List<Mount>> {
-        return realm.where(Mount::class.java)
+    override fun getMounts(): Flow<List<Mount>> =
+        realm
+            .where(Mount::class.java)
             .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
     override fun getMounts(
         type: String?,
         group: String?,
-        color: String?
+        color: String?,
     ): Flow<List<Mount>> {
         var query =
-            realm.where(Mount::class.java)
+            realm
+                .where(Mount::class.java)
                 .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
         if (type != null) {
             query = query.equalTo("animal", type)
@@ -191,35 +198,36 @@ class RealmInventoryLocalRepository(realm: Realm) :
         if (color != null) {
             query = query.equalTo("color", color)
         }
-        return query.findAll()
+        return query
+            .findAll()
             .toFlow()
             .filter { it.isLoaded }
     }
 
-    override fun getOwnedMounts(userID: String): Flow<List<OwnedMount>> {
-        return queryUser(userID)
+    override fun getOwnedMounts(userID: String): Flow<List<OwnedMount>> =
+        queryUser(userID)
             .map { user ->
                 user?.items?.mounts?.filter {
                     it.owned
                 } ?: emptyList()
             }
-    }
 
-    override fun getPets(): Flow<List<Pet>> {
-        return realm.where(Pet::class.java)
+    override fun getPets(): Flow<List<Pet>> =
+        realm
+            .where(Pet::class.java)
             .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
     override fun getPets(
         type: String?,
         group: String?,
-        color: String?
+        color: String?,
     ): Flow<List<Pet>> {
         var query =
-            realm.where(Pet::class.java)
+            realm
+                .where(Pet::class.java)
                 .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
         if (type != null) {
             query = query.equalTo("animal", type)
@@ -230,13 +238,15 @@ class RealmInventoryLocalRepository(realm: Realm) :
         if (color != null) {
             query = query.equalTo("color", color)
         }
-        return query.findAll()
+        return query
+            .findAll()
             .toFlow()
             .filter { it.isLoaded }
     }
 
-    override fun getOwnedPets(userID: String): Flow<List<OwnedPet>> {
-        return realm.where(User::class.java)
+    override fun getOwnedPets(userID: String): Flow<List<OwnedPet>> =
+        realm
+            .where(User::class.java)
             .equalTo("id", userID)
             .findAll()
             .toFlow()
@@ -246,7 +256,6 @@ class RealmInventoryLocalRepository(realm: Realm) :
                     it.trained > 0
                 } ?: emptyList()
             }
-    }
 
     override fun updateOwnedEquipment(user: User) {
     }
@@ -255,7 +264,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         type: String,
         key: String,
         userID: String,
-        amountToAdd: Int
+        amountToAdd: Int,
     ) {
         val item = getOwnedItem(userID, type, key, true).firstOrNull()
         if (item != null) {
@@ -265,7 +274,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
 
     override fun changeOwnedCount(
         item: OwnedItem,
-        amountToAdd: Int?
+        amountToAdd: Int?,
     ) {
         val liveItem = getLiveObject(item) ?: return
         amountToAdd?.let { amount ->
@@ -277,9 +286,9 @@ class RealmInventoryLocalRepository(realm: Realm) :
         userID: String,
         type: String,
         key: String,
-        includeZero: Boolean
-    ): Flow<OwnedItem> {
-        return queryUser(userID)
+        includeZero: Boolean,
+    ): Flow<OwnedItem> =
+        queryUser(userID)
             .filterNotNull()
             .map {
                 var items = (
@@ -290,21 +299,19 @@ class RealmInventoryLocalRepository(realm: Realm) :
                         "quests" -> it.items?.quests
                         else -> emptyList()
                     } ?: emptyList()
-                    )
+                )
                 items = items.filter { it.key == key }
                 if (includeZero) {
                     items
                 } else {
                     items.filter { it.numberOwned > 0 }
                 }
-            }
-            .filter { it.isNotEmpty() }
+            }.filter { it.isNotEmpty() }
             .map { it.first() }
-    }
 
     override fun getItem(
         type: String,
-        key: String
+        key: String,
     ): Flow<Item> {
         val itemClass: Class<out RealmObject> =
             when (type) {
@@ -315,10 +322,13 @@ class RealmInventoryLocalRepository(realm: Realm) :
                 "special" -> SpecialItem::class.java
                 else -> Egg::class.java
             }
-        return realm.where(itemClass).equalTo("key", key)
+        return realm
+            .where(itemClass)
+            .equalTo("key", key)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.firstOrNull() as? Item }
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .mapNotNull { it.firstOrNull() as? Item }
     }
 
     override fun decrementMysteryItemCount(user: User?) {
@@ -339,20 +349,21 @@ class RealmInventoryLocalRepository(realm: Realm) :
         }
     }
 
-    override fun getInAppRewards(): Flow<List<ShopItem>> {
-        return realm.where(ShopItem::class.java)
+    override fun getInAppRewards(): Flow<List<ShopItem>> =
+        realm
+            .where(ShopItem::class.java)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
-    override fun getInAppReward(key: String): Flow<ShopItem> {
-        return realm.where(ShopItem::class.java)
+    override fun getInAppReward(key: String): Flow<ShopItem> =
+        realm
+            .where(ShopItem::class.java)
             .equalTo("key", key)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded }.mapNotNull { it.firstOrNull() }
-    }
+            .filter { it.isLoaded }
+            .mapNotNull { it.firstOrNull() }
 
     override fun saveInAppRewards(onlineItems: List<ShopItem>) {
         val localItems = realm.where(ShopItem::class.java).findAll().createSnapshot()
@@ -369,7 +380,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun hatchPet(
         eggKey: String,
         potionKey: String,
-        userID: String
+        userID: String,
     ) {
         val newPet = OwnedPet()
         newPet.key = "$eggKey-$potionKey"
@@ -388,13 +399,16 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun getLiveObject(obj: OwnedItem): OwnedItem? {
         if (isClosed) return null
         if (!obj.isManaged) return obj
-        return realm.where(OwnedItem::class.java).equalTo("key", obj.key)
-            .equalTo("itemType", obj.itemType).findFirst()
+        return realm
+            .where(OwnedItem::class.java)
+            .equalTo("key", obj.key)
+            .equalTo("itemType", obj.itemType)
+            .findFirst()
     }
 
     override fun save(
         items: Items,
-        userID: String
+        userID: String,
     ) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
         items.setItemTypes()
@@ -406,7 +420,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
     override fun unhatchPet(
         eggKey: String,
         potionKey: String,
-        userID: String
+        userID: String,
     ) {
         val pet = realm.where(OwnedPet::class.java).equalTo("key", "$eggKey-$potionKey").findFirst()
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
@@ -424,7 +438,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         foodKey: String,
         petKey: String,
         feedValue: Int,
-        userID: String
+        userID: String,
     ) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
         val pet = user.items?.pets?.firstOrNull { it.key == petKey } ?: return
@@ -442,8 +456,9 @@ class RealmInventoryLocalRepository(realm: Realm) :
         }
     }
 
-    override fun getLatestMysteryItem(): Flow<Equipment> {
-        return realm.where(Equipment::class.java)
+    override fun getLatestMysteryItem(): Flow<Equipment> =
+        realm
+            .where(Equipment::class.java)
             .contains("key", "mystery_2")
             .sort("mystery", Sort.DESCENDING)
             .findAll()
@@ -455,10 +470,10 @@ class RealmInventoryLocalRepository(realm: Realm) :
                     equipment.key?.contains(format.format(Date())) == true
                 }
             }
-    }
 
-    private fun getLatestMysterySet(): Flow<EquipmentSet?> {
-        return realm.where(EquipmentSet::class.java)
+    private fun getLatestMysterySet(): Flow<EquipmentSet?> =
+        realm
+            .where(EquipmentSet::class.java)
             .sort("key", Sort.DESCENDING)
             .findAll()
             .toFlow()
@@ -469,20 +484,19 @@ class RealmInventoryLocalRepository(realm: Realm) :
                     set.key.contains(dateString)
                 }
             }
-    }
 
-    override fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>> {
-        return getLatestMysteryItem().combine(getLatestMysterySet()) { item, set ->
+    override fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>> =
+        getLatestMysteryItem().combine(getLatestMysterySet()) { item, set ->
             Pair(item, set)
         }
-    }
 
     override fun soldItem(
         userID: String,
-        updatedUser: User
+        updatedUser: User,
     ): User {
         val user =
-            realm.where(User::class.java)
+            realm
+                .where(User::class.java)
                 .equalTo("id", userID)
                 .findFirst() ?: return updatedUser
         executeTransaction {
@@ -503,42 +517,46 @@ class RealmInventoryLocalRepository(realm: Realm) :
         return user
     }
 
-    override fun getAvailableLimitedItems(): Flow<List<Item>> {
-        return realm.where(Egg::class.java)
+    override fun getAvailableLimitedItems(): Flow<List<Item>> =
+        realm
+            .where(Egg::class.java)
             .lessThan("event.start", Date())
             .greaterThan("event.end", Date())
-            .findAll().toFlow()
+            .findAll()
+            .toFlow()
             .map {
                 val items = mutableListOf<Item>()
                 items.addAll(it)
                 items
-            }
-            .combine(
-                realm.where(Food::class.java)
+            }.combine(
+                realm
+                    .where(Food::class.java)
                     .lessThan("event.start", Date())
                     .greaterThan("event.end", Date())
-                    .findAll().toFlow()
+                    .findAll()
+                    .toFlow(),
+            ) { items, food ->
+                items.addAll(food)
+                items
+            }.combine(
+                realm
+                    .where(HatchingPotion::class.java)
+                    .lessThan("event.start", Date())
+                    .greaterThan("event.end", Date())
+                    .findAll()
+                    .toFlow(),
+            ) { items, food ->
+                items.addAll(food)
+                items
+            }.combine(
+                realm
+                    .where(QuestContent::class.java)
+                    .lessThan("event.start", Date())
+                    .greaterThan("event.end", Date())
+                    .findAll()
+                    .toFlow(),
             ) { items, food ->
                 items.addAll(food)
                 items
             }
-            .combine(
-                realm.where(HatchingPotion::class.java)
-                    .lessThan("event.start", Date())
-                    .greaterThan("event.end", Date())
-                    .findAll().toFlow()
-            ) { items, food ->
-                items.addAll(food)
-                items
-            }
-            .combine(
-                realm.where(QuestContent::class.java)
-                    .lessThan("event.start", Date())
-                    .greaterThan("event.end", Date())
-                    .findAll().toFlow()
-            ) { items, food ->
-                items.addAll(food)
-                items
-            }
-    }
 }

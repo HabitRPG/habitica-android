@@ -18,13 +18,14 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 
-class RealmTaskLocalRepository(realm: Realm) :
-    RealmBaseLocalRepository(realm),
+class RealmTaskLocalRepository(
+    realm: Realm,
+) : RealmBaseLocalRepository(realm),
     TaskLocalRepository {
     override fun getTasks(
         taskType: TaskType,
         userID: String,
-        includedGroupIDs: Array<String>
+        includedGroupIDs: Array<String>,
     ): Flow<List<Task>> {
         if (realm.isClosed) return emptyFlow()
         return findTasks(taskType, userID)
@@ -34,18 +35,20 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     private fun findTasks(
         taskType: TaskType,
-        ownerID: String
-    ): RealmResults<Task> {
-        return realm.where(Task::class.java)
+        ownerID: String,
+    ): RealmResults<Task> =
+        realm
+            .where(Task::class.java)
             .equalTo("typeValue", taskType.value)
             .equalTo("ownerID", ownerID)
             .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
-    }
 
     override fun getTasks(userId: String): Flow<List<Task>> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(Task::class.java).equalTo("ownerID", userId)
+        return realm
+            .where(Task::class.java)
+            .equalTo("ownerID", userId)
             .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
             .toFlow()
@@ -55,7 +58,7 @@ class RealmTaskLocalRepository(realm: Realm) :
     override fun saveTasks(
         ownerID: String,
         tasksOrder: TasksOrder,
-        tasks: TaskList
+        tasks: TaskList,
     ) {
         val sortedTasks = mutableListOf<Task>()
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.habits))
@@ -85,7 +88,7 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     override fun saveCompletedTodos(
         userId: String,
-        tasks: MutableCollection<Task>
+        tasks: MutableCollection<Task>,
     ) {
         removeCompletedTodos(userId, tasks)
         executeTransaction { realm1 -> realm1.insertOrUpdate(tasks) }
@@ -113,7 +116,7 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     private fun sortTasks(
         taskMap: MutableMap<String, Task>,
-        taskOrder: List<String>
+        taskOrder: List<String>,
     ): List<Task> {
         val taskList = ArrayList<Task>()
         var position = 0
@@ -131,11 +134,12 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     private fun removeOldTasks(
         ownerID: String,
-        onlineTaskList: List<Task>
+        onlineTaskList: List<Task>,
     ) {
         if (realm.isClosed) return
         val localTasks =
-            realm.where(Task::class.java)
+            realm
+                .where(Task::class.java)
                 .equalTo("ownerID", ownerID)
                 .beginGroup()
                 .beginGroup()
@@ -157,10 +161,11 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     private fun removeCompletedTodos(
         userID: String,
-        onlineTaskList: MutableCollection<Task>
+        onlineTaskList: MutableCollection<Task>,
     ) {
         val localTasks =
-            realm.where(Task::class.java)
+            realm
+                .where(Task::class.java)
                 .equalTo("ownerID", userID)
                 .equalTo("typeValue", TaskType.TODO.value)
                 .equalTo("completed", true)
@@ -187,8 +192,13 @@ class RealmTaskLocalRepository(realm: Realm) :
         if (realm.isClosed) {
             return emptyFlow()
         }
-        return realm.where(Task::class.java).equalTo("id", taskId).findAll().toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.first() }
+        return realm
+            .where(Task::class.java)
+            .equalTo("id", taskId)
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .mapNotNull { it.first() }
     }
 
     override fun getTaskCopy(taskId: String): Flow<Task> {
@@ -204,7 +214,7 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     override fun markTaskCompleted(
         taskId: String,
-        isCompleted: Boolean
+        isCompleted: Boolean,
     ) {
         val task = realm.where(Task::class.java).equalTo("id", taskId).findFirst()
         executeTransaction { task?.completed = isCompleted }
@@ -212,7 +222,7 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     override fun swapTaskPosition(
         firstPosition: Int,
-        secondPosition: Int
+        secondPosition: Int,
     ) {
         val firstTask = realm.where(Task::class.java).equalTo("position", firstPosition).findFirst()
         val secondTask =
@@ -227,20 +237,23 @@ class RealmTaskLocalRepository(realm: Realm) :
 
     override fun getTaskAtPosition(
         taskType: String,
-        position: Int
-    ): Flow<Task> {
-        return realm.where(Task::class.java).equalTo("typeValue", taskType)
+        position: Int,
+    ): Flow<Task> =
+        realm
+            .where(Task::class.java)
+            .equalTo("typeValue", taskType)
             .equalTo("position", position)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }.mapNotNull { it.first() }
-    }
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .mapNotNull { it.first() }
 
     override fun updateIsdue(daily: TaskList): TaskList {
         val tasks =
             realm.where(Task::class.java).equalTo("typeValue", TaskType.DAILY.value).findAll()
         realm.beginTransaction()
-        tasks.filter { daily.tasks.containsKey(it.id) }
+        tasks
+            .filter { daily.tasks.containsKey(it.id) }
             .forEach { it.isDue = daily.tasks[it.id]?.isDue }
         realm.commitTransaction()
         return daily
@@ -250,39 +263,41 @@ class RealmTaskLocalRepository(realm: Realm) :
         if (taskOrder.isNotEmpty()) {
             val tasks = realm.where(Task::class.java).`in`("id", taskOrder.toTypedArray()).findAll()
             executeTransaction { _ ->
-                tasks.filter { taskOrder.contains(it.id) }
+                tasks
+                    .filter { taskOrder.contains(it.id) }
                     .forEach { it.position = taskOrder.indexOf(it.id) }
             }
         }
     }
 
-    override fun getErroredTasks(userID: String): Flow<List<Task>> {
-        return realm.where(Task::class.java)
+    override fun getErroredTasks(userID: String): Flow<List<Task>> =
+        realm
+            .where(Task::class.java)
             .equalTo("ownerID", userID)
             .equalTo("hasErrored", true)
             .sort("position")
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
-    override fun getUser(userID: String): Flow<User> {
-        return realm.where(User::class.java)
+    override fun getUser(userID: String): Flow<User> =
+        realm
+            .where(User::class.java)
             .equalTo("id", userID)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }.mapNotNull { users -> users.first() }
-    }
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+            .mapNotNull { users -> users.first() }
 
     override fun getTasksForChallenge(
         challengeID: String?,
-        userID: String?
-    ): Flow<List<Task>> {
-        return realm.where(Task::class.java)
+        userID: String?,
+    ): Flow<List<Task>> =
+        realm
+            .where(Task::class.java)
             .equalTo("challengeID", challengeID)
             .equalTo("ownerID", userID)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 }

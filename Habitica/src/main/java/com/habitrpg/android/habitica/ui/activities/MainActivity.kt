@@ -136,28 +136,37 @@ import kotlin.time.toDuration
 var mainActivityCreatedAt: Date? = null
 
 @AndroidEntryPoint
-open class MainActivity : BaseActivity(), SnackbarActivity {
+open class MainActivity :
+    BaseActivity(),
+    SnackbarActivity {
     private var launchScreen: String? = null
 
     @Inject
     internal lateinit var apiClient: ApiClient
+
     @Inject
     internal lateinit var soundManager: SoundManager
+
     @Inject
     internal lateinit var displayItemDropUseCase: DisplayItemDropUseCase
+
     @Inject
     internal lateinit var notifyUserUseCase: NotifyUserUseCase
+
     @Inject
     internal lateinit var taskRepository: TaskRepository
+
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
     lateinit var binding: ActivityMainBinding
-    
+
     val snackbarContainer: ViewGroup
         get() = binding.content.snackbarContainer
 
@@ -197,14 +206,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+            ActivityResultContracts.RequestPermission(),
         ) { granted ->
             if (granted) {
                 viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
             } else {
                 viewModel.updateAllowPushNotifications(false)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+                !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)
+            ) {
                 val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager ?: return@registerForActivityResult
                 if (!alarmManager.canScheduleExactAlarms()) {
                     val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
@@ -224,9 +235,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     val isAppBarExpanded: Boolean
         get() = binding.content.appbar.height - binding.content.appbar.bottom == 0
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_main
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -251,7 +260,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val step = preferences.getInt("last_onboarding_step", 0)
         if (!viewModel.isAuthenticated ||
             step == OnboardingSteps.SETUP.id ||
-            step == OnboardingSteps.USERNAME.id){
+            step == OnboardingSteps.USERNAME.id
+        ) {
             val intent = Intent(this, OnboardingActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
@@ -291,7 +301,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     this,
                     foundDrawerLayout,
                     R.string.navigation_drawer_open,
-                    R.string.navigation_drawer_close
+                    R.string.navigation_drawer_close,
                 ) {}
             // Set the drawer toggle as the DrawerListener
             drawerToggle?.let { foundDrawerLayout.addDrawerListener(it) }
@@ -301,7 +311,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
                     override fun onDrawerSlide(
                         drawerView: View,
-                        slideOffset: Float
+                        slideOffset: Float,
                     ) {
                         if (slideOffset < 0.5f && isOpeningDrawer == null) {
                             if (!isUsingNightModeResources()) {
@@ -315,7 +325,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                             if (!isUsingNightModeResources()) {
                                 window.updateStatusBarColor(
                                     getThemeColor(R.attr.headerBackgroundColor),
-                                    true
+                                    true,
                                 )
                             }
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -343,7 +353,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
                     override fun onDrawerStateChanged(newState: Int) {
                     }
-                }
+                },
             )
 
             updateDrawerBehavior()
@@ -360,7 +370,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             HabiticaTheme {
                 val user by viewModel.user.observeAsState(null)
                 val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(
-                    null
+                    null,
                 )
                 val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
                 val canShowTeamHeader: Boolean by viewModel.canShowTeamPlanHeader
@@ -375,20 +385,20 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                 Modifier
                                     .fillMaxWidth()
                                     .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.8f)
-                                    .padding(22.dp)
+                                    .padding(22.dp),
                             ) {
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.spacedBy(4.dp),
-                                    modifier = Modifier.verticalScroll(rememberScrollState())
+                                    modifier = Modifier.verticalScroll(rememberScrollState()),
                                 ) {
                                     ComposableAvatarView(
                                         avatar = user,
-                                        configManager = appConfigManager
+                                        configManager = appConfigManager,
                                     )
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,
-                                        verticalArrangement = Arrangement.spacedBy(15.dp)
+                                        verticalArrangement = Arrangement.spacedBy(15.dp),
                                     ) {
                                         HabiticaButton(
                                             background = HabiticaTheme.colors.tintedUiSub,
@@ -398,10 +408,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                                 dismiss()
                                                 MainNavigationController.navigate(
                                                     MainNavDirections.openProfileActivity(
-                                                        user?.id ?: ""
-                                                    )
+                                                        user?.id ?: "",
+                                                    ),
                                                 )
-                                            }
+                                            },
                                         ) {
                                             Text(stringResource(id = R.string.open_profile))
                                         }
@@ -413,7 +423,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                             onClick = {
                                                 dismiss()
                                                 MainNavigationController.navigate(R.id.avatarOverviewFragment)
-                                            }
+                                            },
                                         ) {
                                             Text(stringResource(id = R.string.customize_avatar))
                                         }
@@ -432,12 +442,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                                                 this@MainActivity,
                                                                 it,
                                                                 "Check out my avatar on Habitica!",
-                                                                "avatar_bottomsheet"
-                                                            )
+                                                                "avatar_bottomsheet",
+                                                            ),
                                                         )
                                                     }
                                                 }
-                                            }
+                                            },
                                         ) {
                                             Text(stringResource(id = R.string.share_avatar))
                                         }
@@ -454,7 +464,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                 Modifier
                                     .fillMaxWidth()
                                     .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.8f)
-                                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
                             ) {
                                 GroupPlanMemberList(members, group, appConfigManager) { member ->
                                     onClose()
@@ -471,7 +481,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         intent.putExtras(bundle)
                         classSelectionResult.launch(intent)
                     },
-                    configManager = appConfigManager
+                    configManager = appConfigManager,
                 )
             }
         }
@@ -489,7 +499,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private fun updateToolbarTitle(
         destination: NavDestination,
-        arguments: Bundle?
+        arguments: Bundle?,
     ) {
         viewModel.getToolbarTitle(destination.id, destination.label, arguments?.getString("type")) {
             title = it
@@ -509,7 +519,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             NotificationChannel(
                 channelId,
                 "Habitica Notifications",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_DEFAULT,
             )
         val manager = getSystemService(NotificationManager::class.java)
         manager?.createNotificationChannel(channel)
@@ -522,7 +532,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     0,
                     0,
                     0,
-                    binding.content.bottomNavigation.barHeight + 12.dpToPx(this)
+                    binding.content.bottomNavigation.barHeight + 12.dpToPx(this),
                 )
             } else {
                 snackbarContainer.setPadding(0, 0, 0, 0)
@@ -544,13 +554,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         updateDrawerBehavior()
     }
 
-    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean, newConfig: Configuration) {
+    override fun onMultiWindowModeChanged(
+        isInMultiWindowMode: Boolean,
+        newConfig: Configuration,
+    ) {
         super.onMultiWindowModeChanged(isInMultiWindowMode, newConfig)
         updateDrawerBehavior()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
             true
         } else if (item.itemId == android.R.id.home) {
             if (showBackButton == true) {
@@ -562,7 +575,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         } else {
             super.onOptionsItemSelected(item)
         }
-    }
 
     override fun onResume() {
         super.onResume()
@@ -583,7 +595,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
             updateToolbarTitle(
                 destination,
-                arguments
+                arguments,
             )
         }
 
@@ -608,9 +620,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen !=
             intent.getLongExtra(
-                    "notificationTimeStamp",
-                    0
-                )
+                "notificationTimeStamp",
+                0,
+            )
         ) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
@@ -621,7 +633,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     "open notification",
                     EventCategory.BEHAVIOUR,
                     HitType.EVENT,
-                    additionalData
+                    additionalData,
                 )
             }
             retrieveUser(true)
@@ -631,7 +643,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         launchTrace?.stop()
         launchTrace = null
 
-        if (binding.content.toolbarTitle.text?.isNotBlank() != true) {
+        if (binding.content.toolbarTitle.text
+                ?.isNotBlank() != true
+        ) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
 
@@ -668,7 +682,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     override fun startActivity(
         intent: Intent?,
-        options: Bundle?
+        options: Bundle?,
     ) {
         resumeFromActivity = true
         super.startActivity(intent, options)
@@ -686,7 +700,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val intent = Intent(this, widgetClass)
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         val ids =
-            AppWidgetManager.getInstance(application)
+            AppWidgetManager
+                .getInstance(application)
                 .getAppWidgetIds(ComponentName(application, widgetClass))
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(intent)
@@ -705,20 +720,24 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             val savedLanguagePref = sharedPreferences.getString("language", null)
 
             val currentAppLocale = AppCompatDelegate.getApplicationLocales()
-            val currentAppLanguageTag = if (!currentAppLocale.isEmpty) {
-                currentAppLocale[0]?.toLanguageTag()
-            } else null
+            val currentAppLanguageTag =
+                if (!currentAppLocale.isEmpty) {
+                    currentAppLocale[0]?.toLanguageTag()
+                } else {
+                    null
+                }
 
-            val currentAppLanguagePref = when (currentAppLanguageTag) {
-                "iw" -> "iw"
-                "hr-HR" -> "hr"
-                "in" -> "in"
-                "pt-PT" -> "pt"
-                "pt-BR" -> "pt_BR"
-                "en-GB" -> "en_GB"
-                "zh-TW" -> "zh_TW"
-                else -> currentAppLanguageTag?.replace("-", "_")
-            }
+            val currentAppLanguagePref =
+                when (currentAppLanguageTag) {
+                    "iw" -> "iw"
+                    "hr-HR" -> "hr"
+                    "in" -> "in"
+                    "pt-PT" -> "pt"
+                    "pt-BR" -> "pt_BR"
+                    "en-GB" -> "en_GB"
+                    "zh-TW" -> "zh_TW"
+                    else -> currentAppLanguageTag?.replace("-", "_")
+                }
 
             if (savedLanguagePref != null) {
                 val savedLanguageTag = LanguageHelper.getLanguageTag(savedLanguagePref)
@@ -757,7 +776,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
             CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
             CrashReporter.setCustomKey("timezone_offset", "${user.preferences?.timezoneOffset ?: 0}")
-            
+
             handleAnalyticsConsent(user)
 
             displayDeathDialogIfNeeded()
@@ -767,13 +786,14 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             if (quest?.completed?.isNotBlank() == true) {
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     val questContent =
-                        inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "")
+                        inventoryRepository
+                            .getQuestContent(user.party?.quest?.completed ?: "")
                             .firstOrNull()
                     if (questContent != null) {
                         QuestCompletedDialog.showWithQuest(
                             this@MainActivity,
                             questContent,
-                            userRepository
+                            userRepository,
                         )
                     }
                     viewModel.updateUser("party.quest.completed", "")
@@ -810,7 +830,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
-
     public override fun onDestroy() {
         userRepository.close()
         inventoryRepository.close()
@@ -836,8 +855,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         data.manaDelta,
                         damageValue,
                         data.hasLeveledUp,
-                        data.level
-                    )
+                        data.level,
+                    ),
                 )
             }
         }
@@ -849,8 +868,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     data,
                     this@MainActivity,
                     snackbarContainer,
-                    showItemsFound
-                )
+                    showItemsFound,
+                ),
             )
         }
     }
@@ -870,74 +889,75 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
                 if (deathOverlayComposeView == null) {
                     val rootLayout = binding.root as? ViewGroup
-                    deathOverlayComposeView = ComposeView(this@MainActivity).apply {
-                        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                        setContent {
-                            HabiticaTheme {
-                                val user by viewModel.user.observeAsState(null)
-                                DeathOverlay(
-                                    isVisible = showDeathOverlay,
-                                    user = user,
-                                    appConfigManager = appConfigManager,
-                                    sharedPreferences = sharedPreferences,
-                                    onSubscribeClick = {
-                                        Analytics.sendEvent(
-                                            "View death sub CTA",
-                                            EventCategory.BEHAVIOUR,
-                                            HitType.EVENT
-                                        )
-                                        val subscriptionBottomSheet =
-                                            EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                                eventType =
-                                                    EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
-                                            }
-                                        subscriptionBottomSheet.show(
-                                            supportFragmentManager,
-                                            EventOutcomeSubscriptionBottomSheetFragment.TAG
-                                        )
-                                    },
-                                    onUseSecondChanceClick = {
-                                        Analytics.sendEvent(
-                                            "second chance perk",
-                                            EventCategory.BEHAVIOUR,
-                                            HitType.EVENT
-                                        )
-                                        sharedPreferences.edit {
-                                            putLong("last_sub_revive", Date().time)
-                                        }
-                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                            userRepository.updateUser("stats.hp", 1)
-                                            delay(1.seconds)
-                                            HabiticaSnackbar.showSnackbar(
-                                                snackbarContainer,
-                                                getString(R.string.subscriber_benefit_success_faint),
-                                                HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
-                                                isSubscriberBenefit = true,
-                                                duration = 2500
+                    deathOverlayComposeView =
+                        ComposeView(this@MainActivity).apply {
+                            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                            setContent {
+                                HabiticaTheme {
+                                    val user by viewModel.user.observeAsState(null)
+                                    DeathOverlay(
+                                        isVisible = showDeathOverlay,
+                                        user = user,
+                                        appConfigManager = appConfigManager,
+                                        sharedPreferences = sharedPreferences,
+                                        onSubscribeClick = {
+                                            Analytics.sendEvent(
+                                                "View death sub CTA",
+                                                EventCategory.BEHAVIOUR,
+                                                HitType.EVENT,
                                             )
-                                        }
-                                    },
-                                    onRefillHealthClick = {
-                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                            val brokenItem = userRepository.revive()
-                                            if (brokenItem != null) {
-                                                delay(500.milliseconds)
+                                            val subscriptionBottomSheet =
+                                                EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                                    eventType =
+                                                        EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
+                                                }
+                                            subscriptionBottomSheet.show(
+                                                supportFragmentManager,
+                                                EventOutcomeSubscriptionBottomSheetFragment.TAG,
+                                            )
+                                        },
+                                        onUseSecondChanceClick = {
+                                            Analytics.sendEvent(
+                                                "second chance perk",
+                                                EventCategory.BEHAVIOUR,
+                                                HitType.EVENT,
+                                            )
+                                            sharedPreferences.edit {
+                                                putLong("last_sub_revive", Date().time)
+                                            }
+                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                                userRepository.updateUser("stats.hp", 1)
+                                                delay(1.seconds)
                                                 HabiticaSnackbar.showSnackbar(
                                                     snackbarContainer,
-                                                    getString(R.string.revive_broken_equipment, brokenItem.text),
-                                                    HabiticaSnackbar.SnackbarDisplayType.BLACK
+                                                    getString(R.string.subscriber_benefit_success_faint),
+                                                    HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
+                                                    isSubscriberBenefit = true,
+                                                    duration = 2500,
                                                 )
                                             }
-                                        }
-                                    },
-                                    onAnimationComplete = {},
-                                    onDismissComplete = {
-                                        showDeathOverlay = false
-                                    }
-                                )
+                                        },
+                                        onRefillHealthClick = {
+                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                                val brokenItem = userRepository.revive()
+                                                if (brokenItem != null) {
+                                                    delay(500.milliseconds)
+                                                    HabiticaSnackbar.showSnackbar(
+                                                        snackbarContainer,
+                                                        getString(R.string.revive_broken_equipment, brokenItem.text),
+                                                        HabiticaSnackbar.SnackbarDisplayType.BLACK,
+                                                    )
+                                                }
+                                            }
+                                        },
+                                        onAnimationComplete = {},
+                                        onDismissComplete = {
+                                            showDeathOverlay = false
+                                        },
+                                    )
+                                }
                             }
                         }
-                    }
                     rootLayout?.addView(deathOverlayComposeView)
                 }
 
@@ -948,7 +968,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     override fun onKeyUp(
         keyCode: Int,
-        event: KeyEvent
+        event: KeyEvent,
     ): Boolean {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             drawerFragment?.openDrawer()
@@ -965,7 +985,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     fun displayTutorialStep(
         step: TutorialStep,
         texts: List<String>,
-        canBeDeferred: Boolean
+        canBeDeferred: Boolean,
     ) {
         val view = TutorialView(this, step, viewModel)
         view.setTutorialTexts(texts)
@@ -1003,7 +1023,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private fun createMaintenanceIntent(
         maintenanceResponse: MaintenanceResponse,
-        isDeprecationNotice: Boolean
+        isDeprecationNotice: Boolean,
     ): Intent {
         val intent = Intent(this, MaintenanceActivity::class.java)
         val data = Bundle()
@@ -1015,9 +1035,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return intent
     }
 
-    override fun snackbarContainer(): ViewGroup {
-        return snackbarContainer
-    }
+    override fun snackbarContainer(): ViewGroup = snackbarContainer
 
     private var errorJob: Job? = null
 
@@ -1025,13 +1043,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         errorCount: Int,
         title: String?,
         message: String,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         if (errorCount == 1 && !isFromUserInput) {
             showSnackbar(
                 title = title,
                 content = message,
-                displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE
+                displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE,
             )
         } else if (title != null) {
             super.showConnectionProblem(errorCount, title, message, isFromUserInput)
@@ -1063,23 +1081,24 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     fun updateToolbarInteractivity(titleInteractive: Boolean) {
         viewModel.canShowTeamPlanHeader.value = titleInteractive
-        binding.content.toolbarTitle.background?.alpha = if (titleInteractive) 255 else 0
+        binding.content.toolbarTitle.background
+            ?.alpha = if (titleInteractive) 255 else 0
         if (titleInteractive) {
             binding.content.toolbarTitle.setScaledPadding(this, 16, 4, 16, 4)
         } else {
             binding.content.toolbarTitle.setPadding(0)
         }
     }
-    
+
     private fun handleAnalyticsConsent(user: User) {
         Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
-        
+
         when (user.preferences?.analyticsConsent) {
             true -> {
                 Analytics.identify(sharedPreferences)
                 user.id?.let { Analytics.setUserID(it) }
                 Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
-                
+
                 if (sharedPreferences.getBoolean("pending_registration_event", false)) {
                     sharedPreferences.edit { remove("pending_registration_event") }
                 }
@@ -1087,9 +1106,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
                     sharedPreferences.edit { remove("pending_login_event") }
                 }
-                
+
                 sharedPreferences.edit { putBoolean("analytics_consent_given", true) }
             }
+
             false -> {
                 sharedPreferences.edit {
                     remove("pending_registration_event")
@@ -1107,11 +1127,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val contentView = binding.content.root
 
         val config = resources.configuration
-        val shouldBePersistent = if (isInMultiWindowMode) {
-            config.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
-        } else {
-            config.smallestScreenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
-        }
+        val shouldBePersistent =
+            if (isInMultiWindowMode) {
+                config.screenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+            } else {
+                config.smallestScreenWidthDp >= PERSISTENT_DRAWER_MIN_WIDTH_DP
+            }
 
         if (isPersistentDrawerMode != null && shouldBePersistent == isPersistentDrawerMode) return
         isPersistentDrawerMode = shouldBePersistent

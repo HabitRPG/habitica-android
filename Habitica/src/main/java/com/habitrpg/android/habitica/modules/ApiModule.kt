@@ -28,21 +28,15 @@ open class ApiModule {
     fun providesHostConfig(
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
-        @ApplicationContext context: Context
-    ): HostConfig {
-        return HostConfig(sharedPreferences, keyHelper, context)
-    }
+        @ApplicationContext context: Context,
+    ): HostConfig = HostConfig(sharedPreferences, keyHelper, context)
 
     @Provides
-    fun providesGsonConverterFactory(): GsonConverterFactory {
-        return createGsonFactory()
-    }
+    fun providesGsonConverterFactory(): GsonConverterFactory = createGsonFactory()
 
     @Provides
     @Singleton
-    fun providesPopupNotificationsManager(): NotificationsManager {
-        return MainNotificationsManager()
-    }
+    fun providesPopupNotificationsManager(): NotificationsManager = MainNotificationsManager()
 
     @Provides
     @Singleton
@@ -50,14 +44,14 @@ open class ApiModule {
         gsonConverter: GsonConverterFactory,
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): ApiClient {
         val apiClient =
             ApiClientImpl(
                 gsonConverter,
                 hostConfig,
                 notificationsManager,
-                context
+                context,
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient
@@ -66,7 +60,8 @@ open class ApiModule {
     @Provides
     fun providesMaintenanceApiService(gsonConverter: GsonConverterFactory): MaintenanceApiService {
         val adapter =
-            Retrofit.Builder()
+            Retrofit
+                .Builder()
                 .baseUrl("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
                 .addConverterFactory(gsonConverter)
                 .build()

@@ -24,40 +24,42 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 
 @Composable
-fun LoginInitialButtons(onLoginClicked: () -> Unit,
-                        onRegisterClicked: () -> Unit,
-                        onGoogleLoginClicked: () -> Unit,
-                        modifier: Modifier = Modifier.Companion
+fun LoginInitialButtons(
+    onLoginClicked: () -> Unit,
+    onRegisterClicked: () -> Unit,
+    onGoogleLoginClicked: () -> Unit,
+    modifier: Modifier = Modifier.Companion,
 ) {
     Column(
         horizontalAlignment = Alignment.Companion.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Button(
             {
                 onGoogleLoginClicked()
             },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Companion.White,
-                contentColor = colorResource(R.color.gray_50)
-            ),
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = Color.Companion.White,
+                    contentColor = colorResource(R.color.gray_50),
+                ),
             shape = HabiticaTheme.shapes.large,
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier.Companion.widthIn(max = 480.dp).fillMaxWidth()
+            modifier = Modifier.Companion.widthIn(max = 480.dp).fillMaxWidth(),
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.Companion.CenterVertically
+                verticalAlignment = Alignment.Companion.CenterVertically,
             ) {
                 Image(
                     painterResource(R.drawable.googleg_standard_color_18),
-                    contentDescription = null
+                    contentDescription = null,
                 )
                 Text(
                     stringResource(R.string.continue_with_google),
                     fontWeight = FontWeight.Companion.Bold,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
             }
         }
@@ -65,23 +67,24 @@ fun LoginInitialButtons(onLoginClicked: () -> Unit,
             {
                 onRegisterClicked()
             },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Companion.White,
-                contentColor = colorResource(R.color.gray_50)
-            ),
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = Color.Companion.White,
+                    contentColor = colorResource(R.color.gray_50),
+                ),
             shape = HabiticaTheme.shapes.large,
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier.Companion.widthIn(max = 480.dp).fillMaxWidth()
+            modifier = Modifier.Companion.widthIn(max = 480.dp).fillMaxWidth(),
         ) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.Companion.CenterVertically
+                verticalAlignment = Alignment.Companion.CenterVertically,
             ) {
                 Image(painterResource(R.drawable.ic_email_color), contentDescription = null)
                 Text(
                     stringResource(R.string.continue_with_email),
                     fontWeight = FontWeight.Companion.Bold,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
             }
         }
@@ -91,16 +94,19 @@ fun LoginInitialButtons(onLoginClicked: () -> Unit,
             },
             colors = ButtonDefaults.textButtonColors(),
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier.Companion.fillMaxWidth()
+            modifier = Modifier.Companion.fillMaxWidth(),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
                     stringResource(R.string.already_have_an_account),
                     color = colorResource(R.color.brand_600),
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
-                Text(stringResource(R.string.login_btn), color = colorResource(R.color.white),
-                    fontSize = 18.sp)
+                Text(
+                    stringResource(R.string.login_btn),
+                    color = colorResource(R.color.white),
+                    fontSize = 18.sp,
+                )
             }
         }
     }

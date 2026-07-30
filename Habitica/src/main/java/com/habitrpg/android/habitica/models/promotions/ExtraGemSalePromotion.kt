@@ -23,7 +23,10 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
+abstract class ExtraGemSalePromotion(
+    startDate: Date?,
+    endDate: Date?,
+) : HabiticaPromotion() {
     override val promoType = PromoType.GEMS_AMOUNT
     override val startDate = startDate ?: DateUtils.createDate(2020, 8, 22)
     override val endDate = endDate ?: DateUtils.createDate(2020, 8, 30)
@@ -32,18 +35,13 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
 
     open val amountTextColor = "#FEDEAD".toColorInt()
 
-    override fun screenBackgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.gray_1)
-    }
+    override fun screenBackgroundColor(context: Context): Int = ContextCompat.getColor(context, R.color.gray_1)
 
-    override fun backgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.gray_10)
-    }
+    override fun backgroundColor(context: Context): Int = ContextCompat.getColor(context, R.color.gray_10)
 
-    override fun promoBackgroundDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_10)
+    override fun promoBackgroundDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_gray_10)
             ?: ShapeDrawable()
-    }
 
     open val promoMenuLeftRes = R.drawable.gem_promo_banner_left
     open val promoMenuRightRes = R.drawable.gem_promo_banner_right
@@ -57,7 +55,7 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
 
         view.setDecoration(
             ContextCompat.getDrawable(context, promoMenuLeftRes),
-            ContextCompat.getDrawable(context, promoMenuRightRes)
+            ContextCompat.getDrawable(context, promoMenuRightRes),
         )
 
         view.binding.button.backgroundTintList =
@@ -83,27 +81,27 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                promoBannerLeftRes
-            )
+                promoBannerLeftRes,
+            ),
         )
         binding.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                promoBannerRightRes
-            )
+                promoBannerRightRes,
+            ),
         )
         binding.promoBannerTitleImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                titleRes
-            )
+                titleRes,
+            ),
         )
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
         binding.promoBannerDurationView.text =
             context.getString(
                 R.string.x_to_y,
                 formatter.format(startDate),
-                formatter.format(endDate)
+                formatter.format(endDate),
             )
         binding.promoBannerDurationView.setTextColor("#FEE2B6".toColorInt())
     }
@@ -119,7 +117,7 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
     @SuppressLint("SetTextI18n")
     override fun configureGemView(
         binding: PurchaseGemViewBinding,
-        regularAmount: Int
+        regularAmount: Int,
     ) {
         val context = binding.root.context
         binding.root.background = promoBackgroundDrawable(context)
@@ -151,7 +149,9 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
                 binding.decoImage.setImageResource(gems84SparkleRes)
             }
 
-            else -> regularAmount.toString()
+            else -> {
+                regularAmount.toString()
+            }
         }
     }
 
@@ -163,27 +163,31 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
         val binding = fragment.binding ?: return
         binding.root.setBackgroundColor(screenBackgroundColor(context))
         (fragment.activity as? BaseActivity)?.let { activity ->
-            ToolbarColorHelper.colorizeToolbar(activity.findViewById(R.id.toolbar), activity, backgroundColor = screenBackgroundColor(context))
+            ToolbarColorHelper.colorizeToolbar(
+                activity.findViewById(R.id.toolbar),
+                activity,
+                backgroundColor = screenBackgroundColor(context),
+            )
             activity.findViewById<View>(R.id.appbar)?.setBackgroundColor(screenBackgroundColor(context))
         }
         binding.promoBanner.background = promoBackgroundDrawable(context)
         binding.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                promoInfoLeftRes
-            )
+                promoInfoLeftRes,
+            ),
         )
         binding.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                promoInfoRightRes
-            )
+                promoInfoRightRes,
+            ),
         )
         binding.promoBannerTitleImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                titleRes
-            )
+                titleRes,
+            ),
         )
         binding.promoBannerSubtitleView.setText(R.string.limited_event)
         binding.promoBannerDurationView.setTextColor("#FEDEAD".toColorInt())
@@ -192,13 +196,13 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
             context.getString(
                 R.string.x_to_y,
                 formatter.format(startDate),
-                formatter.format(endDate)
+                formatter.format(endDate),
             )
         binding.promoBannerDurationView.setTextColor(
             ContextCompat.getColor(
                 context,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         binding.promptButton.background = buttonDrawable(context)
         binding.promptButton.setText(R.string.view_gem_bundles)
@@ -209,7 +213,7 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
             context.getString(
                 R.string.gem_promo_info_instructions,
                 formatter.format(startDate),
-                formatter.format(endDate)
+                formatter.format(endDate),
             )
         val limitationsFormatter =
             SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.LONG)
@@ -221,7 +225,7 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
                 limitationsFormatter.format(startDate),
                 utcTimeFormatter.format(startDate),
                 limitationsFormatter.format(endDate),
-                utcTimeFormatter.format(endDate)
+                utcTimeFormatter.format(endDate),
             )
     }
 }

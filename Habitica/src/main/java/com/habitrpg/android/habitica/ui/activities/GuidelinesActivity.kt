@@ -26,14 +26,15 @@ class GuidelinesActivity : BaseActivity() {
 
         val client = OkHttpClient()
         val request =
-            Request.Builder()
+            Request
+                .Builder()
                 .url("https://s3.amazonaws.com/habitica-assets/mobileApp/endpoint/community-guidelines.md")
                 .build()
         client.newCall(request).enqueue(
             object : Callback {
                 override fun onFailure(
                     call: Call,
-                    e: IOException
+                    e: IOException,
                 ) {
                     ExceptionHandler.reportError(e)
                 }
@@ -41,27 +42,26 @@ class GuidelinesActivity : BaseActivity() {
                 @Throws(IOException::class)
                 override fun onResponse(
                     call: Call,
-                    response: Response
+                    response: Response,
                 ) {
-                    val `in` = response.body?.byteStream()
-                    val reader = BufferedReader(InputStreamReader(`in`))
+                    val bodyBytes = response.body.byteStream()
+                    val reader = BufferedReader(InputStreamReader(bodyBytes))
                     val text = reader.readText()
-                    response.body?.close()
+                    response.body.close()
 
                     findViewById<TextView>(R.id.text_view).post {
                         findViewById<TextView>(R.id.text_view).setMarkdown(text)
                     }
                 }
-            }
+            },
         )
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
-            onBackPressed()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        if (item.itemId == android.R.id.home) {
+            onBackPressedDispatcher.onBackPressed()
             true
         } else {
             super.onOptionsItemSelected(item)
         }
-    }
 }

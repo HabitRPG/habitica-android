@@ -7,7 +7,9 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Quest : RealmObject(), BaseObject {
+open class Quest :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var id: String? = null
         set(value) {
@@ -33,9 +35,7 @@ open class Quest : RealmObject(), BaseObject {
 
     var completed: String? = null
 
-    fun hasRageStrikes(): Boolean {
-        return rageStrikes?.isNotEmpty() ?: false
-    }
+    fun hasRageStrikes(): Boolean = rageStrikes?.isNotEmpty() ?: false
 
     fun addRageStrike(rageStrike: QuestRageStrike) {
         if (rageStrikes == null) {

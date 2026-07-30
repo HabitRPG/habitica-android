@@ -9,7 +9,9 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class ChatMessage : RealmObject(), BaseMainObject {
+open class ChatMessage :
+    RealmObject(),
+    BaseMainObject {
     override val realmClass: Class<ChatMessage>
         get() = ChatMessage::class.java
     override val primaryIdentifier: String?
@@ -59,7 +61,5 @@ open class ChatMessage : RealmObject(), BaseMainObject {
 
     var isSeen: Boolean = true
 
-    fun userLikesMessage(userId: String?): Boolean {
-        return likes?.any { userId == it.id } ?: false
-    }
+    fun userLikesMessage(userId: String?): Boolean = likes?.any { userId == it.id } ?: false
 }

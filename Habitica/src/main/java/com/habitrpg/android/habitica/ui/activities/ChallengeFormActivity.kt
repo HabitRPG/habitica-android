@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -46,7 +47,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
-import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class ChallengeFormActivity : BaseActivity() {
@@ -118,9 +118,7 @@ class ChallengeFormActivity : BaseActivity() {
             return c
         }
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_create_challenge
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_create_challenge
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -156,8 +154,8 @@ class ChallengeFormActivity : BaseActivity() {
                         delay(500L)
                         MainNavigationController.navigate(
                             ChallengesOverviewFragmentDirections.openChallengeDetail(
-                                challengeId ?: ""
-                            )
+                                challengeId ?: "",
+                            ),
                         )
                     }
                 }
@@ -233,7 +231,7 @@ class ChallengeFormActivity : BaseActivity() {
             this,
             "",
             openTaskDisabled = false,
-            taskActionsDisabled = true
+            taskActionsDisabled = true,
         ).also { challengeTasks = it }
 
         challengeTasks.onTaskOpen = {
@@ -354,7 +352,12 @@ class ChallengeFormActivity : BaseActivity() {
             val groups =
                 socialRepository.getUserGroups("guild").firstOrNull()?.toMutableList()
                     ?: return@launch
-            val partyID = userRepository.getUser().firstOrNull()?.party?.id
+            val partyID =
+                userRepository
+                    .getUser()
+                    .firstOrNull()
+                    ?.party
+                    ?.id
             val party =
                 if (partyID?.isNotBlank() == true) {
                     socialRepository.retrieveGroup(partyID)
@@ -381,7 +384,7 @@ class ChallengeFormActivity : BaseActivity() {
                     adapterView: AdapterView<*>,
                     view: View?,
                     i: Int,
-                    l: Long
+                    l: Long,
                 ) {
                     checkPrizeAndMinimumForTavern()
                 }
@@ -415,12 +418,12 @@ class ChallengeFormActivity : BaseActivity() {
                 androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
                 override fun onInterceptTouchEvent(
                     rv: androidx.recyclerview.widget.RecyclerView,
-                    e: MotionEvent
+                    e: MotionEvent,
                 ): Boolean {
                     // Stop only scrolling.
                     return rv.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
                 }
-            }
+            },
         )
     }
 
@@ -459,7 +462,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun openNewTaskActivity(
         type: TaskType?,
-        task: Task?
+        task: Task?,
     ) {
         val bundle = Bundle()
 
@@ -523,13 +526,13 @@ class ChallengeFormActivity : BaseActivity() {
             taskList,
             ArrayList(addedTasks.values),
             ArrayList(updatedTasks.values),
-            ArrayList(removedTasks.keys)
+            ArrayList(removedTasks.keys),
         )
     }
 
     private fun addOrUpdateTaskInList(
         task: Task,
-        isExistingTask: Boolean = false
+        isExistingTask: Boolean = false,
     ) {
         if (!challengeTasks.replaceTask(task)) {
             val taskAbove =
@@ -573,16 +576,15 @@ class ChallengeFormActivity : BaseActivity() {
         }
     }
 
-    private fun getEditTextString(editText: EditText): String {
-        return editText.text.toString()
-    }
+    private fun getEditTextString(editText: EditText): String = editText.text.toString()
 
-    private class GroupArrayAdapter(context: Context) :
-        ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
+    private class GroupArrayAdapter(
+        context: Context,
+    ) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
         override fun getView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup
+            parent: ViewGroup,
         ): View {
             val checkedTextView = super.getView(position, convertView, parent) as? TextView
             checkedTextView?.text = getItem(position)?.name
@@ -592,7 +594,7 @@ class ChallengeFormActivity : BaseActivity() {
         override fun getDropDownView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup
+            parent: ViewGroup,
         ): View {
             val checkedTextView =
                 super.getDropDownView(position, convertView, parent) as? AppCompatCheckedTextView
@@ -604,7 +606,10 @@ class ChallengeFormActivity : BaseActivity() {
     companion object {
         const val CHALLENGE_ID_KEY = "challengeId"
 
-        private fun createTask(taskid: String, taskName: String): Task {
+        private fun createTask(
+            taskid: String,
+            taskName: String,
+        ): Task {
             val t = Task()
 
             t.id = taskid

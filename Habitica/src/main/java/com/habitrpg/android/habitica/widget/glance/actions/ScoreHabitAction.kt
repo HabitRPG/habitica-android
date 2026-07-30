@@ -26,23 +26,25 @@ class ScoreHabitAction : ActionCallback {
         val up = direction == TaskDirection.UP.text
 
         val entry = widgetEntryPoint(context)
-        val result: TaskScoringResult? = withContext(Dispatchers.Main) {
-            val user = entry.userRepository().getUser().firstOrNull()
-            val res = entry.taskRepository().taskChecked(
-                user = user,
-                taskId = taskId,
-                up = up,
-                force = false,
-                notifyFunc = null,
-            )
-            runCatching {
-                val task = entry.taskRepository().getTask(taskId).firstOrNull()
-                if (task != null) {
-                    HabitButtonWidgetCache.write(context, glanceId, task)
+        val result: TaskScoringResult? =
+            withContext(Dispatchers.Main) {
+                val user = entry.userRepository().getUser().firstOrNull()
+                val res =
+                    entry.taskRepository().taskChecked(
+                        user = user,
+                        taskId = taskId,
+                        up = up,
+                        force = false,
+                        notifyFunc = null,
+                    )
+                runCatching {
+                    val task = entry.taskRepository().getTask(taskId).firstOrNull()
+                    if (task != null) {
+                        HabitButtonWidgetCache.write(context, glanceId, task)
+                    }
                 }
+                res
             }
-            res
-        }
 
         showScoringToast(context, result)
         HabitButtonGlanceWidget().update(context, glanceId)

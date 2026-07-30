@@ -21,8 +21,11 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 
 class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
-    class RequestValues(val mountKey: String, val message: String, val context: Context) :
-        UseCase.RequestValues
+    class RequestValues(
+        val mountKey: String,
+        val message: String,
+        val context: Context,
+    ) : UseCase.RequestValues
 
     override suspend fun run(requestValues: RequestValues) {
         val mountWrapper = MountImageviewBinding.inflate(requestValues.context.layoutInflater)
@@ -60,10 +63,12 @@ class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
         mountWrapper.root.doOnNextLayout {
             mountWrapper.root.draw(canvas)
             (
-                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
-                    requestValues.context
-                )?.currentActivity?.get()
-                )?.shareContent("pet", requestValues.message, sharedImage)
+                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication
+                    .getInstance(
+                        requestValues.context,
+                    )?.currentActivity
+                    ?.get()
+            )?.shareContent("pet", requestValues.message, sharedImage)
             containerView?.removeView(mountWrapper.root)
         }
         // trigger layout

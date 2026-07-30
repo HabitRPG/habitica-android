@@ -13,13 +13,11 @@ open class RemindersItem() : Parcelable {
     // Use to store task type before a task is created
     var type: String? = null
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeString(id)
         dest.writeString(startDate)
@@ -38,15 +36,12 @@ open class RemindersItem() : Parcelable {
         time = source.readString()
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is RemindersItem) {
+    override fun equals(other: Any?): Boolean =
+        if (other is RemindersItem) {
             this.id == other.id
         } else {
             super.equals(other)
         }
-    }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 }

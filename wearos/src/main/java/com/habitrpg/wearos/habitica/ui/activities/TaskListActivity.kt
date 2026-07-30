@@ -42,7 +42,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
             layoutManager =
                 WearableLinearLayoutManager(
                     this@TaskListActivity,
-                    HabiticaScrollingLayoutCallback()
+                    HabiticaScrollingLayoutCallback(),
                 )
             adapter = this@TaskListActivity.adapter
             emptyViewBuilder = {
@@ -59,8 +59,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                                 TaskType.TODO -> R.string.todo
                                 TaskType.REWARD -> R.string.reward
                                 else -> R.string.task
-                            }
-                        )
+                            },
+                        ),
                     )
                 emptyBinding.root
             }
@@ -97,7 +97,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         startActivity(
             Intent(this, TaskDetailActivity::class.java).apply {
                 putExtra("task_id", task.id)
-            }
+            },
         )
     }
 
@@ -106,7 +106,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val direction =
-                    result.data?.getStringExtra("direction")
+                    result.data
+                        ?.getStringExtra("direction")
                         ?.let { TaskDirection.valueOf(it) }
                         ?: TaskDirection.UP
 
@@ -128,10 +129,10 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                 habitDirectionIntentLauncher.launch(
                     Intent(
                         this,
-                        HabitDirectionActivity::class.java
+                        HabitDirectionActivity::class.java,
                     ).apply {
                         putExtra("task_id", task.id)
-                    }
+                    },
                 )
                 return
             } else if (task.up != true && task.down != true) {
@@ -157,7 +158,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         startActivity(
             Intent(this, TaskFormActivity::class.java).apply {
                 putExtra("task_type", viewModel.taskType?.value)
-            }
+            },
         )
         overridePendingTransition(R.anim.scale_up, 0)
     }
@@ -167,15 +168,19 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
             TaskType.HABIT -> {
                 adapter = HabitListAdapter()
             }
+
             TaskType.DAILY -> {
                 adapter = DailyListAdapter()
             }
+
             TaskType.TODO -> {
                 adapter = ToDoListAdapter()
             }
+
             TaskType.REWARD -> {
                 adapter = RewardListAdapter()
             }
+
             else -> {}
         }
         adapter.title = getTitle(null)

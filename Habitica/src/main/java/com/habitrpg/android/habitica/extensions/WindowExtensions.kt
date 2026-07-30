@@ -7,7 +7,7 @@ import android.view.WindowInsetsController
 
 fun Window.updateStatusBarColor(
     color: Int,
-    isLight: Boolean
+    isLight: Boolean,
 ) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         return
@@ -21,14 +21,20 @@ fun Window.updateStatusBarColor(
 @Suppress("DEPRECATION")
 fun Window.setNavigationBarDarkIcons(dark: Boolean) {
     when {
-        Build.VERSION_CODES.R <= Build.VERSION.SDK_INT -> insetsController?.setSystemBarsAppearance(
-            if (dark) WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS else 0,
-            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
-        )
-        else -> decorView.systemUiVisibility = if (dark) {
-            decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        } else {
-            decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+        Build.VERSION_CODES.R <= Build.VERSION.SDK_INT -> {
+            insetsController?.setSystemBarsAppearance(
+                if (dark) WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS else 0,
+                WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+            )
+        }
+
+        else -> {
+            decorView.systemUiVisibility =
+                if (dark) {
+                    decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                } else {
+                    decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+                }
         }
     }
 }

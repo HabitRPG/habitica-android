@@ -56,7 +56,6 @@ import java.util.Date
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
-
     @Inject
     lateinit var notificationsManager: NotificationsManager
 
@@ -77,25 +76,24 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract fun getLayoutResId(): Int?
 
-    open fun getContentView(layoutResId: Int? = getLayoutResId()): View {
-        return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+    open fun getContentView(layoutResId: Int? = getLayoutResId()): View =
+        (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
             layoutResId ?: 0,
-            null
+            null,
         )
-    }
 
     private val habiticaApplication: HabiticaApplication
         get() = application as HabiticaApplication
 
     var isActivityVisible = false
 
-    override fun isDestroyed(): Boolean {
-        return destroyed
-    }
+    override fun isDestroyed(): Boolean = destroyed
 
     private val defaultNavigationBarStyle by lazy {
-        SystemBarStyle.auto(ContextCompat.getColor(this, R.color.white_50_alpha),
-            ContextCompat.getColor(this, R.color.black_50_alpha))
+        SystemBarStyle.auto(
+            ContextCompat.getColor(this, R.color.white_50_alpha),
+            ContextCompat.getColor(this, R.color.black_50_alpha),
+        )
     }
     internal var navigationBarStyle: SystemBarStyle? = null
 
@@ -124,7 +122,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 if (ShowNotificationInteractor(
                         this@BaseActivity,
                         lifecycleScope,
-                        userRepository
+                        userRepository,
                     ).handleNotification(it)
                 ) {
                     lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -140,10 +138,11 @@ abstract class BaseActivity : AppCompatActivity() {
         findViewById<View>(R.id.appbar)?.let { appbar ->
             val paddingTop = appbar.paddingTop
             ViewCompat.setOnApplyWindowInsetsListener(appbar) { v, windowInsets ->
-                val insets = windowInsets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                            + WindowInsetsCompat.Type.displayCutout()
-                )
+                val insets =
+                    windowInsets.getInsets(
+                        WindowInsetsCompat.Type.systemBars() +
+                            WindowInsetsCompat.Type.displayCutout(),
+                    )
                 val isImeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
                 val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                 KeyboardUtil.updatePaddingForIme(isImeVisible, imeHeight, insets)
@@ -185,7 +184,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     internal open fun loadTheme(
         sharedPreferences: SharedPreferences,
-        forced: Boolean = false
+        forced: Boolean = false,
     ) {
         val theme = forcedTheme ?: sharedPreferences.getString("theme_name", "purple")
         if (theme != currentTheme || forced) {
@@ -200,7 +199,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal_Dark
                         "blue" -> R.style.MainAppTheme_Blue_Dark
                         else -> R.style.MainAppTheme_Dark
-                    }
+                    },
                 )
             } else {
                 setTheme(
@@ -213,7 +212,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal
                         "blue" -> R.style.MainAppTheme_Blue
                         else -> R.style.MainAppTheme
-                    }
+                    },
                 )
             }
         }
@@ -237,7 +236,11 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun setupToolbar(toolbar: Toolbar?, iconColor: Int? = null, backgroundColor: Int? = null) {
+    protected fun setupToolbar(
+        toolbar: Toolbar?,
+        iconColor: Int? = null,
+        backgroundColor: Int? = null,
+    ) {
         this.toolbar = toolbar
         this.toolbarContentColor = iconColor
         this.toolbarBackgroundColor = backgroundColor
@@ -280,7 +283,7 @@ abstract class BaseActivity : AppCompatActivity() {
         errorCount: Int,
         title: String?,
         message: String,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(title)
@@ -289,7 +292,7 @@ abstract class BaseActivity : AppCompatActivity() {
             android.R.string.ok,
             isPrimary = true,
             isDestructive = false,
-            function = null
+            function = null,
         )
         alert.enqueue()
     }
@@ -300,13 +303,13 @@ abstract class BaseActivity : AppCompatActivity() {
     fun shareContent(
         identifier: String,
         message: String?,
-        image: Bitmap? = null
+        image: Bitmap? = null,
     ) {
         Analytics.sendEvent(
             "shared",
             EventCategory.BEHAVIOUR,
             HitType.EVENT,
-            mapOf("identifier" to identifier)
+            mapOf("identifier" to identifier),
         )
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "image/*"
@@ -324,7 +327,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
                     contentValues.put(
                         MediaStore.MediaColumns.RELATIVE_PATH,
-                        Environment.DIRECTORY_PICTURES
+                        Environment.DIRECTORY_PICTURES,
                     )
                     uri =
                         resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
@@ -332,7 +335,8 @@ abstract class BaseActivity : AppCompatActivity() {
                     fos = resolver.openOutputStream(uri, "wt") ?: return
                 } else {
                     val imagesDir =
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                             .toString()
                     val file = File(imagesDir, "${Date()}.png")
                     uri = file.absoluteFile.toUri()
@@ -352,5 +356,4 @@ abstract class BaseActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out)
         startActivity(intent)
     }
-
 }

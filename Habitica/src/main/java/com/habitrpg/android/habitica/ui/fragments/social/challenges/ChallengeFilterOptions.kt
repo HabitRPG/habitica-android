@@ -7,5 +7,5 @@ data class ChallengeFilterOptions(
     var showOwned: Boolean = false,
     var notOwned: Boolean = false,
     var showParticipating: Boolean = false,
-    var notParticipating: Boolean = false
+    var notParticipating: Boolean = false,
 )

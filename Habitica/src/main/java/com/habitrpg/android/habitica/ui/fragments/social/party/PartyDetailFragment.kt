@@ -60,17 +60,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     val viewModel: PartyViewModel by viewModels(
-        ownerProducer = { parentFragment as Fragment }
+        ownerProducer = { parentFragment as Fragment },
     )
 
     override var binding: FragmentPartyDetailBinding? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentPartyDetailBinding {
-        return FragmentPartyDetailBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentPartyDetailBinding = FragmentPartyDetailBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
@@ -94,7 +92,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.refreshLayout?.setOnRefreshListener { this.refreshParty() }
@@ -117,7 +115,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     parentFragmentManager.popBackStack()
                     MainNavigationController.navigate(
                         R.id.partyFragment,
-                        bundleOf(Pair("partyID", user?.party?.id))
+                        bundleOf(Pair("partyID", user?.party?.id)),
                     )
                 }
             }
@@ -136,7 +134,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         val state =
                             viewModel.pendingInviteStates.getOrDefault(
                                 invitedMember.id,
-                                LoadingButtonState.CONTENT
+                                LoadingButtonState.CONTENT,
                             )
                         PartySeekingListItem(
                             user = invitedMember,
@@ -147,7 +145,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                             configManager = appConfigManager,
                             onInvite = {
                                 viewModel.rescindInvite(invitedMember)
-                            }
+                            },
                         )
                     }
                 }
@@ -209,7 +207,11 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
 
         var invitationVisibility = View.GONE
-        if (user.invitations?.party?.id?.isNotEmpty() == true) {
+        if (user.invitations
+                ?.party
+                ?.id
+                ?.isNotEmpty() == true
+        ) {
             invitationVisibility = View.VISIBLE
         }
 
@@ -226,16 +228,26 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
 
         if (viewModel.isQuestActive && viewModel.isUserOnQuest) {
-            val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
+            val value =
+                (
+                    user.party
+                        ?.quest
+                        ?.progress
+                        ?.up ?: 0F
+                ).toDouble()
             val df = DecimalFormat("###.#")
             binding?.questPendingDamageView?.text =
                 getString(R.string.damage_pending, df.format(value))
-            val collectedItems = user.party?.quest?.progress?.collectedItems
+            val collectedItems =
+                user.party
+                    ?.quest
+                    ?.progress
+                    ?.collectedItems
             binding?.questPendingItemsView?.text =
                 requireContext().resources.getQuantityString(
                     R.plurals.items_pending,
                     collectedItems ?: 0,
-                    collectedItems ?: 0
+                    collectedItems ?: 0,
                 )
         }
 
@@ -249,13 +261,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     leaderID.let { id ->
                         lifecycleScope.launch(ExceptionHandler.coroutine()) {
                             val member = socialRepository.retrieveMember(id) ?: return@launch
-                            binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)
+                            binding
+                                ?.root
+                                ?.findViewById<AvatarView>(R.id.groupleader_avatar_view)
                                 ?.setAvatar(member)
                             binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text =
                                 getString(
                                     R.string.invitation_title,
                                     member.displayName,
-                                    groupName
+                                    groupName,
                                 )
                         }
                     }
@@ -274,9 +288,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
     }
 
-    private fun showParticipantButtons(): Boolean {
-        return viewModel.showParticipantButtons()
-    }
+    private fun showParticipantButtons(): Boolean = viewModel.showParticipantButtons()
 
     private fun updateQuestContent(questContent: QuestContent) {
         if (binding?.questTitleView == null || !questContent.isValid) {
@@ -306,18 +318,27 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questParticipationView?.setTextColor(
                 ContextCompat.getColor(
                     it,
-                    R.color.text_ternary
-                )
+                    R.color.text_ternary,
+                ),
             )
         }
         if (viewModel.isQuestActive) {
             binding?.questProgressView?.visibility = View.VISIBLE
             binding?.questProgressView?.setData(
                 questContent,
-                viewModel.getGroupData().value?.quest?.progress
+                viewModel
+                    .getGroupData()
+                    .value
+                    ?.quest
+                    ?.progress,
             )
 
-            val questParticipants = viewModel.getGroupData().value?.quest?.members
+            val questParticipants =
+                viewModel
+                    .getGroupData()
+                    .value
+                    ?.quest
+                    ?.members
             if (questParticipants?.find { it.key == viewModel.userViewModel.userID } != null) {
                 binding?.questParticipationView?.text =
                     context?.getString(R.string.number_participants, questParticipants.size)
@@ -330,8 +351,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     binding?.questParticipationView?.setTextColor(
                         ContextCompat.getColor(
                             it,
-                            R.color.red_10
-                        )
+                            R.color.red_10,
+                        ),
                     )
                 }
                 binding?.questImageWrapper?.alpha = 0.5f
@@ -341,7 +362,12 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             }
         } else {
             binding?.questProgressView?.visibility = View.GONE
-            val members = viewModel.getGroupData().value?.quest?.members
+            val members =
+                viewModel
+                    .getGroupData()
+                    .value
+                    ?.quest
+                    ?.members
             val responded = members?.filter { it.isParticipating != null }
             binding?.questParticipationView?.text =
                 context?.getString(R.string.number_responded, responded?.size, members?.size)
@@ -363,7 +389,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         view?.tag = member.id
                         view
                     }
-                    ) ?: return@forEachIndexed
+                ) ?: return@forEachIndexed
             val viewHolder = GroupMemberViewHolder(memberView)
             viewHolder.bind(member, leaderID ?: "", viewModel.user.value?.id)
             viewHolder.onClickEvent = {
@@ -383,7 +409,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun showSendMessageToUserDialog(
         userID: String,
-        username: String
+        username: String,
     ) {
         val factory = LayoutInflater.from(context)
         val newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null)
@@ -402,7 +428,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     HabiticaSnackbar.showSnackbar(
                         it1,
                         String.format(getString(R.string.profile_message_sent_to), username),
-                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL,
                     )
                 }
             }
@@ -410,7 +436,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
         addMessageDialog?.addButton(
             android.R.string.cancel,
-            false
+            false,
         ) { _, _ -> activity?.dismissKeyboard() }
         addMessageDialog?.setAdditionalContentView(newMessageView)
         addMessageDialog?.show()
@@ -418,7 +444,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun showTransferOwnerShipDialog(
         userID: String,
-        displayName: String
+        displayName: String,
     ) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.transfer, true) { _, _ ->
@@ -428,7 +454,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     HabiticaSnackbar.showSnackbar(
                         it1,
                         String.format(getString(R.string.transferred_ownership), displayName),
-                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL,
                     )
                 }
             }
@@ -439,15 +465,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         dialog?.setMessage(
             context?.getString(
                 R.string.transfer_ownership_confirm_message,
-                displayName
-            )
+                displayName,
+            ),
         )
         dialog?.show()
     }
 
     private fun showRemoveMemberDialog(
         userID: String,
-        displayName: String
+        displayName: String,
     ) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.remove, true) { _, _ ->
@@ -457,7 +483,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     HabiticaSnackbar.showSnackbar(
                         it1,
                         String.format(getString(R.string.removed_member), displayName),
-                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL,
                     )
                     binding?.membersWrapper?.findViewWithTag<View>(userID)?.let { memberView ->
                         binding?.membersWrapper?.removeView(memberView)
@@ -516,7 +542,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.addButton(
                         R.string.leave_challenges_delete_tasks,
                         false,
-                        isDestructive = true
+                        isDestructive = true,
                     ) { _, _ ->
                         viewModel.leaveGroup(viewModel.isUserOnQuest, viewModel.isUserQuestLeader, groupChallenges, false) {
                             parentFragmentManager.popBackStack()
@@ -540,7 +566,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     alert.addButton(
                         R.string.leave,
                         isPrimary = true,
-                        isDestructive = true
+                        isDestructive = true,
                     ) { _, _ ->
                         viewModel.leaveGroup(viewModel.isUserOnQuest, viewModel.isUserQuestLeader, groupChallenges, false) {
                             if (isAdded) {

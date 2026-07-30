@@ -25,7 +25,7 @@ class MemberSerialization : JsonDeserializer<Member> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Member {
         val obj = json.asJsonObject
         val id = obj.get("_id").asString
@@ -53,7 +53,7 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.preferences =
                 context.deserialize<MemberPreferences>(
                     obj.get("preferences"),
-                    MemberPreferences::class.java
+                    MemberPreferences::class.java,
                 )
         }
         if (obj.has("profile")) {
@@ -63,7 +63,13 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.party = context.deserialize<UserParty>(obj.get("party"), UserParty::class.java)
             if (member.party != null && member.party?.quest != null) {
                 member.party?.quest?.id = member.id
-                if (!obj.get("party").asJsonObject.get("quest").asJsonObject.has("RSVPNeeded")) {
+                if (!obj
+                        .get("party")
+                        .asJsonObject
+                        .get("quest")
+                        .asJsonObject
+                        .has("RSVPNeeded")
+                ) {
                     val quest = realm.where(Quest::class.java).equalTo("id", member.id).findFirst()
                     if (quest != null && quest.isValid) {
                         member.party?.quest?.rsvpNeeded = quest.rsvpNeeded
@@ -98,7 +104,7 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.contributor =
                 context.deserialize<ContributorInfo>(
                     obj.get("contributor"),
-                    ContributorInfo::class.java
+                    ContributorInfo::class.java,
                 )
         }
         if (obj.has("backer")) {

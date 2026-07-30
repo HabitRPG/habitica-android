@@ -14,7 +14,10 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.math.RoundingMode
 import java.text.NumberFormat
 
-class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+class ValueBar(
+    context: Context,
+    attrs: AttributeSet?,
+) : FrameLayout(context, attrs) {
     var descriptionIconVisibility: Int
         get() = binding.descriptionIconView.visibility
         set(value) {
@@ -93,7 +96,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
                 attrs,
                 R.styleable.ValueBar,
                 0,
-                0
+                0,
             )
 
         binding.progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
@@ -165,7 +168,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
 
     fun set(
         value: Double,
-        valueMax: Double
+        valueMax: Double,
     ) {
         if (binding.progressBar.currentValue != value || maxValue != valueMax) {
             if (animationDuration == 0L || binding.valueTextView.text.isEmpty()) {

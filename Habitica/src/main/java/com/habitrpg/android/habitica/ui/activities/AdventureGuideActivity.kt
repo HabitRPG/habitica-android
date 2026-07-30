@@ -29,9 +29,7 @@ class AdventureGuideActivity : BaseActivity() {
     private lateinit var achievementTitles: Map<String, String>
     private lateinit var achievementDescriptions: Map<String, String>
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_main
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityAdventureGuideBinding.inflate(layoutInflater)
@@ -49,7 +47,7 @@ class AdventureGuideActivity : BaseActivity() {
                 Pair("completedTask", getString(R.string.complete_task_title)),
                 Pair("hatchedPet", getString(R.string.hatch_pet_title)),
                 Pair("fedPet", getString(R.string.feedPet_title)),
-                Pair("purchasedEquipment", getString(R.string.purchase_equipment_title))
+                Pair("purchasedEquipment", getString(R.string.purchase_equipment_title)),
             )
         achievementDescriptions =
             mapOf(
@@ -57,7 +55,7 @@ class AdventureGuideActivity : BaseActivity() {
                 Pair("completedTask", getString(R.string.complete_task_description)),
                 Pair("hatchedPet", getString(R.string.hatch_pet_description)),
                 Pair("fedPet", getString(R.string.feedPet_description)),
-                Pair("purchasedEquipment", getString(R.string.purchase_equipment_description))
+                Pair("purchasedEquipment", getString(R.string.purchase_equipment_description)),
             )
 
         val descriptionText = getString(R.string.adventure_guide_description_new)
@@ -72,14 +70,13 @@ class AdventureGuideActivity : BaseActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        if (item.itemId == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this)
             true
         } else {
             super.onOptionsItemSelected(item)
         }
-    }
 
     private fun updateUser(user: User) {
         val achievements = user.onboardingAchievements
@@ -92,7 +89,7 @@ class AdventureGuideActivity : BaseActivity() {
             binding.progressTextview.text =
                 getString(
                     R.string.percent_completed,
-                    ((completed / achievements.size.toFloat()) * 100).toInt()
+                    ((completed / achievements.size.toFloat()) * 100).toInt(),
                 )
         }
 
@@ -102,7 +99,7 @@ class AdventureGuideActivity : BaseActivity() {
                 AdventureGuideItemBinding.inflate(
                     layoutInflater,
                     binding.achievementContainer,
-                    true
+                    true,
                 )
             itemBinding.titleView.text = achievementTitles[achievement.key]
             itemBinding.descriptionView.text = achievementDescriptions[achievement.key]
@@ -120,27 +117,27 @@ class AdventureGuideActivity : BaseActivity() {
                 itemBinding.titleView.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        R.color.text_ternary
-                    )
+                        R.color.text_ternary,
+                    ),
                 )
                 itemBinding.descriptionView.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        R.color.text_ternary
-                    )
+                        R.color.text_ternary,
+                    ),
                 )
             } else {
                 itemBinding.titleView.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        R.color.text_primary
-                    )
+                        R.color.text_primary,
+                    ),
                 )
                 itemBinding.descriptionView.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        R.color.text_primary
-                    )
+                        R.color.text_primary,
+                    ),
                 )
                 itemBinding.iconView.alpha = 0.5f
             }

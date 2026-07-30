@@ -4,7 +4,9 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class Mount : RealmObject(), Animal {
+open class Mount :
+    RealmObject(),
+    Animal {
     @PrimaryKey
     override var key: String = ""
     override var animal: String = ""

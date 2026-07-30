@@ -7,5 +7,5 @@ data class Flavor(
     @SerializedName("appName") val appName: String?,
     @SerializedName("name") val name: String,
     @SerializedName("versionCodeIncrement") val versionCodeIncrement: Int?,
-    @SerializedName("applicationId") val applicationId: String?
+    @SerializedName("applicationId") val applicationId: String?,
 )

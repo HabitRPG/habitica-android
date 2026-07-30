@@ -29,10 +29,8 @@ object ProjectConfig : AbstractProjectConfig() {
                     runnable.run()
                 }
 
-                override fun isMainThread(): Boolean {
-                    return true
-                }
-            }
+                override fun isMainThread(): Boolean = true
+            },
         )
     }
 

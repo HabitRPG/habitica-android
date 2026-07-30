@@ -12,7 +12,7 @@ import com.habitrpg.common.habitica.helpers.RecyclerViewState
 
 internal class ChallengeFilterDialogHolder private constructor(
     view: View,
-    private val context: Activity
+    private val context: Activity,
 ) {
     private val binding = DialogChallengeFilterBinding.bind(view)
 
@@ -58,7 +58,7 @@ internal class ChallengeFilterDialogHolder private constructor(
     fun bind(
         filterGroups: List<Group>,
         currentFilter: ChallengeFilterOptions?,
-        selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)?
+        selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)?,
     ) {
         this.filterGroups = filterGroups
         this.currentFilter = currentFilter
@@ -89,7 +89,7 @@ internal class ChallengeFilterDialogHolder private constructor(
             activity: Activity,
             filterGroups: List<Group>,
             currentFilter: ChallengeFilterOptions?,
-            selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)
+            selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit),
         ) {
             val dialogLayout =
                 activity.layoutInflater.inflate(R.layout.dialog_challenge_filter, null)
@@ -105,8 +105,8 @@ internal class ChallengeFilterDialogHolder private constructor(
                         holder.binding.challengeFilterOwned.isChecked,
                         holder.binding.challengeFilterNotOwned.isChecked,
                         holder.binding.challengeFilterParticipating.isChecked,
-                        holder.binding.challengeFilterNotParticipating.isChecked
-                    )
+                        holder.binding.challengeFilterNotParticipating.isChecked,
+                    ),
                 )
             }
 

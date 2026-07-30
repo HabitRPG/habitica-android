@@ -109,10 +109,8 @@ class ItemRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentItemsBinding {
-        return FragmentItemsBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentItemsBinding = FragmentItemsBinding.inflate(inflater, container, false)
 
     override fun onDestroy() {
         inventoryRepository.close()
@@ -121,7 +119,7 @@ class ItemRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         getSpecialSkills()
@@ -134,8 +132,8 @@ class ItemRecyclerFragment :
                 HitType.EVENT,
                 mapOf(
                     "area" to "empty",
-                    "type" to (itemType ?: "")
-                )
+                    "type" to (itemType ?: ""),
+                ),
             )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
@@ -163,7 +161,7 @@ class ItemRecyclerFragment :
                     else -> null
                 },
                 false,
-                if (itemType == "special") null else buttonMethod
+                if (itemType == "special") null else buttonMethod,
             )
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
@@ -186,7 +184,8 @@ class ItemRecyclerFragment :
         // Get special skills for description of special items
         lifecycleScope.launchCatching {
             val user = userViewModel.user.value ?: return@launchCatching
-            userRepository.getSkills(user)
+            userRepository
+                .getSkills(user)
                 .combine(userRepository.getSpecialItems(user)) { skills, items ->
                     val allEntries = mutableListOf<Skill>()
                     for (skill in skills) {
@@ -214,16 +213,17 @@ class ItemRecyclerFragment :
             val specialSkill = specialSkills.find { it.key == specialItem.key }
             if (specialSkill != null) {
                 val skillIdentifier = "shop_"
-                val bottomSheet = SkillDialogBottomSheetFragment.newInstance(
-                    skillTitle = specialSkill.text,
-                    skillDescription = specialSkill.notes ?: "",
-                    skillKey = specialSkill.key,
-                    skillPath = skillIdentifier,
-                    isTransformationItem = true,
-                    onUseSkill = {
-                        onSpecialItemSelected(specialItem)
-                    }
-                )
+                val bottomSheet =
+                    SkillDialogBottomSheetFragment.newInstance(
+                        skillTitle = specialSkill.text,
+                        skillDescription = specialSkill.notes ?: "",
+                        skillKey = specialSkill.key,
+                        skillPath = skillIdentifier,
+                        isTransformationItem = true,
+                        onUseSkill = {
+                            onSpecialItemSelected(specialItem)
+                        },
+                    )
                 bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
             }
         }
@@ -252,7 +252,7 @@ class ItemRecyclerFragment :
                             item.key?.let { mysteryItem ->
                                 inventoryRepository.equip(
                                     "equipped",
-                                    mysteryItem
+                                    mysteryItem,
                                 )
                             }
                         }
@@ -276,8 +276,8 @@ class ItemRecyclerFragment :
                 HitType.EVENT,
                 mapOf(
                     "area" to "bottom",
-                    "type" to (itemType ?: "")
-                )
+                    "type" to (itemType ?: ""),
+                ),
             )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
@@ -311,7 +311,7 @@ class ItemRecyclerFragment :
 
     private fun hatchPet(
         potion: HatchingPotion,
-        egg: Egg
+        egg: Egg,
     ) {
         (activity as? BaseActivity)?.let {
             lifecycleScope.launchCatching {
@@ -319,8 +319,8 @@ class ItemRecyclerFragment :
                     HatchPetUseCase.RequestValues(
                         potion,
                         egg,
-                        it
-                    )
+                        it,
+                    ),
                 )
 
                 if (isAdded) {
@@ -354,7 +354,7 @@ class ItemRecyclerFragment :
                     user?.id,
                     "party",
                     "",
-                    false
+                    false,
                 )
                 val user = userRepository.retrieveUser(false, true)
                 if (user?.hasParty == true) {
@@ -362,7 +362,7 @@ class ItemRecyclerFragment :
                     socialRepository.retrievePartyMembers(party?.id ?: "", true)
                     MainNavigationController.navigate(
                         R.id.partyFragment,
-                        bundleOf(Pair("partyID", user.party?.id))
+                        bundleOf(Pair("partyID", user.party?.id)),
                     )
                 }
             }
@@ -385,15 +385,14 @@ class ItemRecyclerFragment :
             }
         itemType?.let { type ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedItems(type)
+                inventoryRepository
+                    .getOwnedItems(type)
                     .onEach { items ->
                         adapter?.data = items
-                    }
-                    .map { items -> items.mapNotNull { it.key } }
+                    }.map { items -> items.mapNotNull { it.key } }
                     .map {
                         inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
-                    }
-                    .collect {
+                    }.collect {
                         val itemMap = mutableMapOf<String, Item>()
                         for (item in it ?: emptyList()) {
                             itemMap[item.key] = item
@@ -405,11 +404,13 @@ class ItemRecyclerFragment :
                 inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
             }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedPets().map { ownedPets ->
-                    val petMap = mutableMapOf<String, OwnedPet>()
-                    ownedPets.forEach { petMap[it.key ?: ""] = it }
-                    return@map petMap
-                }.collect { adapter?.setOwnedPets(it) }
+                inventoryRepository
+                    .getOwnedPets()
+                    .map { ownedPets ->
+                        val petMap = mutableMapOf<String, OwnedPet>()
+                        ownedPets.forEach { petMap[it.key ?: ""] = it }
+                        return@map petMap
+                    }.collect { adapter?.setOwnedPets(it) }
             }
         }
     }
@@ -433,7 +434,7 @@ class ItemRecyclerFragment :
 
     private fun useSpecialItem(
         specialItem: SpecialItem?,
-        memberID: String? = null
+        memberID: String? = null,
     ) {
         if (specialItem == null || memberID == null) {
             return
@@ -452,14 +453,17 @@ class ItemRecyclerFragment :
             HabiticaSnackbar.showSnackbar(
                 it.snackbarContainer,
                 context?.getString(R.string.used_skill_without_mana, specialItem?.text),
-                HabiticaSnackbar.SnackbarDisplayType.BLUE
+                HabiticaSnackbar.SnackbarDisplayType.BLUE,
             )
         }
 
         loadItems()
     }
 
-    private fun showSellItemConfirmation(item: Item, ownedItem: OwnedItem) {
+    private fun showSellItemConfirmation(
+        item: Item,
+        ownedItem: OwnedItem,
+    ) {
         val dialog = HabiticaAlertDialog(requireContext())
         dialog.setTitle(getString(R.string.sell_confirmation_title, item.text))
         dialog.addButton(getString(R.string.sell, item.value), isPrimary = true, isDestructive = true) { _, _ ->

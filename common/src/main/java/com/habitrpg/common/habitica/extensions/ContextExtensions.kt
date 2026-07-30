@@ -15,8 +15,8 @@ fun Context.getThemeColor(colorRes: Int): Int {
     return value.data
 }
 
-fun Context.isUsingNightModeResources(): Boolean {
-    return when (
+fun Context.isUsingNightModeResources(): Boolean =
+    when (
         resources.configuration.uiMode and
             Configuration.UI_MODE_NIGHT_MASK
     ) {
@@ -25,4 +25,3 @@ fun Context.isUsingNightModeResources(): Boolean {
         Configuration.UI_MODE_NIGHT_UNDEFINED -> false
         else -> false
     }
-}

@@ -8,9 +8,7 @@ import android.text.util.Linkify
 import android.util.Patterns
 import java.util.Locale
 
-fun String.fromHtml(): CharSequence {
-    return Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
-}
+fun String.fromHtml(): CharSequence = Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
 
 fun String.addZeroWidthSpace(): CharSequence {
     val spannable: Spannable = SpannableString(this)
@@ -20,21 +18,16 @@ fun String.addZeroWidthSpace(): CharSequence {
     return TextUtils.concat(spannable, "\u200B")
 }
 
-fun String.removeZeroWidthSpace(): String {
-    return this.replace("\u200B", "")
-}
+fun String.removeZeroWidthSpace(): String = this.replace("\u200B", "")
 
-fun String.localizedCapitalize(): String {
-    return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-}
+fun String.localizedCapitalize(): String =
+    this.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+    }
 
-fun String.spaceBetweenCapitals(): String {
-    return this.replace("(.)([A-Z0-9]\\w)".toRegex(), "$1 $2")
-}
+fun String.spaceBetweenCapitals(): String = this.replace("(.)([A-Z0-9]\\w)".toRegex(), "$1 $2")
 
-fun String.localizedCapitalizeWithSpaces(): String {
-    return this.localizedCapitalize().spaceBetweenCapitals()
-}
+fun String.localizedCapitalizeWithSpaces(): String = this.localizedCapitalize().spaceBetweenCapitals()
 
 fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 

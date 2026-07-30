@@ -29,7 +29,7 @@ fun CurrencyText(
     fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
-    animated: Boolean = true
+    animated: Boolean = true,
 ) {
     CurrencyText(
         currency = currency,
@@ -38,7 +38,7 @@ fun CurrencyText(
         fontSize,
         decimals,
         minForAbbreviation,
-        animated
+        animated,
     )
 }
 
@@ -50,27 +50,32 @@ fun CurrencyText(
     fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
-    animated: Boolean = true
+    animated: Boolean = true,
 ) {
     val animatedValue =
         if (animated) {
             animateFloatAsState(
                 targetValue = value.toFloat(),
-                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
             ).value
         } else {
             value.toFloat()
         }
-    val currencyName = when (currency) {
-        "gold" -> stringResource(R.string.gold_plural)
-        "gems" -> stringResource(R.string.gems)
-        "hourglasses" -> stringResource(R.string.mystic_hourglasses)
-        else -> ""
-    }
+    val currencyName =
+        when (currency) {
+            "gold" -> stringResource(R.string.gold_plural)
+            "gems" -> stringResource(R.string.gems)
+            "hourglasses" -> stringResource(R.string.mystic_hourglasses)
+            else -> ""
+        }
     val amount = NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbreviation)
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.semantics(mergeDescendants = true) {
-        contentDescription = "$amount $currencyName"
-    }) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier =
+            modifier.semantics(mergeDescendants = true) {
+                contentDescription = "$amount $currencyName"
+            },
+    ) {
         when (currency) {
             "gold" -> HabiticaIconsHelper.imageOfGold()
             "gems" -> HabiticaIconsHelper.imageOfGem()
@@ -87,7 +92,7 @@ fun CurrencyText(
                     else -> colorResource(R.color.text_primary)
                 },
             fontSize = fontSize,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
         )
     }
 }

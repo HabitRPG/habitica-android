@@ -7,11 +7,13 @@ enum class AuthenticationErrors {
     INVALID_CREDENTIAL_TYPE,
     UNKNOWN_CREDENTIAL_TYPE,
     MISSING_TOKEN,
+
     // Validation
     INVALID_EMAIL,
     PASSWORD_TOO_SHORT,
     PASSWORD_MISMATCH,
-    MISSING_FIELDS;
+    MISSING_FIELDS,
+    ;
 
     var minPasswordLength: Int = 6
 

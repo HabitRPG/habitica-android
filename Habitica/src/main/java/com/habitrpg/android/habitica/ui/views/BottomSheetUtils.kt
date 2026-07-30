@@ -42,7 +42,11 @@ fun Activity.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
     addContentToView(viewGroup, content)
 }
 
-fun Activity.showAsBottomSheet(sheetColor: Color, disableScroll: Boolean = false, content: @Composable (() -> Unit) -> Unit) {
+fun Activity.showAsBottomSheet(
+    sheetColor: Color,
+    disableScroll: Boolean = false,
+    content: @Composable (() -> Unit) -> Unit,
+) {
     val viewGroup: ViewGroup = this.findViewById(android.R.id.content)
     addContentToView(viewGroup, content, sheetColor, disableScroll)
 }
@@ -52,7 +56,11 @@ fun Fragment.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
     addContentToView(viewGroup, content)
 }
 
-fun Fragment.showAsBottomSheet(sheetColor: Color, disableScroll: Boolean = false, content: @Composable (() -> Unit) -> Unit) {
+fun Fragment.showAsBottomSheet(
+    sheetColor: Color,
+    disableScroll: Boolean = false,
+    content: @Composable (() -> Unit) -> Unit,
+) {
     val viewGroup: ViewGroup = requireActivity().findViewById(android.R.id.content)
     addContentToView(viewGroup, content, sheetColor, disableScroll)
 }
@@ -61,7 +69,7 @@ private fun addContentToView(
     viewGroup: ViewGroup,
     content: @Composable (() -> Unit) -> Unit,
     sheetColor: Color? = null,
-    disableScroll: Boolean = false
+    disableScroll: Boolean = false,
 ) {
     val composeView = ComposeView(viewGroup.context)
     viewGroup.addView(composeView)
@@ -82,7 +90,7 @@ private fun BottomSheetWrapper(
     dismissView: () -> Unit,
     sheetColor: Color = HabiticaTheme.colors.windowBackground,
     disableScroll: Boolean = false,
-    content: @Composable (() -> Unit) -> Unit
+    content: @Composable (() -> Unit) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState =
@@ -101,15 +109,24 @@ private fun BottomSheetWrapper(
         sheetState = modalBottomSheetState,
         shape = RoundedCornerShape(topStart = radius, topEnd = radius),
         contentWindowInsets = { WindowInsets(0) },
-        dragHandle = { BottomSheetDefaults.DragHandle(
-            color = if (sheetColor != HabiticaTheme.colors.windowBackground) colorResource(R.color.brand_100) else HabiticaTheme.colors.textSecondary
-        ) },
+        dragHandle = {
+            BottomSheetDefaults.DragHandle(
+                color =
+                    if (sheetColor !=
+                        HabiticaTheme.colors.windowBackground
+                    ) {
+                        colorResource(R.color.brand_100)
+                    } else {
+                        HabiticaTheme.colors.textSecondary
+                    },
+            )
+        },
         content = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
-                Modifier
-                    .verticalScroll(rememberScrollState())
+                    Modifier
+                        .verticalScroll(rememberScrollState()),
             ) {
                 content {
                     // Action passed for clicking close button in the content
@@ -119,11 +136,11 @@ private fun BottomSheetWrapper(
                 }
                 Spacer(
                     Modifier.windowInsetsBottomHeight(
-                        WindowInsets.navigationBarsIgnoringVisibility
-                    )
+                        WindowInsets.navigationBarsIgnoringVisibility,
+                    ),
                 )
             }
-        }
+        },
     )
 
     BackHandler {
@@ -138,7 +155,7 @@ private fun BottomSheetWrapper(
             SheetValue.Hidden -> {
                 when {
                     isSheetOpened -> {
-                       dismissView()
+                        dismissView()
                     }
 
                     else -> {

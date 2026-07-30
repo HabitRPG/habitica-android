@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.habitrpg.common.habitica.R
 
-class PlayerTier(val title: String, val id: Int) {
+class PlayerTier(
+    val title: String,
+    val id: Int,
+) {
     companion object {
-        fun getTiers(): List<PlayerTier> {
-            return arrayListOf(
+        fun getTiers(): List<PlayerTier> =
+            arrayListOf(
                 PlayerTier("Tier 1 (Friend)", 1),
                 PlayerTier("Tier 2 (Friend)", 2),
                 PlayerTier("Tier 3 (Elite)", 3),
@@ -15,15 +18,14 @@ class PlayerTier(val title: String, val id: Int) {
                 PlayerTier("Tier 5 (Champion)", 5),
                 PlayerTier("Tier 6 (Champion)", 6),
                 PlayerTier("Tier 7 (Legendary)", 7),
-                PlayerTier("Staff (Heroic)", 9)
+                PlayerTier("Staff (Heroic)", 9),
             )
-        }
 
         fun getColorForTier(
             context: Context,
-            value: Int
-        ): Int {
-            return when (value) {
+            value: Int,
+        ): Int =
+            when (value) {
                 1 -> ContextCompat.getColor(context, R.color.contributor_1)
                 2 -> ContextCompat.getColor(context, R.color.contributor_2)
                 3 -> ContextCompat.getColor(context, R.color.contributor_3)
@@ -35,6 +37,5 @@ class PlayerTier(val title: String, val id: Int) {
                 9 -> ContextCompat.getColor(context, R.color.contributor_staff)
                 else -> ContextCompat.getColor(context, R.color.contributor_0)
             }
-        }
     }
 }

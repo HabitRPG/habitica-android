@@ -30,88 +30,183 @@ import kotlinx.coroutines.launch
 class ShowNotificationInteractor(
     private val activity: Activity,
     private val lifecycleScope: LifecycleCoroutineScope,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) {
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
-            Notification.Type.LOGIN_INCENTIVE.type -> showCheckinDialog(notification)
-            Notification.Type.ACHIEVEMENT_PARTY_UP.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_PARTY_ON.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BEAST_MASTER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type ->
+            Notification.Type.LOGIN_INCENTIVE.type -> {
+                showCheckinDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_PARTY_UP.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_PARTY_ON.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_BEAST_MASTER.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> showAchievementDialog(notification)
-            Notification.Type.WON_CHALLENGE.type -> showWonChallengeDialog(notification)
+            Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> {
+                showAchievementDialog(notification)
+            }
 
-            Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type ->
+            Notification.Type.WON_CHALLENGE.type -> {
+                showWonChallengeDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type ->
+            Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type ->
+            Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type ->
+            Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_TICKLED_PINK.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type ->
+            Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_TICKLED_PINK.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type ->
+            Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type ->
+            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_SEEING_RED.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> {
+                showAchievementDialog(notification)
+            }
 
-            Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type ->
+            Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_SEEING_RED.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_GENERIC.type -> {
+                showAchievementDialog(notification)
+            }
+
+            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> {
                 showAchievementDialog(
-                    notification
+                    notification,
                 )
+            }
 
-            Notification.Type.REBIRTH_ENABLED.type -> showRebirthEnabledDialog()
-            Notification.Type.REBIRTH_ACHIEVEMENT.type -> showRebirthAchievementDialog()
+            Notification.Type.REBIRTH_ENABLED.type -> {
+                showRebirthEnabledDialog()
+            }
 
-            Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
-            else -> return false
+            Notification.Type.REBIRTH_ACHIEVEMENT.type -> {
+                showRebirthAchievementDialog()
+            }
+
+            Notification.Type.FIRST_DROP.type -> {
+                showFirstDropDialog(notification)
+            }
+
+            else -> {
+                return false
+            }
         }
         return true
     }
@@ -157,7 +252,7 @@ class ShowNotificationInteractor(
             (activity as? SnackbarActivity)?.showSnackbar(
                 title = notificationData?.message,
                 content = nextUnlockText,
-                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE
+                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
             )
         }
     }

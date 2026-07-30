@@ -6,7 +6,9 @@ import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class GroupCategory : RealmObject(), BaseMainObject {
+open class GroupCategory :
+    RealmObject(),
+    BaseMainObject {
     override val realmClass: Class<out RealmModel>
         get() = Group::class.java
     override val primaryIdentifier: String?

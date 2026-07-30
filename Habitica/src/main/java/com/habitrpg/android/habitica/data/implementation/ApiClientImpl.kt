@@ -76,7 +76,7 @@ class ApiClientImpl(
     private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
     private val notificationsManager: NotificationsManager,
-    private val context: Context
+    private val context: Context,
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
@@ -94,14 +94,14 @@ class ApiClientImpl(
         return habitResponse?.data
     }
 
-    private suspend fun <T> process(apiCall: suspend () -> Response<HabitResponse<T>>): T? {
-        return process(apiCall, null, true, false)
-    }
+    private suspend fun <T> process(apiCall: suspend () -> Response<HabitResponse<T>>): T? = process(apiCall, null, true, false)
 
-    private suspend fun <T> process(apiCall: suspend () -> Response<HabitResponse<T>>,
-                                    onError: ((Throwable) -> T?)? = null,
-                                    propagateError: Boolean = true,
-                                    returnOnError: Boolean = false): T? {
+    private suspend fun <T> process(
+        apiCall: suspend () -> Response<HabitResponse<T>>,
+        onError: ((Throwable) -> T?)? = null,
+        propagateError: Boolean = true,
+        returnOnError: Boolean = false,
+    ): T? {
         try {
             return processResponse(apiCall())
         } catch (throwable: Throwable) {
@@ -151,7 +151,7 @@ class ApiClientImpl(
         val timezoneOffset =
             -TimeUnit.MINUTES.convert(
                 timeZone.getOffset(calendar.timeInMillis).toLong(),
-                TimeUnit.MILLISECONDS
+                TimeUnit.MILLISECONDS,
             )
 
         val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
@@ -159,7 +159,8 @@ class ApiClientImpl(
         val cache = Cache(File(context.cacheDir, "http_cache"), cacheSize)
 
         val client =
-            OkHttpClient.Builder()
+            OkHttpClient
+                .Builder()
                 .cache(cache)
                 .addNetworkInterceptor { chain ->
                     val original = chain.request()
@@ -171,7 +172,8 @@ class ApiClientImpl(
                                 .header("x-api-user", this.hostConfig.userID)
                     }
                     builder =
-                        builder.header("x-client", "habitica-android")
+                        builder
+                            .header("x-client", "habitica-android")
                             .header("x-user-timezoneOffset", timezoneOffset.toString())
                     if (userAgent != null) {
                         builder = builder.header("user-agent", userAgent)
@@ -180,7 +182,8 @@ class ApiClientImpl(
                         builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY)
                     }
                     val request =
-                        builder.method(original.method, original.body)
+                        builder
+                            .method(original.method, original.body)
                             .build()
                     lastAPICallURL = original.url.toString()
                     val response = chain.proceed(request)
@@ -197,11 +200,12 @@ class ApiClientImpl(
                                     if (!path.contains("/user/auth/update-password") && !path.contains("group-plans")) {
                                         val bodyStr = runCatching { response.peekBody(1024).string() }.getOrDefault("")
 
-                                        val (errField, _) = runCatching {
-                                            JSONObject(bodyStr).let {
-                                                it.optString("error", "") to it.optString("message", "")
-                                            }
-                                        }.getOrDefault("" to "")
+                                        val (errField, _) =
+                                            runCatching {
+                                                JSONObject(bodyStr).let {
+                                                    it.optString("error", "") to it.optString("message", "")
+                                                }
+                                            }.getOrDefault("" to "")
 
                                         // logout if language agnostic "invalid_credentials" error is returned
                                         val shouldLogout = errField.equals("invalid_credentials", ignoreCase = true)
@@ -221,23 +225,25 @@ class ApiClientImpl(
                                 }
 
                                 else -> {
-                                    return@addNetworkInterceptor response.newBuilder()
-                                        .header("Cache-Control", "no-store").build()
+                                    return@addNetworkInterceptor response
+                                        .newBuilder()
+                                        .header("Cache-Control", "no-store")
+                                        .build()
                                 }
                             }
                         } else {
                             return@addNetworkInterceptor response
                         }
                     }
-                }
-                .addInterceptor(logging)
+                }.addInterceptor(logging)
                 .readTimeout(2400, TimeUnit.SECONDS)
                 .build()
 
         val server = Server(this.hostConfig.address)
 
         retrofitAdapter =
-            Retrofit.Builder()
+            Retrofit
+                .Builder()
                 .client(client)
                 .baseUrl(server.toString())
                 .addConverterFactory(converter)
@@ -257,7 +263,7 @@ class ApiClientImpl(
         username: String,
         email: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
     ): UserAuthResponse? {
         val auth = UserAuth()
         auth.username = username
@@ -269,7 +275,7 @@ class ApiClientImpl(
 
     override suspend fun connectUser(
         username: String,
-        password: String
+        password: String,
     ): UserAuthResponse? {
         val auth = UserAuth()
         auth.username = username
@@ -281,7 +287,7 @@ class ApiClientImpl(
         network: String,
         userId: String,
         accessToken: String,
-        allowRegister: Boolean
+        allowRegister: Boolean,
     ): UserAuthResponse? {
         val auth = UserAuthSocial()
         auth.network = network
@@ -297,29 +303,36 @@ class ApiClientImpl(
                 UserAuthResponse().apply {
                     userExists = false
                 }
-            } else if (response.body()?.data?.id?.isEmpty() == true) {
+            } else if (response
+                    .body()
+                    ?.data
+                    ?.id
+                    ?.isEmpty() == true
+            ) {
                 UserAuthResponse().apply {
                     userExists = false
                 }
             } else {
                 processResponse(response)
             }
-        } catch(_: Exception) {
+        } catch (_: Exception) {
             UserAuthResponse().apply {
                 userExists = false
             }
         }
     }
 
-    override suspend fun disconnectSocial(network: String): Boolean {
-        return this.apiService.disconnectSocial(network).code() == 200
-    }
+    override suspend fun disconnectSocial(network: String): Boolean = this.apiService.disconnectSocial(network).code() == 200
 
-    override suspend fun loginApple(authToken: String): UserAuthResponse? {
-        return process { apiService.loginApple(mapOf("code" to authToken,
-            "allowRegister" to true
-            )) }
-    }
+    override suspend fun loginApple(authToken: String): UserAuthResponse? =
+        process {
+            apiService.loginApple(
+                mapOf(
+                    "code" to authToken,
+                    "allowRegister" to true,
+                ),
+            )
+        }
 
     fun accept(throwable: Throwable) {
         val throwableClass = throwable.javaClass
@@ -333,16 +346,23 @@ class ApiClientImpl(
             SSLException::class.java.isAssignableFrom(throwableClass)
         ) {
             this.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
-        } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
+        } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass ||
+            IOException::class.java == throwableClass
+        ) {
             this.showConnectionProblemDialog(
                 R.string.network_error_no_network_body,
-                isUserInputCall
+                isUserInputCall,
             )
         } else if (HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
             val error = throwable as HttpException
             val res = getErrorResponse(error)
             val status = error.code()
-            val requestUrl = error.response()?.raw()?.request?.url
+            val requestUrl =
+                error
+                    .response()
+                    ?.raw()
+                    ?.request
+                    ?.url
             val path = requestUrl?.encodedPath?.removePrefix("/api/v4") ?: ""
             isUserInputCall =
                 when {
@@ -369,7 +389,7 @@ class ApiClientImpl(
                     showConnectionProblemDialog(
                         R.string.authentication_error_title,
                         R.string.authentication_error_body,
-                        isUserInputCall
+                        isUserInputCall,
                     )
                 }
             } else if (status in 500..599) {
@@ -386,10 +406,8 @@ class ApiClientImpl(
 
     override suspend fun updateMember(
         memberID: String,
-        updateData: Map<String, Map<String, Boolean>>
-    ): Member? {
-        return process { apiService.updateUser(memberID, updateData) }
-    }
+        updateData: Map<String, Map<String, Boolean>>,
+    ): Member? = process { apiService.updateUser(memberID, updateData) }
 
     override fun getErrorResponse(throwable: HttpException): ErrorResponse {
         val errorResponse = throwable.response()?.errorBody() ?: return ErrorResponse()
@@ -408,7 +426,12 @@ class ApiClientImpl(
     }
 
     override suspend fun retrieveUser(withTasks: Boolean): User? {
-        val user = process { apiService.getUser("balance,items,permissions,challenges,lastCron,needsCron,loginIncentives,achievements,backer,contributor,purchased,invitations,party,profile,stats,tasksOrder,pushDevices,tags,pinnedItems,unpinnedItems,pinnedItemsOrder") }
+        val user =
+            process {
+                apiService.getUser(
+                    "balance,items,permissions,challenges,lastCron,needsCron,loginIncentives,achievements,backer,contributor,purchased,invitations,party,profile,stats,tasksOrder,pushDevices,tags,pinnedItems,unpinnedItems,pinnedItemsOrder",
+                )
+            }
         val tasks = getTasks()
         user?.tasks = tasks
         return user
@@ -416,22 +439,16 @@ class ApiClientImpl(
 
     override suspend fun retrieveInboxMessages(
         uuid: String,
-        page: Int
-    ): List<ChatMessage>? {
-        return process { apiService.getInboxMessages(uuid, page) }
-    }
+        page: Int,
+    ): List<ChatMessage>? = process { apiService.getInboxMessages(uuid, page) }
 
-    override suspend fun retrieveInboxConversations(): List<InboxConversation>? {
-        return process { apiService.getInboxConversations() }
-    }
+    override suspend fun retrieveInboxConversations(): List<InboxConversation>? = process { apiService.getInboxConversations() }
 
-    override fun hasAuthenticationKeys(): Boolean {
-        return this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
-    }
+    override fun hasAuthenticationKeys(): Boolean = this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
 
     private fun showConnectionProblemDialog(
         resourceMessageString: Int,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         showConnectionProblemDialog(null, context.getString(resourceMessageString), isFromUserInput)
     }
@@ -439,12 +456,12 @@ class ApiClientImpl(
     private fun showConnectionProblemDialog(
         resourceTitleString: Int,
         resourceMessageString: Int,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         showConnectionProblemDialog(
             context.getString(resourceTitleString),
             context.getString(resourceMessageString),
-            isFromUserInput
+            isFromUserInput,
         )
     }
 
@@ -453,18 +470,20 @@ class ApiClientImpl(
     private fun showConnectionProblemDialog(
         resourceTitleString: String?,
         resourceMessageString: String,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         erroredRequestCount += 1
         val application =
             (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication)
-        application?.currentActivity?.get()
+        application
+            ?.currentActivity
+            ?.get()
             ?.showConnectionProblem(
                 erroredRequestCount,
                 resourceTitleString,
                 resourceMessageString,
-                isFromUserInput
+                isFromUserInput,
             )
     }
 
@@ -474,7 +493,9 @@ class ApiClientImpl(
         val application =
             (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication)
-        application?.currentActivity?.get()
+        application
+            ?.currentActivity
+            ?.get()
             ?.hideConnectionProblem()
     }
 
@@ -485,7 +506,7 @@ class ApiClientImpl(
 
     override fun updateAuthenticationCredentials(
         userID: String?,
-        apiToken: String?
+        apiToken: String?,
     ) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
@@ -498,117 +519,88 @@ class ApiClientImpl(
 
     override suspend fun reportChallenge(
         challengeid: String,
-        updateData: Map<String, String>
-    ): Void? {
-        return process { apiService.reportChallenge(challengeid, updateData) }
-    }
+        updateData: Map<String, String>,
+    ): Void? = process { apiService.reportChallenge(challengeid, updateData) }
 
-    override suspend fun getContent(language: String?): ContentResult? {
-        return process { apiService.getContent(language ?: this.languageCode) }
-    }
+    override suspend fun getContent(language: String?): ContentResult? = process { apiService.getContent(language ?: this.languageCode) }
 
-    override suspend fun updateUser(updateDictionary: Map<String, Any?>): User? {
-        return process { apiService.updateUser(updateDictionary) }
-    }
+    override suspend fun updateUser(updateDictionary: Map<String, Any?>): User? = process { apiService.updateUser(updateDictionary) }
 
-    override suspend fun registrationLanguage(registrationLanguage: String): User? {
-        return process { apiService.registrationLanguage(registrationLanguage) }
-    }
+    override suspend fun registrationLanguage(registrationLanguage: String): User? =
+        process {
+            apiService.registrationLanguage(registrationLanguage)
+        }
 
-    override suspend fun retrieveInAppRewards(): List<ShopItem>? {
-        return process { apiService.retrieveInAppRewards() }
-    }
+    override suspend fun retrieveInAppRewards(): List<ShopItem>? = process { apiService.retrieveInAppRewards() }
 
     override suspend fun equipItem(
         type: String,
-        itemKey: String
-    ): Items? {
-        return process { apiService.equipItem(type, itemKey) }
-    }
+        itemKey: String,
+    ): Items? = process { apiService.equipItem(type, itemKey) }
 
     override suspend fun buyItem(
         itemKey: String,
-        purchaseQuantity: Int
-    ): BuyResponse? {
-        return process { apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
-    }
+        purchaseQuantity: Int,
+    ): BuyResponse? = process { apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
 
     override suspend fun unlinkAllTasks(
         challengeID: String?,
-        keepOption: String
-    ): Void? {
-        return process { apiService.unlinkAllTasks(challengeID, keepOption) }
-    }
+        keepOption: String,
+    ): Void? = process { apiService.unlinkAllTasks(challengeID, keepOption) }
 
-    override suspend fun blockMember(userID: String): List<String>? {
-        return process { apiService.blockMember(userID) }
-    }
+    override suspend fun blockMember(userID: String): List<String>? = process { apiService.blockMember(userID) }
 
     override suspend fun purchaseItem(
         type: String,
         itemKey: String,
-        purchaseQuantity: Int
-    ): Void? {
-        return process {
+        purchaseQuantity: Int,
+    ): Void? =
+        process {
             apiService.purchaseItem(
                 type,
                 itemKey,
-                mapOf(Pair("quantity", purchaseQuantity))
+                mapOf(Pair("quantity", purchaseQuantity)),
             )
         }
-    }
 
     private var lastSubscribeCall: Date? = null
-    override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? {
-        return if (Date().time - (lastSubscribeCall?.time ?: 0) > 6000) {
+
+    override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? =
+        if (Date().time - (lastSubscribeCall?.time ?: 0) > 6000) {
             lastSubscribeCall = Date()
             process { apiService.validateSubscription(request) }
         } else {
             null
         }
-    }
 
-    override suspend fun getHallMember(userId: String): Member? {
-        return process { apiService.getHallMember(userId) }
-    }
+    override suspend fun getHallMember(userId: String): Member? = process { apiService.getHallMember(userId) }
 
-    override suspend fun validateNoRenewSubscription(request: PurchaseValidationRequest): Any? {
-        return process { apiService.validateNoRenewSubscription(request) }
-    }
+    override suspend fun validateNoRenewSubscription(request: PurchaseValidationRequest): Any? =
+        process {
+            apiService.validateNoRenewSubscription(request)
+        }
 
-    override suspend fun cancelSubscription(): Void? {
-        return processResponse(apiService.cancelSubscription())
-    }
+    override suspend fun cancelSubscription(): Void? = processResponse(apiService.cancelSubscription())
 
     override suspend fun purchaseHourglassItem(
         type: String,
-        itemKey: String
-    ): Void? {
-        return process { apiService.purchaseHourglassItem(type, itemKey) }
-    }
+        itemKey: String,
+    ): Void? = process { apiService.purchaseHourglassItem(type, itemKey) }
 
-    override suspend fun purchaseMysterySet(itemKey: String): Void? {
-        return process { apiService.purchaseMysterySet(itemKey) }
-    }
+    override suspend fun purchaseMysterySet(itemKey: String): Void? = process { apiService.purchaseMysterySet(itemKey) }
 
-    override suspend fun purchaseQuest(key: String): Void? {
-        return process { apiService.purchaseQuest(key) }
-    }
+    override suspend fun purchaseQuest(key: String): Void? = process { apiService.purchaseQuest(key) }
 
-    override suspend fun purchaseSpecialSpell(key: String): Void? {
-        return process { apiService.purchaseSpecialSpell(key) }
-    }
+    override suspend fun purchaseSpecialSpell(key: String): Void? = process { apiService.purchaseSpecialSpell(key) }
 
     override suspend fun sellItem(
         itemType: String,
-        itemKey: String
-    ): User? {
-        return process { apiService.sellItem(itemType, itemKey) }
-    }
+        itemKey: String,
+    ): User? = process { apiService.sellItem(itemType, itemKey) }
 
     override suspend fun feedPet(
         petKey: String,
-        foodKey: String
+        foodKey: String,
     ): FeedResponse? {
         val response = apiService.feedPet(petKey, foodKey)
         response.body()?.data?.message = response.body()?.message
@@ -617,108 +609,72 @@ class ApiClientImpl(
 
     override suspend fun hatchPet(
         eggKey: String,
-        hatchingPotionKey: String
-    ): Items? {
-        return process { apiService.hatchPet(eggKey, hatchingPotionKey) }
-    }
+        hatchingPotionKey: String,
+    ): Items? = process { apiService.hatchPet(eggKey, hatchingPotionKey) }
 
     override suspend fun getTasks(): TaskList? = process { apiService.getTasks(false) }
 
-    override suspend fun getTasks(type: String): TaskList? {
-        return process { apiService.getTasks(type) }
-    }
+    override suspend fun getTasks(type: String): TaskList? = process { apiService.getTasks(type) }
 
     override suspend fun getTasks(
         type: String,
-        dueDate: String
-    ): TaskList? {
-        return process { apiService.getTasks(type, dueDate) }
-    }
+        dueDate: String,
+    ): TaskList? = process { apiService.getTasks(type, dueDate) }
 
 //    override suspend fun reorderTags(type: String, dueDate: String): {
 //        return process { apiService.getTasks(type, dueDate) }
 //    }
 
-    override suspend fun unlockPath(path: String): UnlockResponse? {
-        return process { apiService.unlockPath(path) }
-    }
+    override suspend fun unlockPath(path: String): UnlockResponse? = process { apiService.unlockPath(path) }
 
-    override suspend fun getTask(id: String): Task? {
-        return process { apiService.getTask(id) }
-    }
+    override suspend fun getTask(id: String): Task? = process { apiService.getTask(id) }
 
     override suspend fun postTaskDirection(
         id: String,
-        direction: String
-    ): TaskDirectionData? {
-        return process { apiService.postTaskDirection(id, direction) }
-    }
+        direction: String,
+    ): TaskDirectionData? = process { apiService.postTaskDirection(id, direction) }
 
-    override suspend fun bulkScoreTasks(data: List<Map<String, String>>): BulkTaskScoringData? {
-        return process { apiService.bulkScoreTasks(data) }
-    }
+    override suspend fun bulkScoreTasks(data: List<Map<String, String>>): BulkTaskScoringData? = process { apiService.bulkScoreTasks(data) }
 
     override suspend fun postTaskNewPosition(
         id: String,
-        position: Int
-    ): List<String>? {
-        return process { apiService.postTaskNewPosition(id, position) }
-    }
+        position: Int,
+    ): List<String>? = process { apiService.postTaskNewPosition(id, position) }
 
     override suspend fun postGroupTaskNewPosition(
         id: String,
-        position: Int
-    ): List<String>? {
-        return process { apiService.postGroupTaskNewPosition(id, position) }
-    }
+        position: Int,
+    ): List<String>? = process { apiService.postGroupTaskNewPosition(id, position) }
 
     override suspend fun scoreChecklistItem(
         taskId: String,
-        itemId: String
-    ): Task? {
-        return process { apiService.scoreChecklistItem(taskId, itemId) }
-    }
+        itemId: String,
+    ): Task? = process { apiService.scoreChecklistItem(taskId, itemId) }
 
-    override suspend fun createTask(item: Task): Task? {
-        return process { apiService.createTask(item) }
-    }
+    override suspend fun createTask(item: Task): Task? = process { apiService.createTask(item) }
 
     override suspend fun createGroupTask(
         groupId: String,
-        item: Task
-    ): Task? {
-        return process { apiService.createGroupTask(groupId, item) }
-    }
+        item: Task,
+    ): Task? = process { apiService.createGroupTask(groupId, item) }
 
-    override suspend fun createTasks(tasks: List<Task>): List<Task>? {
-        return process { apiService.createTasks(tasks) }
-    }
+    override suspend fun createTasks(tasks: List<Task>): List<Task>? = process { apiService.createTasks(tasks) }
 
     override suspend fun updateTask(
         id: String,
-        item: Task
-    ): Task? {
-        return process { apiService.updateTask(id, item) }
-    }
+        item: Task,
+    ): Task? = process { apiService.updateTask(id, item) }
 
-    override suspend fun deleteTask(id: String): Void? {
-        return process { apiService.deleteTask(id) }
-    }
+    override suspend fun deleteTask(id: String): Void? = process { apiService.deleteTask(id) }
 
-    override suspend fun createTag(tag: Tag): Tag? {
-        return process { apiService.createTag(tag) }
-    }
+    override suspend fun createTag(tag: Tag): Tag? = process { apiService.createTag(tag) }
 
     override suspend fun updateTag(
         id: String,
-        tag: Tag
-    ): Tag? {
-        return process { apiService.updateTag(id, tag) }
-    }
+        tag: Tag,
+    ): Tag? = process { apiService.updateTag(id, tag) }
 
-    override suspend fun deleteTag(id: String): Void? {
-        return process { apiService.deleteTag(id) }
-    }
+    override suspend fun deleteTag(id: String): Void? = process { apiService.deleteTag(id) }
 
     override suspend fun sleep(): Boolean? = process { apiService.sleep() }
 
@@ -727,27 +683,22 @@ class ApiClientImpl(
     override suspend fun useSkill(
         skillName: String,
         targetType: String,
-        targetId: String
-    ): SkillResponse? {
-        return process { apiService.useSkill(skillName, targetType, targetId) }
-    }
+        targetId: String,
+    ): SkillResponse? = process { apiService.useSkill(skillName, targetType, targetId) }
 
     override suspend fun useSkill(
         skillName: String,
-        targetType: String
-    ): SkillResponse? {
-        return process { apiService.useSkill(skillName, targetType) }
-    }
+        targetType: String,
+    ): SkillResponse? = process { apiService.useSkill(skillName, targetType) }
 
-    override suspend fun changeClass(className: String?): User? {
-        return process {
+    override suspend fun changeClass(className: String?): User? =
+        process {
             if (className != null) {
                 apiService.changeClass(className)
             } else {
                 apiService.changeClass()
             }
         }
-    }
 
     override suspend fun disableClasses(): User? = process { apiService.disableClasses() }
 
@@ -755,170 +706,115 @@ class ApiClientImpl(
         apiService.markPrivateMessagesRead()
     }
 
-    override suspend fun listGroups(type: String): List<Group>? {
-        return process { apiService.listGroups(type) }
-    }
+    override suspend fun listGroups(type: String): List<Group>? = process { apiService.listGroups(type) }
 
-    override suspend fun getGroup(groupId: String): Group? {
-        return processResponse(apiService.getGroup(groupId))
-    }
+    override suspend fun getGroup(groupId: String): Group? = processResponse(apiService.getGroup(groupId))
 
-    override suspend fun createGroup(group: Group): Group? {
-        return processResponse(apiService.createGroup(group))
-    }
+    override suspend fun createGroup(group: Group): Group? = processResponse(apiService.createGroup(group))
 
     override suspend fun updateGroup(
         id: String,
-        item: Group
-    ): Group? {
-        return processResponse(apiService.updateGroup(id, item))
-    }
+        item: Group,
+    ): Group? = processResponse(apiService.updateGroup(id, item))
 
     override suspend fun removeMemberFromGroup(
         groupID: String,
-        userID: String
-    ): Void? {
-        return processResponse(apiService.removeMemberFromGroup(groupID, userID))
-    }
+        userID: String,
+    ): Void? = processResponse(apiService.removeMemberFromGroup(groupID, userID))
 
     override suspend fun listGroupChat(
         groupId: String,
         limit: Int?,
-        before: String?
-    ): List<ChatMessage>? {
-        return processResponse(apiService.listGroupChat(groupId, limit, before))
-    }
+        before: String?,
+    ): List<ChatMessage>? = processResponse(apiService.listGroupChat(groupId, limit, before))
 
-    override suspend fun joinGroup(groupId: String): Group? {
-        return processResponse(apiService.joinGroup(groupId))
-    }
+    override suspend fun joinGroup(groupId: String): Group? = processResponse(apiService.joinGroup(groupId))
 
     override suspend fun leaveGroup(
         groupId: String,
-        keepChallenges: String
-    ): Void? {
-        return processResponse(apiService.leaveGroup(groupId, keepChallenges))
-    }
+        keepChallenges: String,
+    ): Void? = processResponse(apiService.leaveGroup(groupId, keepChallenges))
 
     override suspend fun postGroupChat(
         groupId: String,
-        message: Map<String, String>
-    ): PostChatMessageResult? {
-        return process { apiService.postGroupChat(groupId, message) }
-    }
+        message: Map<String, String>,
+    ): PostChatMessageResult? = process { apiService.postGroupChat(groupId, message) }
 
     override suspend fun deleteMessage(
         groupId: String,
-        messageId: String
-    ): Void? {
-        return process { apiService.deleteMessage(groupId, messageId) }
-    }
+        messageId: String,
+    ): Void? = process { apiService.deleteMessage(groupId, messageId) }
 
-    override suspend fun deleteInboxMessage(id: String): Void? {
-        return process { apiService.deleteInboxMessage(id) }
-    }
-
-    override suspend fun getGroupMembers(
-        groupId: String,
-        includeAllPublicFields: Boolean?
-    ): List<Member>? {
-        return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields))
-    }
+    override suspend fun deleteInboxMessage(id: String): Void? = process { apiService.deleteInboxMessage(id) }
 
     override suspend fun getGroupMembers(
         groupId: String,
         includeAllPublicFields: Boolean?,
-        lastId: String
-    ): List<Member>? {
-        return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields, lastId))
-    }
+    ): List<Member>? = processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields))
+
+    override suspend fun getGroupMembers(
+        groupId: String,
+        includeAllPublicFields: Boolean?,
+        lastId: String,
+    ): List<Member>? = processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields, lastId))
 
     override suspend fun likeMessage(
         groupId: String,
-        mid: String
-    ): ChatMessage? {
-        return process { apiService.likeMessage(groupId, mid) }
-    }
+        mid: String,
+    ): ChatMessage? = process { apiService.likeMessage(groupId, mid) }
 
     override suspend fun reportMember(
         mid: String,
-        data: Map<String, String>
-    ): Void? {
-        return process { apiService.reportMember(mid, data) }
-    }
+        data: Map<String, String>,
+    ): Void? = process { apiService.reportMember(mid, data) }
 
     override suspend fun flagMessage(
         groupId: String,
         mid: String,
-        data: MutableMap<String, String>
-    ): Void? {
-        return process { apiService.flagMessage(groupId, mid, data) }
-    }
+        data: MutableMap<String, String>,
+    ): Void? = process { apiService.flagMessage(groupId, mid, data) }
 
     override suspend fun flagInboxMessage(
         mid: String,
-        data: MutableMap<String, String>
-    ): Void? {
-        return process { apiService.flagInboxMessage(mid, data) }
-    }
+        data: MutableMap<String, String>,
+    ): Void? = process { apiService.flagInboxMessage(mid, data) }
 
-    override suspend fun seenMessages(groupId: String): Void? {
-        return process { apiService.seenMessages(groupId) }
-    }
+    override suspend fun seenMessages(groupId: String): Void? = process { apiService.seenMessages(groupId) }
 
     override suspend fun inviteToGroup(
         groupId: String,
-        inviteData: Map<String, Any>
-    ): List<InviteResponse>? {
-        return process { apiService.inviteToGroup(groupId, inviteData) }
-    }
+        inviteData: Map<String, Any>,
+    ): List<InviteResponse>? = process { apiService.inviteToGroup(groupId, inviteData) }
 
-    override suspend fun rejectGroupInvite(groupId: String): Void? {
-        return process { apiService.rejectGroupInvite(groupId) }
-    }
+    override suspend fun rejectGroupInvite(groupId: String): Void? = process { apiService.rejectGroupInvite(groupId) }
 
     override suspend fun getGroupInvites(
         groupId: String,
-        includeAllPublicFields: Boolean?
-    ): List<Member>? {
-        return process { apiService.getGroupInvites(groupId, includeAllPublicFields) }
-    }
+        includeAllPublicFields: Boolean?,
+    ): List<Member>? = process { apiService.getGroupInvites(groupId, includeAllPublicFields) }
 
-    override suspend fun acceptQuest(groupId: String): Void? {
-        return process { apiService.acceptQuest(groupId) }
-    }
+    override suspend fun acceptQuest(groupId: String): Void? = process { apiService.acceptQuest(groupId) }
 
-    override suspend fun rejectQuest(groupId: String): Void? {
-        return process { apiService.rejectQuest(groupId) }
-    }
+    override suspend fun rejectQuest(groupId: String): Void? = process { apiService.rejectQuest(groupId) }
 
-    override suspend fun cancelQuest(groupId: String): Void? {
-        return process { apiService.cancelQuest(groupId) }
-    }
+    override suspend fun cancelQuest(groupId: String): Void? = process { apiService.cancelQuest(groupId) }
 
     override suspend fun forceStartQuest(
         groupId: String,
-        group: Group
-    ): Quest? {
-        return process { apiService.forceStartQuest(groupId, group) }
-    }
+        group: Group,
+    ): Quest? = process { apiService.forceStartQuest(groupId, group) }
 
     override suspend fun inviteToQuest(
         groupId: String,
-        questKey: String
-    ): Quest? {
-        return process { apiService.inviteToQuest(groupId, questKey) }
-    }
+        questKey: String,
+    ): Quest? = process { apiService.inviteToQuest(groupId, questKey) }
 
-    override suspend fun abortQuest(groupId: String): Quest? {
-        return process { apiService.abortQuest(groupId) }
-    }
+    override suspend fun abortQuest(groupId: String): Quest? = process { apiService.abortQuest(groupId) }
 
-    override suspend fun leaveQuest(groupId: String): Void? {
-        return process { apiService.leaveQuest(groupId) }
-    }
+    override suspend fun leaveQuest(groupId: String): Void? = process { apiService.leaveQuest(groupId) }
 
     private var lastPurchaseValidation: Date? = null
+
     override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? {
         // make sure a purchase attempt doesn't happen
         return if (Date().time - (lastPurchaseValidation?.time ?: 0) > 5000) {
@@ -929,138 +825,105 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun changeCustomDayStart(updateObject: Map<String, Any>): Void? {
-        return process { apiService.changeCustomDayStart(updateObject) }
-    }
+    override suspend fun changeCustomDayStart(updateObject: Map<String, Any>): Void? =
+        process { apiService.changeCustomDayStart(updateObject) }
 
     override suspend fun markTaskNeedsWork(
         taskID: String,
-        userID: String
-    ): Task? {
-        return process { apiService.markTaskNeedsWork(taskID, userID) }
-    }
+        userID: String,
+    ): Task? = process { apiService.markTaskNeedsWork(taskID, userID) }
 
-    override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? {
-        return process { apiService.retrievePartySeekingUsers(page) }
-    }
+    override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? = process { apiService.retrievePartySeekingUsers(page) }
 
-    override suspend fun getMember(memberId: String) =
-        processResponse(apiService.getMember(memberId))
+    override suspend fun getMember(memberId: String) = processResponse(apiService.getMember(memberId))
 
-    override suspend fun getMemberWithUsername(username: String) =
-        processResponse(apiService.getMemberWithUsername(username))
+    override suspend fun getMemberWithUsername(username: String) = processResponse(apiService.getMemberWithUsername(username))
 
-    override suspend fun getMemberAchievements(memberId: String): List<Achievement>? {
-        return process { apiService.getMemberAchievements(memberId, languageCode) }
-    }
+    override suspend fun getMemberAchievements(memberId: String): List<Achievement>? =
+        process {
+            apiService.getMemberAchievements(memberId, languageCode)
+        }
 
     override suspend fun findUsernames(
         username: String,
         context: String?,
-        id: String?
-    ): List<FindUsernameResult>? {
-        return process { apiService.findUsernames(username, context, id) }
-    }
+        id: String?,
+    ): List<FindUsernameResult>? = process { apiService.findUsernames(username, context, id) }
 
-    override suspend fun postPrivateMessage(messageDetails: Map<String, String>): PostChatMessageResult? {
-        return process { apiService.postPrivateMessage(messageDetails) }
-    }
+    override suspend fun postPrivateMessage(messageDetails: Map<String, String>): PostChatMessageResult? =
+        process {
+            apiService.postPrivateMessage(messageDetails)
+        }
 
-    override suspend fun retrieveShopIventory(identifier: String): Shop? {
-        return process { apiService.retrieveShopInventory(identifier, languageCode) }
-    }
+    override suspend fun retrieveShopIventory(identifier: String): Shop? =
+        process {
+            apiService.retrieveShopInventory(identifier, languageCode)
+        }
 
-    override suspend fun addPushDevice(pushDeviceData: Map<String, String>): List<Void>? {
-        return process { apiService.addPushDevice(pushDeviceData) }
-    }
+    override suspend fun addPushDevice(pushDeviceData: Map<String, String>): List<Void>? =
+        process { apiService.addPushDevice(pushDeviceData) }
 
-    override suspend fun deletePushDevice(regId: String): List<Void>? {
-        return process { apiService.deletePushDevice(regId) }
-    }
+    override suspend fun deletePushDevice(regId: String): List<Void>? = process { apiService.deletePushDevice(regId) }
 
     override suspend fun getUserChallenges(
         page: Int,
-        memberOnly: Boolean
-    ): List<Challenge>? {
-        return if (memberOnly) {
+        memberOnly: Boolean,
+    ): List<Challenge>? =
+        if (memberOnly) {
             process { apiService.getUserChallenges(page, memberOnly) }
         } else {
             process { apiService.getUserChallenges(page) }
         }
-    }
 
-    override suspend fun getChallengeTasks(challengeId: String): TaskList? {
-        return process { apiService.getChallengeTasks(challengeId) }
-    }
+    override suspend fun getChallengeTasks(challengeId: String): TaskList? = process { apiService.getChallengeTasks(challengeId) }
 
-    override suspend fun getChallenge(challengeId: String): Challenge? {
-        return process { apiService.getChallenge(challengeId) }
-    }
+    override suspend fun getChallenge(challengeId: String): Challenge? = process { apiService.getChallenge(challengeId) }
 
-    override suspend fun joinChallenge(challengeId: String): Challenge? {
-        return process { apiService.joinChallenge(challengeId) }
-    }
+    override suspend fun joinChallenge(challengeId: String): Challenge? = process { apiService.joinChallenge(challengeId) }
 
     override suspend fun leaveChallenge(
         challengeId: String,
-        body: LeaveChallengeBody
-    ): Void? {
-        return process { apiService.leaveChallenge(challengeId, body) }
-    }
+        body: LeaveChallengeBody,
+    ): Void? = process { apiService.leaveChallenge(challengeId, body) }
 
-    override suspend fun createChallenge(challenge: Challenge): Challenge? {
-        return process { apiService.createChallenge(challenge) }
-    }
+    override suspend fun createChallenge(challenge: Challenge): Challenge? = process { apiService.createChallenge(challenge) }
 
     override suspend fun createChallengeTasks(
         challengeId: String,
-        tasks: List<Task>
-    ): List<Task>? {
-        return process { apiService.createChallengeTasks(challengeId, tasks) }
-    }
+        tasks: List<Task>,
+    ): List<Task>? = process { apiService.createChallengeTasks(challengeId, tasks) }
 
     override suspend fun createChallengeTask(
         challengeId: String,
-        task: Task
-    ): Task? {
-        return process { apiService.createChallengeTask(challengeId, task) }
-    }
+        task: Task,
+    ): Task? = process { apiService.createChallengeTask(challengeId, task) }
 
-    override suspend fun updateChallenge(challenge: Challenge): Challenge? {
-        return process { apiService.updateChallenge(challenge.id ?: "", challenge) }
-    }
+    override suspend fun updateChallenge(challenge: Challenge): Challenge? =
+        process {
+            apiService.updateChallenge(challenge.id ?: "", challenge)
+        }
 
-    override suspend fun deleteChallenge(challengeId: String): Void? {
-        return process { apiService.deleteChallenge(challengeId) }
-    }
+    override suspend fun deleteChallenge(challengeId: String): Void? = process { apiService.deleteChallenge(challengeId) }
 
-    override suspend fun debugAddTenGems(): Void? {
-        return process { apiService.debugAddTenGems() }
-    }
+    override suspend fun debugAddTenGems(): Void? = process { apiService.debugAddTenGems() }
 
-    override suspend fun getNews(): List<Any>? {
-        return process { apiService.getNews() }
-    }
+    override suspend fun getNews(): List<Any>? = process { apiService.getNews() }
 
-    override suspend fun readNotification(notificationId: String): List<Any>? {
-        return process { apiService.readNotification(notificationId) }
-    }
+    override suspend fun readNotification(notificationId: String): List<Any>? = process { apiService.readNotification(notificationId) }
 
-    override suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>? {
-        return process { apiService.readNotifications(notificationIds) }
-    }
+    override suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>? =
+        process {
+            apiService.readNotifications(notificationIds)
+        }
 
-    override suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any>? {
-        return process { apiService.seeNotifications(notificationIds) }
-    }
+    override suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any>? =
+        process {
+            apiService.seeNotifications(notificationIds)
+        }
 
-    override suspend fun openMysteryItem(): Equipment? {
-        return process { apiService.openMysteryItem() }
-    }
+    override suspend fun openMysteryItem(): Equipment? = process { apiService.openMysteryItem() }
 
-    override suspend fun runCron(): Void? {
-        return process { apiService.runCron() }
-    }
+    override suspend fun runCron(): Void? = process { apiService.runCron() }
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
@@ -1080,10 +943,8 @@ class ApiClientImpl(
 
     override suspend fun togglePinnedItem(
         pinType: String,
-        path: String
-    ): Void? {
-        return process { apiService.togglePinnedItem(pinType, path) }
-    }
+        path: String,
+    ): Void? = process { apiService.togglePinnedItem(pinType, path) }
 
     override suspend fun sendPasswordResetEmail(email: String): Void? {
         val data = HashMap<String, String>()
@@ -1093,7 +954,7 @@ class ApiClientImpl(
 
     override suspend fun updateLoginName(
         newLoginName: String,
-        password: String
+        password: String,
     ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = newLoginName
@@ -1121,7 +982,7 @@ class ApiClientImpl(
 
     override suspend fun updateEmail(
         newEmail: String,
-        password: String
+        password: String,
     ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["newEmail"] = newEmail
@@ -1134,7 +995,7 @@ class ApiClientImpl(
     override suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String
+        newPasswordConfirmation: String,
     ): UserAuthResponse? {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = oldPassword
@@ -1143,51 +1004,40 @@ class ApiClientImpl(
         return process { apiService.updatePassword(updateObject) }
     }
 
-    override suspend fun allocatePoint(stat: String): Stats? {
-        return process { apiService.allocatePoint(stat) }
-    }
+    override suspend fun allocatePoint(stat: String): Stats? = process { apiService.allocatePoint(stat) }
 
     override suspend fun transferGems(
         giftedID: String,
-        amount: Int
-    ): Void? {
-        return process {
+        amount: Int,
+    ): Void? =
+        process {
             apiService.transferGems(
                 mapOf(
                     Pair("toUserId", giftedID),
-                    Pair("gemAmount", amount)
-                )
+                    Pair("gemAmount", amount),
+                ),
             )
         }
-    }
 
-    override suspend fun getTeamPlans(): List<TeamPlan>? {
-        return process { apiService.getTeamPlans() }
-    }
+    override suspend fun getTeamPlans(): List<TeamPlan>? = process { apiService.getTeamPlans() }
 
-    override suspend fun getTeamPlanTasks(teamID: String): TaskList? {
-        return processResponse(apiService.getTeamPlanTasks(teamID))
-    }
+    override suspend fun getTeamPlanTasks(teamID: String): TaskList? = processResponse(apiService.getTeamPlanTasks(teamID))
 
     override suspend fun assignToTask(
         taskId: String,
-        ids: List<String>
-    ): Task? {
-        return process { apiService.assignToTask(taskId, ids) }
-    }
+        ids: List<String>,
+    ): Task? = process { apiService.assignToTask(taskId, ids) }
 
     override suspend fun unassignFromTask(
         taskId: String,
-        userID: String
-    ): Task? {
-        return process { apiService.unassignFromTask(taskId, userID) }
-    }
+        userID: String,
+    ): Task? = process { apiService.unassignFromTask(taskId, userID) }
 
     override suspend fun bulkAllocatePoints(
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int
+        perception: Int,
     ): Stats? {
         val body = HashMap<String, Map<String, Int>>()
         val stats = HashMap<String, Int>()
@@ -1199,15 +1049,11 @@ class ApiClientImpl(
         return process { apiService.bulkAllocatePoints(body) }
     }
 
-    override suspend fun retrieveMarketGear(): Shop? {
-        return process { apiService.retrieveMarketGear(languageCode) }
-    }
+    override suspend fun retrieveMarketGear(): Shop? = process { apiService.retrieveMarketGear(languageCode) }
 
     override suspend fun getWorldState(): WorldState? = process { apiService.worldState() }
 
     companion object {
-        fun createGsonFactory(): GsonConverterFactory {
-            return GSonFactoryCreator.create()
-        }
+        fun createGsonFactory(): GsonConverterFactory = GSonFactoryCreator.create()
     }
 }

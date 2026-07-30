@@ -68,9 +68,7 @@ class ClassSelectionActivity : BaseActivity() {
 
     private var progressDialog: HabiticaProgressDialog? = null
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_class_selection
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_class_selection
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityClassSelectionBinding.inflate(layoutInflater)
@@ -86,7 +84,6 @@ class ClassSelectionActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
-
 
         val args = navArgs<ClassSelectionActivityArgs>().value
         isClassSelected = args.isClassSelected
@@ -109,10 +106,11 @@ class ClassSelectionActivity : BaseActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.selectedWrapperView) { v, windowInsets ->
             val paddingBottom = v.paddingBottom
-            val insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-                    + WindowInsetsCompat.Type.displayCutout()
-            )
+            val insets =
+                windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() +
+                        WindowInsetsCompat.Type.displayCutout(),
+                )
             v.updatePadding(bottom = insets.bottom + paddingBottom)
             consumeWindowInsetsAbove30(windowInsets)
         }
@@ -173,7 +171,7 @@ class ClassSelectionActivity : BaseActivity() {
 
     private fun makeUser(
         preferences: Preferences,
-        outfit: Outfit
+        outfit: Outfit,
     ): User {
         val user = User()
         user.preferences = preferences
@@ -189,20 +187,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.yellow_100
-            )
+                R.color.yellow_100,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.dark_brown
-            )
+                R.color.dark_brown,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_yellow_10)
         updateButtonBackgrounds(
             binding.healerButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border),
         )
     }
 
@@ -212,20 +210,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.blue_10
-            )
+                R.color.blue_10,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.mageButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border),
         )
     }
 
@@ -235,20 +233,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.brand_200
-            )
+                R.color.brand_200,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.rogueButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border),
         )
     }
 
@@ -258,26 +256,26 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.maroon_50
-            )
+                R.color.maroon_50,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.warriorButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border),
         )
     }
 
     private fun updateButtonBackgrounds(
         selectedButton: TextView,
-        background: Drawable?
+        background: Drawable?,
     ) {
         val deselectedBackground =
             ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window)
@@ -372,9 +370,7 @@ class ClassSelectionActivity : BaseActivity() {
         checkForReviewPromptAfterClassSelection()
     }
 
-    private fun displayProgressDialog(progressText: String): HabiticaProgressDialog {
-        return HabiticaProgressDialog.show(this, progressText, 300)
-    }
+    private fun displayProgressDialog(progressText: String): HabiticaProgressDialog = HabiticaProgressDialog.show(this, progressText, 300)
 
     private fun dismiss() {
         if (shouldFinish == true) {

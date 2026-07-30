@@ -19,7 +19,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
+class GiftOneGetOneHabiticaPromotion(
+    startDate: Date?,
+    endDate: Date?,
+) : HabiticaPromotion() {
     override val identifier: String
         get() = "g1g1"
     override val promoType: PromoType
@@ -27,27 +30,20 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
     override val startDate: Date = startDate ?: DateUtils.createDate(2020, 11, 17)
     override val endDate: Date = endDate ?: DateUtils.createDate(2021, 0, 7)
 
-    override fun pillBackgroundDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_pill_bg) ?: ShapeDrawable()
-    }
+    override fun pillBackgroundDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.g1g1_promo_pill_bg) ?: ShapeDrawable()
 
-    override fun screenBackgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.gray_1)
-    }
+    override fun screenBackgroundColor(context: Context): Int = ContextCompat.getColor(context, R.color.gray_1)
 
-    override fun backgroundColor(context: Context): Int {
-        return ContextCompat.getColor(context, R.color.gray_10)
-    }
+    override fun backgroundColor(context: Context): Int = ContextCompat.getColor(context, R.color.gray_10)
 
-    override fun promoBackgroundDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.g1g1_promo_background)
+    override fun promoBackgroundDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.g1g1_promo_background)
             ?: ShapeDrawable()
-    }
 
-    override fun buttonDrawable(context: Context): Drawable {
-        return ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
+    override fun buttonDrawable(context: Context): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
             ?: ShapeDrawable()
-    }
 
     override fun configurePromoMenuView(view: PromoMenuView) {
         val context = view.context
@@ -57,7 +53,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
 
         view.setDecoration(
             ContextCompat.getDrawable(context, R.drawable.g1g1_promo_menu_left),
-            ContextCompat.getDrawable(context, R.drawable.g1g1_promo_menu_right)
+            ContextCompat.getDrawable(context, R.drawable.g1g1_promo_menu_right),
         )
 
         view.binding.button.backgroundTintList =
@@ -84,14 +80,14 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_left
-            )
+                R.drawable.g1g1_promo_left,
+            ),
         )
         binding.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_right
-            )
+                R.drawable.g1g1_promo_right,
+            ),
         )
         binding.promoBannerTitleImage.visibility = View.GONE
         binding.promoBannerDurationView.visibility = View.GONE
@@ -110,14 +106,14 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.content.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_left
-            )
+                R.drawable.g1g1_promo_left,
+            ),
         )
         binding.content.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_right
-            )
+                R.drawable.g1g1_promo_right,
+            ),
         )
         binding.content.promoBannerTitleImage.visibility = View.GONE
         binding.content.promoBannerDurationView.visibility = View.GONE
@@ -131,7 +127,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
 
     override fun configureGemView(
         binding: PurchaseGemViewBinding,
-        regularAmount: Int
+        regularAmount: Int,
     ) {
     }
 
@@ -141,14 +137,14 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promoBannerLeftImage?.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_left
-            )
+                R.drawable.g1g1_promo_left,
+            ),
         )
         fragment.binding?.promoBannerRightImage?.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.g1g1_promo_right
-            )
+                R.drawable.g1g1_promo_right,
+            ),
         )
         fragment.binding?.promoBannerTitleImage?.visibility = View.GONE
         fragment.binding?.promoBannerTitleText?.visibility = View.VISIBLE
@@ -159,20 +155,20 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
             context.getString(
                 R.string.x_to_y,
                 formatter.format(startDate),
-                formatter.format(endDate)
+                formatter.format(endDate),
             )
         fragment.binding?.promoBannerDurationView?.setTextColor(
             ContextCompat.getColor(
                 context,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         fragment.binding?.promptText?.setText(R.string.g1g1_promo_info_prompt)
         fragment.binding?.promptText?.setTextColor(
             ContextCompat.getColor(
                 context,
-                R.color.text_teal
-            )
+                R.color.text_teal,
+            ),
         )
         fragment.binding?.promptButton?.background =
             ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_400)
@@ -181,7 +177,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promptButton?.setOnClickListener {
             fragment.context?.let { context ->
                 SubscriptionFragment.showGiftSubscriptionDialog(
-                    context
+                    context,
                 )
             }
         }
@@ -194,7 +190,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
             context.getString(
                 R.string.g1g1_promo_info_limitations_noutc,
                 limitationsFormatter.format(startDate),
-                limitationsFormatter.format(endDate)
+                limitationsFormatter.format(endDate),
             )
     }
 }

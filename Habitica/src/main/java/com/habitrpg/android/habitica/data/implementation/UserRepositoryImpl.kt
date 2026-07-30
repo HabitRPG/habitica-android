@@ -45,8 +45,9 @@ class UserRepositoryImpl(
     authenticationHandler: AuthenticationHandler,
     private val taskRepository: TaskRepository,
     private val appConfigManager: AppConfigManager,
-    private val context: Context
-) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
+    private val context: Context,
+) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler),
+    UserRepository {
     private var lastReadNotification: String? = null
     private var lastSync: Date? = null
 
@@ -74,7 +75,7 @@ class UserRepositoryImpl(
 
     private suspend fun updateUser(
         userID: String,
-        updateData: Map<String, Any?>
+        updateData: Map<String, Any?>,
     ): User? {
         val networkUser = apiClient.updateUser(updateData) ?: return null
         val oldUser = localRepository.getUser(userID).firstOrNull()
@@ -84,27 +85,21 @@ class UserRepositoryImpl(
     private suspend fun updateUser(
         userID: String,
         key: String,
-        value: Any?
-    ): User? {
-        return updateUser(userID, mapOf(key to value))
-    }
+        value: Any?,
+    ): User? = updateUser(userID, mapOf(key to value))
 
-    override suspend fun updateUser(updateData: Map<String, Any?>): User? {
-        return updateUser(currentUserID, updateData)
-    }
+    override suspend fun updateUser(updateData: Map<String, Any?>): User? = updateUser(currentUserID, updateData)
 
     override suspend fun updateUser(
         key: String,
-        value: Any?
-    ): User? {
-        return updateUser(currentUserID, key, value)
-    }
+        value: Any?,
+    ): User? = updateUser(currentUserID, key, value)
 
     @Suppress("ReturnCount")
     override suspend fun retrieveUser(
         withTasks: Boolean,
         forced: Boolean,
-        overrideExisting: Boolean
+        overrideExisting: Boolean,
     ): User? {
         // Only retrieve again after 3 minutes or it's forced.
         if (forced || lastSync == null || Date().time - (lastSync?.time ?: 0) > 180000) {
@@ -141,7 +136,10 @@ class UserRepositoryImpl(
         if (items != null && currentUser != null) {
             brokenItem =
                 items.gear?.owned?.filter { it.owned == false }?.firstOrNull { equipment ->
-                    currentUser.items?.gear?.owned?.firstOrNull { it.key == equipment.key && it.owned == true } != null
+                    currentUser.items
+                        ?.gear
+                        ?.owned
+                        ?.firstOrNull { it.key == equipment.key && it.owned == true } != null
                 }
         }
         retrieveUser(false, true)
@@ -173,28 +171,50 @@ class UserRepositoryImpl(
     override suspend fun useSkill(
         key: String,
         target: String?,
-        taskId: String
+        taskId: String,
     ): SkillResponse? {
         val response = apiClient.useSkill(key, target ?: "", taskId) ?: return null
         val user = getLiveUser() ?: return response
         response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
         response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
         response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
-        response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
+        response.damage = (
+            response.user
+                ?.party
+                ?.quest
+                ?.progress
+                ?.up ?: 0.0f
+        ) - (
+            user.party
+                ?.quest
+                ?.progress
+                ?.up ?: 0.0f
+        )
         response.user?.let { mergeUser(user, it) }
         return response
     }
 
     override suspend fun useSkill(
         key: String,
-        target: String?
+        target: String?,
     ): SkillResponse? {
         val response = apiClient.useSkill(key, target ?: "") ?: return null
         val user = getLiveUser() ?: return response
         response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
         response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
         response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
-        response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
+        response.damage = (
+            response.user
+                ?.party
+                ?.quest
+                ?.progress
+                ?.up ?: 0.0f
+        ) - (
+            user.party
+                ?.quest
+                ?.progress
+                ?.up ?: 0.0f
+        )
         response.user?.let { mergeUser(user, it) }
         return response
     }
@@ -206,13 +226,12 @@ class UserRepositoryImpl(
         return retrieveUser(false, forced = true)
     }
 
-    override suspend fun unlockPath(customization: Customization): UnlockResponse? {
-        return unlockPath(customization.path, customization.price ?: 0)
-    }
+    override suspend fun unlockPath(customization: Customization): UnlockResponse? =
+        unlockPath(customization.path, customization.price ?: 0)
 
     override suspend fun unlockPath(
         path: String,
-        price: Int
+        price: Int,
     ): UnlockResponse? {
         val unlockResponse = apiClient.unlockPath(path) ?: return null
         val user = localRepository.getUser(currentUserID).firstOrNull() ?: return unlockResponse
@@ -229,9 +248,7 @@ class UserRepositoryImpl(
         runCron(ArrayList())
     }
 
-    override suspend fun getNews(): List<Any>? {
-        return apiClient.getNews()
-    }
+    override suspend fun getNews(): List<Any>? = apiClient.getNews()
 
     override suspend fun getNewsNotification(): Notification {
         val baileyNews = apiClient.getNews()
@@ -251,13 +268,9 @@ class UserRepositoryImpl(
         return apiClient.readNotification(id)
     }
 
-    override fun getUserQuestStatus(): Flow<UserQuestStatus> {
-        return localRepository.getUserQuestStatus(currentUserID)
-    }
+    override fun getUserQuestStatus(): Flow<UserQuestStatus> = localRepository.getUserQuestStatus(currentUserID)
 
-    override suspend fun reroll(): User? {
-        return apiClient.reroll()
-    }
+    override suspend fun reroll(): User? = apiClient.reroll()
 
     override suspend fun rebirth(): User? {
         apiClient.rebirth()
@@ -302,7 +315,7 @@ class UserRepositoryImpl(
 
     override suspend fun updateLoginName(
         newLoginName: String,
-        password: String?
+        password: String?,
     ): User? {
         if (!password.isNullOrEmpty()) {
             apiClient.updateLoginName(newLoginName.trim(), password.trim())
@@ -321,13 +334,13 @@ class UserRepositoryImpl(
 
     override suspend fun updateEmail(
         newEmail: String,
-        password: String
+        password: String,
     ) = apiClient.updateEmail(newEmail.trim(), password)
 
     override suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String
+        newPasswordConfirmation: String,
     ) = apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override suspend fun allocatePoint(stat: Attribute): Stats? {
@@ -361,14 +374,14 @@ class UserRepositoryImpl(
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int
+        perception: Int,
     ): Stats? {
         val stats =
             apiClient.bulkAllocatePoints(
                 strength,
                 intelligence,
                 constitution,
-                perception
+                perception,
             ) ?: return null
         val user = getLiveUser()
         if (user != null) {
@@ -411,15 +424,21 @@ class UserRepositoryImpl(
     override suspend fun useCustomization(
         type: String,
         category: String?,
-        identifier: String
+        identifier: String,
     ): User? {
         if (appConfigManager.enableLocalChanges()) {
             val liveUser = getLiveUser()
             if (liveUser != null) {
                 localRepository.modify(liveUser) { user ->
                     when (type) {
-                        "skin" -> user.preferences?.skin = identifier
-                        "shirt" -> user.preferences?.shirt = identifier
+                        "skin" -> {
+                            user.preferences?.skin = identifier
+                        }
+
+                        "shirt" -> {
+                            user.preferences?.shirt = identifier
+                        }
+
                         "hair" -> {
                             when (category) {
                                 "color" -> user.preferences?.hair?.color = identifier
@@ -430,8 +449,14 @@ class UserRepositoryImpl(
                                 "base" -> user.preferences?.hair?.base = identifier.toInt()
                             }
                         }
-                        "background" -> user.preferences?.background = identifier
-                        "chair" -> user.preferences?.chair = identifier
+
+                        "background" -> {
+                            user.preferences?.background = identifier
+                        }
+
+                        "chair" -> {
+                            user.preferences?.chair = identifier
+                        }
                     }
                 }
             }
@@ -454,13 +479,9 @@ class UserRepositoryImpl(
         return achievements
     }
 
-    override fun getAchievements(): Flow<List<Achievement>> {
-        return localRepository.getAchievements()
-    }
+    override fun getAchievements(): Flow<List<Achievement>> = localRepository.getAchievements()
 
-    override fun getQuestAchievements(): Flow<List<QuestAchievement>> {
-        return localRepository.getQuestAchievements(currentUserID)
-    }
+    override fun getQuestAchievements(): Flow<List<QuestAchievement>> = localRepository.getQuestAchievements(currentUserID)
 
     override suspend fun retrieveTeamPlans(): List<TeamPlan>? {
         val teams = apiClient.getTeamPlans() ?: return null
@@ -469,9 +490,7 @@ class UserRepositoryImpl(
         return teams
     }
 
-    override fun getTeamPlans(): Flow<List<TeamPlan>> {
-        return localRepository.getTeamPlans(currentUserID)
-    }
+    override fun getTeamPlans(): Flow<List<TeamPlan>> = localRepository.getTeamPlans(currentUserID)
 
     override suspend fun retrieveTeamPlan(teamID: String): Group? {
         val team = apiClient.getGroup(teamID) ?: return null
@@ -486,18 +505,18 @@ class UserRepositoryImpl(
         localRepository.save(
             members.map {
                 GroupMembership(it.id, id)
-            }
+            },
         )
         members.let { localRepository.save(members) }
         return team
     }
 
-    override fun getTeamPlan(teamID: String): Flow<Group?> {
-        return localRepository.getTeamPlan(teamID)
+    override fun getTeamPlan(teamID: String): Flow<Group?> =
+        localRepository
+            .getTeamPlan(teamID)
             .map {
                 it ?: retrieveTeamPlan(teamID)
             }
-    }
 
     private suspend fun getLiveUser(): User? {
         val user = localRepository.getUser(currentUserID).firstOrNull() ?: return null
@@ -514,7 +533,7 @@ class UserRepositoryImpl(
 
     private fun mergeUser(
         oldUser: User?,
-        newUser: User
+        newUser: User,
     ): User {
         if (oldUser == null || !oldUser.isValid) {
             return oldUser ?: newUser

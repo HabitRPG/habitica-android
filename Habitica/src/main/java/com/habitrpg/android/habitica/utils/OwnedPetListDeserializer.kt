@@ -11,7 +11,7 @@ class OwnedPetListDeserializer : JsonDeserializer<List<OwnedPet>> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?
+        context: JsonDeserializationContext?,
     ): List<OwnedPet> {
         val ownedItems = RealmList<OwnedPet>()
         val entrySet = json?.asJsonObject?.entrySet()

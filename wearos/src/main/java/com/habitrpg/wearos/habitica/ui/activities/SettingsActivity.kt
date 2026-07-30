@@ -46,7 +46,8 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
         viewModel.logout()
         lifecycleScope.launch {
             try {
-                CredentialManager.create(this@SettingsActivity)
+                CredentialManager
+                    .create(this@SettingsActivity)
                     .clearCredentialState(ClearCredentialStateRequest())
             } catch (_: Exception) {
             }
@@ -57,13 +58,13 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
         startActivity(intent)
     }
 
-    private fun buildSettings(): List<SettingsItem> {
-        return listOf(
+    private fun buildSettings(): List<SettingsItem> =
+        listOf(
             SettingsItem(
                 "sync",
                 getString(R.string.sync_data),
                 SettingsItem.Types.BUTTON,
-                null
+                null,
             ) {
                 viewModel.resyncData()
             },
@@ -71,7 +72,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "logout",
                 getString(R.string.logout),
                 SettingsItem.Types.BUTTON,
-                null
+                null,
             ) {
                 showLogoutConfirmation()
             },
@@ -79,18 +80,17 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "spacer",
                 getString(R.string.settings),
                 SettingsItem.Types.SPACER,
-                null
+                null,
             ) {
             },
             SettingsItem(
                 "footer",
                 getString(R.string.version_info, versionName, versionCode),
                 SettingsItem.Types.FOOTER,
-                null
+                null,
             ) {
-            }
+            },
         )
-    }
 
     private val versionName: String by lazy {
         try {

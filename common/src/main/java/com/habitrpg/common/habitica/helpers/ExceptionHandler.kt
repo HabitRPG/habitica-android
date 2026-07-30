@@ -19,12 +19,11 @@ class ExceptionHandler {
             instance.exceptionLogger = exceptionLogger
         }
 
-        fun coroutine(handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler {
-            return CoroutineExceptionHandler { _, throwable ->
+        fun coroutine(handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler =
+            CoroutineExceptionHandler { _, throwable ->
                 reportError(throwable)
                 handler?.invoke(throwable)
             }
-        }
 
         fun reportError(throwable: Throwable) {
             if (BuildConfig.DEBUG) {
@@ -44,12 +43,12 @@ class ExceptionHandler {
 fun CoroutineScope.launchCatching(
     errorHandler: ((Throwable) -> Unit)? = null,
     context: CoroutineContext = EmptyCoroutineContext,
-    function: suspend CoroutineScope.() -> Unit
+    function: suspend CoroutineScope.() -> Unit,
 ) {
     launch(
         ExceptionHandler.coroutine {
             errorHandler?.invoke(it)
         } + context,
-        block = function
+        block = function,
     )
 }

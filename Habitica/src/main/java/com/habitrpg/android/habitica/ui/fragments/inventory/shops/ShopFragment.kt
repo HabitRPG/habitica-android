@@ -81,15 +81,13 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -104,7 +102,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         initializeCurrencyViews()
@@ -140,7 +138,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         PurchaseDialog(
                             requireContext(),
                             item,
-                            mainActivity
+                            mainActivity,
                         )
                     dialog.shopIdentifier = shopIdentifier
                     dialog.isPinned = isPinned
@@ -212,13 +210,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             layoutManager = GridLayoutManager(context, 2)
             layoutManager?.spanSizeLookup =
                 object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return if ((adapter?.getItemViewType(position) ?: 0) < 5) {
+                    override fun getSpanSize(position: Int): Int =
+                        if ((adapter?.getItemViewType(position) ?: 0) < 5) {
                             layoutManager?.spanCount ?: 1
                         } else {
                             1
                         }
-                    }
                 }
             binding?.recyclerView?.layoutManager = layoutManager
         }
@@ -227,7 +224,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             this.shopIdentifier = savedInstanceState.getString(SHOP_IDENTIFIER_KEY, "")
         }
 
-        adapter?.selectedGearCategory = userViewModel.user.value?.stats?.habitClass ?: ""
+        adapter?.selectedGearCategory = userViewModel.user.value
+            ?.stats
+            ?.habitClass ?: ""
 
         if (shop != null) {
             adapter?.setShop(shop)
@@ -253,19 +252,22 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         view.post { setGridSpanCount(view.width) }
 
         lifecycleScope.launchCatching {
-            inventoryRepository.getOwnedItems()
+            inventoryRepository
+                .getOwnedItems()
                 .collect { adapter?.setOwnedItems(it) }
         }
 
         lifecycleScope.launchCatching {
-            contentRepository.getWorldState()
+            contentRepository
+                .getWorldState()
                 .collect {
                     adapter?.shopSpriteSuffix = it.findNpcImageSuffix()
                 }
         }
 
         lifecycleScope.launchCatching {
-            inventoryRepository.getInAppRewards()
+            inventoryRepository
+                .getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
                 .collect { adapter?.setPinnedItemKeys(it) }
         }
@@ -288,7 +290,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             context?.let { context ->
                 if (user.gemCount <= 2) {
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
-                    Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "class change"))
+                    Analytics.sendEvent(
+                        "show insufficient gems modal",
+                        EventCategory.BEHAVIOUR,
+                        HitType.EVENT,
+                        mapOf("reason" to "class change"),
+                    )
                     dialog?.show()
                     return@launch
                 }
@@ -301,7 +308,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             HabiticaProgressDialog.show(
                                 requireActivity(),
                                 getString(R.string.changing_class_progress),
-                                300
+                                300,
                             )
                         lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
@@ -320,7 +327,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             HabiticaProgressDialog.show(
                                 requireActivity(),
                                 getString(R.string.changing_class_progress),
-                                300
+                                300,
                             )
                         lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
@@ -377,7 +384,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         if (userLevel in 50..99) {
                             val lastFreeRebirth = user.flags?.lastFreeRebirth
                             if (lastFreeRebirth == null ||
-                                (java.util.Date().time - lastFreeRebirth.time) / (1000 * 60 * 60 * 24) >= 45) {
+                                (java.util.Date().time - lastFreeRebirth.time) / (1000 * 60 * 60 * 24) >= 45
+                            ) {
                                 specialCategory.notes = getString(R.string.free_rebirth_at_level_100)
                             }
                         }
@@ -392,8 +400,15 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 Shop.SEASONAL_SHOP -> {
                     newShop.categories.sortWith(
                         compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
-                            .thenByDescending { if (it.identifier == "quests") 10000 else findReleaseYear(it.items.firstOrNull()?.key ?: "") }
-                            .thenBy { it.items.firstOrNull()?.locked }
+                            .thenByDescending {
+                                if (it.identifier ==
+                                    "quests"
+                                ) {
+                                    10000
+                                } else {
+                                    findReleaseYear(it.items.firstOrNull()?.key ?: "")
+                                }
+                            }.thenBy { it.items.firstOrNull()?.locked },
                     )
                 }
             }
@@ -453,13 +468,18 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         lifecycleScope.launchCatching {
             val shop = inventoryRepository.retrieveMarketGear()
             val equipment =
-                inventoryRepository.getOwnedEquipment()
-                    .map { equipment -> equipment.map { it.key } }.firstOrNull()
+                inventoryRepository
+                    .getOwnedEquipment()
+                    .map { equipment -> equipment.map { it.key } }
+                    .firstOrNull()
             for (category in shop?.categories ?: emptyList()) {
                 val items =
-                    category.items.asSequence().filter {
-                        equipment?.contains(it.key) == false
-                    }.sortedBy { it.locked }.toList()
+                    category.items
+                        .asSequence()
+                        .filter {
+                            equipment?.contains(it.key) == false
+                        }.sortedBy { it.locked }
+                        .toList()
                 category.items.clear()
                 category.items.addAll(items)
             }

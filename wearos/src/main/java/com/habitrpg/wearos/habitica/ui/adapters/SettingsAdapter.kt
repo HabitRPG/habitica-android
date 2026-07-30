@@ -19,31 +19,35 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.SpacerViewHolder
 class SettingsAdapter : BaseAdapter<SettingsItem>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return when (viewType) {
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        when (viewType) {
             1 -> FooterViewHolder(RowFooterBinding.inflate(parent.context.layoutInflater, parent, false).root)
             2 -> SpacerViewHolder(RowSpacerBinding.inflate(parent.context.layoutInflater, parent, false).root)
             3 -> SettingsViewHolder(RowSettingsBinding.inflate(parent.context.layoutInflater, parent, false).root)
             else -> super.onCreateViewHolder(parent, viewType)
         }
-    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         when (holder) {
             is SettingsViewHolder -> {
                 holder.bind(getItemAt(position))
             }
+
             is FooterViewHolder -> {
                 holder.bind(getItemAt(position).title)
             }
+
             is SpacerViewHolder -> {
                 holder.bind(16.dpToPx(holder.itemView.context))
             }
-            else -> super.onBindViewHolder(holder, position)
+
+            else -> {
+                super.onBindViewHolder(holder, position)
+            }
         }
     }
 
@@ -59,7 +63,9 @@ class SettingsAdapter : BaseAdapter<SettingsItem>() {
     }
 }
 
-class SettingsViewHolder(itemView: View) : BindableViewHolder<SettingsItem>(itemView) {
+class SettingsViewHolder(
+    itemView: View,
+) : BindableViewHolder<SettingsItem>(itemView) {
     private val binding = RowSettingsBinding.bind(itemView)
 
     private var widget: View? = null
@@ -104,7 +110,7 @@ data class SettingsItem(
     val title: String,
     val type: Types,
     var value: Any?,
-    val onTap: () -> Unit
+    val onTap: () -> Unit,
 ) {
     enum class Types {
         BUTTON,
@@ -112,6 +118,6 @@ data class SettingsItem(
         SPACER,
         TOGGLE,
         HEADER,
-        FOOTER
+        FOOTER,
     }
 }

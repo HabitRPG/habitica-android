@@ -4,8 +4,8 @@ import android.content.Intent
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
-import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.DeviceCommunication
@@ -32,7 +32,7 @@ class DeviceCommunicationService : WearableListenerService() {
 
     private fun openActivity(
         event: MessageEvent,
-        activityClass: Class<*>
+        activityClass: Class<*>,
     ) {
         val intent = Intent(this, activityClass)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -55,7 +55,7 @@ class DeviceCommunicationService : WearableListenerService() {
         messageClient.sendMessage(
             event.sourceNodeId,
             "/auth",
-            "${hostConfig.userID}:${hostConfig.apiKey}".toByteArray()
+            "${hostConfig.userID}:${hostConfig.apiKey}".toByteArray(),
         )
     }
 }

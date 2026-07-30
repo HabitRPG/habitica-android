@@ -26,9 +26,9 @@ import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
-import androidx.glance.layout.ContentScale
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -46,11 +46,11 @@ import com.habitrpg.android.habitica.widget.glance.components.EmptyState
 import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StartDayCard
 import com.habitrpg.android.habitica.widget.glance.components.TaskRow
-import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
-import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
-import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
+import com.habitrpg.android.habitica.widget.glance.components.stringRes
 import com.habitrpg.android.habitica.widget.glance.data.TaskListWidgetState
+import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
+import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
 import com.habitrpg.android.habitica.widget.glance.data.hydrateSnapshot
 import com.habitrpg.android.habitica.widget.glance.data.loadTaskListStateOrNull
 import com.habitrpg.android.habitica.widget.glance.state.WidgetActionKeys
@@ -65,21 +65,26 @@ abstract class TaskListGlanceWidget(
 ) : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val initial = if (WidgetAuth.isLoggedIn(context)) {
-            hydrateSnapshot(context, id, WidgetSnapshotStore.taskListKey) {
-                loadTaskListStateOrNull(context, taskType)?.let { WidgetSnapshotStore.encodeTaskList(it) }
-            }?.let { WidgetSnapshotStore.decodeTaskList(it) }
-        } else {
-            null
-        }
-        provideContent {
-            val loggedIn = WidgetAuth.isLoggedIn(context)
-            val state = if (loggedIn) {
-                WidgetSnapshotStore.taskListFrom(currentState()) ?: initial
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId,
+    ) {
+        val initial =
+            if (WidgetAuth.isLoggedIn(context)) {
+                hydrateSnapshot(context, id, WidgetSnapshotStore.taskListKey) {
+                    loadTaskListStateOrNull(context, taskType)?.let { WidgetSnapshotStore.encodeTaskList(it) }
+                }?.let { WidgetSnapshotStore.decodeTaskList(it) }
             } else {
                 null
             }
+        provideContent {
+            val loggedIn = WidgetAuth.isLoggedIn(context)
+            val state =
+                if (loggedIn) {
+                    WidgetSnapshotStore.taskListFrom(currentState()) ?: initial
+                } else {
+                    null
+                }
             HabiticaWidgetTheme {
                 when {
                     !loggedIn -> SignedOutContent()
@@ -92,6 +97,7 @@ abstract class TaskListGlanceWidget(
 }
 
 class DailyTaskListGlanceWidget : TaskListGlanceWidget(TaskType.DAILY)
+
 class TodoTaskListGlanceWidget : TaskListGlanceWidget(TaskType.TODO)
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
@@ -113,8 +119,8 @@ internal data class TaskListPalette(
 )
 
 @Composable
-private fun rememberPalette(): TaskListPalette {
-    return if (MaterialYouEnabled) {
+private fun rememberPalette(): TaskListPalette =
+    if (MaterialYouEnabled) {
         TaskListPalette(
             widgetBackground = GlanceTheme.colors.widgetBackground,
             cardBackground = GlanceTheme.colors.secondaryContainer,
@@ -143,32 +149,36 @@ private fun rememberPalette(): TaskListPalette {
             checklistChipTextDone = WidgetColors.textSecondary,
         )
     }
-}
 
 @Composable
-private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
+private fun TaskListContent(
+    state: TaskListWidgetState,
+    isDaily: Boolean,
+) {
     val size = LocalSize.current
     val palette = rememberPalette()
     val isVeryCompact = size.width < 180.dp
     val isCompact = size.width < 230.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addTaskType = if (isDaily) "daily" else "todo"
-    val title = when {
-        !isDaily && isCompact -> stringRes(R.string.todos)
-        !isDaily -> stringRes(R.string.widget_list_title_todos_full)
-        isCompact -> stringRes(R.string.dailies)
-        else -> stringRes(R.string.widget_list_title_dailies_full)
-    }
+    val title =
+        when {
+            !isDaily && isCompact -> stringRes(R.string.todos)
+            !isDaily -> stringRes(R.string.widget_list_title_todos_full)
+            isCompact -> stringRes(R.string.dailies)
+            else -> stringRes(R.string.widget_list_title_dailies_full)
+        }
 
     Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .cornerRadius(20.dp)
-            .background(palette.widgetBackground)
-            .padding(
-                horizontal = if (isVeryCompact) 6.dp else 10.dp,
-                vertical = if (isVeryCompact) 8.dp else 12.dp,
-            ),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .cornerRadius(20.dp)
+                .background(palette.widgetBackground)
+                .padding(
+                    horizontal = if (isVeryCompact) 6.dp else 10.dp,
+                    vertical = if (isVeryCompact) 8.dp else 12.dp,
+                ),
     ) {
         TaskListHeader(
             title = title,
@@ -195,29 +205,33 @@ private fun TaskListHeader(
     isVeryCompact: Boolean,
 ) {
     Row(
-        modifier = GlanceModifier
-            .fillMaxWidth()
-            .padding(start = if (isVeryCompact) 6.dp else 14.dp, end = if (isVeryCompact) 6.dp else 14.dp),
+        modifier =
+            GlanceModifier
+                .fillMaxWidth()
+                .padding(start = if (isVeryCompact) 6.dp else 14.dp, end = if (isVeryCompact) 6.dp else 14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = title,
-            style = TextStyle(
-                color = palette.titleText,
-                fontSize = if (isVeryCompact) 15.sp else 22.sp,
-                fontWeight = FontWeight.Medium,
-            ),
-            modifier = GlanceModifier
-                .defaultWeight()
-                .clickable(onClick = openAppAction(openListLink)),
+            style =
+                TextStyle(
+                    color = palette.titleText,
+                    fontSize = if (isVeryCompact) 15.sp else 22.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
+            modifier =
+                GlanceModifier
+                    .defaultWeight()
+                    .clickable(onClick = openAppAction(openListLink)),
         )
         if (!isVeryCompact) {
             Image(
                 provider = ImageProvider(R.drawable.widget_icon_add),
                 contentDescription = stringRes(R.string.widget_add_task_cd),
-                modifier = GlanceModifier
-                    .size(20.dp)
-                    .clickable(onClick = openTaskFormAction(addTaskType)),
+                modifier =
+                    GlanceModifier
+                        .size(20.dp)
+                        .clickable(onClick = openTaskFormAction(addTaskType)),
                 colorFilter = palette.iconTint?.let { ColorFilter.tint(it) },
             )
         }
@@ -232,25 +246,34 @@ private fun TaskListBody(
 ) {
     Box(modifier = GlanceModifier.fillMaxSize()) {
         when {
-            state.needsCron && isDaily -> StartDayCard(
-                onClick = openAppAction("habitica://user/tasks/daily"),
-                backgroundColor = palette.cardBackground,
-                textColor = palette.taskText,
-                iconTint = palette.cardIconTint,
-            )
-            state.tasks.isEmpty() -> EmptyState(
-                message = stringRes(
-                    if (isDaily) R.string.widget_empty_dailies else R.string.widget_empty_todos,
-                ),
-                backgroundColor = palette.cardBackground,
-                textColor = palette.taskText,
-                sparklesSize = if (isDaily) 56.dp else 40.dp,
-            )
-            else -> TaskListRows(
-                state = state,
-                palette = palette,
-                isDaily = isDaily,
-            )
+            state.needsCron && isDaily -> {
+                StartDayCard(
+                    onClick = openAppAction("habitica://user/tasks/daily"),
+                    backgroundColor = palette.cardBackground,
+                    textColor = palette.taskText,
+                    iconTint = palette.cardIconTint,
+                )
+            }
+
+            state.tasks.isEmpty() -> {
+                EmptyState(
+                    message =
+                        stringRes(
+                            if (isDaily) R.string.widget_empty_dailies else R.string.widget_empty_todos,
+                        ),
+                    backgroundColor = palette.cardBackground,
+                    textColor = palette.taskText,
+                    sparklesSize = if (isDaily) 56.dp else 40.dp,
+                )
+            }
+
+            else -> {
+                TaskListRows(
+                    state = state,
+                    palette = palette,
+                    isDaily = isDaily,
+                )
+            }
         }
     }
 }
@@ -273,11 +296,12 @@ private fun TaskListRows(
             val task = shown[index]
             Column(modifier = GlanceModifier.fillMaxWidth()) {
                 Box(
-                    modifier = GlanceModifier
-                        .fillMaxWidth()
-                        .height(48.dp)
-                        .cornerRadius(17.5.dp)
-                        .background(palette.cardBackground),
+                    modifier =
+                        GlanceModifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                            .cornerRadius(17.5.dp)
+                            .background(palette.cardBackground),
                 ) {
                     TaskRow(
                         text = task.text,
@@ -291,12 +315,13 @@ private fun TaskListRows(
                         checklistTotalCount = task.checklistTotal,
                         showChecklistCount = true,
                         innerCornerRadius = innerCornerRadius,
-                        onClick = actionRunCallback<ScoreTaskAction>(
-                            actionParametersOf(
-                                WidgetActionKeys.taskId to task.id,
-                                WidgetActionKeys.direction to TaskDirection.UP.text,
+                        onClick =
+                            actionRunCallback<ScoreTaskAction>(
+                                actionParametersOf(
+                                    WidgetActionKeys.taskId to task.id,
+                                    WidgetActionKeys.direction to TaskDirection.UP.text,
+                                ),
                             ),
-                        ),
                     )
                 }
                 if (index < shown.size - 1 || showFooter) {
@@ -323,19 +348,21 @@ private fun ViewMoreFooter(
     openListLink: String,
 ) {
     Box(
-        modifier = GlanceModifier
-            .fillMaxWidth()
-            .height(28.dp)
-            .clickable(onClick = openAppAction(openListLink)),
+        modifier =
+            GlanceModifier
+                .fillMaxWidth()
+                .height(28.dp)
+                .clickable(onClick = openAppAction(openListLink)),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = stringRes(R.string.widget_view_more, moreCount),
-            style = TextStyle(
-                color = textColor,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Medium,
-            ),
+            style =
+                TextStyle(
+                    color = textColor,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
         )
     }
 }

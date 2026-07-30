@@ -2,8 +2,8 @@ package com.habitrpg.wearos.habitica
 
 import android.app.Application
 import android.content.Intent
-import com.google.firebase.crashlytics.crashlytics
 import com.google.firebase.Firebase
+import com.google.firebase.crashlytics.crashlytics
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
@@ -38,14 +38,17 @@ class MainApplication : Application() {
         setupFirebase()
 
         MainScope().launch {
-            userRepository.getUser()
+            userRepository
+                .getUser()
                 .filterNotNull()
                 .onEach {
                     if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
                         val intent = Intent(this@MainApplication, FaintActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
-                    } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name && BaseActivity.currentActivityClassName != LoginActivity::class.java.name) {
+                    } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name &&
+                        BaseActivity.currentActivityClassName != LoginActivity::class.java.name
+                    ) {
                         val intent = Intent(this@MainApplication, RYAActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)

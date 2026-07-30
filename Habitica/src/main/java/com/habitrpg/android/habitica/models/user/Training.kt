@@ -6,7 +6,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Training : RealmObject(), BaseObject {
+open class Training :
+    RealmObject(),
+    BaseObject {
     var con: Float = 0f
     var str: Float = 0f
     var per: Float = 0f

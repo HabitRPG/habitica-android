@@ -12,19 +12,19 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
-class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
+class HabiticaProgressDialog(
+    context: Context,
+) : HabiticaAlertDialog(context) {
     companion object {
         fun show(
             context: FragmentActivity,
-            titleID: Int
-        ): HabiticaProgressDialog {
-            return show(context, context.getString(titleID))
-        }
+            titleID: Int,
+        ): HabiticaProgressDialog = show(context, context.getString(titleID))
 
         fun show(
             context: FragmentActivity,
             title: String?,
-            dialogWidth: Int = 300
+            dialogWidth: Int = 300,
         ): HabiticaProgressDialog {
             val dialog = HabiticaProgressDialog(context)
             val composeView = ComposeView(context)

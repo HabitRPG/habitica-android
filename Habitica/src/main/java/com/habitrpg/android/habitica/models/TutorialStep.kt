@@ -6,7 +6,9 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class TutorialStep : RealmObject(), BaseMainObject {
+open class TutorialStep :
+    RealmObject(),
+    BaseMainObject {
     var key: String? = null
     var tutorialGroup: String? = null
         set(group) {
@@ -27,8 +29,8 @@ open class TutorialStep : RealmObject(), BaseMainObject {
                 this.displayedOn == null || Date().time - (
                     displayedOn?.time
                         ?: 0
-                    ) > 86400000
-                )
+                ) > 86400000
+            )
         }
     override val realmClass: Class<out RealmModel>
         get() = TutorialStep::class.java

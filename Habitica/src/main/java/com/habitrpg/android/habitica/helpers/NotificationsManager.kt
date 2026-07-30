@@ -7,7 +7,10 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.Notification
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +31,7 @@ interface NotificationsManager : Clearable {
 
     fun dismissTaskNotification(
         context: Context,
-        task: Task
+        task: Task,
     )
 }
 
@@ -55,17 +58,13 @@ class MainNotificationsManager : NotificationsManager {
         this.handlePopupNotifications(current)
     }
 
-    override fun getNotifications(): Flow<List<Notification>> {
-        return notificationsFlow.filterNotNull()
-    }
+    override fun getNotifications(): Flow<List<Notification>> = notificationsFlow.filterNotNull()
 
-    override fun getNotification(id: String): Notification? {
-        return notificationsFlow.value?.find { it.id == id }
-    }
+    override fun getNotification(id: String): Notification? = notificationsFlow.value?.find { it.id == id }
 
     override fun dismissTaskNotification(
         context: Context,
-        task: Task
+        task: Task,
     ) {
         NotificationManagerCompat.from(context).cancel(task.id.hashCode())
     }
@@ -89,7 +88,6 @@ class MainNotificationsManager : NotificationsManager {
                         Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> true
                         Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> true
                         Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> true
-
                         Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> true
                         Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -> true
                         Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> true
@@ -112,7 +110,6 @@ class MainNotificationsManager : NotificationsManager {
                         Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> true
                         Notification.Type.ACHIEVEMENT_SEEING_RED.type -> true
                         Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> true
-
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                         Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
                         Notification.Type.REBIRTH_ENABLED.type -> true

@@ -37,7 +37,11 @@ data class StatsWidgetState(
     val maxMpText: String get() = maxMp.toInt().toString()
 
     companion object {
-        fun fromUser(context: Context, user: User, avatarBitmapPath: String? = null): StatsWidgetState? {
+        fun fromUser(
+            context: Context,
+            user: User,
+            avatarBitmapPath: String? = null,
+        ): StatsWidgetState? {
             val s = user.stats ?: return null
             val gold = (s.gp ?: 0.0)
             val gems = ((user.balance) * 4).toInt()
@@ -95,7 +99,10 @@ data class DailyCountWidgetState(
     val needsCron: Boolean,
 )
 
-fun computeNeedsCron(user: User?, now: Long = System.currentTimeMillis()): Boolean {
+fun computeNeedsCron(
+    user: User?,
+    now: Long = System.currentTimeMillis(),
+): Boolean {
     if (user == null) return false
     if (user.needsCron) return true
     val lastCron = user.lastCron ?: return false
@@ -103,22 +110,32 @@ fun computeNeedsCron(user: User?, now: Long = System.currentTimeMillis()): Boole
     return lastCron.time < CronBoundaryRefreshWorker.lastBoundaryMillis(dayStart, now)
 }
 
-suspend fun loadTaskListStateOrNull(context: Context, taskType: TaskType): TaskListWidgetState? =
+suspend fun loadTaskListStateOrNull(
+    context: Context,
+    taskType: TaskType,
+): TaskListWidgetState? =
     withContext(Dispatchers.Main) {
         try {
             val entry = widgetEntryPoint(context)
             entry.taskRepository().refreshLocalData()
             val user = entry.userRepository().getUser().firstOrNull() ?: return@withContext null
-            val mirroredGroupIds = user.preferences?.tasks?.mirrorGroupTasks
-                ?.toTypedArray() ?: emptyArray()
-            val raw = entry.taskRepository().getTasks(
-                taskType = taskType,
-                userID = user.id,
-                includedGroupIDs = mirroredGroupIds,
-            ).firstOrNull() ?: return@withContext null
-            val visible = raw.filter {
-                !it.completed(user.id) && (taskType != TaskType.DAILY || it.isDue == true)
-            }
+            val mirroredGroupIds =
+                user.preferences
+                    ?.tasks
+                    ?.mirrorGroupTasks
+                    ?.toTypedArray() ?: emptyArray()
+            val raw =
+                entry
+                    .taskRepository()
+                    .getTasks(
+                        taskType = taskType,
+                        userID = user.id,
+                        includedGroupIDs = mirroredGroupIds,
+                    ).firstOrNull() ?: return@withContext null
+            val visible =
+                raw.filter {
+                    !it.completed(user.id) && (taskType != TaskType.DAILY || it.isDue == true)
+                }
             TaskListWidgetState(
                 tasks = visible.map { it.toWidgetItem() },
                 needsCron = computeNeedsCron(user),
@@ -134,8 +151,9 @@ suspend fun loadTaskListStateOrNull(context: Context, taskType: TaskType): TaskL
 suspend fun loadStatsStateOrNull(context: Context): StatsWidgetState? =
     withContext(Dispatchers.Main) {
         try {
-            val user = widgetEntryPoint(context).userRepository().getUser().firstOrNull()
-                ?: return@withContext null
+            val user =
+                widgetEntryPoint(context).userRepository().getUser().firstOrNull()
+                    ?: return@withContext null
             AvatarBitmapCache.refreshIfNeeded(context, user)
             StatsWidgetState.fromUser(
                 context = context,
@@ -156,14 +174,20 @@ suspend fun loadDailyCountStateOrNull(context: Context): DailyCountWidgetState? 
             val entry = widgetEntryPoint(context)
             entry.taskRepository().refreshLocalData()
             val user = entry.userRepository().getUser().firstOrNull() ?: return@withContext null
-            val mirroredGroupIds = user.preferences?.tasks?.mirrorGroupTasks
-                ?.toTypedArray() ?: emptyArray()
-            val due = (
-                entry.taskRepository().getTasks(
-                    taskType = TaskType.DAILY,
-                    userID = user.id,
-                    includedGroupIDs = mirroredGroupIds,
-                ).firstOrNull() ?: return@withContext null
+            val mirroredGroupIds =
+                user.preferences
+                    ?.tasks
+                    ?.mirrorGroupTasks
+                    ?.toTypedArray() ?: emptyArray()
+            val due =
+                (
+                    entry
+                        .taskRepository()
+                        .getTasks(
+                            taskType = TaskType.DAILY,
+                            userID = user.id,
+                            includedGroupIDs = mirroredGroupIds,
+                        ).firstOrNull() ?: return@withContext null
                 ).filter { it.isDue == true }
             DailyCountWidgetState(
                 totalDue = due.size,

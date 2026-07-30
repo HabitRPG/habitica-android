@@ -11,7 +11,9 @@ import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.EnumMap
 
-class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogContent(context) {
+class PurchaseDialogCustomizationContent(
+    context: Context,
+) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseCustomizationBinding.inflate(context.layoutInflater, this)
     override val imageView: PixelArtView
         get() = PixelArtView(context)
@@ -41,7 +43,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
 
     fun setAvatarWithPreview(
         user: User,
-        shopItem: ShopItem
+        shopItem: ShopItem,
     ) {
         val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
         val path = shopItem.unlockPath ?: shopItem.path ?: ""

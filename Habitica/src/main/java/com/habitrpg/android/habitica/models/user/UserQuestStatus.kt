@@ -4,5 +4,5 @@ enum class UserQuestStatus {
     NO_QUEST,
     QUEST_COLLECT,
     QUEST_BOSS,
-    QUEST_UNKNOWN
+    QUEST_UNKNOWN,
 }

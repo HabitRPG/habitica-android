@@ -29,9 +29,7 @@ class GroupFormActivity : BaseActivity() {
 
     private var autocompleteAdapter: AutocompleteAdapter? = null
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_group_form
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_group_form
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGroupFormBinding.inflate(layoutInflater)
@@ -70,13 +68,16 @@ class GroupFormActivity : BaseActivity() {
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
-            val insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-                    + WindowInsetsCompat.Type.displayCutout()
-            )
-            v.updatePadding(top = insets.top,
+            val insets =
+                windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() +
+                        WindowInsetsCompat.Type.displayCutout(),
+                )
+            v.updatePadding(
+                top = insets.top,
                 left = insets.left,
-                right = insets.right)
+                right = insets.right,
+            )
             consumeWindowInsetsAbove30(windowInsets)
         }
     }
@@ -112,7 +113,7 @@ class GroupFormActivity : BaseActivity() {
         bundle.putString("groupType", groupType)
         bundle.putString(
             "description",
-            MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text.toString())
+            MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text.toString()),
         )
         bundle.putBoolean("leaderOnlyChallenges", binding.leaderCreateChallengeSwitch.isChecked)
         bundle.putString("leader", this.groupLeader)

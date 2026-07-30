@@ -14,7 +14,6 @@ class HabitButtonRefreshWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
-
     override suspend fun doWork(): Result {
         runCatching {
             HabitButtonGlanceWidget().updateAll(applicationContext)
@@ -26,9 +25,10 @@ class HabitButtonRefreshWorker(
         private const val WORK_NAME = "habit_button_widget_refresh"
 
         fun enqueue(context: Context) {
-            val request = OneTimeWorkRequestBuilder<HabitButtonRefreshWorker>()
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                .build()
+            val request =
+                OneTimeWorkRequestBuilder<HabitButtonRefreshWorker>()
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .build()
             WorkManager.getInstance(context).enqueueUniqueWork(
                 WORK_NAME,
                 ExistingWorkPolicy.REPLACE,

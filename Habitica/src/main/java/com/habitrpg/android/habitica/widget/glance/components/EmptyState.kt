@@ -37,10 +37,11 @@ fun EmptyState(
     sparklesSize: Dp = 40.dp,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .cornerRadius(17.5.dp)
-            .background(backgroundColor),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .cornerRadius(17.5.dp)
+                .background(backgroundColor),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -55,12 +56,13 @@ fun EmptyState(
             Spacer(GlanceModifier.height(8.dp))
             Text(
                 text = message,
-                style = TextStyle(
-                    color = textColor,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Center,
-                ),
+                style =
+                    TextStyle(
+                        color = textColor,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center,
+                    ),
             )
         }
     }
@@ -75,11 +77,12 @@ fun StartDayCard(
     iconTint: ColorProvider? = null,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .cornerRadius(16.dp)
-            .background(backgroundColor)
-            .clickable(onClick = onClick),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .cornerRadius(16.dp)
+                .background(backgroundColor)
+                .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Column(
@@ -96,12 +99,13 @@ fun StartDayCard(
             Spacer(GlanceModifier.height(12.dp))
             Text(
                 text = stringRes(R.string.widget_start_day),
-                style = TextStyle(
-                    color = textColor,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Center,
-                ),
+                style =
+                    TextStyle(
+                        color = textColor,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center,
+                    ),
             )
         }
     }

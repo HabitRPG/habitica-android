@@ -57,66 +57,74 @@ fun ConfigurableFormScreen(cfg: FormScreenConfig) {
     var attempted by remember { mutableStateOf(false) }
     val touchedFields = remember { mutableStateMapOf<String, Boolean>() }
 
-    val errorRes: Map<String, Int?> = remember(values, attempted, touchedFields) {
-        cfg.fields.associate { f ->
-            val show = attempted || (touchedFields[f.key] == true)
-            val rawError: Int? = when (f.key) {
-                "confirmPw" -> {
-                    if (show && values["confirmPw"].orEmpty() != values["newPw"].orEmpty()) {
-                        R.string.password_not_matching
-                    } else {
-                        f.validator(values[f.key].orEmpty())
+    val errorRes: Map<String, Int?> =
+        remember(values, attempted, touchedFields) {
+            cfg.fields.associate { f ->
+                val show = attempted || (touchedFields[f.key] == true)
+                val rawError: Int? =
+                    when (f.key) {
+                        "confirmPw" -> {
+                            if (show && values["confirmPw"].orEmpty() != values["newPw"].orEmpty()) {
+                                R.string.password_not_matching
+                            } else {
+                                f.validator(values[f.key].orEmpty())
+                            }
+                        }
+
+                        else -> {
+                            f.validator(values[f.key].orEmpty())
+                        }
                     }
+                f.key to if (show) rawError else null
+            }
+        }
+
+    val errors: Map<String, String?> =
+        errorRes.mapValues { (key, resId) ->
+            resId?.let {
+                if (it == R.string.password_too_short) {
+                    stringResource(it, 8)
+                } else {
+                    stringResource(it)
                 }
-
-                else -> f.validator(values[f.key].orEmpty())
-            }
-            f.key to if (show) rawError else null
-        }
-    }
-
-    val errors: Map<String, String?> = errorRes.mapValues { (key, resId) ->
-        resId?.let {
-            if (it == R.string.password_too_short) {
-                stringResource(it, 8)
-            } else {
-                stringResource(it)
             }
         }
-    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = colors.windowBackground
+        color = colors.windowBackground,
     ) {
         Box(Modifier.fillMaxSize()) {
             IconButton(
                 onClick = cfg.onBack,
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(Alignment.TopStart)
-                    .padding(start = 22.dp, top = 16.dp)
+                modifier =
+                    Modifier
+                        .size(48.dp)
+                        .align(Alignment.TopStart)
+                        .padding(start = 22.dp, top = 16.dp),
             ) {
                 Icon(
                     painterResource(R.drawable.arrow_back),
                     contentDescription = stringResource(R.string.action_back),
-                    tint = colors.textPrimary
+                    tint = colors.textPrimary,
                 )
             }
 
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(start = 16.dp, end = 16.dp, top = (16.dp + 40.dp + 8.dp))
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(start = 16.dp, end = 16.dp, top = (16.dp + 40.dp + 8.dp)),
             ) {
                 Text(
                     text = stringResource(cfg.titleRes),
                     fontWeight = FontWeight.Bold,
                     fontSize = 28.sp,
                     color = colors.textPrimary,
-                    modifier = Modifier
-                        .align(Alignment.Start)
-                        .padding(start = 6.dp, bottom = 12.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 6.dp, bottom = 12.dp),
                 )
 
                 cfg.descriptionRes?.let {
@@ -126,9 +134,10 @@ fun ConfigurableFormScreen(cfg: FormScreenConfig) {
                         fontWeight = FontWeight.Normal,
                         lineHeight = 20.sp,
                         color = colors.textPrimary,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(start = 6.dp, bottom = 22.dp)
+                        modifier =
+                            Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(start = 6.dp, bottom = 22.dp),
                     )
                 }
 
@@ -143,7 +152,7 @@ fun ConfigurableFormScreen(cfg: FormScreenConfig) {
                         onFocusChanged = { focused ->
                             if (!focused) touchedFields[f.key] = true
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
 
@@ -155,22 +164,24 @@ fun ConfigurableFormScreen(cfg: FormScreenConfig) {
                         if (cfg.canSubmit(values)) cfg.onSubmit(values)
                     },
                     enabled = true,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.brand_400),
-                        disabledContainerColor = colorResource(id = R.color.brand_400),
-                        contentColor = Color.White,
-                        disabledContentColor = Color.White
-                    ),
+                    colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.brand_400),
+                            disabledContainerColor = colorResource(id = R.color.brand_400),
+                            contentColor = Color.White,
+                            disabledContentColor = Color.White,
+                        ),
                     shape = RoundedCornerShape(12.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(60.dp),
                 ) {
                     Text(
                         text = stringResource(cfg.submitButtonRes),
                         color = Color.White,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
+                        fontWeight = FontWeight.Medium,
                     )
                 }
 
@@ -179,13 +190,13 @@ fun ConfigurableFormScreen(cfg: FormScreenConfig) {
                 cfg.textButtonRes?.let { btnRes ->
                     TextButton(
                         onClick = cfg.onTextButton,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
                     ) {
                         Text(
                             text = stringResource(btnRes),
                             color = colorResource(id = R.color.purple400_purple500),
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
                         )
                     }
                 }
@@ -193,7 +204,6 @@ fun ConfigurableFormScreen(cfg: FormScreenConfig) {
         }
     }
 }
-
 
 @Composable
 fun ComponentTextInput(
@@ -204,12 +214,14 @@ fun ComponentTextInput(
     isError: Boolean,
     errorMessage: String?,
     onFocusChanged: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val onTextChangedColor = if (value.isNotBlank())
-        colorResource(id = R.color.purple400_purple500)
-    else
-        colorResource(id = R.color.gray200_gray400)
+    val onTextChangedColor =
+        if (value.isNotBlank()) {
+            colorResource(id = R.color.purple400_purple500)
+        } else {
+            colorResource(id = R.color.gray200_gray400)
+        }
 
     val activeNotFilledColor = colorResource(id = R.color.purple400_purple500)
     val filledNotActiveColor = colorResource(id = R.color.gray_400)
@@ -218,7 +230,8 @@ fun ComponentTextInput(
 
     AndroidView(
         factory = { ctx ->
-            LayoutInflater.from(ctx)
+            LayoutInflater
+                .from(ctx)
                 .inflate(R.layout.component_text_input, null, false)
                 .apply {
                     findViewById<TextInputLayout>(R.id.text_input_layout)
@@ -231,14 +244,25 @@ fun ComponentTextInput(
 
             til.hint = view.context.getString(hintRes)
 
-            edit.inputType = when (kind) {
-                FieldKind.EMAIL -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-                FieldKind.URI -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
-                FieldKind.MULTILINE -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
-                else ->
-                    InputType.TYPE_CLASS_TEXT or
+            edit.inputType =
+                when (kind) {
+                    FieldKind.EMAIL -> {
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    }
+
+                    FieldKind.URI -> {
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
+                    }
+
+                    FieldKind.MULTILINE -> {
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                    }
+
+                    else -> {
+                        InputType.TYPE_CLASS_TEXT or
                             if (kind == FieldKind.PASSWORD) InputType.TYPE_TEXT_VARIATION_PASSWORD else 0
-            }
+                    }
+                }
             edit.transformationMethod =
                 if (kind == FieldKind.PASSWORD) PasswordTransformationMethod.getInstance() else null
 
@@ -290,9 +314,10 @@ fun ComponentTextInput(
             til.setBoxStrokeWidth(2)
             edit.setTextColor(textColorArgb)
         },
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
     )
 }
 
@@ -303,7 +328,7 @@ data class FieldConfig(
     @StringRes val labelRes: Int,
     val kind: FieldKind = FieldKind.TEXT,
     val initialValue: String = "",
-    val validator: (String) -> Int? = { null }
+    val validator: (String) -> Int? = { null },
 )
 
 data class FormScreenConfig(
@@ -315,31 +340,32 @@ data class FormScreenConfig(
     val canSubmit: (Map<String, String>) -> Boolean,
     @StringRes val textButtonRes: Int? = null,
     val onTextButton: () -> Unit = {},
-    val onBack: () -> Unit
+    val onBack: () -> Unit,
 )
 
 @Composable
 fun ChangeUsernameScreen(
     initial: String,
     onBack: () -> Unit,
-    onSave: (newUsername: String) -> Unit
+    onSave: (newUsername: String) -> Unit,
 ) {
-    val fields = listOf(
-        FieldConfig(
-            key = "username",
-            labelRes = R.string.username,
-            kind = FieldKind.TEXT,
-            initialValue = initial,
-            validator = {
-                when {
-                    it.isBlank() -> R.string.username_requirements
-                    it.length > 20 -> R.string.username_requirements
-                    !Regex("^[A-Za-z0-9_-]+$").matches(it) -> R.string.username_requirements
-                    else -> null
-                }
-            }
+    val fields =
+        listOf(
+            FieldConfig(
+                key = "username",
+                labelRes = R.string.username,
+                kind = FieldKind.TEXT,
+                initialValue = initial,
+                validator = {
+                    when {
+                        it.isBlank() -> R.string.username_requirements
+                        it.length > 20 -> R.string.username_requirements
+                        !Regex("^[A-Za-z0-9_-]+$").matches(it) -> R.string.username_requirements
+                        else -> null
+                    }
+                },
+            ),
         )
-    )
 
     ConfigurableFormScreen(
         FormScreenConfig(
@@ -349,8 +375,8 @@ fun ChangeUsernameScreen(
             submitButtonRes = R.string.change_username,
             canSubmit = { vals -> fields.all { f -> f.validator(vals[f.key].orEmpty()) == null } },
             onSubmit = { vals -> onSave(vals["username"]!!.trim()) },
-            onBack = onBack
-        )
+            onBack = onBack,
+        ),
     )
 }
 
@@ -359,23 +385,24 @@ fun ChangeEmailScreen(
     initialEmail: String,
     onBack: () -> Unit,
     onSave: (newEmail: String, password: String) -> Unit,
-    onForgotPassword: () -> Unit
+    onForgotPassword: () -> Unit,
 ) {
-    val fields = listOf(
-        FieldConfig(
-            key = "email",
-            labelRes = R.string.email,
-            kind = FieldKind.EMAIL,
-            initialValue = initialEmail,
-            validator = { if (it.isBlank()) R.string.email_invalid else null }
-        ),
-        FieldConfig(
-            key = "password",
-            labelRes = R.string.password,
-            kind = FieldKind.PASSWORD,
-            validator = { if (it.length < 8) R.string.password_too_short else null }
+    val fields =
+        listOf(
+            FieldConfig(
+                key = "email",
+                labelRes = R.string.email,
+                kind = FieldKind.EMAIL,
+                initialValue = initialEmail,
+                validator = { if (it.isBlank()) R.string.email_invalid else null },
+            ),
+            FieldConfig(
+                key = "password",
+                labelRes = R.string.password,
+                kind = FieldKind.PASSWORD,
+                validator = { if (it.length < 8) R.string.password_too_short else null },
+            ),
         )
-    )
 
     ConfigurableFormScreen(
         FormScreenConfig(
@@ -387,8 +414,8 @@ fun ChangeEmailScreen(
             onSubmit = { vals -> onSave(vals["email"]!!, vals["password"]!!) },
             textButtonRes = R.string.forgot_pw_btn,
             onTextButton = onForgotPassword,
-            onBack = onBack
-        )
+            onBack = onBack,
+        ),
     )
 }
 
@@ -396,17 +423,18 @@ fun ChangeEmailScreen(
 fun ChangeDisplayNameScreen(
     initial: String,
     onBack: () -> Unit,
-    onSave: (newDisplayName: String) -> Unit
+    onSave: (newDisplayName: String) -> Unit,
 ) {
-    val fields = listOf(
-        FieldConfig(
-            key = "displayName",
-            labelRes = R.string.display_name,
-            kind = FieldKind.TEXT,
-            validator = { if (it.isBlank()) R.string.display_name_length_error else null },
-            initialValue = initial
+    val fields =
+        listOf(
+            FieldConfig(
+                key = "displayName",
+                labelRes = R.string.display_name,
+                kind = FieldKind.TEXT,
+                validator = { if (it.isBlank()) R.string.display_name_length_error else null },
+                initialValue = initial,
+            ),
         )
-    )
 
     ConfigurableFormScreen(
         FormScreenConfig(
@@ -416,8 +444,8 @@ fun ChangeDisplayNameScreen(
             submitButtonRes = R.string.change_display_name,
             canSubmit = { vals -> vals["displayName"]!!.isNotBlank() },
             onSubmit = { vals -> onSave(vals["displayName"]!!) },
-            onBack = onBack
-        )
+            onBack = onBack,
+        ),
     )
 }
 
@@ -425,27 +453,28 @@ fun ChangeDisplayNameScreen(
 fun AboutMeScreen(
     initial: String,
     onBack: () -> Unit,
-    onSave: (aboutText: String) -> Unit
+    onSave: (aboutText: String) -> Unit,
 ) {
-    val fields = listOf(
-        FieldConfig(
-            key          = "about",
-            labelRes     = R.string.about_me,
-            kind         = FieldKind.MULTILINE,
-            initialValue = initial
+    val fields =
+        listOf(
+            FieldConfig(
+                key = "about",
+                labelRes = R.string.about_me,
+                kind = FieldKind.MULTILINE,
+                initialValue = initial,
+            ),
         )
-    )
 
     ConfigurableFormScreen(
         FormScreenConfig(
-            titleRes        = R.string.about_me,
-            descriptionRes  = R.string.about_me_description,
-            fields          = fields,
+            titleRes = R.string.about_me,
+            descriptionRes = R.string.about_me_description,
+            fields = fields,
             submitButtonRes = R.string.save_about_me,
-            canSubmit       = { true },
-            onSubmit        = { vals -> onSave(vals["about"]!!.trim()) },
-            onBack          = onBack
-        )
+            canSubmit = { true },
+            onSubmit = { vals -> onSave(vals["about"]!!.trim()) },
+            onBack = onBack,
+        ),
     )
 }
 
@@ -453,16 +482,17 @@ fun AboutMeScreen(
 fun PhotoUrlScreen(
     initial: String,
     onBack: () -> Unit,
-    onSave: (photoUrl: String) -> Unit
+    onSave: (photoUrl: String) -> Unit,
 ) {
-    val fields = listOf(
-        FieldConfig(
-            key = "photoUrl",
-            labelRes = R.string.photo_url,
-            kind = FieldKind.URI,
-            initialValue = initial
+    val fields =
+        listOf(
+            FieldConfig(
+                key = "photoUrl",
+                labelRes = R.string.photo_url,
+                kind = FieldKind.URI,
+                initialValue = initial,
+            ),
         )
-    )
 
     ConfigurableFormScreen(
         FormScreenConfig(
@@ -472,15 +502,15 @@ fun PhotoUrlScreen(
             submitButtonRes = R.string.save_photo_url,
             canSubmit = { vals -> vals["photoUrl"]!!.isNotBlank() },
             onSubmit = { vals -> onSave(vals["photoUrl"]!!.trim()) },
-            onBack = onBack
-        )
+            onBack = onBack,
+        ),
     )
 }
 
 @Preview(
     name = "ChangeUsername – Dark",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewChangeUsernameScreenDark() {
@@ -488,7 +518,7 @@ fun PreviewChangeUsernameScreenDark() {
         ChangeUsernameScreen(
             initial = "",
             onBack = {},
-            onSave = { }
+            onSave = { },
         )
     }
 }
@@ -496,7 +526,7 @@ fun PreviewChangeUsernameScreenDark() {
 @Preview(
     name = "ChangeEmail – Dark",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewChangeEmailScreenDark() {
@@ -505,7 +535,7 @@ fun PreviewChangeEmailScreenDark() {
             onBack = {},
             initialEmail = "",
             onSave = { newEmail, password -> },
-            onForgotPassword = {}
+            onForgotPassword = {},
         )
     }
 }
@@ -513,7 +543,7 @@ fun PreviewChangeEmailScreenDark() {
 @Preview(
     name = "ChangeDisplayName – Dark",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewChangeDisplayNameScreenDark() {
@@ -521,7 +551,7 @@ fun PreviewChangeDisplayNameScreenDark() {
         ChangeDisplayNameScreen(
             initial = "displayName",
             onBack = {},
-            onSave = { }
+            onSave = { },
         )
     }
 }
@@ -529,7 +559,7 @@ fun PreviewChangeDisplayNameScreenDark() {
 @Preview(
     name = "AboutMe – Dark",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewAboutMeScreenDark() {
@@ -537,7 +567,7 @@ fun PreviewAboutMeScreenDark() {
         AboutMeScreen(
             initial = "",
             onBack = {},
-            onSave = { }
+            onSave = { },
         )
     }
 }
@@ -545,7 +575,7 @@ fun PreviewAboutMeScreenDark() {
 @Preview(
     name = "PhotoURL – Dark",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewPhotoUrlScreenDark() {
@@ -553,16 +583,15 @@ fun PreviewPhotoUrlScreenDark() {
         PhotoUrlScreen(
             initial = "",
             onBack = {},
-            onSave = { }
+            onSave = { },
         )
     }
 }
 
-
 @Preview(
     name = "ChangePasswordScreen – Dark",
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewChangePasswordScreenDark() {
@@ -570,7 +599,7 @@ fun PreviewChangePasswordScreenDark() {
         ChangePasswordScreen(
             onBack = {},
             onSave = { old, new -> },
-            onForgotPassword = {}
+            onForgotPassword = {},
         )
     }
 }

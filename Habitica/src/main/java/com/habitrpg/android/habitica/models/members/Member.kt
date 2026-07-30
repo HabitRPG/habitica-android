@@ -17,7 +17,11 @@ import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Member : RealmObject(), Avatar, BaseMainObject, Assignable {
+open class Member :
+    RealmObject(),
+    Avatar,
+    BaseMainObject,
+    Assignable {
     @PrimaryKey
     @SerializedName("_id")
     override var id: String = ""

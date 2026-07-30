@@ -58,19 +58,22 @@ fun StatRow(
     val progress = if (maxValue > 0f) (value / maxValue).coerceIn(0f, 1f) else 0f
     val fillColor = ColorProvider(barColor)
     val trackColor = if (MaterialYouEnabled) GlanceTheme.colors.outline else WidgetColors.progressTrack
-    val rowAlignment = if (mode == StatRowMode.LabelStackedValue) {
-        Alignment.Top
-    } else {
-        Alignment.CenterVertically
-    }
+    val rowAlignment =
+        if (mode == StatRowMode.LabelStackedValue) {
+            Alignment.Top
+        } else {
+            Alignment.CenterVertically
+        }
     val barCenterOffset = (iconSize - barHeight) / 2
-    val isInlineMode = mode == StatRowMode.InlineValueWithLabel ||
-        mode == StatRowMode.InlineValueMaxWithLabel
-    val rowModifier = if (isInlineMode) {
-        modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp)
-    } else {
-        modifier.fillMaxWidth()
-    }
+    val isInlineMode =
+        mode == StatRowMode.InlineValueWithLabel ||
+            mode == StatRowMode.InlineValueMaxWithLabel
+    val rowModifier =
+        if (isInlineMode) {
+            modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp)
+        } else {
+            modifier.fillMaxWidth()
+        }
 
     Row(
         modifier = rowModifier,
@@ -86,12 +89,25 @@ fun StatRow(
         when (mode) {
             StatRowMode.BarOnly -> {
                 Box(modifier = GlanceModifier.defaultWeight()) {
-                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = barHeight)
+                    SegmentedProgressBar(
+                        progress = progress,
+                        fillColor = fillColor,
+                        trackColor = trackColor,
+                        availableWidth = barAvailableWidth,
+                        height = barHeight,
+                    )
                 }
             }
+
             StatRowMode.LabelStackedValue -> {
                 Column(modifier = GlanceModifier.defaultWeight().padding(top = barCenterOffset)) {
-                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = barHeight)
+                    SegmentedProgressBar(
+                        progress = progress,
+                        fillColor = fillColor,
+                        trackColor = trackColor,
+                        availableWidth = barAvailableWidth,
+                        height = barHeight,
+                    )
                     Spacer(GlanceModifier.height(2.dp))
                     Row(modifier = GlanceModifier.fillMaxWidth()) {
                         Text(
@@ -105,17 +121,26 @@ fun StatRow(
                     }
                 }
             }
+
             StatRowMode.InlineValueWithLabel,
-            StatRowMode.InlineValueMaxWithLabel -> {
+            StatRowMode.InlineValueMaxWithLabel,
+            -> {
                 Box(modifier = GlanceModifier.defaultWeight()) {
-                    SegmentedProgressBar(progress = progress, fillColor = fillColor, trackColor = trackColor, availableWidth = barAvailableWidth, height = barHeight)
+                    SegmentedProgressBar(
+                        progress = progress,
+                        fillColor = fillColor,
+                        trackColor = trackColor,
+                        availableWidth = barAvailableWidth,
+                        height = barHeight,
+                    )
                 }
                 Spacer(GlanceModifier.width(4.dp))
-                val valueModifier = if (valueColumnWidth > 0.dp) {
-                    GlanceModifier.width(valueColumnWidth)
-                } else {
-                    GlanceModifier
-                }
+                val valueModifier =
+                    if (valueColumnWidth > 0.dp) {
+                        GlanceModifier.width(valueColumnWidth)
+                    } else {
+                        GlanceModifier
+                    }
                 Text(
                     text = inlineValueText(mode, valueText, maxText, label),
                     style = inlineValueStyle(labelTextColor),
@@ -127,41 +152,51 @@ fun StatRow(
     }
 }
 
-private fun labelStyle(color: ColorProvider) = TextStyle(
-    color = color,
-    fontSize = 14.sp,
-    fontWeight = FontWeight.Bold,
-)
+private fun labelStyle(color: ColorProvider) =
+    TextStyle(
+        color = color,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold,
+    )
 
-private fun separatorStyle(color: ColorProvider) = TextStyle(
-    color = color,
-    fontSize = 14.sp,
-    fontWeight = FontWeight.Normal,
-)
+private fun separatorStyle(color: ColorProvider) =
+    TextStyle(
+        color = color,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Normal,
+    )
 
-private fun inlineValueStyle(color: ColorProvider) = TextStyle(
-    color = color,
-    fontSize = 14.sp,
-    fontWeight = FontWeight.Bold,
-    textAlign = TextAlign.End,
-)
+private fun inlineValueStyle(color: ColorProvider) =
+    TextStyle(
+        color = color,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.End,
+    )
 
-fun inlineValueText(mode: StatRowMode, valueText: String, maxText: String, label: String): String =
+fun inlineValueText(
+    mode: StatRowMode,
+    valueText: String,
+    maxText: String,
+    label: String,
+): String =
     when (mode) {
         StatRowMode.InlineValueMaxWithLabel -> "$valueText / $maxText $label"
         else -> "$valueText $label"
     }
 
-private fun estimateInlineCharWidthDp(c: Char): Float = when {
-    c.isDigit() -> 8.5f
-    c == ' ' -> 4f
-    c == '/' -> 6f
-    else -> 9f
-}
+private fun estimateInlineCharWidthDp(c: Char): Float =
+    when {
+        c.isDigit() -> 8.5f
+        c == ' ' -> 4f
+        c == '/' -> 6f
+        else -> 9f
+    }
 
 fun inlineValueColumnWidth(texts: List<String>): Dp {
-    val widest = texts.maxOfOrNull { text ->
-        text.fold(0f) { acc, c -> acc + estimateInlineCharWidthDp(c) }
-    } ?: 0f
+    val widest =
+        texts.maxOfOrNull { text ->
+            text.fold(0f) { acc, c -> acc + estimateInlineCharWidthDp(c) }
+        } ?: 0f
     return widest.dp + 4.dp
 }

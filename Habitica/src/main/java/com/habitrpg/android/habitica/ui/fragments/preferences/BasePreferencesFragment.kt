@@ -29,13 +29,16 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         userViewModel.user.observe(viewLifecycleOwner) { setUser(it) }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<RecyclerView>(R.id.recycler_view)?.let {
@@ -50,7 +53,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
-        rootKey: String?
+        rootKey: String?,
     ) {
         setPreferencesFromResource(R.xml.preferences_fragment, rootKey)
         setupPreferences()

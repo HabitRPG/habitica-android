@@ -34,7 +34,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
-open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
+open class HabiticaAlertDialog(
+    context: Context,
+) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
     var buttonAxis: Int = LinearLayout.VERTICAL
         set(value) {
             field = value
@@ -192,17 +194,15 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         isPrimary: Boolean,
         isDestructive: Boolean = false,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
-    ): Button {
-        return addButton(context.getString(stringRes), isPrimary, isDestructive, autoDismiss, function)
-    }
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
+    ): Button = addButton(context.getString(stringRes), isPrimary, isDestructive, autoDismiss, function)
 
     fun addButton(
         string: String,
         isPrimary: Boolean,
         isDestructive: Boolean = false,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
     ): Button {
         val button: Button =
             if (isPrimary) {
@@ -226,7 +226,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun addButton(
         buttonView: View,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
     ): View {
         val weakThis = WeakReference(this)
         val buttonIndex = binding.buttonsWrapper.childCount
@@ -325,8 +325,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                     (dialogQueue[0].context as? BaseActivity)?.lifecycleScope?.launch(context = Dispatchers.Main) {
                         delay(500L)
                         if (dialogQueue.size > 0 && (
-                            (dialogQueue[0].context as? Activity)?.isFinishing == false ||
-                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
+                                (dialogQueue[0].context as? Activity)?.isFinishing == false ||
+                                    ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
                             )
                         ) {
                             dialogQueue[0].show()

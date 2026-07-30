@@ -16,9 +16,7 @@ var customDateAdapter: Any =
     object : Any() {
         @ToJson
         @Synchronized
-        fun dateToJson(d: Date?): String? {
-            return d?.let { dateFormats[0].format(it) }
-        }
+        fun dateToJson(d: Date?): String? = d?.let { dateFormats[0].format(it) }
 
         @FromJson
         @Synchronized

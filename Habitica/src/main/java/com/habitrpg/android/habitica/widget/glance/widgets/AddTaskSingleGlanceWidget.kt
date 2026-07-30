@@ -15,8 +15,6 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-import androidx.glance.currentState
-import androidx.glance.layout.ContentScale
 import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.Action
@@ -26,9 +24,11 @@ import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.provideContent
+import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
+import androidx.glance.layout.ContentScale
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
@@ -47,13 +47,17 @@ import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 class AddTaskSingleGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
+    override suspend fun provideGlance(
+        context: Context,
+        id: GlanceId,
+    ) {
         val isLoggedIn = WidgetAuth.isLoggedIn(context)
         val widgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
-        val configureIntent = Intent(context, AddTaskWidgetActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-        }
+        val configureIntent =
+            Intent(context, AddTaskWidgetActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+            }
         val configureAction = if (isLoggedIn) actionStartActivity(configureIntent) else openAppAction()
         provideContent {
             val type = currentState<Preferences>()[stringPreferencesKey(TASK_TYPE_KEY)]
@@ -78,18 +82,23 @@ private data class TileSpec(
     val taskType: String,
 )
 
-private fun tileFor(type: String?): TileSpec? = when (type) {
-    "habit" -> TileSpec(R.string.habit, R.drawable.widget_add_habit_glyph, "habit")
-    "daily" -> TileSpec(R.string.daily, R.drawable.widget_add_daily_glyph, "daily")
-    "todo" -> TileSpec(R.string.widget_add_task_todo_compact, R.drawable.widget_add_todo_glyph, "todo")
-    "reward" -> TileSpec(R.string.reward, R.drawable.widget_add_reward_glyph, "reward")
-    else -> null
-}
+private fun tileFor(type: String?): TileSpec? =
+    when (type) {
+        "habit" -> TileSpec(R.string.habit, R.drawable.widget_add_habit_glyph, "habit")
+        "daily" -> TileSpec(R.string.daily, R.drawable.widget_add_daily_glyph, "daily")
+        "todo" -> TileSpec(R.string.widget_add_task_todo_compact, R.drawable.widget_add_todo_glyph, "todo")
+        "reward" -> TileSpec(R.string.reward, R.drawable.widget_add_reward_glyph, "reward")
+        else -> null
+    }
 
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
-private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn: Boolean) {
+private fun AddTaskSingleContent(
+    type: String?,
+    onConfigure: Action,
+    isLoggedIn: Boolean,
+) {
     val tile = tileFor(type)
     if (tile == null) {
         UnsetTaskTypeContent(onClick = onConfigure)
@@ -113,9 +122,10 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
     val iconTint = ColorProvider(baseIconTint.getColor(context).copy(alpha = 0.9f))
 
     Box(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .clickable(onClick = tileAction),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .clickable(onClick = tileAction),
         contentAlignment = Alignment.Center,
     ) {
         Box(
@@ -141,26 +151,30 @@ private fun AddTaskSingleContent(type: String?, onConfigure: Action, isLoggedIn:
 
 @Composable
 private fun UnsetTaskTypeContent(onClick: Action) {
-    val badgeTint: ColorProvider = if (MaterialYouEnabled) {
-        GlanceTheme.colors.primary
-    } else {
-        ColorProvider(R.color.widget_dailies_purple)
-    }
-    val badgeText: ColorProvider = if (MaterialYouEnabled) {
-        GlanceTheme.colors.onPrimary
-    } else {
-        ColorProvider(R.color.white)
-    }
-    val textColor: ColorProvider = if (MaterialYouEnabled) {
-        GlanceTheme.colors.onSurfaceVariant
-    } else {
-        ColorProvider(R.color.widget_text)
-    }
+    val badgeTint: ColorProvider =
+        if (MaterialYouEnabled) {
+            GlanceTheme.colors.primary
+        } else {
+            ColorProvider(R.color.widget_dailies_purple)
+        }
+    val badgeText: ColorProvider =
+        if (MaterialYouEnabled) {
+            GlanceTheme.colors.onPrimary
+        } else {
+            ColorProvider(R.color.white)
+        }
+    val textColor: ColorProvider =
+        if (MaterialYouEnabled) {
+            GlanceTheme.colors.onSurfaceVariant
+        } else {
+            ColorProvider(R.color.widget_text)
+        }
     Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .padding(12.dp)
-            .clickable(onClick = onClick),
+        modifier =
+            GlanceModifier
+                .fillMaxSize()
+                .padding(12.dp)
+                .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -176,20 +190,22 @@ private fun UnsetTaskTypeContent(onClick: Action) {
             )
             Text(
                 text = "+",
-                style = TextStyle(
-                    color = badgeText,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
+                style =
+                    TextStyle(
+                        color = badgeText,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
             )
         }
         Text(
             text = stringRes(R.string.widget_unconfigured_choose_type),
-            style = TextStyle(
-                color = textColor,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Medium,
-            ),
+            style =
+                TextStyle(
+                    color = textColor,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
             modifier = GlanceModifier.padding(top = 6.dp),
         )
     }

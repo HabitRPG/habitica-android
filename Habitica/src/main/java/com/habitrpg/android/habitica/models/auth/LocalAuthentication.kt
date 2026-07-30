@@ -7,7 +7,10 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class LocalAuthentication : RealmObject(), BaseObject, AvatarLocalAuthentication {
+open class LocalAuthentication :
+    RealmObject(),
+    BaseObject,
+    AvatarLocalAuthentication {
     override var username: String? = null
     var email: String? = null
 

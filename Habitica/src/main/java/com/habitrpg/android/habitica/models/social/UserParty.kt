@@ -8,7 +8,9 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class UserParty : RealmObject(), BaseObject {
+open class UserParty :
+    RealmObject(),
+    BaseObject {
     @SerializedName("_id")
     var id: String = ""
     var quest: Quest? = null

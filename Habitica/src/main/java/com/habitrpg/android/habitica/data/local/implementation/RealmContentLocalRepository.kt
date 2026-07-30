@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
 
-open class RealmContentLocalRepository(realm: Realm) :
-    RealmBaseLocalRepository(realm),
+open class RealmContentLocalRepository(
+    realm: Realm,
+) : RealmBaseLocalRepository(realm),
     ContentLocalRepository {
     override fun saveContent(contentResult: ContentResult) {
         executeTransaction { realm1 ->
@@ -37,12 +38,13 @@ open class RealmContentLocalRepository(realm: Realm) :
         }
     }
 
-    override fun getWorldState(): Flow<WorldState> {
-        return realm.where(WorldState::class.java)
+    override fun getWorldState(): Flow<WorldState> =
+        realm
+            .where(WorldState::class.java)
             .findAll()
             .toFlow()
-            .filter { it.isLoaded && it.isNotEmpty() }.mapNotNull { it.first() }
-    }
+            .filter { it.isLoaded && it.isNotEmpty() }
+            .mapNotNull { it.first() }
 
     override fun saveWorldState(worldState: WorldState) {
         save(worldState)

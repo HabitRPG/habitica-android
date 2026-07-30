@@ -35,15 +35,13 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentViewpagerBinding {
-        return FragmentViewpagerBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding = FragmentViewpagerBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -52,14 +50,15 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.groupViewType = GroupViewType.GUILD
         viewModel.getGroupData().observe(viewLifecycleOwner) { setGroup(it) }
-        viewModel.getIsMemberData()
+        viewModel
+            .getIsMemberData()
             .observe(viewLifecycleOwner) { mainActivity?.invalidateOptionsMenu() }
 
         arguments?.let {
@@ -96,7 +95,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         if (this.mainActivity != null) {
             if (viewModel.isMember) {
@@ -158,15 +157,15 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                             fragment = chatFragment
                         }
 
-                        else -> fragment = Fragment()
+                        else -> {
+                            fragment = Fragment()
+                        }
                     }
 
                     return fragment ?: Fragment()
                 }
 
-                override fun getItemCount(): Int {
-                    return 2
-                }
+                override fun getItemCount(): Int = 2
             }
 
         binding?.viewPager?.registerOnPageChangeCallback(
@@ -175,7 +174,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
-                    positionOffsetPixels: Int
+                    positionOffsetPixels: Int,
                 ) {
                     if (position == 1) {
                         chatFragment?.setNavigatedToFragment()
@@ -187,7 +186,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         chatFragment?.setNavigatedToFragment()
                     }
                 }
-            }
+            },
         )
 
         tabLayout?.let {

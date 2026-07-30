@@ -21,15 +21,14 @@ object AvatarBitmapCache {
     private const val FILENAME = "widget_avatar.png"
     private const val HASH_FILENAME = "widget_avatar.hash"
     private const val RENDER_TIMEOUT_MS = 10_000L
+
     // Bump when the cached bitmap shape/scale changes so stale files are regenerated.
     private const val HASH_VERSION = "v3"
     private const val CONTENT_FILL_SCALE = 1.06f
 
-    fun cachedFile(context: Context): File =
-        File(context.applicationContext.filesDir, FILENAME)
+    fun cachedFile(context: Context): File = File(context.applicationContext.filesDir, FILENAME)
 
-    private fun hashFile(context: Context): File =
-        File(context.applicationContext.filesDir, HASH_FILENAME)
+    private fun hashFile(context: Context): File = File(context.applicationContext.filesDir, HASH_FILENAME)
 
     fun cachedBitmap(context: Context): Bitmap? {
         val file = cachedFile(context)
@@ -46,7 +45,10 @@ object AvatarBitmapCache {
         runCatching { hashFile(context).delete() }
     }
 
-    suspend fun refreshIfNeeded(context: Context, user: User?) {
+    suspend fun refreshIfNeeded(
+        context: Context,
+        user: User?,
+    ) {
         if (user == null) return
         val newHash = hashOfUser(user)
         val current = readHash(context)
@@ -64,55 +66,101 @@ object AvatarBitmapCache {
         }
     }
 
-    private fun zoomBitmap(src: Bitmap, scale: Float): Bitmap {
+    private fun zoomBitmap(
+        src: Bitmap,
+        scale: Float,
+    ): Bitmap {
         val out = createBitmap(src.width, src.height)
         val canvas = Canvas(out)
-        val matrix = Matrix().apply {
-            postScale(scale, scale, src.width / 2f, src.height / 2f)
-        }
+        val matrix =
+            Matrix().apply {
+                postScale(scale, scale, src.width / 2f, src.height / 2f)
+            }
         val paint = Paint().apply { isFilterBitmap = false }
         canvas.drawBitmap(src, matrix, paint)
         return out
     }
 
-    private fun readHash(context: Context): String? = try {
-        hashFile(context).takeIf { it.exists() }?.readText()
-    } catch (t: Throwable) { null }
+    private fun readHash(context: Context): String? =
+        try {
+            hashFile(context).takeIf { it.exists() }?.readText()
+        } catch (t: Throwable) {
+            null
+        }
 
     private fun hashOfUser(user: User): String {
         val prefs = user.preferences
         val equipped = user.items?.gear?.equipped
         val costume = user.items?.gear?.costume
-        val parts = listOf(
-            HASH_VERSION,
-            prefs?.background, prefs?.chair, prefs?.skin, prefs?.shirt, prefs?.size,
-            prefs?.sleep?.toString(), prefs?.costume?.toString(),
-            prefs?.hair?.color, prefs?.hair?.base?.toString(), prefs?.hair?.bangs?.toString(),
-            prefs?.hair?.mustache?.toString(), prefs?.hair?.beard?.toString(), prefs?.hair?.flower?.toString(),
-            equipped?.armor, equipped?.back, equipped?.body, equipped?.head, equipped?.shield,
-            equipped?.weapon, equipped?.eyeWear, equipped?.headAccessory,
-            costume?.armor, costume?.back, costume?.body, costume?.head, costume?.shield,
-            costume?.weapon, costume?.eyeWear, costume?.headAccessory,
-            user.items?.currentMount, user.items?.currentPet,
-            user.stats?.buffs?.seafoam?.toString(),
-            user.stats?.buffs?.shinySeed?.toString(),
-            user.stats?.buffs?.snowball?.toString(),
-            user.stats?.buffs?.spookySparkles?.toString(),
-            user.stats?.habitClass,
-        )
+        val parts =
+            listOf(
+                HASH_VERSION,
+                prefs?.background,
+                prefs?.chair,
+                prefs?.skin,
+                prefs?.shirt,
+                prefs?.size,
+                prefs?.sleep?.toString(),
+                prefs?.costume?.toString(),
+                prefs?.hair?.color,
+                prefs?.hair?.base?.toString(),
+                prefs?.hair?.bangs?.toString(),
+                prefs?.hair?.mustache?.toString(),
+                prefs?.hair?.beard?.toString(),
+                prefs?.hair?.flower?.toString(),
+                equipped?.armor,
+                equipped?.back,
+                equipped?.body,
+                equipped?.head,
+                equipped?.shield,
+                equipped?.weapon,
+                equipped?.eyeWear,
+                equipped?.headAccessory,
+                costume?.armor,
+                costume?.back,
+                costume?.body,
+                costume?.head,
+                costume?.shield,
+                costume?.weapon,
+                costume?.eyeWear,
+                costume?.headAccessory,
+                user.items?.currentMount,
+                user.items?.currentPet,
+                user.stats
+                    ?.buffs
+                    ?.seafoam
+                    ?.toString(),
+                user.stats
+                    ?.buffs
+                    ?.shinySeed
+                    ?.toString(),
+                user.stats
+                    ?.buffs
+                    ?.snowball
+                    ?.toString(),
+                user.stats
+                    ?.buffs
+                    ?.spookySparkles
+                    ?.toString(),
+                user.stats?.habitClass,
+            )
         return parts.joinToString("|") { it ?: "" }.hashCode().toString()
     }
 
-    private suspend fun renderAvatar(context: Context, user: User): Bitmap? =
+    private suspend fun renderAvatar(
+        context: Context,
+        user: User,
+    ): Bitmap? =
         withContext(Dispatchers.Main) {
             withTimeoutOrNull(RENDER_TIMEOUT_MS) {
                 suspendCancellableCoroutine { cont ->
-                    val avatarView = AvatarView(
-                        context.applicationContext,
-                        showBackground = true,
-                        showMount = true,
-                        showPet = true,
-                    )
+                    val avatarView =
+                        AvatarView(
+                            context.applicationContext,
+                            showBackground = true,
+                            showMount = true,
+                            showPet = true,
+                        )
                     avatarView.setAvatar(user)
                     avatarView.onAvatarImageReady { bitmap ->
                         if (cont.isActive) {

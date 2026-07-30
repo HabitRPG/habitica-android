@@ -30,11 +30,12 @@ fun AddTaskTile(
     iconSize: Dp = 36.dp,
 ) {
     Column(
-        modifier = modifier
-            .cornerRadius(cornerRadius)
-            .background(backgroundColor)
-            .padding(4.dp)
-            .clickable(onClick = onClick),
+        modifier =
+            modifier
+                .cornerRadius(cornerRadius)
+                .background(backgroundColor)
+                .padding(4.dp)
+                .clickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalAlignment = Alignment.CenterVertically,
     ) {

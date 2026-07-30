@@ -4,24 +4,65 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-    id(libs.plugins.android.application.get().pluginId)
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.ksp.get().pluginId)
-    id(libs.plugins.hilt.get().pluginId)
-    id(libs.plugins.habitrpg.convention.get().pluginId)
-    id(libs.plugins.habitrpg.application.get().pluginId)
-    id(libs.plugins.crashlytics.get().pluginId)
-    id(libs.plugins.google.service.get().pluginId)
+    id(
+        libs.plugins.android.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.kotlin.android
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.ksp
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.hilt
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.convention
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.crashlytics
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.google.service
+            .get()
+            .pluginId,
+    )
 }
 
 extensions.configure<ApplicationExtension> {
     namespace = "com.habitrpg.android.habitica"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk =
+        libs.versions.targetSdk
+            .get()
+            .toInt()
 
     defaultConfig {
         applicationId = "com.habitrpg.android.habitica"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.wearOsTargetSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.wearOsTargetSdk
+                .get()
+                .toInt()
 
         buildConfigField("String", "TESTING_LEVEL", "\"production\"")
     }
@@ -89,11 +130,19 @@ dependencies {
     implementation(libs.wear)
     implementation(libs.wear.input)
 
-    //Networking
+    // Networking
     implementation(libs.bundles.okhttp)
 
-    //REST API handling
-    implementation(libs.retrofit) { exclude(module = libs.okhttp.asProvider().get().name) }
+    // REST API handling
+    implementation(libs.retrofit) {
+        exclude(
+            module =
+                libs.okhttp
+                    .asProvider()
+                    .get()
+                    .name,
+        )
+    }
     implementation(libs.retrofit2.converter.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.coordinatorlayout)
@@ -125,7 +174,14 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.reflect)
 
-    implementation(libs.core.splashscreen) { exclude(module = libs.core.ktx.get().name) }
+    implementation(libs.core.splashscreen) {
+        exclude(
+            module =
+                libs.core.ktx
+                    .get()
+                    .name,
+        )
+    }
 
     testImplementation(libs.bundles.test.implementation)
     testImplementation(libs.mockk.android)

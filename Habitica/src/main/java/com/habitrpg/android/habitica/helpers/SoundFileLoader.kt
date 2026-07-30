@@ -15,13 +15,16 @@ import java.io.File
 import java.io.IOException
 
 // based on http://stackoverflow.com/questions/29838565/downloading-files-using-okhttp-okio-and-rxjava
-class SoundFileLoader(private val context: Context) {
+class SoundFileLoader(
+    private val context: Context,
+) {
     private val client: OkHttpClient = OkHttpClient()
 
     private val externalCacheDir: String?
         get() {
             val cacheDir =
-                HabiticaBaseApplication.getInstance(context)
+                HabiticaBaseApplication
+                    .getInstance(context)
                     ?.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS)
             return cacheDir?.path
         }
@@ -65,6 +68,5 @@ class SoundFileLoader(private val context: Context) {
         }
     }
 
-    private fun getFullAudioFilePath(soundFile: SoundFile): String =
-        externalCacheDir + File.separator + soundFile.filePath
+    private fun getFullAudioFilePath(soundFile: SoundFile): String = externalCacheDir + File.separator + soundFile.filePath
 }

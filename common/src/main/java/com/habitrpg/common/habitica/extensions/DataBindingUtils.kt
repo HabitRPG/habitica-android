@@ -19,7 +19,7 @@ import com.habitrpg.common.habitica.views.PixelArtView
 
 fun PixelArtView.loadImage(
     imageName: String?,
-    imageFormat: String? = null
+    imageFormat: String? = null,
 ) {
     val shouldLoadImage = DataBindingUtils.existsAsImage(imageName)
     if (shouldLoadImage && imageName != null) {
@@ -52,7 +52,7 @@ fun PixelArtView.loadImage(
                 tag = null
                 setImageDrawable(null)
                 bitmap = null
-            }
+            },
         )
     } else {
         tag = null
@@ -65,7 +65,7 @@ object DataBindingUtils {
     fun loadImage(
         context: Context,
         imageName: String,
-        imageResult: (Drawable) -> Unit
+        imageResult: (Drawable) -> Unit,
     ) {
         loadImage(context, imageName, null, imageResult)
     }
@@ -75,10 +75,11 @@ object DataBindingUtils {
         imageName: String,
         imageFormat: String?,
         imageResult: (Drawable) -> Unit,
-        imageError: () -> Unit = { }
+        imageError: () -> Unit = { },
     ) {
         val request =
-            ImageRequest.Builder(context)
+            ImageRequest
+                .Builder(context)
                 .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
                 .target(
                     onStart = { _ ->
@@ -88,19 +89,19 @@ object DataBindingUtils {
                     },
                     onError = {
                         imageError()
-                    }
-                )
-                .build()
+                    },
+                ).build()
         SingletonImageLoader.get(context).enqueue(request)
     }
 
     fun getFullFilename(
         imageName: String,
         imageFormat: String? = null,
-        disableAnimations: Boolean = false
+        disableAnimations: Boolean = false,
     ): String {
         var name = SpriteSubstitutionManager.substitute(imageName)
-        name = when {
+        name =
+            when {
                 FILENAME_MAP.containsKey(name) -> FILENAME_MAP[name] ?: ""
                 name.startsWith("handleless") -> "chair_$name"
                 else -> name
@@ -117,7 +118,7 @@ object DataBindingUtils {
 
     fun setRoundedBackground(
         view: View,
-        color: Int
+        color: Int,
     ) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
         drawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
@@ -131,7 +132,10 @@ object DataBindingUtils {
         return imageName != "shop_"
     }
 
-    class LayoutWeightAnimation(internal var view: View, internal var targetWeight: Float) : Animation() {
+    class LayoutWeightAnimation(
+        internal var view: View,
+        internal var targetWeight: Float,
+    ) : Animation() {
         private var initializeWeight: Float = 0.toFloat()
 
         private var layoutParams: LinearLayout.LayoutParams = view.layoutParams as LinearLayout.LayoutParams
@@ -142,7 +146,7 @@ object DataBindingUtils {
 
         override fun applyTransformation(
             interpolatedTime: Float,
-            t: Transformation
+            t: Transformation,
         ) {
             layoutParams.weight = initializeWeight + (targetWeight - initializeWeight) * interpolatedTime
 

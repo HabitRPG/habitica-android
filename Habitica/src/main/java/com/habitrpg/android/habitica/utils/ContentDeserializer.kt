@@ -30,7 +30,7 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): ContentResult {
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("ContentDeserialize")
         deserializeTrace.start()
@@ -110,13 +110,15 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
 
         if (obj.has("categoryOptions")) {
             obj.getAsJsonArray("categoryOptions").forEach { elem ->
-                val o     = elem.asJsonObject
+                val o = elem.asJsonObject
                 val label = o.get("label").asString
-                val key   = o.get("key").asString
-                result.categoryOptions.add(CategoryOption().also {
-                    it.label = label
-                    it.key = key
-                })
+                val key = o.get("key").asString
+                result.categoryOptions.add(
+                    CategoryOption().also {
+                        it.label = label
+                        it.key = key
+                    },
+                )
             }
         }
 
@@ -135,12 +137,12 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.appearances =
             context.deserialize(
                 obj.get("appearances"),
-                object : TypeToken<RealmList<Customization>>() {}.type
+                object : TypeToken<RealmList<Customization>>() {}.type,
             )
         result.backgrounds =
             context.deserialize(
                 obj.get("backgrounds"),
-                object : TypeToken<RealmList<Customization>>() {}.type
+                object : TypeToken<RealmList<Customization>>() {}.type,
             )
         val noBackground = Customization()
         noBackground.customizationSet = "incentiveBackgrounds"

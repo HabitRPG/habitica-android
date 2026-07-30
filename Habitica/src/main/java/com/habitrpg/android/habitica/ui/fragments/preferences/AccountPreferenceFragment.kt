@@ -127,7 +127,11 @@ class AccountPreferenceFragment :
         }
         val googlePref = findPreference<ExtraLabelPreference>("google_auth")
         if (user.authentication?.hasGoogleAuth == true) {
-            googlePref?.summary = user.authentication?.googleAuthentication?.emails?.firstOrNull()
+            googlePref?.summary =
+                user.authentication
+                    ?.googleAuthentication
+                    ?.emails
+                    ?.firstOrNull()
             googlePref?.extraText = getString(R.string.disconnect)
             googlePref?.extraTextColor =
                 context?.let { ContextCompat.getColor(it, R.color.text_red) }
@@ -139,7 +143,11 @@ class AccountPreferenceFragment :
         }
         val applePref = findPreference<ExtraLabelPreference>("apple_auth")
         if (user.authentication?.hasAppleAuth == true) {
-            applePref?.summary = user.authentication?.appleAuthentication?.emails?.firstOrNull()
+            applePref?.summary =
+                user.authentication
+                    ?.appleAuthentication
+                    ?.emails
+                    ?.firstOrNull()
             applePref?.extraText = getString(R.string.disconnect)
             applePref?.extraTextColor =
                 context?.let { ContextCompat.getColor(it, R.color.text_red) }
@@ -149,7 +157,10 @@ class AccountPreferenceFragment :
         val facebookPref = findPreference<ExtraLabelPreference>("facebook_auth")
         if (user.authentication?.hasFacebookAuth == true) {
             facebookPref?.summary =
-                user.authentication?.facebookAuthentication?.emails?.firstOrNull()
+                user.authentication
+                    ?.facebookAuthentication
+                    ?.emails
+                    ?.firstOrNull()
             facebookPref?.extraText = getString(R.string.disconnect)
             facebookPref?.extraTextColor =
                 context?.let { ContextCompat.getColor(it, R.color.text_red) }
@@ -176,10 +187,21 @@ class AccountPreferenceFragment :
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
-            "username" -> showLoginNameDialog()
-            "confirm_username" -> showConfirmUsernameDialog()
+            "username" -> {
+                showLoginNameDialog()
+            }
+
+            "confirm_username" -> {
+                showConfirmUsernameDialog()
+            }
+
             "email" -> {
-                if (user?.authentication?.hasPassword != true && user?.authentication?.localAuthentication?.email?.isNotBlank() != true) {
+                if (user?.authentication?.hasPassword != true && user
+                        ?.authentication
+                        ?.localAuthentication
+                        ?.email
+                        ?.isNotBlank() != true
+                ) {
                     showAddPasswordDialog(true)
                 } else {
                     showEmailDialog()
@@ -190,9 +212,16 @@ class AccountPreferenceFragment :
                 if (user?.authentication?.hasPassword == true) {
                     showChangePasswordDialog()
                 } else {
-                    showAddPasswordDialog(user?.authentication?.localAuthentication?.email?.isNotBlank() != true)
+                    showAddPasswordDialog(
+                        user
+                            ?.authentication
+                            ?.localAuthentication
+                            ?.email
+                            ?.isNotBlank() != true,
+                    )
                 }
             }
+
             "privacy_preferences" -> {
                 showAsBottomSheet { dismiss ->
                     var analyticsConsent by remember { mutableStateOf(user?.preferences?.analyticsConsent ?: false) }
@@ -205,10 +234,11 @@ class AccountPreferenceFragment :
                                 analyticsConsent = user?.preferences?.analyticsConsent ?: false
                             }
                         },
-                        isSettingConsent
+                        isSettingConsent,
                     )
                 }
             }
+
             "UserID" -> {
                 copyValue(getString(R.string.SP_userID), user?.id)
                 return true
@@ -219,21 +249,26 @@ class AccountPreferenceFragment :
                 return true
             }
 
-            "display_name" ->
+            "display_name" -> {
                 updateUser(
                     "profile.name",
                     user?.profile?.name,
                     getString(R.string.display_name),
                 )
+            }
 
-            "photo_url" ->
+            "photo_url" -> {
                 updateUser(
                     "profile.imageUrl",
                     user?.profile?.imageUrl,
                     getString(R.string.photo_url),
                 )
+            }
 
-            "about" -> updateUser("profile.blurb", user?.profile?.blurb, getString(R.string.about))
+            "about" -> {
+                updateUser("profile.blurb", user?.profile?.blurb, getString(R.string.about))
+            }
+
             "google_auth" -> {
                 if (user?.authentication?.hasGoogleAuth == true) {
                     disconnect("google", "Google")
@@ -251,8 +286,14 @@ class AccountPreferenceFragment :
                 }
             }
 
-            "reset_account" -> showAccountResetConfirmation(user)
-            "delete_account" -> showAccountDeleteConfirmation(user)
+            "reset_account" -> {
+                showAccountResetConfirmation(user)
+            }
+
+            "delete_account" -> {
+                showAccountDeleteConfirmation(user)
+            }
+
             "fixCharacterValues" -> {
                 val intent = Intent(activity, FixCharacterValuesActivity::class.java)
                 activity?.startActivity(intent)
@@ -321,19 +362,19 @@ class AccountPreferenceFragment :
                 lifecycleScope.launchCatching {
                     KeyboardUtil.dismissKeyboard(activity)
                     lifecycleScope.launchCatching {
-                        val response = userRepository.updatePassword(
-                            oldPassword,
-                            newPassword,
-                            newPassword,
-                        )
+                        val response =
+                            userRepository.updatePassword(
+                                oldPassword,
+                                newPassword,
+                                newPassword,
+                            )
                         response?.apiToken?.let {
                             viewModel.saveTokens(it, user?.id ?: "")
                         }
                     }
                 }
-            }
+            },
         ).show(childFragmentManager, ChangePasswordBottomSheet.TAG)
-
     }
 
     private fun showForgotPasswordDialog() {
@@ -345,7 +386,7 @@ class AccountPreferenceFragment :
         val lp =
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
+                LinearLayout.LayoutParams.MATCH_PARENT,
             )
         input.layoutParams = lp
         val alertDialog = HabiticaAlertDialog(requireContext())
@@ -395,7 +436,11 @@ class AccountPreferenceFragment :
                 emailEditText?.showErrorIfNecessary()
                 passwordEditText?.showErrorIfNecessary()
                 passwordRepeatEditText?.showErrorIfNecessary()
-                if ((showEmail && emailEditText?.isValid != true) || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
+                if ((showEmail && emailEditText?.isValid != true) || passwordEditText?.isValid != true ||
+                    passwordRepeatEditText?.isValid != true
+                ) {
+                    return@addButton
+                }
                 val email =
                     if (showEmail) emailEditText?.text else user?.authentication?.findFirstSocialEmail()
                 lifecycleScope.launchCatching {

@@ -23,11 +23,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqOverviewBinding
@@ -44,9 +42,11 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.PlayerTier
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.max
-import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
@@ -65,10 +65,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentFaqOverviewBinding {
-        return FragmentFaqOverviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentFaqOverviewBinding = FragmentFaqOverviewBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var faqRepository: FAQRepository
@@ -78,10 +76,12 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     private val versionName: String by lazy {
         try {
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionName
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionName
                 ?: ""
         } catch (_: PackageManager.NameNotFoundException) {
             ""
@@ -91,10 +91,12 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionCode
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionCode
                 ?: 0
         } catch (_: PackageManager.NameNotFoundException) {
             0
@@ -104,7 +106,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         showsBackButton = true
@@ -113,7 +115,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -123,28 +125,30 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         binding?.npcHeader?.descriptionView?.isVisible = false
 
         binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHeartLarge()
+            HabiticaIconsHelper.imageOfHeartLarge(),
         )
         binding?.experienceSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfExperienceReward()
+            HabiticaIconsHelper.imageOfExperienceReward(),
         )
         binding?.manaSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfMagicLarge()
+            HabiticaIconsHelper.imageOfMagicLarge(),
         )
         binding?.goldSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGoldReward()
+            HabiticaIconsHelper.imageOfGoldReward(),
         )
         binding?.gemsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGem()
+            HabiticaIconsHelper.imageOfGem(),
         )
         binding?.hourglassesSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHourglassLarge()
+            HabiticaIconsHelper.imageOfHourglassLarge(),
         )
         binding?.statsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfStats()
+            HabiticaIconsHelper.imageOfStats(),
         )
 
-        binding?.contribTierSection?.findViewById<ImageView>(R.id.icon_view)
+        binding
+            ?.contribTierSection
+            ?.findViewById<ImageView>(R.id.icon_view)
             ?.setImageResource(R.drawable.contributor_icon)
         addPlayerTiers()
 
@@ -168,7 +172,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
             clickableSpan,
             startIndex,
             endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
         )
 
         binding?.moreHelpTextView?.text = spannableString
@@ -208,7 +212,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         SupportFaqItemBinding.inflate(
                             context.layoutInflater,
                             binding?.faqLinearLayout,
-                            true
+                            true,
                         )
                     binding.textView.text = article.question
                     binding.root.setOnClickListener {
@@ -235,8 +239,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         getString(
                             R.string.version_info,
                             versionName,
-                            versionCode
-                        )
+                            versionCode,
+                        ),
                 )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
@@ -255,9 +259,9 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                             (
                                 user.stats?.habitClass
                                     ?: "None"
-                                )
+                            )
                         }
-                        )
+                    ),
                 ) +
                 newLine + Uri.encode("Damage paused: " + (user.preferences?.sleep ?: false)) +
                 newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
@@ -265,7 +269,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 newLine + Uri.encode("Analytics Enabled: " + (user.preferences?.analyticsConsent ?: "No Response")) +
                 newLine +
                 Uri.encode(
-                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
+                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0),
                 )
         }
 
@@ -298,7 +302,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.WRAP_CONTENT,
                         FrameLayout.LayoutParams.WRAP_CONTENT,
-                        Gravity.CENTER
+                        Gravity.CENTER,
                     )
                 container.addView(label, params)
                 container.isVisible = false
@@ -308,7 +312,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     12.dpToPx(context),
                     0,
                     12.dpToPx(context),
-                    if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context)
+                    if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context),
                 )
                 val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
                 container.setPadding(0, padding, 0, padding)
@@ -325,8 +329,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.health_points),
                     subtitle = "HP",
                     description = getString(R.string.health_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
 
@@ -336,8 +340,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.experience_points),
                     subtitle = "EXP",
                     description = getString(R.string.experience_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
 
@@ -347,8 +351,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.mana_points),
                     subtitle = "MP",
                     description = getString(R.string.mana_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
 
@@ -358,8 +362,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.gold_capitalized),
                     subtitle = getString(R.string.currency),
                     description = getString(R.string.gold_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
 
@@ -369,8 +373,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.gems),
                     subtitle = getString(R.string.premium_currency),
                     description = getString(R.string.gems_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
 
@@ -380,8 +384,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.mystic_hourglasses),
                     subtitle = getString(R.string.subscriber_currency),
                     description = getString(R.string.hourglasses_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
 
@@ -391,8 +395,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.stat_allocation),
                     subtitle = "STR, CON, INT, PER",
                     description = getString(R.string.stat_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
 
@@ -402,23 +406,35 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     title = getString(R.string.contributor_tiers),
                     subtitle = "Habitica helpers",
                     description = getString(R.string.contrib_tier_description),
-                    collapsibleSection = section
-                )
+                    collapsibleSection = section,
+                ),
             )
         }
     }
 
     private fun setupSearchBar() {
-        binding?.searchEditText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        binding?.searchEditText?.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s?.toString() ?: ""
-                performSearch(query)
-            }
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int,
+                ) {
+                    val query = s?.toString() ?: ""
+                    performSearch(query)
+                }
 
-            override fun afterTextChanged(s: Editable?) {}
-        })
+                override fun afterTextChanged(s: Editable?) {}
+            },
+        )
     }
 
     private fun performSearch(query: String) {
@@ -430,17 +446,18 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
             return
         }
 
-        searchJob = lifecycleScope.launch {
-            delay(200)
+        searchJob =
+            lifecycleScope.launch {
+                delay(200)
 
-            val results = searchFAQItems(currentSearchQuery)
+                val results = searchFAQItems(currentSearchQuery)
 
-            if (results.isEmpty()) {
-                showEmptyState()
-            } else {
-                showSearchResults(results)
+                if (results.isEmpty()) {
+                    showEmptyState()
+                } else {
+                    showSearchResults(results)
+                }
             }
-        }
     }
 
     private fun searchFAQItems(query: String): List<SearchableFAQItem> {
@@ -470,7 +487,10 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         return results
     }
 
-    private fun generateSnippet(text: String, query: String): String {
+    private fun generateSnippet(
+        text: String,
+        query: String,
+    ): String {
         val cleanText = text.replace(Regex("\\*\\*|\\n"), " ").replace(Regex("\\s+"), " ")
         val index = cleanText.lowercase().indexOf(query)
 
@@ -498,16 +518,17 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         val originalContainer = binding?.originalContentContainer
 
         if (originalContainer != null && searchContainer != null) {
-            val sections = listOf(
-                binding?.healthSection,
-                binding?.experienceSection,
-                binding?.manaSection,
-                binding?.goldSection,
-                binding?.gemsSection,
-                binding?.hourglassesSection,
-                binding?.statsSection,
-                binding?.contribTierSection
-            )
+            val sections =
+                listOf(
+                    binding?.healthSection,
+                    binding?.experienceSection,
+                    binding?.manaSection,
+                    binding?.goldSection,
+                    binding?.gemsSection,
+                    binding?.hourglassesSection,
+                    binding?.statsSection,
+                    binding?.contribTierSection,
+                )
 
             sections.forEach { section ->
                 if (section != null && section.parent == searchContainer) {
@@ -519,17 +540,21 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         }
     }
 
-    private fun findInsertionIndex(container: ViewGroup, sectionId: Int): Int {
-        val expectedOrder = mapOf(
-            R.id.health_section to 1,
-            R.id.experience_section to 2,
-            R.id.mana_section to 3,
-            R.id.gold_section to 4,
-            R.id.gems_section to 5,
-            R.id.hourglasses_section to 6,
-            R.id.stats_section to 7,
-            R.id.contrib_tier_section to 8
-        )
+    private fun findInsertionIndex(
+        container: ViewGroup,
+        sectionId: Int,
+    ): Int {
+        val expectedOrder =
+            mapOf(
+                R.id.health_section to 1,
+                R.id.experience_section to 2,
+                R.id.mana_section to 3,
+                R.id.gold_section to 4,
+                R.id.gems_section to 5,
+                R.id.hourglasses_section to 6,
+                R.id.stats_section to 7,
+                R.id.contrib_tier_section to 8,
+            )
         val currentOrder = expectedOrder[sectionId] ?: return container.childCount
 
         for (i in 0 until container.childCount) {
@@ -573,7 +598,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     section.translationY = 20f
                     binding?.searchResultsContainer?.addView(section)
 
-                    section.animate()
+                    section
+                        .animate()
                         .alpha(1f)
                         .translationY(0f)
                         .setDuration(200)
@@ -585,15 +611,16 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         snippetView.text = highlightQuery(snippet, currentSearchQuery)
                         snippetView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                         snippetView.textSize = 13f
-                        val params = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                        )
+                        val params =
+                            LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                            )
                         params.setMargins(
                             context.resources.getDimensionPixelSize(R.dimen.spacing_large),
                             0,
                             context.resources.getDimensionPixelSize(R.dimen.spacing_large),
-                            context.resources.getDimensionPixelSize(R.dimen.spacing_medium)
+                            context.resources.getDimensionPixelSize(R.dimen.spacing_medium),
                         )
                         snippetView.layoutParams = params
                         snippetView.alpha = 0f
@@ -602,19 +629,22 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         }
                         binding?.searchResultsContainer?.addView(snippetView)
 
-                        snippetView.animate()
+                        snippetView
+                            .animate()
                             .alpha(1f)
                             .setDuration(200)
                             .setStartDelay((index * 30 + 50).toLong())
                             .start()
                     }
                 }
+
                 is SearchableFAQItem.NavigableItem -> {
-                    val itemBinding = SupportFaqItemBinding.inflate(
-                        context.layoutInflater,
-                        binding?.searchResultsContainer,
-                        false
-                    )
+                    val itemBinding =
+                        SupportFaqItemBinding.inflate(
+                            context.layoutInflater,
+                            binding?.searchResultsContainer,
+                            false,
+                        )
                     itemBinding.textView.text = result.title
                     itemBinding.root.setOnClickListener {
                         val direction = FAQOverviewFragmentDirections.openFAQDetail(null, null)
@@ -626,7 +656,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     itemBinding.root.translationY = 20f
                     binding?.searchResultsContainer?.addView(itemBinding.root)
 
-                    itemBinding.root.animate()
+                    itemBinding.root
+                        .animate()
                         .alpha(1f)
                         .translationY(0f)
                         .setDuration(200)
@@ -637,7 +668,10 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         }
     }
 
-    private fun highlightQuery(text: String, query: String): SpannableString {
+    private fun highlightQuery(
+        text: String,
+        query: String,
+    ): SpannableString {
         val spannable = SpannableString(text)
         val startIndex = text.lowercase().indexOf(query.lowercase())
 
@@ -646,7 +680,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 StyleSpan(android.graphics.Typeface.BOLD),
                 startIndex,
                 startIndex + query.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
         }
 

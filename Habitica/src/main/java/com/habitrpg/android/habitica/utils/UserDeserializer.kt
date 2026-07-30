@@ -40,7 +40,7 @@ class UserDeserializer : JsonDeserializer<User> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): User {
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("UserDeserialize")
         deserializeTrace.start()
@@ -87,8 +87,11 @@ class UserDeserializer : JsonDeserializer<User> {
                 if (partyObj.getAsJsonObject("quest").has("completed")) {
                     if (!partyObj.getAsJsonObject("quest").get("completed").isJsonNull) {
                         user.party?.quest?.completed =
-                            obj.getAsJsonObject("party").getAsJsonObject("quest")
-                                .get("completed").asString
+                            obj
+                                .getAsJsonObject("party")
+                                .getAsJsonObject("quest")
+                                .get("completed")
+                                .asString
                     }
                 }
             }
@@ -98,8 +101,11 @@ class UserDeserializer : JsonDeserializer<User> {
             if (obj.getAsJsonObject("purchased").has("plan")) {
                 if (obj.getAsJsonObject("purchased").getAsJsonObject("plan").has("mysteryItems")) {
                     user.purchased?.plan?.mysteryItemCount =
-                        obj.getAsJsonObject("purchased").getAsJsonObject("plan")
-                            .getAsJsonArray("mysteryItems").size()
+                        obj
+                            .getAsJsonObject("purchased")
+                            .getAsJsonObject("plan")
+                            .getAsJsonArray("mysteryItems")
+                            .size()
                 }
             }
         }
@@ -134,7 +140,7 @@ class UserDeserializer : JsonDeserializer<User> {
                 context.deserialize(
                     obj.get("tags"),
                     object : TypeToken<RealmList<Tag>>() {
-                    }.type
+                    }.type,
                 )
             for (tag in user.tags) {
                 tag.userId = user.id
@@ -165,7 +171,8 @@ class UserDeserializer : JsonDeserializer<User> {
 
         if (obj.has("pushDevices")) {
             user.pushDevices = ArrayList()
-            obj.getAsJsonArray("pushDevices")
+            obj
+                .getAsJsonArray("pushDevices")
                 .map { context.deserialize<PushDevice>(it, PushDevice::class.java) }
                 .forEach { (user.pushDevices as? ArrayList<PushDevice>)?.add(it) }
         }

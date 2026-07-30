@@ -16,17 +16,18 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class GroupActivityNotification(context: Context, identifier: String?) :
-    HabiticaLocalNotification(context, identifier) {
-    override fun getNotificationID(data: MutableMap<String, String>): Int {
-        return data["groupID"].hashCode()
-    }
+class GroupActivityNotification(
+    context: Context,
+    identifier: String?,
+) : HabiticaLocalNotification(context, identifier) {
+    override fun getNotificationID(data: MutableMap<String, String>): Int = data["groupID"].hashCode()
 
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val user = Person.Builder().setName("You").build()
         val message = makeMessageFromData(data)
         var style =
-            NotificationCompat.MessagingStyle(user)
+            NotificationCompat
+                .MessagingStyle(user)
                 .setGroupConversation(true)
                 .setConversationTitle(data["groupName"])
 
@@ -35,14 +36,19 @@ class GroupActivityNotification(context: Context, identifier: String?) :
         val existingNotifications =
             notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
         val oldMessages =
-            existingNotifications?.firstOrNull()?.notification?.extras?.getBundle("messages")
+            existingNotifications
+                ?.firstOrNull()
+                ?.notification
+                ?.extras
+                ?.getBundle("messages")
                 ?.get("messages") as? ArrayList<Map<String, String>> ?: arrayListOf()
         for (oldMessage in oldMessages) {
             style = style.addMessage(makeMessageFromData(oldMessage))
         }
         style = style.addMessage(message)
         oldMessages.add(data)
-        return super.configureNotificationBuilder(data)
+        return super
+            .configureNotificationBuilder(data)
             .setStyle(style)
             .setCategory(Notification.CATEGORY_MESSAGE)
             .setExtras(bundleOf(Pair("messages", bundleOf(Pair("messages", oldMessages)))))
@@ -56,13 +62,13 @@ class GroupActivityNotification(context: Context, identifier: String?) :
         return NotificationCompat.MessagingStyle.Message(
             messageText,
             timestamp.time,
-            sender
+            sender,
         )
     }
 
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>
+        data: Map<String, String>,
     ) {
         super.setNotificationActions(notificationId, data)
         val groupID = data["groupID"] ?: return
@@ -83,16 +89,16 @@ class GroupActivityNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_MUTABLE,
             )
 
         val action: NotificationCompat.Action =
-            NotificationCompat.Action.Builder(
-                R.drawable.ic_send_grey_600_24dp,
-                context.getString(R.string.reply),
-                replyPendingIntent
-            )
-                .addRemoteInput(remoteInput)
+            NotificationCompat.Action
+                .Builder(
+                    R.drawable.ic_send_grey_600_24dp,
+                    context.getString(R.string.reply),
+                    replyPendingIntent,
+                ).addRemoteInput(remoteInput)
                 .build()
         notificationBuilder.addAction(action)
     }

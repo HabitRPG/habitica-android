@@ -10,8 +10,8 @@ import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.interactors.InsufficientGemsUseCase
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -28,8 +28,10 @@ import kotlinx.coroutines.withContext
  * Created by phillip on 27.09.17.
  */
 
-class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
-    InsufficientCurrencyDialog(parentActivity) {
+class InsufficientGemsDialog(
+    val parentActivity: Activity,
+    var gemPrice: Int,
+) : InsufficientCurrencyDialog(parentActivity) {
     var configManager: AppConfigManager
     var purchaseHandler: PurchaseHandler
 
@@ -49,27 +51,25 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
         val hiltEntryPoint =
             EntryPointAccessors.fromApplication(
                 parentActivity,
-                InsufficientGemsDialogEntryPoint::class.java
+                InsufficientGemsDialogEntryPoint::class.java,
             )
         insufficientGemsUseCase = hiltEntryPoint.insufficientGemsUseCase()
         configManager = hiltEntryPoint.configManager()
         purchaseHandler = hiltEntryPoint.purchaseHandler()
     }
 
-    override fun getLayoutID(): Int {
-        return R.layout.dialog_insufficient_gems
-    }
+    override fun getLayoutID(): Int = R.layout.dialog_insufficient_gems
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         textView.setText(R.string.insufficientGems)
         addButton(
             R.string.see_other_options,
-            true
+            true,
         ) { _, _ ->
             MainNavigationController.navigate(
                 R.id.gemPurchaseActivity,
-                bundleOf(Pair("openSubscription", false))
+                bundleOf(Pair("openSubscription", false)),
             )
         }
         addCloseButton()
@@ -103,8 +103,8 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
                         insufficientGemsUseCase.callInteractor(
                             InsufficientGemsUseCase.RequestValues(
                                 gemPrice,
-                                parentActivity
-                            )
+                                parentActivity,
+                            ),
                         )
                     }
                 }

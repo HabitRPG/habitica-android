@@ -18,8 +18,9 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 class RewardsRecyclerViewAdapter(
     private var customRewards: List<Task>?,
     private val layoutResource: Int,
-    val viewModel: TasksViewModel
-) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
+    val viewModel: TasksViewModel,
+) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(),
+    TaskRecyclerViewAdapter {
     override var user: User? = null
         set(value) {
             if (field?.versionNumber == value?.versionNumber) {
@@ -61,15 +62,13 @@ class RewardsRecyclerViewAdapter(
             return customRewards?.size ?: 0
         }
 
-    private fun getContentView(parent: ViewGroup): View {
-        return LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
-    }
+    private fun getContentView(parent: ViewGroup): View = LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return if (viewType == VIEWTYPE_CUSTOM_REWARD) {
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        if (viewType == VIEWTYPE_CUSTOM_REWARD) {
             RewardViewHolder(
                 getContentView(parent),
                 { task, direction ->
@@ -80,11 +79,10 @@ class RewardsRecyclerViewAdapter(
                 { task, view ->
                     taskOpenEvents?.invoke(task, view)
                 },
-                {
-                        task ->
+                { task ->
                     brokenTaskEvents?.invoke(task)
                 },
-                viewModel
+                viewModel,
             )
         } else {
             val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
@@ -92,11 +90,10 @@ class RewardsRecyclerViewAdapter(
             viewHolder.onShowPurchaseDialog = onShowPurchaseDialog
             viewHolder
         }
-    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         if (customRewards != null && position < customRewardCount) {
             val reward = customRewards?.get(position) ?: return
@@ -116,13 +113,12 @@ class RewardsRecyclerViewAdapter(
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if ((customRewards != null && position < customRewardCount) || (customRewardCount == 0 && inAppRewardCount == 0)) {
+    override fun getItemViewType(position: Int): Int =
+        if ((customRewards != null && position < customRewardCount) || (customRewardCount == 0 && inAppRewardCount == 0)) {
             VIEWTYPE_CUSTOM_REWARD
         } else {
             VIEWTYPE_IN_APP_REWARD
         }
-    }
 
     override fun updateUnfilteredData(data: List<Task>?) {
         updateData(data)

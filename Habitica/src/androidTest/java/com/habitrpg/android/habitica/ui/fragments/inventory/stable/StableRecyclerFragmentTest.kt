@@ -19,12 +19,16 @@ import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.Matcher
 import org.junit.Test
 
-class PetItem(parent: Matcher<View>) : KRecyclerItem<PetItem>(parent) {
+class PetItem(
+    parent: Matcher<View>,
+) : KRecyclerItem<PetItem>(parent) {
     val title = KTextView(parent) { withId(R.id.titleTextView) }
     val owned = KTextView(parent) { withId(R.id.ownedTextView) }
 }
 
-class SectionItem(parent: Matcher<View>) : KRecyclerItem<PetItem>(parent) {
+class SectionItem(
+    parent: Matcher<View>,
+) : KRecyclerItem<PetItem>(parent) {
     val title = KTextView(parent) { withId(R.id.titleTextView) }
     val owned = KTextView(parent) { withId(R.id.ownedTextView) }
 }
@@ -34,9 +38,9 @@ class StableScreen : Screen<StableScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-                itemType(::SectionItem)
-                itemType(::PetItem)
-            })
+            itemType(::SectionItem)
+            itemType(::PetItem)
+        })
 }
 
 internal class StableRecyclerFragmentTest : FragmentTestCase<StableRecyclerFragment, FragmentRecyclerviewBinding, StableScreen>(false) {

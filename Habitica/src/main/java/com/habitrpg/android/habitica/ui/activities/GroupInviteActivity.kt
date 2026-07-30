@@ -26,9 +26,7 @@ class GroupInviteActivity : BaseActivity() {
 
     internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_party_invite
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_party_invite
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityPartyInviteBinding.inflate(layoutInflater)
@@ -50,8 +48,8 @@ class GroupInviteActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
             R.id.action_send_invites -> {
                 setResult(Activity.RESULT_OK, createResultIntent())
                 dismissKeyboard()
@@ -63,9 +61,10 @@ class GroupInviteActivity : BaseActivity() {
                 true
             }
 
-            else -> super.onOptionsItemSelected(item)
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
-    }
 
     private fun createResultIntent(): Intent {
         val intent = Intent()
@@ -84,9 +83,7 @@ class GroupInviteActivity : BaseActivity() {
                     return fragment
                 }
 
-                override fun getItemCount(): Int {
-                    return 2
-                }
+                override fun getItemCount(): Int = 2
             }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

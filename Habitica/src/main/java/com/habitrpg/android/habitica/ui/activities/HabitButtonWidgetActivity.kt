@@ -93,18 +93,22 @@ class HabitButtonWidgetActivity : ComponentActivity() {
         setContent {
             val context = LocalContext.current
             val isDark = isSystemInDarkTheme()
-            val colors = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-            } else {
-                if (isDark) darkColorScheme() else lightColorScheme()
-            }
+            val colors =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+                } else {
+                    if (isDark) darkColorScheme() else lightColorScheme()
+                }
             MaterialTheme(colorScheme = colors) {
                 var habits by remember { mutableStateOf<List<Task>>(emptyList()) }
                 LaunchedEffect(Unit) {
-                    habits = taskRepository.getTasks(
-                        TaskType.HABIT,
-                        includedGroupIDs = emptyArray(),
-                    ).firstOrNull().orEmpty()
+                    habits =
+                        taskRepository
+                            .getTasks(
+                                TaskType.HABIT,
+                                includedGroupIDs = emptyArray(),
+                            ).firstOrNull()
+                            .orEmpty()
                 }
                 HabitPickerSheet(
                     habits = habits,
@@ -161,10 +165,11 @@ private fun SheetContent(
     onSelected: (Task) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .navigationBarsPadding()
-            .padding(horizontal = 24.dp, vertical = 8.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(horizontal = 24.dp, vertical = 8.dp),
     ) {
         Text(
             text = stringResource(R.string.widget_config_habit_title),
@@ -182,9 +187,10 @@ private fun SheetContent(
             EmptyHabitsState()
         } else {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 480.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = 480.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(items = habits, key = { it.id ?: it.text }) { habit ->
@@ -199,9 +205,10 @@ private fun SheetContent(
 @Composable
 private fun EmptyHabitsState() {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 24.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 24.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
@@ -213,16 +220,20 @@ private fun EmptyHabitsState() {
 }
 
 @Composable
-private fun HabitRow(habit: Task, onClick: () -> Unit) {
+private fun HabitRow(
+    habit: Task,
+    onClick: () -> Unit,
+) {
     val barColor = colorForHabitValueLight(habit.value)
     val circleColor = colorForHabitValueMedium(habit.value)
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 12.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(12.dp))
+                .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+                .clickable(onClick = onClick)
+                .padding(horizontal = 12.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         DirectionsPreview(
@@ -250,9 +261,10 @@ private fun DirectionsPreview(
     circleColor: Color,
 ) {
     Row(
-        modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .background(barColor),
+        modifier =
+            Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .background(barColor),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (showDown) DirectionGlyph(label = "−", circleColor = circleColor)
@@ -261,13 +273,17 @@ private fun DirectionsPreview(
 }
 
 @Composable
-private fun DirectionGlyph(label: String, circleColor: Color) {
+private fun DirectionGlyph(
+    label: String,
+    circleColor: Color,
+) {
     Box(
-        modifier = Modifier
-            .padding(6.dp)
-            .size(28.dp)
-            .clip(CircleShape)
-            .background(circleColor),
+        modifier =
+            Modifier
+                .padding(6.dp)
+                .size(28.dp)
+                .clip(CircleShape)
+                .background(circleColor),
         contentAlignment = Alignment.Center,
     ) {
         Text(

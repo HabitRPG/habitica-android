@@ -9,20 +9,25 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
 
-class RealmTutorialLocalRepository(realm: Realm) :
-    RealmBaseLocalRepository(realm),
+class RealmTutorialLocalRepository(
+    realm: Realm,
+) : RealmBaseLocalRepository(realm),
     TutorialLocalRepository {
     override fun getTutorialStep(key: String): Flow<TutorialStep> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(TutorialStep::class.java).equalTo("identifier", key)
+        return realm
+            .where(TutorialStep::class.java)
+            .equalTo("identifier", key)
             .findAll()
             .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }.mapNotNull { steps -> steps.first() }
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
+            .mapNotNull { steps -> steps.first() }
     }
 
     override fun getTutorialSteps(keys: List<String>): Flow<List<TutorialStep>> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(TutorialStep::class.java)
+        return realm
+            .where(TutorialStep::class.java)
             .`in`("identifier", keys.toTypedArray())
             .findAll()
             .toFlow()

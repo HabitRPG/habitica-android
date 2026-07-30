@@ -26,16 +26,17 @@ class ScoreTaskAction : ActionCallback {
         if (up) WidgetSnapshotPublisher.optimisticComplete(context, taskId)
 
         val entry = widgetEntryPoint(context)
-        val result: TaskScoringResult? = withContext(Dispatchers.Main) {
-            val user = entry.userRepository().getUser().firstOrNull()
-            entry.taskRepository().taskChecked(
-                user = user,
-                taskId = taskId,
-                up = up,
-                force = false,
-                notifyFunc = null,
-            )
-        }
+        val result: TaskScoringResult? =
+            withContext(Dispatchers.Main) {
+                val user = entry.userRepository().getUser().firstOrNull()
+                entry.taskRepository().taskChecked(
+                    user = user,
+                    taskId = taskId,
+                    up = up,
+                    force = false,
+                    notifyFunc = null,
+                )
+            }
 
         showScoringToast(context, result)
         WidgetSnapshotPublisher.publishAll(context)

@@ -9,7 +9,10 @@ import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.android.habitica.widget.glance.work.WidgetUpgradeWorker
 
 class WidgetUpgradeReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (intent.action != Intent.ACTION_MY_PACKAGE_REPLACED) return
         WidgetRefreshWorker.enqueue(context)
         WorkManager.getInstance(context).enqueue(

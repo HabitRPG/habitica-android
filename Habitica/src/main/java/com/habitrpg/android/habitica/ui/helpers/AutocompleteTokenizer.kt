@@ -5,10 +5,12 @@ import android.text.Spanned
 import android.text.TextUtils
 import android.widget.MultiAutoCompleteTextView
 
-class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.Tokenizer {
+class AutocompleteTokenizer(
+    val tokens: List<Char>,
+) : MultiAutoCompleteTextView.Tokenizer {
     override fun findTokenStart(
         text: CharSequence,
-        cursor: Int
+        cursor: Int,
     ): Int {
         var i = cursor
 
@@ -25,7 +27,7 @@ class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.
 
     override fun findTokenEnd(
         text: CharSequence,
-        cursor: Int
+        cursor: Int,
     ): Int {
         var i = cursor
         val len = text.length
@@ -59,7 +61,7 @@ class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.
                     text.length,
                     Any::class.java,
                     sp,
-                    0
+                    0,
                 )
                 sp
             } else {

@@ -56,17 +56,18 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentSubscriptionBinding {
-        return FragmentSubscriptionBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentSubscriptionBinding = FragmentSubscriptionBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -78,7 +79,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -137,7 +138,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                         Modifier
                             .padding(horizontal = 20.dp)
                             .clip(HabiticaTheme.shapes.medium)
-                            .padding(bottom = 10.dp)
+                            .padding(bottom = 10.dp),
                     )
                 }
             }
@@ -146,14 +147,17 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }
 
-        binding?.content?.subscriptionDisclaimerView?.setMarkdown("Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).")
+        binding?.content?.subscriptionDisclaimerView?.setMarkdown(
+            "Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).",
+        )
 
         binding?.content?.bottomSpacing?.let {
             ViewCompat.setOnApplyWindowInsetsListener(it) { v, insets ->
-                val bars = insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                            or WindowInsetsCompat.Type.displayCutout()
-                )
+                val bars =
+                    insets.getInsets(
+                        WindowInsetsCompat.Type.systemBars()
+                            or WindowInsetsCompat.Type.displayCutout(),
+                    )
                 v.updateLayoutParams {
                     height = bars.bottom
                 }
@@ -198,15 +202,26 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 for (sku in subscriptions) {
                     updateButtonLabel(
                         sku,
-                        sku.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
-                            ?: ""
+                        sku
+                            .getBaseOfferDetails()
+                            ?.pricingPhases
+                            ?.pricingPhaseList
+                            ?.firstOrNull()
+                            ?.formattedPrice
+                            ?: "",
                     )
                 }
                 if (selectedSubscriptionSku == null) {
-                    subscriptions.maxByOrNull {
-                        it.getBaseOfferDetails()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
-                            ?: 0
-                    }?.let { selectSubscription(it) }
+                    subscriptions
+                        .maxByOrNull {
+                            it
+                                .getBaseOfferDetails()
+                                ?.pricingPhases
+                                ?.pricingPhaseList
+                                ?.firstOrNull()
+                                ?.priceAmountMicros
+                                ?: 0
+                        }?.let { selectSubscription(it) }
                 }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
@@ -216,7 +231,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String
+        price: String,
     ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
@@ -241,19 +256,16 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         }
     }
 
-    private fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? {
-        return buttonForSku(sku.productId)
-    }
+    private fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? = buttonForSku(sku.productId)
 
-    private fun buttonForSku(sku: String): SubscriptionOptionView? {
-        return when (HabiticaProduct.forSku(sku)) {
+    private fun buttonForSku(sku: String): SubscriptionOptionView? =
+        when (HabiticaProduct.forSku(sku)) {
             HabiticaProduct.SUBSCRIPTION_1_MONTH -> binding?.content?.subscription1month
             HabiticaProduct.SUBSCRIPTION_3_MONTH -> binding?.content?.subscription3month
             HabiticaProduct.SUBSCRIPTION_6_MONTH -> binding?.content?.subscription6month
             HabiticaProduct.SUBSCRIPTION_12_MONTH -> binding?.content?.subscription12month
             else -> null
         }
-    }
 
     private fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
@@ -287,8 +299,16 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 binding?.content?.subscriptionDetails?.currentUserID = user?.id
                 user?.purchased?.plan?.let { binding?.content?.subscriptionDetails?.setPlan(it) }
                 binding?.content?.subscriptionOptions?.visibility = View.GONE
-                binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.GONE
-                binding?.content?.giftSegmentSubscribed?.root?.visibility = View.VISIBLE
+                binding
+                    ?.content
+                    ?.giftSegmentUnsubscribed
+                    ?.root
+                    ?.visibility = View.GONE
+                binding
+                    ?.content
+                    ?.giftSegmentSubscribed
+                    ?.root
+                    ?.visibility = View.VISIBLE
                 binding?.content?.subscribeBenefitsTitle?.visibility = View.GONE
                 binding?.content?.subscribeBenefitsFooter?.visibility = View.VISIBLE
                 binding?.content?.subscriptionDisclaimerView?.visibility = View.GONE
@@ -302,8 +322,16 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 binding?.content?.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt)
                 binding?.content?.subscribeBenefitsTitle?.visibility = View.VISIBLE
                 binding?.content?.subscribeBenefitsFooter?.visibility = View.GONE
-                binding?.content?.giftSegmentSubscribed?.root?.visibility = View.GONE
-                binding?.content?.giftSegmentUnsubscribed?.root?.visibility = View.VISIBLE
+                binding
+                    ?.content
+                    ?.giftSegmentSubscribed
+                    ?.root
+                    ?.visibility = View.GONE
+                binding
+                    ?.content
+                    ?.giftSegmentUnsubscribed
+                    ?.root
+                    ?.visibility = View.VISIBLE
                 binding?.content?.subscriptionDisclaimerView?.visibility = View.VISIBLE
 
                 val totalGemCap = user?.purchased?.plan?.totalNumberOfGemsAlways ?: 24
@@ -330,9 +358,13 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             val newestSubscription = purchaseHandler.checkForSubscription(false)
             val plan = user?.purchased?.plan
             val sub = HabiticaProduct.forSku(newestSubscription?.products?.firstOrNull() ?: "")
-            if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null && newestSubscription?.isAutoRenewing != true) {
+            if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null &&
+                newestSubscription?.isAutoRenewing != true
+            ) {
                 purchaseHandler.cancelSubscription()
-            } else if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null && plan.planId != sub?.getSubCode()) {
+            } else if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null &&
+                plan.planId != sub?.getSubCode()
+            ) {
                 purchaseHandler.updateSubscriptionPlan(newestSubscription)
             }
         }
@@ -344,7 +376,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             {
                 binding?.content?.nestedScrollView?.smoothScrollTo(0, binding?.content?.subscriptionOptions?.top ?: 0)
             },
-            500
+            500,
         )
     }
 

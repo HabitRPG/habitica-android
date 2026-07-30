@@ -31,6 +31,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.toMutableStateList
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.view.isVisible
@@ -86,7 +87,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
-import androidx.core.graphics.drawable.toDrawable
 
 @AndroidEntryPoint
 class TaskFormActivity : BaseActivity() {
@@ -127,7 +127,7 @@ class TaskFormActivity : BaseActivity() {
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+            ActivityResultContracts.RequestPermission(),
         ) { granted ->
             if (granted) {
                 pushNotificationManager.addPushDeviceUsingStoredToken()
@@ -180,9 +180,7 @@ class TaskFormActivity : BaseActivity() {
             updateTagViewsColors()
         }
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_task_form
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_task_form
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
@@ -223,7 +221,7 @@ class TaskFormActivity : BaseActivity() {
                 binding.toolbar,
                 this,
                 ContextCompat.getColor(this, R.color.white),
-                upperTintColor
+                upperTintColor,
             )
         }
         window.navigationBarColor = getThemeColor(R.attr.colorTintedBackground)
@@ -232,7 +230,9 @@ class TaskFormActivity : BaseActivity() {
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
 
         binding.exactAlarmDisabledContainer.background = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_task_form)
-        binding.exactAlarmDisabledContainer.background.mutate().setTint(this.getThemeColor(R.attr.tintedUiMain))
+        binding.exactAlarmDisabledContainer.background
+            .mutate()
+            .setTint(this.getThemeColor(R.attr.tintedUiMain))
         binding.exactAlarmDisabledText.setTextColor(getThemeColor(R.attr.tintedUiDetails))
 
         isChallengeTask = bundle.getBoolean(IS_CHALLENGE_TASK, false)
@@ -241,7 +241,8 @@ class TaskFormActivity : BaseActivity() {
         preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
         lifecycleScope.launch(Dispatchers.Main) {
-            tagRepository.getTags()
+            tagRepository
+                .getTags()
                 .map { tagRepository.getUnmanagedCopy(it) }
                 .collect {
                     tags = it
@@ -258,7 +259,7 @@ class TaskFormActivity : BaseActivity() {
         binding.textEditText.addTextChangedListener(
             OnChangeTextWatcher { _, _, _, _ ->
                 checkCanSave()
-            }
+            },
         )
         binding.textEditText.onFocusChangeListener =
             View.OnFocusChangeListener { _, isFocused ->
@@ -327,8 +328,8 @@ class TaskFormActivity : BaseActivity() {
                                 TaskType.TODO -> R.string.todo
                                 TaskType.REWARD -> R.string.reward
                                 else -> R.string.habit
-                            }
-                        )
+                            },
+                        ),
                     )
                 initialTaskInstance = configureTask(Task())
             }
@@ -352,7 +353,7 @@ class TaskFormActivity : BaseActivity() {
                             }
                         },
                         configManager = configManager,
-                        showEditButton = true
+                        showEditButton = true,
                     )
                 }
             }
@@ -375,7 +376,7 @@ class TaskFormActivity : BaseActivity() {
             HabiticaTheme {
                 TaskDifficultySelector(
                     viewModel.taskDifficulty.value,
-                    onSelect = { viewModel.taskDifficulty.value = it }
+                    onSelect = { viewModel.taskDifficulty.value = it },
                 )
             }
         }
@@ -393,7 +394,7 @@ class TaskFormActivity : BaseActivity() {
                         {
                             viewModel.habitScoringNegative.value =
                                 !viewModel.habitScoringNegative.value
-                        }
+                        },
                     )
                 }
             }
@@ -405,10 +406,10 @@ class TaskFormActivity : BaseActivity() {
                         listOf(
                             LabeledValue(getString(R.string.repeat_daily), HabitResetOption.DAILY),
                             LabeledValue(getString(R.string.weekly), HabitResetOption.WEEKLY),
-                            LabeledValue(getString(R.string.monthly), HabitResetOption.MONTHLY)
+                            LabeledValue(getString(R.string.monthly), HabitResetOption.MONTHLY),
                         ),
                         { viewModel.habitResetOption.value = it },
-                        columnSize = 3
+                        columnSize = 3,
                     )
                 }
             }
@@ -422,15 +423,15 @@ class TaskFormActivity : BaseActivity() {
                         LabeledValue(getString(R.string.strength), Attribute.STRENGTH),
                         LabeledValue(getString(R.string.constitution), Attribute.CONSTITUTION),
                         LabeledValue(getString(R.string.intelligence), Attribute.INTELLIGENCE),
-                        LabeledValue(getString(R.string.perception), Attribute.PERCEPTION)
+                        LabeledValue(getString(R.string.perception), Attribute.PERCEPTION),
                     ),
-                    { viewModel.selectedAttribute.value = it }
+                    { viewModel.selectedAttribute.value = it },
                 )
             }
         }
 
         configureForm()
-}
+    }
 
     override fun onResume() {
         checkIfShowNotifLayout()
@@ -676,22 +677,28 @@ class TaskFormActivity : BaseActivity() {
                 binding.taskSchedulingControls.frequency = task.frequency ?: Frequency.DAILY
             }
 
-            TaskType.TODO -> binding.taskSchedulingControls.dueDate = task.dueDate
-            TaskType.REWARD -> binding.rewardValue.value = task.value
+            TaskType.TODO -> {
+                binding.taskSchedulingControls.dueDate = task.dueDate
+            }
+
+            TaskType.REWARD -> {
+                binding.rewardValue.value = task.value
+            }
         }
         if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
             task.checklist?.let { binding.checklistContainer.checklistItems = it }
             binding.remindersContainer.taskType = taskType
             task.reminders?.let {
                 binding.remindersContainer.reminders = it
-                originalReminders = it.map { reminder ->
-                    RemindersItem().apply {
-                        id = reminder.id
-                        startDate = reminder.startDate
-                        time = reminder.time
-                        type = reminder.type
+                originalReminders =
+                    it.map { reminder ->
+                        RemindersItem().apply {
+                            id = reminder.id
+                            startDate = reminder.startDate
+                            time = reminder.time
+                            type = reminder.type
+                        }
                     }
-                }
             }
             checkIfShowNotifLayout()
         }
@@ -705,7 +712,9 @@ class TaskFormActivity : BaseActivity() {
             binding.habitResetStreakButtons.visibility = View.GONE
 
             assignedIDs =
-                task.group?.assignedUsersDetail?.mapNotNull { it.assignedUserID }
+                task.group
+                    ?.assignedUsersDetail
+                    ?.mapNotNull { it.assignedUserID }
                     ?.toMutableStateList() ?: mutableStateListOf()
             task.group?.assignedUsersDetail?.forEach {
                 it.completedDate?.let { date ->
@@ -724,9 +733,9 @@ class TaskFormActivity : BaseActivity() {
                 ColorStateList(
                     arrayOf(
                         intArrayOf(-android.R.attr.state_checked), // unchecked
-                        intArrayOf(android.R.attr.state_checked) // checked
+                        intArrayOf(android.R.attr.state_checked), // checked
                     ),
-                    intArrayOf(getThemeColor(R.attr.colorTintedBackgroundOffset), tintColor)
+                    intArrayOf(getThemeColor(R.attr.colorTintedBackgroundOffset), tintColor),
                 )
             tagView?.buttonTintList = colorStateList
         }
@@ -748,11 +757,15 @@ class TaskFormActivity : BaseActivity() {
             thisTask.frequency = viewModel.habitResetOption.value.value
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) {
                 thisTask.counterUp =
-                    binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+                    binding.habitAdjustPositiveStreakView.text
+                        .toString()
+                        .toIntCatchOverflow()
             }
             if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) {
                 thisTask.counterDown =
-                    binding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
+                    binding.habitAdjustNegativeStreakView.text
+                        .toString()
+                        .toIntCatchOverflow()
             }
         } else if (taskType == TaskType.DAILY) {
             thisTask.startDate = binding.taskSchedulingControls.startDate
@@ -763,7 +776,9 @@ class TaskFormActivity : BaseActivity() {
             thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) {
                 thisTask.streak =
-                    binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+                    binding.habitAdjustPositiveStreakView.text
+                        .toString()
+                        .toIntCatchOverflow()
             }
             checkIfShowNotifLayout()
         } else if (taskType == TaskType.TODO) {
@@ -823,7 +838,7 @@ class TaskFormActivity : BaseActivity() {
         val assignChanges =
             mapOf(
                 "assign" to mutableListOf<String>(),
-                "unassign" to mutableListOf()
+                "unassign" to mutableListOf(),
             )
         if (groupID != null && thisTask.group?.groupID == null) {
             thisTask.group = TaskGroupPlan()
@@ -855,7 +870,7 @@ class TaskFormActivity : BaseActivity() {
             if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {
                 taskAlarmManager.cancelRemovedRemindersAlarms(
                     oldReminders = originalReminders,
-                    newReminders = thisTask.reminders ?: emptyList()
+                    newReminders = thisTask.reminders ?: emptyList(),
                 )
                 taskAlarmManager.scheduleAlarmsForTask(thisTask)
             }
@@ -869,7 +884,7 @@ class TaskFormActivity : BaseActivity() {
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             },
-            500
+            500,
         )
     }
 
@@ -956,13 +971,13 @@ class TaskFormActivity : BaseActivity() {
                 getString(
                     R.string.delete_challenge_task_description,
                     taskCount,
-                    challenge?.name ?: ""
-                )
+                    challenge?.name ?: "",
+                ),
             )
             alert.addButton(
                 R.string.leave_delete_task,
                 isPrimary = true,
-                isDestructive = true
+                isDestructive = true,
             ) { _, _ ->
                 challenge?.let {
                     lifecycleScope.launch(Dispatchers.Main) {
@@ -975,7 +990,7 @@ class TaskFormActivity : BaseActivity() {
             alert.addButton(
                 getString(R.string.leave_delete_x_tasks, taskCount),
                 isPrimary = false,
-                isDestructive = true
+                isDestructive = true,
             ) { _, _ ->
                 challenge?.let {
                     lifecycleScope.launch(Dispatchers.Main) {
@@ -1004,12 +1019,12 @@ class TaskFormActivity : BaseActivity() {
             dialog.setMessage(
                 getString(
                     R.string.broken_challenge_description,
-                    taskCount
-                )
+                    taskCount,
+                ),
             )
             dialog.addButton(
                 getString(R.string.keep_x_tasks, taskCount),
-                true
+                true,
             ) { _, _ ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
@@ -1019,7 +1034,7 @@ class TaskFormActivity : BaseActivity() {
             dialog.addButton(
                 getString(R.string.delete_x_tasks, taskCount),
                 isPrimary = false,
-                isDestructive = true
+                isDestructive = true,
             ) { _, _ ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
@@ -1056,7 +1071,7 @@ class TaskFormActivity : BaseActivity() {
                         assignedIDs.add(it)
                     }
                 },
-                onClose
+                onClose,
             )
         }
     }
@@ -1076,10 +1091,9 @@ class TaskFormActivity : BaseActivity() {
     }
 }
 
-private fun String.toIntCatchOverflow(): Int? {
-    return try {
+private fun String.toIntCatchOverflow(): Int? =
+    try {
         toInt()
     } catch (e: NumberFormatException) {
         0
     }
-}

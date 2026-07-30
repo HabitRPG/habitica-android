@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 object WidgetSnapshotPublisher {
-
     suspend fun publishAll(context: Context) {
         publishStats(context)
         publishTaskLists(context)
@@ -39,11 +38,13 @@ object WidgetSnapshotPublisher {
         val manager = GlanceAppWidgetManager(context)
         val entry = widgetEntryPoint(context)
         manager.getGlanceIds(widget.javaClass).forEach { id ->
-            val taskId = getAppWidgetState(context, PreferencesGlanceStateDefinition, id)[HabitButtonWidgetCache.KEY_TASK_ID]
-                ?.takeIf { it.isNotEmpty() } ?: return@forEach
-            val task = withContext(Dispatchers.Main) {
-                entry.taskRepository().getTask(taskId).firstOrNull()
-            } ?: return@forEach
+            val taskId =
+                getAppWidgetState(context, PreferencesGlanceStateDefinition, id)[HabitButtonWidgetCache.KEY_TASK_ID]
+                    ?.takeIf { it.isNotEmpty() } ?: return@forEach
+            val task =
+                withContext(Dispatchers.Main) {
+                    entry.taskRepository().getTask(taskId).firstOrNull()
+                } ?: return@forEach
             val up = task.up == true
             val down = task.down == true
             var changed = false
@@ -104,7 +105,10 @@ object WidgetSnapshotPublisher {
         )
     }
 
-    suspend fun optimisticComplete(context: Context, taskId: String) {
+    suspend fun optimisticComplete(
+        context: Context,
+        taskId: String,
+    ) {
         val wasDaily = removeFromList(context, DailyTaskListGlanceWidget(), taskId)
         removeFromList(context, TodoTaskListGlanceWidget(), taskId)
         if (wasDaily) bumpDailyCount(context)

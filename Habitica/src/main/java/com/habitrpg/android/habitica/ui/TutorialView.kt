@@ -20,7 +20,7 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 class TutorialView(
     context: Context,
     val step: TutorialStep,
-    private val onReaction: OnTutorialReaction
+    private val onReaction: OnTutorialReaction,
 ) : FrameLayout(context) {
     private val binding = OverlayTutorialBinding.inflate(context.layoutInflater, this, true)
     private var tutorialTexts: List<String> = emptyList()
@@ -36,24 +36,28 @@ class TutorialView(
                 override fun showNextStep() {
                     displayNextTutorialText()
                 }
-            }
+            },
         )
 
-        binding.speechBubbleView.binding.completeButton.setOnClickListener { completeButtonClicked() }
-        binding.speechBubbleView.binding.dismissButton.setOnClickListener { dismissButtonClicked() }
+        binding.speechBubbleView.binding.completeButton
+            .setOnClickListener { completeButtonClicked() }
+        binding.speechBubbleView.binding.dismissButton
+            .setOnClickListener { dismissButtonClicked() }
         binding.background.setOnClickListener { backgroundClicked() }
 
         if (step.linkFAQ) {
-            binding.speechBubbleView.binding.dismissButton.setText(R.string.visit_faq)
+            binding.speechBubbleView.binding.dismissButton
+                .setText(R.string.visit_faq)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val bars = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-                        or WindowInsetsCompat.Type.displayCutout()
-            )
+            val bars =
+                insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout(),
+                )
             v.updatePadding(
-                bottom = bars.bottom + 16.dpToPx(context)
+                bottom = bars.bottom + 16.dpToPx(context),
             )
             consumeWindowInsetsAbove30(insets)
         }

@@ -22,58 +22,69 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 
-class RealmUserLocalRepository(realm: Realm) :
-    RealmBaseLocalRepository(realm),
+class RealmUserLocalRepository(
+    realm: Realm,
+) : RealmBaseLocalRepository(realm),
     UserLocalRepository {
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getUserQuestStatus(userID: String): Flow<UserQuestStatus> {
-        return getUser(userID)
+    override fun getUserQuestStatus(userID: String): Flow<UserQuestStatus> =
+        getUser(userID)
             .filterNotNull()
             .map { it.party?.id ?: "" }
             .filter { it.isNotBlank() }
             .flatMapLatest {
-                realm.where(Group::class.java)
+                realm
+                    .where(Group::class.java)
                     .equalTo("id", it)
                     .findAll()
                     .toFlow()
-                    .filter { groups -> groups.isNotEmpty() }.mapNotNull { it.firstOrNull() }
-            }
-            .map {
+                    .filter { groups -> groups.isNotEmpty() }
+                    .mapNotNull { it.firstOrNull() }
+            }.map {
                 when {
                     it.quest?.members?.find { questMember -> questMember.key == userID } === null -> UserQuestStatus.NO_QUEST
-                    it.quest?.progress?.collect?.isNotEmpty()
+
+                    it.quest
+                        ?.progress
+                        ?.collect
+                        ?.isNotEmpty()
                         ?: false -> UserQuestStatus.QUEST_COLLECT
 
                     (it.quest?.progress?.hp ?: 0.0) > 0.0 -> UserQuestStatus.QUEST_BOSS
+
                     else -> UserQuestStatus.QUEST_UNKNOWN
                 }
             }
-    }
 
-    override fun getAchievements(): Flow<List<Achievement>> {
-        return realm.where(Achievement::class.java)
+    override fun getAchievements(): Flow<List<Achievement>> =
+        realm
+            .where(Achievement::class.java)
             .sort("index")
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
-    override fun getQuestAchievements(userID: String): Flow<List<QuestAchievement>> {
-        return realm.where(User::class.java)
+    override fun getQuestAchievements(userID: String): Flow<List<QuestAchievement>> =
+        realm
+            .where(User::class.java)
             .equalTo("id", userID)
             .findAll()
             .toFlow()
             .filter { it.isLoaded && it.isNotEmpty() }
             .map { it.first()?.questAchievements ?: emptyList() }
-    }
 
     override suspend fun getTutorialSteps() =
-        realm.where(TutorialStep::class.java).findAll().toFlow()
-            .filter { it.isLoaded }.map { it }
+        realm
+            .where(TutorialStep::class.java)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
+            .map { it }
 
     override fun getUser(userID: String): Flow<User?> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(User::class.java)
+        return realm
+            .where(User::class.java)
             .equalTo("id", userID)
             .findAll()
             .toFlow()
@@ -83,11 +94,12 @@ class RealmUserLocalRepository(realm: Realm) :
 
     override fun saveUser(
         user: User,
-        overrideExisting: Boolean
+        overrideExisting: Boolean,
     ) {
         if (realm.isClosed) return
         val oldUser =
-            realm.where(User::class.java)
+            realm
+                .where(User::class.java)
                 .equalTo("id", user.id)
                 .findFirst()
         if (oldUser != null && oldUser.isValid) {
@@ -107,9 +119,14 @@ class RealmUserLocalRepository(realm: Realm) :
 
     private fun removeOldTags(
         userId: String,
-        onlineTags: List<Tag>
+        onlineTags: List<Tag>,
     ) {
-        val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
+        val tags =
+            realm
+                .where(Tag::class.java)
+                .equalTo("userId", userId)
+                .findAll()
+                .createSnapshot()
         val tagsToDelete = tags.filterNot { onlineTags.contains(it) }
         executeTransaction {
             for (tag in tagsToDelete) {
@@ -124,17 +141,18 @@ class RealmUserLocalRepository(realm: Realm) :
         }
     }
 
-    override fun getTeamPlans(userID: String): Flow<List<TeamPlan>> {
-        return realm.where(TeamPlan::class.java)
+    override fun getTeamPlans(userID: String): Flow<List<TeamPlan>> =
+        realm
+            .where(TeamPlan::class.java)
             .equalTo("userID", userID)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
-    }
 
     override fun getTeamPlan(teamID: String): Flow<Group?> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(Group::class.java)
+        return realm
+            .where(Group::class.java)
             .equalTo("id", teamID)
             .findAll()
             .toFlow()
@@ -145,7 +163,8 @@ class RealmUserLocalRepository(realm: Realm) :
     override fun getSkills(user: User): Flow<List<Skill>> {
         val habitClass =
             if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
-        return realm.where(Skill::class.java)
+        return realm
+            .where(Skill::class.java)
             .equalTo("habitClass", habitClass)
             .sort("lvl")
             .findAll()
@@ -161,7 +180,8 @@ class RealmUserLocalRepository(realm: Realm) :
                 ownedItems.add(key)
             }
         }
-        return realm.where(Skill::class.java)
+        return realm
+            .where(Skill::class.java)
             .`in`("key", ownedItems.toTypedArray())
             .findAll()
             .toFlow()

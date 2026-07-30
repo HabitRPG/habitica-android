@@ -34,24 +34,27 @@ fun LevelChip(
     textColor: ColorProvider = WidgetColors.levelChipText,
     horizontalPadding: Dp = 8.dp,
 ) {
-    val classBitmap = when (className) {
-        "warrior" -> runCatching { HabiticaIconsHelper.imageOfWarriorLightBg() }.getOrNull()
-        "wizard" -> runCatching { HabiticaIconsHelper.imageOfMageLightBg() }.getOrNull()
-        "healer" -> runCatching { HabiticaIconsHelper.imageOfHealerLightBg() }.getOrNull()
-        "rogue" -> runCatching { HabiticaIconsHelper.imageOfRogueLightBg() }.getOrNull()
-        else -> null
-    }
-    val labelText = stringRes(
-        if (showFullLabel) R.string.user_level_long else R.string.widget_level_short,
-        level,
-    )
+    val classBitmap =
+        when (className) {
+            "warrior" -> runCatching { HabiticaIconsHelper.imageOfWarriorLightBg() }.getOrNull()
+            "wizard" -> runCatching { HabiticaIconsHelper.imageOfMageLightBg() }.getOrNull()
+            "healer" -> runCatching { HabiticaIconsHelper.imageOfHealerLightBg() }.getOrNull()
+            "rogue" -> runCatching { HabiticaIconsHelper.imageOfRogueLightBg() }.getOrNull()
+            else -> null
+        }
+    val labelText =
+        stringRes(
+            if (showFullLabel) R.string.user_level_long else R.string.widget_level_short,
+            level,
+        )
 
     Row(
-        modifier = modifier
-            .height(30.dp)
-            .cornerRadius(15.dp)
-            .background(backgroundColor)
-            .padding(horizontal = horizontalPadding),
+        modifier =
+            modifier
+                .height(30.dp)
+                .cornerRadius(15.dp)
+                .background(backgroundColor)
+                .padding(horizontal = horizontalPadding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(GlanceModifier.defaultWeight())
@@ -65,11 +68,12 @@ fun LevelChip(
         }
         Text(
             text = labelText,
-            style = TextStyle(
-                color = textColor,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-            ),
+            style =
+                TextStyle(
+                    color = textColor,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                ),
         )
         Spacer(GlanceModifier.defaultWeight())
     }
@@ -84,11 +88,12 @@ fun CurrencyChip(
     textColor: ColorProvider = WidgetColors.currencyChipText,
 ) {
     Row(
-        modifier = modifier
-            .height(30.dp)
-            .cornerRadius(15.dp)
-            .background(backgroundColor)
-            .padding(horizontal = 8.dp),
+        modifier =
+            modifier
+                .height(30.dp)
+                .cornerRadius(15.dp)
+                .background(backgroundColor)
+                .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -100,11 +105,12 @@ fun CurrencyChip(
         Text(
             text = text,
             maxLines = 1,
-            style = TextStyle(
-                color = textColor,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-            ),
+            style =
+                TextStyle(
+                    color = textColor,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                ),
         )
     }
 }
@@ -122,11 +128,12 @@ fun MergedCurrencyChip(
     textColor: ColorProvider = WidgetColors.currencyChipText,
 ) {
     Row(
-        modifier = modifier
-            .height(30.dp)
-            .cornerRadius(15.dp)
-            .background(backgroundColor)
-            .padding(horizontal = 8.dp),
+        modifier =
+            modifier
+                .height(30.dp)
+                .cornerRadius(15.dp)
+                .background(backgroundColor)
+                .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         items.forEachIndexed { index, item ->
@@ -143,11 +150,12 @@ fun MergedCurrencyChip(
                 Text(
                     text = item.text,
                     maxLines = 1,
-                    style = TextStyle(
-                        color = textColor,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
+                    style =
+                        TextStyle(
+                            color = textColor,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                        ),
                 )
             }
         }
