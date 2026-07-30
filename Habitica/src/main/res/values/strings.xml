@@ -41,7 +41,8 @@
     <string name="subscription_change_hourglass_promo_info">After purchase, 12 Mystic Hourglasses will be delivered to your account.</string>
     <string name="next_payment_date">Next Payment %s</string>
     <string name="will_change_to_x_duration">Will change to every %s</string>
-    <string name="subscription_changed_confirmation">Your Subscription was successfully downgraded. It will change at the next renewal date.</string>
+    <string name="subscription_downgraded_confirmation">Your Subscription was successfully downgraded. It will change at the next renewal date.</string>
+    <string name="subscription_upgraded_confirmation">Your Subscription was successfully upgraded</string>
     <string name="plan_changing_next_renewal">Plan changing at next renewal</string>
     <string name="subscription_change_confirmation_gift">Switching to this plan will immediately charge you the above amount and set your next renewal date to %d months from today.</string>
     <string name="subscription_change_confirmation_downgrade">Switching to this plan will charge you the above amount at your next renewal date.</string>

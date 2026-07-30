@@ -87,18 +87,10 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         binding?.content?.subscriptionDetails?.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
         binding?.content?.giftSegmentSubscribed?.giftSubscriptionButton?.setOnClickListener {
-            context?.let { context ->
-                showGiftSubscriptionDialog(
-                    context
-                )
-            }
+            showGiftSubscriptionDialog(requireContext())
         }
         binding?.content?.giftSegmentUnsubscribed?.giftSubscriptionButton?.setOnClickListener {
-            context?.let { context ->
-                showGiftSubscriptionDialog(
-                    context
-                )
-            }
+            showGiftSubscriptionDialog(requireContext())
         }
 
         binding?.content?.subscriptionDetails?.onUpdateSubscriptionsTapped = {
@@ -109,8 +101,8 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         binding?.content?.subscribeButton?.setOnClickListener { purchaseSubscription() }
 
         binding?.content?.visitHabiticaWebsiteButton?.setOnClickListener {
-            val url = context?.getString(R.string.base_url) + "/"
-            context?.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+            val url = requireContext().getString(R.string.base_url) + "/"
+            requireContext().startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
         }
 
         lifecycleScope.launchCatching {

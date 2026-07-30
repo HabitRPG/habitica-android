@@ -253,6 +253,8 @@ class PurchaseHandler(
                 val replacementMode = getReplacementMode(existingSub, skuDetails)
                 if (replacementMode == BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.DEFERRED) {
                     deferredSubscriptionSku = skuDetails.productId
+                } else {
+                    upgradedSubscriptionSku = skuDetails.productId
                 }
                 productDetailsParams = productDetailsParams.setSubscriptionProductReplacementParams(
                     BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.newBuilder()
@@ -283,7 +285,7 @@ class PurchaseHandler(
         val result = billingClient.consumePurchase(params)
         Log.d("PurchaseHandler", "Consume purchase ${purchase.products.firstOrNull()} result: ${result.billingResult.responseCode}, retries left: $retries")
         if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK && retries > 0) {
-            delay(500)
+            delay(500.milliseconds)
             consume(purchase, retries - 1)
         } else if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
             // Throw an error to continue the flow
@@ -539,7 +541,10 @@ class PurchaseHandler(
                     HabiticaProduct.allSubscriptionTypes.contains(product) -> {
                         if (deferredSubscriptionSku != null) {
                             deferredSubscriptionSku = null
-                            context.getString(R.string.subscription_changed_confirmation)
+                            context.getString(R.string.subscription_downgraded_confirmation)
+                        } else if (upgradedSubscriptionSku != null) {
+                            upgradedSubscriptionSku = null
+                            context.getString(R.string.subscription_upgraded_confirmation)
                         } else {
                             if (sku == HabiticaProduct.SUBSCRIPTION_1_MONTH.sku) {
                                 context.getString(R.string.subscription_confirmation)
@@ -619,6 +624,7 @@ class PurchaseHandler(
         private var pendingGifts: MutableMap<String, Triple<Date, String, String>> = ConcurrentHashMap()
         private var preferences: SharedPreferences? = null
         private var deferredSubscriptionSku: String? = null
+        private var upgradedSubscriptionSku: String? = null
 
         fun addGift(
             sku: String,
@@ -680,7 +686,7 @@ suspend fun retryUntil(
     for (i in 0 until times) {
         if (block()) return
         if (i < times - 1) {
-            delay(currentDelay)
+            delay(currentDelay.milliseconds)
             currentDelay = (currentDelay * factor).toLong().coerceAtMost(maxDelay)
         }
     }

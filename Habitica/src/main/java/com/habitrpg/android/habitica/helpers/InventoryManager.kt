@@ -33,7 +33,7 @@ class InventoryManager(
                     "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}"
                 )
             )
-            return null
+            throw Exception("Failed to load inventory")
         }
         return skuDetailsResult.productDetailsList
     }
