@@ -12,7 +12,10 @@ import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import java.text.SimpleDateFormat
@@ -159,6 +162,10 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
         val context = fragment.context ?: return
         val binding = fragment.binding ?: return
         binding.root.setBackgroundColor(screenBackgroundColor(context))
+        (fragment.activity as? BaseActivity)?.let { activity ->
+            ToolbarColorHelper.colorizeToolbar(activity.findViewById(R.id.toolbar), activity, backgroundColor = screenBackgroundColor(context))
+            activity.findViewById<View>(R.id.appbar)?.setBackgroundColor(screenBackgroundColor(context))
+        }
         binding.promoBanner.background = promoBackgroundDrawable(context)
         binding.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
@@ -208,7 +215,6 @@ abstract class ExtraGemSalePromotion(startDate: Date?, endDate: Date?) : Habitic
             SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.LONG)
         val utcTimeFormatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.LONG)
         utcTimeFormatter.timeZone = TimeZone.getTimeZone("UTC")
-        fragment.activity?.findViewById<View>(R.id.appbar)?.setBackgroundColor(screenBackgroundColor(context))
         binding.limitationsDescriptionView.text =
             context.getString(
                 R.string.gems_promo_info_limitations_fixed,

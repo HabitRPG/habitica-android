@@ -45,6 +45,10 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         }
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
+    var hasDarkNavUI = false
+
+    var toolbarIconColor: Int? = null
+    var toolbarBackgroundColor: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,7 +92,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         val window = activity?.window
         if (window != null) {
             val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
-            if (this.usesBottomNavigation) {
+            if (this.usesBottomNavigation || hasDarkNavUI) {
                 windowInsetsController.isAppearanceLightNavigationBars = false
                 view?.systemUiVisibility
                 window.setNavigationBarDarkIcons(false)
@@ -113,7 +117,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         mainActivity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, mainActivity,
-            appbar = mainActivity?.findViewById(R.id.appbar)) }
+            appbar = mainActivity?.findViewById(R.id.appbar), iconColor = toolbarIconColor, backgroundColor = toolbarBackgroundColor) }
         updateToolbarInteractivity()
     }
 

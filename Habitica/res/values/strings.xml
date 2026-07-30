@@ -386,10 +386,11 @@
     <string name="gem_purchase_toolbartitle">Purchase</string>
     <string name="gem_purchase_title">Buying gems supports the developers and helps keep Habitica running</string>
     <string name="gem_purchase_subtitle">Unlock even more ways to stay productive with Gems!</string>
-    <string name="gem_purchase_listitem1">Cool costumes for your avatar</string>
-    <string name="gem_purchase_listitem2">Awesome backgrounds</string>
-    <string name="gem_purchase_listitem3">Quests that reward you with pet eggs</string>
-    <string name="gem_purchase_listitem4">The ability to change your class before level 100</string>
+    <string name="gem_purchase_listitem1">Premium Avatar Customizations</string>
+    <string name="gem_purchase_listitem2">Past Seasonal Gear Sets</string>
+    <string name="gem_purchase_listitem3">Access to our library of Backgrounds</string>
+    <string name="gem_purchase_listitem4">Community Challenge Creation</string>
+    <string name="gem_purchase_listitem5">Pet and Hatching Potion Quests</string>
     <string name="support_habitica">Support Habitica</string>
     <string name="skill_transformation_use">Use</string>
     <string name="hatching_market_info">Not getting the right drops? Check out the Market!</string>

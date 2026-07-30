@@ -5,7 +5,6 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -23,7 +22,6 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,6 +45,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.edit
+import androidx.core.os.LocaleListCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -55,7 +55,6 @@ import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
-import com.habitrpg.android.habitica.ui.views.HabiticaDrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -78,10 +77,8 @@ import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
-import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
-import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
@@ -98,6 +95,7 @@ import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.DeathOverlay
 import com.habitrpg.android.habitica.ui.views.GroupPlanMemberList
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
+import com.habitrpg.android.habitica.ui.views.HabiticaDrawerLayout
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
@@ -108,7 +106,6 @@ import com.habitrpg.android.habitica.widget.DailiesCountWidgetReceiver
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
@@ -131,9 +128,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
-import androidx.core.content.edit
 
 var mainActivityCreatedAt: Date? = null
 
@@ -143,31 +141,18 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     @Inject
     internal lateinit var apiClient: ApiClient
-
     @Inject
     internal lateinit var soundManager: SoundManager
-
-    @Inject
-    internal lateinit var checkClassSelectionUseCase: CheckClassSelectionUseCase
-
     @Inject
     internal lateinit var displayItemDropUseCase: DisplayItemDropUseCase
-
     @Inject
     internal lateinit var notifyUserUseCase: NotifyUserUseCase
-
     @Inject
     internal lateinit var taskRepository: TaskRepository
-
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
-
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
-
-    @Inject
-    lateinit var reviewManager: ReviewManager
-
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -879,7 +864,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         val now = Date().time
         lifecycleScope.launch(context = Dispatchers.Main) {
-            delay(1000L)
+            delay(1.seconds)
             if (!this@MainActivity.isFinishing && MainNavigationController.isReady && now - lastDeathDialogDisplay > 10000) {
                 lastDeathDialogDisplay = now
 
@@ -922,7 +907,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         }
                                         lifecycleScope.launch(ExceptionHandler.coroutine()) {
                                             userRepository.updateUser("stats.hp", 1)
-                                            delay(1000)
+                                            delay(1.seconds)
                                             HabiticaSnackbar.showSnackbar(
                                                 snackbarContainer,
                                                 getString(R.string.subscriber_benefit_success_faint),
@@ -936,7 +921,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         lifecycleScope.launch(ExceptionHandler.coroutine()) {
                                             val brokenItem = userRepository.revive()
                                             if (brokenItem != null) {
-                                                delay(500)
+                                                delay(500.milliseconds)
                                                 HabiticaSnackbar.showSnackbar(
                                                     snackbarContainer,
                                                     getString(R.string.revive_broken_equipment, brokenItem.text),
@@ -1119,7 +1104,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private fun updateDrawerBehavior() {
         val layout = drawerLayout ?: return
-        val navigationDrawer = findViewById<View>(R.id.navigation_drawer) ?: return
         val contentView = binding.content.root
 
         val config = resources.configuration

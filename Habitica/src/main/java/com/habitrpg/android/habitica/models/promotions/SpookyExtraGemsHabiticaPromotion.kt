@@ -20,8 +20,8 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Extra
     override val gems42SparkleRes = R.drawable.spooky_42_gems_sparkle
     override val gems84SparkleRes = R.drawable.spooky_84_gems_sparkle
 
-    override val promoMenuLeftRes = R.drawable.spooky_promo_banner_left
-    override val promoMenuRightRes = R.drawable.spooky_promo_banner_right
+    override val promoMenuLeftRes = R.drawable.spooky_promo_menu_left
+    override val promoMenuRightRes = R.drawable.spooky_promo_menu_right
 
     override val promoBannerLeftRes = R.drawable.spooky_promo_banner_left
     override val promoBannerRightRes = R.drawable.spooky_promo_banner_right

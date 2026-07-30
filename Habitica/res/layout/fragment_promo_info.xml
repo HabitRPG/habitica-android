@@ -81,7 +81,7 @@
             android:fontFamily="@string/font_family_medium"
             android:textColor="@color/white"
             android:layout_marginTop="4dp"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"/>
         <TextView
             android:id="@+id/prompt_button"
@@ -97,7 +97,7 @@
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
             android:textSize="16sp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/white"
             android:text="@string/how_it_works"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="7dp"/>
@@ -117,7 +117,7 @@
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
             android:textSize="16sp"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/white"
             android:text="@string/limitations"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="7dp"/>

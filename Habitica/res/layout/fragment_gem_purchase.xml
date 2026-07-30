@@ -25,10 +25,9 @@
         <RelativeLayout
             android:id="@+id/promo_banner"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="80dp"
             android:background="@drawable/g1g1_box"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginHorizontal="22dp"
             android:layout_marginBottom="@dimen/spacing_large"
             android:clipChildren="true"
             android:clipToPadding="true"
@@ -92,27 +91,16 @@
                     android:layout_marginStart="84dp"
                     android:layout_marginEnd="84dp"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:layout_marginBottom="6dp" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/promo_banner_duration_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Overline" />
+                    android:textSize="16sp"
+                    android:fontFamily="@string/font_family_medium"
+                    android:textColor="@color/white" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:fontFamily="@string/font_family_medium"
-                android:layout_marginBottom="12dp"
-                android:layout_centerInParent="true" />
         </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -124,19 +112,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/gem_purchase_header_dark"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp" />
+                android:layout_gravity="center_horizontal" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gem_purchase_subtitle"
                 android:gravity="center"
-                android:textStyle="normal|bold"
+                android:fontFamily="@string/font_family_medium"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"
-                android:layout_marginTop="23dp"
+                android:textSize="18sp"
+                android:layout_marginTop="24dp"
                 android:layout_marginStart="@dimen/spacing_xlarge"
                 android:layout_marginEnd="@dimen/spacing_xlarge" />
 
@@ -179,15 +165,6 @@
                 android:textColor="@color/white"
                 android:visibility="gone" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/visit_habitica_website"
-                android:layout_marginBottom="50dp"
-                style="@style/HabiticaButton.Purple"
-                android:visibility="gone" />
-
             <androidx.compose.ui.platform.ComposeView
                 android:id="@+id/loading_indicator"
                 android:layout_width="70dp"
@@ -199,7 +176,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_large">
-
                 <LinearLayout
                     android:id="@+id/gem_purchase_options"
                     android:layout_width="match_parent"
@@ -287,17 +263,19 @@
                 android:textColor="@color/white"
                 android:text="@string/gems_gift_description"
                 android:gravity="center_horizontal"
+                android:fontFamily="@string/font_family_medium"
+                android:textSize="18sp"
                 android:layout_marginStart="@dimen/spacing_xlarge"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="@dimen/spacing_xlarge" />
 
             <Button
                 android:id="@+id/gift_gems_button"
+                style="@style/HabiticaButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gift_gems"
                 android:backgroundTint="@color/brand_200"
-                android:background="@drawable/button_background_brand_200"
                 android:textColor="@color/white"
                 android:textAllCaps="false" />
     </LinearLayout>

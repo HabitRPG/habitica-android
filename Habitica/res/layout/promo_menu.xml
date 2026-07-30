@@ -42,7 +42,7 @@
             android:letterSpacing="0.015"
             android:textAlignment="center"
             android:gravity="center"
-            android:maxWidth="240dp"/>
+            android:maxWidth="170dp"/>
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
@@ -56,13 +56,13 @@
         android:id="@+id/left_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
     <ImageView
         android:id="@+id/right_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true" />
     <ImageButton
         android:id="@+id/close_button"

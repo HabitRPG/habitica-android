@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentPromoInfoBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,9 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
         savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
+        this.hasDarkNavUI = true
+        toolbarIconColor = ContextCompat.getColor(requireContext(), R.color.white)
+        toolbarBackgroundColor = ContextCompat.getColor(requireContext(), R.color.gray_1)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
