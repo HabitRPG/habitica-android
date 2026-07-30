@@ -60,4 +60,6 @@ interface TaskLocalRepository : BaseLocalRepository {
         challengeID: String?,
         userID: String?,
     ): Flow<List<Task>>
+
+    fun getTasksWithTaskId(taskId: String): List<Task>
 }

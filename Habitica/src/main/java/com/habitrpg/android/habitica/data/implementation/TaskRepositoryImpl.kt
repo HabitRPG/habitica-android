@@ -178,7 +178,7 @@ class TaskRepositoryImpl(
         up: Boolean,
         localDelta: Float,
     ) {
-        this.localRepository.executeTransaction {
+        this.localRepository.executeTransaction { realm ->
             val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
             val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
             if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
@@ -214,7 +214,7 @@ class TaskRepositoryImpl(
 
             val taskId = bgTask.id
             if (taskId != null) {
-                it.where(Task::class.java).equalTo("id", taskId).findAll().forEach { sibling ->
+                localRepository.getTasksWithTaskId(taskId).forEach { sibling ->
                     if (sibling.ownerID != bgTask.ownerID) {
                         sibling.value = bgTask.value
                         sibling.streak = bgTask.streak
@@ -257,7 +257,7 @@ class TaskRepositoryImpl(
                         }
                     }
                 var item =
-                    it
+                    realm
                         .where(OwnedItem::class.java)
                         .equalTo("itemType", type)
                         .equalTo("key", key)

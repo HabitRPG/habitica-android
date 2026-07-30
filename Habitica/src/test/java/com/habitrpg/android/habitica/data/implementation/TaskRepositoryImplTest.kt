@@ -25,11 +25,12 @@ import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.verify
 import io.realm.Realm
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import java.util.UUID
 import kotlin.time.Duration.Companion.milliseconds
 
-@OptIn(ExperimentalKotest::class)
+@OptIn(ExperimentalKotest::class, ExperimentalCoroutinesApi::class)
 class TaskRepositoryImplTest :
     WordSpec({
         lateinit var repository: TaskRepository
@@ -40,6 +41,7 @@ class TaskRepositoryImplTest :
             every { localRepository.executeTransaction(transaction = capture(slot)) } answers {
                 slot.captured(mockk(relaxed = true))
             }
+            every { localRepository.getTasksWithTaskId(any()) } returns listOf()
             val authenticationHandler = mockk<AuthenticationHandler>()
             every { authenticationHandler.currentUserID } answers {
                 ""

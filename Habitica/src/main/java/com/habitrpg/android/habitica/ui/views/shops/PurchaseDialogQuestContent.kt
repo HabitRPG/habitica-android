@@ -27,13 +27,13 @@ class PurchaseDialogQuestContent(
 
     override fun setQuestContentItem(questContent: QuestContent) {
         super.setQuestContentItem(questContent)
-        binding.rageMeterView.visibility = View.GONE
+        binding.rageMeterView.visibility = GONE
         if (questContent.isBossQuest) {
             binding.questTypeTextView.setText(R.string.boss_quest)
-            binding.questCollectView.visibility = View.GONE
+            binding.questCollectView.visibility = GONE
             binding.bossHealthText.text = questContent.boss?.hp.toString()
             if (questContent.boss?.hasRage == true) {
-                binding.rageMeterView.visibility = View.VISIBLE
+                binding.rageMeterView.visibility = VISIBLE
             }
             binding.questDifficultyView.rating = questContent.boss?.str ?: 1f
         } else {
@@ -41,7 +41,7 @@ class PurchaseDialogQuestContent(
             val collectionList = questContent.collect?.map { it.count.toString() + " " + it.text }
             binding.questCollectText.text = TextUtils.join(", ", collectionList ?: listOf<String>())
 
-            binding.bossHealthView.visibility = View.GONE
+            binding.bossHealthView.visibility = GONE
 
             binding.questDifficultyView.rating = 1f
         }
@@ -64,8 +64,8 @@ class PurchaseDialogQuestContent(
                 }
             }
             if (!hasOwnerRewards) {
-                binding.ownerRewardsTitle.visibility = View.GONE
-                binding.ownerRewardsList.visibility = View.GONE
+                binding.ownerRewardsTitle.visibility = GONE
+                binding.ownerRewardsList.visibility = GONE
             }
 
             if ((questContent.drop?.exp ?: 0) > 0) {
@@ -107,8 +107,8 @@ class PurchaseDialogQuestContent(
         containerView: ViewGroup?,
     ) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
-        val imageView = view?.findViewById(R.id.imageView) as? PixelArtView
-        val titleTextView = view?.findViewById(R.id.titleTextView) as? TextView
+        val imageView = view?.findViewById<PixelArtView>(R.id.imageView)
+        val titleTextView = view?.findViewById<TextView>(R.id.titleTextView)
         imageView?.loadImage(item.imageName)
         if (item.count > 1) {
             titleTextView?.text =

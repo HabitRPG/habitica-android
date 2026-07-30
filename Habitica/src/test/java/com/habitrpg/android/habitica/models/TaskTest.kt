@@ -28,36 +28,31 @@ class TaskTest :
         "isDueToday" should {
             "false if the day of year is before today" {
                 val now = ZonedDateTime.now()
-                task.dueDate = date(day = now.dayOfYear - 1, year = now.year)
-
+                task.dueDate = date(day = now.dayOfMonth - 1, month = now.monthValue - 1, year = now.year)
                 task.isDueToday() shouldBe false
             }
 
             "false if the year is before today" {
                 val now = ZonedDateTime.now()
-                task.dueDate = date(day = now.dayOfYear, year = now.year - 1)
-
+                task.dueDate = date(day = now.dayOfMonth, month = now.monthValue - 1, year = now.year - 1)
                 task.isDueToday() shouldBe false
             }
 
-            "true if the day of year is after today" {
+            "false if the day of year is after today" {
                 val now = ZonedDateTime.now()
-                task.dueDate = date(day = now.dayOfYear + 1, year = now.year)
-
-                task.isDueToday() shouldBe true
+                task.dueDate = date(day = now.dayOfMonth + 1, month = now.monthValue - 1, year = now.year)
+                task.isDueToday() shouldBe false
             }
 
-            "true if the year is after today" {
+            "false if the year is after today" {
                 val now = ZonedDateTime.now()
-                task.dueDate = date(day = now.dayOfYear, year = now.year + 1)
-
-                task.isDueToday() shouldBe true
+                task.dueDate = date(day = now.dayOfMonth, month = now.monthValue - 1, year = now.year + 1)
+                task.isDueToday() shouldBe false
             }
 
             "true if it is today" {
                 val now = ZonedDateTime.now()
-                task.dueDate = date(day = now.dayOfYear, year = now.year)
-
+                task.dueDate = date(day = now.dayOfMonth, month = now.monthValue - 1, year = now.year)
                 task.isDueToday() shouldBe true
             }
         }
