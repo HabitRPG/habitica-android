@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.lint.AndroidLintTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
@@ -27,7 +26,6 @@ android {
     defaultConfig {
         applicationId = "com.habitrpg.android.habitica"
         minSdk = libs.versions.minSdk.get().toInt()
-        compileSdk = libs.versions.targetSdk.get().toInt()
         vectorDrawables.useSupportLibrary = true
 
         targetSdk = libs.versions.targetSdk.get().toInt()
@@ -46,8 +44,8 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
-        renderScript = true
         buildConfig = true
+        resValues = true
     }
 
     buildTypes {
@@ -56,7 +54,6 @@ android {
             //applicationIdSuffix ".debug"
             isDebuggable = true
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             // Disable fabric build ID generation for debug builds
             ext["enableCrashlytics"] = false
             ext["alwaysUpdateBuildId"] = false
@@ -70,7 +67,6 @@ android {
             isMinifyEnabled = false
             enableUnitTestCoverage = false
             enableAndroidTestCoverage = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             // Disable fabric build ID generation for debug builds
             ext["enableCrashlytics"] = false
             ext["alwaysUpdateBuildId"] = false
@@ -80,9 +76,9 @@ android {
         release {
             signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isDebuggable = false
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            optimization {
+                enable = true
+            }
             resValue("string", "content_provider", "com.habitrpg.android.habitica.fileprovider")
             resValue("string", "app_name", "Habitica")
         }
@@ -97,15 +93,14 @@ android {
     sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
-            java.srcDirs("src/main/java")
-            resources.srcDirs("src/main/java")
-            renderscript.srcDirs("src/main/java")
-            res.srcDirs("res")
-            assets.srcDirs("assets")
+            java.directories.add("src/main/java")
+            resources.directories.add("src/main/java")
+            res.directories.add("res")
+            assets.directories.add("assets")
         }
-        getByName("test") { java.srcDir("src/test/java") }
-        getByName("debugIAP") { java.srcDirs("src/debug/java") }
-        getByName("release") { java.srcDirs("src/release/java") }
+        getByName("test") { java.directories.add("src/test/java") }
+        getByName("debugIAP") { java.directories.add("src/debug/java") }
+        getByName("release") { java.directories.add("src/release/java") }
     }
 
     compileOptions {
@@ -135,10 +130,10 @@ android {
     }
 
     bundle.language.enableSplit = false
-    packaging.resources.excludes.add("META-INF/*")
+    packaging.resources.excludes += "META-INF/*"
 }
 
-tasks.withType<AndroidLintTask> { enabled = false }
+tasks.matching { it.name.startsWith("lint") }.configureEach { enabled = false }
 tasks.withType<JavaCompile> { options.compilerArgs.addAll(listOf("-Xmaxerrs", "500")) }
 tasks.withType<KotlinJvmCompile>().configureEach {
     compilerOptions {

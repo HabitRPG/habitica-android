@@ -90,9 +90,11 @@ android {
         }
     }
 
-    kotlin.jvmToolchain(11)
-    composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     flavorDimensions.add("buildType")
+}
+
+kotlin {
+    jvmToolchain(11)
 }
 
 tasks.withType<KotlinJvmCompile>().configureEach {

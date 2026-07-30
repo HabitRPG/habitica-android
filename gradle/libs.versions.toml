@@ -1,71 +1,71 @@
 [versions]
 minSdk = "26"
-targetSdk = "36"
+targetSdk = "37"
 wearOsTargetSdk = "34"
 
-agp = "8.12.1"
+agp = "9.3.1"
 androidTest = "1.7.0"
 androidTestMonitor = "1.8.0"
 androidTestRunner = "1.7.0"
 annotationApi = "1.3.2"
 appcompat = "1.7.1"
-billing = "9.0.0"
-coil = "3.3.0"
-compose = "1.9.0"
+billing = "9.1.0"
+coil = "3.5.0"
+compose = "1.11.4"
 compose_compiler = "1.5.14"
-composeActivity = "1.10.1"
-constraintlayout = "2.2.1"
+composeActivity = "1.13.0"
+constraintlayout = "2.2.2"
 converterMoshi = "3.0.0"
 coordinatorlayout = "1.3.0"
-coreSplashscreen = "1.2.0-rc01"
-core_ktx = "1.18.0"
-coroutines = "1.10.2"
-crashlytics = "3.0.6"
-credentials = "1.5.0"
-daggerhilt = "2.57.1"
+coreSplashscreen = "1.2.0"
+core_ktx = "1.19.0"
+coroutines = "1.11.0"
+crashlytics = "3.0.7"
+credentials = "1.6.0"
+daggerhilt = "2.60.1"
 desuggar = "2.1.5"
 detekt = "1.23.8"
-firebase-perf = "2.0.1"
-firebase_bom = "34.1.0"
+firebase-perf = "2.0.2"
+firebase_bom = "34.16.0"
 flexbox = "3.0.0"
 fragmentKtx = "1.8.9"
 fragmentTesting = "1.8.9"
 glance = "1.2.0-rc01"
-google-service = "4.4.3"
-googleid = "1.1.1"
-gson = "2.13.1"
+google-service = "4.5.0"
+googleid = "1.2.0"
+gson = "2.14.0"
 habitRpgPlugin = "0.1.0"
 inAppReview = "2.0.2"
 junitKtx = "1.3.0"
-kaspresso = "1.6.0"
-kotest = "6.0.1"
-kotlin = "2.2.10"
-ksp = "2.2.10-2.0.2"
-ktlintPlugin = "13.1.0"
+kaspresso = "1.6.1"
+kotest = "6.2.3"
+kotlin = "2.3.21"
+ksp = "2.3.10"
+ktlintPlugin = "14.2.0"
 leakCanary = "2.14"
-lifecycle = "2.9.2"
-lifecycleRuntimeKtx = "2.9.2"
+lifecycle = "2.11.0"
+lifecycleRuntimeKtx = "2.11.0"
 markwon = "4.6.2"
-material = "1.12.0"
-material3 = "1.3.2"
-mockk = "1.14.5"
+material = "1.14.0"
+material3 = "1.4.0"
+mockk = "1.14.11"
 moshiKotlin = "1.15.2"
-navigation = "2.9.3"
-okhttp = "5.1.0"
+navigation = "2.9.8"
+okhttp = "5.4.0"
 orchestrator = "1.6.1"
-paging = "3.3.6"
-play_auth = "21.4.0"
-play_wearables = "19.0.0"
+paging = "3.5.0"
+play_auth = "21.6.0"
+play_wearables = "20.0.1"
 preferences = "1.2.1"
 realmPlugin = "10.19.0"
 recyclerview = "1.4.0"
 retrofit = "3.0.0"
 shimmer = "0.5.0"
-swipeRefresh = "1.1.0"
+swipeRefresh = "1.2.0"
 turbine = "1.2.1"
-wear = "1.3.0"
-wearInput = "1.1.0"
-workManager = "2.10.0"
+wear = "1.4.0"
+wearInput = "1.2.0"
+workManager = "2.11.2"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
@@ -159,11 +159,11 @@ viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-
 wear = { module = "androidx.wear:wear", version.ref = "wear" }
 wear-input = { module = "androidx.wear:wear-input", version.ref = "wearInput" }
 work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
-hilt-work = { group = "androidx.hilt", name = "hilt-work", version = "1.2.0" }
-hilt-compiler-androidx = { group = "androidx.hilt", name = "hilt-compiler", version = "1.2.0" }
+hilt-work = { group = "androidx.hilt", name = "hilt-work", version = "1.4.0" }
+hilt-compiler-androidx = { group = "androidx.hilt", name = "hilt-compiler", version = "1.4.0" }
 
 ## Dependencies of included build-logic
-android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+android-gradleApi = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlintPlugin" }
@@ -201,6 +201,7 @@ android-test-implementation = [
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

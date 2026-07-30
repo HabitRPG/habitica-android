@@ -232,7 +232,7 @@ class EquipmentDetailFragment :
         val suggestionAdapter = SimpleCursorAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, null, from, to, 0)
         val cursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
         for ((index, suggestion) in suggestions.withIndex()) {
-            cursor.addRow(arrayOf(index, suggestion))
+            cursor.addRow(arrayOf<Any>(index, suggestion))
         }
         suggestionAdapter.changeCursor(cursor)
         searchView.suggestionsAdapter = suggestionAdapter
@@ -263,7 +263,7 @@ class EquipmentDetailFragment :
                 val filteredCursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
                 for ((index, suggestion) in suggestions.withIndex()) {
                     if (suggestion.contains(newText, true)) {
-                        filteredCursor.addRow(arrayOf(index, suggestion))
+                        filteredCursor.addRow(arrayOf<Any>(index, suggestion))
                     }
                 }
                 suggestionAdapter.changeCursor(filteredCursor)

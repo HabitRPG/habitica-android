@@ -1,4 +1,5 @@
 
+import com.android.build.api.dsl.ApplicationExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
@@ -13,7 +14,7 @@ plugins {
     id(libs.plugins.google.service.get().pluginId)
 }
 
-android {
+extensions.configure<ApplicationExtension> {
     namespace = "com.habitrpg.android.habitica"
     compileSdk = libs.versions.targetSdk.get().toInt()
 
@@ -21,7 +22,6 @@ android {
         applicationId = "com.habitrpg.android.habitica"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.wearOsTargetSdk.get().toInt()
-        compileSdk = libs.versions.targetSdk.get().toInt()
 
         buildConfigField("String", "TESTING_LEVEL", "\"production\"")
     }
@@ -56,6 +56,7 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        resValues = true
     }
 
     testOptions {
