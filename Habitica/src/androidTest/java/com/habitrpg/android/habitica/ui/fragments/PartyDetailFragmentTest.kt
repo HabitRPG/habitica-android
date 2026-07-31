@@ -39,14 +39,10 @@ class PartyDetailFragmentTest : FragmentTestCase<PartyDetailFragment, FragmentPa
         val group = Group()
         group.name = "Group Name"
         every { socialRepository.getGroup(any()) } returns flowOf(group)
-        viewModel = PartyViewModel(false)
-        viewModel.socialRepository = socialRepository
-        viewModel.userRepository = userRepository
-        viewModel.userViewModel = userViewModel
-        viewModel.notificationsManager = mockk(relaxed = true)
+        viewModel = PartyViewModel(userRepository, userViewModel, challengeRepository, socialRepository, mockk(relaxed=true))
         fragment = spyk()
         fragment.shouldInitializeComponent = false
-        fragment.viewModel = viewModel
+        //fragment.viewModel = viewModel
     }
 
     override fun launchFragment(args: Bundle?) {

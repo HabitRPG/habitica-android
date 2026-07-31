@@ -36,7 +36,7 @@ private val KTextView.text: CharSequence?
         (
             this.view.perform(
                 object : ViewAction {
-                    override fun getConstraints(): Matcher<View> = isA(TextView::class.java)
+                    override fun getConstraints(): Matcher<View> = isA(View::class.java)
 
                     override fun getDescription(): String = "getting text from a TextView"
 

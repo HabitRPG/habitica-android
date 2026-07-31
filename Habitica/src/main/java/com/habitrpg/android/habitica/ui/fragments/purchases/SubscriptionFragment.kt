@@ -10,9 +10,7 @@ import android.widget.EditText
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -24,35 +22,31 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
+import com.habitrpg.android.habitica.databinding.FragmentSubscriptionContentBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.getBaseOfferDetails
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
-import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
-import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
+class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), CommonSubscriptionFragment {
     override var binding: FragmentSubscriptionBinding? = null
+
+    override val content: FragmentSubscriptionContentBinding?
+        get() = binding?.content
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -60,56 +54,31 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     ): FragmentSubscriptionBinding = FragmentSubscriptionBinding.inflate(inflater, container, false)
 
     @Inject
-    lateinit var userRepository: UserRepository
-
+    override lateinit var userRepository: UserRepository
     @Inject
     lateinit var appConfigManager: AppConfigManager
-
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-
     @Inject
-    lateinit var purchaseHandler: PurchaseHandler
+    override lateinit var purchaseHandler: PurchaseHandler
 
-    private var selectedSubscriptionSku: ProductDetails? = null
-    private var skus: List<ProductDetails> = emptyList()
+    override var selectedSubscriptionSku: ProductDetails? = null
+    override var skus: List<ProductDetails> = emptyList()
 
-    private var user: User? = null
-    private var hasLoadedSubscriptionOptions: Boolean = false
+    override var user: User? = null
+    override var hasLoadedSubscriptionOptions: Boolean = false
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding?.content?.subscriptionOptions?.visibility = View.GONE
-        binding?.content?.subscriptionDetails?.visibility = View.GONE
-        binding?.content?.subscriptionDetails?.onShowSubscriptionOptions = { showSubscriptionOptions() }
-
+        setupView(requireActivity())
         binding?.content?.giftSegmentSubscribed?.giftSubscriptionButton?.setOnClickListener {
             showGiftSubscriptionDialog(requireContext())
         }
         binding?.content?.giftSegmentUnsubscribed?.giftSubscriptionButton?.setOnClickListener {
             showGiftSubscriptionDialog(requireContext())
-        }
-
-        binding?.content?.subscriptionDetails?.onUpdateSubscriptionsTapped = {
-            showAsBottomSheet(sheetColor = Color(requireContext().getColor(R.color.brand_300)), true) {
-                ChangeSubscriptionScreen(it)
-            }
-        }
-        binding?.content?.subscribeButton?.setOnClickListener { purchaseSubscription() }
-
-        binding?.content?.visitHabiticaWebsiteButton?.setOnClickListener {
-            val url = requireContext().getString(R.string.base_url) + "/"
-            requireContext().startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-        }
-
-        lifecycleScope.launchCatching {
-            userRepository.getUser().collect { user ->
-                user?.let { setUser(it) }
-            }
         }
 
         val promo = appConfigManager.activePromo()
@@ -147,10 +116,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }
 
-        binding?.content?.subscriptionDisclaimerView?.setMarkdown(
-            "Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).",
-        )
-
         binding?.content?.bottomSpacing?.let {
             ViewCompat.setOnApplyWindowInsetsListener(it) { v, insets ->
                 val bars =
@@ -164,8 +129,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 consumeWindowInsetsAbove30(insets)
             }
         }
-
-        Analytics.sendNavigationEvent("subscription screen")
     }
 
     override fun onResume() {
@@ -177,97 +140,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         loadInventory()
     }
 
-    private fun refresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(withTasks = false, forced = true)
-            binding?.refreshLayout?.isRefreshing = false
-        }
-    }
-
-    private fun loadInventory() {
-        viewLifecycleOwner.lifecycleScope.launchCatching {
-            val subscriptions = purchaseHandler.loadSubscriptionProducts()
-            skus = subscriptions
-            withContext(Dispatchers.Main) {
-                binding?.content?.loadingIndicator?.visibility = View.GONE
-                if (subscriptions.isEmpty()) {
-                    if (user?.isSubscribed != true) {
-                        binding?.content?.noBillingSubscriptions?.visibility = View.VISIBLE
-                        binding?.content?.visitHabiticaWebsiteButton?.visibility = View.VISIBLE
-                    }
-                    return@withContext
-                }
-                binding?.content?.noBillingSubscriptions?.visibility = View.GONE
-                binding?.content?.visitHabiticaWebsiteButton?.visibility = View.GONE
-                for (sku in subscriptions) {
-                    updateButtonLabel(
-                        sku,
-                        sku
-                            .getBaseOfferDetails()
-                            ?.pricingPhases
-                            ?.pricingPhaseList
-                            ?.firstOrNull()
-                            ?.formattedPrice
-                            ?: "",
-                    )
-                }
-                if (selectedSubscriptionSku == null) {
-                    subscriptions
-                        .maxByOrNull {
-                            it
-                                .getBaseOfferDetails()
-                                ?.pricingPhases
-                                ?.pricingPhaseList
-                                ?.firstOrNull()
-                                ?.priceAmountMicros
-                                ?: 0
-                        }?.let { selectSubscription(it) }
-                }
-                hasLoadedSubscriptionOptions = true
-                updateSubscriptionInfo()
-            }
-        }
-    }
-
-    private fun updateButtonLabel(
-        sku: ProductDetails,
-        price: String,
-    ) {
-        val matchingView = buttonForSku(sku)
-        if (matchingView != null) {
-            matchingView.setPriceText(price)
-            matchingView.sku = sku.productId
-            matchingView.setOnPurchaseClickListener {
-                selectSubscription(sku)
-            }
-        }
-    }
-
-    private fun selectSubscription(sku: ProductDetails) {
-        selectedSubscriptionSku?.let {
-            val oldButton = buttonForSku(it)
-            oldButton?.setIsSelected(false)
-        }
-        this.selectedSubscriptionSku = sku
-        val subscriptionOptionButton = buttonForSku(sku)
-        subscriptionOptionButton?.setIsSelected(true)
-        if (binding?.content?.subscribeButton != null) {
-            binding?.content?.subscribeButton?.isEnabled = true
-        }
-    }
-
-    private fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? = buttonForSku(sku.productId)
-
-    private fun buttonForSku(sku: String): SubscriptionOptionView? =
-        when (HabiticaProduct.forSku(sku)) {
-            HabiticaProduct.SUBSCRIPTION_1_MONTH -> binding?.content?.subscription1month
-            HabiticaProduct.SUBSCRIPTION_3_MONTH -> binding?.content?.subscription3month
-            HabiticaProduct.SUBSCRIPTION_6_MONTH -> binding?.content?.subscription6month
-            HabiticaProduct.SUBSCRIPTION_12_MONTH -> binding?.content?.subscription12month
-            else -> null
-        }
-
-    private fun purchaseSubscription() {
+    override fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
             lifecycleScope.launchCatching {
                 purchaseHandler.purchase(requireActivity(), sku)
@@ -275,109 +148,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         }
     }
 
-    fun setUser(newUser: User) {
-        user = newUser
-        this.updateSubscriptionInfo()
-        checkIfNeedsCancellation()
-    }
-
-    private fun updateSubscriptionInfo() {
-        if (hasLoadedSubscriptionOptions) {
-            binding?.content?.subscriptionOptions?.visibility = View.VISIBLE
-            binding?.content?.loadingIndicator?.visibility = View.GONE
+    override fun refresh() {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(false, true)
+            binding?.refreshLayout?.isRefreshing = false
         }
-        if (user != null) {
-            val isSubscribed = user?.isSubscribed ?: false
-
-            if (binding?.content?.subscriptionDetails == null) {
-                return
-            }
-
-            if (isSubscribed) {
-                binding?.content?.headerImageView?.setImageResource(R.drawable.subscriber_banner_dark)
-                binding?.content?.subscriptionDetails?.visibility = View.VISIBLE
-                binding?.content?.subscriptionDetails?.currentUserID = user?.id
-                user?.purchased?.plan?.let { binding?.content?.subscriptionDetails?.setPlan(it) }
-                binding?.content?.subscriptionOptions?.visibility = View.GONE
-                binding
-                    ?.content
-                    ?.giftSegmentUnsubscribed
-                    ?.root
-                    ?.visibility = View.GONE
-                binding
-                    ?.content
-                    ?.giftSegmentSubscribed
-                    ?.root
-                    ?.visibility = View.VISIBLE
-                binding?.content?.subscribeBenefitsTitle?.visibility = View.GONE
-                binding?.content?.subscribeBenefitsFooter?.visibility = View.VISIBLE
-                binding?.content?.subscriptionDisclaimerView?.visibility = View.GONE
-                binding?.content?.existingGemCapBonusView?.visibility = View.GONE
-            } else {
-                binding?.content?.headerImageView?.setImageResource(R.drawable.subscribe_header_dark)
-                if (!hasLoadedSubscriptionOptions) {
-                    return
-                }
-                binding?.content?.subscriptionDetails?.visibility = View.GONE
-                binding?.content?.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt)
-                binding?.content?.subscribeBenefitsTitle?.visibility = View.VISIBLE
-                binding?.content?.subscribeBenefitsFooter?.visibility = View.GONE
-                binding
-                    ?.content
-                    ?.giftSegmentSubscribed
-                    ?.root
-                    ?.visibility = View.GONE
-                binding
-                    ?.content
-                    ?.giftSegmentUnsubscribed
-                    ?.root
-                    ?.visibility = View.VISIBLE
-                binding?.content?.subscriptionDisclaimerView?.visibility = View.VISIBLE
-
-                val totalGemCap = user?.purchased?.plan?.totalNumberOfGemsAlways ?: 24
-                binding?.content?.subscription1month?.gemCap = totalGemCap
-                binding?.content?.subscription3month?.gemCap = totalGemCap
-                binding?.content?.subscription6month?.gemCap = totalGemCap
-
-                if (totalGemCap > 24) {
-                    binding?.content?.existingGemCapBonusView?.visibility = View.VISIBLE
-                    binding?.content?.gemCapExtraLabel?.text = getString(R.string.gem_cap_extra, totalGemCap, 50)
-                    binding?.content?.extraGemsProgress?.progress = totalGemCap
-                } else {
-                    binding?.content?.existingGemCapBonusView?.visibility = View.GONE
-                }
-
-                binding?.content?.subscription12month?.showHourglassPromo(user?.purchased?.plan?.isEligableForHourglassPromo == true)
-            }
-            binding?.content?.loadingIndicator?.visibility = View.GONE
-        }
-    }
-
-    private fun checkIfNeedsCancellation() {
-        viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val newestSubscription = purchaseHandler.checkForSubscription(false)
-            val plan = user?.purchased?.plan
-            val sub = HabiticaProduct.forSku(newestSubscription?.products?.firstOrNull() ?: "")
-            if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null &&
-                newestSubscription?.isAutoRenewing != true
-            ) {
-                purchaseHandler.cancelSubscription()
-            } else if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null &&
-                plan.planId != sub?.getSubCode()
-            ) {
-                purchaseHandler.updateSubscriptionPlan(newestSubscription)
-            }
-        }
-    }
-
-    private fun showSubscriptionOptions() {
-        binding?.content?.subscriptionOptions?.visibility = View.VISIBLE
-        binding?.content?.subscriptionOptions?.postDelayed(
-            {
-                binding?.content?.nestedScrollView?.smoothScrollTo(0, binding?.content?.subscriptionOptions?.top ?: 0)
-            },
-            500,
-        )
     }
 
     companion object {

@@ -19,29 +19,29 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
             EVENT_GEMS_FOR_GOLD -> setGemsForGoldEventSubscriptionViews()
             EVENT_HOURGLASS_SHOP_OPENED -> setHourglassShopEventSubscriptionViews()
         }
-        binding.content.subscription3month.visibility = View.GONE
-        binding.content.subscription6month.visibility = View.GONE
+        content?.subscription3month?.visibility = View.GONE
+        content?.subscription6month?.visibility = View.GONE
     }
 
     private fun setArmoireEventSubscriptionViews() {
-        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_second_armoire_open_text)
-        binding.content.subscriberBenefits.hideArmoireBenefit()
+        content?.subscribeBenefitsTitle?.text = getString(R.string.subscribe_second_armoire_open_text)
+        content?.subscriberBenefits?.hideArmoireBenefit()
     }
 
     private fun setDeathScreenEventSubscriptionViews() {
-        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_second_chance_incentive_text)
-        binding.content.subscriberBenefits.hideDeathBenefit()
+        content?.subscribeBenefitsTitle?.text = getString(R.string.subscribe_second_chance_incentive_text)
+        content?.subscriberBenefits?.hideDeathBenefit()
     }
 
     private fun setGemsForGoldEventSubscriptionViews() {
-        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_gems_for_gold_incentive_text)
-        binding.content.subscriberBenefits.hideGemsForGoldBenefit()
-        binding.content.subscription3month.visibility = View.GONE
-        binding.content.gemsForGoldBanner.isVisible = true
+        content?.subscribeBenefitsTitle?.text = getString(R.string.subscribe_gems_for_gold_incentive_text)
+        content?.subscriberBenefits?.hideGemsForGoldBenefit()
+        content?.subscription3month?.visibility = View.GONE
+        content?.gemsForGoldBanner?.isVisible = true
     }
 
     private fun setHourglassShopEventSubscriptionViews() {
-        binding.content.subscribeBenefitsTitle.text = getString(R.string.subscribe_hourglass_incentive_text)
+        content?.subscribeBenefitsTitle?.text = getString(R.string.subscribe_hourglass_incentive_text)
         skus.firstOrNull { buttonForSku(it)?.isVisible == true }?.let { selectSubscription(it) }
     }
 
