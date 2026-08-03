@@ -6,6 +6,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.net.SocketException
+import java.net.UnknownHostException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -33,7 +35,11 @@ class ExceptionHandler {
                 } catch (ignored: Exception) {
                 }
             } else {
-                if (throwable !is CancellationException) {
+                if (throwable !is CancellationException &&
+                    throwable !is UnknownHostException &&
+                    throwable !is SocketException &&
+                    throwable.message?.endsWith(" was cancelled") != true &&
+                    throwable.message != "rememberCoroutineScope left the composition") {
                     instance.exceptionLogger?.invoke(throwable)
                 }
             }
