@@ -492,6 +492,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         viewModel.onCreate()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navigationController = navHostFragment.navController
+        MainNavigationController.setup(navigationController)
+        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            updateToolbarTitle(
+                destination,
+                arguments
+            )
+        }
     }
 
     override fun setTitle(title: CharSequence?) {
@@ -587,20 +597,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navigationController = navHostFragment.navController
-        MainNavigationController.setup(navigationController)
-        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
-            if (navHostFragment.childFragmentManager.backStackEntryCount > 30) {
-                navHostFragment.childFragmentManager.fragments.firstOrNull()?.let { fragment ->
-                    val transaction = navHostFragment.childFragmentManager.beginTransaction()
-                    transaction.remove(fragment)
-                    transaction.commit()
-                }
-            }
-            updateToolbarTitle(
-                destination,
-                arguments
-            )
-        }
 
         if (Build.VERSION.SDK_INT >= 33) {
             observeNotificationPermission()
@@ -824,7 +820,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
         }
     }
-
 
     public override fun onDestroy() {
         userRepository.close()
