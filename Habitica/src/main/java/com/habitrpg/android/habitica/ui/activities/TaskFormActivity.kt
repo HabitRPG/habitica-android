@@ -1055,6 +1055,8 @@ class TaskFormActivity : BaseActivity() {
 
     private fun disableEditingForUneditableFieldsInChallengeTask() {
         binding.textEditText.isEnabled = false
+        binding.textEditText.isFocusable = false
+        binding.textEditText.isFocusableInTouchMode = false
         binding.taskDifficultyButtons.isEnabled = false
         binding.taskSchedulingControls.isEnabled = false
         binding.habitScoringButtons.isEnabled = false
