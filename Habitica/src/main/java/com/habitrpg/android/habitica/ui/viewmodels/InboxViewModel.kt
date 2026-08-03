@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -16,6 +15,7 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.kotlin.toFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -49,11 +49,11 @@ constructor(
             messagesDataSource = MessagesDataSource(socialRepository, memberID, ChatMessage())
             messagesDataSource
         }.liveData
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val member =
         memberIDFlow
             .filterNotNull()
             .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
-            .asLiveData()
 
     fun setMemberID(memberID: String) {
         if (memberID == memberIDState.value) return
@@ -87,7 +87,7 @@ class MessagesDataSource(
 ) : PagingSource<Int, ChatMessage>() {
     private var lastFetchWasEnd = false
 
-    override fun getRefreshKey(state: PagingState<Int, ChatMessage>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, ChatMessage>): Int {
         return 0
     }
 

@@ -425,10 +425,6 @@ class ApiClientImpl(
         return process { apiService.getInboxConversations() }
     }
 
-    override fun hasAuthenticationKeys(): Boolean {
-        return this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
-    }
-
     private fun showConnectionProblemDialog(
         resourceMessageString: Int,
         isFromUserInput: Boolean

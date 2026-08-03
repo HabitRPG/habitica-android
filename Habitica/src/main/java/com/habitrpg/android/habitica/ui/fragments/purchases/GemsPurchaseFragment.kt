@@ -32,14 +32,12 @@ import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -142,7 +140,10 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             binding?.loadingIndicator?.isVisible = true
             binding?.gemPurchaseOptions?.isVisible = false
         }
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+        CoroutineScope(Dispatchers.IO).launchCatching {
+            if (!isAdded) {
+                return@launchCatching
+            }
             val skus = purchaseHandler.getAllGemSKUs()
             withContext(Dispatchers.Main) {
                 if (skus.isEmpty()) {

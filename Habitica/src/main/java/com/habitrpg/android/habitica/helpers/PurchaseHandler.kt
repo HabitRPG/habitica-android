@@ -292,6 +292,12 @@ class PurchaseHandler(
                 billingClient.queryProductDetails(params)
             }
         if (skuDetailsResult.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            if (skuDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.NETWORK_ERROR ||
+                skuDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE ||
+                skuDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED ||
+                skuDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE) {
+                return null
+            }
             Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
             CrashReporter.recordException(
                 Throwable(
