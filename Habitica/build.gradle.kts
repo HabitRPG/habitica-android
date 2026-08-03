@@ -162,6 +162,7 @@ android {
             }
             resValue("string", "content_provider", "com.habitrpg.android.habitica.fileprovider")
             resValue("string", "app_name", "Habitica")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 

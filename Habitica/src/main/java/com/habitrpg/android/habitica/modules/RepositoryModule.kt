@@ -27,7 +27,6 @@ open class RepositoryModule {
         val builder =
             RealmConfiguration
                 .Builder()
-                .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
                 .allowWritesOnUiThread(true)
                 .compactOnLaunch { totalBytes, usedBytes ->
