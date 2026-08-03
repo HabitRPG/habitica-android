@@ -399,7 +399,9 @@ class PurchaseDialog(
             } else {
                 limitedTextView.text = context.getString(R.string.gems_left_nomax, gemsLeft)
             }
-            item.limitedNumberLeft = gemsLeft
+            if (!item.isManaged) {
+                item.limitedNumberLeft = gemsLeft
+            }
             limitedTextView.visibility = View.VISIBLE
             if (gemsLeft == 0) {
                 limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.orange_10))
