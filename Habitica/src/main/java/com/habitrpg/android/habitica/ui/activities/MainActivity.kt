@@ -487,6 +487,16 @@ open class MainActivity :
         }
 
         viewModel.onCreate()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navigationController = navHostFragment.navController
+        MainNavigationController.setup(navigationController)
+        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            updateToolbarTitle(
+                destination,
+                arguments
+            )
+        }
     }
 
     override fun setTitle(title: CharSequence?) {
@@ -584,20 +594,6 @@ open class MainActivity :
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navigationController = navHostFragment.navController
-        MainNavigationController.setup(navigationController)
-        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
-            if (navHostFragment.childFragmentManager.backStackEntryCount > 30) {
-                navHostFragment.childFragmentManager.fragments.firstOrNull()?.let { fragment ->
-                    val transaction = navHostFragment.childFragmentManager.beginTransaction()
-                    transaction.remove(fragment)
-                    transaction.commit()
-                }
-            }
-            updateToolbarTitle(
-                destination,
-                arguments,
-            )
-        }
 
         if (Build.VERSION.SDK_INT >= 33) {
             observeNotificationPermission()
