@@ -389,8 +389,6 @@ interface ApiClient {
         apiToken: String?,
     )
 
-    fun hasAuthenticationKeys(): Boolean
-
     suspend fun retrieveUser(withTasks: Boolean = false): User?
 
     suspend fun retrieveInboxMessages(
