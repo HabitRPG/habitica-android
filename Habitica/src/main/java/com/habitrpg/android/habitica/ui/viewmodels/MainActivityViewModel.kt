@@ -91,43 +91,49 @@ constructor(
     }
 
     fun retrieveUser(forced: Boolean = false) {
-        if (hostConfig.hasAuthentication()) {
-            viewModelScope.launch(ExceptionHandler.coroutine()) {
-                contentRepository.retrieveWorldState()
-                userRepository.retrieveUser(true, forced)?.let { user ->
-                    if (user.preferences?.analyticsConsent == true) {
-                        Analytics.setUserProperty(
-                            "has_party",
-                            if (user.party?.id?.isNotEmpty() == true) "true" else "false"
-                        )
-                        Analytics.setUserProperty(
-                            "is_subscribed",
-                            if (user.isSubscribed) "true" else "false"
-                        )
-                        Analytics.setUserProperty(
-                            "checkin_count",
-                            user.loginIncentives.toString()
-                        )
-                        user.preferences?.pushNotifications?.mapOfKeys()?.forEach { key, isEnabled ->
-                            Analytics.setUserProperty("allow_push_${key}", isEnabled)
-                        }
-                        Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            if (!hostConfig.isInitialized) {
+                hostConfig.awaitReady()
+            }
+            if (!hostConfig.hasAuthentication()) return@launch
+            contentRepository.retrieveWorldState()
+            userRepository.retrieveUser(true, forced)?.let { user ->
+                if (user.preferences?.analyticsConsent == true) {
+                    Analytics.setUserProperty(
+                        "has_party",
+                        if (user.party?.id?.isNotEmpty() == true) "true" else "false"
+                    )
+                    Analytics.setUserProperty(
+                        "is_subscribed",
+                        if (user.isSubscribed) "true" else "false"
+                    )
+                    Analytics.setUserProperty(
+                        "checkin_count",
+                        user.loginIncentives.toString()
+                    )
+                    user.preferences?.pushNotifications?.mapOfKeys()?.forEach { key, isEnabled ->
+                        Analytics.setUserProperty("allow_push_${key}", isEnabled)
                     }
-                    pushNotificationManager.setUser(user)
-                    if (!pushNotificationManager.notificationPermissionEnabled()) {
-                        if (sharedPreferences.getBoolean("usePushNotifications", true)) {
-                            requestNotificationPermission.value = true
-                        }
-                    } else {
-                        pushNotificationManager.addPushDeviceUsingStoredToken()
-                    }
+                    Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                 }
-                inventoryRepository.retrieveInAppRewards()
-                contentRepository.retrieveContent()
+                pushNotificationManager.setUser(user)
+                if (!pushNotificationManager.notificationPermissionEnabled()) {
+                    if (sharedPreferences.getBoolean("usePushNotifications", true)) {
+                        requestNotificationPermission.value = true
+                    }
+                } else {
+                    pushNotificationManager.addPushDeviceUsingStoredToken()
+                }
             }
-            viewModelScope.launchCatching {
-                userRepository.retrieveTeamPlans()
+            inventoryRepository.retrieveInAppRewards()
+            contentRepository.retrieveContent()
+        }
+        viewModelScope.launchCatching {
+            if (!hostConfig.isInitialized) {
+                hostConfig.awaitReady()
             }
+            if (!hostConfig.hasAuthentication()) return@launchCatching
+            userRepository.retrieveTeamPlans()
         }
     }
 
