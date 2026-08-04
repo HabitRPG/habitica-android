@@ -256,6 +256,17 @@ open class MainActivity :
         launchTrace?.start()
         super.onCreate(savedInstanceState)
 
+        if (!viewModel.hostConfig.isInitialized) {
+            // Auth loading is taking longer. Activity will recreate once it's there
+            lifecycleScope.launchCatching {
+                viewModel.hostConfig.awaitReady()
+                if (!isFinishing && !isDestroyed) {
+                    recreate()
+                }
+            }
+            return
+        }
+
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val step = preferences.getInt("last_onboarding_step", 0)
         if (!viewModel.isAuthenticated ||
@@ -588,6 +599,11 @@ open class MainActivity :
 
     override fun onResume() {
         super.onResume()
+
+        if (!viewModel.hostConfig.isInitialized) {
+            // Will be recreated once auth is there
+            return
+        }
 
         viewModel.onResume()
 

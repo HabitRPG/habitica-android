@@ -5,18 +5,35 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class HostConfig {
     var address: String
     var port: String
-    var apiKey: String
+    var apiKey: String = ""
     var userID: String
+
+    // HostConfig is provided as a Hilt @Singleton, so this scope lives for the process lifetime.
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val readySignal = CompletableDeferred<Unit>()
+
+    val isInitialized: Boolean
+        get() = readySignal.isCompleted
+
+    suspend fun awaitReady() {
+        readySignal.await()
+    }
 
     constructor(userID: String, apiKey: String) {
         this.port = BuildConfig.PORT
         this.address = BuildConfig.BASE_URL
         this.userID = userID
         this.apiKey = apiKey
+        readySignal.complete(Unit)
     }
 
     constructor(sharedPreferences: SharedPreferences, keyHelper: KeyHelper?, context: Context) {
@@ -28,6 +45,7 @@ class HostConfig {
             if (BuildConfig.TEST_USER_ID.isNotBlank()) {
                 userID = BuildConfig.TEST_USER_ID
                 apiKey = BuildConfig.TEST_USER_KEY
+                readySignal.complete(Unit)
                 return
             }
         } else {
@@ -38,7 +56,10 @@ class HostConfig {
             }
         }
         this.userID = sharedPreferences.getString(context.getString(com.habitrpg.common.habitica.R.string.SP_userID), null) ?: ""
-        this.apiKey = loadAPIKey(sharedPreferences, keyHelper)
+        scope.launch {
+            apiKey = loadAPIKey(sharedPreferences, keyHelper)
+            readySignal.complete(Unit)
+        }
     }
 
     private fun loadAPIKey(
@@ -69,6 +90,7 @@ class HostConfig {
         this.port = port
         this.apiKey = api
         this.userID = user
+        readySignal.complete(Unit)
     }
 
     fun hasAuthentication(): Boolean = userID.isNotEmpty() && apiKey.isNotEmpty()
