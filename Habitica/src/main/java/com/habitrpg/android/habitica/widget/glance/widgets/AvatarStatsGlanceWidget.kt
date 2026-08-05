@@ -131,7 +131,7 @@ private fun rememberInnerPalette(): StatsInnerPalette {
 @Composable
 private fun StatsContent(state: StatsWidgetState) {
     val size = LocalSize.current
-    val fontScale = LocalContext.current.resources.configuration.fontScale
+    val fontScale = WidgetSnapshotStore.fontScale(LocalContext.current)
     val rows = if (state.showMp) 3 else 2
     val layout = pickLayout(size.width, size.height, rows, fontScale)
     val basePadding = layout.outerPadding
