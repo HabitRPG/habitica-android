@@ -444,8 +444,6 @@ class ApiClientImpl(
 
     override suspend fun retrieveInboxConversations(): List<InboxConversation>? = process { apiService.getInboxConversations() }
 
-    override fun hasAuthenticationKeys(): Boolean = this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
-
     private fun showConnectionProblemDialog(
         resourceMessageString: Int,
         isFromUserInput: Boolean,

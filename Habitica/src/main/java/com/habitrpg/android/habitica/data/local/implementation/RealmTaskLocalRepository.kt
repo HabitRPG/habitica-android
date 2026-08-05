@@ -5,7 +5,9 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.Realm
@@ -17,6 +19,8 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import java.util.Date
+import java.util.Locale
 
 class RealmTaskLocalRepository(
     realm: Realm,
@@ -88,6 +92,136 @@ class RealmTaskLocalRepository(
         removeOldChecklists(allChecklistItems)
 
         executeTransaction { realm1 -> realm1.insertOrUpdate(sortedTasks) }
+    }
+
+    override fun handleTaskResponse(
+        user: User,
+        res: TaskDirectionData,
+        task: Task,
+        up: Boolean,
+        localDelta: Float,
+    ) {
+        executeTransaction { realm ->
+            val bgTask = getLiveObject(task) ?: return@executeTransaction
+            val bgUser = getLiveObject(user) ?: return@executeTransaction
+            if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
+                bgTask.value = (bgTask.value - localDelta) + res.delta
+                if (TaskType.DAILY == bgTask.type) {
+                    if (up) {
+                        bgTask.streak = (bgTask.streak ?: 0) + 1
+                    } else {
+                        bgTask.streak = (bgTask.streak ?: 0) - 1
+                    }
+                } else if (TaskType.HABIT == bgTask.type) {
+                    if (up) {
+                        bgTask.counterUp = (bgTask.counterUp ?: 0) + 1
+                    } else {
+                        bgTask.counterDown = (bgTask.counterDown ?: 0) + 1
+                    }
+                }
+            }
+
+            if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
+                bgTask.completeForUser(user.id, up)
+                if (bgTask.isGroupTask) {
+                    val entry =
+                        bgTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == user.id }
+                    entry?.completed = up
+                    if (up) {
+                        entry?.completedDate = Date()
+                    } else {
+                        entry?.completedDate = null
+                    }
+                }
+            }
+
+            val taskId = bgTask.id
+            if (taskId != null) {
+                getTasksWithTaskId(taskId).forEach { sibling ->
+                    if (sibling.ownerID != bgTask.ownerID) {
+                        sibling.value = bgTask.value
+                        sibling.streak = bgTask.streak
+                        sibling.completed = bgTask.completed
+                        sibling.counterUp = bgTask.counterUp
+                        sibling.counterDown = bgTask.counterDown
+                        if (sibling.isGroupTask) {
+                            sibling.group
+                                ?.assignedUsersDetail
+                                ?.firstOrNull { detail -> detail.assignedUserID == user.id }
+                                ?.let { detail ->
+                                    detail.completed = up
+                                    detail.completedDate = if (up) Date() else null
+                                }
+                        }
+                    }
+                }
+            }
+            res._tmp?.drop?.key?.let { key ->
+                val type =
+                    when (
+                        res._tmp
+                            ?.drop
+                            ?.type
+                            ?.lowercase(Locale.US)
+                    ) {
+                        "hatchingpotion" -> {
+                            "hatchingPotions"
+                        }
+
+                        "egg" -> {
+                            "eggs"
+                        }
+
+                        else -> {
+                            res._tmp
+                                ?.drop
+                                ?.type
+                                ?.lowercase(Locale.US)
+                        }
+                    }
+                var item =
+                    realm
+                        .where(OwnedItem::class.java)
+                        .equalTo("itemType", type)
+                        .equalTo("key", key)
+                        .findFirst()
+                if (item == null) {
+                    item = OwnedItem()
+                    item.key = key
+                    item.itemType = type
+                    item.userID = user.id
+
+                    when (type) {
+                        "eggs" -> bgUser.items?.eggs?.add(item)
+                        "food" -> bgUser.items?.food?.add(item)
+                        "hatchingPotions" -> bgUser.items?.hatchingPotions?.add(item)
+                        "quests" -> bgUser.items?.quests?.add(item)
+                    }
+                }
+                item.numberOwned += 1
+            }
+
+            bgUser.stats?.hp = res.hp
+            bgUser.stats?.exp = res.exp
+            bgUser.stats?.mp = res.mp
+            bgUser.stats?.gp = res.gp
+            bgUser.stats?.lvl = res.lvl
+            bgUser.party
+                ?.quest
+                ?.progress
+                ?.up = (
+                    bgUser.party
+                        ?.quest
+                        ?.progress
+                        ?.up
+                        ?: 0F
+                    ) + (
+                    res._tmp
+                        ?.quest
+                        ?.progressDelta
+                        ?.toFloat() ?: 0F
+                    )
+        }
     }
 
     override fun saveCompletedTodos(

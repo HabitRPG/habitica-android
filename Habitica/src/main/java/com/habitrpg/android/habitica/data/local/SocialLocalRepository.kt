@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialLocalRepository : BaseLocalRepository {
@@ -78,9 +77,9 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun getInboxMessages(
         userId: String,
         replyToUserID: String?,
-    ): Flow<RealmResults<ChatMessage>>
+    ): Flow<List<ChatMessage>>
 
-    fun getInboxConversation(userId: String): Flow<RealmResults<InboxConversation>>
+    fun getInboxConversation(userId: String): Flow<List<InboxConversation>>
 
     fun saveGroupMemberships(
         userID: String?,

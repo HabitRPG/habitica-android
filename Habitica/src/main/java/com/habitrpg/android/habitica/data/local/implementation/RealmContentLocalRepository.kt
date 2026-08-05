@@ -45,6 +45,7 @@ open class RealmContentLocalRepository(
             .toFlow()
             .filter { it.isLoaded && it.isNotEmpty() }
             .mapNotNull { it.first() }
+            .filter { it.isValid }
 
     override fun saveWorldState(worldState: WorldState) {
         save(worldState)

@@ -18,6 +18,10 @@ abstract class BaseRepositoryImpl<T : BaseLocalRepository>(
         this.localRepository.close()
     }
 
+    override fun refreshLocalData() {
+        localRepository.refreshLocalData()
+    }
+
     override fun clear() {
     }
 

@@ -15,16 +15,25 @@ import kotlinx.coroutines.flow.map
 import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class RealmBaseLocalRepository internal constructor(
-    override var realm: Realm,
+    internal var realm: Realm,
 ) : BaseLocalRepository {
     override val isClosed: Boolean
         get() = realm.isClosed
+
+    override fun refreshLocalData() {
+        val r = realm
+        if (r.isClosed) return
+        try {
+            r.refresh()
+        } catch (_: IllegalStateException) {
+        }
+    }
 
     override fun close() {
         realm.close()
     }
 
-    override fun executeTransaction(transaction: (Realm) -> Unit) {
+    internal fun executeTransaction(transaction: (Realm) -> Unit) {
         pendingSaves.add(transaction)
         if (isSaving.compareAndSet(false, true)) {
             process()

@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialRepository : BaseRepository {
@@ -80,7 +79,7 @@ interface SocialRepository : BaseRepository {
         leaderCreateChallenge: Boolean?,
     ): Group?
 
-    fun getInboxMessages(replyToUserID: String?): Flow<RealmResults<ChatMessage>>
+    fun getInboxMessages(replyToUserID: String?): Flow<List<ChatMessage>>
 
     suspend fun retrieveInboxMessages(
         uuid: String,
@@ -89,7 +88,7 @@ interface SocialRepository : BaseRepository {
 
     suspend fun retrieveInboxConversations(): List<InboxConversation>?
 
-    fun getInboxConversations(): Flow<RealmResults<InboxConversation>>
+    fun getInboxConversations(): Flow<List<InboxConversation>>
 
     suspend fun postPrivateMessage(
         recipientId: String,

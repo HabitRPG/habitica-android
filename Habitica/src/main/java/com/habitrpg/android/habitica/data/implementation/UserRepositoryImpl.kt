@@ -285,13 +285,7 @@ class UserRepositoryImpl(
         val updateObject = HashMap<String, Any>()
         updateObject["dayStart"] = dayStartTime
         apiClient.changeCustomDayStart(updateObject)
-        val liveUser = getLiveUser()
-        if (liveUser != null) {
-            localRepository.executeTransaction {
-                liveUser.preferences?.dayStart = dayStartTime
-            }
-        }
-        return liveUser
+        return localRepository.updateDayStartTime(currentUserID, dayStartTime)
     }
 
     override suspend fun updateLanguage(languageCode: String): User? {
@@ -344,29 +338,20 @@ class UserRepositoryImpl(
     ) = apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override suspend fun allocatePoint(stat: Attribute): Stats? {
-        val liveUser = getLiveUser()
-        if (liveUser != null) {
-            localRepository.executeTransaction {
+        val user = getLiveUser()
+        if (user != null) {
+            localRepository.updateStats(currentUserID, Stats().apply {
                 when (stat) {
-                    Attribute.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
-                    Attribute.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
-                    Attribute.CONSTITUTION -> liveUser.stats?.constitution = liveUser.stats?.constitution?.inc()
-                    Attribute.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
+                    Attribute.STRENGTH -> strength = user.stats?.strength?.inc()
+                    Attribute.INTELLIGENCE -> intelligence = user.stats?.intelligence?.inc()
+                    Attribute.CONSTITUTION -> constitution = user.stats?.constitution?.inc()
+                    Attribute.PERCEPTION -> per = user.stats?.per?.inc()
                 }
-                liveUser.stats?.points = liveUser.stats?.points?.dec()
-            }
+                points = user.stats?.points?.dec()
+            })
         }
         val stats = apiClient.allocatePoint(stat.value) ?: return null
-        if (liveUser != null) {
-            localRepository.executeTransaction {
-                liveUser.stats?.strength = stats.strength
-                liveUser.stats?.constitution = stats.constitution
-                liveUser.stats?.per = stats.per
-                liveUser.stats?.intelligence = stats.intelligence
-                liveUser.stats?.points = stats.points
-                liveUser.stats?.mp = stats.mp
-            }
-        }
+        localRepository.updateStats(currentUserID, stats)
         return stats
     }
 

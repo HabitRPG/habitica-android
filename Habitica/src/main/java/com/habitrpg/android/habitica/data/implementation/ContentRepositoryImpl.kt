@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
-import io.realm.RealmList
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
@@ -29,7 +28,6 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
         if (forced || now - this.lastContentSync > 300000) {
             val content = apiClient.getContent() ?: return null
             lastContentSync = now
-            content.special = RealmList()
             content.special.add(mysteryItem)
             localRepository.saveContent(content)
             return content

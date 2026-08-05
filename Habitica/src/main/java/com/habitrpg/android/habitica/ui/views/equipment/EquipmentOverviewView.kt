@@ -34,7 +34,6 @@ import com.habitrpg.android.habitica.ui.theme.pixelArtBackground
 import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.theme.caption2
-import io.realm.RealmList
 
 @Composable
 fun OverviewItem(
@@ -93,7 +92,7 @@ fun OverviewItem(
 
 @Composable
 fun EquipmentOverviewView(
-    owned: RealmList<Equipment>?,
+    owned: List<Equipment>?,
     outfit: Outfit?,
     isUsingTwohanded: Boolean,
     onEquipmentTap: (String, String?) -> Unit,

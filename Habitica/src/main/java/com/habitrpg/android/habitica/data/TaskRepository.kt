@@ -12,8 +12,6 @@ import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 interface TaskRepository : BaseRepository {
-    fun refreshLocalData()
-
     fun getTasks(
         taskType: TaskType,
         userID: String? = null,

@@ -99,10 +99,7 @@ class InventoryRepositoryImpl(
     override suspend fun openMysteryItem(user: User?): Equipment? {
         val item = apiClient.openMysteryItem()
         val equipment = localRepository.getEquipment(item?.key ?: "").firstOrNull() ?: return null
-        val liveEquipment = localRepository.getLiveObject(equipment)
-        localRepository.executeTransaction {
-            liveEquipment?.owned = true
-        }
+        localRepository.markAsOwned(equipment, true)
         localRepository.decrementMysteryItemCount(user)
         return equipment
     }
@@ -176,10 +173,7 @@ class InventoryRepositoryImpl(
         item: Item,
         ownedItem: OwnedItem,
     ): User? {
-        localRepository.executeTransaction {
-            val liveItem = localRepository.getLiveObject(ownedItem)
-            liveItem?.numberOwned = liveItem.numberOwned - 1
-        }
+        localRepository.setOwnedCount(ownedItem, ownedItem.numberOwned - 1)
         val user = apiClient.sellItem(item.type, item.key) ?: return null
         return localRepository.soldItem(currentUserID, user)
     }
@@ -326,11 +320,7 @@ class InventoryRepositoryImpl(
     ): Void? {
         val response = apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
         if (key == "gem") {
-            val user = localRepository.getLiveUser(currentUserID)
-            localRepository.executeTransaction {
-                user?.purchased?.plan?.gemsBought =
-                    purchaseQuantity + (user.purchased?.plan?.gemsBought ?: 0)
-            }
+           localRepository.incrementGemsBought(currentUserID, purchaseQuantity)
         }
         return response
     }

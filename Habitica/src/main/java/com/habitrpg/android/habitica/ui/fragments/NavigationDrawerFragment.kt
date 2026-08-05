@@ -53,7 +53,6 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.kotlin.isValid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -204,7 +203,6 @@ class NavigationDrawerFragment : DialogFragment() {
                 .collect { (worldState, items) ->
                     val gearEvent = worldState.events.firstOrNull { it.gear }
                     createUpdatingJob("seasonal", {
-                        if (gearEvent?.isValid == false) return@createUpdatingJob false
                         gearEvent?.isCurrentlyActive == true || items.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
@@ -309,7 +307,7 @@ class NavigationDrawerFragment : DialogFragment() {
     ) {
         val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return
         val item = items.firstOrNull()
-        if (item?.isValid() == true && item.event?.end?.after(Date()) == true) {
+        if (item?.event?.end?.after(Date()) == true) {
             market.pillText = context?.getString(R.string.something_new)
             market.subtitle = context?.getString(R.string.limited_potions_available)
         } else {

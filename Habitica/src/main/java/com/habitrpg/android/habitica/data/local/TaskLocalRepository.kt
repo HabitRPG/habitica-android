@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import kotlinx.coroutines.flow.Flow
@@ -62,4 +63,12 @@ interface TaskLocalRepository : BaseLocalRepository {
     ): Flow<List<Task>>
 
     fun getTasksWithTaskId(taskId: String): List<Task>
+
+    fun handleTaskResponse(
+        user: User,
+        res: TaskDirectionData,
+        task: Task,
+        up: Boolean,
+        localDelta: Float,
+    )
 }

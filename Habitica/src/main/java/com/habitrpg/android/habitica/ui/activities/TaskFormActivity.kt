@@ -80,7 +80,6 @@ import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.RealmList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -789,12 +788,12 @@ class TaskFormActivity : BaseActivity() {
         }
         if (!isChallengeTask) {
             if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
-                thisTask.checklist = RealmList()
+                thisTask.checklist?.clear()
                 thisTask.checklist?.addAll(binding.checklistContainer.checklistItems)
-                thisTask.reminders = RealmList()
+                thisTask.reminders?.clear()
                 thisTask.reminders?.addAll(binding.remindersContainer.reminders)
             }
-            thisTask.tags = RealmList()
+            thisTask.tags?.clear()
             binding.tagsWrapper.forEachIndexed { index, view ->
                 val tagView = view as? CheckBox
                 if (tagView?.isChecked == true && tags[index].id.isNotBlank()) {
@@ -950,7 +949,7 @@ class TaskFormActivity : BaseActivity() {
             binding.exactAlarmDisabledContainer.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                    intent.setData(Uri.fromParts("package", applicationContext?.packageName, null))
+                    intent.data = Uri.fromParts("package", applicationContext?.packageName, null)
                     startActivity(intent)
                 }
             }
@@ -1096,6 +1095,6 @@ class TaskFormActivity : BaseActivity() {
 private fun String.toIntCatchOverflow(): Int? =
     try {
         toInt()
-    } catch (e: NumberFormatException) {
+    } catch (_: NumberFormatException) {
         0
     }

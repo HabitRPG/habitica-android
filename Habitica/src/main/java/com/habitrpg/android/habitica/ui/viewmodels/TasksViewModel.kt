@@ -322,7 +322,7 @@ class TasksViewModel
             }
             var query = unfilteredData.where()
 
-            if (unfilteredData.size != 0) {
+            if (unfilteredData.isNotEmpty()) {
                 val taskType = unfilteredData[0].type
                 val activeFilter = getActiveFilter(taskType)
 

@@ -46,14 +46,6 @@ class TaskRepositoryImpl(
     TaskRepository {
     private var lastTaskAction: Long = 0
 
-    override fun refreshLocalData() {
-        val r = localRepository.realm
-        if (r.isClosed) return
-        try {
-            r.refresh()
-        } catch (_: IllegalStateException) {
-        }
-    }
 
     override fun getTasks(
         taskType: TaskType,
@@ -127,7 +119,7 @@ class TaskRepositoryImpl(
             val result = TaskScoringResult(localData, stats)
             notifyFunc?.invoke(result)
 
-            handleTaskResponse(user, localData, task, up, 0f)
+            localRepository.handleTaskResponse(user, localData, task, up, 0f)
         }
         val now = Date().time
         val id = task.id
@@ -165,141 +157,11 @@ class TaskRepositoryImpl(
         if (localData == null) {
             notifyFunc?.invoke(result)
         }
-        handleTaskResponse(thisUser, res, task, up, localData?.delta ?: 0f)
+        localRepository.handleTaskResponse(thisUser, res, task, up, localData?.delta ?: 0f)
         return result
     }
 
     override suspend fun bulkScoreTasks(data: List<Map<String, String>>): BulkTaskScoringData? = apiClient.bulkScoreTasks(data)
-
-    private fun handleTaskResponse(
-        user: User,
-        res: TaskDirectionData,
-        task: Task,
-        up: Boolean,
-        localDelta: Float,
-    ) {
-        this.localRepository.executeTransaction { realm ->
-            val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
-            val bgUser = localRepository.getLiveObject(user) ?: return@executeTransaction
-            if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
-                bgTask.value = (bgTask.value - localDelta) + res.delta
-                if (TaskType.DAILY == bgTask.type) {
-                    if (up) {
-                        bgTask.streak = (bgTask.streak ?: 0) + 1
-                    } else {
-                        bgTask.streak = (bgTask.streak ?: 0) - 1
-                    }
-                } else if (TaskType.HABIT == bgTask.type) {
-                    if (up) {
-                        bgTask.counterUp = (bgTask.counterUp ?: 0) + 1
-                    } else {
-                        bgTask.counterDown = (bgTask.counterDown ?: 0) + 1
-                    }
-                }
-            }
-
-            if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
-                bgTask.completeForUser(authenticationHandler.currentUserID ?: "", up)
-                if (bgTask.isGroupTask) {
-                    val entry =
-                        bgTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == user.id }
-                    entry?.completed = up
-                    if (up) {
-                        entry?.completedDate = Date()
-                    } else {
-                        entry?.completedDate = null
-                    }
-                }
-            }
-
-            val taskId = bgTask.id
-            if (taskId != null) {
-                localRepository.getTasksWithTaskId(taskId).forEach { sibling ->
-                    if (sibling.ownerID != bgTask.ownerID) {
-                        sibling.value = bgTask.value
-                        sibling.streak = bgTask.streak
-                        sibling.completed = bgTask.completed
-                        sibling.counterUp = bgTask.counterUp
-                        sibling.counterDown = bgTask.counterDown
-                        if (sibling.isGroupTask) {
-                            sibling.group
-                                ?.assignedUsersDetail
-                                ?.firstOrNull { detail -> detail.assignedUserID == user.id }
-                                ?.let { detail ->
-                                    detail.completed = up
-                                    detail.completedDate = if (up) Date() else null
-                                }
-                        }
-                    }
-                }
-            }
-            res._tmp?.drop?.key?.let { key ->
-                val type =
-                    when (
-                        res._tmp
-                            ?.drop
-                            ?.type
-                            ?.lowercase(Locale.US)
-                    ) {
-                        "hatchingpotion" -> {
-                            "hatchingPotions"
-                        }
-
-                        "egg" -> {
-                            "eggs"
-                        }
-
-                        else -> {
-                            res._tmp
-                                ?.drop
-                                ?.type
-                                ?.lowercase(Locale.US)
-                        }
-                    }
-                var item =
-                    realm
-                        .where(OwnedItem::class.java)
-                        .equalTo("itemType", type)
-                        .equalTo("key", key)
-                        .findFirst()
-                if (item == null) {
-                    item = OwnedItem()
-                    item.key = key
-                    item.itemType = type
-                    item.userID = user.id
-
-                    when (type) {
-                        "eggs" -> bgUser.items?.eggs?.add(item)
-                        "food" -> bgUser.items?.food?.add(item)
-                        "hatchingPotions" -> bgUser.items?.hatchingPotions?.add(item)
-                        "quests" -> bgUser.items?.quests?.add(item)
-                    }
-                }
-                item.numberOwned += 1
-            }
-
-            bgUser.stats?.hp = res.hp
-            bgUser.stats?.exp = res.exp
-            bgUser.stats?.mp = res.mp
-            bgUser.stats?.gp = res.gp
-            bgUser.stats?.lvl = res.lvl
-            bgUser.party
-                ?.quest
-                ?.progress
-                ?.up = (
-                bgUser.party
-                    ?.quest
-                    ?.progress
-                    ?.up
-                    ?: 0F
-            ) + (
-                res._tmp
-                    ?.quest
-                    ?.progressDelta
-                    ?.toFloat() ?: 0F
-            )
-        }
-    }
 
     override suspend fun markTaskNeedsWork(
         task: Task,

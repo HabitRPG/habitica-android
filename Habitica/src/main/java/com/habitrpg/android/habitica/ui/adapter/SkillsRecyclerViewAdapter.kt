@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.adapter
 
-import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +15,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.loadImage
-import io.realm.RealmList
 
 class SkillsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onUseSkill: ((Skill) -> Unit)? = null
@@ -34,7 +31,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             notifyDataSetChanged()
         }
 
-    var specialItems: RealmList<OwnedItem>? = null
+    var specialItems: List<OwnedItem>? = null
         set(value) {
             field = value
             notifyDataSetChanged()

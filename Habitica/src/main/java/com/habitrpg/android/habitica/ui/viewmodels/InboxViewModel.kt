@@ -15,11 +15,10 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,7 +51,7 @@ class InboxViewModel
         private val member =
             memberIDFlow
                 .filterNotNull()
-                .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
+                .map { socialRepository.retrieveMember(it) }
                 .asLiveData()
 
         fun setMemberID(memberID: String) {

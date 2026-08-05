@@ -142,4 +142,8 @@ interface InventoryLocalRepository : ContentLocalRepository {
         itemClass: Class<out Item>,
         keys: Array<String>,
     ): Flow<List<Item>>
+
+    fun markAsOwned(equipment: Equipment, isOwned: Boolean)
+    fun setOwnedCount(ownedItem: OwnedItem, newCount: Int)
+    fun incrementGemsBought(currentUserID: String, purchaseQuantity: Int)
 }

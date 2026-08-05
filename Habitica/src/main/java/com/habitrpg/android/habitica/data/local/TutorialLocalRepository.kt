@@ -5,6 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface TutorialLocalRepository : BaseLocalRepository {
     fun getTutorialStep(key: String): Flow<TutorialStep>
-
     fun getTutorialSteps(keys: List<String>): Flow<List<TutorialStep>>
 }

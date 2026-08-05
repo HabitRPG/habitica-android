@@ -7,13 +7,13 @@ import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
-import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface UserLocalRepository : BaseLocalRepository {
-    suspend fun getTutorialSteps(): Flow<RealmResults<TutorialStep>>
+    suspend fun getTutorialSteps(): Flow<List<TutorialStep>>
 
     fun getUser(userID: String): Flow<User?>
 
@@ -37,4 +37,6 @@ interface UserLocalRepository : BaseLocalRepository {
     fun getTeamPlans(userID: String): Flow<List<TeamPlan>>
 
     fun getTeamPlan(teamID: String): Flow<Group?>
+    fun updateStats(userID: String, stats: Stats)
+    fun updateDayStartTime(currentUserID: String, dayStartTime: Int): User?
 }

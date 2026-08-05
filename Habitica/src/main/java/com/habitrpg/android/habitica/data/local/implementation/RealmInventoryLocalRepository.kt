@@ -103,6 +103,33 @@ class RealmInventoryLocalRepository(
             .toFlow()
             .filter { it.isLoaded }
 
+    override fun incrementGemsBought(currentUserID: String, purchaseQuantity: Int) {
+        val user = getLiveUser(currentUserID) ?: return
+        executeTransaction {
+            user.purchased?.plan?.gemsBought = purchaseQuantity + (user.purchased?.plan?.gemsBought ?: 0)
+        }
+    }
+
+    override fun setOwnedCount(
+        ownedItem: OwnedItem,
+        newCount: Int
+    ) {
+        val liveItem = getLiveObject(ownedItem)
+        executeTransaction {
+            liveItem?.numberOwned = newCount
+        }
+    }
+
+    override fun markAsOwned(
+        equipment: Equipment,
+        isOwned: Boolean
+    ) {
+        val liveEquipment = getLiveObject(equipment)
+        executeTransaction {
+            liveEquipment?.owned = isOwned
+        }
+    }
+
     override fun getOwnedItems(
         itemType: String,
         userID: String,
@@ -523,12 +550,7 @@ class RealmInventoryLocalRepository(
             .lessThan("event.start", Date())
             .greaterThan("event.end", Date())
             .findAll()
-            .toFlow()
-            .map {
-                val items = mutableListOf<Item>()
-                items.addAll(it)
-                items
-            }.combine(
+            .toFlow().combine(
                 realm
                     .where(Food::class.java)
                     .lessThan("event.start", Date())
@@ -536,8 +558,7 @@ class RealmInventoryLocalRepository(
                     .findAll()
                     .toFlow(),
             ) { items, food ->
-                items.addAll(food)
-                items
+                items + food
             }.combine(
                 realm
                     .where(HatchingPotion::class.java)
@@ -545,9 +566,8 @@ class RealmInventoryLocalRepository(
                     .greaterThan("event.end", Date())
                     .findAll()
                     .toFlow(),
-            ) { items, food ->
-                items.addAll(food)
-                items
+            ) { items, hatchingPotions ->
+                items + hatchingPotions
             }.combine(
                 realm
                     .where(QuestContent::class.java)
@@ -555,8 +575,8 @@ class RealmInventoryLocalRepository(
                     .greaterThan("event.end", Date())
                     .findAll()
                     .toFlow(),
-            ) { items, food ->
-                items.addAll(food)
-                items
+            ) { items, questContent ->
+                items + questContent
             }
+            .filter { it.firstOrNull()?.isValid == true }
 }

@@ -21,7 +21,6 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -71,7 +70,7 @@ open class GroupViewModel
             groupFlow
                 .map { it?.leaderID }
                 .filterNotNull()
-                .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
+                .map { socialRepository.retrieveMember(it) }
         private val leader = leaderFlow.asLiveData()
 
         private val isMemberFlow =

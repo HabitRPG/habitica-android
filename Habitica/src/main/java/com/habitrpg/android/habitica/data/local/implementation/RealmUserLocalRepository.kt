@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import io.realm.Realm
@@ -27,7 +28,7 @@ class RealmUserLocalRepository(
 ) : RealmBaseLocalRepository(realm),
     UserLocalRepository {
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getUserQuestStatus(userID: String): Flow<UserQuestStatus> =
+    override fun getUserQuestStatus(userID: String) =
         getUser(userID)
             .filterNotNull()
             .map { it.party?.id ?: "" }
@@ -55,6 +56,35 @@ class RealmUserLocalRepository(
                     else -> UserQuestStatus.QUEST_UNKNOWN
                 }
             }
+
+    override fun updateDayStartTime(
+        currentUserID: String,
+        dayStartTime: Int
+    ): User? {
+        val user = getLiveUser(currentUserID) ?: return null
+        executeTransaction {
+            user.preferences?.dayStart = dayStartTime
+        }
+        return user
+    }
+
+    override fun updateStats(userID: String, stats: Stats) {
+        val user = getLiveUser(userID) ?: return
+        executeTransaction {
+            stats.hp?.let { user.stats?.hp = it }
+            stats.mp?.let { user.stats?.mp = it }
+            stats.exp?.let { user.stats?.exp = it }
+            stats.gp?.let { user.stats?.gp = it }
+            stats.lvl?.let { user.stats?.lvl = it }
+            stats.strength?.let { user.stats?.strength = it }
+            stats.intelligence?.let { user.stats?.intelligence = it }
+            stats.constitution?.let { user.stats?.constitution = it }
+            stats.per?.let { user.stats?.per = it }
+            stats.maxMP?.let { user.stats?.maxMP = it }
+            stats.toNextLevel?.let { user.stats?.toNextLevel = it }
+            stats.habitClass?.let { user.stats?.habitClass = it }
+        }
+    }
 
     override fun getAchievements(): Flow<List<Achievement>> =
         realm
