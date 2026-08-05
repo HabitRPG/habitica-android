@@ -756,7 +756,7 @@
     <string name="update_app">Aggiorna l\'App</string>
     <string name="manual_sync_restart_description">A volte l\'app non aggiorna automaticamente i contenuti. Prova a scorrere verso il basso per aggiornare o forza la chiusura dell\'app e riaprila.</string>
     <string name="manual_sync_restart">Sincronizzazione o riavvio</string>
-    <string name="clear_cache_description"><![CDATA[Per cancellare la cache, apri le Impostazioni del tuo telefono. Vai su Archiviazione, App e poi Habitica e premi Cancella Cache.]]></string>
+    <string name="clear_cache_description"><![CDATA[Per cancellare la cache, apri le Impostazioni del tuo telefono. Vai su Archiviazione, App, Habitica e premi Cancella Cache.]]></string>
     <string name="clear_cache">Cancella la cache</string>
     <string name="hourglasses_description">Le Clessitre Mistiche sono una valuta estremamente rara che si può ottenere solo abbonandosi ad Habitica. Puoi usarle nel Negozio dei Viaggiatori del Tempo per acquistare set di Equipaggiamento per Abbonati passati, Animali esclusivi, Cavalcature, Sfondi animati oe Missioni speciali! Questi vantaggi extra sono un ottimo modo per rimanere motivati durante l\'anno e premiarsi per il lavoro portato al termine.
 \n
