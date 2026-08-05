@@ -8,7 +8,6 @@ import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import io.realm.Realm
-import io.realm.RealmList
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,7 +23,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         context: JsonDeserializationContext,
     ): List<Customization> {
         val jsonObject = json.asJsonObject
-        val customizations = RealmList<Customization>()
+        val customizations = mutableListOf<Customization>()
         val realm = Realm.getDefaultInstance()
 
         val existingCustomizations =

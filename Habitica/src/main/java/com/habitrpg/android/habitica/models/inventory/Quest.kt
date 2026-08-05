@@ -27,11 +27,11 @@ open class Quest :
     @SerializedName("RSVPNeeded")
     var rsvpNeeded: Boolean = false
 
-    var members: RealmList<QuestMember>? = null
+    var members: RealmList<QuestMember>? = RealmList()
     var progress: QuestProgress? = null
 
-    var participants: RealmList<Member>? = null
-    var rageStrikes: RealmList<QuestRageStrike>? = null
+    var participants: RealmList<Member>? = RealmList()
+    var rageStrikes: RealmList<QuestRageStrike>? = RealmList()
 
     var completed: String? = null
 

@@ -32,7 +32,7 @@ open class Group :
     var summary: String? = null
     var leaderID: String? = null
     var leaderName: String? = null
-    var managers: RealmList<String>? = null
+    var managers: RealmList<String>? = RealmList()
     var name: String? = null
     var memberCount: Int = 0
     var type: String? = null
@@ -43,7 +43,7 @@ open class Group :
     var leaderMessage: String? = null
     var leaderOnlyChallenges: Boolean = false
     var leaderOnlyGetGems: Boolean = false
-    var categories: RealmList<GroupCategory>? = null
+    var categories: RealmList<GroupCategory>? = RealmList()
     var purchased: SubscriptionPlan? = null
 
     @Ignore

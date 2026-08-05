@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.social.Challenge
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class ChallengeListDeserializer : JsonDeserializer<List<Challenge>> {
@@ -15,7 +14,7 @@ class ChallengeListDeserializer : JsonDeserializer<List<Challenge>> {
         typeOfT: Type,
         context: JsonDeserializationContext,
     ): List<Challenge> {
-        val challenges = RealmList<Challenge>()
+        val challenges = mutableListOf<Challenge>()
 
         for (element in json.asJsonArray) {
             var challenge: Challenge?

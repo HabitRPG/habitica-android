@@ -4,7 +4,6 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class OwnedPetListDeserializer : JsonDeserializer<List<OwnedPet>> {
@@ -13,7 +12,7 @@ class OwnedPetListDeserializer : JsonDeserializer<List<OwnedPet>> {
         typeOfT: Type?,
         context: JsonDeserializationContext?,
     ): List<OwnedPet> {
-        val ownedItems = RealmList<OwnedPet>()
+        val ownedItems = mutableListOf<OwnedPet>()
         val entrySet = json?.asJsonObject?.entrySet()
         if (entrySet != null) {
             for (entry in entrySet) {

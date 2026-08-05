@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupCategory
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.Realm
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class GroupSerialization :
@@ -74,7 +73,6 @@ class GroupSerialization :
             }
         }
         if (obj.has("managers")) {
-            group.managers = RealmList()
             for (manager in obj.getAsJsonObject("managers").entrySet()) {
                 if (manager.value.asBoolean) {
                     group.managers?.add(manager.key)
@@ -114,9 +112,7 @@ class GroupSerialization :
                     }
                     dbMembers.add(member)
                 }
-                val newMembers = RealmList<Member>()
-                newMembers.addAll(dbMembers)
-                group.quest?.participants = newMembers
+                group.quest?.participants?.addAll(dbMembers)
             }
 
             if (questObject.has("extra") && questObject["extra"].asJsonObject.has("worldDmg")) {
@@ -144,7 +140,6 @@ class GroupSerialization :
         }
 
         if (obj.has("categories")) {
-            group.categories = RealmList()
             obj.getAsJsonArray("categories").forEach {
                 group.categories?.add(context.deserialize(it, GroupCategory::class.java))
             }

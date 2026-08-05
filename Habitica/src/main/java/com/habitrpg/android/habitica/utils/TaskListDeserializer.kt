@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import io.realm.Realm
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class TaskListDeserializer : JsonDeserializer<TaskList> {
@@ -38,7 +37,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
                 val obj = e as? JsonObject
                 if (obj != null) {
                     val task = ctx.deserialize<Task>(obj, Task::class.java)
-                    task.tags = handleTags(databaseTags, obj.getAsJsonArray("tags"), ctx)
+                    task.tags?.addAll(handleTags(databaseTags, obj.getAsJsonArray("tags"), ctx))
                     task.id?.let { taskMap[it] = task }
                 }
             } catch (ignored: ClassCastException) {
@@ -55,8 +54,8 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
         databaseTags: List<Tag>,
         json: JsonArray?,
         context: JsonDeserializationContext,
-    ): RealmList<Tag> {
-        val tags = RealmList<Tag>()
+    ): List<Tag> {
+        val tags = mutableListOf<Tag>()
         for (tagElement in json ?: listOf<JsonElement>()) {
             if (tagElement.isJsonObject) {
                 tags.add(context.deserialize(tagElement, Tag::class.java))

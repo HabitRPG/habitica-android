@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.models.social.ChatMessageLike
 import com.habitrpg.android.habitica.models.social.UserStyles
 import com.habitrpg.android.habitica.models.user.Backer
 import com.habitrpg.android.habitica.models.user.ContributorInfo
-import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -30,7 +29,6 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
                 context.deserialize<Date>(obj.get("timestamp"), Date::class.java).time
         }
         if (obj.has("likes")) {
-            message.likes = RealmList()
             for ((key, value) in obj.getAsJsonObject("likes").entrySet()) {
                 if (value.asBoolean) {
                     message.likes?.add(ChatMessageLike(key))

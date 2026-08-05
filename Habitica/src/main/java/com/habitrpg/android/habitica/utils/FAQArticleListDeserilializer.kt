@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.FAQArticle
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class FAQArticleListDeserilializer : JsonDeserializer<List<FAQArticle>> {
@@ -15,7 +14,7 @@ class FAQArticleListDeserilializer : JsonDeserializer<List<FAQArticle>> {
         typeOfT: Type,
         context: JsonDeserializationContext,
     ): List<FAQArticle> {
-        val articles = RealmList<FAQArticle>()
+        val articles = mutableListOf<FAQArticle>()
         for ((position, e) in json.asJsonObject
             .get("questions")
             .asJsonArray

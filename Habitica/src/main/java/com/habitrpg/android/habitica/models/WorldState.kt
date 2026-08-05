@@ -15,7 +15,7 @@ open class WorldState :
     var worldBossKey: String = ""
     var worldBossActive: Boolean = false
     var progress: QuestProgress? = null
-    var rageStrikes: RealmList<QuestRageStrike>? = null
+    var rageStrikes: RealmList<QuestRageStrike>? = RealmList()
 
     var npcImageSuffix: String? = null
 

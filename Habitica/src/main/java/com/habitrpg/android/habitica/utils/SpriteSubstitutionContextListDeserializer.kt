@@ -26,7 +26,6 @@ class SpriteSubstitutionContextListDeserializer : JsonDeserializer<RealmList<Spr
                 contexts.add(context)
             }
         }
-
         return contexts
     }
 }

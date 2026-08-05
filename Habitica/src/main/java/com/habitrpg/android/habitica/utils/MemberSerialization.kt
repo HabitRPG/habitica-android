@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
-import io.realm.Realm
 import java.lang.reflect.Type
 
 class MemberSerialization : JsonDeserializer<Member> {
@@ -28,16 +27,8 @@ class MemberSerialization : JsonDeserializer<Member> {
         context: JsonDeserializationContext,
     ): Member {
         val obj = json.asJsonObject
-        val id = obj.get("_id").asString
-
-        val realm = Realm.getDefaultInstance()
-        var member = realm.where(Member::class.java).equalTo("id", id).findFirst() ?: Member()
-        if (member.id.isBlank()) {
-            member.id = id
-        } else {
-            member = realm.copyFromRealm(member)
-        }
-        realm.close()
+        val member = Member()
+        member.id = obj.get("_id").asString
 
         if (obj.has("flags")) {
             member.flags = context.deserialize(obj.get("flags"), MemberFlags::class.java)
@@ -63,18 +54,6 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.party = context.deserialize<UserParty>(obj.get("party"), UserParty::class.java)
             if (member.party != null && member.party?.quest != null) {
                 member.party?.quest?.id = member.id
-                if (!obj
-                        .get("party")
-                        .asJsonObject
-                        .get("quest")
-                        .asJsonObject
-                        .has("RSVPNeeded")
-                ) {
-                    val quest = realm.where(Quest::class.java).equalTo("id", member.id).findFirst()
-                    if (quest != null && quest.isValid) {
-                        member.party?.quest?.rsvpNeeded = quest.rsvpNeeded
-                    }
-                }
             }
         }
 

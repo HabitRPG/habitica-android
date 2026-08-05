@@ -222,7 +222,7 @@ class TasksViewModel
             }
             val filtered = ArrayList<Task>()
             var activeFilter: String? = null
-            if (activeFilters.size > 0) {
+            if (activeFilters.isNotEmpty()) {
                 activeFilter = activeFilters[tasks[0].type]
             }
             for (task in tasks) {
@@ -326,7 +326,7 @@ class TasksViewModel
                 val taskType = unfilteredData[0].type
                 val activeFilter = getActiveFilter(taskType)
 
-                if (tags.size > 0) {
+                if (tags.isNotEmpty()) {
                     query = query.`in`("tags.id", tags.toTypedArray())
                 }
                 if (searchQuery?.isNotEmpty() == true) {

@@ -112,7 +112,7 @@ open class Task :
 
     override var isDue: Boolean? = null
 
-    var nextDue: RealmList<Date>? = null
+    var nextDue: RealmList<Date>? = RealmList()
     var updatedAt: Date? = null
     val isUpdatedToday: Boolean
         get() {
@@ -197,7 +197,7 @@ open class Task :
             } else if (counterDown != null && (counterDown ?: 0) > 0) {
                 "-$counterDown"
             } else if ((streak ?: 0) > 0) {
-                return streak.toString()
+                streak.toString()
             } else {
                 null
             }
@@ -206,12 +206,12 @@ open class Task :
     val lightestTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_700
-                this.value < -10 -> return R.color.red_700
-                this.value < -1 -> return R.color.orange_700
-                this.value < 1 -> return R.color.yellow_700
-                this.value < 5 -> return R.color.green_700
-                this.value < 10 -> return R.color.teal_700
+                this.value < -20 -> R.color.maroon_700
+                this.value < -10 -> R.color.red_700
+                this.value < -1 -> R.color.orange_700
+                this.value < 1 -> R.color.yellow_700
+                this.value < 5 -> R.color.green_700
+                this.value < 10 -> R.color.teal_700
                 else -> R.color.blue_700
             }
         }
@@ -219,12 +219,12 @@ open class Task :
     val extraExtraLightTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_600
-                this.value < -10 -> return R.color.red_600
-                this.value < -1 -> return R.color.orange_600
-                this.value < 1 -> return R.color.yellow_600
-                this.value < 5 -> return R.color.green_600
-                this.value < 10 -> return R.color.teal_600
+                this.value < -20 -> R.color.maroon_600
+                this.value < -10 -> R.color.red_600
+                this.value < -1 -> R.color.orange_600
+                this.value < 1 -> R.color.yellow_600
+                this.value < 5 -> R.color.green_600
+                this.value < 10 -> R.color.teal_600
                 else -> R.color.blue_600
             }
         }
@@ -232,12 +232,12 @@ open class Task :
     val extraLightTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_500
-                this.value < -10 -> return R.color.red_500
-                this.value < -1 -> return R.color.orange_500
-                this.value < 1 -> return R.color.yellow_500
-                this.value < 5 -> return R.color.green_500
-                this.value < 10 -> return R.color.teal_500
+                this.value < -20 -> R.color.maroon_500
+                this.value < -10 -> R.color.red_500
+                this.value < -1 -> R.color.orange_500
+                this.value < 1 -> R.color.yellow_500
+                this.value < 5 -> R.color.green_500
+                this.value < 10 -> R.color.teal_500
                 else -> R.color.blue_500
             }
         }
@@ -245,12 +245,12 @@ open class Task :
     val lightTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_100
-                this.value < -10 -> return R.color.red_100
-                this.value < -1 -> return R.color.orange_100
-                this.value < 1 -> return R.color.yellow_100
-                this.value < 5 -> return R.color.green_100
-                this.value < 10 -> return R.color.teal_100
+                this.value < -20 -> R.color.maroon_100
+                this.value < -10 -> R.color.red_100
+                this.value < -1 -> R.color.orange_100
+                this.value < 1 -> R.color.yellow_100
+                this.value < 5 -> R.color.green_100
+                this.value < 10 -> R.color.teal_100
                 else -> R.color.blue_100
             }
         }
@@ -258,12 +258,12 @@ open class Task :
     val mediumTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_50
-                this.value < -10 -> return R.color.red_50
-                this.value < -1 -> return R.color.orange_50
-                this.value < 1 -> return R.color.yellow_10
-                this.value < 5 -> return R.color.green_50
-                this.value < 10 -> return R.color.teal_50
+                this.value < -20 -> R.color.maroon_50
+                this.value < -10 -> R.color.red_50
+                this.value < -1 -> R.color.orange_50
+                this.value < 1 -> R.color.yellow_10
+                this.value < 5 -> R.color.green_50
+                this.value < 10 -> R.color.teal_50
                 else -> R.color.blue_50
             }
         }
@@ -271,12 +271,12 @@ open class Task :
     val darkTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_10
-                this.value < -10 -> return R.color.red_10
-                this.value < -1 -> return R.color.orange_10
-                this.value < 1 -> return R.color.yellow_5
-                this.value < 5 -> return R.color.green_10
-                this.value < 10 -> return R.color.teal_10
+                this.value < -20 -> R.color.maroon_10
+                this.value < -10 -> R.color.red_10
+                this.value < -1 -> R.color.orange_10
+                this.value < 1 -> R.color.yellow_5
+                this.value < 5 -> R.color.green_10
+                this.value < 10 -> R.color.teal_10
                 else -> R.color.blue_10
             }
         }
@@ -284,12 +284,12 @@ open class Task :
     val extraDarkTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_1
-                this.value < -10 -> return R.color.red_1
-                this.value < -1 -> return R.color.orange_1
-                this.value < 1 -> return R.color.yellow_1
-                this.value < 5 -> return R.color.green_1
-                this.value < 10 -> return R.color.teal_1
+                this.value < -20 -> R.color.maroon_1
+                this.value < -10 -> R.color.red_1
+                this.value < -1 -> R.color.orange_1
+                this.value < 1 -> R.color.yellow_1
+                this.value < 5 -> R.color.green_1
+                this.value < 10 -> R.color.teal_1
                 else -> R.color.blue_1
             }
         }
@@ -297,12 +297,12 @@ open class Task :
     val lowSaturationTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_sub_text
-                this.value < -10 -> return R.color.red_sub_text
-                this.value < -1 -> return R.color.orange_sub_text
-                this.value < 1 -> return R.color.yellow_sub_text
-                this.value < 5 -> return R.color.green_sub_text
-                this.value < 10 -> return R.color.teal_sub_text
+                this.value < -20 -> R.color.maroon_sub_text
+                this.value < -10 -> R.color.red_sub_text
+                this.value < -1 -> R.color.orange_sub_text
+                this.value < 1 -> R.color.yellow_sub_text
+                this.value < 5 -> R.color.green_sub_text
+                this.value < 10 -> R.color.teal_sub_text
                 else -> R.color.blue_sub_text
             }
         }
@@ -310,12 +310,12 @@ open class Task :
     val extraExtraDarkTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_0
-                this.value < -10 -> return R.color.red_0
-                this.value < -1 -> return R.color.orange_0
-                this.value < 1 -> return R.color.yellow_0
-                this.value < 5 -> return R.color.green_0
-                this.value < 10 -> return R.color.teal_0
+                this.value < -20 -> R.color.maroon_0
+                this.value < -10 -> R.color.red_0
+                this.value < -1 -> R.color.orange_0
+                this.value < 1 -> R.color.yellow_0
+                this.value < 5 -> R.color.green_0
+                this.value < 10 -> R.color.teal_0
                 else -> R.color.blue_0
             }
         }
@@ -323,12 +323,12 @@ open class Task :
     val darkestTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_00
-                this.value < -10 -> return R.color.red_00
-                this.value < -1 -> return R.color.orange_00
-                this.value < 1 -> return R.color.yellow_00
-                this.value < 5 -> return R.color.green_00
-                this.value < 10 -> return R.color.teal_00
+                this.value < -20 -> R.color.maroon_00
+                this.value < -10 -> R.color.red_00
+                this.value < -1 -> R.color.orange_00
+                this.value < 1 -> R.color.yellow_00
+                this.value < 5 -> R.color.green_00
+                this.value < 10 -> R.color.teal_00
                 else -> R.color.blue_00
             }
         }

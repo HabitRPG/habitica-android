@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -97,14 +96,12 @@ class TaskSerializer :
         task.startDate = context.deserialize(obj.get("startDate"), Date::class.java)
         task.isDue = obj.get("isDue")?.asBoolean
         if (obj.has("nextDue")) {
-            task.nextDue = RealmList()
             for (due in obj.getAsJsonArray("nextDue")) {
                 task.nextDue?.add(context.deserialize(due, Date::class.java))
             }
         }
         if (obj.has("checklist")
             && obj.get("checklist").isJsonArray) {
-            task.checklist = RealmList()
             for (checklistElement in obj.getAsJsonArray("checklist")) {
                 val checklistObject = checklistElement.asJsonObject
                 task.checklist?.add(
@@ -118,7 +115,6 @@ class TaskSerializer :
         }
         if (obj.has("reminders")
             && obj.get("reminders").isJsonArray) {
-            task.reminders = RealmList()
             for (reminderElement in obj.getAsJsonArray("reminders")) {
                 val remindersObject = reminderElement.asJsonObject
                 val reminder = RemindersItem()

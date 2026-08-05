@@ -6,7 +6,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.Tag
 import io.realm.Realm
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
@@ -16,7 +15,7 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
         typeOfT: Type,
         context: JsonDeserializationContext,
     ): List<Tag> {
-        val tags = RealmList<Tag>()
+        val tags = mutableListOf<Tag>()
         var databaseTags: List<Tag>
         try {
             val realm = Realm.getDefaultInstance()

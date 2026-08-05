@@ -29,7 +29,7 @@ open class ChatMessage :
 
     var timestamp: Long? = null
 
-    var likes: RealmList<ChatMessageLike>? = null
+    var likes: RealmList<ChatMessageLike>? = RealmList()
 
     var flagCount: Int = 0
 

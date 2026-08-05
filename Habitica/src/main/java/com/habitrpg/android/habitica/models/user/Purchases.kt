@@ -10,7 +10,7 @@ open class Purchases :
     RealmObject(),
     BaseObject {
     @JvmField
-    var customizations: RealmList<OwnedCustomization>? = null
+    var customizations: RealmList<OwnedCustomization>? = RealmList()
     var user: User? = null
     var plan: SubscriptionPlan? = null
 }
