@@ -96,12 +96,13 @@ fun StatRow(
                     Row(modifier = GlanceModifier.fillMaxWidth()) {
                         Text(
                             text = label,
+                            maxLines = 1,
                             style = labelStyle(labelTextColor),
                             modifier = GlanceModifier.defaultWeight(),
                         )
-                        Text(text = valueText, style = labelStyle(labelTextColor))
-                        Text(text = " / ", style = separatorStyle(labelTextColor))
-                        Text(text = maxText, style = labelStyle(labelTextColor))
+                        Text(text = valueText, maxLines = 1, style = labelStyle(labelTextColor))
+                        Text(text = " / ", maxLines = 1, style = separatorStyle(labelTextColor))
+                        Text(text = maxText, maxLines = 1, style = labelStyle(labelTextColor))
                     }
                 }
             }

@@ -48,13 +48,12 @@ fun LevelChip(
 
     Row(
         modifier = modifier
-            .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = horizontalPadding),
+            .padding(horizontal = horizontalPadding, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Spacer(GlanceModifier.defaultWeight())
+        Spacer(GlanceModifier.defaultWeight().height(22.dp))
         if (classBitmap != null) {
             Image(
                 provider = ImageProvider(classBitmap),
@@ -65,6 +64,7 @@ fun LevelChip(
         }
         Text(
             text = labelText,
+            maxLines = 1,
             style = TextStyle(
                 color = textColor,
                 fontSize = 14.sp,
@@ -85,10 +85,9 @@ fun CurrencyChip(
 ) {
     Row(
         modifier = modifier
-            .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -123,10 +122,9 @@ fun MergedCurrencyChip(
 ) {
     Row(
         modifier = modifier
-            .height(30.dp)
             .cornerRadius(15.dp)
             .background(backgroundColor)
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         items.forEachIndexed { index, item ->
