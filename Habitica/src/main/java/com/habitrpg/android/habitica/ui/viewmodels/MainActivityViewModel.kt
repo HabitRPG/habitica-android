@@ -24,7 +24,6 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.realm.kotlin.isValid
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -188,7 +187,6 @@ constructor(
         if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
             viewModelScope.launchCatching {
                 val item = inventoryRepository.getItem("egg", eggType ?: "").firstOrNull()
-                if (item?.isValid() != true) return@launchCatching
                 onSuccess(
                     if (id == R.id.petDetailRecyclerFragment) {
                         (item as? Egg)?.text

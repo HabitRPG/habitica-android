@@ -24,7 +24,6 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.verify
-import io.realm.Realm
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import java.util.UUID
@@ -37,11 +36,24 @@ class TaskRepositoryImplTest :
         val localRepository = mockk<TaskLocalRepository>()
         val apiClient = mockk<ApiClient>()
         beforeEach {
-            val slot = slot<((Realm) -> Unit)>()
-            every { localRepository.executeTransaction(transaction = capture(slot)) } answers {
-                slot.captured(mockk(relaxed = true))
-            }
             every { localRepository.getTasksWithTaskId(any()) } returns listOf()
+            every { localRepository.handleTaskResponse(any(), any(), any(), any(), any()) } answers {
+                val task = thirdArg<Task>()
+                val up = arg<Boolean>(3)
+                when (task.type) {
+                    TaskType.DAILY -> task.streak = (task.streak ?: 0) + if (up) 1 else -1
+                    TaskType.HABIT ->
+                        if (up) {
+                            task.counterUp = (task.counterUp ?: 0) + 1
+                        } else {
+                            task.counterDown = (task.counterDown ?: 0) + 1
+                        }
+                    else -> {}
+                }
+                if (task.type == TaskType.DAILY || task.type == TaskType.TODO) {
+                    task.completeForUser(firstArg<User>().id, up)
+                }
+            }
             val authenticationHandler = mockk<AuthenticationHandler>()
             every { authenticationHandler.currentUserID } answers {
                 ""

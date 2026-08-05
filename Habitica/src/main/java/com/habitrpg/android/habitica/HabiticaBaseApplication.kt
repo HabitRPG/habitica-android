@@ -8,8 +8,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import android.database.DatabaseErrorHandler
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
@@ -120,8 +118,6 @@ abstract class HabiticaBaseApplication :
     internal lateinit var clearables: Set<@JvmSuppressWildcards com.habitrpg.common.habitica.helpers.Clearable>
 
     private lateinit var lifecycleTracker: ApplicationLifecycleTracker
-
-    // endregion
 
     override fun onCreate() {
         super.onCreate()
@@ -280,29 +276,6 @@ abstract class HabiticaBaseApplication :
             }
         }
     }
-
-    override fun openOrCreateDatabase(
-        name: String,
-        mode: Int,
-        factory: SQLiteDatabase.CursorFactory?,
-    ): SQLiteDatabase = super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
-
-    override fun openOrCreateDatabase(
-        name: String,
-        mode: Int,
-        factory: SQLiteDatabase.CursorFactory?,
-        errorHandler: DatabaseErrorHandler?,
-    ): SQLiteDatabase =
-        super.openOrCreateDatabase(
-            getDatabasePath(name).absolutePath,
-            mode,
-            factory,
-            errorHandler,
-        )
-
-    // endregion
-
-    // region IAP - Specific
 
     override fun deleteDatabase(name: String): Boolean {
         val realm = Realm.getDefaultInstance()

@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.QuestAchievement
@@ -31,7 +30,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserAchievement
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.Realm
-import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -136,18 +134,16 @@ class UserDeserializer : JsonDeserializer<User> {
             user.invitations = context.deserialize(obj.get("invitations"), Invitations::class.java)
         }
         if (obj.has("tags")) {
-            user.tags =
-                context.deserialize(
-                    obj.get("tags"),
-                    object : TypeToken<RealmList<Tag>>() {
-                    }.type,
-                )
-            for (tag in user.tags) {
+            for (entry in obj.getAsJsonArray("tags")) {
+                if (!entry.isJsonObject) {
+                    continue
+                }
+                val tag = context.deserialize<Tag>(entry, Tag::class.java)
                 tag.userId = user.id
+                user.tags.add(tag)
             }
         }
         if (obj.has("achievements")) {
-            val achievements = RealmList<UserAchievement>()
             for (entry in obj.getAsJsonObject("achievements").entrySet()) {
                 if (!entry.value.isJsonPrimitive) {
                     continue
@@ -155,15 +151,13 @@ class UserDeserializer : JsonDeserializer<User> {
                 val achievement = UserAchievement()
                 achievement.key = entry.key
                 achievement.earned = entry.value.asBoolean
-                achievements.add(achievement)
+                user.achievements.add(achievement)
             }
-            user.achievements = achievements
         }
         if (obj.has("tasksOrder")) {
             user.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)
         }
         if (obj.has("challenges")) {
-            user.challenges = RealmList()
             obj.getAsJsonArray("challenges").forEach {
                 user.challenges?.add(ChallengeMembership(user.id ?: "", it.asString))
             }
@@ -190,42 +184,37 @@ class UserDeserializer : JsonDeserializer<User> {
             if (achievements.has("streak")) {
                 try {
                     user.streakCount = obj.getAsJsonObject("achievements").get("streak").asInt
-                } catch (ignored: UnsupportedOperationException) {
+                } catch (_: UnsupportedOperationException) {
                 }
             }
             if (achievements.has("quests")) {
-                val questAchievements = RealmList<QuestAchievement>()
                 for (entry in achievements.getAsJsonObject("quests").entrySet()) {
                     val questAchievement = QuestAchievement()
                     questAchievement.questKey = entry.key
                     questAchievement.count = entry.value.asInt
-                    questAchievements.add(questAchievement)
+                    user.questAchievements.add(questAchievement)
                 }
-                user.questAchievements = questAchievements
             }
             if (achievements.has("challenges")) {
-                val challengeAchievements = RealmList<String>()
                 for (entry in achievements.getAsJsonArray("challenges")) {
-                    challengeAchievements.add(entry.asString)
+                    user.challengeAchievements.add(entry.asString)
                 }
-                user.challengeAchievements = challengeAchievements
             }
             if (achievements.has("rebirths")) {
                 try {
                     user.rebirths = achievements.get("rebirths").asInt
-                } catch (ignored: UnsupportedOperationException) {
+                } catch (_: UnsupportedOperationException) {
                 }
             }
             if (achievements.has("rebirthLevel")) {
                 try {
                     user.rebirthLevel = achievements.get("rebirthLevel").asInt
-                } catch (ignored: UnsupportedOperationException) {
+                } catch (_: UnsupportedOperationException) {
                 }
             }
         }
 
         if (obj.has("_ABTests")) {
-            user.abTests = RealmList()
             for (testJSON in obj.getAsJsonObject("_ABTests").entrySet()) {
                 val test = ABTest()
                 test.name = testJSON.key

@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.models.user.User
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.Sort
+import io.realm.kotlin.isValid
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -356,6 +357,7 @@ class RealmInventoryLocalRepository(
             .toFlow()
             .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
             .mapNotNull { it.firstOrNull() as? Item }
+            .filter { it.isValid() }
     }
 
     override fun decrementMysteryItemCount(user: User?) {
