@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="action_refresh">Sincronizza</string>
+    <string name="action_refresh">Ricarica</string>
     <string name="XP_default">Esperienza</string>
     <string name="HP_default">Salute</string>
     <string name="MP_default">Mana</string>
@@ -32,10 +32,10 @@
     <string name="preference_push_your_quest_has_begun">La tua missione è cominciata</string>
     <string name="preference_push_invited_to_quest">Invito ad una Missione</string>
     <!--Adding tasks-->
-    <string name="about_libraries">Librerie</string>
+    <string name="about_libraries">Biblioteche</string>
     <string name="about_habitica_open_source">Habitica è disponibile come software open source su Github</string>
     <string name="about_rate_our_app">Valuta la nostra app</string>
-    <string name="about_give_us_feedback">Invia suggerimenti!</string>
+    <string name="about_give_us_feedback">Inviaci Suggerimenti!</string>
     <string name="about_bugreport">Segnala un bug</string>
     <string name="about_source_code">Codice sorgente</string>
     <!--Network Errors-->
@@ -52,10 +52,10 @@
     <string name="checklist">Lista</string>
     <string name="reminders">Promemoria</string>
     <string name="attributes">Attributi</string>
-    <string name="repeatables_frequency_daily">Ogni giorno</string>
-    <string name="repeatables_frequency_weekly">Ogni settimana</string>
-    <string name="repeatables_frequency_monthly">Ogni mese</string>
-    <string name="repeatables_frequency_yearly">Ogni anno</string>
+    <string name="repeatables_frequency_daily">Giornaliero</string>
+    <string name="repeatables_frequency_weekly">Settimanale</string>
+    <string name="repeatables_frequency_monthly">Mensile</string>
+    <string name="repeatables_frequency_yearly">Annuale</string>
     <string name="repeatables_frequency_day_of_month">Giorno del mese</string>
     <string name="repeatables_frequency_day_of_week">Giorno della settimana</string>
     <string name="monday">Lunedì</string>
@@ -103,8 +103,8 @@
     <string name="avatar_background">Sfondo</string>
     <string name="purchase_customization">Compra personalizzazione</string>
     <string name="purchase_set_button">Sblocca set per %d gemme</string>
-    <string name="purchase_button">Compra</string>
-    <string name="purchase_set_title">Compra set  %s</string>
+    <string name="purchase_button">Acquista</string>
+    <string name="purchase_set_title">Acquista set %s</string>
     <string name="due_date">Data di scadenza</string>
     <string name="quest_accept">Accetta</string>
     <string name="quest_reject">Rifiuta</string>
@@ -141,7 +141,7 @@
     <string name="setup_task_exercise_1">10 min di cardio</string>
     <string name="setup_task_exercise_2">Stretching</string>
     <string name="setup_task_exercise_3">Imposta una tabella per l\'allenamento</string>
-    <string name="setup_task_healthWellness_1">Mangia cibo salutare</string>
+    <string name="setup_task_healthWellness_1">Mangia sano / cibo spazzatura</string>
     <string name="setup_task_healthWellness_2">Lavati i denti</string>
     <string name="setup_task_healthWellness_3">Pianifica il controllo</string>
     <string name="setup_task_school_1">Studia/Procrastina</string>
@@ -165,11 +165,11 @@
     <string name="add_tag">Aggiungi una nuova etichetta</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Scrivi messaggio</string>
-    <string name="battle_gear">Assetto da battaglia</string>
+    <string name="battle_gear">Equipaggiamento da Battaglia</string>
     <string name="costume">Costume</string>
     <string name="outfit_head">Testa</string>
-    <string name="outfit_headAccessory">Accessorio da testa</string>
-    <string name="outfit_eyewear">Occhi</string>
+    <string name="outfit_headAccessory">Accessorio per la Testa</string>
+    <string name="outfit_eyewear">Occhiali</string>
     <string name="outfit_armor">Armatura</string>
     <string name="outfit_back">Schiena</string>
     <string name="outfit_body">Corpo</string>
@@ -207,7 +207,7 @@
     <string name="close">Chiudi</string>
     <string name="share">Condividi</string>
     <string name="notification_pet_fed">Hai dato da mangiare al tuo %s!</string>
-    <string name="notification_purchase_reward">Hai comprato una ricompensa</string>
+    <string name="notification_purchase_reward">Hai acquistato una ricompensa</string>
     <string name="world_quest">Missione Mondiale</string>
     <string name="inn_description">Bisogno di una pausa \? Riposati alla Locanda di Daniel per mettere in pausa le meccaniche di gioco più difficili di Habitica:
 \n
@@ -221,7 +221,7 @@
     <string name="mage">Mago</string>
     <string name="healer">Guaritore</string>
     <string name="warrior_description">I Guerrieri assestano un numero maggiore di colpi critici ed infliggono ingenti danni ai Boss. Gioca il Guerriero se vuoi sconfiggere mostri facilmente! I Guerrieri usufruiscono di un attributo Forza elevato.</string>
-    <string name="mage_description">I Maghi imparano abilità speciali che danneggiano i Boss ed aumentano EXP e Mana. Utilizza il Mago se sei fortemente motivato dal livellare velocemente! I Maghi beneficiano di una stat di Intelligenza elevata.</string>
+    <string name="mage_description">I Maghi imparano abilità che danneggiano i Boss ed aumentano EXP e Mana. Gioca come Mago se sei fortemente motivato dal livellare velocemente! I Maghi beneficiano di una statistica d\'Intelligenza elevata.</string>
     <string name="rogue_description">I Ladri imparano abilita che permettono a loro e alla loro Squadra di trovare più oro e oggetti casuali. Diventa un Ladro se vuoi tanti oggetti ed Oro! I Ladri beneficiano di una stat di Percezione elevata.</string>
     <string name="healer_description">I Guaritori imparano Abilità che possono guarire e proteggere se stessi e la loro Squadra. Gioca come Guaritore se vuoi aiutare gli altri o evitare danni! I Guaritori beneficiano di una stat di Costituzione elevata.</string>
     <string name="select_class">Seleziona classe</string>
@@ -234,11 +234,11 @@
     <string name="change_class">Cambia la tua classe</string>
     <string name="change_class_description">Cambia classe e riottieni i tuoi punti attributo per 3 gemme.</string>
     <string name="enable_class">Abilita sistema delle classi</string>
-    <string name="changing_class_progress">Cambiamento classe</string>
+    <string name="changing_class_progress">Cambia Classe</string>
     <string name="by_email">Per e-mail</string>
     <string name="invite_existing_users">Invita utenti esistenti</string>
     <string name="send">Invia</string>
-    <string name="invite">Trova amici</string>
+    <string name="invite">Trova Membri</string>
     <string name="invite_username_description">Se i tuoi amici usano già Habitica, invitali qui usando il loro nome utente.</string>
     <string name="invite_email_description">Se un amico/a si unisce ad Habitica attraverso la tua e-mail, verrà automaticamente invitato/a nella tua squadra!</string>
     <string name="add_invites">Aggiungi inviti</string>
@@ -249,12 +249,12 @@
     <string name="share_raised">Ho appena ottenuto un %1$s in #Habitica completando le mie attività nella vita reale!</string>
     <string name="open_in_store">Apri nel Play Store</string>
     <string name="change_class_confirmation">Vuoi davvero cambiare classe per 3 gemme\?</string>
-    <string name="change_class_equipment_warning">Ciò rimborserà i tuoi attributi, cambierà l\'equipaggiamento sbloccato nei negozi e cambierà le tue abilità disponibili.</string>
+    <string name="change_class_equipment_warning">Questo rimborserà i tuoi punti attributo, cambierà l\'equipaggiamento sbloccato nei negozi e cambierà le tue abilità disponibili.</string>
     <string name="confirm">Conferma</string>
     <string name="market">Mercato</string>
     <string name="timeTravelers">Viaggiatori del Tempo</string>
     <string name="seasonalShop">Negozio Stagionale</string>
-    <string name="empty_inbox">Al momento non hai alcun messaggio. Puoi inviare un nuovo messaggio a un utente attraverso il loro profilo nelle chat pubbliche!</string>
+    <string name="empty_inbox">Al momento non hai alcun messaggio. Puoi inviare un nuovo messaggio a un utente attraverso le loro chat pubbliche!</string>
     <string name="party_invite">Sblocca invitando amici</string>
     <string name="login_incentive">Sblocca usando Habitica regolarmente</string>
     <string name="create_account">Sblocca creando un account</string>
@@ -267,18 +267,18 @@
     <string name="choose_recipient_title">Scegli destinatario messaggio</string>
     <string name="action_continue">Continua</string>
     <string name="invited_to_party">Hai ricevuto un invito per unirti a una squadra!</string>
-    <string name="stats_widget_label">Statistiche Habitica</string>
+    <string name="stats_widget_label">Le tue Statistiche</string>
     <string name="add_task">Aggiungi Attività</string>
     <string name="add_habit">Aggiungi Abitudine</string>
     <string name="add_daily">Aggiungi Attività Giornaliera</string>
     <string name="add_todo">Aggiungi una Cosa da Fare</string>
     <string name="add_reward">Aggiungi Ricompensa</string>
     <string name="all_dailies_completed">Hai completato tutte le tue Attività Giornaliere. Ottimo lavoro!</string>
-    <string name="widget_habit_button">Habitica esegui Abitudine</string>
-    <string name="widget_dailies">Habitica Attività Giornaliere</string>
-    <string name="widget_todo_list">Lista di Cose da Fare di Habitica</string>
+    <string name="widget_habit_button">Abitudine singola</string>
+    <string name="widget_dailies">Lista delle Attività Giornaliere</string>
+    <string name="widget_todo_list">Lista delle Cose da Fare</string>
     <string name="google_services_missing">Impossibile trovare Google Play Services.</string>
-    <string name="gem_purchase_toolbartitle">Compra</string>
+    <string name="gem_purchase_toolbartitle">Acquista</string>
     <string name="gem_purchase_title">Comprando gemme supporti gli sviluppatori e tieni in vita Habitica</string>
     <string name="gem_purchase_subtitle">Le Gemme ti permettono di ottenere divertenti extra per il tuo account</string>
     <string name="gem_purchase_listitem1">Costumi per il tuo avatar</string>
@@ -316,14 +316,14 @@
     <string name="subscribe3month_gemcap">30 Gemme al mese</string>
     <string name="subscribe6month_gemcap">35 Gemme al mese</string>
     <string name="subscribe12month_gemcap">45 Gemme al mese</string>
-    <string name="subscription_hourglasses">+%d Clessidre</string>
+    <string name="subscription_hourglasses">%d Clessidre</string>
     <string name="payment_method">Metodo di pagamento</string>
     <string name="subscription">Abbonamento</string>
     <string name="active">Attivo</string>
-    <string name="due">Oggi</string>
+    <string name="due">Scadenza</string>
     <string name="cancel_subscription">Annulla abbonamento</string>
     <string name="cancel_subscription_google_description">Puoi annullare il tuo abbonamento dall\'app Google Play Store. Gli eventuali mesi di credito di abbonamento verranno applicati al termine dell\'abbonamento ricorrente.</string>
-    <string name="cancel_subscription_notgoogle_description">Non vuoi più avere l\'abbonamento\? A causa del tuo metodo di pagamento, puoi cancellare il tuo abbonamento solo dal nostro sito web. Per farlo, fai click sul pulsante qui sotto, accedi al tuo account, fai click sull\'icona del giocatore in alto a destra e poi vai alla sezione Abbonamento. Eventuali mesi di credito residuo dell\'abbonamento saranno aggiunti alla tua data di scadenza dopo la cancellazione. Ci mancherai!</string>
+    <string name="cancel_subscription_notgoogle_description">Non vuoi più abbonarti\? A causa dei vincoli sui pagamenti mobili, dovrai annullare tramite il nostro sito web. Per fare ciò, tocca il pulsante in basso, accedi al tuo account, tocca l\'icona del giocatore in alto a destra, quindi vai su Abbonamento. Eventuali mesi di credito di abbonamento verranno applicati al termine dell\'abbonamento. Ci mancherai!</string>
     <string name="visit_habitica_website">Visita il sito web di Habitica</string>
     <string name="current_bonuses">Bonus attivi</string>
     <string name="months_subscribed">Mesi come abbonato</string>
@@ -635,7 +635,7 @@
     <string name="new_msg_party"><![CDATA[La tua squadra, <b>%1$s</b>, ha nuovi messaggi]]></string>
     <string name="unallocated_stats_points"><![CDATA[Hai <b>%1$s Punti Statistica non allocati</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Hai dei nuovi <b>Oggetti Misteriosi</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> hai ricevuto un invito per unirti alla Squadra <b>%2$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color="#925CF3">%2$s</font> hai ricevuto un invito per unirti alla squadra <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Hai ricevuto un invito per la missione <b>%1$s</b>]]></string>
     <string name="join_party_description_guild">Scrivi qui sotto il nome di un amico oppure vai in %s per incontrare potenziali compagni !</string>
     <string name="skill_progress_title">Sto usando un\'abilità</string>
@@ -756,7 +756,7 @@
     <string name="update_app">Aggiorna l\'App</string>
     <string name="manual_sync_restart_description">A volte l\'app non aggiorna automaticamente i contenuti. Prova a scorrere verso il basso per aggiornare o forza la chiusura dell\'app e riaprila.</string>
     <string name="manual_sync_restart">Sincronizzazione o riavvio</string>
-    <string name="clear_cache_description">Per cancellare la cache, apri le impostazioni del telefono. Vai su Archiviazione &gt; App &gt; Habitica e quindi tocca Cancella cache.</string>
+    <string name="clear_cache_description"><![CDATA[Per cancellare la cache, apri le Impostazioni del tuo telefono. Vai su Archiviazione, App, Habitica e premi Cancella Cache.]]></string>
     <string name="clear_cache">Cancella la cache</string>
     <string name="hourglasses_description">Le Clessitre Mistiche sono una valuta estremamente rara che si può ottenere solo abbonandosi ad Habitica. Puoi usarle nel Negozio dei Viaggiatori del Tempo per acquistare set di Equipaggiamento per Abbonati passati, Animali esclusivi, Cavalcature, Sfondi animati oe Missioni speciali! Questi vantaggi extra sono un ottimo modo per rimanere motivati durante l\'anno e premiarsi per il lavoro portato al termine.
 \n
@@ -811,7 +811,7 @@
     <string name="support_bug_title">Cerchiamo costantemente di migliorare le nostre app in base al feedback dei giocatori, ma a volte compaiono alcuni bug …</string>
     <string name="lets_go">Partiamo</string>
     <string name="bugs_fixes_description">Qualcosa è andato storto\? Controlla qui se ci sono le risposte che cerchi o contattaci per chiedere aiuto.</string>
-    <string name="bugs_fixes">Bug &amp; Correzioni</string>
+    <string name="bugs_fixes"><![CDATA[Bug e Correzioni]]></string>
     <string name="suggestions_feedback">Suggerimenti e feedback</string>
     <string name="get_help">Ottieni Aiuto</string>
     <string name="contact_us">Contattaci</string>
@@ -953,8 +953,8 @@
     <string name="empty_description_todos_filtered">Non ci sono Cose da Fare visibili con i filtri specificati.</string>
     <string name="empty_title_todos_filtered">Nessuna Cosa da fare</string>
     <string name="getting_started">Per Iniziare</string>
-    <string name="complete_for_gold">Completa per guadagnare &lt;font color=#EE9109&gt;&lt;b&gt;100 oro&lt;/b&gt;&lt;/font&gt;!</string>
-    <string name="onboardingCompleteTitle">Hai guadagnato &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Oro&lt;/b&gt;&lt;/font&gt; per i tuoi sforzi.</string>
+    <string name="complete_for_gold"><![CDATA[Completa per guadagnare <font color="#EE9109"><b>100 Oro</b></font>!]]></string>
+    <string name="onboardingCompleteTitle"><![CDATA[Hai guadagnato <b>5 Medaglie</b> e <font color="#EE9109"><b>100 Oro</b></font> per i tuoi sforzi.]]></string>
     <string name="first_drop_title">Hai trovato nuovi oggetti!</string>
     <string name="go_to_items">Vai agli Oggetti</string>
     <string name="first_drop_explanation2">Vai ai tuoi oggetti e prova a combinare la tua nuova Pozione di Schiusa con un Uovo!</string>
@@ -1033,7 +1033,7 @@
     <string name="spooky_promo_info_instructions">Tra il %1$s e il %2$s, acquista semplicemente un pacchetto di gemme come faresti di solito, e sull\' account ti verranno accreditate con in aggiunta l\'importo promozionale. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
     <string name="view_gem_bundles">Visualizza pacchetti di gemme</string>
     <string name="fall_promo_info_prompt">Il Gala Autunnale è in pieno svolgimento, quindi abbiamo pensato che fosse il momento perfetto per presentare la nostra prima vendita di Gemme in assoluto! Ora otterrai più gemme ogni acquisto più che mai.</string>
-    <string name="gem_promo_info_instructions">Tra il %1$s e il %2$s, acquista semplicemente un pacchetto di gemme come faresti di solito, e sull\' account ti verranno accreditate con in aggiunta l\'importo promozionale. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
+    <string name="fall_promo_info_instructions">Tra il %1$s e il %2$s, acquista semplicemente un pacchetto di gemme come faresti di solito, e sull\' account ti verranno accreditate con in aggiunta l\'importo promozionale. Più gemme da spendere, condividere o risparmiare per eventuali oggetti futuri!</string>
     <string name="limitations">Limitazioni</string>
     <string name="how_it_works">Come funziona</string>
     <string name="x_to_y">%1$s a %2$s</string>
@@ -1127,7 +1127,7 @@
     <string name="damage_pending">%s danno in sospeso</string>
     <string name="discard">Scarta</string>
     <string name="class_confirmation_price">Vuoi cambiare la tua classe in %1$s per %2$d gemme\?</string>
-    <string name="adventure_guide_description_new">Completa questi obbiettivi e guadagnerai &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ori&lt;/b&gt;&lt;/font&gt; quando avrai finito!</string>
+    <string name="adventure_guide_description_new"><![CDATA[Completa questi obbiettivi e guadagnerai <b>5 Medaglie</b> e <font color="#EE9109"><b>100 Oro</b></font> quando avrai finito!]]></string>
     <string name="removed_social_auth">%s disconnesso</string>
     <string name="discard_changes_to_task_message">Sei sicuro/a di voler scartare le modifiche fatte a questa attività\?</string>
     <string name="password_not_matching">Le password inserite non corrispondono</string>
@@ -1255,16 +1255,16 @@
     <string name="eggs_footer_description">Controlla il [Mercato](/shops/market) per comprare giusto le uova che ti servono!</string>
     <string name="exact_alarm_system_settings_reminders">I promemoria potrebbero essere ritardati perché le autorizzazioni non sono abilitate. Tocca per visualizzare e aggiornare le autorizzazioni.</string>
     <string name="exact_alarm_system_settings_title">`Allarme e Promemoria` disabilitati`</string>
-    <string name="exact_alarm_system_settings_description">Consenti `Allarmi e Promemoria` nelle impostazioni per assicurarti che i promemoria vengano mostrati esattamente all’orario programmato</string>
-    <string name="item_footer_title">Non riesci ad ottenere il/la %s giusto/a dalle attività\?</string>
+    <string name="exact_alarm_system_settings_description">Consenti `Allarmi e Promemoria` nelle Impostazioni per assicurarti che i promemoria vengano mostrati esattamente all’orario programmato</string>
+    <string name="item_footer_title">Non riesci ad ottenere il/la %s dalle attività\?</string>
     <string name="item_footer_description">Controlla il [Mercato](/shops/market) per comprare giusto quello che ti serve!</string>
     <string name="customization_shop_more">Controlla il Negozio Personalizzazioni per ancora più modi di personalizzare il tuo avatar!</string>
     <string name="quests_footer_description">Controlla il [Negozio Missioni](/shops/quests) per vedere cos\'è disponibile!</string>
     <string name="hatchingPotions_footer_description">Controlla il [Mercato](/shops/market) per comprare Pozioni di Schiusa standard o stagionali!</string>
-    <string name="enable_notifications">Abilita le notifiche</string>
-    <string name="push_notification_system_settings_description">Consenti le notifiche di Habitica nelle Impostazioni per ricevere notifiche push</string>
-    <string name="push_notification_system_settings_reminders">Consenti le notifiche di Habitica nelle Impostazioni per ricevere promemoria</string>
-    <string name="push_notification_system_settings_title">Notifiche disabilitate</string>
+    <string name="enable_notifications">Attiva le Notifiche</string>
+    <string name="push_notification_system_settings_description">Consenti le notifiche di Habitica dall\'app Impostazioni per ricevere notifiche push</string>
+    <string name="push_notification_system_settings_reminders">Consenti le notifiche di Habitica dall\'app Impostazioni per ricevere promemoria</string>
+    <string name="push_notification_system_settings_title">Notifiche Disabilitate</string>
     <string name="title">Titolo</string>
     <string name="positive_sentence">positivo</string>
     <string name="negative_sentence">negativo</string>
@@ -1286,10 +1286,6 @@
         <item quantity="other">%d Minuti</item>
     </plurals>
     <string name="faint_broken_gear_info">L\'Equipaggiamento rotto può essere riacquistato dal Mercato</string>
-    <string name="quest_accepted">Missione accettata!</string>
-    <string name="quest_rejected">Missione rifiutata</string>
-    <string name="quest_accept_error">Impossibile accettare la missione. Riprova.</string>
-    <string name="quest_reject_error">Impossibile rifiutare la missione. Riprova.</string>
     <string name="save_photo_url">Salva URL della Foto</string>
     <string name="change_username_description">Il Nome Utente deve essere composto da 1 a 20 caratteri, contenere solo lettere dalla a alla z, numeri da 0 a 9, trattini o trattini bassi.</string>
     <string name="class_equipment_shop_dialog_new">Questo oggetto è disponibile solo per la classe %s. Vai nelle Impostazioni per cambiare la tua classe.</string>
@@ -1297,8 +1293,8 @@
     <string name="sell_confirmation_title">Sei sicuro di voler vendere questo %s\?</string>
     <string name="enable_class_description">Seleziona una classe per utilizzare abilità, attributi e mana</string>
     <string name="opt_out_description">Questo ti lascerà senza una classe assegnata. Puoi scegliere nuovamente una classe abilitando il sistema delle classi dalle Impostazioni in qualsiasi momento.</string>
-    <string name="group_tags">Etichette di Gruppo</string>
-    <string name="subscription_credit_canceling">I tuoi <b>+%s</b> mesi di credito di abbonamento verranno attivati a seguito dell\'annullamento</string>
+    <string name="group_tags">Tag di Gruppo</string>
+    <string name="subscription_credit_canceling">I tuoi <b>+%d</b> mesi di credito di abbonamento verranno attivati dopo l\'annullamento</string>
     <string name="rejoin_party_quest">Non potrai rientrare in questa squadra a meno che tu non venga rinvitato.
 \n
 \nUscire dalla squadra comporterà anche l\'abbandono della missione in corso.</string>
@@ -1313,7 +1309,7 @@
     <string name="display_name_description">Questo è il nome che verrà visualizzato per il tuo avatar in Habitica. A differenza del nome utente, non deve necessariamente essere un identificativo univoco.</string>
     <string name="server_settings_unlock_remaining">Ti mancano %d passaggi per sbloccare le impostazioni del server.</string>
     <string name="subscribe_listitem3_description_alt">Resta al passo con le ultime novità sull\'Equipaggiamento esclusivo. Abbonati ora per ricevere %1$s’s %2$s!</string>
-    <string name="subscribe_listitemFaint_description">Evita di perdere i tuoi progressi grazie a una cura istantanea che ti permette di recuperare Salute ogni volta che ne hai bisogno!</string>
+    <string name="subscribe_listitemFaint_description">Evita di perdere i tuoi progressi con una cura istantanea quando finisci la Salute una volta al giorno!</string>
     <string name="change_class_message">Questa azione cancellerà la tua classe attuale e sarai risarcito di tutti i tuoi punti attributo. Dopodiché, potrai selezionare una nuova classe</string>
     <string name="change_class_confirmation_message">Questo cambierà l\'equipaggiamento sbloccato nei negozi e cambierà le tue abilità disponibili</string>
     <string name="choosing_class_progress">Scegli una Classe</string>
@@ -1340,8 +1336,8 @@
     <string name="server_option_default">%s (Default)</string>
     <string name="server_option_custom">Personalizzato</string>
     <string name="server_custom_address_label">Inserisci l\'indirizzo del server personalizzato</string>
-    <string name="server_custom_address_hint">es. http://localhost:3000</string>
-    <string name="server_url_invalid">Inserisci un URL valido che inizi con http:// o https://</string>
+    <string name="server_custom_address_hint">es. customserver.habitica.com</string>
+    <string name="server_url_invalid">Inserisci un URL valido</string>
     <string name="apply">Applica</string>
     <string name="server_settings_unlocked">Impostazioni del server sbloccate!</string>
     <string name="custom_server">Server Personalizzato</string>
@@ -1400,9 +1396,9 @@
         <item quantity="other">ogni %d settimane</item>
     </plurals>
     <plurals name="repeat_monthly">
-        <item quantity="one">ogni mese</item>
-        <item quantity="many">ogni %d mesi</item>
-        <item quantity="other">ogni %d mesi</item>
+        <item quantity="one">ogni Mese</item>
+        <item quantity="many">ogni %d Mesi</item>
+        <item quantity="other">ogni %d Mesi</item>
     </plurals>
     <string name="resubscribe_description_gift">Desideri continuare a usufruire dei vantaggi dell\'abbonamento\? Puoi attivare un abbonamento ricorrente per mantenere attivi i tuoi vantaggi.</string>
     <string name="report_user_explanation">È opportuno segnalare solo i giocatori che violano le [Linee Guida della Community](https://habitica.com/static/community-guidelines) e/o i [Termini di Servizio](https://habitica.com/static/terms). L\'invio di una segnalazione falsa costituisce una violazione delle Linee Guida della Community di Habitica.</string>
@@ -1557,8 +1553,8 @@
     <string name="max_gem_cap_text_gift">Loro iniziano subito con il limite massimo di Gemme</string>
     <string name="rescrubscribe_to_pick_up">Iscriviti di nuovo per riprendere da dove avevi interrotto!</string>
     <string name="gem_cap_extra">%1$d/%2$d Limite Gemme</string>
-    <string name="reset_server_confirmation">Sei sicuro di voler resettare il server e ritornare a quello predefinito di Habitica\? L\'app verrà riavviata.</string>
-    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; hai ricevuto un invito per unirti alla Squadra &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="reset_server_confirmation">Vuoi davvero resettare il server e ritornare a quello predefinito di Habitica\? Verrai disconnesso/a.</string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color="#925CF3">%2$s</font> hai ricevuto un invito per unirti al gruppo <b>%1$s</b>]]></string>
     <string name="report_reason_title_message">Perché stai segnalando questo messaggio\?</string>
     <string name="report_reason_title_player">Perché stai segnalando questo giocatore\?</string>
     <string name="report_formatted_name">%1$s
@@ -1655,7 +1651,7 @@
     <string name="todo_summary_description_duedate">Si tratta di un\'attività **%1$s** che deve essere completata entro **%2$s**.</string>
     <string name="habit_summary_description">È un\'abitudine **%1$s** che è **%2$s**.</string>
     <string name="todo_summary_description">Si tratta di un\'attività **%1$s** che non ha una scadenza.</string>
-    <string name="daily_summary_description">Si tratta di un\'attività **%1$s** che si ripete **%2$s%3$s**.</string>
+    <string name="daily_summary_description">Si tratta di un\'Attività **%1$s** che si ripete **%2$s%3$s**.%4$s</string>
     <string name="positive_and_negative">positivo e negativo</string>
     <string name="assigned_to">Assegnato a</string>
     <string name="completed_at">Completato in %s</string>
@@ -1697,4 +1693,9 @@
     <string name="day_x">Giorno %d</string>
     <string name="a_party_robe">Una Veste da Festa</string>
     <string name="twenty_gems">20 Gemme</string>
+    <string name="fifth_week_warning">Questa attività non risulterà in scadenza durante i mesi con meno di %1$ss.</string>
+    <string name="avatar_widget_label">Il tuo Avatar</string>
+    <string name="widget_add_task">Aggiungi un\'Attività (Singola)</string>
+    <string name="widget_add_task_multi">Aggiungi un\'Attività (Combinata)</string>
+    <string name="widget_dailies_count">Resoconto Giornaliero</string>
 </resources>
