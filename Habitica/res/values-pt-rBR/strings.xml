@@ -888,7 +888,7 @@
 \n
 \nSe seu **PV chegar a 0**, você irá perder um nível, todo seu Ouro e alguma peça de equipamento. O equipamento perdido pode ser comprado novamente.</string>
     <string name="health_points">Pontos de Vida</string>
-    <string name="stats_currency">Atributos &amp; Moedas</string>
+    <string name="stats_currency"><![CDATA[Atributos &amp; Moedas]]></string>
     <string name="how_best_habitica">Não tem certeza da melhor maneira de usar o Habitica\?</string>
     <string name="overview">Visão geral</string>
     <string name="send_bug_prompt">Envie-nos um relatório sobre o bug e entraremos em contato com você!</string>
@@ -896,7 +896,7 @@
     <string name="support_bug_title">Estamos constantemente tentando melhorar nossos aplicativos com base nos comentários dos(as) jogadores(as), mas às vezes aparecem alguns erros…</string>
     <string name="lets_go">Vamos lá</string>
     <string name="bugs_fixes_description">Algo deu errado\? Verifique as respostas aqui ou entre em contato conosco para obter ajuda.</string>
-    <string name="bugs_fixes">Bugs &amp; Correções</string>
+    <string name="bugs_fixes"><![CDATA[Bugs &amp; Correções]]></string>
     <string name="suggestions_feedback">Sugestões &amp; Comentários</string>
     <string name="get_help">Obter ajuda</string>
     <string name="contact_us">Contate-nos</string>
@@ -945,7 +945,7 @@
     <string name="update_app">Atualizar o aplicativo</string>
     <string name="manual_sync_restart_description">Algumas vezes, o aplicativo não irá atualizar o conteúdo automaticamente. Tente puxar para baixo para atualizá-lo ou, então, force o fechamento do aplicativo e tente reabri-lo.</string>
     <string name="manual_sync_restart">Sincronização manual ou reinicialização</string>
-    <string name="clear_cache_description">Para limpar seu cache, abra as Configurações do aplicativo no seu celular. Vá até Armazenamento &gt; Aplicativos &gt; Habitica, então toque em \"Limpar cache\".</string>
+    <string name="clear_cache_description"><![CDATA[Para limpar seu cache, abra as Configurações do aplicativo no seu celular. Vá até Armazenamento &gt; Aplicativos &gt; Habitica, então toque em \"Limpar cache\".]]></string>
     <string name="clear_cache">Limpar seu cache</string>
     <string name="hourglasses_description">Ampulhetas Místicas são uma forma extremamente rara de moeda que você só recebe ao se inscrever no Habitica. Você pode usá-las na Loja dos Viajantes do Tempo para comprar conjuntos de Equipamentos de Assinantes antigos, Pets exclusivos, Montarias, Fundos animados ou até mesmo Missões especiais! Esses benefícios extras são uma ótima maneira de se manter motivado durante o ano e se recompensar por um trabalho bem feito.
 \n
