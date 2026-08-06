@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
+import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
@@ -48,6 +50,27 @@ class SocialRepositoryImplTest :
                 coEvery { apiClient.listGroupChat("group-1", 50, null) } returns null
                 val result = repository.retrieveGroup("group-1")
                 result shouldBe group
+            }
+
+            "reconcile declared quest participants against the full local party roster" {
+                val declaredKnown = Member().apply { id = "member-1"; participatesInQuest = true }
+                val declaredNew = Member().apply { id = "member-3"; participatesInQuest = false }
+                val group =
+                    Group().apply {
+                        id = "group-1"
+                        quest = Quest().apply { participants?.add(declaredKnown); participants?.add(declaredNew) }
+                    }
+                val localMember1 = Member().apply { id = "member-1" }
+                val localMember2 = Member().apply { id = "member-2" }
+                coEvery { apiClient.getGroup("group-1") } returns group
+                every { localRepository.saveGroup(group) } returns Unit
+                coEvery { apiClient.listGroupChat("group-1", 50, null) } returns null
+                every { localRepository.getPartyMembers("group-1") } returns flowOf(listOf(localMember1, localMember2))
+                repository.retrieveGroup("group-1")
+                val participants = group.quest?.participants.orEmpty()
+                participants.firstOrNull { it.id == "member-1" }?.participatesInQuest shouldBe true
+                participants.firstOrNull { it.id == "member-2" }?.participatesInQuest shouldBe null
+                participants.firstOrNull { it.id == "member-3" }?.participatesInQuest shouldBe false
                 verify { localRepository.saveGroup(group) }
             }
         }

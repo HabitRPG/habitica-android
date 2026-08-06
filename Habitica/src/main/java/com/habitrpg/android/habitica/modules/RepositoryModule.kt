@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.implementation.ContentRepositoryImpl
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
+import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.data.local.implementation.RealmContentLocalRepository
 import dagger.Module
 import dagger.Provides
@@ -51,11 +52,13 @@ open class RepositoryModule {
         apiClient: ApiClient,
         @ApplicationContext context: Context,
         authenticationHandler: AuthenticationHandler,
+        inventoryLocalRepository: InventoryLocalRepository,
     ): ContentRepository =
         ContentRepositoryImpl(
             contentLocalRepository,
             apiClient,
             context,
             authenticationHandler,
+            inventoryLocalRepository,
         )
 }

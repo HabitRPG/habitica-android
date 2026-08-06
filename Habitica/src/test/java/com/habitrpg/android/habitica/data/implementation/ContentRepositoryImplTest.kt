@@ -4,8 +4,11 @@ import android.content.Context
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
+import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
+import com.habitrpg.android.habitica.models.ContentGear
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
@@ -23,9 +26,10 @@ class ContentRepositoryImplTest :
         val apiClient = mockk<ApiClient>()
         val authenticationHandler = mockk<AuthenticationHandler>()
         val context = mockk<Context>(relaxed = true)
+        val inventoryLocalRepository = mockk<InventoryLocalRepository>()
         beforeEach {
             every { authenticationHandler.currentUserID } returns "user-1"
-            repository = ContentRepositoryImpl(localRepository, apiClient, context, authenticationHandler)
+            repository = ContentRepositoryImpl(localRepository, apiClient, context, authenticationHandler, inventoryLocalRepository)
         }
         afterEach { clearAllMocks() }
         "retrieveContent" should {
@@ -59,6 +63,16 @@ class ContentRepositoryImplTest :
                 val result = repository.retrieveContent(true)
                 result shouldBe content
                 coVerify(exactly = 2) { apiClient.getContent() }
+            }
+
+            "inherit the previously known owned flag for gear whose catalog entry doesn't carry one" {
+                val freshGear = Equipment().apply { key = "sword_1"; owned = null }
+                val content = ContentResult().apply { gear = ContentGear().apply { flat = io.realm.RealmList(freshGear) } }
+                val knownGear = Equipment().apply { key = "sword_1"; owned = true }
+                coEvery { apiClient.getContent() } returns content
+                coEvery { inventoryLocalRepository.getEquipment(listOf("sword_1")) } returns flowOf(listOf(knownGear))
+                repository.retrieveContent(true)
+                freshGear.owned shouldBe true
             }
         }
         "retrieveWorldState" should {

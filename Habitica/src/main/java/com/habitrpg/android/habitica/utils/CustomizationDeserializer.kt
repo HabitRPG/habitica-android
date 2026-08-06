@@ -7,7 +7,6 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import io.realm.Realm
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,41 +23,12 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
     ): List<Customization> {
         val jsonObject = json.asJsonObject
         val customizations = mutableListOf<Customization>()
-        val realm = Realm.getDefaultInstance()
 
-        val existingCustomizations =
-            realm.copyFromRealm(realm.where(Customization::class.java).findAll())
         if (jsonObject.has("shirt")) {
-            for (customization in existingCustomizations) {
-                if (jsonObject.has(customization.type)) {
-                    var nestedObject = jsonObject.get(customization.type).asJsonObject
-                    if (customization.category != null) {
-                        if (nestedObject.has(customization.category)) {
-                            nestedObject = nestedObject.get(customization.category).asJsonObject
-                        } else {
-                            continue
-                        }
-                    }
-                    if (nestedObject.has(customization.identifier)) {
-                        customizations.add(
-                            this.parseCustomization(
-                                customization,
-                                customization.type,
-                                customization.category,
-                                customization.identifier,
-                                nestedObject.get(customization.identifier).asJsonObject,
-                            ),
-                        )
-                        nestedObject.remove(customization.identifier)
-                    }
-                }
-            }
-
             for (type in listOf("shirt", "skin", "chair")) {
                 for ((key, value) in jsonObject.get(type).asJsonObject.entrySet()) {
                     customizations.add(
                         this.parseCustomization(
-                            null,
                             type,
                             null,
                             key,
@@ -72,7 +42,6 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                 for ((key1, value1) in value.asJsonObject.entrySet()) {
                     customizations.add(
                         this.parseCustomization(
-                            null,
                             "hair",
                             key,
                             key1,
@@ -83,29 +52,10 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
             }
         } else {
             val keyList = jsonObject.keySet().toList()
-            for (customization in existingCustomizations) {
-                if (jsonObject.has(customization.customizationSet)) {
-                    val nestedObject = jsonObject.get(customization.customizationSet).asJsonObject
-                    if (nestedObject.has(customization.identifier)) {
-                        customizations.add(
-                            this.parseBackground(
-                                customization,
-                                customization.customizationSet ?: "",
-                                keyList.indexOf(customization.customizationSet),
-                                customization.identifier,
-                                nestedObject.get(customization.identifier).asJsonObject,
-                            ),
-                        )
-                        nestedObject.remove(customization.identifier)
-                    }
-                }
-            }
-
             for ((key, value) in jsonObject.entrySet()) {
                 for ((key1, value1) in value.asJsonObject.entrySet()) {
                     customizations.add(
                         this.parseBackground(
-                            null,
                             key,
                             keyList.indexOf(key),
                             key1,
@@ -116,26 +66,20 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
             }
         }
 
-        realm.close()
-
         return customizations
     }
 
     private fun parseCustomization(
-        existingCustomizaion: Customization?,
         type: String?,
         category: String?,
         key: String?,
         entry: JsonObject,
     ): Customization {
-        var customization = existingCustomizaion
-        if (customization == null) {
-            customization = Customization()
-            customization.identifier = key
-            customization.type = type
-            if (category != null) {
-                customization.category = category
-            }
+        val customization = Customization()
+        customization.identifier = key
+        customization.type = type
+        if (category != null) {
+            customization.category = category
         }
         if (entry.has("price")) {
             customization.price = entry.get("price").asInt
@@ -169,20 +113,15 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
     }
 
     private fun parseBackground(
-        existingCustomization: Customization?,
         setName: String,
         setCount: Int,
         key: String?,
         entry: JsonObject,
     ): Customization {
-        var customization = existingCustomization
-
-        if (customization == null) {
-            customization = Customization()
-            customization.customizationSet = setName
-            customization.type = "background"
-            customization.identifier = key
-        }
+        val customization = Customization()
+        customization.customizationSet = setName
+        customization.type = "background"
+        customization.identifier = key
         when (setName) {
             "eventBackgrounds" -> {
                 customization.customizationSetName = "EVENT BACKGROUNDS"

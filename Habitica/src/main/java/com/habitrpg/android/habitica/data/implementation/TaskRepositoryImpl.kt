@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.Analytics
@@ -13,12 +14,10 @@ import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
@@ -42,10 +41,22 @@ class TaskRepositoryImpl(
     apiClient: ApiClient,
     authenticationHandler: AuthenticationHandler,
     val appConfigManager: AppConfigManager,
+    private val tagRepository: TagRepository,
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler),
     TaskRepository {
     private var lastTaskAction: Long = 0
 
+    private suspend fun resolveTagReferences(tasks: Collection<Task>) {
+        val hasUnresolvedTags = tasks.any { task -> task.tags?.any { it.name.isEmpty() } == true }
+        if (!hasUnresolvedTags) return
+        val knownTags = tagRepository.getTags(currentUserID).firstOrNull() ?: return
+        for (task in tasks) {
+            val taskTags = task.tags ?: continue
+            val resolved = taskTags.mapNotNull { tag -> if (tag.name.isEmpty()) knownTags.firstOrNull { it.id == tag.id } else tag }
+            taskTags.clear()
+            taskTags.addAll(resolved)
+        }
+    }
 
     override fun getTasks(
         taskType: TaskType,
@@ -58,11 +69,12 @@ class TaskRepositoryImpl(
             includedGroupIDs,
         )
 
-    override fun saveTasks(
+    override suspend fun saveTasks(
         userId: String,
         order: TasksOrder,
         tasks: TaskList,
     ) {
+        resolveTagReferences(tasks.tasks.values)
         localRepository.saveTasks(userId, order, tasks)
     }
 
@@ -71,6 +83,7 @@ class TaskRepositoryImpl(
         tasksOrder: TasksOrder,
     ): TaskList? {
         val tasks = apiClient.getTasks() ?: return null
+        resolveTagReferences(tasks.tasks.values)
         this.localRepository.saveTasks(userId, tasksOrder, tasks)
         return tasks
     }
@@ -78,6 +91,7 @@ class TaskRepositoryImpl(
     override suspend fun retrieveCompletedTodos(userId: String?): TaskList? {
         val taskList = this.apiClient.getTasks("completedTodos") ?: return null
         val tasks = taskList.tasks
+        resolveTagReferences(tasks.values)
         this.localRepository.saveCompletedTodos(
             userId ?: authenticationHandler.currentUserID ?: "",
             tasks.values,
@@ -92,6 +106,7 @@ class TaskRepositoryImpl(
     ): TaskList? {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         val taskList = this.apiClient.getTasks("dailys", formatter.format(dueDate)) ?: return null
+        resolveTagReferences(taskList.tasks.values)
         this.localRepository.saveTasks(userId, tasksOrder, taskList)
         return taskList
     }
@@ -400,7 +415,9 @@ class TaskRepositoryImpl(
 
     override suspend fun retrieveDailiesFromDate(date: Date): TaskList? {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
-        return apiClient.getTasks("dailys", formatter.format(date))
+        val taskList = apiClient.getTasks("dailys", formatter.format(date)) ?: return null
+        resolveTagReferences(taskList.tasks.values)
+        return taskList
     }
 
     override suspend fun syncErroredTasks(): List<Task>? {

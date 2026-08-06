@@ -1,9 +1,11 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Stats
@@ -35,6 +37,7 @@ class TaskRepositoryImplTest :
         lateinit var repository: TaskRepository
         val localRepository = mockk<TaskLocalRepository>()
         val apiClient = mockk<ApiClient>()
+        val tagRepository = mockk<TagRepository>()
         beforeEach {
             every { localRepository.getTasksWithTaskId(any()) } returns listOf()
             every { localRepository.handleTaskResponse(any(), any(), any(), any(), any()) } answers {
@@ -64,6 +67,7 @@ class TaskRepositoryImplTest :
                     apiClient,
                     authenticationHandler,
                     mockk(relaxed = true),
+                    tagRepository,
                 )
             val liveObjectSlot = slot<BaseObject>()
             every { localRepository.getLiveObject(capture(liveObjectSlot)) } answers {
@@ -78,6 +82,36 @@ class TaskRepositoryImplTest :
                 val order = TasksOrder()
                 repository.retrieveTasks("", order)
                 verify { localRepository.saveTasks("", order, list) }
+            }
+
+            "resolve thin, id-only tag placeholders against locally known tags before saving" {
+                val task =
+                    Task().apply {
+                        id = "task-1"
+                        tags?.add(Tag().apply { id = "tag-1" })
+                        tags?.add(Tag().apply { id = "tag-unknown" })
+                    }
+                val list = TaskList().apply { tasks = mutableMapOf("task-1" to task) }
+                val knownTag = Tag().apply { id = "tag-1"; name = "Work" }
+                coEvery { apiClient.getTasks() } returns list
+                coEvery { tagRepository.getTags("") } returns flowOf(listOf(knownTag))
+                every { localRepository.saveTasks("", any(), any()) } returns Unit
+                repository.retrieveTasks("", TasksOrder())
+                task.tags?.map { it.id } shouldBe listOf("tag-1")
+                task.tags?.firstOrNull()?.name shouldBe "Work"
+            }
+
+            "leave already-full tags untouched and skip tag lookup entirely" {
+                val task =
+                    Task().apply {
+                        id = "task-1"
+                        tags?.add(Tag().apply { id = "tag-1"; name = "Work" })
+                    }
+                val list = TaskList().apply { tasks = mutableMapOf("task-1" to task) }
+                coEvery { apiClient.getTasks() } returns list
+                every { localRepository.saveTasks("", any(), any()) } returns Unit
+                repository.retrieveTasks("", TasksOrder())
+                coVerify(exactly = 0) { tagRepository.getTags(any()) }
             }
         }
         "taskChecked" should {

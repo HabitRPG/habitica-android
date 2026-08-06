@@ -4,6 +4,7 @@ import android.content.Context
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Achievement
@@ -46,6 +47,7 @@ class UserRepositoryImpl(
     private val taskRepository: TaskRepository,
     private val appConfigManager: AppConfigManager,
     private val context: Context,
+    private val inventoryLocalRepository: InventoryLocalRepository,
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler),
     UserRepository {
     private var lastReadNotification: String? = null
@@ -105,6 +107,8 @@ class UserRepositoryImpl(
         if (forced || lastSync == null || Date().time - (lastSync?.time ?: 0) > 180000) {
             val user = apiClient.retrieveUser(withTasks) ?: return null
             lastSync = Date()
+            preserveQuestRsvpIfUnspecified(user)
+            resolveOwnedEquipmentDetails(user)
             withContext(Dispatchers.Main) {
                 localRepository.saveUser(user)
             }
@@ -503,6 +507,37 @@ class UserRepositoryImpl(
                 it ?: retrieveTeamPlan(teamID)
             }
 
+    private suspend fun preserveQuestRsvpIfUnspecified(user: User) {
+        val quest = user.party?.quest ?: return
+        if (quest.rsvpNeededWasSpecified) return
+        val oldUser = localRepository.getUser(user.id ?: currentUserID).firstOrNull()
+        quest.rsvpNeeded = oldUser?.party?.quest?.rsvpNeeded ?: false
+    }
+
+    private suspend fun resolveOwnedEquipmentDetails(user: User) {
+        val owned = user.items?.gear?.owned ?: return
+        val thin = owned.filter { it.text.isEmpty() }
+        if (thin.isEmpty()) return
+        val known = inventoryLocalRepository.getEquipment(thin.map { it.key ?: "" }).firstOrNull() ?: return
+        for (item in thin) {
+            val match = known.firstOrNull { it.key == item.key } ?: continue
+            item.text = match.text
+            item.value = match.value
+            item.type = match.type
+            item.klass = match.klass
+            item.specialClass = match.specialClass
+            item.index = match.index
+            item.notes = match.notes
+            item.con = match.con
+            item.str = match.str
+            item.per = match.per
+            item.intelligence = match.intelligence
+            item.twoHanded = match.twoHanded
+            item.mystery = match.mystery
+            item.gearSet = match.gearSet
+        }
+    }
+
     private suspend fun getLiveUser(): User? {
         val user = localRepository.getUser(currentUserID).firstOrNull() ?: return null
         return localRepository.getLiveObject(user)
@@ -516,7 +551,7 @@ class UserRepositoryImpl(
         return mergeUser(oldUser, newUser)
     }
 
-    private fun mergeUser(
+    private suspend fun mergeUser(
         oldUser: User?,
         newUser: User,
     ): User {
@@ -533,6 +568,7 @@ class UserRepositoryImpl(
             copiedUser.inbox = newUser.inbox
         }
         if (newUser.items != null) {
+            resolveOwnedEquipmentDetails(newUser)
             copiedUser.items = newUser.items
         }
         if (newUser.preferences != null) {
@@ -548,6 +584,9 @@ class UserRepositoryImpl(
             copiedUser.profile = newUser.profile
         }
         if (newUser.party != null) {
+            if (newUser.party?.quest?.rsvpNeededWasSpecified == false) {
+                newUser.party?.quest?.rsvpNeeded = oldUser.party?.quest?.rsvpNeeded ?: false
+            }
             copiedUser.party = newUser.party
         }
         copiedUser.needsCron = newUser.needsCron

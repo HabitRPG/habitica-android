@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
@@ -29,7 +28,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserAchievement
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.realm.Realm
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -75,13 +73,6 @@ class UserDeserializer : JsonDeserializer<User> {
             user.party = context.deserialize(partyObj, UserParty::class.java)
             if (user.party != null && user.party?.quest != null) {
                 user.party?.quest?.id = user.id
-                if (!partyObj.getAsJsonObject("quest").has("RSVPNeeded")) {
-                    val realm = Realm.getDefaultInstance()
-                    val quest = realm.where(Quest::class.java).equalTo("id", user.id).findFirst()
-                    if (quest != null && quest.isValid) {
-                        user.party?.quest?.rsvpNeeded = quest.rsvpNeeded
-                    }
-                }
                 if (partyObj.getAsJsonObject("quest").has("completed")) {
                     if (!partyObj.getAsJsonObject("quest").get("completed").isJsonNull) {
                         user.party?.quest?.completed =

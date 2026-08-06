@@ -18,7 +18,7 @@ interface TaskRepository : BaseRepository {
         includedGroupIDs: Array<String>,
     ): Flow<List<Task>>
 
-    fun saveTasks(
+    suspend fun saveTasks(
         userId: String,
         order: TasksOrder,
         tasks: TaskList,

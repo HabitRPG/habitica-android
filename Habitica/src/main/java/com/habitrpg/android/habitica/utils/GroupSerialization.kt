@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupCategory
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.realm.Realm
 import java.lang.reflect.Type
 
 class GroupSerialization :
@@ -85,34 +84,15 @@ class GroupSerialization :
             val questObject = obj.getAsJsonObject("quest")
             if (questObject.has("members")) {
                 val members = obj.getAsJsonObject("quest").getAsJsonObject("members")
-                val realm = Realm.getDefaultInstance()
-                val dbMembers =
-                    realm.copyFromRealm(
-                        realm.where(Member::class.java).equalTo("party.id", group.id).findAll(),
-                    )
-                realm.close()
-                dbMembers.forEach { member ->
-                    if (members.has(member.id)) {
-                        val value = members.get(member.id)
-                        if (value.isJsonNull) {
-                            member.participatesInQuest = null
-                        } else {
-                            member.participatesInQuest = value.asBoolean
-                        }
-                    } else {
-                        member.participatesInQuest = null
-                    }
-                    members.remove(member.id)
-                }
+                // Thin placeholders for the members this payload mentions; SocialRepositoryImpl reconciles them against the full local party roster before persisting.
                 members.entrySet().forEach { (key, value) ->
                     val member = Member()
                     member.id = key
                     if (!value.isJsonNull) {
                         member.participatesInQuest = value.asBoolean
                     }
-                    dbMembers.add(member)
+                    group.quest?.participants?.add(member)
                 }
-                group.quest?.participants?.addAll(dbMembers)
             }
 
             if (questObject.has("extra") && questObject["extra"].asJsonObject.has("worldDmg")) {

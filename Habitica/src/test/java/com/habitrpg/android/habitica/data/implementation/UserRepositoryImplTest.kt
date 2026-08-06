@@ -4,12 +4,17 @@ import android.content.Context
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
+import com.habitrpg.android.habitica.models.social.UserParty
+import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.models.user.Stats
@@ -35,6 +40,7 @@ class UserRepositoryImplTest :
         val taskRepository = mockk<TaskRepository>()
         val appConfigManager = mockk<AppConfigManager>()
         val context = mockk<Context>(relaxed = true)
+        val inventoryLocalRepository = mockk<InventoryLocalRepository>()
         beforeEach {
             every { authenticationHandler.currentUserID } returns "user-1"
             repository =
@@ -45,6 +51,7 @@ class UserRepositoryImplTest :
                     taskRepository,
                     appConfigManager,
                     context,
+                    inventoryLocalRepository,
                 )
         }
         afterEach { clearAllMocks() }
@@ -69,6 +76,61 @@ class UserRepositoryImplTest :
                 result shouldBe oldUser
                 result?.items shouldBe networkUser.items
                 verify { localRepository.saveUser(oldUser, false) }
+            }
+
+            "fill in full equipment details for owned-gear entries that only arrived as a boolean flag" {
+                val oldUser = User().apply { id = "user-1" }
+                val thinOwnedItem = Equipment().apply { key = "sword_1"; owned = true }
+                val networkUser =
+                    User().apply {
+                        id = "user-1"
+                        items = Items().apply { gear = Gear().apply { owned = io.realm.RealmList(thinOwnedItem) } }
+                    }
+                val knownItem = Equipment().apply { key = "sword_1"; text = "Sword"; value = 5.0 }
+                coEvery { apiClient.updateUser(mapOf("preferences.language" to "de")) } returns networkUser
+                every { localRepository.getUser("user-1") } returns flowOf(oldUser)
+                every { localRepository.saveUser(any(), false) } returns Unit
+                coEvery { inventoryLocalRepository.getEquipment(listOf("sword_1")) } returns flowOf(listOf(knownItem))
+                repository.updateUser("preferences.language", "de")
+                thinOwnedItem.text shouldBe "Sword"
+                thinOwnedItem.value shouldBe 5.0
+                thinOwnedItem.owned shouldBe true
+            }
+
+            "inherit the previous quest RSVP state when the response omits RSVPNeeded" {
+                val oldUser =
+                    User().apply {
+                        id = "user-1"
+                        party = UserParty().apply { quest = Quest().apply { rsvpNeeded = true } }
+                    }
+                val networkUser =
+                    User().apply {
+                        id = "user-1"
+                        party = UserParty().apply { quest = Quest().apply { rsvpNeededWasSpecified = false } }
+                    }
+                coEvery { apiClient.updateUser(mapOf("preferences.language" to "de")) } returns networkUser
+                every { localRepository.getUser("user-1") } returns flowOf(oldUser)
+                every { localRepository.saveUser(any(), false) } returns Unit
+                val result = repository.updateUser("preferences.language", "de")
+                result?.party?.quest?.rsvpNeeded shouldBe true
+            }
+
+            "use the response's own RSVPNeeded value when it was explicitly specified" {
+                val oldUser =
+                    User().apply {
+                        id = "user-1"
+                        party = UserParty().apply { quest = Quest().apply { rsvpNeeded = true } }
+                    }
+                val networkUser =
+                    User().apply {
+                        id = "user-1"
+                        party = UserParty().apply { quest = Quest().apply { rsvpNeeded = false; rsvpNeededWasSpecified = true } }
+                    }
+                coEvery { apiClient.updateUser(mapOf("preferences.language" to "de")) } returns networkUser
+                every { localRepository.getUser("user-1") } returns flowOf(oldUser)
+                every { localRepository.saveUser(any(), false) } returns Unit
+                val result = repository.updateUser("preferences.language", "de")
+                result?.party?.quest?.rsvpNeeded shouldBe false
             }
         }
         "resetTutorial" should {

@@ -63,6 +63,8 @@ class QuestDeserializer : JsonDeserializer<Quest> {
         }
         if (obj.has("RSVPNeeded")) {
             quest.rsvpNeeded = obj.get("RSVPNeeded").asBoolean
+        } else {
+            quest.rsvpNeededWasSpecified = false
         }
 
         if (obj.has("members")) {

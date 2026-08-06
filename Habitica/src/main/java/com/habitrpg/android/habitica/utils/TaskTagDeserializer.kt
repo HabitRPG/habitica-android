@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.Tag
-import io.realm.Realm
 import java.lang.reflect.Type
 
 class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
@@ -16,15 +15,6 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
         context: JsonDeserializationContext,
     ): List<Tag> {
         val tags = mutableListOf<Tag>()
-        var databaseTags: List<Tag>
-        try {
-            val realm = Realm.getDefaultInstance()
-            databaseTags = realm.copyFromRealm(realm.where(Tag::class.java).findAll())
-            realm.close()
-        } catch (e: RuntimeException) {
-            // Tests don't have a database
-            databaseTags = ArrayList()
-        }
 
         if (json.isJsonArray) {
             for (tagElement in json.asJsonArray) {
@@ -33,14 +23,8 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
                 } else {
                     try {
                         val tagId = tagElement.asString
-                        for (tag in databaseTags) {
-                            if (tag.id == tagId) {
-                                if (!alreadyContainsTag(tags, tagId)) {
-                                    tags.add(tag)
-                                }
-
-                                break
-                            }
+                        if (!alreadyContainsTag(tags, tagId)) {
+                            tags.add(Tag().apply { id = tagId })
                         }
                     } catch (ignored: UnsupportedOperationException) {
                     }

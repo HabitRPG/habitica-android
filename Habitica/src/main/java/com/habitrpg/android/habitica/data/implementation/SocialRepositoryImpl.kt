@@ -161,9 +161,30 @@ class SocialRepositoryImpl(
 
     override suspend fun retrieveGroup(id: String): Group? {
         val group = apiClient.getGroup(id)
-        group?.let { localRepository.saveGroup(it) }
+        group?.let {
+            resolveQuestParticipants(it)
+            localRepository.saveGroup(it)
+        }
         retrieveGroupChat(id)
         return group
+    }
+
+    private suspend fun resolveQuestParticipants(group: Group) {
+        val declared = group.quest?.participants ?: return
+        if (declared.isEmpty()) return
+        val known = localRepository.getPartyMembers(group.id).firstOrNull() ?: emptyList()
+        val resolved = mutableListOf<Member>()
+        for (member in known) {
+            member.participatesInQuest = declared.firstOrNull { it.id == member.id }?.participatesInQuest
+            resolved.add(member)
+        }
+        for (member in declared) {
+            if (known.none { it.id == member.id }) {
+                resolved.add(member)
+            }
+        }
+        group.quest?.participants?.clear()
+        group.quest?.participants?.addAll(resolved)
     }
 
     override fun getGroup(id: String?): Flow<Group?> {
@@ -192,6 +213,7 @@ class SocialRepositoryImpl(
         }
         val group = apiClient.joinGroup(id)
         group?.let {
+            resolveQuestParticipants(it)
             localRepository.updateMembership(currentUserID, id, true)
             localRepository.save(group)
         }
@@ -213,7 +235,10 @@ class SocialRepositoryImpl(
         group.leaderID = leader
         group.privacy = privacy
         val savedGroup = apiClient.createGroup(group)
-        savedGroup?.let { localRepository.save(it) }
+        savedGroup?.let {
+            resolveQuestParticipants(it)
+            localRepository.save(it)
+        }
         return savedGroup
     }
 

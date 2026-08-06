@@ -68,12 +68,14 @@ class UserRepositoryModule {
         apiClient: ApiClient,
         authenticationHandler: AuthenticationHandler,
         appConfigManager: AppConfigManager,
+        tagRepository: TagRepository,
     ): TaskRepository =
         TaskRepositoryImpl(
             localRepository,
             apiClient,
             authenticationHandler,
             appConfigManager,
+            tagRepository,
         )
 
     @Provides
@@ -107,6 +109,7 @@ class UserRepositoryModule {
         taskRepository: TaskRepository,
         appConfigManager: AppConfigManager,
         @ApplicationContext context: Context,
+        inventoryLocalRepository: InventoryLocalRepository,
     ): UserRepository =
         UserRepositoryImpl(
             localRepository,
@@ -115,6 +118,7 @@ class UserRepositoryModule {
             taskRepository,
             appConfigManager,
             context,
+            inventoryLocalRepository,
         )
 
     @Provides
