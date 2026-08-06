@@ -3,29 +3,16 @@ package com.habitrpg.android.habitica.data.local.implementation
 import com.habitrpg.android.habitica.data.local.FAQLocalRepository
 import com.habitrpg.android.habitica.models.FAQArticle
 import io.realm.Realm
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.mapNotNull
 
 class RealmFAQLocalRepository(
     realm: Realm,
 ) : RealmContentLocalRepository(realm),
     FAQLocalRepository {
-    override fun getArticle(position: Int): Flow<FAQArticle> =
-        realm
-            .where(FAQArticle::class.java)
-            .equalTo("position", position)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded && it.count() > 0 }
-            .mapNotNull { it.firstOrNull() }
+    override fun getArticle(position: Int): Flow<FAQArticle> = safeFindOne {
+        it.where(FAQArticle::class.java).equalTo("position", position)
+    }
 
     override val articles: Flow<List<FAQArticle>>
-        get() =
-            realm
-                .where(FAQArticle::class.java)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+        get() = safeFindAll { it.where(FAQArticle::class.java) }
 }

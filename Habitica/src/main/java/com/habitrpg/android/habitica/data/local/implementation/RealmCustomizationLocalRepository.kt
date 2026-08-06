@@ -3,9 +3,7 @@ package com.habitrpg.android.habitica.data.local.implementation
 import com.habitrpg.android.habitica.data.local.CustomizationLocalRepository
 import com.habitrpg.android.habitica.models.inventory.Customization
 import io.realm.Realm
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import java.util.Date
 
 class RealmCustomizationLocalRepository(
@@ -16,7 +14,7 @@ class RealmCustomizationLocalRepository(
         type: String,
         category: String?,
         onlyAvailable: Boolean,
-    ): Flow<List<Customization>> {
+    ): Flow<List<Customization>> = safeFindAll { realm ->
         var query =
             realm
                 .where(Customization::class.java)
@@ -38,10 +36,6 @@ class RealmCustomizationLocalRepository(
                     .endGroup()
                     .endGroup()
         }
-        return query
-            .sort("customizationSet")
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        query.sort("customizationSet")
     }
 }

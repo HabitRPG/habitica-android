@@ -8,13 +8,10 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import io.realm.Realm
 import io.realm.Sort
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 
 class RealmChallengeLocalRepository(
     realm: Realm,
@@ -24,97 +21,69 @@ class RealmChallengeLocalRepository(
         userID: String,
         challengeID: String,
     ): Flow<Boolean> =
-        realm
-            .where(ChallengeMembership::class.java)
+        safeFindAll { it.where(ChallengeMembership::class.java)
             .equalTo("userID", userID)
-            .equalTo("challengeID", challengeID)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+            .equalTo("challengeID", challengeID) }
             .map { it.count() > 0 }
 
     override fun getChallengeMembership(
         userId: String,
         id: String,
-    ) = realm
-        .where(ChallengeMembership::class.java)
-        .equalTo("userID", userId)
-        .equalTo("challengeID", id)
-        .findAll()
-        .toFlow()
-        .filter { it.isLoaded }
-        .mapNotNull { it.first() }
-
-    override fun getChallengeMemberships(userId: String) =
-        realm
-            .where(ChallengeMembership::class.java)
+    ) = safeFindOne {
+        it.where(ChallengeMembership::class.java)
             .equalTo("userID", userId)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+            .equalTo("challengeID", id)
+    }
 
-    override fun getChallenge(id: String): Flow<Challenge> =
-        realm
-            .where(Challenge::class.java)
-            .equalTo("id", id)
-            .findAll()
-            .toFlow()
-            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-            .mapNotNull { it.first() }
+    override fun getChallengeMemberships(userId: String) = safeFindAll {
+        it.where(ChallengeMembership::class.java).equalTo("userID", userId)
+    }
 
-    override fun getTasks(challengeID: String): Flow<List<Task>> =
-        realm
-            .where(Task::class.java)
+    override fun getChallenge(id: String): Flow<Challenge> = safeFindOne {
+        it.where(Challenge::class.java).equalTo("id", id)
+    }
+
+    override fun getTasks(challengeID: String): Flow<List<Task>> = safeFindAll {
+        it.where(Task::class.java)
             .equalTo("ownerID", challengeID)
-            .findAll()
-            .toFlow()
-            .filter { realmObject -> realmObject.isLoaded }
+    }
 
     override val challenges: Flow<List<Challenge>>
-        get() =
-            realm
-                .where(Challenge::class.java)
+        get() = safeFindAll {
+            it.where(Challenge::class.java)
                 .isNotNull("name")
                 .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getUserChallenges(userId: String): Flow<List<Challenge>> {
-        return realm
-            .where(ChallengeMembership::class.java)
+    override fun getUserChallenges(userId: String): Flow<List<Challenge>> = safeFindAll {
+        it.where(ChallengeMembership::class.java)
             .equalTo("userID", userId)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+    }
             .flatMapLatest { it ->
                 val ids =
                     it
                         .map {
                             return@map it.challengeID
                         }.toTypedArray()
-                realm
-                    .where(Challenge::class.java)
-                    .isNotNull("name")
-                    .beginGroup()
-                    .`in`("id", ids)
-                    .or()
-                    .equalTo("leaderId", userId)
-                    .endGroup()
-                    .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
-                    .findAll()
-                    .toFlow()
-                    .filter { it.isLoaded }
+                safeFindAll {
+                    it.where(Challenge::class.java)
+                        .isNotNull("name")
+                        .beginGroup()
+                        .`in`("id", ids)
+                        .or()
+                        .equalTo("leaderId", userId)
+                        .endGroup()
+                        .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
+                }
             }
-    }
 
     override fun setParticipating(
         userID: String,
         challengeID: String,
         isParticipating: Boolean,
     ) {
-        val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
+        val user = safeQuery { it.where(User::class.java).equalTo("id", userID) }?.findFirst() ?: return
         executeTransaction {
             if (isParticipating) {
                 user.challenges?.add(ChallengeMembership(userID, challengeID))
@@ -154,11 +123,7 @@ class RealmChallengeLocalRepository(
         executeTransaction { realm1 -> realm1.insertOrUpdate(challenges) }
     }
 
-    override fun getCategoryOptions(): Flow<List<CategoryOption>> =
-        realm
-            .where(CategoryOption::class.java)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
-            .map { it.toList() }
+    override fun getCategoryOptions(): Flow<List<CategoryOption>> = safeFindAll {
+        it.where(CategoryOption::class.java)
+    }
 }

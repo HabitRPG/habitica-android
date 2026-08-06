@@ -4,10 +4,7 @@ import com.habitrpg.android.habitica.data.local.ContentLocalRepository
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import io.realm.Realm
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.mapNotNull
 
 open class RealmContentLocalRepository(
     realm: Realm,
@@ -38,14 +35,9 @@ open class RealmContentLocalRepository(
         }
     }
 
-    override fun getWorldState(): Flow<WorldState> =
-        realm
-            .where(WorldState::class.java)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded && it.isNotEmpty() }
-            .mapNotNull { it.first() }
-            .filter { it.isValid }
+    override fun getWorldState(): Flow<WorldState> = safeFindOne {
+        it.where(WorldState::class.java)
+    }
 
     override fun saveWorldState(worldState: WorldState) {
         save(worldState)

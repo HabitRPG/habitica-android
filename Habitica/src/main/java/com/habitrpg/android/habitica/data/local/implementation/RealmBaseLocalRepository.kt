@@ -1,17 +1,18 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository
+import com.habitrpg.android.habitica.extensions.findAllAsFlow
+import com.habitrpg.android.habitica.extensions.findOneAsFlow
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
 import io.realm.Realm
 import io.realm.RealmModel
 import io.realm.RealmObject
+import io.realm.RealmQuery
 import io.realm.kotlin.deleteFromRealm
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.emptyFlow
 import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class RealmBaseLocalRepository internal constructor(
@@ -141,12 +142,22 @@ abstract class RealmBaseLocalRepository internal constructor(
             .findFirst() as? T
     }
 
-    fun queryUser(userID: String): Flow<User?> =
-        realm
+    fun queryUser(userID: String) = realm
             .where(User::class.java)
             .equalTo("id", userID)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded && it.isValid && !it.isEmpty() }
-            .map { it.firstOrNull() }
+            .findOneAsFlow()
+
+    internal fun <T: RealmModel> safeQuery(queryBuilder: (Realm) -> RealmQuery<T>): RealmQuery<T>? =
+        if (isClosed) {
+            null
+        } else {
+            queryBuilder(realm)
+        }
+
+
+    internal fun <T: RealmModel> safeFindAll(queryBuilder: (Realm) -> RealmQuery<T>): Flow<List<T>> =
+        safeQuery { queryBuilder(it) }?.findAllAsFlow() ?: emptyFlow()
+
+    internal fun <T: RealmModel> safeFindOne(queryBuilder: (Realm) -> RealmQuery<T>): Flow<T> =
+        safeQuery { queryBuilder(it) }?.findOneAsFlow() ?: emptyFlow()
 }
