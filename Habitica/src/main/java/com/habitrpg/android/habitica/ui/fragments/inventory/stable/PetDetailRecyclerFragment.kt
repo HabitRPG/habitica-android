@@ -30,6 +30,7 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -252,10 +253,14 @@ class PetDetailRecyclerFragment :
     ): FeedResponse? {
         if (food != null) {
             val context = mainActivity ?: context ?: return null
+            val egg = (inventoryRepository.getItem("eggs", pet.animal).first() as? Egg) ?: return null
+            val potion = (inventoryRepository.getItem("hatchingPotions", pet.color).first() as? HatchingPotion) ?: return null
             val response =
                 feedPetUseCase.callInteractor(
                     FeedPetUseCase.RequestValues(
                         pet,
+                        egg,
+                        potion,
                         food,
                         context,
                     ),

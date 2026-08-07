@@ -43,6 +43,7 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -271,10 +272,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         val pet = feedingPet ?: return
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
+            val egg = (inventoryRepository.getItem("eggs", pet.animal).first() as? Egg) ?: return@launchCatching
+            val potion = (inventoryRepository.getItem("hatchingPotions", pet.color).first() as? HatchingPotion) ?: return@launchCatching
             val result =
                 feedPetUseCase.callInteractor(
                     FeedPetUseCase.RequestValues(
                         pet,
+                        egg,
+                        potion,
                         food,
                         activity,
                     ),

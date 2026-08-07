@@ -9,7 +9,9 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.MountImageviewBinding
+import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
+import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
@@ -52,7 +54,7 @@ class FeedPetUseCase
                 dialog.setTitle(
                     requestValues.context.getString(
                         R.string.evolved_pet_title,
-                        requestValues.pet.text,
+                         "${requestValues.potion.text} ${requestValues.egg.mountText}",
                     ),
                 )
                 dialog.isCelebratory = true
@@ -62,7 +64,7 @@ class FeedPetUseCase
                     val message =
                         requestValues.context.getString(
                             R.string.share_raised,
-                            requestValues.pet.text,
+                            "${requestValues.potion.text} ${requestValues.egg.mountText}",
                         )
                     MainScope().launchCatching {
                         ShareMountUseCase().callInteractor(
@@ -82,6 +84,8 @@ class FeedPetUseCase
 
         class RequestValues(
             val pet: Pet,
+            val egg: Egg,
+            val potion: HatchingPotion,
             val food: Food,
             val context: Context,
         ) : UseCase.RequestValues

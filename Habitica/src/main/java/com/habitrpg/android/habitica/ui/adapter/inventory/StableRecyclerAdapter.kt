@@ -259,7 +259,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val egg = eggs[item.animal]
             titleView.text =
                 if (egg != null) {
-                    if (item.type == "drop" || itemType == "mounts") egg.mountText else egg.text
+                    if (itemType == "mounts") egg.mountText else egg.text
                 } else {
                     item.animal
                 }

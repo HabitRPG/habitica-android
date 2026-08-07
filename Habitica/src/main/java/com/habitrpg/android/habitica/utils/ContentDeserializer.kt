@@ -44,13 +44,15 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             result.quests.add(context.deserialize(entry.value, QuestContent::class.java))
             result.quests.forEach { it.key = it.key }
         }
-        for (entry in obj.get("eggs").asJsonObject.entrySet()) {
+        val eggs = obj.get("eggs").asJsonObject
+        for (entry in eggs.entrySet()) {
             result.eggs.add(context.deserialize(entry.value, Egg::class.java))
         }
         for (entry in obj.get("food").asJsonObject.entrySet()) {
             result.food.add(context.deserialize(entry.value, Food::class.java))
         }
-        for (entry in obj.get("hatchingPotions").asJsonObject.entrySet()) {
+        val potions = obj.get("hatchingPotions").asJsonObject
+        for (entry in potions.entrySet()) {
             result.hatchingPotions.add(context.deserialize(entry.value, HatchingPotion::class.java))
         }
 
@@ -61,7 +63,9 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             pet.animal = petObj.getAsString("egg")
             pet.color = petObj.getAsString("potion")
             pet.key = petObj.getAsString("key")
-            pet.text = petObj.getAsString("text")
+            val egg = if (eggs.has(pet.animal)) eggs.getAsJsonObject(pet.animal).getAsString("text") else null
+            val potion = if (potions.has(pet.color)) potions.getAsJsonObject(pet.color).getAsString("text") else null
+            pet.text = if (egg != null && potion != null) "$potion $egg" else petObj.getAsString("text")
             pet.type = petObj.getAsString("type")
             if (pet.type == "premium") {
                 pet.premium = true
@@ -76,7 +80,9 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             mount.animal = mountObj.getAsString("egg")
             mount.color = mountObj.getAsString("potion")
             mount.key = mountObj.getAsString("key")
-            mount.text = mountObj.getAsString("text")
+            val egg = if (eggs.has(mount.animal)) eggs.getAsJsonObject(mount.animal).getAsString("mountText") else null
+            val potion = if (potions.has(mount.color)) potions.getAsJsonObject(mount.color).getAsString("text") else null
+            mount.text = if (egg != null && potion != null) "$potion $egg" else mountObj.getAsString("text")
             mount.type = mountObj.getAsString("type")
             if (mount.type == "premium") {
                 mount.premium = true
