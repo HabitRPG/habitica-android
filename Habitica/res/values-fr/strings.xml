@@ -431,8 +431,8 @@
     <string name="quest_abort_message">Voulez-vous vraiment annuler cette mission ? Cela l\'annulera pour tout le   monde dans l\'équipe et toute avancée sera perdue. Le parchemin de quête retournera à son propriétaire. </string>
     <string name="reloading_content">Recharger le contenu</string>
     <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">mo</string>
-    <string name="billion_abbrev">ma</string>
+    <string name="million_abbrev">M</string>
+    <string name="billion_abbrev">G</string>
     <string name="available_until">Disponible jusqu\'au %s</string>
     <string name="gems_left_max">Gemmes mensuelles : %1$d/%2$d restantes</string>
     <string name="gems_left_nomax">Gemmes mensuelles : %d restantes</string>
@@ -730,7 +730,7 @@
     <string name="left_guild">Vous avez quitté la guilde</string>
     <string name="leave_guild_confirmation">Voulez-vous quitter la guilde \?</string>
     <string name="leave_guild">Quitter la guilde</string>
-    <string name="trillion_abbrev">t</string>
+    <string name="trillion_abbrev">T</string>
     <string name="report_violation">Signaler une infraction</string>
     <string name="i_agree_to_follow_the_guidelines">J\'accepte de suivre les règles</string>
     <string name="garden">Botanique</string>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">mo</string>
-    <string name="billion_abbrev">ma</string>
-    <string name="trillion_abbrev">t</string>
+    <string name="million_abbrev">M</string>
+    <string name="billion_abbrev">G</string>
+    <string name="trillion_abbrev">T</string>
     <string name="mystic_hourglasses">Sabliers mystiques</string>
     <string name="repeat_daily">Quotidiennement</string>
     <string name="monthly">Mensuellement</string>
@@ -66,7 +66,7 @@
     <string name="medium_sentence">moyen</string>
     <string name="hard_sentence">difficile</string>
     <string name="rewards">Récompenses</string>
-    <string name="quadrillion_abbrev">q</string>
+    <string name="quadrillion_abbrev">P</string>
     <string name="password">Mot de passe</string>
     <string name="gold_plural">or</string>
     <string name="gold_capitalized">Or</string>
