@@ -897,7 +897,7 @@
     <string name="lets_go">Vamos lá</string>
     <string name="bugs_fixes_description">Algo deu errado\? Verifique as respostas aqui ou entre em contato conosco para obter ajuda.</string>
     <string name="bugs_fixes"><![CDATA[Bugs &amp; Correções]]></string>
-    <string name="suggestions_feedback">Sugestões &amp; Comentários</string>
+    <string name="suggestions_feedback"><![CDATA[Sugestões &amp; Comentários]]></string>
     <string name="get_help">Obter ajuda</string>
     <string name="contact_us">Contate-nos</string>
     <string name="suggestions_feedback_description">Você tem informações sobre como os recursos podem funcionar melhor ou uma ideia para algo novo\? Conte-nos!</string>
