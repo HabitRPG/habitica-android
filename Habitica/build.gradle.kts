@@ -157,6 +157,7 @@ android {
         release {
             signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isDebuggable = false
+            isShrinkResources = true
             optimization {
                 enable = true
             }
