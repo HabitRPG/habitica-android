@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="gems">جواهر</string>
+    <string name="gold_plural">ذهب</string>
+    <string name="gold_capitalized">ذهب</string>
 </resources>
