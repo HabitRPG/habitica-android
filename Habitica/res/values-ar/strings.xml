@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_refresh">تحديث</string>
+    <string name="thousand_abbrev">ألف</string>
+    <string name="million_abbrev">مليون</string>
+    <string name="billion_abbrev">مليار</string>
+    <string name="trillion_abbrev">ترليون</string>
 </resources>
