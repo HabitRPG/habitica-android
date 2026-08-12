@@ -5,4 +5,12 @@
     <string name="million_abbrev">مليون</string>
     <string name="billion_abbrev">مليار</string>
     <string name="trillion_abbrev">ترليون</string>
+    <plurals name="repeat_daily">
+        <item quantity="zero">كل 0 أيام</item>
+        <item quantity="one">كل يوم</item>
+        <item quantity="two">كل يومين</item>
+        <item quantity="few">كل %d أيام</item>
+        <item quantity="many">كل %d يوما</item>
+        <item quantity="other">كل %d يوم</item>
+    </plurals>
 </resources>
