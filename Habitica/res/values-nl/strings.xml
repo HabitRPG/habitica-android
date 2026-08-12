@@ -267,14 +267,14 @@
     <string name="choose_recipient_title">Kies een ontvanger voor het bericht</string>
     <string name="action_continue">Ga verder</string>
     <string name="invited_to_party">Je bent uitgenodigd voor een groep!</string>
-    <string name="stats_widget_label">Habitica-statistieken</string>
+    <string name="stats_widget_label">Jouw statistieken</string>
     <string name="add_task">Voeg taak toe</string>
     <string name="add_habit">Voeg Gewoonte toe</string>
     <string name="add_daily">Voeg Dagelijkse taak toe</string>
     <string name="add_todo">Voeg To-Do toe</string>
     <string name="add_reward">Voeg Beloning toe</string>
     <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
-    <string name="widget_habit_button">Habitica Doe Gewoonte</string>
+    <string name="widget_habit_button">Enkele Gewoonte</string>
     <string name="widget_dailies">Habitica Dagelijkse taken</string>
     <string name="widget_todo_list">Habitica to-do lijst</string>
     <string name="google_services_missing">Google play diensten niet gevonden.</string>
@@ -1334,7 +1334,7 @@
     <string name="search_equipment">Uitrusting Zoeken</string>
     <string name="see_more">Lees Meer</string>
     <string name="error_loading_member">Speler niet gevonden</string>
-    <string name="avatar_widget_label">Habitica Personage</string>
+    <string name="avatar_widget_label">Jouw Personage</string>
     <string name="server_url_invalid">Voer een geldige URL in</string>
     <string name="rebirth_confirm_title">Weet je zeker dat je de Bol der Hergeboorte wilt gebruiken\?</string>
     <string name="go_back">Ga Terug</string>
@@ -1382,4 +1382,5 @@
     <string name="positive_and_negative">Positief en negatief</string>
     <string name="exclusive_items_await">Er staan wachten exclusief voorwerpen en cadeau\'s voor je</string>
     <string name="sub_perk">ABONNEMENTSVOORDEEL</string>
+    <string name="widget_dailies_count">Dagelijkse samenvatting</string>
 </resources>
