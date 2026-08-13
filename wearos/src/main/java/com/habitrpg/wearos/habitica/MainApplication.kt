@@ -9,6 +9,7 @@ import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
+import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
 import com.habitrpg.wearos.habitica.ui.activities.LoginActivity
@@ -39,6 +40,7 @@ class MainApplication : Application() {
 
         MainScope().launch {
             userRepository.getUser()
+                .onEach { applyAnalyticsConsent(it) }
                 .filterNotNull()
                 .onEach {
                     if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
@@ -58,10 +60,14 @@ class MainApplication : Application() {
     private fun setupFirebase() {
         if (!BuildConfig.DEBUG) {
             val crashlytics = Firebase.crashlytics
-            if (userRepository.hasAuthentication) {
-                crashlytics.setUserId(userRepository.userID)
-            }
+            crashlytics.setUserId("")
             crashlytics.setCustomKey("is_wear", true)
         }
+    }
+
+    private fun applyAnalyticsConsent(user: User?) {
+        if (BuildConfig.DEBUG) return
+        val hasConsent = user?.preferences?.analyticsConsent == true && userRepository.hasAuthentication
+        Firebase.crashlytics.setUserId(if (hasConsent) userRepository.userID else "")
     }
 }

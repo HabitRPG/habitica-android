@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.os.bundleOf
+import androidx.preference.PreferenceManager
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
@@ -29,9 +30,12 @@ enum class HitType(val key: String) {
 }
 
 object Analytics {
+    private const val CONSENT_PREFERENCE_KEY = "analytics_consent_given"
+
     private lateinit var amplitude: Amplitude
     private var hasConsent: Boolean = false
     private var isInitialized: Boolean = false
+    private var knownUserID: String? = null
 
     @JvmOverloads
     fun sendEvent(
@@ -81,8 +85,11 @@ object Analytics {
                     optOut = true,
                 )
             )
-        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = false
         isInitialized = true
+        applyConsent(
+            PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(CONSENT_PREFERENCE_KEY, false)
+        )
     }
 
     fun identify(sharedPrefs: SharedPreferences) {
@@ -101,17 +108,27 @@ object Analytics {
     }
 
     fun setUserID(userID: String) {
+        knownUserID = userID.ifBlank { null }
         if (!hasConsent || !isInitialized) {
-            FirebaseCrashlytics.getInstance().setUserId(userID)
+            clearIdentity()
             return
         }
+        applyIdentity(userID)
+    }
+
+    fun clearUserID() {
+        knownUserID = null
+        clearIdentity()
+    }
+
+    private fun applyIdentity(userID: String) {
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.setUserId(userID)
         }
         FirebaseCrashlytics.getInstance().setUserId(userID)
     }
-    
-    fun clearUserID() {
+
+    private fun clearIdentity() {
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.setUserId(null)
         }
@@ -131,6 +148,9 @@ object Analytics {
     }
 
     fun logError(msg: String) {
+        if (!hasConsent) {
+            return
+        }
         FirebaseCrashlytics.getInstance().log(msg)
     }
 
@@ -139,16 +159,31 @@ object Analytics {
     }
 
     fun setAnalyticsConsent(consents: Boolean?) {
-        val isEnabled = consents == true
+        applyConsent(consents == true)
+    }
+
+    private fun applyConsent(isEnabled: Boolean) {
+        val wasEnabled = hasConsent
         hasConsent = isEnabled
-        
+
         if (!isInitialized) {
             return
         }
-        
+
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
         executeLambda(AnalyticsTarget.AMPLITUDE) {
             amplitude.configuration.optOut = !isEnabled
+        }
+
+        val userID = knownUserID
+        if (isEnabled && userID != null) {
+            applyIdentity(userID)
+        } else {
+            clearIdentity()
+        }
+
+        if (wasEnabled && !isEnabled) {
+            FirebaseCrashlytics.getInstance().deleteUnsentReports()
         }
     }
 
