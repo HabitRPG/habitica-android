@@ -5,17 +5,18 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.Skill
+import io.realm.RealmList
 import java.lang.reflect.Type
 
-class SkillDeserializer : JsonDeserializer<List<Skill>> {
+class SkillDeserializer : JsonDeserializer<RealmList<Skill>> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         type: Type,
         context: JsonDeserializationContext,
-    ): List<Skill> {
+    ): RealmList<Skill> {
         val jsonObject = json.asJsonObject
-        val skills = ArrayList<Skill>()
+        val skills = RealmList<Skill>()
         for ((classname, value) in jsonObject.entrySet()) {
             for ((_, value1) in value.asJsonObject.entrySet()) {
                 val skillObject = value1.asJsonObject

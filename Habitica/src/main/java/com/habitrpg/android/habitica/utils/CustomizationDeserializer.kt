@@ -7,11 +7,12 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import io.realm.RealmList
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
+class CustomizationDeserializer : JsonDeserializer<RealmList<Customization>> {
     private val formatter = SimpleDateFormat("MMMM")
     private val calendar = Calendar.getInstance()
 
@@ -20,9 +21,9 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         json: JsonElement,
         typeOfT: Type,
         context: JsonDeserializationContext,
-    ): List<Customization> {
+    ): RealmList<Customization> {
         val jsonObject = json.asJsonObject
-        val customizations = mutableListOf<Customization>()
+        val customizations = RealmList<Customization>()
 
         if (jsonObject.has("shirt")) {
             for (type in listOf("shirt", "skin", "chair")) {

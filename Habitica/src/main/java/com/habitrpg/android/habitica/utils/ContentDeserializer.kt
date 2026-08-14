@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.social.CategoryOption
+import io.realm.RealmList
 import java.lang.reflect.Type
 
 class ContentDeserializer : JsonDeserializer<ContentResult> {
@@ -142,12 +143,12 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.appearances =
             context.deserialize(
                 obj.get("appearances"),
-                object : TypeToken<List<Customization>>() {}.type,
+                object : TypeToken<RealmList<Customization>>() {}.type,
             )
         result.backgrounds =
             context.deserialize(
                 obj.get("backgrounds"),
-                object : TypeToken<List<Customization>>() {}.type,
+                object : TypeToken<RealmList<Customization>>() {}.type,
             )
         val noBackground = Customization()
         noBackground.customizationSet = "incentiveBackgrounds"
@@ -158,7 +159,7 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.backgrounds.add(noBackground)
 
         result.faq =
-            context.deserialize(obj.get("faq"), object : TypeToken<List<FAQArticle>>() {}.type)
+            context.deserialize(obj.get("faq"), object : TypeToken<RealmList<FAQArticle>>() {}.type)
         deserializeTrace.stop()
         return result
     }

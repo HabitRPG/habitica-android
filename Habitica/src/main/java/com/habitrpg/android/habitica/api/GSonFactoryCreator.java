@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.GroupAssignedDetails;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.user.Gear;
 import com.habitrpg.android.habitica.models.user.OwnedItem;
 import com.habitrpg.android.habitica.models.user.OwnedMount;
 import com.habitrpg.android.habitica.models.user.OwnedPet;

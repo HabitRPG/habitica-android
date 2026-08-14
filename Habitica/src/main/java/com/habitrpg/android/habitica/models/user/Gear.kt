@@ -12,7 +12,7 @@ open class Gear :
     RealmObject(),
     BaseObject,
     AvatarGear {
-    var owned: RealmList<Equipment>? = null
+    var owned: RealmList<Equipment>? = RealmList()
     override var equipped: Outfit? = null
     override var costume: Outfit? = null
 }

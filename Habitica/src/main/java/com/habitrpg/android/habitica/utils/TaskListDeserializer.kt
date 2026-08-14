@@ -21,11 +21,12 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
         val taskMap = HashMap<String, Task>()
         val deserializeTrace =
             try {
-                FirebasePerformance.getInstance().newTrace("TaskListDeserialize").apply { start() }
+                FirebasePerformance.getInstance().newTrace("TaskListDeserialize")
             } catch (ignored: IllegalStateException) {
                 // Firebase isn't initialized outside a running app process (e.g. unit tests)
                 null
             }
+        deserializeTrace?.start()
 
         for (e in json.asJsonArray) {
             try {
