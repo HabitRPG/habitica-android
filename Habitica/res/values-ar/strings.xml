@@ -522,7 +522,7 @@
     <string name="maintenance">صيانة</string>
     <string name="reload_content">إعادة تحميل المحتوى</string>
     <string name="dailyDueDefaultView">اضبط الإعدادات اليومية على علامة التبويب \"مستحق\" كإعداد افتراضي</string>
-    <string name="dailyDueDefaultViewDescription">عند تفعيل هذا الخيار، ستُعرض المهام اليومية افتراضياً على أنها \"مستحقة\" بدلاً من \"الكل\".</string>
+    <string name="dailyDueDefaultViewDescription">عند تفعيل هذا الخيار، ستُعرض المهام اليومية افتراضياً على أنها \"مستحقة\" بدلاً من \"الكل\"</string>
     <string name="no_billing_gems">لا يحتوي جوالك على أي من طرق الدفع المدعومة. يُرجى استخدام موقع Habitica الإلكتروني إذا كنت ترغب في شراء الجواهر.</string>
     <string name="no_billing_subscriptions">لا يحتوي جوالك على أي من طرق الدفع المدعومة. يُرجى استخدام موقع Habitica الإلكتروني إذا كنت ترغب في شراء اشتراك.</string>
     <string name="save">حفظ</string>
