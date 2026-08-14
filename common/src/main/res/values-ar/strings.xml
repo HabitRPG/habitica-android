@@ -37,7 +37,7 @@
     <string name="action_edit">تعديل</string>
     <string name="action_cancel">إلغاء</string>
     <string name="login_btn">تسجيل الدخول</string>
-    <string name="register_btn">إنشاء حساب</string>
+    <string name="register_btn">يسجل</string>
     <string name="username">اسم المستخدم</string>
     <string name="email_username">البريد الإلكتروني/اسم المستخدم</string>
     <string name="password">كلمة المرور</string>
