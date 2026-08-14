@@ -4,4 +4,5 @@
     <string name="save">حفظ</string>
     <string name="ok">موافق</string>
     <string name="create_account">إنشاء حساب</string>
+    <string name="x_and_y">%1sو%2s</string>
 </resources>

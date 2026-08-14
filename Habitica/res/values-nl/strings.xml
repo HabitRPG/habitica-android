@@ -1383,4 +1383,13 @@
     <string name="exclusive_items_await">Er staan wachten exclusief voorwerpen en cadeau\'s voor je</string>
     <string name="sub_perk">ABONNEMENTSVOORDEEL</string>
     <string name="widget_dailies_count">Dagelijkse samenvatting</string>
+    <string name="rebirth_enabled_description">Gebruik de Bol der Hergeboorte om je Habitica avontuur nieuw leven in te blazen als je het gevoel hebt dat je alles bereikt hebt! Begin opnieuw bij level 1 met je huidige taken, Prestaties, and Huisdieren, door dit speciale voorwerp van de Marktplaats te gebruiken.</string>
+    <string name="rebirth_achievement_title">Je bent Herboren!</string>
+    <string name="rebirth_achievement_description">Je bent een nieuw avontuur begonnen! Dit is Wedergeboorte nummer %1$d voor jouw, en het hoogste level dat je hebt behaald is %2$d.</string>
+    <string name="rebirth_achievement_description_max">Je bent een nieuw avontuur begonnen! Dit is Wedergeboorte nummer %1$d voor jouw, en het hoogste level dat je hebt behaald is %2$d of hoger.</string>
+    <string name="quest_leave_message">Weet je zeker dat je de Queeste wil verlaten? Je raakt dan al je voortgang kwijt.</string>
+    <string name="quest_leave_message_nostart">Weet je zeker dat je de Queeste wil verlaten? Je kan dan niet meedoen.</string>
+    <string name="launch_screen">Opstartscherm</string>
+    <string name="successful_purchase_generic">Aankoop succesvol</string>
+    <string name="on_weekends">in het weekend</string>
 </resources>
