@@ -50,7 +50,7 @@ class FlashExtraGemsHabiticaPromotion(
 
     override fun configureInfoFragment(fragment: PromoInfoFragment) {
         super.configureInfoFragment(fragment)
-        fragment.binding?.promptText?.setText(R.string.fall_promo_info_prompt)
+        fragment.binding?.promptText?.setText(R.string.flash_promo_info_prompt)
         fragment.binding?.promoBannerSubtitleView?.setTextColor("#FEDEAD".toColorInt())
     }
 }

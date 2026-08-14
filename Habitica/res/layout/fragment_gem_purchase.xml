@@ -148,6 +148,12 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 style="@style/GemPurchaseListItem" />
+        <TextView
+            android:text="@string/gem_purchase_listitem5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            style="@style/GemPurchaseListItem" />
 
             <TextView
                 android:text="@string/gem_purchase_listitem4"

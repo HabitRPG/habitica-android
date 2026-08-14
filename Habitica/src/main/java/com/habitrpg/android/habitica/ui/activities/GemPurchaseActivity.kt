@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.activity.SystemBarStyle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -28,7 +27,6 @@ class GemPurchaseActivity : PurchaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_gem_purchase
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        navigationBarStyle = SystemBarStyle.dark(ContextCompat.getColor(this, R.color.brand_200))
         showSubscription =
             !(intent.extras?.containsKey("openSubscription") == true && intent.extras?.getBoolean("openSubscription") == false)
         super.onCreate(savedInstanceState)

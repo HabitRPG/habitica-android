@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:fontFamily="@string/font_family_medium"
             android:textColor="@color/white"
             android:layout_marginTop="4dp"
@@ -107,8 +107,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="16sp"
-            android:textColor="@color/text_quad"
-            android:lineSpacingExtra="3dp"/>
+            android:textColor="@color/text_ternary"
+            android:lineSpacingExtra="5dp"/>
 
         <TextView
             android:id="@+id/limitations_title_view"
@@ -127,8 +127,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="16sp"
-            android:textColor="@color/text_quad"
+            android:textColor="@color/text_ternary"
             tools:text="This is some text"
-            android:lineSpacingExtra="3dp"/>
+            android:lineSpacingExtra="5dp"/>
     </LinearLayout>
 </com.habitrpg.android.habitica.ui.views.HabiticaScrollView>

@@ -697,6 +697,9 @@ class PurchaseHandler(
         }
 
         private fun removeGift(sku: String?): Triple<Date, String, String>? {
+            if (sku == null || !pendingGifts.contains(sku)) {
+                return null
+            }
             val gift = pendingGifts.remove(sku)
             savePendingGifts()
             return gift

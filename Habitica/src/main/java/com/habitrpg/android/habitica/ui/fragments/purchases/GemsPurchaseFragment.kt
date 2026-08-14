@@ -93,6 +93,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
                     promo.configureGemView(it.gems84View.binding, 84)
                 }
                 binding?.root?.setBackgroundColor(promo.screenBackgroundColor(requireContext()))
+                binding?.giftGemsButton?.setBackgroundColor(promo.backgroundColor(requireContext()))
                 requireActivity().findViewById<View>(R.id.appbar).setBackgroundColor(promo.screenBackgroundColor(requireContext()))
             }
             binding?.promoBanner?.setOnClickListener {
