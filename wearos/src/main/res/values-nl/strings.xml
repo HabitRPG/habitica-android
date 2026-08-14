@@ -3,12 +3,12 @@
     <string name="ok">Oké</string>
     <string name="syncing_account">Synchroniseer account van telefoon</string>
     <string name="how_did_you_do">Hoe ging het\?</string>
-    <string name="you_found">Je vond…</string>
+    <string name="you_found">Je hebt gevonden…</string>
     <string name="one_quest_item">1 Queeste item</string>
     <string name="x_quest_item">%d Queeste items</string>
     <string name="x_and_y">%1$s en %2$s</string>
     <string name="some_x">wat %s</string>
-    <string name="edit_on_phone">Bewerken op telefoon</string>
+    <string name="edit_on_phone">Bewerk op mobiele telefoon</string>
     <string name="continue_text">Doorgaan</string>
     <string name="you_ran_out_of_hp">Je hebt geen HP meer</string>
     <string name="faint_description">Je verliest een Niveau, Ervaring en Goud. Niet opgeven!</string>
