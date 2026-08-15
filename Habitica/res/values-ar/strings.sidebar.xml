@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="sidebar_tasks">المهام</string>
+    <string name="sidebar_skills">المهارات</string>
+    <string name="sidebar_section_social">اجتماعي</string>
+    <string name="sidebar_inbox">الرسائل</string>
+    <string name="sidebar_party">الفريق</string>
+    <string name="sidebar_gems">شراء الجواهر</string>
+    <string name="sidebar_subscription">الاشتراك</string>
+    <string name="sidebar_challenges">التحديات</string>
+    <string name="sidebar_section_inventory">المخزون</string>
+    <string name="sidebar_avatar">تخصيص الشخصية</string>
+    <string name="sidebar_avatar_equipment">الشخصية والعتاد</string>
+    <string name="sidebar_equipment">العتاد</string>
+    <string name="sidebar_stable">الحيوانات الأليفة والمركوبات</string>
+    <string name="sidebar_news">الأخبار</string>
+    <string name="sidebar_about">حول</string>
+    <string name="sidebar_shops">المتاجر</string>
+    <string name="sidebar_stats">الخصائص</string>
 </resources>
