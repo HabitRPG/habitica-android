@@ -15,7 +15,7 @@
     </plurals>
     <string name="XP_default">الخبرة</string>
     <string name="HP_default">الصحة</string>
-    <string name="MP_default">طاقة</string>
+    <string name="MP_default">الطاقة</string>
     <string name="PS_settings_title">الإعدادات</string>
     <string name="SP_userID_title">المعرّف</string>
     <string name="SP_userID_summary">المعرّف الخاص بك</string>
