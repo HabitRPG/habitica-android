@@ -26,7 +26,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -167,7 +166,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             }
         }
 
-        Analytics.sendNavigationEvent("subscription screen")
     }
 
     override fun onResume() {

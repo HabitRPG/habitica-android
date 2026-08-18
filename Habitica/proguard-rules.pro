@@ -89,10 +89,6 @@
     native <methods>;
 }
 
-#amplitude
--keep class com.google.android.gms.ads.** { *; }
-#end amplitude
-
 
 -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
     public static final *** NULL;

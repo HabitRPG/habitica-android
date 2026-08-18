@@ -234,14 +234,6 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
     }
 
     /*override fun onUserEarnedReward(rewardItem: RewardItem) {
-        Analytics.sendEvent(
-            "adRewardEarned",
-            EventCategory.BEHAVIOUR,
-            HitType.EVENT,
-            mapOf(
-                "type" to type.name
-            )
-        )
         rewardAction(true)
     }*/
 }

@@ -36,10 +36,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.AnalyticsTarget
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
@@ -304,12 +300,6 @@ abstract class BaseActivity : AppCompatActivity() {
         message: String?,
         image: Bitmap? = null
     ) {
-        Analytics.sendEvent(
-            "shared",
-            EventCategory.BEHAVIOUR,
-            HitType.EVENT,
-            mapOf("identifier" to identifier)
-        )
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "image/*"
         if (message?.isNotBlank() == true) {

@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.data.TutorialRepository
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.delay
@@ -41,7 +40,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Analytics.sendNavigationEvent(this.javaClass.simpleName)
 
         binding = createBinding(inflater, container)
         return binding?.root

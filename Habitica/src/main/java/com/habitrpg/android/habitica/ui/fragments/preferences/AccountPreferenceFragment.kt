@@ -209,8 +209,10 @@ class AccountPreferenceFragment :
                                 }
                                 val user = userRepository.updateUser("preferences.analyticsConsent", newValue)
                                 val consent = user?.preferences?.analyticsConsent ?: false
-                                applyAnalyticsConsent(consent)
-                                analyticsConsent = consent
+                                if (consent != analyticsConsent) {
+                                    applyAnalyticsConsent(consent)
+                                    analyticsConsent = consent
+                                }
                             }
                         },
                         isSettingConsent

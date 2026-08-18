@@ -23,9 +23,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -356,17 +353,6 @@ class TasksFragment :
             return
         }
 
-        val additionalData = HashMap<String, Any>()
-        additionalData["created task type"] = type
-        additionalData["viewed task type"] =
-            getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: ""
-        Analytics.sendEvent(
-            "open create task form",
-            EventCategory.BEHAVIOUR,
-            HitType.EVENT,
-            additionalData
-        )
-
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type.value)
         if (!viewModel.isPersonalBoard) {
@@ -426,11 +412,6 @@ class TasksFragment :
                         )
                 )
             ) {
-                Analytics.sendEvent(
-                    "task created",
-                    EventCategory.BEHAVIOUR,
-                    HitType.EVENT
-                )
                 viewModel.sharedPreferences.edit {
                     putLong("last_creation_reporting", Date().time)
                 }

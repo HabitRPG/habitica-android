@@ -19,9 +19,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.Skill
@@ -128,15 +125,6 @@ class ItemRecyclerFragment :
 
         binding?.refreshLayout?.setOnRefreshListener(this)
         val buttonMethod = {
-            Analytics.sendEvent(
-                "Items CTA tap",
-                EventCategory.BEHAVIOUR,
-                HitType.EVENT,
-                mapOf(
-                    "area" to "empty",
-                    "type" to (itemType ?: "")
-                )
-            )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
@@ -270,15 +258,6 @@ class ItemRecyclerFragment :
             (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText)
                 ?: ""
         adapter?.onOpenShop = {
-            Analytics.sendEvent(
-                "Items CTA tap",
-                EventCategory.BEHAVIOUR,
-                HitType.EVENT,
-                mapOf(
-                    "area" to "bottom",
-                    "type" to (itemType ?: "")
-                )
-            )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
