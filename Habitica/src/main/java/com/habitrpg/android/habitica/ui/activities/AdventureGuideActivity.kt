@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.fromHtml
@@ -62,8 +61,6 @@ class AdventureGuideActivity : BaseActivity() {
 
         val descriptionText = getString(R.string.adventure_guide_description_new)
         binding.descriptionView.setText(descriptionText.fromHtml(), TextView.BufferType.SPANNABLE)
-
-        Analytics.sendNavigationEvent("adventure guide screen")
 
         userViewModel.user.observe(this) {
             if (it != null) {

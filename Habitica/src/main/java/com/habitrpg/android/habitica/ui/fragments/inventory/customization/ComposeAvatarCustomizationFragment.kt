@@ -71,7 +71,6 @@ import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
@@ -232,7 +231,6 @@ class ComposeAvatarCustomizationFragment :
             }
         }
 
-        Analytics.sendNavigationEvent("$type screen")
     }
 
     override fun onDestroy() {

@@ -13,9 +13,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -124,15 +121,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         val buttonMethod = {
-            Analytics.sendEvent(
-                "Items CTA tap",
-                EventCategory.BEHAVIOUR,
-                HitType.EVENT,
-                mapOf(
-                    "area" to "empty",
-                    "type" to (itemType ?: "")
-                )
-            )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
@@ -251,15 +239,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             adapter?.onFeedPet = { food -> feedPet(food) }
 
             adapter?.onOpenShop = {
-                Analytics.sendEvent(
-                    "Items CTA tap",
-                    EventCategory.BEHAVIOUR,
-                    HitType.EVENT,
-                    mapOf(
-                        "area" to "bottom",
-                        "type" to (itemType ?: "")
-                    )
-                )
                 if (itemType == "quests") {
                     MainNavigationController.navigate(R.id.questShopFragment)
                 } else {

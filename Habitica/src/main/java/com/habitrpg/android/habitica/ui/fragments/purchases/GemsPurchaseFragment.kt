@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -121,7 +120,6 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         }
         loadInventory()
 
-        Analytics.sendNavigationEvent("gem screen")
     }
 
     override fun onResume() {

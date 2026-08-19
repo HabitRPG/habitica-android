@@ -51,10 +51,7 @@ import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
@@ -121,12 +118,6 @@ class BirthdayActivity : BaseActivity() {
                         }) {
                             if ((userViewModel.user.value?.gemCount ?: 0) < 60) {
                                 val dialog = InsufficientGemsDialog(this@BirthdayActivity, 3)
-                                Analytics.sendEvent(
-                                    "show insufficient gems modal",
-                                    EventCategory.BEHAVIOUR,
-                                    HitType.EVENT,
-                                    mapOf("reason" to "birthday")
-                                )
                                 dialog.show()
                                 return@launchCatching
                             }

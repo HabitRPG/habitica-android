@@ -14,4 +14,5 @@ class Preferences : AvatarPreferences {
     override var background: String? = null
     override var chair: String? = null
     override var disableClasses: Boolean = false
+    var analyticsConsent: Boolean? = null
 }
