@@ -1,7 +1,7 @@
 [versions]
 minSdk = "26"
 targetSdk = "36"
-wearOsTargetSdk = "34"
+wearOsTargetSdk = "36"
 
 agp = "8.12.1"
 amplitude = "1.22.2"

@@ -76,7 +76,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         task.down = obj.get("down")?.asBoolean ?: false
         task.streak = obj.safeGet("streak")?.asInt
         if (obj.has("challenge")
-            && obj.getAsJsonObject("challenge").isJsonObject
+            && obj.get("challenge").isJsonObject
             && obj.getAsJsonObject("challenge").has("id")) {
             task.challengeID = obj.getAsJsonObject("challenge").get("id").asString
 
@@ -101,7 +101,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             }
         }
         if (obj.has("checklist")
-            && obj.getAsJsonObject("checklist").isJsonArray) {
+            && obj.get("checklist").isJsonArray) {
             task.checklist = RealmList()
             for (checklistElement in obj.getAsJsonArray("checklist")) {
                 val checklistObject = checklistElement.asJsonObject
@@ -115,7 +115,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             }
         }
         if (obj.has("reminders")
-            && obj.getAsJsonObject("reminders").isJsonArray) {
+            && obj.get("reminders").isJsonArray) {
             task.reminders = RealmList()
             for (reminderElement in obj.getAsJsonArray("reminders")) {
                 val remindersObject = reminderElement.asJsonObject
@@ -130,7 +130,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             task.repeat = context.deserialize(obj.get("repeat"), Days::class.java)
         }
 
-        if (obj.has("group") && obj.getAsJsonObject("group").isJsonObject) {
+        if (obj.has("group") && obj.get("group").isJsonObject) {
             val groupObject = obj.getAsJsonObject("group")
             val group: TaskGroupPlan = context.deserialize(groupObject, TaskGroupPlan::class.java)
             if (group.groupID?.isNotBlank() == true && groupObject.has("approval")) {
