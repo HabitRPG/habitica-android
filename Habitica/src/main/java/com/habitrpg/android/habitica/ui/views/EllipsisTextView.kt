@@ -72,6 +72,16 @@ class EllipsisTextView : AppCompatTextView {
         post { checkEllipsis() }
     }
 
+    fun refreshEllipsis() {
+        post {
+            val newEllipsis = layout?.let { it.lineCount >= maxLines } ?: false
+            ellipses = newEllipsis
+            for (listener in ellipsesListeners) {
+                listener.ellipsisStateChanged(newEllipsis)
+            }
+        }
+    }
+
     private fun checkEllipsis() {
         val newEllipsis = layout?.let { it.lineCount >= maxLines } ?: false
         if (newEllipsis != ellipses) {

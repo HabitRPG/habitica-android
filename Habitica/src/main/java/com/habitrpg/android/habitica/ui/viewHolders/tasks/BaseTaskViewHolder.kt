@@ -24,9 +24,6 @@ import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 abstract class BaseTaskViewHolder(
@@ -36,8 +33,6 @@ abstract class BaseTaskViewHolder(
     var brokenTaskFunc: ((Task) -> Unit),
     var assignedTextProvider: GroupPlanInfoProvider?
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
-    private val scope = MainScope()
-
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: (() -> Unit)? = null
@@ -119,8 +114,9 @@ abstract class BaseTaskViewHolder(
         notesTextView?.addEllipsesListener(
             object : EllipsisTextView.EllipsisListener {
                 override fun ellipsisStateChanged(ellipses: Boolean) {
-                    scope.launch(Dispatchers.Main.immediate) {
-                        expandNotesButton?.visibility =
+                    val button = expandNotesButton ?: return
+                    button.post {
+                        button.visibility =
                             if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                     }
                 }
@@ -191,6 +187,7 @@ abstract class BaseTaskViewHolder(
         } else {
             notesTextView?.visibility = View.GONE
         }
+        notesTextView?.refreshEllipsis()
         titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
 
         if (displayMode == "standard") {
