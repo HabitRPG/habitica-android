@@ -68,6 +68,7 @@ class EllipsisTextView : AppCompatTextView {
         lengthAfter: Int
     ) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter)
+        ellipses = false
         post { checkEllipsis() }
     }
 
