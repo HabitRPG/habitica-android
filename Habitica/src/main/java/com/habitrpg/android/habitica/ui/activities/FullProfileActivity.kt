@@ -103,7 +103,6 @@ class FullProfileActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(binding.toolbar)
 
         userID = intent?.extras?.getString("userID", "") ?: ""
         if (userID.isEmpty()) {

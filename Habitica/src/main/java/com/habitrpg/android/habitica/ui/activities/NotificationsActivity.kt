@@ -84,8 +84,6 @@ class NotificationsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupToolbar(binding.toolbar)
-
         // Check user level to handle if a user loses hp and drops below necessary level to allocate points -
         // and if so, don't display the notification to allocate points.
         viewModel.user.observeOnce(this) { user ->

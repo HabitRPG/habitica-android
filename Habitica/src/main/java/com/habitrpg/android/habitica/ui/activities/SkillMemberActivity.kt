@@ -43,7 +43,6 @@ class SkillMemberActivity : BaseActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(findViewById(R.id.toolbar))
         loadMemberList()
         title = getString(R.string.choose_member)
     }

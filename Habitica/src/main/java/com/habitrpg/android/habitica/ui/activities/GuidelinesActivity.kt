@@ -22,7 +22,6 @@ class GuidelinesActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(findViewById(R.id.toolbar))
 
         val client = OkHttpClient()
         val request =

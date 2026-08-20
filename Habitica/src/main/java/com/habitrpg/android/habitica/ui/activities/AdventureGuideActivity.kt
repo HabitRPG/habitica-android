@@ -39,8 +39,6 @@ class AdventureGuideActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupToolbar(binding.toolbar)
-
         achievementTitles =
             mapOf(
                 Pair("createdTask", getString(R.string.create_task_title)),

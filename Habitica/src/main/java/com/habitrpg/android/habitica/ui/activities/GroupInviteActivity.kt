@@ -35,7 +35,6 @@ class GroupInviteActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(findViewById(R.id.toolbar))
         binding.viewPager.currentItem = 0
 
         supportActionBar?.title = null

@@ -40,6 +40,9 @@ class GiftGemsActivity : PurchaseActivity() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
+    override fun getConfigManager(): AppConfigManager {
+        return appConfigManager
+    }
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -58,10 +61,10 @@ class GiftGemsActivity : PurchaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        showsPromo = false
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_gems)
-        setSupportActionBar(binding.toolbar)
         binding.toolbarAccessoryContainer.addView(currencyView)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

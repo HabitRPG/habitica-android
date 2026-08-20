@@ -154,6 +154,7 @@ interface CommonSubscriptionFragment: LifecycleOwner {
         when (HabiticaProduct.forSku(sku)) {
             HabiticaProduct.SUBSCRIPTION_1_MONTH -> content?.subscription1month
             HabiticaProduct.SUBSCRIPTION_3_MONTH -> content?.subscription3month
+            HabiticaProduct.SUBSCRIPTION_6_MONTH -> content?.subscription6month
             HabiticaProduct.SUBSCRIPTION_12_MONTH -> content?.subscription12month
             else -> null
         }

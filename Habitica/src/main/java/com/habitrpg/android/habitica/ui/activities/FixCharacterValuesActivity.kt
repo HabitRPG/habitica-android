@@ -35,7 +35,6 @@ class FixCharacterValuesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.fix_character_values)
-        setupToolbar(binding.toolbar)
 
         userViewModel.user.observe(this) { user = it }
 

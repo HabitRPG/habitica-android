@@ -31,7 +31,6 @@ class SkillTasksActivity : BaseActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(findViewById(R.id.toolbar))
         loadTaskLists()
     }
 

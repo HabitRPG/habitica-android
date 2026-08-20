@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.Menu
@@ -133,8 +134,19 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onPostCreate(savedInstanceState, persistentState)
+        if (toolbarBackgroundColor == null) {
+            toolbarBackgroundColor = getThemeColor(R.attr.headerBackgroundColor)
+        }
+        if (toolbar == null) {
+            setupToolbar()
+        }
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        toolbarBackgroundColor?.let { window.decorView.setBackgroundColor(it) }
         findViewById<View>(R.id.appbar)?.let { appbar ->
             val paddingTop = appbar.paddingTop
             ViewCompat.setOnApplyWindowInsetsListener(appbar) { v, windowInsets ->
@@ -237,13 +249,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun setupToolbar(
-        toolbar: Toolbar?,
         iconColor: Int? = null,
         backgroundColor: Int? = null,
     ) {
-        this.toolbar = toolbar
+        this.toolbar = findViewById(R.id.toolbar)
         this.toolbarContentColor = iconColor
-        this.toolbarBackgroundColor = backgroundColor
+        this.toolbarBackgroundColor = backgroundColor ?: getThemeColor(R.attr.headerBackgroundColor)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
 

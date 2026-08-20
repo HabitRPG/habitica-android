@@ -21,9 +21,6 @@ class PrefsActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setupToolbar(findViewById(R.id.toolbar))
-
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()

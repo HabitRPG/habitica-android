@@ -280,9 +280,6 @@ open class MainActivity :
         } else {
             Wearable.getCapabilityClient(this).addLocalCapability("provide_auth")
         }
-
-        setupToolbar(binding.content.toolbar)
-
         val headerPaddingTop = binding.content.headerView.paddingTop
         ViewCompat.setOnApplyWindowInsetsListener(binding.content.headerView) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())

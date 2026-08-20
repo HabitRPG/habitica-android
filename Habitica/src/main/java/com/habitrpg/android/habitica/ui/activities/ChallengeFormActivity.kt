@@ -218,8 +218,6 @@ class ChallengeFormActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
 
-        setupToolbar(findViewById(R.id.toolbar))
-
         val intent = intent
         val bundle = intent.extras
 

@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.android.billingclient.api.ProductDetails
@@ -12,7 +10,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
@@ -38,6 +35,10 @@ class GiftSubscriptionActivity : PurchaseActivity() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
+    override fun getConfigManager(): AppConfigManager {
+        return appConfigManager
+    }
+
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -56,10 +57,10 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
+        showsPromo = false
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_subscription)
-        setupToolbar(binding.toolbar, Color.WHITE, ContextCompat.getColor(this, R.color.brand_300))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -116,11 +117,6 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             binding.giftSubscriptionContainer.visibility = View.GONE
             binding.hillsBg.setImageResource(R.drawable.footer_hills)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
     }
 
     private fun showMemberLoadingErrorDialog() {
