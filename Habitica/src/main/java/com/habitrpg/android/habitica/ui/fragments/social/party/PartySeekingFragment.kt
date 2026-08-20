@@ -56,10 +56,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -148,11 +145,6 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
             }
         }
         return view
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Analytics.sendEvent("View Find Members", EventCategory.NAVIGATION, HitType.EVENT)
     }
 }
 

@@ -3,10 +3,7 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
@@ -147,16 +144,6 @@ class TaskRepositoryImpl(
                 ?: return null
         // save local task changes
 
-        Analytics.sendEvent(
-            "task_scored",
-            EventCategory.BEHAVIOUR,
-            HitType.EVENT,
-            mapOf(
-                "type" to (task.type ?: ""),
-                "scored_up" to up,
-                "value" to task.value
-            )
-        )
         if (res.lvl == 0) {
             // Team tasks that require approval have weird data that we should just ignore.
             return TaskScoringResult()

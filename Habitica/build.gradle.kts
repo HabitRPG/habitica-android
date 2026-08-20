@@ -183,7 +183,6 @@ dependencies {
     implementation(libs.coil.compose)
 
     //Analytics
-    implementation(libs.amplitude.analytic)
 
     implementation(libs.shimmer)
 

@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.text.format.DateUtils
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,11 +11,8 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -34,7 +30,6 @@ import io.realm.RealmQuery
 import io.realm.Sort
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -132,16 +127,6 @@ constructor(
                 false
             ) { result ->
                 onResult(result, task.value.toInt())
-                if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
-                    Analytics.sendEvent(
-                        "task scored",
-                        EventCategory.BEHAVIOUR,
-                        HitType.EVENT
-                    )
-                    sharedPreferences.edit {
-                        putLong("last_task_reporting", Date().time)
-                    }
-                }
             }
             applyInAppScoreToWidgets(context, task.id ?: "", direction == TaskDirection.UP)
         }

@@ -75,8 +75,6 @@ import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -629,16 +627,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         ) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
-            if (intent.hasExtra("sendAnalytics")) {
-                val additionalData = HashMap<String, Any>()
-                additionalData["identifier"] = identifier
-                Analytics.sendEvent(
-                    "open notification",
-                    EventCategory.BEHAVIOUR,
-                    HitType.EVENT,
-                    additionalData
-                )
-            }
             retrieveUser(true)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent)
         }
@@ -896,11 +884,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                     appConfigManager = appConfigManager,
                                     sharedPreferences = sharedPreferences,
                                     onSubscribeClick = {
-                                        Analytics.sendEvent(
-                                            "View death sub CTA",
-                                            EventCategory.BEHAVIOUR,
-                                            HitType.EVENT
-                                        )
                                         val subscriptionBottomSheet =
                                             EventOutcomeSubscriptionBottomSheetFragment().apply {
                                                 eventType =
@@ -912,11 +895,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         )
                                     },
                                     onUseSecondChanceClick = {
-                                        Analytics.sendEvent(
-                                            "second chance perk",
-                                            EventCategory.BEHAVIOUR,
-                                            HitType.EVENT
-                                        )
                                         sharedPreferences.edit {
                                             putLong("last_sub_revive", Date().time)
                                         }
@@ -991,7 +969,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
         }
         binding.content.overlayFrameLayout.addView(view)
-        viewModel.logTutorialStatus(step, false)
     }
 
     private fun checkMaintenance() {
@@ -1091,26 +1068,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         
         when (user.preferences?.analyticsConsent) {
             true -> {
-                Analytics.identify(sharedPreferences)
                 user.id?.let { Analytics.setUserID(it) }
-                Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
-                
-                if (sharedPreferences.getBoolean("pending_registration_event", false)) {
-                    sharedPreferences.edit { remove("pending_registration_event") }
-                }
-                if (sharedPreferences.getBoolean("pending_login_event", false)) {
-                    Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
-                    sharedPreferences.edit { remove("pending_login_event") }
-                }
-                
                 sharedPreferences.edit { putBoolean("analytics_consent_given", true) }
             }
             false -> {
-                sharedPreferences.edit {
-                    remove("pending_registration_event")
-                    remove("pending_login_event")
-                    putBoolean("analytics_consent_given", false)
-                }
+                sharedPreferences.edit { putBoolean("analytics_consent_given", false) }
             }
 
             null -> {}

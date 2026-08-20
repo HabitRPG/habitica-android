@@ -20,10 +20,7 @@ import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
@@ -176,7 +173,6 @@ class ArmoireActivity : BaseActivity() {
         }
 
         binding.openArmoireSubscriberButton.setOnClickListener {
-            Analytics.sendEvent("Free armoire perk", EventCategory.BEHAVIOUR, HitType.EVENT)
             giveUserArmoire()
             lifecycleScope.launchCatching {
                 delay(400)
@@ -185,7 +181,6 @@ class ArmoireActivity : BaseActivity() {
         }
 
         binding.subscribeModalButton.setOnClickListener {
-            Analytics.sendEvent("View armoire sub CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
             val subscriptionBottomSheet =
                 EventOutcomeSubscriptionBottomSheetFragment().apply {
                     eventType = EVENT_ARMOIRE_OPENED

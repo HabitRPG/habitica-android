@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.edit
 import androidx.core.util.PatternsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -27,6 +28,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
@@ -201,8 +203,16 @@ class AccountPreferenceFragment :
                         analyticsConsent,
                         { newValue ->
                             lifecycleScope.launchCatching {
+                                if (!newValue) {
+                                    applyAnalyticsConsent(false)
+                                    analyticsConsent = false
+                                }
                                 val user = userRepository.updateUser("preferences.analyticsConsent", newValue)
-                                analyticsConsent = user?.preferences?.analyticsConsent ?: false
+                                val consent = user?.preferences?.analyticsConsent ?: false
+                                if (consent != analyticsConsent) {
+                                    applyAnalyticsConsent(consent)
+                                    analyticsConsent = consent
+                                }
                             }
                         },
                         isSettingConsent
@@ -598,6 +608,11 @@ class AccountPreferenceFragment :
                 accountDialog.showIncorrectPasswordError(getString(R.string.incorrect_password))
             }
         }
+    }
+
+    private fun applyAnalyticsConsent(consent: Boolean) {
+        Analytics.setAnalyticsConsent(consent)
+        preferenceManager.sharedPreferences?.edit { putBoolean("analytics_consent_given", consent) }
     }
 
     private fun copyValue(

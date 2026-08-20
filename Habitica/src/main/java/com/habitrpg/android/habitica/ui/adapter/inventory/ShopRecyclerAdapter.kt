@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.shops.EmptyShopCategory
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
@@ -177,12 +174,6 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                         } else {
                                             mainActivity?.let { activity ->
                                                 val dialog = InsufficientGemsDialog(activity, 3)
-                                                Analytics.sendEvent(
-                                                    "show insufficient gems modal",
-                                                    EventCategory.BEHAVIOUR,
-                                                    HitType.EVENT,
-                                                    mapOf("reason" to "class change")
-                                                )
                                                 dialog.show()
                                             }
                                         }
