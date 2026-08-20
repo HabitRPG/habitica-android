@@ -353,9 +353,7 @@ class PurchaseHandler(
                         apiClient.validatePurchase(validationRequest)
                         processedPurchase()
                         val gift = removeGift(sku)
-                        withContext(Dispatchers.IO) {
-                            consume(purchase)
-                        }
+                        consume(purchase)
                         displayGryphatriceConfirmationDialog(gift?.third)
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
@@ -371,9 +369,7 @@ class PurchaseHandler(
                         Log.d("PurchaseHandler", "Purchase validation response for ${purchase.products.firstOrNull()}: $response")
                         processedPurchase()
                         val gift = removeGift(sku)
-                        withContext(Dispatchers.IO) {
-                            consume(purchase)
-                        }
+                        consume(purchase)
                         if (response != null) {
                             displayConfirmationDialog(purchase, gift?.second, gift?.third)
                         }
@@ -394,9 +390,7 @@ class PurchaseHandler(
                         )
                         processedPurchase()
                         val gift = removeGift(sku)
-                        withContext(Dispatchers.IO) {
-                            consume(purchase)
-                        }
+                        consume(purchase)
                         if (response != null) {
                             displayConfirmationDialog(purchase, gift?.second, gift?.third)
                         }
@@ -415,10 +409,8 @@ class PurchaseHandler(
                     try {
                         val response = apiClient.validateSubscription(validationRequest)
                         Log.d("PurchaseHandler", "Subscription validation response for ${purchase.products.firstOrNull()}: $response")
-                        withContext(Dispatchers.IO) {
-                            processedPurchase()
-                            acknowledgePurchase(purchase)
-                        }
+                        acknowledgePurchase(purchase)
+                        processedPurchase()
                         if (response != null) {
                             displayConfirmationDialog(purchase)
                         }

@@ -34,6 +34,7 @@ class ExceptionHandler {
                 } catch (ignored: Exception) {
                 }
             } else {
+                Log.e("ObservableError", Log.getStackTraceString(throwable))
                 if (throwable !is CancellationException &&
                     throwable !is UnknownHostException &&
                     throwable !is SocketException &&

@@ -33,13 +33,15 @@
 
 #gson
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+-keep class * extends com.google.gson.TypeAdapter
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
 -keepattributes Signature
 -keep class com.google.gson.reflect.TypeToken
--keep class * extends com.google.gson.reflect.TypeToken
+-keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
+-keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
 -keep public class * implements java.lang.reflect.Type
 -keepclassmembers,allowobfuscation class * {
  @com.google.gson.annotations.SerializedName <fields>;
@@ -49,7 +51,6 @@
 -keep class com.habitrpg.android.habitica.** { *; }
 -keep class com.habitrpg.common.habitica.** { *; }
 -keep class com.habitrpg.shared.habitica.** { *; }
--keep class com.habitrpg.android.habitica.extensions.ViewGroupExt
 #realm
 -keep class io.realm.annotations.RealmModule
 -keep @io.realm.annotations.RealmModule class * { *; }

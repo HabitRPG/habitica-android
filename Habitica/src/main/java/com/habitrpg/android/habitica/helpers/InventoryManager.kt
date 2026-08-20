@@ -50,11 +50,8 @@ class InventoryManager(
     ): List<ProductDetails> = loadInventory(type, skus) ?: emptyList()
 
     suspend fun loadGemProducts() = loadProducts(BillingClient.ProductType.INAPP, HabiticaProduct.allGemTypes)
-
     suspend fun loadSubscriptionProducts() = loadProducts(BillingClient.ProductType.SUBS, HabiticaProduct.allSubscriptionTypes)
-
-    suspend fun loadGiftSubscriptionProducts() = loadProducts(BillingClient.ProductType.SUBS, HabiticaProduct.allSubscriptionNoRenewTypes)
-
+    suspend fun loadGiftSubscriptionProducts() = loadProducts(BillingClient.ProductType.INAPP, HabiticaProduct.allSubscriptionNoRenewTypes)
     suspend fun loadInAppProduct(identifier: HabiticaProduct) =
         loadProducts(BillingClient.ProductType.INAPP, listOf(identifier)).firstOrNull()
 }
