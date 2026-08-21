@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.ColorFilter
@@ -11,6 +12,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
@@ -29,6 +31,7 @@ import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.ContentScale
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -59,6 +62,7 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueLight
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlin.math.roundToInt
 
 abstract class TaskListGlanceWidget(
     private val taskType: TaskType,
@@ -97,6 +101,36 @@ class TodoTaskListGlanceWidget : TaskListGlanceWidget(TaskType.TODO)
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 private const val MAX_VISIBLE_TASKS = 15
+
+private val TASK_ROW_HEIGHT = 48.dp
+private val TASK_ROW_MAX_HEIGHT = 144.dp
+private val TASK_ROW_CHROME = 6.4.dp
+private val TASK_ROW_CORNER_RADIUS = 17.5.dp
+private val VIEW_MORE_HEIGHT = 28.dp
+private const val TASK_TEXT_SP = 16f
+private const val TASK_BASE_MAX_LINES = 2
+private const val MAX_TASK_ROW_SCALE = 3f
+
+internal data class TaskRowMetrics(
+    val height: Dp,
+    val maxLines: Int,
+)
+
+internal fun taskRowMetrics(fontScale: Float): TaskRowMetrics {
+    val scale = maxOf(1f, fontScale)
+    val lineHeight = (TASK_TEXT_SP * LINE_HEIGHT_FACTOR * scale).dp
+    val fits = ((TASK_ROW_MAX_HEIGHT - TASK_ROW_CHROME) / lineHeight).toInt().coerceAtLeast(1)
+    val maxLines = (TASK_BASE_MAX_LINES * scale).roundToInt().coerceIn(1, fits)
+    val height = (lineHeight * maxLines + TASK_ROW_CHROME)
+        .coerceIn(TASK_ROW_HEIGHT, TASK_ROW_MAX_HEIGHT)
+    return TaskRowMetrics(
+        height = height,
+        maxLines = maxLines,
+    )
+}
+
+internal fun viewMoreHeight(fontScale: Float): Dp =
+    VIEW_MORE_HEIGHT * maxOf(1f, fontScale).coerceAtMost(MAX_TASK_ROW_SCALE)
 
 internal data class TaskListPalette(
     val widgetBackground: ColorProvider,
@@ -149,6 +183,7 @@ private fun rememberPalette(): TaskListPalette {
 private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val size = LocalSize.current
     val palette = rememberPalette()
+    val fontScale = WidgetSnapshotStore.fontScale(LocalContext.current)
     val isVeryCompact = size.width < 180.dp
     val isCompact = size.width < 230.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
@@ -182,6 +217,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             state = state,
             isDaily = isDaily,
             palette = palette,
+            fontScale = fontScale,
         )
     }
 }
@@ -229,6 +265,7 @@ private fun TaskListBody(
     state: TaskListWidgetState,
     isDaily: Boolean,
     palette: TaskListPalette,
+    fontScale: Float,
 ) {
     Box(modifier = GlanceModifier.fillMaxSize()) {
         when {
@@ -250,6 +287,7 @@ private fun TaskListBody(
                 state = state,
                 palette = palette,
                 isDaily = isDaily,
+                fontScale = fontScale,
             )
         }
     }
@@ -260,9 +298,11 @@ private fun TaskListRows(
     state: TaskListWidgetState,
     palette: TaskListPalette,
     isDaily: Boolean,
+    fontScale: Float,
 ) {
     val innerCornerRadius = if (isDaily) 8.dp else 13.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
+    val metrics = taskRowMetrics(fontScale)
     val total = state.tasks.size
     val showFooter = total > MAX_VISIBLE_TASKS
     val shown = if (showFooter) state.tasks.take(MAX_VISIBLE_TASKS) else state.tasks
@@ -275,8 +315,8 @@ private fun TaskListRows(
                 Box(
                     modifier = GlanceModifier
                         .fillMaxWidth()
-                        .height(48.dp)
-                        .cornerRadius(17.5.dp)
+                        .height(metrics.height)
+                        .cornerRadius(TASK_ROW_CORNER_RADIUS)
                         .background(palette.cardBackground),
                 ) {
                     TaskRow(
@@ -290,6 +330,8 @@ private fun TaskListRows(
                         checklistDoneCount = task.checklistDone,
                         checklistTotalCount = task.checklistTotal,
                         showChecklistCount = true,
+                        maxLines = metrics.maxLines,
+                        modifier = GlanceModifier.fillMaxHeight(),
                         innerCornerRadius = innerCornerRadius,
                         onClick = actionRunCallback<ScoreTaskAction>(
                             actionParametersOf(
@@ -310,6 +352,7 @@ private fun TaskListRows(
                     moreCount = moreCount,
                     textColor = palette.secondaryText,
                     openListLink = openListLink,
+                    height = viewMoreHeight(fontScale),
                 )
             }
         }
@@ -321,11 +364,12 @@ private fun ViewMoreFooter(
     moreCount: Int,
     textColor: ColorProvider,
     openListLink: String,
+    height: Dp,
 ) {
     Box(
         modifier = GlanceModifier
             .fillMaxWidth()
-            .height(28.dp)
+            .height(height)
             .clickable(onClick = openAppAction(openListLink)),
         contentAlignment = Alignment.Center,
     ) {

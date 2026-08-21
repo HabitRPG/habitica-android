@@ -38,6 +38,7 @@ fun TaskRow(
     checklistDoneCount: Int = 0,
     checklistTotalCount: Int = 0,
     showChecklistCount: Boolean = true,
+    maxLines: Int = 2,
     onClick: Action,
     modifier: GlanceModifier = GlanceModifier,
     tileWidth: Dp = 44.dp,
@@ -72,7 +73,7 @@ fun TaskRow(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
             ),
-            maxLines = 2,
+            maxLines = maxLines,
             modifier = GlanceModifier.defaultWeight(),
         )
         if (showChecklistCount && checklistTotalCount > 0) {
