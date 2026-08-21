@@ -1392,4 +1392,9 @@
     <string name="launch_screen">Opstartscherm</string>
     <string name="successful_purchase_generic">Aankoop succesvol</string>
     <string name="on_weekends">in het weekend</string>
+    <string name="rebirth_confirm_reset_header">Dit verwijdert:</string>
+    <string name="rebirth_confirm_reset_item_1">Je levels en klasse</string>
+    <string name="rebirth_confirm_reset_item_2">All je Eigenschapspunten</string>
+    <string name="rebirth_confirm_reset_item_3">Al je Goud en Mana</string>
+    <string name="rebirth_confirm_keep_header">Dit verwijdert niet:</string>
 </resources>
