@@ -60,22 +60,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_ternary"
-            android:maxLines="3"
-            android:ellipsize="end"
             android:textSize="13sp"
             tools:text="Notes"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="7dp"/>
 
-        <Button
-            android:id="@+id/expand_notes_button"
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:textSize="11sp"
-            android:text="@string/expand_notes"
-            android:padding="0dp"
-            android:textColor="?colorAccent" />
         <TextView
             android:id="@+id/approvalRequiredTextField"
             android:layout_width="match_parent"

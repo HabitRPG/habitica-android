@@ -1,12 +1,10 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
-import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -24,7 +22,6 @@ import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import kotlinx.coroutines.withContext
 
 abstract class BaseTaskViewHolder(
     itemView: View,
@@ -52,7 +49,6 @@ abstract class BaseTaskViewHolder(
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView =
         itemView.findViewById(R.id.approvalRequiredTextField)
-    private val expandNotesButton: Button? = itemView.findViewById(R.id.expand_notes_button)
     private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
     private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
     protected val taskGray: Int =
@@ -63,7 +59,6 @@ abstract class BaseTaskViewHolder(
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
-    private var notesExpanded = false
 
     protected open val taskIconWrapperIsVisible: Boolean
         get() {
@@ -102,39 +97,12 @@ abstract class BaseTaskViewHolder(
         notesTextView?.movementMethod = LinkMovementMethod.getInstance()
         titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
-        expandNotesButton?.setOnClickListener {
-            notesExpanded = !notesExpanded
-            updateExpandedTaskLogic()
-        }
         iconViewChallenge?.setOnClickListener {
             task?.let { t ->
                 if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
             }
         }
-        notesTextView?.addEllipsesListener(
-            object : EllipsisTextView.EllipsisListener {
-                override fun ellipsisStateChanged(ellipses: Boolean) {
-                    val button = expandNotesButton ?: return
-                    button.post {
-                        button.visibility =
-                            if (ellipses || notesExpanded) View.VISIBLE else View.GONE
-                    }
-                }
-            }
-        )
         context = itemView.context
-    }
-
-    private fun updateExpandedTaskLogic() {
-        if (notesExpanded) {
-            notesTextView?.ellipsize = null
-            notesTextView?.maxLines = Int.MAX_VALUE
-            expandNotesButton?.text = context.getString(R.string.collapse_notes)
-        } else {
-            notesTextView?.ellipsize = TextUtils.TruncateAt.END
-            notesTextView?.maxLines = 3
-            expandNotesButton?.text = context.getString(R.string.expand_notes)
-        }
     }
 
     override fun bind(
@@ -151,17 +119,12 @@ abstract class BaseTaskViewHolder(
         displayMode: String,
         ownerID: String?
     ) {
-        notesExpanded = false
         task = data
         itemView.setBackgroundColor(context.getThemeColor(R.attr.colorContentBackground))
 
-        expandNotesButton?.visibility = View.GONE
-        notesExpanded = false
-        notesTextView?.maxLines = 3
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
-            updateExpandedTaskLogic()
         } else {
             notesTextView?.visibility = View.GONE
         }
@@ -187,7 +150,6 @@ abstract class BaseTaskViewHolder(
         } else {
             notesTextView?.visibility = View.GONE
         }
-        notesTextView?.refreshEllipsis()
         titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
 
         if (displayMode == "standard") {
