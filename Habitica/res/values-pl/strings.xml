@@ -258,7 +258,7 @@
     <string name="choose_recipient_title">Wybierz odbiorcę wiadomości</string>
     <string name="action_continue">Kontynuuj</string>
     <string name="invited_to_party">Zostałeś zaproszony do drużyny!</string>
-    <string name="stats_widget_label">Statystyki Habitiki</string>
+    <string name="stats_widget_label">Twoje Statystyki</string>
     <string name="add_task">Dodaj Zadanie</string>
     <string name="add_habit">Dodaj Nawyk</string>
     <string name="add_daily">Dodaj Codzienne</string>
@@ -266,8 +266,8 @@
     <string name="add_reward">Dodaj Nagrodę</string>
     <string name="all_dailies_completed">Wykonałeś wszystkie Codzienne Zadania. Brawo!</string>
     <string name="widget_habit_button">Nawyk Habitiki</string>
-    <string name="widget_dailies">Codzienne Habitiki</string>
-    <string name="widget_todo_list">Lista Do Zrobienia w Habitice</string>
+    <string name="widget_dailies">Lista Codziennych</string>
+    <string name="widget_todo_list">Lista Do Zrobienia</string>
     <string name="google_services_missing">Nie znaleziono usługi Google Play.</string>
     <string name="gem_purchase_toolbartitle">Kup</string>
     <string name="gem_purchase_title">Kupując klejnoty, wspierasz deweloperów Habitiki i pozwalasz projektowi istnieć</string>
@@ -919,7 +919,7 @@
     <string name="skill_unlocks_at">Umiejętność odblokowana na poziomie %d</string>
     <string name="locked">Zablokowane</string>
     <string name="unlock_previous">Ukończ Misję %d, aby odblokować</string>
-    <string name="subscription_credit_canceling">Twoje <b>%s</b> zaległych miesięcy Subskrybcji zostanie wykorzystane po rezygnacji</string>
+    <string name="subscription_credit_canceling">Twoje <b>%d</b> zaległych miesięcy Subskrybcji zostanie wykorzystane po rezygnacji</string>
     <string name="share_challenge_with">Udostępnij Wyzwanie</string>
     <string name="see_what_s_new">Zobacz co nowego</string>
     <string name="joinedGuildTitle">Dołączono do Gildii</string>
@@ -1087,7 +1087,7 @@
     <string name="x_to_y">%1$s-%2$s</string>
     <string name="how_it_works">Jak to działa</string>
     <string name="limitations">Ograniczenia</string>
-    <string name="gem_promo_info_instructions">Czas promocji: %1$s-%2$s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
+    <string name="fall_promo_info_instructions">Czas promocji: %1$s-%2$s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
     <string name="view_gem_bundles">Przejdź do pakietów Klejnotów</string>
     <string name="dark_mode">Tryb ciemny</string>
     <string name="theme_mode">Tryb motywu</string>
@@ -1213,16 +1213,12 @@
         <item quantity="many">co %d tygodni</item>
         <item quantity="other">co %d tygodni</item>
     </plurals>
-    <string name="quest_rejected">Misja odrzucona</string>
-    <string name="quest_reject_error">Nie udało się odrzucić misji. Spróbuj ponownie.</string>
     <string name="free_rebirth_at_level_100">DARMOWA Kula Odrodzenia na poziomie 100</string>
     <string name="membership">Członkostwo</string>
     <string name="participating">Biorę udział</string>
     <string name="not_participating_filter">Nie biorę udziału</string>
     <string name="cancel_subscription_apple_description">Chcesz zrezygnować z subskrypcji\? Ze względu na Twoją metodę płatności, musisz anulować subskrypcję za pomocą Apple ID na Twoim urządzeniu iOS.</string>
     <string name="faint_broken_gear_info">Zniszczone wyposażenie może zostać odkupione na Targu</string>
-    <string name="quest_accepted">Misja zaakceptowana!</string>
-    <string name="quest_accept_error">Nie udało się zaakceptować misji. Spróbuj ponownie.</string>
     <plurals name="days_until_free_rebirth">
         <item quantity="one">%d dzień do DARMOWEJ Kuli Odrodzenia</item>
         <item quantity="few">%d dni do DARMOWEJ Kuli Odrodzenia</item>
@@ -1232,4 +1228,7 @@
     <string name="rejoin_party_quest_leader">Nie będziesz miał możliwości dołączenia ponownie do tej drużyny dopóki ktoś Cię nie zaprosi.
 \n
 \nOpuszczenie drużyny sprawi również, że obecna misja zostanie anulowana.</string>
+    <string name="avatar_widget_label">Twoja Postać</string>
+    <string name="widget_dailies_count">Podsumowanie Codziennych</string>
+    <string name="widget_add_task">Stwórz Zadanie (Pojedyncze)</string>
 </resources>
