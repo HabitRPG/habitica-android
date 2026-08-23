@@ -428,7 +428,7 @@
     <string name="resetting_account">Resetowanie konta</string>
     <string name="deleting_account">Usuwanie konta</string>
     <string name="insufficientGoldTitle">Za mało złota</string>
-    <string name="insufficientGems">Potrzebujesz więcej klejnotów, by kupić ten przedmiot!</string>
+    <string name="insufficientGems">Potrzebujesz więcej Klejnotów, by kupić ten przedmiot!</string>
     <string name="purchase_gems">Kup klejnoty</string>
     <string name="insufficientHourglasses">Potrzebujesz więcej Mistycznych Klepsydr, żeby kupić ten przedmiot!</string>
     <string name="get_hourglasses">Zdobądź klepsydry</string>
@@ -469,7 +469,7 @@
     <string name="no_points_to_allocate">Brak punktów do przydzielenia</string>
     <string name="points_to_allocate">%d punkty do przydzielenia</string>
     <string name="distribute_evenly_help">Przydziel taka samą liczbę punktów do każdego atrybutu.</string>
-    <string name="distribute_class_help">Przydziel więcej punktów do atrybutów ważnych dla twojej Klasy.</string>
+    <string name="distribute_class_help">Przydziel więcej punktów do atrybutów ważnych dla twojej klasy.</string>
     <string name="allocating_points">Przydzielanie Punktów</string>
     <string name="class_equipment">Ekwipunek</string>
     <string name="classless">Bez klasy</string>
@@ -490,7 +490,7 @@
     <string name="pending_strike_title">Oczekujący Atak</string>
     <string name="strike_description_title">Czym jest Atak Szału?</string>
     <string name="strike_active_title">%s został zaatakowany!</string>
-    <string name="questShop">Sklep z Misjami</string>
+    <string name="questShop">Misje</string>
     <string name="market_owner_long">Kupiec Alex</string>
     <string name="tavern_owner_long">Gospodarz Karczmy Daniel</string>
     <string name="stable_owner_long">Władca Bestii Matt</string>
@@ -509,7 +509,7 @@
     <string name="create_challenge">Stwórz wyzwanie</string>
     <string name="insufficientGold">Musisz najpierw wykonać więcej zadań, zanim będzie Cię stać na ten przedmiot!</string>
     <string name="change_username">Zmień nazwę użytkownika</string>
-    <string name="report">Zaraportuj</string>
+    <string name="report">Zgłoś</string>
     <string name="reply">Odpowiedz</string>
     <string name="challenge_categories">Kategorie Wyzwań</string>
     <string name="joined">Dołączono</string>
@@ -579,12 +579,12 @@
     <string name="new_msg_party"><![CDATA[Twoja drużyna <b>%1$s</b> ma nowe posty]]></string>
     <string name="unallocated_stats_points"><![CDATA[Masz <b>nieprzydzielone Punkty Atrybutów: %1$s</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Masz nowy <b>Tajemniczy Przedmiot</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> zostałeś/aś zaproszony/a do Dryżyny <b>%2$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color="#925CF3">%2$s</font> zaprosił Cię do drużyny <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Zostałeś/aś zaproszony/a do Misji <b>%1$s</b>]]></string>
     <string name="character_build_description">Każdy zdobyty poziom daje Ci jeden punkt, który możesz przydzielić do wybranego przez siebie atrybutu. Możesz zrobić to ręcznie lub pozwolić, by gra zdecydowała za Ciebie, używając jednej z opcji automatycznego przydzielania.</string>
     <string name="character_build">Rozwój postaci</string>
     <string name="seasonal_closed_description">Wielkie Gale mają miejsce w pobliżu przesilenia i równonocy, więc zajrzyj tu później aby znaleźć zabawny asortyment specjalnych przedmiotów sezonowych!</string>
-    <string name="timetravelers_closed_description">Zdobądź jedną Mistyczną Klepsydrę za każde pełne trzy miesiące subskrypcji i odblokuj dzięki nim przedmioty, chowańce i wierzchowce z limitowanych edycji w przeszłości… i przyszłości!</string>
+    <string name="timetravelers_closed_description">Zdobądź jedną Mistyczną Klepsydrę za każdy miesiąc subskrypcji i odblokuj dzięki nim przedmioty, chowańce i wierzchowce z limitowanych edycji z przeszłości… i przyszłości!</string>
     <string name="subscribe_for_hourglasses">Subskrybuj w celu uzyskania Klepsydr</string>
     <string name="delete_oauth_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Nie otrzymasz zwrotu pieniędzy za zakupione i wydane dotąd klejnoty. Jeśli masz absolutną pewność, wpisz poniżej słowo DELETE.</string>
     <string name="delete_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Nie otrzymasz zwrotu za posiadane lub wydane klejnoty. Jeśli masz całkowitą pewność, wpisz do pola tekstowego poniżej swoje hasło.</string>
@@ -633,13 +633,13 @@
     <string name="world_boss_description_title">Czym jest Boss Świata\?</string>
     <string name="navigation_drawer_close">Zamknij wysuwany panel</string>
     <string name="navigation_drawer_open">Otwórz wysuwany panel</string>
-    <string name="guidelines_description">Habitika dokłada wszelkich starań, by środowisko było przyjazne dla wszystkich, bez względu na wiek czy pochodzenie, szczególnie w miejscach publicznych takich jak Tawerna. Jeśli masz jakieś pytania, sprawdź proszę nasze wytyczne.</string>
+    <string name="guidelines_description">Habitica dokłada wszelkich starań, by stworzyć środowisko przyjazne dla wszystkich graczy, bez względu na ich wiek czy pochodzenie. Jeśli masz jakieś pytania, sprawdź proszę nasze zasady.</string>
     <string name="equipment_empty">Masz już całe wyposażenie! Spodziewaj się kolejnych przedmiotów, które będą dodawane podczas Wielkich Gali zaczynających się w okolicach równonocy i przesileń.</string>
     <string name="distribute_task_help">Przydziela punkty w oparciu o kategorie Siły, Inteligencji, Kondycji oraz Percepcji przydzielone zadaniom, które wykonujesz.</string>
-    <string name="perception_description">Zwiększa: prawdopodobieństwo znajdowania łupów przy kończeniu zadań, limit przedmiotów do zdobycia w ciągu dnia, premii za ciągłość wykonania zadań i ilość złota zdobywanego za zadania.</string>
-    <string name="constitution_description">Zmniejsza ilość obrażeń otrzymanych z zadań. Nie zmniejsza jednak obrażeń zadanych przez bossów.</string>
-    <string name="intelligence_description">Zwiększa PD otrzymane za wykonanie zadania. Zwiększa również maksymalną ilość many i szybkość regeneracji many w czasie.</string>
-    <string name="strength_description">Zwiększa premię za trafienia krytyczne i zwiększa ich prawdopodobieństwo wystąpienia przy zaliczaniu zadania. Zwiększa także obrażenia zadawane bossom.</string>
+    <string name="perception_description">Zwiększa: szansę na znalezienie przedmiotów, limit przedmiotów możliwych do zdobycia w ciągu dnia, bonusy za ciągłość wykonywania zadań i ilość Złota zdobywanego za zadania.</string>
+    <string name="constitution_description">Zmniejsza ilość obrażeń otrzymanych z pominiętych Codziennych oraz z negatywnych Nawyków. Nie zmniejsza obrażeń zadanych przez bossów Misji.</string>
+    <string name="intelligence_description">Zwiększa Doświadczenie otrzymane za wykonanie zadania. Zwiększa również maksymalną ilość Many i szybkość regeneracji Many.</string>
+    <string name="strength_description">Zwiększa szansę na trafienia krytyczne oraz obrażenia przy zaliczaniu zadań. Zwiększa także obrażenia zadawane bossom Misji.</string>
     <string name="number_responded">%1$d/%2$d Odpowiedziało</string>
     <string name="empty_title_rewards_filtered">Brak Nagród</string>
     <string name="empty_description_todos_filtered">Brak zadań Do Zrobienia spełniających kryteria filtrowania.</string>
@@ -731,7 +731,7 @@
     <string name="gift_confirmation_text_sub">Wysłałeś(-aś) @%1$s %2$s-miesięczną subskrypcję Habitica.</string>
     <string name="gift_confirmation_text_sub_g1g1">Wysłałeś(-aś) %1$s %2$s-miesięczną subskrypcję Habitica i taka sama subskrypcja zasiliła Twoje konto w ramach promocji Dajesz - Dostajesz!</string>
     <string name="gift_gems_subtitle">Wybierz pakiet klejnotów do podarowania poniżej!</string>
-    <string name="gift_subscription_subtitle">Wybierz poniżej subskrypcję, którą chcesz podarować! Ten zakup nie będzie odnawiał się automatycznie.</string>
+    <string name="gift_subscription_subtitle">Wybierz subskrypcję, którą chcesz podarować! Ten zakup nie będzie się odnawiał.</string>
     <string name="gift_title">Komu chcesz sprawić podarunek\?</string>
     <string name="gift_subscription">Podaruj subskrypcję</string>
     <string name="trillion_abbrev">bln</string>
@@ -982,7 +982,7 @@
     <string name="update_app_description">Nieustannie wprowadzamy nowe poprawki. Sprawdź, czy w Sklepie Google Play są dostępne nowe aktualizacje.</string>
     <string name="support">Pomoc</string>
     <string name="habitica_questions">Pytania o Habitica</string>
-    <string name="could_not_find_user">Nie udało się znaleźć użytkownika</string>
+    <string name="could_not_find_user">Nie udało się znaleźć gracza</string>
     <string name="wacky">Zwariowane</string>
     <string name="animal_ears">Zwierzęce uszy</string>
     <string name="animal_tail">Zwierzęcy ogon</string>
@@ -1231,4 +1231,27 @@
     <string name="avatar_widget_label">Twoja Postać</string>
     <string name="widget_dailies_count">Podsumowanie Codziennych</string>
     <string name="widget_add_task">Stwórz Zadanie (Pojedyncze)</string>
+    <string name="change_username_description">Nazwy użytkownika muszą mieć od 1 do 20 znaków i zawierać tylko litery od a do z, cyfry od 0 do 9, myślniki, lub znaki podkreślenia.</string>
+    <string name="category">Kategoria</string>
+    <string name="server_option_default">%s (Domyślny)</string>
+    <string name="server_option_custom">Własne</string>
+    <string name="server_custom_address_label">Wprowadź adres własnego serwera</string>
+    <string name="server_custom_address_hint">np. wlasnyserwer.habitica.com</string>
+    <string name="server_url_invalid">Proszę wprowadzić poprawny URL</string>
+    <string name="apply">Zastosuj</string>
+    <string name="server_settings_unlocked">Odblokowane ustawienia serwera!</string>
+    <string name="custom_server">Własny Serwer</string>
+    <string name="reset_server_to_default">Zresetuj do Domyślnego</string>
+    <string name="reset_server_confirmation">Czy jesteś pewien, że chcesz zresetować serwer do domyślnego serwera Habitica? Zostaniesz wylogowany.</string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color="#925CF3">%2$s</font> zaprosił cię do grupy <b>%1$s</b>]]></string>
+    <string name="reset_account_description_new">Stracisz wszystkie swoje poziomy, Złoto, oraz Doświadczenie. Wszystkie twoje zadania i ich historia zostaną usunięte (zadania z Wyzwań pozostaną). Stracisz wszystkie przedmioty w swoim ekwipunku, poza przedmiotami Abonenta oraz darmowymi przedmiotami upamiętniającymi, ale będziesz mógł je odkupić. By ponownie kupić wyposażenie przeznaczone dla danej klasy, będziesz musiał być tą klasą. Zachowasz swoją obecną klasę, Osiągnięcia, Chowańce i Wierzchowce. Aby potwierdzić zresetowanie konta, wpisz poniżej swoje hasło.</string>
+    <string name="reset_account_description_no_pw">Stracisz wszystkie swoje poziomy, Złoto, oraz Doświadczenie. Wszystkie twoje zadania i ich historia zostaną usunięte (zadania z Wyzwań pozostaną). Stracisz wszystkie przedmioty w swoim ekwipunku, poza przedmiotami Abonenta oraz darmowymi przedmiotami upamiętniającymi, ale będziesz mógł go odkupić. By ponownie kupić wyposażenie przeznaczone dla danej klasy, będziesz musiał być tą klasą. Zachowasz swoją obecną klasę, Osiągnięcia, Chowańce i Wierzchowce. Aby potwierdzić zresetowanie konta, wpisz RESET poniżej.</string>
+    <string name="change_email_description">To jest adres e-mail którego używasz do logowania się na Habitica, oraz do dostawania powiadomień.</string>
+    <string name="password_change_info">Hasła muszą mieć 8 lub więcej znaków. Zmiana hasła wyloguje cię z wszystkich innych urządzeń i narzędzi od osób trzecich, z których korzystasz.</string>
+    <string name="report_failure">Zgłoszenie nie powiodło się, spróbuj ponownie później</string>
+    <string name="see_other_sub_options">Zobacz inne opcje subskrypcji</string>
+    <string name="use_skill">Użyj Umiejętności</string>
+    <string name="use_on_party">Użyj na Drużynie</string>
+    <string name="search_questions">Przeszukaj pytania</string>
+    <string name="no_matching_questions">Nie znaleziono pasującego pytania</string>
 </resources>
