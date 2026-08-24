@@ -156,7 +156,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), Common
     }
 
     override fun refresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(false, true)
             binding?.refreshLayout?.isRefreshing = false
         }

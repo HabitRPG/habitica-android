@@ -37,6 +37,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.abs
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -261,7 +262,7 @@ class YesterdailyDialog private constructor(
                         return@launchCatching
                     }
 
-                    delay(500.toDuration(DurationUnit.MILLISECONDS))
+                    delay(500.milliseconds)
 
                     dialogMutex.withLock {
                         if (isShowingDialog.get() || displayedDialog?.get()?.isShowing == true) {

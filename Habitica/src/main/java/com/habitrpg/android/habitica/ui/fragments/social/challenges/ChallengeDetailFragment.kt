@@ -129,19 +129,19 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                         }
                     }
 
-                    if (habits.size > 0) {
+                    if (habits.isNotEmpty()) {
                         addHabits(habits)
                     }
 
-                    if (dailies.size > 0) {
+                    if (dailies.isNotEmpty()) {
                         addDailys(dailies)
                     }
 
-                    if (todos.size > 0) {
+                    if (todos.isNotEmpty()) {
                         addTodos(todos)
                     }
 
-                    if (rewards.size > 0) {
+                    if (rewards.isNotEmpty()) {
                         addRewards(rewards)
                     }
                 }
@@ -318,8 +318,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         groupBinding.taskGroupName.text =
             getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, habits.size)
         groupBinding.taskCountView.text = habits.size.toString()
-        for (i in 0 until habits.size) {
-            val task = habits[i]
+        for ((i, task) in habits.withIndex()) {
             val entry = groupBinding.tasksLayout.inflate(R.layout.habit_item_card)
             val viewHolder = HabitViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true
@@ -339,8 +338,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
             getLabelByTypeAndCount(Challenge.TASK_ORDER_DAILYS, dailies.size)
         groupBinding.taskCountView.text = dailies.size.toString()
 
-        for (i in 0 until dailies.size) {
-            val task = dailies[i]
+        for ((i, task) in dailies.withIndex()) {
             val entry = groupBinding.tasksLayout.inflate(R.layout.daily_item_card)
             val viewHolder = DailyViewHolder(entry, { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true
@@ -360,8 +358,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
             getLabelByTypeAndCount(Challenge.TASK_ORDER_TODOS, todos.size)
         groupBinding.taskCountView.text = todos.size.toString()
 
-        for (i in 0 until todos.size) {
-            val task = todos[i]
+        for ((i, task) in todos.withIndex()) {
             val entry = groupBinding.tasksLayout.inflate(R.layout.todo_item_card)
             val viewHolder = TodoViewHolder(entry, { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true
@@ -381,8 +378,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
             getLabelByTypeAndCount(Challenge.TASK_ORDER_REWARDS, rewards.size)
         groupBinding.taskCountView.text = rewards.size.toString()
 
-        for (i in 0 until rewards.size) {
-            val task = rewards[i]
+        for ((i, task) in rewards.withIndex()) {
             val entry = groupBinding.tasksLayout.inflate(R.layout.reward_item_card)
             val viewHolder = RewardViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true

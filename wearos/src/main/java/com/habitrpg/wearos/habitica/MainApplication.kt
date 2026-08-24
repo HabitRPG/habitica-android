@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -53,7 +54,7 @@ class MainApplication : Application() {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     }
-                    delay(1.toDuration(DurationUnit.SECONDS))
+                    delay(1.seconds)
                 }.collect()
         }
     }

@@ -10,6 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class DisplayItemDropUseCase
     @Inject
@@ -34,7 +36,7 @@ class DisplayItemDropUseCase
 
             if (snackbarText.isNotEmpty()) {
                 withContext(Dispatchers.Main) {
-                    delay(3000L)
+                    delay(3.seconds)
                     HabiticaSnackbar.showSnackbar(
                         requestValues.snackbarTargetView,
                         snackbarText,

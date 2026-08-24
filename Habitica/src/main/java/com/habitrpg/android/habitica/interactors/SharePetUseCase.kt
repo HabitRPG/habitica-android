@@ -21,6 +21,7 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
     class RequestValues(
@@ -55,7 +56,7 @@ class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (petWrapper.petImageview.bitmap == null && attempts < 200) {
-            delay(100)
+            delay(100.milliseconds)
             attempts++
         }
         petWrapper.root.doOnNextLayout {

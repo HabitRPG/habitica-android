@@ -72,6 +72,7 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import kotlinx.coroutines.delay
 import kotlin.math.sin
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 private fun getFoodPainter(petColor: String): ImageBitmap =
@@ -318,12 +319,12 @@ fun PetBottomSheet(
                             val response = onFeed?.invoke(pet, null)
                             feedMessage = response?.message ?: ""
                             showFeedResponse = true
-                            delay(700)
+                            delay(700.milliseconds)
                             oldFeedValue = feedValue
                             feedValue =
                                 if (response?.value == -1) 50 else (response?.value ?: feedValue)
 
-                            delay(1800)
+                            delay(1800.milliseconds)
                             showFeedResponse = false
                             if (response?.value == -1) {
                                 onDismiss()

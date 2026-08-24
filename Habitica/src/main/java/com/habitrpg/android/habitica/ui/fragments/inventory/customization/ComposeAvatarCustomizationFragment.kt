@@ -457,7 +457,7 @@ class ComposeAvatarCustomizationFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(true, true)
         }
     }

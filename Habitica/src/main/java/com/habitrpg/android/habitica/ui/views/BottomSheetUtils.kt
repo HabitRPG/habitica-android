@@ -36,6 +36,7 @@ import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 fun Activity.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
     val viewGroup: ViewGroup = this.findViewById(android.R.id.content)
@@ -161,7 +162,7 @@ private fun BottomSheetWrapper(
                     else -> {
                         isSheetOpened = true
                         coroutineScope.launch {
-                            delay(100L)
+                            delay(100.milliseconds)
                             modalBottomSheetState.show()
                         }
                     }

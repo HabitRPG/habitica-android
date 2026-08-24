@@ -8,6 +8,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun <T> T.useDebounce(
@@ -20,7 +21,7 @@ fun <T> T.useDebounce(
     DisposableEffect(state) {
         val job =
             coroutineScope.launch {
-                delay(delayMillis)
+                delay(delayMillis.milliseconds)
                 onChange(state)
             }
         onDispose {

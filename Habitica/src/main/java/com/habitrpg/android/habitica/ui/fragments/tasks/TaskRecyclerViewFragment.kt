@@ -43,7 +43,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -58,7 +57,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.takeWhile
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
@@ -137,11 +135,7 @@ open class TaskRecyclerViewFragment :
                         )
                     }
 
-                    else -> {
-                        null
-                    }
                 }
-
             recyclerAdapter = adapter as? TaskRecyclerViewAdapter
             binding?.recyclerView?.adapter = adapter
 
@@ -194,7 +188,7 @@ open class TaskRecyclerViewFragment :
         task: Task,
         item: ChecklistItem,
     ) {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
         }
     }
@@ -228,9 +222,8 @@ open class TaskRecyclerViewFragment :
                 TaskType.DAILY -> SoundManager.SOUND_DAILY
                 TaskType.TODO -> SoundManager.SOUND_TODO
                 TaskType.REWARD -> SoundManager.SOUND_REWARD
-                else -> null
             }
-        soundName?.let { soundManager.loadAndPlayAudio(it) }
+        soundManager.loadAndPlayAudio(soundName)
     }
 
     private fun allowReordering() {
@@ -454,7 +447,7 @@ open class TaskRecyclerViewFragment :
                     true,
                 ) { _, _ ->
                     if (!task.isValid) return@addButton
-                    lifecycleScope.launch {
+                    lifecycleScope.launchCatching {
                         taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
                         userRepository.retrieveUser(true, forced = true)
                     }
@@ -465,7 +458,7 @@ open class TaskRecyclerViewFragment :
                     isDestructive = true,
                 ) { _, _ ->
                     if (!task.isValid) return@addButton
-                    lifecycleScope.launch {
+                    lifecycleScope.launchCatching {
                         taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
                         userRepository.retrieveUser(true, forced = true)
                     }
@@ -512,9 +505,6 @@ open class TaskRecyclerViewFragment :
                         )
                     }
 
-                    else -> {
-                        EmptyItem("")
-                    }
                 }
             } else {
                 when (this.taskType) {
@@ -549,10 +539,6 @@ open class TaskRecyclerViewFragment :
                             R.drawable.icon_rewards,
                         )
                     }
-
-                    else -> {
-                        EmptyItem("")
-                    }
                 }
             }
     }
@@ -585,19 +571,6 @@ open class TaskRecyclerViewFragment :
         super.onResume()
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
         setInnerAdapter()
-    }
-
-    fun setActiveFilter(activeFilter: String) {
-        viewModel.setActiveFilter(taskType, activeFilter)
-        recyclerAdapter?.filter()
-
-        setEmptyLabels()
-
-        if (activeFilter == Task.FILTER_COMPLETED) {
-            viewLifecycleOwner.lifecycleScope.launchCatching {
-                taskRepository.retrieveCompletedTodos()
-            }
-        }
     }
 
     private fun setPreferenceTaskFilters() {

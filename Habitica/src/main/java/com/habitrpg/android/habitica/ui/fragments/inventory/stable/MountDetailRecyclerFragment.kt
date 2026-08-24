@@ -190,7 +190,7 @@ class MountDetailRecyclerFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(false, true)
             binding?.refreshLayout?.isRefreshing = false
         }

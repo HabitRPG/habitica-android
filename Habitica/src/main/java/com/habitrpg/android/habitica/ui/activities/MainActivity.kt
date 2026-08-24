@@ -129,6 +129,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -1071,7 +1072,7 @@ open class MainActivity :
             binding.content.connectionIssueTextview.text = message
             errorJob =
                 lifecycleScope.launch(Dispatchers.Main) {
-                    delay(1.toDuration(DurationUnit.MINUTES))
+                    delay(1.minutes)
                     binding.content.connectionIssueView.visibility = View.GONE
                 }
         }

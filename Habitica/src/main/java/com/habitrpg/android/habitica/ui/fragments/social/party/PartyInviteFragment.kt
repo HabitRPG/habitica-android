@@ -73,8 +73,6 @@ import kotlinx.coroutines.delay
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 fun uUIDFromStringOrNull(name: String): UUID? =
     try {
@@ -281,7 +279,7 @@ fun PartyInviteView(
                     scope.launchCatching({
                         inviteButtonState = LoadingButtonState.FAILED
                         scope.launchCatching {
-                            delay(2.toDuration(DurationUnit.SECONDS))
+                            delay(2.seconds)
                             inviteButtonState = LoadingButtonState.CONTENT
                         }
                     }) {

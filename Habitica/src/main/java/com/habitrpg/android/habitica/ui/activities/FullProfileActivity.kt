@@ -63,6 +63,7 @@ import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.math.min
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class FullProfileActivity : BaseActivity() {
@@ -427,8 +428,8 @@ class FullProfileActivity : BaseActivity() {
 
     private fun showSendMessageToUserDialog() {
         finish()
-        MainScope().launch(context = Dispatchers.Main) {
-            delay(500L)
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            delay(500.milliseconds)
             MainNavigationController.navigate(
                 R.id.inboxMessageListFragment,
                 bundleOf(Pair("username", username), Pair("userID", userID)),

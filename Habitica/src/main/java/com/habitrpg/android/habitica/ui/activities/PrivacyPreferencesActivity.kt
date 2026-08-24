@@ -50,6 +50,7 @@ import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class PrivacyPreferencesActivity : BaseActivity() {
@@ -152,7 +153,7 @@ class PrivacyPreferencesActivity : BaseActivity() {
                                     {
                                         analyticsConsent = true
                                         lifecycleScope.launchCatching {
-                                            delay(500)
+                                            delay(500.milliseconds)
                                             isSaving = true
                                             Analytics.setAnalyticsConsent(true)
                                             sharedPrefs.edit { putBoolean("analytics_consent_given", true) }

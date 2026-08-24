@@ -14,6 +14,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -57,7 +58,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
             tutorialStepIdentifier?.let { identifier ->
                 viewLifecycleOwner.lifecycleScope.launchCatching {
                     val step = tutorialRepository.getTutorialStep(identifier).firstOrNull()
-                    delay(1.toDuration(DurationUnit.SECONDS))
+                    delay(1.seconds)
                     if (step?.isValid == true && step.isManaged && step.shouldDisplay) {
                         val mainActivity = activity as? MainActivity ?: return@launchCatching
                         mainActivity.displayTutorialStep(

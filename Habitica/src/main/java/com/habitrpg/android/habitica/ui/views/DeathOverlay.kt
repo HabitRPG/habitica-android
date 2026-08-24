@@ -84,6 +84,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 import kotlin.math.sqrt
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun DeathOverlay(
@@ -147,7 +148,7 @@ fun DeathOverlay(
 
                 while (hasUsedSecondChance) {
                     timeUntilRecharge = midnight.getShortRemainingString()
-                    delay(1000L)
+                    delay(1.milliseconds)
                 }
             } else {
                 timeUntilRecharge = null
@@ -205,14 +206,14 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(150)
+                delay(150.milliseconds)
                 waveProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 800),
                 )
             }
             launch {
-                delay(150)
+                delay(150.milliseconds)
                 launch {
                     ghostHeartProgress.animateTo(
                         targetValue = 1f,
@@ -227,14 +228,14 @@ fun DeathOverlay(
                 }
             }
             launch {
-                delay(150)
+                delay(150.milliseconds)
                 coinsProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 700),
                 )
             }
             launch {
-                delay(850)
+                delay(850.milliseconds)
                 goldCoinRightProgress.animateTo(
                     targetValue = 1f,
                     animationSpec =
@@ -248,7 +249,7 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(1150)
+                delay(1150.milliseconds)
                 goldCoinLeftProgress.animateTo(
                     targetValue = 1f,
                     animationSpec =
@@ -270,7 +271,7 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(1050)
+                delay(1050.milliseconds)
                 coinBobbingProgressLeftSmall.animateTo(
                     targetValue = 1f,
                     animationSpec =
@@ -281,7 +282,7 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(850 + 1000)
+                delay((1850).milliseconds)
                 coinBobbingProgressRight.animateTo(
                     targetValue = 1f,
                     animationSpec =
@@ -292,20 +293,20 @@ fun DeathOverlay(
                 )
             }
             launch {
-                delay(300)
+                delay(300.milliseconds)
                 headerTextProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing),
                 )
             }
             launch {
-                delay(500)
+                delay(500.milliseconds)
                 uiElementsProgress.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(durationMillis = 400, easing = FastOutSlowInEasing),
                 )
             }
-            delay(1270)
+            delay(1270.milliseconds)
             launch {
                 bobbingProgress.animateTo(
                     targetValue = 1f,
@@ -360,7 +361,7 @@ fun DeathOverlay(
                     animationSpec = tween(durationMillis = 200),
                 )
             }
-            delay(200)
+            delay(200.milliseconds)
             circleProgress.animateTo(
                 targetValue = 0f,
                 animationSpec = tween(durationMillis = 1000),

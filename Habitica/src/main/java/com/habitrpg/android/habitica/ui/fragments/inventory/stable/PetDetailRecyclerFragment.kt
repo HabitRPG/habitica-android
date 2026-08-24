@@ -120,7 +120,7 @@ class PetDetailRecyclerFragment :
             }
         binding?.recyclerView?.layoutManager = layoutManager
         adapter.animalIngredientsRetriever = { animal, callback ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 val egg =
                     inventoryRepository
                         .getItems(Egg::class.java, arrayOf(animal.animal))
@@ -198,7 +198,7 @@ class PetDetailRecyclerFragment :
             viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getOwnedItems(true).collect { adapter.setOwnedItems(it) }
             }
-            viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 val mounts =
                     inventoryRepository
                         .getMounts(
@@ -301,7 +301,7 @@ class PetDetailRecyclerFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(false, true)
             binding?.refreshLayout?.isRefreshing = false
         }

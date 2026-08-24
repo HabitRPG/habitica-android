@@ -35,6 +35,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
@@ -164,8 +165,8 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         val context = context
         if (context != null) {
             val groupChallenges = getGroupChallenges()
-            lifecycleScope.launch(Dispatchers.Main) {
-                delay(500)
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                delay(500.milliseconds)
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.guild_challenges)

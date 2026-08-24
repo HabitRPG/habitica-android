@@ -36,7 +36,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -286,8 +285,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun showClassChangeDialog(classIdentifier: String) {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val user = userViewModel.user.value ?: return@launch
+        lifecycleScope.launchCatching {
+            val user = userViewModel.user.value ?: return@launchCatching
             context?.let { context ->
                 if (user.gemCount <= 2) {
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
@@ -298,7 +297,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         mapOf("reason" to "class change"),
                     )
                     dialog?.show()
-                    return@launch
+                    return@launchCatching
                 }
                 if (user.flags?.classSelected == true && user.preferences?.disableClasses == false) {
                     val alert = HabiticaAlertDialog(context)
@@ -311,7 +310,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                                 getString(R.string.changing_class_progress),
                                 300,
                             )
-                        lifecycleScope.launch(Dispatchers.Main) {
+                        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
                             dialog.dismiss()
                             displayClassChanged(classIdentifier)
@@ -330,7 +329,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                                 getString(R.string.changing_class_progress),
                                 300,
                             )
-                        lifecycleScope.launch(Dispatchers.Main) {
+                        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
                             dialog.dismiss()
                             displayClassChanged(classIdentifier)

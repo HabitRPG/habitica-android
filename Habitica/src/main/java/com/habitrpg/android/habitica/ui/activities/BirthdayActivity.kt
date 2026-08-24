@@ -74,6 +74,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class BirthdayActivity : ComposeActivity() {
@@ -428,7 +429,7 @@ fun BirthdayActivityView(
                     {
                         MainScope().launchCatching {
                             activity?.finish()
-                            delay(500)
+                            delay(500.milliseconds)
                             MainNavigationController.navigate(R.id.marketFragment)
                         }
                     },

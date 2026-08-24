@@ -14,11 +14,9 @@ import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -59,7 +57,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     }
 
     fun setupCheckout() {
-        viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val skus = purchaseHandler?.loadGemProducts()
             withContext(Dispatchers.Main) {
                 for (sku in skus ?: emptyList()) {

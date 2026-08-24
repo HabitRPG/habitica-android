@@ -66,7 +66,7 @@ interface CommonSubscriptionFragment: LifecycleOwner {
     }
 
     fun refresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(false, true)
         }
     }
@@ -240,7 +240,7 @@ interface CommonSubscriptionFragment: LifecycleOwner {
     }
 
     fun checkIfNeedsCancellation() {
-        getViewLifecycleOwner().lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        getViewLifecycleOwner().lifecycleScope.launchCatching {
             val newestSubscription = purchaseHandler.checkForSubscription(false)
             val plan = user?.purchased?.plan
             val sub = HabiticaProduct.forSku(newestSubscription?.products?.firstOrNull() ?: "")

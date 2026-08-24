@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Date
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
@@ -90,7 +91,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                     val elapsed = Date().time - startTime.time
                     if (elapsed <= 1000) {
                         // always show it at least 1 second
-                        delay(1000 - elapsed)
+                        delay((1000 - elapsed).milliseconds)
                     }
                     stopAnimatingProgress()
                     finish()

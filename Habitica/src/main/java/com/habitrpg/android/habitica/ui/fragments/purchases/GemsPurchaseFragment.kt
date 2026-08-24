@@ -142,7 +142,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             binding?.loadingIndicator?.isVisible = true
             binding?.gemPurchaseOptions?.isVisible = false
         }
-        viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val skus = purchaseHandler.loadGemProducts()
             withContext(Dispatchers.Main) {
                 if (skus.isEmpty()) {

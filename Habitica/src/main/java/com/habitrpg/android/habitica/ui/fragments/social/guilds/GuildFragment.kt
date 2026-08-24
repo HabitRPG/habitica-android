@@ -222,7 +222,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private val groupFormResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val bundle = it?.data?.extras
+                val bundle = it.data?.extras
                 viewModel.updateGroup(bundle)
             }
         }

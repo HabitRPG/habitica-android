@@ -43,7 +43,6 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
@@ -56,6 +55,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
@@ -113,7 +113,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
         binding?.invitationsView?.acceptCall = {
             viewModel.joinGroup(it) {
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                lifecycleScope.launchCatching {
                     val user = userRepository.retrieveUser(false)
                     parentFragmentManager.popBackStack()
                     MainNavigationController.navigate(
@@ -185,8 +185,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questDetailButton?.visibility = View.VISIBLE
             binding?.questImageWrapper?.visibility = View.VISIBLE
             binding?.questMechanicsButton?.visibility = View.VISIBLE
-            lifecycleScope.launch(Dispatchers.Main) {
-                delay(500)
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                delay(500.milliseconds)
                 val content =
                     inventoryRepository.getQuestContent(party.quest?.key ?: "").firstOrNull()
                 if (content != null) {
@@ -262,8 +262,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     val groupName = invitation.name
 
                     leaderID.let { id ->
-                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                            val member = socialRepository.retrieveMember(id) ?: return@launch
+                        lifecycleScope.launchCatching {
+                            val member = socialRepository.retrieveMember(id) ?: return@launchCatching
                             binding
                                 ?.root
                                 ?.findViewById<AvatarView>(R.id.groupleader_avatar_view)
@@ -425,7 +425,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
         val addMessageDialog = context?.let { HabiticaAlertDialog(it) }
         addMessageDialog?.addButton(android.R.string.ok, true) { _, _ ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
                 (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                     HabiticaSnackbar.showSnackbar(
@@ -451,7 +451,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     ) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.transfer, true) { _, _ ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 socialRepository.transferGroupOwnership(viewModel.groupID ?: "", userID)
                 (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                     HabiticaSnackbar.showSnackbar(
@@ -480,7 +480,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     ) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.remove, true) { _, _ ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 socialRepository.removeMemberFromGroup(viewModel.groupID ?: "", userID)
                 (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                     HabiticaSnackbar.showSnackbar(
@@ -530,8 +530,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val context = context
         if (context != null) {
             val groupChallenges = getGroupChallenges()
-            lifecycleScope.launch(Dispatchers.Main) {
-                delay(500)
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                delay(500.milliseconds)
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.party_challenges)

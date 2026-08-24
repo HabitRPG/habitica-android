@@ -44,9 +44,9 @@ import com.habitrpg.common.habitica.models.PlayerTier
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.max
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
@@ -442,9 +442,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
             return
         }
 
-        searchJob =
-            lifecycleScope.launch {
-                delay(200)
+        searchJob = viewLifecycleOwner.lifecycleScope.launchCatching {
+                delay(200.milliseconds)
 
                 val results = searchFAQItems(currentSearchQuery)
 
@@ -481,25 +480,6 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         }
 
         return results
-    }
-
-    private fun generateSnippet(
-        text: String,
-        query: String,
-    ): String {
-        val cleanText = text.replace(Regex("\\*\\*|\\n"), " ").replace(Regex("\\s+"), " ")
-        val index = cleanText.lowercase().indexOf(query)
-
-        if (index == -1) return ""
-
-        val snippetStart = maxOf(0, index - 30)
-        val snippetEnd = minOf(cleanText.length, index + query.length + 30)
-
-        var snippet = cleanText.substring(snippetStart, snippetEnd)
-        if (snippetStart > 0) snippet = "...$snippet"
-        if (snippetEnd < cleanText.length) snippet = "$snippet..."
-
-        return snippet
     }
 
     private fun showOriginalContent() {
@@ -579,9 +559,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         binding?.searchResultsContainer?.isVisible = true
 
         val searchContainer = binding?.searchResultsContainer
-        if (searchContainer != null) {
-            searchContainer.removeAllViews()
-        }
+        searchContainer?.removeAllViews()
 
         results.forEachIndexed { index, result ->
             when (result) {

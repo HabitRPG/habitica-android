@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -72,7 +73,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.updateUser("flags.newStuff", false)
         }
     }

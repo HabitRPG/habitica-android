@@ -47,6 +47,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class ChallengeFormActivity : BaseActivity() {
@@ -151,7 +152,7 @@ class ChallengeFormActivity : BaseActivity() {
                 finish()
                 if (!editMode) {
                     lifecycleScope.launch(context = Dispatchers.Main) {
-                        delay(500L)
+                        delay(500.milliseconds)
                         MainNavigationController.navigate(
                             ChallengesOverviewFragmentDirections.openChallengeDetail(
                                 challengeId ?: "",

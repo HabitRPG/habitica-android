@@ -5,6 +5,7 @@ import com.habitrpg.common.habitica.BuildConfig
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.net.SocketException
 import java.net.UnknownHostException
@@ -51,8 +52,8 @@ fun CoroutineScope.launchCatching(
     errorHandler: ((Throwable) -> Unit)? = null,
     context: CoroutineContext = EmptyCoroutineContext,
     function: suspend CoroutineScope.() -> Unit,
-) {
-    launch(
+): Job {
+    return launch(
         ExceptionHandler.coroutine {
             errorHandler?.invoke(it)
         } + context,

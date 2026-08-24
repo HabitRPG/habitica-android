@@ -63,7 +63,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         }
 
         binding?.resetTutorialButton?.setOnClickListener {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 userRepository.resetTutorial()
                 mainActivity?.showSnackbar(
                     null,

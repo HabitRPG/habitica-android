@@ -285,7 +285,7 @@ class NavigationDrawerFragment : DialogFragment() {
             updatingJobs[key]?.cancel()
         }
         updatingJobs[key] =
-            lifecycleScope.launch(Dispatchers.Main) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 while (endingCondition()) {
                     function()
                     delay(delayFunc())

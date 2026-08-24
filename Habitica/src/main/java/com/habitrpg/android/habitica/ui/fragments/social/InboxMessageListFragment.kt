@@ -44,6 +44,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -182,7 +183,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 while (true) {
                     refreshConversation()
-                    delay(30.toDuration(DurationUnit.SECONDS))
+                    delay(30.seconds)
                 }
             }
         }
@@ -253,7 +254,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         if (viewModel.memberID?.isNotBlank() != true) {
             return
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             socialRepository.retrieveInboxMessages(viewModel.recipientID ?: "", 0)
 
             if (isScrolledToBottom || isFirstRefresh) {
@@ -282,7 +283,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 },
             ) {
                 socialRepository.postPrivateMessage(userID, chatText)
-                delay(200.toDuration(DurationUnit.MILLISECONDS))
+                delay(200.milliseconds)
                 viewModel.invalidateDataSource()
             }
         }

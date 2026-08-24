@@ -81,7 +81,7 @@ class PreferencesFragment :
 
     private val classSelectionResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 userRepository.retrieveUser(true, true)
             }
         }
@@ -195,7 +195,7 @@ class PreferencesFragment :
                                 isPrimary = true,
                                 isDestructive = true,
                             ) { _, _ ->
-                                lifecycleScope.launch {
+                                lifecycleScope.launchCatching {
                                     userRepository.changeClass()
                                 }
                                 classSelectionResult.launch(
@@ -594,9 +594,9 @@ class PreferencesFragment :
         emailNotificationsPreference?.let { updatePreferenceEnabledView(it) }
         useEmailPreference?.isChecked = useEmailNotifications
 
-        lifecycleScope.launch {
-            val teams = userRepository.getTeamPlans().firstOrNull() ?: return@launch
-            val context = context ?: return@launch
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            val teams = userRepository.getTeamPlans().firstOrNull() ?: return@launchCatching
+            val context = context ?: return@launchCatching
             val groupCategory = findPreference<PreferenceCategory>("groups_category")
             val footer = groupCategory?.findPreference<Preference>("groups_footer")
             footer?.order = 9999

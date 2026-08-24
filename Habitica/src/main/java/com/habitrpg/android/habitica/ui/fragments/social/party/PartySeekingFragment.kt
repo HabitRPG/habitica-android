@@ -78,8 +78,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class PartySeekingViewModel
@@ -325,7 +324,7 @@ fun PartySeekingView(
                         if (response != null) {
                             viewModel.inviteStates[member.id] =
                                 Pair(isInvited, LoadingButtonState.SUCCESS)
-                            delay(2500.toDuration(DurationUnit.MILLISECONDS))
+                            delay(2500.milliseconds)
                             viewModel.inviteStates[member.id] =
                                 Pair(!isInvited, LoadingButtonState.CONTENT)
                         } else {

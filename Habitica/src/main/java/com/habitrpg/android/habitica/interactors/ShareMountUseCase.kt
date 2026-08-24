@@ -19,6 +19,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
     class RequestValues(
@@ -56,7 +57,7 @@ class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (!mountWrapper.mountImageview.hasLoadedImages && attempts < 200) {
-            delay(100)
+            delay(100.milliseconds)
             attempts++
         }
         // Draw it to the canvas once it's layouted

@@ -50,7 +50,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -59,7 +58,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -215,7 +213,7 @@ class EquipmentDetailFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.retrieveUser(true, true)
             binding?.refreshLayout?.isRefreshing = false
         }

@@ -108,7 +108,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         party = group
         quest = group.quest
         setQuestParticipants(group.quest?.participants)
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             val member = socialRepository.retrieveMember(quest?.leader)
             if (context != null && binding?.questLeaderView != null) {
                 binding?.questLeaderView?.text =

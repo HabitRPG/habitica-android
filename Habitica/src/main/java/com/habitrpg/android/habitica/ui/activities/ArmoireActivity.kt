@@ -264,7 +264,7 @@ class ArmoireActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launchCatching {
-            delay(500L)
+            delay(500.milliseconds)
             startAnimation(true)
         }
     }

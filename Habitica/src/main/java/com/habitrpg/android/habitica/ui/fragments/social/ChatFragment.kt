@@ -41,8 +41,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 open class ChatFragment : BaseFragment<FragmentChatBinding>() {
@@ -183,7 +182,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 while (true) {
                     refresh()
-                    delay(30.toDuration(DurationUnit.SECONDS))
+                    delay(30.seconds)
                 }
             }
         }

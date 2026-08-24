@@ -35,6 +35,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
@@ -166,9 +167,9 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             }
         }
         if (response.damage > 0) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                delay(2000L)
-                if (!isAdded) return@launch
+            lifecycleScope.launchCatching {
+                delay(2.seconds)
+                if (!isAdded) return@launchCatching
                 showSnackbar(
                     activity.snackbarContainer,
                     null,
@@ -180,7 +181,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                 )
             }
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(true)
         }
     }

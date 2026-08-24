@@ -310,7 +310,7 @@ class AccountPreferenceFragment :
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.are_you_sure)
             dialog.addButton(R.string.disconnect, true) { _, _ ->
-                lifecycleScope.launch {
+                lifecycleScope.launchCatching {
                     val success = viewModel.removeSocialAuth(network)
                     if (success) {
                         displayDisconnectSuccess(networkName)
@@ -485,7 +485,7 @@ class AccountPreferenceFragment :
                         emailEditText.text.toString(),
                         passwordEditText?.text.toString(),
                     )
-                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    lifecycleScope.launchCatching {
                         userRepository.retrieveUser(true, true)
                     }
                     configurePreference(findPreference("email"), emailEditText.text.toString())

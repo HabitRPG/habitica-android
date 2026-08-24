@@ -25,7 +25,6 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
@@ -114,7 +113,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(withTasks = true, forced = true)
             inventoryRepository.retrieveInAppRewards()
             binding?.refreshLayout?.isRefreshing = false

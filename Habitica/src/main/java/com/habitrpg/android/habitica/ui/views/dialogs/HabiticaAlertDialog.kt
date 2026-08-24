@@ -33,6 +33,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
+import kotlin.time.Duration.Companion.milliseconds
 
 open class HabiticaAlertDialog(
     context: Context,
@@ -323,8 +324,8 @@ open class HabiticaAlertDialog(
             if (dialogQueue.size > 0) {
                 if ((dialogQueue[0].context as? BaseActivity)?.isFinishing != true) {
                     (dialogQueue[0].context as? BaseActivity)?.lifecycleScope?.launch(context = Dispatchers.Main) {
-                        delay(500L)
-                        if (dialogQueue.size > 0 && (
+                        delay(500.milliseconds)
+                        if (dialogQueue.isNotEmpty() && (
                                 (dialogQueue[0].context as? Activity)?.isFinishing == false ||
                                     ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
                             )

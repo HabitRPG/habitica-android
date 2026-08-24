@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Integer.max
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -45,7 +46,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         }
 
         lifecycleScope.launch {
-            delay(secondsToShow.toDuration(DurationUnit.SECONDS))
+            delay(secondsToShow.seconds)
             finish()
         }
     }

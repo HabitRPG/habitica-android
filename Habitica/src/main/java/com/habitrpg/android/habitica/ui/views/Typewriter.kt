@@ -29,6 +29,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.streams.toList
+import kotlin.time.Duration.Companion.milliseconds
 
 // http://stackoverflow.com/a/6700718/1315039
 class Typewriter : androidx.appcompat.widget.AppCompatTextView {
@@ -78,7 +79,7 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
                 while (index <= (stringBuilder?.length ?: 0)) {
                     stringBuilder?.setSpan(visibleSpan, 0, index++, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                     setText(stringBuilder)
-                    delay(delay)
+                    delay(delay.milliseconds)
                 }
             }
     }
@@ -118,7 +119,7 @@ fun TypewriterText(
                     ).joinToString(
                         separator = "",
                     )
-            delay(delay)
+            delay(delay.milliseconds)
         }
     }
 

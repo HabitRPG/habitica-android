@@ -53,6 +53,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class NotificationsActivity :
@@ -247,7 +248,7 @@ class NotificationsActivity :
 
             lifecycleScope.launch {
                 binding.progressView.isVisible = false
-                delay(250)
+                delay(250.milliseconds)
                 if (binding.notificationItems.visibility != View.VISIBLE) {
                     binding.notificationItems.fadeInAnimation(200)
                 }

@@ -132,7 +132,7 @@ class InboxOverviewFragment :
                 binding.errorTextView.visibility = View.GONE
                 binding.progressCircular.visibility = View.VISIBLE
                 val username = binding.uuidEditText.text?.toString() ?: ""
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                lifecycleScope.launchCatching {
                     var member: Member? = null
                     try {
                         member = socialRepository.retrieveMember(username, false)

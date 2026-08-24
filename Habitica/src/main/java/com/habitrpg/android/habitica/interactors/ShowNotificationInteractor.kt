@@ -26,6 +26,7 @@ import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class ShowNotificationInteractor(
     private val activity: Activity,
@@ -267,7 +268,7 @@ class ShowNotificationInteractor(
                 200
             }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            delay(delayTime)
+            delay(delayTime.milliseconds)
             lifecycleScope.launch(context = Dispatchers.Main) {
                 val dialog = AchievementDialog(activity)
                 dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement

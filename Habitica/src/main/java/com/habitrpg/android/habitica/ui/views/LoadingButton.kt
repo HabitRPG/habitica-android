@@ -55,6 +55,7 @@ import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 enum class LoadingButtonState {
     CONTENT,
@@ -265,15 +266,15 @@ private fun Preview() {
         LoadingButton(state, {
             scope.launch {
                 state = LoadingButtonState.LOADING
-                delay(2000)
+                delay(2.seconds)
                 state = LoadingButtonState.FAILED
-                delay(2000)
+                delay(2.seconds)
                 state = LoadingButtonState.LOADING
-                delay(2000)
+                delay(2.seconds)
                 state = LoadingButtonState.SUCCESS
-                delay(2000)
+                delay(2.seconds)
                 state = LoadingButtonState.DISABLED
-                delay(2000)
+                delay(2.seconds)
                 state = LoadingButtonState.CONTENT
             }
         }, successContent = {

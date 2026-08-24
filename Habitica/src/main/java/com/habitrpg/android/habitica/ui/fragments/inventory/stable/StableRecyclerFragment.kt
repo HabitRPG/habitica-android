@@ -98,7 +98,7 @@ class StableRecyclerFragment :
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
             adapter?.animalIngredientsRetriever = { animal, callback ->
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                lifecycleScope.launchCatching {
                     val egg =
                         inventoryRepository
                             .getItems(Egg::class.java, arrayOf(animal.animal))
@@ -186,7 +186,7 @@ class StableRecyclerFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(true, true)
             binding?.refreshLayout?.isRefreshing = false
         }
