@@ -31,11 +31,11 @@ class AppConfigManager(
     Clearable {
     private var worldState: WorldState? = null
 
-    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun clear() {
         scope.cancel()
-        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     }
 
     init {

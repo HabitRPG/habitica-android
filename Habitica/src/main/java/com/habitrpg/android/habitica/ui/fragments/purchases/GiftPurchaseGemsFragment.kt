@@ -1,7 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
@@ -45,6 +47,11 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         }
 
     private var purchaseHandler: PurchaseHandler? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupCheckout()
+    }
 
     fun setupCheckout() {
         viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {

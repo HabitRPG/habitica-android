@@ -129,7 +129,6 @@ class GiftGemsActivity : PurchaseActivity() {
                     if (position == 0) {
                         val fragment = GiftPurchaseGemsFragment()
                         fragment.setPurchaseHandler(purchaseHandler)
-                        fragment.setupCheckout()
                         purchaseFragment = fragment
                         purchaseFragment?.giftedMember = giftedMember
                         fragment

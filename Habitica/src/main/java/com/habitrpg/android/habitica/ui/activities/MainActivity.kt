@@ -187,14 +187,18 @@ open class MainActivity :
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
                 return
             }
-            if (value == true && showBirthdayIcon) {
-                drawerToggle?.isDrawerIndicatorEnabled = false
-                drawerToggle?.setHomeAsUpIndicator(R.drawable.arrow_back)
-            } else if (value == false && showBirthdayIcon) {
-                drawerToggle?.isDrawerIndicatorEnabled = false
-                drawerToggle?.setHomeAsUpIndicator(R.drawable.icon_birthday)
-            } else {
-                drawerToggle?.isDrawerIndicatorEnabled = value != true
+            when (value) {
+                true if showBirthdayIcon -> {
+                    drawerToggle?.isDrawerIndicatorEnabled = false
+                    drawerToggle?.setHomeAsUpIndicator(R.drawable.arrow_back)
+                }
+                false if showBirthdayIcon -> {
+                    drawerToggle?.isDrawerIndicatorEnabled = false
+                    drawerToggle?.setHomeAsUpIndicator(R.drawable.icon_birthday)
+                }
+                else -> {
+                    drawerToggle?.isDrawerIndicatorEnabled = value != true
+                }
             }
         }
     private var resumeFromActivity = false
@@ -367,10 +371,6 @@ open class MainActivity :
             updateDrawerBehavior()
         }
 
-        if (isPersistentDrawerMode != true) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setHomeButtonEnabled(true)
-        }
         setupNotifications()
         setupBottomnavigationLayoutListener()
 

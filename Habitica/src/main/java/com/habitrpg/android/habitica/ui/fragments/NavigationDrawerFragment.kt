@@ -96,9 +96,6 @@ class NavigationDrawerFragment : DialogFragment() {
     private var drawerLayout: DrawerLayout? = null
     private var fragmentContainerView: View? = null
 
-    private var mCurrentSelectedPosition = 0
-    private var mFromSavedInstanceState: Boolean = false
-
     private lateinit var adapter: NavigationDrawerAdapter
 
     val isDrawerOpen: Boolean
@@ -127,11 +124,6 @@ class NavigationDrawerFragment : DialogFragment() {
                 NavigationDrawerAdapter(0, 0)
             }
         super.onCreate(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION)
-            mFromSavedInstanceState = true
-        }
     }
 
     override fun onCreateView(
@@ -185,7 +177,7 @@ class NavigationDrawerFragment : DialogFragment() {
         }
 
         adapter.itemSelectedEvents = {
-            setSelection(it.transitionId, it.bundle, true)
+            setSelection(it.transitionId, it.bundle, true, it.preventReselect)
         }
         adapter.promoClosedSubject = {
             sharedPreferences.edit {
@@ -546,6 +538,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     R.id.gemPurchaseActivity,
                     SIDEBAR_GEMS,
                     context.getString(R.string.sidebar_gems),
+                    preventReselect = false
                 ),
             )
             items.add(
@@ -553,6 +546,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     R.id.subscriptionPurchaseActivity,
                     SIDEBAR_SUBSCRIPTION,
                     context.getString(R.string.sidebar_subscription),
+                    preventReselect = false
                 ),
             )
             items.add(
@@ -634,8 +628,13 @@ class NavigationDrawerFragment : DialogFragment() {
         if (!shouldUsePersistentDrawer) {
             closeDrawer()
         }
-        if (adapter.selectedItem != null && adapter.selectedItem == transitionId && bundle == null && preventReselection) return
-        adapter.selectedItem = transitionId
+        if (adapter.selectedItem != null
+            && adapter.selectedItem == transitionId
+            && bundle == null
+            && preventReselection) return
+        if (preventReselection) {
+            adapter.selectedItem = transitionId
+        }
 
         if (!openSelection) {
             return
@@ -757,11 +756,6 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun setUsername(name: String?) {
         binding?.usernameTextView?.text = name
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition)
     }
 
     private fun setNotificationsCount(unreadNotifications: Int) {

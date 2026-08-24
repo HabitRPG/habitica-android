@@ -10,6 +10,7 @@ data class HabiticaDrawerItem(
     val text: String,
     val icon: Drawable? = null,
     val isHeader: Boolean = false,
+    val preventReselect: Boolean = true
 ) {
     constructor(transitionId: Int, identifier: String) : this(transitionId, identifier, "")
 

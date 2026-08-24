@@ -118,6 +118,9 @@ abstract class BaseActivity : AppCompatActivity() {
         getLayoutResId()?.let {
             setContentView(getContentView(it))
         }
+        if (toolbar == null) {
+            setupToolbar()
+        }
         lifecycleScope.launchCatching {
             notificationsManager.displayNotificationEvents.collect {
                 if (ShowNotificationInteractor(
@@ -138,9 +141,6 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onPostCreate(savedInstanceState, persistentState)
         if (toolbarBackgroundColor == null) {
             toolbarBackgroundColor = getThemeColor(R.attr.headerBackgroundColor)
-        }
-        if (toolbar == null) {
-            setupToolbar()
         }
     }
 
