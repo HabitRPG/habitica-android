@@ -17,13 +17,11 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -105,7 +103,7 @@ class AchievementsFragment :
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository
                 .getAchievements()
                 .combine(userRepository.getQuestAchievements()) { achievements, questAchievements ->
@@ -188,7 +186,7 @@ class AchievementsFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.retrieveAchievements()
         }
     }

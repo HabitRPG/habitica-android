@@ -26,7 +26,7 @@ class QuestShopFragment : ShopFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.getQuestAchievements().collect {
                 adapter?.completedQuests = it.map { it.questKey }
             }

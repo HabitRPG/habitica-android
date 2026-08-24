@@ -89,7 +89,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             socialRepository
                 .getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "")
                 .collect {
@@ -155,7 +155,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
         viewModel.messages.observe(viewLifecycleOwner) {
             markMessagesAsRead(it)
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 chatAdapter?.submitData(it)
             }
         }

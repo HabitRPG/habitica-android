@@ -83,7 +83,7 @@ class InboxOverviewFragment :
     }
 
     private fun loadMessages() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             socialRepository.getInboxConversations().collect {
                 setInboxMessages(it)
             }

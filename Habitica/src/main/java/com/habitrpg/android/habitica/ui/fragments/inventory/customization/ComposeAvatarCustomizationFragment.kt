@@ -200,7 +200,7 @@ class ComposeAvatarCustomizationFragment :
                         stringResource(viewModel.typeNameId),
                         activeCustomization,
                     ) { customization ->
-                        lifecycleScope.launchCatching {
+                        viewLifecycleOwner.lifecycleScope.launchCatching {
                             if (customization.identifier?.isNotBlank() != true) {
                                 userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
                             } else if (customization.identifier == activeCustomization && customization.type == "hair" &&
@@ -248,7 +248,7 @@ class ComposeAvatarCustomizationFragment :
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             currentFilter.collect {
                 Log.e("NewFilter", it.toString())
             }
@@ -325,7 +325,7 @@ class ComposeAvatarCustomizationFragment :
 
     private fun loadCustomizations() {
         val type = this.type ?: return
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             customizationRepository
                 .getCustomizations(type, category, false)
                 .combine(currentFilter) { customizations, filter -> Pair(customizations, filter) }

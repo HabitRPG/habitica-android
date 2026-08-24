@@ -55,7 +55,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
     private fun showTutorialIfNeeded() {
         if (view != null) {
             tutorialStepIdentifier?.let { identifier ->
-                lifecycleScope.launchCatching {
+                viewLifecycleOwner.lifecycleScope.launchCatching {
                     val step = tutorialRepository.getTutorialStep(identifier).firstOrNull()
                     delay(1.toDuration(DurationUnit.SECONDS))
                     if (step?.isValid == true && step.isManaged && step.shouldDisplay) {

@@ -306,7 +306,7 @@ class TasksFragment :
         if (bottomNavigation == null) {
             return
         }
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             tutorialRepository
                 .getTutorialSteps(listOf("habits", "dailies", "todos", "rewards"))
                 .collect { tutorialSteps ->

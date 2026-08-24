@@ -76,14 +76,14 @@ class AccountPreferenceFragment :
         findPreference<Preference>("confirm_username")?.isVisible =
             user?.flags?.verifiedUsername == false
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             viewModel.authenticationSuccess.collect { registered ->
                 if (registered == null) return@collect
                 displayAuthenticationSuccess(lastAuthenticationMethod ?: "Unknown")
             }
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.getUser().collect { user ->
                 this@AccountPreferenceFragment.user = user
             }

@@ -193,7 +193,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             return
         }
         isReporting = true
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val reportReasonInfo = binding.additionalInfoEdittext.text.toString()
             val updateData =
                 mapOf(
@@ -216,7 +216,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             return
         }
         isReporting = true
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val reportReasonInfo = binding.additionalInfoEdittext.text.toString()
             val updateData =
                 mapOf(

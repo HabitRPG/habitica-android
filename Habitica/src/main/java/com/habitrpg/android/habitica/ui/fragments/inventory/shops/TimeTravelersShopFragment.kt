@@ -32,7 +32,7 @@ class TimeTravelersShopFragment : ShopFragment() {
         super.onViewCreated(view, savedInstanceState)
         initializeCurrencyViews()
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val user = userViewModel.user.value
             if (user?.isSubscribed != true && user
                     ?.purchased

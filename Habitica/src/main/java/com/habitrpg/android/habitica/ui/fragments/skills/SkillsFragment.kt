@@ -85,7 +85,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         adapter?.mana = user.stats?.mp ?: 0.0
         adapter?.level = user.stats?.lvl ?: 0
         adapter?.specialItems = user.items?.special
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository
                 .getSkills(user)
                 .combine(userRepository.getSpecialItems(user)) { skills, items ->

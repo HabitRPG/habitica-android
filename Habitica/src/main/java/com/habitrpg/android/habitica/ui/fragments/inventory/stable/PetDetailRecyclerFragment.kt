@@ -186,7 +186,7 @@ class PetDetailRecyclerFragment :
 
     private fun loadItems() {
         if (animalType?.isNotEmpty() == true || animalGroup?.isNotEmpty() == true) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository
                     .getOwnedMounts()
                     .map { ownedMounts ->
@@ -195,10 +195,10 @@ class PetDetailRecyclerFragment :
                         return@map mountMap
                     }.collect { adapter.setOwnedMounts(it) }
             }
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getOwnedItems(true).collect { adapter.setOwnedItems(it) }
             }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val mounts =
                     inventoryRepository
                         .getMounts(

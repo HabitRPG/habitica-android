@@ -53,7 +53,7 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
                 binding?.questionTextView?.text = args.question
                 binding?.answerTextView?.text = MarkdownParser.parseMarkdown(args.answer)
             } else {
-                lifecycleScope.launchCatching {
+                viewLifecycleOwner.lifecycleScope.launchCatching {
                     faqRepository.getArticle(args.position).collect { faq ->
                         binding?.questionTextView?.text = faq.question
                         binding?.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)

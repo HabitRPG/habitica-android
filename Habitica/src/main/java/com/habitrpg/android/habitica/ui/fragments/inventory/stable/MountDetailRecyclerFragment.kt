@@ -148,7 +148,7 @@ class MountDetailRecyclerFragment :
 
     private fun loadItems() {
         if (animalType != null || animalGroup != null) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 val mounts =
                     inventoryRepository
                         .getMounts(animalType, animalGroup, animalColor)

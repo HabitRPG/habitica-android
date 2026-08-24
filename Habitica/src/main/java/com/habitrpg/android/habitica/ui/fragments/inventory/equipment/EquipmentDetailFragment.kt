@@ -105,7 +105,7 @@ class EquipmentDetailFragment :
         hidesToolbar = true
 
         adapter.onEquip = {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.equipGear(it, isCostume ?: false)
 
                 if (this@EquipmentDetailFragment.isAdded) {
@@ -181,7 +181,7 @@ class EquipmentDetailFragment :
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         type?.let { gearType ->
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository
                     .getOwnedEquipment(gearType)
                     .combine(searchedText) { equipment, query ->

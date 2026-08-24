@@ -82,7 +82,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         binding?.questCancelButton?.setOnClickListener { onQuestCancel() }
         binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository
                 .getUser()
                 .map { it?.party?.id }

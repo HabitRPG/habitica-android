@@ -143,7 +143,7 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
                         stringResource(viewModel.typeNameId),
                         activeEquipment,
                     ) { equipment ->
-                        lifecycleScope.launchCatching {
+                        viewLifecycleOwner.lifecycleScope.launchCatching {
                             if ((equipment.key?.isNotBlank() != true || equipment.key?.endsWith("_0") == true) &&
                                 equipment.key != activeEquipment
                             ) {
@@ -230,7 +230,7 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
 
     private fun loadEquipment() {
         val type = viewModel.type ?: return
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             inventoryRepository
                 .getEquipmentType(type, viewModel.category ?: "")
                 .combine(inventoryRepository.getOwnedEquipment(type).map { it.map { owned -> owned.key } }, ::Pair)

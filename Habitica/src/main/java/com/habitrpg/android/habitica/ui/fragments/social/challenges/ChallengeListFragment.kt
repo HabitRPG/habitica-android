@@ -102,7 +102,7 @@ class ChallengeListFragment :
             binding?.recyclerView?.setBackgroundResource(R.color.content_background)
         }
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             socialRepository
                 .getGroup(Group.TAVERN_ID)
                 .combine(socialRepository.getUserGroups("guild")) { tavern, guilds ->
@@ -114,7 +114,7 @@ class ChallengeListFragment :
                 }
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             challengeRepository
                 .getCategoryOptions()
                 .filter { it.isNotEmpty() }
@@ -123,7 +123,7 @@ class ChallengeListFragment :
                 }
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.getUser().collect { user ->
                 user?.challenges?.let { memberships ->
                     challengeAdapter?.updateChallengeMemberships(memberships)
@@ -178,7 +178,7 @@ class ChallengeListFragment :
     }
 
     private fun loadLocalChallenges() {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val flow =
                 if (viewUserChallengesOnly) {
                     challengeRepository.getUserChallenges()

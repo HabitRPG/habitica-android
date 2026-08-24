@@ -134,7 +134,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         }
 
         binding?.automaticAllocationSwitch?.setOnCheckedChangeListener { _, isChecked ->
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 userRepository.updateUser("preferences.automaticAllocation", isChecked)
             }
         }
@@ -163,7 +163,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun changeAutoAllocationMode(allocationMode: String) {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.updateUser(
                 "preferences.allocationMode",
                 allocationMode,
@@ -182,7 +182,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun allocatePoint(stat: Attribute) {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.allocatePoint(stat)
         }
     }
@@ -260,7 +260,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             outfitList.add(thisOutfit.weapon)
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val equipment = inventoryRepository.getEquipment(outfitList).firstOrNull()
             val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 

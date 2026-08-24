@@ -71,7 +71,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         if (showCustomRewards) {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getInAppRewards().collect {
                     val user = viewModel.user.value
                     (recyclerAdapter as? RewardsRecyclerViewAdapter)?.goldGemsLeft =

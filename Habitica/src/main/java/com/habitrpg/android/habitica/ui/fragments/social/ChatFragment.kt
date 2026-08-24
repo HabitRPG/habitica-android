@@ -159,7 +159,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 binding?.chatBarView?.groupMembers = members
             }
         } else {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 viewModel.getGroupData().value?.id?.let { groupId ->
                     socialRepository.getGroupMembers(groupId).collect { members ->
                         binding?.chatBarView?.groupMembers = members

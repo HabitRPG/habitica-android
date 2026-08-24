@@ -196,7 +196,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     }
 
     private fun loadArticles() {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             faqRepository.getArticles().collect {
                 val context = context ?: return@collect
                 if (binding?.faqLinearLayout == null) return@collect

@@ -92,7 +92,6 @@ class ItemRecyclerFragment :
             val args = arguments ?: Bundle().also { arguments = it }
             args.putString(ARG_ITEM_TYPE, value)
         }
-    var transformationItems: MutableList<OwnedItem> = mutableListOf()
     var itemTypeText: String?
         get() = arguments?.getString(ARG_ITEM_TYPE_TEXT)
         set(value) {
@@ -182,7 +181,7 @@ class ItemRecyclerFragment :
 
     private fun getSpecialSkills() {
         // Get special skills for description of special items
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val user = userViewModel.user.value ?: return@launchCatching
             userRepository
                 .getSkills(user)
@@ -231,13 +230,13 @@ class ItemRecyclerFragment :
             showSellItemConfirmation(item, ownedItem)
         }
         adapter?.onQuestInvitation = {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.inviteToQuest(it)
                 MainNavigationController.navigate(R.id.partyFragment)
             }
         }
         adapter?.onOpenMysteryItem = {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
                 val activity = activity as? MainActivity
                 if (activity != null) {
@@ -384,7 +383,7 @@ class ItemRecyclerFragment :
                 else -> Egg::class.java
             }
         itemType?.let { type ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository
                     .getOwnedItems(type)
                     .onEach { items ->
@@ -400,10 +399,10 @@ class ItemRecyclerFragment :
                         adapter?.items = itemMap
                     }
             }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
             }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository
                     .getOwnedPets()
                     .map { ownedPets ->

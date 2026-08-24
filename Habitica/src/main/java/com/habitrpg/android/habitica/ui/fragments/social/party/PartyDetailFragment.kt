@@ -512,7 +512,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun getGroupChallenges(): List<Challenge> {
         val groupChallenges = mutableListOf<Challenge>()
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.getUser().collect {
                 it?.challenges?.forEach { membership ->
                     val challenge =

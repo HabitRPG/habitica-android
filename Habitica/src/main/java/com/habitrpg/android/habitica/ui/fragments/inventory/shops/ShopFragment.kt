@@ -195,12 +195,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
             }
 
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getInAppReward("armoire").collect {
                     adapter?.armoireItem = it
                 }
             }
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getArmoireRemainingCount().collect {
                     adapter?.armoireCount = it
                 }
@@ -252,13 +252,13 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
         view.post { setGridSpanCount(view.width) }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             inventoryRepository
                 .getOwnedItems()
                 .collect { adapter?.setOwnedItems(it) }
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             contentRepository
                 .getWorldState()
                 .collect {
@@ -266,7 +266,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             inventoryRepository
                 .getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
@@ -361,7 +361,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 Shop.CUSTOMIZATIONS -> "customizations"
                 else -> ""
             }
-        lifecycleScope.launchCatching({
+        viewLifecycleOwner.lifecycleScope.launchCatching({
             binding?.recyclerView?.state = RecyclerViewState.FAILED
         }) {
             val newShop = inventoryRepository.retrieveShopInventory(shopUrl) ?: return@launchCatching
@@ -466,7 +466,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun loadMarketGear() {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val shop = inventoryRepository.retrieveMarketGear()
             val equipment =
                 inventoryRepository

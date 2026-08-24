@@ -53,7 +53,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     private fun showTutorialIfNeeded() {
         tutorialStepIdentifier?.let { identifier ->
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 val step = tutorialRepository.getTutorialStep(identifier).firstOrNull()
                 delay(1.toDuration(DurationUnit.SECONDS))
                 if (step?.isValid == true && step.isManaged && step.shouldDisplay) {

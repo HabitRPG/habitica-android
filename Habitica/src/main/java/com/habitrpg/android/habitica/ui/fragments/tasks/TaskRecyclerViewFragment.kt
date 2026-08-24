@@ -178,7 +178,7 @@ open class TaskRecyclerViewFragment :
             canScoreTasks = viewModel.isPersonalBoard
             updateTaskSubscription(it)
         }
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             viewModel.userViewModel.user
                 .asFlow()
                 .onEach { recyclerAdapter?.user = it }
@@ -404,7 +404,7 @@ open class TaskRecyclerViewFragment :
             },
         )
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository
                 .getUser()
                 .distinctUntilChangedBy { it?.hasCompletedOnboarding }
@@ -424,7 +424,7 @@ open class TaskRecyclerViewFragment :
         val additionalGroupIDs =
             if (ownerID == viewModel.userViewModel.userID) viewModel.userViewModel.mirrorGroupTasks.toTypedArray() else emptyArray()
         taskFlowJob =
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 taskRepository.getTasks(taskType, ownerID, additionalGroupIDs).collect {
                     recyclerAdapter?.updateUnfilteredData(it)
                 }
@@ -594,7 +594,7 @@ open class TaskRecyclerViewFragment :
         setEmptyLabels()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 taskRepository.retrieveCompletedTodos()
             }
         }

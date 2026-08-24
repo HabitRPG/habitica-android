@@ -99,7 +99,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         }
 
         challengeID?.let { id ->
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 challengeRepository
                     .getChallenge(id)
                     .map {
@@ -110,7 +110,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                         set(socialRepository.retrieveMember(it))
                     }
             }
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 challengeRepository.getChallengeTasks(id).collect { taskList ->
                     binding?.taskGroupLayout?.removeAllViewsInLayout()
 
@@ -147,7 +147,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                 }
             }
 
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 challengeRepository.isChallengeMember(id).collect { isMember ->
                     setJoined(isMember)
                 }

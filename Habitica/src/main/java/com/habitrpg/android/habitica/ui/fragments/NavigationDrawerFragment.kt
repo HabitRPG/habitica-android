@@ -186,7 +186,7 @@ class NavigationDrawerFragment : DialogFragment() {
             updatePromo()
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             contentRepository
                 .getWorldState()
                 .combine(
@@ -688,19 +688,19 @@ class NavigationDrawerFragment : DialogFragment() {
         this.drawerLayout = drawerLayout
         // set UP the drawer's list view with items and click listener
 
-        lifecycleScope.launchCatching {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getNotificationCount().collect {
                     setNotificationsCount(it)
                 }
             }
         }
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             viewModel.allNotificationsSeen().collect {
                 setNotificationsSeen(it)
             }
         }
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             viewModel.getHasPartyNotification().collect {
                 val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
                 partyMenuItem?.showBubble = it

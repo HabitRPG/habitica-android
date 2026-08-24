@@ -334,7 +334,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 else -> Egg::class.java
             }
         itemType?.let { type ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository
                     .getOwnedItems(type)
                     .onEach { items ->
@@ -356,10 +356,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                         adapter?.items = itemMap
                     }
             }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
             }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository
                     .getOwnedPets()
                     .map { ownedPets ->
