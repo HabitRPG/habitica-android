@@ -179,7 +179,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 it?.flags?.communityGuidelinesAccepted == true
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 while (true) {
                     refresh()

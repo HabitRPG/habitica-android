@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -93,6 +92,11 @@ class PartyInviteViewModel
         val socialRepository: SocialRepository,
     ) : BaseViewModel(userRepository, userViewModel) {
         val invites = mutableStateListOf("")
+
+    override fun onCleared() {
+        socialRepository.close()
+        super.onCleared()
+    }
 
         suspend fun sendInvites(): List<InviteResponse>? {
             val inviteMap =

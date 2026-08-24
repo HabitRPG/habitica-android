@@ -57,12 +57,6 @@ constructor(
             .flatMapLatest { socialRepository.getPartyMembers(it) }
     private val members = membersFlow.asLiveData()
 
-    override fun onCleared() {
-        challengeRepository.close()
-        socialRepository.close()
-        super.onCleared()
-    }
-
     init {
         groupViewType = GroupViewType.PARTY
     }

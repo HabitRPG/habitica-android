@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
@@ -31,9 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HabiticaAccountDialog(
-    private var thisContext: Context,
-) : BottomSheetDialogFragment(R.layout.dialog_habitica_account) {
+class HabiticaAccountDialog: BottomSheetDialogFragment(R.layout.dialog_habitica_account) {
     @Inject
     lateinit var userRepository: UserRepository
     private var viewBinding: DialogHabiticaAccountBinding? = null
@@ -149,7 +146,7 @@ class HabiticaAccountDialog(
                 ) {
                     binding.confirmActionTextview.setTextColor(
                         ContextCompat.getColor(
-                            thisContext,
+                            requireContext(),
                             R.color.gray_300,
                         ),
                     )
@@ -176,7 +173,7 @@ class HabiticaAccountDialog(
                         ) {
                             binding.confirmActionTextview.setTextColor(
                                 ContextCompat.getColor(
-                                    thisContext,
+                                    requireContext(),
                                     R.color.red_100,
                                 ),
                             )
@@ -185,7 +182,7 @@ class HabiticaAccountDialog(
                     } else {
                         binding.confirmActionTextview.setTextColor(
                             ContextCompat.getColor(
-                                thisContext,
+                                requireContext(),
                                 R.color.gray_300,
                             ),
                         )
@@ -236,7 +233,7 @@ class HabiticaAccountDialog(
                 ) {
                     binding.confirmActionTextview.setTextColor(
                         ContextCompat.getColor(
-                            thisContext,
+                            requireContext(),
                             R.color.gray_300,
                         ),
                     )
@@ -263,7 +260,7 @@ class HabiticaAccountDialog(
                         ) {
                             binding.confirmActionTextview.setTextColor(
                                 ContextCompat.getColor(
-                                    thisContext,
+                                    requireContext(),
                                     R.color.red_100,
                                 ),
                             )
@@ -272,7 +269,7 @@ class HabiticaAccountDialog(
                     } else {
                         binding.confirmActionTextview.setTextColor(
                             ContextCompat.getColor(
-                                thisContext,
+                                requireContext(),
                                 R.color.gray_300,
                             ),
                         )

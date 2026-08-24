@@ -63,6 +63,12 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
+    override fun onDestroy() {
+        socialRepository.close()
+        challengeRepository.close()
+        super.onDestroy()
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener { dialog: DialogInterface ->

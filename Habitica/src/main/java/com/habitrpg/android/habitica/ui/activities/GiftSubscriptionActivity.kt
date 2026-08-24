@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionVi
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -129,17 +128,19 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
-            val subscriptions = purchaseHandler.loadGiftSubscriptionProducts()
-            skus = subscriptions
-            withContext(Dispatchers.Main) {
-                for (sku in skus) {
-                    updateButtonLabel(sku)
-                }
-                if (selectedSubscriptionSku == null) {
-                    skus
-                        .maxByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
-                        ?.let { selectSubscription(it) }
+        lifecycleScope.launchCatching {
+            withContext(Dispatchers.IO) {
+                val subscriptions = purchaseHandler.loadGiftSubscriptionProducts()
+                skus = subscriptions
+                withContext(Dispatchers.Main) {
+                    for (sku in skus) {
+                        updateButtonLabel(sku)
+                    }
+                    if (selectedSubscriptionSku == null) {
+                        skus
+                            .maxByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
+                            ?.let { selectSubscription(it) }
+                    }
                 }
             }
         }

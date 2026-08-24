@@ -48,6 +48,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onDestroy() {
         userRepository.close()
+        inventoryRepository.close()
         super.onDestroy()
     }
 

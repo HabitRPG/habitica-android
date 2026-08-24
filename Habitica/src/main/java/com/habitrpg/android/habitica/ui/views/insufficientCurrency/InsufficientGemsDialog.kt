@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -19,7 +20,6 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.withContext
@@ -89,23 +89,25 @@ class InsufficientGemsDialog(
                 purchaseTextView.text = "4"
                 HabiticaProduct.PURCHASE_4_GEMS
             }
-        CoroutineScope(Dispatchers.IO).launchCatching {
-            val sku =
-                purchaseHandler.loadInAppProduct(gemSku)
-                    ?: return@launchCatching
-            withContext(Dispatchers.Main) {
-                purchaseButton?.text = sku.oneTimePurchaseOfferDetails?.formattedPrice
-                contentView.findViewById<ProgressBar>(R.id.loading_indicator).isVisible = false
-                purchaseButton.isVisible = true
+        lifecycleScope.launchCatching {
+            withContext(Dispatchers.IO) {
+                val sku =
+                    purchaseHandler.loadInAppProduct(gemSku)
+                        ?: return@withContext
+                withContext(Dispatchers.Main) {
+                    purchaseButton?.text = sku.oneTimePurchaseOfferDetails?.formattedPrice
+                    contentView.findViewById<ProgressBar>(R.id.loading_indicator).isVisible = false
+                    purchaseButton.isVisible = true
 
-                purchaseButton?.setOnClickListener {
-                    MainScope().launchCatching {
-                        insufficientGemsUseCase.callInteractor(
-                            InsufficientGemsUseCase.RequestValues(
-                                gemPrice,
-                                parentActivity,
-                            ),
-                        )
+                    purchaseButton?.setOnClickListener {
+                        MainScope().launchCatching {
+                            insufficientGemsUseCase.callInteractor(
+                                InsufficientGemsUseCase.RequestValues(
+                                    gemPrice,
+                                    parentActivity,
+                                ),
+                            )
+                        }
                     }
                 }
             }

@@ -34,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -94,6 +93,11 @@ class PartySeekingViewModel
         val isRefreshing = mutableStateOf(false)
         val seekingUsers: Flow<PagingData<Member>>
         val inviteStates = mutableStateMapOf<String, Pair<Boolean, LoadingButtonState>>()
+
+    override fun onCleared() {
+        socialRepository.close()
+        super.onCleared()
+    }
 
         init {
             seekingUsers =
