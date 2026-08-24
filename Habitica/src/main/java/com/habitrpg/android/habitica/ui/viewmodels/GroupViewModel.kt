@@ -94,6 +94,7 @@ open class GroupViewModel
 
         override fun onCleared() {
             socialRepository.close()
+            challengeRepository.close()
             super.onCleared()
         }
 

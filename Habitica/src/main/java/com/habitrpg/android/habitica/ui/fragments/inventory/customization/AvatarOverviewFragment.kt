@@ -95,6 +95,12 @@ open class AvatarOverviewFragment :
         container: ViewGroup?,
     ): FragmentComposeBinding = FragmentComposeBinding.inflate(inflater, container, false)
 
+
+    override fun onDestroy() {
+        inventoryRepository.close()
+        super.onDestroy()
+    }
+
     @OptIn(ExperimentalLayoutApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,

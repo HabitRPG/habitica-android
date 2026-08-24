@@ -90,6 +90,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override fun onDestroy() {
         inventoryRepository.close()
+        socialRepository.close()
+        userRepository.close()
         super.onDestroy()
     }
 

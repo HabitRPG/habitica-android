@@ -223,6 +223,11 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
         super.onResume()
     }
 
+    override fun onDestroy() {
+        inventoryRepository.close()
+        super.onDestroy()
+    }
+
     private fun loadEquipment() {
         val type = viewModel.type ?: return
         lifecycleScope.launchCatching {

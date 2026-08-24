@@ -78,6 +78,11 @@ class HabiticaAccountDialog(
         }
     }
 
+    override fun onDestroy() {
+        userRepository.close()
+        super.onDestroy()
+    }
+
     private fun showForgotPasswordDialog() {
         val input = EditText(requireContext())
         input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)

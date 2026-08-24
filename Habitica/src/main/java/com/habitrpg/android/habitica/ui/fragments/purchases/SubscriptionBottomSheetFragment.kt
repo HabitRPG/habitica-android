@@ -82,6 +82,12 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment(), Common
         }
     }
 
+    override fun onDestroy() {
+        userRepository.close()
+        inventoryRepository.close()
+        super.onDestroy()
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener { dialog: DialogInterface ->

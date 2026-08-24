@@ -166,6 +166,12 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         refresh()
     }
 
+    override fun onDestroy() {
+        challengeRepository.close()
+        socialRepository.close()
+        super.onDestroy()
+    }
+
     override fun onCreateOptionsMenu(
         menu: Menu,
         inflater: MenuInflater,

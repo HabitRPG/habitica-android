@@ -36,6 +36,11 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun onDestroy() {
+        faqRepository.close()
+        super.onDestroy()
+    }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,

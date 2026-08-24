@@ -190,10 +190,6 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
     override fun onDestroy() {
         faqRepository.close()
         super.onDestroy()

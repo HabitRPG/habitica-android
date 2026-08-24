@@ -259,6 +259,7 @@ class ComposeAvatarCustomizationFragment :
 
     override fun onDestroy() {
         customizationRepository.close()
+        inventoryRepository.close()
         super.onDestroy()
     }
 

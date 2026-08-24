@@ -89,6 +89,12 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         }
     }
 
+    override fun onDestroy() {
+        challengeRepository.close()
+        userRepository.close()
+        super.onDestroy()
+    }
+
     private fun setLeader(leader: Member?) {
         if (leader == null) {
             return

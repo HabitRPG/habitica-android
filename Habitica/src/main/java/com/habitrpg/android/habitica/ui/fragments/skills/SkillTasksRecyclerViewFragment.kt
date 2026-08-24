@@ -66,4 +66,9 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
             adapter.data = it
         }
     }
+
+    override fun onDestroy() {
+        taskRepository.close()
+        super.onDestroy()
+    }
 }

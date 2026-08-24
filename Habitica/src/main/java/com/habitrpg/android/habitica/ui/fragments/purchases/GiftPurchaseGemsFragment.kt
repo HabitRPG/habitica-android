@@ -53,6 +53,11 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         setupCheckout()
     }
 
+    override fun onDestroy() {
+        socialRepository.close()
+        super.onDestroy()
+    }
+
     fun setupCheckout() {
         viewLifecycleOwner.lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val skus = purchaseHandler?.loadGemProducts()

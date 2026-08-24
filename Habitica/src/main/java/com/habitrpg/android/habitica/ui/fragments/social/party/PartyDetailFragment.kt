@@ -87,6 +87,9 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     override fun onDestroyView() {
         inventoryRepository.close()
+        challengeRepository.close()
+        socialRepository.close()
+        userRepository.close()
         super.onDestroyView()
     }
 

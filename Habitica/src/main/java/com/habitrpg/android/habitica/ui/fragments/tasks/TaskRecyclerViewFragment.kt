@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.databinding.FragmentTasksRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
@@ -44,7 +42,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.observeOnce
-import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -257,6 +254,8 @@ open class TaskRecyclerViewFragment :
 
     override fun onDestroy() {
         userRepository.close()
+        taskRepository.close()
+        inventoryRepository.close()
         super.onDestroy()
     }
 

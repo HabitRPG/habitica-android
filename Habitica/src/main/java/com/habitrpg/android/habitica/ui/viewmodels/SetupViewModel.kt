@@ -40,6 +40,14 @@ class SetupViewModel
             _user.value = initialUser
         }
 
+    override fun onCleared() {
+        userRepository.close()
+        taskRepository.close()
+        inventoryRepository.close()
+        contentRepository.close()
+        super.onCleared()
+    }
+
         fun equipCustomization(item: SetupCustomization) {
             val currentUser = _user.value ?: return
             when (item.category) {

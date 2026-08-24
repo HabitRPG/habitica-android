@@ -41,13 +41,11 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillDialogBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -114,6 +112,8 @@ class ItemRecyclerFragment :
 
     override fun onDestroy() {
         inventoryRepository.close()
+        socialRepository.close()
+        userRepository.close()
         super.onDestroy()
     }
 

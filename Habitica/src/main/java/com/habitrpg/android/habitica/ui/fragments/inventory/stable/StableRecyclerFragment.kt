@@ -59,6 +59,7 @@ class StableRecyclerFragment :
 
     override fun onDestroy() {
         inventoryRepository.close()
+        userRepository.close()
         super.onDestroy()
     }
 

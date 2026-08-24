@@ -70,6 +70,8 @@ class ChallengeListFragment :
 
     override fun onDestroy() {
         challengeRepository.close()
+        socialRepository.close()
+        userRepository.close()
         super.onDestroy()
     }
 

@@ -70,6 +70,11 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private var hasPendingRefresh = false
     var autocompleteContext: String = ""
 
+    override fun onDestroy() {
+        socialRepository.close()
+        super.onDestroy()
+    }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,

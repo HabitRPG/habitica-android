@@ -164,6 +164,11 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         }
     }
 
+    override fun onDestroy() {
+        userRepository.close()
+        super.onDestroy()
+    }
+
     private fun updateButtonLabel(sku: ProductDetails) {
         val matchingView: GemPurchaseOptionsView? =
             when (HabiticaProduct.forSku(sku.productId)) {

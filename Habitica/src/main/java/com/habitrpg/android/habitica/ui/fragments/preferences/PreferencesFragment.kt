@@ -98,6 +98,11 @@ class PreferencesFragment :
         }
     }
 
+    override fun onDestroy() {
+        contentRepository.close()
+        super.onDestroy()
+    }
+
     override fun setupPreferences() {
         timePreference = findPreference("reminder_time") as? TimePreference
         val useReminder = preferenceManager.sharedPreferences?.getBoolean("use_reminder", false)

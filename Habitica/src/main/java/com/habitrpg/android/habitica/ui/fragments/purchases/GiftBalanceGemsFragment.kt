@@ -67,6 +67,12 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         updateMemberViews()
     }
 
+    override fun onDestroy() {
+        socialRepository.close()
+        userRepository.close()
+        super.onDestroy()
+    }
+
     private fun sendGift() {
         if (isGifting) return
         isGifting = true

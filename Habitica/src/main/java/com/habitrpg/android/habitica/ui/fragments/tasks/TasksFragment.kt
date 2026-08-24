@@ -148,6 +148,11 @@ class TasksFragment :
         super.onPause()
     }
 
+    override fun onDestroy() {
+        tagRepository.close()
+        super.onDestroy()
+    }
+
     override fun onCreateOptionsMenu(
         menu: Menu,
         inflater: MenuInflater,

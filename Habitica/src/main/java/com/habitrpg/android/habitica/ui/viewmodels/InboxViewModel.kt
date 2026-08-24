@@ -66,6 +66,11 @@ class InboxViewModel
             messagesDataSource.invalidate()
         }
 
+    override fun onCleared() {
+        socialRepository.close()
+        super.onCleared()
+    }
+
         init {
             if (recipientID?.isNotBlank() == true) {
                 setMemberID(recipientID)

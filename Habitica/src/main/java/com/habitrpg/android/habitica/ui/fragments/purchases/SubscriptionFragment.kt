@@ -140,6 +140,13 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), Common
         loadInventory()
     }
 
+
+    override fun onDestroy() {
+        userRepository.close()
+        inventoryRepository.close()
+        super.onDestroy()
+    }
+
     override fun purchaseSubscription() {
         selectedSubscriptionSku?.let { sku ->
             lifecycleScope.launchCatching {

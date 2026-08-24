@@ -87,6 +87,11 @@ class AuthenticationViewModel
         val usernameIssues: Flow<String?> = _usernameIssues
         val showServerSettingsDialog: Flow<ServerSettings?> = _showServerSettingsDialog
 
+    override fun onCleared() {
+        userRepository.close()
+        super.onCleared()
+    }
+
         fun clearAuthenticationState() {
             _showAuthProgress.value = false
             _authenticationSuccess.value = null

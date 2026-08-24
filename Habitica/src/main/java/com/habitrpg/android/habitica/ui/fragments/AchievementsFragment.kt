@@ -63,6 +63,11 @@ class AchievementsFragment :
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun onDestroy() {
+        inventoryRepository.close()
+        super.onDestroy()
+    }
+
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
         useGridLayout = savedInstanceState?.getBoolean("useGridLayout") ?: false
