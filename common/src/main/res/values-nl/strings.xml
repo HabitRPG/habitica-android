@@ -19,7 +19,7 @@
     <string name="trivial_sentence">triviaal</string>
     <string name="email_username">Email/Gebruikersnaam</string>
     <string name="password">Wachtwoord</string>
-    <string name="login_validation_error_fieldsmissing">Je moet alle velden invullen</string>
+    <string name="login_validation_error_fieldsmissing">Je moet alle velden invullen.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Gewoonte</item>
         <item quantity="other">%d Gewoontes</item>

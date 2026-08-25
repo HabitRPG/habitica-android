@@ -276,7 +276,7 @@
     <string name="all_dailies_completed">Je hebt al je Dagelijkse taken voltooid. Goed gedaan!</string>
     <string name="widget_habit_button">Enkele Gewoonte</string>
     <string name="widget_dailies">Habitica Dagelijkse taken</string>
-    <string name="widget_todo_list">Habitica to-do lijst</string>
+    <string name="widget_todo_list">To-do Lijst</string>
     <string name="google_services_missing">Google play diensten niet gevonden.</string>
     <string name="gem_purchase_toolbartitle">Kopen</string>
     <string name="gem_purchase_title">Door het kopen van edelstenen steun je de ontwikkelaars en help je Habitica online te houden</string>
@@ -323,7 +323,7 @@
     <string name="due">Tegen</string>
     <string name="cancel_subscription">Annuleer abonnement</string>
     <string name="cancel_subscription_google_description">Wil je geen abonnee blijven\? Je kunt je abonnement opzeggen in de Google Play Store onder \"Mijn apps en games\". Als je nog maanden tegoed hebt van je abonnement dan zullen deze na opzegging worden geactiveerd.</string>
-    <string name="cancel_subscription_notgoogle_description">Wil je geen abonnee blijven\? Vanwege je betaalmethode moet je je abonnement opzeggen via onze website. Klik hiervoor op de knop hieronder, log in op je account, klik op je spelersicoon rechtsboven en ga naar je abonnementsinstellingen. Als je nog maanden tegoed hebt van je abonnement dan zullen deze na opzegging worden geactiveerd.</string>
+    <string name="cancel_subscription_notgoogle_description">Wil je geen abonnee blijven? Vanwege je betaalmethode moet je je abonnement opzeggen via onze website. Klik hiervoor op de knop hieronder, log in op je account, klik op je spelersicoon rechtsboven en ga naar je abonnementsinstellingen. Als je nog maanden tegoed hebt van je abonnement dan zullen deze na opzegging worden geactiveerd. We gaan je missen!</string>
     <string name="visit_habitica_website">Bezoek Habitica Website</string>
     <string name="current_bonuses">Huidige bonussen</string>
     <string name="months_subscribed">Maanden geabonneerd</string>
