@@ -13,11 +13,25 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 class StarView : AppCompatImageView {
     private var blinkDurations: List<Int>? = null
     private var blinkIndex = 0
+    private var currentAnimator: ObjectAnimator? = null
+    private var isDetached = false
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(context: Context) : super(context) {
         this.scaleType = ScaleType.CENTER
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        isDetached = false
+    }
+
+    override fun onDetachedFromWindow() {
+        isDetached = true
+        currentAnimator?.cancel()
+        currentAnimator = null
+        super.onDetachedFromWindow()
     }
 
     fun setStarSize(size: Int) {
@@ -42,6 +56,7 @@ class StarView : AppCompatImageView {
     }
 
     private fun runBlink() {
+        if (isDetached) return
         if (blinkIndex >= (blinkDurations?.size ?: 0)) {
             blinkIndex = 0
         }
@@ -53,11 +68,13 @@ class StarView : AppCompatImageView {
         animator.addListener(
             object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
+                    if (isDetached) return
                     blinkIndex++
                     runBlink()
                 }
             },
         )
+        currentAnimator = animator
         try {
             animator.start()
         } catch (ignored: NullPointerException) {

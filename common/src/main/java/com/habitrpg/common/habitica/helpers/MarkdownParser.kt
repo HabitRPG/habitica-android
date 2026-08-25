@@ -24,6 +24,7 @@ import io.noties.markwon.linkify.LinkifyPlugin
 import io.noties.markwon.movement.MovementMethodPlugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.regex.Matcher
@@ -32,6 +33,9 @@ import java.util.regex.Pattern
 object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
     internal var markwon: Markwon? = null
+
+    // App-lifetime scope shared by parseMarkdownAsync instead of a fresh CoroutineScope per call.
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     fun setup(context: Context) {
         markwon =
@@ -177,7 +181,7 @@ object MarkdownParser {
         input: String?,
         onSuccess: (Spanned) -> Unit,
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch {
             val result = parseMarkdown(input)
             withContext(Dispatchers.Main) {
                 onSuccess(result)

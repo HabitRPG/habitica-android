@@ -32,6 +32,9 @@ class LoginBackgroundView
         private var didLayoutStars = false
         private var params = FrameLayout.LayoutParams(0, 0)
 
+        private var leftCloudAnimator: ObjectAnimator? = null
+        private var rightCloudAnimator: ObjectAnimator? = null
+
         private val blinkDuration: Int
             get() = random.nextInt(30) * 800 + 4
 
@@ -71,11 +74,21 @@ class LoginBackgroundView
             leftAnimator.repeatCount = ValueAnimator.INFINITE
             leftAnimator.repeatMode = ValueAnimator.REVERSE
             leftAnimator.start()
+            leftCloudAnimator = leftAnimator
             val rightAnimator =
                 ObjectAnimator.ofFloat(rightCloudView, View.TRANSLATION_Y, -10.0f).setDuration(8000)
             rightAnimator.repeatCount = ValueAnimator.INFINITE
             rightAnimator.repeatMode = ValueAnimator.REVERSE
             rightAnimator.start()
+            rightCloudAnimator = rightAnimator
+        }
+
+        override fun onDetachedFromWindow() {
+            leftCloudAnimator?.cancel()
+            rightCloudAnimator?.cancel()
+            leftCloudAnimator = null
+            rightCloudAnimator = null
+            super.onDetachedFromWindow()
         }
 
         override fun onMeasure(
