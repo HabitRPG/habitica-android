@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.models.tasks.GroupAssignedDetails;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.Gear;
+import com.habitrpg.android.habitica.models.user.OwnedEquipment;
 import com.habitrpg.android.habitica.models.user.OwnedItem;
 import com.habitrpg.android.habitica.models.user.OwnedMount;
 import com.habitrpg.android.habitica.models.user.OwnedPet;
@@ -50,6 +51,7 @@ import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.InviteResponseDeserializer;
 import com.habitrpg.android.habitica.utils.MemberSerialization;
 import com.habitrpg.android.habitica.utils.NotificationDeserializer;
+import com.habitrpg.android.habitica.utils.OwnedEquipmentListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedItemListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedMountListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedPetListDeserializer;
@@ -103,6 +105,8 @@ public class GSonFactoryCreator {
         }.getType();
         Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {
         }.getType();
+        Type ownedEquipmentListType = new TypeToken<RealmList<OwnedEquipment>>() {
+        }.getType();
         Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {
         }.getType();
         Type ownedMountListType = new TypeToken<RealmList<OwnedMount>>() {
@@ -137,6 +141,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(questDropItemListType, new QuestDropItemsListSerialization())
                 .registerTypeAdapter(ownedItemListType, new OwnedItemListDeserializer())
                 .registerTypeAdapter(ownedPetListType, new OwnedPetListDeserializer())
+                .registerTypeAdapter(ownedEquipmentListType, new OwnedEquipmentListDeserializer())
                 .registerTypeAdapter(ownedMountListType, new OwnedMountListDeserializer())
                 .registerTypeAdapter(achievementsListType, new AchievementListDeserializer())
                 .registerTypeAdapter(assignedDetailsListType, new AssignedDetailsDeserializer())

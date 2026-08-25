@@ -16,10 +16,10 @@ class OwnedPetListDeserializer : JsonDeserializer<RealmList<OwnedPet>> {
         val ownedItems = RealmList<OwnedPet>()
         val entrySet = json?.asJsonObject?.entrySet()
         if (entrySet != null) {
-            for (entry in entrySet) {
+            for ((key, value) in entrySet) {
                 val item = OwnedPet()
-                item.key = entry.key
-                item.trained = entry.value.asInt
+                item.key = key
+                item.trained = value.asInt
                 ownedItems.add(item)
             }
         }

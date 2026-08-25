@@ -17,16 +17,8 @@ class EquipmentListDeserializer : JsonDeserializer<RealmList<Equipment?>?> {
     ): RealmList<Equipment?> {
         val vals = RealmList<Equipment?>()
         if (json.isJsonObject) {
-            for ((key, value) in json.getAsJsonObject().entrySet()) {
-                val item: Equipment?
-                if (value.isJsonObject) {
-                    item = context.deserialize(value, Equipment::class.java)
-                } else {
-                    item = Equipment()
-                    item.key = key
-                    item.owned = !value.isJsonNull && value.asBoolean
-                }
-                vals.add(item)
+            for ((_, value) in json.getAsJsonObject().entrySet()) {
+                vals.add(context.deserialize(value, Equipment::class.java))
             }
         } else {
             for (item in json.getAsJsonArray()) {

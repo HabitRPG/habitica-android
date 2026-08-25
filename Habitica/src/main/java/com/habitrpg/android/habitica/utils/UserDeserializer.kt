@@ -135,13 +135,13 @@ class UserDeserializer : JsonDeserializer<User> {
             }
         }
         if (obj.has("achievements")) {
-            for (entry in obj.getAsJsonObject("achievements").entrySet()) {
-                if (!entry.value.isJsonPrimitive) {
+            for ((key, value) in obj.getAsJsonObject("achievements").entrySet()) {
+                if (!value.isJsonPrimitive) {
                     continue
                 }
                 val achievement = UserAchievement()
-                achievement.key = entry.key
-                achievement.earned = entry.value.asBoolean
+                achievement.key = key
+                achievement.earned = value.asBoolean
                 user.achievements.add(achievement)
             }
         }
@@ -179,10 +179,10 @@ class UserDeserializer : JsonDeserializer<User> {
                 }
             }
             if (achievements.has("quests")) {
-                for (entry in achievements.getAsJsonObject("quests").entrySet()) {
+                for ((key, value) in achievements.getAsJsonObject("quests").entrySet()) {
                     val questAchievement = QuestAchievement()
-                    questAchievement.questKey = entry.key
-                    questAchievement.count = entry.value.asInt
+                    questAchievement.questKey = key
+                    questAchievement.count = value.asInt
                     user.questAchievements.add(questAchievement)
                 }
             }
@@ -206,10 +206,10 @@ class UserDeserializer : JsonDeserializer<User> {
         }
 
         if (obj.has("_ABTests")) {
-            for (testJSON in obj.getAsJsonObject("_ABTests").entrySet()) {
+            for ((key, value) in obj.getAsJsonObject("_ABTests").entrySet()) {
                 val test = ABTest()
-                test.name = testJSON.key
-                test.group = testJSON.value.asString
+                test.name = key
+                test.group = value.asString
                 user.abTests?.add(test)
             }
         }

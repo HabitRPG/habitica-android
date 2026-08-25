@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
 import java.util.Date
 
 class ContentRepositoryImpl<T : ContentLocalRepository>(
@@ -32,20 +31,10 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
             val content = apiClient.getContent() ?: return null
             lastContentSync = now
             content.special.add(mysteryItem)
-            preserveOwnedFlags(content)
             localRepository.saveContent(content)
             return content
         }
         return null
-    }
-
-    // The gear catalog doesn't carry ownership info of its own; a freshly-parsed item's `owned` is
-    // left null (see EquipmentListDeserializer) so a catalog refresh doesn't wipe what's already known.
-    private suspend fun preserveOwnedFlags(content: ContentResult) {
-        val items = content.gear?.flat?.filter { it.owned == null } ?: return
-        if (items.isEmpty()) return
-        val known = inventoryLocalRepository.getEquipment(items.map { it.key ?: "" }).firstOrNull() ?: return
-        items.forEach { item -> item.owned = known.firstOrNull { it.key == item.key }?.owned }
     }
 
     override suspend fun retrieveWorldState(forced: Boolean): WorldState? {

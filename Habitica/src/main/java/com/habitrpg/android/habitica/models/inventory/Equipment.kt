@@ -26,7 +26,6 @@ open class Equipment :
 
     @SerializedName("int")
     var intelligence: Int = 0
-    var owned: Boolean? = null
     var twoHanded = false
     var mystery = ""
     var gearSet = ""

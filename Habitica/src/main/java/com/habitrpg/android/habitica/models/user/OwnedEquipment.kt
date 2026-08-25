@@ -9,5 +9,5 @@ open class OwnedEquipment :
     OwnedObject {
     override var userID: String? = null
     override var key: String? = null
-    var owned = false
+    var owned: Boolean? = null
 }

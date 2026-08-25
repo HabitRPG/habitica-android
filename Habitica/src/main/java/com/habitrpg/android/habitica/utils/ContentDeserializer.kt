@@ -41,20 +41,20 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         result.armoire = context.deserialize(obj.get("armoire"), Equipment::class.java)
         result.gear = context.deserialize(obj.get("gear"), ContentGear::class.java)
 
-        for (entry in obj.get("quests").asJsonObject.entrySet()) {
-            result.quests.add(context.deserialize(entry.value, QuestContent::class.java))
+        for ((_, value) in obj.get("quests").asJsonObject.entrySet()) {
+            result.quests.add(context.deserialize(value, QuestContent::class.java))
             result.quests.forEach { it.key = it.key }
         }
         val eggs = obj.get("eggs").asJsonObject
-        for (entry in eggs.entrySet()) {
-            result.eggs.add(context.deserialize(entry.value, Egg::class.java))
+        for ((_, value) in eggs.entrySet()) {
+            result.eggs.add(context.deserialize(value, Egg::class.java))
         }
-        for (entry in obj.get("food").asJsonObject.entrySet()) {
-            result.food.add(context.deserialize(entry.value, Food::class.java))
+        for ((_, value) in obj.get("food").asJsonObject.entrySet()) {
+            result.food.add(context.deserialize(value, Food::class.java))
         }
         val potions = obj.get("hatchingPotions").asJsonObject
-        for (entry in potions.entrySet()) {
-            result.hatchingPotions.add(context.deserialize(entry.value, HatchingPotion::class.java))
+        for ((_, value) in potions.entrySet()) {
+            result.hatchingPotions.add(context.deserialize(value, HatchingPotion::class.java))
         }
 
         val pets = obj.getAsJsonObject("petInfo")
@@ -129,14 +129,14 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         }
 
         if (obj.has("special")) {
-            for (entry in obj.get("special").asJsonObject.entrySet()) {
-                result.special.add(context.deserialize(entry.value, SpecialItem::class.java))
+            for ((_, value) in obj.get("special").asJsonObject.entrySet()) {
+                result.special.add(context.deserialize(value, SpecialItem::class.java))
             }
         }
 
         if (obj.has("mystery")) {
-            for (entry in obj.get("mystery").asJsonObject.entrySet()) {
-                result.mystery.add(context.deserialize(entry.value, EquipmentSet::class.java))
+            for ((_, value) in obj.get("mystery").asJsonObject.entrySet()) {
+                result.mystery.add(context.deserialize(value, EquipmentSet::class.java))
             }
         }
 

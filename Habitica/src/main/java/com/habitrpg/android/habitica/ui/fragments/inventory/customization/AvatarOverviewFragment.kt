@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,6 +90,8 @@ open class AvatarOverviewFragment :
 
     private val battleGearWeapon = mutableStateOf<Equipment?>(null)
     private val costumeWeapon = mutableStateOf<Equipment?>(null)
+
+    private val ownedEquipment = mutableStateListOf<Equipment>()
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -147,6 +150,7 @@ open class AvatarOverviewFragment :
                         ) {
                             AvatarOverviewView(
                                 userViewModel,
+                                ownedEquipment,
                                 showCustomization,
                                 !showCustomization,
                                 battleGearWeapon.value?.twoHanded == true,
@@ -199,6 +203,13 @@ open class AvatarOverviewFragment :
                         }
                 }
             }
+
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            inventoryRepository.getOwnedEquipment().collect {
+                ownedEquipment.clear()
+                ownedEquipment.addAll(it)
+            }
+        }
         return view
     }
 
@@ -293,6 +304,7 @@ open class AvatarOverviewFragment :
 @Composable
 fun AvatarOverviewView(
     userViewModel: MainUserViewModel,
+    ownedEquipment: List<Equipment>,
     showCustomization: Boolean = true,
     showEquipment: Boolean = true,
     battleGearTwoHanded: Boolean = false,
@@ -367,7 +379,7 @@ fun AvatarOverviewView(
                         userViewModel.updateUser("preferences.autoEquip", it)
                     })
                 }
-                EquipmentOverviewView(user?.items?.gear?.owned, user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
+                EquipmentOverviewView(ownedEquipment, user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
                     onEquipmentTap(type, equipped, false)
                 })
                 Row(
@@ -392,7 +404,7 @@ fun AvatarOverviewView(
                         userViewModel.updateUser("preferences.costume", it)
                     })
                 }
-                EquipmentOverviewView(user?.items?.gear?.owned, user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
+                EquipmentOverviewView(ownedEquipment, user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
                     onEquipmentTap(type, equipped, true)
                 }, modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f))
             }

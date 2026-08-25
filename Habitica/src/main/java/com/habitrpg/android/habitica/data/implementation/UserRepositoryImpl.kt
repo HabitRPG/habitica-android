@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.OwnedEquipment
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
@@ -109,7 +110,6 @@ class UserRepositoryImpl(
             val user = apiClient.retrieveUser(withTasks) ?: return null
             lastSync = Date()
             preserveQuestRsvpIfUnspecified(user)
-            resolveOwnedEquipmentDetails(user)
             withContext(Dispatchers.Main) {
                 localRepository.saveUser(user)
             }
@@ -137,7 +137,7 @@ class UserRepositoryImpl(
     override suspend fun revive(): Equipment? {
         val items = apiClient.revive()
         val currentUser = localRepository.getLiveUser(currentUserID)
-        var brokenItem: Equipment? = null
+        var brokenItem: OwnedEquipment? = null
         if (items != null && currentUser != null) {
             brokenItem =
                 items.gear?.owned?.filter { it.owned == false }?.firstOrNull { equipment ->
@@ -148,7 +148,7 @@ class UserRepositoryImpl(
                 }
         }
         retrieveUser(false, true)
-        return brokenItem
+        return inventoryLocalRepository.getEquipment(brokenItem?.key ?: "").firstOrNull()
     }
 
     override suspend fun resetTutorial(): User? {
@@ -518,30 +518,6 @@ class UserRepositoryImpl(
         quest.rsvpNeeded = oldUser?.party?.quest?.rsvpNeeded ?: false
     }
 
-    private suspend fun resolveOwnedEquipmentDetails(user: User) {
-        val owned = user.items?.gear?.owned ?: return
-        val thin = owned.filter { it.text.isEmpty() }
-        if (thin.isEmpty()) return
-        val known = inventoryLocalRepository.getEquipment(thin.map { it.key ?: "" }).firstOrNull() ?: return
-        for (item in thin) {
-            val match = known.firstOrNull { it.key == item.key } ?: continue
-            item.text = match.text
-            item.value = match.value
-            item.type = match.type
-            item.klass = match.klass
-            item.specialClass = match.specialClass
-            item.index = match.index
-            item.notes = match.notes
-            item.con = match.con
-            item.str = match.str
-            item.per = match.per
-            item.intelligence = match.intelligence
-            item.twoHanded = match.twoHanded
-            item.mystery = match.mystery
-            item.gearSet = match.gearSet
-        }
-    }
-
     private suspend fun getLiveUser(): User? {
         val user = localRepository.getUser(currentUserID).firstOrNull() ?: return null
         return localRepository.getLiveObject(user)
@@ -572,7 +548,6 @@ class UserRepositoryImpl(
             copiedUser.inbox = newUser.inbox
         }
         if (newUser.items != null) {
-            resolveOwnedEquipmentDetails(newUser)
             copiedUser.items = newUser.items
         }
         if (newUser.preferences != null) {

@@ -72,9 +72,9 @@ class GroupSerialization :
             }
         }
         if (obj.has("managers")) {
-            for (manager in obj.getAsJsonObject("managers").entrySet()) {
-                if (manager.value.asBoolean) {
-                    group.managers?.add(manager.key)
+            for ((key, value) in obj.getAsJsonObject("managers").entrySet()) {
+                if (value.asBoolean) {
+                    group.managers?.add(key)
                 }
             }
         }

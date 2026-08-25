@@ -16,14 +16,10 @@ class OwnedMountListDeserializer : JsonDeserializer<RealmList<OwnedMount>> {
         val ownedItems = RealmList<OwnedMount>()
         val entrySet = json?.asJsonObject?.entrySet()
         if (entrySet != null) {
-            for (entry in entrySet) {
+            for ((key, value) in entrySet) {
                 val item = OwnedMount()
-                item.key = entry.key
-                if (entry.value.isJsonNull) {
-                    item.owned = false
-                } else {
-                    item.owned = entry.value.asBoolean
-                }
+                item.key = key
+                item.owned = !value.isJsonNull && value.asBoolean
                 ownedItems.add(item)
             }
         }

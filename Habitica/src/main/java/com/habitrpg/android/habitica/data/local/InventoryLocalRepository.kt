@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 interface InventoryLocalRepository : ContentLocalRepository {
     fun getArmoireRemainingCount(): Flow<Int>
 
-    fun getOwnedEquipment(): Flow<List<Equipment>>
+    fun getOwnedEquipment(userID: String): Flow<List<Equipment>>
 
     fun getMounts(): Flow<List<Mount>>
 
@@ -37,7 +37,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>>
 
-    fun getOwnedEquipment(type: String): Flow<List<Equipment>>
+    fun getOwnedEquipment(userID: String, type: String): Flow<List<Equipment>>
 
     fun getOwnedItems(
         itemType: String,
