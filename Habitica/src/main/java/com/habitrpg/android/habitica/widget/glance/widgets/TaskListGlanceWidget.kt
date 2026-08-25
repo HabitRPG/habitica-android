@@ -62,7 +62,6 @@ import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
 import com.habitrpg.android.habitica.widget.glance.theme.colorForTaskValueLight
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import kotlin.math.roundToInt
 
 abstract class TaskListGlanceWidget(
     private val taskType: TaskType,
@@ -101,36 +100,6 @@ class TodoTaskListGlanceWidget : TaskListGlanceWidget(TaskType.TODO)
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 private const val MAX_VISIBLE_TASKS = 15
-
-private val TASK_ROW_HEIGHT = 48.dp
-private val TASK_ROW_MAX_HEIGHT = 144.dp
-private val TASK_ROW_CHROME = 6.4.dp
-private val TASK_ROW_CORNER_RADIUS = 17.5.dp
-private val VIEW_MORE_HEIGHT = 28.dp
-private const val TASK_TEXT_SP = 16f
-private const val TASK_BASE_MAX_LINES = 2
-private const val MAX_TASK_ROW_SCALE = 3f
-
-internal data class TaskRowMetrics(
-    val height: Dp,
-    val maxLines: Int,
-)
-
-internal fun taskRowMetrics(fontScale: Float): TaskRowMetrics {
-    val scale = maxOf(1f, fontScale)
-    val lineHeight = (TASK_TEXT_SP * LINE_HEIGHT_FACTOR * scale).dp
-    val fits = ((TASK_ROW_MAX_HEIGHT - TASK_ROW_CHROME) / lineHeight).toInt().coerceAtLeast(1)
-    val maxLines = (TASK_BASE_MAX_LINES * scale).roundToInt().coerceIn(1, fits)
-    val height = (lineHeight * maxLines + TASK_ROW_CHROME)
-        .coerceIn(TASK_ROW_HEIGHT, TASK_ROW_MAX_HEIGHT)
-    return TaskRowMetrics(
-        height = height,
-        maxLines = maxLines,
-    )
-}
-
-internal fun viewMoreHeight(fontScale: Float): Dp =
-    VIEW_MORE_HEIGHT * maxOf(1f, fontScale).coerceAtMost(MAX_TASK_ROW_SCALE)
 
 internal data class TaskListPalette(
     val widgetBackground: ColorProvider,
@@ -186,6 +155,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
     val fontScale = WidgetSnapshotStore.fontScale(LocalContext.current)
     val isVeryCompact = size.width < 180.dp
     val isCompact = size.width < 230.dp
+    val outerPadding = if (isVeryCompact) 6.dp else 10.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addTaskType = if (isDaily) "daily" else "todo"
     val title = when {
@@ -201,7 +171,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             .cornerRadius(20.dp)
             .background(palette.widgetBackground)
             .padding(
-                horizontal = if (isVeryCompact) 6.dp else 10.dp,
+                horizontal = outerPadding,
                 vertical = if (isVeryCompact) 8.dp else 12.dp,
             ),
     ) {
@@ -218,6 +188,7 @@ private fun TaskListContent(state: TaskListWidgetState, isDaily: Boolean) {
             isDaily = isDaily,
             palette = palette,
             fontScale = fontScale,
+            rowWidth = size.width - outerPadding * 2,
         )
     }
 }
@@ -266,6 +237,7 @@ private fun TaskListBody(
     isDaily: Boolean,
     palette: TaskListPalette,
     fontScale: Float,
+    rowWidth: Dp,
 ) {
     Box(modifier = GlanceModifier.fillMaxSize()) {
         when {
@@ -288,6 +260,7 @@ private fun TaskListBody(
                 palette = palette,
                 isDaily = isDaily,
                 fontScale = fontScale,
+                rowWidth = rowWidth,
             )
         }
     }
@@ -299,10 +272,10 @@ private fun TaskListRows(
     palette: TaskListPalette,
     isDaily: Boolean,
     fontScale: Float,
+    rowWidth: Dp,
 ) {
     val innerCornerRadius = if (isDaily) 8.dp else 13.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
-    val metrics = taskRowMetrics(fontScale)
     val total = state.tasks.size
     val showFooter = total > MAX_VISIBLE_TASKS
     val shown = if (showFooter) state.tasks.take(MAX_VISIBLE_TASKS) else state.tasks
@@ -311,6 +284,13 @@ private fun TaskListRows(
     LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
         items(shown.size) { index ->
             val task = shown[index]
+            val metrics = taskRowMetrics(
+                text = task.text,
+                rowWidth = rowWidth,
+                checklistDone = task.checklistDone,
+                checklistTotal = task.checklistTotal,
+                fontScale = fontScale,
+            )
             Column(modifier = GlanceModifier.fillMaxWidth()) {
                 Box(
                     modifier = GlanceModifier
@@ -342,7 +322,7 @@ private fun TaskListRows(
                     )
                 }
                 if (index < shown.size - 1 || showFooter) {
-                    Spacer(GlanceModifier.height(6.dp))
+                    Spacer(GlanceModifier.height(TASK_ROW_SPACING))
                 }
             }
         }
