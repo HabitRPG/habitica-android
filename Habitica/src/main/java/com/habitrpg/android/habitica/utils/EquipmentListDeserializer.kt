@@ -13,32 +13,28 @@ class EquipmentListDeserializer : JsonDeserializer<RealmList<Equipment?>?> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type?,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): RealmList<Equipment?> {
         val vals = RealmList<Equipment?>()
         if (json.isJsonObject) {
-            for (entry in json.getAsJsonObject().entrySet()) {
+            for ((key, value) in json.getAsJsonObject().entrySet()) {
                 val item: Equipment?
-                if (entry.value.isJsonObject) {
-                    item = context.deserialize<Equipment?>(entry.value, Equipment::class.java)
+                if (value.isJsonObject) {
+                    item = context.deserialize(value, Equipment::class.java)
                 } else {
                     item = Equipment()
-                    item.key = entry.key
-                    if (entry.value.isJsonNull) {
-                        item.owned = false
-                    } else {
-                        item.owned = entry.value.asBoolean
-                    }
+                    item.key = key
+                    item.owned = !value.isJsonNull && value.asBoolean
                 }
                 vals.add(item)
             }
         } else {
             for (item in json.getAsJsonArray()) {
                 vals.add(
-                    context.deserialize<Equipment?>(
+                    context.deserialize(
                         item.getAsJsonObject(),
-                        Equipment::class.java
-                    )
+                        Equipment::class.java,
+                    ),
                 )
             }
         }

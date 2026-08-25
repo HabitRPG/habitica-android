@@ -320,7 +320,7 @@ class InventoryRepositoryImpl(
     ): Void? {
         val response = apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
         if (key == "gem") {
-           localRepository.incrementGemsBought(currentUserID, purchaseQuantity)
+            localRepository.incrementGemsBought(currentUserID, purchaseQuantity)
         }
         return response
     }

@@ -25,12 +25,14 @@ open class TutorialStep :
 
     val shouldDisplay: Boolean
         get() {
-            return !this.wasCompleted && (
-                this.displayedOn == null || Date().time - (
-                    displayedOn?.time
-                        ?: 0
-                ) > 86400000
-            )
+            return !this.wasCompleted &&
+                (
+                    this.displayedOn == null ||
+                        Date().time - (
+                            displayedOn?.time
+                                ?: 0
+                        ) > 86400000
+                )
         }
     override val realmClass: Class<out RealmModel>
         get() = TutorialStep::class.java

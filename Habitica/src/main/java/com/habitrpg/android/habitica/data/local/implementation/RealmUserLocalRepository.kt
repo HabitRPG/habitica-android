@@ -50,7 +50,7 @@ class RealmUserLocalRepository(
 
     override fun updateDayStartTime(
         currentUserID: String,
-        dayStartTime: Int
+        dayStartTime: Int,
     ): User? {
         val user = getLiveUser(currentUserID) ?: return null
         executeTransaction {
@@ -59,7 +59,10 @@ class RealmUserLocalRepository(
         return user
     }
 
-    override fun updateStats(userID: String, stats: Stats) {
+    override fun updateStats(
+        userID: String,
+        stats: Stats,
+    ) {
         val user = getLiveUser(userID) ?: return
         executeTransaction {
             stats.hp?.let { user.stats?.hp = it }
@@ -77,18 +80,19 @@ class RealmUserLocalRepository(
         }
     }
 
-    override fun getAchievements(): Flow<List<Achievement>> = safeFindAll {
-        it.where(Achievement::class.java).sort("index")
-    }
+    override fun getAchievements(): Flow<List<Achievement>> =
+        safeFindAll {
+            it.where(Achievement::class.java).sort("index")
+        }
 
-    override fun getQuestAchievements(userID: String): Flow<List<QuestAchievement>> =
-        queryUser(userID).map { it.questAchievements }
+    override fun getQuestAchievements(userID: String): Flow<List<QuestAchievement>> = queryUser(userID).map { it.questAchievements }
 
     override suspend fun getTutorialSteps() = safeFindAll { it.where(TutorialStep::class.java) }
 
-    override fun getUser(userID: String): Flow<User?> = safeFindOne {
-        it.where(User::class.java).equalTo("id", userID)
-    }
+    override fun getUser(userID: String): Flow<User?> =
+        safeFindOne {
+            it.where(User::class.java).equalTo("id", userID)
+        }
 
     override fun saveUser(
         user: User,
@@ -116,7 +120,8 @@ class RealmUserLocalRepository(
     ) {
         val tags =
             safeQuery { it.where(Tag::class.java).equalTo("userId", userId) }
-                ?.findAll()?.createSnapshot() ?: return
+                ?.findAll()
+                ?.createSnapshot() ?: return
         val tagsToDelete = tags.filterNot { onlineTags.contains(it) }
         executeTransaction {
             for (tag in tagsToDelete) {
@@ -131,19 +136,22 @@ class RealmUserLocalRepository(
         }
     }
 
-    override fun getTeamPlans(userID: String): Flow<List<TeamPlan>> = safeFindAll {
-        it.where(TeamPlan::class.java).equalTo("userID", userID)
-    }
+    override fun getTeamPlans(userID: String): Flow<List<TeamPlan>> =
+        safeFindAll {
+            it.where(TeamPlan::class.java).equalTo("userID", userID)
+        }
 
-    override fun getTeamPlan(teamID: String): Flow<Group?> = safeFindOne {
-        it.where(Group::class.java).equalTo("id", teamID)
-    }
+    override fun getTeamPlan(teamID: String): Flow<Group?> =
+        safeFindOne {
+            it.where(Group::class.java).equalTo("id", teamID)
+        }
 
     override fun getSkills(user: User): Flow<List<Skill>> {
         val habitClass =
             if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
         return safeFindAll {
-            it.where(Skill::class.java)
+            it
+                .where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
                 .sort("lvl")
         }

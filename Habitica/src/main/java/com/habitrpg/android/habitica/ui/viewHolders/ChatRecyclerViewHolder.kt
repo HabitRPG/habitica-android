@@ -225,10 +225,12 @@ class ChatRecyclerMessageViewHolder(
 
         val username = user?.formattedUsername
         binding.messageWrapper.background =
-            if ((name != null && msg.text?.contains("@$name") == true) || (
-                    username != null && msg.text?.contains(
-                        username,
-                    ) == true
+            if ((name != null && msg.text?.contains("@$name") == true) ||
+                (
+                    username != null &&
+                        msg.text?.contains(
+                            username,
+                        ) == true
                 )
             ) {
                 ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_700)

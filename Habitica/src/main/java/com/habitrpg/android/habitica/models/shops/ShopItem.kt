@@ -77,7 +77,10 @@ open class ShopItem :
 
     val isTypeItem: Boolean
         get() =
-            "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType ||
+            "eggs" == purchaseType ||
+                "hatchingPotions" == purchaseType ||
+                "food" == purchaseType ||
+                "armoire" == purchaseType ||
                 "potion" == purchaseType ||
                 "debuffPotion" == purchaseType ||
                 "fortify" == purchaseType ||

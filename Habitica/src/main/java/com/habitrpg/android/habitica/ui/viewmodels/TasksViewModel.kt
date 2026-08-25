@@ -69,12 +69,12 @@ class TasksViewModel
                 return owners.firstOrNull { it.first == ownerID.value }?.second ?: ""
             }
 
-    override fun onCleared() {
-        taskRepository.close()
-        tagRepository.close()
-        contentRepository.close()
-        super.onCleared()
-    }
+        override fun onCleared() {
+            taskRepository.close()
+            tagRepository.close()
+            contentRepository.close()
+            super.onCleared()
+        }
 
         init {
             viewModelScope.launch(ExceptionHandler.coroutine()) {

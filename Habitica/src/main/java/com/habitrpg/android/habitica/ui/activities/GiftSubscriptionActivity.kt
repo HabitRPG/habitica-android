@@ -34,9 +34,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
-    override fun getConfigManager(): AppConfigManager {
-        return appConfigManager
-    }
+    override fun getConfigManager(): AppConfigManager = appConfigManager
 
     @Inject
     lateinit var purchaseHandler: PurchaseHandler

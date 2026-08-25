@@ -34,15 +34,15 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), CommonSubscriptionFragment {
+class SubscriptionFragment :
+    BaseFragment<FragmentSubscriptionBinding>(),
+    CommonSubscriptionFragment {
     override var binding: FragmentSubscriptionBinding? = null
 
     override val content: FragmentSubscriptionContentBinding?
@@ -55,10 +55,13 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), Common
 
     @Inject
     override lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     override lateinit var purchaseHandler: PurchaseHandler
 
@@ -139,7 +142,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>(), Common
         refresh()
         loadInventory()
     }
-
 
     override fun onDestroy() {
         userRepository.close()

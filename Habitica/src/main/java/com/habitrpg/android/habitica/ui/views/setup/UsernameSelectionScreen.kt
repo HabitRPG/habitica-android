@@ -92,7 +92,8 @@ fun UsernameSelectionScreen(
         if (username.isEmpty() && authenticationViewModel.email.value.isNotBlank()) {
             val email = authenticationViewModel.email.value
             username = email.split("@").firstOrNull()?.replace("+", "_") ?: ""
-        } else if (username.isEmpty() && authenticationViewModel.user.value
+        } else if (username.isEmpty() &&
+            authenticationViewModel.user.value
                 ?.username
                 ?.isNotBlank() == true
         ) {
@@ -155,7 +156,12 @@ fun UsernameSelectionScreen(
                 stringResource(R.string.username),
                 value = username,
                 prefix = {
-                    Text("@", fontSize = 16.sp, color = colorResource(R.color.brand_600), modifier = Modifier.padding(end = 8.dp))
+                    Text(
+                        "@",
+                        fontSize = 16.sp,
+                        color = colorResource(R.color.brand_600),
+                        modifier = Modifier.padding(end = 8.dp),
+                    )
                 },
                 state =
                     when (isUsernameValid) {
@@ -195,7 +201,11 @@ fun UsernameSelectionScreen(
                 } else {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterVertically),
+                        verticalArrangement =
+                            Arrangement.spacedBy(
+                                14.dp,
+                                Alignment.CenterVertically,
+                            ),
                     ) {
                         TermsAndConditionsRow(
                             acceptedTerms = acceptedTerms,
@@ -227,7 +237,11 @@ fun UsernameSelectionScreen(
                                 Modifier
                                     .fillMaxWidth(),
                         ) {
-                            Text(stringResource(R.string.get_started), fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            Text(
+                                stringResource(R.string.get_started),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                            )
                         }
                     }
                 }
@@ -253,7 +267,10 @@ fun TermsAndConditionsRow(
                     .size(30.dp)
                     .clickable {
                         onAcceptedTermsChange(!acceptedTerms)
-                    }.background(colorResource(R.color.brand_100), shape = HabiticaTheme.shapes.small),
+                    }.background(
+                        colorResource(R.color.brand_100),
+                        shape = HabiticaTheme.shapes.small,
+                    ),
         ) {
             if (acceptedTerms) {
                 Image(

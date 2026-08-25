@@ -256,7 +256,6 @@ class NavigationDrawerFragment : DialogFragment() {
             }
         }
 
-
         viewLifecycleOwner.lifecycleScope.launchCatching {
             notificationsViewModel.getNotificationCount().collect {
                 setNotificationsCount(it)
@@ -356,7 +355,8 @@ class NavigationDrawerFragment : DialogFragment() {
                 if ((
                         user.stats?.lvl
                             ?: 0
-                    ) < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)
+                    ) < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS &&
+                    (!hasSpecialItems)
                 ) {
                     item.pillText = getString(R.string.unlock_lvl_11)
                 } else {
@@ -557,7 +557,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     R.id.gemPurchaseActivity,
                     SIDEBAR_GEMS,
                     context.getString(R.string.sidebar_gems),
-                    preventReselect = false
+                    preventReselect = false,
                 ),
             )
             items.add(
@@ -565,7 +565,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     R.id.subscriptionPurchaseActivity,
                     SIDEBAR_SUBSCRIPTION,
                     context.getString(R.string.sidebar_subscription),
-                    preventReselect = false
+                    preventReselect = false,
                 ),
             )
             items.add(
@@ -647,10 +647,13 @@ class NavigationDrawerFragment : DialogFragment() {
         if (!shouldUsePersistentDrawer) {
             closeDrawer()
         }
-        if (adapter.selectedItem != null
-            && adapter.selectedItem == transitionId
-            && bundle == null
-            && preventReselection) return
+        if (adapter.selectedItem != null &&
+            adapter.selectedItem == transitionId &&
+            bundle == null &&
+            preventReselection
+        ) {
+            return
+        }
         if (preventReselection) {
             adapter.selectedItem = transitionId
         }

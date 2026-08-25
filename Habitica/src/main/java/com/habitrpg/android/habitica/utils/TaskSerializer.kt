@@ -76,9 +76,10 @@ class TaskSerializer :
         task.up = obj.get("up")?.asBoolean ?: false
         task.down = obj.get("down")?.asBoolean ?: false
         task.streak = obj.safeGet("streak")?.asInt
-        if (obj.has("challenge")
-            && obj.get("challenge").isJsonObject
-            && obj.getAsJsonObject("challenge").has("id")) {
+        if (obj.has("challenge") &&
+            obj.get("challenge").isJsonObject &&
+            obj.getAsJsonObject("challenge").has("id")
+        ) {
             task.challengeID = obj.getAsJsonObject("challenge").get("id").asString
 
             if (obj.getAsJsonObject("challenge").has("broken")) {
@@ -100,8 +101,9 @@ class TaskSerializer :
                 task.nextDue?.add(context.deserialize(due, Date::class.java))
             }
         }
-        if (obj.has("checklist")
-            && obj.get("checklist").isJsonArray) {
+        if (obj.has("checklist") &&
+            obj.get("checklist").isJsonArray
+        ) {
             for (checklistElement in obj.getAsJsonArray("checklist")) {
                 val checklistObject = checklistElement.asJsonObject
                 task.checklist?.add(
@@ -113,8 +115,9 @@ class TaskSerializer :
                 )
             }
         }
-        if (obj.has("reminders")
-            && obj.get("reminders").isJsonArray) {
+        if (obj.has("reminders") &&
+            obj.get("reminders").isJsonArray
+        ) {
             for (reminderElement in obj.getAsJsonArray("reminders")) {
                 val remindersObject = reminderElement.asJsonObject
                 val reminder = RemindersItem()

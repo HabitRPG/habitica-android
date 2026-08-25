@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -34,12 +33,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.edit
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityComposeBinding
 import com.habitrpg.android.habitica.extensions.openBrowserLink
-import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.preferences.PrivacyToggleView

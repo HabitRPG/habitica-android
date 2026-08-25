@@ -47,7 +47,6 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -196,7 +195,8 @@ class AccountPreferenceFragment :
             }
 
             "email" -> {
-                if (user?.authentication?.hasPassword != true && user
+                if (user?.authentication?.hasPassword != true &&
+                    user
                         ?.authentication
                         ?.localAuthentication
                         ?.email
@@ -436,7 +436,8 @@ class AccountPreferenceFragment :
                 emailEditText?.showErrorIfNecessary()
                 passwordEditText?.showErrorIfNecessary()
                 passwordRepeatEditText?.showErrorIfNecessary()
-                if ((showEmail && emailEditText?.isValid != true) || passwordEditText?.isValid != true ||
+                if ((showEmail && emailEditText?.isValid != true) ||
+                    passwordEditText?.isValid != true ||
                     passwordRepeatEditText?.isValid != true
                 ) {
                     return@addButton

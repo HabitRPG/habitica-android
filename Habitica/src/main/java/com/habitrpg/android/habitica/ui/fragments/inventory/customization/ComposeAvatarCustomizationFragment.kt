@@ -85,7 +85,6 @@ import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.setTintWith
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
@@ -94,7 +93,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CustomizationViewModel : ViewModel() {
@@ -203,7 +201,8 @@ class ComposeAvatarCustomizationFragment :
                         viewLifecycleOwner.lifecycleScope.launchCatching {
                             if (customization.identifier?.isNotBlank() != true) {
                                 userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
-                            } else if (customization.identifier == activeCustomization && customization.type == "hair" &&
+                            } else if (customization.identifier == activeCustomization &&
+                                customization.type == "hair" &&
                                 customization.category != "color"
                             ) {
                                 userRepository.useCustomization(type ?: "", category, "0")
@@ -403,7 +402,8 @@ class ComposeAvatarCustomizationFragment :
         this.updateActiveCustomization(user)
         ownedCustomizations.value =
             user.purchased?.customizations?.filter {
-                it.type == this.type && (it.category.isNullOrEmpty() || it.category == this.category) &&
+                it.type == this.type &&
+                    (it.category.isNullOrEmpty() || it.category == this.category) &&
                     it.purchased
             }
                 ?: emptyList()

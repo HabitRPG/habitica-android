@@ -66,10 +66,10 @@ class InboxViewModel
             messagesDataSource.invalidate()
         }
 
-    override fun onCleared() {
-        socialRepository.close()
-        super.onCleared()
-    }
+        override fun onCleared() {
+            socialRepository.close()
+            super.onCleared()
+        }
 
         init {
             if (recipientID?.isNotBlank() == true) {

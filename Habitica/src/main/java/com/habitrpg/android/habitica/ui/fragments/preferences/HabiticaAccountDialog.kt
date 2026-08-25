@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HabiticaAccountDialog: BottomSheetDialogFragment(R.layout.dialog_habitica_account) {
+class HabiticaAccountDialog : BottomSheetDialogFragment(R.layout.dialog_habitica_account) {
     @Inject
     lateinit var userRepository: UserRepository
     private var viewBinding: DialogHabiticaAccountBinding? = null
@@ -164,7 +164,8 @@ class HabiticaAccountDialog: BottomSheetDialogFragment(R.layout.dialog_habitica_
                             .isNotEmpty()
                     ) {
                         if ((
-                                user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
+                                user?.authentication?.hasPassword != true &&
+                                    binding.confirmationInputEdittext.text.toString() ==
                                     context?.getString(
                                         R.string.reset_caps,
                                     )
@@ -251,7 +252,8 @@ class HabiticaAccountDialog: BottomSheetDialogFragment(R.layout.dialog_habitica_
                             .isNotEmpty()
                     ) {
                         if ((
-                                user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
+                                user?.authentication?.hasPassword != true &&
+                                    binding.confirmationInputEdittext.text.toString() ==
                                     context?.getString(
                                         R.string.delete_caps,
                                     )

@@ -189,7 +189,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     if ((
                             ownedPets?.get(item.key)?.trained
                                 ?: 0
-                        ) <= 0 && eggCount(item) > 0 && potionCount(item) > 0
+                        ) <= 0 &&
+                        eggCount(item) > 0 &&
+                        potionCount(item) > 0
                     ) {
                         22
                     } else {

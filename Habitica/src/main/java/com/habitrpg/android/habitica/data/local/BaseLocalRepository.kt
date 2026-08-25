@@ -27,5 +27,6 @@ interface BaseLocalRepository {
     fun <T : BaseMainObject> delete(obj: T)
 
     fun getLiveUser(id: String): User?
+
     fun refreshLocalData()
 }

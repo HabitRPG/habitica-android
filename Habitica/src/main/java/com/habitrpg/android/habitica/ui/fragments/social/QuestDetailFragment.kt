@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -118,7 +116,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
         val user = userViewModel.user.value
         if (binding?.questResponseWrapper != null) {
-            if (userViewModel.userID != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key &&
+            if (userViewModel.userID != party?.quest?.leader &&
+                user?.party?.quest?.key == group.quest?.key &&
                 user?.party?.quest?.rsvpNeeded == false
             ) {
                 binding?.questLeaveButton?.visibility = View.VISIBLE

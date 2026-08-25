@@ -183,10 +183,12 @@ fun LoadingButton(
                 targetState = state,
                 transitionSpec = {
                     val isInitialShowingContent =
-                        initialState == LoadingButtonState.CONTENT || initialState == LoadingButtonState.DISABLED ||
+                        initialState == LoadingButtonState.CONTENT ||
+                            initialState == LoadingButtonState.DISABLED ||
                             (initialState == LoadingButtonState.SUCCESS && successContent == null)
                     val isTargetShowingContent =
-                        targetState == LoadingButtonState.CONTENT || targetState == LoadingButtonState.DISABLED ||
+                        targetState == LoadingButtonState.CONTENT ||
+                            targetState == LoadingButtonState.DISABLED ||
                             (targetState == LoadingButtonState.SUCCESS && successContent == null)
                     if (targetState == LoadingButtonState.FAILED) {
                         (

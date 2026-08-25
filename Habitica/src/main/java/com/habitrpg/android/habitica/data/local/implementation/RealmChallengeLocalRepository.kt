@@ -21,62 +21,73 @@ class RealmChallengeLocalRepository(
         userID: String,
         challengeID: String,
     ): Flow<Boolean> =
-        safeFindAll { it.where(ChallengeMembership::class.java)
-            .equalTo("userID", userID)
-            .equalTo("challengeID", challengeID) }
-            .map { it.count() > 0 }
+        safeFindAll {
+            it
+                .where(ChallengeMembership::class.java)
+                .equalTo("userID", userID)
+                .equalTo("challengeID", challengeID)
+        }.map { it.count() > 0 }
 
     override fun getChallengeMembership(
         userId: String,
         id: String,
     ) = safeFindOne {
-        it.where(ChallengeMembership::class.java)
+        it
+            .where(ChallengeMembership::class.java)
             .equalTo("userID", userId)
             .equalTo("challengeID", id)
     }
 
-    override fun getChallengeMemberships(userId: String) = safeFindAll {
-        it.where(ChallengeMembership::class.java).equalTo("userID", userId)
-    }
-
-    override fun getChallenge(id: String): Flow<Challenge> = safeFindOne {
-        it.where(Challenge::class.java).equalTo("id", id)
-    }
-
-    override fun getTasks(challengeID: String): Flow<List<Task>> = safeFindAll {
-        it.where(Task::class.java)
-            .equalTo("ownerID", challengeID)
-    }
-
-    override val challenges: Flow<List<Challenge>>
-        get() = safeFindAll {
-            it.where(Challenge::class.java)
-                .isNotNull("name")
-                .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
+    override fun getChallengeMemberships(userId: String) =
+        safeFindAll {
+            it.where(ChallengeMembership::class.java).equalTo("userID", userId)
         }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getUserChallenges(userId: String): Flow<List<Challenge>> = safeFindAll {
-        it.where(ChallengeMembership::class.java)
-            .equalTo("userID", userId)
-    }
-            .flatMapLatest { it ->
-                val ids =
-                    it
-                        .map {
-                            return@map it.challengeID
-                        }.toTypedArray()
-                safeFindAll {
-                    it.where(Challenge::class.java)
-                        .isNotNull("name")
-                        .beginGroup()
-                        .`in`("id", ids)
-                        .or()
-                        .equalTo("leaderId", userId)
-                        .endGroup()
-                        .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
-                }
+    override fun getChallenge(id: String): Flow<Challenge> =
+        safeFindOne {
+            it.where(Challenge::class.java).equalTo("id", id)
+        }
+
+    override fun getTasks(challengeID: String): Flow<List<Task>> =
+        safeFindAll {
+            it
+                .where(Task::class.java)
+                .equalTo("ownerID", challengeID)
+        }
+
+    override val challenges: Flow<List<Challenge>>
+        get() =
+            safeFindAll {
+                it
+                    .where(Challenge::class.java)
+                    .isNotNull("name")
+                    .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
             }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getUserChallenges(userId: String): Flow<List<Challenge>> =
+        safeFindAll {
+            it
+                .where(ChallengeMembership::class.java)
+                .equalTo("userID", userId)
+        }.flatMapLatest { it ->
+            val ids =
+                it
+                    .map {
+                        return@map it.challengeID
+                    }.toTypedArray()
+            safeFindAll {
+                it
+                    .where(Challenge::class.java)
+                    .isNotNull("name")
+                    .beginGroup()
+                    .`in`("id", ids)
+                    .or()
+                    .equalTo("leaderId", userId)
+                    .endGroup()
+                    .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
+            }
+        }
 
     override fun setParticipating(
         userID: String,
@@ -123,7 +134,8 @@ class RealmChallengeLocalRepository(
         executeTransaction { realm1 -> realm1.insertOrUpdate(challenges) }
     }
 
-    override fun getCategoryOptions(): Flow<List<CategoryOption>> = safeFindAll {
-        it.where(CategoryOption::class.java)
-    }
+    override fun getCategoryOptions(): Flow<List<CategoryOption>> =
+        safeFindAll {
+            it.where(CategoryOption::class.java)
+        }
 }

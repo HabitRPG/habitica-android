@@ -14,7 +14,8 @@ class RealmTagLocalRepository(
         executeTransaction { tags.deleteAllFromRealm() }
     }
 
-    override fun getTags(userId: String): Flow<List<Tag>> = safeFindAll {
-        it.where(Tag::class.java).equalTo("userId", userId)
-    }
+    override fun getTags(userId: String): Flow<List<Tag>> =
+        safeFindAll {
+            it.where(Tag::class.java).equalTo("userId", userId)
+        }
 }

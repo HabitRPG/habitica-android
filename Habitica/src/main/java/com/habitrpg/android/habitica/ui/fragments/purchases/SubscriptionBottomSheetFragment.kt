@@ -27,7 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment(), CommonSubscriptionFragment {
+open class SubscriptionBottomSheetFragment :
+    BottomSheetDialogFragment(),
+    CommonSubscriptionFragment {
     private var binding: FragmentBottomsheetSubscriptionBinding? = null
 
     override val content: FragmentSubscriptionContentBinding?
@@ -35,10 +37,13 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment(), Common
 
     @Inject
     override lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     override lateinit var purchaseHandler: PurchaseHandler
 
@@ -48,9 +53,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment(), Common
     override var user: User? = null
     override var hasLoadedSubscriptionOptions: Boolean = false
 
-    override fun getViewLifecycleOwner(): LifecycleOwner {
-        return super.getViewLifecycleOwner()
-    }
+    override fun getViewLifecycleOwner(): LifecycleOwner = super.getViewLifecycleOwner()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.extensions.getImpreciseRemainingString
-import com.habitrpg.android.habitica.extensions.getRemainingString
-import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx

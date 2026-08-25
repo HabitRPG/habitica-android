@@ -23,8 +23,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 @HiltAndroidApp
 class MainApplication : Application() {
@@ -47,7 +45,8 @@ class MainApplication : Application() {
                         val intent = Intent(this@MainApplication, FaintActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
-                    } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name &&
+                    } else if (it.needsCron &&
+                        BaseActivity.currentActivityClassName != RYAActivity::class.java.name &&
                         BaseActivity.currentActivityClassName != LoginActivity::class.java.name
                     ) {
                         val intent = Intent(this@MainApplication, RYAActivity::class.java)

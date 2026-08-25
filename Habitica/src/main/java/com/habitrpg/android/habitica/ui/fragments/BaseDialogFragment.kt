@@ -15,8 +15,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment() {
     var isModal: Boolean = false

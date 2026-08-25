@@ -23,10 +23,10 @@ class EquipmentOverviewViewModel
         val usesCostume: Boolean
             get() = user.value?.preferences?.costume == true
 
-    override fun onCleared() {
-        inventoryRepository.close()
-        super.onCleared()
-    }
+        override fun onCleared() {
+            inventoryRepository.close()
+            super.onCleared()
+        }
 
         fun getGear(
             key: String,

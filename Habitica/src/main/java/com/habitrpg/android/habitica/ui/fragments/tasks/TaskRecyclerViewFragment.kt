@@ -134,7 +134,6 @@ open class TaskRecyclerViewFragment :
                             viewModel,
                         )
                     }
-
                 }
             recyclerAdapter = adapter as? TaskRecyclerViewAdapter
             binding?.recyclerView?.adapter = adapter
@@ -306,7 +305,8 @@ open class TaskRecyclerViewFragment :
                     if ((
                             recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
                                 ?: 0
-                        ) != 0 || !isReorderingAllowed()
+                        ) != 0 ||
+                        !isReorderingAllowed()
                     ) {
                         makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                     } else {
@@ -504,7 +504,6 @@ open class TaskRecyclerViewFragment :
                             R.drawable.icon_rewards,
                         )
                     }
-
                 }
             } else {
                 when (this.taskType) {
@@ -611,7 +610,8 @@ open class TaskRecyclerViewFragment :
         if (Date().time - (
                 TasksFragment.lastTaskFormOpen?.time
                     ?: 0
-            ) < 2000 || !task.isValid
+            ) < 2000 ||
+            !task.isValid
         ) {
             return
         }

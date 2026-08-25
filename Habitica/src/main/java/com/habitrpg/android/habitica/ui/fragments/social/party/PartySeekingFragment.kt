@@ -93,10 +93,10 @@ class PartySeekingViewModel
         val seekingUsers: Flow<PagingData<Member>>
         val inviteStates = mutableStateMapOf<String, Pair<Boolean, LoadingButtonState>>()
 
-    override fun onCleared() {
-        socialRepository.close()
-        super.onCleared()
-    }
+        override fun onCleared() {
+            socialRepository.close()
+            super.onCleared()
+        }
 
         init {
             seekingUsers =
@@ -259,7 +259,8 @@ fun PartySeekingView(
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.padding(bottom = 4.dp),
                     )
-                    if (pageData.itemCount == 0 && pageData.loadState.refresh is LoadState.NotLoading &&
+                    if (pageData.itemCount == 0 &&
+                        pageData.loadState.refresh is LoadState.NotLoading &&
                         pageData.loadState.append is LoadState.NotLoading
                     ) {
                         Text(

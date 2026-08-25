@@ -40,7 +40,8 @@ class ExceptionHandler {
                     throwable !is UnknownHostException &&
                     throwable !is SocketException &&
                     throwable.message?.endsWith(" was cancelled") != true &&
-                    throwable.message != "rememberCoroutineScope left the composition") {
+                    throwable.message != "rememberCoroutineScope left the composition"
+                ) {
                     instance.exceptionLogger?.invoke(throwable)
                 }
             }
@@ -52,11 +53,10 @@ fun CoroutineScope.launchCatching(
     errorHandler: ((Throwable) -> Unit)? = null,
     context: CoroutineContext = EmptyCoroutineContext,
     function: suspend CoroutineScope.() -> Unit,
-): Job {
-    return launch(
+): Job =
+    launch(
         ExceptionHandler.coroutine {
             errorHandler?.invoke(it)
         } + context,
         block = function,
     )
-}

@@ -142,22 +142,22 @@ abstract class RealmBaseLocalRepository internal constructor(
             .findFirst() as? T
     }
 
-    fun queryUser(userID: String) = realm
+    fun queryUser(userID: String) =
+        realm
             .where(User::class.java)
             .equalTo("id", userID)
             .findOneAsFlow()
 
-    internal fun <T: RealmModel> safeQuery(queryBuilder: (Realm) -> RealmQuery<T>): RealmQuery<T>? =
+    internal fun <T : RealmModel> safeQuery(queryBuilder: (Realm) -> RealmQuery<T>): RealmQuery<T>? =
         if (isClosed) {
             null
         } else {
             queryBuilder(realm)
         }
 
-
-    internal fun <T: RealmModel> safeFindAll(queryBuilder: (Realm) -> RealmQuery<T>): Flow<List<T>> =
+    internal fun <T : RealmModel> safeFindAll(queryBuilder: (Realm) -> RealmQuery<T>): Flow<List<T>> =
         safeQuery { queryBuilder(it) }?.findAllAsFlow() ?: emptyFlow()
 
-    internal fun <T: RealmModel> safeFindOne(queryBuilder: (Realm) -> RealmQuery<T>): Flow<T> =
+    internal fun <T : RealmModel> safeFindOne(queryBuilder: (Realm) -> RealmQuery<T>): Flow<T> =
         safeQuery { queryBuilder(it) }?.findOneAsFlow() ?: emptyFlow()
 }

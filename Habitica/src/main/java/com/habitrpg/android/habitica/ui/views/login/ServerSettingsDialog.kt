@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.login
 
 import android.content.res.Configuration
-import android.net.Uri
 import android.webkit.URLUtil
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -67,8 +67,10 @@ class ChallengesListViewAdapter(
     fun filter(filterOptions: ChallengeFilterOptions) {
         val hasNoActiveFilters =
             filterOptions.showByGroups.isEmpty() &&
-                !filterOptions.showOwned && !filterOptions.notOwned &&
-                !filterOptions.showParticipating && !filterOptions.notParticipating
+                !filterOptions.showOwned &&
+                !filterOptions.notOwned &&
+                !filterOptions.showParticipating &&
+                !filterOptions.notParticipating
 
         if (hasNoActiveFilters) {
             currentFilterOptions = null

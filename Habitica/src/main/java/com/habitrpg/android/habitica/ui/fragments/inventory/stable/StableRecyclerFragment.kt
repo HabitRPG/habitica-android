@@ -22,11 +22,9 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -79,7 +77,8 @@ class StableRecyclerFragment :
         layoutManager.spanSizeLookup =
             object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int =
-                    if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
+                    if (adapter?.getItemViewType(position) == 0 ||
+                        adapter?.getItemViewType(
                             position,
                         ) == 1
                     ) {

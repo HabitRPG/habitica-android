@@ -26,7 +26,6 @@ import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFrag
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.observeOnce
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -109,7 +107,8 @@ class PetDetailRecyclerFragment :
         layoutManager?.spanSizeLookup =
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int =
-                    if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(
+                    if (adapter.getItemViewType(position) == 0 ||
+                        adapter.getItemViewType(
                             position,
                         ) == 1
                     ) {

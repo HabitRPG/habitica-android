@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView

@@ -14,7 +14,7 @@ class PurchasedDeserializer : JsonDeserializer<Purchases?> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type?,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Purchases {
         val obj = json.getAsJsonObject()
         val purchases = Purchases()
@@ -23,36 +23,37 @@ class PurchasedDeserializer : JsonDeserializer<Purchases?> {
             if (!obj.has(type)) {
                 continue
             }
-            for (entry in obj.get(type).getAsJsonObject().entrySet()) {
+            for ((key, value) in obj.get(type).getAsJsonObject().entrySet()) {
                 purchases.customizations?.add(
                     this.parseCustomization(
                         type,
                         null,
-                        entry.key,
-                        entry.value.getAsBoolean()
-                    )
+                        key,
+                        value.asBoolean,
+                    ),
                 )
             }
         }
         if (obj.has("hair")) {
-            for (categoryEntry in obj.get("hair").getAsJsonObject().entrySet()) {
-                for (entry in categoryEntry.value.getAsJsonObject().entrySet()) {
+            for ((key, value) in obj.get("hair").getAsJsonObject().entrySet()) {
+                for ((key1, value1) in value.getAsJsonObject().entrySet()) {
                     purchases.customizations?.add(
                         this.parseCustomization(
                             "hair",
-                            categoryEntry.key,
-                            entry.key,
-                            entry.value.getAsBoolean()
-                        )
+                            key,
+                            key1,
+                            value1.asBoolean,
+                        ),
                     )
                 }
             }
         }
 
-        purchases.plan = context.deserialize<SubscriptionPlan?>(
-            obj.get("plan"),
-            SubscriptionPlan::class.java
-        )
+        purchases.plan =
+            context.deserialize(
+                obj.get("plan"),
+                SubscriptionPlan::class.java,
+            )
 
         return purchases
     }
@@ -61,7 +62,7 @@ class PurchasedDeserializer : JsonDeserializer<Purchases?> {
         type: String?,
         category: String?,
         key: String?,
-        wasPurchased: Boolean
+        wasPurchased: Boolean,
     ): OwnedCustomization {
         val customization = OwnedCustomization()
         customization.key = key

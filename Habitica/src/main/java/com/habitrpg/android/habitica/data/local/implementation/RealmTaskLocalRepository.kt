@@ -25,21 +25,25 @@ class RealmTaskLocalRepository(
         taskType: TaskType,
         userID: String,
         includedGroupIDs: Array<String>,
-    ): Flow<List<Task>> = safeFindAll {
-        it.where(Task::class.java)
-            .equalTo("typeValue", taskType.value)
-            .equalTo("ownerID", userID)
-            .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
-    }
+    ): Flow<List<Task>> =
+        safeFindAll {
+            it
+                .where(Task::class.java)
+                .equalTo("typeValue", taskType.value)
+                .equalTo("ownerID", userID)
+                .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
+        }
 
     override fun getTasksWithTaskId(taskId: String): List<Task> =
         safeQuery { it.where(Task::class.java).equalTo("id", taskId) }?.findAll() ?: emptyList()
 
-    override fun getTasks(userId: String): Flow<List<Task>> = safeFindAll {
-        it.where(Task::class.java)
-            .equalTo("ownerID", userId)
-            .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
-    }
+    override fun getTasks(userId: String): Flow<List<Task>> =
+        safeFindAll {
+            it
+                .where(Task::class.java)
+                .equalTo("ownerID", userId)
+                .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
+        }
 
     override fun saveTasks(
         ownerID: String,
@@ -159,7 +163,8 @@ class RealmTaskLocalRepository(
                     }
                 var item =
                     safeQuery {
-                        it.where(OwnedItem::class.java)
+                        it
+                            .where(OwnedItem::class.java)
                             .equalTo("itemType", type)
                             .equalTo("key", key)
                     }?.findFirst()
@@ -188,17 +193,17 @@ class RealmTaskLocalRepository(
                 ?.quest
                 ?.progress
                 ?.up = (
-                    bgUser.party
-                        ?.quest
-                        ?.progress
-                        ?.up
-                        ?: 0F
-                    ) + (
-                    res._tmp
-                        ?.quest
-                        ?.progressDelta
-                        ?.toFloat() ?: 0F
-                    )
+                bgUser.party
+                    ?.quest
+                    ?.progress
+                    ?.up
+                    ?: 0F
+            ) + (
+                res._tmp
+                    ?.quest
+                    ?.progressDelta
+                    ?.toFloat() ?: 0F
+            )
         }
     }
 
@@ -256,7 +261,8 @@ class RealmTaskLocalRepository(
     ) {
         val localTasks =
             safeQuery {
-                it.where(Task::class.java)
+                it
+                    .where(Task::class.java)
                     .equalTo("ownerID", ownerID)
                     .beginGroup()
                     .beginGroup()
@@ -281,7 +287,8 @@ class RealmTaskLocalRepository(
     ) {
         val localTasks =
             safeQuery {
-                it.where(Task::class.java)
+                it
+                    .where(Task::class.java)
                     .equalTo("ownerID", userID)
                     .equalTo("typeValue", TaskType.TODO.value)
                     .equalTo("completed", true)
@@ -303,9 +310,10 @@ class RealmTaskLocalRepository(
         }
     }
 
-    override fun getTask(taskId: String): Flow<Task> = safeFindOne {
-        it.where(Task::class.java).equalTo("id", taskId)
-    }
+    override fun getTask(taskId: String): Flow<Task> =
+        safeFindOne {
+            it.where(Task::class.java).equalTo("id", taskId)
+        }
 
     override fun getTaskCopy(taskId: String): Flow<Task> {
         return getTask(taskId)
@@ -345,11 +353,13 @@ class RealmTaskLocalRepository(
     override fun getTaskAtPosition(
         taskType: String,
         position: Int,
-    ): Flow<Task> = safeFindOne {
-        it.where(Task::class.java)
-            .equalTo("typeValue", taskType)
-            .equalTo("position", position)
-    }
+    ): Flow<Task> =
+        safeFindOne {
+            it
+                .where(Task::class.java)
+                .equalTo("typeValue", taskType)
+                .equalTo("position", position)
+        }
 
     override fun updateIsdue(daily: TaskList): TaskList {
         val tasks =
@@ -375,21 +385,25 @@ class RealmTaskLocalRepository(
         }
     }
 
-    override fun getErroredTasks(userID: String): Flow<List<Task>> = safeFindAll {
-        it.where(Task::class.java)
-            .equalTo("ownerID", userID)
-            .equalTo("hasErrored", true)
-            .sort("position")
-    }
+    override fun getErroredTasks(userID: String): Flow<List<Task>> =
+        safeFindAll {
+            it
+                .where(Task::class.java)
+                .equalTo("ownerID", userID)
+                .equalTo("hasErrored", true)
+                .sort("position")
+        }
 
     override fun getUser(userID: String): Flow<User> = queryUser(userID)
 
     override fun getTasksForChallenge(
         challengeID: String?,
         userID: String?,
-    ): Flow<List<Task>> = safeFindAll {
-        it.where(Task::class.java)
-            .equalTo("challengeID", challengeID)
-            .equalTo("ownerID", userID)
-    }
+    ): Flow<List<Task>> =
+        safeFindAll {
+            it
+                .where(Task::class.java)
+                .equalTo("challengeID", challengeID)
+                .equalTo("ownerID", userID)
+        }
 }

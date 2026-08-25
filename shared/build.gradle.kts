@@ -37,10 +37,8 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+        withHostTest {}
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
 
     sourceSets {
         commonMain {

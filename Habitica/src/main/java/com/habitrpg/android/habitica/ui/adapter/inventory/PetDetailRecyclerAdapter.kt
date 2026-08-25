@@ -119,7 +119,9 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             if ((
                     ownedPets?.get(pet.key)?.trained
                         ?: 0
-                ) <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0
+                ) <= 0 &&
+                eggCount(pet) > 0 &&
+                potionCount(pet) > 0
             ) {
                 2
             } else {

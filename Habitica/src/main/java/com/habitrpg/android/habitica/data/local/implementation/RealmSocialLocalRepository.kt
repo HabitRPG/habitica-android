@@ -24,14 +24,16 @@ class RealmSocialLocalRepository(
         userId: String,
         id: String,
     ) = safeFindOne {
-        it.where(GroupMembership::class.java)
+        it
+            .where(GroupMembership::class.java)
             .equalTo("userID", userId)
             .equalTo("groupID", id)
     }
 
-    override fun getGroupMemberships(userId: String): Flow<List<GroupMembership>> = safeFindAll {
-        it.where(GroupMembership::class.java).equalTo("userID", userId)
-    }
+    override fun getGroupMemberships(userId: String): Flow<List<GroupMembership>> =
+        safeFindAll {
+            it.where(GroupMembership::class.java).equalTo("userID", userId)
+        }
 
     override fun updateMembership(
         userId: String,
@@ -43,7 +45,8 @@ class RealmSocialLocalRepository(
         } else {
             val membership =
                 safeQuery {
-                    it.where(GroupMembership::class.java)
+                    it
+                        .where(GroupMembership::class.java)
                         .equalTo("userID", userId)
                         .equalTo("groupID", id)
                 }?.findFirst()
@@ -81,7 +84,8 @@ class RealmSocialLocalRepository(
         if (page != 0) return
         val existingMessages =
             safeQuery {
-                it.where(ChatMessage::class.java)
+                it
+                    .where(ChatMessage::class.java)
                     .equalTo("isInboxMessage", true)
                     .equalTo("uuid", recipientID)
             }?.findAll() ?: return
@@ -117,9 +121,10 @@ class RealmSocialLocalRepository(
         }
     }
 
-    override fun getMember(userID: String?): Flow<Member?> = safeFindOne {
-        it.where(Member::class.java).equalTo("id", userID)
-    }
+    override fun getMember(userID: String?): Flow<Member?> =
+        safeFindOne {
+            it.where(Member::class.java).equalTo("id", userID)
+        }
 
     override fun saveGroupMemberships(
         userID: String?,
@@ -150,7 +155,8 @@ class RealmSocialLocalRepository(
     ) = getGroupMemberships(userID)
         .flatMapLatest { memberships ->
             safeFindAll {
-                it.where(Group::class.java)
+                it
+                    .where(Group::class.java)
                     .equalTo("type", type ?: "guild")
                     .`in`(
                         "id",
@@ -162,31 +168,34 @@ class RealmSocialLocalRepository(
             }
         }
 
-    override fun getGroup(id: String): Flow<Group?> = safeFindOne {
-        it.where(Group::class.java).equalTo("id", id)
-    }
+    override fun getGroup(id: String): Flow<Group?> =
+        safeFindOne {
+            it.where(Group::class.java).equalTo("id", id)
+        }
 
-    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> = safeFindAll {
-        it.where(ChatMessage::class.java)
-            .equalTo("groupId", groupId)
-            .sort("timestamp", Sort.DESCENDING)
-    }
+    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> =
+        safeFindAll {
+            it
+                .where(ChatMessage::class.java)
+                .equalTo("groupId", groupId)
+                .sort("timestamp", Sort.DESCENDING)
+        }
 
     override fun deleteMessage(id: String) {
         val chatMessage = safeQuery { it.where(ChatMessage::class.java).equalTo("id", id) }?.findFirst()
         executeTransaction { chatMessage?.deleteFromRealm() }
     }
 
-    override fun getPartyMembers(partyId: String) = safeFindAll {
-        it.where(Member::class.java).equalTo("party.id", partyId)
-    }
+    override fun getPartyMembers(partyId: String) =
+        safeFindAll {
+            it.where(Member::class.java).equalTo("party.id", partyId)
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getGroupMembers(groupID: String) =
         safeFindAll {
             it.where(GroupMembership::class.java).equalTo("groupID", groupID)
-        }
-            .map { memberships -> memberships.map { it.userID }.toTypedArray() }
+        }.map { memberships -> memberships.map { it.userID }.toTypedArray() }
             .flatMapLatest { userIDs ->
                 safeFindAll {
                     it.where(Member::class.java).`in`("id", userIDs)
@@ -319,16 +328,19 @@ class RealmSocialLocalRepository(
         userId: String,
         replyToUserID: String?,
     ) = safeFindAll {
-        it.where(ChatMessage::class.java)
+        it
+            .where(ChatMessage::class.java)
             .equalTo("isInboxMessage", true)
             .equalTo("uuid", replyToUserID)
             .equalTo("userID", userId)
             .sort("timestamp", Sort.DESCENDING)
     }
 
-    override fun getInboxConversation(userId: String) = safeFindAll {
-        it.where(InboxConversation::class.java)
-            .equalTo("userID", userId)
-            .sort("timestamp", Sort.DESCENDING)
-    }
+    override fun getInboxConversation(userId: String) =
+        safeFindAll {
+            it
+                .where(InboxConversation::class.java)
+                .equalTo("userID", userId)
+                .sort("timestamp", Sort.DESCENDING)
+        }
 }

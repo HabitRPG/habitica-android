@@ -145,7 +145,8 @@ fun LoginForm(
                         else -> LoginFieldState.ERROR
                     },
                 errorMessage =
-                    if (confirmPassword.isNotBlank() && confirmPassword != password &&
+                    if (confirmPassword.isNotBlank() &&
+                        confirmPassword != password &&
                         passwordFieldState == LoginFieldState.VALID
                     ) {
                         stringResource(R.string.password_not_matching)
@@ -179,7 +180,8 @@ fun LoginForm(
                     enabled =
                         if (isRegistering) {
                             (
-                                emailFieldState == LoginFieldState.VALID && passwordFieldState == LoginFieldState.VALID &&
+                                emailFieldState == LoginFieldState.VALID &&
+                                    passwordFieldState == LoginFieldState.VALID &&
                                     password == confirmPassword
                             )
                         } else {

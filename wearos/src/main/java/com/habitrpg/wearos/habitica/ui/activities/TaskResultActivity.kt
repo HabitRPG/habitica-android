@@ -23,8 +23,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Integer.max
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 @AndroidEntryPoint
 class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultViewModel>() {

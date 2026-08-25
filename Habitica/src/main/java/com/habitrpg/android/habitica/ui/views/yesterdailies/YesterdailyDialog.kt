@@ -38,8 +38,6 @@ import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.abs
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 class YesterdailyDialog private constructor(
     context: Context,
@@ -59,7 +57,7 @@ class YesterdailyDialog private constructor(
 
         addButton(R.string.start_day, true)
 
-        val listView = view?.findViewById(R.id.yesterdailies_list) as? LinearLayout
+        val listView: LinearLayout? = view?.findViewById(R.id.yesterdailies_list)
         if (listView != null) {
             yesterdailiesList = listView
         }
@@ -231,7 +229,7 @@ class YesterdailyDialog private constructor(
         }
 
         val emojiView = taskView.findViewById<TextView>(R.id.text_view)
-        emojiView?.text = task.markdownText { emojiView?.text = it }
+        emojiView?.text = task.markdownText { emojiView.text = it }
     }
 
     private fun createNewTaskView(inflater: LayoutInflater): View =
@@ -292,7 +290,10 @@ class YesterdailyDialog private constructor(
                         cal.add(Calendar.DATE, -1)
                         val tasks =
                             taskRepository.retrieveDailiesFromDate(cal.time)?.tasks?.values?.filter { task ->
-                                return@filter task.type == TaskType.DAILY && task.isDue == true && !task.completed && task.yesterDaily &&
+                                return@filter task.type == TaskType.DAILY &&
+                                    task.isDue == true &&
+                                    !task.completed &&
+                                    task.yesterDaily &&
                                     !task.isGroupTask
                             }
                         val dailies =
@@ -300,7 +301,9 @@ class YesterdailyDialog private constructor(
                                 .getTasks(TaskType.DAILY, null, emptyArray())
                                 .map {
                                     val taskMap = mutableMapOf<String, Int>()
-                                    it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
+                                    it.forEachIndexed { index, task ->
+                                        taskMap[task.id ?: ""] = index
+                                    }
                                     taskMap
                                 }.firstOrNull()
                         val sortedTasks = tasks?.sortedBy { dailies?.get(it.id ?: "") }

@@ -54,7 +54,7 @@ class FeedPetUseCase
                 dialog.setTitle(
                     requestValues.context.getString(
                         R.string.evolved_pet_title,
-                         "${requestValues.potion.text} ${requestValues.egg.mountText}",
+                        "${requestValues.potion.text} ${requestValues.egg.mountText}",
                     ),
                 )
                 dialog.isCelebratory = true

@@ -9,9 +9,10 @@ class RealmFAQLocalRepository(
     realm: Realm,
 ) : RealmContentLocalRepository(realm),
     FAQLocalRepository {
-    override fun getArticle(position: Int): Flow<FAQArticle> = safeFindOne {
-        it.where(FAQArticle::class.java).equalTo("position", position)
-    }
+    override fun getArticle(position: Int): Flow<FAQArticle> =
+        safeFindOne {
+            it.where(FAQArticle::class.java).equalTo("position", position)
+        }
 
     override val articles: Flow<List<FAQArticle>>
         get() = safeFindAll { it.where(FAQArticle::class.java) }

@@ -14,28 +14,29 @@ class RealmCustomizationLocalRepository(
         type: String,
         category: String?,
         onlyAvailable: Boolean,
-    ): Flow<List<Customization>> = safeFindAll { realm ->
-        var query =
-            realm
-                .where(Customization::class.java)
-                .equalTo("type", type)
-                .equalTo("category", category)
-        if (onlyAvailable) {
-            val today = Date()
-            query =
-                query
-                    .beginGroup()
-                    .beginGroup()
-                    .lessThanOrEqualTo("availableFrom", today)
-                    .greaterThanOrEqualTo("availableUntil", today)
-                    .endGroup()
-                    .or()
-                    .beginGroup()
-                    .isNull("availableFrom")
-                    .isNull("availableUntil")
-                    .endGroup()
-                    .endGroup()
+    ): Flow<List<Customization>> =
+        safeFindAll { realm ->
+            var query =
+                realm
+                    .where(Customization::class.java)
+                    .equalTo("type", type)
+                    .equalTo("category", category)
+            if (onlyAvailable) {
+                val today = Date()
+                query =
+                    query
+                        .beginGroup()
+                        .beginGroup()
+                        .lessThanOrEqualTo("availableFrom", today)
+                        .greaterThanOrEqualTo("availableUntil", today)
+                        .endGroup()
+                        .or()
+                        .beginGroup()
+                        .isNull("availableFrom")
+                        .isNull("availableUntil")
+                        .endGroup()
+                        .endGroup()
+            }
+            query.sort("customizationSet")
         }
-        query.sort("customizationSet")
-    }
 }

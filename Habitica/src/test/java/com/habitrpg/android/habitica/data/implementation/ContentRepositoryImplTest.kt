@@ -66,9 +66,17 @@ class ContentRepositoryImplTest :
             }
 
             "inherit the previously known owned flag for gear whose catalog entry doesn't carry one" {
-                val freshGear = Equipment().apply { key = "sword_1"; owned = null }
+                val freshGear =
+                    Equipment().apply {
+                        key = "sword_1"
+                        owned = null
+                    }
                 val content = ContentResult().apply { gear = ContentGear().apply { flat = io.realm.RealmList(freshGear) } }
-                val knownGear = Equipment().apply { key = "sword_1"; owned = true }
+                val knownGear =
+                    Equipment().apply {
+                        key = "sword_1"
+                        owned = true
+                    }
                 coEvery { apiClient.getContent() } returns content
                 coEvery { inventoryLocalRepository.getEquipment(listOf("sword_1")) } returns flowOf(listOf(knownGear))
                 repository.retrieveContent(true)

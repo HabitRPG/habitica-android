@@ -11,13 +11,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GemPurchaseActivity : PurchaseActivity() {
-
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
-    override fun getConfigManager(): AppConfigManager {
-        return appConfigManager
-    }
+    override fun getConfigManager(): AppConfigManager = appConfigManager
 
     private var showSubscription: Boolean = false
 

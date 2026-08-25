@@ -37,6 +37,14 @@ interface UserLocalRepository : BaseLocalRepository {
     fun getTeamPlans(userID: String): Flow<List<TeamPlan>>
 
     fun getTeamPlan(teamID: String): Flow<Group?>
-    fun updateStats(userID: String, stats: Stats)
-    fun updateDayStartTime(currentUserID: String, dayStartTime: Int): User?
+
+    fun updateStats(
+        userID: String,
+        stats: Stats,
+    )
+
+    fun updateDayStartTime(
+        currentUserID: String,
+        dayStartTime: Int,
+    ): User?
 }

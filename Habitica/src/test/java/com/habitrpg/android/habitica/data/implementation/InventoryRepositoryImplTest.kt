@@ -6,10 +6,8 @@ import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
-import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.Items
@@ -21,7 +19,6 @@ import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -87,7 +84,12 @@ class InventoryRepositoryImplTest :
             }
 
             "sell the owned item when found" {
-                val ownedItem = OwnedItem().apply { key = "key-1"; itemType = "eggs"; numberOwned = 3 }
+                val ownedItem =
+                    OwnedItem().apply {
+                        key = "key-1"
+                        itemType = "eggs"
+                        numberOwned = 3
+                    }
                 val itemData = mockk<Item>()
                 val user = User()
                 every { localRepository.getOwnedItem("user-1", "eggs", "key-1", true) } returns flowOf(ownedItem)

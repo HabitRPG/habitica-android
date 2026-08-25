@@ -346,7 +346,8 @@ class ApiClientImpl(
             SSLException::class.java.isAssignableFrom(throwableClass)
         ) {
             this.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
-        } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass ||
+        } else if (throwableClass == SocketTimeoutException::class.java ||
+            UnknownHostException::class.java == throwableClass ||
             IOException::class.java == throwableClass
         ) {
             this.showConnectionProblemDialog(

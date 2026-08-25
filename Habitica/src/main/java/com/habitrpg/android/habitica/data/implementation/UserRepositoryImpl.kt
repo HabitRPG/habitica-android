@@ -65,7 +65,8 @@ class UserRepositoryImpl(
 
     override suspend fun syncUserStats(): User? {
         val user = apiClient.syncUserStats()
-        if (user != null && (user.stats?.toNextLevel ?: 0) > 1 &&
+        if (user != null &&
+            (user.stats?.toNextLevel ?: 0) > 1 &&
             (user.stats?.maxMP ?: 0) > 1
         ) {
             localRepository.saveUser(user)
@@ -344,15 +345,18 @@ class UserRepositoryImpl(
     override suspend fun allocatePoint(stat: Attribute): Stats? {
         val user = getLiveUser()
         if (user != null) {
-            localRepository.updateStats(currentUserID, Stats().apply {
-                when (stat) {
-                    Attribute.STRENGTH -> strength = user.stats?.strength?.inc()
-                    Attribute.INTELLIGENCE -> intelligence = user.stats?.intelligence?.inc()
-                    Attribute.CONSTITUTION -> constitution = user.stats?.constitution?.inc()
-                    Attribute.PERCEPTION -> per = user.stats?.per?.inc()
-                }
-                points = user.stats?.points?.dec()
-            })
+            localRepository.updateStats(
+                currentUserID,
+                Stats().apply {
+                    when (stat) {
+                        Attribute.STRENGTH -> strength = user.stats?.strength?.inc()
+                        Attribute.INTELLIGENCE -> intelligence = user.stats?.intelligence?.inc()
+                        Attribute.CONSTITUTION -> constitution = user.stats?.constitution?.inc()
+                        Attribute.PERCEPTION -> per = user.stats?.per?.inc()
+                    }
+                    points = user.stats?.points?.dec()
+                },
+            )
         }
         val stats = apiClient.allocatePoint(stat.value) ?: return null
         localRepository.updateStats(currentUserID, stats)

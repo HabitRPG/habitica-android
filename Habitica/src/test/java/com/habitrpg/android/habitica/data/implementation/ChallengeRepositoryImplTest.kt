@@ -69,7 +69,11 @@ class ChallengeRepositoryImplTest :
         "createChallenge" should {
             "build the tasks order, create the challenge, and add a single task via the single-task endpoint" {
                 val challenge = Challenge().apply { id = "challenge-1" }
-                val task = Task().apply { id = "task-1"; type = TaskType.HABIT }
+                val task =
+                    Task().apply {
+                        id = "task-1"
+                        type = TaskType.HABIT
+                    }
                 coEvery { apiClient.createChallenge(challenge) } returns challenge
                 coEvery { apiClient.createChallengeTask("challenge-1", task) } returns task
                 every { localRepository.save(any<List<Task>>()) } returns Unit
@@ -82,8 +86,16 @@ class ChallengeRepositoryImplTest :
 
             "create multiple tasks via the bulk endpoint" {
                 val challenge = Challenge().apply { id = "challenge-1" }
-                val task1 = Task().apply { id = "task-1"; type = TaskType.TODO }
-                val task2 = Task().apply { id = "task-2"; type = TaskType.TODO }
+                val task1 =
+                    Task().apply {
+                        id = "task-1"
+                        type = TaskType.TODO
+                    }
+                val task2 =
+                    Task().apply {
+                        id = "task-2"
+                        type = TaskType.TODO
+                    }
                 coEvery { apiClient.createChallenge(challenge) } returns challenge
                 coEvery { apiClient.createChallengeTasks("challenge-1", listOf(task1, task2)) } returns listOf(task1, task2)
                 every { localRepository.save(any<List<Task>>()) } returns Unit
@@ -93,7 +105,11 @@ class ChallengeRepositoryImplTest :
 
             "not add tasks when challenge creation fails" {
                 val challenge = Challenge().apply { id = "challenge-1" }
-                val task = Task().apply { id = "task-1"; type = TaskType.HABIT }
+                val task =
+                    Task().apply {
+                        id = "task-1"
+                        type = TaskType.HABIT
+                    }
                 coEvery { apiClient.createChallenge(challenge) } returns null
                 val result = repository.createChallenge(challenge, listOf(task))
                 result shouldBe null

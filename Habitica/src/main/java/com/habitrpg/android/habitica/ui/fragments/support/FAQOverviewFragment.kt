@@ -442,7 +442,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
             return
         }
 
-        searchJob = viewLifecycleOwner.lifecycleScope.launchCatching {
+        searchJob =
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 delay(200.milliseconds)
 
                 val results = searchFAQItems(currentSearchQuery)

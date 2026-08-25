@@ -92,13 +92,15 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
                                     ?.items
                                     ?.gear
                                     ?.equipped
-                                    ?.eyeWear || "eyewear_base_0" ==
+                                    ?.eyeWear ||
+                                "eyewear_base_0" ==
                                 this.user
                                     ?.items
                                     ?.gear
                                     ?.equipped
                                     ?.eyeWear
-                        ) && customization.key.isEmpty()
+                        ) &&
+                            customization.key.isEmpty()
                     }
 
                     SetupCustomizationRepository.SUBCATEGORY_FLOWER -> {
@@ -108,7 +110,8 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
                     }
 
                     SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR -> {
-                        "chair_" + customization.key == prefs.chair || customization.key == prefs.chair ||
+                        "chair_" + customization.key == prefs.chair ||
+                            customization.key == prefs.chair ||
                             (customization.key == "none" && prefs.chair == null)
                     }
 

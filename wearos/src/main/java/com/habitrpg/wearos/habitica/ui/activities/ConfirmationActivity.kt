@@ -9,8 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 @AndroidEntryPoint
 class ConfirmationActivity : BaseActivity<ActivityConfirmationBinding, ConfirmactionActivityViewModel>() {

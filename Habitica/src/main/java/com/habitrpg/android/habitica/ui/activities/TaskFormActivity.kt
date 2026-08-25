@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -251,7 +250,8 @@ class TaskFormActivity : BaseActivity() {
         }
         userViewModel.user.observe(this) {
             usesTaskAttributeStats =
-                it?.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
+                it?.preferences?.allocationMode == "taskbased" &&
+                it.preferences?.automaticAllocation == true
             configureForm()
         }
 
@@ -271,7 +271,8 @@ class TaskFormActivity : BaseActivity() {
             }
         binding.nestedScrollView.setOnTouchListener { view, event ->
             userScrolled =
-                view == binding.nestedScrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
+                view == binding.nestedScrollView &&
+                (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
             return@setOnTouchListener false
         }
         binding.nestedScrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->

@@ -131,8 +131,6 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 var mainActivityCreatedAt: Date? = null
 
@@ -503,7 +501,7 @@ open class MainActivity :
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
             updateToolbarTitle(
                 destination,
-                arguments
+                arguments,
             )
         }
     }
@@ -628,7 +626,8 @@ open class MainActivity :
         }
         resumeFromActivity = false
 
-        if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen !=
+        if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) &&
+            lastNotificationOpen !=
             intent.getLongExtra(
                 "notificationTimeStamp",
                 0,

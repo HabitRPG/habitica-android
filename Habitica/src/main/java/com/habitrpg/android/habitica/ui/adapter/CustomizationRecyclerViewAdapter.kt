@@ -125,11 +125,13 @@ class CustomizationRecyclerViewAdapter :
                         (
                             customization.availableFrom?.compareTo(today)
                                 ?: 0
-                        ) > 0 || (
-                            customization.availableUntil?.compareTo(today)
-                                ?: 0
-                        ) < 0
-                    ) && !isUsable
+                        ) > 0 ||
+                            (
+                                customization.availableUntil?.compareTo(today)
+                                    ?: 0
+                            ) < 0
+                    ) &&
+                    !isUsable
                 ) {
                     continue
                 }

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat

@@ -119,7 +119,8 @@ class PurchaseDialog(
                 shopItem.isTypeQuest -> {
                     contentView = PurchaseDialogQuestContent(context)
                     MainScope().launch(ExceptionHandler.coroutine()) {
-                        val content = inventoryRepository.getQuestContent(shopItem.key).firstOrNull()
+                        val content =
+                            inventoryRepository.getQuestContent(shopItem.key).firstOrNull()
                         if (content != null) {
                             contentView.setQuestContentItem(content)
                         }
@@ -180,7 +181,8 @@ class PurchaseDialog(
                 }
             }
 
-            val purchaseImmediatelyView = contentView.findViewById<View>(R.id.purchase_immediately_view)
+            val purchaseImmediatelyView =
+                contentView.findViewById<View>(R.id.purchase_immediately_view)
             if (purchaseImmediatelyView != null) {
                 if (item.key == "fortify" || item.key == "potion" || item.key == "rebirth_orb") {
                     purchaseImmediatelyView.visibility = View.VISIBLE
@@ -234,17 +236,36 @@ class PurchaseDialog(
     private fun updatePurchaseTotal() {
         priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
 
-        if ((shopItem.currency != "gold" || shopItem.canAfford(user, purchaseQuantity)) && !shopItem.locked && purchaseQuantity >= 1) {
-            buyButton.background = ContextCompat.getDrawable(context, R.drawable.button_background_primary)
+        if ((
+                shopItem.currency != "gold" ||
+                    shopItem.canAfford(
+                        user,
+                        purchaseQuantity,
+                    )
+            ) &&
+            !shopItem.locked &&
+            purchaseQuantity >= 1
+        ) {
+            buyButton.background =
+                ContextCompat.getDrawable(context, R.drawable.button_background_primary)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.white))
         } else {
-            buyButton.background = ContextCompat.getDrawable(context, R.drawable.button_background_offset)
+            buyButton.background =
+                ContextCompat.getDrawable(context, R.drawable.button_background_offset)
             priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             buyLabel.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         }
 
-        if (purchaseQuantity < 1 || (shopItem.limitedNumberLeft != null && (shopItem.limitedNumberLeft ?: 0) < purchaseQuantity)) {
+        if (purchaseQuantity < 1 ||
+            (
+                shopItem.limitedNumberLeft != null &&
+                    (
+                        shopItem.limitedNumberLeft
+                            ?: 0
+                    ) < purchaseQuantity
+            )
+        ) {
             amountErrorLabel?.visibility = View.VISIBLE
         } else {
             amountErrorLabel?.visibility = View.GONE
@@ -265,13 +286,15 @@ class PurchaseDialog(
         if (user == null) return
 
         val userLvl = user?.stats?.lvl ?: 0
-        if (shopItem.habitClass != null && shopItem.specialClass != null &&
+        if (shopItem.habitClass != null &&
+            shopItem.specialClass != null &&
             (shopItem.habitClass != "special" || shopItem.pinType == "marketGear") &&
             shopItem.habitClass != "armoire" &&
             user?.stats?.habitClass != shopItem.specialClass
         ) {
             val classDisclaimerView = contentView.findViewById<TextView>(R.id.class_disclaimer_view)
-            val className = getTranslatedClassNamePlural(context.resources, shopItem.specialClass ?: "")
+            val className =
+                getTranslatedClassNamePlural(context.resources, shopItem.specialClass ?: "")
             classDisclaimerView.text =
                 if (userLvl >= 10) {
                     context.getString(R.string.class_equipment_shop_dialog_new, className)
@@ -288,31 +311,44 @@ class PurchaseDialog(
                 MainScope().launch(Dispatchers.Main) {
                     limitedTextView.visibility = View.VISIBLE
                     while (endDate?.after(Date()) == true) {
-                        limitedTextView.text = context.getString(R.string.available_for, endDate.getShortRemainingString())
+                        limitedTextView.text =
+                            context.getString(
+                                R.string.available_for,
+                                endDate.getShortRemainingString(),
+                            )
                         val diff = endDate.time - Date().time
                         delay(1.toDuration(if (diff < (60 * 60 * 1000)) DurationUnit.SECONDS else DurationUnit.MINUTES))
                     }
                     if (endDate?.before(Date()) == true) {
                         limitedTextView.text = context.getString(R.string.no_longer_available)
-                        limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
-                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                        limitedTextView.background =
+                            ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                        limitedTextView.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.text_secondary,
+                            ),
+                        )
                     }
                 }
         } else if (shopItem.locked) {
             buyLabel.text = context.getString(R.string.locked)
             priceLabel.visibility = View.GONE
             limitedTextView.visibility = View.GONE
-            if (shopItem.isTypeGear && shopItem.key
+            if (shopItem.isTypeGear &&
+                shopItem.key
                     .last()
                     .toString()
                     .toIntOrNull() != null
             ) {
-                val previousKey = "${shopItem.key.dropLast(1)}${(
-                    shopItem.key
-                        .last()
-                        .toString()
-                        .toIntOrNull() ?: 1
-                ) - 1}"
+                val previousKey = "${shopItem.key.dropLast(1)}${
+                    (
+                        shopItem.key
+                            .last()
+                            .toString()
+                            .toIntOrNull() ?: 1
+                    ) - 1
+                }"
                 if (user
                         ?.items
                         ?.gear
@@ -322,8 +358,14 @@ class PurchaseDialog(
                 ) {
                     limitedTextView.visibility = View.VISIBLE
                     limitedTextView.text = context.getString(R.string.locked_equipment_shop_dialog)
-                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
-                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                    limitedTextView.background =
+                        ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                    limitedTextView.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.text_secondary,
+                        ),
+                    )
                 }
             }
         } else if (shopItem.purchaseType == "rebirth_orb" && shopItem.value > 0) {
@@ -343,8 +385,14 @@ class PurchaseDialog(
                                 daysUntilFree,
                                 daysUntilFree,
                             )
-                        limitedTextView.background = ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
-                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
+                        limitedTextView.background =
+                            ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
+                        limitedTextView.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                R.color.yellow_1,
+                            ),
+                        )
                     } else {
                         limitedTextView.visibility = View.GONE
                     }
@@ -358,7 +406,8 @@ class PurchaseDialog(
                 ) {
                     limitedTextView.visibility = View.VISIBLE
                     limitedTextView.text = context.getString(R.string.free_rebirth_at_level_100)
-                    limitedTextView.background = ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
+                    limitedTextView.background =
+                        ContextCompat.getColor(context, R.color.yellow_100).toDrawable()
                     limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
                 } else {
                     limitedTextView.visibility = View.GONE
@@ -377,12 +426,16 @@ class PurchaseDialog(
         set(value) {
             field = value
             if (isPinned) {
-                pinIcon.setImageDrawable(HabiticaIconsHelper.imageOfUnpinItem().toDrawable(context.resources))
+                pinIcon.setImageDrawable(
+                    HabiticaIconsHelper.imageOfUnpinItem().toDrawable(context.resources),
+                )
                 pinIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.text_red)
                 pinTextView.setTextColor(ContextCompat.getColor(context, R.color.text_red))
                 pinTextView.text = context.getText(R.string.unpin)
             } else {
-                pinIcon.setImageDrawable(HabiticaIconsHelper.imageOfPinItem().toDrawable(context.resources))
+                pinIcon.setImageDrawable(
+                    HabiticaIconsHelper.imageOfPinItem().toDrawable(context.resources),
+                )
                 pinIcon.imageTintList = ContextCompat.getColorStateList(context, R.color.text_brand)
                 pinTextView.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
                 pinTextView.text = context.getText(R.string.pin)
@@ -401,7 +454,10 @@ class PurchaseDialog(
 
         addCloseButton()
         buyButton =
-            addButton(DialogPurchaseShopitemButtonBinding.inflate(layoutInflater).root, autoDismiss = false) { _, _ ->
+            addButton(
+                DialogPurchaseShopitemButtonBinding.inflate(layoutInflater).root,
+                autoDismiss = false,
+            ) { _, _ ->
                 onBuyButtonClicked()
             }
         priceLabel = buyButton.findViewById(R.id.priceLabel)
@@ -443,12 +499,23 @@ class PurchaseDialog(
             }
             limitedTextView.visibility = View.VISIBLE
             if (gemsLeft == 0) {
-                limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.orange_10))
+                limitedTextView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.orange_10,
+                    ),
+                )
             } else {
-                limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.green_10))
+                limitedTextView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.green_10,
+                    ),
+                )
             }
             val gemContent = additionalContentView as? PurchaseDialogGemsContent
-            gemContent?.binding?.stepperView?.maxValue = (user.purchased?.plan?.numberOfGemsLeft ?: 1).toDouble()
+            gemContent?.binding?.stepperView?.maxValue =
+                (user.purchased?.plan?.numberOfGemsLeft ?: 1).toDouble()
         }
 
         buyButton.elevation = 0f
@@ -484,7 +551,12 @@ class PurchaseDialog(
             return
         }
         if (shopItem.isValid && !shopItem.locked) {
-            if ((gemsLeft > 0 && shopItem.purchaseType == "gems") || shopItem.canAfford(user, purchaseQuantity)) {
+            if ((gemsLeft > 0 && shopItem.purchaseType == "gems") ||
+                shopItem.canAfford(
+                    user,
+                    purchaseQuantity,
+                )
+            ) {
                 MainScope().launch(Dispatchers.Main) {
                     remainingPurchaseQuantity { quantity ->
                         if (quantity >= 0) {
@@ -522,7 +594,12 @@ class PurchaseDialog(
                             HitType.EVENT,
                             mapOf("reason" to "purchase modal", "item" to shopItem.key),
                         )
-                        parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
+                        parentActivity?.let { activity ->
+                            InsufficientGemsDialog(
+                                activity,
+                                shopItem.value,
+                            ).show()
+                        }
                     }
 
                     "hourglasses" == shopItem.currency -> {
@@ -531,10 +608,14 @@ class PurchaseDialog(
                         } else {
                             val subscriptionBottomSheet =
                                 EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                    eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                                    eventType =
+                                        EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
                                 }
                             parentActivity?.let { activity ->
-                                subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                                subscriptionBottomSheet.show(
+                                    activity.supportFragmentManager,
+                                    SubscriptionBottomSheetFragment.TAG,
+                                )
                             }
                         }
                     }
@@ -549,14 +630,20 @@ class PurchaseDialog(
         HapticFeedbackManager.tap(buyButton)
         val snackbarText = arrayOf("")
         val observable: (suspend () -> Any?)
-        if (shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType ||
+        if (shopIdentifier == Shop.TIME_TRAVELERS_SHOP ||
+            "mystery_set" == shopItem.purchaseType ||
             shopItem.currency == "hourglasses"
         ) {
             observable =
                 if (shopItem.purchaseType == "gear") {
                     { inventoryRepository.purchaseMysterySet(shopItem.key) }
                 } else {
-                    { inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key) }
+                    {
+                        inventoryRepository.purchaseHourglassItem(
+                            shopItem.purchaseType,
+                            shopItem.key,
+                        )
+                    }
                 }
         } else if (shopItem.purchaseType == "fortify") {
             observable = { userRepository.reroll() }
@@ -567,9 +654,19 @@ class PurchaseDialog(
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds") {
-            observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
+            observable = {
+                userRepository.unlockPath(
+                    item.unlockPath ?: "${item.pinType}.${item.key}",
+                    item.value,
+                )
+            }
         } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "customizationSet") {
-            observable = { userRepository.unlockPath(item.path ?: item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
+            observable = {
+                userRepository.unlockPath(
+                    item.path ?: item.unlockPath ?: "${item.pinType}.${item.key}",
+                    item.value,
+                )
+            }
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "card") {
@@ -578,7 +675,13 @@ class PurchaseDialog(
             return
         } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
             observable = {
-                val buyResponse = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity)
+                val buyResponse =
+                    inventoryRepository.buyItem(
+                        user,
+                        shopItem.key,
+                        shopItem.value.toDouble(),
+                        quantity,
+                    )
                 if (shopItem.key == "armoire" && buyResponse != null) {
                     MainNavigationController.navigate(
                         R.id.armoireActivity,
@@ -593,7 +696,8 @@ class PurchaseDialog(
                 }
             }
         } else {
-            observable = { inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity) }
+            observable =
+                { inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity) }
         }
         lifecycleScope.launchCatching {
             val result = observable()
@@ -645,11 +749,26 @@ class PurchaseDialog(
     private fun displaySomeRemainingConfirmationDialog(quantity: Int) {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.excess_items)
-        alert.setMessage(context.getString(R.string.excessItemsXLeft, quantity, item.text, purchaseQuantity))
-        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity), isPrimary = true, isDestructive = false) { _, _ ->
+        alert.setMessage(
+            context.getString(
+                R.string.excessItemsXLeft,
+                quantity,
+                item.text,
+                purchaseQuantity,
+            ),
+        )
+        alert.addButton(
+            context.getString(R.string.purchaseX, purchaseQuantity),
+            isPrimary = true,
+            isDestructive = false,
+        ) { _, _ ->
             buyItem(purchaseQuantity)
         }
-        alert.addButton(context.getString(R.string.purchaseX, quantity), isPrimary = false, isDestructive = false) { _, _ ->
+        alert.addButton(
+            context.getString(R.string.purchaseX, quantity),
+            isPrimary = false,
+            isDestructive = false,
+        ) { _, _ ->
             buyItem(quantity)
         }
         alert.setExtraCloseButtonVisibility(View.VISIBLE)
@@ -659,7 +778,14 @@ class PurchaseDialog(
     private fun displayNoRemainingConfirmationDialog() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.excess_items)
-        alert.setMessage(context.getString(R.string.excessItemsNoneLeft, item.text, purchaseQuantity, item.text))
+        alert.setMessage(
+            context.getString(
+                R.string.excessItemsNoneLeft,
+                item.text,
+                purchaseQuantity,
+                item.text,
+            ),
+        )
         alert.addButton(
             context.getString(R.string.purchaseX, purchaseQuantity),
             isPrimary = true,
@@ -674,7 +800,8 @@ class PurchaseDialog(
     private fun displayRebirthConfirmationDialog() {
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.rebirth_confirm_title)
-        val rebirthContent = context.layoutInflater.inflate(R.layout.dialog_rebirth_confirmation, null)
+        val rebirthContent =
+            context.layoutInflater.inflate(R.layout.dialog_rebirth_confirmation, null)
 
         val priceView = rebirthContent.findViewById<CurrencyView>(R.id.price_view)
         priceView.currency = "gems"
@@ -720,7 +847,9 @@ class PurchaseDialog(
         var shouldWarn = true
         var ownedItems: List<OwnedItem>? = null
         if (item.purchaseType == "eggs") {
-            shouldWarn = inventoryRepository.getPets(item.key, "quest", null).firstOrNull()?.isNotEmpty() ?: false
+            shouldWarn =
+                inventoryRepository.getPets(item.key, "quest", null).firstOrNull()?.isNotEmpty()
+                    ?: false
             ownedItems = inventoryRepository.getOwnedItems("eggs").firstOrNull()
         } else if (item.purchaseType == "hatchingPotions") {
             totalCount =

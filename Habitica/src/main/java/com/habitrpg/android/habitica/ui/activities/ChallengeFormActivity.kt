@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem

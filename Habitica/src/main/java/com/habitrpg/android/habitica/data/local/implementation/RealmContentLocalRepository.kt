@@ -35,9 +35,10 @@ open class RealmContentLocalRepository(
         }
     }
 
-    override fun getWorldState(): Flow<WorldState> = safeFindOne {
-        it.where(WorldState::class.java)
-    }
+    override fun getWorldState(): Flow<WorldState> =
+        safeFindOne {
+            it.where(WorldState::class.java)
+        }
 
     override fun saveWorldState(worldState: WorldState) {
         save(worldState)

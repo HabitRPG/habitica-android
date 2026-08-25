@@ -186,10 +186,13 @@ open class Task :
 
     val streakString: String?
         get() {
-            return if (counterUp != null && (
+            return if (counterUp != null &&
+                (
                     counterUp
                         ?: 0
-                ) > 0 && counterDown != null && (counterDown ?: 0) > 0
+                ) > 0 &&
+                counterDown != null &&
+                (counterDown ?: 0) > 0
             ) {
                 "+$counterUp | -$counterDown"
             } else if (counterUp != null && (counterUp ?: 0) > 0) {

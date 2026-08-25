@@ -63,10 +63,10 @@ open class NotificationsViewModel
 
         private val customNotifications = MutableStateFlow<List<Notification>>(emptyList())
 
-    override fun onCleared() {
-        socialRepository.close()
-        super.onCleared()
-    }
+        override fun onCleared() {
+            socialRepository.close()
+            super.onCleared()
+        }
 
         init {
             userViewModel.user.observeForever {

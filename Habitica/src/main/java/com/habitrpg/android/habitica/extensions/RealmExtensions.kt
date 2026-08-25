@@ -8,12 +8,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.mapNotNull
 
-fun <T: RealmModel> RealmQuery<T>.findAllAsFlow(): Flow<List<T>> = this.findAll()
-    .toFlow()
-    .filter { it.isLoaded }
+fun <T : RealmModel> RealmQuery<T>.findAllAsFlow(): Flow<List<T>> =
+    this
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
 
-fun <T: RealmModel> RealmQuery<T>.findOneAsFlow(): Flow<T> = this.findAll()
-    .toFlow()
-    .filter { it.isLoaded && it.isNotEmpty() }
-    .mapNotNull { it.first() }
-    .filter { it.isValid() }
+fun <T : RealmModel> RealmQuery<T>.findOneAsFlow(): Flow<T> =
+    this
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded && it.isNotEmpty() }
+        .mapNotNull { it.first() }
+        .filter { it.isValid() }

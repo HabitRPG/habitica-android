@@ -80,13 +80,22 @@ class UserRepositoryImplTest :
 
             "fill in full equipment details for owned-gear entries that only arrived as a boolean flag" {
                 val oldUser = User().apply { id = "user-1" }
-                val thinOwnedItem = Equipment().apply { key = "sword_1"; owned = true }
+                val thinOwnedItem =
+                    Equipment().apply {
+                        key = "sword_1"
+                        owned = true
+                    }
                 val networkUser =
                     User().apply {
                         id = "user-1"
                         items = Items().apply { gear = Gear().apply { owned = io.realm.RealmList(thinOwnedItem) } }
                     }
-                val knownItem = Equipment().apply { key = "sword_1"; text = "Sword"; value = 5.0 }
+                val knownItem =
+                    Equipment().apply {
+                        key = "sword_1"
+                        text = "Sword"
+                        value = 5.0
+                    }
                 coEvery { apiClient.updateUser(mapOf("preferences.language" to "de")) } returns networkUser
                 every { localRepository.getUser("user-1") } returns flowOf(oldUser)
                 every { localRepository.saveUser(any(), false) } returns Unit
@@ -124,7 +133,14 @@ class UserRepositoryImplTest :
                 val networkUser =
                     User().apply {
                         id = "user-1"
-                        party = UserParty().apply { quest = Quest().apply { rsvpNeeded = false; rsvpNeededWasSpecified = true } }
+                        party =
+                            UserParty().apply {
+                                quest =
+                                    Quest().apply {
+                                        rsvpNeeded = false
+                                        rsvpNeededWasSpecified = true
+                                    }
+                            }
                     }
                 coEvery { apiClient.updateUser(mapOf("preferences.language" to "de")) } returns networkUser
                 every { localRepository.getUser("user-1") } returns flowOf(oldUser)
@@ -141,7 +157,11 @@ class UserRepositoryImplTest :
             }
 
             "clear every step's flag via updateUser" {
-                val step = TutorialStep().apply { tutorialGroup = "tasks"; identifier = "intro" }
+                val step =
+                    TutorialStep().apply {
+                        tutorialGroup = "tasks"
+                        identifier = "intro"
+                    }
                 coEvery { localRepository.getTutorialSteps() } returns flowOf(listOf(step))
                 coEvery { apiClient.updateUser(mapOf(step.flagPath to false)) } returns null
                 repository.resetTutorial()
@@ -174,7 +194,11 @@ class UserRepositoryImplTest :
             }
 
             "apply the unlock response to the live user and deduct the balance" {
-                val user = User().apply { id = "user-1"; balance = 4.0 }
+                val user =
+                    User().apply {
+                        id = "user-1"
+                        balance = 4.0
+                    }
                 val response = UnlockResponse().apply { items = Items() }
                 coEvery { apiClient.unlockPath("hair.color.red") } returns response
                 every { localRepository.getUser("user-1") } returns flowOf(user)
@@ -256,11 +280,22 @@ class UserRepositoryImplTest :
             }
 
             "increment the chosen stat locally and persist the API result" {
-                val user = User().apply { stats = Stats().apply { strength = 1; points = 2 } }
+                val user =
+                    User().apply {
+                        stats =
+                            Stats().apply {
+                                strength = 1
+                                points = 2
+                            }
+                    }
                 every { localRepository.getUser("user-1") } returns flowOf(user)
                 every { localRepository.getLiveObject(user) } returns user
                 every { localRepository.updateStats("user-1", any()) } returns Unit
-                val apiStats = Stats().apply { strength = 2; points = 1 }
+                val apiStats =
+                    Stats().apply {
+                        strength = 2
+                        points = 1
+                    }
                 coEvery { apiClient.allocatePoint(Attribute.STRENGTH.value) } returns apiStats
                 val result = repository.allocatePoint(Attribute.STRENGTH)
                 result shouldBe apiStats

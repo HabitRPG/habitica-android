@@ -5,6 +5,7 @@ import com.habitrpg.common.habitica.helpers.Clearable
 
 interface BaseRepository : Clearable {
     fun refreshLocalData()
+
     val isClosed: Boolean
 
     fun close()

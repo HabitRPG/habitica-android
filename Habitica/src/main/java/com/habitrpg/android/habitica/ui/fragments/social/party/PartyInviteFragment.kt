@@ -91,10 +91,10 @@ class PartyInviteViewModel
     ) : BaseViewModel(userRepository, userViewModel) {
         val invites = mutableStateListOf("")
 
-    override fun onCleared() {
-        socialRepository.close()
-        super.onCleared()
-    }
+        override fun onCleared() {
+            socialRepository.close()
+            super.onCleared()
+        }
 
         suspend fun sendInvites(): List<InviteResponse>? {
             val inviteMap =
@@ -259,7 +259,8 @@ fun PartyInviteView(
                         Modifier
                             .onFocusChanged {
                                 if (!it.isFocused) {
-                                    if (viewModel.invites.size > index && viewModel.invites[index].isBlank() &&
+                                    if (viewModel.invites.size > index &&
+                                        viewModel.invites[index].isBlank() &&
                                         viewModel.invites.size - 1 != index &&
                                         viewModel.invites.size > 1
                                     ) {

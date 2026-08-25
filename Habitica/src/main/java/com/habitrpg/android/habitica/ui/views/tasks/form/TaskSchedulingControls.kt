@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.icu.text.MessageFormat
-import android.os.Build
 import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
@@ -255,11 +254,11 @@ class TaskSchedulingControls
             binding.startDateTitle.text =
                 context.getString(if (taskType == TaskType.DAILY) R.string.start_date else R.string.due_date)
             binding.repeatsEveryWrapper.visibility =
-                if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+                if (taskType == TaskType.DAILY) VISIBLE else GONE
             binding.summaryTextview.visibility =
-                if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+                if (taskType == TaskType.DAILY) VISIBLE else GONE
             binding.weeklyRepeatWrapper.visibility =
-                if (taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+                if (taskType == TaskType.DAILY) VISIBLE else GONE
         }
 
         override fun onDateSet(
@@ -287,9 +286,9 @@ class TaskSchedulingControls
                     },
                 )
             binding.weeklyRepeatWrapper.visibility =
-                if (frequency == Frequency.WEEKLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+                if (frequency == Frequency.WEEKLY && taskType == TaskType.DAILY) VISIBLE else GONE
             binding.monthlyRepeatWrapper.visibility =
-                if (frequency == Frequency.MONTHLY && taskType == TaskType.DAILY) View.VISIBLE else View.GONE
+                if (frequency == Frequency.MONTHLY && taskType == TaskType.DAILY) VISIBLE else GONE
             if (frequency == Frequency.WEEKLY) {
                 createWeeklyRepeatViews()
             } else if (frequency == Frequency.MONTHLY) {

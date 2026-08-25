@@ -12,7 +12,9 @@ data class CustomizationFilter(
 
     override fun equals(other: Any?): Boolean {
         if (other is CustomizationFilter) {
-            return onlyPurchased == other.onlyPurchased && ascending == other.ascending && months.size == other.months.size &&
+            return onlyPurchased == other.onlyPurchased &&
+                ascending == other.ascending &&
+                months.size == other.months.size &&
                 months.containsAll(
                     other.months,
                 )

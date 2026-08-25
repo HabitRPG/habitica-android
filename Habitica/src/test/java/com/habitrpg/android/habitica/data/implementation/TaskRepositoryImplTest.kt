@@ -92,7 +92,11 @@ class TaskRepositoryImplTest :
                         tags?.add(Tag().apply { id = "tag-unknown" })
                     }
                 val list = TaskList().apply { tasks = mutableMapOf("task-1" to task) }
-                val knownTag = Tag().apply { id = "tag-1"; name = "Work" }
+                val knownTag =
+                    Tag().apply {
+                        id = "tag-1"
+                        name = "Work"
+                    }
                 coEvery { apiClient.getTasks() } returns list
                 coEvery { tagRepository.getTags("") } returns flowOf(listOf(knownTag))
                 every { localRepository.saveTasks("", any(), any()) } returns Unit
@@ -105,7 +109,12 @@ class TaskRepositoryImplTest :
                 val task =
                     Task().apply {
                         id = "task-1"
-                        tags?.add(Tag().apply { id = "tag-1"; name = "Work" })
+                        tags?.add(
+                            Tag().apply {
+                                id = "tag-1"
+                                name = "Work"
+                            },
+                        )
                     }
                 val list = TaskList().apply { tasks = mutableMapOf("task-1" to task) }
                 coEvery { apiClient.getTasks() } returns list

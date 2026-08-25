@@ -110,7 +110,8 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             if (user == null) return@observe
             canAllocatePoints =
-                (user.stats?.lvl ?: 0) >= 10 && (user.stats?.points ?: 0) > 0
+                (user.stats?.lvl ?: 0) >= 10 &&
+                (user.stats?.points ?: 0) > 0
             binding?.unlockAtLevel?.visibility =
                 if ((user.stats?.lvl ?: 0) < 10) View.VISIBLE else View.GONE
             updateStats(user)

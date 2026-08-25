@@ -9,11 +9,13 @@ class RealmTutorialLocalRepository(
     realm: Realm,
 ) : RealmBaseLocalRepository(realm),
     TutorialLocalRepository {
-    override fun getTutorialStep(key: String): Flow<TutorialStep> = safeFindOne {
-        it.where(TutorialStep::class.java).equalTo("identifier", key)
-    }
+    override fun getTutorialStep(key: String): Flow<TutorialStep> =
+        safeFindOne {
+            it.where(TutorialStep::class.java).equalTo("identifier", key)
+        }
 
-    override fun getTutorialSteps(keys: List<String>): Flow<List<TutorialStep>> = safeFindAll {
-        it.where(TutorialStep::class.java).`in`("identifier", keys.toTypedArray())
-    }
+    override fun getTutorialSteps(keys: List<String>): Flow<List<TutorialStep>> =
+        safeFindAll {
+            it.where(TutorialStep::class.java).`in`("identifier", keys.toTypedArray())
+        }
 }

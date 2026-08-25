@@ -95,7 +95,6 @@ open class AvatarOverviewFragment :
         container: ViewGroup?,
     ): FragmentComposeBinding = FragmentComposeBinding.inflate(inflater, container, false)
 
-
     override fun onDestroy() {
         inventoryRepository.close()
         super.onDestroy()

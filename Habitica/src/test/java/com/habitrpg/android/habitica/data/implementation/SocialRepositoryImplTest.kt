@@ -53,12 +53,24 @@ class SocialRepositoryImplTest :
             }
 
             "reconcile declared quest participants against the full local party roster" {
-                val declaredKnown = Member().apply { id = "member-1"; participatesInQuest = true }
-                val declaredNew = Member().apply { id = "member-3"; participatesInQuest = false }
+                val declaredKnown =
+                    Member().apply {
+                        id = "member-1"
+                        participatesInQuest = true
+                    }
+                val declaredNew =
+                    Member().apply {
+                        id = "member-3"
+                        participatesInQuest = false
+                    }
                 val group =
                     Group().apply {
                         id = "group-1"
-                        quest = Quest().apply { participants?.add(declaredKnown); participants?.add(declaredNew) }
+                        quest =
+                            Quest().apply {
+                                participants?.add(declaredKnown)
+                                participants?.add(declaredNew)
+                            }
                     }
                 val localMember1 = Member().apply { id = "member-1" }
                 val localMember2 = Member().apply { id = "member-2" }
@@ -119,7 +131,11 @@ class SocialRepositoryImplTest :
         }
         "deleteMessage" should {
             "delete via the inbox endpoint for inbox messages" {
-                val message = ChatMessage().apply { id = "msg-1"; isInboxMessage = true }
+                val message =
+                    ChatMessage().apply {
+                        id = "msg-1"
+                        isInboxMessage = true
+                    }
                 coEvery { apiClient.deleteInboxMessage("msg-1") } returns null
                 every { localRepository.deleteMessage("msg-1") } returns Unit
                 repository.deleteMessage(message)
@@ -129,7 +145,12 @@ class SocialRepositoryImplTest :
             }
 
             "delete via the group endpoint for group messages" {
-                val message = ChatMessage().apply { id = "msg-1"; groupId = "group-1"; isInboxMessage = false }
+                val message =
+                    ChatMessage().apply {
+                        id = "msg-1"
+                        groupId = "group-1"
+                        isInboxMessage = false
+                    }
                 coEvery { apiClient.deleteMessage("group-1", "msg-1") } returns null
                 every { localRepository.deleteMessage("msg-1") } returns Unit
                 repository.deleteMessage(message)
@@ -144,7 +165,11 @@ class SocialRepositoryImplTest :
             }
 
             "like the message and save the response" {
-                val message = ChatMessage().apply { id = "msg-1"; groupId = "group-1" }
+                val message =
+                    ChatMessage().apply {
+                        id = "msg-1"
+                        groupId = "group-1"
+                    }
                 val liked = ChatMessage().apply { id = "msg-1" }
                 coEvery { apiClient.likeMessage("group-1", "msg-1") } returns liked
                 every { localRepository.save(liked) } returns Unit

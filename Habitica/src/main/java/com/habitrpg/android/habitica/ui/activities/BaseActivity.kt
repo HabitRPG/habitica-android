@@ -137,7 +137,10 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onPostCreate(
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?,
+    ) {
         super.onPostCreate(savedInstanceState, persistentState)
         if (toolbarBackgroundColor == null) {
             toolbarBackgroundColor = getThemeColor(R.attr.headerBackgroundColor)

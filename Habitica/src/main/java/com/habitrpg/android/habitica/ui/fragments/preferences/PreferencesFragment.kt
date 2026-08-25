@@ -41,7 +41,6 @@ import com.habitrpg.android.habitica.ui.views.preferences.PauseResumeDamageView
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint

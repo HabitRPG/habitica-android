@@ -17,14 +17,12 @@ import com.habitrpg.android.habitica.helpers.getBaseOfferDetails
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-interface CommonSubscriptionFragment: LifecycleOwner {
+interface CommonSubscriptionFragment : LifecycleOwner {
     var userRepository: UserRepository
     var purchaseHandler: PurchaseHandler
     var selectedSubscriptionSku: ProductDetails?
@@ -159,7 +157,6 @@ interface CommonSubscriptionFragment: LifecycleOwner {
             else -> null
         }
 
-
     fun selectSubscription(sku: ProductDetails) {
         selectedSubscriptionSku?.let {
             val oldButton = buttonForSku(it)
@@ -244,11 +241,15 @@ interface CommonSubscriptionFragment: LifecycleOwner {
             val newestSubscription = purchaseHandler.checkForSubscription(false)
             val plan = user?.purchased?.plan
             val sub = HabiticaProduct.forSku(newestSubscription?.products?.firstOrNull() ?: "")
-            if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null &&
+            if (plan?.paymentMethod == "Google" &&
+                plan.isActive &&
+                plan.dateTerminated == null &&
                 newestSubscription?.isAutoRenewing != true
             ) {
                 purchaseHandler.cancelSubscription()
-            } else if (plan?.paymentMethod == "Google" && plan.isActive && plan.dateTerminated == null &&
+            } else if (plan?.paymentMethod == "Google" &&
+                plan.isActive &&
+                plan.dateTerminated == null &&
                 plan.planId != sub?.getSubCode()
             ) {
                 purchaseHandler.updateSubscriptionPlan(newestSubscription)
