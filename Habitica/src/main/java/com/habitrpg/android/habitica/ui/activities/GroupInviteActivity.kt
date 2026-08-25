@@ -24,8 +24,6 @@ class GroupInviteActivity : BaseActivity() {
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
-
     override fun getLayoutResId(): Int = R.layout.activity_party_invite
 
     override fun getContentView(layoutResId: Int?): View {
@@ -67,7 +65,6 @@ class GroupInviteActivity : BaseActivity() {
 
     private fun createResultIntent(): Intent {
         val intent = Intent()
-        if (fragments.size == 0) return intent
         return intent
     }
 
@@ -78,7 +75,6 @@ class GroupInviteActivity : BaseActivity() {
             object : FragmentStateAdapter(fragmentManager, lifecycle) {
                 override fun createFragment(position: Int): Fragment {
                     val fragment = PartyInviteFragment()
-                    fragments.add(fragment)
                     return fragment
                 }
 
@@ -97,9 +93,7 @@ class GroupInviteActivity : BaseActivity() {
     }
 
     companion object {
-        const val RESULT_SEND_INVITES = 100
         const val USER_IDS_KEY = "userIDs"
-        const val IS_EMAIL_KEY = "isEmail"
         const val EMAILS_KEY = "emails"
     }
 }

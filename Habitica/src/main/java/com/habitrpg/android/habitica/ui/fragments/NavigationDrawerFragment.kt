@@ -20,9 +20,8 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Lifecycle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -90,6 +89,8 @@ class NavigationDrawerFragment : DialogFragment() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
+    val notificationsViewModel: NotificationsViewModel by viewModels()
 
     private var activePromo: HabiticaPromotion? = null
 
@@ -252,6 +253,24 @@ class NavigationDrawerFragment : DialogFragment() {
         userViewModel.user.observe(viewLifecycleOwner) {
             if (it != null) {
                 updateUser(it)
+            }
+        }
+
+
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            notificationsViewModel.getNotificationCount().collect {
+                setNotificationsCount(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            notificationsViewModel.allNotificationsSeen().collect {
+                setNotificationsSeen(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            notificationsViewModel.getHasPartyNotification().collect {
+                val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
+                partyMenuItem?.showBubble = it
             }
         }
 
@@ -687,25 +706,6 @@ class NavigationDrawerFragment : DialogFragment() {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
         // set UP the drawer's list view with items and click listener
-
-        viewLifecycleOwner.lifecycleScope.launchCatching {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getNotificationCount().collect {
-                    setNotificationsCount(it)
-                }
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launchCatching {
-            viewModel.allNotificationsSeen().collect {
-                setNotificationsSeen(it)
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launchCatching {
-            viewModel.getHasPartyNotification().collect {
-                val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
-                partyMenuItem?.showBubble = it
-            }
-        }
     }
 
     fun openDrawer() {
