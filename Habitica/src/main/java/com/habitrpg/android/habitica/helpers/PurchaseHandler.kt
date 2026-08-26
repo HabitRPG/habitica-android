@@ -103,8 +103,9 @@ class PurchaseHandler(
                             if (plan?.isActive == true &&
                                 HabiticaProduct.allSubscriptionTypes.contains(product)
                             ) {
-                                if (((plan.dateTerminated == null) == purchase.isAutoRenewing) ||
-                                    purchase.purchaseToken == plan.customerId
+                                val samePlan = product.getSubCode() == plan.planId
+                                if (purchase.purchaseToken == plan.customerId ||
+                                    ((plan.dateTerminated == null) == purchase.isAutoRenewing && samePlan)
                                 ) {
                                     continue
                                 }
@@ -139,6 +140,7 @@ class PurchaseHandler(
     init {
         preferences = PreferenceManager.getDefaultSharedPreferences(context)
         loadPendingGifts()
+        loadDeferredSubscriptionSkus()
         startListening()
     }
 
@@ -674,10 +676,25 @@ class PurchaseHandler(
 
     companion object {
         private const val PENDING_GIFTS_KEY = "PENDING_GIFTS_DATED"
+        private const val DEFERRED_SUBSCRIPTION_SKU_KEY = "DEFERRED_SUBSCRIPTION_SKU"
+        private const val UPGRADED_SUBSCRIPTION_SKU_KEY = "UPGRADED_SUBSCRIPTION_SKU"
         private var pendingGifts: MutableMap<String, Triple<Date, String, String>> = ConcurrentHashMap()
         private var preferences: SharedPreferences? = null
         private var deferredSubscriptionSku: String? = null
+            set(value) {
+                field = value
+                preferences?.edit { putString(DEFERRED_SUBSCRIPTION_SKU_KEY, value) }
+            }
         private var upgradedSubscriptionSku: String? = null
+            set(value) {
+                field = value
+                preferences?.edit { putString(UPGRADED_SUBSCRIPTION_SKU_KEY, value) }
+            }
+
+        private fun loadDeferredSubscriptionSkus() {
+            deferredSubscriptionSku = preferences?.getString(DEFERRED_SUBSCRIPTION_SKU_KEY, null)
+            upgradedSubscriptionSku = preferences?.getString(UPGRADED_SUBSCRIPTION_SKU_KEY, null)
+        }
 
         fun addGift(
             sku: String,
