@@ -30,8 +30,7 @@ open class User :
     Avatar,
     VersionedObject {
     fun hasPermission(permission: Permission): Boolean {
-        if (permissions?.fullAccess == true) return true
-        return when (permission) {
+        return permissions?.fullAccess == true || when (permission) {
             Permission.MODERATOR -> permissions?.moderator
             Permission.USER_SUPPORT -> permissions?.userSupport
         } == true
@@ -140,10 +139,7 @@ open class User :
         }
 
     val hasCompletedOnboarding: Boolean
-        get() {
-            val onboarding = onboardingAchievements
-            return onboarding.count { it.earned } == onboarding.size
-        }
+        get() = onboardingAchievements.all { it.earned }
 
     companion object {
         val ONBOARDING_ACHIEVEMENT_KEYS =

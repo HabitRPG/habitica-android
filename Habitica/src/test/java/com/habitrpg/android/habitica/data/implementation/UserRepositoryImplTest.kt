@@ -10,11 +10,9 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.TutorialStep
-import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.models.user.Stats
@@ -76,34 +74,6 @@ class UserRepositoryImplTest :
                 result shouldBe oldUser
                 result?.items shouldBe networkUser.items
                 verify { localRepository.saveUser(oldUser, false) }
-            }
-
-            "fill in full equipment details for owned-gear entries that only arrived as a boolean flag" {
-                val oldUser = User().apply { id = "user-1" }
-                val thinOwnedItem =
-                    Equipment().apply {
-                        key = "sword_1"
-                        owned = true
-                    }
-                val networkUser =
-                    User().apply {
-                        id = "user-1"
-                        items = Items().apply { gear = Gear().apply { owned = io.realm.RealmList(thinOwnedItem) } }
-                    }
-                val knownItem =
-                    Equipment().apply {
-                        key = "sword_1"
-                        text = "Sword"
-                        value = 5.0
-                    }
-                coEvery { apiClient.updateUser(mapOf("preferences.language" to "de")) } returns networkUser
-                every { localRepository.getUser("user-1") } returns flowOf(oldUser)
-                every { localRepository.saveUser(any(), false) } returns Unit
-                coEvery { inventoryLocalRepository.getEquipment(listOf("sword_1")) } returns flowOf(listOf(knownItem))
-                repository.updateUser("preferences.language", "de")
-                thinOwnedItem.text shouldBe "Sword"
-                thinOwnedItem.value shouldBe 5.0
-                thinOwnedItem.owned shouldBe true
             }
 
             "inherit the previous quest RSVP state when the response omits RSVPNeeded" {

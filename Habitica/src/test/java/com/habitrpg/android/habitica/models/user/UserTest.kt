@@ -73,6 +73,25 @@ class UserTest :
             }
         }
 
+        "hasCompletedOnboarding" should {
+            beforeEach {
+                user.achievements.add(UserAchievement("test", true))
+                user.achievements.add(UserAchievement("test2", false))
+                for (key in User.ONBOARDING_ACHIEVEMENT_KEYS) {
+                    user.achievements.add(UserAchievement(key, false))
+                }
+            }
+            "return true if all onboarding achievements are completed" {
+                user.achievements.forEach { it.earned = true }
+                user.hasCompletedOnboarding shouldBe true
+            }
+
+            "return false if not all onboarding achievements are completed" {
+                user.achievements[2]?.earned = true
+                user.hasCompletedOnboarding shouldBe false
+            }
+        }
+
         "hasParty" should {
             "true if user has valid party" {
                 user.party?.id = UUID.randomUUID().toString()
@@ -143,6 +162,20 @@ class UserTest :
             "return false if does not have matching access" {
                 user.permissions?.moderator = false
                 user.hasPermission(Permission.MODERATOR) shouldBe false
+            }
+        }
+
+        "isSubscribed" should {
+            "return true if user has active subscription" {
+                user.purchased?.plan?.planId = "plan"
+                user.purchased?.plan?.customerId = "plan"
+                user.isSubscribed shouldBe true
+            }
+
+            "return false if user has no active subscription" {
+                user.purchased?.plan?.planId = null
+                user.purchased?.plan?.customerId = null
+                user.isSubscribed shouldBe false
             }
         }
     })

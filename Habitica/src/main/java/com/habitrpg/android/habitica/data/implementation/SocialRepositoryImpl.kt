@@ -307,9 +307,9 @@ class SocialRepositoryImpl(
         return postPrivateMessage(recipientId, messageObject)
     }
 
-    override suspend fun getPartyMembers(id: String) = localRepository.getPartyMembers(id)
+    override fun getPartyMembers(id: String) = localRepository.getPartyMembers(id)
 
-    override suspend fun getGroupMembers(id: String) = localRepository.getGroupMembers(id)
+    override fun getGroupMembers(id: String) = localRepository.getGroupMembers(id)
 
     override suspend fun retrievePartyMembers(
         id: String,

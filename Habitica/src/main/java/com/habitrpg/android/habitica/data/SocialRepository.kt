@@ -100,9 +100,9 @@ interface SocialRepository : BaseRepository {
         message: String,
     ): List<ChatMessage>?
 
-    suspend fun getPartyMembers(id: String): Flow<List<Member>>
+    fun getPartyMembers(id: String): Flow<List<Member>>
 
-    suspend fun getGroupMembers(id: String): Flow<List<Member>>
+    fun getGroupMembers(id: String): Flow<List<Member>>
 
     suspend fun retrievePartyMembers(
         id: String,

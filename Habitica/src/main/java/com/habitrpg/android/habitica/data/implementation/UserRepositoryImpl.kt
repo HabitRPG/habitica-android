@@ -72,7 +72,7 @@ class UserRepositoryImpl(
         ) {
             localRepository.saveUser(user)
         } else {
-            retrieveUser(false, true)
+            retrieveUser(withTasks = false, forced = true)
         }
         return user
     }
@@ -147,7 +147,7 @@ class UserRepositoryImpl(
                         ?.firstOrNull { it.key == equipment.key && it.owned == true } != null
                 }
         }
-        retrieveUser(false, true)
+        retrieveUser(withTasks = false, forced = true)
         return inventoryLocalRepository.getEquipment(brokenItem?.key ?: "").firstOrNull()
     }
 
@@ -279,7 +279,7 @@ class UserRepositoryImpl(
 
     override suspend fun rebirth(): User? {
         apiClient.rebirth()
-        return retrieveUser(true, true)
+        return retrieveUser(withTasks = true, forced = true)
     }
 
     override suspend fun readNotifications(notificationIds: Map<String, List<String>>) = apiClient.readNotifications(notificationIds)
@@ -409,7 +409,7 @@ class UserRepositoryImpl(
             taskRepository.bulkScoreTasks(scoringList)
         }
         apiClient.runCron()
-        retrieveUser(true, true)
+        retrieveUser(withTasks = true, forced = true)
         delay(2.seconds)
         WidgetRefreshWorker.refreshAllWidgetsNow(context)
     }
@@ -456,7 +456,7 @@ class UserRepositoryImpl(
         }
         return if (type == "background") {
             apiClient.unlockPath("background.$identifier")
-            retrieveUser(false, true)
+            retrieveUser(withTasks = false, forced = true)
         } else {
             var updatePath = "preferences.$type"
             if (category != null) {
@@ -531,7 +531,7 @@ class UserRepositoryImpl(
         return mergeUser(oldUser, newUser)
     }
 
-    private suspend fun mergeUser(
+    private fun mergeUser(
         oldUser: User?,
         newUser: User,
     ): User {

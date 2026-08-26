@@ -5,7 +5,6 @@ import androidx.lifecycle.asLiveData
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.TeamPlan
-import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -29,8 +28,8 @@ class MainUserViewModel
         val userRepository: UserRepository,
         val socialRepository: SocialRepository,
     ) {
-        val formattedUsername: CharSequence?
-            get() = validatedUser?.formattedUsername
+        val formattedUsername: CharSequence
+            get() = validatedUser?.formattedUsername ?: ""
         val userID: String
             get() = validatedUser?.id ?: authenticationHandler.currentUserID ?: ""
         val username: CharSequence
@@ -61,20 +60,18 @@ class MainUserViewModel
                 onBufferOverflow = BufferOverflow.DROP_OLDEST,
             )
 
+        private val currentTeamPlanID = currentTeamPlan.map { it?.id }
+            .distinctUntilChanged()
+            .filterNotNull()
+
         @OptIn(ExperimentalCoroutinesApi::class)
         var currentTeamPlanGroup =
-            currentTeamPlan
-                .map { it?.id }
-                .distinctUntilChanged { old, new -> old == new }
-                .filterNotNull()
+            currentTeamPlanID
                 .flatMapLatest { socialRepository.getGroup(it) }
 
         @OptIn(ExperimentalCoroutinesApi::class)
-        var currentTeamPlanMembers: LiveData<List<Member>> =
-            currentTeamPlan
-                .map { it?.id }
-                .distinctUntilChanged { old, new -> old == new }
-                .filterNotNull()
+        var currentTeamPlanMembers =
+            currentTeamPlanID
                 .flatMapLatest { socialRepository.getGroupMembers(it) }
                 .distinctUntilChanged { old, new ->
                     old.size == new.size &&
@@ -87,7 +84,9 @@ class MainUserViewModel
                             userRepository.retrieveTeamPlan(plan.id)
                         }
                     }
-                }.asLiveData()
+                }
+
+        var currentTeamPlanMembersData = currentTeamPlanMembers.asLiveData()
 
         fun updateUser(
             path: String,

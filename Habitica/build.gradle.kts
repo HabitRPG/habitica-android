@@ -317,4 +317,6 @@ dependencies {
     debugImplementation(libs.test.fragment)
     debugImplementation(libs.test.monitor)
     androidTestUtil(libs.test.orchestrator)
+    testImplementation(libs.coroutine.test)
+    testImplementation(libs.turbine)
 }
