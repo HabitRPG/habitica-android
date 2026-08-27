@@ -492,7 +492,7 @@
     <string name="character_build">Karakterbouw</string>
     <string name="character_build_description">Bij elk niveau verdien je een punt om toe te wijzen aan een eigenschap van jou keuze. Dat kun je manueel doen, of je kunt het spel voor je laten beslissen door één van de opties voor Automatische Toewijzing te gebruiken.</string>
     <string name="strength">Kracht</string>
-    <string name="strength_description">Verhoogt de bonus van voltreffers en maakt ze waarschijnlijker bij het voltooien van een taak. Verhoogt ook de schade die toegebracht wordt aan bazen.</string>
+    <string name="strength_description">Verhoogt de kans en schade van voltreffers bij het voltooien van een taken. Verhoogt ook de schade die toegebracht wordt aan Queestebazen.</string>
     <string name="intelligence">Intelligentie</string>
     <string name="intelligence_description">Verhoogt ERV die verdiend word door taken te voltooien. Verhoogt ook je mana capaciteit en hoe snel mana regenereert.</string>
     <string name="constitution">Weerbaarheid</string>
@@ -1354,7 +1354,7 @@
     <string name="potions">toverdranken</string>
     <string name="open_profile">Profiel Openen</string>
     <string name="preference_push_joined_group_plan_mention">\@Mentions in groepsabonnementen</string>
-    <string name="widget_add_task">Habitica Taak Toevoegen</string>
+    <string name="widget_add_task">Taak Toevoegen (1)</string>
     <string name="widget_add_task_multi">Habitica Taken Toevoegen</string>
     <string name="popular">Populair</string>
     <string name="mute_user">Speler Dempen</string>
@@ -1397,4 +1397,5 @@
     <string name="rebirth_confirm_reset_item_2">All je Eigenschapspunten</string>
     <string name="rebirth_confirm_reset_item_3">Al je Goud en Mana</string>
     <string name="rebirth_confirm_keep_header">Dit verwijdert niet:</string>
+    <string name="not_participating_filter">Doet niet mee</string>
 </resources>
