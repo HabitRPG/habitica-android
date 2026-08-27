@@ -397,7 +397,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         private val textView: TextView? = itemView.findViewById(R.id.textView)
 
         init {
-            subscribeButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
+            subscribeButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseFragment) }
         }
 
         var text: String? = null

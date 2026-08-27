@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
@@ -23,10 +24,11 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
+import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -41,24 +43,39 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
+class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
     override var binding: FragmentGemPurchaseBinding? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
     ): FragmentGemPurchaseBinding = FragmentGemPurchaseBinding.inflate(inflater, container, false)
-
-    @Inject
-    lateinit var userRepository: UserRepository
-
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
-    private var isGemSaleHappening = false
+    private var gemPromo: HabiticaPromotion? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val promo = appConfigManager.activePromo()
+        if (promo?.promoType == PromoType.GEMS_AMOUNT || promo?.promoType == PromoType.GEMS_PRICE) {
+            this.gemPromo = promo
+        }
+        this.hidesToolbar = true
+        toolbarBackgroundColor =
+            if (gemPromo != null) gemPromo?.screenBackgroundColor(requireContext()) else ContextCompat.getColor(
+                requireContext(),
+                R.color.brand_300
+            )
+        toolbarIconColor = Color.WHITE
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(
         view: View,
@@ -74,15 +91,14 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         binding?.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
         binding?.viewSubscriptionsButton?.setOnClickListener {
             MainNavigationController.navigate(
-                R.id.gemPurchaseActivity,
+                R.id.gemPurchaseFragment,
                 Bundle().apply { putBoolean("openSubscription", true) },
             )
         }
 
-        val promo = appConfigManager.activePromo()
+        val promo = gemPromo
         if (promo != null) {
             binding?.let {
-                isGemSaleHappening = promo.promoType == PromoType.GEMS_AMOUNT
                 promo.configurePurchaseBanner(it)
                 if (promo.promoType != PromoType.SUBSCRIPTION) {
                     promo.configureGemView(it.gems4View.binding, 4)
@@ -187,7 +203,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     private fun purchaseGems(view: GemPurchaseOptionsView?) {
         val identifier = view?.sku ?: return
         lifecycleScope.launchCatching {
-            purchaseHandler.purchase(requireActivity(), identifier, null, null, isGemSaleHappening)
+            purchaseHandler.purchase(requireActivity(), identifier, null, null, gemPromo != null)
         }
     }
 

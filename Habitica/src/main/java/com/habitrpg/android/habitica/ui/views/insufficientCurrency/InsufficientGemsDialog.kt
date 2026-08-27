@@ -68,7 +68,7 @@ class InsufficientGemsDialog(
             true,
         ) { _, _ ->
             MainNavigationController.navigate(
-                R.id.gemPurchaseActivity,
+                R.id.gemPurchaseFragment,
                 bundleOf(Pair("openSubscription", false)),
             )
         }

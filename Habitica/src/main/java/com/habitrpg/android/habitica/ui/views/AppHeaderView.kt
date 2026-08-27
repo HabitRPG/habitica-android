@@ -356,7 +356,7 @@ fun AppHeaderView(
                             Modifier
                                 .padding(end = 12.dp)
                                 .clickable {
-                                    MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                                    MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
                                 },
                         decimals = 0,
                     )
@@ -373,7 +373,7 @@ fun AppHeaderView(
                     user.gemCount.toDouble(),
                     modifier =
                         Modifier.clickable {
-                            MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                            MainNavigationController.navigate(R.id.gemPurchaseFragment)
                         },
                     decimals = 0,
                 )

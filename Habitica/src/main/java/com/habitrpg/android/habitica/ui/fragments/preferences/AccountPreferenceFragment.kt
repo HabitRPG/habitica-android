@@ -552,7 +552,7 @@ class AccountPreferenceFragment :
             dialog?.setTitle(R.string.unable_to_delete)
             dialog?.setMessage(R.string.delete_account_subscription_active)
             dialog?.addButton(R.string.go_to_subscription, false) { _, _ ->
-                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
             }
             dialog?.addCloseButton()
             dialog?.show()

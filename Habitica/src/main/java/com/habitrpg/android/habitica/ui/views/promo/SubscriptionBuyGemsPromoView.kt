@@ -25,7 +25,7 @@ class SubscriptionBuyGemsPromoView
             clipToOutline = false
             findViewById<Button>(R.id.button).setOnClickListener {
                 MainNavigationController.navigate(
-                    R.id.gemPurchaseActivity,
+                    R.id.gemPurchaseFragment,
                     bundleOf(Pair("openSubscription", true)),
                 )
             }

@@ -26,6 +26,7 @@ import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.waitForLayout
 
@@ -70,6 +71,12 @@ object ToolbarColorHelper {
                     v.setBackgroundColor(backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor))
                 }
             }
+        }
+
+        toolbar.findViewById<TextView>(R.id.toolbar_title)?.setTextColor(toolbarIconsColor)
+
+        if (activity is MainActivity) {
+            activity.drawerToggle?.drawerArrowDrawable?.color = toolbarIconsColor
         }
 
         toolbar.setTitleTextColor(toolbarIconsColor)

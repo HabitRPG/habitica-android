@@ -379,7 +379,7 @@ open class MainActivity :
                 val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(
                     null,
                 )
-                val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
+                val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembersData.observeAsState()
                 val canShowTeamHeader: Boolean by viewModel.canShowTeamPlanHeader
                 AppHeaderView(
                     user,
@@ -466,7 +466,7 @@ open class MainActivity :
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
                             val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
-                            val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
+                            val members by viewModel.userViewModel.currentTeamPlanMembersData.observeAsState()
                             Box(
                                 Modifier
                                     .fillMaxWidth()

@@ -96,8 +96,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         contentRepository.close()
         inventoryRepository.close()
         socialRepository.close()
-        toolbarAccessoryContainer?.removeView(currencyView)
         super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        toolbarAccessoryContainer?.removeView(currencyView)
+        super.onDestroyView()
     }
 
     override fun onViewCreated(

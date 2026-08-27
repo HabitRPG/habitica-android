@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -20,16 +22,17 @@ import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionContentBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
+import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
+import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
-import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
@@ -41,7 +44,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SubscriptionFragment :
-    BaseFragment<FragmentSubscriptionBinding>(),
+    BaseMainFragment<FragmentSubscriptionBinding>(),
     CommonSubscriptionFragment {
     override var binding: FragmentSubscriptionBinding? = null
 
@@ -52,9 +55,6 @@ class SubscriptionFragment :
         inflater: LayoutInflater,
         container: ViewGroup?,
     ): FragmentSubscriptionBinding = FragmentSubscriptionBinding.inflate(inflater, container, false)
-
-    @Inject
-    override lateinit var userRepository: UserRepository
 
     @Inject
     lateinit var appConfigManager: AppConfigManager
@@ -68,8 +68,29 @@ class SubscriptionFragment :
     override var selectedSubscriptionSku: ProductDetails? = null
     override var skus: List<ProductDetails> = emptyList()
 
+    private var subscriptionPromo: HabiticaPromotion? = null
+
     override var user: User? = null
     override var hasLoadedSubscriptionOptions: Boolean = false
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val promo = appConfigManager.activePromo()
+        if (promo?.promoType == PromoType.SUBSCRIPTION) {
+            this.subscriptionPromo = promo
+        }
+        this.hidesToolbar = true
+        toolbarBackgroundColor =
+            if (subscriptionPromo != null) subscriptionPromo?.screenBackgroundColor(requireContext()) else ContextCompat.getColor(
+                requireContext(),
+                R.color.brand_300
+            )
+        toolbarIconColor = Color.WHITE
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(
         view: View,
@@ -84,10 +105,10 @@ class SubscriptionFragment :
             showGiftSubscriptionDialog(requireContext())
         }
 
-        val promo = appConfigManager.activePromo()
-        if (promo != null) {
+
+        if (subscriptionPromo != null) {
             binding?.let {
-                promo.configurePurchaseBanner(it)
+                subscriptionPromo?.configurePurchaseBanner(it)
             }
             binding?.content?.promoBanner?.setOnClickListener {
                 val fragment = PromoInfoFragment()
@@ -124,7 +145,7 @@ class SubscriptionFragment :
                 val bars =
                     insets.getInsets(
                         WindowInsetsCompat.Type.systemBars()
-                            or WindowInsetsCompat.Type.displayCutout(),
+                                or WindowInsetsCompat.Type.displayCutout(),
                     )
                 v.updateLayoutParams {
                     height = bars.bottom

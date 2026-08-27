@@ -206,7 +206,7 @@ abstract class ExtraGemSalePromotion(
         binding.promptButton.background = buttonDrawable(context)
         binding.promptButton.setText(R.string.view_gem_bundles)
         binding.promptButton.setTextColor(ContextCompat.getColor(context, R.color.black))
-        binding.promptButton.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
+        binding.promptButton.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseFragment) }
 
         binding.instructionDescriptionView.text =
             context.getString(

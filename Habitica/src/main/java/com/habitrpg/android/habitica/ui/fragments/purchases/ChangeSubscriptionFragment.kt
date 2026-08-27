@@ -215,7 +215,7 @@ class ChangeSubscriptionViewModel
 
         val productDetails = MutableStateFlow<Map<HabiticaProduct, ProductDetails>>(emptyMap())
 
-        val isEligableForHourglassPromo: Boolean
+        val isEligibleForHourglassPromo: Boolean
             get() = activeSubscriptionPlan.value?.isEligableForHourglassPromo == true
         val hadGiftedSubscription: Boolean
             get() = activeSubscriptionPlan.value?.isGiftedSub == true
@@ -358,9 +358,9 @@ private fun ChangeSubscriptionReviewView(
                         Text(stringResource(R.string.subscription_change_confirmation_upgrade), fontWeight = FontWeight.Bold)
                     }
                 }
-                if (viewModel.isEligableForHourglassPromo && viewModel.totalGemCount < 50) {
+                if (viewModel.isEligibleForHourglassPromo && viewModel.totalGemCount < 50) {
                     Text(stringResource(R.string.subscription_change_hourglass_promo_gems_info))
-                } else if (viewModel.isEligableForHourglassPromo) {
+                } else if (viewModel.isEligibleForHourglassPromo) {
                     Text(stringResource(R.string.subscription_change_hourglass_promo_info))
                 }
             }

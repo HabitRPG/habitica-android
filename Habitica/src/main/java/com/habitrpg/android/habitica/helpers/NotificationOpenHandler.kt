@@ -83,7 +83,7 @@ class NotificationOpenHandler {
 
         private fun openSubscriptionScreen() {
             MainNavigationController.navigate(
-                R.id.gemPurchaseActivity,
+                R.id.gemPurchaseFragment,
                 bundleOf(Pair("openSubscription", true)),
             )
         }
@@ -115,7 +115,7 @@ class NotificationOpenHandler {
         }
 
         private fun openGiftOneGetOneInfoScreen() {
-            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+            MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
         }
 
         private fun openQuestDetailSCreen() {

@@ -79,7 +79,7 @@ open class SubscriptionBottomSheetFragment :
 
         content.seeMoreButton.setOnClickListener {
             MainNavigationController.navigate(
-                R.id.gemPurchaseActivity,
+                R.id.gemPurchaseFragment,
                 bundleOf(Pair("openSubscription", true)),
             )
         }

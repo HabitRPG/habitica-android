@@ -554,7 +554,7 @@ class NavigationDrawerFragment : DialogFragment() {
             )
             items.add(
                 HabiticaDrawerItem(
-                    R.id.gemPurchaseActivity,
+                    R.id.gemPurchaseFragment,
                     SIDEBAR_GEMS,
                     context.getString(R.string.sidebar_gems),
                     preventReselect = false,
@@ -562,7 +562,7 @@ class NavigationDrawerFragment : DialogFragment() {
             )
             items.add(
                 HabiticaDrawerItem(
-                    R.id.subscriptionPurchaseActivity,
+                    R.id.subscriptionPurchaseFragment,
                     SIDEBAR_SUBSCRIPTION,
                     context.getString(R.string.sidebar_subscription),
                     preventReselect = false,
@@ -624,14 +624,14 @@ class NavigationDrawerFragment : DialogFragment() {
             )
         }
 
-        val promoItem = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_PROMO)
+        val promoItem = HabiticaDrawerItem(R.id.subscriptionPurchaseFragment, SIDEBAR_PROMO)
         promoItem.itemViewType = 5
         promoItem.isVisible = false
         items.add(0, promoItem)
 
         if (configManager.showSubscriptionBanner()) {
             val item =
-                HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
+                HabiticaDrawerItem(R.id.subscriptionPurchaseFragment, SIDEBAR_SUBSCRIPTION_PROMO)
             item.itemViewType = 2
             items.add(item)
         }
