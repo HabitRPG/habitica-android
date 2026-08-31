@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.app.Activity
+import android.os.Build
 import android.view.ViewGroup
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
@@ -28,10 +29,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
@@ -140,6 +145,19 @@ private fun BottomSheetWrapper(
                         WindowInsets.navigationBarsIgnoringVisibility,
                     ),
                 )
+
+                val currentView = LocalView.current
+                val window = (currentView.parent as? DialogWindowProvider)?.window
+                LaunchedEffect(window) {
+                    if (window != null) {
+                        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+                        windowInsetsController.isAppearanceLightNavigationBars = false
+                        window.setNavigationBarDarkIcons(false)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            window.isNavigationBarContrastEnforced = false
+                        }
+                    }
+                }
             }
         },
     )
@@ -152,6 +170,7 @@ private fun BottomSheetWrapper(
 
     // Take action based on hidden state
     LaunchedEffect(modalBottomSheetState.currentValue) {
+
         when (modalBottomSheetState.currentValue) {
             SheetValue.Hidden -> {
                 when {
@@ -164,6 +183,7 @@ private fun BottomSheetWrapper(
                         coroutineScope.launch {
                             delay(100.milliseconds)
                             modalBottomSheetState.show()
+
                         }
                     }
                 }

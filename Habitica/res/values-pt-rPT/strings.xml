@@ -844,7 +844,7 @@
     <string name="enable_class_description">Selecione uma classe para habilitar habilidades, estatísticas e mana</string>
     <string name="group_tags">Tags de grupo</string>
     <string name="subscribe_listitem3_description_alt">Fique vestido com os equipamentos exclusivos mais recentes. Inscreva-se agora para receber %1$s %2$s!</string>
-    <string name="subscription_credit_canceling">Seus <b>+%d</b> meses de crédito de assinatura serão ativados após o cancelamento</string>
+    <string name="subscription_credit_canceling">Seus <b>+%f</b> meses de crédito de assinatura serão ativados após o cancelamento</string>
     <string name="subscription_hourglasses_3month_timeframe">Ampulheta em 3 meses</string>
     <string name="challenges">Desafios</string>
     <string name="leave_party_confirmation_quest">Tem certeza de que deseja sair desta festa\?</string>

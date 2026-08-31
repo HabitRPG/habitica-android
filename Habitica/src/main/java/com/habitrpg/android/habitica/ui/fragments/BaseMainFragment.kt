@@ -95,7 +95,6 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
             val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
             if (this.usesBottomNavigation || hasDarkNavUI) {
                 windowInsetsController.isAppearanceLightNavigationBars = false
-                view?.systemUiVisibility
                 window.setNavigationBarDarkIcons(false)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     window.isNavigationBarContrastEnforced = false

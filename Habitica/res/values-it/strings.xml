@@ -1298,7 +1298,7 @@
     <string name="enable_class_description">Seleziona una classe per utilizzare abilità, attributi e mana</string>
     <string name="opt_out_description">Questo ti lascerà senza una classe assegnata. Puoi scegliere nuovamente una classe abilitando il sistema delle classi dalle Impostazioni in qualsiasi momento.</string>
     <string name="group_tags">Etichette di Gruppo</string>
-    <string name="subscription_credit_canceling">I tuoi <b>+%d</b> mesi di credito di abbonamento verranno attivati a seguito dell\'annullamento</string>
+    <string name="subscription_credit_canceling">I tuoi <b>+%f</b> mesi di credito di abbonamento verranno attivati a seguito dell\'annullamento</string>
     <string name="rejoin_party_quest">Non potrai rientrare in questa squadra a meno che tu non venga rinvitato.
 \n
 \nUscire dalla squadra comporterà anche l\'abbandono della missione in corso.</string>

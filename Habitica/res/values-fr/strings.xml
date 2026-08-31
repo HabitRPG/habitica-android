@@ -1267,7 +1267,7 @@
     <string name="insufficient_level_equipment_dialog">Cet objet n\'est disponible que pour une classe spécifique. Vous pouvez choisir votre classe après le niveau 10.</string>
     <string name="x_checkins">%d Connexions</string>
     <string name="send_invite">Envoyer une invitation</string>
-    <string name="subscription_credit_canceling">Vos <b>+%d</b> crédits de mois d\'abonnement s\'activeront après avoir annulé</string>
+    <string name="subscription_credit_canceling">Vos <b>+%f</b> crédits de mois d\'abonnement s\'activeront après avoir annulé</string>
     <string name="report_player_title">Signaler %s \?</string>
     <string name="report_reason_title_player">Pourquoi signale tu ce joueur \?</string>
     <string name="report_user_description">Cette action bloquera également @%s</string>

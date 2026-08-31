@@ -25,7 +25,7 @@ open class SubscriptionPlan :
     var deferredPlanId: String? = null
     var active: Boolean? = null
     var gemsBought: Int? = null
-    var extraMonths: Int? = null
+    var extraMonths: Float? = null
     var quantity: Int? = null
     var consecutive: SubscriptionPlanConsecutive? = null
     var cumulativeCount: Int? = null

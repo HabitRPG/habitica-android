@@ -1263,7 +1263,7 @@
     <string name="password_change_info">비밀번호는 8자 이상이어야 합니다. 비밀번호를 변경하면 다른 기기나 사용 중인 서드파티 도구에서 로그아웃됩니다.</string>
     <string name="confirm_new_password">새로운 패스워드 확인</string>
     <string name="report_user_explanation">https://habitica.com/static/community-guidelines 에 명시된 커뮤니티 가이드라인 및/또는 https://habitica.com/static/terms 에 명시된 서비스 약관을 위반한 플레이어만 신고해야 합니다. 허위 신고를 하는 것은 Habitica 커뮤니티 가이드라인 위반에 해당합니다.</string>
-    <string name="subscription_credit_canceling">현재 보유 중인 <b>+%d</b>개월의 구독 크레딧은 취소 후 활성화됩니다</string>
+    <string name="subscription_credit_canceling">현재 보유 중인 <b>+%f</b>개월의 구독 크레딧은 취소 후 활성화됩니다</string>
     <string name="reset_account_description_new">모든 레벨, 골드, 경험치를 잃게 됩니다. 모든 작업과 그 기록이 삭제됩니다(도전 과제의 작업은 유지됩니다). 구독자 아이템과 무료 기념 아이템을 제외한 모든 장비를 잃게 되지만, 다시 구매할 수 있습니다. 직업 전용 장비를 다시 구매하려면 해당 직업이어야 합니다. 현재 직업, 업적, 그리고 펫과 탈것은 유지됩니다. 초기화를 확인하려면 아래에 비밀번호를 입력하세요.</string>
     <string name="display_name_description">이 이름은 Habitica에서 아바타에 표시되는 이름입니다. 사용자 이름과 달리, 고유 식별자가 될 필요는 없습니다.</string>
     <string name="report_message_explanation">https://habitica.com/static/community-guidelines 에 명시된 커뮤니티 가이드라인 및/또는 https://habitica.com/static/terms 에 명시된 서비스 약관을 위반한 게시물만 신고해야 합니다. 허위 신고를 하는 것은 Habitica 커뮤니티 가이드라인 위반에 해당합니다.</string>

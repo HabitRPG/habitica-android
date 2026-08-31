@@ -48,7 +48,6 @@ class SubscriptionDetailsView : LinearLayout {
         updateSubscriptionStatusPill(plan)
 
         var duration: String? = null
-
         if (plan.planId != null && plan.dateTerminated == null) {
             when (plan.planId) {
                 SubscriptionPlan.PLANID_BASIC, SubscriptionPlan.PLANID_BASICEARNED -> {
@@ -90,11 +89,11 @@ class SubscriptionDetailsView : LinearLayout {
             }
         }
 
-        if ((plan.extraMonths ?: 0) > 0) {
+        if ((plan.extraMonths ?: 0f) > 0f) {
             binding.subscriptionCreditCard.visibility = VISIBLE
-            if (plan.extraMonths == 1) {
+            if (plan.extraMonths == 1f) {
                 binding.subscriptionCreditTextView.text =
-                    resources.getString(R.string.subscription_credit_canceling, 1)
+                    resources.getString(R.string.subscription_credit_canceling_one)
             } else {
                 binding.subscriptionCreditTextView.text =
                     resources.getString(R.string.subscription_credit_canceling, plan.extraMonths)
@@ -119,7 +118,7 @@ class SubscriptionDetailsView : LinearLayout {
             "Google" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
                 val billingDate = plan.nextBillingDate
-                if (billingDate != null && billingDate > Date()) {
+                if (plan.dateTerminated != null && billingDate != null && billingDate > Date()) {
                     binding.subscriptionPaymentMethodTextview.text =
                         context.getString(
                             R.string.next_payment_date,

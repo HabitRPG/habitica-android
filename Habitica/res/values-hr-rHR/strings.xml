@@ -1271,7 +1271,7 @@
 \n**Percepcija (PER)** povećava zlato koje zaradite i stopu pronalaženja ispuštenih predmeta. Lupeži i Čarobnjaci dobivaju PER od opreme svoje klase.
 \n
 \nNakon razine 10, zarađujete 1 Bod Statistike na svakoj razini koju osvojite i koji možete staviti u bilo koju statistiku koju želite. Također možete opremiti opremu koja ima različite kombinacije poboljšanja statistike.</string>
-    <string name="subscription_credit_canceling">Vaš kredit za pretplatu od <b>+%d</b> mjeseci aktivirat će se nakon otkazivanja</string>
+    <string name="subscription_credit_canceling">Vaš kredit za pretplatu od <b>+%f</b> mjeseci aktivirat će se nakon otkazivanja</string>
     <string name="fall_promo_info_prompt">Jesenska gala je u punom jeku pa smo mislili da je savršeno vrijeme za Rasprodaju Dragulja! Sada ćete svakom kupnjom dobiti više Dragulja nego ikada prije.</string>
     <string name="clear_cache_description">Za brisanje predmemorije, otvorite aplikaciju Postavke na telefonu. Idite na Pohrana &gt; Aplikacije &gt; Habitica, zatim dodirnite Očisti Predmemoriju.</string>
     <string name="death_description">Ali sve ih možete vratiti napornim radom! Sretno — bit ćete odlični.</string>

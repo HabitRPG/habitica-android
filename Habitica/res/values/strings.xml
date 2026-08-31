@@ -434,7 +434,8 @@
     <string name="subscription_hourglasses">%d Hourglasses</string>
     <string name="payment_method">Payment method</string>
     <string name="subscription">Subscription</string>
-    <string name="subscription_credit_canceling">"Your <b>+%d</b> months of subscription credit will activate after canceling</string>
+    <string name="subscription_credit_canceling">"Your <b>+%f</b> months of subscription credit will activate after canceling</string>
+    <string name="subscription_credit_canceling_one">"Your <b>+1</b> month of subscription credit will activate after canceling</string>
     <string name="active">Active</string>
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>

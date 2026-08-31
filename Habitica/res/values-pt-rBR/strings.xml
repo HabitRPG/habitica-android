@@ -1291,7 +1291,7 @@
     <string name="third">terceiro</string>
     <string name="fourth">quarto</string>
     <string name="fifth">quinto</string>
-    <string name="subscription_credit_canceling">Seus <b>+%d</b> meses de crédito de assinatura serão ativados depois do cancelamento</string>
+    <string name="subscription_credit_canceling">Seus <b>+%f</b> meses de crédito de assinatura serão ativados depois do cancelamento</string>
     <string name="manager">Administrador</string>
     <string name="unmute_user_confirm">Você quer habilitar o acesso ao chat para este usuário\?</string>
     <string name="assigned_to_you_by">Atribuído a você por @%1$s em %2$s</string>

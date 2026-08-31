@@ -1252,7 +1252,7 @@
     <string name="level_abbreviated">Ур. %d</string>
     <string name="class_changed_description">Вы можете использовать навыки %s и покупать снаряжение в магазинах! Повышайте уровень, чтобы получить очки атрибутов, которые вы можете использовать для усиления своих навыков.</string>
     <string name="change_class_selected_confirmation">Вы действительно хотите изменить свой класс на %1$s\?</string>
-    <string name="subscription_credit_canceling">Ваша подписка на <b>+%d</b> месяцев будет активирована после отмены</string>
+    <string name="subscription_credit_canceling">Ваша подписка на <b>+%f</b> месяцев будет активирована после отмены</string>
     <string name="insufficient_level_equipment_dialog">Этот предмет доступен только определенному классу. Выбрать класс можно по достижению 10-го уровня.</string>
     <string name="push_notification_system_settings_reminders">В Настройках разрешите Habitica присылать вам уведомления, чтобы получать напоминания</string>
     <string name="push_notification_system_settings_title">Уведомления выключены</string>

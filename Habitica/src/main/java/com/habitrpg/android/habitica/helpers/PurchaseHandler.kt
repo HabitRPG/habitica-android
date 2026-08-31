@@ -103,7 +103,7 @@ class PurchaseHandler(
                             if (plan?.isActive == true &&
                                 HabiticaProduct.allSubscriptionTypes.contains(product)
                             ) {
-                                val samePlan = product.getSubCode() == plan.planId
+                                val samePlan = purchase.purchaseToken == plan.customerId
                                 if (purchase.purchaseToken == plan.customerId ||
                                     ((plan.dateTerminated == null) == purchase.isAutoRenewing && samePlan)
                                 ) {

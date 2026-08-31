@@ -35,7 +35,7 @@
     <string name="subscribe_again">Subscribe Again</string>
     <string name="complete_purchase">Complete Purchase</string>
     <string name="subscription_renew_review_info">Once we’ve confirmed your purchase, the payment will be charged \nto your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you agree to pay above.\n\nBy continuing you accept the Terms of Use and Privacy Policy.</string>
-    <string name="subscription_renew_review_info_downgrade">Once we’ve confirmed your purchase, the payment will be charged \nto your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you agree to pay above.\n\nBy continuing you accept the Terms of Use and Privacy Policy.</string>
+    <string name="subscription_renew_review_info_downgrade">The above payment will be charged to your Google Account at your nect scheduled renewal date.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you agree to pay above.\n\nBy continuing you accept the Terms of Use and Privacy Policy.</string>
     <string name="subscription_change_gift_info">Any remaining time from your current subscription will be saved to your account as credit that will extend your benefit’s termination date only after cancelling your recurring subscription.</string>
     <string name="subscription_change_hourglass_promo_gems_info">After purchase, 12 Mystic Hourglasses will be delivered to your account and the max amount of Gems you can buy in the Market will be set to 50.</string>
     <string name="subscription_change_hourglass_promo_info">After purchase, 12 Mystic Hourglasses will be delivered to your account.</string>
@@ -44,7 +44,10 @@
     <string name="subscription_downgraded_confirmation">Your Subscription was successfully downgraded. It will change at the next renewal date.</string>
     <string name="subscription_upgraded_confirmation">Your Subscription was successfully upgraded</string>
     <string name="plan_changing_next_renewal">Plan changing at next renewal</string>
-    <string name="subscription_change_confirmation_gift">Switching to this plan will immediately charge you the above amount and set your next renewal date to %d months from today.</string>
+    <plurals name="subscription_change_confirmation_gift">
+        <item quantity="one">Switching to this plan will immediately charge you the above amount and set your next renewal date to %d month from today.</item>
+        <item quantity="other">Switching to this plan will immediately charge you the above amount and set your next renewal date to %d months from today.</item>
+    </plurals>
     <string name="subscription_change_confirmation_downgrade">Switching to this plan will charge you the above amount at your next renewal date.</string>
     <string name="subscription_change_confirmation_upgrade">Switching to this plan will immediately charge you the above amount. Any unused time from your current subscription will be calculated into your next renewal date.</string>
     <string name="subscription_change_confirmation_reactivate_upgrade">Switching to this plan will immediately charge you the above amount. Any unused time from your current subscription will be calculated into your next renewal date.</string>
