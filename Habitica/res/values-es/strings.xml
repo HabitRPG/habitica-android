@@ -267,16 +267,16 @@
     <string name="choose_recipient_title">Elige el destinatario del mensaje</string>
     <string name="action_continue">Continuar</string>
     <string name="invited_to_party">¡Te han invitado a un Equipo!</string>
-    <string name="stats_widget_label">Estadísticas de Habitica</string>
+    <string name="stats_widget_label">Tus Estadísticas</string>
     <string name="add_task">Añadir Tarea</string>
     <string name="add_habit">Añadir Hábito</string>
     <string name="add_daily">Añadir Tarea Diaria</string>
     <string name="add_todo">Añadir Tarea Pendiente</string>
     <string name="add_reward">Añadir recompensa</string>
     <string name="all_dailies_completed">Ha completado todas tus tareas diarias. ¡Buen trabajo!</string>
-    <string name="widget_habit_button">Hábitos de Habitica</string>
-    <string name="widget_dailies">Tareas Diarias de Habitica</string>
-    <string name="widget_todo_list">Tareas Pendientes de Habitica</string>
+    <string name="widget_habit_button">Hábito Individual</string>
+    <string name="widget_dailies">Lista de Tareas Diarias</string>
+    <string name="widget_todo_list">Tareas Pendientes</string>
     <string name="google_services_missing">No pudieron encontrarse los servidores de Google Play.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">Comprar gemas apoya a los desarrolladores y ayuda a mantener Habitica en funcionamiento</string>
@@ -996,7 +996,7 @@
     <string name="stat_allocation">Asignación de estadísticas</string>
     <string name="getting_started">Empezando</string>
     <string name="delete_checklist_entry">Eliminar…</string>
-    <string name="complete_for_gold">Completa para ganar &lt;font color=#EE9109&gt;&lt;b&gt;100 de oro &lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="complete_for_gold"><![CDATA[Completa para ganar <font color="#EE9109"><b>100 de oro </b></font>!]]></string>
     <string name="task_display">Visualización de la lista de tareas</string>
     <string name="still_questions">¿Aún tienes una pregunta\?</string>
     <string name="purchase_amount_error">No puedes comprar esa cantidad.</string>
@@ -1053,7 +1053,7 @@
     <string name="all_tasks_completed">Has completado todas tus tareas. ¡Bien hecho!</string>
     <string name="no_longer_available">Ya no está disponible</string>
     <string name="cant_like_own_message">No puedes dar \"me gusta\" a tus propios mensajes</string>
-    <string name="onboardingCompleteTitle">Has obtenido &lt;b&gt;5 logros&lt;/b&gt; y &lt;font color=#EE9109&gt;&lt;b&gt;100 piezas de oro&lt;/b&gt;&lt;/font&gt; por tus esfuerzos.</string>
+    <string name="onboardingCompleteTitle"><![CDATA[Has obtenido <b>5 logros</b> y <font color="#EE9109"><b>100 piezas de oro</b></font> por tus esfuerzos.]]></string>
     <string name="todo_item_checkbox">Lista de tareas pendientes</string>
     <string name="avatar_style">Estilo</string>
     <string name="create_guild_description">Para crear un gremio, inicia sesión en la página web de Habitica y pulsa en el botón \"Crear\" del submenú \"Gremios &gt; Mis Gremios\".</string>
@@ -1220,7 +1220,7 @@
     <string name="buy_gems_with_gold">Compra Gemas con Oro</string>
     <string name="see_more_subscription_options">Ver más opciones de suscripción</string>
     <string name="subscribe_incentive_button_faint">¡Suscríbete para resistir con 1 PV!</string>
-    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; te ha invitado a unirte al grupo &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color="#925CF3">%2$s</font> te ha invitado a unirte al grupo <b>%1$s</b>]]></string>
     <string name="successful_purchase_generic">Compra exitosa</string>
     <string name="limited_edition">Edición Limitada</string>
     <string name="subscriber_benefit_used_faint">¡Segunda Oportunidad aún se está recargando! Estará disponible denuevo en %s.</string>
@@ -1694,4 +1694,8 @@
     <string name="auth_missing_token">Token requerido.</string>
     <string name="new_message">Nuevo mensaje</string>
     <string name="rebirth_confirm_reset_header">Se reestablecerán:</string>
+    <string name="avatar_widget_label">Tu Avatar</string>
+    <string name="widget_dailies_count">Resumen Diario</string>
+    <string name="widget_add_task">Crear Tarea (Única)</string>
+    <string name="widget_add_task_multi">Crear Tarea (Compuesta)</string>
 </resources>
