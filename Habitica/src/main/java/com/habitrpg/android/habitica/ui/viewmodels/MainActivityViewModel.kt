@@ -111,7 +111,7 @@ class MainActivityViewModel
                             "checkin_count",
                             user.loginIncentives.toString(),
                         )
-                        user.preferences?.pushNotifications?.mapOfKeys()?.forEach { key, isEnabled ->
+                        user.preferences?.pushNotifications?.mapOfKeys()?.forEach { (key, isEnabled) ->
                             Analytics.setUserProperty("allow_push_$key", isEnabled)
                         }
                         Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")

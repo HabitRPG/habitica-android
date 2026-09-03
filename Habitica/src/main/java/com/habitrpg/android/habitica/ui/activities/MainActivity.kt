@@ -191,10 +191,12 @@ open class MainActivity :
                     drawerToggle?.isDrawerIndicatorEnabled = false
                     drawerToggle?.setHomeAsUpIndicator(R.drawable.arrow_back)
                 }
+
                 false if showBirthdayIcon -> {
                     drawerToggle?.isDrawerIndicatorEnabled = false
                     drawerToggle?.setHomeAsUpIndicator(R.drawable.icon_birthday)
                 }
+
                 else -> {
                     drawerToggle?.isDrawerIndicatorEnabled = value != true
                 }
@@ -219,7 +221,8 @@ open class MainActivity :
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
                 !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)
             ) {
-                val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager ?: return@registerForActivityResult
+                val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager
+                    ?: return@registerForActivityResult
                 if (!alarmManager.canScheduleExactAlarms()) {
                     val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                     intent.data = Uri.fromParts("package", applicationContext?.packageName, null)
@@ -326,7 +329,10 @@ open class MainActivity :
                     ) {
                         if (slideOffset < 0.5f && isOpeningDrawer == null) {
                             if (!isUsingNightModeResources()) {
-                                window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                                window.updateStatusBarColor(
+                                    getThemeColor(R.attr.colorPrimaryDark),
+                                    false
+                                )
                             }
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                 window?.isNavigationBarContrastEnforced = true
@@ -340,7 +346,8 @@ open class MainActivity :
                                 )
                             }
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                window?.isNavigationBarContrastEnforced = !binding.content.bottomNavigation.isVisible
+                                window?.isNavigationBarContrastEnforced =
+                                    !binding.content.bottomNavigation.isVisible
                             }
                             isOpeningDrawer = false
                         }
@@ -349,7 +356,10 @@ open class MainActivity :
                     override fun onDrawerOpened(drawerView: View) {
                         hideKeyboard()
                         if (!isUsingNightModeResources()) {
-                            window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                            window.updateStatusBarColor(
+                                getThemeColor(R.attr.colorPrimaryDark),
+                                false
+                            )
                         }
                         isOpeningDrawer = null
                         drawerFragment?.updatePromo()
@@ -357,7 +367,10 @@ open class MainActivity :
 
                     override fun onDrawerClosed(drawerView: View) {
                         if (!isUsingNightModeResources()) {
-                            window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
+                            window.updateStatusBarColor(
+                                getThemeColor(R.attr.headerBackgroundColor),
+                                true
+                            )
                         }
                         isOpeningDrawer = null
                     }
@@ -465,7 +478,9 @@ open class MainActivity :
                     },
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
-                            val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
+                            val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
+                                null
+                            )
                             val members by viewModel.userViewModel.currentTeamPlanMembersData.observeAsState()
                             Box(
                                 Modifier
@@ -580,9 +595,7 @@ open class MainActivity :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
-            true
-        } else if (item.itemId == android.R.id.home) {
+        binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true || if (item.itemId == android.R.id.home) {
             if (showBackButton == true) {
                 MainNavigationController.navigateBack()
             } else if (isPersistentDrawerMode != true) {
@@ -658,7 +671,12 @@ open class MainActivity :
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
 
-        YesterdailyDialog.showDialogIfNeeded(this, viewModel.userViewModel.userID, userRepository, taskRepository)
+        YesterdailyDialog.showDialogIfNeeded(
+            this,
+            viewModel.userViewModel.userID,
+            userRepository,
+            taskRepository
+        )
 
         val openTaskFormType = intent.getStringExtra(OPEN_TASK_FORM_TYPE)
         if (openTaskFormType != null && viewModel.isAuthenticated) {
@@ -784,7 +802,10 @@ open class MainActivity :
             preferences?.sound?.let { soundManager.soundTheme = it }
 
             CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
-            CrashReporter.setCustomKey("timezone_offset", "${user.preferences?.timezoneOffset ?: 0}")
+            CrashReporter.setCustomKey(
+                "timezone_offset",
+                "${user.preferences?.timezoneOffset ?: 0}"
+            )
 
             handleAnalyticsConsent(user)
 
@@ -953,7 +974,10 @@ open class MainActivity :
                                                     delay(500.milliseconds)
                                                     HabiticaSnackbar.showSnackbar(
                                                         snackbarContainer,
-                                                        getString(R.string.revive_broken_equipment, brokenItem.text),
+                                                        getString(
+                                                            R.string.revive_broken_equipment,
+                                                            brokenItem.text
+                                                        ),
                                                         HabiticaSnackbar.SnackbarDisplayType.BLACK,
                                                     )
                                                 }
