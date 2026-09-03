@@ -474,7 +474,7 @@ interface ApiService {
         @Body request: PurchaseValidationRequest,
     ): Response<HabitResponse<Void>>
 
-    @GET("/iap/android/subscribe/cancel")
+    @GET("/iap/android/subscribe/cancel?noRedirect=true")
     suspend fun cancelSubscription(): Response<HabitResponse<Void>>
 
     @POST("/iap/android/norenew-subscribe")
