@@ -6,13 +6,6 @@
         <value>3000</value>
     </entry>
     <entry>
-        <key>shopSpriteSuffix</key>
-    </entry>
-    <entry>
-        <key>spriteSubstitutions</key>
-        <value>{}</value>
-    </entry>
-    <entry>
         <key>enableUsernameAutocomplete</key>
         <value>false</value>
     </entry>
@@ -33,20 +26,8 @@
         <value>0</value>
     </entry>
     <entry>
-        <key>noPartyLinkPartyGuild</key>
-        <value>false</value>
-    </entry>
-    <entry>
         <key>supportEmail</key>
         <value>admin@habitica.com</value>
-    </entry>
-    <entry>
-        <key>flipAddTaskBehaviour</key>
-        <value>true</value>
-    </entry>
-    <entry>
-        <key>insufficientGemPurchase</key>
-        <value>false</value>
     </entry>
     <entry>
         <key>showSubscriptionBanner</key>
@@ -65,14 +46,6 @@
         <value>false</value>
     </entry>
     <entry>
-        <key>insufficientGemPurchaseAdjust</key>
-        <value>false</value>
-    </entry>
-    <entry>
-        <key>raiseShops</key>
-        <value>false</value>
-    </entry>
-    <entry>
         <key>enableTaskDisplayMode</key>
         <value>true</value>
     </entry>
@@ -85,14 +58,6 @@
         <value />
     </entry>
     <entry>
-        <key>enableAdventureGuide</key>
-        <value>false</value>
-    </entry>
-    <entry>
-        <key>activePromo</key>
-        <value />
-    </entry>
-    <entry>
         <key>surveyURL</key>
         <value />
     </entry>
@@ -100,11 +65,6 @@
         <key>knownIssues</key>
         <value>[]</value>
     </entry>
-    <entry>
-        <key>enableTeamBoards</key>
-        <value>false</value>
-    </entry>
-
     <entry>
         <key>enableArmoireAds</key>
         <value>false</value>
@@ -114,19 +74,7 @@
         <value>false</value>
     </entry>
     <entry>
-        <key>enableArmoireSubs</key>
-        <value>true</value>
-    </entry>
-    <entry>
-        <key>enableFaintSubs</key>
-        <value>true</value>
-    </entry>
-    <entry>
         <key>enableSpellAds</key>
-        <value>false</value>
-    </entry>
-    <entry>
-        <key>hideGuilds</key>
         <value>false</value>
     </entry>
     <entry>
@@ -140,10 +88,6 @@
     <entry>
         <key>reviewCheckingMinCount</key>
         <value>1</value>
-    </entry>
-    <entry>
-        <key>enableCustomizationShop</key>
-        <value>false</value>
     </entry>
     <entry>
         <key>showAltDeathText</key>

@@ -153,7 +153,6 @@ android {
             ext["alwaysUpdateBuildId"] = false
             resValue("string", "content_provider", "com.habitrpg.android.habitica.fileprovider")
             resValue("string", "app_name", "Habitica Debug")
-            signingConfig = signingConfigs.getByName("debug")
         }
         release {
             signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
@@ -163,7 +162,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             resValue("string", "content_provider", "com.habitrpg.android.habitica.fileprovider")
             resValue("string", "app_name", "Habitica")
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
 

@@ -120,9 +120,6 @@ class AppConfigManager(
                 }
             }
         }
-        if (promo == null && remoteConfig.getString("activePromo").isNotBlank()) {
-            promo = getHabiticaPromotionFromKey(remoteConfig.getString("activePromo"), null, null)
-        }
         if (promo is HabiticaWebPromotion) {
             promo.url = surveyURL()
         }

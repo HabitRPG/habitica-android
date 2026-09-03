@@ -14,7 +14,7 @@ class ApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit =
         with(target) {
             pluginManager.withPlugin("com.android.application") {
-                val signingProps = loadProperties(file("signingrelease.properties"))
+                val signingProps = loadProperties(rootProject.file("signingrelease.properties"))
                 val signingPropsAvailable =
                     signingProps.containsKey("STORE_FILE") && signingProps.containsKey("STORE_PASSWORD") &&
                         signingProps.containsKey("KEY_ALIAS") && signingProps.containsKey("KEY_PASSWORD")
@@ -33,9 +33,9 @@ class ApplicationPlugin : Plugin<Project> {
                         }
 
                         val habiticaRes = loadProperties(rootProject.file("habitica.resources"))
-                        habiticaRes.forEach { key, value -> resValue("string", key.toString(), "\"${value}\"") }
+                        habiticaRes.forEach { (key, value) -> resValue("string", key.toString(), "\"${value}\"") }
                         val hrpgProps = loadProperties(rootProject.file("habitica.properties"))
-                        hrpgProps.forEach { key, value -> buildConfigField("String", key as String, "\"${value}\"") }
+                        hrpgProps.forEach { (key, value) -> buildConfigField("String", key as String, "\"${value}\"") }
                     }
 
                     if (signingPropsAvailable && versionPropsAvailable) {
