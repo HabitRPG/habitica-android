@@ -51,10 +51,7 @@ import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
@@ -75,6 +72,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
+import androidx.compose.ui.platform.LocalLocale
 
 @AndroidEntryPoint
 class BirthdayActivity : ComposeActivity() {
@@ -122,12 +120,6 @@ class BirthdayActivity : ComposeActivity() {
                         }) {
                             if ((userViewModel.user.value?.gemCount ?: 0) < 60) {
                                 val dialog = InsufficientGemsDialog(this@BirthdayActivity, 3)
-                                Analytics.sendEvent(
-                                    "show insufficient gems modal",
-                                    EventCategory.BEHAVIOUR,
-                                    HitType.EVENT,
-                                    mapOf("reason" to "birthday"),
-                                )
                                 dialog.show()
                                 return@launchCatching
                             }
@@ -237,7 +229,7 @@ fun BirthdayActivityView(
     onEquipClick: () -> Unit,
 ) {
     val activity = LocalActivity.current
-    val dateFormat = SimpleDateFormat("MMM dd", java.util.Locale.getDefault())
+    val dateFormat = SimpleDateFormat("MMM dd", LocalLocale.current.platformLocale)
     val complexDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL)
 
     val textColor = Color.White

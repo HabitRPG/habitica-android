@@ -46,6 +46,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import kotlinx.coroutines.MainScope
+import leakcanary.LeakCanary
 import java.lang.ref.WeakReference
 import java.util.Date
 import javax.inject.Inject
@@ -117,6 +118,8 @@ abstract class HabiticaBaseApplication :
 
     override fun onCreate() {
         super.onCreate()
+
+        LeakCanary.config = LeakCanary.config.copy(showNotifications = false)
 
         lifecycleTracker = ApplicationLifecycleTracker(sharedPrefs)
         ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleTracker)

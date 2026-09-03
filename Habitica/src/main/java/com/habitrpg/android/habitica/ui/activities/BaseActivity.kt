@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -36,9 +35,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
@@ -78,7 +74,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun getLayoutResId(): Int?
 
     open fun getContentView(layoutResId: Int? = getLayoutResId()): View =
-        (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+        (getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
             layoutResId ?: 0,
             null,
         )
@@ -319,12 +315,6 @@ abstract class BaseActivity : AppCompatActivity() {
         message: String?,
         image: Bitmap? = null,
     ) {
-        Analytics.sendEvent(
-            "shared",
-            EventCategory.BEHAVIOUR,
-            HitType.EVENT,
-            mapOf("identifier" to identifier),
-        )
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "image/*"
         if (message?.isNotBlank() == true) {

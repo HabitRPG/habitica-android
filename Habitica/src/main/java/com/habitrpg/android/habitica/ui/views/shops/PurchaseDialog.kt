@@ -21,11 +21,8 @@ import com.habitrpg.android.habitica.databinding.DialogPurchaseShopitemHeaderBin
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -588,12 +585,6 @@ class PurchaseDialog(
                     }
 
                     "gems" == shopItem.currency -> {
-                        Analytics.sendEvent(
-                            "show insufficient gems modal",
-                            EventCategory.BEHAVIOUR,
-                            HitType.EVENT,
-                            mapOf("reason" to "purchase modal", "item" to shopItem.key),
-                        )
                         parentActivity?.let { activity ->
                             InsufficientGemsDialog(
                                 activity,

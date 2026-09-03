@@ -60,6 +60,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                     } else {
                         1
                     }
+                }
             }
 
         view.post { setGridSpanCount(view.width) }
@@ -113,7 +114,8 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         super.onDestroy()
     }
 
-    override fun getLayoutManager(context: Context?): LinearLayoutManager = GridLayoutManager(context, 4)
+    override fun getLayoutManager(context: Context?): LinearLayoutManager =
+        GridLayoutManager(context, 4)
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true

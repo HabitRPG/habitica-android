@@ -23,9 +23,7 @@ import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 abstract class BaseTaskViewHolder(
     itemView: View,
@@ -109,16 +107,6 @@ abstract class BaseTaskViewHolder(
                 if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
             }
         }
-        notesTextView?.addEllipsesListener(
-            object : EllipsisTextView.EllipsisListener {
-                override fun ellipsisStateChanged(ellipses: Boolean) {
-                    scope.launch(Dispatchers.Main.immediate) {
-                        expandNotesButton?.visibility =
-                            if (ellipses || notesExpanded) View.VISIBLE else View.GONE
-                    }
-                }
-            },
-        )
         context = itemView.context
     }
 

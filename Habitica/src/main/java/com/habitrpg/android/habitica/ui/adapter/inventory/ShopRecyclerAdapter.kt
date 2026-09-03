@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.shops.EmptyShopCategory
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
@@ -59,7 +56,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
     var user: User? = null
         set(value) {
             field = value
-            if (items.size > 0) {
+            if (items.isNotEmpty()) {
                 this.notifyDataSetChanged()
             }
         }
@@ -193,12 +190,6 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                         } else {
                                             mainActivity?.let { activity ->
                                                 val dialog = InsufficientGemsDialog(activity, 3)
-                                                Analytics.sendEvent(
-                                                    "show insufficient gems modal",
-                                                    EventCategory.BEHAVIOUR,
-                                                    HitType.EVENT,
-                                                    mapOf("reason" to "class change"),
-                                                )
                                                 dialog.show()
                                             }
                                         }
@@ -278,7 +269,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
 
     @Suppress("ReturnCount")
     private fun getItem(position: Int): Any? {
-        if (items.size == 0) {
+        if (items.isEmpty()) {
             return null
         }
         if (position == 0) {
@@ -293,7 +284,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                 }
 
                 (selectedGearCategory?.items?.size ?: 0) <= position - 2 -> {
-                    return Pair(
+                    Pair(
                         context?.resources?.let {
                             getTranslatedClassName(
                                 it,
@@ -356,14 +347,14 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        if (items.size > 0) {
+        if (items.isNotEmpty()) {
             this.notifyDataSetChanged()
         }
     }
 
     fun setPinnedItemKeys(pinnedItemKeys: List<String>) {
         this.pinnedItemKeys = pinnedItemKeys
-        if (items.size > 0) {
+        if (items.isNotEmpty()) {
             this.notifyDataSetChanged()
         }
     }

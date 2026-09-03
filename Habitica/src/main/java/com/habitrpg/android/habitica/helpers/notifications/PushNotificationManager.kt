@@ -9,9 +9,6 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -185,12 +182,6 @@ class PushNotificationManager(
                 if (remoteMessage.data.containsKey("sendAnalytics")) {
                     val additionalData = HashMap<String, Any>()
                     additionalData["identifier"] = remoteMessageIdentifier ?: ""
-                    Analytics.sendEvent(
-                        "receive notification",
-                        EventCategory.BEHAVIOUR,
-                        HitType.EVENT,
-                        additionalData,
-                    )
                 }
 
                 val notificationFactory = HabiticaLocalNotificationFactory()

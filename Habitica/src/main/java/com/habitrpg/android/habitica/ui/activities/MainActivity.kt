@@ -213,19 +213,20 @@ open class MainActivity :
         ) { granted ->
             if (granted) {
                 viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+                    !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)
+                ) {
+                    val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager
+                        ?: return@registerForActivityResult
+                    if (!alarmManager.canScheduleExactAlarms()) {
+                        val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                        intent.data = Uri.fromParts("package", applicationContext?.packageName, null)
+                        startActivity(intent)
+                    }
+                }
             } else {
                 viewModel.updateAllowPushNotifications(false)
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-                !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)
-            ) {
-                val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager
-                    ?: return@registerForActivityResult
-                if (!alarmManager.canScheduleExactAlarms()) {
-                    val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                    intent.data = Uri.fromParts("package", applicationContext?.packageName, null)
-                    startActivity(intent)
-                }
             }
         }
 
@@ -934,7 +935,7 @@ open class MainActivity :
                                         }
                                         lifecycleScope.launch(ExceptionHandler.coroutine()) {
                                             userRepository.updateUser("stats.hp", 1)
-                                            delay(1000)
+                                            delay(1.seconds)
                                             HabiticaSnackbar.showSnackbar(
                                                 snackbarContainer,
                                                 getString(R.string.subscriber_benefit_success_faint),
@@ -948,7 +949,7 @@ open class MainActivity :
                                         lifecycleScope.launch(ExceptionHandler.coroutine()) {
                                             val brokenItem = userRepository.revive()
                                             if (brokenItem != null) {
-                                                delay(500)
+                                                delay(500.milliseconds)
                                                 HabiticaSnackbar.showSnackbar(
                                                     snackbarContainer,
                                                     getString(R.string.revive_broken_equipment, brokenItem.text),
