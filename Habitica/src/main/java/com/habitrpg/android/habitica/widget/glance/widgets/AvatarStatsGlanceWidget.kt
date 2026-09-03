@@ -1,13 +1,11 @@
 package com.habitrpg.android.habitica.widget.glance.widgets
 
 import android.content.Context
-import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
-import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
@@ -18,7 +16,6 @@ import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
-import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -30,11 +27,8 @@ import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
-import androidx.glance.layout.size
 import androidx.glance.layout.width
-import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.widget.glance.actions.openAppAction
 import com.habitrpg.android.habitica.widget.glance.actions.openProfileAction
 import com.habitrpg.android.habitica.widget.glance.components.CurrencyChip
@@ -44,24 +38,25 @@ import com.habitrpg.android.habitica.widget.glance.components.MergedCurrencyChip
 import com.habitrpg.android.habitica.widget.glance.components.SignedOutContent
 import com.habitrpg.android.habitica.widget.glance.components.StatRow
 import com.habitrpg.android.habitica.widget.glance.components.StatRowMode
-import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
 import com.habitrpg.android.habitica.widget.glance.components.inlineValueColumnWidth
 import com.habitrpg.android.habitica.widget.glance.components.inlineValueText
 import com.habitrpg.android.habitica.widget.glance.components.stringRes
-import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
+import com.habitrpg.android.habitica.widget.glance.components.WidgetLoadingContent
 import com.habitrpg.android.habitica.widget.glance.data.WidgetAuth
-import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
+import com.habitrpg.android.habitica.widget.glance.data.StatsWidgetState
 import com.habitrpg.android.habitica.widget.glance.data.hydrateSnapshot
 import com.habitrpg.android.habitica.widget.glance.data.loadStatsStateOrNull
+import android.os.Build
+import androidx.glance.GlanceTheme
+import androidx.glance.unit.ColorProvider
 import com.habitrpg.android.habitica.widget.glance.theme.HabiticaWidgetTheme
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetBarColors
 import com.habitrpg.android.habitica.widget.glance.theme.WidgetColors
+import androidx.datastore.preferences.core.Preferences
+import androidx.glance.currentState
+import com.habitrpg.android.habitica.widget.glance.data.WidgetSnapshotStore
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
-private val TALL_THRESHOLD = 120.dp
-
-private const val OUTER_PADDING_DP = 12
-private const val COMPACT_OUTER_PADDING_DP = 8
-private const val FULL_OUTER_PADDING_DP = 16
 private val HORIZONTAL_START_PADDING = 14.dp
 private val HORIZONTAL_END_PADDING = 20.dp
 
@@ -71,26 +66,21 @@ private val COMPACT_BAR_HEIGHT = 6.dp
 class AvatarStatsGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
-    override suspend fun provideGlance(
-        context: Context,
-        id: GlanceId,
-    ) {
-        val initial =
-            if (WidgetAuth.isLoggedIn(context)) {
-                hydrateSnapshot(context, id, WidgetSnapshotStore.statsKey) {
-                    loadStatsStateOrNull(context)?.let { WidgetSnapshotStore.encodeStats(it) }
-                }?.let { WidgetSnapshotStore.decodeStats(it) }
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val initial = if (WidgetAuth.isLoggedIn(context)) {
+            hydrateSnapshot(context, id, WidgetSnapshotStore.statsKey) {
+                loadStatsStateOrNull(context)?.let { WidgetSnapshotStore.encodeStats(it) }
+            }?.let { WidgetSnapshotStore.decodeStats(it) }
+        } else {
+            null
+        }
+        provideContent {
+            val loggedIn = WidgetAuth.isLoggedIn(context)
+            val state = if (loggedIn) {
+                WidgetSnapshotStore.statsFrom(currentState()) ?: initial
             } else {
                 null
             }
-        provideContent {
-            val loggedIn = WidgetAuth.isLoggedIn(context)
-            val state =
-                if (loggedIn) {
-                    WidgetSnapshotStore.statsFrom(currentState()) ?: initial
-                } else {
-                    null
-                }
             HabiticaWidgetTheme {
                 when {
                     !loggedIn -> SignedOutContent()
@@ -101,16 +91,6 @@ class AvatarStatsGlanceWidget : GlanceAppWidget() {
         }
     }
 }
-
-private data class StatsLayout(
-    val cols: Int,
-    val tall: Boolean,
-    val rowMode: StatRowMode,
-    val showAvatar: Boolean,
-    val avatarOnTop: Boolean,
-    val showFooter: Boolean,
-    val barsFillHeight: Boolean,
-)
 
 private data class StatsInnerPalette(
     val labelText: ColorProvider,
@@ -123,25 +103,19 @@ private data class StatsInnerPalette(
 private val MaterialYouEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
 @Composable
-private fun rememberInnerPalette(): StatsInnerPalette =
-    if (MaterialYouEnabled) {
+private fun rememberInnerPalette(): StatsInnerPalette {
+    return if (MaterialYouEnabled) {
         val context = LocalContext.current
         StatsInnerPalette(
             labelText = GlanceTheme.colors.onSurface,
-            chipBackground =
-                ColorProvider(
-                    GlanceTheme.colors.primary
-                        .getColor(context)
-                        .copy(alpha = 0.3f),
-                ),
+            chipBackground = ColorProvider(
+                GlanceTheme.colors.primary.getColor(context).copy(alpha = 0.3f),
+            ),
             chipText = GlanceTheme.colors.onSurfaceVariant,
             levelChipBackground = GlanceTheme.colors.primary,
-            levelChipText =
-                ColorProvider(
-                    GlanceTheme.colors.onPrimary
-                        .getColor(context)
-                        .copy(alpha = 0.85f),
-                ),
+            levelChipText = ColorProvider(
+                GlanceTheme.colors.onPrimary.getColor(context).copy(alpha = 0.85f),
+            ),
         )
     } else {
         StatsInnerPalette(
@@ -152,77 +126,41 @@ private fun rememberInnerPalette(): StatsInnerPalette =
             levelChipText = WidgetColors.levelChipText,
         )
     }
-
-private fun pickLayout(
-    width: Dp,
-    height: Dp,
-): StatsLayout {
-    val tall = height >= TALL_THRESHOLD
-    val cols =
-        when {
-            width >= 310.dp -> 5
-            width >= 240.dp -> 4
-            width >= 170.dp -> 3
-            else -> 2
-        }
-    val rowMode =
-        when {
-            tall && cols >= 4 -> StatRowMode.LabelStackedValue
-            tall -> StatRowMode.BarOnly
-            cols >= 5 -> StatRowMode.InlineValueMaxWithLabel
-            cols == 4 -> StatRowMode.InlineValueWithLabel
-            else -> StatRowMode.BarOnly
-        }
-    val showAvatar = tall && (cols == 2 || cols >= 5)
-    val avatarOnTop = showAvatar && cols == 2
-    val showFooter = tall && cols >= 4
-    val barsFillHeight = tall && rowMode == StatRowMode.BarOnly && !showAvatar
-    return StatsLayout(cols, tall, rowMode, showAvatar, avatarOnTop, showFooter, barsFillHeight)
 }
 
 @Composable
 private fun StatsContent(state: StatsWidgetState) {
     val size = LocalSize.current
-    val layout = pickLayout(size.width, size.height)
-    val basePadding =
-        when {
-            !layout.tall -> COMPACT_OUTER_PADDING_DP.dp
-            layout.showAvatar && !layout.avatarOnTop -> FULL_OUTER_PADDING_DP.dp
-            else -> OUTER_PADDING_DP.dp
-        }
+    val fontScale = WidgetSnapshotStore.fontScale(LocalContext.current)
+    val rows = if (state.showMp) 3 else 2
+    val layout = pickLayout(size.width, size.height, rows, fontScale)
+    val basePadding = layout.outerPadding
     val noAvatarHorizontal = !layout.avatarOnTop && !layout.showAvatar
     val startPadding = if (noAvatarHorizontal) HORIZONTAL_START_PADDING else basePadding
     val endPadding = if (noAvatarHorizontal) HORIZONTAL_END_PADDING else basePadding
     val horizontalPadding = startPadding + endPadding
     val palette = rememberInnerPalette()
 
-    val tileBackground: ColorProvider =
-        if (MaterialYouEnabled) {
-            GlanceTheme.colors.widgetBackground
-        } else {
-            WidgetColors.background
-        }
+    val tileBackground: ColorProvider = if (MaterialYouEnabled) {
+        GlanceTheme.colors.widgetBackground
+    } else {
+        WidgetColors.background
+    }
     Box(
-        modifier =
-            GlanceModifier
-                .fillMaxSize()
-                .cornerRadius(20.dp)
-                .background(tileBackground)
-                .padding(start = startPadding, end = endPadding, top = basePadding, bottom = basePadding)
-                .clickable(onClick = openAppAction()),
+        modifier = GlanceModifier
+            .fillMaxSize()
+            .cornerRadius(20.dp)
+            .background(tileBackground)
+            .padding(start = startPadding, end = endPadding, top = basePadding, bottom = basePadding)
+            .clickable(onClick = openAppAction()),
     ) {
         when {
-            layout.avatarOnTop -> {
+            layout.avatarOnTop ->
                 CompactAvatarLayout(state, layout, size.width, horizontalPadding, palette)
-            }
-
-            layout.showAvatar -> {
+            layout.showAvatar ->
                 FullStatsLayout(state, layout, size.width, horizontalPadding, palette)
-            }
-
-            else -> {
+            else ->
                 HorizontalLayout(state, layout, size.width, horizontalPadding, palette)
-            }
         }
     }
 }
@@ -236,18 +174,24 @@ private fun CompactAvatarLayout(
     palette: StatsInnerPalette,
 ) {
     val columnWidth = (widgetWidth - horizontalPadding).coerceAtLeast(40.dp)
+    val avatarHeight = layout.avatarHeight
+    val avatarWidth = avatarHeight * COMPACT_AVATAR_ASPECT
     Column(
         modifier = GlanceModifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        AvatarImage(
-            state = state,
-            width = 88.dp,
-            height = 92.dp,
-            cornerRadius = 14.dp,
-            modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
-        )
-        Spacer(GlanceModifier.defaultWeight())
+        Box(
+            modifier = GlanceModifier.defaultWeight(),
+            contentAlignment = Alignment.Center,
+        ) {
+            AvatarImage(
+                state = state,
+                width = avatarWidth,
+                height = avatarHeight,
+                cornerRadius = 14.dp,
+                modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
+            )
+        }
         StatBars(state = state, layout = layout, columnWidth = columnWidth, palette = palette)
     }
 }
@@ -260,58 +204,24 @@ private fun HorizontalLayout(
     horizontalPadding: Dp,
     palette: StatsInnerPalette,
 ) {
-    val avatarBoxWidth = if (layout.showAvatar) 124.dp else 0.dp
-    val avatarSpacing = if (layout.showAvatar) 12.dp else 0.dp
-    val columnWidth =
-        (widgetWidth - horizontalPadding - avatarBoxWidth - avatarSpacing)
-            .coerceAtLeast(40.dp)
+    val columnWidth = (widgetWidth - horizontalPadding).coerceAtLeast(40.dp)
 
-    Row(
-        modifier = GlanceModifier.fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        if (layout.showAvatar) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                AvatarImage(
-                    state = state,
-                    width = 124.dp,
-                    height = 129.dp,
-                    cornerRadius = 16.dp,
-                    modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
-                )
-                Spacer(GlanceModifier.height(6.dp))
-                LevelChip(
-                    level = state.level,
-                    className = state.className,
-                    showFullLabel = true,
-                    modifier =
-                        GlanceModifier
-                            .width(124.dp)
-                            .clickable(onClick = openProfileAction(state.userId)),
-                    backgroundColor = palette.levelChipBackground,
-                    textColor = palette.levelChipText,
-                )
-            }
-            Spacer(GlanceModifier.width(12.dp))
-        }
-        val contentModifier =
-            if (layout.barsFillHeight) {
-                GlanceModifier.defaultWeight().fillMaxHeight()
-            } else {
-                GlanceModifier.defaultWeight()
-            }
-        Column(modifier = contentModifier) {
+    Column(modifier = GlanceModifier.fillMaxSize()) {
+        Box(
+            modifier = GlanceModifier.defaultWeight(),
+            contentAlignment = Alignment.CenterStart,
+        ) {
             StatBars(state = state, layout = layout, columnWidth = columnWidth, palette = palette)
-            if (layout.showFooter) {
-                Spacer(GlanceModifier.height(8.dp))
-                StatsFooter(
-                    state = state,
-                    includeLevel = !layout.showAvatar,
-                    showFullLevelLabel = layout.cols >= 5,
-                    palette = palette,
-                    mergeCurrencyChips = true,
-                )
-            }
+        }
+        if (layout.showFooter) {
+            Spacer(GlanceModifier.height(FOOTER_SPACING))
+            StatsFooter(
+                state = state,
+                includeLevel = true,
+                showFullLevelLabel = layout.cols >= 5,
+                palette = palette,
+                mergeCurrencyChips = true,
+            )
         }
     }
 }
@@ -324,30 +234,28 @@ private fun FullStatsLayout(
     horizontalPadding: Dp,
     palette: StatsInnerPalette,
 ) {
-    val avatarWidth = 124.dp
-    val avatarSpacing = 12.dp
-    val columnWidth =
-        (widgetWidth - horizontalPadding - avatarWidth - avatarSpacing)
-            .coerceAtLeast(40.dp)
+    val avatarHeight = layout.avatarHeight
+    val avatarWidth = avatarHeight * AVATAR_ASPECT
+    val columnWidth = (widgetWidth - horizontalPadding - avatarWidth - AVATAR_SPACING)
+        .coerceAtLeast(40.dp)
 
     Column(modifier = GlanceModifier.fillMaxSize()) {
         Row(
-            modifier = GlanceModifier.fillMaxWidth(),
+            modifier = GlanceModifier.fillMaxWidth().defaultWeight(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AvatarImage(
                 state = state,
                 width = avatarWidth,
-                height = 129.dp,
+                height = avatarHeight,
                 cornerRadius = 16.dp,
                 modifier = GlanceModifier.clickable(onClick = openProfileAction(state.userId)),
             )
-            Spacer(GlanceModifier.width(avatarSpacing))
+            Spacer(GlanceModifier.width(AVATAR_SPACING))
             Column(modifier = GlanceModifier.defaultWeight()) {
                 StatBars(state = state, layout = layout, columnWidth = columnWidth, palette = palette)
             }
         }
-        Spacer(GlanceModifier.defaultWeight())
         StatsFooter(
             state = state,
             includeLevel = true,
@@ -366,52 +274,37 @@ private fun StatBars(
     palette: StatsInnerPalette,
 ) {
     val fill = layout.barsFillHeight
-    val iconSize =
-        when {
-            !layout.tall -> 18.dp
-            fill -> 30.dp
-            else -> 24.dp
-        }
+    val iconSize = layout.iconSize
     val useThinBar = layout.avatarOnTop || !layout.tall
     val barHeight = if (useThinBar) COMPACT_BAR_HEIGHT else DEFAULT_BAR_HEIGHT
-    val gap =
-        when {
-            !layout.tall -> 4.dp
-            layout.rowMode == StatRowMode.LabelStackedValue -> 10.dp
-            else -> 6.dp
-        }
-    val columnModifier =
-        if (fill) {
-            GlanceModifier.fillMaxWidth().fillMaxHeight()
-        } else {
-            GlanceModifier.fillMaxWidth()
-        }
+    val gap = layout.rowGap
+    val columnModifier = if (fill) {
+        GlanceModifier.fillMaxWidth().fillMaxHeight()
+    } else {
+        GlanceModifier.fillMaxWidth()
+    }
     val hpLabel = stringRes(R.string.widget_stat_hp)
     val expLabel = stringRes(R.string.widget_stat_exp)
     val mpLabel = stringRes(R.string.widget_stat_mp)
-    val isInline =
-        layout.rowMode == StatRowMode.InlineValueWithLabel ||
-            layout.rowMode == StatRowMode.InlineValueMaxWithLabel
-    val valueColumnWidth =
-        if (isInline) {
-            val texts =
-                buildList {
-                    add(inlineValueText(layout.rowMode, state.hpText, state.maxHpText, hpLabel))
-                    add(inlineValueText(layout.rowMode, state.expText, state.toNextLevelText, expLabel))
-                    if (state.showMp) add(inlineValueText(layout.rowMode, state.mpText, state.maxMpText, mpLabel))
-                }
-            inlineValueColumnWidth(texts)
-        } else {
-            0.dp
+    val isInline = layout.rowMode == StatRowMode.InlineValueWithLabel ||
+        layout.rowMode == StatRowMode.InlineValueMaxWithLabel
+    val valueColumnWidth = if (isInline) {
+        val texts = buildList {
+            add(inlineValueText(layout.rowMode, state.hpText, state.maxHpText, hpLabel))
+            add(inlineValueText(layout.rowMode, state.expText, state.toNextLevelText, expLabel))
+            if (state.showMp) add(inlineValueText(layout.rowMode, state.mpText, state.maxMpText, mpLabel))
         }
-    val barAvailableWidth =
-        (
-            columnWidth -
-                (if (isInline) 8.dp else 0.dp) -
-                iconSize -
-                8.dp -
-                (if (isInline) 4.dp + valueColumnWidth else 0.dp)
-        ).coerceAtLeast(16.dp)
+        inlineValueColumnWidth(texts)
+    } else {
+        0.dp
+    }
+    val barAvailableWidth = (
+        columnWidth -
+            (if (isInline) 8.dp else 0.dp) -
+            iconSize -
+            8.dp -
+            (if (isInline) 4.dp + valueColumnWidth else 0.dp)
+    ).coerceAtLeast(16.dp)
     Column(modifier = columnModifier) {
         if (fill) Spacer(GlanceModifier.defaultWeight())
         StatRow(
@@ -476,12 +369,11 @@ private fun AvatarImage(
     modifier: GlanceModifier = GlanceModifier,
 ) {
     val bitmapFile = state.avatarBitmapPath?.let { java.io.File(it) }
-    val bitmap =
-        if (bitmapFile?.exists() == true) {
-            runCatching { android.graphics.BitmapFactory.decodeFile(bitmapFile.absolutePath) }.getOrNull()
-        } else {
-            null
-        }
+    val bitmap = if (bitmapFile?.exists() == true) {
+        runCatching { android.graphics.BitmapFactory.decodeFile(bitmapFile.absolutePath) }.getOrNull()
+    } else {
+        null
+    }
     val baseModifier = modifier.width(width).height(height)
     val clippedModifier = if (cornerRadius > 0.dp) baseModifier.cornerRadius(cornerRadius) else baseModifier
     if (bitmap != null) {
@@ -511,14 +403,11 @@ private fun StatsFooter(
     ) {
         val levelChip: @Composable () -> Unit = {
             if (includeLevel) {
-                val levelModifier =
-                    (
-                        if (levelChipWidth != null) {
-                            GlanceModifier.width(levelChipWidth)
-                        } else {
-                            GlanceModifier
-                        }
-                    ).clickable(onClick = openProfileAction(state.userId))
+                val levelModifier = (if (levelChipWidth != null) {
+                    GlanceModifier.width(levelChipWidth)
+                } else {
+                    GlanceModifier
+                }).clickable(onClick = openProfileAction(state.userId))
                 LevelChip(
                     level = state.level,
                     className = state.className,
@@ -537,29 +426,28 @@ private fun StatsFooter(
             ) {
                 levelChip()
             }
-            val items =
-                buildList {
-                    if (state.hourglassCount > 0) {
-                        add(
-                            CurrencyChipItem(
-                                iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),
-                                text = state.hourglassesText,
-                            ),
-                        )
-                    }
+            val items = buildList {
+                if (state.hourglassCount > 0) {
                     add(
                         CurrencyChipItem(
-                            iconProvider = ImageProvider(R.drawable.widget_icon_gem),
-                            text = state.gemsText,
-                        ),
-                    )
-                    add(
-                        CurrencyChipItem(
-                            iconProvider = ImageProvider(R.drawable.widget_icon_gold),
-                            text = state.goldText,
+                            iconProvider = ImageProvider(HabiticaIconsHelper.imageOfHourglass()),
+                            text = state.hourglassesText,
                         ),
                     )
                 }
+                add(
+                    CurrencyChipItem(
+                        iconProvider = ImageProvider(R.drawable.widget_icon_gem),
+                        text = state.gemsText,
+                    ),
+                )
+                add(
+                    CurrencyChipItem(
+                        iconProvider = ImageProvider(R.drawable.widget_icon_gold),
+                        text = state.goldText,
+                    ),
+                )
+            }
             MergedCurrencyChip(
                 items = items,
                 backgroundColor = palette.chipBackground,

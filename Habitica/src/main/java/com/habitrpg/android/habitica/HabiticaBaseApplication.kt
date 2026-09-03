@@ -82,10 +82,6 @@ class ApplicationLifecycleTracker(
                 putInt("usage_time_day_count", ++observedDays)
                 putLong("usage_time_daily_average", average)
             }
-            if (sharedPreferences.getBoolean("analytics_consent_given", false)) {
-                Analytics.setUserProperty("usage_time_daily_average", average)
-                Analytics.setUserProperty("usage_time_total", currentTotal)
-            }
             current = 0
             currentDay = Date()
         }

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.widget.glance.widgets
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.ColorFilter
@@ -11,6 +12,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
@@ -28,6 +30,8 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.ContentScale
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -156,8 +160,10 @@ private fun TaskListContent(
 ) {
     val size = LocalSize.current
     val palette = rememberPalette()
+    val fontScale = WidgetSnapshotStore.fontScale(LocalContext.current)
     val isVeryCompact = size.width < 180.dp
     val isCompact = size.width < 230.dp
+    val outerPadding = if (isVeryCompact) 6.dp else 10.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
     val addTaskType = if (isDaily) "daily" else "todo"
     val title =
@@ -169,15 +175,14 @@ private fun TaskListContent(
         }
 
     Column(
-        modifier =
-            GlanceModifier
-                .fillMaxSize()
-                .cornerRadius(20.dp)
-                .background(palette.widgetBackground)
-                .padding(
-                    horizontal = if (isVeryCompact) 6.dp else 10.dp,
-                    vertical = if (isVeryCompact) 8.dp else 12.dp,
-                ),
+        modifier = GlanceModifier
+            .fillMaxSize()
+            .cornerRadius(20.dp)
+            .background(palette.widgetBackground)
+            .padding(
+                horizontal = outerPadding,
+                vertical = if (isVeryCompact) 8.dp else 12.dp,
+            ),
     ) {
         TaskListHeader(
             title = title,
@@ -191,6 +196,8 @@ private fun TaskListContent(
             state = state,
             isDaily = isDaily,
             palette = palette,
+            fontScale = fontScale,
+            rowWidth = size.width - outerPadding * 2,
         )
     }
 }
@@ -242,37 +249,32 @@ private fun TaskListBody(
     state: TaskListWidgetState,
     isDaily: Boolean,
     palette: TaskListPalette,
+    fontScale: Float,
+    rowWidth: Dp,
 ) {
     Box(modifier = GlanceModifier.fillMaxSize()) {
         when {
-            state.needsCron && isDaily -> {
-                StartDayCard(
-                    onClick = openAppAction("habitica://user/tasks/daily"),
-                    backgroundColor = palette.cardBackground,
-                    textColor = palette.taskText,
-                    iconTint = palette.cardIconTint,
-                )
-            }
-
-            state.tasks.isEmpty() -> {
-                EmptyState(
-                    message =
-                        stringRes(
-                            if (isDaily) R.string.widget_empty_dailies else R.string.widget_empty_todos,
-                        ),
-                    backgroundColor = palette.cardBackground,
-                    textColor = palette.taskText,
-                    sparklesSize = if (isDaily) 56.dp else 40.dp,
-                )
-            }
-
-            else -> {
-                TaskListRows(
-                    state = state,
-                    palette = palette,
-                    isDaily = isDaily,
-                )
-            }
+            state.needsCron && isDaily -> StartDayCard(
+                onClick = openAppAction("habitica://user/tasks/daily"),
+                backgroundColor = palette.cardBackground,
+                textColor = palette.taskText,
+                iconTint = palette.cardIconTint,
+            )
+            state.tasks.isEmpty() -> EmptyState(
+                message = stringRes(
+                    if (isDaily) R.string.widget_empty_dailies else R.string.widget_empty_todos,
+                ),
+                backgroundColor = palette.cardBackground,
+                textColor = palette.taskText,
+                sparklesSize = if (isDaily) 56.dp else 40.dp,
+            )
+            else -> TaskListRows(
+                state = state,
+                palette = palette,
+                isDaily = isDaily,
+                fontScale = fontScale,
+                rowWidth = rowWidth,
+            )
         }
     }
 }
@@ -282,6 +284,8 @@ private fun TaskListRows(
     state: TaskListWidgetState,
     palette: TaskListPalette,
     isDaily: Boolean,
+    fontScale: Float,
+    rowWidth: Dp,
 ) {
     val innerCornerRadius = if (isDaily) 8.dp else 13.dp
     val openListLink = if (isDaily) "habitica://user/tasks/daily" else "habitica://user/tasks/todo"
@@ -293,14 +297,20 @@ private fun TaskListRows(
     LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
         items(shown.size) { index ->
             val task = shown[index]
+            val metrics = taskRowMetrics(
+                text = task.text,
+                rowWidth = rowWidth,
+                checklistDone = task.checklistDone,
+                checklistTotal = task.checklistTotal,
+                fontScale = fontScale,
+            )
             Column(modifier = GlanceModifier.fillMaxWidth()) {
                 Box(
-                    modifier =
-                        GlanceModifier
-                            .fillMaxWidth()
-                            .height(48.dp)
-                            .cornerRadius(17.5.dp)
-                            .background(palette.cardBackground),
+                    modifier = GlanceModifier
+                        .fillMaxWidth()
+                        .height(metrics.height)
+                        .cornerRadius(TASK_ROW_CORNER_RADIUS)
+                        .background(palette.cardBackground),
                 ) {
                     TaskRow(
                         text = task.text,
@@ -313,6 +323,8 @@ private fun TaskListRows(
                         checklistDoneCount = task.checklistDone,
                         checklistTotalCount = task.checklistTotal,
                         showChecklistCount = true,
+                        maxLines = metrics.maxLines,
+                        modifier = GlanceModifier.fillMaxHeight(),
                         innerCornerRadius = innerCornerRadius,
                         onClick =
                             actionRunCallback<ScoreTaskAction>(
@@ -324,7 +336,7 @@ private fun TaskListRows(
                     )
                 }
                 if (index < shown.size - 1 || showFooter) {
-                    Spacer(GlanceModifier.height(6.dp))
+                    Spacer(GlanceModifier.height(TASK_ROW_SPACING))
                 }
             }
         }
@@ -334,6 +346,7 @@ private fun TaskListRows(
                     moreCount = moreCount,
                     textColor = palette.secondaryText,
                     openListLink = openListLink,
+                    height = viewMoreHeight(fontScale),
                 )
             }
         }
@@ -345,13 +358,13 @@ private fun ViewMoreFooter(
     moreCount: Int,
     textColor: ColorProvider,
     openListLink: String,
+    height: Dp,
 ) {
     Box(
-        modifier =
-            GlanceModifier
-                .fillMaxWidth()
-                .height(28.dp)
-                .clickable(onClick = openAppAction(openListLink)),
+        modifier = GlanceModifier
+            .fillMaxWidth()
+            .height(height)
+            .clickable(onClick = openAppAction(openListLink)),
         contentAlignment = Alignment.Center,
     ) {
         Text(

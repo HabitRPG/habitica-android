@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
@@ -34,6 +33,7 @@ import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
@@ -137,7 +137,8 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
             }
             binding?.promoComposeView?.isVisible = true
         }
-        Analytics.sendNavigationEvent("gem screen")
+        loadInventory()
+
     }
 
     override fun onResume() {

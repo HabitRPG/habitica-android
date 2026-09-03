@@ -12,8 +12,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
@@ -90,52 +88,34 @@ class MainActivityViewModel
             }
         }
 
-        fun retrieveUser(forced: Boolean = false) {
-            viewModelScope.launch(ExceptionHandler.coroutine()) {
-                if (!hostConfig.isInitialized) {
-                    hostConfig.awaitReady()
-                }
-                if (!hostConfig.hasAuthentication()) return@launch
-                contentRepository.retrieveWorldState()
-                userRepository.retrieveUser(true, forced)?.let { user ->
-                    if (user.preferences?.analyticsConsent == true) {
-                        Analytics.setUserProperty(
-                            "has_party",
-                            if (user.party?.id?.isNotEmpty() == true) "true" else "false",
-                        )
-                        Analytics.setUserProperty(
-                            "is_subscribed",
-                            if (user.isSubscribed) "true" else "false",
-                        )
-                        Analytics.setUserProperty(
-                            "checkin_count",
-                            user.loginIncentives.toString(),
-                        )
-                        user.preferences?.pushNotifications?.mapOfKeys()?.forEach { (key, isEnabled) ->
-                            Analytics.setUserProperty("allow_push_$key", isEnabled)
-                        }
-                        Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
-                    }
-                    pushNotificationManager.setUser(user)
-                    if (!pushNotificationManager.notificationPermissionEnabled()) {
-                        if (sharedPreferences.getBoolean("usePushNotifications", true)) {
-                            requestNotificationPermission.value = true
-                        }
-                    } else {
-                        pushNotificationManager.addPushDeviceUsingStoredToken()
-                    }
-                }
-                inventoryRepository.retrieveInAppRewards()
-                contentRepository.retrieveContent()
+    fun retrieveUser(forced: Boolean = false) {
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            if (!hostConfig.isInitialized) {
+                hostConfig.awaitReady()
             }
-            viewModelScope.launchCatching {
-                if (!hostConfig.isInitialized) {
-                    hostConfig.awaitReady()
+            if (!hostConfig.hasAuthentication()) return@launch
+            contentRepository.retrieveWorldState()
+            userRepository.retrieveUser(true, forced)?.let { user ->
+                pushNotificationManager.setUser(user)
+                if (!pushNotificationManager.notificationPermissionEnabled()) {
+                    if (sharedPreferences.getBoolean("usePushNotifications", true)) {
+                        requestNotificationPermission.value = true
+                    }
+                } else {
+                    pushNotificationManager.addPushDeviceUsingStoredToken()
                 }
-                if (!hostConfig.hasAuthentication()) return@launchCatching
-                userRepository.retrieveTeamPlans()
             }
+            inventoryRepository.retrieveInAppRewards()
+            contentRepository.retrieveContent()
         }
+        viewModelScope.launchCatching {
+            if (!hostConfig.isInitialized) {
+                hostConfig.awaitReady()
+            }
+            if (!hostConfig.hasAuthentication()) return@launchCatching
+            userRepository.retrieveTeamPlans()
+        }
+    }
 
         fun updateAllowPushNotifications(allowPushNotifications: Boolean) {
             sharedPreferences.getBoolean("usePushNotifications", true)
@@ -148,26 +128,14 @@ class MainActivityViewModel
             updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
             logTutorialStatus(step, true)
         }
+    override fun onTutorialCompleted(step: TutorialStep) {
+        updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
+    }
 
-        override fun onTutorialDeferred(step: TutorialStep) {
-            taskRepository.modify(step) { it.displayedOn = Date() }
-        }
 
-        fun logTutorialStatus(
-            step: TutorialStep,
-            complete: Boolean,
-        ) {
-            val additionalData = HashMap<String, Any>()
-            additionalData["eventLabel"] = step.identifier + "-android"
-            additionalData["eventValue"] = step.identifier ?: ""
-            additionalData["complete"] = complete
-            Analytics.sendEvent(
-                "tutorial",
-                EventCategory.BEHAVIOUR,
-                HitType.EVENT,
-                additionalData,
-            )
-        }
+    override fun onTutorialDeferred(step: TutorialStep) {
+        taskRepository.modify(step) { it.displayedOn = Date() }
+    }
 
         fun ifNeedsMaintenance(onResult: ((MaintenanceResponse) -> Unit)) {
             viewModelScope.launchCatching {

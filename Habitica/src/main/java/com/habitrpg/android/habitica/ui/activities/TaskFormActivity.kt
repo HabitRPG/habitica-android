@@ -7,6 +7,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -45,6 +47,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -260,6 +263,16 @@ class TaskFormActivity : BaseActivity() {
                 checkCanSave()
             },
         )
+        binding.spiWarningText.paintFlags = binding.spiWarningText.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        val spiColor =
+            if (forcedTheme == "taskform" || forcedTheme == "maroon") {
+                Color.WHITE
+            } else {
+                getThemeColor(R.attr.toolbarContentColor)
+            }
+        binding.spiWarningText.setTextColor(spiColor)
+        binding.spiWarningIcon.imageTintList = ColorStateList.valueOf(spiColor)
+        binding.spiWarningRow.setOnClickListener { showSPIDialog() }
         binding.textEditText.onFocusChangeListener =
             View.OnFocusChangeListener { _, isFocused ->
                 binding.textInputLayout.alpha = if (isFocused) 0.8f else 0.6f
@@ -921,6 +934,17 @@ class TaskFormActivity : BaseActivity() {
             finish()
         }
         alert.addCancelButton()
+        alert.show()
+    }
+
+    private fun showSPIDialog() {
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.avoid_spi_title)
+        alert.setMessage(R.string.avoid_spi_message)
+        alert.addButton(R.string.got_it, true)
+        alert.addButton(R.string.review_privacy_policy, false) { _, _ ->
+            openBrowserLink("https://habitica.com/static/privacy")
+        }
         alert.show()
     }
 

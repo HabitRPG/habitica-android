@@ -1,96 +1,51 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
-import com.habitrpg.android.habitica.BuildConfig
-
-enum class EventCategory(
-    val key: String,
-) {
-    BEHAVIOUR("behaviour"),
-    NAVIGATION("navigation"),
-}
-
-enum class HitType(
-    val key: String,
-) {
-    EVENT("event"),
-    PAGEVIEW("pageview"),
-    CREATE_WIDGET("create"),
-    REMOVE_WIDGET("remove"),
-    UPDATE_WIDGET("update"),
-}
 
 object Analytics {
+    private const val CONSENT_PREFERENCE_KEY = "analytics_consent_given"
+
     private var hasConsent: Boolean = false
     private var isInitialized: Boolean = false
-
-    @JvmOverloads
-    fun sendEvent(
-        eventAction: String?,
-        category: EventCategory?,
-        hitType: HitType?,
-        additionalData: Map<String, Any>? = null,
-    ) {
-        if (BuildConfig.DEBUG || !hasConsent || !isInitialized) {
-            return
-        }
-        val data =
-            mutableMapOf<String, Any?>(
-                "eventAction" to eventAction,
-                "eventCategory" to category?.key,
-                "hitType" to hitType?.key,
-                "status" to "displayed",
-            )
-        if (additionalData != null) {
-            data.putAll(additionalData)
-        }
-    }
-
-    fun sendNavigationEvent(page: String) {
-        if (!hasConsent || !isInitialized) {
-            return
-        }
-        val additionalData = HashMap<String, Any>()
-        additionalData["page"] = page
-        sendEvent("navigated $page", EventCategory.NAVIGATION, HitType.PAGEVIEW, additionalData)
-    }
+    private var knownUserID: String? = null
 
     fun initialize(context: Context) {
-        FirebasePerformance.getInstance().isPerformanceCollectionEnabled = false
         isInitialized = true
-    }
-
-    fun identify(sharedPrefs: SharedPreferences) {
-        if (!hasConsent || !isInitialized) {
-            return
-        }
+        applyConsent(
+            PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(CONSENT_PREFERENCE_KEY, false)
+        )
     }
 
     fun setUserID(userID: String) {
+        knownUserID = userID.ifBlank { null }
         if (!hasConsent || !isInitialized) {
-            FirebaseCrashlytics.getInstance().setUserId(userID)
+            clearIdentity()
             return
         }
-        FirebaseCrashlytics.getInstance().setUserId(userID)
+        applyIdentity(userID)
     }
 
     fun clearUserID() {
+        knownUserID = null
+        clearIdentity()
+    }
+
+    private fun applyIdentity(userID: String) {
+        FirebaseCrashlytics.getInstance().setUserId(userID)
+    }
+
+    private fun clearIdentity() {
         FirebaseCrashlytics.getInstance().setUserId("")
     }
 
-    fun setUserProperty(
-        identifier: String,
-        value: Any?,
-    ) {
-        if (!hasConsent || !isInitialized) {
+    fun logError(msg: String) {
+        if (!hasConsent) {
             return
         }
-    }
-
-    fun logError(msg: String) {
         FirebaseCrashlytics.getInstance().log(msg)
     }
 
@@ -99,7 +54,11 @@ object Analytics {
     }
 
     fun setAnalyticsConsent(consents: Boolean?) {
-        val isEnabled = consents == true
+        applyConsent(consents == true)
+    }
+
+    private fun applyConsent(isEnabled: Boolean) {
+        val wasEnabled = hasConsent
         hasConsent = isEnabled
 
         if (!isInitialized) {
@@ -107,5 +66,16 @@ object Analytics {
         }
 
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = isEnabled
+
+        val userID = knownUserID
+        if (isEnabled && userID != null) {
+            applyIdentity(userID)
+        } else {
+            clearIdentity()
+        }
+
+        if (wasEnabled && !isEnabled) {
+            FirebaseCrashlytics.getInstance().deleteUnsentReports()
+        }
     }
 }

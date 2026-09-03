@@ -3,7 +3,7 @@
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minWidth="218dp"
     android:minHeight="110dp"
-    android:targetCellWidth="2"
+    android:targetCellWidth="3"
     android:targetCellHeight="2"
     android:previewImage="@drawable/widget_daily_summary"
     android:resizeMode="horizontal"

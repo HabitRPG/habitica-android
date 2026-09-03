@@ -66,7 +66,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.user.User
@@ -196,7 +195,6 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
 
-        Analytics.sendNavigationEvent("${viewModel.type} screen")
     }
 
     override fun onCreateOptionsMenu(

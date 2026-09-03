@@ -37,6 +37,7 @@ object WidgetSnapshotPublisher {
         val widget = HabitButtonGlanceWidget()
         val manager = GlanceAppWidgetManager(context)
         val entry = widgetEntryPoint(context)
+        val config = WidgetSnapshotStore.configFingerprint(context)
         manager.getGlanceIds(widget.javaClass).forEach { id ->
             val taskId =
                 getAppWidgetState(context, PreferencesGlanceStateDefinition, id)[HabitButtonWidgetCache.KEY_TASK_ID]
@@ -59,6 +60,10 @@ object WidgetSnapshotPublisher {
                     prefs[HabitButtonWidgetCache.KEY_VALUE] = task.value
                     prefs[HabitButtonWidgetCache.KEY_UP] = up
                     prefs[HabitButtonWidgetCache.KEY_DOWN] = down
+                    changed = true
+                }
+                if (prefs[WidgetSnapshotStore.configKey] != config) {
+                    prefs[WidgetSnapshotStore.configKey] = config
                     changed = true
                 }
             }
@@ -121,11 +126,16 @@ object WidgetSnapshotPublisher {
         json: String,
     ) {
         val manager = GlanceAppWidgetManager(context)
+        val config = WidgetSnapshotStore.configFingerprint(context)
         manager.getGlanceIds(widget.javaClass).forEach { id ->
             var changed = false
             WidgetStateWriter.edit(context, id) { prefs ->
                 if (prefs[key] != json) {
                     prefs[key] = json
+                    changed = true
+                }
+                if (prefs[WidgetSnapshotStore.configKey] != config) {
+                    prefs[WidgetSnapshotStore.configKey] = config
                     changed = true
                 }
             }

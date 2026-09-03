@@ -74,8 +74,6 @@ import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
@@ -648,16 +646,6 @@ open class MainActivity :
         ) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
-            if (intent.hasExtra("sendAnalytics")) {
-                val additionalData = HashMap<String, Any>()
-                additionalData["identifier"] = identifier
-                Analytics.sendEvent(
-                    "open notification",
-                    EventCategory.BEHAVIOUR,
-                    HitType.EVENT,
-                    additionalData,
-                )
-            }
             retrieveUser(true)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent)
         }
@@ -919,78 +907,64 @@ open class MainActivity :
 
                 if (deathOverlayComposeView == null) {
                     val rootLayout = binding.root as? ViewGroup
-                    deathOverlayComposeView =
-                        ComposeView(this@MainActivity).apply {
-                            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                            setContent {
-                                HabiticaTheme {
-                                    val user by viewModel.user.observeAsState(null)
-                                    DeathOverlay(
-                                        isVisible = showDeathOverlay,
-                                        user = user,
-                                        appConfigManager = appConfigManager,
-                                        sharedPreferences = sharedPreferences,
-                                        onSubscribeClick = {
-                                            Analytics.sendEvent(
-                                                "View death sub CTA",
-                                                EventCategory.BEHAVIOUR,
-                                                HitType.EVENT,
-                                            )
-                                            val subscriptionBottomSheet =
-                                                EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                                    eventType =
-                                                        EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
-                                                }
-                                            subscriptionBottomSheet.show(
-                                                supportFragmentManager,
-                                                EventOutcomeSubscriptionBottomSheetFragment.TAG,
-                                            )
-                                        },
-                                        onUseSecondChanceClick = {
-                                            Analytics.sendEvent(
-                                                "second chance perk",
-                                                EventCategory.BEHAVIOUR,
-                                                HitType.EVENT,
-                                            )
-                                            sharedPreferences.edit {
-                                                putLong("last_sub_revive", Date().time)
+                    deathOverlayComposeView = ComposeView(this@MainActivity).apply {
+                        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                        setContent {
+                            HabiticaTheme {
+                                val user by viewModel.user.observeAsState(null)
+                                DeathOverlay(
+                                    isVisible = showDeathOverlay,
+                                    user = user,
+                                    appConfigManager = appConfigManager,
+                                    sharedPreferences = sharedPreferences,
+                                    onSubscribeClick = {
+                                        val subscriptionBottomSheet =
+                                            EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                                eventType =
+                                                    EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
                                             }
-                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                                userRepository.updateUser("stats.hp", 1)
-                                                delay(1.seconds)
+                                        subscriptionBottomSheet.show(
+                                            supportFragmentManager,
+                                            EventOutcomeSubscriptionBottomSheetFragment.TAG
+                                        )
+                                    },
+                                    onUseSecondChanceClick = {
+                                        sharedPreferences.edit {
+                                            putLong("last_sub_revive", Date().time)
+                                        }
+                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                            userRepository.updateUser("stats.hp", 1)
+                                            delay(1000)
+                                            HabiticaSnackbar.showSnackbar(
+                                                snackbarContainer,
+                                                getString(R.string.subscriber_benefit_success_faint),
+                                                HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
+                                                isSubscriberBenefit = true,
+                                                duration = 2500
+                                            )
+                                        }
+                                    },
+                                    onRefillHealthClick = {
+                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                            val brokenItem = userRepository.revive()
+                                            if (brokenItem != null) {
+                                                delay(500)
                                                 HabiticaSnackbar.showSnackbar(
                                                     snackbarContainer,
-                                                    getString(R.string.subscriber_benefit_success_faint),
-                                                    HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
-                                                    isSubscriberBenefit = true,
-                                                    duration = 2500,
+                                                    getString(R.string.revive_broken_equipment, brokenItem.text),
+                                                    HabiticaSnackbar.SnackbarDisplayType.BLACK
                                                 )
                                             }
-                                        },
-                                        onRefillHealthClick = {
-                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                                val brokenItem = userRepository.revive()
-                                                if (brokenItem != null) {
-                                                    delay(500.milliseconds)
-                                                    HabiticaSnackbar.showSnackbar(
-                                                        snackbarContainer,
-                                                        getString(
-                                                            R.string.revive_broken_equipment,
-                                                            brokenItem.text
-                                                        ),
-                                                        HabiticaSnackbar.SnackbarDisplayType.BLACK,
-                                                    )
-                                                }
-                                            }
-                                        },
-                                        onAnimationComplete = {},
-                                        onDismissComplete = {
-                                            showDeathOverlay = false
-                                        },
-                                    )
-                                }
+                                        }
+                                    },
+                                    onAnimationComplete = {},
+                                    onDismissComplete = {
+                                        showDeathOverlay = false
+                                    }
+                                )
                             }
                         }
+                    }
                     rootLayout?.addView(deathOverlayComposeView)
                 }
 
@@ -1029,7 +1003,6 @@ open class MainActivity :
             }
         }
         binding.content.overlayFrameLayout.addView(view)
-        viewModel.logTutorialStatus(step, false)
     }
 
     private fun checkMaintenance() {
@@ -1128,27 +1101,12 @@ open class MainActivity :
 
         when (user.preferences?.analyticsConsent) {
             true -> {
-                Analytics.identify(sharedPreferences)
                 user.id?.let { Analytics.setUserID(it) }
-                Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
-
-                if (sharedPreferences.getBoolean("pending_registration_event", false)) {
-                    sharedPreferences.edit { remove("pending_registration_event") }
-                }
-                if (sharedPreferences.getBoolean("pending_login_event", false)) {
-                    Analytics.sendEvent("login", EventCategory.BEHAVIOUR, HitType.EVENT)
-                    sharedPreferences.edit { remove("pending_login_event") }
-                }
-
                 sharedPreferences.edit { putBoolean("analytics_consent_given", true) }
             }
 
             false -> {
-                sharedPreferences.edit {
-                    remove("pending_registration_event")
-                    remove("pending_login_event")
-                    putBoolean("analytics_consent_given", false)
-                }
+                sharedPreferences.edit { putBoolean("analytics_consent_given", false) }
             }
 
             null -> {}

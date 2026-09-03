@@ -26,6 +26,15 @@ object EmojiParser {
         return returnString
     }
 
+    fun containsEmoji(text: String?): Boolean {
+        if (text == null) return false
+        val matcher = pattern.matcher(text)
+        while (matcher.find()) {
+            if (EmojiMap.invertedEmojiMap[matcher.group()] != null) return true
+        }
+        return false
+    }
+
     /**
      * Converts unicode characters into Cheat Sheet codes
      *

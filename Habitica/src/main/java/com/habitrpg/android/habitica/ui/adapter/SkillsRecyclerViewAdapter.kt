@@ -18,6 +18,7 @@ import com.habitrpg.common.habitica.extensions.loadImage
 
 class SkillsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onUseSkill: ((Skill) -> Unit)? = null
+    var onUseSkillDirectly: ((Skill) -> Unit)? = null
 
     var mana: Double = 0.0
         set(value) {
@@ -97,6 +98,15 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         init {
             binding.skillItemContainer.setOnClickListener(this)
+            binding.buttonWrapper.setOnClickListener {
+                val s = skill ?: return@setOnClickListener
+                if ((s.lvl ?: 0) > level) return@setOnClickListener
+                if ((s.mana ?: 0) <= mana) {
+                    onUseSkillDirectly?.invoke(s)
+                } else {
+                    onUseSkill?.invoke(s)
+                }
+            }
         }
 
         fun bind(skill: Skill) {

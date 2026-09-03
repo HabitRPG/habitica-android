@@ -1,12 +1,10 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
-import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,6 +19,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -57,7 +56,6 @@ abstract class BaseTaskViewHolder(
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView =
         itemView.findViewById(R.id.approvalRequiredTextField)
-    private val expandNotesButton: Button? = itemView.findViewById(R.id.expand_notes_button)
     private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
     private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
     protected val taskGray: Int =
@@ -68,7 +66,6 @@ abstract class BaseTaskViewHolder(
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
-    private var notesExpanded = false
 
     protected open val taskIconWrapperIsVisible: Boolean
         get() {
@@ -107,10 +104,6 @@ abstract class BaseTaskViewHolder(
         notesTextView?.movementMethod = LinkMovementMethod.getInstance()
         titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
-        expandNotesButton?.setOnClickListener {
-            notesExpanded = !notesExpanded
-            updateExpandedTaskLogic()
-        }
         iconViewChallenge?.setOnClickListener {
             task?.let { t ->
                 if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
@@ -129,18 +122,6 @@ abstract class BaseTaskViewHolder(
         context = itemView.context
     }
 
-    private fun updateExpandedTaskLogic() {
-        if (notesExpanded) {
-            notesTextView?.ellipsize = null
-            notesTextView?.maxLines = Int.MAX_VALUE
-            expandNotesButton?.text = context.getString(R.string.collapse_notes)
-        } else {
-            notesTextView?.ellipsize = TextUtils.TruncateAt.END
-            notesTextView?.maxLines = 3
-            expandNotesButton?.text = context.getString(R.string.expand_notes)
-        }
-    }
-
     override fun bind(
         data: Task,
         position: Int,
@@ -155,23 +136,18 @@ abstract class BaseTaskViewHolder(
         displayMode: String,
         ownerID: String?,
     ) {
-        notesExpanded = false
         task = data
         itemView.setBackgroundColor(context.getThemeColor(R.attr.colorContentBackground))
 
-        expandNotesButton?.visibility = View.GONE
-        notesExpanded = false
-        notesTextView?.maxLines = 3
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
-            updateExpandedTaskLogic()
         } else {
             notesTextView?.visibility = View.GONE
         }
 
         val titleText = data.text ?: ""
-        if (!MarkdownParser.containsMarkdown(titleText)) {
+        if (!MarkdownParser.containsMarkdown(titleText) && !EmojiParser.containsEmoji(titleText)) {
             titleTextView.text = titleText
         } else {
             val parsedText = MarkdownParser.parseMarkdown(titleText)
@@ -181,7 +157,7 @@ abstract class BaseTaskViewHolder(
 
         if (displayMode != "minimal") {
             val notes = data.notes ?: ""
-            if (!MarkdownParser.containsMarkdown(notes)) {
+            if (!MarkdownParser.containsMarkdown(notes) && !EmojiParser.containsEmoji(notes)) {
                 notesTextView?.text = notes
             } else {
                 val parsedNotes = MarkdownParser.parseMarkdown(notes)

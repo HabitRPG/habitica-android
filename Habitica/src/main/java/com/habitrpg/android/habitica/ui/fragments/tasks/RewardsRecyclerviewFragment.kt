@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -49,9 +50,13 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
         (layoutManager as? GridLayoutManager)?.spanSizeLookup =
             object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int =
-                    if ((recyclerAdapter?.getItemViewType(position) ?: 0) < 3) {
-                        (layoutManager as? GridLayoutManager)?.spanCount ?: 1
+                override fun getSpanSize(position: Int): Int {
+                    val spanCount = (layoutManager as? GridLayoutManager)?.spanCount ?: 1
+                    if (((recyclerAdapter as? RecyclerView.Adapter<*>)?.itemCount ?: 0) == 0) {
+                        return spanCount
+                    }
+                    return if ((recyclerAdapter?.getItemViewType(position) ?: 0) < 3) {
+                        spanCount
                     } else {
                         1
                     }
