@@ -152,9 +152,11 @@ fun ChangeSubscriptionOption(
             bottomView?.invoke()
         }
         if (isCurrentPlan) {
-            Row(modifier = Modifier
-                .padding(top = 16.dp)
-                .align(Alignment.TopEnd)) {
+            Row(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .align(Alignment.TopEnd)
+            ) {
                 Image(
                     painterResource(R.drawable.flag_flap),
                     contentDescription = null,
@@ -359,7 +361,10 @@ private fun ChangeSubscriptionReviewView(
                 fontSize = 14.sp,
             ),
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(18.dp), modifier = Modifier.padding(horizontal = 16.dp)) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(18.dp),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
                 if (viewModel.hadGiftedSubscription) {
                     val duration = selectedProduct.getSubscriptionDuration()
                     Text(
@@ -369,21 +374,28 @@ private fun ChangeSubscriptionReviewView(
                             duration
                         ),
                         fontWeight = FontWeight.Medium,
+                        lineHeight = 24.sp,
                         fontSize = 16.sp
                     )
-                    Text(stringResource(R.string.subscription_change_gift_info),
-                        fontSize = 14.sp)
+                    Text(
+                        stringResource(R.string.subscription_change_gift_info),
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp,
+                        fontWeight = FontWeight.Normal
+                    )
                 } else if (activePlan?.isTerminated == true) {
                     if (viewModel.isDowngrade) {
                         Text(
                             stringResource(R.string.subscription_change_confirmation_reactivate_downgrade),
                             fontWeight = FontWeight.Medium,
+                            lineHeight = 24.sp,
                             fontSize = 16.sp
                         )
                     } else {
                         Text(
                             stringResource(R.string.subscription_change_confirmation_reactivate_upgrade),
                             fontWeight = FontWeight.Medium,
+                            lineHeight = 24.sp,
                             fontSize = 16.sp
                         )
                     }
@@ -392,12 +404,14 @@ private fun ChangeSubscriptionReviewView(
                         Text(
                             stringResource(R.string.subscription_change_confirmation_downgrade),
                             fontWeight = FontWeight.Medium,
+                            lineHeight = 24.sp,
                             fontSize = 16.sp
                         )
                     } else {
                         Text(
                             stringResource(R.string.subscription_change_confirmation_upgrade),
                             fontWeight = FontWeight.Medium,
+                            lineHeight = 24.sp,
                             fontSize = 16.sp
                         )
                     }
@@ -406,12 +420,16 @@ private fun ChangeSubscriptionReviewView(
                     if (viewModel.isEligibleForHourglassPromo && viewModel.totalGemCount < 50) {
                         Text(
                             stringResource(R.string.subscription_change_hourglass_promo_gems_info),
-                            fontSize = 14.sp
+                            fontSize = 14.sp,
+                            lineHeight = 20.sp,
+                            fontWeight = FontWeight.Normal
                         )
                     } else if (viewModel.isEligibleForHourglassPromo) {
                         Text(
                             stringResource(R.string.subscription_change_hourglass_promo_info),
-                            fontSize = 14.sp
+                            fontSize = 14.sp,
+                            lineHeight = 20.sp,
+                            fontWeight = FontWeight.Normal
                         )
                     }
                 }

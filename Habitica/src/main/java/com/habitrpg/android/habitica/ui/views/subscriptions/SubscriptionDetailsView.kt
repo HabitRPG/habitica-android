@@ -118,14 +118,14 @@ class SubscriptionDetailsView : LinearLayout {
             "Google" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
                 val billingDate = plan.nextBillingDate
-                if (plan.dateTerminated != null && billingDate != null && billingDate > Date()) {
+                if (plan.dateTerminated == null && billingDate != null && billingDate.after(Date())) {
                     binding.subscriptionPaymentMethodTextview.text =
                         context.getString(
                             R.string.next_payment_date,
                             DateFormat.getDateInstance().format(billingDate),
                         )
                 } else {
-                    context.getString(R.string.google_pay)
+                    binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.google_pay)
                 }
                 binding.updateSubscriptionButton.visibility = VISIBLE
                 if (plan.isActive && plan.dateTerminated != null) {
