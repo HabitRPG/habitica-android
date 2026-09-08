@@ -8,7 +8,7 @@
     <string name="repeat_daily">Dagelijks</string>
     <string name="monthly">Maandelijks</string>
     <string name="weekly">Wekelijks</string>
-    <string name="daily">Dagelijks</string>
+    <string name="daily">Dagelijkse Taak</string>
     <string name="settings">Instellingen</string>
     <string name="user_level_long">Niveau %d</string>
     <string name="action_edit">Bewerk</string>
@@ -59,7 +59,7 @@
     <string name="medium_sentence">middelmatig</string>
     <string name="habits">Gewoontes</string>
     <string name="dailies">Dagelijks</string>
-    <string name="todos">Taken</string>
+    <string name="todos">To Dos</string>
     <string name="reward">Beloning</string>
     <string name="todo">Taak</string>
     <string name="hard_sentence">moeilijk</string>
