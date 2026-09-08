@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class ShowNotificationInteractor(
     private val activity: Activity,
@@ -261,14 +262,14 @@ class ShowNotificationInteractor(
     fun showAchievementDialog(notification: Notification) {
         val data = (notification.data as? AchievementData) ?: return
         val achievement = data.achievement ?: notification.type ?: ""
-        val delayTime: Long =
+        val delayTime =
             if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
-                1000
+                1.seconds
             } else {
-                200
+                200.milliseconds
             }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            delay(delayTime.milliseconds)
+            delay(delayTime)
             lifecycleScope.launch(context = Dispatchers.Main) {
                 val dialog = AchievementDialog(activity)
                 dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement
