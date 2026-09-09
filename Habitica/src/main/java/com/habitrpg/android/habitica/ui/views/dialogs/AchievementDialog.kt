@@ -17,6 +17,8 @@ import com.habitrpg.common.habitica.models.Notification
 class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
     var isLastOnboardingAchievement: Boolean = false
 
+    private var isConfigured = false
+
     private val binding: DialogAchievementDetailBinding =
         DialogAchievementDetailBinding.inflate(context.layoutInflater)
 
@@ -29,7 +31,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
         type: String,
         message: String?,
         text: String?
-    ) {
+    ): Boolean {
         when (type) {
             Notification.Type.ACHIEVEMENT_PARTY_UP.type ->
                 configure(
@@ -123,8 +125,11 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
                     "onboardingComplete"
                 )
 
-            else -> configure(message ?: "", text ?: "", type)
+            else -> if (message?.isNotBlank() == true && text?.isNotBlank() == true) {
+                configure(message, text, type)
+            }
         }
+        return isConfigured
     }
 
     private fun configure(
@@ -170,5 +175,6 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
             }
             addButton(R.string.close, false)
         }
+        isConfigured = true
     }
 }

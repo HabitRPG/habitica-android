@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
@@ -26,7 +25,6 @@ import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class ShowNotificationInteractor(
@@ -37,83 +35,48 @@ class ShowNotificationInteractor(
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
             Notification.Type.LOGIN_INCENTIVE.type -> showCheckinDialog(notification)
-            Notification.Type.ACHIEVEMENT_PARTY_UP.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_PARTY_ON.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BEAST_MASTER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> showAchievementDialog(notification)
             Notification.Type.WON_CHALLENGE.type -> showWonChallengeDialog(notification)
 
-            Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_TICKLED_PINK.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type ->
-                showAchievementDialog(
-                    notification
-                )
-
-            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_SEEING_RED.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> showAchievementDialog(notification)
-
+            Notification.Type.ACHIEVEMENT_PARTY_UP.type,
+            Notification.Type.ACHIEVEMENT_PARTY_ON.type,
+            Notification.Type.ACHIEVEMENT_BEAST_MASTER.type,
+            Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type,
+            Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type,
+            Notification.Type.ACHIEVEMENT_GUILD_JOINED.type,
+            Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type,
+            Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type,
+            Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type,
+            Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type,
+            Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type,
+            Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type,
+            Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type,
+            Notification.Type.ACHIEVEMENT_DUST_DEVIL.type,
+            Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type,
+            Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type,
+            Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type,
+            Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type,
+            Notification.Type.ACHIEVEMENT_PEARLY_PRO.type,
+            Notification.Type.ACHIEVEMENT_TICKLED_PINK.type,
+            Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type,
+            Notification.Type.ACHIEVEMENT_BUG_BONANZA.type,
+            Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type,
+            Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type,
+            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type,
+            Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type,
+            Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type,
+            Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type,
+            Notification.Type.ACHIEVEMENT_SKELETON_CREW.type,
+            Notification.Type.ACHIEVEMENT_SEEING_RED.type,
+            Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type,
+            Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type,
+            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type,
             Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type ->
-                showAchievementDialog(
-                    notification
-                )
 
             Notification.Type.REBIRTH_ENABLED.type -> showRebirthEnabledDialog()
             Notification.Type.REBIRTH_ACHIEVEMENT.type -> showRebirthAchievementDialog()
 
             Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
-            else -> return false
+            else -> return notification.type?.contains("ACHIEVEMENT") == true
         }
         return true
     }
@@ -167,6 +130,12 @@ class ShowNotificationInteractor(
     fun showAchievementDialog(notification: Notification) {
         val data = (notification.data as? AchievementData) ?: return
         val achievement = data.achievement ?: notification.type ?: ""
+
+        val dialog = AchievementDialog(activity)
+        dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement
+        val canShow = dialog.setType(data.achievement ?: "", data.message, data.modalText)
+        if (!canShow) return
+
         val delayTime: Long =
             if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
                 1000
@@ -176,9 +145,6 @@ class ShowNotificationInteractor(
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             delay(delayTime)
             lifecycleScope.launch(context = Dispatchers.Main) {
-                val dialog = AchievementDialog(activity)
-                dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement
-                dialog.setType(data.achievement ?: "", data.message, data.modalText)
                 dialog.enqueue()
             }
         }

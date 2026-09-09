@@ -41,6 +41,7 @@ class Notification {
         ACHIEVEMENT_INVITED_FRIEND("INVITED_FRIEND_ACHIEVEMENT"),
         ACHIEVEMENT_GENERIC("ACHIEVEMENT"),
         ACHIEVEMENT_ONBOARDING_COMPLETE("ONBOARDING_COMPLETE"),
+        ACHIEVEMENT_ULTIMATE_GEAR("ULTIMATE_GEAR_ACHIEVEMENT"),
 
         ACHIEVEMENT_ALL_YOUR_BASE("ACHIEVEMENT_ALL_YOUR_BASE"),
         ACHIEVEMENT_BACK_TO_BASICS("ACHIEVEMENT_BACK_TO_BASICS"),
@@ -123,6 +124,7 @@ class Notification {
             Type.ACHIEVEMENT_SKELETON_CREW.type -> AchievementData::class.java
             Type.ACHIEVEMENT_SEEING_RED.type -> AchievementData::class.java
             Type.ACHIEVEMENT_RED_LETTER_DAY.type -> AchievementData::class.java
+            Type.ACHIEVEMENT_ULTIMATE_GEAR.type -> AchievementData::class.java
 
             Type.REBIRTH_ENABLED.type -> AchievementData::class.java
             Type.REBIRTH_ACHIEVEMENT.type -> AchievementData::class.java
