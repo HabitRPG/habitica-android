@@ -51,7 +51,7 @@ class MainNotificationsManager : NotificationsManager {
     private val notificationsFlow = MutableStateFlow<List<Notification>?>(null)
     private val displayedNotificationEvents = Channel<Notification>()
     override val displayNotificationEvents: Flow<Notification> =
-        displayedNotificationEvents.receiveAsFlow().filterNotNull()
+        displayedNotificationEvents.receiveAsFlow()
 
     override fun setNotifications(current: List<Notification>) {
         notificationsFlow.value = current
@@ -77,7 +77,7 @@ class MainNotificationsManager : NotificationsManager {
         lastNotificationHandling = now
         notifications
             .filter { !this.seenNotifications.containsKey(it.id) }
-            .map {
+            .forEach {
                 val notificationDisplayed =
                     when (it.type) {
                         Notification.Type.ACHIEVEMENT_PARTY_UP.type -> true
@@ -110,6 +110,8 @@ class MainNotificationsManager : NotificationsManager {
                         Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> true
                         Notification.Type.ACHIEVEMENT_SEEING_RED.type -> true
                         Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> true
+                        Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type -> true
+
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                         Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
                         Notification.Type.REBIRTH_ENABLED.type -> true

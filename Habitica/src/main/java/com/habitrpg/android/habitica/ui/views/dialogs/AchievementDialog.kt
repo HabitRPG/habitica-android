@@ -19,6 +19,8 @@ class AchievementDialog(
 ) : HabiticaAlertDialog(context) {
     var isLastOnboardingAchievement: Boolean = false
 
+    private var isConfigured = false
+
     private val binding: DialogAchievementDetailBinding =
         DialogAchievementDetailBinding.inflate(context.layoutInflater)
 
@@ -30,8 +32,8 @@ class AchievementDialog(
     fun setType(
         type: String,
         message: String?,
-        text: String?,
-    ) {
+        text: String?
+    ): Boolean {
         when (type) {
             Notification.Type.ACHIEVEMENT_PARTY_UP.type -> {
                 configure(
@@ -141,10 +143,11 @@ class AchievementDialog(
                 )
             }
 
-            else -> {
-                configure(message ?: "", text ?: "", type)
+            else -> if (message?.isNotBlank() == true && text?.isNotBlank() == true) {
+                configure(message, text, type)
             }
         }
+        return isConfigured
     }
 
     private fun configure(
@@ -190,5 +193,6 @@ class AchievementDialog(
             }
             addButton(R.string.close, false)
         }
+        isConfigured = true
     }
 }
