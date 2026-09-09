@@ -988,7 +988,7 @@
     <string name="subscribe_listitem3_description_alt">Tetap tampil spesial dengan peralatan eksklusif terbaru. Langganan sekarang untuk mendapatkan %1$s’s %2$s!</string>
     <string name="subscribe_listitemFaint_description">Hindari kehilangan kemajuan Anda dengan penyembuhan instan saat Anda kehabisan HP sekali sehari!</string>
     <string name="sell_confirmation_title">Apakah kamu yakin ingin menjual %s ini\?</string>
-    <string name="subscription_credit_canceling">Kredit langganan kamu sebanyak <b>+%f</b> bulan akan aktif setelah pembatalan</string>
+    <string name="subscription_credit_canceling">Kredit langganan kamu sebanyak <b>+%s</b> bulan akan aktif setelah pembatalan</string>
     <string name="exact_alarm_system_settings_reminders">Pengingat mungkin tertunda karena izin tidak diaktifkan. Ketuk untuk melihat dan memperbarui izin.</string>
     <string name="challenge_tags">Tag Tantangan</string>
     <string name="group_tags">Tag Grup</string>

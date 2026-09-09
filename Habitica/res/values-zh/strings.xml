@@ -1262,7 +1262,7 @@
     <string name="habit_summary_description">这是一个**%2$s**难度的**%1$s**习惯。</string>
     <string name="subscribers_mythic_hourglasses"><i>订阅者会在每月的前三天收到神秘沙漏。</i></string>
     <string name="class_changed_description">现在你可以使用%s技能并从商店购买新的职业装备！提升等级可获得属性点数来增强你的技能。</string>
-    <string name="subscription_credit_canceling">取消后，您的<b>+%f</b>个月订阅点数将被退还</string>
+    <string name="subscription_credit_canceling">取消后，您的<b>+%s</b>个月订阅点数将被退还</string>
     <string name="insufficient_level_equipment_dialog">此物品只有特定职业可用。你可以在10级后选择一个职业。</string>
     <string name="x_checkins">%d次签到</string>
     <string name="send_invite">发送邀请</string>

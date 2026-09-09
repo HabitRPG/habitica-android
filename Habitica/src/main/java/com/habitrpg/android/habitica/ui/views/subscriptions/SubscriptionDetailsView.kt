@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.text.DateFormat
+import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
@@ -95,8 +96,9 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.subscriptionCreditTextView.text =
                     resources.getString(R.string.subscription_credit_canceling_one)
             } else {
+                val format = DecimalFormat("#.#")
                 binding.subscriptionCreditTextView.text =
-                    resources.getString(R.string.subscription_credit_canceling, plan.extraMonths)
+                    resources.getString(R.string.subscription_credit_canceling, format.format(plan.extraMonths))
             }
         } else {
             binding.subscriptionCreditCard.visibility = GONE

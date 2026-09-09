@@ -143,7 +143,7 @@ class ShowNotificationInteractor(
         val canShow = dialog.setType(data.achievement ?: "", data.message, data.modalText)
         if (!canShow) return
 
-        val delayTime: Long =
+        val delayTime =
             if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
                 1.seconds
             } else {

@@ -76,6 +76,10 @@ class AccountPreferenceFragment :
         super.onCreate(savedInstanceState)
         findPreference<Preference>("confirm_username")?.isVisible =
             user?.flags?.verifiedUsername == false
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewLifecycleOwner.lifecycleScope.launchCatching {
             viewModel.authenticationSuccess.collect { registered ->

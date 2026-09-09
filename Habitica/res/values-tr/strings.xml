@@ -1203,7 +1203,7 @@
     <string name="armoire_rate_food_title">20% Yem</string>
     <string name="purchased">Satın Alındı</string>
     <string name="class_confirmation_price">Sınıfını %1$s\'ye %2$d Elmas için değiştirmek istiyor musun\?</string>
-    <string name="subscription_credit_canceling">Sizin <b>+%f</b> aylık abonelik krediniz aboneliğinizi iptal ettikten sonra etkinleşecek</string>
+    <string name="subscription_credit_canceling">Sizin <b>+%s</b> aylık abonelik krediniz aboneliğinizi iptal ettikten sonra etkinleşecek</string>
     <string name="unsaved_changes">Kaydedilmemiş Değişiklikler</string>
     <string name="armoire_rate_equipment_description">Yeni Ekipman parçaları her ay eklenir. Eğer bütün Ekipmanlara sahipsen, o zaman Yem ya da Deneyim alırsın, 50/50 şans.</string>
     <string name="insufficient_level_equipment_dialog">Bu eşya sadece özel bir sınıfa mevcut. 10. Seviyeden sonra bir sınıf seçebilirsin.</string>

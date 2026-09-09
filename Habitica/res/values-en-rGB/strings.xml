@@ -1105,7 +1105,7 @@
     <string name="guild_challenges">You\'re participating in a Guild Challenge</string>
     <string name="leave_delete_tasks">Leave &amp; Delete Tasks</string>
     <string name="is_open">Open</string>
-    <string name="subscription_credit_canceling">Your <b>+%f</b> months of subscription credit will activate after cancelling</string>
+    <string name="subscription_credit_canceling">Your <b>+%s</b> months of subscription credit will activate after cancelling</string>
     <string name="unsaved_changes">Unsaved Changes</string>
     <string name="faint_broken_gear_info">Broken gear can be repurchased from the Market</string>
     <string name="quest_accepted">Quest accepted!</string>

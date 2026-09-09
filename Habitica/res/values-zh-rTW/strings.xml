@@ -1260,7 +1260,7 @@
     <string name="subscribe_listitemFaint_description">每天都可迴避一次因生命值歸零所導致的懲罰！</string>
     <string name="subscription_hourglasses_3month_timeframe">三個月內的神祕沙漏</string>
     <string name="challenges">挑戰</string>
-    <string name="subscription_credit_canceling">您的 <b>+%f</b> 個月訂閱將在取消後啟用</string>
+    <string name="subscription_credit_canceling">您的 <b>+%s</b> 個月訂閱將在取消後啟用</string>
     <string name="leave_party_confirmation_quest">你確定要離開這個隊伍\?</string>
     <string name="plus_two_gems">+2顆寶石</string>
     <string name="quest_mechanics_boss_description">完成任何類型的任務或使用技能即可累積預期傷害！這些傷害將在你下一次的每日起始時間後生效。力量會影響你造成的傷害量。</string>

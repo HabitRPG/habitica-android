@@ -1200,7 +1200,7 @@
         <item quantity="other">Ви, %d інших</item>
     </plurals>
     <string name="armoire_rate_equipment_description">Щомісяця додається нове спорядження. Якщо ви володієте всім спорядженням, то ви отримаєте їжу або досвід, з шансом 50/50.</string>
-    <string name="subscription_credit_canceling">Ваші <b>+%f</b> місяців підписки будуть активовані після скасування</string>
+    <string name="subscription_credit_canceling">Ваші <b>+%s</b> місяців підписки будуть активовані після скасування</string>
     <string name="subscribers_mythic_hourglasses"><i>Підписники отримують Містичні пісочні годинники протягом перших трьох днів місяця.</i></string>
     <string name="insufficient_level_equipment_dialog">Цей предмет доступний тільки для певного класу. Ви зможете обрати ваш клас після досягнення 10 рівня.</string>
     <string name="send_invite">Відправити запрошення</string>

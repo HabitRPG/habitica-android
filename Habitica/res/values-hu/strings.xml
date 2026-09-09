@@ -329,7 +329,7 @@
     <string name="subscription_hourglasses">%d homokóra</string>
     <string name="payment_method">Fizetési mód</string>
     <string name="subscription">Előfizetés</string>
-    <string name="subscription_credit_canceling">A <b>+%f</b> hónapnyi előfizetési jóváírásod az előfizetés lemondása után aktiválódik</string>
+    <string name="subscription_credit_canceling">A <b>+%s</b> hónapnyi előfizetési jóváírásod az előfizetés lemondása után aktiválódik</string>
     <string name="one_month">1 hónap</string>
     <string name="x_months">%d hónap</string>
     <string name="month">Hónap</string>

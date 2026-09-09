@@ -1259,7 +1259,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="push_notification_system_settings_title">Benachrichtigungen wurden deaktiviert</string>
     <string name="class_changed_description">Du kannst nun deine Fertigkeit %s verwenden und Ausrüstungen im Shop erwerben. Erhöhe dein Level, um Punkte für die Aufwertung deiner Fertigkeiten zu erhalten.</string>
     <string name="enable_notifications">Benachrichtigungen aktivieren</string>
-    <string name="subscription_credit_canceling">Deine <b>+%f</b> Monate Abonnement werden nach Abbruch aktiv</string>
+    <string name="subscription_credit_canceling">Deine <b>+%s</b> Monate Abonnement werden nach Abbruch aktiv</string>
     <string name="positive_sentence">positiv</string>
     <string name="title">Titel</string>
     <string name="negative_sentence">negativ</string>

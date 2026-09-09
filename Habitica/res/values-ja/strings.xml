@@ -1251,7 +1251,7 @@
     </plurals>
     <string name="x_and_y">%1$sと%2$s</string>
     <string name="class_changed_description">スキル %s を使えるようになりました。ショップで装備を購入することもできます。レベルを上げてステータスポイントを獲得し、スキルをパワーアップさせましょう。</string>
-    <string name="subscription_credit_canceling">あなたの有料プランは解約の後<b>+%f</b>ヶ月間有効です</string>
+    <string name="subscription_credit_canceling">あなたの有料プランは解約の後<b>+%s</b>ヶ月間有効です</string>
     <string name="positive_sentence">いい</string>
     <string name="negative_sentence">悪い</string>
     <plurals name="repeat_daily">

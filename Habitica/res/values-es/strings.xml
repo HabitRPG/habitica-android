@@ -1423,7 +1423,7 @@
     <string name="manager">Encargado</string>
     <string name="armoire_rate_equipment_description">Cada mes se añaden nuevas piezas de equipamiento. Si tienes todas las piezas de equipo, obtendrás comida o experiencia, a una probabilidad de 50/50.</string>
     <string name="added_social_auth">Autenticación %s añadida</string>
-    <string name="subscription_credit_canceling">Tus <b>+%f</b> meses de suscripción se activarán tras la cancelación</string>
+    <string name="subscription_credit_canceling">Tus <b>+%s</b> meses de suscripción se activarán tras la cancelación</string>
     <string name="self_improvement">Mejora Personal</string>
     <string name="todo_summary_description">Esta es una **%1$s** Tarea que no tiene fecha de vencimiento.</string>
     <string name="daily_summary_description">Esta es una **%1$s** Tarea que repite **%2$s%3$s**.</string>

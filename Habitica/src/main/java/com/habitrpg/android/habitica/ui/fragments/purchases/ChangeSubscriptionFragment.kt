@@ -29,6 +29,7 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -50,11 +51,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.formattedSubscriptionPrice
@@ -226,6 +229,7 @@ constructor(
     val currentStep = MutableStateFlow(0)
 
     val activeSubscriptionPlan = userViewModel.user.map { it?.purchased?.plan }
+    val newestSubscription = MutableStateFlow<Purchase?>(null)
     val currentProduct = MutableStateFlow<HabiticaProduct?>(null)
     val selectedProduct = MutableStateFlow(HabiticaProduct.SUBSCRIPTION_1_MONTH)
 
@@ -239,13 +243,17 @@ constructor(
         get() = activeSubscriptionPlan.value?.totalNumberOfGems ?: 0
 
     init {
-        val plan =
-            userViewModel.user.value
-                ?.purchased
-                ?.plan
-        currentProduct.value = plan?.habiticaProduct
-        if (currentProduct.value != null) {
-            selectedProduct.value = currentProduct.value!!
+        viewModelScope.launchCatching {
+            userViewModel.user.asFlow().collect {
+                val plan =
+                    userViewModel.user.value
+                        ?.purchased
+                        ?.plan
+                currentProduct.value = plan?.habiticaProduct
+                if (currentProduct.value != null) {
+                    selectedProduct.value = currentProduct.value!!
+                }
+            }
         }
 
         viewModelScope.launchCatching {
@@ -258,6 +266,11 @@ constructor(
                 }
             }
             productDetails.value = details
+        }
+
+        viewModelScope.launchCatching {
+            newestSubscription.value = purchaseHandler.checkForSubscription(false)
+
         }
     }
 
@@ -349,6 +362,7 @@ private fun ChangeSubscriptionReviewView(
 ) {
     val selectedProduct by viewModel.selectedProduct.collectAsStateWithLifecycle()
     val activePlan by viewModel.activeSubscriptionPlan.observeAsState()
+    val newestSub by viewModel.newestSubscription.collectAsState()
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -365,7 +379,23 @@ private fun ChangeSubscriptionReviewView(
                 verticalArrangement = Arrangement.spacedBy(18.dp),
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                if (viewModel.hadGiftedSubscription) {
+                if (activePlan?.isTerminated == true && newestSub?.purchaseToken == activePlan?.customerId) {
+                    if (viewModel.isDowngrade) {
+                        Text(
+                            stringResource(R.string.subscription_change_confirmation_reactivate_downgrade),
+                            fontWeight = FontWeight.Medium,
+                            lineHeight = 24.sp,
+                            fontSize = 16.sp
+                        )
+                    } else {
+                        Text(
+                            stringResource(R.string.subscription_change_confirmation_reactivate_upgrade),
+                            fontWeight = FontWeight.Medium,
+                            lineHeight = 24.sp,
+                            fontSize = 16.sp
+                        )
+                    }
+                } else if (viewModel.hadGiftedSubscription || activePlan?.isTerminated == true && newestSub == null) {
                     val duration = selectedProduct.getSubscriptionDuration()
                     Text(
                         pluralStringResource(
@@ -383,22 +413,6 @@ private fun ChangeSubscriptionReviewView(
                         lineHeight = 20.sp,
                         fontWeight = FontWeight.Normal
                     )
-                } else if (activePlan?.isTerminated == true) {
-                    if (viewModel.isDowngrade) {
-                        Text(
-                            stringResource(R.string.subscription_change_confirmation_reactivate_downgrade),
-                            fontWeight = FontWeight.Medium,
-                            lineHeight = 24.sp,
-                            fontSize = 16.sp
-                        )
-                    } else {
-                        Text(
-                            stringResource(R.string.subscription_change_confirmation_reactivate_upgrade),
-                            fontWeight = FontWeight.Medium,
-                            lineHeight = 24.sp,
-                            fontSize = 16.sp
-                        )
-                    }
                 } else {
                     if (viewModel.isDowngrade) {
                         Text(

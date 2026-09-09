@@ -919,7 +919,7 @@
     <string name="skill_unlocks_at">Umiejętność odblokowana na poziomie %d</string>
     <string name="locked">Zablokowane</string>
     <string name="unlock_previous">Ukończ Misję %d, aby odblokować</string>
-    <string name="subscription_credit_canceling">Twoje <b>%d</b> zaległych miesięcy Subskrybcji zostanie wykorzystane po rezygnacji</string>
+    <string name="subscription_credit_canceling">Twoje <b>%s</b> zaległych miesięcy Subskrybcji zostanie wykorzystane po rezygnacji</string>
     <string name="share_challenge_with">Udostępnij Wyzwanie</string>
     <string name="see_what_s_new">Zobacz co nowego</string>
     <string name="joinedGuildTitle">Dołączono do Gildii</string>
