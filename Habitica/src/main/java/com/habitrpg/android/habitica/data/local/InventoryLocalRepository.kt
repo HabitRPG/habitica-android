@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryLocalRepository : ContentLocalRepository {
-    fun getArmoireRemainingCount(): Flow<Int>
+    fun getArmoireRemainingCount(userID: String): Flow<Int>
 
     fun getOwnedEquipment(userID: String): Flow<List<Equipment>>
 

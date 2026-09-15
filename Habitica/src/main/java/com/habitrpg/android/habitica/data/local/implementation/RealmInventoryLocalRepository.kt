@@ -54,17 +54,21 @@ class RealmInventoryLocalRepository(
             it.where(Equipment::class.java).`in`("key", searchedKeys.toTypedArray())
         }
 
-    override fun getArmoireRemainingCount(): Flow<Int> =
-        safeFindAll {
-            it
-                .where(Equipment::class.java)
-                .equalTo("klass", "armoire")
-                .beginGroup()
-                .equalTo("owned", false)
-                .or()
-                .isNull("owned")
-                .endGroup()
-        }.map { it.count() }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getArmoireRemainingCount(userID: String): Flow<Int> =
+        queryUser(userID)
+            .map { user ->
+                user?.items?.gear?.owned?.filter {
+                    it.owned == true
+                } ?: emptyList()
+            }.flatMapLatest { equipment ->
+                safeFindAll {
+                    it
+                        .where(Equipment::class.java)
+                        .equalTo("klass", "armoire")
+                        .not().`in`("key", equipment.mapNotNull { it.key }.toTypedArray())
+                }.map { it.count() }
+            }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getOwnedEquipment(userID: String, type: String): Flow<List<Equipment>> =

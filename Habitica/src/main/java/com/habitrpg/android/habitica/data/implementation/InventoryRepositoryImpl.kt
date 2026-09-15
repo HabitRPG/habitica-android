@@ -45,7 +45,7 @@ class InventoryRepositoryImpl(
     override fun getEquipment(searchedKeys: List<String>) =
         localRepository.getEquipment(searchedKeys)
 
-    override fun getArmoireRemainingCount() = localRepository.getArmoireRemainingCount()
+    override fun getArmoireRemainingCount() = localRepository.getArmoireRemainingCount(currentUserID)
 
     override fun getInAppRewards() = localRepository.getInAppRewards()
 
