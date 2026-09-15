@@ -142,7 +142,7 @@
                 style="@style/Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/equipment_remaining"
+                tools:text="@string/equipment_remaining"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
