@@ -183,7 +183,6 @@ private fun BottomSheetWrapper(
                         coroutineScope.launch {
                             delay(100.milliseconds)
                             modalBottomSheetState.show()
-
                         }
                     }
                 }

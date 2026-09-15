@@ -166,7 +166,6 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         if (context != null) {
             val groupChallenges = getGroupChallenges()
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                delay(500.milliseconds)
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.guild_challenges)
@@ -182,7 +181,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                         viewModel.leaveGroup(false, false, groupChallenges, false) { showLeaveSnackbar() }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
-                    alert.show()
+                    alert.enqueue()
                 } else {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.leave_guild_confirmation)
@@ -197,7 +196,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                         }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
-                    alert.show()
+                    alert.enqueue()
                 }
             }
         }

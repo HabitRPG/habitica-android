@@ -169,7 +169,6 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         }
         if (response.damage > 0) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                delay(2000L)
                 if (!isAdded) return@launch
                 showSnackbar(
                     activity.snackbarContainer,

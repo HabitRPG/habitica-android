@@ -531,7 +531,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         if (context != null) {
             val groupChallenges = getGroupChallenges()
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                delay(500.milliseconds)
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.party_challenges)
@@ -553,7 +552,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
-                    alert.show()
+                    alert.enqueue()
                 } else {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.leave_party_confirmation)
@@ -579,7 +578,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
-                    alert.show()
+                    alert.enqueue()
                 }
             }
         }
