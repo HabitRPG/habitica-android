@@ -425,7 +425,7 @@
     <string name="subscription_hourglasses">%d ساعات رملية</string>
     <string name="payment_method">طريقة الدفع</string>
     <string name="subscription">الاشتراك</string>
-    <string name="subscription_credit_canceling">سيتم تفعيل رصيد اشتراكك البالغ <b>+%d</b> شهرًا بعد الإلغاء</string>
+    <string name="subscription_credit_canceling">سيتم تفعيل رصيد اشتراكك البالغ <b>+%s</b> شهرًا بعد الإلغاء</string>
     <string name="active">نشط</string>
     <string name="due">مستحق</string>
     <string name="cancel_subscription">إلغاء الاشتراك</string>

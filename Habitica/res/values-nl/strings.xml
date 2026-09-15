@@ -1029,7 +1029,7 @@
     <string name="change_class_message">Dit verwijdert je huidige Klasse en geeft alle Attribuutpunten terug. Hierna kun je een nieuwe Klasse kiezen</string>
     <string name="subscribe_listitemFaint_description">Behoud je voortgang met één keer per dag een directe genezing als je Levens opraken!</string>
     <string name="change_class_selected_confirmation">Wil je je Klasse veranderen naar %1$s\?</string>
-    <string name="subscription_credit_canceling">Je huidige tegoed van <b>%d</b> maanden van je abonnement zullen na opzegging worden geactiveerd</string>
+    <string name="subscription_credit_canceling">Je huidige tegoed van <b>+%s</b> maanden van je abonnement zullen na opzegging worden geactiveerd</string>
     <string name="challenges">Uitdagingen</string>
     <string name="reset_account_title">Weet je zeker dat je wilt resetten\?</string>
     <string name="reset_account_description_new">Je verliest al je Niveaus, Goud en Ervaring. Al je Taken en historische gegevens zullen worden verwijderd (Uitdagingen blijven bestaan). Je zult al je Uitrusting verliezen, behalve abonnementsitems en gratis Memorabilia, maar je kunt ze wel opnieuw kopen. Je moet van de juiste Klasse zijn om klassespecifieke Uitrusting opnieuw te kopen. Je behoudt je huidige Klasse, Prestaties, en je Huis- en Rijdieren. Typ hieronder je wachtwoord om het resetten te bevestigen.</string>
