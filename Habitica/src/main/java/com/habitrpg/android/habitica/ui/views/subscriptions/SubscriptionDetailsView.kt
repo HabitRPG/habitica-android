@@ -46,6 +46,13 @@ class SubscriptionDetailsView : LinearLayout {
     fun setPlan(plan: SubscriptionPlan) {
         this.plan = plan
 
+        binding.paymentProcessorWrapper.visibility = VISIBLE
+        binding.nextHourglassTextview.visibility = VISIBLE
+        binding.nextHourglassLabel.visibility = VISIBLE
+        binding.changeSubscriptionWrapper.visibility = VISIBLE
+        binding.changeSubscriptionTitle.setText(R.string.cancel_subscription)
+        binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_notgoogle_description)
+
         updateSubscriptionStatusPill(plan)
 
         var duration: String? = null
@@ -87,6 +94,10 @@ class SubscriptionDetailsView : LinearLayout {
                         R.string.benefits_end,
                         DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()),
                     )
+            }
+
+            else -> {
+                binding.subscriptionDurationTextView.text = null
             }
         }
 
@@ -189,7 +200,6 @@ class SubscriptionDetailsView : LinearLayout {
 
         binding.changeSubscriptionButton.visibility = VISIBLE
         if (plan.paymentMethod != null) {
-            binding.changeSubscriptionTitle.setText(R.string.cancel_subscription)
             if (plan.paymentMethod == "Google") {
                 binding.changeSubscriptionDescription.setText(R.string.cancel_subscription_google_description)
                 binding.changeSubscriptionButton.setText(R.string.open_in_store)
@@ -230,6 +240,7 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.subscriptionStatusActive.visibility = GONE
                 binding.subscriptionStatusGroupPlan.visibility = GONE
             } else {
+                binding.subscriptionStatusCancelled.visibility = GONE
                 if (plan.isGroupPlanSub) {
                     binding.subscriptionStatusGroupPlan.visibility = VISIBLE
                     binding.subscriptionStatusActive.visibility = GONE
@@ -240,7 +251,6 @@ class SubscriptionDetailsView : LinearLayout {
                     binding.subscriptionStatusGroupPlan.visibility = GONE
                 }
             }
-            binding.subscriptionStatusCancelled.visibility = GONE
             binding.subscriptionStatusInactive.visibility = GONE
         } else {
             binding.subscriptionStatusActive.visibility = GONE
