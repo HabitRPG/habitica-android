@@ -59,15 +59,26 @@ private data class CompactTier(
 
 internal fun chipHeight(fontScale: Float): Dp = CHIP_HEIGHT * maxOf(1f, fontScale)
 
-internal fun labelLineHeight(fontScale: Float): Dp =
-    (LABEL_TEXT_SP * LINE_HEIGHT_FACTOR * fontScale).dp
+internal fun labelLineHeight(fontScale: Float): Dp = (LABEL_TEXT_SP * LINE_HEIGHT_FACTOR * fontScale).dp
 
-internal fun rowHeight(mode: StatRowMode, iconSize: Dp, fontScale: Float): Dp = when (mode) {
-    StatRowMode.LabelStackedValue ->
-        maxOf(iconSize, STACKED_ROW_CHROME + labelLineHeight(fontScale))
-    StatRowMode.BarOnly -> iconSize
-    else -> maxOf(iconSize, labelLineHeight(fontScale))
-}
+internal fun rowHeight(
+    mode: StatRowMode,
+    iconSize: Dp,
+    fontScale: Float,
+): Dp =
+    when (mode) {
+        StatRowMode.LabelStackedValue -> {
+            maxOf(iconSize, STACKED_ROW_CHROME + labelLineHeight(fontScale))
+        }
+
+        StatRowMode.BarOnly -> {
+            iconSize
+        }
+
+        else -> {
+            maxOf(iconSize, labelLineHeight(fontScale))
+        }
+    }
 
 internal fun stackHeight(
     mode: StatRowMode,
@@ -77,27 +88,33 @@ internal fun stackHeight(
     fontScale: Float,
 ): Dp = rowHeight(mode, iconSize, fontScale) * rows + gap * (rows - 1)
 
-internal fun requiredHeight(layout: StatsLayout, rows: Int, fontScale: Float): Dp {
+internal fun requiredHeight(
+    layout: StatsLayout,
+    rows: Int,
+    fontScale: Float,
+): Dp {
     val padding = layout.outerPadding * 2
     val stack = stackHeight(layout.rowMode, rows, layout.iconSize, layout.rowGap, fontScale)
     if (layout.avatarOnTop) {
         return padding + layout.avatarHeight + stack
     }
     val body = if (layout.showAvatar) maxOf(layout.avatarHeight, stack) else stack
-    val footer = if (layout.showFooter) {
-        (if (layout.showAvatar) 0.dp else FOOTER_SPACING) + chipHeight(fontScale)
-    } else {
-        0.dp
-    }
+    val footer =
+        if (layout.showFooter) {
+            (if (layout.showAvatar) 0.dp else FOOTER_SPACING) + chipHeight(fontScale)
+        } else {
+            0.dp
+        }
     return padding + body + footer
 }
 
 private fun compactTiers(cols: Int): List<CompactTier> {
-    val inlineMode = when {
-        cols >= 5 -> StatRowMode.InlineValueMaxWithLabel
-        cols == 4 -> StatRowMode.InlineValueWithLabel
-        else -> null
-    }
+    val inlineMode =
+        when {
+            cols >= 5 -> StatRowMode.InlineValueMaxWithLabel
+            cols == 4 -> StatRowMode.InlineValueWithLabel
+            else -> null
+        }
     return buildList {
         if (inlineMode != null) {
             add(CompactTier(inlineMode, COMPACT_OUTER_PADDING, COMPACT_ICON_SIZE, COMPACT_ROW_GAP))
@@ -110,20 +127,27 @@ private fun compactTiers(cols: Int): List<CompactTier> {
     }
 }
 
-internal fun pickLayout(width: Dp, height: Dp, rows: Int, fontScale: Float): StatsLayout {
-    val cols = when {
-        width >= 310.dp -> 5
-        width >= 240.dp -> 4
-        width >= 170.dp -> 3
-        else -> 2
-    }
+internal fun pickLayout(
+    width: Dp,
+    height: Dp,
+    rows: Int,
+    fontScale: Float,
+): StatsLayout {
+    val cols =
+        when {
+            width >= 310.dp -> 5
+            width >= 240.dp -> 4
+            width >= 170.dp -> 3
+            else -> 2
+        }
 
     if (height < TALL_THRESHOLD) {
         val tiers = compactTiers(cols)
-        val tier = tiers.firstOrNull {
-            height - it.padding * 2 >=
-                stackHeight(it.rowMode, rows, it.iconSize, it.gap, fontScale)
-        } ?: tiers.last()
+        val tier =
+            tiers.firstOrNull {
+                height - it.padding * 2 >=
+                    stackHeight(it.rowMode, rows, it.iconSize, it.gap, fontScale)
+            } ?: tiers.last()
         return StatsLayout(
             cols = cols,
             tall = false,
@@ -141,44 +165,61 @@ internal fun pickLayout(width: Dp, height: Dp, rows: Int, fontScale: Float): Sta
 
     val budget = height - OUTER_PADDING * 2
     val chip = chipHeight(fontScale)
-    val stackedStack = stackHeight(
-        StatRowMode.LabelStackedValue, rows, TALL_ICON_SIZE, STACKED_ROW_GAP, fontScale,
-    )
+    val stackedStack =
+        stackHeight(
+            StatRowMode.LabelStackedValue,
+            rows,
+            TALL_ICON_SIZE,
+            STACKED_ROW_GAP,
+            fontScale,
+        )
     val barStack = stackHeight(StatRowMode.BarOnly, rows, TALL_ICON_SIZE, BAR_ROW_GAP, fontScale)
 
     val avatarBudget = budget - chip
     val compactAvatarBudget = budget - barStack
-    val showAvatar = when {
-        cols >= 5 -> avatarBudget >= maxOf(AVATAR_MIN_HEIGHT, barStack)
-        cols == 2 -> compactAvatarBudget >= COMPACT_AVATAR_MIN_HEIGHT
-        else -> false
-    }
+    val showAvatar =
+        when {
+            cols >= 5 -> avatarBudget >= maxOf(AVATAR_MIN_HEIGHT, barStack)
+            cols == 2 -> compactAvatarBudget >= COMPACT_AVATAR_MIN_HEIGHT
+            else -> false
+        }
     val avatarOnTop = showAvatar && cols == 2
-    val avatarHeight = when {
-        avatarOnTop ->
-            compactAvatarBudget.coerceIn(COMPACT_AVATAR_MIN_HEIGHT, COMPACT_AVATAR_MAX_HEIGHT)
-        showAvatar -> avatarBudget.coerceIn(AVATAR_MIN_HEIGHT, AVATAR_MAX_HEIGHT)
-        else -> 0.dp
-    }
+    val avatarHeight =
+        when {
+            avatarOnTop -> {
+                compactAvatarBudget.coerceIn(COMPACT_AVATAR_MIN_HEIGHT, COMPACT_AVATAR_MAX_HEIGHT)
+            }
+
+            showAvatar -> {
+                avatarBudget.coerceIn(AVATAR_MIN_HEIGHT, AVATAR_MAX_HEIGHT)
+            }
+
+            else -> {
+                0.dp
+            }
+        }
 
     val footerBudget = budget - chip - FOOTER_SPACING
-    val richRows = cols >= 4 &&
-        if (showAvatar) avatarBudget >= stackedStack else footerBudget >= stackedStack
+    val richRows =
+        cols >= 4 &&
+            if (showAvatar) avatarBudget >= stackedStack else footerBudget >= stackedStack
     val rowMode = if (richRows) StatRowMode.LabelStackedValue else StatRowMode.BarOnly
-    val showFooter = when {
-        showAvatar -> !avatarOnTop
-        cols >= 4 -> footerBudget >= barStack
-        else -> false
-    }
+    val showFooter =
+        when {
+            showAvatar -> !avatarOnTop
+            cols >= 4 -> footerBudget >= barStack
+            else -> false
+        }
     val barsFillHeight = rowMode == StatRowMode.BarOnly && !showAvatar && !showFooter
-    val iconSize = if (
-        barsFillHeight &&
-        budget >= stackHeight(rowMode, rows, FILL_ICON_SIZE, BAR_ROW_GAP, fontScale)
-    ) {
-        FILL_ICON_SIZE
-    } else {
-        TALL_ICON_SIZE
-    }
+    val iconSize =
+        if (
+            barsFillHeight &&
+            budget >= stackHeight(rowMode, rows, FILL_ICON_SIZE, BAR_ROW_GAP, fontScale)
+        ) {
+            FILL_ICON_SIZE
+        } else {
+            TALL_ICON_SIZE
+        }
     val rowGap = if (richRows) STACKED_ROW_GAP else BAR_ROW_GAP
 
     return StatsLayout(

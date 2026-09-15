@@ -32,8 +32,8 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
@@ -50,6 +50,7 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?,
     ): FragmentGemPurchaseBinding = FragmentGemPurchaseBinding.inflate(inflater, container, false)
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
@@ -61,7 +62,7 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val promo = appConfigManager.activePromo()
         if (promo?.promoType == PromoType.GEMS_AMOUNT || promo?.promoType == PromoType.GEMS_PRICE) {
@@ -69,10 +70,14 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
         }
         this.hidesToolbar = true
         toolbarBackgroundColor =
-            if (gemPromo != null) gemPromo?.screenBackgroundColor(requireContext()) else ContextCompat.getColor(
-                requireContext(),
-                R.color.brand_300
-            )
+            if (gemPromo != null) {
+                gemPromo?.screenBackgroundColor(requireContext())
+            } else {
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.brand_300,
+                )
+            }
         toolbarIconColor = Color.WHITE
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -138,7 +143,6 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
             binding?.promoComposeView?.isVisible = true
         }
         loadInventory()
-
     }
 
     override fun onResume() {

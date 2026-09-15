@@ -111,7 +111,6 @@ class MainNotificationsManager : NotificationsManager {
                         Notification.Type.ACHIEVEMENT_SEEING_RED.type -> true
                         Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> true
                         Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type -> true
-
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                         Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
                         Notification.Type.REBIRTH_ENABLED.type -> true

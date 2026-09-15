@@ -42,8 +42,7 @@ class InventoryRepositoryImpl(
 
     override fun getQuestContent(key: String) = localRepository.getQuestContent(key)
 
-    override fun getEquipment(searchedKeys: List<String>) =
-        localRepository.getEquipment(searchedKeys)
+    override fun getEquipment(searchedKeys: List<String>) = localRepository.getEquipment(searchedKeys)
 
     override fun getArmoireRemainingCount() = localRepository.getArmoireRemainingCount(currentUserID)
 
@@ -59,8 +58,7 @@ class InventoryRepositoryImpl(
         return rewards
     }
 
-    override fun getOwnedEquipment(type: String) =
-        localRepository.getOwnedEquipment(currentUserID, type)
+    override fun getOwnedEquipment(type: String) = localRepository.getOwnedEquipment(currentUserID, type)
 
     override fun getOwnedEquipment() = localRepository.getOwnedEquipment(currentUserID)
 
@@ -94,8 +92,7 @@ class InventoryRepositoryImpl(
         keys: Array<String>,
     ): Flow<List<Item>> = localRepository.getItems(itemClass, keys)
 
-    override fun getItems(itemClass: Class<out Item>): Flow<List<Item>> =
-        localRepository.getItems(itemClass)
+    override fun getItems(itemClass: Class<out Item>): Flow<List<Item>> = localRepository.getItems(itemClass)
 
     override fun getEquipment(key: String): Flow<Equipment> = localRepository.getEquipment(key)
 
@@ -132,8 +129,7 @@ class InventoryRepositoryImpl(
         color: String?,
     ): Flow<List<Pet>> = localRepository.getPets(type, group, color)
 
-    override fun getOwnedPets(): Flow<List<OwnedPet>> =
-        authenticationHandler.userIDFlow.flatMapLatest { localRepository.getOwnedPets(it) }
+    override fun getOwnedPets(): Flow<List<OwnedPet>> = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getOwnedPets(it) }
 
     override fun updateOwnedEquipment(user: User) {
         localRepository.updateOwnedEquipment(user)
@@ -166,8 +162,7 @@ class InventoryRepositoryImpl(
 
     override fun getLatestMysteryItem(): Flow<Equipment> = localRepository.getLatestMysteryItem()
 
-    override fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>> =
-        localRepository.getLatestMysteryItemAndSet()
+    override fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>> = localRepository.getLatestMysteryItemAndSet()
 
     override fun getItem(
         type: String,
@@ -301,16 +296,13 @@ class InventoryRepositoryImpl(
         return buyResponse
     }
 
-    override fun getAvailableLimitedItems(): Flow<List<Item>> =
-        localRepository.getAvailableLimitedItems()
+    override fun getAvailableLimitedItems(): Flow<List<Item>> = localRepository.getAvailableLimitedItems()
 
-    override suspend fun retrieveShopInventory(identifier: String): Shop? =
-        apiClient.retrieveShopIventory(identifier)
+    override suspend fun retrieveShopInventory(identifier: String): Shop? = apiClient.retrieveShopIventory(identifier)
 
     override suspend fun retrieveMarketGear(): Shop? = apiClient.retrieveMarketGear()
 
-    override suspend fun purchaseMysterySet(categoryIdentifier: String): Void? =
-        apiClient.purchaseMysterySet(categoryIdentifier)
+    override suspend fun purchaseMysterySet(categoryIdentifier: String): Void? = apiClient.purchaseMysterySet(categoryIdentifier)
 
     override suspend fun purchaseHourglassItem(
         purchaseType: String,
@@ -319,8 +311,7 @@ class InventoryRepositoryImpl(
 
     override suspend fun purchaseQuest(key: String): Void? = apiClient.purchaseQuest(key)
 
-    override suspend fun purchaseSpecialSpell(key: String): Void? =
-        apiClient.purchaseSpecialSpell(key)
+    override suspend fun purchaseSpecialSpell(key: String): Void? = apiClient.purchaseSpecialSpell(key)
 
     override suspend fun purchaseItem(
         purchaseType: String,

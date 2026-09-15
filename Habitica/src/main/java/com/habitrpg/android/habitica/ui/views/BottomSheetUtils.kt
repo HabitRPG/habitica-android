@@ -170,7 +170,6 @@ private fun BottomSheetWrapper(
 
     // Take action based on hidden state
     LaunchedEffect(modalBottomSheetState.currentValue) {
-
         when (modalBottomSheetState.currentValue) {
             SheetValue.Hidden -> {
                 when {

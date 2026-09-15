@@ -8,7 +8,7 @@ object ProjectConfig : AbstractProjectConfig() {
     override suspend fun beforeProject() {
         super.beforeProject()
         setupLiveData()
-        //setup whatever you want
+        // setup whatever you want
     }
 
     override suspend fun afterProject() {
@@ -17,19 +17,19 @@ object ProjectConfig : AbstractProjectConfig() {
     }
 
     private fun setupLiveData() {
-        ArchTaskExecutor.getInstance().setDelegate(object : TaskExecutor() {
-            override fun executeOnDiskIO(runnable: Runnable) {
-                runnable.run()
-            }
+        ArchTaskExecutor.getInstance().setDelegate(
+            object : TaskExecutor() {
+                override fun executeOnDiskIO(runnable: Runnable) {
+                    runnable.run()
+                }
 
-            override fun postToMainThread(runnable: Runnable) {
-                runnable.run()
-            }
+                override fun postToMainThread(runnable: Runnable) {
+                    runnable.run()
+                }
 
-            override fun isMainThread(): Boolean {
-                return true
-            }
-        })
+                override fun isMainThread(): Boolean = true
+            },
+        )
     }
 
     private fun resetLiveData() {

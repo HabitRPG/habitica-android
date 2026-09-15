@@ -194,7 +194,6 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
         this.loadEquipment()
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
-
     }
 
     override fun onCreateOptionsMenu(

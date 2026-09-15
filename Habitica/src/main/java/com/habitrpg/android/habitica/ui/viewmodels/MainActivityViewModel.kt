@@ -29,147 +29,146 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel
-@Inject
-constructor(
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel,
-    val hostConfig: HostConfig,
-    val pushNotificationManager: PushNotificationManager,
-    val sharedPreferences: SharedPreferences,
-    val contentRepository: ContentRepository,
-    val taskRepository: TaskRepository,
-    val inventoryRepository: InventoryRepository,
-    val taskAlarmManager: TaskAlarmManager,
-    val maintenanceService: MaintenanceApiService,
-) : BaseViewModel(userRepository, userViewModel),
-    TutorialView.OnTutorialReaction {
-    val isAuthenticated: Boolean
-        get() = hostConfig.hasAuthentication()
-    val launchScreen: String?
-        get() = sharedPreferences.getString("launch_screen", "")
-    var preferenceLanguage: String?
-        get() = sharedPreferences.getString("language", "en")
-        set(value) {
-            sharedPreferences.edit {
-                putString("language", value)
-            }
-        }
-    var requestNotificationPermission = MutableLiveData(false)
-
-    val canShowTeamPlanHeader = mutableStateOf(false)
-
-    override fun onCleared() {
-        taskRepository.close()
-        inventoryRepository.close()
-        contentRepository.close()
-        super.onCleared()
-    }
-
-    fun onCreate() {
-        try {
-            viewModelScope.launch(ExceptionHandler.coroutine()) {
-                taskAlarmManager.scheduleAllSavedAlarms(
-                    sharedPreferences.getBoolean(
-                        "preventDailyReminder",
-                        false,
-                    ),
-                )
-            }
-        } catch (e: Exception) {
-            Analytics.logException(e)
-        }
-    }
-
-    fun onResume() {
-        // Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
-        sharedPreferences.edit {
-            putLong("lastAppLaunch", Date().time)
-            putBoolean("preventDailyReminder", false)
-        }
-    }
-
-    fun retrieveUser(forced: Boolean = false) {
-        viewModelScope.launch(ExceptionHandler.coroutine()) {
-            if (!hostConfig.isInitialized) {
-                hostConfig.awaitReady()
-            }
-            if (!hostConfig.hasAuthentication()) return@launch
-            contentRepository.retrieveWorldState()
-            userRepository.retrieveUser(true, forced)?.let { user ->
-                pushNotificationManager.setUser(user)
-                if (!pushNotificationManager.notificationPermissionEnabled()) {
-                    if (sharedPreferences.getBoolean("usePushNotifications", true)) {
-                        requestNotificationPermission.value = true
-                    }
-                } else {
-                    pushNotificationManager.addPushDeviceUsingStoredToken()
+    @Inject
+    constructor(
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+        val hostConfig: HostConfig,
+        val pushNotificationManager: PushNotificationManager,
+        val sharedPreferences: SharedPreferences,
+        val contentRepository: ContentRepository,
+        val taskRepository: TaskRepository,
+        val inventoryRepository: InventoryRepository,
+        val taskAlarmManager: TaskAlarmManager,
+        val maintenanceService: MaintenanceApiService,
+    ) : BaseViewModel(userRepository, userViewModel),
+        TutorialView.OnTutorialReaction {
+        val isAuthenticated: Boolean
+            get() = hostConfig.hasAuthentication()
+        val launchScreen: String?
+            get() = sharedPreferences.getString("launch_screen", "")
+        var preferenceLanguage: String?
+            get() = sharedPreferences.getString("language", "en")
+            set(value) {
+                sharedPreferences.edit {
+                    putString("language", value)
                 }
             }
-            inventoryRepository.retrieveInAppRewards()
-            contentRepository.retrieveContent()
+        var requestNotificationPermission = MutableLiveData(false)
+
+        val canShowTeamPlanHeader = mutableStateOf(false)
+
+        override fun onCleared() {
+            taskRepository.close()
+            inventoryRepository.close()
+            contentRepository.close()
+            super.onCleared()
         }
-        viewModelScope.launchCatching {
-            if (!hostConfig.isInitialized) {
-                hostConfig.awaitReady()
+
+        fun onCreate() {
+            try {
+                viewModelScope.launch(ExceptionHandler.coroutine()) {
+                    taskAlarmManager.scheduleAllSavedAlarms(
+                        sharedPreferences.getBoolean(
+                            "preventDailyReminder",
+                            false,
+                        ),
+                    )
+                }
+            } catch (e: Exception) {
+                Analytics.logException(e)
             }
-            if (!hostConfig.hasAuthentication()) return@launchCatching
-            userRepository.retrieveTeamPlans()
         }
-    }
 
-    fun updateAllowPushNotifications(allowPushNotifications: Boolean) {
-        sharedPreferences.getBoolean("usePushNotifications", true)
-        sharedPreferences.edit {
-            putBoolean("usePushNotifications", allowPushNotifications)
-        }
-    }
-
-    override fun onTutorialCompleted(step: TutorialStep) {
-        updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
-    }
-
-
-    override fun onTutorialDeferred(step: TutorialStep) {
-        taskRepository.modify(step) { it.displayedOn = Date() }
-    }
-
-    fun ifNeedsMaintenance(onResult: ((MaintenanceResponse) -> Unit)) {
-        viewModelScope.launchCatching {
-            val maintenanceResponse = maintenanceService.getMaintenanceStatus()
-            if (maintenanceResponse?.activeMaintenance == null) {
-                return@launchCatching
+        fun onResume() {
+            // Track when the app was last opened, so that we can use this to send out special reminders after a week of inactivity
+            sharedPreferences.edit {
+                putLong("lastAppLaunch", Date().time)
+                putBoolean("preventDailyReminder", false)
             }
-            onResult(maintenanceResponse)
         }
-    }
 
-    fun getToolbarTitle(
-        id: Int,
-        label: CharSequence?,
-        eggType: String?,
-        onSuccess: ((CharSequence?) -> Unit),
-    ) {
-        if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
-            viewModelScope.launchCatching {
-                val item = inventoryRepository.getItem("egg", eggType ?: "").firstOrNull()
-                onSuccess(
-                    if (id == R.id.petDetailRecyclerFragment) {
-                        (item as? Egg)?.text
+        fun retrieveUser(forced: Boolean = false) {
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
+                if (!hostConfig.isInitialized) {
+                    hostConfig.awaitReady()
+                }
+                if (!hostConfig.hasAuthentication()) return@launch
+                contentRepository.retrieveWorldState()
+                userRepository.retrieveUser(true, forced)?.let { user ->
+                    pushNotificationManager.setUser(user)
+                    if (!pushNotificationManager.notificationPermissionEnabled()) {
+                        if (sharedPreferences.getBoolean("usePushNotifications", true)) {
+                            requestNotificationPermission.value = true
+                        }
                     } else {
-                        (item as? Egg)?.mountText
+                        pushNotificationManager.addPushDeviceUsingStoredToken()
+                    }
+                }
+                inventoryRepository.retrieveInAppRewards()
+                contentRepository.retrieveContent()
+            }
+            viewModelScope.launchCatching {
+                if (!hostConfig.isInitialized) {
+                    hostConfig.awaitReady()
+                }
+                if (!hostConfig.hasAuthentication()) return@launchCatching
+                userRepository.retrieveTeamPlans()
+            }
+        }
+
+        fun updateAllowPushNotifications(allowPushNotifications: Boolean) {
+            sharedPreferences.getBoolean("usePushNotifications", true)
+            sharedPreferences.edit {
+                putBoolean("usePushNotifications", allowPushNotifications)
+            }
+        }
+
+        override fun onTutorialCompleted(step: TutorialStep) {
+            updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
+        }
+
+        override fun onTutorialDeferred(step: TutorialStep) {
+            taskRepository.modify(step) { it.displayedOn = Date() }
+        }
+
+        fun ifNeedsMaintenance(onResult: ((MaintenanceResponse) -> Unit)) {
+            viewModelScope.launchCatching {
+                val maintenanceResponse = maintenanceService.getMaintenanceStatus()
+                if (maintenanceResponse?.activeMaintenance == null) {
+                    return@launchCatching
+                }
+                onResult(maintenanceResponse)
+            }
+        }
+
+        fun getToolbarTitle(
+            id: Int,
+            label: CharSequence?,
+            eggType: String?,
+            onSuccess: ((CharSequence?) -> Unit),
+        ) {
+            if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
+                viewModelScope.launchCatching {
+                    val item = inventoryRepository.getItem("egg", eggType ?: "").firstOrNull()
+                    onSuccess(
+                        if (id == R.id.petDetailRecyclerFragment) {
+                            (item as? Egg)?.text
+                        } else {
+                            (item as? Egg)?.mountText
+                        },
+                    )
+                }
+            } else {
+                onSuccess(
+                    if (id == R.id.promoInfoFragment) {
+                        ""
+                    } else if (label.isNullOrEmpty() && user.value?.isValid == true) {
+                        user.value?.profile?.name
+                    } else {
+                        label ?: ""
                     },
                 )
             }
-        } else {
-            onSuccess(
-                if (id == R.id.promoInfoFragment) {
-                    ""
-                } else if (label.isNullOrEmpty() && user.value?.isValid == true) {
-                    user.value?.profile?.name
-                } else {
-                    label ?: ""
-                },
-            )
         }
     }
-}

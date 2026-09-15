@@ -12,12 +12,13 @@ object WidgetSnapshotStore {
     val dailyCountKey = stringPreferencesKey("daily_count_snapshot")
     val configKey = stringPreferencesKey("render_config")
 
-    fun fontScale(context: android.content.Context): Float = runCatching {
-        android.provider.Settings.System.getFloat(
-            context.contentResolver,
-            android.provider.Settings.System.FONT_SCALE,
-        )
-    }.getOrNull() ?: context.resources.configuration.fontScale
+    fun fontScale(context: android.content.Context): Float =
+        runCatching {
+            android.provider.Settings.System.getFloat(
+                context.contentResolver,
+                android.provider.Settings.System.FONT_SCALE,
+            )
+        }.getOrNull() ?: context.resources.configuration.fontScale
 
     fun configFingerprint(context: android.content.Context): String {
         val config = context.resources.configuration

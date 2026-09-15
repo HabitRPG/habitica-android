@@ -114,8 +114,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         super.onDestroy()
     }
 
-    override fun getLayoutManager(context: Context?): LinearLayoutManager =
-        GridLayoutManager(context, 4)
+    override fun getLayoutManager(context: Context?): LinearLayoutManager = GridLayoutManager(context, 4)
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true

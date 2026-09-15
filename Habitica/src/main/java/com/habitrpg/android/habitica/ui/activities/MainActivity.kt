@@ -217,8 +217,9 @@ open class MainActivity :
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
                     !viewModel.sharedPreferences.getBoolean("prompted_exact_scheduling", false)
                 ) {
-                    val alarmManager = this.getSystemService(ALARM_SERVICE) as? AlarmManager
-                        ?: return@registerForActivityResult
+                    val alarmManager =
+                        this.getSystemService(ALARM_SERVICE) as? AlarmManager
+                            ?: return@registerForActivityResult
                     if (!alarmManager.canScheduleExactAlarms()) {
                         val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                         intent.data = Uri.fromParts("package", applicationContext?.packageName, null)
@@ -330,7 +331,7 @@ open class MainActivity :
                             if (!isUsingNightModeResources()) {
                                 window.updateStatusBarColor(
                                     getThemeColor(R.attr.colorPrimaryDark),
-                                    false
+                                    false,
                                 )
                             }
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -357,7 +358,7 @@ open class MainActivity :
                         if (!isUsingNightModeResources()) {
                             window.updateStatusBarColor(
                                 getThemeColor(R.attr.colorPrimaryDark),
-                                false
+                                false,
                             )
                         }
                         isOpeningDrawer = null
@@ -368,7 +369,7 @@ open class MainActivity :
                         if (!isUsingNightModeResources()) {
                             window.updateStatusBarColor(
                                 getThemeColor(R.attr.headerBackgroundColor),
-                                true
+                                true,
                             )
                         }
                         isOpeningDrawer = null
@@ -478,7 +479,7 @@ open class MainActivity :
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
                             val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
-                                null
+                                null,
                             )
                             val members by viewModel.userViewModel.currentTeamPlanMembersData.observeAsState()
                             Box(
@@ -594,16 +595,17 @@ open class MainActivity :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true || if (item.itemId == android.R.id.home) {
-            if (showBackButton == true) {
-                MainNavigationController.navigateBack()
-            } else if (isPersistentDrawerMode != true) {
-                drawerFragment?.toggleDrawer()
+        binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true ||
+            if (item.itemId == android.R.id.home) {
+                if (showBackButton == true) {
+                    MainNavigationController.navigateBack()
+                } else if (isPersistentDrawerMode != true) {
+                    drawerFragment?.toggleDrawer()
+                }
+                true
+            } else {
+                super.onOptionsItemSelected(item)
             }
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
 
     override fun onResume() {
         super.onResume()
@@ -664,7 +666,7 @@ open class MainActivity :
             this,
             viewModel.userViewModel.userID,
             userRepository,
-            taskRepository
+            taskRepository,
         )
 
         val openTaskFormType = intent.getStringExtra(OPEN_TASK_FORM_TYPE)
@@ -793,7 +795,7 @@ open class MainActivity :
             CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
             CrashReporter.setCustomKey(
                 "timezone_offset",
-                "${user.preferences?.timezoneOffset ?: 0}"
+                "${user.preferences?.timezoneOffset ?: 0}",
             )
 
             handleAnalyticsConsent(user)
@@ -908,64 +910,65 @@ open class MainActivity :
 
                 if (deathOverlayComposeView == null) {
                     val rootLayout = binding.root as? ViewGroup
-                    deathOverlayComposeView = ComposeView(this@MainActivity).apply {
-                        setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                        setContent {
-                            HabiticaTheme {
-                                val user by viewModel.user.observeAsState(null)
-                                DeathOverlay(
-                                    isVisible = showDeathOverlay,
-                                    user = user,
-                                    appConfigManager = appConfigManager,
-                                    sharedPreferences = sharedPreferences,
-                                    onSubscribeClick = {
-                                        val subscriptionBottomSheet =
-                                            EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                                eventType =
-                                                    EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
-                                            }
-                                        subscriptionBottomSheet.show(
-                                            supportFragmentManager,
-                                            EventOutcomeSubscriptionBottomSheetFragment.TAG
-                                        )
-                                    },
-                                    onUseSecondChanceClick = {
-                                        sharedPreferences.edit {
-                                            putLong("last_sub_revive", Date().time)
-                                        }
-                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                            userRepository.updateUser("stats.hp", 1)
-                                            delay(1.seconds)
-                                            HabiticaSnackbar.showSnackbar(
-                                                snackbarContainer,
-                                                getString(R.string.subscriber_benefit_success_faint),
-                                                HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
-                                                isSubscriberBenefit = true,
-                                                duration = 2500
+                    deathOverlayComposeView =
+                        ComposeView(this@MainActivity).apply {
+                            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                            setContent {
+                                HabiticaTheme {
+                                    val user by viewModel.user.observeAsState(null)
+                                    DeathOverlay(
+                                        isVisible = showDeathOverlay,
+                                        user = user,
+                                        appConfigManager = appConfigManager,
+                                        sharedPreferences = sharedPreferences,
+                                        onSubscribeClick = {
+                                            val subscriptionBottomSheet =
+                                                EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                                    eventType =
+                                                        EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
+                                                }
+                                            subscriptionBottomSheet.show(
+                                                supportFragmentManager,
+                                                EventOutcomeSubscriptionBottomSheetFragment.TAG,
                                             )
-                                        }
-                                    },
-                                    onRefillHealthClick = {
-                                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                            val brokenItem = userRepository.revive()
-                                            if (brokenItem != null) {
-                                                delay(500.milliseconds)
+                                        },
+                                        onUseSecondChanceClick = {
+                                            sharedPreferences.edit {
+                                                putLong("last_sub_revive", Date().time)
+                                            }
+                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                                userRepository.updateUser("stats.hp", 1)
+                                                delay(1.seconds)
                                                 HabiticaSnackbar.showSnackbar(
                                                     snackbarContainer,
-                                                    getString(R.string.revive_broken_equipment, brokenItem.text),
-                                                    HabiticaSnackbar.SnackbarDisplayType.BLACK
+                                                    getString(R.string.subscriber_benefit_success_faint),
+                                                    HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT,
+                                                    isSubscriberBenefit = true,
+                                                    duration = 2500,
                                                 )
                                             }
-                                        }
-                                    },
-                                    onAnimationComplete = {},
-                                    onDismissComplete = {
-                                        showDeathOverlay = false
-                                    }
-                                )
+                                        },
+                                        onRefillHealthClick = {
+                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                                val brokenItem = userRepository.revive()
+                                                if (brokenItem != null) {
+                                                    delay(500.milliseconds)
+                                                    HabiticaSnackbar.showSnackbar(
+                                                        snackbarContainer,
+                                                        getString(R.string.revive_broken_equipment, brokenItem.text),
+                                                        HabiticaSnackbar.SnackbarDisplayType.BLACK,
+                                                    )
+                                                }
+                                            }
+                                        },
+                                        onAnimationComplete = {},
+                                        onDismissComplete = {
+                                            showDeathOverlay = false
+                                        },
+                                    )
+                                }
                             }
                         }
-                    }
                     rootLayout?.addView(deathOverlayComposeView)
                 }
 

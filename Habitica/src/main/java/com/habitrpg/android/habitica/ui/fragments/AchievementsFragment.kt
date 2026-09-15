@@ -26,7 +26,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AchievementsFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
-    SwipeRefreshLayout.OnRefreshListener, MenuProvider {
+    SwipeRefreshLayout.OnRefreshListener,
+    MenuProvider {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -37,8 +38,7 @@ class AchievementsFragment :
     override fun createBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
-    ): FragmentRefreshRecyclerviewBinding =
-        FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
+    ): FragmentRefreshRecyclerviewBinding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
 
     private var menuID: Int = 0
     private lateinit var adapter: AchievementsAdapter
@@ -87,8 +87,7 @@ class AchievementsFragment :
 
         layoutManager.spanSizeLookup =
             object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int =
-                    viewModel.itemSizeForType(adapter.getItemViewType(position))
+                override fun getSpanSize(position: Int): Int = viewModel.itemSizeForType(adapter.getItemViewType(position))
             }
 
         binding?.refreshLayout?.setOnRefreshListener(this)
@@ -110,7 +109,10 @@ class AchievementsFragment :
         }
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
         if (useGridLayout) {
             val menuItem = menu.add(R.string.switch_to_list_view)
             menuID = menuItem?.itemId ?: 0

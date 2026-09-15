@@ -126,7 +126,6 @@ class Notification {
             Type.ACHIEVEMENT_SEEING_RED.type -> AchievementData::class.java
             Type.ACHIEVEMENT_RED_LETTER_DAY.type -> AchievementData::class.java
             Type.ACHIEVEMENT_ULTIMATE_GEAR.type -> AchievementData::class.java
-
             Type.REBIRTH_ENABLED.type -> AchievementData::class.java
             Type.REBIRTH_ACHIEVEMENT.type -> AchievementData::class.java
             else -> null

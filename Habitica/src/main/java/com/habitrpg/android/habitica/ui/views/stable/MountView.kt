@@ -12,40 +12,40 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
 class MountView
-@JvmOverloads
-constructor(
-    context: Context,
-    attrs: AttributeSet? = null
-) : FrameLayout(context, attrs) {
-    val hasLoadedImages: Boolean
-        get() {
-            return bodyView.bitmap != null && headView.bitmap != null
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+    ) : FrameLayout(context, attrs) {
+        val hasLoadedImages: Boolean
+            get() {
+                return bodyView.bitmap != null && headView.bitmap != null
+            }
+        var onCanvasSizeLoaded: ((Int) -> Unit)? = null
+        private val bodyView: PixelArtView = PixelArtView(context)
+        private val headView: PixelArtView = PixelArtView(context)
+
+        fun setMount(key: String) {
+            bodyView.loadImage("Mount_Body_$key")
+            headView.loadImage("Mount_Head_$key")
         }
-    var onCanvasSizeLoaded: ((Int) -> Unit)? = null
-    private val bodyView: PixelArtView = PixelArtView(context)
-    private val headView: PixelArtView = PixelArtView(context)
 
-    fun setMount(key: String) {
-        bodyView.loadImage("Mount_Body_$key")
-        headView.loadImage("Mount_Head_$key")
+        init {
+            bodyView.onBitmapLoaded = { onCanvasSizeLoaded?.invoke(it.width) }
+            addView(bodyView)
+            bodyView.layoutParams =
+                LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            addView(headView)
+            headView.layoutParams =
+                LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
     }
-
-    init {
-        bodyView.onBitmapLoaded = { onCanvasSizeLoaded?.invoke(it.width) }
-        addView(bodyView)
-        bodyView.layoutParams =
-            LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        addView(headView)
-        headView.layoutParams =
-            LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-    }
-}
 
 @Composable
 fun MountView(
     mount: Mount,
     modifier: Modifier = Modifier,
-    onCanvasSizeLoaded: ((Int) -> Unit)? = null
+    onCanvasSizeLoaded: ((Int) -> Unit)? = null,
 ) {
     MountView(mount.key, modifier, onCanvasSizeLoaded)
 }
@@ -54,7 +54,7 @@ fun MountView(
 fun MountView(
     mountKey: String,
     modifier: Modifier = Modifier,
-    onCanvasSizeLoaded: ((Int) -> Unit)? = null
+    onCanvasSizeLoaded: ((Int) -> Unit)? = null,
 ) {
     AndroidView(
         modifier = modifier,
@@ -64,6 +64,6 @@ fun MountView(
         update = { view ->
             view.onCanvasSizeLoaded = onCanvasSizeLoaded
             view.setMount(mountKey)
-        }
+        },
     )
 }

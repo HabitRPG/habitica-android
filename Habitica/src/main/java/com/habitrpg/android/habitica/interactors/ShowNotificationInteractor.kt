@@ -35,8 +35,13 @@ class ShowNotificationInteractor(
 ) {
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
-            Notification.Type.LOGIN_INCENTIVE.type -> showCheckinDialog(notification)
-            Notification.Type.WON_CHALLENGE.type -> showWonChallengeDialog(notification)
+            Notification.Type.LOGIN_INCENTIVE.type -> {
+                showCheckinDialog(notification)
+            }
+
+            Notification.Type.WON_CHALLENGE.type -> {
+                showWonChallengeDialog(notification)
+            }
 
             Notification.Type.ACHIEVEMENT_PARTY_UP.type,
             Notification.Type.ACHIEVEMENT_PARTY_ON.type,
@@ -70,9 +75,14 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_SEEING_RED.type,
             Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type,
             Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type,
-            Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_GENERIC.type,
+            -> {
+                showAchievementDialog(notification)
+            }
 
-            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showOnboardingCompletedDialog(notification)
+            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> {
+                showOnboardingCompletedDialog(notification)
+            }
 
             Notification.Type.REBIRTH_ENABLED.type -> {
                 showRebirthEnabledDialog()
@@ -82,8 +92,13 @@ class ShowNotificationInteractor(
                 showRebirthAchievementDialog()
             }
 
-            Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
-            else -> return notification.type?.contains("ACHIEVEMENT") == true
+            Notification.Type.FIRST_DROP.type -> {
+                showFirstDropDialog(notification)
+            }
+
+            else -> {
+                return notification.type?.contains("ACHIEVEMENT") == true
+            }
         }
         return true
     }

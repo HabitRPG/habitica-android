@@ -9,78 +9,91 @@ import android.util.AttributeSet
 import java.lang.Integer.min
 
 class PixelArtView
-@JvmOverloads
-constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
-    private var targetRect = Rect(0, 0, 0, 0)
-    var forceScaleUp: Boolean = false
-    var onBitmapLoaded: ((Bitmap) -> Unit)? = null
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0,
+    ) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
+        private var targetRect = Rect(0, 0, 0, 0)
+        var forceScaleUp: Boolean = false
+        var onBitmapLoaded: ((Bitmap) -> Unit)? = null
 
-    var bitmap: Bitmap? = null
-        set(value) {
-            field = value
-            updateTargetRect()
-            invalidate()
-            if (value != null) {
-                onBitmapLoaded?.invoke(value)
+        var bitmap: Bitmap? = null
+            set(value) {
+                field = value
+                updateTargetRect()
+                invalidate()
+                if (value != null) {
+                    onBitmapLoaded?.invoke(value)
+                }
             }
+
+        private val paint: Paint by lazy {
+            val paint = Paint()
+            paint.isAntiAlias = true
+            paint.isFilterBitmap = false
+            paint
         }
 
-    private val paint: Paint by lazy {
-        val paint = Paint()
-        paint.isAntiAlias = true
-        paint.isFilterBitmap = false
-        paint
-    }
-
-    override fun onSizeChanged(
-        w: Int,
-        h: Int,
-        oldw: Int,
-        oldh: Int
-    ) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        updateTargetRect()
-    }
-
-    private fun updateTargetRect() {
-        var targetWidth = bitmap?.width ?: 0
-        var targetHeight = bitmap?.height ?: 0
-        val smallestSide = if (forceScaleUp) width else min(width, height)
-        val divisor = if (forceScaleUp) 1 else if (targetWidth % 3 == 0 && targetHeight % 3 == 0) 3 else 2
-
-        val factor = if (forceScaleUp) {
-            if (smallestSide > 0 && targetWidth > 0) {
-                (smallestSide.toFloat() / (targetWidth.toFloat() / divisor)).toInt().coerceAtLeast(1)
-            } else 1
-        } else {
-            min(
-                if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
-                    smallestSide / (targetWidth / divisor)
-                } else 1,
-                if (smallestSide > 0 && targetHeight > 0 && smallestSide != targetHeight) {
-                    smallestSide / (targetHeight / divisor)
-                } else 1
-            )
+        override fun onSizeChanged(
+            w: Int,
+            h: Int,
+            oldw: Int,
+            oldh: Int,
+        ) {
+            super.onSizeChanged(w, h, oldw, oldh)
+            updateTargetRect()
         }
 
-        targetWidth = (targetWidth / divisor) * factor
-        targetHeight = (targetHeight / divisor) * factor
-        val left = (width - targetWidth) / 2
-        val top = (height - targetHeight) / 2
-        targetRect = Rect(left, top, left + targetWidth, top + targetHeight)
-    }
+        private fun updateTargetRect() {
+            var targetWidth = bitmap?.width ?: 0
+            var targetHeight = bitmap?.height ?: 0
+            val smallestSide = if (forceScaleUp) width else min(width, height)
+            val divisor =
+                if (forceScaleUp) {
+                    1
+                } else if (targetWidth % 3 == 0 && targetHeight % 3 == 0) {
+                    3
+                } else {
+                    2
+                }
 
+            val factor =
+                if (forceScaleUp) {
+                    if (smallestSide > 0 && targetWidth > 0) {
+                        (smallestSide.toFloat() / (targetWidth.toFloat() / divisor)).toInt().coerceAtLeast(1)
+                    } else {
+                        1
+                    }
+                } else {
+                    min(
+                        if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
+                            smallestSide / (targetWidth / divisor)
+                        } else {
+                            1
+                        },
+                        if (smallestSide > 0 && targetHeight > 0 && smallestSide != targetHeight) {
+                            smallestSide / (targetHeight / divisor)
+                        } else {
+                            1
+                        },
+                    )
+                }
 
-    override fun onDraw(canvas: Canvas) {
-        if (bitmap == null) {
-            super.onDraw(canvas)
-            return
+            targetWidth = (targetWidth / divisor) * factor
+            targetHeight = (targetHeight / divisor) * factor
+            val left = (width - targetWidth) / 2
+            val top = (height - targetHeight) / 2
+            targetRect = Rect(left, top, left + targetWidth, top + targetHeight)
         }
-        val bitmap = bitmap ?: return
-        canvas.drawBitmap(bitmap, null, targetRect, paint)
+
+        override fun onDraw(canvas: Canvas) {
+            if (bitmap == null) {
+                super.onDraw(canvas)
+                return
+            }
+            val bitmap = bitmap ?: return
+            canvas.drawBitmap(bitmap, null, targetRect, paint)
+        }
     }
-}

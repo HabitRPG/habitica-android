@@ -137,8 +137,10 @@ open class AvatarOverviewFragment :
                                         .size(140.dp, 147.dp),
                             )
                         }
-                        val insets = WindowInsets.systemBars.add(WindowInsets.displayCutout)
-                            .asPaddingValues()
+                        val insets =
+                            WindowInsets.systemBars
+                                .add(WindowInsets.displayCutout)
+                                .asPaddingValues()
                         val ld = LocalLayoutDirection.current
                         Column(
                             modifier =
@@ -147,9 +149,8 @@ open class AvatarOverviewFragment :
                                     .background(colorResource(R.color.window_background))
                                     .padding(
                                         start = insets.calculateStartPadding(ld),
-                                        end = insets.calculateEndPadding(ld)
-                                    )
-                                    .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                                        end = insets.calculateEndPadding(ld),
+                                    ).clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                                     .background(colorResource(R.color.content_background))
                                     .verticalScroll(rememberScrollState()),
                         ) {
@@ -237,8 +238,8 @@ open class AvatarOverviewFragment :
         MainNavigationController.navigate(
             AvatarOverviewFragmentDirections.openComposeAvatarEquipment(
                 type,
-                category ?: ""
-            )
+                category ?: "",
+            ),
         )
     }
 
@@ -251,8 +252,8 @@ open class AvatarOverviewFragment :
             AvatarOverviewFragmentDirections.openEquipmentDetail(
                 type,
                 isCostume,
-                equipped ?: ""
-            )
+                equipped ?: "",
+            ),
         )
     }
 
@@ -374,7 +375,7 @@ fun AvatarOverviewView(
                     user?.preferences,
                     user?.items?.gear?.equipped,
                     onCustomizationTap,
-                    onAvatarEquipmentTap
+                    onAvatarEquipmentTap,
                 )
             }
             if (showEquipment) {
@@ -406,7 +407,8 @@ fun AvatarOverviewView(
                     battleGearTwoHanded,
                     { type, equipped ->
                         onEquipmentTap(type, equipped, false)
-                    })
+                    },
+                )
                 Row(
                     Modifier
                         .padding(horizontal = 12.dp)
@@ -436,7 +438,7 @@ fun AvatarOverviewView(
                     { type, equipped ->
                         onEquipmentTap(type, equipped, true)
                     },
-                    modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f)
+                    modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f),
                 )
             }
         }

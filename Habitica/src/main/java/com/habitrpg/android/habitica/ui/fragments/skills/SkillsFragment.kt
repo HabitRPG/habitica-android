@@ -46,15 +46,13 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRecyclerviewBinding {
-        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRecyclerviewBinding = FragmentRecyclerviewBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         adapter = SkillsRecyclerViewAdapter()
         adapter?.onUseSkill = { onSkillSelected(it) }
@@ -67,7 +65,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.user.observe(viewLifecycleOwner) { user ->
@@ -87,7 +85,8 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         adapter?.level = user.stats?.lvl ?: 0
         adapter?.specialItems = user.items?.special
         lifecycleScope.launchCatching {
-            userRepository.getSkills(user)
+            userRepository
+                .getSkills(user)
                 .combine(userRepository.getSpecialItems(user)) { skills, items ->
                     val allEntries = mutableListOf<Skill>()
                     for (skill in skills) {
@@ -107,16 +106,17 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         val skillIdentifier = "shop_"
         val isTransformationItem = skill.habitClass == "special"
 
-        val bottomSheet = SkillDialogBottomSheetFragment.newInstance(
-            skillTitle = skill.text,
-            skillDescription = skill.notes ?: "",
-            skillKey = skill.key,
-            skillPath = skillIdentifier,
-            skillMpCost = "${skill.mana ?: 0} MP",
-            resourceIcon = resourceIconDrawable,
-            isTransformationItem = isTransformationItem,
-            onUseSkill = { castSkill(skill) }
-        )
+        val bottomSheet =
+            SkillDialogBottomSheetFragment.newInstance(
+                skillTitle = skill.text,
+                skillDescription = skill.notes ?: "",
+                skillKey = skill.key,
+                skillPath = skillIdentifier,
+                skillMpCost = "${skill.mana ?: 0} MP",
+                resourceIcon = resourceIconDrawable,
+                isTransformationItem = isTransformationItem,
+                onUseSkill = { castSkill(skill) },
+            )
         bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
     }
 
@@ -134,13 +134,15 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                 taskSelectionResult.launch(intent)
             }
 
-            else -> useSkill(skill)
+            else -> {
+                useSkill(skill)
+            }
         }
     }
 
     private fun displaySkillResult(
         usedSkill: Skill?,
-        response: SkillResponse
+        response: SkillResponse,
     ) {
         if (!isAdded) return
         adapter?.mana = response.user?.stats?.mp ?: 0.0
@@ -149,7 +151,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             showSnackbar(
                 activity.snackbarContainer,
                 context?.getString(R.string.used_skill_without_mana, usedSkill.text),
-                HabiticaSnackbar.SnackbarDisplayType.BLUE
+                HabiticaSnackbar.SnackbarDisplayType.BLUE,
             )
         } else {
             context?.let {
@@ -160,7 +162,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
                     ContextCompat.getColor(it, R.color.blue_10),
                     "-" + usedSkill?.mana,
-                    HabiticaSnackbar.SnackbarDisplayType.BLUE
+                    HabiticaSnackbar.SnackbarDisplayType.BLUE,
                 )
             }
         }
@@ -174,7 +176,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
                     ContextCompat.getColor(activity, R.color.green_10),
                     "+%.01f".format(response.damage),
-                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                 )
             }
         }
@@ -199,7 +201,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     private fun useSkill(
         skill: Skill?,
-        taskId: String? = null
+        taskId: String? = null,
     ) {
         if (skill == null) {
             return

@@ -60,9 +60,11 @@ class MainUserViewModel
                 onBufferOverflow = BufferOverflow.DROP_OLDEST,
             )
 
-        private val currentTeamPlanID = currentTeamPlan.map { it?.id }
-            .distinctUntilChanged()
-            .filterNotNull()
+        private val currentTeamPlanID =
+            currentTeamPlan
+                .map { it?.id }
+                .distinctUntilChanged()
+                .filterNotNull()
 
         @OptIn(ExperimentalCoroutinesApi::class)
         var currentTeamPlanGroup =

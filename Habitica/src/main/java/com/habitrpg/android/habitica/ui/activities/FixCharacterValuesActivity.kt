@@ -161,11 +161,10 @@ class FixCharacterValuesActivity : BaseActivity() {
         }
     }
 
-    private fun Double.toEditableString(): String {
-        return if (this % 1.0 == 0.0) {
+    private fun Double.toEditableString(): String =
+        if (this % 1.0 == 0.0) {
             this.toLong().toString()
         } else {
             this.toString()
         }
-    }
 }

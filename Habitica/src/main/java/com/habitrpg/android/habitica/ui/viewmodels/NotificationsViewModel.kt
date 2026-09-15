@@ -180,9 +180,8 @@ open class NotificationsViewModel
             return notifications
         }
 
-        fun isPartyMessage(data: NewChatMessageData?): Boolean {
-            return !(party?.isValid != true || data?.group?.id == null) && party?.id == data.group?.id
-        }
+        fun isPartyMessage(data: NewChatMessageData?): Boolean =
+            !(party?.isValid != true || data?.group?.id == null) && party?.id == data.group?.id
 
         /**
          * Is the given notification an "artificial" custom notification (created by this class)

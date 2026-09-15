@@ -251,7 +251,6 @@ class ComposeAvatarCustomizationFragment :
                 Log.e("NewFilter", it.toString())
             }
         }
-
     }
 
     override fun onDestroy() {

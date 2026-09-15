@@ -37,7 +37,10 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>>
 
-    fun getOwnedEquipment(userID: String, type: String): Flow<List<Equipment>>
+    fun getOwnedEquipment(
+        userID: String,
+        type: String,
+    ): Flow<List<Equipment>>
 
     fun getOwnedItems(
         itemType: String,

@@ -44,15 +44,17 @@ internal fun taskRowMetrics(
 ): TaskRowMetrics {
     val scale = maxOf(1f, fontScale)
     val lineHeight = (TASK_TEXT_SP * LINE_HEIGHT_FACTOR * scale).dp
-    val lineCap = (TASK_BASE_MAX_LINES * scale)
-        .roundToInt()
-        .coerceIn(1, linesFitting(TASK_ROW_MAX_HEIGHT, lineHeight))
-    val needed = estimateLineCount(
-        text = text,
-        maxWidth = taskTextWidth(rowWidth, checklistDone, checklistTotal, scale),
-        em = TASK_TEXT_SP * scale,
-        cap = lineCap,
-    )
+    val lineCap =
+        (TASK_BASE_MAX_LINES * scale)
+            .roundToInt()
+            .coerceIn(1, linesFitting(TASK_ROW_MAX_HEIGHT, lineHeight))
+    val needed =
+        estimateLineCount(
+            text = text,
+            maxWidth = taskTextWidth(rowWidth, checklistDone, checklistTotal, scale),
+            em = TASK_TEXT_SP * scale,
+            cap = lineCap,
+        )
     val lines = maxOf(needed, linesFitting(TASK_ROW_MIN_HEIGHT, lineHeight)).coerceIn(1, lineCap)
     return TaskRowMetrics(
         height = maxOf(TASK_ROW_MIN_HEIGHT, lineHeight * lines + TASK_ROW_CHROME),
@@ -60,11 +62,12 @@ internal fun taskRowMetrics(
     )
 }
 
-internal fun viewMoreHeight(fontScale: Float): Dp =
-    VIEW_MORE_HEIGHT * maxOf(1f, fontScale).coerceAtMost(MAX_TASK_ROW_SCALE)
+internal fun viewMoreHeight(fontScale: Float): Dp = VIEW_MORE_HEIGHT * maxOf(1f, fontScale).coerceAtMost(MAX_TASK_ROW_SCALE)
 
-private fun linesFitting(height: Dp, lineHeight: Dp): Int =
-    ((height - TASK_ROW_CHROME) / lineHeight + LINE_FIT_EPSILON).toInt().coerceAtLeast(1)
+private fun linesFitting(
+    height: Dp,
+    lineHeight: Dp,
+): Int = ((height - TASK_ROW_CHROME) / lineHeight + LINE_FIT_EPSILON).toInt().coerceAtLeast(1)
 
 private fun taskTextWidth(
     rowWidth: Dp,
@@ -72,12 +75,13 @@ private fun taskTextWidth(
     checklistTotal: Int,
     scale: Float,
 ): Dp {
-    val chip = if (checklistTotal > 0) {
-        CHECKLIST_CHIP_GAP + CHECKLIST_CHIP_PADDING +
-            textWidth("$checklistDone/$checklistTotal", CHECKLIST_TEXT_SP * scale).dp
-    } else {
-        0.dp
-    }
+    val chip =
+        if (checklistTotal > 0) {
+            CHECKLIST_CHIP_GAP + CHECKLIST_CHIP_PADDING +
+                textWidth("$checklistDone/$checklistTotal", CHECKLIST_TEXT_SP * scale).dp
+        } else {
+            0.dp
+        }
     return rowWidth - TASK_TILE_WIDTH - TASK_TEXT_START_GAP - TASK_TEXT_END_GAP - chip
 }
 
@@ -122,7 +126,10 @@ private fun estimateLineCount(
     return lines
 }
 
-private fun textWidth(text: String, em: Float): Float {
+private fun textWidth(
+    text: String,
+    em: Float,
+): Float {
     var total = 0f
     for (char in text) {
         total += charWidthEm(char)
@@ -130,14 +137,15 @@ private fun textWidth(text: String, em: Float): Float {
     return total * em * TEXT_WIDTH_TOLERANCE
 }
 
-private fun charWidthEm(char: Char): Float = when {
-    char == ' ' -> 0.26f
-    char in NARROW_CHARS -> 0.27f
-    char in SEMI_NARROW_CHARS -> 0.36f
-    char in WIDE_CHARS -> 0.86f
-    char.isLowSurrogate() -> 0f
-    char.isHighSurrogate() -> 1.2f
-    char.code >= FULL_WIDTH_CODE_POINT -> 1f
-    char.isDigit() || char.isUpperCase() -> 0.63f
-    else -> 0.54f
-}
+private fun charWidthEm(char: Char): Float =
+    when {
+        char == ' ' -> 0.26f
+        char in NARROW_CHARS -> 0.27f
+        char in SEMI_NARROW_CHARS -> 0.36f
+        char in WIDE_CHARS -> 0.86f
+        char.isLowSurrogate() -> 0f
+        char.isHighSurrogate() -> 1.2f
+        char.code >= FULL_WIDTH_CODE_POINT -> 1f
+        char.isDigit() || char.isUpperCase() -> 0.63f
+        else -> 0.54f
+    }

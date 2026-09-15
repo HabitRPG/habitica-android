@@ -15,8 +15,9 @@ object Analytics {
     fun initialize(context: Context) {
         isInitialized = true
         applyConsent(
-            PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(CONSENT_PREFERENCE_KEY, false)
+            PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .getBoolean(CONSENT_PREFERENCE_KEY, false),
         )
     }
 

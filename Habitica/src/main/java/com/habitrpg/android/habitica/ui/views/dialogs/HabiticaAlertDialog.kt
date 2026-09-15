@@ -326,8 +326,8 @@ open class HabiticaAlertDialog(
                     dialogQueue[0].lifecycleScope.launch(context = Dispatchers.Main) {
                         delay(500.milliseconds)
                         if (dialogQueue.isNotEmpty() && (
-                            (dialogQueue[0].context as? Activity)?.isFinishing == false ||
-                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
+                                (dialogQueue[0].context as? Activity)?.isFinishing == false ||
+                                    ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
                             )
                         ) {
                             dialogQueue[0].show()

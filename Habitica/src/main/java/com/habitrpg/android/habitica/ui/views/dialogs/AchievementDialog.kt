@@ -32,7 +32,7 @@ class AchievementDialog(
     fun setType(
         type: String,
         message: String?,
-        text: String?
+        text: String?,
     ): Boolean {
         when (type) {
             Notification.Type.ACHIEVEMENT_PARTY_UP.type -> {
@@ -143,8 +143,10 @@ class AchievementDialog(
                 )
             }
 
-            else -> if (message?.isNotBlank() == true && text?.isNotBlank() == true) {
-                configure(message, text, type)
+            else -> {
+                if (message?.isNotBlank() == true && text?.isNotBlank() == true) {
+                    configure(message, text, type)
+                }
             }
         }
         return isConfigured

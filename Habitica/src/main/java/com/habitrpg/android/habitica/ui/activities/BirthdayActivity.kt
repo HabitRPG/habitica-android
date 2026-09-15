@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -72,7 +73,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
-import androidx.compose.ui.platform.LocalLocale
 
 @AndroidEntryPoint
 class BirthdayActivity : ComposeActivity() {

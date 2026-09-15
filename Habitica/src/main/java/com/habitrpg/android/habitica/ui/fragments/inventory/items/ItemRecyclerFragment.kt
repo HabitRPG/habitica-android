@@ -45,7 +45,6 @@ import javax.inject.Inject
 class ItemRecyclerFragment :
     BaseFragment<FragmentItemsBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-
     val viewModel: ItemListViewModel by viewModels()
 
     @Inject
@@ -265,7 +264,6 @@ class ItemRecyclerFragment :
     private fun loadItems() {
         viewLifecycleOwner.lifecycleScope.launchCatching {
             viewModel.ownedItems.collect { adapter?.data = it }
-
         }
         viewLifecycleOwner.lifecycleScope.launchCatching {
             viewModel.items.collect {
@@ -334,7 +332,7 @@ class ItemRecyclerFragment :
         dialog.addButton(
             getString(R.string.sell, item.value),
             isPrimary = true,
-            isDestructive = true
+            isDestructive = true,
         ) { _, _ ->
             lifecycleScope.launchCatching {
                 viewModel.sellItem(ownedItem)

@@ -76,7 +76,7 @@ class SubscriptionFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val promo = appConfigManager.activePromo()
         if (promo?.promoType == PromoType.SUBSCRIPTION) {
@@ -84,10 +84,14 @@ class SubscriptionFragment :
         }
         this.hidesToolbar = true
         toolbarBackgroundColor =
-            if (subscriptionPromo != null) subscriptionPromo?.screenBackgroundColor(requireContext()) else ContextCompat.getColor(
-                requireContext(),
-                R.color.brand_300
-            )
+            if (subscriptionPromo != null) {
+                subscriptionPromo?.screenBackgroundColor(requireContext())
+            } else {
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.brand_300,
+                )
+            }
         toolbarIconColor = Color.WHITE
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -104,7 +108,6 @@ class SubscriptionFragment :
         binding?.content?.giftSegmentUnsubscribed?.giftSubscriptionButton?.setOnClickListener {
             showGiftSubscriptionDialog(requireContext())
         }
-
 
         if (subscriptionPromo != null) {
             binding?.let {
@@ -145,7 +148,7 @@ class SubscriptionFragment :
                 val bars =
                     insets.getInsets(
                         WindowInsetsCompat.Type.systemBars()
-                                or WindowInsetsCompat.Type.displayCutout(),
+                            or WindowInsetsCompat.Type.displayCutout(),
                     )
                 v.updateLayoutParams {
                     height = bars.bottom

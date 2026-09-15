@@ -4,8 +4,8 @@ import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import java.util.Date
 
-class CustomizationTest
-    : WordSpec({
+class CustomizationTest :
+    WordSpec({
         "purchaseable" should {
             "return true if date is between availableFrom and availableUntil" {
                 val customization = Customization()
@@ -41,4 +41,4 @@ class CustomizationTest
                 customization.purchasable shouldBe true
             }
         }
-})
+    })

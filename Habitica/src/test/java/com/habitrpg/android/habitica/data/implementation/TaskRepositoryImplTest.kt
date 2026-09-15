@@ -44,13 +44,18 @@ class TaskRepositoryImplTest :
                 val task = thirdArg<Task>()
                 val up = arg<Boolean>(3)
                 when (task.type) {
-                    TaskType.DAILY -> task.streak = (task.streak ?: 0) + if (up) 1 else -1
-                    TaskType.HABIT ->
+                    TaskType.DAILY -> {
+                        task.streak = (task.streak ?: 0) + if (up) 1 else -1
+                    }
+
+                    TaskType.HABIT -> {
                         if (up) {
                             task.counterUp = (task.counterUp ?: 0) + 1
                         } else {
                             task.counterDown = (task.counterDown ?: 0) + 1
                         }
+                    }
+
                     else -> {}
                 }
                 if (task.type == TaskType.DAILY || task.type == TaskType.TODO) {

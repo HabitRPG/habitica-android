@@ -39,7 +39,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
         binding = createBinding(inflater, container)
         return binding?.root
     }
