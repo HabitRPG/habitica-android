@@ -116,7 +116,8 @@ open class AvatarOverviewFragment :
             setContent {
                 HabiticaTheme {
                     val configuration = LocalConfiguration.current
-                    val isWidthGreaterHeight = configuration.screenWidthDp > configuration.screenHeightDp
+                    val isWidthGreaterHeight =
+                        configuration.screenWidthDp > configuration.screenHeightDp
 
                     val avatar by userViewModel.user.observeAsState()
                     Column {
@@ -136,14 +137,18 @@ open class AvatarOverviewFragment :
                                         .size(140.dp, 147.dp),
                             )
                         }
-                        val insets = WindowInsets.systemBars.add(WindowInsets.displayCutout).asPaddingValues()
+                        val insets = WindowInsets.systemBars.add(WindowInsets.displayCutout)
+                            .asPaddingValues()
                         val ld = LocalLayoutDirection.current
                         Column(
                             modifier =
                                 Modifier
                                     .padding(bottom = insets.calculateBottomPadding())
                                     .background(colorResource(R.color.window_background))
-                                    .padding(start = insets.calculateStartPadding(ld), end = insets.calculateEndPadding(ld))
+                                    .padding(
+                                        start = insets.calculateStartPadding(ld),
+                                        end = insets.calculateEndPadding(ld)
+                                    )
                                     .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                                     .background(colorResource(R.color.content_background))
                                     .verticalScroll(rememberScrollState()),
@@ -229,7 +234,12 @@ open class AvatarOverviewFragment :
         type: String,
         category: String?,
     ) {
-        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openComposeAvatarEquipment(type, category ?: ""))
+        MainNavigationController.navigate(
+            AvatarOverviewFragmentDirections.openComposeAvatarEquipment(
+                type,
+                category ?: ""
+            )
+        )
     }
 
     private fun displayEquipmentFragment(
@@ -237,7 +247,13 @@ open class AvatarOverviewFragment :
         equipped: String?,
         isCostume: Boolean = false,
     ) {
-        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openEquipmentDetail(type, isCostume, equipped ?: ""))
+        MainNavigationController.navigate(
+            AvatarOverviewFragmentDirections.openEquipmentDetail(
+                type,
+                isCostume,
+                equipped ?: ""
+            )
+        )
     }
 
     override fun onCreateOptionsMenu(
@@ -354,7 +370,12 @@ fun AvatarOverviewView(
                         },
                     )
                 }
-                AvatarCustomizationOverviewView(user?.preferences, user?.items?.gear?.equipped, onCustomizationTap, onAvatarEquipmentTap)
+                AvatarCustomizationOverviewView(
+                    user?.preferences,
+                    user?.items?.gear?.equipped,
+                    onCustomizationTap,
+                    onAvatarEquipmentTap
+                )
             }
             if (showEquipment) {
                 Row(
@@ -379,9 +400,13 @@ fun AvatarOverviewView(
                         userViewModel.updateUser("preferences.autoEquip", it)
                     })
                 }
-                EquipmentOverviewView(ownedEquipment, user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
-                    onEquipmentTap(type, equipped, false)
-                })
+                EquipmentOverviewView(
+                    ownedEquipment,
+                    user?.items?.gear?.equipped,
+                    battleGearTwoHanded,
+                    { type, equipped ->
+                        onEquipmentTap(type, equipped, false)
+                    })
                 Row(
                     Modifier
                         .padding(horizontal = 12.dp)
@@ -404,9 +429,15 @@ fun AvatarOverviewView(
                         userViewModel.updateUser("preferences.costume", it)
                     })
                 }
-                EquipmentOverviewView(ownedEquipment, user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
-                    onEquipmentTap(type, equipped, true)
-                }, modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f))
+                EquipmentOverviewView(
+                    ownedEquipment,
+                    user?.items?.gear?.costume,
+                    costumeTwoHanded,
+                    { type, equipped ->
+                        onEquipmentTap(type, equipped, true)
+                    },
+                    modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f)
+                )
             }
         }
     }

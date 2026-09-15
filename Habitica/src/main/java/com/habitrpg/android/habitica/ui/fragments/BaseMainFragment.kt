@@ -111,7 +111,6 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         }
     }
 
-    @Deprecated("Use onCreateOptionsMenu(Menu, MenuInflater) instead")
     override fun onCreateOptionsMenu(
         menu: Menu,
         inflater: MenuInflater,

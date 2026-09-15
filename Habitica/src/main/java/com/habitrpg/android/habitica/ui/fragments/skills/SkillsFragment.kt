@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
@@ -28,13 +29,9 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSna
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.core.graphics.drawable.toDrawable
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.views.PixelArtView
 
 @AndroidEntryPoint
 class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
@@ -115,7 +112,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             skillDescription = skill.notes ?: "",
             skillKey = skill.key,
             skillPath = skillIdentifier,
-            skillMpCost = "${skill.mana?.toInt() ?: 0} MP",
+            skillMpCost = "${skill.mana ?: 0} MP",
             resourceIcon = resourceIconDrawable,
             isTransformationItem = isTransformationItem,
             onUseSkill = { castSkill(skill) }

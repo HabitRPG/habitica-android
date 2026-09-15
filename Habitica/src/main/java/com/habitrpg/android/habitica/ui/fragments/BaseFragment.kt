@@ -75,7 +75,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onDestroy() {
         try {
             tutorialRepository.close()
-        } catch (exception: UninitializedPropertyAccessException) {
+        } catch (_: UninitializedPropertyAccessException) {
             // no-on
         }
         super.onDestroy()
