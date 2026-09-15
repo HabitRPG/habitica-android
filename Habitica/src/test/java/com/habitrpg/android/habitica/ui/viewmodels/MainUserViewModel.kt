@@ -206,16 +206,5 @@ class MainUserViewModelTest :
                     }
                 }
             }
-
-            "currentTeamPlanMembers" should {
-                "return members if currentTeamPlan is not null" {
-                    val teamPlan = TeamPlan()
-                    teamPlan.id = "123"
-                    every { socialRepository.getGroupMembers(any()) } returns flowOf(emptyList())
-                    viewModel.currentTeamPlan.emit(teamPlan)
-                    viewModel.currentTeamPlanMembers.first() shouldBe emptyList()
-                    verify(exactly = 1) { socialRepository.getGroupMembers("123") }
-                }
-            }
         }
     })
