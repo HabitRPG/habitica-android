@@ -29,4 +29,8 @@ abstract class BaseViewModel(
             userRepository.updateUser(path, value)
         }
     }
+
+    open suspend fun refreshUser() {
+        userRepository.retrieveUser(true, true)
+    }
 }

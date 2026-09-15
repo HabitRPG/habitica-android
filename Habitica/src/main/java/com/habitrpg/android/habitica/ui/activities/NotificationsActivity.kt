@@ -100,7 +100,7 @@ class NotificationsActivity :
         lifecycleScope.launchCatching {
             viewModel
                 .getNotifications()
-                .debounce(250)
+                .debounce(250.milliseconds)
                 .collect {
                     setNotifications(it)
                     viewModel.markNotificationsAsSeen(it)

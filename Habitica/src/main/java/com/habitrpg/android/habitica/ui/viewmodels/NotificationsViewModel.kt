@@ -181,11 +181,7 @@ open class NotificationsViewModel
         }
 
         fun isPartyMessage(data: NewChatMessageData?): Boolean {
-            if (party?.isValid != true || data?.group?.id == null) {
-                return false
-            }
-
-            return party?.id == data.group?.id
+            return !(party?.isValid != true || data?.group?.id == null) && party?.id == data.group?.id
         }
 
         /**
@@ -482,7 +478,7 @@ open class NotificationsViewModel
             }
         }
 
-        private fun refreshUser() {
+        override suspend fun refreshUser() {
             viewModelScope.launch(ExceptionHandler.coroutine()) {
                 refreshNotifications()
             }
