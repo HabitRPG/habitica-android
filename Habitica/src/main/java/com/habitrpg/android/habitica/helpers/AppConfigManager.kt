@@ -17,10 +17,7 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.MainScope
 import java.util.Date
 import javax.inject.Provider
 
@@ -31,15 +28,11 @@ class AppConfigManager(
     Clearable {
     private var worldState: WorldState? = null
 
-    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
     override fun clear() {
-        scope.cancel()
-        scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     }
 
     init {
-        scope.launchCatching {
+        MainScope().launchCatching {
             contentRepository.get().getWorldState().collect {
                 worldState = it
 
