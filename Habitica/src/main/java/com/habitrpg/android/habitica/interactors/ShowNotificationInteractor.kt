@@ -24,7 +24,6 @@ import com.habitrpg.common.habitica.models.notifications.FirstDropData
 import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -71,8 +70,9 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_SEEING_RED.type,
             Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type,
             Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type,
-            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type,
             Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
+
+            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showOnboardingCompletedDialog(notification)
 
             Notification.Type.REBIRTH_ENABLED.type -> {
                 showRebirthEnabledDialog()
@@ -136,21 +136,25 @@ class ShowNotificationInteractor(
 
     fun showAchievementDialog(notification: Notification) {
         val data = (notification.data as? AchievementData) ?: return
-        val achievement = data.achievement ?: notification.type ?: ""
 
         val dialog = AchievementDialog(activity)
         dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement
         val canShow = dialog.setType(data.achievement ?: "", data.message, data.modalText)
         if (!canShow) return
 
-        val delayTime =
-            if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
-                1.seconds
-            } else {
-                200.milliseconds
-            }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            delay(delayTime)
+            lifecycleScope.launch(context = Dispatchers.Main) {
+                dialog.enqueue()
+            }
+        }
+    }
+
+    fun showOnboardingCompletedDialog(notification: Notification) {
+        val dialog = AchievementDialog(activity)
+        dialog.isLastOnboardingAchievement = true
+        dialog.setType(notification.type ?: "", null, null)
+
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             lifecycleScope.launch(context = Dispatchers.Main) {
                 dialog.enqueue()
             }

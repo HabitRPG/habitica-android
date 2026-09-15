@@ -321,14 +321,13 @@ open class HabiticaAlertDialog(
             if (dialogQueue.firstOrNull() == currentDialog) {
                 dialogQueue.removeAt(0)
             }
-            if (dialogQueue.size > 0) {
+            if (dialogQueue.isNotEmpty()) {
                 if ((dialogQueue[0].context as? BaseActivity)?.isFinishing != true) {
-                    (dialogQueue[0].context as? BaseActivity)?.lifecycleScope?.launch(context = Dispatchers.Main) {
+                    dialogQueue[0].lifecycleScope.launch(context = Dispatchers.Main) {
                         delay(500.milliseconds)
-                        if (dialogQueue.isNotEmpty() &&
-                            (
-                                (dialogQueue[0].context as? Activity)?.isFinishing == false ||
-                                    ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
+                        if (dialogQueue.isNotEmpty() && (
+                            (dialogQueue[0].context as? Activity)?.isFinishing == false ||
+                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
                             )
                         ) {
                             dialogQueue[0].show()
