@@ -2,7 +2,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("multiplatform")
+    id(
+        libs.plugins.kotlin.multiplatform
+            .get()
+            .pluginId,
+    )
     id(
         libs.plugins.android.kotlin.multiplatform.library
             .get()

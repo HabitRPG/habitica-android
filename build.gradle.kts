@@ -9,7 +9,8 @@ plugins {
     alias(libs.plugins.google.service) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kotest) apply false
-    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.legacy.kapt) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.ktlint) apply false

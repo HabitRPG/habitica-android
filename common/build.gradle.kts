@@ -6,11 +6,6 @@ import java.util.Properties
 
 plugins {
     id(
-        libs.plugins.kotlin.android
-            .get()
-            .pluginId,
-    )
-    id(
         libs.plugins.habitrpg.convention
             .get()
             .pluginId,

@@ -169,6 +169,9 @@ detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gr
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlintPlugin" }
 
+realm-annotations-processor = { group = "io.realm", name = "realm-annotations-processor", version.ref = "realmPlugin" }
+realm-kotlin-extensions = { group = "io.realm", name = "realm-android-kotlin-extensions", version.ref = "realmPlugin" }
+
 [bundles]
 okhttp = ["okhttp", "okhttp-logging"]
 markwon = ["markwon-core", "markwon-ext", "markwon-image", "markwon-linkify", "markwon-recycler"]
@@ -209,8 +212,9 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebase-perf" }
 google-service = { id = "com.google.gms.google-services", version.ref = "google-service" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerhilt" }
+legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
 kotest = { id = "io.kotest", version.ref = "kotest" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }

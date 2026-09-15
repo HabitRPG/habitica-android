@@ -4,11 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 plugins {
     `jacoco-report-aggregation`
     id(
-        libs.plugins.kotlin.android
-            .get()
-            .pluginId,
-    )
-    id(
         libs.plugins.android.application
             .get()
             .pluginId,
@@ -29,7 +24,11 @@ plugins {
             .pluginId,
     )
     id("kotlin-parcelize")
-    id("kotlin-kapt")
+    id(
+        libs.plugins.legacy.kapt
+            .get()
+            .pluginId,
+    )
     id(
         libs.plugins.kotlin.compose
             .get()
@@ -180,7 +179,10 @@ android {
             assets.directories.add("assets")
         }
         getByName("test") { java.directories.add("src/test/java") }
-        getByName("debugIAP") { java.directories.add("src/debug/java") }
+        getByName("debugIAP") {
+            java.directories.add("src/debug/java")
+            kotlin.directories.add("src/debug/java")
+        }
         getByName("release") { java.directories.add("src/release/java") }
     }
 
@@ -227,6 +229,10 @@ dependencies {
     implementation(projects.shared)
 
     implementation(fileTree("../common/libs") { include("*.jar") })
+
+    // Realm (added explicitly, the realm plugin only wires these up for kotlin-android/kotlin-kapt)
+    implementation(libs.realm.kotlin.extensions)
+    kapt(libs.realm.annotations.processor)
 
     // Networking
     implementation(libs.bundles.okhttp)

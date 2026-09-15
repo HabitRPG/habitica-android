@@ -10,11 +10,6 @@ plugins {
             .pluginId,
     )
     id(
-        libs.plugins.kotlin.android
-            .get()
-            .pluginId,
-    )
-    id(
         libs.plugins.ksp
             .get()
             .pluginId,
