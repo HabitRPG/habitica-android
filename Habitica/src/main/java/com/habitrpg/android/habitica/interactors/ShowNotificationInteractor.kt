@@ -132,7 +132,7 @@ class ShowNotificationInteractor(
 
         val dialog = AchievementDialog(activity)
         dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement
-        val canShow = dialog.setType(data.achievement ?: "", data.message, data.modalText)
+        val canShow = dialog.setType(data.achievement ?: "", data.message, data.modalText, data.iconName)
         if (!canShow) return
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {

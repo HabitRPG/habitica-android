@@ -30,7 +30,8 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
     fun setType(
         type: String,
         message: String?,
-        text: String?
+        text: String?,
+        iconName: String? = null
     ): Boolean {
         when (type) {
             Notification.Type.ACHIEVEMENT_PARTY_UP.type ->
@@ -126,7 +127,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
                 )
 
             else -> if (message?.isNotBlank() == true && text?.isNotBlank() == true) {
-                configure(message, text, type)
+                configure(message, text, iconName ?: type)
             }
         }
         return isConfigured
