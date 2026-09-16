@@ -62,7 +62,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         }
     private var pinnedItemKeys: List<String> = ArrayList()
 
-    var gearCategories: MutableList<ShopCategory> = ArrayList()
+    var gearCategories: List<ShopCategory> = ArrayList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -71,7 +71,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
     internal var selectedGearCategory: String = ""
         set(value) {
             field = value
-            if (field != "" && items.size > 0) {
+            if (field != "" && items.isNotEmpty()) {
                 notifyDataSetChanged()
             }
         }
