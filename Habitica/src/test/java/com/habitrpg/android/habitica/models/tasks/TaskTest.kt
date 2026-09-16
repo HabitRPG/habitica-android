@@ -224,7 +224,7 @@ class TaskTest :
                         daily.everyX = 1
                         daily.setWeeksOfMonth(listOf(2))
                         calendar.time = storedTime
-                        if (calendar.get(Calendar.DAY_OF_MONTH) > 17) {
+                        if (calendar.get(Calendar.DAY_OF_MONTH) > 14) {
                             calendar.add(Calendar.MONTH, 1)
                         }
 
@@ -238,6 +238,10 @@ class TaskTest :
                                 calendar.add(Calendar.DATE, 1)
                             }
                             calendar.add(Calendar.DATE, 14)
+                            println(daily.startDate)
+                            println(reminder.time)
+                            println(fakeZDT)
+                            println(calendar.time)
                             it.dayOfYear shouldBe calendar.get(Calendar.DAY_OF_YEAR)
                             it.year shouldBe calendar.get(Calendar.YEAR)
                             calendar.add(Calendar.MONTH, 1)

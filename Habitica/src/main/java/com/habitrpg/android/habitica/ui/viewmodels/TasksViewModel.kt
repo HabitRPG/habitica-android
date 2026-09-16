@@ -234,42 +234,43 @@ class TasksViewModel
             task: Task,
             activeFilter: String?,
         ): Boolean =
-            task.containsAllTagIds(tags) && (
-                !(activeFilter != null && activeFilter != Task.FILTER_ALL) ||
-                    when (activeFilter) {
-                        Task.FILTER_ACTIVE -> {
-                            if (task.type == TaskType.DAILY) {
-                                task.isDisplayedActive
-                            } else {
-                                !task.completed
+            task.containsAllTagIds(tags) &&
+                (
+                    !(activeFilter != null && activeFilter != Task.FILTER_ALL) ||
+                        when (activeFilter) {
+                            Task.FILTER_ACTIVE -> {
+                                if (task.type == TaskType.DAILY) {
+                                    task.isDisplayedActive
+                                } else {
+                                    !task.completed
+                                }
+                            }
+
+                            Task.FILTER_GRAY -> {
+                                task.completed || !task.isDisplayedActive
+                            }
+
+                            Task.FILTER_WEAK -> {
+                                task.value < 1
+                            }
+
+                            Task.FILTER_STRONG -> {
+                                task.value >= 1
+                            }
+
+                            Task.FILTER_DATED -> {
+                                task.dueDate != null
+                            }
+
+                            Task.FILTER_COMPLETED -> {
+                                task.completed
+                            }
+
+                            else -> {
+                                true
                             }
                         }
-
-                        Task.FILTER_GRAY -> {
-                            task.completed || !task.isDisplayedActive
-                        }
-
-                        Task.FILTER_WEAK -> {
-                            task.value < 1
-                        }
-
-                        Task.FILTER_STRONG -> {
-                            task.value >= 1
-                        }
-
-                        Task.FILTER_DATED -> {
-                            task.dueDate != null
-                        }
-
-                        Task.FILTER_COMPLETED -> {
-                            task.completed
-                        }
-
-                        else -> {
-                            true
-                        }
-                    }
-            )
+                )
 
         fun setActiveFilter(
             type: TaskType,

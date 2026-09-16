@@ -25,8 +25,6 @@ import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 class ShowNotificationInteractor(
     private val activity: Activity,

@@ -222,7 +222,8 @@ open class MainActivity :
                             ?: return@registerForActivityResult
                     if (!alarmManager.canScheduleExactAlarms()) {
                         val intent = Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                        intent.data = Uri.fromParts("package", applicationContext?.packageName, null)
+                        intent.data =
+                            Uri.fromParts("package", applicationContext?.packageName, null)
                         startActivity(intent)
                     }
                 }
@@ -595,7 +596,8 @@ open class MainActivity :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true ||
+        binding.root.parent is DrawerLayout &&
+            drawerToggle?.onOptionsItemSelected(item) == true ||
             if (item.itemId == android.R.id.home) {
                 if (showBackButton == true) {
                     MainNavigationController.navigateBack()
@@ -955,7 +957,10 @@ open class MainActivity :
                                                     delay(500.milliseconds)
                                                     HabiticaSnackbar.showSnackbar(
                                                         snackbarContainer,
-                                                        getString(R.string.revive_broken_equipment, brokenItem.text),
+                                                        getString(
+                                                            R.string.revive_broken_equipment,
+                                                            brokenItem.text,
+                                                        ),
                                                         HabiticaSnackbar.SnackbarDisplayType.BLACK,
                                                     )
                                                 }

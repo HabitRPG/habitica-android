@@ -30,10 +30,11 @@ open class User :
     Avatar,
     VersionedObject {
     fun hasPermission(permission: Permission): Boolean =
-        permissions?.fullAccess == true || when (permission) {
-            Permission.MODERATOR -> permissions?.moderator
-            Permission.USER_SUPPORT -> permissions?.userSupport
-        } == true
+        permissions?.fullAccess == true ||
+            when (permission) {
+                Permission.MODERATOR -> permissions?.moderator
+                Permission.USER_SUPPORT -> permissions?.userSupport
+            } == true
 
     override val realmClass: Class<User>
         get() = User::class.java
