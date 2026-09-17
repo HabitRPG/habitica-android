@@ -76,7 +76,7 @@ class SubscriptionDetailsView : LinearLayout {
             }
         }
 
-        binding.subscriptionChangeNotif.isVisible = plan.deferred?.planId != null
+        binding.subscriptionChangeNotif.isVisible = plan.deferred?.planId != null && plan.dateTerminated == null
 
         when {
             duration != null -> {
