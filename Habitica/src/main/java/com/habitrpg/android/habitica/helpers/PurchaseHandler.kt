@@ -275,9 +275,7 @@ class PurchaseHandler(
 
         if (skuDetails.productType == BillingClient.ProductType.SUBS) {
             val existingSub = checkForSubscription()
-            val terminationDate = userViewModel.user.value?.purchased?.plan?.dateTerminated
-            val isUserSubStillActive = terminationDate == null || terminationDate > Date()
-            if (existingSub != null && (existingSub.isAutoRenewing || isUserSubStillActive)) {
+            if (existingSub != null && existingSub.isAutoRenewing) {
                 val replacementMode = getReplacementMode(existingSub, skuDetails)
                 if (replacementMode ==
                     BillingFlowParams.ProductDetailsParams.SubscriptionProductReplacementParams.ReplacementMode.DEFERRED

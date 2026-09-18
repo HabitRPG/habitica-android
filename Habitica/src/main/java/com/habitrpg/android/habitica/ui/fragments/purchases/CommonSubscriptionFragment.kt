@@ -46,8 +46,19 @@ interface CommonSubscriptionFragment : LifecycleOwner {
         content.subscriptionDetails.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
         content.subscriptionDetails.onUpdateSubscriptionsTapped = {
-            activity.showAsBottomSheet(sheetColor = Color(activity.getColor(R.color.brand_300)), true) {
-                ChangeSubscriptionScreen(it)
+            val plan = user?.purchased?.plan
+            if (plan?.datePaymentExpired == null) {
+                activity.showAsBottomSheet(
+                    sheetColor = Color(activity.getColor(R.color.brand_300)),
+                    true
+                ) {
+                    ChangeSubscriptionScreen(it)
+                }
+            } else {
+                val subSku = plan.habiticaProduct?.sku
+                val sku = skus.firstOrNull { it.productId == subSku }
+                selectedSubscriptionSku = sku
+                purchaseSubscription()
             }
         }
         content.subscribeButton.setOnClickListener { purchaseSubscription() }

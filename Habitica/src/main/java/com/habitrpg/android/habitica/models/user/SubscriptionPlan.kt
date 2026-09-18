@@ -12,12 +12,18 @@ import kotlin.math.max
 open class SubscriptionPlan :
     RealmObject(),
     BaseObject {
+    val isPaymentExpired: Boolean
+        get() {
+            val today = Date()
+            return datePaymentExpired?.before(today) == true
+        }
     var customerId: String? = null
     var dateCreated: Date? = null
     var dateUpdated: Date? = null
 
     @JvmField
     var dateTerminated: Date? = null
+    var datePaymentExpired: Date? = null
     var paymentMethod: String? = null
 
     @JvmField

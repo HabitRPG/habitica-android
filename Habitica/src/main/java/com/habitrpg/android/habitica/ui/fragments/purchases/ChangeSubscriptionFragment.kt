@@ -256,7 +256,7 @@ class ChangeSubscriptionViewModel
                         userViewModel.user.value
                             ?.purchased
                             ?.plan
-                    if (plan?.isGiftedSub == false) {
+                    if (plan?.isGiftedSub == false && !plan.isPaymentExpired) {
                         currentProduct.value = plan.habiticaProduct
                         if (currentProduct.value != null) {
                             selectedProduct.value = currentProduct.value!!
