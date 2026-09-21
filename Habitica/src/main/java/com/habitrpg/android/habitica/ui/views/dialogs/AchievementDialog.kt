@@ -148,7 +148,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
     ) {
         binding.titleView.text = title
         binding.descriptionView.setText(description.fromHtml(), TextView.BufferType.SPANNABLE)
-        binding.iconView.loadImage("achievement-${iconName}2x")
+        binding.iconView.loadImage(if (iconName.startsWith("achievement-")) "${iconName}2x" else "achievement-${iconName}2x")
         if (iconName == "onboardingComplete") {
             setTitle(R.string.onboardingComplete_achievement_title)
             binding.titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
