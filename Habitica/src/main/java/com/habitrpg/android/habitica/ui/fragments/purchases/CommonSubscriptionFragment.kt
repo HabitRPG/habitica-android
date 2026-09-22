@@ -47,7 +47,7 @@ interface CommonSubscriptionFragment : LifecycleOwner {
 
         content.subscriptionDetails.onUpdateSubscriptionsTapped = {
             val plan = user?.purchased?.plan
-            if (plan?.datePaymentExpired == null) {
+            if (plan?.datePaymentExpired == null || (plan.datePaymentExpired?.time ?: 0) < System.currentTimeMillis()) {
                 activity.showAsBottomSheet(
                     sheetColor = Color(activity.getColor(R.color.brand_300)),
                     true
