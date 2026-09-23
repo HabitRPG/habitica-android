@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.RebirthAchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.RebirthEnabledDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.AchievementData
 import com.habitrpg.common.habitica.models.notifications.ChallengeWonData
@@ -68,6 +67,7 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_SEEING_RED.type,
             Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type,
             Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type,
+            Notification.Type.ACHIEVEMENT_PET_COLOR.type,
             Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
 
             Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showOnboardingCompletedDialog(notification)
@@ -128,17 +128,15 @@ class ShowNotificationInteractor(
     }
 
     fun showAchievementDialog(notification: Notification) {
-        val data = (notification.data as? AchievementData) ?: return
+        val data = (notification.data as? AchievementData)
 
         val dialog = AchievementDialog(activity)
-        dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement
-        val canShow = dialog.setType(data.achievement ?: "", data.message, data.modalText, data.iconName)
+        dialog.isLastOnboardingAchievement = data?.isLastOnboardingAchievement == true
+        val canShow = dialog.setType(data?.achievement ?: notification.type ?: "", data?.message, data?.modalText, data?.iconName)
         if (!canShow) return
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            lifecycleScope.launch(context = Dispatchers.Main) {
-                dialog.enqueue()
-            }
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            dialog.enqueue()
         }
     }
 
@@ -147,10 +145,8 @@ class ShowNotificationInteractor(
         dialog.isLastOnboardingAchievement = true
         dialog.setType(notification.type ?: "", null, null)
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            lifecycleScope.launch(context = Dispatchers.Main) {
-                dialog.enqueue()
-            }
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            dialog.enqueue()
         }
     }
 
