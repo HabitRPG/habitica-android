@@ -3,11 +3,8 @@ package com.habitrpg.wearos.habitica
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.arch.core.executor.TaskExecutor
 import io.kotest.core.config.AbstractProjectConfig
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 
 object ProjectConfig : AbstractProjectConfig() {
-    private val testDispatcher = TestCoroutineDispatcher()
-
     override suspend fun beforeProject() {
         super.beforeProject()
         setupLiveData()
