@@ -6,8 +6,11 @@ import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
+import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.Items
@@ -15,10 +18,12 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -122,6 +127,67 @@ class InventoryRepositoryImplTest :
                 coEvery { apiClient.equipItem("mount", "mount_1") } returns Items()
                 val result = repository.equip("mount", "mount_1")
                 result shouldBe null
+            }
+        }
+        "sellItem" should {
+            "decrement the owned count and save the updated user" {
+                val owned = OwnedItem().apply { itemType = "food"; key = "Meat"; numberOwned = 3 }
+                val food = Food().apply { key = "Meat" }
+                val user = User()
+                every { localRepository.getOwnedItem("user-1", "food", "Meat", true) } returns flowOf(owned)
+                every { localRepository.getItem("food", "Meat") } returns flowOf(food)
+                every { localRepository.setOwnedCount(owned, 2) } returns Unit
+                coEvery { apiClient.sellItem(food.type, "Meat") } returns user
+                every { localRepository.soldItem("user-1", user) } returns user
+                repository.sellItem("food", "Meat") shouldBe user
+                verify { localRepository.setOwnedCount(owned, 2) }
+            }
+
+            "do nothing if the item is not owned" {
+                every { localRepository.getOwnedItem("user-1", "food", "Meat", true) } returns flowOf()
+                repository.sellItem("food", "Meat") shouldBe null
+                coVerify(exactly = 0) { apiClient.sellItem(any(), any()) }
+            }
+        }
+        "feedPet" should {
+            "save the new feeding progress" {
+                val response = FeedResponse().apply { value = 20 }
+                coEvery { apiClient.feedPet("Wolf-Base", "Meat") } returns response
+                every { localRepository.feedPet("Meat", "Wolf-Base", 20, "user-1") } returns Unit
+                repository.feedPet(Pet().apply { key = "Wolf-Base" }, Food().apply { key = "Meat" }) shouldBe response
+                verify { localRepository.feedPet("Meat", "Wolf-Base", 20, "user-1") }
+            }
+
+            "not change anything if feeding failed" {
+                coEvery { apiClient.feedPet(any(), any()) } returns null
+                repository.feedPet(Pet().apply { key = "Wolf-Base" }, Food().apply { key = "Meat" }) shouldBe null
+                verify(exactly = 0) { localRepository.feedPet(any(), any(), any(), any()) }
+            }
+        }
+        "inviteToQuest" should {
+            "invite the party and use up the quest scroll" {
+                coEvery { apiClient.inviteToQuest("party", "dilatory") } returns null
+                coEvery { localRepository.changeOwnedCount("quests", "dilatory", "user-1", -1) } returns Unit
+                repository.inviteToQuest(QuestContent().apply { key = "dilatory" })
+                coVerify { localRepository.changeOwnedCount("quests", "dilatory", "user-1", -1) }
+            }
+        }
+        "togglePinnedItem" should {
+            "toggle the item and reload the rewards" {
+                val item = ShopItem().apply { pinType = "marketGear"; path = "gear.flat.weapon_1" }
+                coEvery { apiClient.togglePinnedItem("marketGear", "gear.flat.weapon_1") } returns null
+                coEvery { apiClient.retrieveInAppRewards() } returns null
+                repository.togglePinnedItem(item)
+                coVerify { apiClient.togglePinnedItem("marketGear", "gear.flat.weapon_1") }
+                coVerify { apiClient.retrieveInAppRewards() }
+            }
+        }
+        "equipGear" should {
+            "equip the item as costume if requested" {
+                every { localRepository.getLiveUser("user-1") } returns null
+                coEvery { apiClient.equipItem("costume", "weapon_1") } returns null
+                repository.equipGear("weapon_1", true) shouldBe null
+                coVerify { apiClient.equipItem("costume", "weapon_1") }
             }
         }
         "hatchPet" should {

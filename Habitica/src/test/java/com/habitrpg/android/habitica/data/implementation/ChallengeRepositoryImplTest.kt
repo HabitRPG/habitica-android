@@ -116,6 +116,52 @@ class ChallengeRepositoryImplTest :
                 coVerify(exactly = 0) { apiClient.createChallengeTask(any(), any()) }
             }
         }
+        "updateChallenge" should {
+            "update, delete and add tasks before updating the challenge" {
+                val challenge = Challenge().apply { id = "challenge-1" }
+                val updated = Task().apply { id = "task-1"; type = TaskType.HABIT }
+                val added = Task().apply { id = "task-3"; type = TaskType.DAILY }
+                val savedUpdated = Task()
+                every { localRepository.getUnmanagedCopy(updated) } returns updated
+                coEvery { apiClient.updateTask("task-1", updated) } returns savedUpdated
+                coEvery { apiClient.deleteTask("task-2") } returns null
+                coEvery { apiClient.createChallengeTask("challenge-1", added) } returns added
+                coEvery { apiClient.updateChallenge(challenge) } returns challenge
+                coEvery { apiClient.getChallengeTasks("challenge-1") } returns TaskList()
+                every { localRepository.save(any<List<Task>>()) } returns Unit
+                every { localRepository.save(challenge) } returns Unit
+                repository.updateChallenge(challenge, listOf(updated, added), listOf(added), listOf(updated), listOf("task-2")) shouldBe challenge
+                savedUpdated.ownerID shouldBe "challenge-1"
+                challenge.tasksOrder?.habits shouldBe listOf("task-1")
+                challenge.tasksOrder?.dailys shouldBe listOf("task-3")
+                coVerify { apiClient.deleteTask("task-2") }
+                coVerify { apiClient.getChallengeTasks("challenge-1") }
+            }
+
+            "not save anything if updating the challenge failed" {
+                val challenge = Challenge().apply { id = "challenge-1" }
+                coEvery { apiClient.updateChallenge(challenge) } returns null
+                repository.updateChallenge(challenge, emptyList(), emptyList(), emptyList(), emptyList()) shouldBe null
+                coVerify(exactly = 0) { apiClient.getChallengeTasks(any()) }
+            }
+        }
+        "retrieveChallenges" should {
+            "clear stored challenges when loading the first page" {
+                val challenges = listOf(Challenge())
+                coEvery { apiClient.getUserChallenges(0, true) } returns challenges
+                every { localRepository.saveChallenges(challenges, true, true, "user-1") } returns Unit
+                repository.retrieveChallenges(0, true) shouldBe challenges
+                verify { localRepository.saveChallenges(challenges, true, true, "user-1") }
+            }
+
+            "keep stored challenges when loading later pages" {
+                val challenges = listOf(Challenge())
+                coEvery { apiClient.getUserChallenges(2, false) } returns challenges
+                every { localRepository.saveChallenges(challenges, false, false, "user-1") } returns Unit
+                repository.retrieveChallenges(2, false)
+                verify { localRepository.saveChallenges(challenges, false, false, "user-1") }
+            }
+        }
         "leaveChallenge" should {
             "leave remotely and mark not participating" {
                 val challenge = Challenge().apply { id = "challenge-1" }

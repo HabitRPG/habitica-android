@@ -323,4 +323,5 @@ dependencies {
     androidTestUtil(libs.test.orchestrator)
     testImplementation(libs.coroutine.test)
     testImplementation(libs.turbine)
+    testImplementation(libs.okhttp.mockwebserver)
 }
