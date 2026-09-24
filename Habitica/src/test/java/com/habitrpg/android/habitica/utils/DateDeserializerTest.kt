@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.utils
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import io.kotest.matchers.shouldBe
@@ -35,6 +36,26 @@ class DateDeserializerTest :
                 val date =
                     deserializer.deserialize(JsonPrimitive(""), Date::class.java, deserializationContext)
                 date shouldBe null
+            }
+
+            "use the first entry of an array" {
+                val array = JsonArray().apply { add("2015-09-28T13:00:00.000Z") }
+                deserializer.deserialize(array, Date::class.java, deserializationContext) shouldBe Date(referenceTimestamp)
+            }
+
+            "return null for an empty array" {
+                deserializer.deserialize(JsonArray(), Date::class.java, deserializationContext) shouldBe null
+            }
+
+            "parse dates without milliseconds or time" {
+                deserializer.deserialize(JsonPrimitive("2015-09-28T13:00:00Z"), Date::class.java, deserializationContext) shouldBe
+                    Date(referenceTimestamp)
+                deserializer.deserialize(JsonPrimitive("2015-09-28"), Date::class.java, deserializationContext) shouldBe
+                    Date(1443398400000)
+            }
+
+            "return null for unparseable strings" {
+                deserializer.deserialize(JsonPrimitive("not a date"), Date::class.java, deserializationContext) shouldBe null
             }
         }
 

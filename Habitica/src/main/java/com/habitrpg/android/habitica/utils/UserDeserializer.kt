@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserAchievement
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -149,6 +150,7 @@ class UserDeserializer : JsonDeserializer<User> {
             user.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)
         }
         if (obj.has("challenges")) {
+            user.challenges = RealmList()
             obj.getAsJsonArray("challenges").forEach {
                 user.challenges?.add(ChallengeMembership(user.id ?: "", it.asString))
             }
@@ -206,6 +208,7 @@ class UserDeserializer : JsonDeserializer<User> {
         }
 
         if (obj.has("_ABTests")) {
+            user.abTests = RealmList()
             for ((key, value) in obj.getAsJsonObject("_ABTests").entrySet()) {
                 val test = ABTest()
                 test.name = key

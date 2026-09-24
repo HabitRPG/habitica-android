@@ -5,16 +5,17 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.Tag
+import io.realm.RealmList
 import java.lang.reflect.Type
 
-class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
+class TaskTagDeserializer : JsonDeserializer<RealmList<Tag>> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
         context: JsonDeserializationContext,
-    ): List<Tag> {
-        val tags = mutableListOf<Tag>()
+    ): RealmList<Tag> {
+        val tags = RealmList<Tag>()
 
         if (json.isJsonArray) {
             for (tagElement in json.asJsonArray) {

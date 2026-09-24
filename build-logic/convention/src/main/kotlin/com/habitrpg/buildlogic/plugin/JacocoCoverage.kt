@@ -4,13 +4,16 @@ import com.android.build.api.artifact.ScopedArtifact
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ScopedArtifacts
 import org.gradle.api.Project
+import org.gradle.api.file.ArchiveOperations
 import org.gradle.api.file.Directory
 import org.gradle.api.file.RegularFile
+import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.testing.jacoco.tasks.JacocoReport
+import javax.inject.Inject
 
 private const val COVERAGE_PACKAGE_INCLUDE = "com/habitrpg/**"
 
@@ -43,6 +46,12 @@ abstract class HabiticaJacocoReport : JacocoReport() {
     @get:InputFiles
     @get:PathSensitive(PathSensitivity.RELATIVE)
     abstract val classesDirectories: ListProperty<Directory>
+
+    @get:Inject
+    abstract val archiveOperations: ArchiveOperations
+
+    @get:Inject
+    abstract val objects: ObjectFactory
 }
 
 internal fun Project.registerJacocoUnitTestCoverageReports() {
@@ -66,10 +75,13 @@ internal fun Project.registerJacocoUnitTestCoverageReports() {
                     },
                 )
 
+                // Lambdas below must not capture the Project, or the configuration cache fails to serialize them.
+                val archives = archiveOperations
+                val fileTrees = objects
                 classDirectories.setFrom(
                     classesJars.map { jars ->
                         jars.map {
-                            zipTree(it).matching {
+                            archives.zipTree(it).matching {
                                 include(COVERAGE_PACKAGE_INCLUDE)
                                 exclude(COVERAGE_GENERATED_CODE_EXCLUDES)
                             }
@@ -77,7 +89,7 @@ internal fun Project.registerJacocoUnitTestCoverageReports() {
                     },
                     classesDirectories.map { dirs ->
                         dirs.map {
-                            fileTree(it) {
+                            fileTrees.fileTree().from(it).matching {
                                 include(COVERAGE_PACKAGE_INCLUDE)
                                 exclude(COVERAGE_GENERATED_CODE_EXCLUDES)
                             }
