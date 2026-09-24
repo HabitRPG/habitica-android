@@ -41,7 +41,9 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
-        withHostTest {}
+        withHostTest {
+            enableCoverage = true
+        }
     }
 
     sourceSets {

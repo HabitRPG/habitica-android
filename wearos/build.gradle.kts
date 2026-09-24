@@ -73,6 +73,7 @@ extensions.configure<ApplicationExtension> {
             isDebuggable = true
             ext["enableCrashlytics"] = false
             ext["alwaysUpdateBuildId"] = false
+            enableUnitTestCoverage = true
             resValue("string", "app_name", "Habitica Debug")
         }
         release {

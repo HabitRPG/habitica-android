@@ -43,7 +43,36 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: ${{ matrix.module }}:testProdDebugUnitTest
+        arguments: ${{ matrix.module }}:jacocoProdDebugUnitTestReport
+    - name: Upload coverage report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report-${{ matrix.module }}
+        path: ${{ matrix.module }}/build/reports/jacoco/jacocoProdDebugUnitTestReport/
+
+  shared-unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+        cache: gradle
+    - name: Prepare
+      run: ./.github/prepare-workflow
+    - name: Run with Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: shared:createAndroidHostTestCoverageReport
+    - name: Upload coverage report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report-shared
+        path: shared/build/reports/coverage/test/
 
 #  ui-test:
 #    runs-on: ubuntu-latest

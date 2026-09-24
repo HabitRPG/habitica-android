@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-    `jacoco-report-aggregation`
     id(
         libs.plugins.android.application
             .get()
@@ -137,7 +136,8 @@ android {
             // Disable fabric build ID generation for debug builds
             ext["enableCrashlytics"] = false
             ext["alwaysUpdateBuildId"] = false
-            enableUnitTestCoverage = false
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             resValue("string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider")
             resValue("string", "app_name", "Habitica Debug")
         }

@@ -14,6 +14,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR
 import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 class ConventionPlugin : Plugin<Project> {
@@ -23,6 +24,15 @@ class ConventionPlugin : Plugin<Project> {
                 apply("io.gitlab.arturbosch.detekt")
                 apply("org.jlleitschuh.gradle.ktlint")
             }
+
+            pluginManager.withPlugin("jacoco") {
+                configure<JacocoPluginExtension> {
+                    toolVersion = "0.8.12"
+                }
+            }
+
+            pluginManager.withPlugin("com.android.application") { target.registerJacocoUnitTestCoverageReports() }
+            pluginManager.withPlugin("com.android.library") { target.registerJacocoUnitTestCoverageReports() }
 
             configure<KtlintExtension> {
                 filter {

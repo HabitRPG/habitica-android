@@ -21,5 +21,10 @@ plugins {
 }
 
 tasks.register("allUnitTests", DefaultTask::class) {
-    dependsOn(":Habitica:testProdDebugUnitTest", ":wearos:testProdDebugUnitTest", ":common:testProdDebugUnitTest")
+    dependsOn(
+        ":Habitica:testProdDebugUnitTest",
+        ":wearos:testProdDebugUnitTest",
+        ":common:testProdDebugUnitTest",
+        ":shared:testAndroidHostTest",
+    )
 }
