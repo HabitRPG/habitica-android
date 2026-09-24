@@ -7,17 +7,25 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.android.habitica.models.user.Preferences
+import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.UserTaskPreferences
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import io.realm.RealmList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -110,6 +118,19 @@ class MainUserViewModelTest :
             "isUserFainted should return false" {
                 viewModel.isUserFainted shouldBe false
             }
+
+            "userID should fall back to the authenticated user id" {
+                every { authenticationHandler.currentUserID } returns "auth-id"
+                viewModel.userID shouldBe "auth-id"
+            }
+
+            "isUserInParty should return false" {
+                viewModel.isUserInParty shouldBe false
+            }
+
+            "mirrorGroupTasks should return an empty list" {
+                viewModel.mirrorGroupTasks shouldBe emptyList()
+            }
         }
 
         "when user is not null" `when` {
@@ -164,6 +185,80 @@ class MainUserViewModelTest :
                     user.stats?.hp = 1.0
                     viewModel.user.getOrAwaitValue()
                     viewModel.isUserFainted shouldBe false
+                }
+            }
+
+            "userID" should {
+                "return the id of the user" {
+                    user.id = "user-1"
+                    viewModel.user.getOrAwaitValue()
+                    viewModel.userID shouldBe "user-1"
+                }
+            }
+
+            "displayName" should {
+                "return the profile name" {
+                    user.profile = Profile()
+                    user.profile?.name = "Display Name"
+                    viewModel.user.getOrAwaitValue()
+                    viewModel.displayName shouldBe "Display Name"
+                }
+            }
+
+            "party" should {
+                "return the party id and membership if the user is in a party" {
+                    user.party = UserParty()
+                    user.party?.id = "party-1"
+                    viewModel.user.getOrAwaitValue()
+                    viewModel.partyID shouldBe "party-1"
+                    viewModel.isUserInParty shouldBe true
+                }
+            }
+
+            "mirrorGroupTasks" should {
+                "return the mirrored group ids" {
+                    user.preferences = Preferences()
+                    user.preferences?.tasks = UserTaskPreferences()
+                    user.preferences?.tasks?.mirrorGroupTasks = RealmList("group-1")
+                    viewModel.user.getOrAwaitValue()
+                    viewModel.mirrorGroupTasks shouldBe listOf("group-1")
+                }
+            }
+
+            "updateUser" should {
+                "update a single value" {
+                    coEvery { userRepository.updateUser(any<String>(), any()) } returns null
+                    viewModel.updateUser("preferences.sleep", true)
+                    coVerify(exactly = 1) { userRepository.updateUser("preferences.sleep", true) }
+                }
+
+                "update multiple values" {
+                    val data = mapOf("preferences.sleep" to true)
+                    coEvery { userRepository.updateUser(any<Map<String, Any?>>()) } returns null
+                    viewModel.updateUser(data)
+                    coVerify(exactly = 1) { userRepository.updateUser(data) }
+                }
+            }
+
+            "currentTeamPlanMembers" should {
+                "retrieve the team plan if it has no members yet" {
+                    val teamPlan = TeamPlan()
+                    teamPlan.id = "123"
+                    every { socialRepository.getGroupMembers("123") } returns flowOf(emptyList())
+                    coEvery { userRepository.retrieveTeamPlan("123") } returns null
+                    viewModel.currentTeamPlan.emit(teamPlan)
+                    viewModel.currentTeamPlanMembers.first() shouldBe emptyList()
+                    coVerify(exactly = 1) { userRepository.retrieveTeamPlan("123") }
+                }
+
+                "not retrieve the team plan if members are known" {
+                    val teamPlan = TeamPlan()
+                    teamPlan.id = "123"
+                    val members = listOf(Member().apply { id = "member-1" })
+                    every { socialRepository.getGroupMembers("123") } returns flowOf(members)
+                    viewModel.currentTeamPlan.emit(teamPlan)
+                    viewModel.currentTeamPlanMembers.first() shouldBe members
+                    coVerify(exactly = 0) { userRepository.retrieveTeamPlan(any()) }
                 }
             }
 

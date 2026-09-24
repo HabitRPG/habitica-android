@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -82,7 +81,7 @@ class MainUserViewModel
                             .contains(false)
                 }.onEach {
                     if (it.isEmpty()) {
-                        currentTeamPlan.lastOrNull()?.let { plan ->
+                        currentTeamPlan.replayCache.lastOrNull()?.let { plan ->
                             userRepository.retrieveTeamPlan(plan.id)
                         }
                     }
