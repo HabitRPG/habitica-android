@@ -14,6 +14,9 @@ open class SubscriptionPlan :
     BaseObject {
     val isPaymentExpired: Boolean
         get() {
+            // datePaymentExpired is not cleared when a user subscribes again,
+            // so it's only meaningful while the plan is terminated.
+            if (dateTerminated == null) return false
             val today = Date()
             return datePaymentExpired?.before(today) == true
         }

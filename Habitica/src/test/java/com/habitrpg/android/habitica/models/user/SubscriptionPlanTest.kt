@@ -28,6 +28,28 @@ class SubscriptionPlanTest :
             }
         }
 
+        "isPaymentExpired" should {
+            "false without datePaymentExpired" {
+                plan.dateTerminated = Date(Date().time - 10000)
+                plan.isPaymentExpired shouldBe false
+            }
+            "false if terminated subscription is still paid" {
+                plan.dateTerminated = Date(Date().time + 10000)
+                plan.datePaymentExpired = Date(Date().time + 10000)
+                plan.isPaymentExpired shouldBe false
+            }
+            "true if terminated subscription payment has expired" {
+                plan.dateTerminated = Date(Date().time + 10000)
+                plan.datePaymentExpired = Date(Date().time - 10000)
+                plan.isPaymentExpired shouldBe true
+            }
+            "false if user resubscribed after a previous subscription expired" {
+                plan.dateTerminated = null
+                plan.datePaymentExpired = Date(Date().time - 10000)
+                plan.isPaymentExpired shouldBe false
+            }
+        }
+
         "isGiftedSub" should {
             "true if paymentMethod is Gift" {
                 plan.paymentMethod = "Gift"

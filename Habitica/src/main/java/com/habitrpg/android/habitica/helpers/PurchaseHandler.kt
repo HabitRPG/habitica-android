@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.edit
+import androidx.lifecycle.asFlow
 import androidx.preference.PreferenceManager
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -40,6 +41,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -96,19 +99,20 @@ class PurchaseHandler(
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 scope.launchCatching {
-                    userViewModel.user.value?.let {
+                    userViewModel.user.asFlow().filterNotNull().first().let {
                         val plan = it.purchased!!.plan
                         for (purchase in purchases) {
                             val product = HabiticaProduct.forSku(purchase.products.firstOrNull() ?: "") ?: continue
                             if (plan?.isActive == true &&
-                                HabiticaProduct.allSubscriptionTypes.contains(product)
+                                HabiticaProduct.allSubscriptionTypes.contains(product) &&
+                                purchase.purchaseToken == plan.customerId
                             ) {
-                                val samePlan = purchase.purchaseToken == plan.customerId
-                                if (purchase.purchaseToken == plan.customerId ||
-                                    ((plan.dateTerminated == null) == purchase.isAutoRenewing && samePlan)
-                                ) {
-                                    continue
+                                // Same purchase that the plan was created from. If the user cancelled and then
+                                // resubscribed through the Play Store, the token stays the same but it auto renews again.
+                                if (plan.dateTerminated != null && purchase.isAutoRenewing) {
+                                    reactivateSubscription(purchase)
                                 }
+                                continue
                             }
                             handle(purchase)
                         }
@@ -178,6 +182,7 @@ class PurchaseHandler(
         scope.cancel()
         scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
         processedPurchases.clear()
+        reactivatedPurchases.clear()
         displayedConfirmations.clear()
     }
 
@@ -420,6 +425,26 @@ class PurchaseHandler(
                         handleError(throwable, purchase)
                     }
                 }
+            }
+        }
+    }
+
+    private val reactivatedPurchases = ConcurrentHashMap.newKeySet<String>()
+
+    private fun reactivateSubscription(purchase: Purchase) {
+        if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED ||
+            !reactivatedPurchases.add(purchase.purchaseToken)
+        ) {
+            return
+        }
+        Log.d("PurchaseHandler", "Reactivating subscription: ${purchase.products.firstOrNull()}, orderId: ${purchase.orderId}")
+        scope.launchCatching {
+            try {
+                apiClient.validateSubscription(buildValidationRequest(purchase))
+                processedPurchase()
+            } catch (throwable: Throwable) {
+                reactivatedPurchases.remove(purchase.purchaseToken)
+                CrashReporter.recordException(throwable)
             }
         }
     }
