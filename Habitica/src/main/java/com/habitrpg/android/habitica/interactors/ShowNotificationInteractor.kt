@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.RebirthAchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.RebirthEnabledDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.AchievementData
@@ -68,7 +69,7 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type,
             Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type,
             Notification.Type.ACHIEVEMENT_PET_COLOR.type,
-            Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievement(notification)
 
             Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showOnboardingCompletedDialog(notification)
 
@@ -127,9 +128,18 @@ class ShowNotificationInteractor(
         }
     }
 
-    fun showAchievementDialog(notification: Notification) {
+    fun showAchievement(notification: Notification) {
         val data = (notification.data as? AchievementData)
 
+        val count = data?.count ?: 0
+        if (count > 1) {
+            showAchievementSnackbar(data, count)
+            return
+        }
+        showAchievementDialog(notification, data)
+    }
+
+    fun showAchievementDialog(notification: Notification, data: AchievementData?) {
         val dialog = AchievementDialog(activity)
         dialog.isLastOnboardingAchievement = data?.isLastOnboardingAchievement == true
         val canShow = dialog.setType(data?.achievement ?: notification.type ?: "", data?.message, data?.modalText, data?.iconName)
@@ -137,6 +147,22 @@ class ShowNotificationInteractor(
 
         lifecycleScope.launch(context = Dispatchers.Main) {
             dialog.enqueue()
+        }
+    }
+
+    private fun showAchievementSnackbar(data: AchievementData?, count: Int) {
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            val iconName = data?.iconName ?: data?.achievement ?: ""
+            DataBindingUtils.loadImage(activity, if (iconName.startsWith("achievement-")) "${iconName}2x" else "achievement-${iconName}2x") {
+                (activity as? SnackbarActivity)?.showSnackbar(
+                    title = data?.message ?: activity.getString(R.string.achievement_title),
+                    leftImage = it,
+                    rightText = "×$count",
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                    isCelebratory = true,
+                )
+            }
+
         }
     }
 
