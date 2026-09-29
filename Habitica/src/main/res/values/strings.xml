@@ -25,4 +25,5 @@
     <string name="accept_all">Accept All</string>
     <string name="habiticas_privacy_policy">Habitica\'s Privacy Policy</string>
     <string name="save_preferences">Save Preferences</string>
+    <string name="achievement">Achievement</string>
 </resources>

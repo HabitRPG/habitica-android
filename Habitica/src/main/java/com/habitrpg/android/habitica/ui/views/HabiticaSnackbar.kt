@@ -9,7 +9,6 @@ import android.view.animation.AccelerateInterpolator
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SnackbarViewBinding
 import com.habitrpg.common.habitica.helpers.Animations
@@ -64,9 +63,12 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         return this
     }
 
-    fun setLeftIcon(image: Drawable?): HabiticaSnackbar {
+    fun setLeftIcon(image: Drawable?, hideIconBackground: Boolean): HabiticaSnackbar {
         binding.leftImageView.setImageDrawable(image)
         binding.leftImageView.visibility = if (image != null) View.VISIBLE else View.GONE
+        if (hideIconBackground) {
+            binding.leftImageView.background = null
+        }
         return this
     }
 
@@ -154,7 +156,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
             isSubscriberBenefit: Boolean = false,
-            duration: Int = Snackbar.LENGTH_LONG
+            hideIconBackground: Boolean = false,
+            duration: Int = LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -168,6 +171,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 displayType,
                 isCelebratory,
                 isSubscriberBenefit,
+                hideIconBackground,
                 duration
             )
         }
@@ -180,7 +184,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
             isSubscriberBenefit: Boolean = false,
-            duration: Int = Snackbar.LENGTH_LONG
+            hideIconBackground: Boolean = false,
+            duration: Int = LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -194,6 +199,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 displayType,
                 isCelebratory,
                 isSubscriberBenefit,
+                hideIconBackground,
                 duration
             )
         }
@@ -208,7 +214,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
             isSubscriberBenefit: Boolean = false,
-            duration: Int = Snackbar.LENGTH_LONG
+            hideIconBackground: Boolean = false,
+            duration: Int = LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -222,6 +229,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 displayType,
                 isCelebratory,
                 isSubscriberBenefit,
+                hideIconBackground,
                 duration
             )
         }
@@ -234,7 +242,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
             isSubscriberBenefit: Boolean = false,
-            duration: Int = Snackbar.LENGTH_LONG
+            hideIconBackground: Boolean = false,
+            duration: Int = LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -248,6 +257,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 displayType,
                 isCelebratory,
                 isSubscriberBenefit,
+                hideIconBackground,
                 duration
             )
         }
@@ -264,12 +274,13 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
             isSubscriberBenefit: Boolean = false,
-            duration: Int = Snackbar.LENGTH_LONG
+            hideIconBackground: Boolean = false,
+            duration: Int = LENGTH_LONG
         ) {
             val snackbar =
                 make(container, duration)
                     .setSpecialView(specialView)
-                    .setLeftIcon(leftImage)
+                    .setLeftIcon(leftImage, hideIconBackground)
             if (title?.isNotBlank() == true) {
                 snackbar.setTitle(title)
             }
@@ -427,7 +438,8 @@ interface SnackbarActivity {
         rightTextColor: Int? = null,
         rightText: String? = null,
         displayType: HabiticaSnackbar.SnackbarDisplayType = HabiticaSnackbar.SnackbarDisplayType.NORMAL,
-        isCelebratory: Boolean = false
+        isCelebratory: Boolean = false,
+        hideIconBackground: Boolean = false
     ) {
         HabiticaSnackbar.showSnackbar(
             snackbarContainer(),
@@ -439,7 +451,8 @@ interface SnackbarActivity {
             rightTextColor,
             rightText,
             displayType,
-            isCelebratory
+            isCelebratory,
+            hideIconBackground = hideIconBackground
         )
     }
 }

@@ -155,11 +155,12 @@ class ShowNotificationInteractor(
             val iconName = data?.iconName ?: data?.achievement ?: ""
             DataBindingUtils.loadImage(activity, if (iconName.startsWith("achievement-")) "${iconName}2x" else "achievement-${iconName}2x") {
                 (activity as? SnackbarActivity)?.showSnackbar(
-                    title = data?.message ?: activity.getString(R.string.achievement_title),
+                    title = activity.getString(R.string.achievement),
+                    content = data?.message ?: activity.getString(R.string.achievement_title),
                     leftImage = it,
-                    rightText = "×$count",
-                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
                     isCelebratory = true,
+                    hideIconBackground = true
                 )
             }
 
