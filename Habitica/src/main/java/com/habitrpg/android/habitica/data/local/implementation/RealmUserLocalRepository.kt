@@ -142,9 +142,9 @@ class RealmUserLocalRepository(
         }
 
     override fun getTeamPlan(teamID: String): Flow<Group?> =
-        safeFindOne {
+        safeFindAll {
             it.where(Group::class.java).equalTo("id", teamID)
-        }
+        }.map { groups -> groups.firstOrNull()?.takeIf { it.isValid } }
 
     override fun getSkills(user: User): Flow<List<Skill>> {
         val habitClass =

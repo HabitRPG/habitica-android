@@ -34,8 +34,11 @@ interface CommonSubscriptionFragment : LifecycleOwner {
 
     fun getViewLifecycleOwner(): LifecycleOwner
 
+    val showsGiftSegment: Boolean
+        get() = true
+
     fun setupView(activity: Activity) {
-        lifecycleScope.launchCatching {
+        getViewLifecycleOwner().lifecycleScope.launchCatching {
             userRepository.getUser().collect { user ->
                 user?.let { updateUser(it) }
             }
@@ -204,7 +207,7 @@ interface CommonSubscriptionFragment : LifecycleOwner {
                 content
                     ?.giftSegmentSubscribed
                     ?.root
-                    ?.visibility = View.VISIBLE
+                    ?.visibility = if (showsGiftSegment) View.VISIBLE else View.GONE
                 content?.subscribeBenefitsTitle?.visibility = View.GONE
                 content?.subscribeBenefitsFooter?.visibility = View.VISIBLE
                 content?.subscriptionDisclaimerView?.visibility = View.GONE
@@ -225,7 +228,7 @@ interface CommonSubscriptionFragment : LifecycleOwner {
                 content
                     ?.giftSegmentUnsubscribed
                     ?.root
-                    ?.visibility = View.VISIBLE
+                    ?.visibility = if (showsGiftSegment) View.VISIBLE else View.GONE
                 content?.subscriptionDisclaimerView?.visibility = View.VISIBLE
 
                 val totalGemCap = user?.purchased?.plan?.totalNumberOfGemsAlways ?: 24
@@ -261,6 +264,7 @@ interface CommonSubscriptionFragment : LifecycleOwner {
             } else if (plan?.paymentMethod == "Google" &&
                 plan.isActive &&
                 plan.dateTerminated == null &&
+                plan.deferred?.planId == null &&
                 plan.planId != sub?.getSubCode()
             ) {
                 purchaseHandler.updateSubscriptionPlan(newestSubscription)

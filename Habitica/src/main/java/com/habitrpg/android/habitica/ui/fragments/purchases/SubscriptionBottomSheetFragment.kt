@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
@@ -53,6 +52,9 @@ open class SubscriptionBottomSheetFragment :
     override var user: User? = null
     override var hasLoadedSubscriptionOptions: Boolean = false
 
+    override val showsGiftSegment: Boolean
+        get() = false
+
     override fun getViewLifecycleOwner(): LifecycleOwner = super.getViewLifecycleOwner()
 
     override fun onCreateView(
@@ -78,10 +80,7 @@ open class SubscriptionBottomSheetFragment :
         content.seeMoreButton.visibility = View.VISIBLE
 
         content.seeMoreButton.setOnClickListener {
-            MainNavigationController.navigate(
-                R.id.gemPurchaseFragment,
-                bundleOf(Pair("openSubscription", true)),
-            )
+            MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
         }
     }
 

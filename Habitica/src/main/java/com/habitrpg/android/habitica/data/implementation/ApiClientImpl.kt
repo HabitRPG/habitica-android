@@ -67,7 +67,6 @@ import java.io.IOException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLException
@@ -562,20 +561,23 @@ class ApiClientImpl(
             )
         }
 
-    private var lastSubscribeCall: Date? = null
+    private suspend fun <T> processPurchaseValidation(apiCall: suspend () -> Response<HabitResponse<T>>): T? =
+        try {
+            processResponse(apiCall())
+        } catch (throwable: Throwable) {
+            if (throwable !is HttpException) {
+                accept(throwable)
+            }
+            throw throwable
+        }
 
     override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? =
-        if (Date().time - (lastSubscribeCall?.time ?: 0) > 6000) {
-            lastSubscribeCall = Date()
-            process { apiService.validateSubscription(request) }
-        } else {
-            null
-        }
+        processPurchaseValidation { apiService.validateSubscription(request) }
 
     override suspend fun getHallMember(userId: String): Member? = process { apiService.getHallMember(userId) }
 
     override suspend fun validateNoRenewSubscription(request: PurchaseValidationRequest): Any? =
-        process {
+        processPurchaseValidation {
             apiService.validateNoRenewSubscription(request)
         }
 
@@ -812,17 +814,8 @@ class ApiClientImpl(
 
     override suspend fun leaveQuest(groupId: String): Void? = process { apiService.leaveQuest(groupId) }
 
-    private var lastPurchaseValidation: Date? = null
-
-    override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? {
-        // make sure a purchase attempt doesn't happen
-        return if (Date().time - (lastPurchaseValidation?.time ?: 0) > 5000) {
-            lastPurchaseValidation = Date()
-            return process { apiService.validatePurchase(request) }
-        } else {
-            null
-        }
-    }
+    override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? =
+        processPurchaseValidation { apiService.validatePurchase(request) }
 
     override suspend fun changeCustomDayStart(updateObject: Map<String, Any>): Void? =
         process { apiService.changeCustomDayStart(updateObject) }

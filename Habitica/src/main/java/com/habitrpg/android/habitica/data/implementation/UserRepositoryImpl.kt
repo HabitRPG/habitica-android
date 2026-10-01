@@ -51,8 +51,10 @@ class UserRepositoryImpl(
     private val inventoryLocalRepository: InventoryLocalRepository,
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler),
     UserRepository {
-    private var lastReadNotification: String? = null
-    private var lastSync: Date? = null
+    companion object {
+        private var lastReadNotification: String? = null
+        private var lastSync: Date? = null
+    }
 
     override fun clear() {
         super.clear()
@@ -148,7 +150,8 @@ class UserRepositoryImpl(
                 }
         }
         retrieveUser(withTasks = false, forced = true)
-        return inventoryLocalRepository.getEquipment(brokenItem?.key ?: "").firstOrNull()
+        val brokenKey = brokenItem?.key ?: return null
+        return inventoryLocalRepository.getEquipment(brokenKey).firstOrNull()
     }
 
     override suspend fun resetTutorial(): User? {
@@ -518,8 +521,10 @@ class UserRepositoryImpl(
     private suspend fun preserveQuestRsvpIfUnspecified(user: User) {
         val quest = user.party?.quest ?: return
         if (quest.rsvpNeededWasSpecified) return
-        val oldUser = localRepository.getUser(user.id ?: currentUserID).firstOrNull()
-        quest.rsvpNeeded = oldUser?.party?.quest?.rsvpNeeded ?: false
+        quest.rsvpNeeded =
+            withContext(Dispatchers.Main) {
+                localRepository.getLiveUser(user.id ?: currentUserID)?.party?.quest?.rsvpNeeded
+            } ?: false
     }
 
     private suspend fun getLiveUser(): User? {

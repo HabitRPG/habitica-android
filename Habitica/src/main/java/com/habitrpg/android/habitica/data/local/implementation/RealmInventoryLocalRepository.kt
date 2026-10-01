@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -56,54 +57,46 @@ class RealmInventoryLocalRepository(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getArmoireRemainingCount(userID: String): Flow<Int> =
-        queryUser(userID)
-            .map { user ->
-                user?.items?.gear?.owned?.filter {
-                    it.owned == true
-                } ?: emptyList()
-            }.flatMapLatest { equipment ->
-                safeFindAll {
-                    it
-                        .where(Equipment::class.java)
-                        .equalTo("klass", "armoire")
-                        .not()
-                        .`in`("key", equipment.mapNotNull { it.key }.toTypedArray())
-                }.map { it.count() }
-            }
+        ownedEquipmentKeys(userID).flatMapLatest { keys ->
+            safeFindAll {
+                it
+                    .where(Equipment::class.java)
+                    .equalTo("klass", "armoire")
+                    .not()
+                    .`in`("key", keys)
+            }.map { it.count() }
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getOwnedEquipment(
-        userID: String,
-        type: String,
-    ): Flow<List<Equipment>> =
-        queryUser(userID)
-            .map { user ->
-                user?.items?.gear?.owned?.filter {
-                    it.owned == true
-                } ?: emptyList()
-            }.flatMapLatest { equipment ->
-                safeFindAll {
-                    it
-                        .where(Equipment::class.java)
-                        .equalTo("type", type)
-                        .`in`("key", equipment.mapNotNull { it.key }.toTypedArray())
-                }
+    override fun getOwnedEquipment(userID: String, type: String): Flow<List<Equipment>> =
+        ownedEquipmentKeys(userID).flatMapLatest { keys ->
+            safeFindAll {
+                it.where(Equipment::class.java)
+                    .equalTo("type", type)
+                    .`in`("key", keys)
             }
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getOwnedEquipment(userID: String): Flow<List<Equipment>> =
+        ownedEquipmentKeys(userID).flatMapLatest { keys ->
+            safeFindAll {
+                it.where(Equipment::class.java)
+                    .`in`("key", keys)
+            }
+        }
+
+    private fun ownedEquipmentKeys(userID: String): Flow<Array<String>> =
         queryUser(userID)
             .map { user ->
-                user?.items?.gear?.owned?.filter {
-                    it.owned == true
-                } ?: emptyList()
-            }.flatMapLatest { equipment ->
-                safeFindAll {
-                    it
-                        .where(Equipment::class.java)
-                        .`in`("key", equipment.mapNotNull { it.key }.toTypedArray())
-                }
-            }
+                user.items
+                    ?.gear
+                    ?.owned
+                    ?.filter { it.owned == true }
+                    ?.mapNotNull { it.key }
+                    ?: emptyList()
+            }.distinctUntilChanged()
+            .map { it.toTypedArray() }
 
     override fun getEquipmentType(
         type: String,
@@ -141,10 +134,9 @@ class RealmInventoryLocalRepository(
         equipment: Equipment,
         isOwned: Boolean,
     ) {
-        val liveEquipment =
-            safeQuery {
-                it.where(OwnedEquipment::class.java).equalTo("key", equipment.key)
-            }?.findFirst()
+        val liveEquipment = safeQuery {
+            it.where(OwnedEquipment::class.java).equalTo("key", equipment.key)
+        }?.findFirst()
         executeTransaction {
             liveEquipment?.owned = isOwned
         }
@@ -228,7 +220,7 @@ class RealmInventoryLocalRepository(
                         "type",
                         Sort.ASCENDING,
                         if (color == null) "color" else "animal",
-                        Sort.ASCENDING,
+                        Sort.ASCENDING
                     )
             if (type != null) {
                 query = query.equalTo("animal", type)
@@ -268,7 +260,7 @@ class RealmInventoryLocalRepository(
                         "type",
                         Sort.ASCENDING,
                         if (color == null) "color" else "animal",
-                        Sort.ASCENDING,
+                        Sort.ASCENDING
                     )
             if (type != null) {
                 query = query.equalTo("animal", type)
@@ -324,14 +316,14 @@ class RealmInventoryLocalRepository(
         queryUser(userID)
             .map {
                 var items = (
-                    when (type) {
-                        "eggs" -> it.items?.eggs
-                        "hatchingPotions" -> it.items?.hatchingPotions
-                        "food" -> it.items?.food
-                        "quests" -> it.items?.quests
-                        else -> emptyList()
-                    } ?: emptyList()
-                )
+                        when (type) {
+                            "eggs" -> it.items?.eggs
+                            "hatchingPotions" -> it.items?.hatchingPotions
+                            "food" -> it.items?.food
+                            "quests" -> it.items?.quests
+                            else -> emptyList()
+                        } ?: emptyList()
+                        )
                 items = items.filter { it.key == key }
                 if (includeZero) {
                     items
@@ -446,10 +438,9 @@ class RealmInventoryLocalRepository(
         potionKey: String,
         userID: String,
     ) {
-        val pet =
-            safeQuery {
-                it.where(OwnedPet::class.java).equalTo("key", "$eggKey-$potionKey")
-            }?.findFirst()
+        val pet = safeQuery {
+            it.where(OwnedPet::class.java).equalTo("key", "$eggKey-$potionKey")
+        }?.findFirst()
         val user =
             safeQuery { it.where(User::class.java).equalTo("id", userID) }?.findFirst() ?: return
         val egg = user.items?.eggs?.firstOrNull { it.key == eggKey } ?: return

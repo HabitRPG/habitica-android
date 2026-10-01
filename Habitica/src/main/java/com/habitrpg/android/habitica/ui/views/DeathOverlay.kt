@@ -81,6 +81,7 @@ import java.util.Calendar
 import java.util.Date
 import kotlin.math.sqrt
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun DeathOverlay(
@@ -144,7 +145,7 @@ fun DeathOverlay(
 
                 while (hasUsedSecondChance) {
                     timeUntilRecharge = midnight.getShortRemainingString()
-                    delay(1.milliseconds)
+                    delay(1.seconds)
                 }
             } else {
                 timeUntilRecharge = null

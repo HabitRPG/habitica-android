@@ -168,7 +168,6 @@ class SubscriptionFragment :
     }
 
     override fun onDestroy() {
-        userRepository.close()
         inventoryRepository.close()
         super.onDestroy()
     }

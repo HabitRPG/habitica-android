@@ -114,8 +114,4 @@ class InsufficientGemsDialog(
         }
     }
 
-    override fun onDetachedFromWindow() {
-        purchaseHandler.stopListening()
-        super.onDetachedFromWindow()
-    }
 }

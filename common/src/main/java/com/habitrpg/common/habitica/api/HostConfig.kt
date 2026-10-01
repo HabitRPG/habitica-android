@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.habitrpg.common.habitica.BuildConfig
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 class HostConfig {
     var address: String
     var port: String
+    @Volatile
     var apiKey: String = ""
     var userID: String
 
@@ -57,8 +59,13 @@ class HostConfig {
         }
         this.userID = sharedPreferences.getString(context.getString(com.habitrpg.common.habitica.R.string.SP_userID), null) ?: ""
         scope.launch {
-            apiKey = loadAPIKey(sharedPreferences, keyHelper)
-            readySignal.complete(Unit)
+            try {
+                apiKey = loadAPIKey(sharedPreferences, keyHelper)
+            } catch (throwable: Exception) {
+                ExceptionHandler.reportError(throwable)
+            } finally {
+                readySignal.complete(Unit)
+            }
         }
     }
 

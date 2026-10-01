@@ -89,6 +89,7 @@ class AuthenticationViewModel
 
         override fun onCleared() {
             userRepository.close()
+            super.onCleared()
         }
 
         fun clearAuthenticationState() {

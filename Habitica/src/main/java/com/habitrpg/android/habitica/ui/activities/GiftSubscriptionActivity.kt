@@ -179,9 +179,8 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             if (id.isEmpty()) {
                 return
             }
-            PurchaseHandler.addGift(sku.productId, id, giftedUsername ?: id)
             lifecycleScope.launchCatching {
-                purchaseHandler.purchase(this@GiftSubscriptionActivity, sku)
+                purchaseHandler.purchase(this@GiftSubscriptionActivity, sku, id, giftedUsername ?: id)
             }
         }
     }

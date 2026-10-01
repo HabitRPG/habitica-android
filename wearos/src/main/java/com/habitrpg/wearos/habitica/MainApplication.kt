@@ -2,13 +2,11 @@ package com.habitrpg.wearos.habitica
 
 import android.app.Application
 import android.content.Intent
-import com.google.firebase.Firebase
-import com.google.firebase.crashlytics.crashlytics
-import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
+import com.habitrpg.wearos.habitica.helpers.Analytics
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
 import com.habitrpg.wearos.habitica.ui.activities.LoginActivity
@@ -34,12 +32,15 @@ class MainApplication : Application() {
         super.onCreate()
         MarkdownParser.setup(this)
         setupCoil()
-        setupFirebase()
+        Analytics.initialize()
 
         MainScope().launch {
             userRepository
                 .getUser()
-                .filterNotNull()
+                .onEach {
+                    Analytics.setUserID(if (userRepository.hasAuthentication) userRepository.userID else null)
+                    Analytics.setAnalyticsConsent(it?.preferences?.analyticsConsent)
+                }.filterNotNull()
                 .onEach {
                     if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
                         val intent = Intent(this@MainApplication, FaintActivity::class.java)
@@ -55,16 +56,6 @@ class MainApplication : Application() {
                     }
                     delay(1.seconds)
                 }.collect()
-        }
-    }
-
-    private fun setupFirebase() {
-        if (!BuildConfig.DEBUG) {
-            val crashlytics = Firebase.crashlytics
-            if (userRepository.hasAuthentication) {
-                crashlytics.setUserId(userRepository.userID)
-            }
-            crashlytics.setCustomKey("is_wear", true)
         }
     }
 }

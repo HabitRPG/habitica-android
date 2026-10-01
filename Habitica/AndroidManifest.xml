@@ -208,7 +208,6 @@
         </activity>
         <activity android:name=".ui.activities.MaintenanceActivity"
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.activities.GemPurchaseActivity" />
         <receiver android:name=".receivers.NotificationPublisher" />
 
         <receiver android:name=".receivers.TaskReceiver" android:enabled="true" android:exported="true">

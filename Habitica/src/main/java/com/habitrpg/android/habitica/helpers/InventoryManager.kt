@@ -32,14 +32,17 @@ class InventoryManager(
             withContext(Dispatchers.IO) {
                 billingClient.queryProductDetails(params)
             }
-        if (skuDetailsResult.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+        val responseCode = skuDetailsResult.billingResult.responseCode
+        if (responseCode != BillingClient.BillingResponseCode.OK) {
             Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
-            CrashReporter.recordException(
-                Throwable(
-                    "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}",
-                ),
-            )
-            throw Exception("Failed to load inventory")
+            if (responseCode !in transientErrorCodes) {
+                CrashReporter.recordException(
+                    Throwable(
+                        "Failed to load inventory ($responseCode): ${skuDetailsResult.billingResult.debugMessage}",
+                    ),
+                )
+            }
+            return null
         }
         return skuDetailsResult.productDetailsList
     }
@@ -57,4 +60,14 @@ class InventoryManager(
 
     suspend fun loadInAppProduct(identifier: HabiticaProduct) =
         loadProducts(BillingClient.ProductType.INAPP, listOf(identifier)).firstOrNull()
+
+    companion object {
+        private val transientErrorCodes =
+            setOf(
+                BillingClient.BillingResponseCode.NETWORK_ERROR,
+                BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE,
+                BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
+                BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
+            )
+    }
 }

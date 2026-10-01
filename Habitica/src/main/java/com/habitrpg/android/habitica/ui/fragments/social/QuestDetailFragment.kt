@@ -230,7 +230,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     override fun onDestroyView() {
         socialRepository.close()
-        userRepository.close()
         inventoryRepository.close()
         super.onDestroyView()
     }

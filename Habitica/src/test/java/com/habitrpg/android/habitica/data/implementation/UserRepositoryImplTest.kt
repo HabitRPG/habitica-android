@@ -77,6 +77,7 @@ class UserRepositoryImplTest :
                     context,
                     inventoryLocalRepository,
                 )
+            repository.clear()
         }
         afterEach { clearAllMocks() }
         "updateUser(key, value)" should {

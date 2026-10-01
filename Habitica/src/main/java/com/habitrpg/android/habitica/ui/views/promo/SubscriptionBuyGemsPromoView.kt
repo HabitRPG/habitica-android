@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.Button
 import android.widget.RelativeLayout
-import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.inflate
@@ -24,10 +23,7 @@ class SubscriptionBuyGemsPromoView
             clipChildren = false
             clipToOutline = false
             findViewById<Button>(R.id.button).setOnClickListener {
-                MainNavigationController.navigate(
-                    R.id.gemPurchaseFragment,
-                    bundleOf(Pair("openSubscription", true)),
-                )
+                MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
             }
         }
     }

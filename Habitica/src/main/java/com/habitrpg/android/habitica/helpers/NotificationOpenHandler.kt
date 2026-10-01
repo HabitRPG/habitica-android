@@ -82,10 +82,7 @@ class NotificationOpenHandler {
         }
 
         private fun openSubscriptionScreen() {
-            MainNavigationController.navigate(
-                R.id.gemPurchaseFragment,
-                bundleOf(Pair("openSubscription", true)),
-            )
+            MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
         }
 
         private fun openPrivateMessageScreen(

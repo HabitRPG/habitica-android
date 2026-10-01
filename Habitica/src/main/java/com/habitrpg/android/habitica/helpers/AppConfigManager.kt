@@ -89,7 +89,12 @@ class AppConfigManager(
         }
 
     fun activePromo(): HabiticaPromotion? {
-        val prefsPromo = sharedPreferences.getString("active_promo", null)
+        val prefsPromo =
+            if (BuildConfig.DEBUG || testingLevel() == AppTestingLevel.STAFF) {
+                sharedPreferences.getString("active_promo", null)
+            } else {
+                null
+            }
         if (prefsPromo?.isNotBlank() == true) {
             return getHabiticaPromotionFromKey(prefsPromo, null, null)
         }
@@ -101,7 +106,7 @@ class AppConfigManager(
             val allEvents = worldState?.events?.toMutableList() ?: mutableListOf()
             allEvents.add(worldState?.currentEvent)
             for (event in allEvents) {
-                if (event == null) return null
+                if (event == null) continue
                 val thisPromo =
                     getHabiticaPromotionFromKey(
                         event.promo ?: event.eventKey ?: "",

@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.insufficientCurrency
 
 import android.content.Context
 import android.os.Bundle
-import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -20,10 +19,7 @@ class InsufficientHourglassesDialog(
             R.string.get_hourglasses,
             true,
         ) { _, _ ->
-            MainNavigationController.navigate(
-                R.id.gemPurchaseFragment,
-                bundleOf(Pair("openSubscription", true)),
-            )
+            MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
         }
         addCloseButton()
     }

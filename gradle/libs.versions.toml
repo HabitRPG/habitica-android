@@ -1,7 +1,7 @@
 [versions]
 minSdk = "26"
 targetSdk = "37"
-wearOsTargetSdk = "34"
+wearOsTargetSdk = "36"
 
 agp = "9.3.1"
 androidTest = "1.7.0"
