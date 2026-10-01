@@ -40,8 +40,8 @@
 
 -keepattributes Signature
 -keep class com.google.gson.reflect.TypeToken
--keep,allowobfuscation,allowshrinking class com.google.gson.reflect.TypeToken
--keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
+# Gson needs the generic signature of TypeToken subclasses, which R8 full mode strips unless they are kept
+-keep class * extends com.google.gson.reflect.TypeToken
 -keep public class * implements java.lang.reflect.Type
 -keepclassmembers,allowobfuscation class * {
  @com.google.gson.annotations.SerializedName <fields>;
