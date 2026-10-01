@@ -6,6 +6,7 @@ open class AchievementData : NotificationData {
     var icon: String? = null
     var message: String? = null
     var modalText: String? = null
+    var count: Int? = null
 
     val iconName: String?
         get() = icon ?: achievement

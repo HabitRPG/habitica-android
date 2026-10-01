@@ -60,9 +60,15 @@ class HabiticaSnackbar
             return this
         }
 
-        fun setLeftIcon(image: Drawable?): HabiticaSnackbar {
+        fun setLeftIcon(
+            image: Drawable?,
+            hideIconBackground: Boolean,
+        ): HabiticaSnackbar {
             binding.leftImageView.setImageDrawable(image)
             binding.leftImageView.visibility = if (image != null) View.VISIBLE else View.GONE
+            if (hideIconBackground) {
+                binding.leftImageView.background = null
+            }
             return this
         }
 
@@ -175,6 +181,7 @@ class HabiticaSnackbar
                 displayType: SnackbarDisplayType,
                 isCelebratory: Boolean = false,
                 isSubscriberBenefit: Boolean = false,
+                hideIconBackground: Boolean = false,
                 duration: Int = Snackbar.LENGTH_LONG,
             ) {
                 showSnackbar(
@@ -189,6 +196,7 @@ class HabiticaSnackbar
                     displayType,
                     isCelebratory,
                     isSubscriberBenefit,
+                    hideIconBackground,
                     duration,
                 )
             }
@@ -201,6 +209,7 @@ class HabiticaSnackbar
                 displayType: SnackbarDisplayType,
                 isCelebratory: Boolean = false,
                 isSubscriberBenefit: Boolean = false,
+                hideIconBackground: Boolean = false,
                 duration: Int = Snackbar.LENGTH_LONG,
             ) {
                 showSnackbar(
@@ -215,6 +224,7 @@ class HabiticaSnackbar
                     displayType,
                     isCelebratory,
                     isSubscriberBenefit,
+                    hideIconBackground,
                     duration,
                 )
             }
@@ -229,6 +239,7 @@ class HabiticaSnackbar
                 displayType: SnackbarDisplayType,
                 isCelebratory: Boolean = false,
                 isSubscriberBenefit: Boolean = false,
+                hideIconBackground: Boolean = false,
                 duration: Int = Snackbar.LENGTH_LONG,
             ) {
                 showSnackbar(
@@ -243,6 +254,7 @@ class HabiticaSnackbar
                     displayType,
                     isCelebratory,
                     isSubscriberBenefit,
+                    hideIconBackground,
                     duration,
                 )
             }
@@ -255,6 +267,7 @@ class HabiticaSnackbar
                 displayType: SnackbarDisplayType,
                 isCelebratory: Boolean = false,
                 isSubscriberBenefit: Boolean = false,
+                hideIconBackground: Boolean = false,
                 duration: Int = Snackbar.LENGTH_LONG,
             ) {
                 showSnackbar(
@@ -269,6 +282,7 @@ class HabiticaSnackbar
                     displayType,
                     isCelebratory,
                     isSubscriberBenefit,
+                    hideIconBackground,
                     duration,
                 )
             }
@@ -285,12 +299,13 @@ class HabiticaSnackbar
                 displayType: SnackbarDisplayType,
                 isCelebratory: Boolean = false,
                 isSubscriberBenefit: Boolean = false,
+                hideIconBackground: Boolean = false,
                 duration: Int = Snackbar.LENGTH_LONG,
             ) {
                 val snackbar =
                     make(container, duration)
                         .setSpecialView(specialView)
-                        .setLeftIcon(leftImage)
+                        .setLeftIcon(leftImage, hideIconBackground)
                 if (title?.isNotBlank() == true) {
                     snackbar.setTitle(title)
                 }
@@ -455,6 +470,7 @@ interface SnackbarActivity {
         rightText: String? = null,
         displayType: HabiticaSnackbar.SnackbarDisplayType = HabiticaSnackbar.SnackbarDisplayType.NORMAL,
         isCelebratory: Boolean = false,
+        hideIconBackground: Boolean = false,
     ) {
         HabiticaSnackbar.showSnackbar(
             snackbarContainer(),
@@ -467,6 +483,7 @@ interface SnackbarActivity {
             rightText,
             displayType,
             isCelebratory,
+            hideIconBackground = hideIconBackground,
         )
     }
 }

@@ -145,6 +145,9 @@ class NotificationsActivity :
     }
 
     private fun setNotifications(notifications: List<Notification>) {
+        if (this.notifications == notifications && notifications.isNotEmpty()) {
+            return
+        }
         this.notifications = notifications
 
         if (notifications.isEmpty()) {

@@ -42,6 +42,7 @@ class Notification {
         ACHIEVEMENT_CHALLENGE_JOINED("CHALLENGE_JOINED_ACHIEVEMENT"),
         ACHIEVEMENT_INVITED_FRIEND("INVITED_FRIEND_ACHIEVEMENT"),
         ACHIEVEMENT_GENERIC("ACHIEVEMENT"),
+        ACHIEVEMENT_PET_COLOR("ACHIEVEMENT_PET_COLOR"),
         ACHIEVEMENT_ONBOARDING_COMPLETE("ONBOARDING_COMPLETE"),
         ACHIEVEMENT_ULTIMATE_GEAR("ULTIMATE_GEAR_ACHIEVEMENT"),
 
@@ -128,7 +129,8 @@ class Notification {
             Type.ACHIEVEMENT_ULTIMATE_GEAR.type -> AchievementData::class.java
             Type.REBIRTH_ENABLED.type -> AchievementData::class.java
             Type.REBIRTH_ACHIEVEMENT.type -> AchievementData::class.java
-            else -> null
+
+            else -> if (type?.contains("ACHIEVEMENT") == true) AchievementData::class.java else null
         }
 
     val priority: Int

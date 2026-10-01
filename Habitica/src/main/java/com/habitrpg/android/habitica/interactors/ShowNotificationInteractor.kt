@@ -15,8 +15,8 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.RebirthAchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.RebirthEnabledDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.AchievementData
 import com.habitrpg.common.habitica.models.notifications.ChallengeWonData
@@ -25,6 +25,8 @@ import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 class ShowNotificationInteractor(
     private val activity: Activity,
@@ -33,13 +35,8 @@ class ShowNotificationInteractor(
 ) {
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
-            Notification.Type.LOGIN_INCENTIVE.type -> {
-                showCheckinDialog(notification)
-            }
-
-            Notification.Type.WON_CHALLENGE.type -> {
-                showWonChallengeDialog(notification)
-            }
+            Notification.Type.LOGIN_INCENTIVE.type -> showCheckinDialog(notification)
+            Notification.Type.WON_CHALLENGE.type -> showWonChallengeDialog(notification)
 
             Notification.Type.ACHIEVEMENT_PARTY_UP.type,
             Notification.Type.ACHIEVEMENT_PARTY_ON.type,
@@ -73,14 +70,10 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_SEEING_RED.type,
             Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type,
             Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type,
-            Notification.Type.ACHIEVEMENT_GENERIC.type,
-            -> {
-                showAchievementDialog(notification)
-            }
+            Notification.Type.ACHIEVEMENT_PET_COLOR.type,
+            Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievement(notification)
 
-            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> {
-                showOnboardingCompletedDialog(notification)
-            }
+            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showOnboardingCompletedDialog(notification)
 
             Notification.Type.REBIRTH_ENABLED.type -> {
                 showRebirthEnabledDialog()
@@ -90,13 +83,8 @@ class ShowNotificationInteractor(
                 showRebirthAchievementDialog()
             }
 
-            Notification.Type.FIRST_DROP.type -> {
-                showFirstDropDialog(notification)
-            }
-
-            else -> {
-                return notification.type?.contains("ACHIEVEMENT") == true
-            }
+            Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
+            else -> return notification.type?.contains("ACHIEVEMENT") == true
         }
         return true
     }
@@ -147,18 +135,42 @@ class ShowNotificationInteractor(
         }
     }
 
-    fun showAchievementDialog(notification: Notification) {
-        val data = (notification.data as? AchievementData) ?: return
+    fun showAchievement(notification: Notification) {
+        val data = (notification.data as? AchievementData)
 
+        val count = data?.count ?: 0
+        if (count > 1) {
+            showAchievementSnackbar(data, count)
+            return
+        }
+        showAchievementDialog(notification, data)
+    }
+
+    fun showAchievementDialog(notification: Notification, data: AchievementData?) {
         val dialog = AchievementDialog(activity)
-        dialog.isLastOnboardingAchievement = data.isLastOnboardingAchievement
-        val canShow = dialog.setType(data.achievement ?: "", data.message, data.modalText, data.iconName)
+        dialog.isLastOnboardingAchievement = data?.isLastOnboardingAchievement == true
+        val canShow = dialog.setType(data?.achievement ?: notification.type ?: "", data?.message, data?.modalText, data?.iconName)
         if (!canShow) return
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            lifecycleScope.launch(context = Dispatchers.Main) {
-                dialog.enqueue()
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            dialog.enqueue()
+        }
+    }
+
+    private fun showAchievementSnackbar(data: AchievementData?, count: Int) {
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            val iconName = data?.iconName ?: data?.achievement ?: ""
+            DataBindingUtils.loadImage(activity, if (iconName.startsWith("achievement-")) "${iconName}2x" else "achievement-${iconName}2x") {
+                (activity as? SnackbarActivity)?.showSnackbar(
+                    title = activity.getString(R.string.achievement),
+                    content = data?.message ?: activity.getString(R.string.achievement_title),
+                    leftImage = it,
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                    isCelebratory = true,
+                    hideIconBackground = true
+                )
             }
+
         }
     }
 
@@ -167,10 +179,8 @@ class ShowNotificationInteractor(
         dialog.isLastOnboardingAchievement = true
         dialog.setType(notification.type ?: "", null, null)
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            lifecycleScope.launch(context = Dispatchers.Main) {
-                dialog.enqueue()
-            }
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            dialog.enqueue()
         }
     }
 
