@@ -94,10 +94,7 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
 
         binding?.giftGemsButton?.setOnClickListener { showGiftGemsDialog() }
         binding?.viewSubscriptionsButton?.setOnClickListener {
-            MainNavigationController.navigate(
-                R.id.gemPurchaseFragment,
-                Bundle().apply { putBoolean("openSubscription", true) },
-            )
+            MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
         }
 
         val promo = gemPromo
@@ -141,7 +138,6 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
             }
             binding?.promoComposeView?.isVisible = true
         }
-        loadInventory()
     }
 
     override fun onResume() {
@@ -182,11 +178,6 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
         }
     }
 
-    override fun onDestroy() {
-        userRepository.close()
-        super.onDestroy()
-    }
-
     private fun updateButtonLabel(sku: ProductDetails) {
         val matchingView: GemPurchaseOptionsView? =
             when (HabiticaProduct.forSku(sku.productId)) {
@@ -207,7 +198,7 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
     private fun purchaseGems(view: GemPurchaseOptionsView?) {
         val identifier = view?.sku ?: return
         lifecycleScope.launchCatching {
-            purchaseHandler.purchase(requireActivity(), identifier, null, null, gemPromo != null)
+            purchaseHandler.purchase(requireActivity(), identifier, null, null, gemPromo?.promoType == PromoType.GEMS_AMOUNT)
         }
     }
 

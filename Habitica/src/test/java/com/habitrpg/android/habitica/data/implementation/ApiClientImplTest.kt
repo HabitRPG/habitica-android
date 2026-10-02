@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -26,6 +27,7 @@ import io.mockk.verify
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
 import mockwebserver3.RecordedRequest
+import retrofit2.HttpException
 import java.lang.ref.WeakReference
 import java.nio.file.Files
 import java.util.concurrent.TimeUnit
@@ -39,6 +41,9 @@ class ApiClientImplTest :
         val activity = mockk<BaseActivity>(relaxed = true)
         val context = mockk<HabiticaBaseApplication>(relaxed = true)
         val cacheDir = Files.createTempDirectory("api-client-test").toFile()
+
+        // The client waits up to 40 minutes for a response, so fail fast if a test forgets to enqueue one
+        timeout = 10_000L
 
         fun enqueue(
             data: String = "null",
@@ -328,12 +333,27 @@ class ApiClientImplTest :
             }
         }
 
-        "validatePurchase" should {
-            "not validate the same purchase twice within a few seconds" {
+        "purchase validation" should {
+            "validate every purchase" {
+                enqueue()
                 enqueue()
                 apiClient.validatePurchase(PurchaseValidationRequest())
                 apiClient.validatePurchase(PurchaseValidationRequest())
-                server.requestCount shouldBe 1
+                server.requestCount shouldBe 2
+            }
+
+            "validate every subscription" {
+                enqueue()
+                enqueue()
+                apiClient.validateSubscription(PurchaseValidationRequest())
+                apiClient.validateSubscription(PurchaseValidationRequest())
+                server.requestCount shouldBe 2
+            }
+
+            "pass server errors to the caller instead of showing them" {
+                enqueueError(401, """{"message":"Invalid receipt"}""")
+                shouldThrow<HttpException> { apiClient.validatePurchase(PurchaseValidationRequest()) }
+                verify(exactly = 0) { activity.showConnectionProblem(any(), any(), any(), any()) }
             }
         }
 

@@ -336,9 +336,17 @@ class UserRepositoryImplTest :
                 val user = networkUser().apply { party = UserParty().apply { quest = Quest().apply { rsvpNeededWasSpecified = false } } }
                 val oldUser = User().apply { party = UserParty().apply { quest = Quest().apply { rsvpNeeded = true } } }
                 coEvery { apiClient.retrieveUser(false) } returns user
-                every { localRepository.getUser("user-1") } returns flowOf(oldUser)
+                every { localRepository.getLiveUser("user-1") } returns oldUser
                 repository.retrieveUser(forced = true)
                 user.party?.quest?.rsvpNeeded shouldBe true
+            }
+
+            "not need an RSVP if there is no local user" {
+                val user = networkUser().apply { party = UserParty().apply { quest = Quest().apply { rsvpNeededWasSpecified = false } } }
+                coEvery { apiClient.retrieveUser(false) } returns user
+                every { localRepository.getLiveUser("user-1") } returns null
+                repository.retrieveUser(forced = true)
+                user.party?.quest?.rsvpNeeded shouldBe false
             }
 
             "update the timezone offset if it changed" {

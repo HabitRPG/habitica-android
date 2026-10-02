@@ -82,7 +82,18 @@ class PurchaseHandler(
         result: BillingResult,
         purchases: MutableList<Purchase>?,
     ) {
-        purchases?.let { processPurchases(result, it) }
+        if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+            resetPendingFlowState()
+        }
+        processPurchases(result, purchases ?: emptyList())
+    }
+
+    private fun resetPendingFlowState() {
+        removeGift(pendingFlowSku)
+        pendingFlowSku = null
+        deferredSubscriptionSku = null
+        upgradedSubscriptionSku = null
+        isSaleGemPurchase = false
     }
 
     override fun onQueryPurchasesResponse(
@@ -98,40 +109,37 @@ class PurchaseHandler(
     ) {
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
+                if (purchases.isEmpty()) return
                 scope.launchCatching {
-                    userViewModel.user.asFlow().filterNotNull().first().let {
-                        val plan = it.purchased!!.plan
-                        for (purchase in purchases) {
-                            val product = HabiticaProduct.forSku(purchase.products.firstOrNull() ?: "") ?: continue
-                            if (plan?.isActive == true &&
-                                HabiticaProduct.allSubscriptionTypes.contains(product) &&
-                                purchase.purchaseToken == plan.customerId
-                            ) {
-                                // Same purchase that the plan was created from. If the user cancelled and then
-                                // resubscribed through the Play Store, the token stays the same but it auto renews again.
-                                if (plan.dateTerminated != null && purchase.isAutoRenewing) {
-                                    reactivateSubscription(purchase)
-                                }
-                                continue
+                    val user = userViewModel.user.asFlow().filterNotNull().first()
+                    val plan = user.purchased?.plan
+                    for (purchase in purchases) {
+                        val product = HabiticaProduct.forSku(purchase.products.firstOrNull() ?: "") ?: continue
+                        if (plan?.isActive == true &&
+                            HabiticaProduct.allSubscriptionTypes.contains(product) &&
+                            purchase.purchaseToken == plan.customerId
+                        ) {
+                            // Same purchase that the plan was created from. If the user cancelled and then
+                            // resubscribed through the Play Store, the token stays the same but it auto renews again.
+                            if (plan.dateTerminated != null && purchase.isAutoRenewing) {
+                                reactivateSubscription(purchase)
                             }
-                            handle(purchase)
+                            continue
                         }
+                        handle(purchase)
                     }
                 }
             }
 
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
-                scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
-                    for (purchase in purchases) {
-                        consume(purchase)
-                    }
+                scope.launchCatching {
+                    queryPurchases()
                 }
             }
 
             BillingClient.BillingResponseCode.USER_CANCELED,
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
             -> {
-                removeGift(purchases.firstOrNull()?.products?.firstOrNull())
                 return
             }
 
@@ -171,11 +179,6 @@ class PurchaseHandler(
                 }
             },
         )
-    }
-
-    fun stopListening() {
-        billingClient.endConnection()
-        scope.cancel()
     }
 
     override fun clear() {
@@ -263,14 +266,17 @@ class PurchaseHandler(
         isSaleGemPurchase: Boolean = false,
     ) {
         this.isSaleGemPurchase = isSaleGemPurchase
-        recipient?.let {
-            addGift(skuDetails.productId, it, recipientUsername ?: it)
+        pendingFlowSku = skuDetails.productId
+        if (recipient != null) {
+            addGift(skuDetails.productId, recipient, recipientUsername ?: recipient)
+        } else {
+            removeGift(skuDetails.productId)
         }
         var productDetailsParams =
             BillingFlowParams.ProductDetailsParams
                 .newBuilder()
                 .setProductDetails(skuDetails)
-        skuDetails.subscriptionOfferDetails?.first()?.offerToken?.let { offerToken ->
+        skuDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken?.let { offerToken ->
             productDetailsParams = productDetailsParams.setOfferToken(offerToken)
         }
         var flowParams =
@@ -279,6 +285,8 @@ class PurchaseHandler(
                 .setObfuscatedAccountId(userViewModel.userID)
 
         if (skuDetails.productType == BillingClient.ProductType.SUBS) {
+            deferredSubscriptionSku = null
+            upgradedSubscriptionSku = null
             val existingSub = checkForSubscription()
             if (existingSub != null && existingSub.isAutoRenewing) {
                 val replacementMode = getReplacementMode(existingSub, skuDetails)
@@ -507,9 +515,14 @@ class PurchaseHandler(
                         scope.launchCatching {
                             processedPurchase()
                         }
-                        removeGift(purchase.products.firstOrNull())
-                        scope.launch(Dispatchers.IO + ExceptionHandler.coroutine()) {
-                            consume(purchase)
+                        val sku = purchase.products.firstOrNull()
+                        removeGift(sku)
+                        scope.launchCatching {
+                            if (HabiticaProduct.allSubscriptionTypes.contains(HabiticaProduct.forSku(sku ?: ""))) {
+                                if (!purchase.isAcknowledged) acknowledgePurchase(purchase)
+                            } else {
+                                consume(purchase)
+                            }
                         }
                         return
                     }
@@ -568,12 +581,16 @@ class PurchaseHandler(
         if (alreadyTriedCancellation) return null
         alreadyTriedCancellation = true
         Log.d("PurchaseHandler", "Attempting to cancel subscription on server side")
-        apiClient.cancelSubscription()
-        alreadyTriedCancellation = false
+        try {
+            apiClient.cancelSubscription()
+        } finally {
+            alreadyTriedCancellation = false
+        }
         return userViewModel.userRepository.retrieveUser(false, true)
     }
 
     private var isSaleGemPurchase = false
+    private var pendingFlowSku: String? = null
 
     private val displayedConfirmations = ConcurrentHashMap.newKeySet<String>()
 
@@ -721,7 +738,7 @@ class PurchaseHandler(
             upgradedSubscriptionSku = preferences?.getString(UPGRADED_SUBSCRIPTION_SKU_KEY, null)
         }
 
-        fun addGift(
+        private fun addGift(
             sku: String,
             userID: String,
             username: String,
@@ -731,10 +748,10 @@ class PurchaseHandler(
         }
 
         private fun removeGift(sku: String?): Triple<Date, String, String>? {
-            if (sku == null || !pendingGifts.contains(sku)) {
+            if (sku == null) {
                 return null
             }
-            val gift = pendingGifts.remove(sku)
+            val gift = pendingGifts.remove(sku) ?: return null
             savePendingGifts()
             return gift
         }

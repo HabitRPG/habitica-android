@@ -30,13 +30,8 @@ class ScoreTaskLocallyInteractor {
             var nextDelta =
                 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
 
-            if ((task.checklist?.size ?: 0) > 0) {
-                if (task.type == TaskType.TODO) {
-                    nextDelta *= 1 + (
-                        task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
-                            ?: 0
-                    )
-                }
+            if (task.type == TaskType.TODO) {
+                nextDelta *= 1 + (task.checklist?.count { it.completed } ?: 0)
             }
 
             return nextDelta
@@ -162,11 +157,10 @@ class ScoreTaskLocallyInteractor {
 
             val streak = task.streak ?: 0
             result.gp = (stats.gp ?: 0.0) +
-                if (task.streak != null) {
+                if (streak != 0) {
                     val currentStreak = if (direction == TaskDirection.DOWN) streak - 1 else streak
-                    val streakBonus = (currentStreak / 100) * 1
-                    val afterStreak = goldMod * streakBonus
-                    afterStreak
+                    val streakBonus = currentStreak / 100.0 + 1
+                    goldMod * streakBonus
                 } else {
                     goldMod
                 }
