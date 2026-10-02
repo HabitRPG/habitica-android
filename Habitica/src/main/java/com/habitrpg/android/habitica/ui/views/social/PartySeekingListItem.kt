@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -34,13 +35,13 @@ import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.fragments.social.party.InviteButton
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.ClassText
 import com.habitrpg.android.habitica.ui.views.ComposableUsernameLabel
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.common.habitica.extensions.toLocale
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
 import java.util.Locale
@@ -57,12 +58,13 @@ fun PartySeekingListItem(
     configManager: AppConfigManager? = null,
     onInvite: (Member) -> Unit,
 ) {
+    val context = LocalContext.current
     Column(
         modifier
             .fillMaxWidth()
             .clickable {
                 val profileDirections = MainNavDirections.openProfileActivity(user.id)
-                MainNavigationController.navigate(profileDirections)
+                context.navigator.navigate(profileDirections)
             }.padding(bottom = 6.dp)
             .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.large)
             .padding(14.dp),

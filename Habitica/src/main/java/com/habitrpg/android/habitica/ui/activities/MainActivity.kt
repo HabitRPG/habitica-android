@@ -61,7 +61,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.Wearable
-import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -71,9 +70,11 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
+import com.habitrpg.android.habitica.helpers.PerformanceTrace
+import com.habitrpg.android.habitica.modules.platformServices
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
@@ -137,6 +138,12 @@ open class MainActivity :
     BaseActivity(),
     SnackbarActivity {
     private var launchScreen: String? = null
+
+    @Inject
+    lateinit var analytics: AnalyticsManager
+
+    @Inject
+    lateinit var crashReporter: CrashReporter
 
     @Inject
     internal lateinit var apiClient: ApiClient
@@ -249,17 +256,13 @@ open class MainActivity :
         return binding.root
     }
 
-    private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
+    private var launchTrace: PerformanceTrace? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         if (BuildConfig.DEBUG) {
             mainActivityCreatedAt = Date()
         }
-        try {
-            launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
-        } catch (e: IllegalStateException) {
-            ExceptionHandler.reportError(e)
-        }
+        launchTrace = platformServices.performanceMonitor().newTrace("MainActivityLaunch")
         launchTrace?.start()
         super.onCreate(savedInstanceState)
 
@@ -794,8 +797,8 @@ open class MainActivity :
 
             preferences?.sound?.let { soundManager.soundTheme = it }
 
-            CrashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
-            CrashReporter.setCustomKey(
+            crashReporter.setCustomKey("day_start", "${user.preferences?.dayStart ?: 0}")
+            crashReporter.setCustomKey(
                 "timezone_offset",
                 "${user.preferences?.timezoneOffset ?: 0}",
             )
@@ -1106,11 +1109,11 @@ open class MainActivity :
     }
 
     private fun handleAnalyticsConsent(user: User) {
-        Analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
+        analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
 
         when (user.preferences?.analyticsConsent) {
             true -> {
-                user.id?.let { Analytics.setUserID(it) }
+                user.id?.let { analytics.setUserID(it) }
                 sharedPreferences.edit { putBoolean("analytics_consent_given", true) }
             }
 

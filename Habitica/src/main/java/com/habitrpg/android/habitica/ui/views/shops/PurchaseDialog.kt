@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
@@ -45,13 +46,16 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.internal.managers.ViewComponentManager
 import dagger.hilt.components.SingletonComponent
+import java.lang.Integer.max
+import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -59,10 +63,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.lang.Integer.max
-import java.util.Date
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 class PurchaseDialog(
     context: Context,
@@ -674,7 +674,7 @@ class PurchaseDialog(
                         quantity,
                     )
                 if (shopItem.key == "armoire" && buyResponse != null) {
-                    MainNavigationController.navigate(
+                    context.navigator.navigate(
                         R.id.armoireActivity,
                         ArmoireActivityDirections
                             .openArmoireActivity(

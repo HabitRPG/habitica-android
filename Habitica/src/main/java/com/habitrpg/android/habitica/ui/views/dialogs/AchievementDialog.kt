@@ -8,10 +8,10 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.models.Notification
 
 class AchievementDialog(
@@ -185,12 +185,12 @@ class AchievementDialog(
             }
             if (!isLastOnboardingAchievement) {
                 addButton(R.string.view_onboarding_tasks, false, false) { _, _ ->
-                    MainNavigationController.navigate(R.id.adventureGuideActivity)
+                    context.navigator.navigate(R.id.adventureGuideActivity)
                 }
             }
         } else {
             addButton(R.string.view_achievements, isPrimary = true, isDestructive = false) { _, _ ->
-                MainNavigationController.navigate(R.id.achievementsFragment)
+                context.navigator.navigate(R.id.achievementsFragment)
             }
             addButton(R.string.close, false)
         }

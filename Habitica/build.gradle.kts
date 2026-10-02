@@ -200,7 +200,10 @@ android {
         unitTests {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
-            all { it.useJUnitPlatform() }
+            all {
+                it.useJUnitPlatform()
+                it.jvmArgs("--add-exports=java.base/jdk.internal.access=ALL-UNNAMED")
+            }
         }
         animationsDisabled = true
     }
@@ -324,4 +327,7 @@ dependencies {
     testImplementation(libs.coroutine.test)
     testImplementation(libs.turbine)
     testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.bundles.robolectric.test.implementation)
+    testRuntimeOnly(libs.bundles.robolectric.test.runtime)
+    kspTest(libs.hilt.compiler)
 }

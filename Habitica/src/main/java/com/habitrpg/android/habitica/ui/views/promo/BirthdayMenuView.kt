@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,26 +34,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.views.PixelArtView
-import com.habitrpg.common.habitica.helpers.MainNavigationController
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import java.util.Date
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 
 @Composable
 fun BirthdayBanner(
     endDate: Date,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     Column(
         modifier
             .fillMaxWidth()
             .clickable {
-                MainNavigationController.navigate(R.id.birthdayActivity)
+                context.navigator.navigate(R.id.birthdayActivity)
             },
     ) {
         Column(Modifier.fillMaxWidth()) {

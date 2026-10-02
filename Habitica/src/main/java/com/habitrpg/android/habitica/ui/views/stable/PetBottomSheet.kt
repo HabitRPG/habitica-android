@@ -59,20 +59,20 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.interactors.SharePetUseCase
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.Pet
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import kotlinx.coroutines.delay
 import kotlin.math.sin
 import kotlin.time.Duration.Companion.milliseconds
+import kotlinx.coroutines.delay
 
 @Composable
 private fun getFoodPainter(petColor: String): ImageBitmap =
@@ -291,7 +291,7 @@ fun PetBottomSheet(
                             dialog.setTitle(R.string.no_saddles)
                             dialog.setMessage(R.string.purchase_saddles_in_market)
                             dialog.addButton(R.string.visit_market, isPrimary = true) { _, _ ->
-                                MainNavigationController.navigate(R.id.marketFragment)
+                                context.navigator.navigate(R.id.marketFragment)
                             }
                             dialog.addCloseButton()
                             dialog.show()

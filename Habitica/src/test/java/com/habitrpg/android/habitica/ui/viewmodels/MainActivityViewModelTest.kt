@@ -64,6 +64,7 @@ class MainActivityViewModelTest :
                 inventoryRepository,
                 taskAlarmManager,
                 maintenanceService,
+                mockk(relaxed = true),
             )
 
         beforeEach {

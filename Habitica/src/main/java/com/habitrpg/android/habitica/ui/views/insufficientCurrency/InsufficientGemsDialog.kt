@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.interactors.InsufficientGemsUseCase
-import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -67,7 +67,7 @@ class InsufficientGemsDialog(
             R.string.see_other_options,
             true,
         ) { _, _ ->
-            MainNavigationController.navigate(
+            context.navigator.navigate(
                 R.id.gemPurchaseFragment,
                 bundleOf(Pair("openSubscription", false)),
             )

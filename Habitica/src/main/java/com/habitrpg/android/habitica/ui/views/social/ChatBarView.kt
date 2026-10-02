@@ -13,13 +13,13 @@ import com.habitrpg.android.habitica.databinding.ChatBarViewBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.OnImeVisibilityChangedListener
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class ChatBarView :
     LinearLayout,
@@ -106,7 +106,7 @@ class ChatBarView :
             onCommunityGuidelinesAccepted?.invoke()
         }
         binding.communityGuidelinesReviewView.setOnClickListener {
-            MainNavigationController.navigate(R.id.guidelinesActivity)
+            context.navigator.navigate(R.id.guidelinesActivity)
         }
     }
 

@@ -5,10 +5,10 @@ import android.view.View
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class RebirthAchievementDialog(
     context: Context,
@@ -42,7 +42,7 @@ class RebirthAchievementDialog(
         binding.onboardingDoneIcon.visibility = View.GONE
 
         addButton(R.string.view_achievements, isPrimary = true, isDestructive = false) { _, _ ->
-            MainNavigationController.navigate(R.id.achievementsFragment)
+            context.navigator.navigate(R.id.achievementsFragment)
         }
         addButton(R.string.close, false)
     }

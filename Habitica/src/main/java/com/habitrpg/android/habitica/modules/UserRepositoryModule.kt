@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmTaskLocalRep
 import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLocalRepository
 import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import dagger.Module
@@ -185,5 +186,6 @@ class UserRepositoryModule {
         apiClient: ApiClient,
         userViewModel: MainUserViewModel,
         appConfigManager: AppConfigManager,
-    ): PurchaseHandler = PurchaseHandler(context, apiClient, userViewModel, appConfigManager)
+        crashReporter: CrashReporter,
+    ): PurchaseHandler = PurchaseHandler(context, apiClient, userViewModel, appConfigManager, crashReporter)
 }

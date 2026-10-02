@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.helpers
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.BuildConfig
@@ -24,6 +23,7 @@ import javax.inject.Provider
 class AppConfigManager(
     contentRepository: Provider<ContentRepository>,
     private val sharedPreferences: SharedPreferences,
+    private val remoteConfig: RemoteConfig,
 ) : com.habitrpg.common.habitica.helpers.AppConfigManager(),
     Clearable {
     private var worldState: WorldState? = null
@@ -50,8 +50,6 @@ class AppConfigManager(
             }
         }
     }
-
-    private val remoteConfig = FirebaseRemoteConfig.getInstance()
 
     fun shopSpriteSuffix(): String? = worldState?.findNpcImageSuffix()
 

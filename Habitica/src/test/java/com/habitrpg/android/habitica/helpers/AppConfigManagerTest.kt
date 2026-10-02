@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.SharedPreferences
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.models.WorldState
@@ -16,8 +15,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +27,7 @@ import kotlin.time.Duration.Companion.days
 @OptIn(ExperimentalCoroutinesApi::class)
 class AppConfigManagerTest :
     WordSpec({
-        val remoteConfig = mockk<FirebaseRemoteConfig>(relaxed = true)
+        val remoteConfig = mockk<RemoteConfig>(relaxed = true)
         val sharedPreferences = mockk<SharedPreferences>()
         val contentRepository = mockk<ContentRepository>()
         val worldState = MutableStateFlow(WorldState())
@@ -63,18 +60,12 @@ class AppConfigManagerTest :
                 }
         }
 
-        beforeSpec {
-            mockkStatic(FirebaseRemoteConfig::class)
-            every { FirebaseRemoteConfig.getInstance() } returns remoteConfig
-        }
-        afterSpec { unmockkStatic(FirebaseRemoteConfig::class) }
-
         beforeEach {
             Dispatchers.setMain(UnconfinedTestDispatcher())
             worldState.value = WorldState()
             every { contentRepository.getWorldState() } returns worldState
             every { sharedPreferences.getString("active_promo", null) } returns null
-            configManager = AppConfigManager({ contentRepository }, sharedPreferences)
+            configManager = AppConfigManager({ contentRepository }, sharedPreferences, remoteConfig)
         }
         afterEach { Dispatchers.resetMain() }
 

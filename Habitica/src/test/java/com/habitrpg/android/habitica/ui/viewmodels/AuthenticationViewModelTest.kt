@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
@@ -50,18 +50,18 @@ class AuthenticationViewModelTest :
         val hostConfig = mockk<HostConfig>()
         val keyHelper = mockk<KeyHelper>()
         val context = mockk<Context>()
+        val analytics = mockk<AnalyticsManager>(relaxed = true)
 
         every { sharedPreferences.edit() } returns editor
 
         fun makeViewModel(keyHelper: KeyHelper? = null) =
-            AuthenticationViewModel(apiClient, userRepository, sharedPreferences, authenticationHandler, configManager, hostConfig, keyHelper, context)
+            AuthenticationViewModel(apiClient, userRepository, sharedPreferences, authenticationHandler, configManager, hostConfig, keyHelper, context, analytics)
 
         beforeSpec {
-            mockkObject(Analytics, WidgetRefreshWorker)
-            every { Analytics.logException(any()) } just runs
+            mockkObject(WidgetRefreshWorker)
             every { WidgetRefreshWorker.enqueueOneTime(any()) } just runs
         }
-        afterSpec { unmockkObject(Analytics, WidgetRefreshWorker) }
+        afterSpec { unmockkObject(WidgetRefreshWorker) }
 
         beforeEach { Dispatchers.setMain(testDispatcher) }
         afterEach { clearMocks(apiClient, userRepository, editor, authenticationHandler, answers = false) }

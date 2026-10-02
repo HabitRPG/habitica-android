@@ -12,6 +12,8 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
+import org.gradle.api.tasks.testing.Test
+import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
 import javax.inject.Inject
 
@@ -56,6 +58,13 @@ abstract class HabiticaJacocoReport : JacocoReport() {
 
 internal fun Project.registerJacocoUnitTestCoverageReports() {
     pluginManager.apply("jacoco")
+
+    tasks.withType(Test::class.java).configureEach {
+        extensions.findByType(JacocoTaskExtension::class.java)?.apply {
+            isIncludeNoLocationClasses = true
+            excludes = listOf("jdk.internal.*")
+        }
+    }
 
     val androidComponents = extensions.findByType(AndroidComponentsExtension::class.java) ?: return
     androidComponents.onVariants(androidComponents.selector().withBuildType("debug")) { variant ->

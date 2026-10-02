@@ -36,7 +36,9 @@ googleid = "1.2.0"
 gson = "2.14.0"
 habitRpgPlugin = "0.1.0"
 inAppReview = "2.0.2"
+junit4 = "4.13.2"
 junitKtx = "1.3.0"
+junitVintage = "5.13.4"
 kaspresso = "1.6.1"
 kotest = "6.2.3"
 kotlin = "2.4.10"
@@ -59,6 +61,7 @@ play_wearables = "20.0.1"
 preferences = "1.2.1"
 realmPlugin = "10.19.0"
 recyclerview = "1.4.0"
+robolectric = "4.17"
 retrofit = "3.0.0"
 shimmer = "0.5.0"
 swipeRefresh = "1.2.0"
@@ -104,6 +107,7 @@ google-play-wearable = { group = "com.google.android.gms", name = "play-services
 googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerhilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "daggerhilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "daggerhilt" }
 javax-annotation = { group = "javax.annotation", name = "javax.annotation-api", version.ref = "annotationApi" }
 kaspresso = { group = "com.kaspersky.android-components", name = "kaspresso", version.ref = "kaspresso" }
 kaspresso-compose = { group = "com.kaspersky.android-components", name = "kaspresso-compose-support", version.ref = "kaspresso" }
@@ -146,6 +150,9 @@ retrofit2-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi",
 runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "compose" }
 shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 swipeRefreshLayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipeRefresh" }
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junitVintage" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 test-core = { group = "androidx.test", name = "core", version.ref = "androidTest" }
 test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidTest" }
 test-fragment = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentTesting" }
@@ -187,10 +194,21 @@ google-services = [
 ]
 test-implementation = [
     "test-core",
+    "test-core-ktx",
+    "test-junit",
     "mockk",
     "mockk-android",
     "kotest-runner",
     "kotest-assertions"
+]
+robolectric-test-implementation = [
+    "robolectric",
+    "junit4",
+    "hilt-android-testing",
+    "test-fragment"
+]
+robolectric-test-runtime = [
+    "junit-vintage-engine"
 ]
 android-test-implementation = [
     "test-runner",

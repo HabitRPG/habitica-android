@@ -66,10 +66,10 @@ import com.habitrpg.android.habitica.models.user.Purchases
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.theme.basicButtonColor
 import com.habitrpg.android.habitica.ui.theme.basicTextColor
 import com.habitrpg.android.habitica.ui.theme.colors
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.shared.habitica.models.Avatar
@@ -136,6 +136,7 @@ fun AppHeaderView(
     configManager: AppConfigManager? = null,
     useWindowInsets: Boolean = true,
 ) {
+    val context = LocalContext.current
     val isPlayerOptedOutOfClass = user?.preferences?.disableClasses == true
     var wrapperModifier = modifier
     if (useWindowInsets) {
@@ -200,7 +201,7 @@ fun AppHeaderView(
                                 Modifier
                                     .weight(1f)
                                     .clickable {
-                                        MainNavigationController.navigate(R.id.skillsFragment)
+                                        context.navigator.navigate(R.id.skillsFragment)
                                     },
                         )
                     } else if ((user?.stats?.lvl ?: 0) < 10) {
@@ -253,7 +254,7 @@ fun AppHeaderView(
                                 .background(
                                     colorResource(R.color.window_background),
                                 ).clickable {
-                                    MainNavigationController.navigate(
+                                    context.navigator.navigate(
                                         R.id.guildFragment,
                                         bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1),
                                     )
@@ -356,7 +357,7 @@ fun AppHeaderView(
                             Modifier
                                 .padding(end = 12.dp)
                                 .clickable {
-                                    MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
+                                    context.navigator.navigate(R.id.subscriptionPurchaseFragment)
                                 },
                         decimals = 0,
                     )
@@ -373,7 +374,7 @@ fun AppHeaderView(
                     user.gemCount.toDouble(),
                     modifier =
                         Modifier.clickable {
-                            MainNavigationController.navigate(R.id.gemPurchaseFragment)
+                            context.navigator.navigate(R.id.gemPurchaseFragment)
                         },
                     decimals = 0,
                 )

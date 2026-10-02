@@ -3,10 +3,10 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.content.Context
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.views.PixelArtView
 
 class RebirthEnabledDialog(
@@ -29,7 +29,7 @@ class RebirthEnabledDialog(
         addButton(R.string.onwards, isPrimary = true, isDestructive = false) { _, _ ->
         }
         addButton(R.string.go_to_market, isPrimary = false, isDestructive = false) { _, _ ->
-            MainNavigationController.navigate(R.id.marketFragment)
+            context.navigator.navigate(R.id.marketFragment)
         }
     }
 }

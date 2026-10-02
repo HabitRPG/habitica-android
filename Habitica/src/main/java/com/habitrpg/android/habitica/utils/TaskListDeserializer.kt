@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.firebase.perf.FirebasePerformance
 import com.google.gson.JsonArray
 import com.google.gson.JsonDeserializationContext
+import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import java.lang.reflect.Type
 
-class TaskListDeserializer : JsonDeserializer<TaskList> {
+class TaskListDeserializer(
+    private val performanceMonitor: PerformanceMonitor,
+) : JsonDeserializer<TaskList> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
@@ -19,14 +21,8 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
     ): TaskList {
         val tasks = TaskList()
         val taskMap = HashMap<String, Task>()
-        val deserializeTrace =
-            try {
-                FirebasePerformance.getInstance().newTrace("TaskListDeserialize")
-            } catch (ignored: IllegalStateException) {
-                // Firebase isn't initialized outside a running app process (e.g. unit tests)
-                null
-            }
-        deserializeTrace?.start()
+        val deserializeTrace = performanceMonitor.newTrace("TaskListDeserialize")
+        deserializeTrace.start()
 
         for (e in json.asJsonArray) {
             try {
@@ -42,7 +38,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
         }
 
         tasks.tasks = taskMap
-        deserializeTrace?.stop()
+        deserializeTrace.stop()
         return tasks
     }
 

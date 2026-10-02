@@ -12,9 +12,9 @@ import com.habitrpg.android.habitica.databinding.ViewInvitationBinding
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.invitations.GenericInvitation
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.extensions.flash
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.launch
 
@@ -59,7 +59,7 @@ class InvitationsView
                         it.flash()
                         HapticFeedbackManager.tap(it)
                         val profileDirections = MainNavDirections.openProfileActivity(id)
-                        MainNavigationController.navigate(profileDirections)
+                        context.navigator.navigate(profileDirections)
                     }
                 }
 

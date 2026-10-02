@@ -2,11 +2,13 @@ package com.habitrpg.android.habitica.modules
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
-import com.habitrpg.android.habitica.data.implementation.ApiClientImpl.Companion.createGsonFactory
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
+import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
@@ -32,7 +34,8 @@ open class ApiModule {
     ): HostConfig = HostConfig(sharedPreferences, keyHelper, context)
 
     @Provides
-    fun providesGsonConverterFactory(): GsonConverterFactory = createGsonFactory()
+    fun providesGsonConverterFactory(performanceMonitor: PerformanceMonitor): GsonConverterFactory =
+        GSonFactoryCreator.create(performanceMonitor)
 
     @Provides
     @Singleton
@@ -45,6 +48,7 @@ open class ApiModule {
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
         @ApplicationContext context: Context,
+        analytics: AnalyticsManager,
     ): ApiClient {
         val apiClient =
             ApiClientImpl(
@@ -52,6 +56,7 @@ open class ApiModule {
                 hostConfig,
                 notificationsManager,
                 context,
+                analytics,
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient

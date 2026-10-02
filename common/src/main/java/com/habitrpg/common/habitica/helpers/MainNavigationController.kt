@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference
 import java.util.Date
 import kotlin.math.abs
 
-object MainNavigationController {
+object MainNavigationController : Navigator {
     var lastNavigation: Date? = null
 
     private var controllerReference: WeakReference<NavController>? = null
@@ -40,9 +40,9 @@ object MainNavigationController {
         navController?.findDestination(destinationID)?.label = label
     }
 
-    fun navigate(
+    override fun navigate(
         transactionId: Int,
-        args: Bundle? = null,
+        args: Bundle?,
     ) {
         if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()
@@ -59,7 +59,7 @@ object MainNavigationController {
         }
     }
 
-    fun navigate(directions: NavDirections) {
+    override fun navigate(directions: NavDirections) {
         if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()
             try {
@@ -73,7 +73,7 @@ object MainNavigationController {
         }
     }
 
-    fun navigate(uriString: String) {
+    override fun navigate(uriString: String) {
         val uri = uriString.toUri()
         var builder = uri.buildUpon()
         if (uri.scheme == null) {
@@ -85,7 +85,7 @@ object MainNavigationController {
         navigate(builder.build())
     }
 
-    fun navigate(uri: Uri) {
+    override fun navigate(uri: Uri) {
         if (navController?.graph?.hasDeepLink(uri) == true) {
             navController?.navigate(uri)
         } else {
@@ -97,17 +97,17 @@ object MainNavigationController {
         }
     }
 
-    fun navigate(request: NavDeepLinkRequest) {
+    override fun navigate(request: NavDeepLinkRequest) {
         if (navController?.graph?.hasDeepLink(request) == true) {
             navController?.navigate(request)
         }
     }
 
-    fun handle(deeplink: Intent) {
+    override fun handle(deeplink: Intent) {
         navController?.handleDeepLink(deeplink)
     }
 
-    fun navigateBack() {
+    override fun navigateBack() {
         navController?.navigateUp()
     }
 }

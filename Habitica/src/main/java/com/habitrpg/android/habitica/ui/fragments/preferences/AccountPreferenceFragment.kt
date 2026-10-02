@@ -28,7 +28,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
@@ -58,6 +58,10 @@ class AccountPreferenceFragment :
     SharedPreferences.OnSharedPreferenceChangeListener,
     AccountUpdateConfirmed {
     val viewModel: AuthenticationViewModel by viewModels()
+
+    @Inject
+    lateinit var analytics: AnalyticsManager
+
 
     @Inject
     lateinit var hostConfig: HostConfig
@@ -660,7 +664,7 @@ class AccountPreferenceFragment :
     }
 
     private fun applyAnalyticsConsent(consent: Boolean) {
-        Analytics.setAnalyticsConsent(consent)
+        analytics.setAnalyticsConsent(consent)
         preferenceManager.sharedPreferences?.edit { putBoolean("analytics_consent_given", consent) }
     }
 

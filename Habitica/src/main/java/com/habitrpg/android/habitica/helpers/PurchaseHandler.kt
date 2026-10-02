@@ -65,6 +65,7 @@ class PurchaseHandler(
     private val apiClient: ApiClient,
     private val userViewModel: MainUserViewModel,
     private val configManager: AppConfigManager,
+    private val crashReporter: CrashReporter,
 ) : PurchasesUpdatedListener,
     PurchasesResponseListener,
     Clearable {
@@ -76,7 +77,7 @@ class PurchaseHandler(
             .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
             .enableAutoServiceReconnection()
             .build()
-    private val inventoryManager = InventoryManager(billingClient)
+    private val inventoryManager = InventoryManager(billingClient, crashReporter)
 
     override fun onPurchasesUpdated(
         result: BillingResult,
@@ -144,7 +145,7 @@ class PurchaseHandler(
             }
 
             else -> {
-                CrashReporter.recordException(Throwable(result.debugMessage))
+                crashReporter.recordException(Throwable(result.debugMessage))
             }
         }
     }
@@ -452,7 +453,7 @@ class PurchaseHandler(
                 processedPurchase()
             } catch (throwable: Throwable) {
                 reactivatedPurchases.remove(purchase.purchaseToken)
-                CrashReporter.recordException(throwable)
+                crashReporter.recordException(throwable)
             }
         }
     }
@@ -530,7 +531,7 @@ class PurchaseHandler(
             }
         }
         purchase.orderId?.let { processedPurchases.remove(it) }
-        CrashReporter.recordException(throwable)
+        crashReporter.recordException(throwable)
     }
 
     suspend fun checkForSubscription(onlyAcknowledged: Boolean = true): Purchase? {

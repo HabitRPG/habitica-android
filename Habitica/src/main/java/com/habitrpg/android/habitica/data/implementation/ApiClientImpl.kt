@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
@@ -76,6 +76,7 @@ class ApiClientImpl(
     override val hostConfig: HostConfig,
     private val notificationsManager: NotificationsManager,
     private val context: Context,
+    private val analytics: AnalyticsManager,
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
@@ -398,9 +399,9 @@ class ApiClientImpl(
                 showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
             }
         } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
-            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
+            analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
         } else {
-            Analytics.logException(throwable)
+            analytics.logException(throwable)
         }
     }
 
@@ -417,10 +418,10 @@ class ApiClientImpl(
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: JsonSyntaxException) {
-            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         } catch (e: IOException) {
-            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         }
     }
@@ -508,7 +509,7 @@ class ApiClientImpl(
     ) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
-        Analytics.setUserID(hostConfig.userID)
+        analytics.setUserID(hostConfig.userID)
     }
 
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }

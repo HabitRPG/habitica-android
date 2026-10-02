@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
@@ -41,6 +41,7 @@ class MainActivityViewModel
         val inventoryRepository: InventoryRepository,
         val taskAlarmManager: TaskAlarmManager,
         val maintenanceService: MaintenanceApiService,
+        private val analytics: AnalyticsManager,
     ) : BaseViewModel(userRepository, userViewModel),
         TutorialView.OnTutorialReaction {
         val isAuthenticated: Boolean
@@ -76,7 +77,7 @@ class MainActivityViewModel
                     )
                 }
             } catch (e: Exception) {
-                Analytics.logException(e)
+                analytics.logException(e)
             }
         }
 

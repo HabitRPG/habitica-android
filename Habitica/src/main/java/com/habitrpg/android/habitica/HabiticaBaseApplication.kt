@@ -26,7 +26,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.DateUtils
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager.Companion.DEVICE_TOKEN_PREFERENCE_KEY
 import com.habitrpg.android.habitica.models.user.User
@@ -111,6 +111,9 @@ abstract class HabiticaBaseApplication :
     internal lateinit var authenticationHandler: AuthenticationHandler
 
     @Inject
+    internal lateinit var analytics: AnalyticsManager
+
+    @Inject
     internal lateinit var clearables: Set<@JvmSuppressWildcards com.habitrpg.common.habitica.helpers.Clearable>
 
     private lateinit var lifecycleTracker: ApplicationLifecycleTracker
@@ -123,7 +126,7 @@ abstract class HabiticaBaseApplication :
 
         if (!BuildConfig.DEBUG) {
             try {
-                Analytics.initialize(this)
+                analytics.initialize(this)
             } catch (ignored: Resources.NotFoundException) {
             }
         }
@@ -139,7 +142,7 @@ abstract class HabiticaBaseApplication :
         setupCoil()
 
         ExceptionHandler.init {
-            Analytics.logException(it)
+            analytics.logException(it)
         }
 
         WidgetRefreshWorker.enqueue(this)
@@ -388,8 +391,8 @@ abstract class HabiticaBaseApplication :
 
                 deleteDatabase(context)
 
-                Analytics.setAnalyticsConsent(false)
-                Analytics.clearUserID()
+                instance?.analytics?.setAnalyticsConsent(false)
+                instance?.analytics?.clearUserID()
 
                 preferences.edit {
                     clear()

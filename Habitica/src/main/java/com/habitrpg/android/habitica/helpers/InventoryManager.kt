@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 
 class InventoryManager(
     private val billingClient: BillingClient,
+    private val crashReporter: CrashReporter,
 ) {
     private suspend fun loadInventory(
         type: String,
@@ -36,7 +37,7 @@ class InventoryManager(
         if (responseCode != BillingClient.BillingResponseCode.OK) {
             Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
             if (responseCode !in transientErrorCodes) {
-                CrashReporter.recordException(
+                crashReporter.recordException(
                     Throwable(
                         "Failed to load inventory ($responseCode): ${skuDetailsResult.billingResult.debugMessage}",
                     ),

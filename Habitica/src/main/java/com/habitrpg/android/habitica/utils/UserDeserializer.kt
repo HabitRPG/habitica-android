@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.firebase.perf.FirebasePerformance
 import com.google.gson.JsonDeserializationContext
+import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
@@ -32,14 +32,16 @@ import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
 
-class UserDeserializer : JsonDeserializer<User> {
+class UserDeserializer(
+    private val performanceMonitor: PerformanceMonitor,
+) : JsonDeserializer<User> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
         context: JsonDeserializationContext,
     ): User {
-        val deserializeTrace = FirebasePerformance.getInstance().newTrace("UserDeserialize")
+        val deserializeTrace = performanceMonitor.newTrace("UserDeserialize")
         deserializeTrace.start()
         val user = User()
         val obj = json.asJsonObject

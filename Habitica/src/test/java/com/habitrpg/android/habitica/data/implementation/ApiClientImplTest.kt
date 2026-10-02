@@ -4,7 +4,7 @@ import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.common.habitica.api.HostConfig
@@ -16,12 +16,8 @@ import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.shouldContain
 import io.mockk.clearMocks
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.mockkStatic
-import io.mockk.runs
-import io.mockk.unmockkObject
 import io.mockk.unmockkStatic
 import io.mockk.verify
 import mockwebserver3.MockResponse
@@ -38,6 +34,7 @@ class ApiClientImplTest :
         lateinit var apiClient: ApiClientImpl
         val hostConfig = mockk<HostConfig>(relaxed = true)
         val notificationsManager = mockk<NotificationsManager>(relaxed = true)
+        val analytics = mockk<AnalyticsManager>(relaxed = true)
         val activity = mockk<BaseActivity>(relaxed = true)
         val context = mockk<HabiticaBaseApplication>(relaxed = true)
         val cacheDir = Files.createTempDirectory("api-client-test").toFile()
@@ -68,14 +65,10 @@ class ApiClientImplTest :
         fun RecordedRequest.bodyText() = body?.utf8() ?: ""
 
         beforeSpec {
-            mockkObject(Analytics)
-            every { Analytics.logError(any()) } just runs
-            every { Analytics.logException(any()) } just runs
             mockkStatic(FirebasePerformance::class)
             every { FirebasePerformance.getInstance() } returns mockk(relaxed = true)
         }
         afterSpec {
-            unmockkObject(Analytics)
             unmockkStatic(FirebasePerformance::class)
             cacheDir.deleteRecursively()
         }
@@ -90,11 +83,11 @@ class ApiClientImplTest :
             every { context.cacheDir } returns cacheDir
             every { context.getString(any()) } answers { "string-${firstArg<Int>()}" }
             every { context.currentActivity } returns WeakReference(activity)
-            apiClient = ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, notificationsManager, context)
+            apiClient = ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, notificationsManager, context, analytics)
         }
         afterEach {
             server.close()
-            clearMocks(hostConfig, activity, notificationsManager, Analytics, answers = false)
+            clearMocks(hostConfig, activity, notificationsManager, analytics, answers = false)
         }
 
         "requests" should {
@@ -432,7 +425,7 @@ class ApiClientImplTest :
             "log invalid json" {
                 enqueueError(200, "not json")
                 apiClient.getStatus() shouldBe null
-                verify { Analytics.logError(match { it.startsWith("Json Error") }) }
+                verify { analytics.logError(match { it.startsWith("Json Error") }) }
             }
         }
     })

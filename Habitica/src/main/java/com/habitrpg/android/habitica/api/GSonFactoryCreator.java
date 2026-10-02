@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.Strictness;
 import com.google.gson.reflect.TypeToken;
+import com.habitrpg.android.habitica.helpers.FirebasePerformanceMonitor;
+import com.habitrpg.android.habitica.helpers.PerformanceMonitor;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
@@ -81,6 +83,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GSonFactoryCreator {
 
     public static Gson createGson() {
+        return createGson(new FirebasePerformanceMonitor());
+    }
+
+    public static Gson createGson(PerformanceMonitor performanceMonitor) {
         Type skillListType = new TypeToken<List<Skill>>() {
         }.getType();
         Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {
@@ -121,7 +127,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(skillListType, new SkillDeserializer())
-                .registerTypeAdapter(TaskList.class, new TaskListDeserializer())
+                .registerTypeAdapter(TaskList.class, new TaskListDeserializer(performanceMonitor))
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
                 .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
                 .registerTypeAdapter(tutorialStepListType, new TutorialStepListDeserializer())
@@ -131,10 +137,10 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(itemDataListType, new EquipmentListDeserializer())
                 .registerTypeAdapter(ChatMessage.class, new ChatMessageDeserializer())
                 .registerTypeAdapter(Task.class, new TaskSerializer())
-                .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
+                .registerTypeAdapter(ContentResult.class, new ContentDeserializer(performanceMonitor))
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
                 .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
-                .registerTypeAdapter(User.class, new UserDeserializer())
+                .registerTypeAdapter(User.class, new UserDeserializer(performanceMonitor))
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
                 .registerTypeAdapter(challengeRealmListType, new ChallengeListDeserializer())
@@ -161,5 +167,9 @@ public class GSonFactoryCreator {
 
     public static GsonConverterFactory create() {
         return GsonConverterFactory.create(createGson());
+    }
+
+    public static GsonConverterFactory create(PerformanceMonitor performanceMonitor) {
+        return GsonConverterFactory.create(createGson(performanceMonitor));
     }
 }

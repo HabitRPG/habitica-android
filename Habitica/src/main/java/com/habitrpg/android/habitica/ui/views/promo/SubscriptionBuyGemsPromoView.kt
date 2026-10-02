@@ -5,9 +5,9 @@ import android.util.AttributeSet
 import android.widget.Button
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.inflate
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class SubscriptionBuyGemsPromoView
     @JvmOverloads
@@ -23,7 +23,7 @@ class SubscriptionBuyGemsPromoView
             clipChildren = false
             clipToOutline = false
             findViewById<Button>(R.id.button).setOnClickListener {
-                MainNavigationController.navigate(R.id.subscriptionPurchaseFragment)
+                context.navigator.navigate(R.id.subscriptionPurchaseFragment)
             }
         }
     }
