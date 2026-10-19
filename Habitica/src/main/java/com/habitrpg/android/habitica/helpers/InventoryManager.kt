@@ -37,7 +37,7 @@ class InventoryManager(
         if (responseCode != BillingClient.BillingResponseCode.OK) {
             Log.e("PurchaseHandler", "Failed to load inventory: ${skuDetailsResult.billingResult.debugMessage}")
             if (responseCode !in transientErrorCodes) {
-                crashReporter.recordException(
+                crashReporter.logException(
                     Throwable(
                         "Failed to load inventory ($responseCode): ${skuDetailsResult.billingResult.debugMessage}",
                     ),

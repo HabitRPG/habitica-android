@@ -37,7 +37,7 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityComposeBinding
 import com.habitrpg.android.habitica.extensions.openBrowserLink
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.views.preferences.PrivacyToggleView
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
@@ -52,7 +52,7 @@ import kotlin.time.Duration.Companion.milliseconds
 @AndroidEntryPoint
 class PrivacyPreferencesActivity : BaseActivity() {
     @Inject
-    lateinit var analytics: AnalyticsManager
+    lateinit var crashReporter: CrashReporter
 
 
     @Inject
@@ -156,7 +156,7 @@ class PrivacyPreferencesActivity : BaseActivity() {
                                         lifecycleScope.launchCatching {
                                             delay(500.milliseconds)
                                             isSaving = true
-                                            analytics.setAnalyticsConsent(true)
+                                            crashReporter.setAnalyticsConsent(true)
                                             sharedPrefs.edit { putBoolean("analytics_consent_given", true) }
                                             userRepository.updateUser("preferences.analyticsConsent", true)
                                             finish()
@@ -172,7 +172,7 @@ class PrivacyPreferencesActivity : BaseActivity() {
                                     {
                                         lifecycleScope.launchCatching {
                                             isSaving = true
-                                            analytics.setAnalyticsConsent(analyticsConsent)
+                                            crashReporter.setAnalyticsConsent(analyticsConsent)
                                             sharedPrefs.edit { putBoolean("analytics_consent_given", analyticsConsent) }
                                             userRepository.updateUser("preferences.analyticsConsent", analyticsConsent)
                                             finish()

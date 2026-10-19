@@ -70,10 +70,8 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
-import com.habitrpg.android.habitica.helpers.PerformanceTrace
 import com.habitrpg.android.habitica.modules.platformServices
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -138,9 +136,6 @@ open class MainActivity :
     BaseActivity(),
     SnackbarActivity {
     private var launchScreen: String? = null
-
-    @Inject
-    lateinit var analytics: AnalyticsManager
 
     @Inject
     lateinit var crashReporter: CrashReporter
@@ -256,14 +251,10 @@ open class MainActivity :
         return binding.root
     }
 
-    private var launchTrace: PerformanceTrace? = null
-
     public override fun onCreate(savedInstanceState: Bundle?) {
         if (BuildConfig.DEBUG) {
             mainActivityCreatedAt = Date()
         }
-        launchTrace = platformServices.performanceMonitor().newTrace("MainActivityLaunch")
-        launchTrace?.start()
         super.onCreate(savedInstanceState)
 
         if (!viewModel.hostConfig.isInitialized) {
@@ -657,9 +648,6 @@ open class MainActivity :
             retrieveUser(true)
             NotificationOpenHandler.handleOpenedByNotification(identifier, intent)
         }
-
-        launchTrace?.stop()
-        launchTrace = null
 
         if (binding.content.toolbarTitle.text
                 ?.isNotBlank() != true
@@ -1109,11 +1097,11 @@ open class MainActivity :
     }
 
     private fun handleAnalyticsConsent(user: User) {
-        analytics.setAnalyticsConsent(user.preferences?.analyticsConsent)
+        crashReporter.setAnalyticsConsent(user.preferences?.analyticsConsent)
 
         when (user.preferences?.analyticsConsent) {
             true -> {
-                user.id?.let { analytics.setUserID(it) }
+                user.id?.let { crashReporter.setUserID(it) }
                 sharedPreferences.edit { putBoolean("analytics_consent_given", true) }
             }
 

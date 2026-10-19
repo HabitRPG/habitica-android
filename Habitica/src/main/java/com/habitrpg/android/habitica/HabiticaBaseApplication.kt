@@ -19,14 +19,9 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.Wearable
 import com.google.firebase.installations.FirebaseInstallations
-import com.google.firebase.remoteconfig.ConfigUpdate
-import com.google.firebase.remoteconfig.ConfigUpdateListener
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.DateUtils
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager.Companion.DEVICE_TOKEN_PREFERENCE_KEY
 import com.habitrpg.android.habitica.models.user.User
@@ -111,7 +106,7 @@ abstract class HabiticaBaseApplication :
     internal lateinit var authenticationHandler: AuthenticationHandler
 
     @Inject
-    internal lateinit var analytics: AnalyticsManager
+    internal lateinit var crashReporter: CrashReporter
 
     @Inject
     internal lateinit var clearables: Set<@JvmSuppressWildcards com.habitrpg.common.habitica.helpers.Clearable>
@@ -126,7 +121,7 @@ abstract class HabiticaBaseApplication :
 
         if (!BuildConfig.DEBUG) {
             try {
-                analytics.initialize(this)
+                crashReporter.initialize(this)
             } catch (ignored: Resources.NotFoundException) {
             }
         }
@@ -142,7 +137,7 @@ abstract class HabiticaBaseApplication :
         setupCoil()
 
         ExceptionHandler.init {
-            analytics.logException(it)
+            crashReporter.logException(it)
         }
 
         WidgetRefreshWorker.enqueue(this)
@@ -286,25 +281,7 @@ abstract class HabiticaBaseApplication :
     }
 
     private fun setupRemoteConfig() {
-        val remoteConfig = FirebaseRemoteConfig.getInstance()
-        val configSettings =
-            FirebaseRemoteConfigSettings
-                .Builder()
-                .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 1800)
-                .build()
-        remoteConfig.setConfigSettingsAsync(configSettings)
-        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
-        remoteConfig.fetchAndActivate()
-        remoteConfig.addOnConfigUpdateListener(
-            object : ConfigUpdateListener {
-                override fun onUpdate(configUpdate: ConfigUpdate) {
-                    remoteConfig.activate()
-                }
 
-                override fun onError(error: FirebaseRemoteConfigException) {
-                }
-            },
-        )
     }
 
     private fun setupNotifications() {
@@ -391,8 +368,8 @@ abstract class HabiticaBaseApplication :
 
                 deleteDatabase(context)
 
-                instance?.analytics?.setAnalyticsConsent(false)
-                instance?.analytics?.clearUserID()
+                instance?.crashReporter?.setAnalyticsConsent(false)
+                instance?.crashReporter?.clearUserID()
 
                 preferences.edit {
                     clear()

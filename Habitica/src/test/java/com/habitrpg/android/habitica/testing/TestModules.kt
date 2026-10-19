@@ -14,21 +14,17 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.RemoteConfig
 import com.habitrpg.android.habitica.modules.ApiModule
 import com.habitrpg.android.habitica.modules.PlatformServicesModule
 import com.habitrpg.android.habitica.modules.RepositoryModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
-import com.habitrpg.android.habitica.testing.fakes.FakeAnalyticsManager
 import com.habitrpg.android.habitica.testing.fakes.FakeCrashReporter
 import com.habitrpg.android.habitica.testing.fakes.FakeNavigator
 import com.habitrpg.android.habitica.testing.fakes.FakeRemoteConfig
-import com.habitrpg.android.habitica.testing.fakes.NoOpPerformanceMonitor
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.Navigator
 import dagger.Module
@@ -51,13 +47,6 @@ object TestPlatformServicesModule {
 
     @Provides
     @Singleton
-    fun provideFakeAnalyticsManager(): FakeAnalyticsManager = FakeAnalyticsManager()
-
-    @Provides
-    fun provideAnalyticsManager(analytics: FakeAnalyticsManager): AnalyticsManager = analytics
-
-    @Provides
-    @Singleton
     fun provideFakeCrashReporter(): FakeCrashReporter = FakeCrashReporter()
 
     @Provides
@@ -69,9 +58,6 @@ object TestPlatformServicesModule {
 
     @Provides
     fun provideRemoteConfig(remoteConfig: FakeRemoteConfig): RemoteConfig = remoteConfig
-
-    @Provides
-    fun providePerformanceMonitor(): PerformanceMonitor = NoOpPerformanceMonitor()
 }
 
 @Module
@@ -148,6 +134,6 @@ object TestApiModule {
     fun provideMaintenanceApiService(): MaintenanceApiService = mockk(relaxed = true)
 
     @Provides
-    fun provideGsonConverterFactory(performanceMonitor: PerformanceMonitor): GsonConverterFactory =
-        GSonFactoryCreator.create(performanceMonitor)
+    fun provideGsonConverterFactory(): GsonConverterFactory =
+        GSonFactoryCreator.create()
 }
