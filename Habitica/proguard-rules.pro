@@ -48,8 +48,11 @@
 }
 
 #keep Habitica code
--keep class com.habitrpg.android.habitica.** { *; }
--keep class com.habitrpg.common.habitica.** { *; }
+-keep class !com.habitrpg.android.habitica.R,!com.habitrpg.android.habitica.R$*,!com.habitrpg.android.habitica.databinding.**,!com.habitrpg.android.habitica.ui.**,com.habitrpg.android.habitica.** { *; }
+-keep,allowobfuscation class com.habitrpg.android.habitica.** { *; }
+-keepnames class com.habitrpg.android.habitica.ui.** extends androidx.fragment.app.Fragment
+-keep class !com.habitrpg.common.habitica.R,!com.habitrpg.common.habitica.R$*,!com.habitrpg.common.habitica.databinding.**,com.habitrpg.common.habitica.** { *; }
+-keep,allowobfuscation class com.habitrpg.common.habitica.** { *; }
 -keep class com.habitrpg.shared.habitica.** { *; }
 #realm
 -keep class io.realm.annotations.RealmModule
