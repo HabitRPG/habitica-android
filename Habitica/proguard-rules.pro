@@ -56,6 +56,11 @@
 -keep @io.realm.annotations.RealmModule class * { *; }
 -keep class io.realm.internal.Keep
 -keep @io.realm.internal.Keep class * { *; }
+# R8 erases type arguments (RealmList<Tag> -> RealmList) from field signatures of classes that are not kept,
+# which breaks Gson's lookup of the type adapters registered for those generic types
+-keep,allowobfuscation class io.realm.RealmList
+-keep,allowobfuscation class io.realm.RealmObject
+-keep,allowobfuscation class io.realm.RealmResults
 -dontwarn javax.**
 -dontwarn io.realm.**
 
