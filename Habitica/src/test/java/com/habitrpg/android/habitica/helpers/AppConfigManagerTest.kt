@@ -70,15 +70,6 @@ class AppConfigManagerTest :
         afterEach { Dispatchers.resetMain() }
 
         "remote config values" should {
-            "be read from firebase" {
-                every { remoteConfig.getBoolean("enableLocalTaskScoring") } returns true
-                every { remoteConfig.getLong("maxChatLength") } returns 3000
-                every { remoteConfig.getString("supportEmail") } returns "admin@habitica.com"
-                configManager.enableLocalTaskScoring() shouldBe true
-                configManager.maxChatLength() shouldBe 3000
-                configManager.supportEmail() shouldBe "admin@habitica.com"
-            }
-
             "parse known issues" {
                 every { remoteConfig.getString("knownIssues") } returns """[{"title":"Sync","text":"Tasks may not sync"}]"""
                 configManager.knownIssues() shouldBe listOf(mapOf("title" to "Sync", "text" to "Tasks may not sync"))

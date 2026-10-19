@@ -6,10 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDirections
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
-import com.habitrpg.android.habitica.helpers.PerformanceMonitor
-import com.habitrpg.android.habitica.helpers.PerformanceTrace
 import com.habitrpg.android.habitica.helpers.RemoteConfig
 import com.habitrpg.common.habitica.helpers.Navigator
 
@@ -90,42 +87,6 @@ class FakeRemoteConfig : RemoteConfig {
     fun reset() = values.clear()
 }
 
-class FakeAnalyticsManager : AnalyticsManager {
-    var currentUserID: String? = null
-    var hasConsent: Boolean? = null
-    val loggedErrors = mutableListOf<String>()
-    val loggedExceptions = mutableListOf<Throwable>()
-
-    override fun initialize(context: Context) = Unit
-
-    override fun setUserID(userID: String) {
-        currentUserID = userID
-    }
-
-    override fun clearUserID() {
-        currentUserID = null
-    }
-
-    override fun logError(msg: String) {
-        loggedErrors += msg
-    }
-
-    override fun logException(t: Throwable) {
-        loggedExceptions += t
-    }
-
-    override fun setAnalyticsConsent(consents: Boolean?) {
-        hasConsent = consents
-    }
-
-    fun reset() {
-        currentUserID = null
-        hasConsent = null
-        loggedErrors.clear()
-        loggedExceptions.clear()
-    }
-}
-
 class FakeCrashReporter : CrashReporter {
     val customKeys = mutableMapOf<String, String>()
     val recordedExceptions = mutableListOf<Throwable>()
@@ -137,7 +98,7 @@ class FakeCrashReporter : CrashReporter {
         customKeys[key] = value
     }
 
-    override fun recordException(throwable: Throwable) {
+    override fun logException(throwable: Throwable) {
         recordedExceptions += throwable
     }
 
@@ -145,13 +106,4 @@ class FakeCrashReporter : CrashReporter {
         customKeys.clear()
         recordedExceptions.clear()
     }
-}
-
-class NoOpPerformanceMonitor : PerformanceMonitor {
-    override fun newTrace(name: String): PerformanceTrace =
-        object : PerformanceTrace {
-            override fun start() = Unit
-
-            override fun stop() = Unit
-        }
 }

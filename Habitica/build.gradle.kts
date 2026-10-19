@@ -54,11 +54,6 @@ plugins {
             .pluginId,
     )
     id(
-        libs.plugins.firebase.perf
-            .get()
-            .pluginId,
-    )
-    id(
         libs.plugins.google.service
             .get()
             .pluginId,

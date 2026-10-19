@@ -145,7 +145,7 @@ class PurchaseHandler(
             }
 
             else -> {
-                crashReporter.recordException(Throwable(result.debugMessage))
+                crashReporter.logException(Throwable(result.debugMessage))
             }
         }
     }
@@ -453,7 +453,7 @@ class PurchaseHandler(
                 processedPurchase()
             } catch (throwable: Throwable) {
                 reactivatedPurchases.remove(purchase.purchaseToken)
-                crashReporter.recordException(throwable)
+                crashReporter.logException(throwable)
             }
         }
     }
@@ -531,7 +531,7 @@ class PurchaseHandler(
             }
         }
         purchase.orderId?.let { processedPurchases.remove(it) }
-        crashReporter.recordException(throwable)
+        crashReporter.logException(throwable)
     }
 
     suspend fun checkForSubscription(onlyAcknowledged: Boolean = true): Purchase? {
