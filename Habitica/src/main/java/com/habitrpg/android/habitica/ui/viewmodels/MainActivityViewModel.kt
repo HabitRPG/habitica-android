@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
@@ -20,6 +19,7 @@ import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull
@@ -41,7 +41,6 @@ class MainActivityViewModel
         val inventoryRepository: InventoryRepository,
         val taskAlarmManager: TaskAlarmManager,
         val maintenanceService: MaintenanceApiService,
-        private val analytics: AnalyticsManager,
     ) : BaseViewModel(userRepository, userViewModel),
         TutorialView.OnTutorialReaction {
         val isAuthenticated: Boolean
@@ -77,7 +76,7 @@ class MainActivityViewModel
                     )
                 }
             } catch (e: Exception) {
-                analytics.logException(e)
+                HLogger.logException("AuthenticationViewModel", "onCreate error", e)
             }
         }
 

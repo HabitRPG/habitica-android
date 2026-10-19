@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.utils
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonDeserializationContext
-import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -11,9 +10,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import java.lang.reflect.Type
 
-class TaskListDeserializer(
-    private val performanceMonitor: PerformanceMonitor,
-) : JsonDeserializer<TaskList> {
+class TaskListDeserializer() : JsonDeserializer<TaskList> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
@@ -21,8 +18,6 @@ class TaskListDeserializer(
     ): TaskList {
         val tasks = TaskList()
         val taskMap = HashMap<String, Task>()
-        val deserializeTrace = performanceMonitor.newTrace("TaskListDeserialize")
-        deserializeTrace.start()
 
         for (e in json.asJsonArray) {
             try {
@@ -38,7 +33,6 @@ class TaskListDeserializer(
         }
 
         tasks.tasks = taskMap
-        deserializeTrace.stop()
         return tasks
     }
 

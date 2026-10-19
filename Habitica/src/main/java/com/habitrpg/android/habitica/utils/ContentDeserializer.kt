@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.utils
 
 import com.google.gson.JsonDeserializationContext
-import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
@@ -25,17 +24,13 @@ import com.habitrpg.android.habitica.models.social.CategoryOption
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-class ContentDeserializer(
-    private val performanceMonitor: PerformanceMonitor,
-) : JsonDeserializer<ContentResult> {
+class ContentDeserializer() : JsonDeserializer<ContentResult> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
         context: JsonDeserializationContext,
     ): ContentResult {
-        val deserializeTrace = performanceMonitor.newTrace("ContentDeserialize")
-        deserializeTrace.start()
         val result = ContentResult()
         val obj = json.asJsonObject
 
@@ -162,7 +157,6 @@ class ContentDeserializer(
 
         result.faq =
             context.deserialize(obj.get("faq"), object : TypeToken<RealmList<FAQArticle>>() {}.type)
-        deserializeTrace.stop()
         return result
     }
 }
