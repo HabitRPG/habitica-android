@@ -4,6 +4,8 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -81,7 +83,9 @@ class TaskRepositoryImplTest :
                     localRepository,
                     apiClient,
                     authenticationHandler,
-                    mockk(relaxed = true),
+                    mockk<AppConfigManager> {
+                        every { value(ClientConfigKey.enableLocalTaskScoring) } returns false
+                    },
                     tagRepository,
                 )
             val liveObjectSlot = slot<BaseObject>()

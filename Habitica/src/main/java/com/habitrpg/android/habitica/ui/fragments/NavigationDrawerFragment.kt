@@ -35,6 +35,7 @@ import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
@@ -583,7 +584,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     context.getString(R.string.sidebar_party),
                 ),
             )
-            if (!configManager.hideChallenges()) {
+            if (!configManager.value(ClientConfigKey.hideChallenges)) {
                 items.add(
                     HabiticaDrawerItem(
                         R.id.challengesOverviewFragment,
@@ -629,7 +630,7 @@ class NavigationDrawerFragment : DialogFragment() {
         promoItem.isVisible = false
         items.add(0, promoItem)
 
-        if (configManager.showSubscriptionBanner()) {
+        if (configManager.value(ClientConfigKey.showSubscriptionBanner)) {
             val item =
                 HabiticaDrawerItem(R.id.subscriptionPurchaseFragment, SIDEBAR_SUBSCRIPTION_PROMO)
             item.itemViewType = 2

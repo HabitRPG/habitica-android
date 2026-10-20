@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -174,7 +175,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         }
 
         binding?.chatBarView?.sendAction = { sendMessage(it) }
-        binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
+        binding?.chatBarView?.maxChatLength = configManager.value(ClientConfigKey.maxChatLength)
 
         binding?.chatBarView?.hasAcceptedGuidelines = true
 

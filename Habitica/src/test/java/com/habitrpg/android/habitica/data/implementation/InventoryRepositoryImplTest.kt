@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -194,7 +195,7 @@ class InventoryRepositoryImplTest :
             "apply the local change immediately when enabled" {
                 val egg = Egg().apply { key = "egg-1" }
                 val potion = HatchingPotion().apply { key = "potion-1" }
-                every { appConfigManager.enableLocalChanges() } returns true
+                every { appConfigManager.value(ClientConfigKey.enableLocalChanges) } returns true
                 every { localRepository.hatchPet("egg-1", "potion-1", "user-1") } returns Unit
                 val items = Items()
                 coEvery { apiClient.hatchPet("egg-1", "potion-1") } returns items
@@ -209,7 +210,7 @@ class InventoryRepositoryImplTest :
             "only call success after the API responds when local changes are disabled" {
                 val egg = Egg().apply { key = "egg-1" }
                 val potion = HatchingPotion().apply { key = "potion-1" }
-                every { appConfigManager.enableLocalChanges() } returns false
+                every { appConfigManager.value(ClientConfigKey.enableLocalChanges) } returns false
                 val items = Items()
                 coEvery { apiClient.hatchPet("egg-1", "potion-1") } returns items
                 every { localRepository.save(items, "user-1") } returns Unit

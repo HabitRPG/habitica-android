@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.implementation
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.common.habitica.api.HostConfig
@@ -30,6 +31,7 @@ class ApiClientImplTest :
         lateinit var apiClient: ApiClientImpl
         val hostConfig = mockk<HostConfig>(relaxed = true)
         val notificationsManager = mockk<NotificationsManager>(relaxed = true)
+        val crashReporter = mockk<CrashReporter>(relaxed = true)
         val activity = mockk<BaseActivity>(relaxed = true)
         val context = mockk<HabiticaBaseApplication>(relaxed = true)
         val cacheDir = Files.createTempDirectory("api-client-test").toFile()
@@ -73,7 +75,7 @@ class ApiClientImplTest :
             every { context.cacheDir } returns cacheDir
             every { context.getString(any()) } answers { "string-${firstArg<Int>()}" }
             every { context.currentActivity } returns WeakReference(activity)
-            apiClient = ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, notificationsManager, context, analytics)
+            apiClient = ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, notificationsManager, context, crashReporter)
         }
         afterEach {
             server.close()
