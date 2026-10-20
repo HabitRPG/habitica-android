@@ -1,7 +1,4 @@
+# Markwon's image decoders reference these optional libraries, which aren't included
 -dontwarn com.caverock.androidsvg.SVG
 -dontwarn com.caverock.androidsvg.SVGParseException
 -dontwarn pl.droidsonroids.gif.GifDrawable
--dontwarn java.lang.invoke.StringConcatFactory
--keep class !com.habitrpg.common.habitica.R,!com.habitrpg.common.habitica.R$*,!com.habitrpg.common.habitica.databinding.**,com.habitrpg.common.habitica.** { *; }
--keep,allowobfuscation class com.habitrpg.common.habitica.** { *; }
--keep class com.habitrpg.shared.habitica.** { *; }

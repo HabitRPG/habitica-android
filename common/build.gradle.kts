@@ -46,12 +46,11 @@ android {
             enableUnitTestCoverage = true
         }
         release {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // Optimized by the consuming app, so the app's R8 run sees the whole program
+            isMinifyEnabled = false
         }
         register("debugIAP") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
