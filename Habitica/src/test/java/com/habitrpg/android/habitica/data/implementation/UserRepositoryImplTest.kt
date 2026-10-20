@@ -422,7 +422,6 @@ class UserRepositoryImplTest :
             val user = User().apply { preferences = Preferences().apply { hair = Hair() } }
 
             beforeEach {
-                every { appConfigManager.value(ClientConfigKey.enableLocalChanges) } returns true
                 every { localRepository.getUser("user-1") } returns flowOf(user)
                 every { localRepository.getLiveObject(user) } returns user
                 every { localRepository.modify(any<User>(), any()) } answers { secondArg<(User) -> Unit>().invoke(firstArg()) }

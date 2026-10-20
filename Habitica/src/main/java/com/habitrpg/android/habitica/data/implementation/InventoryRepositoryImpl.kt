@@ -245,15 +245,10 @@ class InventoryRepositoryImpl(
         hatchingPotion: HatchingPotion,
         successFunction: () -> Unit,
     ): Items? {
-        if (appConfigManager.value(ClientConfigKey.enableLocalChanges)) {
-            localRepository.hatchPet(egg.key, hatchingPotion.key, currentUserID)
-            successFunction()
-        }
+        localRepository.hatchPet(egg.key, hatchingPotion.key, currentUserID)
+        successFunction()
         val items = apiClient.hatchPet(egg.key, hatchingPotion.key) ?: return null
         localRepository.save(items, currentUserID)
-        if (!appConfigManager.value(ClientConfigKey.enableLocalChanges)) {
-            successFunction()
-        }
         return items
     }
 

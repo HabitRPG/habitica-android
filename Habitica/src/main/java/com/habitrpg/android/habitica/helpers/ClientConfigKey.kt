@@ -24,12 +24,9 @@ class ClientConfigKey<T> private constructor(
         val knownIssues = key<List<Map<String, String>>>("knownIssues", emptyList())
 
         val enableUsernameAutocomplete = key("enableUsernameAutocomplete", false)
-        val enableLocalChanges = key("enableLocalChanges", false)
-        val enableLocalTaskScoring = key("enableLocalTaskScoring", false)
         val enableTaskDisplayMode = key("enableTaskDisplayMode", true)
         val showSubscriptionBanner = key("showSubscriptionBanner", false)
         val hideChallenges = key("hideChallenges", false)
-        val enableReviewPrompt = key("enableReviewPrompt", false)
         val reviewCheckingMinCount = key("reviewCheckingMinCount", 1L)
         val showAltDeathText = key("showAltDeathText", false)
     }

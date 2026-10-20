@@ -84,7 +84,6 @@ class TaskRepositoryImplTest :
                     apiClient,
                     authenticationHandler,
                     mockk<AppConfigManager> {
-                        every { value(ClientConfigKey.enableLocalTaskScoring) } returns false
                     },
                     tagRepository,
                 )

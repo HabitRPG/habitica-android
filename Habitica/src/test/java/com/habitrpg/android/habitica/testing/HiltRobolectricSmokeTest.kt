@@ -55,8 +55,8 @@ class HiltRobolectricSmokeTest {
 
     @Test
     fun readsUpdatedClientConfig() {
-        configManager.updateConfig(JsonObject().apply { addProperty("enableLocalTaskScoring", true) })
-        configManager.value(ClientConfigKey.enableLocalTaskScoring) shouldBe true
+        configManager.updateConfig(JsonObject().apply { addProperty("enableTaskDisplayMode", true) })
+        configManager.value(ClientConfigKey.enableTaskDisplayMode) shouldBe true
     }
 
     @Test
