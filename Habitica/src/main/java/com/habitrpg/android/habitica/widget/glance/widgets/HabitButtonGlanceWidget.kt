@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
@@ -58,15 +57,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
 class HabitButtonGlanceWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode =
-        SizeMode.Responsive(
-            setOf(
-                DpSize(120.dp, 40.dp),
-                DpSize(218.dp, 70.dp),
-                DpSize(360.dp, 70.dp),
-                DpSize(218.dp, 160.dp),
-                DpSize(360.dp, 160.dp),
-            ),
-        )
+        SizeMode.Exact
 
     override suspend fun provideGlance(
         context: Context,
