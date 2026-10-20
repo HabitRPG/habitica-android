@@ -13,7 +13,6 @@
     <string name="user_level_long">Рівень %d</string>
     <string name="action_edit">Редагувати</string>
     <string name="action_cancel">Скасувати</string>
-    <string name="about_title">Про нас</string>
     <string name="are_you_sure">Ви впевнені\?</string>
     <string name="stats">Характеристики</string>
     <string name="reward">Нагорода</string>
@@ -35,12 +34,9 @@
     <string name="register_btn">Зареєструватися</string>
     <string name="username">Ім\'я користувача</string>
     <string name="password">Пароль</string>
-    <string name="emailAddress">Електронна пошта</string>
     <string name="confirmpassword">Введіть пароль повторно</string>
     <string name="login_btn_google">Приєднатися за допомогою Google</string>
     <string name="logout">Вийти</string>
-    <string name="email_username">Електрона пошта/Ім\'я користувача</string>
-    <string name="logout_description">Вийти з акаунту</string>
     <string name="LoginActivityName">Вітаємо</string>
     <string name="login_validation_error_title">Виникла помилка при перевірці</string>
     <plurals name="x_habits">

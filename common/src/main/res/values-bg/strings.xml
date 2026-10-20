@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_title">Относно</string>
     <string name="are_you_sure">Сигурен/на ли сте\?</string>
     <string name="thousand_abbrev">хил.</string>
     <string name="million_abbrev">млн.</string>

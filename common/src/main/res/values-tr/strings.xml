@@ -13,7 +13,6 @@
     <string name="user_level_long">Düzey %d</string>
     <string name="action_edit">Düzenle</string>
     <string name="action_cancel">İptal</string>
-    <string name="about_title">Hakkında</string>
     <string name="are_you_sure">Emin misin\?</string>
     <string name="stats">İstatistikler</string>
     <string name="gems">Mücevherler</string>
@@ -29,9 +28,7 @@
     <string name="login_btn">Oturum Aç</string>
     <string name="register_btn">Hesap Oluştur</string>
     <string name="username">Kullanıcı Adı</string>
-    <string name="email_username">E-Posta/Kullanıcı Adı</string>
     <string name="password">Şifre</string>
-    <string name="emailAddress">E-Posta Adresi</string>
     <string name="login_btn_google">Google ile Oturum aç</string>
     <string name="logout">Çıkış Yap</string>
     <string name="gold_capitalized">Altın</string>
@@ -54,7 +51,6 @@
     <string name="new_task">Yeni Görev</string>
     <string name="avatar">Avatar</string>
     <string name="user_level">Svy. %d</string>
-    <string name="logout_description">Hesabından çıkış yap</string>
     <string name="LoginActivityName">Hoş Geldin</string>
     <string name="login_validation_error_title">Doğrulama Hatası</string>
     <string name="login_validation_error_fieldsmissing">Bütün alanları doldurman lazım.</string>

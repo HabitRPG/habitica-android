@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ok">Tamam</string>
-    <string name="syncing_account">Hesabınız Telefondan Sekronize Ediliyor</string>
     <string name="how_did_you_do">Nasıl gitti\?</string>
     <string name="you_found">Şunu buldun…</string>
-    <string name="one_quest_item">1 Görev eşyası</string>
-    <string name="x_quest_item">%d Görev eşyası</string>
     <string name="x_and_y">%1$s ve %2$s</string>
     <string name="some_x">Biraz %s</string>
     <string name="edit_on_phone">Telefondan Düzenle</string>
@@ -28,7 +25,6 @@
     <string name="checklist_disclaimer">Görev kontrol listeleri telefonda mevcuttur</string>
     <string name="save">Kaydet</string>
     <string name="sync_data">Verileri Eşle</string>
-    <string name="hide_task_rewards">Görev ödüllerini gizle</string>
     <string name="version_info">Sürüm %1$s (%2$d)</string>
     <string name="log_out_of_habitica">Habitica oturumunu kapatıyor musun\?</string>
     <string name="no_tasks">Bu listeye ekli bir %s oluştur</string>

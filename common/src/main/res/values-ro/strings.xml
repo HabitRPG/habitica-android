@@ -9,7 +9,6 @@
     <string name="daily">Zilnic</string>
     <string name="settings">Setări</string>
     <string name="action_edit">Editează</string>
-    <string name="about_title">Despre</string>
     <string name="are_you_sure">Ești sigur(ă)\?</string>
     <string name="stats">Statistice</string>
     <string name="trivial">Banal</string>
@@ -43,7 +42,6 @@
     <string name="action_cancel">Anulează</string>
     <string name="register_btn">Înregistrează-te</string>
     <string name="username">Nume de utilizator</string>
-    <string name="email_username">Email/Nume de utilizator</string>
     <string name="new_task_x">%s nou</string>
     <string name="save_task_x">Salvați %s</string>
     <string name="login_btn">Conectare</string>
@@ -59,12 +57,10 @@
     <string name="LoginActivityName">Bun venit</string>
     <string name="user_level_long">Nivel %d</string>
     <string name="password">Parolă</string>
-    <string name="emailAddress">Adresă de email</string>
     <string name="complete_task_title">Finalizați o sarcină</string>
     <string name="create_task">Creați %s</string>
     <string name="confirmpassword">Repetă parola</string>
     <string name="login_btn_google">Sign in with Google</string>
-    <string name="logout_description">Deconectați-vă din contul dvs</string>
     <string name="login_validation_error_title">Eroare de validare</string>
     <string name="login_validation_error_fieldsmissing">Trebuie să completați toate câmpurile.</string>
     <plurals name="x_habits">

@@ -2,8 +2,6 @@
 <resources>
     <string name="you_found">Ви знайшли…</string>
     <string name="sign_in">Зареєструйтеся</string>
-    <string name="one_quest_item">1 Квестова річ</string>
-    <string name="syncing_account">Синхронізуємо акаунт з телефоном</string>
     <string name="ok">ОК</string>
     <string name="starting_your_day">Починаємо твій день...</string>
     <string name="disconnected">Роз\'єднано</string>
@@ -15,7 +13,6 @@
     <string name="day_start">Початок нового дня</string>
     <string name="review_dailies">Огляд Щоденних Завдань</string>
     <string name="save">Зберегти</string>
-    <string name="x_quest_item">%d квестових предметів</string>
     <string name="how_did_you_do">Як ти впорався\?</string>
     <string name="x_and_y">%1$s та %2$s</string>
     <string name="some_x">трохи%s</string>
@@ -38,6 +35,5 @@
     <string name="faint_description">Ви втратили Рівень, Досвід і Золото. Але не здавайся!</string>
     <string name="rya_description">З учора у вас залишилися незавершені щоденні завдання</string>
     <string name="checklist_disclaimer">Списки завдань доступні на телефоні</string>
-    <string name="hide_task_rewards">Сховати нагоди за завдання</string>
     <string name="levelup_description">Твій рівень підвищено завдяки твоїм старанням!</string>
 </resources>

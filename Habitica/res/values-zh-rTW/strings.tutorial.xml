@@ -13,7 +13,6 @@
     <string name="tutorial_rewards_2">你也可以自定義獎勵。</string>
     <string name="tutorial_tasks_complete">目前為止就這樣了。如果您想了解更多，請查看FAQ部分。</string>
     <string name="tutorial_skills">技能是有強大作用的特殊能力！點擊技能使用。使用技能需要消耗魔法值(藍色條)，魔力可由每日打卡和完成現實任務來獲得。更多信息請查詢FAQ！</string>
-    <string name="tutorial_party">在這裡，你和你的朋友可以互相激勵完成目標並通過完成任務組團打BOSS！</string>
     <string name="tutorial_stats">按灰色的按鈕可以把所有的能力點用於一次升級某項能力，或是按箭頭以批次分配能力點。</string>
     <string name="tutorial_party_created">歡迎來到你的隊伍！你可以從尋找隊伍的玩家列表中找到更多成員，或是直接邀請你的朋友以獲得基礎任務列表卷軸。
 \n

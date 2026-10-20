@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ok">OK</string>
-    <string name="syncing_account">Sincronizar cuenta desde el teléfono</string>
     <string name="how_did_you_do">¿Cómo te fue\?</string>
     <string name="edit_on_phone">Editar en móvil</string>
     <string name="sign_in">Iniciar sesión</string>
@@ -23,7 +22,6 @@
     <string name="task_title_hint">Añadir título de la Tarea</string>
     <string name="save">Guardar</string>
     <string name="sync_data">Sincronizar datos</string>
-    <string name="hide_task_rewards">Esconder recompensas de la tarea</string>
     <string name="version_info">Versión %1$s (%2$d)</string>
     <string name="log_out_of_habitica">¿Cerrar sesión en Habitica\?</string>
     <string name="no_tasks">Crea una %s para añadir a esta lista</string>
@@ -36,8 +34,6 @@
     <string name="disconnected">Desconectado</string>
     <string name="starting_your_day">Empezando tu día...</string>
     <string name="you_found">Encontraste…</string>
-    <string name="one_quest_item">1 objeto de misión</string>
-    <string name="x_quest_item">%d Objetos de misión</string>
     <string name="x_and_y">%1$s y %2$s</string>
     <string name="some_x">Algunos %s</string>
 </resources>

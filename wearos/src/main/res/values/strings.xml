@@ -1,10 +1,7 @@
 <resources>
     <string name="ok">OK</string>
-    <string name="syncing_account">Syncing Account from Phone</string>
     <string name="how_did_you_do">How did you do?</string>
     <string name="you_found">You found…</string>
-    <string name="one_quest_item">1 Quest item</string>
-    <string name="x_quest_item">%d Quest items</string>
     <string name="x_and_y">%1$s and %2$s</string>
     <string name="some_x">some %s</string>
     <string name="edit_on_phone">Edit on phone</string>
@@ -27,7 +24,6 @@
     <string name="task_title_hint">Enter Task Title</string>
     <string name="save">Save</string>
     <string name="sync_data">Sync Data</string>
-    <string name="hide_task_rewards">Hide task rewards</string>
     <string name="version_info">Version %1$s (%2$d)</string>
     <string name="log_out_of_habitica">Log out of Habitica?</string>
     <string name="no_tasks">Create a %s to add to this list</string>

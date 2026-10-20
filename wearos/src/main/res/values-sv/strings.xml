@@ -4,8 +4,6 @@
     <string name="ok">OK</string>
     <string name="you_found">Du hittade…</string>
     <string name="faint_description">Du förlorade en nivå, XP, och Guld. Ge inte upp!</string>
-    <string name="one_quest_item">1 Uppdragsföremål</string>
-    <string name="x_quest_item">%d Uppdragsföremål</string>
     <string name="x_and_y">%1$s och %2$s</string>
     <string name="edit_on_phone">Redigera på telefonen</string>
     <string name="sign_in">Logga in</string>
@@ -15,11 +13,9 @@
     <string name="continue_text">Fortsätt</string>
     <string name="you_ran_out_of_hp">Du fick slut på HP</string>
     <string name="rya_description">Det finns ofullbordade Dagliga uppgifter från igår</string>
-    <string name="syncing_account">Synkar konto från telefon</string>
     <string name="review_dailies">Granska Dagliga uppgifter</string>
     <string name="check_on_phone">Granska på telefonen</string>
     <string name="sync_data">Synka data</string>
-    <string name="hide_task_rewards">Göm uppgiftsbelöningar</string>
     <string name="checklist_disclaimer">Uppgiftschecklistor är tillgängliga på telefonen</string>
     <string name="start_new_day">Börja en ny dag</string>
     <string name="check_off_yesterday">Bocka av någon du gjorde igår:</string>

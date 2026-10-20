@@ -13,7 +13,6 @@
     <string name="user_level_long">%d級</string>
     <string name="action_edit">編輯</string>
     <string name="action_cancel">取消</string>
-    <string name="about_title">關於</string>
     <string name="are_you_sure">你確定嗎？</string>
     <string name="gold_plural">金幣</string>
     <string name="stats">統計</string>
@@ -44,10 +43,8 @@
     </plurals>
     <string name="new_task_x">新的 %s</string>
     <string name="username">使用者名稱</string>
-    <string name="email_username">信箱/使用者名稱</string>
     <string name="password">密碼</string>
     <string name="logout">登出</string>
-    <string name="logout_description">登出你的帳號</string>
     <string name="LoginActivityName">歡迎</string>
     <string name="login_validation_error_title">驗證錯誤</string>
     <string name="login_validation_error_fieldsmissing">你必須填寫所有欄位。</string>
@@ -71,7 +68,6 @@
     <string name="retry">重試</string>
     <string name="new_task">新的任務</string>
     <string name="avatar">角色</string>
-    <string name="emailAddress">電子郵件地址</string>
     <string name="confirmpassword">重複密碼</string>
     <string name="login_btn_google">使用 Google 登入</string>
 </resources>

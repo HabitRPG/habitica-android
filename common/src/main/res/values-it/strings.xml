@@ -34,15 +34,11 @@
     <string name="login_btn">Accedi</string>
     <string name="register_btn">Registrati</string>
     <string name="username">Nome Utente</string>
-    <string name="email_username">E-mail o nome utente</string>
     <string name="password">Password</string>
-    <string name="emailAddress">Indirizzo e-mail</string>
     <string name="confirmpassword">Ripeti password</string>
     <string name="login_btn_google">Accedi con Google</string>
     <string name="logout">Esci</string>
-    <string name="logout_description">Esci dal tuo account</string>
     <string name="LoginActivityName">Benvenuto</string>
-    <string name="about_title">Info</string>
     <string name="login_validation_error_title">Errore di validazione</string>
     <string name="login_validation_error_fieldsmissing">Devi compilare tutti i campi.</string>
     <plurals name="x_rewards">

@@ -26,7 +26,6 @@
     <string name="habiticas_privacy_policy">Habitica\'s Privacy Policy</string>
     <string name="save_preferences">Save Preferences</string>
     <string name="change_subscription_plan">Change your subscription plan</string>
-    <string name="change_subscription_duration">Change Subscription Plan</string>
     <string name="continue_current_benefits">Continues current subscription benefits</string>
     <string name="current_plan">Current Plan</string>
     <string name="review_subscription_change_info">You\'ll be able to review upcoming charges before confirming your change in the next step</string>
@@ -40,7 +39,6 @@
     <string name="subscription_change_hourglass_promo_gems_info">After purchase, 12 Mystic Hourglasses will be delivered to your account and the max amount of Gems you can buy in the Market will be set to 50.</string>
     <string name="subscription_change_hourglass_promo_info">After purchase, 12 Mystic Hourglasses will be delivered to your account.</string>
     <string name="next_payment_date">Next Payment %s</string>
-    <string name="will_change_to_x_duration">Will change to every %s</string>
     <string name="subscription_downgraded_confirmation">Your Subscription was successfully downgraded. It will change at the next renewal date.</string>
     <string name="subscription_upgraded_confirmation">Your Subscription was successfully upgraded</string>
     <string name="plan_changing_next_renewal">Plan changing at next renewal</string>

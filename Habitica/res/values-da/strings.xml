@@ -7,19 +7,15 @@
     <!--Prefs-->
     <string name="PS_settings_title">Indstillinger</string>
     <string name="SP_userID_title">Bruger ID</string>
-    <string name="SP_userID_summary">Dit Bruger ID</string>
     <string name="SP_APIToken_title">API Nøgle</string>
-    <string name="SP_APIToken_summary">Din API Nøgle</string>
     <string name="Language_title">Sprog</string>
     <string name="Language_summary">Skift Habiticas sprog</string>
-    <string name="PS_contact_title">Kontakt mig</string>
     <string name="pref_account_header">Konto</string>
     <string name="pref_first_day_of_the_week_title">Første dag af ugen</string>
     <string name="pref_first_day_of_the_week_summary">Første dag af ugen i alle kalendere</string>
     <string name="pref_reminder_header">Daglig Påmindelse</string>
     <string name="pref_reminder_checkbox">Aktiver Påmindelser</string>
     <string name="pref_reminder_picker">Sæt Påmidelses Tid</string>
-    <string name="pref_cds_header">Brugerdefineret Dagstart</string>
     <string name="pref_push_notifications_checkbox">Bruger Push-Notifikationer</string>
     <string name="push_notifications">Push-Notifikationer</string>
     <string name="push_notifications_sum">Ændre dine push-notifikationer indstillinger</string>
@@ -61,13 +57,10 @@
     <string name="friday">Fredag</string>
     <string name="saturday">Lørdag</string>
     <string name="sunday">Søndag</string>
-    <string name="faint_subtitle">Frygt ikke!</string>
-    <string name="faint_header">Du løb tør for liv!</string>
     <string name="faint_button">Genfyld Liv &amp; Prøv igen</string>
     <string name="filter">Filter</string>
     <string name="used_skill_without_mana">Du har brugt %1$s.</string>
     <string name="new_checklist_item">nyt tjekliste punkt</string>
-    <string name="skill_progress_title">Brug Evne</string>
     <string name="unlock_lvl_11">Låses op for ved niv. 11</string>
     <string name="forgot_pw_btn">Glemt kodeord</string>
     <string name="party">Gruppe</string>
@@ -80,20 +73,13 @@
     <string name="avatar_hair">Hår</string>
     <string name="avatar_shirt">Trøje</string>
     <string name="avatar_skin">Hud</string>
-    <string name="avatar_base">Base</string>
-    <string name="avatar_color">Farve</string>
     <string name="avatar_beard">Skæg</string>
     <string name="avatar_mustache">Overskæg</string>
     <string name="avatar_flower">Blomst</string>
-    <string name="avatar_bangs">Pandehår</string>
     <string name="avatar_size">Størrelse</string>
     <string name="avatar_size_slim">Tynd</string>
     <string name="avatar_size_broad">Bred</string>
     <string name="avatar_background">Baggrund</string>
-    <string name="purchase_customization">Køb Brugerdefinering</string>
-    <string name="purchase_set_button">Lås op for sættet for %d Ædelsten</string>
-    <string name="purchase_button">Køb</string>
-    <string name="purchase_set_title">Køb sæt %s</string>
     <string name="due_date">Forfaldsdato</string>
     <string name="version_info">Version %1$s (%2$d)</string>
     <string name="sidebar_help">Hjælp &amp; OSS</string>
@@ -158,14 +144,11 @@
     <string name="hatch_egg">Udrug med æg</string>
     <string name="invite_party">Inviter gruppe</string>
     <string name="dialog_feeding">Foder %s med:</string>
-    <string name="use_animal">Brug</string>
     <string name="feed">Foder</string>
     <string name="hatch_with">Udrug kæledyr med %s</string>
     <string name="hatched_pet_title">Du har udruget en/et %1$s %2$s!</string>
     <string name="close">Luk</string>
     <string name="share">Del</string>
-    <string name="notification_pet_fed">Du har fodret din %s!</string>
-    <string name="world_quest">Verdensquest</string>
     <string name="empty_items">Du have ingen %s</string>
     <string name="user_level_with_class">Niv. %1$d %2$s</string>
     <string name="warrior">Kriger</string>
@@ -190,7 +173,6 @@
     <string name="confirm_delete_tag_title">Er du sikker?</string>
     <string name="confirm_delete_tag_message">Vil du virkelig slette?</string>
     <!--QR Strings-->
-    <string name="add_task">Tilføj Opgave</string>
     <string name="add_habit">Tilføj Vane</string>
     <string name="add_daily">Tilføj Daglig Opgave</string>
     <string name="add_todo">Tilføj To Do</string>
@@ -198,12 +180,10 @@
     <string name="widget_dailies">Habitica Daglige Opgaver</string>
     <string name="widget_todo_list">Habitica To Do Liste</string>
     <!--Login Incentives-->
-    <string name="subscription_hourglasses">+%d Mystisk Timeglas</string>
     <string name="payment_method">Betalingsmetode</string>
     <string name="subscription">Abonnement</string>
     <string name="active">Aktiv</string>
     <string name="cancel_subscription">Annuller Abonnement</string>
-    <string name="current_hourclasses">Nuværende Mystiske Timeglas</string>
     <string name="monthly_gem_cap">Månedlig ædelstensmaksimum</string>
     <string name="inactive">Inaktiv</string>
     <string name="one_month">1 Måned</string>
@@ -212,8 +192,6 @@
     <string name="three_months">3 måneder</string>
     <string name="six_months">6 måneder</string>
     <string name="twelve_months">12 måneder</string>
-    <string name="subscribe_prompt_thanks">Du modtager følgende fordele for dit abonnement</string>
-    <string name="subscription_status">Abonnement status</string>
     <string name="challenge_leave_title">Forlad Udfordring</string>
     <string name="my_challenges">Mine Udfordringer</string>
     <string name="official">Officiel</string>
@@ -227,7 +205,6 @@
     <string name="checkInRewardEarned">Du har modtaget en/et %1$s som belønning for din hengivenhed til at forbedre dit liv.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Din næste præmie vil åbne ved %1$d Check-ins</string>
     <string name="pending_approval">afventer godkendelse</string>
-    <string name="enable_notifications">Aktiver beskeder</string>
     <string name="push_notification_system_settings_description">Tillad Habitica notifikationer i indstillinger-appen for at modtage push-beskeder</string>
     <string name="push_notification_system_settings_reminders">Tillad Habitica notifikationer i indstillinger-appen for at modtage push-beskeder</string>
 </resources>

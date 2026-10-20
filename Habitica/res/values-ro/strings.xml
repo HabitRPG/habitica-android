@@ -7,19 +7,15 @@
     <!--Prefs-->
     <string name="PS_settings_title">Setări</string>
     <string name="SP_userID_title">Nume Utilizator</string>
-    <string name="SP_userID_summary">Numele tău de utilizator</string>
     <string name="SP_APIToken_title">Token API</string>
-    <string name="SP_APIToken_summary">Tokenul tău API</string>
     <string name="Language_title">Limbă</string>
     <string name="Language_summary">Schimbă limba în Habitica</string>
-    <string name="PS_contact_title">Contactează-mă</string>
     <string name="pref_account_header">Cont</string>
     <string name="pref_first_day_of_the_week_title">Prima zi a săptămânii</string>
     <string name="pref_first_day_of_the_week_summary">Prima zi a săptămânii în toate calendarele</string>
     <string name="pref_reminder_header">Memento zilnic</string>
     <string name="pref_reminder_checkbox">Activați Memento</string>
     <string name="pref_reminder_picker">Setați ora pentru memento</string>
-    <string name="pref_cds_header">Ziua de pornire personalizată</string>
     <string name="pref_push_notifications_checkbox">Utilizează Notificări Push</string>
     <string name="push_notifications">Notificări Push</string>
     <string name="push_notifications_sum">Setează-ți notificările push</string>
@@ -61,13 +57,10 @@
     <string name="friday">Vineri</string>
     <string name="saturday">Sâmbătă</string>
     <string name="sunday">Duminică</string>
-    <string name="faint_subtitle">Nu dispera!</string>
-    <string name="faint_header">Ai rămas fără Viață</string>
     <string name="faint_button">Reumple-ți Viața &amp; Încearcă din Nou</string>
     <string name="filter">Filtru</string>
     <string name="used_skill_without_mana">Ai folosit %1$s.</string>
     <string name="new_checklist_item">obiect nou în checklist</string>
-    <string name="skill_progress_title">Folosind abilitatea</string>
     <string name="unlock_lvl_11">Deblocați la nivelul 11</string>
     <string name="forgot_pw_btn">Parolă uitată</string>
     <string name="party">Ceată</string>
@@ -80,20 +73,13 @@
     <string name="avatar_hair">Păr</string>
     <string name="avatar_shirt">Tricou</string>
     <string name="avatar_skin">Piele</string>
-    <string name="avatar_base">Bază</string>
-    <string name="avatar_color">Culoare</string>
     <string name="avatar_beard">Barbă</string>
     <string name="avatar_mustache">Mustață</string>
     <string name="avatar_flower">Floare</string>
-    <string name="avatar_bangs">Breton</string>
     <string name="avatar_size">Mărime</string>
     <string name="avatar_size_slim">Suplu</string>
     <string name="avatar_size_broad">Mare</string>
     <string name="avatar_background">Decor</string>
-    <string name="purchase_customization">Achiziționați personalizarea</string>
-    <string name="purchase_set_button">Deblochează setul pentru %d nestemate</string>
-    <string name="purchase_button">Cumpără</string>
-    <string name="purchase_set_title">Cumpără setul pentru %s</string>
     <string name="due_date">Dată limită</string>
     <string name="version_info">Versiunea %1$s (%2$d)</string>
     <string name="sidebar_help">Suport</string>
@@ -110,8 +96,6 @@
     <string name="intro_finish_button">Să începem!</string>
     <string name="next_button">Următor</string>
     <string name="skip_button">Ocolire</string>
-    <string name="avatar_setup_description">Așadar, cum ai vrea să arăți? Nu-ți face griji, poți modifica asta mai târziu.</string>
-    <string name="task_setup_description">Grozav! Acum, la ce ai vrea să lucrezi în timpul acestei călătorii?</string>
     <string name="setup_group_work">Muncă</string>
     <string name="setup_group_exercise">Exercițiu</string>
     <string name="setup_group_health">Sănătate</string>
@@ -177,16 +161,13 @@
     <string name="hatch_egg">Eclozează cu un ou</string>
     <string name="invite_party">Invită ceata</string>
     <string name="dialog_feeding">Hrănește %s cu:</string>
-    <string name="use_animal">Utilizează</string>
     <string name="feed">Hrănește</string>
     <string name="hatch_with">Eclozează animalul de companie cu %s</string>
     <string name="hatched_pet_title">Ai eclozat un %1$s %2$s!</string>
     <string name="evolved_pet_title">Ai domesticit %s, hai să mergem într-o călătorie!</string>
     <string name="close">Închide</string>
     <string name="share">Distribuie</string>
-    <string name="notification_pet_fed">Ți-ai hrănit %s!</string>
     <string name="notification_purchase_reward">Ai achiziționat o recompensă</string>
-    <string name="world_quest">Expediție Globală</string>
     <string name="inn_description">Ai nevoie de o pauză? Cazează-te în Hanul lui Daniel pentru a pune pauză unora din atributele dificile ale jocului:\n\n
 • Cotidienele ratate nu te vor deteriora\n
 • Sarcinile nu-și vor pierde șirurile și nu își vor pierde culoarea\n
@@ -216,7 +197,6 @@
     <string name="invite_existing_users">Invită jucători existenți</string>
     <string name="send">Trimite</string>
     <string name="invite">Găsește membri</string>
-    <string name="invite_email_description">Dacă un prieten se alătura Habitica prin intermediul email-ului tău, aceștia vor fi automat invitați în ceata ta!</string>
     <string name="add_invites">Adaugă Invitații</string>
     <string name="email">Email</string>
     <string name="share_using">Distribuie utilizând</string>
@@ -242,44 +222,29 @@
     <!--QR Strings-->
     <string name="choose_recipient_title">Alege un Destinatar</string>
     <string name="action_continue">Continuă</string>
-    <string name="invited_to_party">Ai fost invitat să te alături unei cete!</string>
     <string name="stats_widget_label">Status Habitica</string>
-    <string name="add_task">Adaugă Sarcină</string>
     <string name="add_habit">Adaugă Obicei</string>
     <string name="add_daily">Adaugă Cotidiene</string>
     <string name="add_todo">Adaugă la lista de sarcini</string>
     <string name="add_reward">Adaugă Recompensă</string>
-    <string name="all_dailies_completed">Ți-ai completat toate cotidienele. Bravo!</string>
     <string name="widget_habit_button">Habitica Respectă Obiceiul</string>
     <string name="widget_dailies">Cotidiene Habitica</string>
     <string name="widget_todo_list">Lista de sarcini Habitica</string>
-    <string name="google_services_missing">Serviciile play Google nu au putut fi găsite.</string>
-    <string name="support_habitica">Susține Habitica</string>
-    <string name="skill_transformation_use">utilizează</string>
-    <string name="hatching_market_info">Nu primești lucrurile pe care ți le dorești? Uită-te prin Târg!</string>
-    <string name="feeding_market_info">Ai nevoie de hrană diferită? Cumpără mai multe de la târg!</string>
-    <string name="open_market">Târg Deschis</string>
-    <string name="cds_description">Cotidienele tale se vor reseta prima dată când utilizezi Habitica după %1$s. Asigură-te că ți-ai completat Cotidienele înainte!</string>
     <string name="AudioTheme_title">Temă Audio</string>
     <string name="AudioTheme_summary">Schimbă Tema Audio Habitica</string>
     <!--Login Incentives-->
     <string name="see_you_tomorrow">Ne vedem mâine!</string>
     <string name="belongs_to_challenge">Aparține unei Provocări</string>
     <string name="has_reminder">Are Memento</string>
-    <string name="has_tag">Are Etichetă</string>
     <string name="subscribe_prompt">Rămâi motivat cu și mai multe recompense când te abonezi</string>
-    <string name="subscriptions">Abonamente</string>
     <string name="subscription_duration">Se repetă la fiecare %s</string>
     <string name="subscribe">Abonează-te</string>
-    <string name="subscription_hourglasses">+%d Clepsidre Mistice</string>
     <string name="payment_method">Metodă de plată</string>
     <string name="subscription">Abonament</string>
     <string name="active">Activ</string>
     <string name="cancel_subscription">Anulează-ți Abonamentul</string>
     <string name="visit_habitica_website">Vizitează Site-ul Habitica</string>
-    <string name="current_bonuses">Bonusuri curente</string>
     <string name="months_subscribed">Luni de abonament</string>
-    <string name="current_hourclasses">Clepsidre Mistice curente</string>
     <string name="monthly_gem_cap">Limită de nestemate lunare</string>
     <string name="inactive">Inactiv</string>
     <string name="one_month">1 Lună</string>
@@ -288,17 +253,10 @@
     <string name="three_months">3 luni</string>
     <string name="six_months">6 luni</string>
     <string name="twelve_months">12 luni</string>
-    <string name="subscribe_prompt_thanks">Pentru că te-ai abonat primești următoarele beneficii utile</string>
-    <string name="subscription_status">Statusul abonamentului</string>
     <string name="challenge_leave_title">Părăsește Provocarea</string>
-    <string name="remove_tasks">Elimină</string>
-    <string name="keep_tasks">Păstrează</string>
     <string name="my_challenges">Provocările mele</string>
     <string name="official">Oficial</string>
     <string name="challenge">Provocare</string>
-    <string name="not_part_of_a_challenge">Nu faci parte din nicio Provocare acum!</string>
-    <string name="join_a_challenge">Alătură-te unei Provocări pentru a adăuga un set special ales de sarcini listei tale, apoi intră în competiție împotriva altor Habiticans pentru a câștiga realizări și chiar nestemate!</string>
-    <string name="check_the_public_challenge_tab">Apasă pe tab-ul ”Public” pentru a găsi Provocările create de utilizatori care sunt cele mai potrivite pentru tine!</string>
     <string name="inbox">Mesaje</string>
     <string name="special">Special</string>
     <string name="gem_for_gold_description">Datorită faptului că ești abonat la Habitica, poți cumpăra un anumit număr de Nestemate în fiecare lună, folosind Aur. </string>
@@ -311,14 +269,11 @@
     <string name="pending_approval">așteaptă acceptul</string>
     <string name="filters">Filtre</string>
     <string name="done">Gata</string>
-    <string name="groups">Grupuri</string>
     <string name="all">Toate</string>
     <string name="none">Niciuna</string>
     <string name="owned">Deținut</string>
     <string name="not_owned">Nedeținut</string>
-    <string name="login_btn_fb">Logare cu Facebook</string>
     <string name="action_back">Înapoi</string>
-    <string name="randomize">Randomizează</string>
     <string name="avatar_extras">Extra</string>
     <string name="avatar_skin_color">Culoarea Pielii</string>
     <string name="avatar_hair_color">Culoarea Părului</string>
@@ -331,7 +286,6 @@
     <string name="gray">Gri</string>
     <string name="dated">Programat</string>
     <string name="completed">Completat</string>
-    <string name="setuP_group_other">Alta</string>
     <string name="clear">Îndepărtează</string>
     <string name="empty_title_habits">Nu ai niciun Obicei</string>
     <string name="empty_description_habits">Obiceiurile sunt sarcini care nu au un program rigid. Poți să le bifezi de mai multe ori pe zi, sau niciodată. </string>
@@ -344,9 +298,6 @@
     <string name="read_community_guidelines">Te rugăm să citești Ghidurile Comunității înainte să postezi</string>
     <string name="maintenance">În Lucru</string>
     <string name="reload_content">Reîmprospătează Conținutul</string>
-    <string name="dailyDueDefaultView">Setează Cotidienele la tabul cu termen limită</string>
-    <string name="dailyDueDefaultViewDescription">Cu această opțiune selectată, Cotidienele tale vor fi setate ca default la ‘termen limită’ în loc de ‘toate’</string>
-    <string name="repeat_summary">Repetă %1$s la fiecare %2$s %3$s %4$s</string>
     <string name="no_billing_gems">Dispozitivul tău nu deține niciun din metodele de plată disponibile. Te rugăm să utilizezi site-ul habitica pentru a achiziționa nestemate.</string>
     <string name="no_billing_subscriptions">Dispozitivul tău nu deține niciun din metodele de plată disponibile. Te rugăm să utilizezi site-ul habitica pentru a te abona.</string>
     <string name="save">Salvează</string>
@@ -358,7 +309,6 @@
     <string name="description_optional">Descriere (opțional)</string>
     <string name="new_challenge_title">Titlul noii Provocări</string>
     <string name="ownership">Proprietate</string>
-    <string name="inn">Han</string>
     <string name="start_quest">Începe o nouă Expediție</string>
     <string name="leave_party">Părăsește Ceata</string>
     <string name="party_description">Descrierea Cetei</string>
@@ -378,7 +328,6 @@
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">mld</string>
-    <string name="available_until" formatted="false">Valabil până la %s</string>
     <string name="gems_left_max" formatted="false">Nestemate Lunare: %1$d/%2$d Rămase</string>
     <string name="gems_left_nomax" formatted="false">Nestemate Lunare: %d Rămase</string>
     <string name="health">Sănătate</string>
@@ -397,14 +346,11 @@
     <string name="reset_account">Resetează Contul</string>
     <string name="delete_account">Șterge Contul</string>
     <string name="delete_account_description">Ești sigur(ă)? Această acțiune îți va șterge contul pentru totdeauna, cu imposibilitatea recuperării acestuia. Pentru a utiliza Habitica din nou, va fi necesar să te înregistrezi cu un cont nou. Nestematele deținute sau cheltuite nu vor fi restituite. Dacă ești absolut sigur(ă), introdu-ți parola în căsuța de mai jos. </string>
-    <string name="reset_account_confirmation">resetează-mi contul</string>
-    <string name="delete_account_confirmation">șterge-mi contul</string>
     <string name="danger_zone">Zona de Pericol</string>
     <string name="resetting_account">Contul se resetează</string>
     <string name="deleting_account">Contul se șterge</string>
     <string name="insufficientGold">Trebuie să mai completezi sarcini înainte să-ți permiți acest obiect!</string>
     <string name="insufficientGems">Ai nevoie de mai multe Nestemate pentru a cumpăra acest obiect!</string>
-    <string name="purchase_gems">Cumpără nestemate</string>
     <string name="insufficientHourglasses">Ai nevoie de mai multe Clepsidre Mistice pentru a cumpăra acest obiect!</string>
     <string name="get_hourglasses">Fă rost de clepsidre</string>
     <string name="subscribe_for_hourglasses">Abonează-te pentru Clepsidre</string>
@@ -422,13 +368,10 @@
     <string name="forgot_password_confirmation">Dacă ai pus la dispoziție o adresă de email, instrucțiuni cu setările noii tale parole au fost trimise.</string>
     <string name="ok">OK</string>
     <string name="profile">Profil</string>
-    <string name="profile_summary">Editează-ți profilul public.</string>
     <string name="display_name">Nume Afișat</string>
     <string name="photo_url">URL-ul Pozei</string>
-    <string name="login_name">Numele de Logare</string>
     <string name="about">Despre</string>
     <string name="app_settings">Setările Aplicației</string>
-    <string name="authentication">Autentificare</string>
     <string name="authentication_summary">Modifică-ți opțiunile de autentificare.</string>
     <string name="change_password">Schimbă Parola</string>
     <string name="change_email">Schimbă Adresa de Email</string>
@@ -456,52 +399,26 @@
     <string name="distribute_evenly_help">Alocă același număr de puncte fiecărui atribut.</string>
     <string name="distribute_class_help">Alocă mai multe puncte atributelor importante pentru Clasa ta. </string>
     <string name="distribute_task_help">Alocă puncte în funcție de categoriile Forță, Inteligență, Constituție, și Percepție asociate cu sarcinile completate.</string>
-    <string name="allocating_points">Alocarea Punctelor</string>
     <string name="class_equipment">Echipament</string>
-    <string name="equipment_empty">Ai deja tot echipamentul! Mai mult va fi pus la dispoziție în timpul Galelor Grand, din apropierea solstițiilor și a echinocțiilor.</string>
     <string name="classless">Fără Clasă</string>
-    <string name="class_equipment_shop_dialog">Acest obiect este disponibil doar unei anumite clase.\nÎți poți modifica clasa din Setări.</string>
     <string name="class_gear_disclaimer">Poți achiziționa doar echipament pentru clasa ta actuală</string>
-    <string name="check_into_inn">Cazează-te în Han</string>
     <string name="community_guidelines">Ghidurile Comunității</string>
-    <string name="view_community_guidelines">Vezi Ghidurile Comunității</string>
-    <string name="guidelines_description">Habitica încearcă să creeze un mediu primitor tuturor utilizatorilor, indiferent de vârsă și proveniență, în special în spații publice precum Taverna. Dacă ai întrebări, te rugăm să consulți ghidurile.</string>
-    <string name="helpful_links">Link-uri utile</string>
-    <string name="view_faq">Vezi FAQ</string>
     <string name="report_bug">Raportează o Eroare</string>
-    <string name="player_tiers">Nivelurile Jucătorului</string>
-    <string name="staff_moderators">Staff și Moderatori</string>
-    <string name="tiers_descriptions">Numele de Utilizator colorat pe care îl vezi în chat reprezintă nivelul de contribuitor al persoanei respective. Cu cât este mai mare nivelul, cu atât mai mult a contribuit persoana pentru Habitica prin artă, cod, comunitate, sau altele!</string>
     <string name="navigation_drawer_open">Deschize sertarul de navigație</string>
     <string name="navigation_drawer_close">Închide sertarul de navigație</string>
-    <string name="world_boss">Căpcăunul Global</string>
     <string name="boss_art">Arta Căpcăunului</string>
     <string name="world_boss_description">Descrierea Căpcăunului Global</string>
-    <string name="rage_strike_count" formatted="false">Lovituri Furioase: %d/%d</string>
-    <string name="pending_strike_title">Lovitură iminentă</string>
-    <string name="strike_description_title">Ce este o Lovitură Furioasă?</string>
-    <string name="strike_active_title" formatted="false">%s a fost Atacat!</string>
-    <string name="strike_active_description">Dragul nostru %1$s a fost devastat atunci când %2$s a distrus %3$s. Îndeplinește-ți sarcinile rapid pentru a înfrânge monstrul și a ajuta la reconstrucție! </string>
     <string name="questShop">Magazinul de Expediții</string>
-    <string name="market_owner_long">Alex Negustorul</string>
-    <string name="tavern_owner_long">Daniel Păzitorul Hanului</string>
-    <string name="stable_owner_long">Matt îngrijitorul animalelor</string>
-    <string name="hide_boss_art">Ascunde Arta Căpcăunului</string>
-    <string name="active_world_boss">Căpcăun Global activ</string>
     <string name="no_party_description">Pleacă în expediții împreună cu prieteni sau singur. Luptă împotriva monștrilor, crează Provocări, și ajută-te să rămâi responsabil cu ajutorul Cetelor. </string>
     <string name="no_party_title">Joacă Habitica într-o Ceată</string>
-    <string name="join_party_title">Vrei să te alături unei cete?</string>
     <string name="id_copied">ID copiat în clipboard</string>
     <string name="insufficientSubscriberGems">Ai cumpărat toate Nestematele pe care le poți cumpăra luna aceasta. Mai multe vor fi puse la dispuziție în primele trei zile ale fiecărei luni. Mulțumim pentru abonare!</string>
-    <string name="world_boss_description_title">Ce este un Căpcăun Global?</string>
     <string name="world_boss_description_intro">Un Căpcăun Șef este un eveniment special în cadrul căruia toată comunitatea lucrează împreună pentru a răpune un monstru cu ajutorul sarcinilor lor!</string>
     <string name="world_boss_description_1">Completează sarcini pentru a deteriora Căpcăunul</string>
     <string name="world_boss_description_2">Căpcăunul nu îți va afecta viața pentru sarcini ratate, dar Furia lui va crește. Dacă instrumentul de măsură se umple, Căpcăunul îl va ataca pe unul din negustori!</string>
     <string name="world_boss_description_3">Poți continua cu Expediții normale împotriva Căpcăunilor, deteriorarea se va aplica ambelor</string>
     <string name="world_boss_description_4">Mergi în Tavernă să vezi progresul Căpcăunului și atacurile Furioase</string>
     <string name="world_boss_action_prompt" formatted="false">Răpune Căpcăunul pentru a primi recompense speciale și pentru a salva Habitica de Teroarea lui %s!</string>
-    <string name="questShop_owner_long">Ian Ghidul Expedițiilor</string>
-    <string name="seasonalShop_owner_long">Vrăjitoarea Sezonului</string>
     <string name="rage_attack">Atac furios:</string>
     <string name="x_and_y">%1$s și %2$s</string>
     <plurals name="repeat_daily">
@@ -531,13 +448,7 @@
     </plurals>
     <string name="about_habitica_open_source">Habitica este disponibil ca software open source pe Github</string>
     <string name="exact_alarm_system_settings_reminders">Mementourile pot fi întârziate deoarece permisiunile nu sunt activate. Atingeți pentru a vizualiza și actualiza permisiunile.</string>
-    <string name="exact_alarm_system_settings_title">`Alarm &amp; Reminders` sunt dezactivate`</string>
-    <string name="exact_alarm_system_settings_description">Permite „Alarme și mementouri” din Setări pentru a te asigura că mementourile apar exact la ora programată</string>
-    <string name="about_libraries">Librării</string>
     <string name="about_rate_our_app">Evaluează aplicația noastră</string>
-    <string name="about_give_us_feedback">Trimite-ne feedback!</string>
-    <string name="on">Pornit</string>
-    <string name="off">Oprit</string>
     <string name="selected">Selectat</string>
     <string name="about_source_code">Codul sursă</string>
     <string name="trillion_abbrev">tln</string>
@@ -545,7 +456,6 @@
     <string name="negative_sentence">negativ</string>
     <string name="not_selected">Neselectat</string>
     <string name="about_bugreport">Raportează o eroare</string>
-    <string name="enable_notifications">Activează Notificările</string>
     <string name="push_notification_system_settings_description">Permite notificările Habitica în Setări pentru a primi notificări push</string>
     <string name="push_notification_system_settings_reminders">Permite notificările Habitica în Setări pentru a primi mementouri</string>
     <string name="push_notification_system_settings_title">Notificările sunt dezactivate</string>

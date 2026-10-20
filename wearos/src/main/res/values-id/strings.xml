@@ -7,11 +7,8 @@
     <string name="some_x">beberapa %s</string>
     <string name="other_options">Pilihan lain</string>
     <string name="ok">OK</string>
-    <string name="syncing_account">Menyinkronkan Akun dari Ponsel</string>
     <string name="how_did_you_do">Bagaimana kabarmu\?</string>
     <string name="you_found">Kamu menemukan…</string>
-    <string name="one_quest_item">1 item Misi</string>
-    <string name="x_quest_item">%d item Misi</string>
     <string name="x_and_y">%1$s dan %2$s</string>
     <string name="create_account">Buat akaun</string>
     <string name="continue_text">Lanjutkan</string>
@@ -29,7 +26,6 @@
     <string name="task_type">Jenis Tugas</string>
     <string name="task_title_hint">Masukkan Judul Tugas</string>
     <string name="sync_data">Sinkronkan Data</string>
-    <string name="hide_task_rewards">Sembunyikan hadiah dari tugas</string>
     <string name="log_out_of_habitica">Keluar dari Habitica\?</string>
     <string name="no_tasks">Buat %s untuk ditambahkan ke daftar ini</string>
     <string name="an_egg">sebutir Telur</string>

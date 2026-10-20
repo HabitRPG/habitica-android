@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="syncing_account">Synchronisation du compte à partir du téléphone</string>
     <string name="how_did_you_do">Comment ça a été ?</string>
     <string name="you_found">Tu as trouvé…</string>
     <string name="some_x">quelques %s</string>
@@ -16,8 +15,6 @@
     <string name="ok">OK</string>
     <string name="x_and_y">%1$s et %2$s</string>
     <string name="you_ran_out_of_hp">Vous n\'avez plus de point de vie</string>
-    <string name="one_quest_item">1 Objet de Quête</string>
-    <string name="x_quest_item">%d Objets de Quête</string>
     <string name="check_on_phone">Vérifier sur le téléphone</string>
     <string name="check_off_yesterday">Validez celle(s) que vous avez faite(s) hier :</string>
     <string name="rya_description">Vous avez des Quotidiennes incomplètes pour la journée d\'hier</string>
@@ -27,7 +24,6 @@
     <string name="task_type">Type de Tâche</string>
     <string name="task_title_hint">Entrer un nom pour cette Tâche</string>
     <string name="sync_data">Synchroniser les données</string>
-    <string name="hide_task_rewards">Cacher les récompenses de tâche</string>
     <string name="log_out_of_habitica">Se déconnecter d\'Habitica ?</string>
     <string name="an_egg">un Œuf</string>
     <string name="a_potion">une Potion</string>

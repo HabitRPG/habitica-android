@@ -39,15 +39,11 @@
     <string name="login_btn">تسجيل الدخول</string>
     <string name="register_btn">يسجل</string>
     <string name="username">اسم المستخدم</string>
-    <string name="email_username">البريد الإلكتروني/اسم المستخدم</string>
     <string name="password">كلمة المرور</string>
-    <string name="emailAddress">عنوان البريد الإلكتروني</string>
     <string name="confirmpassword">إعادة كلمة المرور</string>
     <string name="login_btn_google">تسجيل الدخول باستخدام Google</string>
     <string name="logout">تسجيل الخروج</string>
-    <string name="logout_description">تسجيل الخروج من حسابك</string>
     <string name="LoginActivityName">مرحباً</string>
-    <string name="about_title">حول التطبيق</string>
     <string name="login_validation_error_title">خطأ في التحقق</string>
     <string name="login_validation_error_fieldsmissing">يجب ملء جميع الحقول.</string>
     <plurals name="x_habits">

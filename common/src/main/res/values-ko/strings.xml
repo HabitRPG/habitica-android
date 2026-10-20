@@ -44,13 +44,10 @@
     <string name="register_btn">등록</string>
     <string name="username">아이디</string>
     <string name="password">비밀번호</string>
-    <string name="emailAddress">이메일 주소</string>
     <string name="confirmpassword">비밀번호 확인</string>
     <string name="login_btn_google">구글 계정으로 가입</string>
     <string name="logout">로그아웃</string>
-    <string name="logout_description">계정에서 로그아웃하기</string>
     <string name="LoginActivityName">환영합니다</string>
-    <string name="about_title">더보기</string>
     <string name="login_validation_error_title">검증 오류</string>
     <string name="login_validation_error_fieldsmissing">모든 항목을 채워주셔야 합니다.</string>
     <string name="failed">불러오기에 실패하였습니다</string>
@@ -58,7 +55,6 @@
     <plurals name="x_dailies">
         <item quantity="other">%d 매일 할 일</item>
     </plurals>
-    <string name="email_username">이메일/아이디</string>
     <plurals name="x_habits">
         <item quantity="other">%d 해빗</item>
     </plurals>

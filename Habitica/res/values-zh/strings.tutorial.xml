@@ -13,7 +13,6 @@
     <string name="tutorial_rewards_2">你还可以根据自己的动力源，设定一个真实世界的自定义奖励。</string>
     <string name="tutorial_tasks_complete">暂时就是这些。如果你想要了解更多，请查看常见问题界面。</string>
     <string name="tutorial_skills">技能是具有强大效果的特殊能力！点击技能即可使用它。使用技能需要消耗法力值（蓝色条），你可以通过每天签到和完成现实任务获得法力值。更多信息请查看菜单中的常见问题！</string>
-    <string name="tutorial_party">在这里，你和你的朋友可以互相激励达成目标，并通过完成任务与怪物战斗！</string>
     <string name="tutorial_stats">按下灰色按钮来一次性分配大量属性点，或者按箭头一次分配一个。</string>
     <string name="tutorial_party_created">欢迎加入你的队伍！ 你可以从寻求组队的玩家列表中找到更多成员，或者直接邀请朋友来获得清单魔蛇副本卷轴。
 \n

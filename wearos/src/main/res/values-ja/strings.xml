@@ -3,14 +3,11 @@
     <string name="other_options">ほかのオプション</string>
     <string name="continue_text">続ける</string>
     <string name="you_ran_out_of_hp">体力がなくなりました</string>
-    <string name="x_quest_item">%d個のクエストアイテム</string>
     <string name="x_and_y">%1$sと%2$s</string>
     <string name="some_x">いくつかの%s</string>
     <string name="sign_in">サインイン</string>
     <string name="start_new_day">新たな一日を始める</string>
     <string name="ok">OK</string>
-    <string name="syncing_account">端末からのアカウント同期</string>
-    <string name="one_quest_item">1個のクエストアイテム</string>
     <string name="edit_on_phone">端末で編集</string>
     <string name="sign_in_on_phone">端末でサインイン</string>
     <string name="create_account">アカウントを作成</string>
@@ -21,7 +18,6 @@
     <string name="task_type">タスクのタイプ</string>
     <string name="task_title_hint">タスクのタイトルを入力する</string>
     <string name="sync_data">データの同期</string>
-    <string name="hide_task_rewards">タスクのごほうびを隠す</string>
     <string name="log_out_of_habitica">Habiticaからログアウトしますか？</string>
     <string name="no_tasks">このリストに追加する%sを作成する</string>
     <string name="an_egg">たまご</string>

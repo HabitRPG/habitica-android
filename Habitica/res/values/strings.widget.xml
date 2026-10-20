@@ -30,14 +30,9 @@
     <!-- Dailies count widget -->
     <string name="widget_start_day">Start a new day</string>
     <string name="widget_dailies_done">Dailies done</string>
-    <string name="widget_dailies_left">Dailies left</string>
     <plurals name="widget_dailies_left_to_do">
         <item quantity="one">%1$d left to do</item>
         <item quantity="other">%1$d left to do</item>
-    </plurals>
-    <plurals name="widget_dailies_count_done">
-        <item quantity="one">%1$d done</item>
-        <item quantity="other">%1$d done</item>
     </plurals>
 
     <!-- Signed-out state (shown on every widget when no user is logged in) -->

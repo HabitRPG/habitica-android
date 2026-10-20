@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ok">OK</string>
-    <string name="syncing_account">Sincronizando Cuenta De El Dispositivo Móvil</string>
     <string name="you_found">Encontraste…</string>
     <string name="how_did_you_do">¿Cómo te fue\?</string>
-    <string name="one_quest_item">1 Artículo De Misión</string>
     <string name="some_x">algunos %s</string>
-    <string name="x_quest_item">%d Objetos de Misión</string>
     <string name="x_and_y">%1$s y %2$s</string>
     <string name="you_ran_out_of_hp">No te quedan HP</string>
     <string name="continue_text">Continuar</string>
@@ -29,7 +26,6 @@
     <string name="disconnected">Desconectado</string>
     <string name="sync_data">Sincronizar Información</string>
     <string name="check_on_phone">Comprobar en el teléfono</string>
-    <string name="hide_task_rewards">Esconder recompensas de Tarea</string>
     <string name="some_food">Algo de Comida</string>
     <string name="continue_on_your_phone">Continúa en tu teléfono</string>
     <string name="checklist_disclaimer">Las listas de tareas están disponibles en el teléfono</string>

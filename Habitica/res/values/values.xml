@@ -63,10 +63,6 @@
         <item>12</item>
     </string-array>
 
-    <string-array name="avatar_sizes">
-        <item>@string/avatar_size_slim</item>
-        <item>@string/avatar_size_broad</item>
-    </string-array>
 
     <string-array name="TaskDisplayTypes">
         <item>Standard</item>
@@ -252,49 +248,7 @@
         <item>Flash Extra Gems</item>
     </string-array>
 
-    <string-array name="task_list_modes">
-        <item>@string/standard</item>
-        <item>@string/compact</item>
-        <item>@string/minimal</item>
-    </string-array>
 
-    <string-array name="task_list_modes_values">
-        <item>standard</item>
-        <item>compact</item>
-        <item>minimal</item>
-    </string-array>
 
-    <string-array name="challenge_category_values">
-        <item>habitica_official</item>
-        <item>academics</item>
-        <item>advocacy_causes</item>
-        <item>creativity</item>
-        <item>entertainment</item>
-        <item>finance</item>
-        <item>health_fitness</item>
-        <item>hobbies_occupations</item>
-        <item>location_based</item>
-        <item>mental_health</item>
-        <item>getting_organized</item>
-        <item>self_improvement</item>
-        <item>spirituality</item>
-        <item>time_management</item>
-    </string-array>
 
-    <string-array name="challenge_category_labels">
-        <item>@string/habitica_official</item>
-        <item>@string/academics</item>
-        <item>@string/advocacy_causes</item>
-        <item>@string/creativity</item>
-        <item>@string/entertainment</item>
-        <item>@string/finance</item>
-        <item>@string/health_fitness</item>
-        <item>@string/hobbies_occupations</item>
-        <item>@string/location_based</item>
-        <item>@string/mental_health</item>
-        <item>@string/getting_organized</item>
-        <item>@string/self_improvement</item>
-        <item>@string/spirituality</item>
-        <item>@string/time_management</item>
-    </string-array>
 </resources>

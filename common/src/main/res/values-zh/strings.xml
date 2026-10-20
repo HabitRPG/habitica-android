@@ -13,7 +13,6 @@
     <string name="user_level_long">%d级</string>
     <string name="action_edit">编辑</string>
     <string name="action_cancel">取消</string>
-    <string name="about_title">关于</string>
     <string name="are_you_sure">你确定吗？</string>
     <string name="stats">属性</string>
     <plurals name="x_rewards">
@@ -40,9 +39,7 @@
     <string name="login_btn">登录</string>
     <string name="register_btn">注册</string>
     <string name="username">用户名</string>
-    <string name="email_username">邮箱地址/用户名</string>
     <string name="password">密码</string>
-    <string name="emailAddress">邮箱地址</string>
     <string name="confirmpassword">再次输入密码</string>
     <string name="login_btn_google">使用Google登录</string>
     <string name="logout">退出</string>
@@ -70,7 +67,6 @@
     <string name="failed">加载失败</string>
     <string name="easy_sentence">简单</string>
     <string name="quadrillion_abbrev">q</string>
-    <string name="logout_description">退出账号</string>
     <string name="gold_capitalized">金币</string>
     <string name="trivial">琐事</string>
     <string name="easy">简单</string>

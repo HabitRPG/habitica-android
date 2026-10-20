@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="x_quest_item">%d個副本物品</string>
     <string name="x_and_y">%1$s 與 %2$s</string>
     <string name="some_x">一些%s</string>
     <string name="edit_on_phone">在手機上編輯</string>
     <string name="check_on_phone">在手機上查看</string>
     <string name="sync_data">同步數據</string>
-    <string name="hide_task_rewards">隱藏任務獎勵</string>
     <string name="all_done_today">今日事，今日畢！</string>
     <string name="starting_your_day">開始你的一天…</string>
     <string name="disconnected">已斷開連接</string>
@@ -25,8 +23,6 @@
     <string name="some_food">一些食物</string>
     <string name="continue_text">繼續</string>
     <string name="ok">確定</string>
-    <string name="one_quest_item">1個副本物品</string>
-    <string name="syncing_account">通過手機同步帳戶</string>
     <string name="how_did_you_do">做得怎麼樣？</string>
     <string name="you_found">你找到了...…</string>
     <string name="sign_in">登入</string>
