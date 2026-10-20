@@ -95,17 +95,17 @@ private fun SplitDirections(
 ) {
     Row(modifier = GlanceModifier.fillMaxSize()) {
         DirectionRegion(
-            glyphRes = R.drawable.habit_minus,
-            description = scoreDownCd(),
-            circleColor = circleColor,
-            onClick = onDownClick,
-            modifier = GlanceModifier.defaultWeight().fillMaxHeight(),
-        )
-        DirectionRegion(
             glyphRes = R.drawable.habit_plus,
             description = scoreUpCd(),
             circleColor = circleColor,
             onClick = onUpClick,
+            modifier = GlanceModifier.defaultWeight().fillMaxHeight(),
+        )
+        DirectionRegion(
+            glyphRes = R.drawable.habit_minus,
+            description = scoreDownCd(),
+            circleColor = circleColor,
+            onClick = onDownClick,
             modifier = GlanceModifier.defaultWeight().fillMaxHeight(),
         )
     }
