@@ -117,23 +117,6 @@ class TaskRepositoryImpl(
         force: Boolean,
         notifyFunc: ((TaskScoringResult) -> Unit)?,
     ): TaskScoringResult? {
-        val localData =
-            if (user != null && appConfigManager.value(ClientConfigKey.enableLocalTaskScoring)) {
-                ScoreTaskLocallyInteractor.score(
-                    user,
-                    task,
-                    if (up) TaskDirection.UP else TaskDirection.DOWN,
-                )
-            } else {
-                null
-            }
-        if (user != null && localData != null) {
-            val stats = user.stats
-            val result = TaskScoringResult(localData, stats)
-            notifyFunc?.invoke(result)
-
-            localRepository.handleTaskResponse(user, localData, task, up, 0f)
-        }
         val now = Date().time
         val id = task.id
         if ((lastTaskAction > now - 500 && !force) || id == null) {
@@ -157,10 +140,8 @@ class TaskRepositoryImpl(
             return TaskScoringResult()
         }
         val result = TaskScoringResult(res, thisUser.stats)
-        if (localData == null) {
-            notifyFunc?.invoke(result)
-        }
-        localRepository.handleTaskResponse(thisUser, res, task, up, localData?.delta ?: 0f)
+        notifyFunc?.invoke(result)
+        localRepository.handleTaskResponse(thisUser, res, task, up, 0f)
         return result
     }
 
