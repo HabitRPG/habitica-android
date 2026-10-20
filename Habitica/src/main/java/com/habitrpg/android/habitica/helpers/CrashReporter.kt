@@ -67,8 +67,8 @@ class FirebaseCrashReporter
         FirebaseCrashlytics.getInstance().log(msg)
     }
 
-    override fun logException(t: Throwable) {
-        FirebaseCrashlytics.getInstance().recordException(t)
+    override fun logException(throwable: Throwable) {
+        FirebaseCrashlytics.getInstance().recordException(throwable)
     }
 
     override fun setAnalyticsConsent(consents: Boolean?) {

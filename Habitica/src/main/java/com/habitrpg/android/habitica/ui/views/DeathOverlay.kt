@@ -98,7 +98,7 @@ fun DeathOverlay(
 ) {
     if (!isVisible) return
 
-    val userLevel = user?.stats?.lvl?.toInt()
+    val userLevel = user?.stats?.lvl
     val userGold = user?.stats?.gp?.toInt()
     val isSubscribed = user?.isSubscribed == true
 
@@ -239,10 +239,10 @@ fun DeathOverlay(
                     animationSpec =
                         keyframes {
                             durationMillis = 1000
-                            0f at 0 with FastOutSlowInEasing
-                            0.50f at 350 with LinearOutSlowInEasing
-                            1.65f at 750 with FastOutLinearInEasing
-                            1f at 1000 with FastOutSlowInEasing
+                            0f at 0 using FastOutSlowInEasing
+                            0.50f at 350 using LinearOutSlowInEasing
+                            1.65f at 750 using FastOutLinearInEasing
+                            1f at 1000 using FastOutSlowInEasing
                         },
                 )
             }
@@ -253,10 +253,10 @@ fun DeathOverlay(
                     animationSpec =
                         keyframes {
                             durationMillis = 1000
-                            0f at 0 with FastOutSlowInEasing
-                            0.50f at 350 with LinearOutSlowInEasing
-                            1.65f at 750 with FastOutLinearInEasing
-                            1f at 1000 with FastOutSlowInEasing
+                            0f at 0 using FastOutSlowInEasing
+                            0.50f at 350 using LinearOutSlowInEasing
+                            1.65f at 750 using FastOutLinearInEasing
+                            1f at 1000 using FastOutSlowInEasing
                         },
                 )
                 coinBobbingProgress.animateTo(
@@ -651,11 +651,10 @@ fun DeathOverlay(
             val baseScale = 1.75f * 0.85f * ghostHeartSizeMultiplier
 
             val currentScale = 0.15f + (0.85f * ghostHeartScale.value)
-            val finalScale = baseScale * currentScale
 
             val ghostHeartVerticalPosition = waveTopPosition / 2f - ((157 * baseScale).dp / 2f)
 
-            val startY = -300.dp
+            val startY = (-300).dp
             val ghostHeartOffset = startY + ((ghostHeartVerticalPosition - startY) * ghostHeartProgress.value)
 
             val bobbingOffset = ((bobbingProgress.value * 7f) - 11f).dp
@@ -867,7 +866,6 @@ fun DeathOverlay(
             }
 
             val teal10Color = colorResource(id = R.color.teal_10)
-            val teal1Color = colorResource(id = R.color.teal_1)
             val subPerkBgColor = Color(0xFF005737)
             val subPerkTextColor = Color(0xFF77F4C7)
             Box(
