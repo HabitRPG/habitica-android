@@ -13,7 +13,6 @@
     <string name="user_level_long">Nivå %d</string>
     <string name="action_edit">Ändra</string>
     <string name="action_cancel">Avbryt</string>
-    <string name="about_title">Om</string>
     <string name="are_you_sure">Är du säker\?</string>
     <string name="gems">Juveler</string>
     <string name="stats">Statistik</string>
@@ -38,13 +37,10 @@
     <string name="todos">Att göra</string>
     <string name="todo">Att göra</string>
     <string name="new_task">Ny Uppgift</string>
-    <string name="email_username">E-post/Användarnamn</string>
     <string name="password">Lösenord</string>
-    <string name="emailAddress">E-postadress</string>
     <string name="confirmpassword">Bekräfta lösenord</string>
     <string name="login_btn_google">Logga in med Google</string>
     <string name="logout">Logga ut</string>
-    <string name="logout_description">Logga ut från ditt konto</string>
     <string name="LoginActivityName">Välkommen</string>
     <string name="login_validation_error_fieldsmissing">Du måste fylla i alla fält.</string>
     <plurals name="x_habits">

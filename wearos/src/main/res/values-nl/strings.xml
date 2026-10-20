@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ok">Oké</string>
-    <string name="syncing_account">Synchroniseer account van telefoon</string>
     <string name="how_did_you_do">Hoe ging het\?</string>
     <string name="you_found">Je hebt gevonden…</string>
-    <string name="one_quest_item">1 Queeste item</string>
-    <string name="x_quest_item">%d Queeste items</string>
     <string name="x_and_y">%1$s en %2$s</string>
     <string name="some_x">wat %s</string>
     <string name="edit_on_phone">Bewerk op mobiele telefoon</string>
@@ -21,7 +18,6 @@
     <string name="review_dailies">Bekijk Dagelijkse Taken</string>
     <string name="check_on_phone">Op telefoon bekijken</string>
     <string name="checklist_disclaimer">Takenlijsten zijn beschikbaar op je telefoon</string>
-    <string name="hide_task_rewards">Taakbeloningen verbergen</string>
     <string name="start_new_day">Begin nieuwe dag</string>
     <string name="check_off_yesterday">Streep af wat je gisteren hebt gedaan:</string>
     <string name="task_type">Taaktype</string>

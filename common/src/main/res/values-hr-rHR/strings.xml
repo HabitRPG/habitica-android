@@ -12,7 +12,6 @@
     <string name="user_level_long">Razina %d</string>
     <string name="action_edit">Uredi</string>
     <string name="action_cancel">Otkaži</string>
-    <string name="about_title">O</string>
     <string name="are_you_sure">Jeste li sigurni\?</string>
     <string name="stats">Statistika</string>
     <string name="trillion_abbrev">bln.</string>
@@ -50,13 +49,10 @@
     <string name="new_task">Novi Zadatak</string>
     <string name="avatar">Avatar</string>
     <string name="username">Korisničko ime</string>
-    <string name="email_username">Email/Korisničko ime</string>
     <string name="password">Zaporka</string>
-    <string name="emailAddress">Email adresa</string>
     <string name="confirmpassword">Ponovi zaporku</string>
     <string name="login_btn_google">Prijavi se putem Googlea</string>
     <string name="logout">Odjava</string>
-    <string name="logout_description">Odjavi se sa svog računa</string>
     <string name="login_validation_error_title">Pogreška provjere valjanosti</string>
     <string name="login_validation_error_fieldsmissing">Morate ispuniti sva polja.</string>
     <plurals name="x_habits">

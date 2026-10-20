@@ -13,11 +13,9 @@
     <string name="user_level_long">Niveau %d</string>
     <string name="action_edit">Bewerk</string>
     <string name="action_cancel">Annuleren</string>
-    <string name="about_title">Over</string>
     <string name="are_you_sure">Weet je het zeker\?</string>
     <string name="stats">Statistieken</string>
     <string name="trivial_sentence">triviaal</string>
-    <string name="email_username">Email/Gebruikersnaam</string>
     <string name="password">Wachtwoord</string>
     <string name="login_validation_error_fieldsmissing">Je moet alle velden invullen.</string>
     <plurals name="x_habits">
@@ -67,7 +65,6 @@
     <string name="habit">Gewoonte</string>
     <string name="LoginActivityName">Welkom</string>
     <string name="easy_sentence">makkelijk</string>
-    <string name="emailAddress">Email adres</string>
     <string name="confirmpassword">Wachtwoord bevestigen</string>
     <string name="login_btn_google">Inloggen met Google</string>
     <string name="logout">Uitloggen</string>
@@ -76,7 +73,6 @@
     <string name="username">Gebruikersnaam</string>
     <string name="login_validation_error_title">Verificatiefout</string>
     <string name="failed">Laden mislukt</string>
-    <string name="logout_description">Uitloggen</string>
     <string name="login_btn">Inloggen</string>
     <string name="quadrillion_abbrev">q</string>
 </resources>

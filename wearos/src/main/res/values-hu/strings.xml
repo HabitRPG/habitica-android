@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ok">OK</string>
-    <string name="syncing_account">Fiók szinkronizálása a telefonról</string>
     <string name="how_did_you_do">Hogy ment\?</string>
     <string name="you_found">Te találtál…</string>
-    <string name="one_quest_item">1 küldetési tárgyat</string>
-    <string name="x_quest_item">%d küldetési tárgyat</string>
     <string name="x_and_y">%1$s és %2$s</string>
     <string name="some_x">néhány %s</string>
     <string name="edit_on_phone">Szerkesztés telefonon</string>
@@ -31,7 +28,6 @@
     <string name="task_title_hint">Írd be a feladat címét</string>
     <string name="save">Mentés</string>
     <string name="sync_data">Adatok szinkronizálása</string>
-    <string name="hide_task_rewards">Feladat jutalmak elrejtése</string>
     <string name="version_info">%1$s (%2$d) verzió</string>
     <string name="log_out_of_habitica">Kijelentkezés a Habiticából\?</string>
     <string name="some_food">némi élelem</string>

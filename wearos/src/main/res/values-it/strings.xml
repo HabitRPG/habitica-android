@@ -2,11 +2,8 @@
 <resources>
     <string name="some_x">un po\' di %s</string>
     <string name="ok">OK</string>
-    <string name="syncing_account">Sincronizzazione dell\'account dal telefono</string>
     <string name="how_did_you_do">Com\'è andata\?</string>
     <string name="you_found">Hai trovato…</string>
-    <string name="one_quest_item">1 Oggetto della missione</string>
-    <string name="x_quest_item">%d Oggetti missione</string>
     <string name="x_and_y">%1$s e %2$s</string>
     <string name="edit_on_phone">Modifica sul telefono</string>
     <string name="sign_in">Accedi</string>
@@ -35,7 +32,6 @@
     <string name="task_title_hint">Inserisci il titolo dell\'attività</string>
     <string name="save">Salva</string>
     <string name="sync_data">Sincronizza i dati</string>
-    <string name="hide_task_rewards">Nascondi le ricompense per le attività</string>
     <string name="an_egg">un Uovo</string>
     <string name="all_done_today">Tutto finito per oggi!</string>
     <string name="starting_your_day">Inizia la tua giornata...</string>

@@ -15,7 +15,6 @@
     <string name="user_level_long">Niveau %d</string>
     <string name="action_edit">Modifier</string>
     <string name="action_cancel">Annuler</string>
-    <string name="about_title">À propos</string>
     <string name="are_you_sure">Confirmez-vous \?</string>
     <string name="task">Tâche</string>
     <string name="avatar">Avatar</string>
@@ -35,10 +34,8 @@
         <item quantity="many">%d Tâches quotidiennes</item>
         <item quantity="other">%d Tâches quotidiennes</item>
     </plurals>
-    <string name="emailAddress">Adresse e-mail</string>
     <string name="confirmpassword">Entrez à nouveau le mot de passe</string>
     <string name="login_btn_google">S\'identifier avec Google</string>
-    <string name="logout_description">Déconnectez-vous de votre compte</string>
     <string name="LoginActivityName">Bienvenue</string>
     <string name="login_validation_error_title">Erreur de validation</string>
     <string name="new_task">Nouvelle tâche</string>
@@ -83,5 +80,4 @@
         <item quantity="other">%d Tâches à faire</item>
     </plurals>
     <string name="complete_task_title">Terminer une Tâche</string>
-    <string name="email_username">Email/Nom d\'Utilisateur</string>
 </resources>

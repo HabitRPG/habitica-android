@@ -15,7 +15,6 @@
 \n
 \nLátogasd meg a Támogatás menüt, ha többet szeretnél megtudni a csapatokról.</string>
     <string name="tutorial_skills">A képességek különleges erők, amelyek hatékony bónuszokat adnak! Koppints egy képességre, hogy használd. Ez manába (a kék sáv) kerül, amit napi bejelentkezéssel és a való életbeli feladataid teljesítésével szerezhetsz. További infóért nézd meg a GYIK-et a menüben!</string>
-    <string name="tutorial_party">Itt tudjátok egymást felelősségre vonni a céljaitokért, és a feladataitok segítségével szörnyekkel harcolhattok!</string>
     <string name="tutorial_stats">Koppints a szürke gombra, hogy egyszerre több statisztikai pontot ossz el vagy a nyilakra, hogy egyesével adj hozzá.</string>
     <string name="tutorial_dailies_1">Készíts napi teendőket azokra a feladatokra, amelyeket rendszeresen, meghatározott időközönként kell elvégezni.</string>
 </resources>

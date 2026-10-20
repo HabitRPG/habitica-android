@@ -37,13 +37,10 @@
     <string name="login_btn">Prihlásiť sa</string>
     <string name="username">Používateľské Meno</string>
     <string name="password">Heslo</string>
-    <string name="emailAddress">Emailová adresa</string>
     <string name="confirmpassword">Potvrdiť heslo</string>
     <string name="login_btn_google">Prihlásiť sa cez Google</string>
     <string name="logout">Odhlásiť sa</string>
-    <string name="logout_description">Odhlásiť sa z konta</string>
     <string name="LoginActivityName">Vitajte</string>
-    <string name="about_title">O</string>
     <string name="login_validation_error_fieldsmissing">Musíte vyplniť všetky polia.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Zvyk</item>
@@ -71,7 +68,6 @@
     <string name="mystic_hourglasses">Mýtické Presýpacie Hodiny</string>
     <string name="todo">Úloha</string>
     <string name="register_btn">Zaregistrovať sa</string>
-    <string name="email_username">Email/Používateľské Meno</string>
     <string name="login_validation_error_title">Chyba v Overovaní</string>
     <plurals name="x_todos">
         <item quantity="one">%d Úloha</item>

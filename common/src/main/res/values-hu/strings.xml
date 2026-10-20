@@ -50,15 +50,11 @@
     <string name="create_task">%s létrehozása</string>
     <string name="register_btn">Regisztráció</string>
     <string name="username">Felhasználónév</string>
-    <string name="email_username">E-mail/felhasználónév</string>
     <string name="password">Jelszó</string>
-    <string name="emailAddress">E-mail cím</string>
     <string name="confirmpassword">Jelszó ismétlése</string>
     <string name="login_btn_google">Bejelentkezés Google fiókkal</string>
     <string name="logout">Kijelentkezés</string>
-    <string name="logout_description">Kijelentkezés a fiókból</string>
     <string name="LoginActivityName">Üdvözlünk</string>
-    <string name="about_title">Névjegy</string>
     <string name="login_validation_error_title">Hibás adatok</string>
     <string name="login_validation_error_fieldsmissing">Minden mezőt ki kell töltened.</string>
     <plurals name="x_habits">

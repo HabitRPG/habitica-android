@@ -35,13 +35,10 @@
     <string name="register_btn">Daftar</string>
     <string name="username">Nama Pengguna</string>
     <string name="password">Kata sandi</string>
-    <string name="emailAddress">Alamat Email</string>
     <string name="confirmpassword">Ulangi kata sandi</string>
     <string name="login_btn_google">Masuk melalui Google</string>
     <string name="logout">Keluar</string>
-    <string name="logout_description">Keluar dari akunmu</string>
     <string name="LoginActivityName">Selamat Datang</string>
-    <string name="about_title">Tentang</string>
     <string name="login_validation_error_title">Validasi Gagal</string>
     <string name="login_validation_error_fieldsmissing">Kamu harus mengisi semua kolom.</string>
     <plurals name="x_rewards">
@@ -54,7 +51,6 @@
     <string name="task">Tugas</string>
     <string name="quadrillion_abbrev">q</string>
     <string name="trivial_sentence">remeh</string>
-    <string name="email_username">Email/Nama Pengguna</string>
     <plurals name="x_habits">
         <item quantity="other">%d Kebiasaan</item>
     </plurals>

@@ -3,8 +3,6 @@
     <string name="save">저장</string>
     <string name="levelup_description">열심히 노력한 결과 레벨이 올랐습니다!</string>
     <string name="ok">좋아요</string>
-    <string name="syncing_account">휴대폰에서 계정 동기화 중</string>
-    <string name="one_quest_item">1 퀘스트 아이템</string>
     <string name="other_options">다른 옵션</string>
     <string name="create_account">계정 만들기</string>
     <string name="continue_text">계속</string>
@@ -15,7 +13,6 @@
     <string name="disconnected">연결이 끊어짐</string>
     <string name="task_title_hint">과제 제목 입력</string>
     <string name="sync_data">데이터 동기화</string>
-    <string name="hide_task_rewards">과제 리워드 숨기기</string>
     <string name="version_info">버전 %1$s (%2$d)</string>
     <string name="log_out_of_habitica">Habitica에서 로그아웃 하시겠습니까\?</string>
     <string name="no_tasks">이 목록에 추가하기 위하여 %s를(을) 생성</string>
@@ -25,7 +22,6 @@
     <string name="continue_on_your_phone">휴대폰에서 이어 하기</string>
     <string name="how_did_you_do">어떻게 되었나요\?</string>
     <string name="you_found">당신이 찾은 것은…</string>
-    <string name="x_quest_item">%d 퀘스트 아이템</string>
     <string name="some_x">약간의 %s</string>
     <string name="edit_on_phone">휴대폰으로 편집</string>
     <string name="sign_in">가입하기</string>

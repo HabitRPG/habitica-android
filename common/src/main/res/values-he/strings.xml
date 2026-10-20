@@ -9,7 +9,6 @@
     <string name="action_cancel">בטלו הזמנה</string>
     <string name="are_you_sure">האם אתם בטוחים\?</string>
     <string name="stats">מדדים</string>
-    <string name="about_title">אודות</string>
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
@@ -45,13 +44,10 @@
     <string name="user_level_long">דרגה %d</string>
     <string name="login_btn">כניסה</string>
     <string name="username">שם משתמש</string>
-    <string name="email_username">אימייל/שם משתמש</string>
     <string name="password">סיסמה</string>
-    <string name="emailAddress">כתובת אימייל</string>
     <string name="confirmpassword">אישור סיסמה</string>
     <string name="login_btn_google">כניסה באמצעות גוגל</string>
     <string name="logout">יציאה</string>
-    <string name="logout_description">יציאה מהחשבון שלך</string>
     <string name="LoginActivityName">ברוכים הבאים</string>
     <string name="login_validation_error_title">תקלה באימות</string>
     <string name="login_validation_error_fieldsmissing">עליך למלא את כל השדות.</string>

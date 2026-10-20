@@ -13,7 +13,6 @@
     <string name="user_level_long">Уровень %d</string>
     <string name="action_edit">Редактировать</string>
     <string name="action_cancel">Отменить</string>
-    <string name="about_title">О себе</string>
     <string name="are_you_sure">Вы уверены\?</string>
     <string name="gems">Самоцветы</string>
     <string name="gold_capitalized">Золото</string>
@@ -36,12 +35,9 @@
     <string name="login_btn">Вход</string>
     <string name="register_btn">Регистрация</string>
     <string name="username">Имя пользователя</string>
-    <string name="email_username">Электронная почта/Имя пользователя</string>
     <string name="password">Пароль</string>
-    <string name="emailAddress">Электронная почта</string>
     <string name="login_btn_google">Войти через Google</string>
     <string name="logout">Выйти</string>
-    <string name="logout_description">Выйти из аккаунта</string>
     <string name="LoginActivityName">Добро пожаловать</string>
     <plurals name="x_habits">
         <item quantity="one">%d привычка</item>

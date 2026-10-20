@@ -35,13 +35,10 @@
     <string name="register_btn">Zarejestruj się</string>
     <string name="username">Nazwa użytkownika</string>
     <string name="password">Hasło</string>
-    <string name="emailAddress">Adres e-mail</string>
     <string name="confirmpassword">Potwierdź hasło</string>
     <string name="login_btn_google">Zaloguj się przez Google</string>
     <string name="logout">Wyloguj</string>
-    <string name="logout_description">Wyloguj się z konta</string>
     <string name="LoginActivityName">Witaj</string>
-    <string name="about_title">O nas</string>
     <string name="login_validation_error_title">Błąd walidacji</string>
     <string name="login_validation_error_fieldsmissing">Musisz wypełnić wszystkie pola.</string>
     <plurals name="x_rewards">
@@ -56,7 +53,6 @@
     <string name="new_task_x">Nowy %s</string>
     <string name="are_you_sure">Na pewno\?</string>
     <string name="task">Zadanie</string>
-    <string name="email_username">E-mail/Nazwa użytkownika</string>
     <string name="save_task_x">Zapisz %s</string>
     <string name="retry">Spróbuj ponownie</string>
     <string name="failed">Nie udało się załadować zawartości</string>

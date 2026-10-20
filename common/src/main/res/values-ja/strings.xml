@@ -17,7 +17,6 @@
     <string name="action_edit">編集</string>
     <string name="action_cancel">キャンセル</string>
     <string name="username">ユーザー名</string>
-    <string name="about_title">Habiticaについて</string>
     <string name="are_you_sure">よろしいですか？</string>
     <string name="gems">ジェム</string>
     <string name="gold_plural">ゴールド</string>
@@ -36,13 +35,10 @@
     <string name="user_level">レベル %d</string>
     <string name="login_btn">ログイン</string>
     <string name="register_btn">登録</string>
-    <string name="email_username">Eメール / ユーザー名</string>
     <string name="password">パスワード</string>
-    <string name="emailAddress">メールアドレス</string>
     <string name="confirmpassword">パスワード（確認）</string>
     <string name="login_btn_google">Google アカウントでサインイン</string>
     <string name="logout">ログアウト</string>
-    <string name="logout_description">ログアウトする</string>
     <string name="LoginActivityName">ようこそ</string>
     <string name="login_validation_error_title">確認エラー</string>
     <string name="login_validation_error_fieldsmissing">全ての入力欄に入力してください。</string>

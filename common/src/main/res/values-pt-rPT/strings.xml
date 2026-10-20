@@ -12,7 +12,6 @@
     <string name="settings">Configurações</string>
     <string name="action_edit">Editar</string>
     <string name="action_cancel">Cancelar</string>
-    <string name="about_title">Sobre</string>
     <string name="are_you_sure">Tem certeza\?</string>
     <string name="task">Tarefa</string>
     <string name="trillion_abbrev">t</string>
@@ -37,11 +36,9 @@
     <string name="register_btn">Registrar</string>
     <string name="username">Nome de usuário</string>
     <string name="password">Senha</string>
-    <string name="emailAddress">Endereço de e-mail</string>
     <string name="confirmpassword">Confirmar senha</string>
     <string name="login_btn_google">Entrar com a conta Google</string>
     <string name="logout">Terminar Sessão</string>
-    <string name="logout_description">Termine a sessão da sua conta</string>
     <string name="LoginActivityName">Bem-vindo</string>
     <string name="login_validation_error_title">Erro de Validação</string>
     <string name="login_validation_error_fieldsmissing">Tem que preencher todos os campos.</string>
@@ -63,7 +60,6 @@
         <item quantity="many">%d Hábitos</item>
         <item quantity="other"/>
     </plurals>
-    <string name="email_username">Email/Nome de Usuário</string>
     <string name="avatar">Avatar</string>
     <plurals name="x_dailies">
         <item quantity="one">%d Diário</item>

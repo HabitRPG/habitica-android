@@ -14,7 +14,6 @@
     <string name="user_level_long">Level %d</string>
     <string name="action_edit">Bearbeiten</string>
     <string name="action_cancel">Einladung abbrechen</string>
-    <string name="about_title">Über</string>
     <string name="are_you_sure">Bist Du sicher\?</string>
     <string name="task">Aufgabe</string>
     <string name="gems">Edelsteine</string>
@@ -37,13 +36,10 @@
     <string name="login_btn">Login</string>
     <string name="register_btn">Registrieren</string>
     <string name="username">Benutzername</string>
-    <string name="email_username">E-Mail / Benutzername</string>
     <string name="password">Passwort</string>
-    <string name="emailAddress">E-Mail-Adresse</string>
     <string name="login_btn_google">Mit Google einloggen</string>
     <string name="confirmpassword">Passwort wiederholen</string>
     <string name="logout">Ausloggen</string>
-    <string name="logout_description">Logge Dich aus</string>
     <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Gewohnheit</item>

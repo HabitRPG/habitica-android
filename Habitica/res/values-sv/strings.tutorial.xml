@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tutorial_todos_1">Använd Att göra för att hålla reda på uppgifter som du bara behöver göra en gång.</string>
-    <string name="tutorial_party">Det är här du och dina vänner kan hålla varandra ansvariga för era mål och slåss mot monster med era uppgifter!</string>
     <string name="tutorial_party_created">Välkommen till ditt Sällskap! Du kan hitta fler medlemmar i en lista med spelare som letar efter ett sällskap, eller bjuda in vänner direkt för att tjäna Basi-Lista uppdragsskriftrullen.
 \n
 \nBesök Supporten för att läsa mer om Sällskap.</string>

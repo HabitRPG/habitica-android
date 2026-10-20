@@ -3,7 +3,6 @@
     <string name="ok">好的</string>
     <string name="x_and_y">%1$s和%2$s</string>
     <string name="task_type">任务类型</string>
-    <string name="x_quest_item">%d个副本物品</string>
     <string name="some_x">一些%s</string>
     <string name="edit_on_phone">用手机编辑</string>
     <string name="other_options">其他选项</string>
@@ -15,7 +14,6 @@
     <string name="check_off_yesterday">勾选你昨天做过的任务：</string>
     <string name="task_title_hint">输入任务标题</string>
     <string name="save">保存</string>
-    <string name="hide_task_rewards">隐藏任务奖励</string>
     <string name="log_out_of_habitica">登出Habitica？</string>
     <string name="no_tasks">创建一个 %s 添加到此列表</string>
     <string name="an_egg">一枚蛋</string>
@@ -29,10 +27,8 @@
     <string name="checklist_disclaimer">任务的清单可在手机上查看</string>
     <string name="continue_on_your_phone">在手机上继续</string>
     <string name="all_done_today">今日任务已全部完成！</string>
-    <string name="syncing_account">通过手机同步账户</string>
     <string name="how_did_you_do">做得怎么样？</string>
     <string name="you_found">你找到了…</string>
-    <string name="one_quest_item">1个副本物品</string>
     <string name="sign_in">登录</string>
     <string name="sync_data">同步数据</string>
     <string name="rya_description">昨天有未完成的日常任务</string>

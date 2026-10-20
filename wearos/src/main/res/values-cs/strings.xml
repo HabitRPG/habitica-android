@@ -2,11 +2,8 @@
 <resources>
     <string name="start_new_day">Začněte nový den</string>
     <string name="ok">OK</string>
-    <string name="syncing_account">Synchronizace účtu z telefonu</string>
     <string name="how_did_you_do">Jak se ti dařilo\?</string>
     <string name="you_found">Našli jste…</string>
-    <string name="one_quest_item">1 Úkolový předmět</string>
-    <string name="x_quest_item">%d Předměty úkolů</string>
     <string name="checklist_disclaimer">Kontrolní seznamy úkolů jsou k dispozici na telefonu</string>
     <string name="sign_in_on_phone">Přihlásit se v telefonu</string>
     <string name="other_options">Další možnosti</string>

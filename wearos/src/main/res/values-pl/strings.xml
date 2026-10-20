@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ok">OK</string>
-    <string name="syncing_account">Synchronizowanie konta z telefonem</string>
     <string name="you_found">Znalazłeś…</string>
     <string name="version_info">Wersja %1$s (%2$d)</string>
     <string name="create_account">Stwórz konto</string>
     <string name="save">Zapisz</string>
     <string name="sync_data">Synchronizuj Dane</string>
-    <string name="hide_task_rewards">Schowaj nagrody za zadania</string>
     <string name="no_tasks">Stwórz %s do dodania do tej listy</string>
     <string name="an_egg">jajko</string>
     <string name="a_potion">mikstura</string>
@@ -15,10 +13,8 @@
     <string name="continue_on_your_phone">Kontynuuj na telefonie</string>
     <string name="task_title_hint">Wpisz Nazwę Zadania</string>
     <string name="log_out_of_habitica">Wylogować z Habitici\?</string>
-    <string name="one_quest_item">1 przedmiot Misji</string>
     <string name="edit_on_phone">Edytuj na telefonie</string>
     <string name="sign_in">Zaloguj się</string>
-    <string name="x_quest_item">%d przedmiotów Misji</string>
     <string name="how_did_you_do">Jak Ci poszło\?</string>
     <string name="x_and_y">%1$s i %2$s</string>
     <string name="some_x">trochę/niektóre %s</string>

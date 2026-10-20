@@ -7,11 +7,8 @@
     <!--Prefs-->
     <string name="PS_settings_title">הגדרות</string>
     <string name="SP_userID_title">מזהה משתמש</string>
-    <string name="SP_userID_summary">מזהה המשתמש שלכם</string>
     <string name="SP_APIToken_title">מפתח API</string>
-    <string name="SP_APIToken_summary">מפתח ה API שלכם</string>
     <string name="Language_title">שפה</string>
-    <string name="PS_contact_title">צרו איתי קשר</string>
     <string name="pref_account_header">חשבון</string>
     <string name="pref_first_day_of_the_week_title">היום הראשון בשבוע</string>
     <string name="pref_reminder_header">תזכורת יומית</string>
@@ -27,10 +24,8 @@
     <string name="preference_push_your_quest_has_begun">ההרפתקה שלכם החלה</string>
     <string name="preference_push_invited_to_quest">הוזמנו להרפתקה</string>
     <!--Adding tasks-->
-    <string name="about_libraries">ספריות</string>
     <string name="about_habitica_open_source">האביטיקה זמינה כתוכנה במקור פתוח בגיטהאב</string>
     <string name="about_rate_our_app">דרגו את האפליקציה שלנו</string>
-    <string name="about_give_us_feedback">שלחו לנו משוב!</string>
     <string name="about_bugreport">דווחו על תקלה</string>
     <string name="about_source_code">קוד מקור</string>
     <!--Network Errors-->
@@ -55,14 +50,11 @@
     <string name="saturday">שבת</string>
     <string name="sunday">ראשון</string>
     <string name="onwards">ישש!</string>
-    <string name="faint_subtitle">אל ייאוש!</string>
-    <string name="faint_header">נגמרה לכם הבריאות!</string>
     <string name="faint_button">מלאו בריאות ונסו מחדש</string>
     <string name="filter">מסנן</string>
     <string name="new_checklist_item">שורה חדשה לרשימה</string>
     <string name="unlock_lvl_11">משתחרר בדרגה 11</string>
     <string name="forgot_pw_btn">שכחתי סיסמה</string>
-    <string name="tavern_inn_checkOut">הפעילו מחדש את המטלות היומיות שלכם</string>
     <string name="tavern_inn_rest">עצרו את המטלות היומיות שלכם</string>
     <string name="reward_dialog_buy">קנייה</string>
     <string name="reward_dialog_dismiss">בטל</string>
@@ -76,26 +68,18 @@
     <string name="avatar_hair">שיער</string>
     <string name="avatar_shirt">חולצה</string>
     <string name="avatar_skin">עור</string>
-    <string name="avatar_base">בסיס</string>
-    <string name="avatar_color">צבע</string>
     <string name="avatar_beard">זקן</string>
     <string name="avatar_mustache">שפם</string>
     <string name="avatar_flower">פרח</string>
-    <string name="avatar_bangs">טלטלים</string>
     <string name="avatar_size">גודל</string>
     <string name="avatar_size_slim">רזה</string>
     <string name="avatar_size_broad">רחב</string>
     <string name="avatar_background">רקע</string>
-    <string name="purchase_customization">ריכשו התאמה אישית</string>
-    <string name="purchase_set_button">שחררו סט בעבור %d אבני חן</string>
-    <string name="purchase_button">קנייה</string>
-    <string name="purchase_set_title">קנו סט %s</string>
     <string name="due_date">תאריך יעד</string>
     <string name="quest_accept">קבלו</string>
     <string name="quest_reject">דחו</string>
     <string name="quest_begin">התחילו הרפתקאה</string>
     <string name="quest_cancel">בטלו הזמנה</string>
-    <string name="quest_abort">הפסיקו את ההרפתקאה</string>
     <string name="sidebar_help">עזרה ושאלות נפוצות</string>
     <string name="complete_tutorial">הבנתי!</string>
     <string name="dismiss_tutorial">הזכר לי שוב</string>
@@ -164,14 +148,11 @@
     <string name="hatch_egg">הבקיעו עם ביצה</string>
     <string name="invite_party">הזמינו חבורה</string>
     <string name="dialog_feeding">האכלתם %s עם:</string>
-    <string name="use_animal">השתמשו</string>
     <string name="feed">האכילו</string>
     <string name="hatch_with">הבקיעו חיית מחמד עם %s</string>
     <string name="hatched_pet_title">הבקעתם %1$s %2$s!</string>
     <string name="close">סיגרו</string>
     <string name="share">שתפו</string>
-    <string name="notification_pet_fed">האכלתם את ה %s שלכם!</string>
-    <string name="world_quest">הרפתקאה עולמית</string>
     <string name="empty_items">אין לכם כל %s</string>
     <string name="user_level_with_class">%2$s בדרגה %1$d</string>
     <string name="warrior">לוחם</string>
@@ -194,7 +175,6 @@
     <string name="invite_existing_users">הזמינו משתמשים קיימים</string>
     <string name="send">שליחה</string>
     <string name="invite">איתור משתתפים</string>
-    <string name="invite_email_description">אם חברים מצטרפים להביטיקה דרך כתובת הדואר האלקטרוני שלך, הם יוזמנו אוטומטית לחבורה שלך!</string>
     <string name="add_invites">הזמנת חברים נוספים</string>
     <string name="email">דואר אלקטרוני</string>
     <string name="share_using">שיתוף באמצעות</string>
@@ -215,11 +195,9 @@
     <string name="choose_recipient_title">בחרו נמען להודעה</string>
     <string name="action_continue">המשך</string>
     <!--Login Incentives-->
-    <string name="subscriptions">הרשמות</string>
     <string name="subscribe">הרשמה</string>
     <string name="Language_summary">שינוי השפה של הביטיקה</string>
     <string name="pref_first_day_of_the_week_summary">היום הראשון בשבוע בכל לוחות השנה</string>
-    <string name="pref_cds_header">התחלה ביום מותאם אישית</string>
     <string name="push_notifications_sum">הגדרות התראות הדחיפה</string>
     <string name="preference_push_invited_to_guild">הוזמנת לגילדה</string>
     <string name="repeatables_frequency_daily">יומי</string>
@@ -235,9 +213,6 @@
     <string name="version_info">גרסה %1$s (%2$d)</string>
     <string name="intro_1_subtitle">ברוך בואך אל</string>
     <string name="new_bailey_update">לביילי יש חדשות בשבילך!</string>
-    <string name="register_btn_google">הרשמה דרך Google</string>
-    <string name="register_btn_fb">הרשמה דרך פייסבוק</string>
-    <string name="getting_started">תחילת השימוש</string>
     <string name="lets_get_started">בואו נתחיל</string>
     <string name="x_and_y">%1$s ו %2$s</string>
     <string name="save">לשמור</string>
@@ -246,28 +221,20 @@
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
     <string name="exact_alarm_system_settings_reminders">ייתכן ולא תקבלו תזכורות מאחר ולא התקבלה ההרשאה להתראות. לחצו לצפייה הגדרת ההרשאות.</string>
-    <string name="enable_notifications">הפעלת תזכורות</string>
     <string name="push_notification_system_settings_reminders">תנו להביטיקה הרשאה להתראות בהגדרות האפקליקציה לקבלת תזכורות</string>
     <string name="push_notification_system_settings_description">תנו להביטיקה הרשאה להתראות בהגדרות של האפליקציה על מנת שתוכלו לקבל התראות דחיפה</string>
     <string name="push_notification_system_settings_title">התראות מושבתות</string>
     <string name="intro_2_title">התקדמות בחיים</string>
     <string name="add_reward">הוספת פרס</string>
-    <string name="hatching_market_info">לא מצליחים למצוא את החפצים המתאימים\? נסו את השוק!</string>
-    <string name="cds_description">היומיות שלכם יתאפסו בפעם הראשונה שתיכנסו להביטיקה אחרי %1$s. וודאו שהשלמתם את כל היומיות לפני הזמן הזה!</string>
     <plurals name="x_minutes">
         <item quantity="one">דקה</item>
         <item quantity="two">%d דקות</item>
         <item quantity="many">%d דקות</item>
         <item quantity="other"/>
     </plurals>
-    <string name="exact_alarm_system_settings_title">`התראות ותזכורות` מושבת`</string>
-    <string name="exact_alarm_system_settings_description">אשרו `התראות ותזכורות` בהגדרות האפליקציה על מנת לוודא שאכן תקבלו את ההתראות לפי לוח הזמן שקבעתם</string>
     <string name="positive_sentence">חיובית</string>
     <string name="negative_sentence">שלילית</string>
-    <string name="on">מופעל</string>
-    <string name="off">כבוי</string>
     <string name="selected">נבחר</string>
-    <string name="skill_progress_title">שימוש ביכולת</string>
     <plurals name="x_days">
         <item quantity="one">יום</item>
         <item quantity="two">יומיים</item>
@@ -283,7 +250,6 @@
     </plurals>
     <string name="notification_purchase_reward">רכשת פרס</string>
     <string name="level_abbreviated">דרגה %d</string>
-    <string name="user_level_with_class_unabbreviated">%2$s בדרגה %1$d</string>
     <string name="choosing_class_progress">בחרו מקצוע</string>
     <string name="change_class_selected_confirmation">לשנות מקצוע ל%1$s\?</string>
     <string name="empty_inbox">אין לכם הודעות. תוכלו לשלוח הודעה חדשה למשתמש אחר דרך הודעות הצ\'ט הציבוריות שלהם!</string>
@@ -295,7 +261,6 @@
     <string name="your_tags">התגיות שלכם</string>
     <string name="challenge_tags">תגיות אתגרים</string>
     <string name="group_tags">תגיות חבורה</string>
-    <string name="add_task">הוספת משימה</string>
     <string name="gem_purchase_listitem4">היכולת לשנות את המקצוע שלכם לפני דרגה 100</string>
     <string name="subscribe_listitem1">אבני חן בחינם כל חודש</string>
     <string name="ago_1Minute">לפני דקה</string>
@@ -308,14 +273,11 @@
     <string name="opt_out_description">אתם תישארו ללא מקצוע. תוכלו לבחור מקצוע בכל עת על ידי הפעלת מערכת המקצועות בהגדרות.</string>
     <string name="change_class_message">פעולה זו תסיר ממך את המקצוע הנוכחי ותזכה אותך בכל נקודות המדדים, ואז יהיה אפשר לבחור מקצוע חדש</string>
     <string name="change_class_equipment_warning">פעולה זו תזכה את נקודות המדדים שלך, תחליף את הציוד הזמין בחנויות, ותשנה את היכולות שלך.</string>
-    <string name="all_dailies_completed">השלמתם את כל המטלות היומיות שלכם. כל הכבוד!</string>
     <string name="class_changed">הינכם %s!</string>
     <string name="class_changed_description">כעת תוכלו להשתמש ב%s יכולות ולרכוש ציוד מחנויות. עלו בדרגות על מנת לזכות בנקודות מדדים נוספות, על מנת לחזק את היכולות שלכם.</string>
-    <string name="invite_username_description">אם יש לך חברים שמשתמשים בהביטיקה, אפשר להזמין אותם באמצעות שם משתמש כאן.</string>
     <string name="share_levelup">הגעתי לרמה %d במשחק #הביטיקה בכך ששיפרתי את ההרגלים בחיים האמיתיים!</string>
     <string name="add_habit">הוספת הרגל</string>
     <string name="add_daily">הוספת יומית</string>
-    <string name="open_market">פתיחת השוק</string>
     <string name="AudioTheme_title">ערכת נושא אודיו</string>
     <string name="AudioTheme_summary">שינוי ערכת נושא האודיו של הביטיקה</string>
     <string name="belongs_to_challenge">שייך לאתגר</string>
@@ -325,10 +287,7 @@
     <string name="subscribe_listitem2">שעון חול מסתורי כל חודש</string>
     <string name="remaining_hours">נותרו %d שעות</string>
     <string name="see_you_tomorrow">ניתראה מחר!</string>
-    <string name="task_setup_description">מעולה! עכשיו, על מה היית רוצה לעבוד במשך הזמן הזה\?</string>
     <string name="not_selected">לא נבחר</string>
-    <string name="gem_purchase_title">רכישת אבני חן תומכת במפתחים ועוזרת להביטיקה להמשיך לפעול</string>
-    <string name="has_tag">ישנה תגית</string>
     <string name="login_incentive_count">שחררו על ידי כניסה להביטיקה %d פעמים.</string>
     <string name="ago_minutes">לפני %d דקות</string>
     <string name="ago_hours">לפני %d שעות</string>
@@ -339,7 +298,6 @@
     <string name="intro_2_subtitle">התקדמות במשחק</string>
     <string name="intro_3_subtitle">הילחם במפלצות</string>
     <string name="intro_finish_button">בואו נתחיל!</string>
-    <string name="avatar_setup_description">אז, איך תרצו שהדמות שלכם תיראה\? אל דאגה, אפשר לשנות גם בהמשך.</string>
     <string name="setup_group_health">חיים</string>
     <string name="add_tag">הוספת תגית חדשה</string>
     <string name="quest_begin_message">אתם בטוחים\? רק %1$d מתוך %2$d חברי החבורה שלכם הצטרפו להרפתקה! הרפתקאות מתחילות באופן אוטומטי כשכל חברי החבורה אשרו או דחו את השתתפותם.</string>
@@ -367,19 +325,13 @@
     <string name="evolved_pet_title">אילפת את %s, בואו נצא לרכיבה!</string>
     <string name="warrior_description">ללוחמים יש יותר פגיעות קריטיות והם משבים יותר נזק לבוסים. בחרו בלוחם אם אתם רוצים להביס מפלצות בקלות! המדד המועיל ביותר ללוחם הוא מדד העוצמה.</string>
     <string name="opting_out_progress">וויתור</string>
-    <string name="class_confirmation_price">האם תרצו לשנות את המקצוע שלכם ל%s בעבור %d אבני חן\?</string>
     <string name="change_class_description">שנו את המקצוע והזדכו על נקודות המדדים שלכם בעבור 3 אבני חן.</string>
     <string name="stats_widget_label">מדדים בהביטיקה</string>
     <string name="create_account_short">יצירת חשבון</string>
-    <string name="invited_to_party">הזמינו אתכם להצטרף לחבורה!</string>
-    <string name="support_habitica">תמכו בהביטיקה</string>
-    <string name="skill_transformation_use">שימוש</string>
-    <string name="feeding_market_info">זקוקים למזון שונה\? רכשו מזון נוסף בשוק!</string>
     <string name="add_todo">הוספת מטלה לביצוע</string>
     <string name="widget_habit_button">ביצוע הרגל בהביטיקה</string>
     <string name="widget_dailies">יומיות בהביטיקה</string>
     <string name="widget_todo_list">רשימת מטלות בהביטיקה</string>
-    <string name="google_services_missing">שירותי Google Play לא נמצאו.</string>
     <string name="gem_purchase_toolbartitle">רכישה</string>
     <string name="gem_purchase_subtitle">באמצעות אבני חן תוכלו לרכוש תוספות כיפייות עבור החשבון שלכם</string>
     <string name="gem_purchase_listitem1">תחפושות מגניבות עבור הדמות שלכם</string>

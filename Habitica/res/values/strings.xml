@@ -9,12 +9,9 @@
     <!--  Prefs -->
     <string name="PS_settings_title">Settings</string>
     <string name="SP_userID_title">User ID</string>
-    <string name="SP_userID_summary">Your User ID</string>
     <string name="SP_APIToken_title">API Token</string>
-    <string name="SP_APIToken_summary">Your API Token</string>
     <string name="Language_title">Language</string>
     <string name="Language_summary">Change Habitica\'s language</string>
-    <string name="PS_contact_title">Contact me</string>
     <string name="pref_account_header">Account</string>
     <string name="pref_first_day_of_the_week_title">First Day of the Week</string>
     <string name="pref_first_day_of_the_week_summary">First day of the week in all calendars</string>
@@ -23,18 +20,14 @@
     <string name="pref_reminder_checkbox">Activate Reminder</string>
     <string name="pref_reminder_picker">Set Reminder Time</string>
 
-    <string name="pref_cds_header">Custom Day Start</string>
 
     <string name="pref_push_notifications_checkbox">Use Push Notifications</string>
     <string name="push_notifications">Push Notifications</string>
-    <string name="enable_notifications">Enable Notifications</string>
     <string name="push_notification_system_settings_description">Allow Habitica notifications in the Settings app to receive push notifications</string>
     <string name="push_notification_system_settings_reminders">Allow Habitica notifications in the Settings app to receive reminders</string>
     <string name="exact_alarm_system_settings_reminders">Reminders may be delayed because permissions aren\'t enabled. Tap to view and update permissions.</string>
     <string name="push_notification_system_settings_title">Notifications Disabled</string>
     <string name="push_notifications_sum">Set your push notifications settings</string>
-    <string name="exact_alarm_system_settings_title">`Alarm &amp; Reminders` disabled`</string>
-    <string name="exact_alarm_system_settings_description">Allow `Alarms &amp; Reminders` in the Settings app to ensure reminders appear at the scheduled time exactly</string>
     <string name="preference_push_you_won_challenge">You won a Challenge!</string>
     <string name="preference_push_received_a_private_message">Received a Private Message</string>
     <string name="preference_push_gifted_gems">Gifted Gems</string>
@@ -44,10 +37,8 @@
     <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
     <string name="preference_push_invited_to_quest">Invited to Quest</string>
 
-    <string name="about_libraries">Libraries</string>
     <string name="about_habitica_open_source">Habitica is available as open source software on Github</string>
     <string name="about_rate_our_app">Rate our App</string>
-    <string name="about_give_us_feedback">Send us Feedback!</string>
     <string name="about_bugreport">Report a Bug</string>
     <string name="about_source_code">Source Code</string>
 
@@ -69,8 +60,6 @@
     <string name="negative_habit_form">Negative</string>
     <string name="positive_sentence">positive</string>
     <string name="negative_sentence">negative</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
     <string name="selected">Selected</string>
     <string name="not_selected">Not selected</string>
     <string name="checklist">Checklist</string>
@@ -98,8 +87,6 @@
     <string name="levelup_detail">By accomplishing your real life goals, you leveled up and are now fully healed!</string>
     <string name="onwards">Onwards!</string>
 
-    <string name="faint_subtitle">Don\'t despair!</string>
-    <string name="faint_header">You ran out of Health!</string>
     <string name="faint_button">Refill Health &amp; Try Again</string>
     <string name="faint_broken_gear_info">Broken gear can be repurchased from the Market</string>
 
@@ -109,10 +96,8 @@
     <string name="new_checklist_item">New checklist entry</string>
 
     <string name="reminder_title">Remember to check off your tasks</string>
-    <string name="skill_progress_title">Using Skill</string>
     <string name="unlock_lvl_11">Unlock at lvl 11</string>
     <string name="forgot_pw_btn">Forgot Password</string>
-    <string name="tavern_inn_checkOut">Reactivate your Dailies</string>
     <string name="tavern_inn_rest">Pause your Dailies</string>
     <string name="reward_dialog_buy">Buy</string>
     <string name="reward_dialog_dismiss">Dismiss</string>
@@ -128,26 +113,18 @@
     <string name="avatar_hair">Hair</string>
     <string name="avatar_shirt">Shirt</string>
     <string name="avatar_skin">Skin</string>
-    <string name="avatar_base">Base</string>
-    <string name="avatar_color">Color</string>
     <string name="avatar_beard">Beard</string>
     <string name="avatar_mustache">Mustache</string>
     <string name="avatar_flower">Flower</string>
-    <string name="avatar_bangs">Bangs</string>
     <string name="avatar_size">Size</string>
     <string name="avatar_size_slim">Slim</string>
     <string name="avatar_size_broad">Broad</string>
     <string name="avatar_background">Background</string>
-    <string name="purchase_customization">Purchase Customization</string>
-    <string name="purchase_set_button">Unlock set for %d gems</string>
-    <string name="purchase_button">Purchase</string>
-    <string name="purchase_set_title">Purchase set %s</string>
     <string name="due_date">Due Date</string>
     <string name="quest_accept">Accept</string>
     <string name="quest_reject">Reject</string>
     <string name="quest_begin">Begin Quest</string>
     <string name="quest_cancel">Cancel</string>
-    <string name="quest_abort">Abort Quest</string>
     <string name="version_info">Version %1$s (%2$d)</string>
 
     <string name="sidebar_help">Support</string>
@@ -164,8 +141,6 @@
     <string name="intro_finish_button">Let\'s start!</string>
     <string name="next_button">Next</string>
     <string name="skip_button">Skip</string>
-    <string name="avatar_setup_description">So, how would you like to look? Don\'t worry, you can change this later.</string>
-    <string name="task_setup_description">Great! Now, what are you interested in working on throughout this journey?</string>
     <string name="setup_group_work">Work</string>
     <string name="setup_group_exercise">Exercise</string>
     <string name="setup_group_health">Health</string>
@@ -281,16 +256,13 @@
     <string name="invite_party">Invite party</string>
     <string name="create_new_party">Create new party</string>
     <string name="dialog_feeding">Feed %s with:</string>
-    <string name="use_animal">Use</string>
     <string name="feed">Feed</string>
     <string name="hatch_with">Hatch pet with %s</string>
     <string name="hatched_pet_title">You hatched a %1$s %2$s!</string>
     <string name="evolved_pet_title">You have tamed %s, let\'s go for a ride!</string>
     <string name="close">Close</string>
     <string name="share">Share</string>
-    <string name="notification_pet_fed" >You fed your %s!</string>
     <string name="notification_purchase_reward" >You purchased a reward</string>
-    <string name="world_quest">World Quest</string>
     <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
 &#8226; Your missed Dailies won\'t damage you (bosses will still do damage caused by other Party member\'s missed Dailies)\n
 &#8226; Your Task streaks and Habit counters will not reset\n
@@ -298,7 +270,6 @@
     <string name="empty_items">You don\'t have any %s</string>
     <string name="level_abbreviated">Lv. %d</string>
     <string name="user_level_with_class">Lv. %1$d %2$s</string>
-    <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
     <string name="warrior">Warrior</string>
     <string name="rogue">Rogue</string>
     <string name="mage">Mage</string>
@@ -311,7 +282,6 @@
     <string name="opt_out_class">Opt Out</string>
     <string name="opting_out_progress">Opting Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
-    <string name="class_confirmation_price">Do you want to change your class to %1$s for %2$d Gems?</string>
     <string name="class_changed">You\'re a %s!</string>
     <string name="class_changed_description">You can now use %s skills and purchase gear from shops. Gain levels to earn stat points you can use to power up your skills.</string>
     <string name="choose_class">Choose Class</string>
@@ -328,8 +298,6 @@
     <string name="invite_existing_users">Invite Existing players</string>
     <string name="send">Send</string>
     <string name="invite">Find Members</string>
-    <string name="invite_username_description">If you have friends already using Habitica, invite them by username here.</string>
-    <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
     <string name="add_invites">Add Invites</string>
     <string name="email">Email</string>
     <string name="share_using">Share using</string>o
@@ -367,36 +335,25 @@
     <!-- QR Strings -->
     <string name="choose_recipient_title">Choose Message Recipient</string>
     <string name="action_continue">Continue</string>
-    <string name="invited_to_party">You were invited to join a party!</string>
     <string name="stats_widget_label">Your Stats</string>
     <string name="avatar_widget_label">Your Avatar</string>
-    <string name="add_task">Add Task</string>
     <string name="add_habit">Add Habit</string>
     <string name="add_daily">Add Daily</string>
     <string name="add_todo">Add To Do</string>
     <string name="add_reward">Add Reward</string>
-    <string name="all_dailies_completed">You completed all your dailies. Well done!</string>
     <string name="widget_habit_button">Single Habit</string>
     <string name="widget_dailies">Dailies List</string>
     <string name="widget_todo_list">To Do List</string>
     <string name="widget_dailies_count">Daily Summary</string>
     <string name="widget_add_task">Create a Task (Single)</string>
     <string name="widget_add_task_multi">Create a Task (Combined)</string>
-    <string name="google_services_missing">Google play services could not be found.</string>
     <string name="gem_purchase_toolbartitle">Purchase</string>
-    <string name="gem_purchase_title">Buying gems supports the developers and helps keep Habitica running</string>
     <string name="gem_purchase_subtitle">Unlock even more ways to stay productive with Gems!</string>
     <string name="gem_purchase_listitem1">Premium Avatar Customizations</string>
     <string name="gem_purchase_listitem2">Past Seasonal Gear Sets</string>
     <string name="gem_purchase_listitem3">Access to our library of Backgrounds</string>
     <string name="gem_purchase_listitem4">Community Challenge Creation</string>
     <string name="gem_purchase_listitem5">Pet and Hatching Potion Quests</string>
-    <string name="support_habitica">Support Habitica</string>
-    <string name="skill_transformation_use">Use</string>
-    <string name="hatching_market_info">Not getting the right drops? Check out the Market!</string>
-    <string name="feeding_market_info">Need different food? Buy more from the market!</string>
-    <string name="open_market">Open Market</string>
-    <string name="cds_description">Your Dailies will next reset the first time you use Habitica after %1$s. Make sure you have completed your Dailies before this time!</string>
 
     <string name="AudioTheme_title">Audio Theme</string>
     <string name="AudioTheme_summary">Change Habitica\'s Audio Theme</string>
@@ -405,33 +362,23 @@
     <string name="see_you_tomorrow">See you tomorrow!</string>
     <string name="belongs_to_challenge">Belongs to Challenge</string>
     <string name="has_reminder">Has Reminder</string>
-    <string name="has_tag">Has Tag</string>
     <string name="subscribe_title">Subscribing supports our small team and helps keep Habitica running</string>
     <string name="subscribe_prompt">Stay motivated with even more rewards when you subscribe</string>
     <string name="subscribe_listitem1">Free Monthly Gems</string>
     <string name="subscribe_listitem2">Monthly Mystic Hourglass</string>
     <string name="subscribe_listitem3">Monthly Mystery Items</string>
-    <string name="subscribe_listitem4">Special Subscriber Pet</string>
     <string name="subscribe_listitemFaint">Get a Second Chance</string>
     <string name="subscribe_listitem5">Special Pet &amp; More Drops</string>
-    <string name="subscriptions">Subscriptions</string>
     <string name="subscription_duration">Recurring every %s</string>
     <string name="subscription_duration_norenew">For %s</string>
     <string name="subscribe">Subscribe</string>
     <string name="subscribe_listitem1_description">Get up to 50 Gold-purchasable Gems in the Market to buy Quests, Customizations, Pets, and more!</string>
     <string name="subscribe_listitem2_description">Never miss an item with 1 Mystic Hourglass a month to use in the Time Travelers Shop!</string>
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
-    <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month!</string>
     <string name="subscribe_listitem3_description_alt">Stay decked out in the latest exclusive gear. Subscribe now to get %1$s’s %2$s!</string>
-    <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
     <string name="subscribe_listitemFaint_description">Avoid losing your progress with an instant heal when you run out of HP once a day!</string>
     <string name="subscribe_listitem5_description">Get a Royal Purple Jackalope plus double the Eggs, Hatching Potions, and Food each day to grow your Pet collection!</string>
     <string name="subscribe1month_gemcap">25 Gems a month</string>
-    <string name="subscribe3month_gemcap">30 Gems a month</string>
-    <string name="subscribe6month_gemcap">35 Gems a month</string>
-    <string name="subscribe12month_gemcap">45 Gems a month</string>
-    <string name="subscription_hourglasses_3month_timeframe">Hourglass in 3 months</string>
-    <string name="subscription_hourglasses">%d Hourglasses</string>
     <string name="payment_method">Payment method</string>
     <string name="subscription">Subscription</string>
     <string name="subscription_credit_canceling">"Your <b>+%s</b> months of subscription credit will activate after canceling</string>
@@ -443,20 +390,15 @@
     <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to your payment method, you’ll need to unsubscribe from our website. To do this, tap the button below, log in to your account, tap the player icon in the top right, then go to the Subscription section. Any leftover months of subscription credit will be added to your end date after cancellation. We’ll miss you!</string>
     <string name="cancel_subscription_apple_description">No longer want to subscribe? Due to your payment method, you’ll need to unsubscribe through your Apple ID subscription settings on your iOS device.</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
-    <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months Subscribed</string>
-    <string name="current_hourclasses">Current Mystic Hourglasses</string>
     <string name="next_hourglass">Next Hourglass delivery</string>
     <string name="monthly_gem_cap">Monthly Gem Cap</string>
     <string name="inactive">Inactive</string>
     <string name="one_month">1 Month</string>
-    <string name="x_months">%d Months</string>
     <string name="month">Month</string>
     <string name="three_months">3 Months</string>
     <string name="six_months">6 Months</string>
     <string name="twelve_months">12 Months</string>
-    <string name="subscribe_prompt_thanks">You get these benefits for being a Subscriber</string>
-    <string name="subscription_status">Subscription Status</string>
 
     <string name="challenge_leave_title">Leave Challenge</string>
     <string name="challenge_leave_description">You can choose to keep this Challenge\'s tasks on your personal task board or delete them when you leave</string>
@@ -464,15 +406,9 @@
     <string name="leave_delete_tasks">Leave &amp; Delete Tasks</string>
     <string name="guild_challenges">You\'re participating in a Guild Challenge</string>
     <string name="party_challenges">You\'re participating in a Party Challenge</string>
-    <string name="remove_tasks">Remove</string>
-    <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
-    <string name="challenges">Challenges</string>
     <string name="official">Official</string>
     <string name="challenge">Challenge</string>
-    <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
-    <string name="join_a_challenge">Join a Challenge to add a curated set of tasks to your list, then compete against other Habiticans to win achievements and even gems!</string>
-    <string name="check_the_public_challenge_tab">Tap the “Public” tab to find the user-created Challenges that are the best fit for you!</string>
     <string name="inbox">Messages</string>
     <string name="notifications">Notifications</string>
     <string name="special">Special</string>
@@ -482,25 +418,17 @@
     <string name="mystery_item">Mystery Item</string>
     <string name="myster_item_notes">Each month, subscribers will receive a mystery item. This is usually released about one week before the end of the month.</string>
     <string name="open">Open</string>>
-    <string name="is_open">Open</string>
-    <string name="use_item">Use Item on party member</string>>
     <string name="checkInRewardEarned">You earned a %1$s as a reward for your devotion to improving your life.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Next prize in %1$d Check-Ins</string>
     <string name="pending_approval">pending approval</string>
     <string name="filters">Filters</string>
     <string name="done">Done</string>
-    <string name="groups">Groups</string>
     <string name="all">All</string>
     <string name="none">None</string>
     <string name="owned">Owned</string>
     <string name="not_owned">Not owned</string>
-    <string name="login_btn_fb">Login with Facebook</string>
-    <string name="login_btn_apple">Sign in with Apple</string>
-    <string name="register_btn_fb">Sign up with Facebook</string>
-    <string name="register_btn_google">Sign up with Google</string>
     <string name="action_back">Back</string>
     <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.\n\nFirst, what should we call you? Feel free to change what I picked. When you’re all set, let’s create your avatar!</string>
-    <string name="randomize">Randomize</string>
     <string name="avatar_extras">Extras</string>
     <string name="avatar_skin_color">Skin Color</string>
     <string name="avatar_hair_color">Hair Color</string>
@@ -513,7 +441,6 @@
     <string name="gray">Grey</string>
     <string name="dated">Scheduled</string>
     <string name="completed">Completed</string>
-    <string name="setuP_group_other">Other</string>
     <string name="clear">Clear</string>
     <string name="empty_title_habits">You don\'t have any Habits</string>
     <string name="empty_description_habits">Habits are tasks that don\'t have a rigid schedule. You can check them off many times a day, or not at all.</string>
@@ -533,9 +460,6 @@
     <string name="read_community_guidelines">Review our <u>Community Guidelines</u> before posting</string>
     <string name="maintenance">Maintenance</string>
     <string name="reload_content">Reload Content</string>
-    <string name="dailyDueDefaultView">Set Dailies default to ‘due’ tab</string>
-    <string name="dailyDueDefaultViewDescription">With this option set, the Dailies tasks will default to ‘due’ instead of ‘all’</string>
-    <string name="repeat_summary" translatable="false">"Repeats every %1$s%2$s%3$s"</string>
 
     <string name="no_billing_gems">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase gems.</string>
     <string name="no_billing_subscriptions">Your device does not have any of the supported payment methods. Please use the habitica website if you want to purchase a subscription.</string>
@@ -557,7 +481,6 @@
     <string name="membership">Membership</string>
     <string name="participating">Participating</string>
     <string name="not_participating_filter">Not Participating</string>
-    <string name="inn">Inn</string>
     <string name="start_quest">Start a new Quest</string>
     <string name="leave_party">Leave Party</string>
     <string name="party_description">Party Description</string>
@@ -567,7 +490,6 @@
     <string name="yesterdaililes_prompt">Check off any Dailies you did yesterday:</string>
     <string name="start_day">Start My Day</string>
     <string name="leave_party_confirmation">Are you sure you want to leave this party?</string>
-    <string name="leave_party_confirmation_quest">Are you sure you want to leave this party?</string>
     <string name="leave_party_challenges_confirmation">Do you want to keep participating in the Challenge when leaving the Party?</string>
     <string name="discard_changes_to_task_message">Are you sure you want to discard changes to this task?</string>
     <string name="rejoin_party">You will not be able to rejoin this party unless invited.</string>
@@ -586,7 +508,6 @@
     <string name="thousand_abbrev">k</string>
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
-    <string name="available_until">Available until %s</string>
     <string name="available_for">Available for %s</string>
     <string name="gems_left_max">Monthly Gems: %1$d/%2$d Remaining</string>
     <string name="gems_left_nomax">Monthly Gems: %d Remaining</string>
@@ -613,15 +534,12 @@
     <string name="delete_account">Delete Account</string>
     <string name="delete_account_description">This will delete your account forever and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type your password into the text box below.</string>
     <string name="delete_oauth_account_description">This will delete your account forever and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type DELETE into the text box below.</string>
-    <string name="reset_account_confirmation">Reset my Account</string>
-    <string name="delete_account_confirmation">Delete my Account</string>
     <string name="danger_zone">Danger Zone</string>
     <string name="resetting_account">Resetting Account</string>
     <string name="deleting_account">Deleting Account</string>
     <string name="insufficientGold">You need to complete more tasks before you can afford this item!</string>
     <string name="insufficientGoldTitle">Not Enough Gold</string>
     <string name="insufficientGems">You\'ll need more Gems to buy this!</string>
-    <string name="purchase_gems">Purchase gems</string>
     <string name="insufficientHourglasses">You\'ll need more Mystic Hourglasses to buy this item!</string>
     <string name="get_hourglasses">Get hourglasses</string>
     <string name="subscribe_for_hourglasses">Subscribe for Hourglasses</string>
@@ -640,15 +558,12 @@
     <string name="forgot_password_hint_example">e.g, habitrabbit or gryphon@example.com</string>
     <string name="ok">OK</string>
     <string name="profile">Profile</string>
-    <string name="profile_summary">Edit your public profile.</string>
     <string name="display_name">Display Name</string>
     <string name="photo_url">Photo URL</string>
     <string name="photo_url_description">You can display an image on your Habitica profile for others to see by adding a link to the image here.</string>
     <string name="save_photo_url">Save Photo URL</string>
-    <string name="login_name">Login Name</string>
     <string name="about">About</string>
     <string name="app_settings">App Settings</string>
-    <string name="authentication">Authentication</string>
     <string name="authentication_summary">Change your authentication options.</string>
     <string name="change_password">Change Password</string>
     <string name="change_email">Change Email Address</string>
@@ -679,56 +594,27 @@
     <string name="distribute_evenly_help">Assigns the same number of points to each attribute.</string>
     <string name="distribute_class_help">Assigns more points to the attributes important to your class.</string>
     <string name="distribute_task_help">Assigns points based on the Strength, Intelligence, Constitution, and Perception categories associated with the tasks you complete.</string>
-    <string name="allocating_points">Allocating Points</string>
     <string name="class_equipment">Equipment</string>
-    <string name="equipment_empty">You already have all equipment! More will be released during the Grand Galas, near the solstices and equinoxes.</string>
     <string name="classless">Classless</string>
-    <string name="class_equipment_shop_dialog">This item is only available to a specific class. You can change your class from Settings.</string>
     <string name="class_equipment_shop_dialog_new">This item is only available to %s. Open Settings to change class.</string>
-    <string name="insufficient_level_equipment_dialog">This item is only available to a specific class. You can select a class after level 10.</string>
     <string name="insufficient_level_equipment_dialog_new">This item is only available to %s. You can select a class after level 10.</string>
     <string name="class_gear_disclaimer">You can only purchase gear for your current class</string>
-    <string name="check_into_inn">Check into Inn</string>
     <string name="community_guidelines">Community Guidelines</string>
-    <string name="view_community_guidelines">View Community Guidelines</string>
-    <string name="guidelines_description">Habitica tries to create a welcoming environment for players of all ages and backgrounds. If you have any questions, please consult our guidelines.</string>
-    <string name="helpful_links">Helpful Links</string>
-    <string name="view_faq">View FAQ</string>
     <string name="report_bug">Report a Bug</string>
-    <string name="player_tiers">Player Tiers</string>
-    <string name="staff_moderators">Staff and Moderators</string>
-    <string name="tiers_descriptions">The colored usernames you see in chat represent a person’s contributor tier. The higher the tier, the more the person has contributed to habitica through art, code, the community, or more!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="world_boss">World Boss</string>
     <string name="boss_art">Boss Art</string>
     <string name="world_boss_description">World Boss Description</string>
-    <string name="rage_strike_count" formatted="false">Rage Strikes: %d/%d</string>
-    <string name="pending_strike_title">Pending Strike</string>
-    <string name="strike_description_title">What’s a Rage Strike?</string>
-    <string name="strike_active_title">The %s was Attacked!</string>
-    <string name="strike_active_description">Our beloved %1$s was devastated when the %2$s shattered the %3$s. Quickly, tackle your tasks to defeat the monster and help rebuild!!</string>
     <string name="questShop">Quests</string>
-    <string name="market_owner_long">Alex the Merchant</string>
-    <string name="tavern_owner_long">Daniel the inn keeper</string>
-    <string name="stable_owner_long">Matt the beast master</string>
-    <string name="hide_boss_art">Hide Boss Art</string>
-    <string name="active_world_boss">Active World Boss</string>
     <string name="no_party_description">Take on quests with friends or on your own. Battle monsters, create Challenges, and help yourself stay accountable through Parties.</string>
     <string name="no_party_title">Play Habitica in a Party</string>
-    <string name="join_party_description">Give a Party member the username found below and they can send you an invite</string>
-    <string name="join_party_description_guild">Give the username below to a friend or head to the %s to meet potential comrades!</string>
-    <string name="join_party_title">Want to join a party?</string>
     <string name="insufficientSubscriberGems">You have bought all the Gems you can this month. More become available within the first three days of each month. Thanks for subscribing!</string>
-    <string name="world_boss_description_title">What’s a World Boss?</string>
     <string name="world_boss_description_intro">A World Boss is a special event where the whole community works together to take down a powerful monster with their tasks!</string>
     <string name="world_boss_description_1">Complete tasks to damage the Boss</string>
     <string name="world_boss_description_2">The Boss won’t damage you for missed tasks, but its Rage meter will go up. If the bar fills up, the Boss will attack one of the shopkeepers!</string>
     <string name="world_boss_description_3">You can continue with normal Quest Bosses, damage will apply to both</string>
     <string name="world_boss_description_4">Check the Tavern to see Boss progress and Rage attacks</string>
     <string name="world_boss_action_prompt">Defeat the Boss to earn special rewards and save Habitica from %s’s Terror!</string>
-    <string name="questShop_owner_long">Ian the Quest Guide</string>
-    <string name="seasonalShop_owner_long">Seasonal Sorceress</string>
     <string name="rage_attack">Rage attack:</string>
     <string name="report">Report</string>
     <string name="reply">Reply</string>
@@ -756,14 +642,9 @@
     <string name="daily_tip_9">If you\'re having a tough time, try breaking your tasks down into smaller parts.</string>
     <string name="moderator">Mod</string>
     <string name="staff">Staff</string>
-    <string name="expand_notes">Read More</string>
-    <string name="collapse_notes">Show Less</string>
-    <string name="reset_streak">Reset Streak</string>
     <string name="reset_counter">Reset Counter</string>
     <string name="week_reminder_title">Getting things done?</string>
     <string name="week_reminder_text">Check them off in Habitica now for rewards and XP!</string>
-    <string name="month_reminder_title">Need a change of routine?</string>
-    <string name="month_reminder_text">Sometimes starting fresh is the best option, Habitica can help!</string>
     <string name="last_login">Latest Check In</string>
     <string name="total_checkins">Total Check-ins</string>
     <string name="x_checkins">%d Checkins</string>
@@ -772,17 +653,14 @@
     <string name="usernamePromptBody">Login names are now unique usernames that will be visible beside your display name and used for invitations, chat @mentions, and messaging.</string>
     <string name="usernamePromptWiki">If you’d like to learn more about this change, <a href="https://habitica.wikia.com/wiki/Player_Names">visit our wiki.</a></string>
     <string name="usernamePromptDisclaimer">Usernames should conform to our <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/community-guidelines">Community Guidelines</a>. If you didn’t previously set a login name, your username was auto-generated.</string>
-    <string name="register_tos_confirm">You agree to our <a href="https://habitica.com/static/terms">Terms of Service</a> and have read our <a href="https://habitica.com/static/privacy">Privacy Policy</a>.</string>
     <string name="confirm_username_title">Are you sure you want to confirm your current username?</string>
     <string name="confirm_username_description">Confirming your username will make it public for invitations, @mentions and messaging. You can change your username from settings at any time.</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_username">Confirm Username</string>
     <string name="username_not_confirmed">Username not confirmed</string>
-    <string name="username_confirmed">Username Confirmed</string>
     <string name="enter_recipient_username">Enter a Recipient\'s @ username</string>
     <string name="username_copied">Username copied to clipboard</string>
     <string name="verification_pet">One of these Veteran Pets will be waiting for you after you’ve finished confirming!</string>
-    <string name="welcomeNameTitle">What should we call you?</string>
     <string name="change_display_name">Change Display Name</string>
     <string name="display_name_description">This is the name that will be displayed for your avatar in Habitica. Unlike username, it does not have to be a unique identifier.</string>
     <string name="display_name_length_error">Display names must be between 1 and 30 characters</string>
@@ -794,10 +672,8 @@
     <string name="equipment_con">CON:</string>
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
-    <string name="visit_website">visit website</string>
     <string name="subscribe_gift_description">Want to give the benefits of a subscription to someone else?</string>
     <string name="gift_subscription">Gift Subscription</string>
-    <string name="gift_one_get_one_description">Gift a sub and get a sub free event going on now!</string>
     <string name="gift_title">Who would you like to gift to?</string>
     <string name="gift_one_get_one">Gift one, Get one</string>
     <string name="gift_one_get_one_detailed_description">While this promotion is active, you’ll receive a matching subscription automatically after sending your gift.</string>
@@ -824,7 +700,6 @@
     <string name="subscription_confirmation_multiple">You are now subscribed for %s months</string>
     <string name="gem_purchase_confirmation">You gained %s gems.</string>
     <string name="discover">Discover</string>
-    <string name="damage_paused">Damage paused</string>
     <string name="preference_push_important_announcements">Important Announcements</string>
     <string name="no_notifications_title">You’re all caught up!</string>
     <string name="no_notifications_text">The notification fairies give you a raucous round of applause! Well done!</string>
@@ -841,7 +716,6 @@
     <string name="create">Create</string>
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
     <string name="create_party">Create a new Party</string>
-    <string name="add_local_authentication">Add Local Authentication</string>
     <string name="task_title">Task Title</string>
 
     <string name="old_password">Old Password</string>
@@ -851,7 +725,6 @@
     <string name="confirm_new_password">Confirm new Password</string>
     <string name="adjust_streak">Adjust Streak</string>
     <string name="adjust_counter">Adjust Counter</string>
-    <string name="password_changed">Password successfully changed</string>
     <string name="assigned_stat">Assigned Stat</string>
     <string name="repeats">Repeats</string>
     <string name="every">Every</string>
@@ -865,7 +738,6 @@
     <string name="streak">Streak</string>
     <string name="update_available">Update available: %1$s (%2$d)</string>
     <string name="need_help_description">You can contact us and a member of our team will do their best to help!</string>
-    <string name="need_help_header_description">Post a message in the %s to have your questions answered by a fellow player.</string>
     <string name="need_more_help">Need more help?</string>
     <string name="become_x">Become a %s</string>
     <string name="x_class">%s Class</string>
@@ -874,7 +746,6 @@
     <string name="report_message_explanation">You should only report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
     <string name="report_user_explanation">You should only report a player that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
     <string name="report_challenge_explanation">You should only report a challenge that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Submitting a false report is a violation of Habitica\'s Community Guidelines.</string>
-    <string name="report_player_title">Report %s?</string>
     <string name="report_player">Report Player</string>
     <string name="report_hint">Reason for report</string>
     <string name="report_reason_title_message">Why are you reporting this message?</string>
@@ -884,14 +755,9 @@
     <string name="report_user_description">This will also block @%s</string>
     <string name="report_message_hint">Reason for report</string>
     <string name="report_message">Report Message</string>
-    <string name="report_successful">%s Reported</string>
-    <string name="report_failure">Report failed, please try again later</string>
-    <string name="report_player_toolbar_title">Report %s</string>
     <string name="mystery_sets">Mystery Sets</string>
     <string name="guild_description">Guild Description</string>
-    <string name="invite_to_guild">Invite to Guild</string>
     <string name="join_guild">Join Guild</string>
-    <string name="garden">Garden</string>
     <string name="i_agree_to_follow_the_guidelines">I agree to follow the guidelines</string>
     <string name="report_violation">Report Violation</string>
     <string name="trillion_abbrev">t</string>
@@ -909,7 +775,6 @@
     <string name="guild_summary">Guild Summary</string>
     <string name="guild_members">Guild Members</string>
     <string name="guild_bank">Guild Bank</string>
-    <string name="invite_to_party">Invite to Party</string>
     <string name="delete_task">Delete Task</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="not_now">Not right now</string>
@@ -927,7 +792,6 @@
     <string name="confirm_deletion">Confirm deletion</string>
     <string name="details">Details</string>
     <string name="share_challenge_with">Share Challenge with</string>
-    <string name="app_theme">App Theme</string>
     <string name="sent_card">You sent a %s</string>
     <string name="inbox_messages_title_single">New Message from %1$s</string>
     <string name="inbox_messages_title">%1$d New Messages from %2$s</string>
@@ -942,7 +806,6 @@
     <string name="remove_member_confirm">Are you sure you want to remove %s from the group?</string>
     <string name="transfer">Transfer</string>
     <string name="removed_member">%s was removed from the group</string>
-    <string name="mystery_item_received">You open the box and receive a %s</string>
     <string name="see_what_s_new">See what\'s new</string>
     <string name="view_achievements">View Achievements</string>
     <string name="achievement_title">You got an Achievement!</string>
@@ -963,19 +826,16 @@
     <string name="inviteFriendTitle">Invited a Friend</string>
     <string name="inviteFriendDescription">You invited a friend (or friends) who joined you on your adventure!</string>
     <string name="keep_challenges">Keep Challenges</string>
-    <string name="leave_challenges">Leave Challenges</string>
     <string name="leave_challenges_delete_tasks">Leave Challenges &amp; Delete Tasks</string>
     <string name="equip_automatically">Auto-equip new</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
-    <string name="complete">Complete</string>
     <string name="search">Search</string>
     <string name="search_hint">Search tasks</string>
     <string name="preference_push_party_activity">Party Activity</string>
     <string name="promo_subscription_buy_gems_prompt">Need Gems?</string>
     <string name="promo_subscription_buy_gems_description">Become a Subscriber to buy Gems with gold, get monthly mystery items, increased drop caps and more!</string>
     <string name="see_other_options">See other options</string>
-    <string name="see_other_sub_options">See other subscription options</string>
     <string name="gift_gems">Gift Gems</string>
     <string name="profile_send_message">Send\nMessage</string>
     <string name="profile_gift_gems">Gift\nGems</string>
@@ -988,54 +848,33 @@
     <string name="from_balance">From Balance</string>
     <string name="gift_gems_balance_subtitle">Enter how many of your Gems you\'d like to send below or switch tabs to purchase Gems to gift</string>
     <string name="gems_to_gift">Gems to gift</string>
-    <string name="preference_push_joined_guild_mention">\@Mentions in joined Guilds</string>
-    <string name="preference_push_unjoined_guild_mention">\@Mentions in not joined Guilds</string>
     <string name="send_gift">Send Gift</string>
     <string name="copy_userid">Copy User ID</string>
     <string name="id_copied">Copied User ID to clipboard</string>
     <string name="copy_username">Copy Username</string>
     <string name="password_too_short">Your password has to be at least %d characters long</string>
     <string name="invitation_title">%1$s invited you to join their group %2$s</string>
-    <string name="someone">Someone</string>
-    <string name="authentication_methods">Authentication Methods</string>
-    <string name="local">local</string>
     <string name="facebook">Facebook</string>
-    <string name="apple_sign_in">Sign in with Apple</string>
     <string name="google">Google</string>
     <string name="send_invites">Send Invites</string>
     <string name="send_invite">Send Invite</string>
     <string name="cancelled">Cancelled</string>
-    <string name="not_recurring">Not Recurring</string>
-    <string name="ending_on">Ending on %s</string>
     <string name="benefits_end">Benefits end %s</string>
-    <string name="subscribe_options_title">Choose the Subscription length that works for you</string>
-    <string name="thanks_for_supporting">Thanks for supporting Habitica</string>
     <string name="subscribers_mythic_hourglasses"><i>Subscribers receive Mystic Hourglasses within the first three days of the month.</i></string>
     <string name="renew_subscription">Renew Subscription</string>
     <string name="resubscribe">Resubscribe</string>
     <string name="resubscribe_description">Want to continue your benefits? You can start a new subscription before this one runs out to keep your benefits active.</string>
-    <string name="resubscribe_description_gift">Want to continue receiving subscription benefits? You can start a recurring subscription to keep your benefits active.</string>
     <string name="gifted">Gifted</string>
-    <string name="save_20">Save 20%</string>
-    <string name="subscription_credit">Subscription Credit</string>
     <string name="group_plan">Group Plan</string>
     <string name="cancel_subscription_group_plan">You have a free subscription because you are a member a Party or Guild that has a Group Plan. This will end if you leave or the Group Plan is cancelled by the owner. Any months of extra subscription credit you have will be applied at the end of the Group Plan.</string>
-    <string name="cancel_subscription_group_plan_owner">You have a free subscription because you are an owner of a Party or Guild that has a Group Plan. This will end if you cancel the plan. Any months of extra subscription credit you have will be applied at the end of the Group Plan. You can cancel from the Habitica website.</string>
     <string name="owner">Owner</string>
     <string name="member">Member</string>
     <string name="member_group_plan">Member of a Group Plan</string>
-    <string name="event">Event</string>
     <string name="promo_g1g1_description">Gift a subscription now and you’ll get the same sub for yourself free!</string>
     <string name="promo_g1g1_prompt">Gift One, Get One Event</string>
     <string name="sale">Sale</string>
-    <string name="g1g1_info_1">In honor of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
     <string name="gift_a_subscription">Gift a Subscription</string>
-    <string name="g1g1_info_2">How it works</string>
-    <string name="g1g1_info_2_text">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
-    <string name="g1g1_info_3">Limitations</string>
-    <string name="g1g1_info_3_text">This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
     <string name="limited_event">Limited event</string>
-    <string name="g1g1_duration">Dec 17 to Jan 6</string>
     <string name="learn_more">Learn more</string>
     <string name="purchase_from_timetravel_shop">You can purchase this customization from the Time Travelers shop</string>
     <string name="go_shopping">Go shopping</string>
@@ -1052,21 +891,15 @@
     <string name="level_unabbreviated">Level %d</string>
     <string name="not_participating">You are not participating</string>
     <string name="quest_completed">Quest completed!</string>
-    <string name="using_habitica">Using Habitica</string>
     <string name="using_habitica_description">We’ll explain the basics and answer common questions to get you up to speed</string>
     <string name="suggestions_feedback_description">Have input on how features could work better or an idea for something new? Tell us!</string>
-    <string name="contact_us">Contact Us</string>
     <string name="get_help">Get Help</string>
     <string name="suggestions_feedback"><![CDATA[Suggestions & Feedback]]></string>
     <string name="bugs_fixes"><![CDATA[Bugs & Fixes]]></string>
     <string name="bugs_fixes_description">Did something go wrong? Check for answers here or reach out to us for help.</string>
     <string name="lets_go">Let\'s Go</string>
-    <string name="support_bug_title">We’re constantly trying to make our apps better based on player feedback but sometimes a few bugs pop up…</string>
     <string name="common_fixes">Common Fixes</string>
     <string name="send_bug_prompt">Send a bug report to us and we’ll get back to you!</string>
-    <string name="overview">Overview</string>
-    <string name="how_best_habitica">Not sure how to best use Habitica?</string>
-    <string name="stats_currency"><![CDATA[Stats & Currency]]></string>
     <string name="health_points">Health Points</string>
     <string name="health_description">This represents your avatar’s life. Missing a Daily or doing a negative Habit **reduces your HP**.\n\n**Regain HP** by leveling up, using a Health Potion, or a class skill with healing ability.\n\nIf your **HP reaches 0** you will lose a level, all Gold, and one piece of equipment. Lost equipment can be re-purchased.</string>
     <string name="experience_points">Experience Points</string>
@@ -1101,18 +934,12 @@
     <string name="could_not_find_user">Could not find player</string>
     <string name="animal_ears">Animal Ears</string>
     <string name="animal_tail">Animal Tail</string>
-    <string name="avatar_headband">Headband</string>
-    <string name="avatar_accent">Accent</string>
-    <string name="buy_all">Buy All</string>
     <string name="read_more">Read More</string>
     <string name="purchase_amount_error">You are unable to buy that amount.</string>
     <string name="still_questions">Still have a question?</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
     <string name="task_display">Task list display</string>
-    <string name="onboarding_tasks">Onboarding Tasks</string>
-    <string name="complete_for_gold"><![CDATA[Complete to earn <font color="#EE9109"><b>100 Gold</b></font>!]]></string>
     <string name="delete_checklist_entry">Delete…</string>
-    <string name="getting_started">Getting Started</string>
     <string name="adventure_guide_description_new"><![CDATA[Complete these objectives and you’ll earn <b>5 Achievements</b> and <font color="#EE9109"><b>100 Gold</b></font> once you’re done!]]></string>
     <string name="your_progress">Your Progress</string>
     <string name="lets_get_started">Let\'s get started</string>
@@ -1158,8 +985,6 @@
     <string name="can_hatch_pet">Combine your %1$s Egg and %2$s Potion to hatch this pet!</string>
     <string name="hatch_pet">Hatch Pet</string>
     <string name="unhatched_pet">Unhatched Pet</string>
-    <string name="hatch_pet_again">Hatch Pet again</string>
-    <string name="magic_potions">Magic Potions</string>
     <string name="magic_potion">Magic Potion</string>
     <string name="use_saddle">Give Saddle</string>
     <string name="hatch_your_pet">Hatch your Pet</string>
@@ -1196,14 +1021,12 @@
     <string name="view_gem_bundles">View Gem Bundles</string>
     <string name="gems_promo_info_limitations_fixed">This promotion only applies during the limited time event. This event starts on %1$s (%2$s) and will end %3$s (%4$s). The promo offer is only available when buying Gems for yourself.</string>
     <string name="spooky_promo_info_prompt">Get more Gems with each purchase for a limited time! Put on your best costume and claim one of our best deals on Gems before it’s gone!</string>
-    <string name="dark_mode">Dark Mode</string>
     <string name="theme_mode">Theme Mode</string>
     <string name="theme_color">Theme Color</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="user_is_blocked">You blocked this player</string>
     <string name="user_is_blocked_explanation">A blocked player cannot send you Private Messages but you will still see their posts</string>
     <string name="finish">Finish</string>
-    <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
     <string name="you">You</string>
     <string name="invitation_title_no_leader">You were invited to join a party</string>
     <string name="fortify_shop">Fortify Potion</string>
@@ -1222,7 +1045,6 @@
     <string name="rebirth_confirm_keep_item_3">Your Achievements</string>
     <string name="rebirth_confirm_keep_item_4">Your Party and Challenges</string>
     <string name="rebirth_confirm_use">Use Orb Of Rebirth</string>
-    <string name="free">FREE</string>
     <string name="go_back">Go Back</string>
     <string name="rebirth_enabled_title">Orb of Rebirth Unlocked</string>
     <string name="rebirth_enabled_subtitle">A new adventure is available!</string>
@@ -1232,8 +1054,6 @@
     <string name="rebirth_achievement_description">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest level you\'ve attained is %2$d.</string>
     <string name="rebirth_achievement_description_max">You\'ve begun a new adventure! This is Rebirth %1$d for you, and the highest level you\'ve attained is %2$d or higher.</string>
     <string name="purchase_immediately_description">This will take effect immediately after buying!</string>
-    <string name="create_guild">Create Guild</string>
-    <string name="create_guild_description">To create a Guild, log in to the Habitica website then tap the “Create” button on the “My Guilds” screen.</string>
     <string name="open_website">Open Website</string>
     <string name="action_end_challenge">End Challenge</string>
     <string name="end_challenge_description">To end a Challenge, log in to the Habitica website then tap the “End Challenge” button on the right of the Challenge screen.</string>
@@ -1251,16 +1071,12 @@
     <string name="three_months_one_time">3 Months</string>
     <string name="six_months_one_time">6 Months</string>
     <string name="twelve_months_one_time">12 Months</string>
-    <string name="sidebar_teams">Teams</string>
-    <string name="team_information">Team Information</string>
     <string name="mystery_item_title">You open the Mystery Box and find…</string>
-    <string name="cant_like_own_message">Can\'t like your own messages</string>
     <string name="quest_leave_message">Are you sure you want to leave the Quest? All your progress will be lost.</string>
     <string name="quest_leave_message_nostart">Are you sure you want to leave the Quest? You won\'t be able to participate.</string>
     <string name="launch_screen">Launch Screen</string>
     <string name="something_new">New</string>
     <string name="limited_potions_available">Seasonal items available</string>
-    <string name="open_for">Open for %s</string>
     <string name="no_longer_available">No longer available</string>
     <string name="go_to_survey">Go to Survey</string>
     <string name="survey_title">Habitica player survey</string>
@@ -1272,11 +1088,8 @@
     <string name="empty_title">Nothing here yet</string>
     <string name="empty_equipment_description">You don\'t have any equipment of this type yet. You can purchase equipment from the market using the gold you earned.</string>
     <string name="todo_item_checkbox">Todo Checkbox</string>
-    <string name="open_shop">Open Shop</string>
     <string name="empty_challenge_list">You aren\'t a member of any Challenges.</string>
-    <string name="empty_guilds_list">You aren\'t a member of any Guilds.</string>
     <string name="empty_discover_description">Head over to the Discover tab to find some to join!</string>
-    <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="avoid_spi">Avoid SPI</string>
     <string name="avoid_spi_title">Sensitive Personal Information</string>
@@ -1285,14 +1098,12 @@
     <string name="review_privacy_policy">Review Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="damage_pending">%s Damage pending</string>
-    <string name="x_remaining">%s remaining</string>
     <string name="sale_ends_in">Sale ends in %s</string>
     <string name="my_account">My Account</string>
     <string name="public_profile">Public Profile</string>
     <string name="about_me">About Me</string>
     <string name="about_me_description">Add a small blurb about yourself that will appear on your Habitica profile when others view it.</string>
     <string name="save_about_me">Save About Me</string>
-    <string name="api" translatable="false">API</string>
     <string name="account_info">Account Info</string>
     <string name="login_methods">Login Methods</string>
     <string name="apple" translatable="false">Apple</string>
@@ -1306,27 +1117,18 @@
     <string name="added_social_auth">Added %s authentication</string>
     <string name="copied_to_clipboard">Copied %s to clipboard</string>
     <string name="removed_social_auth">Disconnected %s</string>
-    <string name="password_added">Password saved</string>
     <string name="add_email_and_password">Add Email and Password</string>
     <string name="password_not_matching">The entered passwords do not match</string>
     <string name="email_invalid">Invalid Email address</string>
     <string name="successful_purchase_generic">Purchase successful</string>
     <string name="starting_objectives">Starting Objectives</string>
-    <string name="switch_class">Switch Class</string>
     <string name="onboarding_objectives">Starting Objectives</string>
-    <string name="task_list_mode">Task list mode</string>
 
-    <string name="compact">Compact</string>
-    <string name="minimal">Minimal</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
     <string name="armoire_drop_rates">Armoire drop rates</string>
     <string name="armoire">Armoire</string>
     <string name="equipment_remaining">Equipment Remaining: %d</string>
     <string name="new_pieces_added_every_month">New pieces added every month</string>
-    <string name="watch_ad">Watch Ad</string>
-    <string name="available_in">Available in %s</string>
-    <string name="watch_ad_to_open">Watch ad to open again</string>
-    <string name="watch_ad_to_revive">Watch Ad to revive</string>
     <string name="enchanted_armoire_drop_rates">Enchanted Armoire Drop Rates</string>
     <string name="armoire_rate_equipment_description">New Equipment pieces are added every month. If you own all pieces of equipment, then you\'ll get Food or Experience, 50/50 odds.</string>
     <string name="armoire_rate_equipment_title">60% Piece of Equipment</string>
@@ -1336,7 +1138,6 @@
     <string name="armoire_rate_experience_description">The amount gained varies randomly from 10 to 50</string>
     <string name="day_start_adjustment">Day Start Adjustment</string>
     <string name="purchased">Purchased</string>
-    <string name="show_me">Show Me</string>
     <string name="background_filters">Background Filters</string>
     <string name="newest">Newest</string>
     <string name="oldest">Oldest</string>
@@ -1357,11 +1158,8 @@
     <string name="buy_set">Buy Set</string>
     <string name="tutorial_reset_confirmation">Your Tutorials were reset</string>
     <string name="you_ran_out_of_health">You ran out of Health!</string>
-    <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
-    <string name="faint_broken_equipment">Broken equipment can be repurchased \nfrom the Market</string>
     <string name="faint_loss_description"><![CDATA[You\'ll drop to <b>level %1$d, lose %2$d Gold, and break a piece of gear</b>… However, you can earn it all back with hard work!]]></string>
     <string name="faint_loss_description_alt"><![CDATA[You’ll drop to level <b>%1$d</b>, lose <b>%2$d</b> Gold, and your Experience… You can earn them all back with hard work!]]></string>
-    <string name="account_reset">Account Reset</string>
     <string name="avatar_skin_customization">Avatar Skin Customization</string>
     <string name="avatar_shirt_customization">Avatar Shirt Customization</string>
     <string name="avatar_beard_customization">Avatar Beard Customization</string>
@@ -1379,20 +1177,6 @@
     <string name="month_released">Month Released</string>
     <string name="incorrect_password">The password was incorrect</string>
 
-    <string name="habitica_official">Habitica Official</string>
-    <string name="academics">Academics</string>
-    <string name="advocacy_causes">Advocacy + Causes</string>
-    <string name="creativity">Creativity</string>
-    <string name="entertainment">Entertainment</string>
-    <string name="finance">Finance</string>
-    <string name="health_fitness">Health + Fitness</string>
-    <string name="hobbies_occupations">Hobbies + Occupations</string>
-    <string name="location_based">Location-based</string>
-    <string name="mental_health">Mental Health + Self Care</string>
-    <string name="getting_organized">Getting Organized</string>
-    <string name="self_improvement">Self Improvement</string>
-    <string name="spirituality">Spirituality</string>
-    <string name="time_management">Time Management + Accountability</string>
     <string name="copy_tasks_description">Show assigned and open tasks on your personal task lists</string>
     <string name="copy_shared_tasks">Copy shared tasks</string>
     <string name="group_plan_settings">Group Plan Settings</string>
@@ -1407,7 +1191,6 @@
     <string name="assign">Assign</string>
     <string name="edit_assignees">Edit assignees</string>
     <string name="assign_to">Assign to…</string>
-    <string name="promote_to_manager">Promote to Manager</string>
     <string name="manager">Manager</string>
     <string name="member_list">Member List</string>
     <string name="ban_user">Ban Player</string>
@@ -1424,7 +1207,6 @@
     <string name="unmute_user">Unmute player</string>
     <string name="status">Status</string>
     <string name="regular_access">Regular Access</string>
-    <string name="message_flagged">Message flagged %d times.</string>
     <string name="amazon">Amazon</string>
     <string name="apple_pay">Apple Pay</string>
     <string name="google_pay">Google Pay</string>
@@ -1439,12 +1221,7 @@
     <string name="on_every_day_of_week">on every day of the week</string>
     <string name="x_and_y">%1$s and %2$s</string>
     <string name="on_the_x">on the %s</string>
-    <string name="first">first</string>
     <string name="on_the_x_of_month">on the %1$s %2$s of the month</string>
-    <string name="second">second</string>
-    <string name="third">third</string>
-    <string name="fourth">fourth</string>
-    <string name="fifth">fifth</string>
     <string name="fifth_week_warning">This task will not appear due during months with less %1$ss.</string>
     <string name="animated_gryphatrice_pet">Jubilant Gryphatrice Pet</string>
     <string name="birthday_title_description">Celebrate Habitica’s 10th birthday with gifts and exclusive items below!</string>
@@ -1472,11 +1249,9 @@
     <string name="twenty_gems">20 Gems</string>
     <string name="background">Background</string>
     <string name="birthday_set">Birthday Set</string>
-    <string name="you_equipped_x">You equipped %s</string>
     <string name="purchase_gryphatrice_confirmation">Purchase the Jubilant Gryphatrice for %d Gems?</string>
     <string name="find_new_member">Find Members</string>
     <string name="find_more_members">Find more members</string>
-    <string name="go_to_settings">Go to Settings</string>
     <string name="resume_damage">Resume Damage</string>
     <string name="resume_damage_1_title">Your missed Dailies won\'t damage you</string>
     <string name="resume_damage_1_description">Bosses will still do damage caused by other\nParty member\'s missed Dailies</string>
@@ -1506,7 +1281,6 @@
     <string name="look_for_party">Look for a Party</string>
     <string name="you_re_looking_for_party">You’re looking for a Party!</string>
     <string name="seeking_hint">Keep an eye out for an invite or start your own Party at any time</string>
-    <string name="equipment_class_locked">This equipment is class-locked</string>
     <string name="change_class_to_x">Change class to %s</string>
     <string name="shop_armoire_title">You own all %s gear</string>
     <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, there\'s %d pieces of gear in the Enchanted Armoire to find!</string>
@@ -1515,7 +1289,6 @@
     <string name="rescind_invite">Cancel Invite</string>
     <string name="rescinded">Rescinded</string>
     <string name="pending_invite">Pending Invite</string>
-    <string name="invalid_input">Input invalid</string>
     <string name="username_requirements">Can only contain letters a-z, numbers, hyphens, or underscores</string>
     <string name="contributor_tiers">Contributor Tiers</string>
     <string name="contrib_tier_description">If you see an account with a colored display name and an icon, that’s a contributor tier! Tiers are given to people who help around Habitica, whether it be for translation, coding, or just being helpful. The higher the tier, the more the player has contributed.</string>
@@ -1527,7 +1300,6 @@
     <string name="empty_potions_description">Complete tasks, Potion Quests, or head over to the [Market](/shops/market) to stock up!</string>
     <string name="empty_eggs_description">Complete tasks, Egg Quests, or head over to the [Market](/shops/market) to stock up!</string>
     <string name="item_footer_title">Not getting the right %s from tasks?</string>
-    <string name="item_footer_description">Check out the [Market](/shops/market) to buy just the things you need!</string>
     <string name="quests_footer_description">Check out the [Quest Shop](/shops/quests) to see what’s available!</string>
     <string name="quests_footer_title">Want more Quests?</string>
     <string name="potions">potions</string>
@@ -1543,15 +1315,12 @@
     <string name="subscribe_incentive_text_armoire">Get an extra chance at the Armoire each time you buy it with a subscription</string>
     <string name="subscribe_second_armoire_open_text">Subscribers get extra chances at the Armoire and these other benefits!</string>
     <string name="subscriber_button_armoire">Open again for free!</string>
-    <string name="subscriber_button_faint">Second chance: Hold on with 1HP!</string>
     <string name="subscriber_button_faint_use">Use your Second Chance!</string>
     <string name="sub_perk">SUB PERK</string>
     <string name="subscribe_incentive_text_faint">Subscribers get a Second Chance perk to avoid running out of HP once a day</string>
     <string name="subscriber_benefit_available_faint">Your subscription lets you avoid running out of HP once a day!</string>
     <string name="subscribe_second_chance_incentive_text">Subscribers get a second chance at life each day and these other benefits!</string>
     <string name="subscriber_benefit_used_faint">Your Second Chance perk is still recharging! It\'ll be available again in %s.</string>
-    <string name="subriber_benefit_notification_faint">You got a second chance with 1HP!</string>
-    <string name="watch_ad_to_hang_on">Watch ad to hold on with 1HP!</string>
     <string name="quest_mechanics">Quest Mechanics</string>
     <string name="quest_mechanics_boss_title">Damaging a Boss</string>
     <string name="quest_mechanics_boss_description">Complete any type of task or use skills to rack up pending damage! Damage will be applied on your next day reset. Strength affects how much damage you do.</string>
@@ -1564,11 +1333,7 @@
     <string name="quest_mechanics_rage_title">Rage meters</string>
     <string name="quest_mechanics_rage_description">Some difficult bosses have an orange Rage meter under their HP. This meter fills up when participants miss Dailies. When it fills completely, the boss will let out a fearsome attack that does extra damage!</string>
     <string name="buy_gems_with_gold">Buy Gems with Gold</string>
-    <string name="subscribe_prompt_2">Subscribe to buy Gems with Gold and receive these other exclusive benefits!</string>
-    <string name="subscribe_listitemArmoire_description_2">Each time you open the Armoire, you can open again for free!</string>
-    <string name="subscribe_listitem2_description_2">Earn Hourglasses over time to purchase items in the Time Traveler\'s Shop</string>
     <string name="see_more_subscription_options">See more subscription options</string>
-    <string name="faint_subscriber_description">Your subscription lets you have a second chance each day if you run out of HP</string>
     <string name="rage">Rage</string>
     <string name="preference_push_invited_to_group_plan">Invited to Group Plan</string>
     <string name="preference_push_joined_group_plan_mention">\@Mentions in Group Plans</string>
@@ -1622,9 +1387,7 @@
     <string name="customizing_your_avatar">customizing your avatar</string>
     <string name="error">Error</string>
     <string name="error_loading_gems">There was an error loading gems</string>
-    <string name="clear_database">Clear Database</string>
     <string name="clear_cache_settings">Clear Cache</string>
-    <string name="best_deal">Best Deal</string>
     <string name="unlock_x_gems_per_month">Unlock %d Gems per month in the Market</string>
     <string name="unlocks_x_gems_per_month">They unlock %d Gems per month in the Market</string>
     <string name="x_gems">%d Gems</string>
@@ -1637,9 +1400,7 @@
     <string name="subscription_details_footer">Subscribers receive a Mystic Hourglass, a Mystery Gear Set, and Gems restocked in the Market within the first two days of the month</string>
     <string name="enjoy_benefits">Enjoy all these exclusive benefits with your subscription</string>
     <string name="resubscribe_for_hourglasses">Subscribe again to continue receiving Mystic Hourglasses</string>
-    <string name="max_gem_cap">Max Gem Cap</string>
     <string name="max_gem_cap_text">Instantly start at the max Gem Cap</string>
-    <string name="fifty_gems">50 Gems</string>
     <string name="raises_gem_cap_text">Raises Gem Cap to 50 Gems per month</string>
     <string name="max_gem_cap_text_gift">They instantly start at the Max Gem Cap</string>
     <string name="chat_empty_state_title">Start chatting!</string>
@@ -1652,16 +1413,11 @@
     <string name="rescrubscribe_to_pick_up">Resubscribe to pick up where you left off!</string>
     <string name="gem_cap_extra">%1$d/%2$d Gem Cap</string>
     <string name="open_habitica_website">Open Habitica Website</string>
-    <string name="nye">New Year\'s Eve</string>
-    <string name="valentines">Valentines</string>
-    <string name="habitoween" translatable="false">Habitoween</string>
-    <string name="turkey_day">Turkey Day</string>
     <string name="search_equipment">Search Equipment</string>
     <string name="auth_get_credentials_error">Error getting credentials for authentication.</string>
     <string name="auth_invalid_credentials">Received invalid credentials.</string>
     <string name="auth_invalid_credential_type">Received invalid credential type.</string>
     <string name="auth_unknown_credential_type">Received unknown credential type.</string>
-    <string name="auth_unknown_error">Unknown error during authentication.</string>
     <string name="auth_missing_token">Received empty token.</string>
     <string name="api_token_title">API Token</string>
     <string name="api_token_is_password">Your API Token is like a password</string>
