@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDirections
 import com.habitrpg.android.habitica.helpers.CrashReporter
-import com.habitrpg.android.habitica.helpers.RemoteConfig
 import com.habitrpg.common.habitica.helpers.Navigator
 
 class FakeNavigator : Navigator {
@@ -75,18 +74,6 @@ class FakeNavigator : Navigator {
     fun reset() = navigations.clear()
 }
 
-class FakeRemoteConfig : RemoteConfig {
-    val values = mutableMapOf<String, Any>()
-
-    override fun getBoolean(key: String): Boolean = values[key] as? Boolean ?: false
-
-    override fun getLong(key: String): Long = (values[key] as? Number)?.toLong() ?: 0L
-
-    override fun getString(key: String): String = values[key]?.toString() ?: ""
-
-    fun reset() = values.clear()
-}
-
 class FakeCrashReporter : CrashReporter {
     val customKeys = mutableMapOf<String, String>()
     val recordedExceptions = mutableListOf<Throwable>()
@@ -101,6 +88,16 @@ class FakeCrashReporter : CrashReporter {
     override fun logException(throwable: Throwable) {
         recordedExceptions += throwable
     }
+
+    override fun setUserID(userID: String) = Unit
+
+    override fun logError(msg: String) = Unit
+
+    override fun setAnalyticsConsent(consents: Boolean?) = Unit
+
+    override fun initialize(context: Context) = Unit
+
+    override fun clearUserID() = Unit
 
     fun reset() {
         customKeys.clear()

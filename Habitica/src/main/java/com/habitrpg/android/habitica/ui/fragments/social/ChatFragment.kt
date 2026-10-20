@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -96,7 +97,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
 
         binding?.chatBarView?.sendAction = { sendChatMessage(it) }
-        binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
+        binding?.chatBarView?.maxChatLength = configManager.value(ClientConfigKey.maxChatLength)
         binding?.chatBarView?.autocompleteContext = "party"
         binding?.chatBarView?.groupID = viewModel.getGroupData().value?.id
         binding?.chatBarView?.autocompleteAdapter =
@@ -105,7 +106,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 socialRepository,
                 autocompleteContext,
                 viewModel.groupID,
-                configManager.enableUsernameAutocomplete(),
+                configManager.value(ClientConfigKey.enableUsernameAutocomplete),
             )
 
         binding?.recyclerView?.adapter = chatAdapter

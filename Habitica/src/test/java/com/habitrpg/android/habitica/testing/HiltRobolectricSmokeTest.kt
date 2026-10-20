@@ -1,11 +1,12 @@
 package com.habitrpg.android.habitica.testing
 
 import androidx.test.core.app.ApplicationProvider
+import com.google.gson.JsonObject
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.testing.fakes.FakeNavigator
-import com.habitrpg.android.habitica.testing.fakes.FakeRemoteConfig
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -34,9 +35,6 @@ class HiltRobolectricSmokeTest {
     lateinit var navigator: FakeNavigator
 
     @Inject
-    lateinit var remoteConfig: FakeRemoteConfig
-
-    @Inject
     lateinit var configManager: AppConfigManager
 
     @Before
@@ -56,9 +54,9 @@ class HiltRobolectricSmokeTest {
     }
 
     @Test
-    fun readsRemoteConfigFromTheFake() {
-        remoteConfig.values["enableLocalTaskScoring"] = true
-        configManager.enableLocalTaskScoring() shouldBe true
+    fun readsUpdatedClientConfig() {
+        configManager.updateConfig(JsonObject().apply { addProperty("enableLocalTaskScoring", true) })
+        configManager.value(ClientConfigKey.enableLocalTaskScoring) shouldBe true
     }
 
     @Test

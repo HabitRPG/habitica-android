@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
@@ -117,7 +118,7 @@ class TaskRepositoryImpl(
         notifyFunc: ((TaskScoringResult) -> Unit)?,
     ): TaskScoringResult? {
         val localData =
-            if (user != null && appConfigManager.enableLocalTaskScoring()) {
+            if (user != null && appConfigManager.value(ClientConfigKey.enableLocalTaskScoring)) {
                 ScoreTaskLocallyInteractor.score(
                     user,
                     task,

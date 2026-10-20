@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
+import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -1045,6 +1046,9 @@ class ApiClientImpl(
     override suspend fun retrieveMarketGear(): Shop? = process { apiService.retrieveMarketGear(languageCode) }
 
     override suspend fun getWorldState(): WorldState? = process { apiService.worldState() }
+
+    override suspend fun getClientConfig(): JsonObject? =
+        process({ apiService.clientConfig() }, onError = { null }, propagateError = false, returnOnError = true)
 
     companion object {
         fun createGsonFactory(): GsonConverterFactory = GSonFactoryCreator.create()

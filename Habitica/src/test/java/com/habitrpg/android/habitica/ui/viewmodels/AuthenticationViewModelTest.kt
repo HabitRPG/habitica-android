@@ -53,7 +53,7 @@ class AuthenticationViewModelTest :
         every { sharedPreferences.edit() } returns editor
 
         fun makeViewModel(keyHelper: KeyHelper? = null) =
-            AuthenticationViewModel(apiClient, userRepository, sharedPreferences, authenticationHandler, configManager, hostConfig, keyHelper, context, analytics)
+            AuthenticationViewModel(apiClient, userRepository, sharedPreferences, authenticationHandler, configManager, hostConfig, keyHelper, context)
 
         beforeSpec {
             mockkObject(WidgetRefreshWorker)

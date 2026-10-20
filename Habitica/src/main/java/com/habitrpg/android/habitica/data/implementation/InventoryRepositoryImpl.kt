@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.EquipmentSet
@@ -244,13 +245,13 @@ class InventoryRepositoryImpl(
         hatchingPotion: HatchingPotion,
         successFunction: () -> Unit,
     ): Items? {
-        if (appConfigManager.enableLocalChanges()) {
+        if (appConfigManager.value(ClientConfigKey.enableLocalChanges)) {
             localRepository.hatchPet(egg.key, hatchingPotion.key, currentUserID)
             successFunction()
         }
         val items = apiClient.hatchPet(egg.key, hatchingPotion.key) ?: return null
         localRepository.save(items, currentUserID)
-        if (!appConfigManager.enableLocalChanges()) {
+        if (!appConfigManager.value(ClientConfigKey.enableLocalChanges)) {
             successFunction()
         }
         return items

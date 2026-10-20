@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.TeamPlan
@@ -421,7 +422,7 @@ class UserRepositoryImplTest :
             val user = User().apply { preferences = Preferences().apply { hair = Hair() } }
 
             beforeEach {
-                every { appConfigManager.enableLocalChanges() } returns true
+                every { appConfigManager.value(ClientConfigKey.enableLocalChanges) } returns true
                 every { localRepository.getUser("user-1") } returns flowOf(user)
                 every { localRepository.getLiveObject(user) } returns user
                 every { localRepository.modify(any<User>(), any()) } answers { secondArg<(User) -> Unit>().invoke(firstArg()) }

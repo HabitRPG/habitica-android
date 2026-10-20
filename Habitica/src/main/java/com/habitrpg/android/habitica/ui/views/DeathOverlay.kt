@@ -74,6 +74,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -118,7 +119,7 @@ fun DeathOverlay(
         (context as? android.app.Activity)?.moveTaskToBack(true)
     }
 
-    val useAltText = appConfigManager.showAltDeathText()
+    val useAltText = appConfigManager.value(ClientConfigKey.showAltDeathText)
     val lossDescriptionStringId =
         if (useAltText) {
             R.string.faint_loss_description_alt

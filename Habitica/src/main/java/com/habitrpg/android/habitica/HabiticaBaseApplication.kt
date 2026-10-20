@@ -21,6 +21,7 @@ import com.google.android.gms.wearable.Wearable
 import com.google.firebase.installations.FirebaseInstallations
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager.Companion.DEVICE_TOKEN_PREFERENCE_KEY
@@ -109,6 +110,9 @@ abstract class HabiticaBaseApplication :
     internal lateinit var crashReporter: CrashReporter
 
     @Inject
+    internal lateinit var appConfigManager: AppConfigManager
+
+    @Inject
     internal lateinit var clearables: Set<@JvmSuppressWildcards com.habitrpg.common.habitica.helpers.Clearable>
 
     private lateinit var lifecycleTracker: ApplicationLifecycleTracker
@@ -128,7 +132,7 @@ abstract class HabiticaBaseApplication :
         registerActivityLifecycleCallbacks(this)
         setLocale()
         setupLocaleChangeListener()
-        setupRemoteConfig()
+        setupClientConfig()
         setupNotifications()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
@@ -280,8 +284,15 @@ abstract class HabiticaBaseApplication :
         return true
     }
 
-    private fun setupRemoteConfig() {
-
+    private fun setupClientConfig() {
+        // Refreshes the config whenever the app comes to the foreground, if the cached one is outdated
+        ProcessLifecycleOwner.get().lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                override fun onStart(owner: LifecycleOwner) {
+                    appConfigManager.fetchConfig()
+                }
+            },
+        )
     }
 
     private fun setupNotifications() {
