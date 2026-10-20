@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data
 
+import com.google.gson.JsonObject
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
@@ -56,6 +57,8 @@ interface ApiClient {
     ): List<Challenge>?
 
     suspend fun getWorldState(): WorldState?
+
+    suspend fun getClientConfig(): JsonObject?
 
     var languageCode: String?
 

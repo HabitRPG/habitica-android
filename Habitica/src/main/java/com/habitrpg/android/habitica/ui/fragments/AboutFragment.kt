@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.plattysoft.leonids.ParticleSystem
@@ -123,13 +124,13 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
         binding?.versionInfo?.text = getString(R.string.version_info, versionName, versionCode)
 
-        if (appConfigManager.lastVersionCode() > versionCode) {
+        if (appConfigManager.value(ClientConfigKey.lastVersionCode) > versionCode) {
             binding?.updateAvailableWrapper?.visibility = View.VISIBLE
             binding?.updateAvailableTextview?.text =
                 getString(
                     R.string.update_available,
-                    appConfigManager.lastVersionNumber(),
-                    appConfigManager.lastVersionCode(),
+                    appConfigManager.value(ClientConfigKey.lastVersionNumber),
+                    appConfigManager.value(ClientConfigKey.lastVersionCode),
                 )
         } else {
             binding?.updateAvailableWrapper?.visibility = View.GONE

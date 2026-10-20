@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -54,8 +55,8 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
             MainNavigationController.navigate(R.id.bugFixFragment)
         }
         binding?.suggestionsFeedbackWrapper?.setOnClickListener {
-            if (appConfigManager.feedbackURL().isNotBlank()) {
-                val uriUrl = appConfigManager.feedbackURL().toUri()
+            if (appConfigManager.value(ClientConfigKey.feedbackURL).isNotBlank()) {
+                val uriUrl = appConfigManager.value(ClientConfigKey.feedbackURL).toUri()
                 val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
                 startActivity(launchBrowser)
             }

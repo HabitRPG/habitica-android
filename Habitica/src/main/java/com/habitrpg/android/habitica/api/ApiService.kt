@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.api
 
+import com.google.gson.JsonObject
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
@@ -80,6 +81,9 @@ interface ApiService {
 
     @GET("world-state")
     suspend fun worldState(): Response<HabitResponse<WorldState>>
+
+    @GET("client-config")
+    suspend fun clientConfig(): Response<HabitResponse<JsonObject>>
 
     @GET("content")
     suspend fun getContent(

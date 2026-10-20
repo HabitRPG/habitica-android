@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.TeamPlan
@@ -422,7 +423,7 @@ class UserRepositoryImpl(
         category: String?,
         identifier: String,
     ): User? {
-        if (appConfigManager.enableLocalChanges()) {
+        if (appConfigManager.value(ClientConfigKey.enableLocalChanges)) {
             val liveUser = getLiveUser()
             if (liveUser != null) {
                 localRepository.modify(liveUser) { user ->

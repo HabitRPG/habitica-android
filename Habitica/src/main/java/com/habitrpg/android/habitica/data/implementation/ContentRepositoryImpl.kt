@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
+import com.google.gson.JsonObject
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
@@ -49,4 +50,6 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
     }
 
     override fun getWorldState(): Flow<WorldState> = localRepository.getWorldState()
+
+    override suspend fun retrieveClientConfig(): JsonObject? = apiClient.getClientConfig()
 }

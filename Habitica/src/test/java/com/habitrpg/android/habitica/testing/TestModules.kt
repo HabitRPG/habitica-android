@@ -17,14 +17,12 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.RemoteConfig
 import com.habitrpg.android.habitica.modules.ApiModule
 import com.habitrpg.android.habitica.modules.PlatformServicesModule
 import com.habitrpg.android.habitica.modules.RepositoryModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.testing.fakes.FakeCrashReporter
 import com.habitrpg.android.habitica.testing.fakes.FakeNavigator
-import com.habitrpg.android.habitica.testing.fakes.FakeRemoteConfig
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.Navigator
 import dagger.Module
@@ -51,13 +49,6 @@ object TestPlatformServicesModule {
 
     @Provides
     fun provideCrashReporter(crashReporter: FakeCrashReporter): CrashReporter = crashReporter
-
-    @Provides
-    @Singleton
-    fun provideFakeRemoteConfig(): FakeRemoteConfig = FakeRemoteConfig()
-
-    @Provides
-    fun provideRemoteConfig(remoteConfig: FakeRemoteConfig): RemoteConfig = remoteConfig
 }
 
 @Module

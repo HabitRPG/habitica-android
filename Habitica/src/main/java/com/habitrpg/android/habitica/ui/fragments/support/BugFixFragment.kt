@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
 import com.habitrpg.android.habitica.databinding.KnownIssueBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.layoutInflater
@@ -57,7 +58,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
             sendEmail("[Android] Bugreport")
         }
 
-        appConfigManager.knownIssues().forEach { issue ->
+        appConfigManager.value(ClientConfigKey.knownIssues).forEach { issue ->
             val issueBinding = KnownIssueBinding.inflate(view.context.layoutInflater)
             issueBinding.root.text = issue["title"]
             issueBinding.root.setOnClickListener {
@@ -152,7 +153,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         mainActivity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             val mailto =
-                "mailto:" + appConfigManager.supportEmail() +
+                "mailto:" + appConfigManager.value(ClientConfigKey.supportEmail) +
                     "?subject=" + Uri.encode(subject) +
                     "&body=" + bodyOfEmail
             emailIntent.data = mailto.toUri()
