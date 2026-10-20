@@ -20,7 +20,6 @@ class ReviewManager(
     }
 
     private fun canRequestReview(currentCheckins: Int): Boolean {
-        if (!configManager.value(ClientConfigKey.enableReviewPrompt)) return false
         val initialCheckins = sharedPref.getInt(INITIAL_CHECKINS_KEY, -1)
         val shouldQueueReview = sharedPref.getBoolean(SHOULD_QUEUE_REVIEW, false)
         val lastReviewCheckin = sharedPref.getInt(LAST_REVIEW_CHECKIN_KEY, -1)

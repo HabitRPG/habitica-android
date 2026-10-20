@@ -192,10 +192,9 @@ class InventoryRepositoryImplTest :
             }
         }
         "hatchPet" should {
-            "apply the local change immediately when enabled" {
+            "apply the local change immediately" {
                 val egg = Egg().apply { key = "egg-1" }
                 val potion = HatchingPotion().apply { key = "potion-1" }
-                every { appConfigManager.value(ClientConfigKey.enableLocalChanges) } returns true
                 every { localRepository.hatchPet("egg-1", "potion-1", "user-1") } returns Unit
                 val items = Items()
                 coEvery { apiClient.hatchPet("egg-1", "potion-1") } returns items
@@ -205,19 +204,6 @@ class InventoryRepositoryImplTest :
                 result shouldBe items
                 successCalls shouldBe 1
                 verify { localRepository.hatchPet("egg-1", "potion-1", "user-1") }
-            }
-
-            "only call success after the API responds when local changes are disabled" {
-                val egg = Egg().apply { key = "egg-1" }
-                val potion = HatchingPotion().apply { key = "potion-1" }
-                every { appConfigManager.value(ClientConfigKey.enableLocalChanges) } returns false
-                val items = Items()
-                coEvery { apiClient.hatchPet("egg-1", "potion-1") } returns items
-                every { localRepository.save(items, "user-1") } returns Unit
-                var successCalls = 0
-                repository.hatchPet(egg, potion) { successCalls++ }
-                successCalls shouldBe 1
-                verify(exactly = 0) { localRepository.hatchPet(any(), any(), any()) }
             }
         }
         "buyItem" should {

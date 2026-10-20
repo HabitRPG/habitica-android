@@ -7,7 +7,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.TeamPlan
@@ -423,37 +422,35 @@ class UserRepositoryImpl(
         category: String?,
         identifier: String,
     ): User? {
-        if (appConfigManager.value(ClientConfigKey.enableLocalChanges)) {
-            val liveUser = getLiveUser()
-            if (liveUser != null) {
-                localRepository.modify(liveUser) { user ->
-                    when (type) {
-                        "skin" -> {
-                            user.preferences?.skin = identifier
-                        }
+        val liveUser = getLiveUser()
+        if (liveUser != null) {
+            localRepository.modify(liveUser) { user ->
+                when (type) {
+                    "skin" -> {
+                        user.preferences?.skin = identifier
+                    }
 
-                        "shirt" -> {
-                            user.preferences?.shirt = identifier
-                        }
+                    "shirt" -> {
+                        user.preferences?.shirt = identifier
+                    }
 
-                        "hair" -> {
-                            when (category) {
-                                "color" -> user.preferences?.hair?.color = identifier
-                                "flower" -> user.preferences?.hair?.flower = identifier.toInt()
-                                "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
-                                "beard" -> user.preferences?.hair?.beard = identifier.toInt()
-                                "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
-                                "base" -> user.preferences?.hair?.base = identifier.toInt()
-                            }
+                    "hair" -> {
+                        when (category) {
+                            "color" -> user.preferences?.hair?.color = identifier
+                            "flower" -> user.preferences?.hair?.flower = identifier.toInt()
+                            "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
+                            "beard" -> user.preferences?.hair?.beard = identifier.toInt()
+                            "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
+                            "base" -> user.preferences?.hair?.base = identifier.toInt()
                         }
+                    }
 
-                        "background" -> {
-                            user.preferences?.background = identifier
-                        }
+                    "background" -> {
+                        user.preferences?.background = identifier
+                    }
 
-                        "chair" -> {
-                            user.preferences?.chair = identifier
-                        }
+                    "chair" -> {
+                        user.preferences?.chair = identifier
                     }
                 }
             }
