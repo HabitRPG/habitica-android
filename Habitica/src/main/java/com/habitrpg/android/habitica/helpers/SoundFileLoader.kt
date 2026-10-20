@@ -48,16 +48,16 @@ class SoundFileLoader(
                     if (!response.isSuccessful) {
                         throw IOException()
                     }
-                } catch (io: IOException) {
+                } catch (_: IOException) {
                     return@withContext audioFile
                 }
 
                 try {
                     val sink = file.sink().buffer()
-                    sink.writeAll(response.body!!.source())
+                    sink.writeAll(response.body.source())
                     sink.flush()
                     sink.close()
-                } catch (io: IOException) {
+                } catch (_: IOException) {
                     return@withContext audioFile
                 }
 

@@ -53,11 +53,7 @@ class LanguageHelper(
     companion object {
         // Intentional, we want the system locale, not the app locale
         @SuppressLint("ConstantLocale")
-        val systemLocale: Locale
-
-        init {
-            systemLocale = Locale.getDefault()
-        }
+        val systemLocale: Locale = Locale.getDefault()
 
         fun getLanguageTag(languagePref: String?): String =
             when (languagePref) {

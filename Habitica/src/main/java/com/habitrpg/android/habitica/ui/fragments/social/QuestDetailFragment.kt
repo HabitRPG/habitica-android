@@ -28,10 +28,11 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -69,6 +70,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -82,14 +84,10 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
         viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository
-                .getUser()
-                .map { it?.party?.id }
-                .filterNotNull()
+                .getUser().mapNotNull { it?.party?.id }
                 .distinctUntilChanged()
                 .flatMapLatest { socialRepository.getGroup(it) }
-                .onEach { updateParty(it) }
-                .map { it?.quest?.key }
-                .filterNotNull()
+                .onEach { updateParty(it) }.mapNotNull { it?.quest?.key }
                 .distinctUntilChanged()
                 .flatMapLatest { inventoryRepository.getQuestContent(it) }
                 .filterNotNull()

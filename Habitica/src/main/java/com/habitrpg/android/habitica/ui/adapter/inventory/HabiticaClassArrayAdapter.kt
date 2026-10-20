@@ -20,11 +20,11 @@ class HabiticaClassArrayAdapter(
     override fun getDropDownView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup?,
+        parent: ViewGroup,
     ): View =
         createView(
             position,
-            convertView ?: parent?.inflate(R.layout.class_spinner_dropdown_item, false),
+            convertView ?: parent.inflate(R.layout.class_spinner_dropdown_item, false),
         )
 
     override fun getView(

@@ -134,7 +134,7 @@ abstract class BaseTaskViewHolder(
             notesTextView?.visibility = View.GONE
         }
 
-        val titleText = data.text ?: ""
+        val titleText = data.text
         if (!MarkdownParser.containsMarkdown(titleText) && !EmojiParser.containsEmoji(titleText)) {
             titleTextView.text = titleText
         } else {

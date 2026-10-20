@@ -455,7 +455,6 @@ class TasksFragment :
                 TaskType.DAILY -> 1
                 TaskType.TODO -> 2
                 TaskType.REWARD -> 3
-                else -> -1
             }
         }
         return -1
@@ -480,7 +479,6 @@ class TasksFragment :
                 TaskType.DAILY -> 1
                 TaskType.TODO -> 2
                 TaskType.REWARD -> 3
-                else -> 0
             }
         binding?.viewPager?.setCurrentItem(newItem, smooth)
         updateBottomBarBadges()
