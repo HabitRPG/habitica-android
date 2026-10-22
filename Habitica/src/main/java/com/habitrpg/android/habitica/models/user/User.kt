@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.VersionedObject
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
@@ -27,8 +26,7 @@ enum class Permission {
 open class User :
     RealmObject(),
     BaseMainObject,
-    Avatar,
-    VersionedObject {
+    Avatar {
     fun hasPermission(permission: Permission): Boolean =
         permissions?.fullAccess == true ||
             when (permission) {
@@ -51,7 +49,7 @@ open class User :
     override var id: String? = null
 
     @SerializedName("_v")
-    override var versionNumber: Int = 0
+    var versionNumber: Int = 0
 
     override var balance: Double = 0.toDouble()
     override var stats: Stats? = null

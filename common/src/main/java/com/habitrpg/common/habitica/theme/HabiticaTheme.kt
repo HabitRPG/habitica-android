@@ -97,36 +97,12 @@ fun HabiticaTheme(content: @Composable () -> Unit) {
     )
 }
 
-val Typography.caption1
-    get() = labelMedium
 val Typography.caption2
     get() =
         TextStyle(
             fontWeight = FontWeight.Medium,
             fontSize = 12.sp,
             letterSpacing = 0.4.sp,
-        )
-val Typography.caption3
-    get() =
-        TextStyle(
-            fontWeight = FontWeight.Medium,
-            fontSize = 12.sp,
-            letterSpacing = 0.3.sp,
-            lineHeight = 14.sp,
-        )
-val Typography.caption4
-    get() =
-        TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 12.sp,
-            letterSpacing = 0.35.sp,
-        )
-val Typography.subtitle3
-    get() =
-        TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
-            letterSpacing = 0.15.sp,
         )
 
 object HabiticaTheme {
@@ -159,4 +135,3 @@ class HabiticaColors(
     val successColor: Color,
 )
 
-class HabiticaTypography

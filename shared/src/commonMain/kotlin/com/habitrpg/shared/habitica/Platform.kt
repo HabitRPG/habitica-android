@@ -2,10 +2,6 @@ package com.habitrpg.shared.habitica
 
 import kotlin.reflect.KClass
 
-expect class Platform() {
-    val platform: String
-}
-
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect interface HParcelable {
     fun writeToParcel(

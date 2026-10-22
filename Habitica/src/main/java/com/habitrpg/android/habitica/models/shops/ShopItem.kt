@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
@@ -253,39 +252,6 @@ open class ShopItem :
             } else {
                 item.purchaseType = "customization"
                 item.imageName = customization.getIconName(userSize, hairColor)
-            }
-            return item
-        }
-
-        fun fromCustomizationSet(
-            set: CustomizationSet,
-            additionalSetItems: List<Customization>?,
-            userSize: String?,
-            hairColor: String?,
-        ): ShopItem {
-            val item = ShopItem()
-            var path = ""
-            for (customization in set.customizations) {
-                path = path + "," + customization.unlockPath
-                item.setImageNames.add(customization.getIconName(userSize, hairColor))
-            }
-            for (customization in additionalSetItems ?: emptyList()) {
-                path = path + "," + customization.unlockPath
-                item.setImageNames.add(customization.getIconName(userSize, hairColor))
-            }
-            if (path.isEmpty()) {
-                item.unlockPath = path
-            } else {
-                item.unlockPath = path.substring(1)
-            }
-            item.text = set.text
-            item.key = set.identifier ?: ""
-            item.currency = "gems"
-            item.value = set.price
-            item.purchaseType = "customizationSet"
-            if (set.customizations.firstOrNull()?.type == "background") {
-                // TODO: Needs a way to be translated.
-                item.notes = "Get all three Backgrounds in this bundle."
             }
             return item
         }

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.models.SetupCustomization
@@ -10,9 +9,7 @@ import javax.inject.Inject
 @Suppress("StringLiteralDuplication")
 class SetupCustomizationRepositoryImpl
     @Inject
-    constructor(
-        private val context: Context,
-    ) : SetupCustomizationRepository {
+    constructor() : SetupCustomizationRepository {
         private val wheelchairs: List<SetupCustomization>
             get() =
                 listOf(
@@ -161,20 +158,43 @@ class SetupCustomizationRepositoryImpl
                 }
             }
 
-        private fun getHairBases(color: String): List<SetupCustomization> =
-            listOf(
-                SetupCustomization.createHairPonytail("0", R.drawable.creator_blank_face),
-                SetupCustomization.createHairPonytail("1", getResId("creator_hair_base_1_$color")),
-                SetupCustomization.createHairPonytail("3", getResId("creator_hair_base_3_$color")),
+        // Referenced statically so the resource shrinker keeps them in release builds.
+        private val hairBaseDrawables: Map<String, List<Int>> =
+            mapOf(
+                "black" to listOf(R.drawable.creator_hair_base_1_black, R.drawable.creator_hair_base_3_black),
+                "blond" to listOf(R.drawable.creator_hair_base_1_blond, R.drawable.creator_hair_base_3_blond),
+                "brown" to listOf(R.drawable.creator_hair_base_1_brown, R.drawable.creator_hair_base_3_brown),
+                "red" to listOf(R.drawable.creator_hair_base_1_red, R.drawable.creator_hair_base_3_red),
+                "white" to listOf(R.drawable.creator_hair_base_1_white, R.drawable.creator_hair_base_3_white),
             )
 
-        private fun getBangs(color: String): List<SetupCustomization> =
-            listOf(
-                SetupCustomization.createHairBangs("0", R.drawable.creator_blank_face),
-                SetupCustomization.createHairBangs("1", getResId("creator_hair_bangs_1_$color")),
-                SetupCustomization.createHairBangs("2", getResId("creator_hair_bangs_2_$color")),
-                SetupCustomization.createHairBangs("3", getResId("creator_hair_bangs_3_$color")),
+        private val bangsDrawables: Map<String, List<Int>> =
+            mapOf(
+                "black" to listOf(R.drawable.creator_hair_bangs_1_black, R.drawable.creator_hair_bangs_2_black, R.drawable.creator_hair_bangs_3_black),
+                "blond" to listOf(R.drawable.creator_hair_bangs_1_blond, R.drawable.creator_hair_bangs_2_blond, R.drawable.creator_hair_bangs_3_blond),
+                "brown" to listOf(R.drawable.creator_hair_bangs_1_brown, R.drawable.creator_hair_bangs_2_brown, R.drawable.creator_hair_bangs_3_brown),
+                "red" to listOf(R.drawable.creator_hair_bangs_1_red, R.drawable.creator_hair_bangs_2_red, R.drawable.creator_hair_bangs_3_red),
+                "white" to listOf(R.drawable.creator_hair_bangs_1_white, R.drawable.creator_hair_bangs_2_white, R.drawable.creator_hair_bangs_3_white),
             )
+
+        private fun getHairBases(color: String): List<SetupCustomization> {
+            val drawables = hairBaseDrawables[color]
+            return listOf(
+                SetupCustomization.createHairPonytail("0", R.drawable.creator_blank_face),
+                SetupCustomization.createHairPonytail("1", drawables?.get(0)),
+                SetupCustomization.createHairPonytail("3", drawables?.get(1)),
+            )
+        }
+
+        private fun getBangs(color: String): List<SetupCustomization> {
+            val drawables = bangsDrawables[color]
+            return listOf(
+                SetupCustomization.createHairBangs("0", R.drawable.creator_blank_face),
+                SetupCustomization.createHairBangs("1", drawables?.get(0)),
+                SetupCustomization.createHairBangs("2", drawables?.get(1)),
+                SetupCustomization.createHairBangs("3", drawables?.get(2)),
+            )
+        }
 
         private fun getShirts(size: String): List<SetupCustomization> =
             if (size == "broad") {
@@ -195,12 +215,5 @@ class SetupCustomizationRepositoryImpl
                     SetupCustomization.createShirt("white", R.drawable.creator_slim_shirt_white),
                     SetupCustomization.createShirt("yellow", R.drawable.creator_slim_shirt_yellow),
                 )
-            }
-
-        private fun getResId(resName: String): Int =
-            try {
-                context.resources.getIdentifier(resName, "drawable", context.packageName)
-            } catch (_: Exception) {
-                -1
             }
     }

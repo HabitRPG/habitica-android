@@ -3,11 +3,6 @@ package com.habitrpg.shared.habitica
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import kotlin.reflect.KClass
 
-actual class Platform actual constructor() {
-    actual val platform: String
-        get() = "JS!"
-}
-
 actual interface HParcelable {
     actual fun writeToParcel(
         dest: HParcel,

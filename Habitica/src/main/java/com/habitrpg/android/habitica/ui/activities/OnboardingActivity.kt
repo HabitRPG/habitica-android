@@ -20,13 +20,8 @@ import androidx.core.content.edit
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.google.android.gms.tasks.Tasks
-import com.google.android.gms.wearable.CapabilityClient
-import com.google.android.gms.wearable.MessageClient
-import com.google.android.gms.wearable.Wearable
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
-import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addOkButton
@@ -40,11 +35,8 @@ import com.habitrpg.android.habitica.ui.views.login.LoginScreen
 import com.habitrpg.android.habitica.ui.views.setup.SetupScreen
 import com.habitrpg.android.habitica.ui.views.setup.UsernameSelectionScreen
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 enum class OnboardingSteps(
@@ -58,8 +50,6 @@ enum class OnboardingSteps(
 
 @AndroidEntryPoint
 class OnboardingActivity : ComposeActivity() {
-    private lateinit var binding: ActivityLoginBinding
-
     val authenticationViewModel: AuthenticationViewModel by viewModels()
 
     val currentStep = mutableStateOf(OnboardingSteps.INTRO)
@@ -202,33 +192,6 @@ class OnboardingActivity : ComposeActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
-    }
-
-    private fun sendAuthToWearables(response: UserAuthResponse) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val messageClient: MessageClient = Wearable.getMessageClient(this@OnboardingActivity)
-            val capabilityClient: CapabilityClient = Wearable.getCapabilityClient(this@OnboardingActivity)
-            try {
-                val info =
-                    Tasks.await(
-                        capabilityClient.getCapability(
-                            "receive_message",
-                            CapabilityClient.FILTER_REACHABLE,
-                        ),
-                    )
-                info.nodes.forEach {
-                    Tasks.await(
-                        messageClient.sendMessage(
-                            it.id,
-                            "/auth",
-                            "${response.id}:${response.apiToken}".toByteArray(),
-                        ),
-                    )
-                }
-            } catch (_: Exception) {
-                // Wearable API is not available on this device.
-            }
-        }
     }
 
     private fun onForgotPasswordClicked() {

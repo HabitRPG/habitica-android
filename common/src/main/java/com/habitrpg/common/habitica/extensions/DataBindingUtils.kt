@@ -5,9 +5,6 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.Transformation
-import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import coil3.SingletonImageLoader
@@ -130,30 +127,6 @@ object DataBindingUtils {
             return false
         }
         return imageName != "shop_"
-    }
-
-    class LayoutWeightAnimation(
-        internal var view: View,
-        internal var targetWeight: Float,
-    ) : Animation() {
-        private var initializeWeight: Float = 0.toFloat()
-
-        private var layoutParams: LinearLayout.LayoutParams = view.layoutParams as LinearLayout.LayoutParams
-
-        init {
-            initializeWeight = layoutParams.weight
-        }
-
-        override fun applyTransformation(
-            interpolatedTime: Float,
-            t: Transformation,
-        ) {
-            layoutParams.weight = initializeWeight + (targetWeight - initializeWeight) * interpolatedTime
-
-            view.requestLayout()
-        }
-
-        override fun willChangeBounds(): Boolean = true
     }
 
     const val BASE_IMAGE_URL = "https://habitica-assets.s3.amazonaws.com/mobileApp/images/"

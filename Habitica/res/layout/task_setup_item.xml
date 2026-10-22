@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/textView"
-        android:layout_height="36dp"
-        android:layout_width="match_parent"
-        style="@style/DiamondButton"
-        android:background="@drawable/diamond_button_white"
-                android:layout_margin="6dp" />
