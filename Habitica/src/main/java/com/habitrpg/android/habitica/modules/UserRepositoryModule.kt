@@ -56,9 +56,7 @@ import javax.inject.Singleton
 @Module
 class UserRepositoryModule {
     @Provides
-    fun providesSetupCustomizationRepository(
-        @ApplicationContext context: Context,
-    ): SetupCustomizationRepository = SetupCustomizationRepositoryImpl(context)
+    fun providesSetupCustomizationRepository(): SetupCustomizationRepository = SetupCustomizationRepositoryImpl()
 
     @Provides
     fun providesTaskLocalRepository(realm: Realm): TaskLocalRepository = RealmTaskLocalRepository(realm)

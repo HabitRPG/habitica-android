@@ -45,20 +45,16 @@ object HabiticaWidgetColorScheme {
 
 object WidgetColors {
     val background = ColorProvider(R.color.widget_bg)
-    val backgroundSecondary = ColorProvider(R.color.widget_bg_secondary)
     val cardBackground = ColorProvider(R.color.widget_card_bg)
     val text = ColorProvider(R.color.widget_text)
     val textSecondary = ColorProvider(R.color.widget_text_secondary)
-    val dailiesPurple = ColorProvider(R.color.widget_dailies_purple)
     val progressTrack = ColorProvider(R.color.widget_progress_track)
     val taskListPrimaryText = ColorProvider(R.color.widget_task_list_primary_text)
-    val taskListSecondaryText = ColorProvider(R.color.widget_task_list_secondary_text)
     val taskListTaskText = ColorProvider(R.color.widget_task_list_task_text)
     val separator = ColorProvider(R.color.widget_separator)
     val checklistBackground = ColorProvider(R.color.widget_checklist_bg)
     val checklistBackgroundDone = ColorProvider(R.color.widget_checklist_bg_done)
     val checkboxFill = ColorProvider(R.color.widget_checkbox_fill)
-    val addLabelText = ColorProvider(R.color.widget_add_label_text)
     val levelChipBackground = ColorProvider(R.color.widget_level_chip_bg)
     val levelChipText = ColorProvider(R.color.widget_level_chip_text)
     val currencyChipBackground = ColorProvider(R.color.widget_currency_chip_bg)
@@ -74,16 +70,6 @@ object WidgetBarColors {
     val blue = Color(0xFF50B5E9)
     val purple = Color(0xFF925CF3)
     val gray = Color(0xFF34313A)
-}
-
-object TaskValueBucketColors {
-    val maroon = Color(0xFFC92B2B)
-    val red = Color(0xFFF74E52)
-    val orange = Color(0xFFFA8537)
-    val yellow = Color(0xFFFFB445)
-    val green = Color(0xFF20B780)
-    val teal = Color(0xFF34B5C1)
-    val blue = Color(0xFF46A7D9)
 }
 
 object HabitButtonBarColors {
@@ -102,17 +88,6 @@ object HabitButtonBarColors {
     val blueLight = Color(0xFF50B5E9)
     val blueMedium = Color(0xFF46A7D9)
 }
-
-fun colorForTaskValue(value: Double): Color =
-    when {
-        value < -20.0 -> TaskValueBucketColors.maroon
-        value < -10.0 -> TaskValueBucketColors.red
-        value < -1.0 -> TaskValueBucketColors.orange
-        value < 1.0 -> TaskValueBucketColors.yellow
-        value < 5.0 -> TaskValueBucketColors.green
-        value < 10.0 -> TaskValueBucketColors.teal
-        else -> TaskValueBucketColors.blue
-    }
 
 fun colorForTaskValueLight(value: Double): Color =
     when {

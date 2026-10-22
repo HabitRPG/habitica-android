@@ -702,16 +702,6 @@
         <item name="android:paddingBottom">20dp</item>
     </style>
 
-    <style name="LoginButton" parent="@style/Widget.AppCompat.Button.Borderless">
-        <item name="android:shadowColor">@color/transparent</item>
-        <item name="android:background">@drawable/login_button</item>
-        <item name="backgroundTint">@color/brand_50</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:paddingStart">32dp</item>
-        <item name="android:paddingEnd">32dp</item>
-    </style>
 
     <style name="LoginButtonProgress" parent="@style/Widget.Material3.CircularProgressIndicator">
         <item name="indicatorSize">22dp</item>
@@ -721,18 +711,6 @@
         <item name="android:layout_marginStart">@dimen/spacing_xlarge</item>
     </style>
 
-    <style name="DiamondButton" parent="@style/Widget.AppCompat.Button.Borderless">
-        <item name="android:layout_height">36dp</item>
-        <item name="android:background">@drawable/diamond_button</item>
-        <item name="backgroundTint">@color/brand</item>
-        <item name="android:paddingStart">36dp</item>
-        <item name="android:paddingEnd">36dp</item>
-        <item name="android:paddingTop">0dp</item>
-        <item name="android:paddingBottom">0dp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:shadowColor">@color/transparent</item>
-    </style>
 
     <style name="TaskFilterRadioButton">
         <item name="android:layout_weight">1</item>
@@ -1002,13 +980,6 @@
         <item name="android:accessibilityHeading">true</item>
     </style>
 
-    <style name="TaskFormToggle">
-        <item name="android:background">@drawable/layout_rounded_bg_tinted</item>
-        <item name="android:gravity">center</item>
-        <item name="android:paddingTop">@dimen/spacing_small</item>
-        <item name="android:paddingBottom">@dimen/spacing_small</item>
-        <item name="android:height">48dp</item>
-    </style>
 
     <style name="TaskFormWeekdayButton">
         <item name="android:textSize">16sp</item>

@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.models.user.Hair
@@ -9,16 +8,10 @@ import com.habitrpg.android.habitica.models.user.User
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
 
 class SetupCustomizationRepositoryImplTest :
     WordSpec({
-        val context = mockk<Context>()
-        val repository = SetupCustomizationRepositoryImpl(context)
-
-        every { context.packageName } returns "com.habitrpg.android.habitica"
-        every { context.resources.getIdentifier(any(), "drawable", any()) } answers { firstArg<String>().hashCode() }
+        val repository = SetupCustomizationRepositoryImpl()
 
         fun user(
             size: String? = null,
@@ -57,17 +50,24 @@ class SetupCustomizationRepositoryImplTest :
             "look up bangs and ponytails in the users hair color" {
                 val bangs = repository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, user(hairColor = "red"))
                 bangs.map { it.key } shouldBe listOf("0", "1", "2", "3")
-                bangs[1].drawableId shouldBe "creator_hair_bangs_1_red".hashCode()
+                bangs.drop(1).map { it.drawableId } shouldBe
+                    listOf(R.drawable.creator_hair_bangs_1_red, R.drawable.creator_hair_bangs_2_red, R.drawable.creator_hair_bangs_3_red)
                 val bases = repository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_PONYTAIL, user(hairColor = "red"))
                 bases.map { it.key } shouldBe listOf("0", "1", "3")
-                bases[2].drawableId shouldBe "creator_hair_base_3_red".hashCode()
+                bases.drop(1).map { it.drawableId } shouldBe listOf(R.drawable.creator_hair_base_1_red, R.drawable.creator_hair_base_3_red)
             }
 
-            "use -1 for drawables that could not be looked up" {
-                every { context.resources } throws IllegalStateException()
+            "have a drawable for every hair color" {
+                listOf("white", "brown", "blond", "red", "black").forEach { color ->
+                    val bangs = repository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, user(hairColor = color))
+                    val bases = repository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_PONYTAIL, user(hairColor = color))
+                    (bangs + bases).all { it.drawableId != null } shouldBe true
+                }
+            }
+
+            "use no drawable for unknown hair colors" {
                 val bangs = repository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, User())
-                bangs[1].drawableId shouldBe -1
-                every { context.resources.getIdentifier(any(), "drawable", any()) } answers { firstArg<String>().hashCode() }
+                bangs[1].drawableId shouldBe null
             }
 
             "return the extras" {
