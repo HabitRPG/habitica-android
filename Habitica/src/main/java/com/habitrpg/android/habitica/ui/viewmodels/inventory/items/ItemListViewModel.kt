@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
@@ -26,6 +27,7 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -33,7 +35,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -46,6 +47,7 @@ import javax.inject.Inject
 class ItemListViewModel
 @Inject
 constructor(
+    savedStateHandle: SavedStateHandle,
     private val inventoryRepository: InventoryRepository,
     private val socialRepository: SocialRepository,
     private val sharedPreferences: SharedPreferences,
@@ -75,28 +77,24 @@ constructor(
                     }
             }
 
-    val itemType: MutableStateFlow<String> = MutableStateFlow("")
+    val itemType: String = savedStateHandle[ItemRecyclerFragment.ARG_ITEM_TYPE] ?: ""
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val ownedItems =
-        itemType.flatMapLatest {
-            inventoryRepository
-                .getOwnedItems(it)
+    val ownedItems = inventoryRepository.getOwnedItems(itemType)
+
+    private val itemClass: Class<out Item> =
+        when (itemType) {
+            "eggs" -> Egg::class.java
+            "hatchingPotions" -> HatchingPotion::class.java
+            "food" -> Food::class.java
+            "quests" -> QuestContent::class.java
+            "special" -> SpecialItem::class.java
+            else -> Egg::class.java
         }
 
     val items =
         ownedItems
             .map { items -> items.mapNotNull { it.key } }
             .map {
-                val itemClass: Class<out Item> =
-                    when (itemType.value) {
-                        "eggs" -> Egg::class.java
-                        "hatchingPotions" -> HatchingPotion::class.java
-                        "food" -> Food::class.java
-                        "quests" -> QuestContent::class.java
-                        "special" -> SpecialItem::class.java
-                        else -> Egg::class.java
-                    }
                 inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
             }.map {
                 val itemMap = mutableMapOf<String, Item>()
@@ -138,32 +136,35 @@ constructor(
         }
     }
 
-    fun hatchPet(
+    /**
+     * Suspends instead of launching in [viewModelScope], so callers that dismiss themselves
+     * (like [com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment])
+     * can run it in a scope that outlives this view model.
+     */
+    suspend fun hatchPet(
         potion: HatchingPotion,
         egg: Egg,
         activity: Activity,
     ) {
-        viewModelScope.launchCatching {
-            hatchPetUseCase.callInteractor(
-                HatchPetUseCase.RequestValues(
-                    potion,
-                    egg,
-                    activity,
-                ),
-            )
+        hatchPetUseCase.callInteractor(
+            HatchPetUseCase.RequestValues(
+                potion,
+                egg,
+                activity,
+            ),
+        )
 
-            var hatchCount = sharedPreferences.getInt("pets_hatched", 0)
-            hatchCount += 1
-            sharedPreferences.edit {
-                putInt("pets_hatched", hatchCount)
-            }
-            userViewModel.user.value?.let { user ->
-                val parentActivity = activity as? MainActivity
-                val totalCheckIns = user.loginIncentives
+        var hatchCount = sharedPreferences.getInt("pets_hatched", 0)
+        hatchCount += 1
+        sharedPreferences.edit {
+            putInt("pets_hatched", hatchCount)
+        }
+        userViewModel.user.value?.let { user ->
+            val parentActivity = activity as? MainActivity
+            val totalCheckIns = user.loginIncentives
 
-                if (parentActivity != null) {
-                    reviewManager.requestReview(parentActivity, totalCheckIns)
-                }
+            if (parentActivity != null) {
+                reviewManager.requestReview(parentActivity, totalCheckIns)
             }
         }
     }

@@ -43,8 +43,18 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     lateinit var userViewModel: MainUserViewModel
 
     var adapter: ItemRecyclerAdapter? = null
-    var itemType: String? = null
-    var itemTypeText: String? = null
+    var itemType: String?
+        get() = arguments?.getString(ItemRecyclerFragment.ARG_ITEM_TYPE)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ItemRecyclerFragment.ARG_ITEM_TYPE, value)
+        }
+    var itemTypeText: String?
+        get() = arguments?.getString(ItemRecyclerFragment.ARG_ITEM_TYPE_TEXT)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ItemRecyclerFragment.ARG_ITEM_TYPE_TEXT, value)
+        }
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
     var onFeedResult: ((FeedResponse?) -> Unit)? = null
@@ -119,10 +129,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 user = it
                 adapter?.user = it
             }
-        }
-
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
         }
 
         when {
@@ -224,18 +230,16 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         super.onResume()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(ITEM_TYPE_KEY, this.itemType)
-    }
-
     private fun hatchPet(
         potion: HatchingPotion,
         egg: Egg,
     ) {
         dismiss()
         val activity = activity ?: return
-        viewModel.hatchPet(potion, egg, activity)
+        // dismissing clears this dialog's view model, so the request has to run in the activity's scope
+        activity.lifecycleScope.launchCatching {
+            viewModel.hatchPet(potion, egg, activity)
+        }
     }
 
     private fun loadItems() {
@@ -276,9 +280,5 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         }
         dialog.addCancelButton()
         dialog.show()
-    }
-
-    companion object {
-        private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
     }
 }

@@ -1,7 +1,5 @@
-New in 4.8.0:
-- Added ability to set Privacy Preferences
-- New screen will prompt all players to opt-in to analytics
-- Privacy Preferences can be viewed and changed in Settings
-- New login screen interface
-- New sign-up flow
-- New initial character creation flow
+New in 4.11:
+- This update improves the options and responsiveness of subscription changes
+- You can now change your subscription type and convert a gifted subscription to a recurring one
+- Cancellations and subscription changes will now be reflected quicker
+- Added support for more seasonal events

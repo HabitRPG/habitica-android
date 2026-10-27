@@ -237,7 +237,9 @@ class ItemRecyclerFragment :
         egg: Egg,
     ) {
         (activity as? BaseActivity)?.let {
-            viewModel.hatchPet(potion, egg, it)
+            lifecycleScope.launchCatching {
+                viewModel.hatchPet(potion, egg, it)
+            }
         }
     }
 
