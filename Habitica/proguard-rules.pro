@@ -28,6 +28,11 @@
 }
 
 #realm
+# Realm instantiates DefaultRealmModule and DefaultRealmModuleMediator via getDeclaredConstructors()[0].
+# Its consumer rule keeps the classes but not their constructors, which R8 full mode then removes.
+-keep @io.realm.annotations.RealmModule class * {
+    <init>();
+}
 # R8 erases type arguments (RealmList<Tag> -> RealmList) from field signatures of classes that are not kept,
 # which breaks Gson's lookup of the type adapters registered for those generic types
 -keep,allowobfuscation class io.realm.RealmList
