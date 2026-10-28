@@ -1,5 +1,6 @@
-New in 4.11:
+New in 4.11.1:
 - This update improves the options and responsiveness of subscription changes
 - You can now change your subscription type and convert a gifted subscription to a recurring one
 - Cancellations and subscription changes will now be reflected quicker
 - Added support for more seasonal events
+- Fixed an issue where Quests and their participants weren't displaying correctly

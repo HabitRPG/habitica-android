@@ -83,7 +83,9 @@ class SocialRepositoryImplTest :
                 every { localRepository.saveGroup(group) } returns Unit
                 coEvery { apiClient.listGroupChat("group-1", 50, null) } returns null
                 every { localRepository.getPartyMembers("group-1") } returns flowOf(listOf(localMember1, localMember2))
+                every { localRepository.getUnmanagedCopy(any<List<Member>>()) } answers { firstArg() }
                 repository.retrieveGroup("group-1")
+                verify { localRepository.getUnmanagedCopy(listOf(localMember1, localMember2)) }
                 val participants = group.quest?.participants.orEmpty()
                 participants.firstOrNull { it.id == "member-1" }?.participatesInQuest shouldBe true
                 participants.firstOrNull { it.id == "member-2" }?.participatesInQuest shouldBe null

@@ -172,7 +172,8 @@ class SocialRepositoryImpl(
     private suspend fun resolveQuestParticipants(group: Group) {
         val declared = group.quest?.participants ?: return
         if (declared.isEmpty()) return
-        val known = localRepository.getPartyMembers(group.id).firstOrNull() ?: emptyList()
+        // The local roster comes back as managed (frozen) Realm objects, which can't be modified outside a write transaction
+        val known = localRepository.getUnmanagedCopy(localRepository.getPartyMembers(group.id).firstOrNull() ?: emptyList())
         val resolved = mutableListOf<Member>()
         for (member in known) {
             member.participatesInQuest = declared.firstOrNull { it.id == member.id }?.participatesInQuest

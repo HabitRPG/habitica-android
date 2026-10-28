@@ -248,11 +248,14 @@ class RealmSocialLocalRepository(
         groupId: String?,
         members: List<Member>,
     ) {
+        val existingMembers =
+            groupId?.let { id -> safeQuery { it.where(Member::class.java).equalTo("party.id", id) }?.findAll() }
+        // Quest participation only comes from the group payload, so keep it instead of overwriting it with null
+        existingMembers?.forEach { existingMember ->
+            members.firstOrNull { it.id == existingMember.id }?.participatesInQuest = existingMember.participatesInQuest
+        }
         save(members)
-        if (groupId != null) {
-            val existingMembers =
-                safeQuery { it.where(Member::class.java).equalTo("party.id", groupId) }?.findAll()
-                    ?: return
+        if (existingMembers != null) {
             val membersToRemove = ArrayList<Member>()
             for (existingMember in existingMembers) {
                 val isStillMember =

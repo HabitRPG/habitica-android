@@ -162,7 +162,9 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         var participantCount = 0
         for (participant in participants ?: emptyList()) {
-            if (quest?.active == true && participant.participatesInQuest == false) {
+            // Read the response from the quest itself, since the shared Member rows get overwritten by other member saves
+            val participatesInQuest = quest?.members?.firstOrNull { it.key == participant.id }?.isParticipating
+            if (quest?.active == true && participatesInQuest == false) {
                 continue
             }
             val participantView =
@@ -172,7 +174,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             val statusTextView = participantView?.findViewById<View>(R.id.status_view) as? TextView
             if (quest?.active == false) {
                 context?.let {
-                    when (participant.participatesInQuest) {
+                    when (participatesInQuest) {
                         null -> {
                             statusTextView?.setText(R.string.pending)
                             statusTextView?.setTextColor(
@@ -207,11 +209,11 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 binding?.questParticipantList?.addView(participantView)
             } else {
                 statusTextView?.visibility = View.GONE
-                if (participant.participatesInQuest == true) {
+                if (participatesInQuest == true) {
                     binding?.questParticipantList?.addView(participantView)
                 }
             }
-            if (participant.participatesInQuest == true) {
+            if (participatesInQuest == true) {
                 participantCount += 1
             }
         }
