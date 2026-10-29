@@ -88,6 +88,7 @@ import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
@@ -176,6 +177,7 @@ open class MainActivity :
 
     val notificationsViewModel: NotificationsViewModel by viewModels()
     val viewModel: MainActivityViewModel by viewModels()
+    private val authenticationViewModel: AuthenticationViewModel by viewModels()
     private var sideAvatarView: AvatarView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
     private var drawerLayout: HabiticaDrawerLayout? = null
@@ -276,6 +278,8 @@ open class MainActivity :
             }
             return
         }
+
+        applyLaunchCredentials()
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val step = preferences.getInt("last_onboarding_step", 0)
@@ -611,6 +615,22 @@ open class MainActivity :
             } else {
                 super.onOptionsItemSelected(item)
             }
+
+    // Lets UI tests start the app logged in, e.g. with Maestro's launchApp arguments.
+    // Only in debug builds, since any app can start this activity with extras.
+    private fun applyLaunchCredentials() {
+        if (!BuildConfig.DEBUG) return
+        val userID = intent.getStringExtra(LAUNCH_USER_ID)
+        val apiKey = intent.getStringExtra(LAUNCH_API_KEY)
+        intent.removeExtra(LAUNCH_USER_ID)
+        intent.removeExtra(LAUNCH_API_KEY)
+        if (userID.isNullOrBlank() || apiKey.isNullOrBlank()) return
+        authenticationViewModel.saveTokens(apiKey, userID)
+        // The account is already set up, so don't resume an unfinished onboarding
+        PreferenceManager.getDefaultSharedPreferences(this).edit {
+            putInt("last_onboarding_step", -1)
+        }
+    }
 
     override fun onResume() {
         super.onResume()
@@ -1174,5 +1194,7 @@ open class MainActivity :
         private const val PERSISTENT_DRAWER_MIN_WIDTH_DP = 600
         private const val DEFAULT_SCRIM_COLOR = 0x99000000.toInt()
         const val OPEN_TASK_FORM_TYPE = "openTaskFormType"
+        const val LAUNCH_USER_ID = "userid"
+        const val LAUNCH_API_KEY = "apikey"
     }
 }
