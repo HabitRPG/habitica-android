@@ -210,9 +210,6 @@ class TaskFormActivity : BaseActivity() {
             }
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
         tintColor = getThemeColor(R.attr.taskFormTint)
         val upperTintColor =
             if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
