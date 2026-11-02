@@ -50,6 +50,7 @@ import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
+import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerializationException
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -103,6 +104,7 @@ class ApiClientImpl(
         try {
             return processResponse(apiCall())
         } catch (throwable: Throwable) {
+            if (throwable is CancellationException) throw throwable
             if (onError != null) {
                 if (returnOnError) {
                     return onError(throwable)
@@ -124,6 +126,7 @@ class ApiClientImpl(
             processResponse(apiCall())
             return true
         } catch (throwable: Throwable) {
+            if (throwable is CancellationException) throw throwable
             accept(throwable)
             return false
         }
@@ -234,7 +237,7 @@ class ApiClientImpl(
                         }
                     }
                 }.addInterceptor(logging)
-                .readTimeout(2400, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
                 .build()
 
         val server = Server(this.hostConfig.address)
@@ -297,26 +300,18 @@ class ApiClientImpl(
 
         return try {
             val response = this.apiService.connectSocial(auth)
-            if (response.code() == 404) {
-                UserAuthResponse().apply {
-                    userExists = false
-                }
-            } else if (response
-                    .body()
-                    ?.data
-                    ?.id
-                    ?.isEmpty() == true
-            ) {
+            if (response.code() == 404 || response.body()?.data?.id?.isEmpty() == true) {
                 UserAuthResponse().apply {
                     userExists = false
                 }
             } else {
                 processResponse(response)
             }
-        } catch (_: Exception) {
-            UserAuthResponse().apply {
-                userExists = false
-            }
+        } catch (throwable: Throwable) {
+            // A failed request says nothing about whether the account exists, so don't send the user into registration
+            if (throwable is CancellationException) throw throwable
+            accept(throwable)
+            null
         }
     }
 
@@ -430,9 +425,8 @@ class ApiClientImpl(
                 apiService.getUser(
                     "balance,items,permissions,challenges,lastCron,needsCron,loginIncentives,achievements,backer,contributor,purchased,invitations,party,profile,stats,tasksOrder,pushDevices,tags,pinnedItems,unpinnedItems,pinnedItemsOrder",
                 )
-            }
-        val tasks = getTasks()
-        user?.tasks = tasks
+            } ?: return null
+        user.tasks = getTasks()
         return user
     }
 
@@ -564,7 +558,7 @@ class ApiClientImpl(
         try {
             processResponse(apiCall())
         } catch (throwable: Throwable) {
-            if (throwable !is HttpException) {
+            if (throwable !is HttpException && throwable !is CancellationException) {
                 accept(throwable)
             }
             throw throwable
