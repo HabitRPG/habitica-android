@@ -265,9 +265,9 @@ class ApiClientImplTest :
                 apiClient.connectSocial("google", "client", "access", false)?.userExists shouldBe false
             }
 
-            "report a missing user if the social login failed" {
+            "not report a missing user if the social login failed" {
                 enqueueError(200, "not json")
-                apiClient.connectSocial("google", "client", "access", false)?.userExists shouldBe false
+                apiClient.connectSocial("google", "client", "access", false) shouldBe null
             }
 
             "report whether disconnecting a social account worked" {

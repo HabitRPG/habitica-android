@@ -107,9 +107,7 @@ class TaskAlarmManager(
         scope.launchCatching(context = Dispatchers.IO) {
             task.reminders?.let { reminders ->
                 // Remove not only the immediate reminder, but also the next however many (upcomingReminderOccurrencesToSchedule) reminders
-                reminders.forEachIndexed { index, reminder ->
-                    removeAlarmForRemindersItem(reminder, index)
-                }
+                reminders.forEach { removeAlarmForRemindersItem(it) }
             }
         }
     }
@@ -206,34 +204,22 @@ class TaskAlarmManager(
         }
     }
 
-    private fun removeAlarmForRemindersItem(
-        remindersItem: RemindersItem,
-        occurrenceIndex: Int? = null,
-    ) {
+    // Cancels every occurrence setAlarmsForTask may have scheduled for this reminder
+    private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
-        val intentId =
-            if (occurrenceIndex != null) {
-                (
-                    remindersItem.id?.hashCode()
-                        ?: (0 and 0xfffffff)
-                ) + occurrenceIndex
-            } else {
-                (
-                    remindersItem.id?.hashCode()
-                        ?: (0 and 0xfffffff)
-                )
-            }
-        val sender =
-            PendingIntent.getBroadcast(
-                context,
-                intentId,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
-            )
         val am = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-        sender.cancel()
-        am?.cancel(sender)
+        for (occurrenceIndex in 0 until upcomingReminderOccurrencesToSchedule) {
+            val sender =
+                PendingIntent.getBroadcast(
+                    context,
+                    (remindersItem.id?.hashCode() ?: 0) + occurrenceIndex,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
+                )
+            sender.cancel()
+            am?.cancel(sender)
+        }
     }
 
     companion object {
