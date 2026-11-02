@@ -67,8 +67,6 @@ open class Group :
         return isManager(userID)
     }
 
-    fun canManageManagers(userID: String): Boolean = isLeader(userID)
-
     fun isLeader(userID: String): Boolean = leaderID == userID
 
     fun isManager(userID: String): Boolean = managers?.contains(userID) == true

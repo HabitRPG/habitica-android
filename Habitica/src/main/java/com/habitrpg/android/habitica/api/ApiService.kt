@@ -35,7 +35,6 @@ import com.habitrpg.shared.habitica.models.auth.UserAuth
 import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
 import com.habitrpg.shared.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
@@ -44,7 +43,6 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
-import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -52,9 +50,6 @@ import retrofit2.http.Query
 
 @JvmSuppressWildcards
 interface ApiService {
-    @GET("status")
-    suspend fun getStatus(): Response<HabitResponse<Status>>
-
     // user API
 
     @GET("user/")
@@ -93,11 +88,6 @@ interface ApiService {
     @PUT("user/")
     suspend fun updateUser(
         @Body updateDictionary: Map<String, Any?>,
-    ): Response<HabitResponse<User>>
-
-    @PUT("user/")
-    suspend fun registrationLanguage(
-        @Header("Accept-Language") registrationLanguage: String,
     ): Response<HabitResponse<User>>
 
     @GET("user/in-app-rewards")
@@ -274,11 +264,6 @@ interface ApiService {
         @Path("network") network: String,
     ): Response<HabitResponse<Void>>
 
-    @POST("user/auth/apple")
-    suspend fun loginApple(
-        @Body auth: Map<String, Any>,
-    ): Response<HabitResponse<UserAuthResponse>>
-
     @POST("user/sleep")
     suspend fun sleep(): Response<HabitResponse<Boolean>>
 
@@ -313,11 +298,6 @@ interface ApiService {
     suspend fun markPrivateMessagesRead(): Response<Void?>
 
     // Group API
-
-    @GET("groups")
-    suspend fun listGroups(
-        @Query("type") type: String,
-    ): Response<HabitResponse<List<Group>>>
 
     @GET("groups/{gid}")
     suspend fun getGroup(
@@ -611,9 +591,6 @@ interface ApiService {
     ): Response<HabitResponse<Void>>
 
     // DEBUG: These calls only work on a local development server
-
-    @POST("debug/add-ten-gems")
-    suspend fun debugAddTenGems(): Response<HabitResponse<Void>>
 
     @GET("news")
     suspend fun getNews(): Response<HabitResponse<List<Any>>>

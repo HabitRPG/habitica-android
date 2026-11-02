@@ -72,8 +72,6 @@ interface InventoryLocalRepository : ContentLocalRepository {
         color: String?,
     ): Flow<List<Pet>>
 
-    fun updateOwnedEquipment(user: User)
-
     suspend fun changeOwnedCount(
         type: String,
         key: String,

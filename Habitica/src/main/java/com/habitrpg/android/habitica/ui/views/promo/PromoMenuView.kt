@@ -44,10 +44,6 @@ class PromoMenuView
             setImage(binding.titleImageView, title)
         }
 
-        fun setSubtitleImage(subtitle: Drawable?) {
-            setImage(binding.descriptionImageView, subtitle)
-        }
-
         fun setDecoration(
             leftDrawable: Drawable?,
             rightDrawable: Drawable?,

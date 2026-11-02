@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.shared.habitica.models.responses.Status
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import java.io.File
@@ -26,7 +25,6 @@ class ServerResponseSnapshotTest :
         val snapshotDir = File("src/test/resources/fixtures/snapshots")
         val cases: Map<String, () -> Any?> =
             mapOf(
-                "status" to { ServerFixtures.fixture<Status>("status") },
                 "user" to { ServerFixtures.fixture<User>("user") },
                 "tasks" to { ServerFixtures.fixture<TaskList>("tasks") },
                 "world_state" to { ServerFixtures.fixture<WorldState>("world_state") },

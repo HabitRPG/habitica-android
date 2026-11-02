@@ -22,8 +22,6 @@ interface SocialRepository : BaseRepository {
         before: String? = null,
     ): List<ChatMessage>?
 
-    fun getGroupChat(groupId: String): Flow<List<ChatMessage>>
-
     suspend fun markMessagesSeen(seenGroupId: String)
 
     suspend fun flagMessage(
@@ -170,8 +168,6 @@ interface SocialRepository : BaseRepository {
     ): Void?
 
     fun getGroupMembership(id: String): Flow<GroupMembership?>
-
-    fun getGroupMemberships(): Flow<List<GroupMembership>>
 
     suspend fun blockMember(userID: String): List<String>?
 

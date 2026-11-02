@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
@@ -68,13 +67,6 @@ class SocialRepositoryImpl(
             )
         }
 
-    override fun getGroupMemberships(): Flow<List<GroupMembership>> =
-        authenticationHandler.userIDFlow.flatMapLatest {
-            localRepository.getGroupMemberships(
-                it,
-            )
-        }
-
     override suspend fun retrieveGroupChat(
         groupId: String,
         limit: Int?,
@@ -84,8 +76,6 @@ class SocialRepositoryImpl(
         messages?.forEach { it.groupId = groupId }
         return messages
     }
-
-    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> = localRepository.getGroupChat(groupId)
 
     override suspend fun markMessagesSeen(seenGroupId: String) {
         apiClient.seenMessages(seenGroupId)

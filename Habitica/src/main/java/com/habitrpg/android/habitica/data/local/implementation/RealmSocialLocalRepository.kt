@@ -173,14 +173,6 @@ class RealmSocialLocalRepository(
             it.where(Group::class.java).equalTo("id", id)
         }
 
-    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> =
-        safeFindAll {
-            it
-                .where(ChatMessage::class.java)
-                .equalTo("groupId", groupId)
-                .sort("timestamp", Sort.DESCENDING)
-        }
-
     override fun deleteMessage(id: String) {
         val chatMessage = safeQuery { it.where(ChatMessage::class.java).equalTo("id", id) }?.findFirst()
         executeTransaction { chatMessage?.deleteFromRealm() }

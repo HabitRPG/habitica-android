@@ -282,9 +282,6 @@ class RealmInventoryLocalRepository(
                 } ?: emptyList()
             }
 
-    override fun updateOwnedEquipment(user: User) {
-    }
-
     override suspend fun changeOwnedCount(
         type: String,
         key: String,

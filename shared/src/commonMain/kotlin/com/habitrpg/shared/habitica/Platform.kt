@@ -18,13 +18,6 @@ expect interface HParcelable {
     }
 }
 
-@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-@OptIn(ExperimentalMultiplatform::class)
-@OptionalExpectation
-@Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.BINARY)
-expect annotation class HParcelize()
-
 expect abstract class HClassLoader
 
 expect class HParcel {

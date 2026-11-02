@@ -29,19 +29,6 @@ inline fun View.waitForLayout(crossinline f: View.() -> Unit) =
         )
     }
 
-inline fun View.afterMeasured(crossinline f: View.() -> Unit) {
-    viewTreeObserver.addOnGlobalLayoutListener(
-        object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (measuredWidth > 0 && measuredHeight > 0) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    f()
-                }
-            }
-        },
-    )
-}
-
 fun View.fadeInAnimation(duration: Long = 500) {
     this.alpha = 0f
     this.visibility = View.VISIBLE

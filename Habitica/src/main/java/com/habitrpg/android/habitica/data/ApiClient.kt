@@ -34,7 +34,6 @@ import com.habitrpg.shared.habitica.models.PurchaseValidationResult
 import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
 import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
@@ -42,8 +41,6 @@ import retrofit2.HttpException
 
 interface ApiClient {
     val hostConfig: HostConfig
-
-    suspend fun getStatus(): Status?
 
     // user API
 
@@ -65,8 +62,6 @@ interface ApiClient {
     suspend fun getContent(language: String? = null): ContentResult?
 
     suspend fun updateUser(updateDictionary: Map<String, Any?>): User?
-
-    suspend fun registrationLanguage(registrationLanguage: String): User?
 
     suspend fun retrieveInAppRewards(): List<ShopItem>?
 
@@ -197,8 +192,6 @@ interface ApiClient {
 
     suspend fun disconnectSocial(network: String): Boolean
 
-    suspend fun loginApple(authToken: String): UserAuthResponse?
-
     suspend fun sleep(): Boolean?
 
     suspend fun revive(): Items?
@@ -221,8 +214,6 @@ interface ApiClient {
     suspend fun markPrivateMessagesRead()
 
     // Group API
-
-    suspend fun listGroups(type: String): List<Group>?
 
     suspend fun getGroup(groupId: String): Group?
 
@@ -373,8 +364,6 @@ interface ApiClient {
     suspend fun deleteChallenge(challengeId: String): Void?
 
     // DEBUG: These calls only work on a local development server
-
-    suspend fun debugAddTenGems(): Void?
 
     suspend fun getNews(): List<Any>?
 

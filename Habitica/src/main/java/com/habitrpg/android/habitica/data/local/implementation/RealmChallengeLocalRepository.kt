@@ -28,21 +28,6 @@ class RealmChallengeLocalRepository(
                 .equalTo("challengeID", challengeID)
         }.map { it.count() > 0 }
 
-    override fun getChallengeMembership(
-        userId: String,
-        id: String,
-    ) = safeFindOne {
-        it
-            .where(ChallengeMembership::class.java)
-            .equalTo("userID", userId)
-            .equalTo("challengeID", id)
-    }
-
-    override fun getChallengeMemberships(userId: String) =
-        safeFindAll {
-            it.where(ChallengeMembership::class.java).equalTo("userID", userId)
-        }
-
     override fun getChallenge(id: String): Flow<Challenge> =
         safeFindOne {
             it.where(Challenge::class.java).equalTo("id", id)

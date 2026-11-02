@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
 import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
@@ -26,10 +25,6 @@ class ChallengeRepositoryImpl(
         challengeid: String,
         updateData: Map<String, String>,
     ): Void? = apiClient.reportChallenge(challengeid, updateData)
-
-    override fun getChallengepMembership(id: String): Flow<ChallengeMembership> = localRepository.getChallengeMembership(currentUserID, id)
-
-    override fun getChallengeMemberships(): Flow<List<ChallengeMembership>> = localRepository.getChallengeMemberships(currentUserID)
 
     override fun getChallenge(challengeId: String): Flow<Challenge> = localRepository.getChallenge(challengeId)
 

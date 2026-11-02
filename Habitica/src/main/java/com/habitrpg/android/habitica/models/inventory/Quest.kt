@@ -42,8 +42,6 @@ open class Quest :
 
     var completed: String? = null
 
-    fun hasRageStrikes(): Boolean = rageStrikes?.isNotEmpty() ?: false
-
     fun addRageStrike(rageStrike: QuestRageStrike) {
         if (rageStrikes == null) {
             rageStrikes = RealmList()

@@ -18,8 +18,6 @@ interface SocialLocalRepository : BaseLocalRepository {
 
     fun saveGroup(group: Group)
 
-    fun getGroupChat(groupId: String): Flow<List<ChatMessage>>
-
     fun deleteMessage(id: String)
 
     fun getPartyMembers(partyId: String): Flow<List<Member>>

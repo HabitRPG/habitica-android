@@ -178,8 +178,4 @@ class CollapsibleSectionView(
             isCollapsed = true
         }
     }
-
-    fun setCaretOffset(offset: Int) {
-        binding.caretView.setPadding(0, 0, offset, 0)
-    }
 }

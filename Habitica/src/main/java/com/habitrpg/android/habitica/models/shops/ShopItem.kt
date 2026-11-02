@@ -6,8 +6,6 @@ import android.content.Context
 import android.content.res.Resources
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
-import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.utils.RealmListSerializer
@@ -236,41 +234,6 @@ open class ShopItem :
             item.pinType = "rebirth_orb"
             item.path = "special.rebirth_orb"
             item.purchaseType = "rebirth_orb"
-            return item
-        }
-
-        fun fromCustomization(
-            customization: Customization,
-            userSize: String?,
-            hairColor: String?,
-        ): ShopItem {
-            val item = ShopItem()
-            item.key = customization.identifier ?: ""
-            item.text = customization.text
-            item.currency = "gems"
-            item.notes = customization.notes
-            item.value = customization.price ?: 0
-            item.path = customization.path
-            item.unlockPath = customization.unlockPath
-            item.pinType = customization.type
-            if (customization.type == "background") {
-                item.purchaseType = "background"
-                item.imageName = customization.getImageName(userSize, hairColor)
-            } else {
-                item.purchaseType = "customization"
-                item.imageName = customization.getIconName(userSize, hairColor)
-            }
-            return item
-        }
-
-        fun fromAnimalEquipment(equipment: Equipment?): ShopItem {
-            val item = ShopItem()
-            item.key = equipment?.key ?: ""
-            item.text = equipment?.text
-            item.currency = "gems"
-            item.value = 2
-            item.purchaseType = "gear"
-            item.imageName = equipment?.key
             return item
         }
     }

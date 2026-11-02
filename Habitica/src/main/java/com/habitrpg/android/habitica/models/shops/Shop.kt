@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models.shops
 
-import android.content.Context
 import com.habitrpg.android.habitica.R
 import kotlinx.serialization.Serializable
 
@@ -24,8 +23,6 @@ class Shop {
                 "customizationsShop" -> R.string.customizations_owner
                 else -> R.string.market_owner
             }
-
-    fun getNpcName(context: Context): String = context.getString(npcNameResource)
 
     companion object {
         const val MARKET = "market"

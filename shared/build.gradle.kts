@@ -12,14 +12,8 @@ plugins {
             .get()
             .pluginId,
     )
-    id("kotlin-parcelize")
     id(
         libs.plugins.kotlin.serialization
-            .get()
-            .pluginId,
-    )
-    id(
-        libs.plugins.ksp
             .get()
             .pluginId,
     )

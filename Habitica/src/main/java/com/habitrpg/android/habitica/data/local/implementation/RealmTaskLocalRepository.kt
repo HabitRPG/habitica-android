@@ -326,30 +326,6 @@ class RealmTaskLocalRepository(
             }
     }
 
-    override fun markTaskCompleted(
-        taskId: String,
-        isCompleted: Boolean,
-    ) {
-        val task = safeQuery { it.where(Task::class.java).equalTo("id", taskId) }?.findFirst()
-        executeTransaction { task?.completed = isCompleted }
-    }
-
-    override fun swapTaskPosition(
-        firstPosition: Int,
-        secondPosition: Int,
-    ) {
-        val firstTask =
-            safeQuery { it.where(Task::class.java).equalTo("position", firstPosition) }?.findFirst()
-        val secondTask =
-            safeQuery { it.where(Task::class.java).equalTo("position", secondPosition) }?.findFirst()
-        if (firstTask != null && secondTask != null && firstTask.isValid && secondTask.isValid) {
-            executeTransaction {
-                firstTask.position = secondPosition
-                secondTask.position = firstPosition
-            }
-        }
-    }
-
     override fun getTaskAtPosition(
         taskType: String,
         position: Int,

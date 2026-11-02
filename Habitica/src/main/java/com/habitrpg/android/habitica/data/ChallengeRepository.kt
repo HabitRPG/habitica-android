@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import kotlinx.coroutines.flow.Flow
@@ -55,10 +54,6 @@ interface ChallengeRepository : BaseRepository {
     ): Void?
 
     suspend fun joinChallenge(challenge: Challenge): Challenge?
-
-    fun getChallengepMembership(id: String): Flow<ChallengeMembership>
-
-    fun getChallengeMemberships(): Flow<List<ChallengeMembership>>
 
     fun isChallengeMember(challengeID: String): Flow<Boolean>
 

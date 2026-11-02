@@ -5,8 +5,6 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ClientConfigKey
-import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -280,25 +278,11 @@ class TaskRepositoryImpl(
 
     override suspend fun createTasks(newTasks: List<Task>) = apiClient.createTasks(newTasks)
 
-    override fun markTaskCompleted(
-        taskId: String,
-        isCompleted: Boolean,
-    ) {
-        localRepository.markTaskCompleted(taskId, isCompleted)
-    }
-
     override fun <T : BaseMainObject> modify(
         obj: T,
         transaction: (T) -> Unit,
     ) {
         localRepository.modify(obj, transaction)
-    }
-
-    override fun swapTaskPosition(
-        firstPosition: Int,
-        secondPosition: Int,
-    ) {
-        localRepository.swapTaskPosition(firstPosition, secondPosition)
     }
 
     override suspend fun updateTaskPosition(

@@ -29,16 +29,6 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun getTaskCopy(taskId: String): Flow<Task>
 
-    fun markTaskCompleted(
-        taskId: String,
-        isCompleted: Boolean,
-    )
-
-    fun swapTaskPosition(
-        firstPosition: Int,
-        secondPosition: Int,
-    )
-
     fun getTaskAtPosition(
         taskType: String,
         position: Int,

@@ -4,17 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class TasksOrder {
-    fun positionOf(
-        key: String,
-        type: TaskType,
-    ): Int =
-        when (type) {
-            TaskType.HABIT -> habits.indexOf(key)
-            TaskType.DAILY -> dailys.indexOf(key)
-            TaskType.TODO -> todos.indexOf(key)
-            TaskType.REWARD -> rewards.indexOf(key)
-        }
-
     var habits: List<String> = listOf()
     var dailys: List<String> = listOf()
     var todos: List<String> = listOf()

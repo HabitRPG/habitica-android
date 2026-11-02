@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.EquipmentSet
@@ -105,10 +104,6 @@ class InventoryRepositoryImpl(
         return equipment
     }
 
-    override fun saveEquipment(equipment: Equipment) {
-        localRepository.save(equipment)
-    }
-
     override fun getMounts(): Flow<List<Mount>> = localRepository.getMounts()
 
     override fun getMounts(
@@ -132,18 +127,6 @@ class InventoryRepositoryImpl(
 
     override fun getOwnedPets(): Flow<List<OwnedPet>> = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getOwnedPets(it) }
 
-    override fun updateOwnedEquipment(user: User) {
-        localRepository.updateOwnedEquipment(user)
-    }
-
-    override suspend fun changeOwnedCount(
-        type: String,
-        key: String,
-        amountToAdd: Int,
-    ) {
-        localRepository.changeOwnedCount(type, key, currentUserID, amountToAdd)
-    }
-
     override suspend fun sellItem(
         type: String,
         key: String,
@@ -160,8 +143,6 @@ class InventoryRepositoryImpl(
                 ?: return null
         return sellItem(itemData, item)
     }
-
-    override fun getLatestMysteryItem(): Flow<Equipment> = localRepository.getLatestMysteryItem()
 
     override fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>> = localRepository.getLatestMysteryItemAndSet()
 

@@ -12,13 +12,5 @@ class HapticFeedbackManager {
                 // some devices require VIBRATE permission for haptic feedback
             }
         }
-
-        fun longPress(view: View) {
-            try {
-                view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
-            } catch (_: SecurityException) {
-                // some devices require VIBRATE permission for haptic feedback
-            }
-        }
     }
 }

@@ -64,7 +64,6 @@ shimmer = "0.5.0"
 swipeRefresh = "1.2.0"
 turbine = "1.2.1"
 wear = "1.4.0"
-wearInput = "1.2.0"
 workManager = "2.12.0"
 
 [libraries]
@@ -113,7 +112,6 @@ kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", vers
 kotlinx-coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakCanary" }
-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -153,12 +151,10 @@ test-monitor = { group = "androidx.test", name = "monitor", version.ref = "andro
 test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "orchestrator" }
 test-rules = { group = "androidx.test", name = "rules", version.ref = "androidTest" }
 test-runner = { group = "androidx.test", name = "runner", version.ref = "androidTestRunner" }
-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "compose" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 wear = { module = "androidx.wear:wear", version.ref = "wear" }
-wear-input = { module = "androidx.wear:wear-input", version.ref = "wearInput" }
 work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
 hilt-work = { group = "androidx.hilt", name = "hilt-work", version = "1.4.0" }
 hilt-compiler-androidx = { group = "androidx.hilt", name = "hilt-compiler", version = "1.4.0" }

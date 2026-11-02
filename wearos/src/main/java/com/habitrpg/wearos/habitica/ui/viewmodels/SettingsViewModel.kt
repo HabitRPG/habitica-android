@@ -40,12 +40,4 @@ class SettingsViewModel
                 appStateManager.endLoading()
             }
         }
-
-        fun setHideTaskResults(hide: Boolean) {
-            sharedPreferences.edit {
-                putBoolean("hide_task_results", hide)
-            }
-        }
-
-        fun isTaskResultHidden(): Boolean = sharedPreferences.getBoolean("hide_task_results", false)
     }

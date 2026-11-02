@@ -64,8 +64,6 @@ interface InventoryRepository : BaseRepository {
 
     suspend fun openMysteryItem(user: User?): Equipment?
 
-    fun saveEquipment(equipment: Equipment)
-
     fun getMounts(
         type: String?,
         group: String?,
@@ -77,14 +75,6 @@ interface InventoryRepository : BaseRepository {
         group: String?,
         color: String?,
     ): Flow<List<Pet>>
-
-    fun updateOwnedEquipment(user: User)
-
-    suspend fun changeOwnedCount(
-        type: String,
-        key: String,
-        amountToAdd: Int,
-    )
 
     suspend fun sellItem(
         type: String,
@@ -152,8 +142,6 @@ interface InventoryRepository : BaseRepository {
     ): Flow<List<Item>>
 
     fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
-
-    fun getLatestMysteryItem(): Flow<Equipment>
 
     fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>>
 

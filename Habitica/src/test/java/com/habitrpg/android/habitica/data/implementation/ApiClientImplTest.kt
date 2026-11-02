@@ -93,10 +93,10 @@ class ApiClientImplTest :
 
         "requests" should {
             "send the authentication and client headers" {
-                enqueue("""{"status":"up"}""")
-                apiClient.getStatus()?.status shouldBe "up"
+                enqueue("true")
+                apiClient.sleep() shouldBe true
                 val request = takeRequest()
-                request.route() shouldBe "GET /status"
+                request.route() shouldBe "POST /user/sleep"
                 request.headers["x-api-key"] shouldBe "api-key"
                 request.headers["x-api-user"] shouldBe "user-1"
                 request.headers["x-client"] shouldBe "habitica-android"
@@ -106,13 +106,13 @@ class ApiClientImplTest :
             "not send authentication headers without credentials" {
                 every { hostConfig.hasAuthentication() } returns false
                 enqueue()
-                apiClient.getStatus()
+                apiClient.sleep()
                 takeRequest().headers["x-api-key"] shouldBe null
             }
 
             "pass notifications of the response to the notifications manager" {
                 enqueue(notifications = """[{"id":"n1","type":"NEW_STUFF"}]""")
-                apiClient.getStatus()
+                apiClient.sleep()
                 verify { notificationsManager.setNotifications(match { it.single().id == "n1" }) }
             }
 
@@ -121,8 +121,8 @@ class ApiClientImplTest :
                 newServer.start()
                 every { hostConfig.address } returns newServer.url("/").toString()
                 apiClient.updateServerUrl(newServer.url("/").toString())
-                newServer.enqueue(MockResponse.Builder().body("""{"data":{"status":"up"}}""").build())
-                apiClient.getStatus()?.status shouldBe "up"
+                newServer.enqueue(MockResponse.Builder().body("""{"data":true}""").build())
+                apiClient.sleep() shouldBe true
                 newServer.requestCount shouldBe 1
                 server.requestCount shouldBe 0
                 newServer.close()
@@ -162,7 +162,6 @@ class ApiClientImplTest :
                     "POST /user/class/cast/fireball" to { useSkill("fireball", "task", "task-1") },
                     "POST /user/change-class" to { changeClass("wizard") },
                     "POST /user/disable-classes" to { disableClasses() },
-                    "GET /groups" to { listGroups("party") },
                     "GET /groups/group-1" to { getGroup("group-1") },
                     "GET /groups/group-1/chat" to { listGroupChat("group-1") },
                     "POST /groups/group-1/join" to { joinGroup("group-1") },
@@ -363,19 +362,19 @@ class ApiClientImplTest :
         "error handling" should {
             "show the error message of client errors" {
                 enqueueError(400, """{"message":"Not enough gems"}""")
-                apiClient.getStatus() shouldBe null
+                apiClient.sleep() shouldBe null
                 verify { activity.showConnectionProblem(1, "", "Not enough gems", false) }
             }
 
             "prefer the message of the first error" {
                 enqueueError(400, """{"message":"Invalid","errors":[{"message":"Name is too long"}]}""")
-                apiClient.getStatus()
+                apiClient.sleep()
                 verify { activity.showConnectionProblem(1, "", "Name is too long", false) }
             }
 
             "show an authentication error for unauthorized requests without message" {
                 enqueueError(401, "{}")
-                apiClient.getStatus()
+                apiClient.sleep()
                 verify {
                     activity.showConnectionProblem(
                         1,
@@ -388,7 +387,7 @@ class ApiClientImplTest :
 
             "show a generic error for server errors" {
                 enqueueError(500, "{}")
-                apiClient.getStatus()
+                apiClient.sleep()
                 verify { activity.showConnectionProblem(1, null, "string-${R.string.internal_error_api}", false) }
             }
 
@@ -396,10 +395,10 @@ class ApiClientImplTest :
                 enqueueError(500, "{}")
                 enqueueError(500, "{}")
                 enqueue()
-                apiClient.getStatus()
-                apiClient.getStatus()
+                apiClient.sleep()
+                apiClient.sleep()
                 verify { activity.showConnectionProblem(2, null, any(), false) }
-                apiClient.getStatus()
+                apiClient.sleep()
                 verify(exactly = 1) { activity.hideConnectionProblem() }
             }
 
@@ -411,9 +410,9 @@ class ApiClientImplTest :
 
             "not show already used receipts or missing authentication headers" {
                 enqueueError(400, """{"message":"RECEIPT_ALREADY_USED"}""")
-                apiClient.getStatus()
+                apiClient.sleep()
                 enqueueError(401, """{"message":"Missing authentication headers."}""")
-                apiClient.getStatus()
+                apiClient.sleep()
                 verify(exactly = 0) { activity.showConnectionProblem(any(), any(), any(), any()) }
             }
 

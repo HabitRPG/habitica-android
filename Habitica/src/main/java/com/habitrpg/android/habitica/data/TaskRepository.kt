@@ -76,19 +76,9 @@ interface TaskRepository : BaseRepository {
 
     suspend fun createTasks(newTasks: List<Task>): List<Task>?
 
-    fun markTaskCompleted(
-        taskId: String,
-        isCompleted: Boolean,
-    )
-
     fun <T : BaseMainObject> modify(
         obj: T,
         transaction: (T) -> Unit,
-    )
-
-    fun swapTaskPosition(
-        firstPosition: Int,
-        secondPosition: Int,
     )
 
     suspend fun updateTaskPosition(

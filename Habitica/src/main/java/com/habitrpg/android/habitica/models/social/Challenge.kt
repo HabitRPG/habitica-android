@@ -45,44 +45,6 @@ open class Challenge :
     var tasksOrder: TasksOrder? = null
     var summary: String? = null
 
-    fun getTasksOrder(): HashMap<String, Array<String>> {
-        val map = HashMap<String, Array<String>>()
-
-        if (dailyList?.isNotEmpty() == true) {
-            dailyList
-                ?.split(",".toRegex())
-                ?.dropLastWhile { it.isEmpty() }
-                ?.toTypedArray()
-                ?.let { map[TASK_ORDER_DAILYS] }
-        }
-
-        if (habitList?.isNotEmpty() == true) {
-            habitList
-                ?.split(",".toRegex())
-                ?.dropLastWhile { it.isEmpty() }
-                ?.toTypedArray()
-                ?.let { map[TASK_ORDER_HABITS] }
-        }
-
-        if (rewardList?.isNotEmpty() == true) {
-            rewardList
-                ?.split(",".toRegex())
-                ?.dropLastWhile { it.isEmpty() }
-                ?.toTypedArray()
-                ?.let { map[TASK_ORDER_REWARDS] }
-        }
-
-        if (todoList?.isNotEmpty() == true) {
-            todoList
-                ?.split(",".toRegex())
-                ?.dropLastWhile { it.isEmpty() }
-                ?.toTypedArray()
-                ?.let { map[TASK_ORDER_TODOS] }
-        }
-
-        return map
-    }
-
     override val realmClass: Class<out RealmModel>
         get() = Challenge::class.java
     override val primaryIdentifier: String?

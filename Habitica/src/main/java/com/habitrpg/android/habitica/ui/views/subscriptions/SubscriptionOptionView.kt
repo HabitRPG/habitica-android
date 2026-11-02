@@ -134,10 +134,6 @@ class SubscriptionOptionView(
         }
     }
 
-    fun setSalePrice(price: String) {
-        binding.salePriceLabel.text = price
-    }
-
     fun setFlagText(text: CharSequence?) {
         isPromoted = text?.isNotBlank() ?: false
         if (isPromoted) {

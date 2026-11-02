@@ -190,7 +190,6 @@
     <ID>ReturnCount:Task.kt$Task$ fun getNextReminderOccurrences(remindersItem: RemindersItem?, occurrences: Int): List&lt;ZonedDateTime&gt;?</ID>
     <ID>ReturnCount:Task.kt$Task$fun isBeingEdited(task: Task): Boolean</ID>
     <ID>SpreadOperator:Analytics.kt$Analytics$(*data.toList().toTypedArray())</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:EllipsisTextView.kt$EllipsisTextView$NullPointerException()</ID>
     <ID>TooGenericExceptionCaught:ApiClientImpl.kt$ApiClientImpl$throwable: Throwable</ID>
     <ID>TooGenericExceptionCaught:AuthenticationViewModel.kt$AuthenticationViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:CustomizationDeserializer.kt$CustomizationDeserializer$e: Exception</ID>

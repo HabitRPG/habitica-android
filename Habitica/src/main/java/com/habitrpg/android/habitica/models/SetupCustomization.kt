@@ -10,21 +10,6 @@ class SetupCustomization {
     var subcategory: String = ""
 
     companion object {
-        fun createSize(
-            key: String,
-            drawableId: Int,
-            text: String,
-        ): SetupCustomization {
-            val customization = SetupCustomization()
-            customization.key = key
-            customization.drawableId = drawableId
-            customization.text = text
-            customization.path = "size"
-            customization.category = "body"
-            customization.subcategory = "size"
-            return customization
-        }
-
         fun createShirt(
             key: String,
             drawableId: Int,

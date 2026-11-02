@@ -151,7 +151,6 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.runtime.livedata)
     implementation(libs.compose.animation)
-    implementation(libs.text.google.fonts)
     implementation(libs.ui.tooling)
     implementation(libs.material3)
 }

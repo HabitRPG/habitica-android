@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -5629,56 +5628,6 @@ public class HabiticaIcons {
         canvas.restore();
     }
 
-    private static class CacheForCheckmark {
-        private static final Paint paint = new Paint();
-        private static final RectF originalFrame = new RectF(0f, 0f, 16f, 12f);
-        private static final RectF resizedFrame = new RectF();
-        private static final RectF bezierRect = new RectF();
-        private static final Path bezierPath = new Path();
-        private static final PaintCodeDashPathEffect bezierPathDashEffect = new PaintCodeDashPathEffect();
-    }
-
-    public static void drawCheckmark(Canvas canvas, int checkmarkColor, float percentage) {
-        HabiticaIcons.drawCheckmark(canvas, new RectF(0f, 0f, 16f, 12f), ResizingBehavior.AspectFit, checkmarkColor, percentage);
-    }
-
-    public static void drawCheckmark(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int checkmarkColor, float percentage) {
-        // General Declarations
-        Paint paint = CacheForCheckmark.paint;
-
-        // Local Variables
-        float checkmarkVisibility = percentage * 20f;
-
-        // Resize to Target Frame
-        canvas.save();
-        RectF resizedFrame = CacheForCheckmark.resizedFrame;
-        HabiticaIcons.resizingBehaviorApply(resizing, CacheForCheckmark.originalFrame, targetFrame, resizedFrame);
-        canvas.translate(resizedFrame.left, resizedFrame.top);
-        canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 12f);
-
-        // Bezier
-        RectF bezierRect = CacheForCheckmark.bezierRect;
-        bezierRect.set(1f, 1f, 15f, 10f);
-        Path bezierPath = CacheForCheckmark.bezierPath;
-        bezierPath.reset();
-        bezierPath.moveTo(1f, 5f);
-        bezierPath.lineTo(6f, 10f);
-        bezierPath.lineTo(15f, 1f);
-
-        paint.reset();
-        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        paint.setStrokeWidth(2f);
-        paint.setStrokeMiter(10f);
-        paint.setPathEffect(CacheForCheckmark.bezierPathDashEffect.get(checkmarkVisibility));
-        canvas.save();
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(checkmarkColor);
-        canvas.drawPath(bezierPath, paint);
-        canvas.restore();
-
-        canvas.restore();
-    }
-
     private static class CacheForHourglassShop {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 42f, 53f);
@@ -8559,78 +8508,6 @@ public class HabiticaIcons {
         canvas.restore();
     }
 
-    private static class CacheForAlertIcon {
-        private static final Paint paint = new Paint();
-        private static final RectF originalFrame = new RectF(0f, 0f, 16f, 16f);
-        private static final RectF resizedFrame = new RectF();
-        private static final RectF bezierRect = new RectF();
-        private static final Path bezierPath = new Path();
-    }
-
-    public static void drawAlertIcon(Canvas canvas) {
-        HabiticaIcons.drawAlertIcon(canvas, new RectF(0f, 0f, 16f, 16f), ResizingBehavior.AspectFit);
-    }
-
-    public static void drawAlertIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
-        // General Declarations
-        Paint paint = CacheForAlertIcon.paint;
-
-        // Local Colors
-        int fillColor105 = Color.argb(255, 255, 97, 101);
-
-        // Resize to Target Frame
-        canvas.save();
-        RectF resizedFrame = CacheForAlertIcon.resizedFrame;
-        HabiticaIcons.resizingBehaviorApply(resizing, CacheForAlertIcon.originalFrame, targetFrame, resizedFrame);
-        canvas.translate(resizedFrame.left, resizedFrame.top);
-        canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 16f);
-
-        // Bezier
-        RectF bezierRect = CacheForAlertIcon.bezierRect;
-        bezierRect.set(0.01f, 0.05f, 16.01f, 16.05f);
-        Path bezierPath = CacheForAlertIcon.bezierPath;
-        bezierPath.reset();
-        bezierPath.moveTo(0.01f, 2.05f);
-        bezierPath.cubicTo(0.01f, 0.95f, 0.9f, 0.05f, 2f, 0.05f);
-        bezierPath.lineTo(14.01f, 0.05f);
-        bezierPath.cubicTo(15.12f, 0.05f, 16.01f, 0.95f, 16.01f, 2.05f);
-        bezierPath.lineTo(16.01f, 14.06f);
-        bezierPath.lineTo(16.01f, 14.06f);
-        bezierPath.cubicTo(16.01f, 15.16f, 15.11f, 16.05f, 14.01f, 16.05f);
-        bezierPath.lineTo(2f, 16.05f);
-        bezierPath.lineTo(2f, 16.05f);
-        bezierPath.cubicTo(0.9f, 16.05f, 0.01f, 15.16f, 0.01f, 14.06f);
-        bezierPath.lineTo(0.01f, 2.05f);
-        bezierPath.close();
-        bezierPath.moveTo(2.01f, 2.05f);
-        bezierPath.lineTo(2.01f, 14.05f);
-        bezierPath.lineTo(14.01f, 14.05f);
-        bezierPath.lineTo(14.01f, 2.05f);
-        bezierPath.lineTo(2.01f, 2.05f);
-        bezierPath.close();
-        bezierPath.moveTo(7.01f, 4.05f);
-        bezierPath.lineTo(9.01f, 4.05f);
-        bezierPath.lineTo(9.01f, 9.05f);
-        bezierPath.lineTo(7.01f, 9.05f);
-        bezierPath.lineTo(7.01f, 4.05f);
-        bezierPath.close();
-        bezierPath.moveTo(7.01f, 10.05f);
-        bezierPath.lineTo(9.01f, 10.05f);
-        bezierPath.lineTo(9.01f, 12.05f);
-        bezierPath.lineTo(7.01f, 12.05f);
-        bezierPath.lineTo(7.01f, 10.05f);
-        bezierPath.close();
-
-        paint.reset();
-        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
-        bezierPath.setFillType(Path.FillType.EVEN_ODD);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(fillColor105);
-        canvas.drawPath(bezierPath, paint);
-
-        canvas.restore();
-    }
-
     private static class CacheForStats {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 30f, 22f);
@@ -8999,22 +8876,5 @@ public class HabiticaIcons {
                 target.centerY() - newHeight / 2,
                 target.centerX() + newWidth / 2,
                 target.centerY() + newHeight / 2);
-    }
-
-
-}
-
-class PaintCodeDashPathEffect {
-    private DashPathEffect effect;
-    private float dash, gap, phase;
-
-    DashPathEffect get(float dash) {
-        if (this.dash != dash || this.gap != (float) 20.0 || this.phase != (float) 0.0) {
-            this.dash = dash;
-            this.gap = (float) 20.0;
-            this.phase = (float) 0.0;
-            this.effect = new DashPathEffect(new float[]{dash, (float) 20.0}, (float) 0.0);
-        }
-        return this.effect;
     }
 }

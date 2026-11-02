@@ -425,18 +425,12 @@ class TaskRepositoryImplTest :
                 coEvery { apiClient.createTasks(any()) } returns emptyList()
                 coEvery { apiClient.unlinkAllTasks("challenge-1", "keep-all") } returns null
                 coEvery { apiClient.bulkScoreTasks(any()) } returns null
-                every { localRepository.markTaskCompleted("task-1", true) } returns Unit
-                every { localRepository.swapTaskPosition(1, 2) } returns Unit
                 every { localRepository.getTasksForChallenge("challenge-1", "") } returns flowOf(emptyList())
                 repository.createTasks(emptyList())
                 repository.unlinkAllTasks("challenge-1", "keep-all")
                 repository.bulkScoreTasks(emptyList())
-                repository.markTaskCompleted("task-1", true)
-                repository.swapTaskPosition(1, 2)
                 repository.getTasksForChallenge("challenge-1").first() shouldBe emptyList()
                 coVerify { apiClient.unlinkAllTasks("challenge-1", "keep-all") }
-                verify { localRepository.markTaskCompleted("task-1", true) }
-                verify { localRepository.swapTaskPosition(1, 2) }
             }
         }
         afterEach { clearAllMocks() }

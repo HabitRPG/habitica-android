@@ -129,7 +129,6 @@ dependencies {
     implementation(libs.google.play.wearable)
     implementation(libs.recyclerview)
     implementation(libs.wear)
-    implementation(libs.wear.input)
 
     // Networking
     implementation(libs.bundles.okhttp)
@@ -153,11 +152,9 @@ dependencies {
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
     implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.lifecycle.common)
     implementation(libs.kotlinx.coroutine)
     implementation(libs.coroutine.android)
     implementation(libs.preference)
-    implementation(libs.navigation.fragment)
 
     implementation(libs.google.play.auth)
     implementation(libs.credentials)

@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.widget.glance.data
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.Paint
@@ -29,16 +28,6 @@ object AvatarBitmapCache {
     fun cachedFile(context: Context): File = File(context.applicationContext.filesDir, FILENAME)
 
     private fun hashFile(context: Context): File = File(context.applicationContext.filesDir, HASH_FILENAME)
-
-    fun cachedBitmap(context: Context): Bitmap? {
-        val file = cachedFile(context)
-        if (!file.exists()) return null
-        return try {
-            BitmapFactory.decodeFile(file.absolutePath)
-        } catch (t: Throwable) {
-            null
-        }
-    }
 
     fun clearCache(context: Context) {
         runCatching { cachedFile(context).delete() }

@@ -46,7 +46,6 @@ import com.habitrpg.shared.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
@@ -317,16 +316,6 @@ class ApiClientImpl(
 
     override suspend fun disconnectSocial(network: String): Boolean = this.apiService.disconnectSocial(network).code() == 200
 
-    override suspend fun loginApple(authToken: String): UserAuthResponse? =
-        process {
-            apiService.loginApple(
-                mapOf(
-                    "code" to authToken,
-                    "allowRegister" to true,
-                ),
-            )
-        }
-
     fun accept(throwable: Throwable) {
         val throwableClass = throwable.javaClass
         if (SocketTimeoutException::class.java.isAssignableFrom(throwableClass)) {
@@ -504,8 +493,6 @@ class ApiClientImpl(
         analytics.setUserID(hostConfig.userID)
     }
 
-    override suspend fun getStatus(): Status? = process { apiService.getStatus() }
-
     override suspend fun syncUserStats(): User? = process { apiService.syncUserStats() }
 
     override suspend fun reportChallenge(
@@ -516,11 +503,6 @@ class ApiClientImpl(
     override suspend fun getContent(language: String?): ContentResult? = process { apiService.getContent(language ?: this.languageCode) }
 
     override suspend fun updateUser(updateDictionary: Map<String, Any?>): User? = process { apiService.updateUser(updateDictionary) }
-
-    override suspend fun registrationLanguage(registrationLanguage: String): User? =
-        process {
-            apiService.registrationLanguage(registrationLanguage)
-        }
 
     override suspend fun retrieveInAppRewards(): List<ShopItem>? = process { apiService.retrieveInAppRewards() }
 
@@ -699,8 +681,6 @@ class ApiClientImpl(
     override suspend fun markPrivateMessagesRead() {
         apiService.markPrivateMessagesRead()
     }
-
-    override suspend fun listGroups(type: String): List<Group>? = process { apiService.listGroups(type) }
 
     override suspend fun getGroup(groupId: String): Group? = processResponse(apiService.getGroup(groupId))
 
@@ -889,8 +869,6 @@ class ApiClientImpl(
         }
 
     override suspend fun deleteChallenge(challengeId: String): Void? = process { apiService.deleteChallenge(challengeId) }
-
-    override suspend fun debugAddTenGems(): Void? = process { apiService.debugAddTenGems() }
 
     override suspend fun getNews(): List<Any>? = process { apiService.getNews() }
 
