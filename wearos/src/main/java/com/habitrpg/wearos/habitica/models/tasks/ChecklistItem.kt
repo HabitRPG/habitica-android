@@ -2,10 +2,10 @@ package com.habitrpg.wearos.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 import java.util.UUID
 
-@JsonClass(generateAdapter = true)
+@Serializable
 open class ChecklistItem(
     var id: String? = UUID.randomUUID().toString(),
     var text: String? = null,

@@ -20,6 +20,11 @@ plugins {
             .pluginId,
     )
     id(
+        libs.plugins.kotlin.serialization
+            .get()
+            .pluginId,
+    )
+    id(
         libs.plugins.habitrpg.convention
             .get()
             .pluginId,
@@ -139,11 +144,8 @@ dependencies {
                     .name,
         )
     }
-    implementation(libs.retrofit2.converter.moshi)
-    implementation(libs.moshi.kotlin)
     implementation(libs.coordinatorlayout)
     implementation(libs.constraintlayout)
-    ksp(libs.moshi.kotlin.codegen)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.google.services)
@@ -168,7 +170,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlin.reflect)
 
     implementation(libs.core.splashscreen) {
         exclude(

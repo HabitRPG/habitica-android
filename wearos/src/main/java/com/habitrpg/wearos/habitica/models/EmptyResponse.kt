@@ -1,6 +1,6 @@
 package com.habitrpg.wearos.habitica.models
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class EmptyResponse

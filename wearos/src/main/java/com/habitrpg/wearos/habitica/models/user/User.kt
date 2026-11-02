@@ -3,10 +3,10 @@ package com.habitrpg.wearos.habitica.models.user
 import com.habitrpg.shared.habitica.models.Avatar
 import com.habitrpg.shared.habitica.models.AvatarAuthentication
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class User : Avatar {
     val tasksOrder: TasksOrder? = null
     val isDead: Boolean
@@ -19,7 +19,7 @@ class User : Avatar {
     override var id: String? = null
     override var balance: Double = 0.0
 
-    @Json(ignore = true)
+    @Transient
     override var authentication: AvatarAuthentication? = null
     override var stats: Stats? = null
     override var preferences: Preferences? = null

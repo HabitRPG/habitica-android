@@ -1,10 +1,10 @@
 package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.AvatarOutfit
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Outfit : AvatarOutfit {
     override var armor: String = ""
     override var back: String = ""
@@ -13,7 +13,7 @@ class Outfit : AvatarOutfit {
     override var shield: String = ""
     override var weapon: String = ""
 
-    @Json(name = "eyewear")
+    @SerialName("eyewear")
     override var eyeWear: String = ""
     override var headAccessory: String = ""
 }

@@ -494,6 +494,5 @@
         <argument
             android:name="url"
             app:argType="string" />
-        <deepLink app:uri="habitica.com/promo/web?url={url}" />
     </fragment>
 </navigation>

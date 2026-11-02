@@ -2,27 +2,27 @@ package com.habitrpg.wearos.habitica.models.tasks
 
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.wearos.habitica.models.user.Buffs
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class BulkTaskScoringData {
-    @Json(name = "con")
+    @SerialName("con")
     var constitution: Int? = null
 
-    @Json(name = "str")
+    @SerialName("str")
     var strength: Int? = null
 
-    @Json(name = "per")
+    @SerialName("per")
     var per: Int? = null
 
-    @Json(name = "int")
+    @SerialName("int")
     var intelligence: Int? = null
     var buffs: Buffs? = null
     var points: Int? = null
     var lvl: Int? = null
 
-    @Json(name = "class")
+    @SerialName("class")
     var habitClass: String? = null
     var gp: Double? = null
     var exp: Double? = null

@@ -2,9 +2,9 @@ package com.habitrpg.wearos.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 open class RemindersItem() : Parcelable {
     var id: String? = null
     var startDate: String? = null

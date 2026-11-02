@@ -3,35 +3,33 @@ minSdk = "26"
 targetSdk = "37"
 wearOsTargetSdk = "36"
 
-agp = "9.3.3"
+agp = "9.4.1"
 androidTest = "1.7.0"
 androidTestMonitor = "1.8.0"
 androidTestRunner = "1.7.0"
 annotationApi = "1.3.2"
-appcompat = "1.7.1"
+appcompat = "1.8.0"
 billing = "9.1.0"
-coil = "3.5.0"
-compose = "1.11.4"
+coil = "3.6.3"
+compose = "1.12.1"
 composeActivity = "1.13.0"
 constraintlayout = "2.2.2"
-converterMoshi = "3.0.0"
 coordinatorlayout = "1.3.0"
 coreSplashscreen = "1.2.0"
 core_ktx = "1.19.1"
 coroutines = "1.11.0"
-crashlytics = "3.0.7"
+crashlytics = "3.0.8"
 credentials = "1.6.0"
 daggerhilt = "2.60.1"
 desuggar = "2.1.5"
 detekt = "1.23.8"
-firebase-perf = "2.0.2"
-firebase_bom = "34.19.0"
+firebase_bom = "35.0.2"
 flexbox = "3.0.0"
-fragmentKtx = "1.8.9"
-fragmentTesting = "1.8.9"
+fragmentKtx = "1.9.1"
+fragmentTesting = "1.9.1"
 glance = "1.2.0"
 google-service = "4.5.0"
-googleid = "1.2.0"
+googleid = "1.2.1"
 gson = "2.14.0"
 habitRpgPlugin = "0.1.0"
 inAppReview = "2.0.2"
@@ -40,7 +38,7 @@ junitKtx = "1.3.0"
 junitVintage = "5.13.4"
 kaspresso = "1.6.1"
 kotest = "6.2.5"
-kotlin = "2.4.10"
+kotlin = "2.4.21"
 kotlinxSerialization = "1.12.0"
 ksp = "2.3.10"
 ktlintPlugin = "14.2.0"
@@ -51,12 +49,11 @@ markwon = "4.6.2"
 material = "1.14.0"
 material3 = "1.4.0"
 mockk = "1.14.11"
-moshiKotlin = "1.15.2"
-navigation = "2.9.8"
+navigation = "2.10.2"
 okhttp = "5.5.0"
 orchestrator = "1.6.1"
-paging = "3.5.1"
-play_auth = "21.6.0"
+paging = "3.5.3"
+play_auth = "22.0.0"
 play_wearables = "20.0.1"
 preferences = "1.2.1"
 realmPlugin = "10.19.0"
@@ -68,7 +65,7 @@ swipeRefresh = "1.2.0"
 turbine = "1.2.1"
 wear = "1.4.0"
 wearInput = "1.2.0"
-workManager = "2.11.2"
+workManager = "2.12.0"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
@@ -92,10 +89,8 @@ credentials = { group = "androidx.credentials", name = "credentials", version.re
 credentials-playServicesAuth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desuggar" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase_bom" }
-firebase-config = { group = "com.google.firebase", name = "firebase-config" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
-firebase-perf = { group = "com.google.firebase", name = "firebase-perf" }
 flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
 fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glance" }
@@ -133,8 +128,6 @@ material3 = { group = "androidx.compose.material3", name = "material3", version.
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 mockk-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockk" }
 mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
-moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshiKotlin" }
 navigation-common = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigation" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation" }
@@ -146,7 +139,6 @@ paging-compose = { group = "androidx.paging", name = "paging-compose", version.r
 preference = { group = "androidx.preference", name = "preference-ktx", version.ref = "preferences" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit2-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
 runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "compose" }
 shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 swipeRefreshLayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipeRefresh" }
@@ -187,8 +179,6 @@ design = ["appcompat", "material", "recyclerview", "preference", "swipeRefreshLa
 google-services = [
     "firebase-crashlytics",
     "firebase-messaging",
-    "firebase-config",
-    "firebase-perf",
     "google-play-auth",
     "google-play-wearable"
 ]
@@ -228,7 +218,6 @@ android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.
 android-library = { id = "com.android.library", version.ref = "agp" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebase-perf" }
 google-service = { id = "com.google.gms.google-services", version.ref = "google-service" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerhilt" }
 legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }

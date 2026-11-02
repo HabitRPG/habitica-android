@@ -1,3 +1,5 @@
+@file:UseSerializers(DateSerializer::class)
+
 package com.habitrpg.wearos.habitica.models.tasks
 
 import android.os.Parcel
@@ -8,17 +10,20 @@ import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.BaseTask
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.habitrpg.shared.habitica.serialization.DateSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.UseSerializers
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.Date
 
-@JsonClass(generateAdapter = true)
+@Serializable
 open class Task() :
     Parcelable,
     BaseTask {
-    @Json(name = "_id")
+    @SerialName("_id")
     var id: String? = null
     var userId: String = ""
     var priority: Float = 0.0f
@@ -29,6 +34,8 @@ open class Task() :
         set(value) {
             typeValue = value?.value
         }
+
+    @SerialName("type")
     internal var typeValue: String? = null
     var challengeID: String? = null
     var challengeBroken: String? = null
@@ -37,6 +44,8 @@ open class Task() :
         set(value) {
             attributeValue = value?.value
         }
+
+    @SerialName("attribute")
     var attributeValue: String? = Attribute.STRENGTH.value
     var value: Double? = 0.0
     var dateCreated: Date? = null
@@ -54,20 +63,27 @@ open class Task() :
     var reminders: List<RemindersItem>? = listOf()
 
     // dailies
-    var frequency: Frequency? = null
+    var frequency: Frequency?
+        get() = Frequency.from(frequencyValue)
+        set(value) {
+            frequencyValue = value?.value
+        }
+
+    @SerialName("frequency")
+    internal var frequencyValue: String? = null
     var everyX: Int? = 0
     override var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
 
     // todos
-    @Json(name = "date")
+    @SerialName("date")
     var dueDate: Date? = null
 
-    @Json(ignore = true)
+    @Transient
     var parsedText: Spanned? = null
 
-    @Json(ignore = true)
+    @Transient
     var parsedNotes: Spanned? = null
 
     override var isDue: Boolean? = null
@@ -83,10 +99,10 @@ open class Task() :
     internal var daysOfMonthString: String? = null
     internal var weeksOfMonthString: String? = null
 
-    @Json(ignore = true)
+    @Transient
     private var daysOfMonth: List<Int>? = null
 
-    @Json(ignore = true)
+    @Transient
     private var weeksOfMonth: List<Int>? = null
 
     val completedChecklistCount: Int

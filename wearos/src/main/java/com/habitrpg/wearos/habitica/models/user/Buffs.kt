@@ -1,9 +1,9 @@
 package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.AvatarBuffs
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Buffs : AvatarBuffs {
     override var con: Float? = null
     override var str: Float? = null

@@ -1,9 +1,9 @@
 package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.AvatarHair
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Hair : AvatarHair {
     override var mustache: Int = 0
     override var beard: Int = 0

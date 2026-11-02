@@ -1,9 +1,9 @@
 package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.AvatarFlags
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Flags : AvatarFlags {
     override var classSelected: Boolean = false
 }

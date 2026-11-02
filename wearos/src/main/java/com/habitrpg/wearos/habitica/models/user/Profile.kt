@@ -1,8 +1,8 @@
 package com.habitrpg.wearos.habitica.models.user
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Profile {
     var name: String? = null
 }

@@ -1,9 +1,9 @@
 package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.AvatarItems
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Items : AvatarItems {
     override var gear: Gear? = null
 

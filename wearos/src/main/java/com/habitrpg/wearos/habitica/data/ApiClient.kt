@@ -8,13 +8,11 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.shared.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.responses.ErrorResponse
+import com.habitrpg.shared.habitica.serialization.habiticaJson
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.models.NetworkResult
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import com.habitrpg.wearos.habitica.models.tasks.Task
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
@@ -189,14 +187,6 @@ class ApiClient
             this.hostConfig.apiKey = apiToken ?: ""
         }
 
-        private val adapter: JsonAdapter<ErrorResponse>? =
-            Moshi
-                .Builder()
-                .addLast(KotlinJsonAdapterFactory())
-                .build()
-                .adapter(ErrorResponse::class.java)
-                .lenient()
-
         private suspend fun <T : Any> process(call: suspend () -> Response<WearableHabitResponse<T>>): NetworkResult<T> {
             val response: Response<WearableHabitResponse<T>> = call.invoke()
 
@@ -208,7 +198,7 @@ class ApiClient
                     NetworkResult.Error(Exception(), !wasCached)
                 } else {
                     response.errorBody()?.string()?.let {
-                        val errorResponse = adapter?.fromJson(it)
+                        val errorResponse = habiticaJson.decodeFromString<ErrorResponse>(it)
                         throw(java.lang.Exception(errorResponse?.message))
                     }
                     throw(java.lang.Exception(response.message()))

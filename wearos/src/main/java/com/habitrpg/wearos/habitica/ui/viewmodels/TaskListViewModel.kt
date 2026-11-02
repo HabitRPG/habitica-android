@@ -9,20 +9,17 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.serialization.habiticaJson
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,21 +30,14 @@ class TaskListViewModel
         taskRepository: TaskRepository,
         userRepository: UserRepository,
         val sharedPreferences: SharedPreferences,
-        moshi: Moshi,
         exceptionBuilder: ExceptionHandlerBuilder,
         appStateManager: AppStateManager,
     ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-        var type: Type =
-            Types.newParameterizedType(
-                MutableList::class.java,
-                Task::class.java,
-            )
-        private val moshiAdapter: JsonAdapter<MutableList<Task>> = moshi.adapter(type)
         val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
         val taskCount = MutableLiveData(0)
         val completedToDos: MutableList<Task> by lazy {
             val tasksString = sharedPreferences.getString("to_do_tasks", null) ?: return@lazy mutableListOf()
-            return@lazy moshiAdapter.fromJson(tasksString) ?: mutableListOf()
+            return@lazy habiticaJson.decodeFromString<MutableList<Task>>(tasksString)
         }
         val tasks =
             taskRepository
@@ -142,7 +132,7 @@ class TaskListViewModel
 
         private fun saveCurrentToDos() {
             sharedPreferences.edit {
-                putString("to_do_tasks", moshiAdapter.toJson(completedToDos))
+                putString("to_do_tasks", habiticaJson.encodeToString<List<Task>>(completedToDos))
             }
         }
     }

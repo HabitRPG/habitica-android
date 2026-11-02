@@ -1,9 +1,9 @@
 package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.shared.habitica.models.AvatarPreferences
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Preferences : AvatarPreferences {
     override var hair: Hair? = null
     override var costume: Boolean = false

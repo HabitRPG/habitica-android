@@ -9,21 +9,14 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.wearos.habitica.data.ApiClient
+import com.habitrpg.wearos.habitica.data.HabiticaConverterFactory
 import com.habitrpg.wearos.habitica.managers.AppStateManager
-import com.habitrpg.wearos.habitica.models.tasks.WrappedTasklistAdapter
-import com.habitrpg.wearos.habitica.util.AttributeAdapter
-import com.habitrpg.wearos.habitica.util.FrequencyAdapter
-import com.habitrpg.wearos.habitica.util.TaskTypeAdapter
-import com.habitrpg.wearos.habitica.util.customDateAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Converter
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 import java.security.KeyStore
 import java.security.KeyStoreException
@@ -43,23 +36,7 @@ class AppModule {
     ): HostConfig = HostConfig(sharedPreferences, keyHelper, context)
 
     @Provides
-    fun providesConverterFactory(moshi: Moshi): Converter.Factory =
-        MoshiConverterFactory
-            .create(
-                moshi,
-            ).asLenient()
-
-    @Provides
-    fun providesMoshi(): Moshi =
-        Moshi
-            .Builder()
-            .add(WrappedTasklistAdapter())
-            .add(customDateAdapter)
-            .add(FrequencyAdapter())
-            .add(TaskTypeAdapter())
-            .add(AttributeAdapter())
-            .addLast(KotlinJsonAdapterFactory())
-            .build()
+    fun providesConverterFactory(): Converter.Factory = HabiticaConverterFactory()
 
     @Provides
     @Singleton
