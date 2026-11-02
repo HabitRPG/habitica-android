@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.seconds
 
 @ExperimentalCoroutinesApi
@@ -42,7 +43,19 @@ class TaskRepositoryImpl(
     private val tagRepository: TagRepository,
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler),
     TaskRepository {
-    private var lastTaskAction: Long = 0
+    private val lastTaskActions = ConcurrentHashMap<String, Long>()
+
+    // Drops a repeated action on the same task within 500ms (double taps). Other tasks are not affected.
+    private fun isRepeatedAction(
+        taskId: String?,
+        force: Boolean,
+    ): Boolean {
+        val key = taskId ?: ""
+        val now = Date().time
+        if (!force && (lastTaskActions[key] ?: 0) > now - 500) return true
+        lastTaskActions[key] = now
+        return false
+    }
 
     private suspend fun resolveTagReferences(tasks: Collection<Task>) {
         val hasUnresolvedTags = tasks.any { task -> task.tags?.any { it.name.isEmpty() } == true }
@@ -117,13 +130,10 @@ class TaskRepositoryImpl(
         force: Boolean,
         notifyFunc: ((TaskScoringResult) -> Unit)?,
     ): TaskScoringResult? {
-        val now = Date().time
-        val id = task.id
-        if ((lastTaskAction > now - 500 && !force) || id == null) {
+        val id = task.id ?: return null
+        if (isRepeatedAction(id, force)) {
             return null
         }
-
-        lastTaskAction = now
         val res =
             this.apiClient.postTaskDirection(
                 id,
@@ -194,11 +204,9 @@ class TaskRepositoryImpl(
         task: Task,
         force: Boolean,
     ): Task? {
-        val now = Date().time
-        if (lastTaskAction > now - 500 && !force) {
+        if (isRepeatedAction(task.id, force)) {
             return null
         }
-        lastTaskAction = now
 
         task.isSaving = true
         task.isCreating = true
@@ -237,11 +245,9 @@ class TaskRepositoryImpl(
         task: Task,
         force: Boolean,
     ): Task? {
-        val now = Date().time
-        if ((lastTaskAction > now - 500 && !force) || !task.isValid) {
+        if (!task.isValid || isRepeatedAction(task.id, force)) {
             return task
         }
-        lastTaskAction = now
         val id = task.id ?: return task
         val unmanagedTask = localRepository.getUnmanagedCopy(task)
         unmanagedTask.isSaving = true

@@ -155,6 +155,13 @@ class TaskRepositoryImplTest :
                 repository.taskChecked(user, task, true, false, null)
                 coVerify(exactly = 1) { apiClient.postTaskDirection(any(), any()) }
             }
+            "not debounce different tasks" {
+                coEvery { apiClient.postTaskDirection(any(), "up") } returns TaskDirectionData()
+                val otherTask = Task().apply { id = UUID.randomUUID().toString() }
+                repository.taskChecked(user, task, true, false, null)
+                repository.taskChecked(user, otherTask, true, false, null)
+                coVerify(exactly = 2) { apiClient.postTaskDirection(any(), any()) }
+            }
             "get user if not passed" {
                 coEvery { apiClient.postTaskDirection(any(), "up") } returns TaskDirectionData()
                 coEvery { localRepository.getUser("") } returns flowOf(user)

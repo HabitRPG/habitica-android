@@ -7,8 +7,6 @@ import android.security.keystore.KeyProperties
 import android.util.Base64
 import androidx.core.content.edit
 import com.habitrpg.shared.habitica.HLogger
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.UnsupportedEncodingException
 import java.security.GeneralSecurityException
@@ -22,14 +20,11 @@ import java.security.SecureRandom
 import java.security.UnrecoverableKeyException
 import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
-import javax.crypto.CipherInputStream
-import javax.crypto.CipherOutputStream
 import javax.crypto.IllegalBlockSizeException
 import javax.crypto.KeyGenerator
 import javax.crypto.NoSuchPaddingException
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
-import javax.crypto.spec.SecretKeySpec
 import javax.security.cert.CertificateException
 
 // https://stackoverflow.com/a/42716982
@@ -92,58 +87,6 @@ class KeyHelper
                 )
                 keyGenerator.generateKey()
             }
-        }
-
-        @Throws(Exception::class)
-        private fun rsaEncrypt(secret: ByteArray): ByteArray {
-            val privateKeyEntry = keyStore?.getEntry(KEY_ALIAS, null) as? KeyStore.PrivateKeyEntry
-            // Encrypt the text
-            val inputCipher = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL")
-            inputCipher.init(Cipher.ENCRYPT_MODE, privateKeyEntry?.certificate?.publicKey)
-
-            val outputStream = ByteArrayOutputStream()
-            val cipherOutputStream = CipherOutputStream(outputStream, inputCipher)
-            cipherOutputStream.write(secret)
-            cipherOutputStream.close()
-
-            return outputStream.toByteArray()
-        }
-
-        @Throws(Exception::class)
-        private fun rsaDecrypt(encrypted: ByteArray): ByteArray {
-            val privateKeyEntry = keyStore?.getEntry(KEY_ALIAS, null) as? KeyStore.PrivateKeyEntry
-            val output = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL")
-            output.init(Cipher.DECRYPT_MODE, privateKeyEntry?.privateKey)
-            val cipherInputStream =
-                CipherInputStream(
-                    ByteArrayInputStream(encrypted),
-                    output,
-                )
-            return cipherInputStream.readBytes()
-        }
-
-        @Throws(Exception::class)
-        private fun generateAESKey() {
-            var enryptedKeyB64 = sharedPreferences.getString(ENCRYPTED_KEY, null)
-            if (enryptedKeyB64 == null) {
-                val key = ByteArray(16)
-                val secureRandom = SecureRandom()
-                secureRandom.nextBytes(key)
-                val encryptedKey = rsaEncrypt(key)
-                enryptedKeyB64 = Base64.encodeToString(encryptedKey, Base64.DEFAULT)
-                sharedPreferences.edit {
-                    putString(ENCRYPTED_KEY, enryptedKeyB64)
-                }
-            }
-        }
-
-        @Throws(Exception::class)
-        private fun getSecretKey(): Key {
-            val enryptedKeyB64 = sharedPreferences.getString(ENCRYPTED_KEY, null)
-
-            val encryptedKey = Base64.decode(enryptedKeyB64, Base64.DEFAULT)
-            val key = rsaDecrypt(encryptedKey)
-            return SecretKeySpec(key, "AES")
         }
 
         @Throws(
@@ -222,12 +165,10 @@ class KeyHelper
         }
 
         companion object {
-            private const val RSA_MODE = "RSA/ECB/PKCS1Padding"
             private const val AES_MODE_M = "AES/GCM/NoPadding"
 
             private const val KEY_ALIAS = "KEY"
             private const val ANDROID_KEY_STORE = "AndroidKeyStore"
-            const val ENCRYPTED_KEY = "ENCRYPTED_KEY"
             const val PUBLIC_IV = "PUBLIC_IV"
             private var keyHelper: KeyHelper? = null
 

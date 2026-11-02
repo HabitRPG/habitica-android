@@ -165,7 +165,7 @@ class ApiClient
                                 .removeHeader("Pragma")
                                 .build()
                         chain.proceed(request)
-                    }.readTimeout(2400, TimeUnit.SECONDS)
+                    }.readTimeout(60, TimeUnit.SECONDS)
                     .build()
 
             val server = Server(this.hostConfig.address)

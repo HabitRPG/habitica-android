@@ -2,6 +2,7 @@ package com.habitrpg.common.habitica.api
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -69,7 +70,8 @@ class HostConfig {
         }
     }
 
-    private fun loadAPIKey(
+    @VisibleForTesting
+    internal fun loadAPIKey(
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
     ): String =
@@ -83,10 +85,13 @@ class HostConfig {
         } else {
             val key = sharedPreferences.getString("APIToken", null)
             if (key?.isNotBlank() == true) {
-                val encryptedKey = keyHelper?.encrypt(key)
-                sharedPreferences.edit {
-                    putString(userID, encryptedKey)
-                    remove("APIToken")
+                // Keep the plain token if the keystore can't encrypt, otherwise the user is logged out next launch
+                val encryptedKey = runCatching { keyHelper?.encrypt(key) }.getOrNull()
+                if (encryptedKey != null) {
+                    sharedPreferences.edit {
+                        putString(userID, encryptedKey)
+                        remove("APIToken")
+                    }
                 }
             }
             key
