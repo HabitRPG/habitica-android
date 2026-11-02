@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.models.user
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.shared.habitica.models.AvatarBuffs
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @RealmClass(embedded = true)
+@Serializable
 open class Buffs :
     RealmObject(),
     AvatarBuffs,
@@ -15,7 +17,7 @@ open class Buffs :
     override var str: Float? = null
     override var per: Float? = null
 
-    @SerializedName("int")
+    @SerialName("int")
     override var intelligence: Float? = null
     override var seafoam: Boolean? = null
         get() {

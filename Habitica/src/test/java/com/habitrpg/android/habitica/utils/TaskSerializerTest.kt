@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.gson.JsonObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
@@ -11,6 +10,11 @@ import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.realm.RealmList
+import kotlinx.serialization.json.boolean
+import kotlinx.serialization.json.int
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import java.util.Date
 
 class TaskSerializerTest :
@@ -29,7 +33,7 @@ class TaskSerializerTest :
                     "repeat": {"m": false, "t": true},
                     "daysOfMonth": [1, 15], "weeksOfMonth": []
                 }"""
-                val task = gson.fromJson(json, Task::class.java)
+                val task = parse<Task>(json)
                 task.id shouldBe "task-1"
                 task.text shouldBe "Daily"
                 task.notes shouldBe "Notes"
@@ -56,7 +60,7 @@ class TaskSerializerTest :
 
             "read habit counters and default missing values" {
                 val json = """{"_id": "task-1", "type": "habit", "up": true, "counterUp": 3, "counterDown": 1, "streak": null}"""
-                val task = gson.fromJson(json, Task::class.java)
+                val task = parse<Task>(json)
                 task.up shouldBe true
                 task.down shouldBe false
                 task.counterUp shouldBe 3
@@ -67,12 +71,12 @@ class TaskSerializerTest :
             }
 
             "fall back to habit for unknown types" {
-                gson.fromJson("""{"type": "unknown"}""", Task::class.java).type shouldBe TaskType.HABIT
+                parse<Task>("""{"type": "unknown"}""").type shouldBe TaskType.HABIT
             }
 
             "read group approval flags only for tasks with a group id" {
                 val json = """{"type": "todo", "group": {"id": "group-1", "approval": {"requested": true, "approved": "yes", "required": true}}}"""
-                val group = gson.fromJson(json, Task::class.java).group
+                val group = parse<Task>(json).group
                 group?.groupID shouldBe "group-1"
                 group?.approvalRequested shouldBe true
                 group?.approvalApproved shouldBe false
@@ -80,11 +84,11 @@ class TaskSerializerTest :
             }
 
             "ignore a challenge without an id" {
-                gson.fromJson("""{"challenge": {"broken": "x"}}""", Task::class.java).challengeID.shouldBeNull()
+                parse<Task>("""{"challenge": {"broken": "x"}}""").challengeID.shouldBeNull()
             }
 
             "return an empty task for non-object input" {
-                TaskSerializer().deserialize(null, null, deserializationContext).id.shouldBeNull()
+                parse(TaskSerializer, "null").id.shouldBeNull()
             }
         }
 
@@ -97,49 +101,73 @@ class TaskSerializerTest :
                     attribute = Attribute.STRENGTH
                     tags = RealmList(Tag().apply { id = "tag-1" })
                     checklist = RealmList(ChecklistItem("c1", "Item", true))
-                    reminders = RealmList(RemindersItem().apply { id = "r1"; time = "t" })
+                    reminders =
+                        RealmList(
+                            RemindersItem().apply {
+                                id = "r1"
+                                time = "t"
+                            },
+                        )
                 }
 
             "write habit specific fields" {
-                val task = baseTask(TaskType.HABIT).apply { up = true; down = false; counterUp = 2 }
-                val obj = gson.toJsonTree(task, Task::class.java) as JsonObject
-                obj["_id"].asString shouldBe "task-1"
-                obj["type"].asString shouldBe "habit"
-                obj["attribute"].asString shouldBe "str"
-                obj["tags"].asJsonArray.map { it.asString } shouldBe listOf("tag-1")
-                obj["up"].asBoolean shouldBe true
-                obj["counterUp"].asInt shouldBe 2
-                obj.has("checklist") shouldBe false
+                val task =
+                    baseTask(TaskType.HABIT).apply {
+                        up = true
+                        down = false
+                        counterUp = 2
+                    }
+                val obj = serialize<Task>(task)
+                obj["_id"]!!.jsonPrimitive.content shouldBe "task-1"
+                obj["type"]!!.jsonPrimitive.content shouldBe "habit"
+                obj["attribute"]!!.jsonPrimitive.content shouldBe "str"
+                obj["tags"]!!.jsonArray.map { it.jsonPrimitive.content } shouldBe listOf("tag-1")
+                obj["up"]!!.jsonPrimitive.boolean shouldBe true
+                obj["counterUp"]!!.jsonPrimitive.int shouldBe 2
+                obj.containsKey("checklist") shouldBe false
             }
 
             "write an empty date and the checklist for todos" {
-                val obj = gson.toJsonTree(baseTask(TaskType.TODO), Task::class.java) as JsonObject
-                obj["date"].asString shouldBe ""
-                obj["checklist"].asJsonArray.single().asJsonObject["id"].asString shouldBe "c1"
-                obj["reminders"].asJsonArray.single().asJsonObject.has("startDate") shouldBe false
-                obj["completed"].asBoolean shouldBe false
+                val obj = serialize<Task>(baseTask(TaskType.TODO))
+                obj["date"]!!.jsonPrimitive.content shouldBe ""
+                obj["checklist"]!!
+                    .jsonArray
+                    .single()
+                    .jsonObject["id"]!!
+                    .jsonPrimitive.content shouldBe "c1"
+                obj["reminders"]!!
+                    .jsonArray
+                    .single()
+                    .jsonObject
+                    .containsKey("startDate") shouldBe false
+                obj["completed"]!!.jsonPrimitive.boolean shouldBe false
             }
 
             "write the due date for todos" {
                 val task = baseTask(TaskType.TODO).apply { dueDate = Date(1443445200000) }
-                val obj = gson.toJsonTree(task, Task::class.java) as JsonObject
-                obj["date"].asString shouldBe "2015-09-28T13:00:00.000Z"
+                val obj = serialize<Task>(task)
+                obj["date"]!!.jsonPrimitive.content shouldBe "2015-09-28T13:00:00.000Z"
             }
 
             "write the schedule for dailies" {
-                val task = baseTask(TaskType.DAILY).apply { everyX = 3; frequency = Frequency.WEEKLY; streak = 5 }
-                val obj = gson.toJsonTree(task, Task::class.java) as JsonObject
-                obj["everyX"].asInt shouldBe 3
-                obj["frequency"].asString shouldBe "weekly"
-                obj["streak"].asInt shouldBe 5
-                obj.has("checklist") shouldBe true
-                obj.has("up") shouldBe false
+                val task =
+                    baseTask(TaskType.DAILY).apply {
+                        everyX = 3
+                        frequency = Frequency.WEEKLY
+                        streak = 5
+                    }
+                val obj = serialize<Task>(task)
+                obj["everyX"]!!.jsonPrimitive.int shouldBe 3
+                obj["frequency"]!!.jsonPrimitive.content shouldBe "weekly"
+                obj["streak"]!!.jsonPrimitive.int shouldBe 5
+                obj.containsKey("checklist") shouldBe true
+                obj.containsKey("up") shouldBe false
             }
 
             "write only common fields for rewards" {
-                val obj = gson.toJsonTree(baseTask(TaskType.REWARD), Task::class.java) as JsonObject
-                obj.has("checklist") shouldBe false
-                obj.has("up") shouldBe false
+                val obj = serialize<Task>(baseTask(TaskType.REWARD))
+                obj.containsKey("checklist") shouldBe false
+                obj.containsKey("up") shouldBe false
             }
         }
     })

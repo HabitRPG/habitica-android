@@ -1,14 +1,11 @@
 package com.habitrpg.android.habitica.utils
 
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.models.user.Purchases
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 
 class PurchasedDeserializerTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
 
         "deserialize" should {
             "flatten customizations including hair categories" {
@@ -18,7 +15,7 @@ class PurchasedDeserializerTest :
                     "hair": {"color": {"red": true}},
                     "plan": {"customerId": "customer-1"}
                 }"""
-                val purchases = gson.fromJson(json, Purchases::class.java)
+                val purchases = parse<Purchases>(json)
                 purchases.customizations?.map { listOf(it.type, it.category, it.key, it.purchased) } shouldBe
                     listOf(
                         listOf("background", null, "beach", true),
@@ -29,7 +26,7 @@ class PurchasedDeserializerTest :
             }
 
             "handle a missing plan" {
-                gson.fromJson("{}", Purchases::class.java).plan.shouldBeNull()
+                parse<Purchases>("{}").plan.shouldBeNull()
             }
         }
     })

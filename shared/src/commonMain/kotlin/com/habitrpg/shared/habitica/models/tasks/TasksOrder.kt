@@ -1,5 +1,8 @@
 package com.habitrpg.shared.habitica.models.tasks
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class TasksOrder {
     fun positionOf(
         key: String,

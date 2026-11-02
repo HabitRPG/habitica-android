@@ -1,13 +1,23 @@
+@file:UseSerializers(DateSerializer::class, RealmListSerializer::class)
+
 package com.habitrpg.android.habitica.models.user
 
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.utils.OwnedItemListSerializer
+import com.habitrpg.android.habitica.utils.OwnedMountListSerializer
+import com.habitrpg.android.habitica.utils.OwnedPetListSerializer
+import com.habitrpg.android.habitica.utils.RealmListSerializer
 import com.habitrpg.shared.habitica.models.AvatarItems
+import com.habitrpg.shared.habitica.serialization.DateSerializer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import java.util.Date
 
 @RealmClass(embedded = true)
+@Serializable
 open class Items :
     RealmObject,
     BaseObject,
@@ -20,33 +30,45 @@ open class Items :
         special?.forEach { it.itemType = "special" }
     }
 
+    @Serializable(with = OwnedItemListSerializer::class)
     var eggs: RealmList<OwnedItem>? = null
         set(value) {
             field = value
             field?.forEach { it.itemType = "eggs" }
         }
+
+    @Serializable(with = OwnedItemListSerializer::class)
     var food: RealmList<OwnedItem>? = null
         set(value) {
             field = value
             field?.forEach { it.itemType = "food" }
         }
+
+    @Serializable(with = OwnedItemListSerializer::class)
     var hatchingPotions: RealmList<OwnedItem>? = null
         set(value) {
             field = value
             field?.forEach { it.itemType = "hatchingPotions" }
         }
+
+    @Serializable(with = OwnedItemListSerializer::class)
     var quests: RealmList<OwnedItem>? = null
         set(value) {
             field = value
             field?.forEach { it.itemType = "quests" }
         }
+
+    @Serializable(with = OwnedItemListSerializer::class)
     var special: RealmList<OwnedItem>? = null
         set(value) {
             field = value
             field?.forEach { it.itemType = "special" }
         }
 
+    @Serializable(with = OwnedPetListSerializer::class)
     var pets: RealmList<OwnedPet>? = null
+
+    @Serializable(with = OwnedMountListSerializer::class)
     var mounts: RealmList<OwnedMount>? = null
     override var currentMount: String? = null
     override var currentPet: String? = null

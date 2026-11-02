@@ -1,0 +1,5 @@
+data.status = "up"
+message = null
+notifications = null
+statusCode = null
+success = true

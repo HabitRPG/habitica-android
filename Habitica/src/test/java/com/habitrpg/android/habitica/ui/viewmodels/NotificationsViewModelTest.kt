@@ -13,9 +13,9 @@ import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.Flags
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.MainNavigationController
-import com.habitrpg.common.habitica.models.Notification
-import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
-import com.habitrpg.common.habitica.models.notifications.NotificationGroup
+import com.habitrpg.shared.habitica.models.Notification
+import com.habitrpg.shared.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.shared.habitica.models.notifications.NotificationGroup
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearMocks

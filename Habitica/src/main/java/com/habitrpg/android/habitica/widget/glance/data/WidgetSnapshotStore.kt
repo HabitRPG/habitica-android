@@ -2,11 +2,10 @@ package com.habitrpg.android.habitica.widget.glance.data
 
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.google.gson.Gson
+import com.habitrpg.shared.habitica.serialization.habiticaJson
+import kotlinx.serialization.encodeToString
 
 object WidgetSnapshotStore {
-    private val gson = Gson()
-
     val statsKey = stringPreferencesKey("stats_snapshot")
     val taskListKey = stringPreferencesKey("task_list_snapshot")
     val dailyCountKey = stringPreferencesKey("daily_count_snapshot")
@@ -25,26 +24,24 @@ object WidgetSnapshotStore {
         return "${fontScale(context)}|${config.densityDpi}|${config.locales.toLanguageTags()}"
     }
 
-    fun encodeStats(state: StatsWidgetState): String = gson.toJson(state)
+    fun encodeStats(state: StatsWidgetState): String = habiticaJson.encodeToString(state)
 
-    fun encodeTaskList(state: TaskListWidgetState): String = gson.toJson(state)
+    fun encodeTaskList(state: TaskListWidgetState): String = habiticaJson.encodeToString(state)
 
-    fun encodeDailyCount(state: DailyCountWidgetState): String = gson.toJson(state)
+    fun encodeDailyCount(state: DailyCountWidgetState): String = habiticaJson.encodeToString(state)
 
-    fun statsFrom(prefs: Preferences): StatsWidgetState? = decode(prefs[statsKey], StatsWidgetState::class.java)
+    fun statsFrom(prefs: Preferences): StatsWidgetState? = decode<StatsWidgetState>(prefs[statsKey])
 
-    fun taskListFrom(prefs: Preferences): TaskListWidgetState? = decode(prefs[taskListKey], TaskListWidgetState::class.java)
+    fun taskListFrom(prefs: Preferences): TaskListWidgetState? = decode<TaskListWidgetState>(prefs[taskListKey])
 
-    fun dailyCountFrom(prefs: Preferences): DailyCountWidgetState? = decode(prefs[dailyCountKey], DailyCountWidgetState::class.java)
+    fun dailyCountFrom(prefs: Preferences): DailyCountWidgetState? = decode<DailyCountWidgetState>(prefs[dailyCountKey])
 
-    fun decodeStats(json: String): StatsWidgetState? = decode(json, StatsWidgetState::class.java)
+    fun decodeStats(json: String): StatsWidgetState? = decode<StatsWidgetState>(json)
 
-    fun decodeTaskList(json: String): TaskListWidgetState? = decode(json, TaskListWidgetState::class.java)
+    fun decodeTaskList(json: String): TaskListWidgetState? = decode<TaskListWidgetState>(json)
 
-    fun decodeDailyCount(json: String): DailyCountWidgetState? = decode(json, DailyCountWidgetState::class.java)
+    fun decodeDailyCount(json: String): DailyCountWidgetState? = decode<DailyCountWidgetState>(json)
 
-    private fun <T> decode(
-        json: String?,
-        type: Class<T>,
-    ): T? = json?.let { runCatching { gson.fromJson(it, type) }.getOrNull() }
+    private inline fun <reified T> decode(json: String?): T? =
+        json?.let { runCatching { habiticaJson.decodeFromString<T>(it) }.getOrNull() }
 }

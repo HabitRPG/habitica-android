@@ -21,9 +21,9 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.habitrpg.common.habitica.models.auth.UserAuthSocial
-import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens
+import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
+import com.habitrpg.shared.habitica.models.auth.UserAuthSocial
+import com.habitrpg.shared.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository

@@ -1,15 +1,12 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import com.google.gson.JsonObject
-import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.CrashReporter
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
@@ -40,19 +37,20 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
-import com.habitrpg.common.habitica.models.HabitResponse
-import com.habitrpg.common.habitica.models.PurchaseValidationRequest
-import com.habitrpg.common.habitica.models.PurchaseValidationResult
-import com.habitrpg.common.habitica.models.auth.UserAuth
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.habitrpg.common.habitica.models.auth.UserAuthSocial
-import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens
+import com.habitrpg.shared.habitica.models.HabitResponse
+import com.habitrpg.shared.habitica.models.PurchaseValidationRequest
+import com.habitrpg.shared.habitica.models.PurchaseValidationResult
+import com.habitrpg.shared.habitica.models.auth.UserAuth
+import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
+import com.habitrpg.shared.habitica.models.auth.UserAuthSocial
+import com.habitrpg.shared.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
+import kotlinx.serialization.SerializationException
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -62,7 +60,6 @@ import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.io.IOException
 import java.net.SocketException
@@ -77,7 +74,7 @@ class ApiClientImpl(
     override val hostConfig: HostConfig,
     private val notificationsManager: NotificationsManager,
     private val context: Context,
-    private val crashReporter: CrashReporter
+    private val analytics: AnalyticsManager,
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
@@ -399,10 +396,10 @@ class ApiClientImpl(
             } else {
                 showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
             }
-        } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
-            crashReporter.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
+        } else if (SerializationException::class.java.isAssignableFrom(throwableClass)) {
+            analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
         } else {
-            crashReporter.logException(throwable)
+            analytics.logException(throwable)
         }
     }
 
@@ -418,11 +415,11 @@ class ApiClientImpl(
                 .responseBodyConverter(ErrorResponse::class.java, arrayOfNulls(0), retrofitAdapter)
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
-        } catch (e: JsonSyntaxException) {
-            crashReporter.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+        } catch (e: SerializationException) {
+            analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         } catch (e: IOException) {
-            crashReporter.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         }
     }
@@ -510,7 +507,7 @@ class ApiClientImpl(
     ) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
-        crashReporter.setUserID(hostConfig.userID)
+        analytics.setUserID(hostConfig.userID)
     }
 
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }
@@ -1046,11 +1043,4 @@ class ApiClientImpl(
     override suspend fun retrieveMarketGear(): Shop? = process { apiService.retrieveMarketGear(languageCode) }
 
     override suspend fun getWorldState(): WorldState? = process { apiService.worldState() }
-
-    override suspend fun getClientConfig(): JsonObject? =
-        process({ apiService.clientConfig() }, onError = { null }, propagateError = false, returnOnError = true)
-
-    companion object {
-        fun createGsonFactory(): GsonConverterFactory = GSonFactoryCreator.create()
-    }
 }

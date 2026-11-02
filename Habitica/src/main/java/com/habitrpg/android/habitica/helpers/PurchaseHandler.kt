@@ -33,9 +33,9 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.models.IAPGift
-import com.habitrpg.common.habitica.models.PurchaseValidationRequest
-import com.habitrpg.common.habitica.models.Transaction
+import com.habitrpg.shared.habitica.models.IAPGift
+import com.habitrpg.shared.habitica.models.PurchaseValidationRequest
+import com.habitrpg.shared.habitica.models.Transaction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

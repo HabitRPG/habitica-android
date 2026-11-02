@@ -4,7 +4,9 @@ import android.content.Context
 import com.habitrpg.android.habitica.R
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 open class SpecialItem :
     RealmObject(),
     Item {

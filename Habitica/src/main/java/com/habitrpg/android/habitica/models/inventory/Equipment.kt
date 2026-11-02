@@ -1,11 +1,13 @@
 package com.habitrpg.android.habitica.models.inventory
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseMainObject
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 open class Equipment :
     RealmObject(),
     BaseMainObject {
@@ -24,7 +26,7 @@ open class Equipment :
     var per: Int = 0
     var released: Boolean = true
 
-    @SerializedName("int")
+    @SerialName("int")
     var intelligence: Int = 0
     var twoHanded = false
     var mystery = ""

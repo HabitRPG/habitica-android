@@ -3,7 +3,9 @@ package com.habitrpg.android.habitica.models
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 open class QuestAchievement :
     RealmObject(),
     BaseObject {

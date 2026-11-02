@@ -1,9 +1,16 @@
+@file:UseSerializers(RealmListSerializer::class)
+
 package com.habitrpg.android.habitica.models.inventory
 
+import com.habitrpg.android.habitica.utils.QuestCollectListSerializer
+import com.habitrpg.android.habitica.utils.RealmListSerializer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 
+@Serializable
 open class QuestContent :
     RealmObject(),
     Item {
@@ -45,6 +52,7 @@ open class QuestContent :
             }
         }
 
+    @Serializable(with = QuestCollectListSerializer::class)
     var collect: RealmList<QuestCollect>? = null
     override var event: ItemEvent? = null
 

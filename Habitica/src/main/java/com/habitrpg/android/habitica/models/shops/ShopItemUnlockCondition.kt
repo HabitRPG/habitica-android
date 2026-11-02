@@ -5,8 +5,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.Serializable
 
 @RealmClass(embedded = true)
+@Serializable
 open class ShopItemUnlockCondition :
     RealmObject(),
     BaseObject {

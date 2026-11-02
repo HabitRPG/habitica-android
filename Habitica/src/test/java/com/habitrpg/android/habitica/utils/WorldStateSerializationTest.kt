@@ -1,14 +1,11 @@
 package com.habitrpg.android.habitica.utils
 
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.models.WorldState
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 
 class WorldStateSerializationTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
 
         "deserialize" should {
             "read the world boss, rage strikes and events" {
@@ -22,7 +19,7 @@ class WorldStateSerializationTest :
                     "currentEvent": {"event": "spring", "season": "spring"},
                     "currentEventList": [{"event": "spring"}, {"event": "gems"}]
                 }"""
-                val state = gson.fromJson(json, WorldState::class.java)
+                val state = parse<WorldState>(json)
                 state.worldBossActive shouldBe true
                 state.worldBossKey shouldBe "dysheartener"
                 state.progress?.hp shouldBe 100.5
@@ -35,7 +32,7 @@ class WorldStateSerializationTest :
 
             "ignore null boss values and events without a current event" {
                 val json = """{"worldBoss": {"active": null, "key": null}, "currentEvent": null, "currentEventList": [{"event": "x"}]}"""
-                val state = gson.fromJson(json, WorldState::class.java)
+                val state = parse<WorldState>(json)
                 state.worldBossActive shouldBe false
                 state.worldBossKey shouldBe ""
                 state.progress.shouldBeNull()
@@ -44,7 +41,7 @@ class WorldStateSerializationTest :
             }
 
             "return a default state for null input" {
-                WorldStateSerialization().deserialize(null, null, null).worldBossKey shouldBe ""
+                parse(WorldStateSerializer, "null").worldBossKey shouldBe ""
             }
         }
     })

@@ -4,11 +4,14 @@ import android.text.Spanned
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.user.Backer
 import com.habitrpg.android.habitica.models.user.ContributorInfo
+import com.habitrpg.android.habitica.utils.ChatMessageSerializer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable(with = ChatMessageSerializer::class)
 open class ChatMessage :
     RealmObject(),
     BaseMainObject {

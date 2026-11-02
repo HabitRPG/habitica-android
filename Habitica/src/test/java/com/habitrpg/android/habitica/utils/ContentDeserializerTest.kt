@@ -1,13 +1,21 @@
 package com.habitrpg.android.habitica.utils
 
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
+import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.models.ContentResult
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 
 class ContentDeserializerTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
+
+        beforeSpec {
+            mockkStatic(FirebasePerformance::class)
+            every { FirebasePerformance.getInstance() } returns mockk(relaxed = true)
+        }
+        afterSpec { unmockkStatic(FirebasePerformance::class) }
 
         "deserialize" should {
             "read items, animals, spells and extras" {
@@ -29,7 +37,7 @@ class ContentDeserializerTest :
                     "appearances": {}, "backgrounds": {},
                     "faq": {"questions": [{"question": "Q", "web": "A"}]}
                 }"""
-                val content = gson.fromJson(json, ContentResult::class.java)
+                val content = parse<ContentResult>(json)
                 content.potion?.key shouldBe "HealthPotion"
                 content.armoire?.key shouldBe "Armoire"
                 content.quests.map { it.key } shouldBe listOf("dilatory")

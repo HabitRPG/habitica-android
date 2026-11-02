@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
@@ -31,8 +32,7 @@ import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.helpers.KeyHelper
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.habitrpg.shared.habitica.HLogger
+import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -57,6 +57,7 @@ class AuthenticationViewModel
         val hostConfig: HostConfig,
         private val keyHelper: KeyHelper?,
         @ApplicationContext private val appContext: Context,
+        private val analytics: AnalyticsManager,
     ) : ViewModel() {
         val email = mutableStateOf("")
         val password = mutableStateOf("")
@@ -104,7 +105,7 @@ class AuthenticationViewModel
                 _usernameIssues.value = response?.issues?.joinToString("\n") { it }
             } catch (e: Exception) {
                 _isUsernameValid.value = null
-                HLogger.logException("AuthenticationViewModel", "username error", e)
+                analytics.logException(e)
             }
         }
 
@@ -124,7 +125,7 @@ class AuthenticationViewModel
                     }
                     _showAuthProgress.value = false
                 } catch (e: Exception) {
-                    HLogger.logException("AuthenticationViewModel", "email error", e)
+                    analytics.logException(e)
                     _showAuthProgress.value = false
                 }
             }
@@ -143,7 +144,7 @@ class AuthenticationViewModel
                 handleAuthResponse(response)
             } catch (e: Exception) {
                 authenticationError()
-                HLogger.logException("AuthenticationViewModel", "login error", e)
+                analytics.logException(e)
             }
         }
 
@@ -169,7 +170,7 @@ class AuthenticationViewModel
                 handleAuthResponse(response)
             } catch (e: Exception) {
                 authenticationError()
-                HLogger.logException("AuthenticationViewModel", "register error", e)
+                analytics.logException(e)
             }
         }
 
@@ -201,7 +202,7 @@ class AuthenticationViewModel
             try {
                 saveTokens(response.apiToken, response.id)
             } catch (e: Exception) {
-                HLogger.logException("AuthenticationViewModel", "apitoken error", e)
+                analytics.logException(e)
             }
 
             val wasRegistering = isRegistering.value
@@ -269,10 +270,10 @@ class AuthenticationViewModel
                             )
                         handleSignIn(context, result, allowRegister)
                     } catch (e: GetCredentialException) {
-                        HLogger.logException("AuthenticationViewModel", "Get Credential Exception", e)
+                        Log.e("AuthenticationViewModel", "Get Credential Exception", e)
                     } catch (e: ApiException) {
                         authenticationError(AuthenticationErrors.GET_CREDENTIALS_ERROR)
-                        HLogger.logException("AuthenticationViewModel", "API Exception", e)
+                        Log.e("AuthenticationViewModel", "API Exception", e)
                     }
                 }
             } catch (e: ApiException) {

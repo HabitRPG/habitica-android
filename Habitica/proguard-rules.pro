@@ -1,43 +1,95 @@
-# Rules covered by default proguard-android-optimize.txt or by consumer rules bundled with
-# libraries (Gson, Retrofit, OkHttp, Realm, Play services, Firebase, Glance, WorkManager) are
-# intentionally not repeated here.
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepattributes Exceptions
 
-#crashlytics
--keepattributes SourceFile,LineNumberTable
+#retrolambda
+-dontwarn java.lang.invoke.*
+-dontwarn sun.misc.**
 
-#gson
-# Gson reads and writes model fields by name, and most of them have no @SerializedName.
-# Keep the classes when used, so R8 full mode doesn't assume they're never instantiated,
-# but allow renaming classes and optimizing their methods.
--keep,allowobfuscation,allowshrinking class com.habitrpg.android.habitica.models.**
--keep,allowobfuscation,allowshrinking class com.habitrpg.common.habitica.models.**
--keep,allowobfuscation,allowshrinking class com.habitrpg.shared.habitica.models.**
--keep,allowobfuscation,allowshrinking class com.habitrpg.android.habitica.widget.glance.data.*WidgetState
--keep,allowobfuscation,allowshrinking class com.habitrpg.android.habitica.widget.glance.data.TaskWidgetItem
--keepclassmembers class com.habitrpg.android.habitica.models.**,
-                        com.habitrpg.common.habitica.models.**,
-                        com.habitrpg.shared.habitica.models.**,
-                        com.habitrpg.android.habitica.widget.glance.data.*WidgetState,
-                        com.habitrpg.android.habitica.widget.glance.data.TaskWidgetItem {
-    <fields>;
-    <init>();
-}
-# Gson reads enum constants reflectively
--keepclassmembers enum com.habitrpg.** {
-    <fields>;
+#rxJava
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
 }
 
+
+#OkHttp
+-keep class okhttp3.** { *; }
+-keep,includedescriptorclasses class okio.Source
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+
+
+#retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-if interface * { @retrofit2.http.* *** *(...); }
+-keep,allowobfuscation interface <3>
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+#keep Habitica code
+-keep class com.habitrpg.android.habitica.** { *; }
+-keep class com.habitrpg.common.habitica.** { *; }
+-keep class com.habitrpg.shared.habitica.** { *; }
 #realm
-# Realm instantiates DefaultRealmModule and DefaultRealmModuleMediator via getDeclaredConstructors()[0].
-# Its consumer rule keeps the classes but not their constructors, which R8 full mode then removes.
--keep @io.realm.annotations.RealmModule class * {
-    <init>();
-}
-# R8 erases type arguments (RealmList<Tag> -> RealmList) from field signatures of classes that are not kept,
-# which breaks Gson's lookup of the type adapters registered for those generic types
--keep,allowobfuscation class io.realm.RealmList
--keep,allowobfuscation class io.realm.RealmObject
--keep,allowobfuscation class io.realm.RealmResults
+-keep class io.realm.annotations.RealmModule
+-keep @io.realm.annotations.RealmModule class * { *; }
+-keep class io.realm.internal.Keep
+-keep @io.realm.internal.Keep class * { *; }
+-dontwarn javax.**
+-dontwarn io.realm.**
 
-# simpleName is used as fragment tag and sent to the server as the report sourceView
--keepnames class com.habitrpg.android.habitica.ui.** extends androidx.fragment.app.Fragment
+#crashlytic
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+
+# Keep native methods
+-keepclassmembers class * {
+    native <methods>;
+}
+
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+    }
+    -keep class com.google.android.gms.** { *; }
+    -dontwarn com.google.android.gms.**
+#end playservices
+
+#add warnings here, warnings in proguard is normal
+-dontwarn javax.annotation.**
+-dontwarn com.squareup.picasso.**
+-dontwarn okio.**
+-dontwarn rx.**
+-dontwarn com.android.volley.toolbox.**
+-dontwarn com.facebook.infer.**
+-dontwarn com.habitrpg.android.habitica.ui.views.bottombar.**
+#-ignorewarnings
+
+-keep class com.google.firebase.provider.FirebaseInitProvider
+
+#keep all enums
+-keepclassmembers enum * { *; }
+-keepclassmembers class * extends java.lang.Enum {
+    <fields>;
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keepattributes Signature
+-keep class kotlin.coroutines.Continuation

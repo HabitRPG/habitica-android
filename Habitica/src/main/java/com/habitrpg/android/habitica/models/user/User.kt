@@ -1,21 +1,23 @@
 package com.habitrpg.android.habitica.models.user
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.models.VersionedObject
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.android.habitica.utils.UserSerializer
 import com.habitrpg.shared.habitica.models.Avatar
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 import java.util.Date
 
 enum class Permission {
@@ -23,10 +25,12 @@ enum class Permission {
     USER_SUPPORT,
 }
 
+@Serializable(with = UserSerializer::class)
 open class User :
     RealmObject(),
     BaseMainObject,
-    Avatar {
+    Avatar,
+    VersionedObject {
     fun hasPermission(permission: Permission): Boolean =
         permissions?.fullAccess == true ||
             when (permission) {
@@ -45,11 +49,9 @@ open class User :
     var tasks: TaskList? = null
 
     @PrimaryKey
-    @SerializedName("_id")
     override var id: String? = null
 
-    @SerializedName("_v")
-    var versionNumber: Int = 0
+    override var versionNumber: Int = 0
 
     override var balance: Double = 0.toDouble()
     override var stats: Stats? = null
@@ -60,7 +62,6 @@ open class User :
     var party: UserParty? = null
     override var items: Items? = null
 
-    @SerializedName("auth")
     override var authentication: Authentication? = null
     override var flags: Flags? = null
     var contributor: ContributorInfo? = null

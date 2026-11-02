@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
-import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.shared.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.models.NetworkResult

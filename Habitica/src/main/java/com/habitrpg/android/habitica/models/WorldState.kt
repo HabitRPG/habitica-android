@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.models
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
+import com.habitrpg.android.habitica.utils.WorldStateSerializer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable(with = WorldStateSerializer::class)
 open class WorldState :
     RealmObject(),
     BaseObject {
@@ -21,7 +23,6 @@ open class WorldState :
 
     var currentEvent: WorldStateEvent? = null
 
-    @SerializedName("currentEventList")
     var events: RealmList<WorldStateEvent> = RealmList()
 
     fun findNpcImageSuffix(): String? {

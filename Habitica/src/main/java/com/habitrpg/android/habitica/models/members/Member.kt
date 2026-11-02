@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models.members
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.Assignable
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.social.UserParty
@@ -12,18 +11,20 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
+import com.habitrpg.android.habitica.utils.MemberSerializer
 import com.habitrpg.shared.habitica.models.Avatar
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable(with = MemberSerializer::class)
 open class Member :
     RealmObject(),
     Avatar,
     BaseMainObject,
     Assignable {
     @PrimaryKey
-    @SerializedName("_id")
     override var id: String = ""
     override var stats: Stats? = null
     var inbox: Inbox? = null

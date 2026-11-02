@@ -1,15 +1,17 @@
 package com.habitrpg.android.habitica.models.social
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
+import com.habitrpg.android.habitica.utils.GroupSerializer
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable(with = GroupSerializer::class)
 open class Group :
     RealmObject(),
     BaseMainObject {
@@ -24,7 +26,6 @@ open class Group :
     override val primaryIdentifierName: String
         get() = "id"
 
-    @SerializedName("_id")
     @PrimaryKey
     var id: String = ""
     var balance: Double = 0.toDouble()

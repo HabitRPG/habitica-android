@@ -1,33 +1,35 @@
 package com.habitrpg.android.habitica.models.user
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.shared.habitica.models.AvatarStats
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @RealmClass(embedded = true)
+@Serializable
 open class Stats :
     RealmObject(),
     AvatarStats,
     BaseObject {
-    @SerializedName("con")
+    @SerialName("con")
     var constitution: Int? = null
 
-    @SerializedName("str")
+    @SerialName("str")
     var strength: Int? = null
 
-    @SerializedName("per")
+    @SerialName("per")
     var per: Int? = null
 
-    @SerializedName("int")
+    @SerialName("int")
     var intelligence: Int? = null
     var training: Training? = null
     override var buffs: Buffs? = null
     override var points: Int? = null
     override var lvl: Int? = null
 
-    @SerializedName("class")
+    @SerialName("class")
     override var habitClass: String? = null
     override var gp: Double? = null
     override var exp: Double? = null

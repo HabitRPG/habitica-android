@@ -1,11 +1,18 @@
+@file:UseSerializers(DateSerializer::class, RealmListSerializer::class)
+
 package com.habitrpg.android.habitica.models
 
-import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.utils.RealmListSerializer
+import com.habitrpg.android.habitica.utils.SpriteSubstitutionListSerializer
+import com.habitrpg.shared.habitica.serialization.DateSerializer
 import io.realm.RealmDictionary
 import io.realm.RealmList
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import java.util.Date
 
 @RealmClass(embedded = true)
@@ -15,6 +22,7 @@ open class SpriteSubstitutionContext : RealmObject() {
 }
 
 @RealmClass(embedded = true)
+@Serializable
 open class WorldStateEvent :
     RealmObject(),
     BaseMainObject {
@@ -24,7 +32,7 @@ open class WorldStateEvent :
             return (start?.before(now) == true) && (end?.after(now) == true)
         }
 
-    @SerializedName("event")
+    @SerialName("event")
     var eventKey: String? = null
     var start: Date? = null
     var end: Date? = null
@@ -33,6 +41,8 @@ open class WorldStateEvent :
     var npcImageSuffix: String? = null
     var aprilFools: String? = null
     var gear: Boolean = false
+
+    @Serializable(with = SpriteSubstitutionListSerializer::class)
     var spriteSubstitutions = RealmList<SpriteSubstitutionContext>()
 
     override val realmClass: Class<out RealmModel>

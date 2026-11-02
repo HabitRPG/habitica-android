@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.models.user
 
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
+import kotlinx.serialization.Serializable
 
+@Serializable
 open class Permissions :
     RealmObject(),
     BaseObject {

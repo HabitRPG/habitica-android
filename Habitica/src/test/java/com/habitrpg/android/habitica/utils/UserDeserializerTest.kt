@@ -1,14 +1,22 @@
 package com.habitrpg.android.habitica.utils
 
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
+import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.models.user.User
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import java.util.Date
 
 class UserDeserializerTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
+
+        beforeSpec {
+            mockkStatic(FirebasePerformance::class)
+            every { FirebasePerformance.getInstance() } returns mockk(relaxed = true)
+        }
+        afterSpec { unmockkStatic(FirebasePerformance::class) }
 
         "deserialize" should {
             "read the user and its nested objects" {
@@ -28,7 +36,7 @@ class UserDeserializerTest :
                     "challenges": ["c1", "c2"], "_ABTests": {"subscriptionPosition": "top"},
                     "lastCron": "2015-09-28T13:00:00.000Z", "needsCron": true
                 }"""
-                val user = gson.fromJson(json, User::class.java)
+                val user = parse<User>(json)
                 user.id shouldBe "user-1"
                 user.versionNumber shouldBe 12
                 user.balance shouldBe 2.5
@@ -58,7 +66,7 @@ class UserDeserializerTest :
 
             "ignore a null completed quest" {
                 val json = """{"_id": "user-1", "party": {"quest": {"key": "quest-1", "completed": null}}}"""
-                gson.fromJson(json, User::class.java).party?.quest?.completed shouldBe null
+                parse<User>(json).party?.quest?.completed shouldBe null
             }
         }
     })

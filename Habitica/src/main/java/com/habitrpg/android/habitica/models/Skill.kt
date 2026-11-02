@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.models
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 open class Skill :
     RealmObject(),
     BaseObject {

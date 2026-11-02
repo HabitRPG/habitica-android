@@ -1,15 +1,14 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.gson.JsonObject
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.models.social.Group
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import kotlinx.serialization.json.boolean
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 class GroupSerializationTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
 
         "deserialize" should {
             "read group fields, managers, quest participants and rage strikes" {
@@ -27,7 +26,7 @@ class GroupSerializationTest :
                     "leaderOnly": {"challenges": true, "getGems": false},
                     "categories": [{"slug": "hobbies", "name": "Hobbies"}]
                 }"""
-                val group = gson.fromJson(json, Group::class.java)
+                val group = parse<Group>(json)
                 group.id shouldBe "group-1"
                 group.name shouldBe "Party"
                 group.description shouldBe "Desc"
@@ -53,7 +52,7 @@ class GroupSerializationTest :
 
             "accept a plain leader id and null optional strings" {
                 val json = """{"_id": "group-1", "name": "Guild", "leader": "leader-1", "description": null, "logo": null}"""
-                val group = gson.fromJson(json, Group::class.java)
+                val group = parse<Group>(json)
                 group.leaderID shouldBe "leader-1"
                 group.leaderName.shouldBeNull()
                 group.description.shouldBeNull()
@@ -71,14 +70,14 @@ class GroupSerializationTest :
                         type = "guild"
                         leaderOnlyChallenges = true
                     }
-                val obj = gson.toJsonTree(group) as JsonObject
-                obj["name"].asString shouldBe "Guild"
-                obj["description"].asString shouldBe "Desc"
-                obj["leader"].asString shouldBe "leader-1"
-                obj["type"].asString shouldBe "guild"
-                obj["leaderOnly"].asJsonObject["challenges"].asBoolean shouldBe true
-                obj["leaderOnly"].asJsonObject["getGems"].asBoolean shouldBe false
-                obj.has("_id") shouldBe false
+                val obj = serialize(group)
+                obj["name"]!!.jsonPrimitive.content shouldBe "Guild"
+                obj["description"]!!.jsonPrimitive.content shouldBe "Desc"
+                obj["leader"]!!.jsonPrimitive.content shouldBe "leader-1"
+                obj["type"]!!.jsonPrimitive.content shouldBe "guild"
+                obj["leaderOnly"]!!.jsonObject["challenges"]!!.jsonPrimitive.boolean shouldBe true
+                obj["leaderOnly"]!!.jsonObject["getGems"]!!.jsonPrimitive.boolean shouldBe false
+                obj.containsKey("_id") shouldBe false
             }
         }
     })

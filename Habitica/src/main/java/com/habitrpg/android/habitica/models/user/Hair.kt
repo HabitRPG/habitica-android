@@ -4,8 +4,10 @@ import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.shared.habitica.models.AvatarHair
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.Serializable
 
 @RealmClass(embedded = true)
+@Serializable
 open class Hair :
     RealmObject,
     BaseObject,

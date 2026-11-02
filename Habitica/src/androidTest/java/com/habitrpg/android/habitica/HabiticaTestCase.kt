@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica
 
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -29,6 +28,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.shared.habitica.serialization.habiticaJson
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -37,8 +37,8 @@ import io.mockk.mockkObject
 import io.mockk.slot
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.serialization.serializer
 import org.junit.Before
-import java.io.InputStreamReader
 import java.lang.reflect.Type
 import kotlin.reflect.KCallable
 import kotlin.reflect.KMutableProperty1
@@ -46,8 +46,6 @@ import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.javaField
 
 open class HabiticaTestCase : TestCase() {
-    val gson = GSonFactoryCreator.createGson()
-
     val apiClient: ApiClient = mockk(relaxed = true)
     val userRepository: UserRepository = mockk(relaxed = true)
     val challengeRepository: ChallengeRepository = mockk(relaxed = true)
@@ -110,8 +108,13 @@ open class HabiticaTestCase : TestCase() {
         s: String,
         type: Type,
     ): T {
-        val userStream = javaClass.classLoader?.getResourceAsStream("$s.json")
-        return gson.fromJson(gson.newJsonReader(InputStreamReader(userStream)), type)
+        val text =
+            javaClass.classLoader
+                ?.getResourceAsStream("$s.json")!!
+                .reader()
+                .readText()
+        @Suppress("UNCHECKED_CAST")
+        return habiticaJson.decodeFromString(habiticaJson.serializersModule.serializer(type), text) as T
     }
 
     internal fun <C> initializeInjects(obj: C) {

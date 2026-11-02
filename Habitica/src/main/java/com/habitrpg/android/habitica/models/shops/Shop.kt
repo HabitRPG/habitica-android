@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.models.shops
 
 import android.content.Context
 import com.habitrpg.android.habitica.R
+import kotlinx.serialization.Serializable
 
+@Serializable
 class Shop {
     var identifier: String = ""
     var text: String = ""

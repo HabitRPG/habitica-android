@@ -1,28 +1,28 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonElement
-import com.google.gson.JsonSerializationContext
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
+import com.habitrpg.android.habitica.api.ServerFixtures
+import com.habitrpg.shared.habitica.serialization.habiticaJson
 import io.kotest.core.spec.DslDrivenSpec
 import io.kotest.core.spec.style.scopes.WordSpecRootScope
-import io.mockk.mockk
-import java.lang.reflect.Type
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.JsonObject
 
 abstract class SerializerSpec(
     body: SerializerSpec.() -> Unit = {},
 ) : DslDrivenSpec(),
     WordSpecRootScope {
-    val deserializationContext: JsonDeserializationContext = mockk(relaxed = true)
-    val serializationContext: JsonSerializationContext = mockk(relaxed = true)
-    val gson = GSonFactoryCreator.createGson()
-    val gsonDeserializationContext =
-        object : JsonDeserializationContext {
-            override fun <T> deserialize(
-                json: JsonElement,
-                typeOfT: Type,
-            ): T = gson.fromJson(json, typeOfT)
-        }
+    val json = habiticaJson
+
+    /** Parses like an API response body would be. */
+    inline fun <reified T> parse(text: String): T = ServerFixtures.parse(text)
+
+    fun <T> parse(
+        serializer: KSerializer<T>,
+        text: String,
+    ): T = json.decodeFromString(serializer, text)
+
+    /** Serializes like an API request body would be. */
+    inline fun <reified T> serialize(value: T): JsonObject = json.parseToJsonElement(ServerFixtures.serialize(value)) as JsonObject
 
     init {
         body()

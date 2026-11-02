@@ -11,11 +11,14 @@ import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.social.CategoryOption
+import com.habitrpg.android.habitica.utils.ContentSerializer
 import io.realm.RealmList
+import kotlinx.serialization.Serializable
 
 /**
  * Created by Negue on 15.07.2015.
  */
+@Serializable(with = ContentSerializer::class)
 class ContentResult {
     var potion: Equipment? = null
     var armoire: Equipment? = null

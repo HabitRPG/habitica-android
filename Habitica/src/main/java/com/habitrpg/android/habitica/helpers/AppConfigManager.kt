@@ -2,13 +2,7 @@ package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.annotation.VisibleForTesting
-import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParseException
-import com.google.gson.JsonParser
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.models.WorldState
@@ -20,26 +14,18 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.shared.habitica.serialization.habiticaJson
 import kotlinx.coroutines.MainScope
 import java.util.Date
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Provider
-import kotlin.time.Duration.Companion.hours
 
 class AppConfigManager(
-    private val contentRepository: Provider<ContentRepository>,
+    contentRepository: Provider<ContentRepository>,
     private val sharedPreferences: SharedPreferences,
+    private val remoteConfig: RemoteConfig,
 ) : com.habitrpg.common.habitica.helpers.AppConfigManager(),
     Clearable {
     private var worldState: WorldState? = null
-    private val gson = Gson()
-
-    @Volatile
-    private var config: JsonObject = loadStoredConfig()
-
-    @Volatile
-    private var lastFetchInSession: Long? = null
-    private val isFetching = AtomicBoolean(false)
 
     override fun clear() {
     }
@@ -66,52 +52,30 @@ class AppConfigManager(
 
     fun shopSpriteSuffix(): String? = worldState?.findNpcImageSuffix()
 
-    fun <T> value(key: ClientConfigKey<T>): T {
-        val raw = config.get(key.key)
-        if (raw == null || raw.isJsonNull) return key.defaultValue
-        return try {
-            gson.fromJson<T>(raw, key.type) ?: key.defaultValue
-        } catch (_: JsonParseException) {
-            key.defaultValue
-        }
-    }
+    fun maxChatLength(): Long = remoteConfig.getLong("maxChatLength")
 
-    fun fetchConfig(forced: Boolean = false) {
-        val lastFetch = lastFetchInSession
-        if (!forced && lastFetch != null && System.currentTimeMillis() - lastFetch < CONFIG_REFRESH_INTERVAL) return
-        if (!isFetching.compareAndSet(false, true)) return
-        MainScope().launchCatching {
-            try {
-                contentRepository.get().retrieveClientConfig()?.let { updateConfig(it) }
-            } finally {
-                isFetching.set(false)
-            }
-        }
-    }
+    fun supportEmail(): String = remoteConfig.getString("supportEmail")
 
-    @VisibleForTesting
-    internal fun updateConfig(newConfig: JsonObject) {
-        val now = System.currentTimeMillis()
-        config = newConfig
-        lastFetchInSession = now
-        sharedPreferences.edit {
-            putString(CONFIG_STORAGE_KEY, newConfig.toString())
-            putLong(LAST_FETCH_STORAGE_KEY, now)
-        }
-    }
+    fun enableUsernameAutocomplete(): Boolean = remoteConfig.getBoolean("enableUsernameAutocomplete")
 
-    // Use the config from the last launch until a fresh one is loaded
-    private fun loadStoredConfig(): JsonObject =
-        try {
-            sharedPreferences.getString(CONFIG_STORAGE_KEY, null)?.let { JsonParser.parseString(it).asJsonObject }
-        } catch (_: RuntimeException) {
-            null
-        } ?: JsonObject()
+    fun enableLocalChanges(): Boolean = remoteConfig.getBoolean("enableLocalChanges")
+
+    fun lastVersionNumber(): String = remoteConfig.getString("lastVersionNumber")
+
+    fun lastVersionCode(): Long = remoteConfig.getLong("lastVersionCode")
 
     fun testingLevel(): AppTestingLevel = AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
 
+    fun enableLocalTaskScoring(): Boolean = remoteConfig.getBoolean("enableLocalTaskScoring")
+
+    fun showSubscriptionBanner(): Boolean = remoteConfig.getBoolean("showSubscriptionBanner")
+
     fun enableTaskDisplayMode(): Boolean =
-        value(ClientConfigKey.enableTaskDisplayMode) || testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
+        remoteConfig.getBoolean("enableTaskDisplayMode") || testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
+
+    fun feedbackURL(): String = remoteConfig.getString("feedbackURL")
+
+    fun surveyURL(): String = remoteConfig.getString("surveyURL")
 
     fun taskDisplayMode(context: Context): String =
         if (enableTaskDisplayMode()) {
@@ -152,7 +116,7 @@ class AppConfigManager(
             }
         }
         if (promo is HabiticaWebPromotion) {
-            promo.url = value(ClientConfigKey.surveyURL)
+            promo.url = surveyURL()
         }
         if (promo?.isActive == true) {
             return promo
@@ -160,15 +124,24 @@ class AppConfigManager(
         return null
     }
 
+    // The value is empty until the remote config was fetched once
+    fun knownIssues(): List<Map<String, String>> =
+        runCatching { habiticaJson.decodeFromString<List<Map<String, String>>>(remoteConfig.getString("knownIssues")) }
+            .getOrDefault(emptyList())
+
+    fun enableArmoireAds(): Boolean = remoteConfig.getBoolean("enableArmoireAds")
+
+    fun hideChallenges(): Boolean = remoteConfig.getBoolean("hideChallenges")
+
+    fun enableReviewPrompt(): Boolean = remoteConfig.getBoolean("enableReviewPrompt")
+
+    fun reviewCheckingMinCount(): Long = remoteConfig.getLong("reviewCheckingMinCount")
+
     fun getBirthdayEvent(): WorldStateEvent? {
         val events =
             ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
     }
 
-    companion object {
-        private const val CONFIG_STORAGE_KEY = "clientConfig"
-        private const val LAST_FETCH_STORAGE_KEY = "clientConfigLastFetch"
-        private val CONFIG_REFRESH_INTERVAL = 24.hours.inWholeMilliseconds
-    }
+    fun showAltDeathText(): Boolean = remoteConfig.getBoolean("showAltDeathText")
 }

@@ -11,7 +11,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class StatsWidgetState(
     val hp: Float,
     val maxHp: Float,
@@ -25,7 +27,7 @@ data class StatsWidgetState(
     val hourglassesText: String,
     val hourglassCount: Int,
     val showMp: Boolean,
-    val className: String?,
+    val className: String? = null,
     val avatarBitmapPath: String? = null,
     val userId: String? = null,
 ) {
@@ -69,11 +71,13 @@ data class StatsWidgetState(
     }
 }
 
+@Serializable
 data class TaskListWidgetState(
     val tasks: List<TaskWidgetItem>,
     val needsCron: Boolean,
 )
 
+@Serializable
 data class TaskWidgetItem(
     val id: String,
     val text: String,
@@ -93,6 +97,7 @@ fun Task.toWidgetItem(): TaskWidgetItem {
     )
 }
 
+@Serializable
 data class DailyCountWidgetState(
     val totalDue: Int,
     val completed: Int,

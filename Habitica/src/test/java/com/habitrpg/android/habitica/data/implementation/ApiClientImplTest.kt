@@ -1,13 +1,15 @@
 package com.habitrpg.android.habitica.data.implementation
 
+import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.api.HabiticaConverterFactory
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.CrashReporter
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import com.habitrpg.shared.habitica.models.PurchaseValidationRequest
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
@@ -16,6 +18,8 @@ import io.kotest.matchers.string.shouldContain
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
@@ -31,7 +35,7 @@ class ApiClientImplTest :
         lateinit var apiClient: ApiClientImpl
         val hostConfig = mockk<HostConfig>(relaxed = true)
         val notificationsManager = mockk<NotificationsManager>(relaxed = true)
-        val crashReporter = mockk<CrashReporter>(relaxed = true)
+        val analytics = mockk<AnalyticsManager>(relaxed = true)
         val activity = mockk<BaseActivity>(relaxed = true)
         val context = mockk<HabiticaBaseApplication>(relaxed = true)
         val cacheDir = Files.createTempDirectory("api-client-test").toFile()
@@ -61,7 +65,12 @@ class ApiClientImplTest :
 
         fun RecordedRequest.bodyText() = body?.utf8() ?: ""
 
+        beforeSpec {
+            mockkStatic(FirebasePerformance::class)
+            every { FirebasePerformance.getInstance() } returns mockk(relaxed = true)
+        }
         afterSpec {
+            unmockkStatic(FirebasePerformance::class)
             cacheDir.deleteRecursively()
         }
 
@@ -75,11 +84,11 @@ class ApiClientImplTest :
             every { context.cacheDir } returns cacheDir
             every { context.getString(any()) } answers { "string-${firstArg<Int>()}" }
             every { context.currentActivity } returns WeakReference(activity)
-            apiClient = ApiClientImpl(ApiClientImpl.createGsonFactory(), hostConfig, notificationsManager, context, crashReporter)
+            apiClient = ApiClientImpl(HabiticaConverterFactory(), hostConfig, notificationsManager, context, analytics)
         }
         afterEach {
             server.close()
-            clearMocks(hostConfig, activity, notificationsManager, answers = false)
+            clearMocks(hostConfig, activity, notificationsManager, analytics, answers = false)
         }
 
         "requests" should {
@@ -412,6 +421,12 @@ class ApiClientImplTest :
                 enqueueError(400, """{"message":"Push device already exists"}""")
                 apiClient.addPushDevice(mapOf("regId" to "device-1"))
                 verify(exactly = 0) { activity.showConnectionProblem(any(), any(), any(), any()) }
+            }
+
+            "log invalid json" {
+                enqueueError(200, "not json")
+                apiClient.getStatus() shouldBe null
+                verify { analytics.logError(match { it.startsWith("Json Error") }) }
             }
         }
     })

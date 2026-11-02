@@ -14,6 +14,11 @@ plugins {
     )
     id("kotlin-parcelize")
     id(
+        libs.plugins.kotlin.serialization
+            .get()
+            .pluginId,
+    )
+    id(
         libs.plugins.ksp
             .get()
             .pluginId,
@@ -50,6 +55,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutine)
+                api(libs.kotlinx.serialization.json)
             }
         }
         commonTest {

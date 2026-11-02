@@ -4,8 +4,10 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import com.habitrpg.android.habitica.R
+import kotlinx.serialization.Serializable
 
 @io.realm.annotations.RealmClass(embedded = true)
+@Serializable
 open class Days() :
     io.realm.RealmObject(),
     Parcelable {

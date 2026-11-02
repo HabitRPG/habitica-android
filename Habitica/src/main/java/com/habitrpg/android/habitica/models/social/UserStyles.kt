@@ -9,8 +9,10 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.Avatar
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.Serializable
 
 @RealmClass(embedded = true)
+@Serializable
 open class UserStyles :
     RealmObject(),
     Avatar {

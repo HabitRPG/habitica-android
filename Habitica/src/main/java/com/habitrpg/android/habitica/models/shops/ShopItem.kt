@@ -1,19 +1,26 @@
+@file:UseSerializers(DateSerializer::class, RealmListSerializer::class)
+
 package com.habitrpg.android.habitica.models.shops
 
 import android.content.Context
 import android.content.res.Resources
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.utils.RealmListSerializer
+import com.habitrpg.shared.habitica.serialization.DateSerializer
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import java.util.Date
 
+@Serializable
 open class ShopItem :
     RealmObject(),
     BaseObject {
@@ -22,7 +29,7 @@ open class ShopItem :
     var text: String? = ""
     var notes: String? = ""
 
-    @SerializedName("class")
+    @SerialName("class")
     var imageName: String? = null
         get() {
             val name =
@@ -55,16 +62,16 @@ open class ShopItem :
     var isSuggested: String? = null
     var pinType: String? = null
 
-    @SerializedName("klass")
+    @SerialName("klass")
     var habitClass: String? = null
     var specialClass: String? = null
     var previous: String? = null
 
-    @SerializedName("lvl")
+    @SerialName("lvl")
     var level: Int? = null
     var event: ItemEvent? = null
 
-    @SerializedName("end")
+    @SerialName("end")
     var endDate: Date? = null
 
     val availableUntil: Date?

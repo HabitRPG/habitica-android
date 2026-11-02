@@ -34,7 +34,7 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
-import com.habitrpg.common.habitica.models.notifications.NewStuffData
+import com.habitrpg.shared.habitica.models.notifications.NewStuffData
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.kotest.core.spec.style.WordSpec

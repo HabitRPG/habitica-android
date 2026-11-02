@@ -1,11 +1,17 @@
+@file:UseSerializers(DateSerializer::class)
+
 package com.habitrpg.android.habitica.models
 
+import com.habitrpg.shared.habitica.serialization.DateSerializer
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import java.util.Date
 
 @RealmClass(embedded = true)
+@Serializable
 open class TutorialStep :
     RealmObject(),
     BaseMainObject {

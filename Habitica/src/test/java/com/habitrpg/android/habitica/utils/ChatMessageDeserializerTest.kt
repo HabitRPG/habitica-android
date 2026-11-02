@@ -1,14 +1,11 @@
 package com.habitrpg.android.habitica.utils
 
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.models.social.ChatMessage
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 
 class ChatMessageDeserializerTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
 
         "deserialize" should {
             "read all message fields and only count positive likes" {
@@ -19,7 +16,7 @@ class ChatMessageDeserializerTest :
                     "sent": true, "contributor": {"level": 4}, "backer": {"tier": 3},
                     "userStyles": {"stats": {"lvl": 5}}
                 }"""
-                val message = gson.fromJson(json, ChatMessage::class.java)
+                val message = parse<ChatMessage>(json)
                 message.id shouldBe "m1"
                 message.text shouldBe "Hello"
                 message.timestamp shouldBe 1443445200000
@@ -36,13 +33,13 @@ class ChatMessageDeserializerTest :
             }
 
             "wrap a plain contributor string" {
-                val message = gson.fromJson("""{"contributor": "Artisan"}""", ChatMessage::class.java)
+                val message = parse<ChatMessage>("""{"contributor": "Artisan"}""")
                 message.contributor?.text shouldBe "Artisan"
             }
 
             "ignore null or non-primitive text, username and contributor" {
                 val json = """{"text": null, "username": {}, "contributor": null}"""
-                val message = gson.fromJson(json, ChatMessage::class.java)
+                val message = parse<ChatMessage>(json)
                 message.text.shouldBeNull()
                 message.username.shouldBeNull()
                 message.contributor.shouldBeNull()

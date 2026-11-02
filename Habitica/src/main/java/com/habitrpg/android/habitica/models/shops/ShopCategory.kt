@@ -1,8 +1,14 @@
+@file:UseSerializers(DateSerializer::class)
+
 package com.habitrpg.android.habitica.models.shops
 
-import com.google.gson.annotations.SerializedName
+import com.habitrpg.shared.habitica.serialization.DateSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import java.util.Date
 
+@Serializable
 class ShopCategory {
     var identifier: String = ""
     var text: String = ""
@@ -11,7 +17,7 @@ class ShopCategory {
     var purchaseAll: Boolean? = null
     var pinType: String = ""
 
-    @SerializedName("end")
+    @SerialName("end")
     var endDate: Date? = null
 
     var itemEndDates: MutableList<Date> = ArrayList()

@@ -2,7 +2,9 @@ package com.habitrpg.android.habitica.models.responses
 
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
+import kotlinx.serialization.Serializable
 
+@Serializable
 class SkillResponse {
     var user: User? = null
     var task: Task? = null

@@ -2,14 +2,17 @@ package com.habitrpg.android.habitica.models.social
 
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.utils.ChallengeSerializer
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.RealmList
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 import java.util.Date
 
+@Serializable(with = ChallengeSerializer::class)
 open class Challenge :
     RealmObject(),
     BaseMainObject {

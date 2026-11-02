@@ -24,6 +24,11 @@ plugins {
     )
     id("kotlin-parcelize")
     id(
+        libs.plugins.kotlin.serialization
+            .get()
+            .pluginId,
+    )
+    id(
         libs.plugins.legacy.kapt
             .get()
             .pluginId,
@@ -245,7 +250,6 @@ dependencies {
                     .group,
         )
     }
-    implementation(libs.retrofit.converter.gson)
 
     // Dependency Injection
     implementation(libs.hilt.android)

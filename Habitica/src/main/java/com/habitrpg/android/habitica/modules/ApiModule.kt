@@ -2,13 +2,14 @@ package com.habitrpg.android.habitica.modules
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
+import com.habitrpg.android.habitica.api.HabiticaConverterFactory
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
-import com.habitrpg.android.habitica.helpers.CrashReporter
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
+import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import dagger.Module
@@ -16,8 +17,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.ref.WeakReference
 import javax.inject.Singleton
 
@@ -33,8 +34,7 @@ open class ApiModule {
     ): HostConfig = HostConfig(sharedPreferences, keyHelper, context)
 
     @Provides
-    fun providesGsonConverterFactory(): GsonConverterFactory =
-        GSonFactoryCreator.create()
+    fun providesConverterFactory(performanceMonitor: PerformanceMonitor): Converter.Factory = HabiticaConverterFactory(performanceMonitor)
 
     @Provides
     @Singleton
@@ -43,31 +43,31 @@ open class ApiModule {
     @Provides
     @Singleton
     fun providesApiHelper(
-        gsonConverter: GsonConverterFactory,
+        converterFactory: Converter.Factory,
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
-        crashReporter: CrashReporter,
         @ApplicationContext context: Context,
+        analytics: AnalyticsManager,
     ): ApiClient {
         val apiClient =
             ApiClientImpl(
-                gsonConverter,
+                converterFactory,
                 hostConfig,
                 notificationsManager,
                 context,
-                crashReporter
+                analytics,
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient
     }
 
     @Provides
-    fun providesMaintenanceApiService(gsonConverter: GsonConverterFactory): MaintenanceApiService {
+    fun providesMaintenanceApiService(converterFactory: Converter.Factory): MaintenanceApiService {
         val adapter =
             Retrofit
                 .Builder()
                 .baseUrl("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
-                .addConverterFactory(gsonConverter)
+                .addConverterFactory(converterFactory)
                 .build()
         return adapter.create(MaintenanceApiService::class.java)
     }

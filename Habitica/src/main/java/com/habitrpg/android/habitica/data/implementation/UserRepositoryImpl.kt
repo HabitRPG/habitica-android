@@ -23,8 +23,8 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
-import com.habitrpg.common.habitica.models.Notification
-import com.habitrpg.common.habitica.models.notifications.NewStuffData
+import com.habitrpg.shared.habitica.models.Notification
+import com.habitrpg.shared.habitica.models.notifications.NewStuffData
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import kotlinx.coroutines.Dispatchers

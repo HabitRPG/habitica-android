@@ -1,12 +1,14 @@
 package com.habitrpg.android.habitica.models.user
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.shared.habitica.models.AvatarPreferences
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @RealmClass(embedded = true)
+@Serializable
 open class Preferences :
     RealmObject(),
     AvatarPreferences,
@@ -15,10 +17,10 @@ open class Preferences :
     var suppressModals: SuppressedModals? = null
     override var costume: Boolean = false
 
-    @SerializedName("disableClasses")
+    @SerialName("disableClasses")
     override var disableClasses: Boolean = false
 
-    @SerializedName("sleep")
+    @SerialName("sleep")
     override var sleep: Boolean = false
     var dailyDueDefaultView: Boolean = false
     var automaticAllocation: Boolean = false

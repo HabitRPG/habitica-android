@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.shared.habitica.models.notifications.NewChatMessageData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -299,12 +299,12 @@ open class GroupViewModel
                         onError()
                     },
                 ) {
-                    val response = socialRepository.postGroupChat(groupID, chatText)
-                    if (response != null) {
+                    val message = socialRepository.postGroupChat(groupID, chatText)?.message
+                    if (message != null) {
                         chatUpdateMutex.withLock {
                             val currentMessages = chatMessagesLiveData.value?.toMutableList() ?: mutableListOf()
-                            if (currentMessages.none { it.id == response.message.id }) {
-                                currentMessages.add(0, response.message)
+                            if (currentMessages.none { it.id == message.id }) {
+                                currentMessages.add(0, message)
                                 chatMessagesLiveData.postValue(currentMessages)
                             }
                         }

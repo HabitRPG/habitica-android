@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.ServerSettings
 import com.habitrpg.common.habitica.helpers.KeyHelper
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
+import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import io.kotest.core.spec.style.WordSpec

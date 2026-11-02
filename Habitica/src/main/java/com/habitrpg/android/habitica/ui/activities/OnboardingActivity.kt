@@ -36,6 +36,7 @@ import com.habitrpg.android.habitica.ui.views.setup.SetupScreen
 import com.habitrpg.android.habitica.ui.views.setup.UsernameSelectionScreen
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

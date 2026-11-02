@@ -1,15 +1,19 @@
 package com.habitrpg.android.habitica.models.social
 
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.models.user.Profile
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class FindUsernameResult {
-    @SerializedName("_id")
+    @SerialName("_id")
     var id: String? = null
 
     var contributor: ContributorInfo? = null
+
+    @SerialName("auth")
     var authentication: Authentication? = null
     var profile: Profile? = null
 

@@ -2,23 +2,27 @@ package com.habitrpg.shared.habitica.models.responses
 
 import com.habitrpg.shared.habitica.HParcel
 import com.habitrpg.shared.habitica.HParcelable
+import kotlinx.serialization.Serializable
 
+@Serializable
 class TaskDirectionDataTemp {
     var drop: TaskDirectionDataDrop? = null
     var quest: TaskDirectionDataQuest? = null
     var crit: Float? = null
 }
 
+@Serializable
 class TaskDirectionDataQuest {
     var progressDelta: Double = 0.0
     var collection: Int = 0
 }
 
+@Serializable
 data class TaskDirectionDataDrop(
-    var value: Int,
-    var key: String?,
-    var type: String?,
-    var dialog: String?,
+    var value: Int = 0,
+    var key: String? = null,
+    var type: String? = null,
+    var dialog: String? = null,
 ) : HParcelable {
     override fun writeToParcel(
         dest: HParcel,

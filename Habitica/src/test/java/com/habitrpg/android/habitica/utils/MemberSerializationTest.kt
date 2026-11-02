@@ -1,14 +1,11 @@
 package com.habitrpg.android.habitica.utils
 
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.models.members.Member
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 
 class MemberSerializationTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
 
         "deserialize" should {
             "read nested objects and outfit details" {
@@ -25,7 +22,7 @@ class MemberSerializationTest :
                     "auth": {"local": {"username": "member"}},
                     "loginIncentives": 7
                 }"""
-                val member = gson.fromJson(json, Member::class.java)
+                val member = parse<Member>(json)
                 member.id shouldBe "member-1"
                 member.stats?.lvl shouldBe 12
                 member.profile?.name shouldBe "Member"
@@ -43,7 +40,7 @@ class MemberSerializationTest :
 
             "skip null current mount and pet" {
                 val json = """{"_id": "member-1", "items": {"currentMount": null, "currentPet": null}}"""
-                val member = gson.fromJson(json, Member::class.java)
+                val member = parse<Member>(json)
                 member.currentMount.shouldBeNull()
                 member.currentPet.shouldBeNull()
             }

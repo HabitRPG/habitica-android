@@ -1,8 +1,8 @@
 package com.habitrpg.wearos.habitica.data
 
-import com.habitrpg.common.habitica.models.auth.UserAuth
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.shared.habitica.models.auth.UserAuth
+import com.habitrpg.shared.habitica.models.auth.UserAuthResponse
+import com.habitrpg.shared.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.wearos.habitica.models.EmptyResponse
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse

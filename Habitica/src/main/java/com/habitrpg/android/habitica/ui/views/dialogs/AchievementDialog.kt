@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.models.Notification
+import com.habitrpg.shared.habitica.models.Notification
 
 class AchievementDialog(
     context: Context,

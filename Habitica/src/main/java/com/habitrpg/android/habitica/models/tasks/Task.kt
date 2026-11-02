@@ -3,13 +3,13 @@ package com.habitrpg.android.habitica.models.tasks
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
-import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.matchesRepeatDays
 import com.habitrpg.android.habitica.extensions.parseToZonedDateTime
 import com.habitrpg.android.habitica.extensions.toZonedDateTime
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.android.habitica.utils.TaskSerializer
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.shared.habitica.models.tasks.Attribute
@@ -20,6 +20,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import kotlinx.serialization.Serializable
 import org.json.JSONArray
 import org.json.JSONException
 import java.time.LocalDate
@@ -28,6 +29,7 @@ import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import java.util.Date
 
+@Serializable(with = TaskSerializer::class)
 open class Task :
     RealmObject,
     BaseMainObject,
@@ -43,7 +45,6 @@ open class Task :
     @PrimaryKey
     var combinedID: String? = null
 
-    @SerializedName("_id")
     var id: String? = null
         set(value) {
             field = value
@@ -101,7 +102,6 @@ open class Task :
     var repeat: Days? = null
 
     // todos
-    @SerializedName("date")
     var dueDate: Date? = null
 
     @Ignore

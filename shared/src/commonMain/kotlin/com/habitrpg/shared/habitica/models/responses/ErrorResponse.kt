@@ -1,5 +1,8 @@
 package com.habitrpg.shared.habitica.models.responses
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class ErrorResponse {
     var message: String? = null
     var errors: List<HabiticaError>? = null

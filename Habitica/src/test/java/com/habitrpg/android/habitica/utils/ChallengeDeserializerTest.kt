@@ -1,16 +1,15 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.gson.JsonObject
-import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.models.social.Challenge
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.int
+import kotlinx.serialization.json.jsonPrimitive
 import java.util.Date
 
 class ChallengeDeserializerTest :
-    WordSpec({
-        val gson = GSonFactoryCreator.createGson()
+    SerializerSpec({
 
         "deserialize" should {
             "read challenge, leader, group and categories" {
@@ -22,7 +21,7 @@ class ChallengeDeserializerTest :
                     "categories": [{"_id": "cat-1", "slug": "hobbies", "name": "Hobbies"}],
                     "createdAt": "2015-09-28T13:00:00.000Z"
                 }"""
-                val challenge = gson.fromJson(json, Challenge::class.java)
+                val challenge = parse<Challenge>(json)
                 challenge.id shouldBe "c1"
                 challenge.name shouldBe "Challenge"
                 challenge.shortName shouldBe "C"
@@ -41,7 +40,7 @@ class ChallengeDeserializerTest :
 
             "prefer the leader id field and tolerate null prize, leader and group" {
                 val json = """{"id": "c1", "name": "C", "memberCount": 0, "prize": null, "official": false, "leader": {"id": "l1", "_id": "l2", "profile": {"name": "L"}}, "group": null}"""
-                val challenge = gson.fromJson(json, Challenge::class.java)
+                val challenge = parse<Challenge>(json)
                 challenge.leaderId shouldBe "l1"
                 challenge.prize shouldBe 0
                 challenge.groupId.shouldBeNull()
@@ -57,12 +56,12 @@ class ChallengeDeserializerTest :
                         prize = 4
                         groupId = "group-1"
                     }
-                val obj = gson.toJsonTree(challenge) as JsonObject
-                obj["id"].asString shouldBe "c1"
-                obj["name"].asString shouldBe "Challenge"
-                obj["prize"].asInt shouldBe 4
-                obj["group"].asString shouldBe "group-1"
-                obj["tasksOrder"].isJsonNull shouldBe true
+                val obj = serialize(challenge)
+                obj["id"]!!.jsonPrimitive.content shouldBe "c1"
+                obj["name"]!!.jsonPrimitive.content shouldBe "Challenge"
+                obj["prize"]!!.jsonPrimitive.int shouldBe 4
+                obj["group"]!!.jsonPrimitive.content shouldBe "group-1"
+                (obj["tasksOrder"] is JsonNull) shouldBe true
             }
         }
     })

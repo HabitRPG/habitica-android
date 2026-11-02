@@ -266,4 +266,15 @@ class WidgetStateTest :
                 verify(exactly = 2) { taskRepository.getTasks(any(), any(), any()) }
             }
         }
+
+        "WidgetSnapshotStore" should {
+            "read stats snapshots saved without the null class name" {
+                val json =
+                    """{"hp": 40, "maxHp": 50, "exp": 10, "toNextLevel": 100, "mp": 0, "maxMp": 0, "level": 5,
+                    "goldText": "12", "gemsText": "4", "hourglassesText": "0", "hourglassCount": 0, "showMp": false}"""
+                val state = WidgetSnapshotStore.decodeStats(json)
+                state?.level shouldBe 5
+                state?.className.shouldBeNull()
+            }
+        }
     })

@@ -1,6 +1,9 @@
 package com.habitrpg.shared.habitica.models.responses
 
+import kotlinx.serialization.Serializable
+
 @Suppress("PropertyName")
+@Serializable
 class TaskDirectionData {
     var delta: Float = 0.toFloat()
     var _tmp: TaskDirectionDataTemp? = null
