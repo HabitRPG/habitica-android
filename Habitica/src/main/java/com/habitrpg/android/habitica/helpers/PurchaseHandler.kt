@@ -399,17 +399,12 @@ class PurchaseHandler(
                 val validationRequest = buildValidationRequest(purchase)
                 scope.launchCatching {
                     try {
-                        val response = apiClient.validateNoRenewSubscription(validationRequest)
-                        Log.d(
-                            "PurchaseHandler",
-                            "No-renew subscription validation response for ${purchase.products.firstOrNull()}: $response",
-                        )
+                        // Returns no data, failures throw
+                        apiClient.validateNoRenewSubscription(validationRequest)
                         processedPurchase()
                         val gift = removeGift(sku)
                         consume(purchase)
-                        if (response != null) {
-                            displayConfirmationDialog(purchase, gift?.second, gift?.third)
-                        }
+                        displayConfirmationDialog(purchase, gift?.second, gift?.third)
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
@@ -423,13 +418,11 @@ class PurchaseHandler(
                 }
                 scope.launchCatching {
                     try {
-                        val response = apiClient.validateSubscription(validationRequest)
-                        Log.d("PurchaseHandler", "Subscription validation response for ${purchase.products.firstOrNull()}: $response")
+                        // Returns no data, failures throw
+                        apiClient.validateSubscription(validationRequest)
                         acknowledgePurchase(purchase)
                         processedPurchase()
-                        if (response != null) {
-                            displayConfirmationDialog(purchase)
-                        }
+                        displayConfirmationDialog(purchase)
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
@@ -706,14 +699,12 @@ class PurchaseHandler(
 
     suspend fun updateSubscriptionPlan(purchase: Purchase?) {
         purchase?.let {
-            val response = apiClient.validateSubscription(buildValidationRequest(it))
+            apiClient.validateSubscription(buildValidationRequest(it))
             withContext(Dispatchers.IO) {
                 processedPurchase()
                 acknowledgePurchase(purchase)
             }
-            if (response != null) {
-                displayConfirmationDialog(purchase)
-            }
+            displayConfirmationDialog(purchase)
         }
     }
 
