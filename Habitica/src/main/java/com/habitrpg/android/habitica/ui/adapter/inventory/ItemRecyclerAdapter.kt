@@ -201,10 +201,14 @@ class ItemRecyclerAdapter(
                 }
 
                 is SpecialItem -> {
-                    // Mystery Item (Inventory Present)
-                    val sdf = SimpleDateFormat("MM", Locale.getDefault())
-                    val month = sdf.format(Date())
-                    "inventory_present_$month"
+                    if (item.isMysteryItem) {
+                        // Mystery Item (Inventory Present)
+                        val sdf = SimpleDateFormat("MM", Locale.getDefault())
+                        val month = sdf.format(Date())
+                        "inventory_present_$month"
+                    } else {
+                        "shop_" + item.key
+                    }
                 }
 
                 else -> {
@@ -253,22 +257,20 @@ class ItemRecyclerAdapter(
                     } else {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.create_new_party)))
                     }
-                } else if (item is SpecialItem) {
+                } else if ((item as? SpecialItem)?.isMysteryItem == true) {
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && (ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
                     }
                 } else if (ownedItem?.itemType == "special") {
                     if ((ownedItem?.numberOwned ?: 0) > 0) {
-                        if (item == null && ownedItem != null) {
-                            // Special items that are not Mystery Item
-                            val specialItem = SpecialItem()
-                            ownedItem?.key?.let { key ->
-                                specialItem.key = key
-                                specialItem.text = key.localizedCapitalizeWithSpaces()
-                            }
-                            onUseSpecialItem?.invoke(specialItem)
+                        // Special items that are not Mystery Item
+                        val specialItem = SpecialItem()
+                        ownedItem?.key?.let { key ->
+                            specialItem.key = key
+                            specialItem.text = key.localizedCapitalizeWithSpaces()
                         }
+                        onUseSpecialItem?.invoke(specialItem)
                     }
                     return
                 }

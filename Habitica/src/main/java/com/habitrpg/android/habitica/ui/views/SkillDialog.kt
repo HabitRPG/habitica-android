@@ -84,7 +84,7 @@ fun SkillDialog(
             ) {
                 PixelArtView(
                     imageName = "$skillPath$skillKey",
-                    modifier = Modifier.size(62.dp),
+                    modifier = Modifier.size(68.dp),
                 )
             }
             Spacer(Modifier.height(16.dp))
