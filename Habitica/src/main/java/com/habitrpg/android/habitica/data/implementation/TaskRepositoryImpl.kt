@@ -281,7 +281,7 @@ class TaskRepositoryImpl(
     }
 
     override suspend fun deleteTask(taskId: String): Void? {
-        apiClient.deleteTask(taskId) ?: return null
+        apiClient.deleteTask(taskId)
         localRepository.deleteTask(taskId)
         return null
     }

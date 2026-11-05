@@ -74,6 +74,7 @@ class RealmUserLocalRepository(
             stats.intelligence?.let { user.stats?.intelligence = it }
             stats.constitution?.let { user.stats?.constitution = it }
             stats.per?.let { user.stats?.per = it }
+            stats.points?.let { user.stats?.points = it }
             stats.maxMP?.let { user.stats?.maxMP = it }
             stats.toNextLevel?.let { user.stats?.toNextLevel = it }
             stats.habitClass?.let { user.stats?.habitClass = it }

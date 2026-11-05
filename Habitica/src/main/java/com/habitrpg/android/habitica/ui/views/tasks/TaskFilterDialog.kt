@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.MainScope
 import java.util.UUID
 
 class TaskFilterDialog(
@@ -237,16 +238,22 @@ class TaskFilterDialog(
         createTagViews()
         binding.tagEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        lifecycleScope.launchCatching {
-            repository.updateTags(editedTags.values).forEach { tag ->
+        val toUpdate = editedTags.values.toList()
+        val toCreate = createdTags.values.toList()
+        val toDelete = deletedTags.toList()
+        // MainScope, not lifecycleScope: dismissing the dialog must not cancel the save after the API call
+        MainScope().launchCatching {
+            repository.updateTags(toUpdate).forEach { tag ->
                 editedTags.remove(tag.id)
                 tags.remove(tag)
             }
-            repository.createTags(createdTags.values).forEach { tag ->
+            repository.createTags(toCreate).forEach { tag ->
                 createdTags.remove(tag.id)
                 tags.remove(tag)
             }
-            repeat(repository.deleteTags(deletedTags).size) { deletedTags.clear() }
+            // deleteTag throws on failure, so reaching here means all deletes succeeded
+            repository.deleteTags(toDelete)
+            deletedTags.removeAll(toDelete.toSet())
         }
     }
 
