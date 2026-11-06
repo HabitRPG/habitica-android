@@ -29,7 +29,9 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -348,23 +350,37 @@ class UserRepositoryImpl(
     override suspend fun allocatePoint(stat: Attribute): Stats? {
         val user = getLiveUser()
         if (user != null) {
-            localRepository.updateStats(
-                currentUserID,
-                Stats().apply {
-                    when (stat) {
-                        Attribute.STRENGTH -> strength = user.stats?.strength?.inc()
-                        Attribute.INTELLIGENCE -> intelligence = user.stats?.intelligence?.inc()
-                        Attribute.CONSTITUTION -> constitution = user.stats?.constitution?.inc()
-                        Attribute.PERCEPTION -> per = user.stats?.per?.inc()
-                    }
-                    points = user.stats?.points?.dec()
-                },
-            )
+            if ((user.stats?.points ?: 0) <= 0) return null
+            localRepository.updateStats(currentUserID, pointAllocationChange(user.stats, stat, 1))
         }
-        val stats = apiClient.allocatePoint(stat.value) ?: return null
+        val stats = apiClient.allocatePoint(stat.value)
+        if (stats == null) {
+            if (user != null) {
+                currentCoroutineContext().ensureActive()
+                getLiveUser()?.let {
+                    localRepository.updateStats(currentUserID, pointAllocationChange(it.stats, stat, -1))
+                }
+            }
+            return null
+        }
         localRepository.updateStats(currentUserID, stats)
         return stats
     }
+
+    private fun pointAllocationChange(
+        current: Stats?,
+        stat: Attribute,
+        change: Int,
+    ): Stats =
+        Stats().apply {
+            when (stat) {
+                Attribute.STRENGTH -> strength = current?.strength?.plus(change)
+                Attribute.INTELLIGENCE -> intelligence = current?.intelligence?.plus(change)
+                Attribute.CONSTITUTION -> constitution = current?.constitution?.plus(change)
+                Attribute.PERCEPTION -> per = current?.per?.plus(change)
+            }
+            points = current?.points?.minus(change)
+        }
 
     override suspend fun bulkAllocatePoints(
         strength: Int,
