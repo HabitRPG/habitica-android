@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -241,13 +242,13 @@ class YesterdailyDialog private constructor(
         private var lastDialogShownTime: Long = 0
 
         fun showDialogIfNeeded(
-            activity: Activity,
+            activity: AppCompatActivity,
             userId: String?,
             userRepository: UserRepository?,
             taskRepository: TaskRepository,
         ) {
             if (userRepository != null && userId != null) {
-                MainScope().launchCatching {
+                activity.lifecycleScope.launchCatching {
                     if (isShowingDialog.get()) {
                         return@launchCatching
                     }
@@ -268,7 +269,7 @@ class YesterdailyDialog private constructor(
                             return@launchCatching
                         }
 
-                        val user = userRepository.getUser().firstOrNull()
+                        val user = userRepository.getUser(userId).firstOrNull()
                         if (user?.needsCron != true) {
                             return@launchCatching
                         }
