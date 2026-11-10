@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data
 
-import com.google.gson.JsonObject
+import kotlinx.serialization.json.JsonObject
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import kotlinx.coroutines.flow.Flow

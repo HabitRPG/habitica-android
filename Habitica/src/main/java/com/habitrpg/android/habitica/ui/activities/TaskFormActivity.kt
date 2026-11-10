@@ -924,7 +924,7 @@ class TaskFormActivity : BaseActivity() {
                 resultIntent.putExtra(TASK_TYPE_KEY, taskType.value)
                 resultIntent.putExtra(TASK_ID_KEY, task?.id)
                 resultIntent.putExtra(TASK_DELETED_KEY, true)
-                setResult(Activity.RESULT_OK, resultIntent)
+                setResult(RESULT_OK, resultIntent)
             }
 
             finish()

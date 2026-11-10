@@ -6,10 +6,9 @@ import com.habitrpg.android.habitica.api.HabiticaConverterFactory
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import dagger.Module
@@ -31,10 +30,11 @@ open class ApiModule {
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
         @ApplicationContext context: Context,
+        crashReporter: CrashReporter,
     ): HostConfig = HostConfig(sharedPreferences, keyHelper, context)
 
     @Provides
-    fun providesConverterFactory(performanceMonitor: PerformanceMonitor): Converter.Factory = HabiticaConverterFactory(performanceMonitor)
+    fun providesConverterFactory(): Converter.Factory = HabiticaConverterFactory()
 
     @Provides
     @Singleton
@@ -47,7 +47,7 @@ open class ApiModule {
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
         @ApplicationContext context: Context,
-        analytics: AnalyticsManager,
+        crashReporter: CrashReporter,
     ): ApiClient {
         val apiClient =
             ApiClientImpl(
@@ -55,7 +55,7 @@ open class ApiModule {
                 hostConfig,
                 notificationsManager,
                 context,
-                analytics,
+                crashReporter,
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient

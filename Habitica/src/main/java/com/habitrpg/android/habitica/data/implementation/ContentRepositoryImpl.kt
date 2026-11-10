@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import com.google.gson.JsonObject
+import kotlinx.serialization.json.JsonObject
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository

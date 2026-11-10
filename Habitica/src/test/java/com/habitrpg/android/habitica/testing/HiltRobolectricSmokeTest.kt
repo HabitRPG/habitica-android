@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.testing
 
 import androidx.test.core.app.ApplicationProvider
-import com.google.gson.JsonObject
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ClientConfigKey
@@ -17,6 +16,8 @@ import io.mockk.isMockKMock
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Before
 import org.junit.Rule
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -55,7 +56,7 @@ class HiltRobolectricSmokeTest {
 
     @Test
     fun readsUpdatedClientConfig() {
-        configManager.updateConfig(JsonObject().apply { addProperty("enableTaskDisplayMode", true) })
+        configManager.updateConfig(JsonObject(mapOf("enableTaskDisplayMode" to JsonPrimitive(true))))
         configManager.value(ClientConfigKey.enableTaskDisplayMode) shouldBe true
     }
 

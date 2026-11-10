@@ -1,22 +1,12 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.models.user.User
 import io.kotest.matchers.shouldBe
-import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
 import java.util.Date
 
 class UserDeserializerTest :
     SerializerSpec({
-
-        beforeSpec {
-            mockkStatic(FirebasePerformance::class)
-            every { FirebasePerformance.getInstance() } returns mockk(relaxed = true)
-        }
-        afterSpec { unmockkStatic(FirebasePerformance::class) }
 
         "deserialize" should {
             "read the user and its nested objects" {

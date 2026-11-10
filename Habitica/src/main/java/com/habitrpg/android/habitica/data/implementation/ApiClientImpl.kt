@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
@@ -51,6 +51,7 @@ import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.JsonObject
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -74,7 +75,7 @@ class ApiClientImpl(
     override val hostConfig: HostConfig,
     private val notificationsManager: NotificationsManager,
     private val context: Context,
-    private val analytics: AnalyticsManager,
+    private val crashReporter: CrashReporter,
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
@@ -381,9 +382,9 @@ class ApiClientImpl(
                 showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
             }
         } else if (SerializationException::class.java.isAssignableFrom(throwableClass)) {
-            analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
+            crashReporter.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
         } else {
-            analytics.logException(throwable)
+            crashReporter.logException(throwable)
         }
     }
 
@@ -400,10 +401,10 @@ class ApiClientImpl(
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: SerializationException) {
-            analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            crashReporter.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         } catch (e: IOException) {
-            analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            crashReporter.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         }
     }
@@ -490,7 +491,7 @@ class ApiClientImpl(
     ) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
-        analytics.setUserID(hostConfig.userID)
+        crashReporter.setUserID(hostConfig.userID)
     }
 
     override suspend fun syncUserStats(): User? = process { apiService.syncUserStats() }
@@ -1015,4 +1016,7 @@ class ApiClientImpl(
     override suspend fun retrieveMarketGear(): Shop? = process { apiService.retrieveMarketGear(languageCode) }
 
     override suspend fun getWorldState(): WorldState? = process { apiService.worldState() }
+
+    override suspend fun getClientConfig(): JsonObject? =
+        process({ apiService.clientConfig() }, onError = { null }, propagateError = false, returnOnError = true)
 }

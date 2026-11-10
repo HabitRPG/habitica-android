@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
@@ -46,6 +47,7 @@ class AuthenticationViewModelTest :
         val editor = mockk<SharedPreferences.Editor>(relaxed = true)
         val authenticationHandler = mockk<AuthenticationHandler>(relaxed = true)
         val configManager = mockk<AppConfigManager>()
+        val crashReporter = mockk<CrashReporter>(relaxed = true)
         val hostConfig = mockk<HostConfig>()
         val keyHelper = mockk<KeyHelper>()
         val context = mockk<Context>()
@@ -53,7 +55,7 @@ class AuthenticationViewModelTest :
         every { sharedPreferences.edit() } returns editor
 
         fun makeViewModel(keyHelper: KeyHelper? = null) =
-            AuthenticationViewModel(apiClient, userRepository, sharedPreferences, authenticationHandler, configManager, hostConfig, keyHelper, context)
+            AuthenticationViewModel(apiClient, userRepository, sharedPreferences, authenticationHandler, configManager, hostConfig, keyHelper, context, crashReporter)
 
         beforeSpec {
             mockkObject(WidgetRefreshWorker)

@@ -24,8 +24,8 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.AuthenticationErrors
-import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
@@ -57,7 +57,7 @@ class AuthenticationViewModel
         val hostConfig: HostConfig,
         private val keyHelper: KeyHelper?,
         @ApplicationContext private val appContext: Context,
-        private val analytics: AnalyticsManager,
+        private val crashReporter: CrashReporter,
     ) : ViewModel() {
         val email = mutableStateOf("")
         val password = mutableStateOf("")
@@ -105,7 +105,7 @@ class AuthenticationViewModel
                 _usernameIssues.value = response?.issues?.joinToString("\n") { it }
             } catch (e: Exception) {
                 _isUsernameValid.value = null
-                analytics.logException(e)
+                crashReporter.logException(e)
             }
         }
 
@@ -125,7 +125,7 @@ class AuthenticationViewModel
                     }
                     _showAuthProgress.value = false
                 } catch (e: Exception) {
-                    analytics.logException(e)
+                    crashReporter.logException(e)
                     _showAuthProgress.value = false
                 }
             }
@@ -144,7 +144,7 @@ class AuthenticationViewModel
                 handleAuthResponse(response)
             } catch (e: Exception) {
                 authenticationError()
-                analytics.logException(e)
+                crashReporter.logException(e)
             }
         }
 
@@ -170,7 +170,7 @@ class AuthenticationViewModel
                 handleAuthResponse(response)
             } catch (e: Exception) {
                 authenticationError()
-                analytics.logException(e)
+                crashReporter.logException(e)
             }
         }
 
@@ -202,7 +202,7 @@ class AuthenticationViewModel
             try {
                 saveTokens(response.apiToken, response.id)
             } catch (e: Exception) {
-                analytics.logException(e)
+                crashReporter.logException(e)
             }
 
             val wasRegistering = isRegistering.value

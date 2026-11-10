@@ -1,18 +1,18 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.serializer
 
 class ClientConfigKey<T> private constructor(
     val key: String,
     val defaultValue: T,
-    internal val type: Type,
+    internal val serializer: KSerializer<T>,
 ) {
     companion object {
         private inline fun <reified T> key(
             key: String,
             default: T,
-        ) = ClientConfigKey(key, default, object : TypeToken<T>() {}.type)
+        ) = ClientConfigKey(key, default, serializer<T>())
 
         val supportEmail = key("supportEmail", "admin@habitica.com")
         val feedbackURL = key("feedbackURL", "")

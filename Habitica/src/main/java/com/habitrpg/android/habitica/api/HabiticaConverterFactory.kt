@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.api
 
-import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.tasks.TaskList
@@ -23,7 +22,6 @@ import java.lang.reflect.WildcardType
 
 /** Converts API bodies with kotlinx.serialization, using [habiticaJson]. */
 class HabiticaConverterFactory(
-    private val performanceMonitor: PerformanceMonitor? = null,
     private val json: Json = habiticaJson,
 ) : Converter.Factory() {
     private val contentType = "application/json".toMediaType()
@@ -38,13 +36,7 @@ class HabiticaConverterFactory(
         return Converter<ResponseBody, Any?> { body ->
             // Read first, so the trace only measures parsing and not the download
             val text = body.use { it.string() }
-            val trace = traceName?.let { performanceMonitor?.newTrace(it) }
-            trace?.start()
-            try {
-                json.decodeFromString(serializer, text)
-            } finally {
-                trace?.stop()
-            }
+            json.decodeFromString(serializer, text)
         }
     }
 

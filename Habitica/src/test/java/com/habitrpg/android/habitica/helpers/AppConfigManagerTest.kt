@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.SharedPreferences
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.models.WorldState
@@ -27,6 +25,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
 import java.util.Date
 import kotlin.time.Duration.Companion.days
 
@@ -84,7 +85,7 @@ class AppConfigManagerTest :
 
             "return the loaded value" {
                 configManager.updateConfig(
-                    JsonParser.parseString("""{"maxChatLength":500,"hideChallenges":true,"supportEmail":"a@b.c"}""").asJsonObject,
+                    Json.parseToJsonElement("""{"maxChatLength":500,"hideChallenges":true,"supportEmail":"a@b.c"}""").jsonObject,
                 )
                 configManager.value(ClientConfigKey.maxChatLength) shouldBe 500L
                 configManager.value(ClientConfigKey.hideChallenges) shouldBe true
@@ -93,14 +94,14 @@ class AppConfigManagerTest :
 
             "parse known issues" {
                 configManager.updateConfig(
-                    JsonParser.parseString("""{"knownIssues":[{"title":"Sync","text":"Tasks may not sync"}]}""").asJsonObject,
+                    Json.parseToJsonElement("""{"knownIssues":[{"title":"Sync","text":"Tasks may not sync"}]}""").jsonObject,
                 )
                 configManager.value(ClientConfigKey.knownIssues) shouldBe listOf(mapOf("title" to "Sync", "text" to "Tasks may not sync"))
             }
 
             "fall back to the default for values of the wrong type" {
                 configManager.updateConfig(
-                    JsonParser.parseString("""{"maxChatLength":"many","knownIssues":"none","lastVersionCode":null}""").asJsonObject,
+                    Json.parseToJsonElement("""{"maxChatLength":"many","knownIssues":"none","lastVersionCode":null}""").jsonObject,
                 )
                 configManager.value(ClientConfigKey.maxChatLength) shouldBe 3000L
                 configManager.value(ClientConfigKey.knownIssues).shouldBeEmpty()
@@ -120,7 +121,7 @@ class AppConfigManagerTest :
             "store the loaded config" {
                 val editor = mockk<SharedPreferences.Editor>(relaxed = true)
                 every { sharedPreferences.edit() } returns editor
-                configManager.updateConfig(JsonParser.parseString("""{"maxChatLength":42}""").asJsonObject)
+                configManager.updateConfig(Json.parseToJsonElement("""{"maxChatLength":42}""").jsonObject)
                 verify { editor.putString("clientConfig", """{"maxChatLength":42}""") }
                 verify { editor.apply() }
             }
@@ -129,13 +130,13 @@ class AppConfigManagerTest :
         "fetchConfig" should {
             "update the config from the server" {
                 coEvery { contentRepository.retrieveClientConfig() } returns
-                    JsonParser.parseString("""{"maxChatLength":10}""").asJsonObject
+                    Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject
                 configManager.fetchConfig()
                 configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
             }
 
             "only load once per day unless forced" {
-                coEvery { contentRepository.retrieveClientConfig() } returns JsonObject()
+                coEvery { contentRepository.retrieveClientConfig() } returns JsonObject(emptyMap())
                 configManager.fetchConfig()
                 configManager.fetchConfig()
                 coVerify(exactly = 1) { contentRepository.retrieveClientConfig() }
@@ -144,7 +145,7 @@ class AppConfigManagerTest :
             }
 
             "keep the current config when loading fails" {
-                configManager.updateConfig(JsonParser.parseString("""{"maxChatLength":10}""").asJsonObject)
+                configManager.updateConfig(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
                 coEvery { contentRepository.retrieveClientConfig() } returns null
                 configManager.fetchConfig(forced = true)
                 configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
@@ -153,7 +154,7 @@ class AppConfigManagerTest :
 
         "enableTaskDisplayMode" should {
             "always be enabled in debug builds" {
-                configManager.updateConfig(JsonParser.parseString("""{"enableTaskDisplayMode":false}""").asJsonObject)
+                configManager.updateConfig(Json.parseToJsonElement("""{"enableTaskDisplayMode":false}""").jsonObject)
                 configManager.enableTaskDisplayMode() shouldBe BuildConfig.DEBUG
             }
         }
