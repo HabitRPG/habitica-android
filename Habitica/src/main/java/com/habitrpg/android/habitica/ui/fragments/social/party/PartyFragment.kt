@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
@@ -47,6 +46,11 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        viewPagerAdapter = null
+        super.onDestroyView()
     }
 
     override fun onViewCreated(
@@ -175,7 +179,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         val fragmentManager = childFragmentManager
 
         viewPagerAdapter =
-            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            object : FragmentStateAdapter(fragmentManager, viewLifecycleOwner.lifecycle) {
                 override fun createFragment(position: Int): Fragment =
                     when (position) {
                         0 -> {
@@ -196,16 +200,14 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             }
         binding?.viewPager?.adapter = viewPagerAdapter
 
-        tabLayout?.let {
-            binding?.viewPager?.let { it1 ->
-                TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text =
-                        when (position) {
-                            0 -> context?.getString(R.string.party)
-                            1 -> context?.getString(R.string.chat)
-                            else -> ""
-                        }
-                }.attach()
+        binding?.viewPager?.let { viewPager ->
+            attachTabLayout(viewPager) { tab, position ->
+                tab.text =
+                    when (position) {
+                        0 -> context?.getString(R.string.party)
+                        1 -> context?.getString(R.string.chat)
+                        else -> ""
+                    }
             }
         }
     }

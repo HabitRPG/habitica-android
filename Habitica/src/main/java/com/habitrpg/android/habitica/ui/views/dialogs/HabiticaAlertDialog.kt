@@ -97,6 +97,7 @@ open class HabiticaAlertDialog(
         binding.closeButton.setOnClickListener { dismiss() }
         binding.dialogContainer.clipChildren = true
         binding.dialogContainer.clipToOutline = true
+        cancelWorkWhenHostDestroyed { dialogQueue.remove(this) }
     }
 
     override fun setTitle(title: CharSequence?) {

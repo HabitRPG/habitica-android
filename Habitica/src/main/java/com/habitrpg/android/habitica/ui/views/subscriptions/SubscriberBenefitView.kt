@@ -15,6 +15,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
@@ -49,31 +50,45 @@ class SubscriberBenefitView
             configManager = hiltEntryPoint.configManager()
             inventoryRepository = hiltEntryPoint.inventoryRepository()
 
-            MainScope().launchCatching {
-                inventoryRepository.getLatestMysteryItemAndSet().collectLatest { pair ->
-                    val item = pair.first
-                    val set = pair.second
-                    binding.subBenefitsMysteryItemIcon.loadImage(
-                        "shop_set_mystery_${
-                            item.key?.split(
-                                "_",
-                            )?.last()
-                        }",
-                    )
-                    binding.subBenefitsMysteryItemText.text =
-                        context.getString(
-                            R.string.subscribe_listitem3_description_alt,
-                            monthFormatter.format(Date()),
-                            set?.text ?: context.getString(R.string.set),
-                        )
-                }
-            }
             binding.subBenefitsMysteryItemText.text =
                 context.getString(
                     R.string.subscribe_listitem3_description_alt,
                     monthFormatter.format(Date()),
                     context.getString(R.string.set),
                 )
+        }
+
+        private var mysteryItemJob: Job? = null
+
+        override fun onAttachedToWindow() {
+            super.onAttachedToWindow()
+            mysteryItemJob?.cancel()
+            mysteryItemJob =
+                MainScope().launchCatching {
+                    inventoryRepository.getLatestMysteryItemAndSet().collectLatest { pair ->
+                        val item = pair.first
+                        val set = pair.second
+                        binding.subBenefitsMysteryItemIcon.loadImage(
+                            "shop_set_mystery_${
+                                item.key?.split(
+                                    "_",
+                                )?.last()
+                            }",
+                        )
+                        binding.subBenefitsMysteryItemText.text =
+                            context.getString(
+                                R.string.subscribe_listitem3_description_alt,
+                                monthFormatter.format(Date()),
+                                set?.text ?: context.getString(R.string.set),
+                            )
+                    }
+                }
+        }
+
+        override fun onDetachedFromWindow() {
+            mysteryItemJob?.cancel()
+            mysteryItemJob = null
+            super.onDetachedFromWindow()
         }
 
         fun hideDeathBenefit() {

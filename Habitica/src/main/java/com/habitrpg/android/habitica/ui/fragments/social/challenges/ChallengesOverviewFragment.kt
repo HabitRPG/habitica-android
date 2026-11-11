@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
@@ -67,6 +66,11 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         getActiveFragment()?.retrieveChallengesPage()
     }
 
+    override fun onDestroyView() {
+        statePagerAdapter = null
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
         challengeRepository.close()
         super.onDestroy()
@@ -117,7 +121,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         val fragmentManager = childFragmentManager
 
         statePagerAdapter =
-            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            object : FragmentStateAdapter(fragmentManager, viewLifecycleOwner.lifecycle) {
                 override fun createFragment(position: Int): Fragment =
                     if (position == 0) {
                         userChallengesFragment
@@ -135,16 +139,14 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
                 }
             },
         )
-        tabLayout?.let {
-            binding?.viewPager?.let { it1 ->
-                TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text =
-                        when (position) {
-                            0 -> getString(R.string.my_challenges)
-                            1 -> getString(R.string.discover)
-                            else -> ""
-                        }
-                }.attach()
+        binding?.viewPager?.let { viewPager ->
+            attachTabLayout(viewPager) { tab, position ->
+                tab.text =
+                    when (position) {
+                        0 -> getString(R.string.my_challenges)
+                        1 -> getString(R.string.discover)
+                        else -> ""
+                    }
             }
         }
         statePagerAdapter?.notifyDataSetChanged()

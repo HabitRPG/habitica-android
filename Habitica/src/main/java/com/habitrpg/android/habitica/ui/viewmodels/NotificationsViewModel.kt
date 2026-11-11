@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -63,14 +64,9 @@ open class NotificationsViewModel
 
         private val customNotifications = MutableStateFlow<List<Notification>>(emptyList())
 
-        override fun onCleared() {
-            socialRepository.close()
-            super.onCleared()
-        }
-
-        init {
-            userViewModel.user.observeForever {
-                if (it == null) return@observeForever
+        private val userObserver =
+            Observer<User?> {
+                if (it == null) return@Observer
                 party = it.party
                 hasStats = it.hasClass
                 val notifications = convertInvitationsToNotifications(it)
@@ -84,6 +80,15 @@ open class NotificationsViewModel
                 }
                 customNotifications.value = notifications
             }
+
+        override fun onCleared() {
+            userViewModel.user.removeObserver(userObserver)
+            socialRepository.close()
+            super.onCleared()
+        }
+
+        init {
+            userViewModel.user.observeForever(userObserver)
         }
 
         fun getNotifications(): Flow<List<Notification>> {

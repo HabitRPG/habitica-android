@@ -305,7 +305,7 @@ class PurchaseDialog(
             val endDate = shopItem.availableUntil
             limitedTextViewJob?.cancel()
             limitedTextViewJob =
-                MainScope().launch(Dispatchers.Main) {
+                lifecycleScope.launch {
                     limitedTextView.visibility = View.VISIBLE
                     while (endDate?.after(Date()) == true) {
                         limitedTextView.text =

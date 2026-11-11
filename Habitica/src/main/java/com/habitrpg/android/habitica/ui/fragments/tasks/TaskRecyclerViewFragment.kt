@@ -242,6 +242,7 @@ open class TaskRecyclerViewFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         itemTouchCallback = null
+        layoutManager = null
     }
 
     override fun onDestroy() {

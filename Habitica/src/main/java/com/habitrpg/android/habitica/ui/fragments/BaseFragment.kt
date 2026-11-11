@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -68,6 +71,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     override fun onDestroyView() {
+        binding?.root?.detachRecyclerViewAdapters()
         binding = null
         super.onDestroyView()
     }
@@ -82,4 +86,12 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     open fun addToBackStack(): Boolean = true
+}
+
+private fun View.detachRecyclerViewAdapters() {
+    when (this) {
+        is ViewPager2 -> return
+        is RecyclerView -> adapter = null
+        is ViewGroup -> children.forEach { it.detachRecyclerViewAdapters() }
+    }
 }

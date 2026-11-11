@@ -346,8 +346,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     uri = file.absoluteFile.toUri()
                     fos = FileOutputStream(file)
                 }
-                image.compress(Bitmap.CompressFormat.PNG, 100, fos)
-                fos.close()
+                fos.use { image.compress(Bitmap.CompressFormat.PNG, 100, it) }
                 sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
             }
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))

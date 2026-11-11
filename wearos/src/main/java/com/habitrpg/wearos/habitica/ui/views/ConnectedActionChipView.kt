@@ -4,9 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.Wearable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 class ConnectedActionChipView(
     context: Context,
@@ -14,18 +11,25 @@ class ConnectedActionChipView(
 ) : TextActionChipView(context, attrs) {
     private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(context) }
 
-    init {
-        checkIfPhoneAvailable()
+    private val capabilityListener =
+        CapabilityClient.OnCapabilityChangedListener { info ->
+            post {
+                isEnabled = info.nodes.firstOrNull { it.isNearby } != null
+                alpha = if (isEnabled) 1.0f else 0.5f
+            }
+        }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        capabilityClient.addListener(capabilityListener, CAPABILITY)
     }
 
-    private fun checkIfPhoneAvailable() {
-        MainScope().launch(Dispatchers.IO) {
-            capabilityClient.addListener({
-                launch(Dispatchers.Main) {
-                    isEnabled = it.nodes.firstOrNull { it.isNearby } != null
-                    alpha = if (isEnabled) 1.0f else 0.5f
-                }
-            }, "open_activity")
-        }
+    override fun onDetachedFromWindow() {
+        capabilityClient.removeListener(capabilityListener, CAPABILITY)
+        super.onDetachedFromWindow()
+    }
+
+    private companion object {
+        const val CAPABILITY = "open_activity"
     }
 }

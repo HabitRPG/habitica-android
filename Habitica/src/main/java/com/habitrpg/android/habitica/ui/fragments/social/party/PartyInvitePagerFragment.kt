@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -60,7 +59,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
         binding?.viewPager?.adapter =
-            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            object : FragmentStateAdapter(fragmentManager, viewLifecycleOwner.lifecycle) {
                 override fun createFragment(position: Int): Fragment =
                     when (position) {
                         0 -> {
@@ -82,16 +81,14 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
                 override fun getItemCount(): Int = if (viewModel.isLeader) 2 else 1
             }
-        tabLayout?.let {
-            binding?.viewPager?.let { it1 ->
-                TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text =
-                        when (position) {
-                            0 -> context?.getString(R.string.list)
-                            1 -> context?.getString(R.string.by_invite)
-                            else -> ""
-                        }
-                }.attach()
+        binding?.viewPager?.let { viewPager ->
+            attachTabLayout(viewPager) { tab, position ->
+                tab.text =
+                    when (position) {
+                        0 -> context?.getString(R.string.list)
+                        1 -> context?.getString(R.string.by_invite)
+                        else -> ""
+                    }
             }
         }
     }

@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
@@ -50,6 +52,17 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     var toolbarIconColor: Int? = null
     var toolbarBackgroundColor: Int? = null
 
+    private var tabLayoutMediator: TabLayoutMediator? = null
+
+    protected fun attachTabLayout(
+        viewPager: ViewPager2,
+        configureTab: (TabLayout.Tab, Int) -> Unit,
+    ) {
+        val tabs = tabLayout ?: return
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = TabLayoutMediator(tabs, viewPager, configureTab).also { it.attach() }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -79,6 +92,8 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     }
 
     override fun onDestroyView() {
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
         super.onDestroyView()
         binding = null
     }

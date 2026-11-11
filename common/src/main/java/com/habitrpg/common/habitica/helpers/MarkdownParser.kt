@@ -15,6 +15,7 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonConfiguration
 import io.noties.markwon.MarkwonPlugin
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
+import io.noties.markwon.image.AsyncDrawableSpan
 import io.noties.markwon.image.ImageSize
 import io.noties.markwon.image.ImageSizeResolverDef
 import io.noties.markwon.image.ImagesPlugin
@@ -116,6 +117,9 @@ object MarkdownParser {
         // Adding this space here bc for some reason some markdown is not rendered correctly when the whole string is supposed to be formatted
         val result = markwon?.toMarkdown("$text ") ?: SpannableString(text)
 
+        if (result.getSpans(0, result.length, AsyncDrawableSpan::class.java).isNotEmpty()) {
+            return result
+        }
         try {
             cache[hashCode] = result
             if (cache.size > 100) {

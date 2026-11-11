@@ -26,6 +26,7 @@ open class HabiticaBottomSheetDialog(
             )
             consumeWindowInsetsAbove30(windowInsets)
         }
+        cancelWorkWhenHostDestroyed()
     }
 
     var grabberVisibility: Int

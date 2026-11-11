@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -45,7 +44,7 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         val fragmentManager = childFragmentManager
 
         binding?.viewPager?.adapter =
-            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            object : FragmentStateAdapter(fragmentManager, viewLifecycleOwner.lifecycle) {
                 override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                     val fragment = StableRecyclerFragment()
                     fragment.arguments =
@@ -57,11 +56,9 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
                 override fun getItemCount(): Int = 2
             }
-        tabLayout?.let {
-            binding?.viewPager?.let { it1 ->
-                TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = getPageTitle(position)
-                }.attach()
+        binding?.viewPager?.let { viewPager ->
+            attachTabLayout(viewPager) { tab, position ->
+                tab.text = getPageTitle(position)
             }
         }
     }

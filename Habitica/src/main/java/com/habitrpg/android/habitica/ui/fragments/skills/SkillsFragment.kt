@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSna
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,6 +39,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
     private var isCastingSkill = false
+    private var skillsJob: Job? = null
 
     override var binding: FragmentRecyclerviewBinding? = null
 
@@ -84,20 +86,22 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         adapter?.mana = user.stats?.mp ?: 0.0
         adapter?.level = user.stats?.lvl ?: 0
         adapter?.specialItems = user.items?.special
-        lifecycleScope.launchCatching {
-            userRepository
-                .getSkills(user)
-                .combine(userRepository.getSpecialItems(user)) { skills, items ->
-                    val allEntries = mutableListOf<Skill>()
-                    for (skill in skills) {
-                        allEntries.add(skill)
-                    }
-                    for (item in items) {
-                        allEntries.add(item)
-                    }
-                    return@combine allEntries
-                }.collect { skills -> adapter?.setSkillList(skills) }
-        }
+        skillsJob?.cancel()
+        skillsJob =
+            viewLifecycleOwner.lifecycleScope.launchCatching {
+                userRepository
+                    .getSkills(user)
+                    .combine(userRepository.getSpecialItems(user)) { skills, items ->
+                        val allEntries = mutableListOf<Skill>()
+                        for (skill in skills) {
+                            allEntries.add(skill)
+                        }
+                        for (item in items) {
+                            allEntries.add(item)
+                        }
+                        return@combine allEntries
+                    }.collect { skills -> adapter?.setSkillList(skills) }
+            }
     }
 
     private fun onSkillSelected(skill: Skill) {

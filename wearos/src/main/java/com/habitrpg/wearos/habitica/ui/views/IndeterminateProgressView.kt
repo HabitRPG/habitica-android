@@ -87,9 +87,16 @@ class IndeterminateProgressView
                     addUpdateListener { paint.strokeWidth = it.animatedValue as Float }
                     start()
                 }.doOnEnd {
+                    animator?.cancel()
                     animator = null
                     onAnimationEnd()
                 }
+        }
+
+        override fun onDetachedFromWindow() {
+            animator?.cancel()
+            animator = null
+            super.onDetachedFromWindow()
         }
 
         override fun onDraw(canvas: Canvas) {

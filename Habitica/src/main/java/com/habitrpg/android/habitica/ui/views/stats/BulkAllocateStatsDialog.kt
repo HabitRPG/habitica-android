@@ -13,7 +13,8 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.MainScope
+import com.habitrpg.android.habitica.ui.views.dialogs.cancelWorkWhenHostDestroyed
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
@@ -50,6 +51,7 @@ class BulkAllocateStatsDialog(
         this.setButton(BUTTON_NEUTRAL, context.getString(R.string.action_cancel)) { _, _ ->
             this.dismiss()
         }
+        cancelWorkWhenHostDestroyed()
     }
 
     private fun saveChanges() {
@@ -68,7 +70,7 @@ class BulkAllocateStatsDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MainScope().launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launch(Dispatchers.Main + ExceptionHandler.coroutine()) {
             userRepository
                 .getUser()
                 .filterNotNull()

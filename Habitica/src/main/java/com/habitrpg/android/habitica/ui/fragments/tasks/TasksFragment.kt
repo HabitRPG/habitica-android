@@ -34,8 +34,8 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.ref.WeakReference
 import java.util.Date
-import java.util.WeakHashMap
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -55,7 +55,7 @@ class TasksFragment :
     ): FragmentViewpagerBinding = FragmentViewpagerBinding.inflate(inflater, container, false)
 
     private var refreshItem: MenuItem? = null
-    internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
+    internal var viewFragmentsDictionary: MutableMap<Int, WeakReference<TaskRecyclerViewFragment>>? = mutableMapOf()
 
     private var filterMenuItem: MenuItem? = null
     private var searchView: SearchView? = null
@@ -63,7 +63,7 @@ class TasksFragment :
 
     private val activeFragment: TaskRecyclerViewFragment?
         get() {
-            var fragment = viewFragmentsDictionary?.get(binding?.viewPager?.currentItem)
+            var fragment = viewFragmentsDictionary?.get(binding?.viewPager?.currentItem)?.get()
             if (fragment == null) {
                 if (isAdded) {
                     fragment =
@@ -141,6 +141,10 @@ class TasksFragment :
     override fun onPause() {
         if (bottomNavigation?.listener == this) {
             bottomNavigation?.listener = null
+        }
+        mainActivity?.binding?.content?.toolbarTitle?.let {
+            it.setOnClickListener(null)
+            it.isClickable = false
         }
         super.onPause()
     }
@@ -242,7 +246,7 @@ class TasksFragment :
         val fragmentManager = childFragmentManager
 
         binding?.viewPager?.adapter =
-            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+            object : FragmentStateAdapter(fragmentManager, viewLifecycleOwner.lifecycle) {
                 override fun createFragment(position: Int): Fragment {
                     val fragment: TaskRecyclerViewFragment =
                         when (position) {
@@ -251,7 +255,7 @@ class TasksFragment :
                             3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true)
                             else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO)
                         }
-                    viewFragmentsDictionary?.put(position, fragment)
+                    viewFragmentsDictionary?.put(position, WeakReference(fragment))
                     return fragment
                 }
 
@@ -346,7 +350,7 @@ class TasksFragment :
                     }
                     if (activeTutorialFragments.size == 1) {
                         val fragment =
-                            viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
+                            viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))?.get()
                         if (fragment?.tutorialTexts != null && context != null) {
                             val finalText = context?.getString(R.string.tutorial_tasks_complete)
                             if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
@@ -415,7 +419,7 @@ class TasksFragment :
 
                 val index = indexForTaskType(taskType)
                 if (index != -1) {
-                    val fragment = viewFragmentsDictionary?.get(index)
+                    val fragment = viewFragmentsDictionary?.get(index)?.get()
                     fragment?.binding?.recyclerView?.scrollToPosition(0)
                 }
             }
@@ -445,7 +449,7 @@ class TasksFragment :
     private fun indexForTaskType(taskType: TaskType?): Int {
         if (taskType != null) {
             for (index in 0 until (viewFragmentsDictionary?.size ?: 0)) {
-                val fragment = viewFragmentsDictionary?.get(index)
+                val fragment = viewFragmentsDictionary?.get(index)?.get()
                 if (fragment != null && taskType == fragment.className) {
                     return index
                 }
