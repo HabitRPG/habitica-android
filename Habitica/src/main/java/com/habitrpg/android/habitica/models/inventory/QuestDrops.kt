@@ -8,7 +8,9 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by phillip on 25.07.17.
  */
-open class QuestDrops : RealmObject(), BaseObject {
+open class QuestDrops :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var key: String? = null
         set(value) {

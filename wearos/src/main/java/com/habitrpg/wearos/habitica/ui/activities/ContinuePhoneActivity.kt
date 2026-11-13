@@ -13,8 +13,7 @@ import com.habitrpg.wearos.habitica.ui.viewmodels.ContinuePhoneViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class ContinuePhoneActivity : BaseActivity<ActivityContinuePhoneBinding, ContinuePhoneViewModel>() {
@@ -41,7 +40,7 @@ class ContinuePhoneActivity : BaseActivity<ActivityContinuePhoneBinding, Continu
 
         if (!viewModel.keepActive) {
             lifecycleScope.launch {
-                delay(secondsToShow.toDuration(DurationUnit.SECONDS))
+                delay(secondsToShow.seconds)
                 finish()
             }
         }

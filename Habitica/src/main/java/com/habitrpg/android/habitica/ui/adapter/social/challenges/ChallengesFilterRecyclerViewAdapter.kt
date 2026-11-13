@@ -8,8 +8,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogChallengeFilterGroupItemBinding
 import com.habitrpg.android.habitica.models.social.Group
 
-class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) :
-    RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
+class ChallengesFilterRecyclerViewAdapter(
+    entries: List<Group>,
+) : RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
     private val entries: List<Group>
     val checkedEntries: MutableList<Group> = mutableListOf()
 
@@ -19,31 +20,32 @@ class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ChallengeViewHolder {
         val view =
-            LayoutInflater.from(parent.context)
+            LayoutInflater
+                .from(parent.context)
                 .inflate(R.layout.dialog_challenge_filter_group_item, parent, false)
         return ChallengeViewHolder(view)
     }
 
     override fun onBindViewHolder(
         holder: ChallengeViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.bind(entries[position], checkedEntries)
     }
 
-    override fun getItemCount(): Int {
-        return entries.size
-    }
+    override fun getItemCount(): Int = entries.size
 
-    class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ChallengeViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
         private val binding = DialogChallengeFilterGroupItemBinding.bind(itemView)
 
         fun bind(
             group: Group,
-            checkedEntries: MutableList<Group>
+            checkedEntries: MutableList<Group>,
         ) {
             binding.root.text = group.name
             binding.root.isChecked = checkedEntries.contains(group)

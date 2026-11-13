@@ -14,14 +14,12 @@ class PartyMemberRecyclerViewAdapter : BaseRecyclerViewAdapter<Member, GroupMemb
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): GroupMemberViewHolder {
-        return GroupMemberViewHolder(parent.inflate(R.layout.party_member))
-    }
+        viewType: Int,
+    ): GroupMemberViewHolder = GroupMemberViewHolder(parent.inflate(R.layout.party_member))
 
     override fun onBindViewHolder(
         holder: GroupMemberViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.bind(data[position], leaderID, null)
         holder.onClickEvent = {

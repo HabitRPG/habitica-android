@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseViewModel(
     val userRepository: UserRepository,
-    val userViewModel: MainUserViewModel
+    val userViewModel: MainUserViewModel,
 ) : ViewModel() {
     val user: LiveData<User?> by lazy {
         userViewModel.user
@@ -23,10 +23,14 @@ abstract class BaseViewModel(
 
     fun updateUser(
         path: String,
-        value: Any
+        value: Any,
     ) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser(path, value)
         }
+    }
+
+    open suspend fun refreshUser() {
+        userRepository.retrieveUser(true, true)
     }
 }

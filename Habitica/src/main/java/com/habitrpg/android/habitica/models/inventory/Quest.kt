@@ -5,9 +5,12 @@ import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.members.Member
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class Quest : RealmObject(), BaseObject {
+open class Quest :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var id: String? = null
         set(value) {
@@ -25,17 +28,20 @@ open class Quest : RealmObject(), BaseObject {
     @SerializedName("RSVPNeeded")
     var rsvpNeeded: Boolean = false
 
-    var members: RealmList<QuestMember>? = null
+    // Set to false by QuestDeserializer when the source payload omits RSVPNeeded, so callers know to
+    // inherit the previously-known value instead of treating this default as an authoritative false.
+    @Ignore
+    var rsvpNeededWasSpecified: Boolean = true
+
+    var members: RealmList<QuestMember>? = RealmList()
     var progress: QuestProgress? = null
 
-    var participants: RealmList<Member>? = null
-    var rageStrikes: RealmList<QuestRageStrike>? = null
+    var participants: RealmList<Member>? = RealmList()
+    var rageStrikes: RealmList<QuestRageStrike>? = RealmList()
 
     var completed: String? = null
 
-    fun hasRageStrikes(): Boolean {
-        return rageStrikes?.isNotEmpty() ?: false
-    }
+    fun hasRageStrikes(): Boolean = rageStrikes?.isNotEmpty() ?: false
 
     fun addRageStrike(rageStrike: QuestRageStrike) {
         if (rageStrikes == null) {

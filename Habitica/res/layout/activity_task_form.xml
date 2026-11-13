@@ -49,6 +49,41 @@
                     android:paddingEnd="@dimen/spacing_large"
                     android:paddingBottom="@dimen/spacing_large">
 
+                <LinearLayout
+                        android:id="@+id/spi_warning_row"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingTop="@dimen/spacing_small"
+                        android:paddingBottom="6dp"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="@dimen/spacing_small">
+
+                    <ImageView
+                            android:id="@+id/spi_warning_icon"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="5dp"
+                            android:src="@drawable/alert_icon"
+                            android:importantForAccessibility="no" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/spi_warning_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/avoid_spi"
+                            android:textColor="?attr/toolbarContentColor"
+                            android:textSize="14sp"
+                            android:fontFamily="@string/font_family_medium"
+                            android:letterSpacing="0"
+                            app:lineHeight="20sp" />
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/text_input_layout"
                         android:layout_width="match_parent"

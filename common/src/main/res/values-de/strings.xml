@@ -51,7 +51,7 @@
     </plurals>
     <plurals name="x_dailies">
         <item quantity="one">%d Tagesaufgabe</item>
-        <item quantity="other">%d Tagesauffgaben</item>
+        <item quantity="other">%d Tagesaufgaben</item>
     </plurals>
     <string name="LoginActivityName">Willkommen</string>
     <plurals name="x_todos">

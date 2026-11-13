@@ -7,19 +7,19 @@ import com.habitrpg.android.habitica.models.user.OwnedPet
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-class OwnedPetListDeserializer : JsonDeserializer<List<OwnedPet>> {
+class OwnedPetListDeserializer : JsonDeserializer<RealmList<OwnedPet>> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?
-    ): List<OwnedPet> {
+        context: JsonDeserializationContext?,
+    ): RealmList<OwnedPet> {
         val ownedItems = RealmList<OwnedPet>()
         val entrySet = json?.asJsonObject?.entrySet()
         if (entrySet != null) {
-            for (entry in entrySet) {
+            for ((key, value) in entrySet) {
                 val item = OwnedPet()
-                item.key = entry.key
-                item.trained = entry.value.asInt
+                item.key = key
+                item.trained = value.asInt
                 ownedItems.add(item)
             }
         }

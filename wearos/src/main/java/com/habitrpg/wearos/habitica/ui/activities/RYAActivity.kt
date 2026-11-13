@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Date
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
@@ -43,9 +44,8 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                         }
                     }
                 }
-            }
+            },
         )
-
 
         binding.ryaButton.setOnClickListener {
             binding.titleView.text = getString(R.string.check_off_yesterday)
@@ -71,7 +71,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                 Intent(this, RYAActivity::class.java)
                     .apply {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
+                    },
             )
         }
         super.onDestroy()
@@ -91,7 +91,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                     val elapsed = Date().time - startTime.time
                     if (elapsed <= 1000) {
                         // always show it at least 1 second
-                        delay(1000 - elapsed)
+                        delay((1000 - elapsed).milliseconds)
                     }
                     stopAnimatingProgress()
                     finish()

@@ -1,16 +1,14 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.firebase.perf.FirebasePerformance
 import com.google.gson.JsonDeserializationContext
+import com.habitrpg.android.habitica.helpers.PerformanceMonitor
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
@@ -30,19 +28,20 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserAchievement
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
 
-class UserDeserializer : JsonDeserializer<User> {
+class UserDeserializer(
+    private val performanceMonitor: PerformanceMonitor,
+) : JsonDeserializer<User> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): User {
-        val deserializeTrace = FirebasePerformance.getInstance().newTrace("UserDeserialize")
+        val deserializeTrace = performanceMonitor.newTrace("UserDeserialize")
         deserializeTrace.start()
         val user = User()
         val obj = json.asJsonObject
@@ -77,18 +76,14 @@ class UserDeserializer : JsonDeserializer<User> {
             user.party = context.deserialize(partyObj, UserParty::class.java)
             if (user.party != null && user.party?.quest != null) {
                 user.party?.quest?.id = user.id
-                if (!partyObj.getAsJsonObject("quest").has("RSVPNeeded")) {
-                    val realm = Realm.getDefaultInstance()
-                    val quest = realm.where(Quest::class.java).equalTo("id", user.id).findFirst()
-                    if (quest != null && quest.isValid) {
-                        user.party?.quest?.rsvpNeeded = quest.rsvpNeeded
-                    }
-                }
                 if (partyObj.getAsJsonObject("quest").has("completed")) {
                     if (!partyObj.getAsJsonObject("quest").get("completed").isJsonNull) {
                         user.party?.quest?.completed =
-                            obj.getAsJsonObject("party").getAsJsonObject("quest")
-                                .get("completed").asString
+                            obj
+                                .getAsJsonObject("party")
+                                .getAsJsonObject("quest")
+                                .get("completed")
+                                .asString
                     }
                 }
             }
@@ -98,8 +93,11 @@ class UserDeserializer : JsonDeserializer<User> {
             if (obj.getAsJsonObject("purchased").has("plan")) {
                 if (obj.getAsJsonObject("purchased").getAsJsonObject("plan").has("mysteryItems")) {
                     user.purchased?.plan?.mysteryItemCount =
-                        obj.getAsJsonObject("purchased").getAsJsonObject("plan")
-                            .getAsJsonArray("mysteryItems").size()
+                        obj
+                            .getAsJsonObject("purchased")
+                            .getAsJsonObject("plan")
+                            .getAsJsonArray("mysteryItems")
+                            .size()
                 }
             }
         }
@@ -130,28 +128,25 @@ class UserDeserializer : JsonDeserializer<User> {
             user.invitations = context.deserialize(obj.get("invitations"), Invitations::class.java)
         }
         if (obj.has("tags")) {
-            user.tags =
-                context.deserialize(
-                    obj.get("tags"),
-                    object : TypeToken<RealmList<Tag>>() {
-                    }.type
-                )
-            for (tag in user.tags) {
+            for (entry in obj.getAsJsonArray("tags")) {
+                if (!entry.isJsonObject) {
+                    continue
+                }
+                val tag = context.deserialize<Tag>(entry, Tag::class.java)
                 tag.userId = user.id
+                user.tags.add(tag)
             }
         }
         if (obj.has("achievements")) {
-            val achievements = RealmList<UserAchievement>()
-            for (entry in obj.getAsJsonObject("achievements").entrySet()) {
-                if (!entry.value.isJsonPrimitive) {
+            for ((key, value) in obj.getAsJsonObject("achievements").entrySet()) {
+                if (!value.isJsonPrimitive) {
                     continue
                 }
                 val achievement = UserAchievement()
-                achievement.key = entry.key
-                achievement.earned = entry.value.asBoolean
-                achievements.add(achievement)
+                achievement.key = key
+                achievement.earned = value.asBoolean
+                user.achievements.add(achievement)
             }
-            user.achievements = achievements
         }
         if (obj.has("tasksOrder")) {
             user.tasksOrder = context.deserialize(obj.get("tasksOrder"), TasksOrder::class.java)
@@ -165,7 +160,8 @@ class UserDeserializer : JsonDeserializer<User> {
 
         if (obj.has("pushDevices")) {
             user.pushDevices = ArrayList()
-            obj.getAsJsonArray("pushDevices")
+            obj
+                .getAsJsonArray("pushDevices")
                 .map { context.deserialize<PushDevice>(it, PushDevice::class.java) }
                 .forEach { (user.pushDevices as? ArrayList<PushDevice>)?.add(it) }
         }
@@ -183,34 +179,42 @@ class UserDeserializer : JsonDeserializer<User> {
             if (achievements.has("streak")) {
                 try {
                     user.streakCount = obj.getAsJsonObject("achievements").get("streak").asInt
-                } catch (ignored: UnsupportedOperationException) {
+                } catch (_: UnsupportedOperationException) {
                 }
             }
             if (achievements.has("quests")) {
-                val questAchievements = RealmList<QuestAchievement>()
-                for (entry in achievements.getAsJsonObject("quests").entrySet()) {
+                for ((key, value) in achievements.getAsJsonObject("quests").entrySet()) {
                     val questAchievement = QuestAchievement()
-                    questAchievement.questKey = entry.key
-                    questAchievement.count = entry.value.asInt
-                    questAchievements.add(questAchievement)
+                    questAchievement.questKey = key
+                    questAchievement.count = value.asInt
+                    user.questAchievements.add(questAchievement)
                 }
-                user.questAchievements = questAchievements
             }
             if (achievements.has("challenges")) {
-                val challengeAchievements = RealmList<String>()
                 for (entry in achievements.getAsJsonArray("challenges")) {
-                    challengeAchievements.add(entry.asString)
+                    user.challengeAchievements.add(entry.asString)
                 }
-                user.challengeAchievements = challengeAchievements
+            }
+            if (achievements.has("rebirths")) {
+                try {
+                    user.rebirths = achievements.get("rebirths").asInt
+                } catch (_: UnsupportedOperationException) {
+                }
+            }
+            if (achievements.has("rebirthLevel")) {
+                try {
+                    user.rebirthLevel = achievements.get("rebirthLevel").asInt
+                } catch (_: UnsupportedOperationException) {
+                }
             }
         }
 
         if (obj.has("_ABTests")) {
             user.abTests = RealmList()
-            for (testJSON in obj.getAsJsonObject("_ABTests").entrySet()) {
+            for ((key, value) in obj.getAsJsonObject("_ABTests").entrySet()) {
                 val test = ABTest()
-                test.name = testJSON.key
-                test.group = testJSON.value.asString
+                test.name = key
+                test.group = value.asString
                 user.abTests?.add(test)
             }
         }

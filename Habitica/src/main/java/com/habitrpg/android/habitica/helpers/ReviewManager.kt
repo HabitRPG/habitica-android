@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.google.android.play.core.review.ReviewManagerFactory
 
-class ReviewManager(context: Context, private val configManager: AppConfigManager) {
+class ReviewManager(
+    context: Context,
+    private val configManager: AppConfigManager,
+) {
     private val reviewManager = ReviewManagerFactory.create(context)
     private val sharedPref = context.getSharedPreferences("ReviewPrefs", Context.MODE_PRIVATE)
 
@@ -60,7 +63,7 @@ class ReviewManager(context: Context, private val configManager: AppConfigManage
 
     fun requestReview(
         activity: AppCompatActivity,
-        currentCheckins: Int
+        currentCheckins: Int,
     ) {
         if (!canRequestReview(currentCheckins)) return
 

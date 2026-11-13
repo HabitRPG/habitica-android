@@ -22,7 +22,9 @@ import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.Matcher
 import org.junit.Test
 
-open class TaskItem(val parent: Matcher<View>) : KRecyclerItem<TaskItem>(parent) {
+open class TaskItem(
+    val parent: Matcher<View>,
+) : KRecyclerItem<TaskItem>(parent) {
     val title = KTextView(parent) { withId(R.id.checkedTextView) }
     val notes = KTextView(parent) { withId(R.id.notesTextView) }
 }
@@ -32,11 +34,12 @@ class TaskListScreen : Screen<TaskListScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-                itemType(::TaskItem)
-            })
+            itemType(::TaskItem)
+        })
 }
 
-internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewFragment, FragmentRefreshRecyclerviewBinding, TaskListScreen>(false) {
+internal class TaskRecyclerViewFragmentTest :
+    FragmentTestCase<TaskRecyclerViewFragment, FragmentRefreshRecyclerviewBinding, TaskListScreen>(false) {
     lateinit var tasks: MutableCollection<Task>
 
     override fun makeFragment() {

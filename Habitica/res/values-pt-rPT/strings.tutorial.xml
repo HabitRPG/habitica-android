@@ -14,4 +14,7 @@
     <string name="tutorial_todos_2">Se os seus Afazeres precisam de ser realizados até determinado momento, coloque uma data final. Parece que já pode clicar numa — continue!</string>
     <string name="tutorial_habits_3">Se se descuidar e fizer um Hábito negativo, carregar no sinal - vai reduzir a vida do seu avatar, para o ajudar a manter a disciplina.</string>
     <string name="tutorial_habits_4">Experimente! Pode explorar outros tipos de tarefas com o botão de navegação, no fundo da página.</string>
+    <string name="tutorial_party_created">Bem-vindo ao teu Grupo! Podes encontrar mais membros a partir de uma lista de jogadores à procura de grupo ou convidar amigos diretamente para ganhares o Pergaminho de Missão Basi-List.
+\nVisita o Suporte para saberes mais sobre os Grupos.</string>
+    <string name="tutorial_stats">Toca no botão cinzento para atribuíres vários pontos de uma vez, ou toca nas setas para os adicionares um a um.</string>
 </resources>

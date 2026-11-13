@@ -5,7 +5,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class UserAchievement() : RealmObject(), BaseObject {
+open class UserAchievement() :
+    RealmObject(),
+    BaseObject {
     var key: String? = null
     var earned: Boolean = false
 

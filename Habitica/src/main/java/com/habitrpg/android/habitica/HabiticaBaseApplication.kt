@@ -7,14 +7,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.content.res.Resources
-import android.database.DatabaseErrorHandler
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -28,8 +26,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.DateUtils
-import com.habitrpg.android.habitica.helpers.AdHandler
-import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager.Companion.DEVICE_TOKEN_PREFERENCE_KEY
 import com.habitrpg.android.habitica.models.user.User
@@ -37,6 +34,10 @@ import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.OnboardingActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.widget.glance.migration.LegacyWidgetMigration
+import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
+import com.habitrpg.android.habitica.widget.glance.work.WidgetDataCoordinator
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
@@ -44,14 +45,14 @@ import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
-import io.realm.RealmConfiguration
 import kotlinx.coroutines.MainScope
 import java.lang.ref.WeakReference
 import java.util.Date
 import javax.inject.Inject
 
-class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferences) :
-    DefaultLifecycleObserver {
+class ApplicationLifecycleTracker(
+    private val sharedPreferences: SharedPreferences,
+) : DefaultLifecycleObserver {
     private var lastResumeTime = 0L
 
     override fun onResume(owner: LifecycleOwner) {
@@ -81,8 +82,6 @@ class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferenc
                 putInt("usage_time_day_count", ++observedDays)
                 putLong("usage_time_daily_average", average)
             }
-            Analytics.setUserProperty("usage_time_daily_average", average)
-            Analytics.setUserProperty("usage_time_total", currentTotal)
             current = 0
             currentDay = Date()
         }
@@ -96,7 +95,9 @@ class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferenc
 }
 
 @HiltAndroidApp
-abstract class HabiticaBaseApplication : Application(), Application.ActivityLifecycleCallbacks {
+abstract class HabiticaBaseApplication :
+    Application(),
+    Application.ActivityLifecycleCallbacks {
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
 
@@ -109,9 +110,13 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     @Inject
     internal lateinit var authenticationHandler: AuthenticationHandler
 
-    private lateinit var lifecycleTracker: ApplicationLifecycleTracker
+    @Inject
+    internal lateinit var analytics: AnalyticsManager
 
-    // endregion
+    @Inject
+    internal lateinit var clearables: Set<@JvmSuppressWildcards com.habitrpg.common.habitica.helpers.Clearable>
+
+    private lateinit var lifecycleTracker: ApplicationLifecycleTracker
 
     override fun onCreate() {
         super.onCreate()
@@ -121,18 +126,15 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         if (!BuildConfig.DEBUG) {
             try {
-                Analytics.initialize(this)
+                analytics.initialize(this)
             } catch (ignored: Resources.NotFoundException) {
             }
-            Analytics.identify(sharedPrefs)
-            Analytics.setUserID(lazyApiHelper.hostConfig.userID)
         }
         registerActivityLifecycleCallbacks(this)
-        setupRealm()
         setLocale()
+        setupLocaleChangeListener()
         setupRemoteConfig()
         setupNotifications()
-        setupAdHandler()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
@@ -140,47 +142,116 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         setupCoil()
 
         ExceptionHandler.init {
-            Analytics.logException(it)
+            analytics.logException(it)
         }
 
-        Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
+        WidgetRefreshWorker.enqueue(this)
+        WidgetDataCoordinator.start(this)
+        MainScope().launchCatching {
+            LegacyWidgetMigration.runIfNeeded(this@HabiticaBaseApplication)
+            WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+            CronBoundaryRefreshWorker.scheduleFromCache(this@HabiticaBaseApplication)
+        }
+        ProcessLifecycleOwner.get().lifecycle.addObserver(
+            object : DefaultLifecycleObserver {
+                private var isInitialStart = true
+
+                override fun onStart(owner: LifecycleOwner) {
+                    if (isInitialStart) {
+                        isInitialStart = false
+                        return
+                    }
+                    MainScope().launchCatching {
+                        WidgetRefreshWorker.refreshAllWidgetsNow(this@HabiticaBaseApplication)
+                    }
+                }
+            },
+        )
 
         checkIfNewVersion()
     }
 
-    private fun setupAdHandler() {
-        AdHandler.setup(sharedPrefs)
-    }
+    private var isSettingLocale = false
 
     private fun setLocale() {
-        val resources = resources
-        val configuration: Configuration = resources.configuration
-        val languageHelper = LanguageHelper(sharedPrefs.getString("language", "en"))
-        if (
-            configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
-        ) {
-            configuration.setLocale(languageHelper.locale)
-            resources.updateConfiguration(configuration, null)
+        val savedLanguage = sharedPrefs.getString("language", null)
+        val currentAppLocales = AppCompatDelegate.getApplicationLocales()
+
+        if (savedLanguage != null) {
+            val languageTag = LanguageHelper.getLanguageTag(savedLanguage)
+            val currentTag =
+                if (!currentAppLocales.isEmpty) {
+                    currentAppLocales[0]?.toLanguageTag()
+                } else {
+                    null
+                }
+
+            if (currentTag != languageTag) {
+                isSettingLocale = true
+                val appLocale = LocaleListCompat.forLanguageTags(languageTag)
+                AppCompatDelegate.setApplicationLocales(appLocale)
+                isSettingLocale = false
+            }
+        } else if (currentAppLocales.isEmpty) {
+            isSettingLocale = true
+            val appLocale = LocaleListCompat.forLanguageTags("en")
+            AppCompatDelegate.setApplicationLocales(appLocale)
+            sharedPrefs.edit {
+                putString("language", "en")
+            }
+            isSettingLocale = false
         }
     }
 
-    protected open fun setupRealm() {
-        Realm.init(this)
-        val builder =
-            RealmConfiguration.Builder()
-                .schemaVersion(1)
-                .deleteRealmIfMigrationNeeded()
-                .allowWritesOnUiThread(true)
-                .compactOnLaunch { totalBytes, usedBytes ->
-                    // Compact if the file is over 100MB in size and less than 50% 'used'
-                    val oneHundredMB = 50 * 1024 * 1024
-                    (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5
+    private fun setupLocaleChangeListener() {
+        registerActivityLifecycleCallbacks(
+            object : ActivityLifecycleCallbacks {
+                override fun onActivityCreated(
+                    activity: Activity,
+                    savedInstanceState: Bundle?,
+                ) {
+                    if (isSettingLocale) return
+
+                    val currentLocales = AppCompatDelegate.getApplicationLocales()
+                    if (!currentLocales.isEmpty) {
+                        val currentLanguageTag = currentLocales[0]?.toLanguageTag() ?: "en"
+                        val prefLanguage =
+                            when (currentLanguageTag) {
+                                "iw" -> "iw"
+                                "hr-HR" -> "hr"
+                                "in" -> "in"
+                                "pt-PT" -> "pt"
+                                "pt-BR" -> "pt_BR"
+                                "en-GB" -> "en_GB"
+                                "zh-TW" -> "zh_TW"
+                                else -> currentLanguageTag.replace("-", "_")
+                            }
+
+                        val savedLanguage = sharedPrefs.getString("language", null)
+                        if (savedLanguage == null) {
+                            sharedPrefs.edit {
+                                putString("language", prefLanguage)
+                            }
+                        }
+                    }
                 }
-        try {
-            Realm.setDefaultConfiguration(builder.build())
-        } catch (ignored: UnsatisfiedLinkError) {
-            // Catch crash in tests
-        }
+
+                override fun onActivityStarted(activity: Activity) {}
+
+                override fun onActivityResumed(activity: Activity) {}
+
+                override fun onActivityPaused(activity: Activity) {}
+
+                override fun onActivityStopped(activity: Activity) {}
+
+                override fun onActivitySaveInstanceState(
+                    activity: Activity,
+                    outState: Bundle,
+                ) {}
+
+                override fun onActivityDestroyed(activity: Activity) {}
+            },
+        )
     }
 
     private fun checkIfNewVersion() {
@@ -205,32 +276,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
     }
 
-    override fun openOrCreateDatabase(
-        name: String,
-        mode: Int,
-        factory: SQLiteDatabase.CursorFactory?
-    ): SQLiteDatabase {
-        return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
-    }
-
-    override fun openOrCreateDatabase(
-        name: String,
-        mode: Int,
-        factory: SQLiteDatabase.CursorFactory?,
-        errorHandler: DatabaseErrorHandler?
-    ): SQLiteDatabase {
-        return super.openOrCreateDatabase(
-            getDatabasePath(name).absolutePath,
-            mode,
-            factory,
-            errorHandler
-        )
-    }
-
-    // endregion
-
-    // region IAP - Specific
-
     override fun deleteDatabase(name: String): Boolean {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction { realm1 ->
@@ -243,21 +288,23 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     private fun setupRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
         val configSettings =
-            FirebaseRemoteConfigSettings.Builder()
+            FirebaseRemoteConfigSettings
+                .Builder()
                 .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 1800)
                 .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()
-        remoteConfig.addOnConfigUpdateListener(object : ConfigUpdateListener {
+        remoteConfig.addOnConfigUpdateListener(
+            object : ConfigUpdateListener {
+                override fun onUpdate(configUpdate: ConfigUpdate) {
+                    remoteConfig.activate()
+                }
 
-            override fun onUpdate(configUpdate: ConfigUpdate) {
-                remoteConfig.activate()
-            }
-
-            override fun onError(error: FirebaseRemoteConfigException) {
-            }
-        })
+                override fun onError(error: FirebaseRemoteConfigException) {
+                }
+            },
+        )
     }
 
     private fun setupNotifications() {
@@ -291,7 +338,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onActivityCreated(
         p0: Activity,
-        p1: Bundle?
+        p1: Bundle?,
     ) {
     }
 
@@ -300,7 +347,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onActivitySaveInstanceState(
         p0: Activity,
-        p1: Bundle
+        p1: Bundle,
     ) {
     }
 
@@ -308,9 +355,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     }
 
     companion object {
-        fun getInstance(context: Context): HabiticaBaseApplication? {
-            return context.applicationContext as? HabiticaBaseApplication
-        }
+        fun getInstance(context: Context): HabiticaBaseApplication? = context.applicationContext as? HabiticaBaseApplication
 
         fun deleteDatabase(context: Context) {
             val realm = Realm.getDefaultInstance()
@@ -318,13 +363,20 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             realm.close()
         }
 
-        fun logout(context: Context, user: User? = null) {
+        fun logout(
+            context: Context,
+            user: User? = null,
+        ) {
             MainScope().launchCatching {
                 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-                val instance      = getInstance(context)
-                val pushManager   = instance?.pushNotificationManager
-                val deviceToken   = preferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "") ?: ""
+                val instance = getInstance(context)
 
+                instance?.clearables?.forEach { it.clear() }
+
+                val pushManager = instance?.pushNotificationManager
+                val deviceToken = preferences.getString(DEVICE_TOKEN_PREFERENCE_KEY, "") ?: ""
+
+                val serverURL = preferences.getString("server_url", null)
                 val useReminder = preferences.getBoolean("use_reminder", false)
                 val reminderTime = preferences.getString("reminder_time", "19:00")
                 val lightMode = preferences.getString("theme_mode", "system")
@@ -338,24 +390,34 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 }
 
                 deleteDatabase(context)
+
+                instance?.analytics?.setAnalyticsConsent(false)
+                instance?.analytics?.clearUserID()
+
                 preferences.edit {
                     clear()
+                    putString("server_url", serverURL)
                     putBoolean("use_reminder", useReminder)
                     putString("reminder_time", reminderTime)
                     putString("theme_mode", lightMode)
                     putString("launch_screen", launchScreen)
+                    putBoolean("analytics_consent_given", false)
                 }
+
                 pushManager?.clearUser()
 
                 instance?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
+                instance?.authenticationHandler?.clear()
                 Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
+                runCatching { WidgetRefreshWorker.clearAllForLogout(context.applicationContext) }
+                runCatching { CronBoundaryRefreshWorker.cancel(context.applicationContext) }
                 startActivity(OnboardingActivity::class.java, context)
             }
         }
 
         private fun startActivity(
             activityClass: Class<*>,
-            context: Context
+            context: Context,
         ) {
             val intent = Intent(context, activityClass)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

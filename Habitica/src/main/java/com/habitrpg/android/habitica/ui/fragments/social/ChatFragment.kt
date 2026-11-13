@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
-import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -40,8 +41,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 open class ChatFragment : BaseFragment<FragmentChatBinding>() {
@@ -49,13 +49,11 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentChatBinding {
-        return FragmentChatBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentChatBinding = FragmentChatBinding.inflate(inflater, container, false)
 
     open val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+        ownerProducer = { requireParentFragment() },
     )
 
     @Inject
@@ -68,11 +66,17 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
     private var isFirstRefresh = true
+    private var hasPendingRefresh = false
     var autocompleteContext: String = ""
+
+    override fun onDestroy() {
+        socialRepository.close()
+        super.onDestroy()
+    }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -101,11 +105,18 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 socialRepository,
                 autocompleteContext,
                 viewModel.groupID,
-                configManager.enableUsernameAutocomplete()
+                configManager.enableUsernameAutocomplete(),
             )
 
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+
+        binding?.newMessageIndicator?.setOnClickListener {
+            hasPendingRefresh = false
+            hideNewMessageIndicator()
+            binding?.recyclerView?.smoothScrollToPosition(0)
+            viewModel.retrieveGroupChat { _ -> }
+        }
 
         binding?.recyclerView?.addOnScrollListener(
             object :
@@ -113,15 +124,48 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 override fun onScrolled(
                     recyclerView: androidx.recyclerview.widget.RecyclerView,
                     dx: Int,
-                    dy: Int
+                    dy: Int,
                 ) {
                     super.onScrolled(recyclerView, dx, dy)
-                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
+                    val wasScrolledToBottom = isScrolledToBottom
+                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() <= 3
+
+                    if (isScrolledToBottom && !wasScrolledToBottom && hasPendingRefresh) {
+                        hasPendingRefresh = false
+                        hideNewMessageIndicator()
+                        viewModel.retrieveGroupChat { _ -> }
+                    }
+
+                    if (isScrolledToBottom) {
+                        hideNewMessageIndicator()
+                    }
+
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = layoutManager.itemCount
+                    if (lastVisibleItemPosition >= totalItemCount - 5 && totalItemCount > 0) {
+                        viewModel.loadOlderMessages { }
+                    }
                 }
-            }
+            },
         )
 
         viewModel.chatmessages.observe(viewLifecycleOwner) { setChatMessages(it) }
+
+        if (viewModel.groupViewType == GroupViewType.PARTY) {
+            (viewModel as? com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel)?.getMembersData()?.observe(
+                viewLifecycleOwner,
+            ) { members ->
+                binding?.chatBarView?.groupMembers = members
+            }
+        } else {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
+                viewModel.getGroupData().value?.id?.let { groupId ->
+                    socialRepository.getGroupMembers(groupId).collect { members ->
+                        binding?.chatBarView?.groupMembers = members
+                    }
+                }
+            }
+        }
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
             viewModel.updateUser("flags.communityGuidelinesAccepted", true)
@@ -134,44 +178,43 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 it?.flags?.communityGuidelinesAccepted == true
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 while (true) {
                     refresh()
-                    delay(30.toDuration(DurationUnit.SECONDS))
+                    delay(30.seconds)
                 }
             }
         }
-        
+
         binding?.root.apply {
             ViewCompat.setOnApplyWindowInsetsListener(this!!) { _, insets ->
                 val ime = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                 val nav = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
 
-                binding?.chatBarView?.translationY = -ime.toFloat()
+                val keyboardOffset = (ime - nav).coerceAtLeast(0)
+
+                binding?.chatBarView?.translationY = -keyboardOffset.toFloat()
                 binding?.chatBarView?.setPadding(
                     binding?.chatBarView!!.paddingLeft,
                     binding?.chatBarView!!.paddingTop,
                     binding?.chatBarView!!.paddingRight,
-                    nav
+                    nav,
                 )
 
-
-                binding?.recyclerView?.translationY = -ime.toFloat()
-
+                binding?.recyclerView?.translationY = -keyboardOffset.toFloat()
 
                 binding?.recyclerView?.setPadding(
                     binding?.recyclerView!!.paddingLeft,
                     binding?.recyclerView!!.paddingTop,
                     binding?.recyclerView!!.paddingRight,
-                    ime + nav
+                    ime.coerceAtLeast(nav),
                 )
 
                 insets
             }
             ViewCompat.requestApplyInsets(this)
         }
-
     }
 
     override fun onResume() {
@@ -189,11 +232,14 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun refresh() {
-        viewModel.retrieveGroupChat {
+        viewModel.retrieveGroupChat { hasNewMessages ->
             if (isScrolledToBottom || isFirstRefresh) {
                 binding?.recyclerView?.scrollToPosition(0)
+                isFirstRefresh = false
+            } else if (hasNewMessages) {
+                hasPendingRefresh = true
+                showNewMessageIndicator()
             }
-            isFirstRefresh = false
         }
     }
 
@@ -217,7 +263,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             showSnackbar(
                 activity.snackbarContainer,
                 getString(R.string.chat_message_copied),
-                SnackbarDisplayType.NORMAL
+                SnackbarDisplayType.NORMAL,
             )
         }
     }
@@ -231,7 +277,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 messageText = chatMessage.text ?: "",
                 groupId = chatMessage.groupId ?: "",
                 userIdBeingReported = chatMessage.userID ?: "",
-                sourceView = this::class.simpleName ?: ""
+                sourceView = this::class.simpleName ?: "",
             )
 
         reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)
@@ -254,23 +300,50 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.data = chatMessages
         binding?.chatBarView?.chatMessages = chatMessages
 
-         if (chatMessages.isEmpty()) {
-             binding?.recyclerView?.state = RecyclerViewState.EMPTY
-             binding?.chatEmptyContainer?.fadeInAnimation()
+        if (chatMessages.isEmpty()) {
+            binding?.recyclerView?.state = RecyclerViewState.EMPTY
+            binding?.chatEmptyContainer?.fadeInAnimation()
         } else {
-             binding?.recyclerView?.state = RecyclerViewState.DISPLAYING_DATA
-             binding?.chatEmptyContainer?.isGone = true
+            binding?.recyclerView?.state = RecyclerViewState.DISPLAYING_DATA
+            binding?.chatEmptyContainer?.isGone = true
         }
 
         viewModel.gotNewMessages = true
         markMessagesAsSeen()
     }
 
-
     private fun sendChatMessage(chatText: String) {
         viewModel.postGroupChat(
             chatText,
-            { binding?.recyclerView?.scrollToPosition(0) }
+            { binding?.recyclerView?.scrollToPosition(0) },
         ) { binding?.chatBarView?.message = chatText }
+    }
+
+    private fun showNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility != View.VISIBLE) {
+                visibility = View.VISIBLE
+                alpha = 0f
+                translationY = 50f
+                animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(200)
+                    .start()
+            }
+        }
+    }
+
+    private fun hideNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (isVisible) {
+                animate()
+                    .alpha(0f)
+                    .translationY(50f)
+                    .setDuration(200)
+                    .withEndAction { visibility = View.GONE }
+                    .start()
+            }
+        }
     }
 }

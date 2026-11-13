@@ -1,21 +1,22 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemPurchaseBinding
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -28,10 +29,8 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentGiftGemPurchaseBinding {
-        return FragmentGiftGemPurchaseBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentGiftGemPurchaseBinding = FragmentGiftGemPurchaseBinding.inflate(inflater, container, false)
 
     var giftedMember: Member? = null
         @SuppressLint("SetTextI18n")
@@ -47,9 +46,22 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     private var purchaseHandler: PurchaseHandler? = null
 
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        setupCheckout()
+    }
+
+    override fun onDestroy() {
+        socialRepository.close()
+        super.onDestroy()
+    }
+
     fun setupCheckout() {
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
-            val skus = purchaseHandler?.getAllGemSKUs()
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            val skus = purchaseHandler?.loadGemProducts()
             withContext(Dispatchers.Main) {
                 for (sku in skus ?: emptyList()) {
                     updateButtonLabel(sku, sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
@@ -64,14 +76,14 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     private fun updateButtonLabel(
         sku: ProductDetails,
-        price: String
+        price: String,
     ) {
         val matchingView: GemPurchaseOptionsView? =
-            when (sku.productId) {
-                PurchaseTypes.PURCHASE_4_GEMS -> binding?.gems4View
-                PurchaseTypes.PURCHASE_21_GEMS -> binding?.gems21View
-                PurchaseTypes.PURCHASE_42_GEMS -> binding?.gems42View
-                PurchaseTypes.PURCHASE_84_GEMS -> binding?.gems84View
+            when (HabiticaProduct.forSku(sku.productId)) {
+                HabiticaProduct.PURCHASE_4_GEMS -> binding?.gems4View
+                HabiticaProduct.PURCHASE_21_GEMS -> binding?.gems21View
+                HabiticaProduct.PURCHASE_42_GEMS -> binding?.gems42View
+                HabiticaProduct.PURCHASE_84_GEMS -> binding?.gems84View
                 else -> return
             }
         if (matchingView != null) {
@@ -85,7 +97,9 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     private fun purchaseGems(sku: ProductDetails) {
         giftedMember?.id?.let {
-            activity?.let { it1 -> purchaseHandler?.purchase(it1, sku, it, giftedMember?.username) }
+            lifecycleScope.launchCatching {
+                purchaseHandler?.purchase(requireActivity(), sku, it, giftedMember?.username)
+            }
         }
     }
 }

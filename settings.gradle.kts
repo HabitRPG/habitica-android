@@ -18,9 +18,11 @@ pluginManagement {
         mavenLocal()
     }
     resolutionStrategy.eachPlugin {
-        if (requested.id.id == "realm-android") useModule(
-            "io.realm:realm-gradle-plugin:${requested.version}"
-        )
+        if (requested.id.id == "realm-android") {
+            useModule(
+                "io.realm:realm-gradle-plugin:${requested.version}",
+            )
+        }
     }
 }
 
@@ -41,7 +43,7 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.6.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 rootProject.name = "habitica-android"

@@ -8,8 +8,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SpeechbubbleBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
-class SpeechBubbleView(context: Context, attrs: AttributeSet) :
-    FrameLayout(context, attrs),
+class SpeechBubbleView(
+    context: Context,
+    attrs: AttributeSet,
+) : FrameLayout(context, attrs),
     View.OnClickListener {
     internal var binding = SpeechbubbleBinding.inflate(context.layoutInflater, this, true)
     private var showNextListener: ShowNextListener? = null
@@ -20,7 +22,7 @@ class SpeechBubbleView(context: Context, attrs: AttributeSet) :
                 attrs,
                 R.styleable.SpeechBubbleView,
                 0,
-                0
+                0,
             )
 
         binding.namePlate.text = attributes.getString(R.styleable.SpeechBubbleView_namePlate)

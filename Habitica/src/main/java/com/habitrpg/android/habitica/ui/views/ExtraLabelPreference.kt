@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R
 
 class ExtraLabelPreference(
     context: Context,
-    attrs: AttributeSet?
+    attrs: AttributeSet?,
 ) : Preference(context, attrs) {
     var extraText: String? = null
     var extraTextColor: Int? = null

@@ -2,11 +2,15 @@ package com.habitrpg.android.habitica.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.Strictness;
 import com.google.gson.reflect.TypeToken;
+import com.habitrpg.android.habitica.helpers.FirebasePerformanceMonitor;
+import com.habitrpg.android.habitica.helpers.PerformanceMonitor;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
 import com.habitrpg.android.habitica.models.Skill;
+import com.habitrpg.android.habitica.models.SpriteSubstitutionContext;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
 import com.habitrpg.android.habitica.models.WorldState;
@@ -24,6 +28,8 @@ import com.habitrpg.android.habitica.models.social.Group;
 import com.habitrpg.android.habitica.models.tasks.GroupAssignedDetails;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
+import com.habitrpg.android.habitica.models.user.Gear;
+import com.habitrpg.android.habitica.models.user.OwnedEquipment;
 import com.habitrpg.android.habitica.models.user.OwnedItem;
 import com.habitrpg.android.habitica.models.user.OwnedMount;
 import com.habitrpg.android.habitica.models.user.OwnedPet;
@@ -47,6 +53,7 @@ import com.habitrpg.android.habitica.utils.GroupSerialization;
 import com.habitrpg.android.habitica.utils.InviteResponseDeserializer;
 import com.habitrpg.android.habitica.utils.MemberSerialization;
 import com.habitrpg.android.habitica.utils.NotificationDeserializer;
+import com.habitrpg.android.habitica.utils.OwnedEquipmentListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedItemListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedMountListDeserializer;
 import com.habitrpg.android.habitica.utils.OwnedPetListDeserializer;
@@ -56,6 +63,7 @@ import com.habitrpg.android.habitica.utils.QuestDeserializer;
 import com.habitrpg.android.habitica.utils.QuestDropItemsListSerialization;
 import com.habitrpg.android.habitica.utils.SkillDeserializer;
 import com.habitrpg.android.habitica.utils.SocialAuthenticationDeserializer;
+import com.habitrpg.android.habitica.utils.SpriteSubstitutionContextListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskListDeserializer;
 import com.habitrpg.android.habitica.utils.TaskSerializer;
 import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
@@ -75,6 +83,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GSonFactoryCreator {
 
     public static Gson createGson() {
+        return createGson(new FirebasePerformanceMonitor());
+    }
+
+    public static Gson createGson(PerformanceMonitor performanceMonitor) {
         Type skillListType = new TypeToken<List<Skill>>() {
         }.getType();
         Type taskTagClassListType = new TypeToken<RealmList<Tag>>() {
@@ -89,7 +101,7 @@ public class GSonFactoryCreator {
         }.getType();
         Type questCollectListType = new TypeToken<RealmList<QuestCollect>>() {
         }.getType();
-        Type chatMessageListType = new TypeToken<RealmList<ChatMessage>>() {
+        Type spriteSubstitutionContextListType = new TypeToken<RealmList<SpriteSubstitutionContext>>() {
         }.getType();
         Type challengeListType = new TypeToken<List<Challenge>>() {
         }.getType();
@@ -98,6 +110,8 @@ public class GSonFactoryCreator {
         Type questDropItemListType = new TypeToken<RealmList<QuestDropItem>>() {
         }.getType();
         Type ownedItemListType = new TypeToken<RealmList<OwnedItem>>() {
+        }.getType();
+        Type ownedEquipmentListType = new TypeToken<RealmList<OwnedEquipment>>() {
         }.getType();
         Type ownedPetListType = new TypeToken<RealmList<OwnedPet>>() {
         }.getType();
@@ -113,7 +127,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(Boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(boolean.class, new BooleanAsIntAdapter())
                 .registerTypeAdapter(skillListType, new SkillDeserializer())
-                .registerTypeAdapter(TaskList.class, new TaskListDeserializer())
+                .registerTypeAdapter(TaskList.class, new TaskListDeserializer(performanceMonitor))
                 .registerTypeAdapter(Purchases.class, new PurchasedDeserializer())
                 .registerTypeAdapter(customizationListType, new CustomizationDeserializer())
                 .registerTypeAdapter(tutorialStepListType, new TutorialStepListDeserializer())
@@ -123,16 +137,17 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(itemDataListType, new EquipmentListDeserializer())
                 .registerTypeAdapter(ChatMessage.class, new ChatMessageDeserializer())
                 .registerTypeAdapter(Task.class, new TaskSerializer())
-                .registerTypeAdapter(ContentResult.class, new ContentDeserializer())
+                .registerTypeAdapter(ContentResult.class, new ContentDeserializer(performanceMonitor))
                 .registerTypeAdapter(FeedResponse.class, new FeedResponseDeserializer())
                 .registerTypeAdapter(Challenge.class, new ChallengeDeserializer())
-                .registerTypeAdapter(User.class, new UserDeserializer())
+                .registerTypeAdapter(User.class, new UserDeserializer(performanceMonitor))
                 .registerTypeAdapter(questCollectListType, new QuestCollectDeserializer())
                 .registerTypeAdapter(challengeListType, new ChallengeListDeserializer())
                 .registerTypeAdapter(challengeRealmListType, new ChallengeListDeserializer())
                 .registerTypeAdapter(questDropItemListType, new QuestDropItemsListSerialization())
                 .registerTypeAdapter(ownedItemListType, new OwnedItemListDeserializer())
                 .registerTypeAdapter(ownedPetListType, new OwnedPetListDeserializer())
+                .registerTypeAdapter(ownedEquipmentListType, new OwnedEquipmentListDeserializer())
                 .registerTypeAdapter(ownedMountListType, new OwnedMountListDeserializer())
                 .registerTypeAdapter(achievementsListType, new AchievementListDeserializer())
                 .registerTypeAdapter(assignedDetailsListType, new AssignedDetailsDeserializer())
@@ -143,13 +158,18 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(FindUsernameResult.class, new FindUsernameResultDeserializer())
                 .registerTypeAdapter(Notification.class, new NotificationDeserializer())
                 .registerTypeAdapter(SocialAuthentication.class, new SocialAuthenticationDeserializer())
+                .registerTypeAdapter(spriteSubstitutionContextListType, new SpriteSubstitutionContextListDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .serializeNulls()
-                .setLenient()
+                .setStrictness(Strictness.LENIENT)
                 .create();
     }
 
     public static GsonConverterFactory create() {
         return GsonConverterFactory.create(createGson());
+    }
+
+    public static GsonConverterFactory create(PerformanceMonitor performanceMonitor) {
+        return GsonConverterFactory.create(createGson(performanceMonitor));
     }
 }

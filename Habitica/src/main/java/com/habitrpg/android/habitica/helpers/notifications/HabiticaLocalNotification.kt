@@ -17,14 +17,15 @@ import java.util.Date
  */
 abstract class HabiticaLocalNotification(
     protected var context: Context,
-    protected var identifier: String?
+    protected var identifier: String?,
 ) {
     protected var data: Map<String, String>? = null
     protected var title: String? = null
     protected var message: String? = null
 
     protected var notificationBuilder =
-        NotificationCompat.Builder(context, "default")
+        NotificationCompat
+            .Builder(context, "default")
             .setSmallIcon(R.drawable.ic_gryphon_white)
             .setAutoCancel(true)
 
@@ -39,7 +40,7 @@ abstract class HabiticaLocalNotification(
     open fun notifyLocally(
         title: String?,
         message: String?,
-        data: MutableMap<String, String>
+        data: MutableMap<String, String>,
     ) {
         this.title = title
         this.message = message
@@ -70,7 +71,7 @@ abstract class HabiticaLocalNotification(
 
     protected open fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>
+        data: Map<String, String>,
     ) {
         val intent = Intent(context, MainActivity::class.java)
         configureMainIntent(intent)
@@ -80,7 +81,7 @@ abstract class HabiticaLocalNotification(
                 context,
                 3000,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
             )
         notificationBuilder.setContentIntent(pendingIntent)
     }
@@ -93,7 +94,5 @@ abstract class HabiticaLocalNotification(
         }
     }
 
-    protected open fun getNotificationID(data: MutableMap<String, String>): Int {
-        return Date().time.toInt()
-    }
+    protected open fun getNotificationID(data: MutableMap<String, String>): Int = Date().time.toInt()
 }

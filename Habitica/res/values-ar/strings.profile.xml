@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_pets_and_mounts">الحيوانات الأليفة والمركبات</string>
+    <string name="profile_pets_found">الحيوانات الأليفة التي تم العثور عليها</string>
+    <string name="profile_mounts_tamed">المركوبات المروّضة</string>
+    <string name="profile_loading_data">جاري تحميل بيانات العضو…</string>
+    <string name="profile_send_message_to">إرسال رسالة إلى %s</string>
+    <string name="profile_message_sent_to">تم إرسال الرسالة إلى %s</string>
+    <string name="profile_level">المستوى:</string>
+    <string name="profile_class_bonus">مكافأة الفئة:</string>
+    <string name="profile_allocated">النقاط الموزعة:</string>
+    <string name="profile_achievements">الإنجازات</string>
+</resources>

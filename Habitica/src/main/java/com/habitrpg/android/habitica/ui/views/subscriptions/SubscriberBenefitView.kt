@@ -20,74 +20,71 @@ import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import javax.inject.Inject
 
 class SubscriberBenefitView
-@JvmOverloads
-constructor(
-    context: Context,
-    attrs: AttributeSet? = null
-) : LinearLayout(context, attrs) {
-    private val binding: SubscriptionBenefitsBinding = SubscriptionBenefitsBinding.inflate(context.layoutInflater, this)
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+    ) : LinearLayout(context, attrs) {
+        private val binding: SubscriptionBenefitsBinding = SubscriptionBenefitsBinding.inflate(context.layoutInflater, this)
 
-    val monthFormatter = SimpleDateFormat("MMMM", Locale.getDefault())
+        val monthFormatter = SimpleDateFormat("MMMM", Locale.getDefault())
 
-    @Inject
-    lateinit var configManager: AppConfigManager
+        var configManager: AppConfigManager
+        var inventoryRepository: InventoryRepository
 
-    @Inject
-    lateinit var inventoryRepository: InventoryRepository
+        @EntryPoint
+        @InstallIn(SingletonComponent::class)
+        interface ThisEntryPoint {
+            fun configManager(): AppConfigManager
 
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface ThisEntryPoint {
-        fun configManager(): AppConfigManager
-
-        fun inventoryRepository(): InventoryRepository
-    }
-
-    init {
-        orientation = VERTICAL
-        val hiltEntryPoint =
-            EntryPointAccessors.fromApplication(context, ThisEntryPoint::class.java)
-        configManager = hiltEntryPoint.configManager()
-        inventoryRepository = hiltEntryPoint.inventoryRepository()
-
-        MainScope().launchCatching {
-            inventoryRepository.getLatestMysteryItemAndSet().collectLatest { pair ->
-                val item = pair.first
-                val set = pair.second
-                binding.subBenefitsMysteryItemIcon.loadImage(
-                    "shop_set_mystery_${
-                    item.key?.split(
-                        "_"
-                    )?.last()
-                    }"
-                )
-                binding.subBenefitsMysteryItemText.text =
-                    context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), set?.text ?: context.getString(R.string.set))
-            }
+            fun inventoryRepository(): InventoryRepository
         }
-        binding.subBenefitsMysteryItemText.text =
-            context.getString(R.string.subscribe_listitem3_description_alt, monthFormatter.format(Date()), context.getString(R.string.set))
 
-        binding.benefitArmoireWrapper.isVisible = configManager.enableArmoireSubs()
-        binding.benefitFaintWrapper.isVisible = configManager.enableFaintSubs()
-    }
+        init {
+            orientation = VERTICAL
+            val hiltEntryPoint =
+                EntryPointAccessors.fromApplication(context, ThisEntryPoint::class.java)
+            configManager = hiltEntryPoint.configManager()
+            inventoryRepository = hiltEntryPoint.inventoryRepository()
 
-    fun hideDeathBenefit() {
-        binding.benefitFaintWrapper.isVisible = false
-    }
+            MainScope().launchCatching {
+                inventoryRepository.getLatestMysteryItemAndSet().collectLatest { pair ->
+                    val item = pair.first
+                    val set = pair.second
+                    binding.subBenefitsMysteryItemIcon.loadImage(
+                        "shop_set_mystery_${
+                            item.key?.split(
+                                "_",
+                            )?.last()
+                        }",
+                    )
+                    binding.subBenefitsMysteryItemText.text =
+                        context.getString(
+                            R.string.subscribe_listitem3_description_alt,
+                            monthFormatter.format(Date()),
+                            set?.text ?: context.getString(R.string.set),
+                        )
+                }
+            }
+            binding.subBenefitsMysteryItemText.text =
+                context.getString(
+                    R.string.subscribe_listitem3_description_alt,
+                    monthFormatter.format(Date()),
+                    context.getString(R.string.set),
+                )
+        }
 
-    fun hideArmoireBenefit() {
-        binding.benefitArmoireWrapper.isVisible = false
-    }
+        fun hideDeathBenefit() {
+            binding.benefitFaintWrapper.isVisible = false
+        }
 
-    fun hideGemsForGoldBenefit() {
-        binding.benefitGemsForGoldWrapper.isVisible = false
-    }
+        fun hideArmoireBenefit() {
+            binding.benefitArmoireWrapper.isVisible = false
+        }
 
-    fun hideMysticHourglassBenefit() {
-        binding.benefitHourglassesWrapper.isVisible = false
+        fun hideGemsForGoldBenefit() {
+            binding.benefitGemsForGoldWrapper.isVisible = false
+        }
     }
-}

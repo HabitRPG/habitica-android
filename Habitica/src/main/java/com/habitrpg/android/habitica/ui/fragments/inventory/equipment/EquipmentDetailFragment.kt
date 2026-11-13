@@ -50,7 +50,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
@@ -59,7 +58,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -85,10 +83,8 @@ class EquipmentDetailFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentEquipmentDetailBinding {
-        return FragmentEquipmentDetailBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentEquipmentDetailBinding = FragmentEquipmentDetailBinding.inflate(inflater, container, false)
 
     var type: String? = null
     var equippedGear: String? = null
@@ -101,13 +97,13 @@ class EquipmentDetailFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         showsBackButton = true
         hidesToolbar = true
 
         adapter.onEquip = {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.equipGear(it, isCostume ?: false)
 
                 if (this@EquipmentDetailFragment.isAdded) {
@@ -127,7 +123,7 @@ class EquipmentDetailFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -144,7 +140,7 @@ class EquipmentDetailFragment :
             EmptyItem(
                 getString(R.string.empty_title),
                 getString(R.string.empty_equipment_description),
-                null
+                null,
             ) {
                 MainNavigationController.navigate(R.id.marketFragment)
             }
@@ -152,20 +148,23 @@ class EquipmentDetailFragment :
         binding?.avatarHeader?.setContent {
             HabiticaTheme {
                 val avatar by userViewModel.user.observeAsState()
-                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.background(colorResource(R.color.window_background)),
+                ) {
                     ComposableAvatarView(
                         avatar = avatar,
                         configManager = configManager,
                         modifier =
-                        Modifier
-                            .padding(top = 6.dp, bottom = 24.dp)
-                            .size(140.dp, 147.dp)
+                            Modifier
+                                .padding(top = 6.dp, bottom = 24.dp)
+                                .size(140.dp, 147.dp),
                     )
                     Box(
                         Modifier
                             .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                             .fillMaxWidth()
-                            .height(22.dp)
+                            .height(22.dp),
                     )
                 }
             }
@@ -180,11 +179,13 @@ class EquipmentDetailFragment :
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         type?.let { gearType ->
-            lifecycleScope.launchCatching {
-                inventoryRepository.getOwnedEquipment(gearType)
+            viewLifecycleOwner.lifecycleScope.launchCatching {
+                inventoryRepository
+                    .getOwnedEquipment(gearType)
                     .combine(searchedText) { equipment, query ->
-                        if (query.isNullOrBlank()) equipment
-                        else {
+                        if (query.isNullOrBlank()) {
+                            equipment
+                        } else {
                             val tokens = query.split(" ")
                             equipment.filter { gear ->
                                 tokens.all { token ->
@@ -192,17 +193,15 @@ class EquipmentDetailFragment :
                                 }
                             }
                         }
-                    }
-                    .map { list ->
+                    }.map { list ->
                         val sorted = list.sortedBy { it.text }
                         pinnedGearKey?.let { key ->
                             sorted.sortedWith(
                                 compareBy<Equipment> { it.key != key }
-                                    .thenBy { it.text }
+                                    .thenBy { it.text },
                             )
                         } ?: sorted
-                    }
-                    .collect { adapter.data = it }
+                    }.collect { adapter.data = it }
             }
         }
     }
@@ -214,13 +213,16 @@ class EquipmentDetailFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.retrieveUser(true, true)
             binding?.refreshLayout?.isRefreshing = false
         }
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+    override fun onCreateMenu(
+        menu: Menu,
+        menuInflater: MenuInflater,
+    ) {
         menuInflater.inflate(R.menu.menu_searchable, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
@@ -232,7 +234,7 @@ class EquipmentDetailFragment :
         val suggestionAdapter = SimpleCursorAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, null, from, to, 0)
         val cursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
         for ((index, suggestion) in suggestions.withIndex()) {
-            cursor.addRow(arrayOf(index, suggestion))
+            cursor.addRow(arrayOf<Any>(index, suggestion))
         }
         suggestionAdapter.changeCursor(cursor)
         searchView.suggestionsAdapter = suggestionAdapter
@@ -242,56 +244,64 @@ class EquipmentDetailFragment :
         searchView.isIconified = false
         searchView.clearFocus()
         searchView.queryHint = getString(R.string.search_equipment)
-        searchView.findViewById<View>(androidx.appcompat.R.id.search_plate)
+        searchView
+            .findViewById<View>(androidx.appcompat.R.id.search_plate)
             .setBackgroundColor(Color.TRANSPARENT)
-        searchView.background = InsetDrawable(
-            AppCompatResources.getDrawable(requireContext(), R.drawable.search_background),
-            12.dpToPx(requireContext()),
-            0,
-            8.dpToPx(requireContext()),
-            0
+        searchView.background =
+            InsetDrawable(
+                AppCompatResources.getDrawable(requireContext(), R.drawable.search_background),
+                12.dpToPx(requireContext()),
+                0,
+                8.dpToPx(requireContext()),
+                0,
+            )
+
+        searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    searchedText.value = query
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    searchedText.value = newText
+                    val filteredCursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
+                    for ((index, suggestion) in suggestions.withIndex()) {
+                        if (suggestion.contains(newText, true)) {
+                            filteredCursor.addRow(arrayOf<Any>(index, suggestion))
+                        }
+                    }
+                    suggestionAdapter.changeCursor(filteredCursor)
+                    return false
+                }
+            },
         )
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                searchedText.value = query
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                searchedText.value = newText
-                val filteredCursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
-                for ((index, suggestion) in suggestions.withIndex()) {
-                    if (suggestion.contains(newText, true)) {
-                        filteredCursor.addRow(arrayOf(index, suggestion))
-                    }
+        searchView.setOnSuggestionListener(
+            object : SearchView.OnSuggestionListener {
+                override fun onSuggestionSelect(position: Int): Boolean {
+                    val selected = suggestionAdapter.getItem(position)
+                    searchView.setQuery((selected as MatrixCursor).getString(1), true)
+                    return false
                 }
-                suggestionAdapter.changeCursor(filteredCursor)
-                return false
-            }
-        })
 
-        searchView.setOnSuggestionListener(object : SearchView.OnSuggestionListener {
-            override fun onSuggestionSelect(position: Int): Boolean {
-                val selected = suggestionAdapter.getItem(position)
-                searchView.setQuery((selected as MatrixCursor).getString(1), true)
-                return false
-            }
-
-            override fun onSuggestionClick(position: Int): Boolean {
-                val selected = suggestionAdapter.getItem(position)
-                searchView.setQuery((selected as MatrixCursor).getString(1), true)
-                return false
-            }
-        })
+                override fun onSuggestionClick(position: Int): Boolean {
+                    val selected = suggestionAdapter.getItem(position)
+                    searchView.setQuery((selected as MatrixCursor).getString(1), true)
+                    return false
+                }
+            },
+        )
 
         mainActivity?.toolbar?.let {
             val color = ContextCompat.getColor(requireContext(), R.color.window_background)
 
-            ToolbarColorHelper.colorizeToolbar(it,
+            ToolbarColorHelper.colorizeToolbar(
+                it,
                 mainActivity,
                 backgroundColor = color,
-                appbar = mainActivity?.findViewById(R.id.appbar))
+                appbar = mainActivity?.findViewById(R.id.appbar),
+            )
         }
     }
 

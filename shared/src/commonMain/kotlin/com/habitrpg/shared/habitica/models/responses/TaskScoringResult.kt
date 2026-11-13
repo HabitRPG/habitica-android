@@ -16,7 +16,7 @@ data class TaskScoringResult(
     var hasLeveledUp: Boolean = false,
     var level: Int = 0,
     var questDamage: Double? = null,
-    var questItemsFound: Int? = null
+    var questItemsFound: Int? = null,
 ) : HParcelable {
     constructor(data: TaskDirectionData, stats: AvatarStats?) : this(
         data.hp <= 0.0,
@@ -32,7 +32,7 @@ data class TaskScoringResult(
         data.lvl > (stats?.lvl ?: 0),
         data.lvl,
         data._tmp?.quest?.progressDelta,
-        data._tmp?.quest?.collection
+        data._tmp?.quest?.collection,
     )
 
     constructor(source: HParcel) : this(
@@ -45,10 +45,13 @@ data class TaskScoringResult(
         hasLeveledUp = source.readByte() != 0.toByte(),
         level = source.readInt(),
         questDamage = source.readValue(getClassLoader(Double::class)) as? Double,
-        questItemsFound = source.readValue(getClassLoader(Int::class)) as? Int
+        questItemsFound = source.readValue(getClassLoader(Int::class)) as? Int,
     )
 
-    override fun writeToParcel(dest: HParcel, flags: Int) {
+    override fun writeToParcel(
+        dest: HParcel,
+        flags: Int,
+    ) {
         dest.writeByte(if (hasDied) 1.toByte() else 0.toByte())
         dest.writeParcelable(drop, flags)
         dest.writeDouble(experienceDelta)
@@ -61,20 +64,15 @@ data class TaskScoringResult(
         dest.writeValue(questItemsFound)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     companion object {
         @JvmField
-        final val CREATOR: HParcelable.Creator<TaskScoringResult> = object : HParcelable.Creator<TaskScoringResult> {
-            override fun createFromParcel(source: HParcel): TaskScoringResult {
-                return TaskScoringResult(source)
-            }
+        final val CREATOR: HParcelable.Creator<TaskScoringResult> =
+            object : HParcelable.Creator<TaskScoringResult> {
+                override fun createFromParcel(source: HParcel): TaskScoringResult = TaskScoringResult(source)
 
-            override fun newArray(size: Int): Array<TaskScoringResult?> {
-                return arrayOfNulls(size)
+                override fun newArray(size: Int): Array<TaskScoringResult?> = arrayOfNulls(size)
             }
-        }
     }
 }

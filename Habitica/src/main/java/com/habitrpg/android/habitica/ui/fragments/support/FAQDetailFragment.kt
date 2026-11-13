@@ -23,24 +23,27 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentFaqDetailBinding {
-        return FragmentFaqDetailBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentFaqDetailBinding = FragmentFaqDetailBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         showsBackButton = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun onDestroy() {
+        faqRepository.close()
+        super.onDestroy()
+    }
+
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,7 +53,7 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
                 binding?.questionTextView?.text = args.question
                 binding?.answerTextView?.text = MarkdownParser.parseMarkdown(args.answer)
             } else {
-                lifecycleScope.launchCatching {
+                viewLifecycleOwner.lifecycleScope.launchCatching {
                     faqRepository.getArticle(args.position).collect { faq ->
                         binding?.questionTextView?.text = faq.question
                         binding?.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)

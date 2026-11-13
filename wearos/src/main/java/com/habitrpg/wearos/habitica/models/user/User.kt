@@ -37,7 +37,5 @@ class User : Avatar {
 
     var profile: Profile? = null
 
-    override fun isValid(): Boolean {
-        return true
-    }
+    override fun isValid(): Boolean = true
 }

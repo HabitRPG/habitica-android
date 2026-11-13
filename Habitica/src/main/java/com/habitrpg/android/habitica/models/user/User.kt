@@ -21,17 +21,20 @@ import java.util.Date
 
 enum class Permission {
     MODERATOR,
-    USER_SUPPORT
+    USER_SUPPORT,
 }
 
-open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
-    fun hasPermission(permission: Permission): Boolean {
-        if (permissions?.fullAccess == true) return true
-        return when (permission) {
-            Permission.MODERATOR -> permissions?.moderator
-            Permission.USER_SUPPORT -> permissions?.userSupport
-        } == true
-    }
+open class User :
+    RealmObject(),
+    BaseMainObject,
+    Avatar,
+    VersionedObject {
+    fun hasPermission(permission: Permission): Boolean =
+        permissions?.fullAccess == true ||
+            when (permission) {
+                Permission.MODERATOR -> permissions?.moderator
+                Permission.USER_SUPPORT -> permissions?.userSupport
+            } == true
 
     override val realmClass: Class<User>
         get() = User::class.java
@@ -74,6 +77,8 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
             field.forEach { it.userID = id }
         }
     var challengeAchievements = RealmList<String>()
+    var rebirths: Int = 0
+    var rebirthLevel: Int = 0
 
     @Ignore
     var pushDevices: List<PushDevice>? = null
@@ -134,10 +139,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
         }
 
     val hasCompletedOnboarding: Boolean
-        get() {
-            val onboarding = onboardingAchievements
-            return onboarding.count { it.earned } == onboarding.size
-        }
+        get() = onboardingAchievements.all { it.earned }
 
     companion object {
         val ONBOARDING_ACHIEVEMENT_KEYS =

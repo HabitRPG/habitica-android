@@ -5,13 +5,13 @@ import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -19,21 +19,20 @@ import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 abstract class BaseTaskViewHolder(
     itemView: View,
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var openTaskFunc: ((Task, View) -> Unit),
     var brokenTaskFunc: ((Task) -> Unit),
-    var assignedTextProvider: GroupPlanInfoProvider?
-) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
+    var assignedTextProvider: GroupPlanInfoProvider?,
+) : BindableViewHolder<Task>(itemView),
+    View.OnTouchListener {
     private val scope = MainScope()
 
     var task: Task? = null
@@ -55,7 +54,6 @@ abstract class BaseTaskViewHolder(
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
     private val approvalRequiredTextView: TextView =
         itemView.findViewById(R.id.approvalRequiredTextField)
-    private val expandNotesButton: Button? = itemView.findViewById(R.id.expand_notes_button)
     private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
     private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
     protected val taskGray: Int =
@@ -66,7 +64,6 @@ abstract class BaseTaskViewHolder(
 
     private var openTaskDisabled: Boolean = false
     private var taskActionsDisabled: Boolean = false
-    private var notesExpanded = false
 
     protected open val taskIconWrapperIsVisible: Boolean
         get() {
@@ -87,7 +84,7 @@ abstract class BaseTaskViewHolder(
             if (specialTaskTextView?.visibility == View.VISIBLE) {
                 isVisible = true
             }
-            if (this.streakTextView.visibility == View.VISIBLE) {
+            if (this.streakTextView.isVisible) {
                 isVisible = true
             }
             return isVisible
@@ -105,45 +102,18 @@ abstract class BaseTaskViewHolder(
         notesTextView?.movementMethod = LinkMovementMethod.getInstance()
         titleTextView.movementMethod = LinkMovementMethod.getInstance()
 
-        expandNotesButton?.setOnClickListener {
-            notesExpanded = !notesExpanded
-            updateExpandedTaskLogic()
-        }
         iconViewChallenge?.setOnClickListener {
             task?.let { t ->
                 if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
             }
         }
-        notesTextView?.addEllipsesListener(
-            object : EllipsisTextView.EllipsisListener {
-                override fun ellipsisStateChanged(ellipses: Boolean) {
-                    scope.launch(Dispatchers.Main.immediate) {
-                        if (ellipses && notesTextView.maxLines != 3) {
-                            notesTextView.maxLines = 3
-                        }
-                        expandNotesButton?.visibility =
-                            if (ellipses || notesExpanded) View.VISIBLE else View.GONE
-                    }
-                }
-            }
-        )
         context = itemView.context
-    }
-
-    private fun updateExpandedTaskLogic() {
-        if (notesExpanded) {
-            notesTextView?.maxLines = 100
-            expandNotesButton?.text = context.getString(R.string.collapse_notes)
-        } else {
-            notesTextView?.maxLines = 8
-            expandNotesButton?.text = context.getString(R.string.expand_notes)
-        }
     }
 
     override fun bind(
         data: Task,
         position: Int,
-        displayMode: String
+        displayMode: String,
     ) {
         bind(data, position, displayMode, null)
     }
@@ -152,25 +122,20 @@ abstract class BaseTaskViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?
+        ownerID: String?,
     ) {
-        notesExpanded = false
         task = data
         itemView.setBackgroundColor(context.getThemeColor(R.attr.colorContentBackground))
 
-        expandNotesButton?.visibility = View.GONE
-        notesExpanded = false
-        notesTextView?.maxLines = 8
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
-            updateExpandedTaskLogic()
         } else {
             notesTextView?.visibility = View.GONE
         }
 
         val titleText = data.text ?: ""
-        if (!MarkdownParser.containsMarkdown(titleText)) {
+        if (!MarkdownParser.containsMarkdown(titleText) && !EmojiParser.containsEmoji(titleText)) {
             titleTextView.text = titleText
         } else {
             val parsedText = MarkdownParser.parseMarkdown(titleText)
@@ -180,7 +145,7 @@ abstract class BaseTaskViewHolder(
 
         if (displayMode != "minimal") {
             val notes = data.notes ?: ""
-            if (!MarkdownParser.containsMarkdown(notes)) {
+            if (!MarkdownParser.containsMarkdown(notes) && !EmojiParser.containsEmoji(notes)) {
                 notesTextView?.text = notes
             } else {
                 val parsedNotes = MarkdownParser.parseMarkdown(notes)
@@ -232,14 +197,18 @@ abstract class BaseTaskViewHolder(
             assignedTextView.text =
                 assignedTextProvider?.assignedTextForTask(
                     context.resources,
-                    data.group?.assignedUsers ?: emptyList()
+                    data.group?.assignedUsers ?: emptyList(),
                 )
             assignedTextView.visibility = View.VISIBLE
         } else {
             assignedTextView.visibility = View.GONE
         }
 
-        val completedCount = data.group?.assignedUsersDetail?.filter { it.completed }?.size ?: 0
+        val completedCount =
+            data.group
+                ?.assignedUsersDetail
+                ?.filter { it.completed }
+                ?.size ?: 0
         if (completedCount > 0) {
             completedCountTextView.text =
                 "$completedCount/${data.group?.assignedUsersDetail?.size}"
@@ -263,7 +232,7 @@ abstract class BaseTaskViewHolder(
 
     override fun onTouch(
         view: View?,
-        motionEvent: MotionEvent?
+        motionEvent: MotionEvent?,
     ): Boolean {
         if (motionEvent != null) {
             if (motionEvent.action != MotionEvent.ACTION_UP) return true
@@ -312,7 +281,7 @@ abstract class BaseTaskViewHolder(
 
     open fun setDisabled(
         openTaskDisabled: Boolean,
-        taskActionsDisabled: Boolean
+        taskActionsDisabled: Boolean,
     ) {
         this.openTaskDisabled = openTaskDisabled
         this.taskActionsDisabled = taskActionsDisabled

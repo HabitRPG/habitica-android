@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.withStyledAttributes
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
@@ -24,40 +25,37 @@ class SupportCollapsibleSection : LinearLayout {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
         context,
         attrs,
-        defStyle
+        defStyle,
     ) {
         init(attrs, defStyle)
     }
 
     private fun init(
         attrs: AttributeSet?,
-        defStyle: Int
+        defStyle: Int,
     ) {
         val binding = SupportCollapsibleSectionBinding.inflate(context.layoutInflater, this)
-        val a =
-            context.obtainStyledAttributes(
-                attrs,
-                R.styleable.SupportCollapsibleSection,
-                defStyle,
-                0
+        context.withStyledAttributes(
+            attrs,
+            R.styleable.SupportCollapsibleSection,
+            defStyle,
+            0,
+        ) {
+            orientation = VERTICAL
+
+            binding.titleView.text = getString(R.styleable.SupportCollapsibleSection_title)
+            binding.subtitleView.text = getString(R.styleable.SupportCollapsibleSection_subtitle)
+            binding.descriptionView.text =
+                MarkdownParser.parseMarkdown(getString(R.styleable.SupportCollapsibleSection_description))
+            binding.titleView.setTextColor(
+                getColor(
+                    R.styleable.SupportCollapsibleSection_titleColor,
+                    ContextCompat.getColor(context, R.color.text_primary),
+                ),
             )
 
-        orientation = VERTICAL
-
-        binding.titleView.text = a.getString(R.styleable.SupportCollapsibleSection_title)
-        binding.subtitleView.text = a.getString(R.styleable.SupportCollapsibleSection_subtitle)
-        binding.descriptionView.text =
-            MarkdownParser.parseMarkdown(a.getString(R.styleable.SupportCollapsibleSection_description))
-        binding.titleView.setTextColor(
-            a.getColor(
-                R.styleable.SupportCollapsibleSection_titleColor,
-                ContextCompat.getColor(context, R.color.text_primary)
-            )
-        )
-
-        background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
-
-        a.recycle()
+            background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
+        }
 
         setOnClickListener {
             val shouldBeVisible = binding.descriptionView.visibility != View.VISIBLE

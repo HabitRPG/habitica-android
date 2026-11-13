@@ -3,7 +3,9 @@ package com.habitrpg.android.habitica.models
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Tag : RealmObject(), BaseObject {
+open class Tag :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var id: String = ""
 
@@ -19,7 +21,5 @@ open class Tag : RealmObject(), BaseObject {
         return super.equals(other)
     }
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+    override fun hashCode(): Int = id.hashCode()
 }

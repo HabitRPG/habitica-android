@@ -4,14 +4,11 @@ import com.habitrpg.android.habitica.data.local.ContentLocalRepository
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import io.realm.Realm
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
 
-open class RealmContentLocalRepository(realm: Realm) :
-    RealmBaseLocalRepository(realm),
+open class RealmContentLocalRepository(
+    realm: Realm,
+) : RealmBaseLocalRepository(realm),
     ContentLocalRepository {
     override fun saveContent(contentResult: ContentResult) {
         executeTransaction { realm1 ->
@@ -24,6 +21,7 @@ open class RealmContentLocalRepository(realm: Realm) :
             realm1.insertOrUpdate(contentResult.food)
             realm1.insertOrUpdate(contentResult.hatchingPotions)
             realm1.insertOrUpdate(contentResult.special)
+            realm1.insertOrUpdate(contentResult.categoryOptions)
 
             realm1.insertOrUpdate(contentResult.pets)
             realm1.insertOrUpdate(contentResult.mounts)
@@ -37,14 +35,10 @@ open class RealmContentLocalRepository(realm: Realm) :
         }
     }
 
-    override fun getWorldState(): Flow<WorldState> {
-        return realm.where(WorldState::class.java)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded && it.size > 0 }
-            .map { it.first() }
-            .filterNotNull()
-    }
+    override fun getWorldState(): Flow<WorldState> =
+        safeFindOne {
+            it.where(WorldState::class.java)
+        }
 
     override fun saveWorldState(worldState: WorldState) {
         save(worldState)

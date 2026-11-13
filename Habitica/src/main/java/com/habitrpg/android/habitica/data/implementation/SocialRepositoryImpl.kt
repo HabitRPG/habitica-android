@@ -28,12 +28,12 @@ import java.util.UUID
 class SocialRepositoryImpl(
     localRepository: SocialLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler
+    authenticationHandler: AuthenticationHandler,
 ) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, authenticationHandler),
     SocialRepository {
     override suspend fun transferGroupOwnership(
         groupID: String,
-        userID: String
+        userID: String,
     ): Group? {
         val group =
             localRepository.getGroup(groupID).first()?.let { localRepository.getUnmanagedCopy(it) }
@@ -43,56 +43,49 @@ class SocialRepositoryImpl(
 
     override suspend fun removeMemberFromGroup(
         groupID: String,
-        userID: String
+        userID: String,
     ): List<Member>? {
         apiClient.removeMemberFromGroup(groupID, userID)
         return retrievePartyMembers(groupID, true)
     }
 
-    override suspend fun blockMember(userID: String): List<String>? {
-        return apiClient.blockMember(userID)
-    }
+    override suspend fun blockMember(userID: String): List<String>? = apiClient.blockMember(userID)
 
-    override fun getMember(userID: String?): Flow<Member?> {
-        return localRepository.getMember(userID)
-    }
+    override fun getMember(userID: String?): Flow<Member?> = localRepository.getMember(userID)
 
     override suspend fun updateMember(
         memberID: String,
-        data: Map<String, Map<String, Boolean>>
-    ): Member? {
-        return apiClient.updateMember(memberID, data)
-    }
+        data: Map<String, Map<String, Boolean>>,
+    ): Member? = apiClient.updateMember(memberID, data)
 
-    override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? {
-        return apiClient.retrievePartySeekingUsers(page)
-    }
+    override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? = apiClient.retrievePartySeekingUsers(page)
 
     override fun getGroupMembership(id: String) =
         authenticationHandler.userIDFlow.flatMapLatest {
             localRepository.getGroupMembership(
                 it,
-                id
+                id,
             )
         }
 
-    override fun getGroupMemberships(): Flow<List<GroupMembership>> {
-        return authenticationHandler.userIDFlow.flatMapLatest {
+    override fun getGroupMemberships(): Flow<List<GroupMembership>> =
+        authenticationHandler.userIDFlow.flatMapLatest {
             localRepository.getGroupMemberships(
-                it
+                it,
             )
         }
-    }
 
-    override suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>? {
-        val messages = apiClient.listGroupChat(groupId)
+    override suspend fun retrieveGroupChat(
+        groupId: String,
+        limit: Int?,
+        before: String?,
+    ): List<ChatMessage>? {
+        val messages = apiClient.listGroupChat(groupId, limit, before)
         messages?.forEach { it.groupId = groupId }
         return messages
     }
 
-    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> {
-        return localRepository.getGroupChat(groupId)
-    }
+    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> = localRepository.getGroupChat(groupId)
 
     override suspend fun markMessagesSeen(seenGroupId: String) {
         apiClient.seenMessages(seenGroupId)
@@ -101,11 +94,17 @@ class SocialRepositoryImpl(
     override suspend fun flagMessage(
         chatMessageID: String,
         additionalInfo: String,
-        groupID: String?
-    ): Void? {
-        return when {
-            chatMessageID.isBlank() -> return null
-            currentUserID == BuildConfig.ANDROID_TESTING_UUID -> return null
+        groupID: String?,
+    ): Void? =
+        when {
+            chatMessageID.isBlank() -> {
+                null
+            }
+
+            currentUserID == BuildConfig.ANDROID_TESTING_UUID -> {
+                null
+            }
+
             else -> {
                 val data = mutableMapOf<String, String>()
                 data["comment"] = additionalInfo
@@ -116,14 +115,11 @@ class SocialRepositoryImpl(
                 }
             }
         }
-    }
 
     override suspend fun reportMember(
         memberID: String,
-        data: Map<String, String>
-    ): Void? {
-        return apiClient.reportMember(memberID, data)
-    }
+        data: Map<String, String>,
+    ): Void? = apiClient.reportMember(memberID, data)
 
     override suspend fun likeMessage(chatMessage: ChatMessage): ChatMessage? {
         if (chatMessage.id.isBlank()) {
@@ -147,7 +143,7 @@ class SocialRepositoryImpl(
 
     override suspend fun postGroupChat(
         groupId: String,
-        messageObject: HashMap<String, String>
+        messageObject: HashMap<String, String>,
     ): PostChatMessageResult? {
         val result = apiClient.postGroupChat(groupId, messageObject)
         result?.message?.groupId = groupId
@@ -156,7 +152,7 @@ class SocialRepositoryImpl(
 
     override suspend fun postGroupChat(
         groupId: String,
-        message: String
+        message: String,
     ): PostChatMessageResult? {
         val messageObject = HashMap<String, String>()
         messageObject["message"] = message
@@ -165,9 +161,31 @@ class SocialRepositoryImpl(
 
     override suspend fun retrieveGroup(id: String): Group? {
         val group = apiClient.getGroup(id)
-        group?.let { localRepository.saveGroup(it) }
+        group?.let {
+            resolveQuestParticipants(it)
+            localRepository.saveGroup(it)
+        }
         retrieveGroupChat(id)
         return group
+    }
+
+    private suspend fun resolveQuestParticipants(group: Group) {
+        val declared = group.quest?.participants ?: return
+        if (declared.isEmpty()) return
+        // The local roster comes back as managed (frozen) Realm objects, which can't be modified outside a write transaction
+        val known = localRepository.getUnmanagedCopy(localRepository.getPartyMembers(group.id).firstOrNull() ?: emptyList())
+        val resolved = mutableListOf<Member>()
+        for (member in known) {
+            member.participatesInQuest = declared.firstOrNull { it.id == member.id }?.participatesInQuest
+            resolved.add(member)
+        }
+        for (member in declared) {
+            if (known.none { it.id == member.id }) {
+                resolved.add(member)
+            }
+        }
+        group.quest?.participants?.clear()
+        group.quest?.participants?.addAll(resolved)
     }
 
     override fun getGroup(id: String?): Flow<Group?> {
@@ -179,7 +197,7 @@ class SocialRepositoryImpl(
 
     override suspend fun leaveGroup(
         id: String?,
-        keepChallenges: Boolean
+        keepChallenges: Boolean,
     ): Group? {
         if (id?.isNotBlank() != true) {
             return null
@@ -196,6 +214,7 @@ class SocialRepositoryImpl(
         }
         val group = apiClient.joinGroup(id)
         group?.let {
+            resolveQuestParticipants(it)
             localRepository.updateMembership(currentUserID, id, true)
             localRepository.save(group)
         }
@@ -208,7 +227,7 @@ class SocialRepositoryImpl(
         leader: String?,
         type: String?,
         privacy: String?,
-        leaderCreateChallenge: Boolean?
+        leaderCreateChallenge: Boolean?,
     ): Group? {
         val group = Group()
         group.name = name
@@ -217,7 +236,10 @@ class SocialRepositoryImpl(
         group.leaderID = leader
         group.privacy = privacy
         val savedGroup = apiClient.createGroup(group)
-        savedGroup?.let { localRepository.save(it) }
+        savedGroup?.let {
+            resolveQuestParticipants(it)
+            localRepository.save(it)
+        }
         return savedGroup
     }
 
@@ -226,7 +248,7 @@ class SocialRepositoryImpl(
         name: String?,
         description: String?,
         leader: String?,
-        leaderCreateChallenge: Boolean?
+        leaderCreateChallenge: Boolean?,
     ): Group? {
         if (group == null) {
             return null
@@ -240,20 +262,19 @@ class SocialRepositoryImpl(
         return apiClient.updateGroup(copiedGroup.id, copiedGroup)
     }
 
-    override fun getInboxConversations() =
-        authenticationHandler.userIDFlow.flatMapLatest { localRepository.getInboxConversation(it) }
+    override fun getInboxConversations() = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getInboxConversation(it) }
 
     override fun getInboxMessages(replyToUserID: String?) =
         authenticationHandler.userIDFlow.flatMapLatest {
             localRepository.getInboxMessages(
                 it,
-                replyToUserID
+                replyToUserID,
             )
         }
 
     override suspend fun retrieveInboxMessages(
         uuid: String,
-        page: Int
+        page: Int,
     ): List<ChatMessage>? {
         val messages = apiClient.retrieveInboxMessages(uuid, page) ?: return null
         messages.forEach {
@@ -271,7 +292,7 @@ class SocialRepositoryImpl(
 
     override suspend fun postPrivateMessage(
         recipientId: String,
-        messageObject: HashMap<String, String>
+        messageObject: HashMap<String, String>,
     ): List<ChatMessage>? {
         apiClient.postPrivateMessage(messageObject)
         return retrieveInboxMessages(recipientId, 0)
@@ -279,7 +300,7 @@ class SocialRepositoryImpl(
 
     override suspend fun postPrivateMessage(
         recipientId: String,
-        message: String
+        message: String,
     ): List<ChatMessage>? {
         val messageObject = HashMap<String, String>()
         messageObject["message"] = message
@@ -287,13 +308,13 @@ class SocialRepositoryImpl(
         return postPrivateMessage(recipientId, messageObject)
     }
 
-    override suspend fun getPartyMembers(id: String) = localRepository.getPartyMembers(id)
+    override fun getPartyMembers(id: String) = localRepository.getPartyMembers(id)
 
-    override suspend fun getGroupMembers(id: String) = localRepository.getGroupMembers(id)
+    override fun getGroupMembers(id: String) = localRepository.getGroupMembers(id)
 
     override suspend fun retrievePartyMembers(
         id: String,
-        includeAllPublicFields: Boolean
+        includeAllPublicFields: Boolean,
     ): List<Member>? {
         val members = apiClient.getGroupMembers(id, includeAllPublicFields)
         members?.let { localRepository.savePartyMembers(id, it) }
@@ -302,15 +323,14 @@ class SocialRepositoryImpl(
 
     override suspend fun inviteToGroup(
         id: String,
-        inviteData: Map<String, Any>
-    ) =
-        apiClient.inviteToGroup(id, inviteData)
+        inviteData: Map<String, Any>,
+    ) = apiClient.inviteToGroup(id, inviteData)
 
     override suspend fun retrieveMember(
         userId: String?,
-        fromHall: Boolean
-    ): Member? {
-        return if (userId == null) {
+        fromHall: Boolean,
+    ): Member? =
+        if (userId == null) {
             null
         } else {
             if (fromHall) {
@@ -324,21 +344,17 @@ class SocialRepositoryImpl(
                 }
             }
         }
-    }
 
     override suspend fun retrievegroupInvites(
         id: String,
-        includeAllPublicFields: Boolean
-    ) =
-        apiClient.getGroupInvites(id, includeAllPublicFields)
+        includeAllPublicFields: Boolean,
+    ) = apiClient.getGroupInvites(id, includeAllPublicFields)
 
     override suspend fun findUsernames(
         username: String,
         context: String?,
-        id: String?
-    ): List<FindUsernameResult>? {
-        return apiClient.findUsernames(username, context, id)
-    }
+        id: String?,
+    ): List<FindUsernameResult>? = apiClient.findUsernames(username, context, id)
 
     override suspend fun markPrivateMessagesRead(user: User?) {
         if (user?.isManaged == true) {
@@ -351,7 +367,7 @@ class SocialRepositoryImpl(
 
     override fun markSomePrivateMessagesAsRead(
         user: User?,
-        messages: List<ChatMessage>
+        messages: List<ChatMessage>,
     ) {
         if (user?.isManaged == true) {
             val numOfUnseenMessages = messages.count { !it.isSeen }
@@ -371,12 +387,11 @@ class SocialRepositoryImpl(
         }
     }
 
-    override fun getUserGroups(type: String?) =
-        authenticationHandler.userIDFlow.flatMapLatest { localRepository.getUserGroups(it, type) }
+    override fun getUserGroups(type: String?) = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getUserGroups(it, type) }
 
     override suspend fun acceptQuest(
         user: User?,
-        partyId: String
+        partyId: String,
     ): Void? {
         apiClient.acceptQuest(partyId)
         user?.let {
@@ -387,7 +402,7 @@ class SocialRepositoryImpl(
 
     override suspend fun rejectQuest(
         user: User?,
-        partyId: String
+        partyId: String,
     ): Void? {
         apiClient.rejectQuest(partyId)
         user?.let {
@@ -396,9 +411,7 @@ class SocialRepositoryImpl(
         return null
     }
 
-    override suspend fun leaveQuest(partyId: String): Void? {
-        return apiClient.leaveQuest(partyId)
-    }
+    override suspend fun leaveQuest(partyId: String): Void? = apiClient.leaveQuest(partyId)
 
     override suspend fun cancelQuest(partyId: String): Void? {
         apiClient.cancelQuest(partyId)
@@ -424,18 +437,15 @@ class SocialRepositoryImpl(
         return quest
     }
 
-    override suspend fun getMemberAchievements(userId: String?): List<Achievement>? {
-        return if (userId == null) {
+    override suspend fun getMemberAchievements(userId: String?): List<Achievement>? =
+        if (userId == null) {
             null
         } else {
             apiClient.getMemberAchievements(userId)
         }
-    }
 
     override suspend fun transferGems(
         giftedID: String,
-        amount: Int
-    ): Void? {
-        return apiClient.transferGems(giftedID, amount)
-    }
+        amount: Int,
+    ): Void? = apiClient.transferGems(giftedID, amount)
 }

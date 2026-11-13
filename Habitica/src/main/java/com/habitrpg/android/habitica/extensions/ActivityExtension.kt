@@ -2,8 +2,10 @@ package com.habitrpg.android.habitica.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -15,8 +17,17 @@ fun Activity.hideKeyboard() {
     imm.hideSoftInputFromWindow(window.decorView.windowToken, 0)
 }
 
-fun AppCompatActivity.lifecycleLaunchWhen(state: Lifecycle.State, function: suspend CoroutineScope.() -> Unit) {
+fun AppCompatActivity.lifecycleLaunchWhen(
+    state: Lifecycle.State,
+    function: suspend CoroutineScope.() -> Unit,
+) {
     lifecycleScope.launchCatching {
         repeatOnLifecycle(state, function)
     }
+}
+
+fun Activity.openBrowserLink(url: String) {
+    val uriUrl = url.toUri()
+    val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+    startActivity(launchBrowser)
 }

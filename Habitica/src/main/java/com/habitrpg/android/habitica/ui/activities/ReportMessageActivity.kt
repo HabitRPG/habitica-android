@@ -2,12 +2,8 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
-import android.os.Build
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -15,7 +11,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +30,7 @@ class ReportMessageActivity : BaseActivity() {
     private var groupID: String? = null
     private var isReporting: Boolean = false
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_report_message
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_report_message
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityReportMessageBinding.inflate(layoutInflater)
@@ -55,13 +48,14 @@ class ReportMessageActivity : BaseActivity() {
         binding.touchOutside.setOnClickListener { finish() }
         binding.reportExplanationTextview.setMarkdown(getString(R.string.report_explanation))
 
-        BottomSheetBehavior.from<View>(binding.bottomSheet)
+        BottomSheetBehavior
+            .from<View>(binding.bottomSheet)
             .addBottomSheetCallback(
                 object : BottomSheetBehavior.BottomSheetCallback() {
                     @SuppressLint("SwitchIntDef")
                     override fun onStateChanged(
                         bottomSheet: View,
-                        newState: Int
+                        newState: Int,
                     ) {
                         when (newState) {
                             BottomSheetBehavior.STATE_HIDDEN -> finish()
@@ -72,11 +66,11 @@ class ReportMessageActivity : BaseActivity() {
 
                     override fun onSlide(
                         bottomSheet: View,
-                        slideOffset: Float
+                        slideOffset: Float,
                     ) {
                         // no op
                     }
-                }
+                },
             )
 
         val args = navArgs<ReportMessageActivityArgs>().value
@@ -103,12 +97,12 @@ class ReportMessageActivity : BaseActivity() {
             lifecycleScope.launch(
                 ExceptionHandler.coroutine {
                     isReporting = false
-                }
+                },
             ) {
                 socialRepository.flagMessage(
                     messageID ?: "",
                     binding.additionalInfoEdittext.text.toString(),
-                    groupID
+                    groupID,
                 )
                 finish()
             }

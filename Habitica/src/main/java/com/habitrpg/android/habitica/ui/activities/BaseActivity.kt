@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -10,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.Menu
@@ -23,7 +23,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.updatePadding
@@ -31,17 +30,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
-import com.habitrpg.android.habitica.extensions.forceLocale
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.AnalyticsTarget
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
@@ -50,7 +43,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
 import java.io.File
@@ -61,7 +53,6 @@ import java.util.Date
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
-
     @Inject
     lateinit var notificationsManager: NotificationsManager
 
@@ -82,25 +73,24 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract fun getLayoutResId(): Int?
 
-    open fun getContentView(layoutResId: Int? = getLayoutResId()): View {
-        return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+    open fun getContentView(layoutResId: Int? = getLayoutResId()): View =
+        (getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
             layoutResId ?: 0,
-            null
+            null,
         )
-    }
 
     private val habiticaApplication: HabiticaApplication
         get() = application as HabiticaApplication
 
     var isActivityVisible = false
 
-    override fun isDestroyed(): Boolean {
-        return destroyed
-    }
+    override fun isDestroyed(): Boolean = destroyed
 
     private val defaultNavigationBarStyle by lazy {
-        SystemBarStyle.auto(ContextCompat.getColor(this, R.color.white_50_alpha),
-            ContextCompat.getColor(this, R.color.black_50_alpha))
+        SystemBarStyle.auto(
+            ContextCompat.getColor(this, R.color.white_50_alpha),
+            ContextCompat.getColor(this, R.color.black_50_alpha),
+        )
     }
     internal var navigationBarStyle: SystemBarStyle? = null
 
@@ -109,8 +99,6 @@ abstract class BaseActivity : AppCompatActivity() {
             enableEdgeToEdge(navigationBarStyle = navigationBarStyle ?: defaultNavigationBarStyle)
         }
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
-        resources.forceLocale(this, languageHelper.locale)
         delegate.localNightMode =
             when (sharedPreferences.getString("theme_mode", "system")) {
                 "light" -> AppCompatDelegate.MODE_NIGHT_NO
@@ -126,11 +114,15 @@ abstract class BaseActivity : AppCompatActivity() {
         getLayoutResId()?.let {
             setContentView(getContentView(it))
         }
+        if (toolbar == null) {
+            setupToolbar()
+        }
         lifecycleScope.launchCatching {
             notificationsManager.displayNotificationEvents.collect {
                 if (ShowNotificationInteractor(
                         this@BaseActivity,
-                        lifecycleScope
+                        lifecycleScope,
+                        userRepository,
                     ).handleNotification(it)
                 ) {
                     lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -141,15 +133,27 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPostCreate(
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?,
+    ) {
+        super.onPostCreate(savedInstanceState, persistentState)
+        if (toolbarBackgroundColor == null) {
+            toolbarBackgroundColor = getThemeColor(R.attr.headerBackgroundColor)
+        }
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        toolbarBackgroundColor?.let { window.decorView.setBackgroundColor(it) }
         findViewById<View>(R.id.appbar)?.let { appbar ->
             val paddingTop = appbar.paddingTop
             ViewCompat.setOnApplyWindowInsetsListener(appbar) { v, windowInsets ->
-                val insets = windowInsets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                            + WindowInsetsCompat.Type.displayCutout()
-                )
+                val insets =
+                    windowInsets.getInsets(
+                        WindowInsetsCompat.Type.systemBars() +
+                            WindowInsetsCompat.Type.displayCutout(),
+                    )
                 val isImeVisible = windowInsets.isVisible(WindowInsetsCompat.Type.ime())
                 val imeHeight = windowInsets.getInsets(WindowInsetsCompat.Type.ime()).bottom
                 KeyboardUtil.updatePaddingForIme(isImeVisible, imeHeight, insets)
@@ -166,26 +170,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
-        resources.forceLocale(this, languageHelper.locale)
     }
-
-    val additionalScreenViewParams = mutableMapOf<String, String>()
 
     override fun onResume() {
         super.onResume()
         isActivityVisible = true
         loadTheme(PreferenceManager.getDefaultSharedPreferences(this))
-
-        Analytics.sendEvent(
-            "screen_view",
-            EventCategory.NAVIGATION,
-            HitType.PAGEVIEW,
-            mapOf(
-                FirebaseAnalytics.Param.SCREEN_CLASS to (this::class.java.canonicalName ?: "")) + additionalScreenViewParams,
-            AnalyticsTarget.FIREBASE
-        )
     }
 
     override fun onPause() {
@@ -205,7 +195,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     internal open fun loadTheme(
         sharedPreferences: SharedPreferences,
-        forced: Boolean = false
+        forced: Boolean = false,
     ) {
         val theme = forcedTheme ?: sharedPreferences.getString("theme_name", "purple")
         if (theme != currentTheme || forced) {
@@ -220,7 +210,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal_Dark
                         "blue" -> R.style.MainAppTheme_Blue_Dark
                         else -> R.style.MainAppTheme_Dark
-                    }
+                    },
                 )
             } else {
                 setTheme(
@@ -233,7 +223,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal
                         "blue" -> R.style.MainAppTheme_Blue
                         else -> R.style.MainAppTheme
-                    }
+                    },
                 )
             }
         }
@@ -257,10 +247,13 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun setupToolbar(toolbar: Toolbar?, iconColor: Int? = null, backgroundColor: Int? = null) {
-        this.toolbar = toolbar
+    protected fun setupToolbar(
+        iconColor: Int? = null,
+        backgroundColor: Int? = null,
+    ) {
+        this.toolbar = findViewById(R.id.toolbar)
         this.toolbarContentColor = iconColor
-        this.toolbarBackgroundColor = backgroundColor
+        this.toolbarBackgroundColor = backgroundColor ?: getThemeColor(R.attr.headerBackgroundColor)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
 
@@ -300,7 +293,7 @@ abstract class BaseActivity : AppCompatActivity() {
         errorCount: Int,
         title: String?,
         message: String,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(title)
@@ -309,7 +302,7 @@ abstract class BaseActivity : AppCompatActivity() {
             android.R.string.ok,
             isPrimary = true,
             isDestructive = false,
-            function = null
+            function = null,
         )
         alert.enqueue()
     }
@@ -320,14 +313,8 @@ abstract class BaseActivity : AppCompatActivity() {
     fun shareContent(
         identifier: String,
         message: String?,
-        image: Bitmap? = null
+        image: Bitmap? = null,
     ) {
-        Analytics.sendEvent(
-            "shared",
-            EventCategory.BEHAVIOUR,
-            HitType.EVENT,
-            mapOf("identifier" to identifier)
-        )
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "image/*"
         if (message?.isNotBlank() == true) {
@@ -344,7 +331,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
                     contentValues.put(
                         MediaStore.MediaColumns.RELATIVE_PATH,
-                        Environment.DIRECTORY_PICTURES
+                        Environment.DIRECTORY_PICTURES,
                     )
                     uri =
                         resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
@@ -352,7 +339,8 @@ abstract class BaseActivity : AppCompatActivity() {
                     fos = resolver.openOutputStream(uri, "wt") ?: return
                 } else {
                     val imagesDir =
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
                             .toString()
                     val file = File(imagesDir, "${Date()}.png")
                     uri = file.absoluteFile.toUri()
@@ -372,5 +360,4 @@ abstract class BaseActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out)
         startActivity(intent)
     }
-
 }

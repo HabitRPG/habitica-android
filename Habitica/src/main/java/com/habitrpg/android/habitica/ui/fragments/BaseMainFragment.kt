@@ -10,19 +10,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.AnalyticsTarget
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
@@ -51,11 +45,15 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         }
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
+    var hasDarkNavUI = false
+
+    var toolbarIconColor: Int? = null
+    var toolbarBackgroundColor: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
@@ -76,13 +74,6 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
             showToolbar()
             enableToolbarScrolling()
         }
-        Analytics.sendEvent(
-            "fragment_view",
-            EventCategory.NAVIGATION,
-            HitType.PAGEVIEW,
-            mapOf("fragment" to (this::class.java.canonicalName ?: "")),
-            AnalyticsTarget.FIREBASE
-        )
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -93,6 +84,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     }
 
     var navigationBarColor: Int? = null
+
     override fun onResume() {
         super.onResume()
         mainActivity?.showBackButton = showsBackButton
@@ -101,9 +93,8 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         val window = activity?.window
         if (window != null) {
             val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
-            if (this.usesBottomNavigation) {
+            if (this.usesBottomNavigation || hasDarkNavUI) {
                 windowInsetsController.isAppearanceLightNavigationBars = false
-                view?.systemUiVisibility
                 window.setNavigationBarDarkIcons(false)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     window.isNavigationBarContrastEnforced = false
@@ -114,19 +105,26 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     window.isNavigationBarContrastEnforced = true
                 }
-                activity?.window?.navigationBarColor = navigationBarColor ?: ContextCompat.getColor(requireContext(), R.color.content_background)
+                activity?.window?.navigationBarColor =
+                    navigationBarColor ?: ContextCompat.getColor(requireContext(), R.color.content_background)
             }
         }
     }
 
-    @Deprecated("Use onCreateOptionsMenu(Menu, MenuInflater) instead")
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         super.onCreateOptionsMenu(menu, inflater)
-        mainActivity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, mainActivity,
-            appbar = mainActivity?.findViewById(R.id.appbar)) }
+        mainActivity?.toolbar?.let {
+            ToolbarColorHelper.colorizeToolbar(
+                it,
+                mainActivity,
+                appbar = mainActivity?.findViewById(R.id.appbar),
+                iconColor = toolbarIconColor,
+                backgroundColor = toolbarBackgroundColor,
+            )
+        }
         updateToolbarInteractivity()
     }
 
@@ -151,11 +149,19 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     }
 
     private fun hideToolbar() {
-        mainActivity?.binding?.content?.headerView?.visibility = View.GONE
+        mainActivity
+            ?.binding
+            ?.content
+            ?.headerView
+            ?.visibility = View.GONE
     }
 
     private fun showToolbar() {
-        mainActivity?.binding?.content?.headerView?.visibility = View.VISIBLE
+        mainActivity
+            ?.binding
+            ?.content
+            ?.headerView
+            ?.visibility = View.VISIBLE
     }
 
     private fun disableToolbarScrolling() {

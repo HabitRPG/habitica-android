@@ -7,7 +7,9 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class AuthenticationTimestamps : RealmObject(), BaseObject {
+open class AuthenticationTimestamps :
+    RealmObject(),
+    BaseObject {
     @SerializedName("loggedin")
     var lastLoggedIn: Date? = null
 

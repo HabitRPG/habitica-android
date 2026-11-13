@@ -5,18 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.extensions.getImpreciseRemainingString
-import com.habitrpg.android.habitica.extensions.getRemainingString
-import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 
-class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+class ShopItemViewHolder(
+    itemView: View,
+) : RecyclerView.ViewHolder(itemView),
+    View.OnClickListener {
     private val binding = RowShopitemBinding.bind(itemView)
     var shopIdentifier: String? = null
     private var item: ShopItem? = null
@@ -50,7 +52,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     fun bind(
         item: ShopItem,
         canBuy: Boolean,
-        numberOwned: Int
+        numberOwned: Int,
     ) {
         this.item = item
         binding.buyButton.visibility = View.VISIBLE
@@ -123,7 +125,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             contentDescription += ", ${context.getString(R.string.gems_left_nomax, limitedLeft)}"
         }
 
-        if (binding.itemDetailIndicator.visibility == View.VISIBLE) {
+        if (binding.itemDetailIndicator.isVisible) {
             val layoutParams = binding.itemDetailIndicator.layoutParams
             layoutParams.width =
                 if (binding.itemDetailIndicator.text.isBlank()) {

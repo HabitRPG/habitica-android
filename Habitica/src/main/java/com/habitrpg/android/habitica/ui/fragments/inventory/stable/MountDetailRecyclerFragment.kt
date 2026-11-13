@@ -16,13 +16,11 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAda
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,15 +43,13 @@ class MountDetailRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding = FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = false
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -66,7 +62,7 @@ class MountDetailRecyclerFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -84,16 +80,16 @@ class MountDetailRecyclerFragment :
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(mainActivity, 4)
         layoutManager?.spanSizeLookup =
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
-                            position
+                override fun getSpanSize(position: Int): Int =
+                    if (adapter?.getItemViewType(position) == 0 ||
+                        adapter?.getItemViewType(
+                            position,
                         ) == 1
                     ) {
                         layoutManager?.spanCount ?: 1
                     } else {
                         1
                     }
-                }
             }
         binding?.recyclerView?.layoutManager = layoutManager
 
@@ -151,15 +147,18 @@ class MountDetailRecyclerFragment :
 
     private fun loadItems() {
         if (animalType != null || animalGroup != null) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 val mounts =
-                    inventoryRepository.getMounts(animalType, animalGroup, animalColor)
+                    inventoryRepository
+                        .getMounts(animalType, animalGroup, animalColor)
                         .firstOrNull() ?: emptyList()
-                inventoryRepository.getOwnedMounts().map { ownedMounts ->
-                    val mountMap = mutableMapOf<String, OwnedMount>()
-                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                    return@map mountMap
-                }.onEach { adapter?.setOwnedMounts(it) }
+                inventoryRepository
+                    .getOwnedMounts()
+                    .map { ownedMounts ->
+                        val mountMap = mutableMapOf<String, OwnedMount>()
+                        ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                        return@map mountMap
+                    }.onEach { adapter?.setOwnedMounts(it) }
                     .collect { ownedMounts ->
                         val items = mutableListOf<Any>()
                         var lastMount: Mount? = null
@@ -190,7 +189,7 @@ class MountDetailRecyclerFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(false, true)
             binding?.refreshLayout?.isRefreshing = false
         }

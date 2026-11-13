@@ -6,7 +6,9 @@ import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Equipment : RealmObject(), BaseMainObject {
+open class Equipment :
+    RealmObject(),
+    BaseMainObject {
     var value: Double = 0.toDouble()
     var type: String? = ""
 
@@ -24,7 +26,6 @@ open class Equipment : RealmObject(), BaseMainObject {
 
     @SerializedName("int")
     var intelligence: Int = 0
-    var owned: Boolean? = null
     var twoHanded = false
     var mystery = ""
     var gearSet = ""

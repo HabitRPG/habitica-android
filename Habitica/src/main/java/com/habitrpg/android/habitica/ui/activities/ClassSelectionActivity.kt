@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
@@ -68,9 +68,7 @@ class ClassSelectionActivity : BaseActivity() {
 
     private var progressDialog: HabiticaProgressDialog? = null
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_class_selection
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_class_selection
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityClassSelectionBinding.inflate(layoutInflater)
@@ -86,7 +84,6 @@ class ClassSelectionActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
-
 
         val args = navArgs<ClassSelectionActivityArgs>().value
         isClassSelected = args.isClassSelected
@@ -109,10 +106,11 @@ class ClassSelectionActivity : BaseActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.selectedWrapperView) { v, windowInsets ->
             val paddingBottom = v.paddingBottom
-            val insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-                    + WindowInsetsCompat.Type.displayCutout()
-            )
+            val insets =
+                windowInsets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() +
+                        WindowInsetsCompat.Type.displayCutout(),
+                )
             v.updatePadding(bottom = insets.bottom + paddingBottom)
             consumeWindowInsetsAbove30(windowInsets)
         }
@@ -138,7 +136,7 @@ class ClassSelectionActivity : BaseActivity() {
         healerOutfit.weapon = "weapon_healer_6"
         val healer = this.makeUser(preferences, healerOutfit)
         binding.healerAvatarView.setAvatar(healer)
-        val healerIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfHealerLightBg())
+        val healerIcon = HabiticaIconsHelper.imageOfHealerLightBg().toDrawable(resources)
         binding.healerButton.setCompoundDrawablesWithIntrinsicBounds(healerIcon, null, null, null)
 
         val mageOutfit = Outfit()
@@ -147,7 +145,7 @@ class ClassSelectionActivity : BaseActivity() {
         mageOutfit.weapon = "weapon_wizard_6"
         val mage = this.makeUser(preferences, mageOutfit)
         binding.mageAvatarView.setAvatar(mage)
-        val mageIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfMageLightBg())
+        val mageIcon = HabiticaIconsHelper.imageOfMageLightBg().toDrawable(resources)
         binding.mageButton.setCompoundDrawablesWithIntrinsicBounds(mageIcon, null, null, null)
 
         val rogueOutfit = Outfit()
@@ -157,7 +155,7 @@ class ClassSelectionActivity : BaseActivity() {
         rogueOutfit.weapon = "weapon_rogue_6"
         val rogue = this.makeUser(preferences, rogueOutfit)
         binding.rogueAvatarView.setAvatar(rogue)
-        val rogueIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfRogueLightBg())
+        val rogueIcon = HabiticaIconsHelper.imageOfRogueLightBg().toDrawable(resources)
         binding.rogueButton.setCompoundDrawablesWithIntrinsicBounds(rogueIcon, null, null, null)
 
         val warriorOutfit = Outfit()
@@ -167,13 +165,13 @@ class ClassSelectionActivity : BaseActivity() {
         warriorOutfit.weapon = "weapon_warrior_6"
         val warrior = this.makeUser(preferences, warriorOutfit)
         binding.warriorAvatarView.setAvatar(warrior)
-        val warriorIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfWarriorLightBg())
+        val warriorIcon = HabiticaIconsHelper.imageOfWarriorLightBg().toDrawable(resources)
         binding.warriorButton.setCompoundDrawablesWithIntrinsicBounds(warriorIcon, null, null, null)
     }
 
     private fun makeUser(
         preferences: Preferences,
-        outfit: Outfit
+        outfit: Outfit,
     ): User {
         val user = User()
         user.preferences = preferences
@@ -189,20 +187,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.yellow_100
-            )
+                R.color.yellow_100,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.dark_brown
-            )
+                R.color.dark_brown,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_yellow_10)
         updateButtonBackgrounds(
             binding.healerButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border),
         )
     }
 
@@ -212,20 +210,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.blue_10
-            )
+                R.color.blue_10,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.mageButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border),
         )
     }
 
@@ -235,20 +233,20 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.brand_200
-            )
+                R.color.brand_200,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.rogueButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border),
         )
     }
 
@@ -258,26 +256,26 @@ class ClassSelectionActivity : BaseActivity() {
         binding.selectedWrapperView.setBackgroundColor(
             ContextCompat.getColor(
                 this,
-                R.color.maroon_50
-            )
+                R.color.maroon_50,
+            ),
         )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.selectedDescriptionTextView.setTextColor(
             ContextCompat.getColor(
                 this,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
         updateButtonBackgrounds(
             binding.warriorButton,
-            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border)
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border),
         )
     }
 
     private fun updateButtonBackgrounds(
         selectedButton: TextView,
-        background: Drawable?
+        background: Drawable?,
     ) {
         val deselectedBackground =
             ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window)
@@ -372,9 +370,7 @@ class ClassSelectionActivity : BaseActivity() {
         checkForReviewPromptAfterClassSelection()
     }
 
-    private fun displayProgressDialog(progressText: String): HabiticaProgressDialog {
-        return HabiticaProgressDialog.show(this, progressText, 300)
-    }
+    private fun displayProgressDialog(progressText: String): HabiticaProgressDialog = HabiticaProgressDialog.show(this, progressText, 300)
 
     private fun dismiss() {
         if (shouldFinish == true) {

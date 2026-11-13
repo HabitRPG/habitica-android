@@ -9,10 +9,16 @@ actual class Platform actual constructor() {
 }
 
 actual interface HParcelable {
-    actual fun writeToParcel(dest: HParcel, flags: Int)
+    actual fun writeToParcel(
+        dest: HParcel,
+        flags: Int,
+    )
+
     actual fun describeContents(): Int
+
     actual interface Creator<T> {
         actual fun createFromParcel(source: HParcel): T
+
         actual fun newArray(size: Int): Array<TaskScoringResult?>
     }
 }
@@ -21,7 +27,10 @@ actual class HParcel {
     actual fun writeByte(byte: Byte) {
     }
 
-    actual fun writeParcelable(drop: HParcelable?, flags: Int) {
+    actual fun writeParcelable(
+        drop: HParcelable?,
+        flags: Int,
+    ) {
     }
 
     actual fun writeDouble(experienceDelta: Double) {

@@ -12,7 +12,7 @@ import com.habitrpg.common.habitica.helpers.RecyclerViewState
 
 internal class ChallengeFilterDialogHolder private constructor(
     view: View,
-    private val context: Activity
+    private val context: Activity,
 ) {
     private val binding = DialogChallengeFilterBinding.bind(view)
 
@@ -28,12 +28,37 @@ internal class ChallengeFilterDialogHolder private constructor(
         binding.challengeFilterNotOwned.setOnCheckedChangeListener { _, isChecked ->
             currentFilter?.notOwned = isChecked
         }
+        binding.challengeFilterParticipating.setOnCheckedChangeListener { _, isChecked ->
+            currentFilter?.showParticipating = isChecked
+        }
+        binding.challengeFilterNotParticipating.setOnCheckedChangeListener { _, isChecked ->
+            currentFilter?.notParticipating = isChecked
+        }
+
+        binding.clearButton.visibility = View.VISIBLE
+        binding.clearButton.setOnClickListener {
+            clearFilters()
+        }
+    }
+
+    private fun clearFilters() {
+        binding.challengeFilterOwned.isChecked = false
+        binding.challengeFilterNotOwned.isChecked = false
+        binding.challengeFilterParticipating.isChecked = false
+        binding.challengeFilterNotParticipating.isChecked = false
+        adapter?.checkedEntries?.clear()
+        adapter?.notifyDataSetChanged()
+        currentFilter?.showOwned = false
+        currentFilter?.notOwned = false
+        currentFilter?.showParticipating = false
+        currentFilter?.notParticipating = false
+        currentFilter?.showByGroups = emptyList()
     }
 
     fun bind(
         filterGroups: List<Group>,
         currentFilter: ChallengeFilterOptions?,
-        selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)?
+        selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)?,
     ) {
         this.filterGroups = filterGroups
         this.currentFilter = currentFilter
@@ -43,6 +68,8 @@ internal class ChallengeFilterDialogHolder private constructor(
         if (currentFilter != null) {
             binding.challengeFilterOwned.isChecked = currentFilter.showOwned
             binding.challengeFilterNotOwned.isChecked = currentFilter.notOwned
+            binding.challengeFilterParticipating.isChecked = currentFilter.showParticipating
+            binding.challengeFilterNotParticipating.isChecked = currentFilter.notParticipating
         }
     }
 
@@ -62,7 +89,7 @@ internal class ChallengeFilterDialogHolder private constructor(
             activity: Activity,
             filterGroups: List<Group>,
             currentFilter: ChallengeFilterOptions?,
-            selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)
+            selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit),
         ) {
             val dialogLayout =
                 activity.layoutInflater.inflate(R.layout.dialog_challenge_filter, null)
@@ -76,8 +103,10 @@ internal class ChallengeFilterDialogHolder private constructor(
                     ChallengeFilterOptions(
                         holder.adapter?.checkedEntries ?: emptyList(),
                         holder.binding.challengeFilterOwned.isChecked,
-                        holder.binding.challengeFilterNotOwned.isChecked
-                    )
+                        holder.binding.challengeFilterNotOwned.isChecked,
+                        holder.binding.challengeFilterParticipating.isChecked,
+                        holder.binding.challengeFilterNotParticipating.isChecked,
+                    ),
                 )
             }
 

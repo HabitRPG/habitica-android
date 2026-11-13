@@ -7,7 +7,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class ContributorInfo : RealmObject(), BaseObject {
+open class ContributorInfo :
+    RealmObject(),
+    BaseObject {
     companion object {
         val CONTRIBUTOR_COLOR_DICT: SparseIntArray = SparseIntArray()
 

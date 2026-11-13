@@ -1,10 +1,12 @@
 package com.habitrpg.shared.habitica.models.tasks
 
-enum class TaskType(val value: String) {
+enum class TaskType(
+    val value: String,
+) {
     HABIT("habit"),
     DAILY("daily"),
     TODO("todo"),
-    REWARD("reward")
+    REWARD("reward"),
     ;
 
     override fun toString(): String = value

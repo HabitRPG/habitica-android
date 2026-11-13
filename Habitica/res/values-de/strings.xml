@@ -1039,7 +1039,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="usually_x_gems">Üblicherweise %d Edelsteine</string>
     <string name="limitations">Einschränkungen</string>
     <string name="how_it_works">So funktioniert es</string>
-    <string name="fall_promo_info_instructions">Zwischen %1$s und %2$s kannst du wie gewohnt ein Edelstein-Paket kaufen, deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum Ausgeben, Teilen oder für spätere Neuerungen Sparen!</string>
+    <string name="gem_promo_info_instructions">Zwischen %1$s und %2$s kannst du wie gewohnt ein Edelstein-Paket kaufen, deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum Ausgeben, Teilen oder für spätere Neuerungen Sparen!</string>
     <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
     <string name="spooky_promo_info_instructions">Zwischen %1$s und %2$s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
@@ -1122,7 +1122,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="x_remaining">%s verbleibend</string>
     <string name="reset_counter">Zähler zurücksetzen</string>
     <string name="adjust_counter">Zähler anpassen</string>
-    <string name="apitoken_summary">Token kopieren. Bitte sei vorsichtig, das ist ein Passwort!</string>
+    <string name="apitoken_summary">Token kopieren. Bitte sei vorsichtig, das ist ein Passwort.</string>
     <string name="password_added">Passwort gespeichert</string>
     <string name="public_profile">Öffentliches Profil</string>
     <string name="about_me">Über mich</string>
@@ -1255,11 +1255,11 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="other">Du und %d andere</item>
     </plurals>
     <string name="push_notification_system_settings_description">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um Push-Benachrichtigungen zu erhalten</string>
-    <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um, Erinnerungen zu erhalten</string>
+    <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen, um Erinnerungen zu erhalten</string>
     <string name="push_notification_system_settings_title">Benachrichtigungen wurden deaktiviert</string>
     <string name="class_changed_description">Du kannst nun deine Fertigkeit %s verwenden und Ausrüstungen im Shop erwerben. Erhöhe dein Level, um Punkte für die Aufwertung deiner Fertigkeiten zu erhalten.</string>
     <string name="enable_notifications">Benachrichtigungen aktivieren</string>
-    <string name="subscription_credit_canceling">Deine <b>+%d</b> Monate Abonnement werden nach Abbruch aktiv</string>
+    <string name="subscription_credit_canceling">Deine <b>+%s</b> Monate Abonnement werden nach Abbruch aktiv</string>
     <string name="positive_sentence">positiv</string>
     <string name="title">Titel</string>
     <string name="negative_sentence">negativ</string>
@@ -1314,7 +1314,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="report_reason_title_message">Warum meldest du diese Nachricht\?</string>
     <string name="report_reason_title_player">Warum meldest du diese/n Spieler*in\?</string>
     <string name="exact_alarm_system_settings_reminders">Erinnerungen können verspätet erscheinen, da die Berechtigung nicht gegeben wurde. Klicke um Berechtigungen anzuzeigen und zu ändern.</string>
-    <string name="exact_alarm_system_settings_description">Erlaube \"Wecker und Erinnerungen\" in der Einstellungen-App, damit Erinnerungen exakt zur richtigen Zeit erscheinen</string>
+    <string name="exact_alarm_system_settings_description">Erlaube \"Wecker und Erinnerungen\" in den Einstellungen, damit Erinnerungen pünktlich erscheinen</string>
     <string name="sell_confirmation_title">Bist du dir sicher, dass du %s verkaufen möchtest\?</string>
     <string name="leave_party_confirmation_quest">Bist du sicher, dass du diese Party verlassen willst\?</string>
     <string name="rejoin_party_quest">Du kannst dieser Party ohne Einladung nicht erneut beitreten.
@@ -1397,7 +1397,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="quests_footer_description">Schau im [Quest-Shop](/shops/quests) vorbei, um zu sehen, was verfügbar ist!</string>
     <string name="eggs_footer_description">Schau im [Markt](/shops/market) vorbei, um genau die Eier zu kaufen, die du brauchst!</string>
     <string name="hatchingPotions_footer_description">Schau im [Markt](/shops/market) vorbei, um Standard- und saisonale Bruttränke zu kaufen!</string>
-    <string name="subscriber_benefit_used_faint">Du hast deine zweite Chance heute bereits genutzt. Sie ist wieder verfügbar in %s</string>
+    <string name="subscriber_benefit_used_faint">Dein „Zweite-Chance“-Bonus lädt sich noch auf! Sie ist wieder verfügbar in %s</string>
     <string name="quest_mechanics_collecting_title">Quest-Gegenstände sammeln</string>
     <string name="quest_mechanics_damage_title">Bosse schlagen zurück, wenn tägliche Aufgaben verpasst werden</string>
     <string name="buy_gems_with_gold">Kaufe Edelsteine mit Gold</string>
@@ -1535,7 +1535,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="one">jedes Jahr</item>
         <item quantity="other">alle %d Jahre</item>
     </plurals>
-    <string name="faint_loss_description_alt">Du fällst auf Level <b>%1$d</b> zurück, verlierst <b>%2$d</b> Gold und deine Erfahrung ... Du kannst mit harter Arbeit alles wieder zurückerlangen!</string>
+    <string name="faint_loss_description_alt">Du fällst auf Level <b>%1$d</b> zurück, verlierst <b>%2$d</b> Gold und deine Erfahrung … Du kannst mit harter Arbeit alles wieder zurückerlangen!</string>
     <string name="gems_promo_info_limitations_fixed">Diese Aktion gilt nur während des zeitlich begrenzten Events. Das Event beginnt am %1$s (%2$s) und endet am %3$s (%4$s). Die Aktion gilt nur für Edelsteine welche du für dich selbst kaufst.</string>
     <string name="task_summary">Zusammenfassung der Aufgaben</string>
     <string name="habit_summary_description">Dies ist eine **%1$s** Gewohnheit, die **%2$s** ist.</string>
@@ -1614,4 +1614,5 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="enjoy_benefits">Genieße all diese exklusiven Vorteile mit deinem Abo</string>
     <string name="max_gem_cap">Max. Anzahl an Edelsteinen</string>
     <string name="max_gem_cap_text_gift">Sie beginnen direkt bei der max. Anzahl an Edelsteinen</string>
+    <string name="subscriber_button_faint_use">Nutze deine zweite Chance!</string>
 </resources>

@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,15 +18,13 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentViewpagerBinding {
-        return FragmentViewpagerBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding = FragmentViewpagerBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -37,7 +33,7 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.viewPager?.currentItem = 0
@@ -59,9 +55,7 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     return fragment
                 }
 
-                override fun getItemCount(): Int {
-                    return 2
-                }
+                override fun getItemCount(): Int = 2
             }
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
@@ -72,11 +66,10 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         }
     }
 
-    private fun getPageTitle(position: Int): String {
-        return when (position) {
+    private fun getPageTitle(position: Int): String =
+        when (position) {
             0 -> mainActivity?.getString(R.string.pets)
             1 -> mainActivity?.getString(R.string.mounts)
             else -> ""
         } ?: ""
-    }
 }

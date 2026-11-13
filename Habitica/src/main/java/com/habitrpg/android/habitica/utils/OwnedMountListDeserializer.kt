@@ -7,23 +7,19 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-class OwnedMountListDeserializer : JsonDeserializer<List<OwnedMount>> {
+class OwnedMountListDeserializer : JsonDeserializer<RealmList<OwnedMount>> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?
-    ): List<OwnedMount> {
+        context: JsonDeserializationContext?,
+    ): RealmList<OwnedMount> {
         val ownedItems = RealmList<OwnedMount>()
         val entrySet = json?.asJsonObject?.entrySet()
         if (entrySet != null) {
-            for (entry in entrySet) {
+            for ((key, value) in entrySet) {
                 val item = OwnedMount()
-                item.key = entry.key
-                if (entry.value.isJsonNull) {
-                    item.owned = false
-                } else {
-                    item.owned = entry.value.asBoolean
-                }
+                item.key = key
+                item.owned = !value.isJsonNull && value.asBoolean
                 ownedItems.add(item)
             }
         }

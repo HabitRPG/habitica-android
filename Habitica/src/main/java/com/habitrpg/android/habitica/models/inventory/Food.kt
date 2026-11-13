@@ -3,7 +3,9 @@ package com.habitrpg.android.habitica.models.inventory
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Food : RealmObject(), Item {
+open class Food :
+    RealmObject(),
+    Item {
     @PrimaryKey
     override var key: String = ""
     override var text: String = ""

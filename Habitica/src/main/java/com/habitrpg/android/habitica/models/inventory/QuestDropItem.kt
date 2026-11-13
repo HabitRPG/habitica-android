@@ -4,7 +4,9 @@ import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class QuestDropItem : RealmObject(), BaseObject {
+open class QuestDropItem :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var combinedKey: String? = null
     var questKey: String? = null

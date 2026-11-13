@@ -22,8 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.Integer.max
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultViewModel>() {
@@ -45,7 +44,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         }
 
         lifecycleScope.launch {
-            delay(secondsToShow.toDuration(DurationUnit.SECONDS))
+            delay(secondsToShow.seconds)
             finish()
         }
     }
@@ -56,7 +55,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
                 Intent(this, LevelupActivity::class.java)
                     .apply {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
+                    },
             )
             overridePendingTransition(R.anim.scale_in, R.anim.move_away)
         } else if (viewModel.hasDied) {
@@ -64,7 +63,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
                 Intent(this, FaintActivity::class.java)
                     .apply {
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
+                    },
             )
             overridePendingTransition(R.anim.scale_in, R.anim.move_away)
         }
@@ -83,7 +82,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.healthDelta,
-                R.drawable.heart
+                R.drawable.heart,
             )
             chips.add(chip)
         }
@@ -91,7 +90,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.experienceDelta,
-                R.drawable.experience
+                R.drawable.experience,
             )
             chips.add(chip)
         }
@@ -99,7 +98,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.goldDelta,
-                R.drawable.gold
+                R.drawable.gold,
             )
             chips.add(chip)
         }
@@ -107,7 +106,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.manaDelta,
-                R.drawable.magic
+                R.drawable.magic,
             )
             chips.add(chip)
         }
@@ -191,7 +190,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
                         "Egg" -> getString(R.string.an_egg)
                         "HatchingPotion" -> getString(R.string.a_potion)
                         else -> getString(R.string.some_x, type)
-                    }
+                    },
                 )
                 dropBinding.imageView.loadImage("Pet_" + type + "_" + key)
             }
@@ -207,7 +206,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
     companion object {
         fun show(
             context: Activity,
-            result: TaskScoringResult
+            result: TaskScoringResult,
         ) {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             if (sharedPreferences.getBoolean("hide_task_results", false)) return

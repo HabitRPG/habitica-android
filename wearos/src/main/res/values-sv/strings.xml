@@ -3,7 +3,7 @@
     <string name="version_info">Version %1$s (%2$d)</string>
     <string name="ok">OK</string>
     <string name="you_found">Du hittade…</string>
-    <string name="faint_description">Du förlorade en nivå, XP, och guld. Ge inte upp!</string>
+    <string name="faint_description">Du förlorade en nivå, XP, och Guld. Ge inte upp!</string>
     <string name="one_quest_item">1 Uppdragsföremål</string>
     <string name="x_quest_item">%d Uppdragsföremål</string>
     <string name="x_and_y">%1$s och %2$s</string>
@@ -14,9 +14,9 @@
     <string name="create_account">Skapa konto</string>
     <string name="continue_text">Fortsätt</string>
     <string name="you_ran_out_of_hp">Du fick slut på HP</string>
-    <string name="rya_description">Det finns ofullbordade dagliga uppgifter från igår</string>
+    <string name="rya_description">Det finns ofullbordade Dagliga uppgifter från igår</string>
     <string name="syncing_account">Synkar konto från telefon</string>
-    <string name="review_dailies">Granska dagliga uppgifter</string>
+    <string name="review_dailies">Granska Dagliga uppgifter</string>
     <string name="check_on_phone">Granska på telefonen</string>
     <string name="sync_data">Synka data</string>
     <string name="hide_task_rewards">Göm uppgiftsbelöningar</string>
@@ -34,4 +34,10 @@
     <string name="levelup_description">Du har nått en ny nivå genom allt ditt hårda arbete!</string>
     <string name="all_done_today">Allt är gjort för idag!</string>
     <string name="starting_your_day">Börjar din dag...</string>
+    <string name="how_did_you_do">Hur gick det\?</string>
+    <string name="some_x">lite %s</string>
+    <string name="sign_in_description">Skapa uppgiftslistor och följ dina framsteg med din gamifierade avatar</string>
+    <string name="day_start">Dagens start</string>
+    <string name="disconnected">Frånkopplad</string>
+    <string name="no_tasks">Skapa en %s som du kan lägga till i listan</string>
 </resources>

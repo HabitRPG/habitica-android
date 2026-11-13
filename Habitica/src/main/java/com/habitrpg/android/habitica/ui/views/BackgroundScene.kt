@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views
 
-import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +16,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.core.graphics.scale
 import com.habitrpg.android.habitica.R
 import java.util.Calendar
 
@@ -39,7 +39,7 @@ private fun getBackgroundPainter(): ImageBitmap {
             Calendar.NOVEMBER -> R.drawable.stable_tile_november
             Calendar.DECEMBER -> R.drawable.stable_tile_december
             else -> R.drawable.stable_tile_may
-        }
+        },
     )
 }
 
@@ -48,18 +48,13 @@ fun BackgroundScene(modifier: Modifier = Modifier) {
     val image = getBackgroundPainter()
     Canvas(
         modifier =
-        modifier
-            .height(124.dp)
-            .fillMaxWidth()
-            .zIndex(1f),
+            modifier
+                .height(124.dp)
+                .fillMaxWidth()
+                .zIndex(1f),
         onDraw = {
             val bitmap =
-                Bitmap.createScaledBitmap(
-                    image.asAndroidBitmap(),
-                    image.width.dp.roundToPx(),
-                    124.dp.roundToPx(),
-                    false
-                )
+                image.asAndroidBitmap().scale(image.width.dp.roundToPx(), 124.dp.roundToPx(), false)
             val paint =
                 Paint().asFrameworkPaint().apply {
                     isAntiAlias = true
@@ -67,13 +62,13 @@ fun BackgroundScene(modifier: Modifier = Modifier) {
                         ImageShader(
                             bitmap.asImageBitmap(),
                             TileMode.Repeated,
-                            TileMode.Repeated
+                            TileMode.Repeated,
                         )
                 }
             drawIntoCanvas {
                 it.nativeCanvas.drawPaint(paint)
             }
             paint.reset()
-        }
+        },
     )
 }

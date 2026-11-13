@@ -1,18 +1,5 @@
 package com.habitrpg.android.habitica.ui.views
 
-/**
- * Author: Michael Ritchie, ThanksMister LLC
- * Date: 10/16/12
- * Web: thanksmister.com
- *
- * Extension of <code>TextView</code> that adds listener for ellipses changes.  This can be used to determine
- * if a TextView has an ellipses or not.
- *
- * Derived from discussion on StackOverflow:
- *
- * http://stackoverflow.com/questions/4005933/how-do-i-tell-if-my-textview-has-been-ellipsized
- */
-
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
@@ -33,7 +20,7 @@ class EllipsisTextView : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
         context,
         attrs,
-        defStyle
+        defStyle,
     )
 
     fun addEllipsesListener(listener: EllipsisListener?) {
@@ -47,29 +34,35 @@ class EllipsisTextView : AppCompatTextView {
         ellipsesListeners.remove(listener)
     }
 
-    fun hadEllipses(): Boolean {
-        return ellipses
-    }
+    fun hadEllipses(): Boolean = ellipses
 
     override fun layout(
         l: Int,
         t: Int,
         r: Int,
-        b: Int
+        b: Int,
     ) {
         super.layout(l, t, r, b)
+        checkEllipsis()
+    }
 
-        ellipses = false
-        val layout = layout
-        if (layout != null) {
-            val lines = layout.lineCount
-            if (lines >= maxLines) {
-                ellipses = true
+    override fun onTextChanged(
+        text: CharSequence?,
+        start: Int,
+        lengthBefore: Int,
+        lengthAfter: Int,
+    ) {
+        super.onTextChanged(text, start, lengthBefore, lengthAfter)
+        post { checkEllipsis() }
+    }
+
+    private fun checkEllipsis() {
+        val newEllipsis = layout?.let { it.lineCount >= maxLines } ?: false
+        if (newEllipsis != ellipses) {
+            ellipses = newEllipsis
+            for (listener in ellipsesListeners) {
+                listener.ellipsisStateChanged(ellipses)
             }
-        }
-
-        for (listener in ellipsesListeners) {
-            listener.ellipsisStateChanged(ellipses)
         }
     }
 }

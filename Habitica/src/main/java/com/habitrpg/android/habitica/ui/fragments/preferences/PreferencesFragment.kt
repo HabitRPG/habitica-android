@@ -2,12 +2,14 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -20,10 +22,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -38,14 +37,13 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.preferences.PauseResumeDamageView
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
+import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -71,19 +69,22 @@ class PreferencesFragment :
     private var pushNotificationsPreference: PreferenceScreen? = null
     private var emailNotificationsPreference: PreferenceScreen? = null
     private var classSelectionPreference: Preference? = null
-    private var serverUrlPreference: ListPreference? = null
+    private var activePromoDebugPreference: ListPreference? = null
+    private var customServerUrlDebugPreference: ListPreference? = null
+    private var customServerUrlReleaseCategory: PreferenceCategory? = null
+    private var customServerUrlReleasePreference: Preference? = null
     private var taskListPreference: ListPreference? = null
 
     private val classSelectionResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            lifecycleScope.launchCatching {
                 userRepository.retrieveUser(true, true)
             }
         }
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
@@ -91,6 +92,11 @@ class PreferencesFragment :
         lifecycleScope.launchCatching {
             userRepository.retrieveTeamPlans()
         }
+    }
+
+    override fun onDestroy() {
+        contentRepository.close()
+        super.onDestroy()
     }
 
     override fun setupPreferences() {
@@ -102,25 +108,32 @@ class PreferencesFragment :
         classSelectionPreference = findPreference("choose_class")
 
         val weekdayPreference = findPreference("FirstDayOfTheWeek") as? ListPreference
-        weekdayPreference?.summary = weekdayPreference?.entry
+        weekdayPreference?.summary = weekdayPreference.entry
 
-        serverUrlPreference = findPreference("server_url") as? ListPreference
-        serverUrlPreference?.isVisible = false
-        serverUrlPreference?.summary =
-            preferenceManager.sharedPreferences?.getString("server_url", "")
+        val serverUrl = preferenceManager.sharedPreferences?.getString("server_url", "")
+        customServerUrlDebugPreference = findPreference("server_url") as? ListPreference
+        customServerUrlDebugPreference?.isVisible = false
+        customServerUrlDebugPreference?.summary = serverUrl
+        customServerUrlReleaseCategory = findPreference("custom_server")
+        customServerUrlReleasePreference = findPreference("custom_server_url")
+        customServerUrlReleasePreference?.summary = serverUrl
+
+        activePromoDebugPreference = findPreference("active_promo")
+        activePromoDebugPreference?.isVisible = false
+        activePromoDebugPreference?.summary = activePromoDebugPreference?.entry
 
         val themePreference = findPreference("theme_name") as? ListPreference
-        themePreference?.summary = themePreference?.entry ?: "Default"
+        themePreference?.summary = themePreference.entry ?: "Default"
         val themeModePreference = findPreference("theme_mode") as? ListPreference
-        themeModePreference?.summary = themeModePreference?.entry ?: "Follow System"
+        themeModePreference?.summary = themeModePreference.entry ?: "Follow System"
 
         val launchScreenPreference = findPreference("launch_screen") as? ListPreference
-        launchScreenPreference?.summary = launchScreenPreference?.entry ?: "Habits"
+        launchScreenPreference?.summary = launchScreenPreference.entry ?: "Habits"
 
         val taskDisplayPreference = findPreference("task_display") as? ListPreference
         if (configManager.enableTaskDisplayMode()) {
             taskDisplayPreference?.isVisible = true
-            taskDisplayPreference?.summary = taskDisplayPreference?.entry
+            taskDisplayPreference?.summary = taskDisplayPreference.entry
         } else {
             taskDisplayPreference?.isVisible = false
         }
@@ -176,13 +189,13 @@ class PreferencesFragment :
                             dialog.addButton(
                                 R.string.change_class,
                                 isPrimary = true,
-                                isDestructive = true
+                                isDestructive = true,
                             ) { _, _ ->
-                                lifecycleScope.launch {
+                                lifecycleScope.launchCatching {
                                     userRepository.changeClass()
                                 }
                                 classSelectionResult.launch(
-                                    intent
+                                    intent,
                                 )
                             }
                             dialog.addButton(R.string.close, false)
@@ -191,12 +204,6 @@ class PreferencesFragment :
                     } else {
                         activity?.let { activity ->
                             val dialog = InsufficientGemsDialog(activity, 3)
-                            Analytics.sendEvent(
-                                "show insufficient gems modal",
-                                EventCategory.BEHAVIOUR,
-                                HitType.EVENT,
-                                mapOf("reason" to "class change")
-                            )
                             dialog.show()
                         }
                     }
@@ -211,19 +218,39 @@ class PreferencesFragment :
 
             "reload_content" -> {
                 (activity as? SnackbarActivity)?.showSnackbar(
-                    content = context?.getString(R.string.reloading_content)
+                    content = context?.getString(R.string.reloading_content),
                 )
                 reloadContent(true)
+            }
+
+            "custom_server_url" -> {
+                context?.let { context ->
+                    val dialog = HabiticaAlertDialog(context)
+                    dialog.setTitle(R.string.custom_server)
+                    dialog.setMessage(R.string.reset_server_confirmation)
+                    dialog.addButton(R.string.reset_server_to_default, isPrimary = true, isDestructive = true) { _, _ ->
+                        preferenceManager.sharedPreferences?.edit {
+                            remove("server_url")
+                        }
+                        val baseUrl = context.getString(com.habitrpg.common.habitica.R.string.base_url)
+                        apiClient.updateServerUrl(baseUrl)
+                        HabiticaBaseApplication.logout(context)
+                        activity?.finish()
+                    }
+                    dialog.addCancelButton()
+                    dialog.enqueue()
+                }
             }
 
             "clear_database" -> {
                 context?.let { context ->
                     HabiticaBaseApplication.deleteDatabase(context)
                     lifecycleScope.launchCatching {
-                        userRepository.retrieveUser(true, true)
+                        userRepository.retrieveUser(true, forced = true)
+                        userRepository.retrieveTeamPlans()
                         (activity as? SnackbarActivity)?.showSnackbar(
                             content = context.getString(R.string.cleared_cache),
-                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                         )
                         reloadContent(true)
                         inventoryRepository.retrieveInAppRewards()
@@ -237,10 +264,12 @@ class PreferencesFragment :
     private fun reloadContent(withConfirmation: Boolean) {
         lifecycleScope.launchCatching {
             contentRepository.retrieveContent(true)
+            contentRepository.retrieveWorldState(true)
+            userRepository.retrieveUser(true, true)
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloaded_content),
-                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                 )
             }
         }
@@ -261,7 +290,7 @@ class PreferencesFragment :
 
     private val notificationPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
+            ActivityResultContracts.RequestPermission(),
         ) { granted ->
             if (granted) {
                 val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
@@ -272,13 +301,13 @@ class PreferencesFragment :
                 val alert = context?.let { HabiticaAlertDialog(it) }
                 alert?.setTitle(R.string.push_notification_system_settings_title)
                 alert?.setMessage(R.string.push_notification_system_settings_description)
-                alert?.addButton(R.string.open_settings, true, false) { _, _ ->
+                alert?.addButton(R.string.open_settings, true, isDestructive = false) { _, _ ->
                     val notifSettingIntent: Intent =
                         Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             .putExtra(
                                 Settings.EXTRA_APP_PACKAGE,
-                                context?.applicationContext?.packageName
+                                context?.applicationContext?.packageName,
                             )
                     startActivity(notifSettingIntent)
                 }
@@ -291,7 +320,7 @@ class PreferencesFragment :
 
     override fun onSharedPreferenceChanged(
         sharedPreferences: SharedPreferences,
-        key: String?
+        key: String?,
     ) {
         when (key) {
             "use_reminder" -> {
@@ -319,7 +348,7 @@ class PreferencesFragment :
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.pushNotifications.unsubscribeFromAll",
-                        !usePushNotifications
+                        !usePushNotifications,
                     )
                 }
                 if (usePushNotifications) {
@@ -342,7 +371,7 @@ class PreferencesFragment :
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.emailNotifications.unsubscribeFromAll",
-                        !useEmailNotifications
+                        !useEmailNotifications,
                     )
                 }
             }
@@ -354,31 +383,28 @@ class PreferencesFragment :
                     userRepository.changeCustomDayStart(hour)
                 }
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "language" -> {
-                val languageHelper = LanguageHelper(sharedPreferences.getString(key, "en"))
+                val selectedLanguage = sharedPreferences.getString(key, "en") ?: "en"
+                val languageHelper = LanguageHelper(selectedLanguage)
 
-                Locale.setDefault(languageHelper.locale)
-                val configuration = Configuration()
-                configuration.setLocale(languageHelper.locale)
-                @Suppress("DEPRECATION")
-                activity?.resources?.updateConfiguration(
-                    configuration,
-                    activity?.resources?.displayMetrics
+                if (user?.preferences?.language != languageHelper.languageCode) {
+                    MainScope().launchCatching {
+                        userRepository.updateLanguage(languageHelper.languageCode ?: "en")
+                    }
+                }
+
+                val appContext = requireContext().applicationContext
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(LanguageHelper.getLanguageTag(selectedLanguage)),
                 )
+                WidgetRefreshWorker.enqueueOneTime(appContext)
 
-                if (user?.preferences?.language == languageHelper.languageCode) {
-                    return
-                }
-                lifecycleScope.launchCatching {
-                    userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                    reloadContent(false)
-                }
                 val intent = Intent(activity, MainActivity::class.java)
-                this.startActivity(intent)
-                activity?.finishAffinity()
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
 
             "audioTheme" -> {
@@ -403,18 +429,25 @@ class PreferencesFragment :
             }
 
             "server_url" -> {
-                apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
-                findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
+                val newUrl = sharedPreferences.getString(key, null)
+                if (!newUrl.isNullOrBlank()) {
+                    apiClient.updateServerUrl(newUrl)
+                }
+                findPreference<Preference>(key)?.summary = newUrl ?: ""
+            }
+
+            "active_promo" -> {
+                activePromoDebugPreference?.summary = activePromoDebugPreference?.entry
             }
 
             "task_display" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "FirstDayOfTheWeek" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry
+                preference?.summary = preference.entry
             }
 
             "disablePMs" -> {
@@ -428,7 +461,7 @@ class PreferencesFragment :
 
             "launch_screen" -> {
                 val preference = findPreference<ListPreference>(key)
-                preference?.summary = preference?.entry ?: "Habits"
+                preference?.summary = preference.entry ?: "Habits"
             }
         }
     }
@@ -436,7 +469,8 @@ class PreferencesFragment :
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
             if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                TimePreferenceDialogFragment
+                    .newInstance(this, preference.key)
                     .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
             }
         } else {
@@ -454,7 +488,7 @@ class PreferencesFragment :
                     R.string.resume_damage
                 } else {
                     R.string.pause_damage
-                }
+                },
             )
         pauseDamagePreference?.summary =
             getString(
@@ -462,7 +496,7 @@ class PreferencesFragment :
                     R.string.resume_damage_summary
                 } else {
                     R.string.pause_damage_summary
-                }
+                },
             )
 
         val themePreference = findPreference("theme_name") as? ListPreference
@@ -490,13 +524,14 @@ class PreferencesFragment :
         }
         val cdsTimePreference = findPreference("cds_time") as? ListPreference
         cdsTimePreference?.value = user?.preferences?.dayStart.toString()
-        cdsTimePreference?.summary = cdsTimePreference?.entry
+        cdsTimePreference?.summary = cdsTimePreference.entry
         val languagePreference = findPreference("language") as? ListPreference
-        languagePreference?.value = user?.preferences?.language
-        languagePreference?.summary = languagePreference?.entry
+        val savedLanguage = preferenceManager.sharedPreferences?.getString("language", null)
+        languagePreference?.value = savedLanguage ?: user?.preferences?.language
+        languagePreference?.summary = languagePreference.entry
         val audioThemePreference = findPreference("audioTheme") as? ListPreference
         audioThemePreference?.value = user?.preferences?.sound
-        audioThemePreference?.summary = audioThemePreference?.entry
+        audioThemePreference?.summary = audioThemePreference.entry
 
         val preference = findPreference<Preference>("authentication")
         if (user?.flags?.verifiedUsername == true) {
@@ -548,9 +583,9 @@ class PreferencesFragment :
         emailNotificationsPreference?.let { updatePreferenceEnabledView(it) }
         useEmailPreference?.isChecked = useEmailNotifications
 
-        lifecycleScope.launch {
-            val teams = userRepository.getTeamPlans().firstOrNull() ?: return@launch
-            val context = context ?: return@launch
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            val teams = userRepository.getTeamPlans().firstOrNull() ?: return@launchCatching
+            val context = context ?: return@launchCatching
             val groupCategory = findPreference<PreferenceCategory>("groups_category")
             val footer = groupCategory?.findPreference<Preference>("groups_footer")
             footer?.order = 9999
@@ -568,7 +603,11 @@ class PreferencesFragment :
                     newPreference.onPreferenceChangeListener =
                         Preference.OnPreferenceChangeListener { _, newValue ->
                             val currentIds =
-                                user?.preferences?.tasks?.mirrorGroupTasks?.toMutableList()
+                                user
+                                    ?.preferences
+                                    ?.tasks
+                                    ?.mirrorGroupTasks
+                                    ?.toMutableList()
                                     ?: mutableListOf()
                             if (newValue == true && !currentIds.contains(team.id)) {
                                 currentIds.add(team.id)
@@ -578,14 +617,18 @@ class PreferencesFragment :
                             lifecycleScope.launchCatching {
                                 userRepository.updateUser(
                                     "preferences.tasks.mirrorGroupTasks",
-                                    currentIds
+                                    currentIds,
                                 )
                             }
                             true
                         }
                     groupCategory?.addPreference(newPreference)
                     newPreference.isChecked =
-                        user?.preferences?.tasks?.mirrorGroupTasks?.contains(team.id) == true
+                        user
+                            ?.preferences
+                            ?.tasks
+                            ?.mirrorGroupTasks
+                            ?.contains(team.id) == true
                 }
             }
             if (footer != null) {
@@ -594,8 +637,12 @@ class PreferencesFragment :
         }
 
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
-            serverUrlPreference?.isVisible = true
+            customServerUrlDebugPreference?.isVisible = true
+            activePromoDebugPreference?.isVisible = true
             taskListPreference?.isVisible = true
+        }
+        if (BuildConfig.DEBUG.not()) {
+            customServerUrlReleaseCategory?.isVisible = customServerUrlReleasePreference?.summary.isNullOrEmpty().not()
         }
     }
 }

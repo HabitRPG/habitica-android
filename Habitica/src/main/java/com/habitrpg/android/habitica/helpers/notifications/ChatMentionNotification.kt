@@ -4,14 +4,18 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 
-class ChatMentionNotification(context: Context, identifier: String?) :
-    HabiticaLocalNotification(context, identifier) {
+class ChatMentionNotification(
+    context: Context,
+    identifier: String?,
+) : HabiticaLocalNotification(context, identifier) {
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val style =
-            NotificationCompat.BigTextStyle()
+            NotificationCompat
+                .BigTextStyle()
                 .setBigContentTitle(title)
                 .bigText(message)
-        return super.configureNotificationBuilder(data)
+        return super
+            .configureNotificationBuilder(data)
             .setStyle(style)
     }
 

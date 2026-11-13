@@ -7,7 +7,9 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class QuestCompletedDialog(context: Context) : HabiticaAlertDialog(context) {
+class QuestCompletedDialog(
+    context: Context,
+) : HabiticaAlertDialog(context) {
     lateinit var userRepository: UserRepository
 
     var quest: QuestContent? = null
@@ -34,7 +36,7 @@ class QuestCompletedDialog(context: Context) : HabiticaAlertDialog(context) {
         fun showWithQuest(
             context: Context,
             quest: QuestContent,
-            userRepository: UserRepository
+            userRepository: UserRepository,
         ) {
             if (isShowingDialog) return
 

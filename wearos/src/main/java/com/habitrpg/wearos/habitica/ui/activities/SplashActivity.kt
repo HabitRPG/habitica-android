@@ -13,8 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
@@ -80,7 +79,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
             } else {
                 stopAnimatingProgress()
             }
-            delay(40.toDuration(DurationUnit.SECONDS))
+            delay(40.seconds)
             if (isActive) {
                 // the sync attempt has timed out
                 startLoginActivity()

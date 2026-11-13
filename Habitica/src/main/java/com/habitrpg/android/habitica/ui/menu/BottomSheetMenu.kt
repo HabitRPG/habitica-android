@@ -10,7 +10,10 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 
-class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), View.OnClickListener {
+class BottomSheetMenu(
+    context: Context,
+) : HabiticaBottomSheetDialog(context),
+    View.OnClickListener {
     private var binding = MenuBottomSheetBinding.inflate(layoutInflater)
     private var runnable: ((Int) -> Unit)? = null
 

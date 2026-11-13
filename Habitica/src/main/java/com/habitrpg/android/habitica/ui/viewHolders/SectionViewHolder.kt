@@ -21,7 +21,9 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.common.habitica.extensions.inflate
 import java.util.Date
 
-class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class SectionViewHolder(
+    itemView: View,
+) : RecyclerView.ViewHolder(itemView) {
     val headerContainer: LinearLayout? = itemView.findViewById(R.id.header_container)
     private val label: TextView = itemView.findViewById(R.id.label)
     private val switchesInLabel: TextView? = itemView.findViewById(R.id.switches_in_label)
@@ -55,7 +57,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     spinnerSelectionChanged?.invoke()
                 }
@@ -79,7 +81,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             } else {
                 context.getString(
                     R.string.mount_category,
-                    getTranslatedAnimalType(context, section.key)
+                    getTranslatedAnimalType(context, section.key),
                 )
             }
         if (section.key == "special") {
@@ -92,7 +94,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.context.getString(
                 R.string.pet_ownership_fraction,
                 section.ownedCount,
-                section.totalCount
+                section.totalCount,
             )
     }
 
@@ -103,7 +105,8 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             if (nextDate.time < Date().time) {
                 switchesInLabel?.text = context.getString(R.string.tap_to_reload)
             } else if (endDates.size > 1) {
-                switchesInLabel?.text = context.getString(R.string.next_switch_in_x, nextDate.getImpreciseRemainingString(context.resources))
+                switchesInLabel?.text =
+                    context.getString(R.string.next_switch_in_x, nextDate.getImpreciseRemainingString(context.resources))
             } else {
                 switchesInLabel?.text = context.getString(R.string.switches_in_x, nextDate.getImpreciseRemainingString(context.resources))
             }
@@ -119,19 +122,23 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 classSelectionButton?.background = AppCompatResources.getDrawable(context, R.drawable.shop_header_warrior_background)
                 classSelectionLabel?.text = context.getString(R.string.warrior)
             }
+
             "wizard" -> {
                 classSelectionButton?.background = AppCompatResources.getDrawable(context, R.drawable.shop_header_wizard_background)
                 classSelectionLabel?.text = context.getString(R.string.mage)
             }
+
             "healer" -> {
                 classSelectionButton?.background = AppCompatResources.getDrawable(context, R.drawable.shop_header_healer_background)
                 classSelectionLabel?.text = context.getString(R.string.healer)
                 textColor = R.color.darkbrown
             }
+
             "rogue" -> {
                 classSelectionButton?.background = AppCompatResources.getDrawable(context, R.drawable.shop_header_rogue_background)
                 classSelectionLabel?.text = context.getString(R.string.rogue)
             }
+
             else -> {
                 classSelectionButton?.background = AppCompatResources.getDrawable(context, R.drawable.shop_header_else_background)
                 classSelectionLabel?.text = context.getString(R.string.classless)

@@ -2,15 +2,11 @@ package com.habitrpg.wearos.habitica
 
 import android.app.Application
 import android.content.Intent
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
-import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
+import com.habitrpg.wearos.habitica.helpers.Analytics
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
 import com.habitrpg.wearos.habitica.ui.activities.LoginActivity
@@ -24,8 +20,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 @HiltAndroidApp
 class MainApplication : Application() {
@@ -37,42 +32,30 @@ class MainApplication : Application() {
         super.onCreate()
         MarkdownParser.setup(this)
         setupCoil()
-        setupFirebase()
+        Analytics.initialize()
 
         MainScope().launch {
-            userRepository.getUser()
-                .filterNotNull()
+            userRepository
+                .getUser()
+                .onEach {
+                    Analytics.setUserID(if (userRepository.hasAuthentication) userRepository.userID else null)
+                    Analytics.setAnalyticsConsent(it?.preferences?.analyticsConsent)
+                }.filterNotNull()
                 .onEach {
                     if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
                         val intent = Intent(this@MainApplication, FaintActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
-                    } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name && BaseActivity.currentActivityClassName != LoginActivity::class.java.name) {
+                    } else if (it.needsCron &&
+                        BaseActivity.currentActivityClassName != RYAActivity::class.java.name &&
+                        BaseActivity.currentActivityClassName != LoginActivity::class.java.name
+                    ) {
                         val intent = Intent(this@MainApplication, RYAActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                     }
-                    delay(1.toDuration(DurationUnit.SECONDS))
+                    delay(1.seconds)
                 }.collect()
-        }
-
-        logLaunch()
-    }
-
-    private fun logLaunch() {
-        if (!BuildConfig.DEBUG) {
-            Firebase.analytics.logEvent("wear_launched", null)
-        }
-    }
-
-    private fun setupFirebase() {
-        if (!BuildConfig.DEBUG) {
-            val crashlytics = Firebase.crashlytics
-            if (userRepository.hasAuthentication) {
-                crashlytics.setUserId(userRepository.userID)
-            }
-            crashlytics.setCustomKey("is_wear", true)
-            FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
         }
     }
 }

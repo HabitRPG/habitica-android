@@ -1,19 +1,39 @@
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.habitrpg.convention.get().pluginId)
-    id(libs.plugins.android.library.get().pluginId)
-    id(libs.plugins.kotlin.compose.get().pluginId)
+    id(
+        libs.plugins.habitrpg.convention
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.android.library
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.kotlin.compose
+            .get()
+            .pluginId,
+    )
 }
 
 android {
     namespace = "com.habitrpg.common.habitica"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk =
+        libs.versions.targetSdk
+            .get()
+            .toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
@@ -22,6 +42,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableUnitTestCoverage = true
+        }
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -61,6 +84,11 @@ android {
             buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
         }
 
+        register("setup") {
+            dimension = "buildType"
+            buildConfigField("String", "TESTING_LEVEL", "\"staff\"")
+        }
+
         register("partners") {
             dimension = "buildType"
             buildConfigField("String", "TESTING_LEVEL", "\"partners\"")
@@ -82,10 +110,17 @@ android {
         }
     }
 
-    kotlin.jvmToolchain(11)
-    composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
     flavorDimensions.add("buildType")
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
 }
 
 dependencies {

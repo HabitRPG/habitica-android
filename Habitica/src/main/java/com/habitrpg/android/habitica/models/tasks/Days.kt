@@ -6,7 +6,9 @@ import android.os.Parcelable
 import com.habitrpg.android.habitica.R
 
 @io.realm.annotations.RealmClass(embedded = true)
-open class Days() : io.realm.RealmObject(), Parcelable {
+open class Days() :
+    io.realm.RealmObject(),
+    Parcelable {
     val isEveryDay: Boolean
         get() = m && t && w && th && f && s && su
     val isOnlyWeekdays: Boolean
@@ -29,7 +31,7 @@ open class Days() : io.realm.RealmObject(), Parcelable {
         f: Boolean? = null,
         s: Boolean? = null,
         su: Boolean? = null,
-        default: Boolean = true
+        default: Boolean = true,
     ) : this() {
         this.m = m ?: default
         this.t = t ?: default
@@ -42,7 +44,7 @@ open class Days() : io.realm.RealmObject(), Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeByte(if (m) 1.toByte() else 0.toByte())
         dest.writeByte(if (t) 1.toByte() else 0.toByte())
@@ -63,9 +65,7 @@ open class Days() : io.realm.RealmObject(), Parcelable {
         su = `in`.readByte().toInt() != 0
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     fun dayStrings(context: Context): List<String> {
         val days = mutableListOf<String>()
@@ -80,12 +80,8 @@ open class Days() : io.realm.RealmObject(), Parcelable {
     }
 
     companion object CREATOR : Parcelable.Creator<Days> {
-        override fun createFromParcel(parcel: Parcel): Days {
-            return Days(parcel)
-        }
+        override fun createFromParcel(parcel: Parcel): Days = Days(parcel)
 
-        override fun newArray(size: Int): Array<Days?> {
-            return arrayOfNulls(size)
-        }
+        override fun newArray(size: Int): Array<Days?> = arrayOfNulls(size)
     }
 }

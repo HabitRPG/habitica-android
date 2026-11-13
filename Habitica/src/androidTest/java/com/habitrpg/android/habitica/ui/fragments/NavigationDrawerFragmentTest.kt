@@ -14,11 +14,15 @@ import io.mockk.spyk
 import org.hamcrest.Matcher
 import org.junit.Test
 
-class SectionHeaderItem(parent: Matcher<View>) : KRecyclerItem<SectionHeaderItem>(parent) {
+class SectionHeaderItem(
+    parent: Matcher<View>,
+) : KRecyclerItem<SectionHeaderItem>(parent) {
     val title = KTextView(parent) { isRoot() }
 }
 
-class MainItem(parent: Matcher<View>) : KRecyclerItem<MainItem>(parent) {
+class MainItem(
+    parent: Matcher<View>,
+) : KRecyclerItem<MainItem>(parent) {
     val title = KTextView(parent) { withId(R.id.titleTextView) }
 }
 
@@ -27,9 +31,9 @@ class NavigationDrawerScreen : Screen<NavigationDrawerScreen>() {
         KRecyclerView({
             withId(R.id.recyclerView)
         }, itemTypeBuilder = {
-                itemType(::SectionHeaderItem)
-                itemType(::MainItem)
-            })
+            itemType(::SectionHeaderItem)
+            itemType(::MainItem)
+        })
 }
 
 @LargeTest

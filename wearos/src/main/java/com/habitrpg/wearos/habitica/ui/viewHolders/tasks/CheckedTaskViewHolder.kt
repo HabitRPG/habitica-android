@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.wearos.habitica.models.tasks.Task
 
-abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) {
+abstract class CheckedTaskViewHolder(
+    itemView: View,
+) : TaskViewHolder(itemView) {
     abstract val checkbox: ImageView
     abstract val checkboxWrapper: ViewGroup
 
@@ -25,8 +27,8 @@ abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) 
                 ColorStateList.valueOf(
                     ContextCompat.getColor(
                         itemView.context,
-                        R.color.gray_300
-                    )
+                        R.color.gray_300,
+                    ),
                 )
         } else {
             checkbox.setImageDrawable(null)
@@ -37,8 +39,8 @@ abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) 
                 ColorStateList.valueOf(
                     ContextCompat.getColor(
                         itemView.context,
-                        data.extraLightTaskColor
-                    )
+                        data.extraLightTaskColor,
+                    ),
                 )
         }
     }

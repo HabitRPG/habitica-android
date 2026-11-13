@@ -15,9 +15,9 @@ import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryLocalRepository : ContentLocalRepository {
-    fun getArmoireRemainingCount(): Flow<Int>
+    fun getArmoireRemainingCount(userID: String): Flow<Int>
 
-    fun getOwnedEquipment(): Flow<List<Equipment>>
+    fun getOwnedEquipment(userID: String): Flow<List<Equipment>>
 
     fun getMounts(): Flow<List<Mount>>
 
@@ -37,22 +37,25 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>>
 
-    fun getOwnedEquipment(type: String): Flow<List<Equipment>>
+    fun getOwnedEquipment(
+        userID: String,
+        type: String,
+    ): Flow<List<Equipment>>
 
     fun getOwnedItems(
         itemType: String,
         userID: String,
-        includeZero: Boolean
+        includeZero: Boolean,
     ): Flow<List<OwnedItem>>
 
     fun getOwnedItems(
         userID: String,
-        includeZero: Boolean
+        includeZero: Boolean,
     ): Flow<Map<String, OwnedItem>>
 
     fun getEquipmentType(
         type: String,
-        set: String
+        set: String,
     ): Flow<List<Equipment>>
 
     fun getEquipment(key: String): Flow<Equipment>
@@ -60,13 +63,13 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun getMounts(
         type: String?,
         group: String?,
-        color: String?
+        color: String?,
     ): Flow<List<Mount>>
 
     fun getPets(
         type: String?,
         group: String?,
-        color: String?
+        color: String?,
     ): Flow<List<Pet>>
 
     fun updateOwnedEquipment(user: User)
@@ -75,24 +78,24 @@ interface InventoryLocalRepository : ContentLocalRepository {
         type: String,
         key: String,
         userID: String,
-        amountToAdd: Int
+        amountToAdd: Int,
     )
 
     fun changeOwnedCount(
         item: OwnedItem,
-        amountToAdd: Int?
+        amountToAdd: Int?,
     )
 
     fun getItem(
         type: String,
-        key: String
+        key: String,
     ): Flow<Item>
 
     fun getOwnedItem(
         userID: String,
         type: String,
         key: String,
-        includeZero: Boolean
+        includeZero: Boolean,
     ): Flow<OwnedItem>
 
     fun decrementMysteryItemCount(user: User?)
@@ -102,35 +105,36 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun hatchPet(
         eggKey: String,
         potionKey: String,
-        userID: String
+        userID: String,
     )
 
     fun unhatchPet(
         eggKey: String,
         potionKey: String,
-        userID: String
+        userID: String,
     )
 
     fun feedPet(
         foodKey: String,
         petKey: String,
         feedValue: Int,
-        userID: String
+        userID: String,
     )
 
     fun getLatestMysteryItem(): Flow<Equipment>
+
     fun getLatestMysteryItemAndSet(): Flow<Pair<Equipment, EquipmentSet?>>
 
     fun soldItem(
         userID: String,
-        updatedUser: User
+        updatedUser: User,
     ): User
 
     fun getAvailableLimitedItems(): Flow<List<Item>>
 
     fun save(
         items: Items,
-        userID: String
+        userID: String,
     )
 
     fun getLiveObject(obj: OwnedItem): OwnedItem?
@@ -139,6 +143,21 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getItems(
         itemClass: Class<out Item>,
-        keys: Array<String>
+        keys: Array<String>,
     ): Flow<List<Item>>
+
+    fun markAsOwned(
+        equipment: Equipment,
+        isOwned: Boolean,
+    )
+
+    fun setOwnedCount(
+        ownedItem: OwnedItem,
+        newCount: Int,
+    )
+
+    fun incrementGemsBought(
+        currentUserID: String,
+        purchaseQuantity: Int,
+    )
 }

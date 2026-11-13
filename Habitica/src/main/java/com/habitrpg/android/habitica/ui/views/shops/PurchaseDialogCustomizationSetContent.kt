@@ -11,7 +11,9 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class PurchaseDialogCustomizationSetContent(context: Context) : PurchaseDialogContent(context) {
+class PurchaseDialogCustomizationSetContent(
+    context: Context,
+) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseCustomizationsetBinding.inflate(context.layoutInflater, this)
     override val imageView: PixelArtView
         get() = PixelArtView(context)

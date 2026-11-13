@@ -8,7 +8,9 @@ import com.habitrpg.android.habitica.databinding.RowHabitBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.views.TaskTextView
 
-class HabitViewHolder(itemView: View) : TaskViewHolder(itemView) {
+class HabitViewHolder(
+    itemView: View,
+) : TaskViewHolder(itemView) {
     private val binding = RowHabitBinding.bind(itemView)
     override val titleView: TaskTextView
         get() = binding.title
@@ -34,12 +36,15 @@ class HabitViewHolder(itemView: View) : TaskViewHolder(itemView) {
             }
         }
         if (data.up != true && data.down != true) {
-            binding.habitButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_100))
-            binding.habitButtonIcon.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_5))
+            binding.habitButton.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_100))
+            binding.habitButtonIcon.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_5))
             binding.habitButtonIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_100))
         } else {
             binding.habitButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.lightTaskColor))
-            binding.habitButtonIcon.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.mediumTaskColor))
+            binding.habitButtonIcon.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.mediumTaskColor))
             binding.habitButtonIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.white))
         }
     }

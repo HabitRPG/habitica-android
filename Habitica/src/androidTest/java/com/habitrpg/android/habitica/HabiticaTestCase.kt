@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -49,6 +50,7 @@ open class HabiticaTestCase : TestCase() {
 
     val apiClient: ApiClient = mockk(relaxed = true)
     val userRepository: UserRepository = mockk(relaxed = true)
+    val challengeRepository: ChallengeRepository = mockk(relaxed = true)
     val taskRepository: TaskRepository = mockk(relaxed = true)
     val inventoryRepository: InventoryRepository = mockk(relaxed = true)
     val socialRepository: SocialRepository = mockk(relaxed = true)
@@ -106,7 +108,7 @@ open class HabiticaTestCase : TestCase() {
 
     internal fun <T> loadJsonFile(
         s: String,
-        type: Type
+        type: Type,
     ): T {
         val userStream = javaClass.classLoader?.getResourceAsStream("$s.json")
         return gson.fromJson(gson.newJsonReader(InputStreamReader(userStream)), type)
@@ -138,7 +140,7 @@ open class HabiticaTestCase : TestCase() {
     private fun <P, C> assign(
         it: KCallable<*>,
         obj: C,
-        value: P
+        value: P,
     ) {
         if ((it as KMutableProperty1<C, P>).javaField!!.get(obj) == null) {
             it.set(obj, value)

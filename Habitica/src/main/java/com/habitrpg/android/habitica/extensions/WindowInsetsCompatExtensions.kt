@@ -17,11 +17,13 @@ fun consumeWindowInsetsAbove30(insets: WindowInsets?): WindowInsets? {
     return insets
 }
 
-fun applyScrollContentWindowInsets(view: View,
-                                   applyTop: Boolean = false,
-                                   applyBottom: Boolean = true,
-                                   applyLeft: Boolean = true,
-                                   applyRight: Boolean = true) {
+fun applyScrollContentWindowInsets(
+    view: View,
+    applyTop: Boolean = false,
+    applyBottom: Boolean = true,
+    applyLeft: Boolean = true,
+    applyRight: Boolean = true,
+) {
     val topPadding = view.paddingTop
     val leftPadding = view.paddingLeft
     val rightPadding = view.paddingRight
@@ -37,7 +39,8 @@ fun applyScrollContentWindowInsets(view: View,
             top = top,
             left = (if (applyLeft) insets.left else 0) + leftPadding,
             right = (if (applyRight) insets.right else 0) + rightPadding,
-            bottom = bottom)
+            bottom = bottom,
+        )
         consumeWindowInsetsAbove30(windowInsets)
     }
 }

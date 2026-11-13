@@ -32,10 +32,8 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentStatsBinding {
-        return FragmentStatsBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentStatsBinding = FragmentStatsBinding.inflate(inflater, container, false)
 
     private var canAllocatePoints: Boolean = false
 
@@ -69,7 +67,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         tutorialStepIdentifier = "stats"
         tutorialTexts = listOf(getString(R.string.tutorial_stats))
@@ -84,7 +82,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -94,25 +92,26 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             val color = it.getThemeColor(R.attr.colorPrimaryOffset)
             binding?.distributeEvenlyHelpButton?.setImageBitmap(
                 HabiticaIconsHelper.imageOfInfoIcon(
-                    color
-                )
+                    color,
+                ),
             )
             binding?.distributeClassHelpButton?.setImageBitmap(
                 HabiticaIconsHelper.imageOfInfoIcon(
-                    color
-                )
+                    color,
+                ),
             )
             binding?.distributeTaskHelpButton?.setImageBitmap(
                 HabiticaIconsHelper.imageOfInfoIcon(
-                    color
-                )
+                    color,
+                ),
             )
         }
 
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             if (user == null) return@observe
             canAllocatePoints =
-                (user.stats?.lvl ?: 0) >= 10 && (user.stats?.points ?: 0) > 0
+                (user.stats?.lvl ?: 0) >= 10 &&
+                (user.stats?.points ?: 0) > 0
             binding?.unlockAtLevel?.visibility =
                 if ((user.stats?.lvl ?: 0) < 10) View.VISIBLE else View.GONE
             updateStats(user)
@@ -136,7 +135,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         }
 
         binding?.automaticAllocationSwitch?.setOnCheckedChangeListener { _, isChecked ->
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 userRepository.updateUser("preferences.automaticAllocation", isChecked)
             }
         }
@@ -165,10 +164,10 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun changeAutoAllocationMode(allocationMode: String) {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.updateUser(
                 "preferences.allocationMode",
-                allocationMode
+                allocationMode,
             )
         }
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
@@ -184,7 +183,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun allocatePoint(stat: Attribute) {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.allocatePoint(stat)
         }
     }
@@ -220,8 +219,8 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
                 binding?.numberOfPointsTextView?.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.white
-                    )
+                        R.color.white,
+                    ),
                 )
                 binding?.numberOfPointsTextView?.background =
                     ContextCompat.getDrawable(context, R.drawable.button_gray_100)
@@ -232,14 +231,14 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
                 binding?.numberOfPointsTextView?.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_quad
-                    )
+                        R.color.text_quad,
+                    ),
                 )
                 binding?.numberOfPointsTextView?.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.transparent
-                    )
+                        R.color.transparent,
+                    ),
                 )
                 binding?.leftSparklesView?.visibility = View.GONE
                 binding?.rightSparklesView?.visibility = View.GONE
@@ -262,7 +261,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             outfitList.add(thisOutfit.weapon)
         }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             val equipment = inventoryRepository.getEquipment(outfitList).firstOrNull()
             val levelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f).toInt()
 
@@ -276,17 +275,41 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             binding?.constitutionStatsView?.levelValue = levelStat
             binding?.perceptionStatsView?.levelValue = levelStat
 
-            totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
-            totalIntelligence += user.stats?.buffs?.intelligence?.toInt() ?: 0
-            totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
-            totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
-            binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
+            totalStrength += user.stats
+                ?.buffs
+                ?.str
+                ?.toInt() ?: 0
+            totalIntelligence += user.stats
+                ?.buffs
+                ?.intelligence
+                ?.toInt() ?: 0
+            totalConstitution += user.stats
+                ?.buffs
+                ?.con
+                ?.toInt() ?: 0
+            totalPerception += user.stats
+                ?.buffs
+                ?.per
+                ?.toInt() ?: 0
+            binding?.strengthStatsView?.buffValue = user.stats
+                ?.buffs
+                ?.str
+                ?.toInt() ?: 0
             binding?.intelligenceStatsView?.buffValue =
-                user.stats?.buffs?.intelligence?.toInt() ?: 0
+                user.stats
+                    ?.buffs
+                    ?.intelligence
+                    ?.toInt() ?: 0
             binding?.constitutionStatsView?.buffValue =
-                user.stats?.buffs?.con?.toInt() ?: 0
+                user.stats
+                    ?.buffs
+                    ?.con
+                    ?.toInt() ?: 0
             binding?.perceptionStatsView?.buffValue =
-                user.stats?.buffs?.per?.toInt() ?: 0
+                user.stats
+                    ?.buffs
+                    ?.per
+                    ?.toInt() ?: 0
 
             totalStrength += user.stats?.strength ?: 0
             totalIntelligence += user.stats?.intelligence ?: 0

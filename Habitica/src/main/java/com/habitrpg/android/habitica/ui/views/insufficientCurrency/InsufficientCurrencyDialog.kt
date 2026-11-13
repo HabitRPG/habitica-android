@@ -12,13 +12,13 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
  * Created by phillip on 27.09.17.
  */
 
-abstract class InsufficientCurrencyDialog(context: Context) : HabiticaAlertDialog(context) {
+abstract class InsufficientCurrencyDialog(
+    context: Context,
+) : HabiticaAlertDialog(context) {
     protected lateinit var imageView: ImageView
     protected lateinit var textView: TextView
 
-    open fun getLayoutID(): Int {
-        return R.layout.dialog_insufficient_currency
-    }
+    open fun getLayoutID(): Int = R.layout.dialog_insufficient_currency
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

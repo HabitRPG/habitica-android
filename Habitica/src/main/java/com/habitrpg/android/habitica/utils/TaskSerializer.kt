@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
 
@@ -29,7 +28,9 @@ private val JsonPrimitive.asBooleanOrFalse: Boolean
             false
         }
 
-class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
+class TaskSerializer :
+    JsonSerializer<Task>,
+    JsonDeserializer<Task> {
     private fun getIntListFromJsonArray(jsonArray: JsonArray): List<Int> {
         val intList = ArrayList<Int>()
 
@@ -42,7 +43,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
 
     private fun getMonthlyDays(
         e: JsonObject,
-        task: Task
+        task: Task,
     ) {
         val weeksOfMonth = e.getAsJsonArray("weeksOfMonth")
         if (weeksOfMonth != null && weeksOfMonth.size() > 0) {
@@ -58,7 +59,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Task {
         val task = Task()
         val obj = json as? JsonObject ?: return task
@@ -75,7 +76,10 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         task.up = obj.get("up")?.asBoolean ?: false
         task.down = obj.get("down")?.asBoolean ?: false
         task.streak = obj.safeGet("streak")?.asInt
-        if (obj.getAsJsonObject("challenge").has("id")) {
+        if (obj.has("challenge") &&
+            obj.get("challenge").isJsonObject &&
+            obj.getAsJsonObject("challenge").has("id")
+        ) {
             task.challengeID = obj.getAsJsonObject("challenge").get("id").asString
 
             if (obj.getAsJsonObject("challenge").has("broken")) {
@@ -93,26 +97,27 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         task.startDate = context.deserialize(obj.get("startDate"), Date::class.java)
         task.isDue = obj.get("isDue")?.asBoolean
         if (obj.has("nextDue")) {
-            task.nextDue = RealmList()
             for (due in obj.getAsJsonArray("nextDue")) {
                 task.nextDue?.add(context.deserialize(due, Date::class.java))
             }
         }
-        if (obj.has("checklist")) {
-            task.checklist = RealmList()
+        if (obj.has("checklist") &&
+            obj.get("checklist").isJsonArray
+        ) {
             for (checklistElement in obj.getAsJsonArray("checklist")) {
                 val checklistObject = checklistElement.asJsonObject
                 task.checklist?.add(
                     ChecklistItem(
                         checklistObject.getAsString("id"),
                         checklistObject.getAsString("text"),
-                        checklistObject.get("completed").asBoolean
-                    )
+                        checklistObject.get("completed").asBoolean,
+                    ),
                 )
             }
         }
-        if (obj.has("reminders")) {
-            task.reminders = RealmList()
+        if (obj.has("reminders") &&
+            obj.get("reminders").isJsonArray
+        ) {
             for (reminderElement in obj.getAsJsonArray("reminders")) {
                 val remindersObject = reminderElement.asJsonObject
                 val reminder = RemindersItem()
@@ -126,7 +131,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             task.repeat = context.deserialize(obj.get("repeat"), Days::class.java)
         }
 
-        if (obj.has("group")) {
+        if (obj.has("group") && obj.get("group").isJsonObject) {
             val groupObject = obj.getAsJsonObject("group")
             val group: TaskGroupPlan = context.deserialize(groupObject, TaskGroupPlan::class.java)
             if (group.groupID?.isNotBlank() == true && groupObject.has("approval")) {
@@ -157,7 +162,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
     override fun serialize(
         task: Task,
         typeOfSrc: Type,
-        context: JsonSerializationContext
+        context: JsonSerializationContext,
     ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("_id", task.id)

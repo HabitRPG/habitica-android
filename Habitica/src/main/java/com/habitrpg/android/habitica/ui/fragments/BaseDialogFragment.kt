@@ -8,14 +8,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.data.TutorialRepository
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment() {
     var isModal: Boolean = false
@@ -33,16 +31,14 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
 
     abstract fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        Analytics.sendNavigationEvent(this.javaClass.simpleName)
-
         binding = createBinding(inflater, container)
         return binding?.root
     }
@@ -55,15 +51,15 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
     private fun showTutorialIfNeeded() {
         if (view != null) {
             tutorialStepIdentifier?.let { identifier ->
-                lifecycleScope.launchCatching {
+                viewLifecycleOwner.lifecycleScope.launchCatching {
                     val step = tutorialRepository.getTutorialStep(identifier).firstOrNull()
-                    delay(1.toDuration(DurationUnit.SECONDS))
+                    delay(1.seconds)
                     if (step?.isValid == true && step.isManaged && step.shouldDisplay) {
                         val mainActivity = activity as? MainActivity ?: return@launchCatching
                         mainActivity.displayTutorialStep(
                             step,
                             tutorialTexts,
-                            tutorialCanBeDeferred
+                            tutorialCanBeDeferred,
                         )
                     }
                 }

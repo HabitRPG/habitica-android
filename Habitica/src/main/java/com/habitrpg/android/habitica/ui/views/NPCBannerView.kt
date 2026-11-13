@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Shader
-import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.scale
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.NpcBannerBinding
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
@@ -16,7 +16,10 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
+class NPCBannerView(
+    context: Context,
+    attrs: AttributeSet?,
+) : RelativeLayout(context, attrs) {
     private val binding = NpcBannerBinding.inflate(context.layoutInflater, this)
 
     var shopSpriteSuffix: String? = null
@@ -48,7 +51,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(con
         DataBindingUtils.loadImage(context, identifier + "_background" + shopSpriteSuffix) {
             val aspectRatio = it.intrinsicWidth / it.intrinsicHeight.toFloat()
             val width = (height * aspectRatio).roundToInt()
-            val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it.toBitmap(), width, height, false))
+            val drawable = it.toBitmap().scale(width, height, false).toDrawable(context.resources)
             drawable.tileModeX = Shader.TileMode.REPEAT
             MainScope().launch {
                 binding.backgroundView.background = drawable
@@ -58,7 +61,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : RelativeLayout(con
         DataBindingUtils.loadImage(context, identifier + "_scene" + shopSpriteSuffix) {
             val aspectRatio = it.intrinsicWidth / it.intrinsicHeight.toFloat()
             val width = (height * aspectRatio).roundToInt()
-            val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it.toBitmap(), width, height, false))
+            val drawable = it.toBitmap().scale(width, height, false).toDrawable(context.resources)
             drawable.tileModeX = Shader.TileMode.CLAMP
             MainScope().launch {
                 binding.sceneView.background = drawable

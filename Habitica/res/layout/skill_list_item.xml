@@ -55,6 +55,10 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:background="@color/blue_500"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/use_skill"
+            android:foreground="?android:attr/selectableItemBackground"
             android:orientation="vertical"
             android:gravity="center">
             <ImageView

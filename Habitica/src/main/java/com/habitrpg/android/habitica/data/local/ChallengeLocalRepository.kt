@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data.local
 
+import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -17,25 +18,27 @@ interface ChallengeLocalRepository : BaseLocalRepository {
     fun setParticipating(
         userID: String,
         challengeID: String,
-        isParticipating: Boolean
+        isParticipating: Boolean,
     )
 
     fun saveChallenges(
         challenges: List<Challenge>,
         clearChallenges: Boolean,
         memberOnly: Boolean,
-        userID: String
+        userID: String,
     )
 
     fun getChallengeMembership(
         userId: String,
-        id: String
+        id: String,
     ): Flow<ChallengeMembership>
 
     fun getChallengeMemberships(userId: String): Flow<List<ChallengeMembership>>
 
     fun isChallengeMember(
         userID: String,
-        challengeID: String
+        challengeID: String,
     ): Flow<Boolean>
+
+    fun getCategoryOptions(): Flow<List<CategoryOption>>
 }

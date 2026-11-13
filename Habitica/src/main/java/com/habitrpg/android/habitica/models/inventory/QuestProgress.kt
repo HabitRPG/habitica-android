@@ -6,13 +6,15 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class QuestProgress : RealmObject(), BaseObject {
+open class QuestProgress :
+    RealmObject(),
+    BaseObject {
     var id: String? = null
     var key: String? = null
     var hp: Double = 0.0
     var rage: Double = 0.0
     var collectedItems: Int = 0
-    var collect: RealmList<QuestProgressCollect>? = null
+    var collect: RealmList<QuestProgressCollect>? = RealmList()
     var down: Float = 0.0f
     var up: Float = 0.0f
 }

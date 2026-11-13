@@ -5,4 +5,5 @@ class HabitResponse<T> {
     var notifications: List<Notification>? = null
     var success: Boolean? = null
     var message: String? = null
+    var statusCode: Int? = null
 }

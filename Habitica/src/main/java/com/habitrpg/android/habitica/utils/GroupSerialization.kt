@@ -14,16 +14,16 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupCategory
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.realm.Realm
-import io.realm.RealmList
 import java.lang.reflect.Type
 
-class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
+class GroupSerialization :
+    JsonDeserializer<Group>,
+    JsonSerializer<Group> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Group {
         val group = Group()
         val obj = json.asJsonObject
@@ -61,16 +61,20 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 group.leaderID = leader.get("_id").asString
                 if (leader.has("profile") && !leader.get("profile").isJsonNull) {
                     if (leader.get("profile").asJsonObject.has("name")) {
-                        group.leaderName = leader.get("profile").asJsonObject.get("name").asString
+                        group.leaderName =
+                            leader
+                                .get("profile")
+                                .asJsonObject
+                                .get("name")
+                                .asString
                     }
                 }
             }
         }
         if (obj.has("managers")) {
-            group.managers = RealmList()
-            for (manager in obj.getAsJsonObject("managers").entrySet()) {
-                if (manager.value.asBoolean) {
-                    group.managers?.add(manager.key)
+            for ((key, value) in obj.getAsJsonObject("managers").entrySet()) {
+                if (value.asBoolean) {
+                    group.managers?.add(key)
                 }
             }
         }
@@ -80,36 +84,15 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
             val questObject = obj.getAsJsonObject("quest")
             if (questObject.has("members")) {
                 val members = obj.getAsJsonObject("quest").getAsJsonObject("members")
-                val realm = Realm.getDefaultInstance()
-                val dbMembers =
-                    realm.copyFromRealm(
-                        realm.where(Member::class.java).equalTo("party.id", group.id).findAll()
-                    )
-                realm.close()
-                dbMembers.forEach { member ->
-                    if (members.has(member.id)) {
-                        val value = members.get(member.id)
-                        if (value.isJsonNull) {
-                            member.participatesInQuest = null
-                        } else {
-                            member.participatesInQuest = value.asBoolean
-                        }
-                    } else {
-                        member.participatesInQuest = null
-                    }
-                    members.remove(member.id)
-                }
+                // Thin placeholders for the members this payload mentions; SocialRepositoryImpl reconciles them against the full local party roster before persisting.
                 members.entrySet().forEach { (key, value) ->
                     val member = Member()
                     member.id = key
                     if (!value.isJsonNull) {
                         member.participatesInQuest = value.asBoolean
                     }
-                    dbMembers.add(member)
+                    group.quest?.participants?.add(member)
                 }
-                val newMembers = RealmList<Member>()
-                newMembers.addAll(dbMembers)
-                group.quest?.participants = newMembers
             }
 
             if (questObject.has("extra") && questObject["extra"].asJsonObject.has("worldDmg")) {
@@ -137,7 +120,6 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
         }
 
         if (obj.has("categories")) {
-            group.categories = RealmList()
             obj.getAsJsonArray("categories").forEach {
                 group.categories?.add(context.deserialize(it, GroupCategory::class.java))
             }
@@ -149,7 +131,7 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
     override fun serialize(
         src: Group,
         typeOfSrc: Type,
-        context: JsonSerializationContext
+        context: JsonSerializationContext,
     ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("name", src.name)

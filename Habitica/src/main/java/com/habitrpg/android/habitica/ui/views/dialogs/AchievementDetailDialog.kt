@@ -11,8 +11,10 @@ import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class AchievementDetailDialog(val achievement: Achievement, context: Context) :
-    HabiticaAlertDialog(context) {
+class AchievementDetailDialog(
+    val achievement: Achievement,
+    context: Context,
+) : HabiticaAlertDialog(context) {
     private var iconView: PixelArtView?
     private var descriptionView: TextView?
 

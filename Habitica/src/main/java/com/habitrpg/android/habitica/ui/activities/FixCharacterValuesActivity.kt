@@ -35,29 +35,28 @@ class FixCharacterValuesActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.fix_character_values)
-        setupToolbar(binding.toolbar)
 
         userViewModel.user.observe(this) { user = it }
 
         setIconBackground(
             binding.healthIconBackgroundView,
-            ContextCompat.getColor(this, R.color.red_500)
+            ContextCompat.getColor(this, R.color.red_500),
         )
         setIconBackground(
             binding.experienceIconBackgroundView,
-            ContextCompat.getColor(this, R.color.yellow_500)
+            ContextCompat.getColor(this, R.color.yellow_500),
         )
         setIconBackground(
             binding.manaIconBackgroundView,
-            ContextCompat.getColor(this, R.color.blue_500)
+            ContextCompat.getColor(this, R.color.blue_500),
         )
         setIconBackground(
             binding.goldIconBackgroundView,
-            ContextCompat.getColor(this, R.color.yellow_500)
+            ContextCompat.getColor(this, R.color.yellow_500),
         )
         setIconBackground(
             binding.streakIconBackgroundView,
-            ContextCompat.getColor(this, R.color.separator)
+            ContextCompat.getColor(this, R.color.separator),
         )
 
         binding.healthIconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
@@ -101,10 +100,10 @@ class FixCharacterValuesActivity : BaseActivity() {
 
     private fun updateFields(user: User) {
         val stats = user.stats ?: return
-        binding.healthEditText.setText(stats.hp.toString())
-        binding.experienceEditText.setText(stats.exp.toString())
-        binding.goldEditText.setText(stats.gp.toString())
-        binding.manaEditText.setText(stats.mp.toString())
+        binding.healthEditText.setText(stats.hp?.toEditableString() ?: "0")
+        binding.experienceEditText.setText(stats.exp?.toEditableString() ?: "0")
+        binding.goldEditText.setText(stats.gp?.toEditableString() ?: "0")
+        binding.manaEditText.setText(stats.mp?.toEditableString() ?: "0")
         binding.levelEditText.setText(stats.lvl.toString())
         binding.streakEditText.setText(user.streakCount.toString())
 
@@ -112,7 +111,7 @@ class FixCharacterValuesActivity : BaseActivity() {
             Stats.WARRIOR -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.red_500)
+                    ContextCompat.getColor(this, R.color.red_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
             }
@@ -120,7 +119,7 @@ class FixCharacterValuesActivity : BaseActivity() {
             Stats.MAGE -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.blue_500)
+                    ContextCompat.getColor(this, R.color.blue_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
             }
@@ -128,7 +127,7 @@ class FixCharacterValuesActivity : BaseActivity() {
             Stats.HEALER -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.yellow_500)
+                    ContextCompat.getColor(this, R.color.yellow_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
             }
@@ -136,7 +135,7 @@ class FixCharacterValuesActivity : BaseActivity() {
             Stats.ROGUE -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.brand_500)
+                    ContextCompat.getColor(this, R.color.brand_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
@@ -145,7 +144,7 @@ class FixCharacterValuesActivity : BaseActivity() {
 
     private fun setIconBackground(
         view: View,
-        color: Int
+        color: Int,
     ) {
         val backgroundDrawable = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg)
         backgroundDrawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
@@ -161,4 +160,11 @@ class FixCharacterValuesActivity : BaseActivity() {
             0.0
         }
     }
+
+    private fun Double.toEditableString(): String =
+        if (this % 1.0 == 0.0) {
+            this.toLong().toString()
+        } else {
+            this.toString()
+        }
 }

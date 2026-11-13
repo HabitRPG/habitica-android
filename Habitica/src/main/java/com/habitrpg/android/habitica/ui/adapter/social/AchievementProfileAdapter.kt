@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ProfileAchievementItemBinding
 import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 import com.habitrpg.common.habitica.extensions.inflate
@@ -14,7 +13,6 @@ import com.habitrpg.common.habitica.extensions.loadImage
 
 class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var itemType: String? = null
-    var activity: MainActivity? = null
     private var itemList: List<Any> = emptyList()
 
     fun setItemList(itemList: List<Any>) {
@@ -24,18 +22,17 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return if (viewType == 0) {
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        if (viewType == 0) {
             SectionViewHolder(parent.inflate(R.layout.profile_achievement_category))
         } else {
             AchievementViewHolder(parent.inflate(R.layout.profile_achievement_item))
         }
-    }
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         val obj = this.itemList[position]
         if (obj.javaClass == String::class.java) {
@@ -54,12 +51,11 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 
-    internal class AchievementViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView),
+    internal class AchievementViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         private val binding = ProfileAchievementItemBinding.bind(itemView)
         private var achievement: Achievement? = null

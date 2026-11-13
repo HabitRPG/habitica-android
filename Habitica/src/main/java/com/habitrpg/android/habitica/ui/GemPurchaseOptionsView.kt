@@ -8,7 +8,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
-class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
+class GemPurchaseOptionsView(
+    context: Context,
+    attrs: AttributeSet,
+) : FrameLayout(context, attrs) {
     var binding: PurchaseGemViewBinding =
         PurchaseGemViewBinding.inflate(context.layoutInflater, this, true)
     var sku: ProductDetails? = null
@@ -19,7 +22,7 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
                 attrs,
                 R.styleable.GemPurchaseOptionsView,
                 0,
-                0
+                0,
             )
 
         binding.gemAmount.text = a.getText(R.styleable.GemPurchaseOptionsView_gemAmount)
@@ -27,6 +30,10 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
         val iconRes = a.getDrawable(R.styleable.GemPurchaseOptionsView_gemDrawable)
         if (iconRes != null) {
             binding.gemImage.setImageDrawable(iconRes)
+        }
+        val decoDrawable = a.getDrawable(R.styleable.GemPurchaseOptionsView_decoDrawable)
+        if (decoDrawable != null) {
+            binding.decoImage.setImageDrawable(decoDrawable)
         }
     }
 

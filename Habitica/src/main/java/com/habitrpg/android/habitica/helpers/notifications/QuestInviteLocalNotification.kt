@@ -3,19 +3,18 @@ package com.habitrpg.android.habitica.helpers.notifications
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 
-class QuestInviteLocalNotification(context: Context, identifier: String?) :
-    HabiticaLocalNotification(context, identifier) {
-    override fun getNotificationID(data: MutableMap<String, String>): Int {
-        return 1000
-    }
+class QuestInviteLocalNotification(
+    context: Context,
+    identifier: String?,
+) : HabiticaLocalNotification(context, identifier) {
+    override fun getNotificationID(data: MutableMap<String, String>): Int = 1000
 
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>
+        data: Map<String, String>,
     ) {
         super.setNotificationActions(notificationId, data)
         val res = context.resources
@@ -30,7 +29,7 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 3001,
                 acceptInviteIntent,
-                flags
+                flags,
             )
         notificationBuilder.addAction(0, "Accept", pendingIntentAccept)
 
@@ -42,7 +41,7 @@ class QuestInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 2001,
                 rejectInviteIntent,
-                flags
+                flags,
             )
         notificationBuilder.addAction(0, "Reject", pendingIntentReject)
     }

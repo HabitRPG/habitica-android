@@ -1,12 +1,28 @@
 package com.habitrpg.android.habitica.widget
 
-import com.habitrpg.android.habitica.R
+import android.appwidget.AppWidgetManager
+import android.content.Context
+import androidx.glance.appwidget.GlanceAppWidget
+import com.habitrpg.android.habitica.widget.glance.widgets.DailyTaskListGlanceWidget
+import com.habitrpg.android.habitica.widget.glance.work.CronBoundaryRefreshWorker
 
-class DailiesWidgetProvider : TaskListWidgetProvider() {
-    override val serviceClass: Class<*>
-        get() = DailiesWidgetService::class.java
-    override val providerClass: Class<*>
-        get() = DailiesWidgetProvider::class.java
-    override val titleResId: Int
-        get() = R.string.dailies
+class DailiesWidgetProvider : HydratingGlanceReceiver() {
+    override val glanceAppWidget: GlanceAppWidget = DailyTaskListGlanceWidget()
+
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        CronBoundaryRefreshWorker.scheduleFromCacheAsync(context)
+    }
+
+    override fun onDeleted(
+        context: Context,
+        appWidgetIds: IntArray,
+    ) {
+        super.onDeleted(context, appWidgetIds)
+        CronBoundaryRefreshWorker.scheduleFromCacheAsync(context)
+    }
 }

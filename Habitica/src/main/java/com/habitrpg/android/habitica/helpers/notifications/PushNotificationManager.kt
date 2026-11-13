@@ -4,22 +4,26 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import java.io.IOException
 
 class PushNotificationManager(
     var apiClient: ApiClient,
     private val sharedPreferences: SharedPreferences,
-    private val context: Context
-) {
+    private val context: Context,
+) : Clearable {
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     var refreshedToken: String = ""
         set(value) {
             if (value.isEmpty()) {
@@ -31,6 +35,13 @@ class PushNotificationManager(
                 putString(DEVICE_TOKEN_PREFERENCE_KEY, value)
             }
         }
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        clearUser()
+    }
+
     private var user: User? = null
 
     fun setUser(user: User) {
@@ -85,7 +96,7 @@ class PushNotificationManager(
         val pushDeviceData = HashMap<String, String>()
         pushDeviceData["regId"] = this.refreshedToken
         pushDeviceData["type"] = "android"
-        MainScope().launchCatching {
+        scope.launchCatching {
             apiClient.addPushDevice(pushDeviceData)
         }
     }
@@ -141,30 +152,43 @@ class PushNotificationManager(
         const val G1G1_PROMO_KEY = "g1g1Promo"
         const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
 
+        private fun isAppInForeground(): Boolean =
+            ProcessLifecycleOwner
+                .get()
+                .lifecycle.currentState
+                .isAtLeast(Lifecycle.State.STARTED)
+
+        private fun shouldSuppressNotification(identifier: String?): Boolean {
+            if (!isAppInForeground()) {
+                return false
+            }
+            return identifier == GROUP_ACTIVITY_NOTIFICATION_KEY ||
+                identifier == CHAT_MENTION_NOTIFICATION_KEY ||
+                identifier?.contains(RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY) == true
+        }
+
         fun displayNotification(
             remoteMessage: RemoteMessage,
             context: Context,
-            pushNotificationManager: PushNotificationManager? = null
+            pushNotificationManager: PushNotificationManager? = null,
         ) {
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
+
+            if (shouldSuppressNotification(remoteMessageIdentifier)) {
+                return
+            }
 
             if (pushNotificationManager?.userIsSubscribedToNotificationType(remoteMessageIdentifier) != false) {
                 if (remoteMessage.data.containsKey("sendAnalytics")) {
                     val additionalData = HashMap<String, Any>()
                     additionalData["identifier"] = remoteMessageIdentifier ?: ""
-                    Analytics.sendEvent(
-                        "receive notification",
-                        EventCategory.BEHAVIOUR,
-                        HitType.EVENT,
-                        additionalData
-                    )
                 }
 
                 val notificationFactory = HabiticaLocalNotificationFactory()
                 val localNotification =
                     notificationFactory.build(
                         remoteMessageIdentifier,
-                        context
+                        context,
                     )
                 localNotification.setExtras(remoteMessage.data)
                 val notification = remoteMessage.notification
@@ -172,13 +196,13 @@ class PushNotificationManager(
                     localNotification.notifyLocally(
                         notification.title ?: remoteMessage.data["title"],
                         notification.body ?: remoteMessage.data["body"],
-                        remoteMessage.data
+                        remoteMessage.data,
                     )
                 } else {
                     localNotification.notifyLocally(
                         remoteMessage.data["title"],
                         remoteMessage.data["body"],
-                        remoteMessage.data
+                        remoteMessage.data,
                     )
                 }
             }

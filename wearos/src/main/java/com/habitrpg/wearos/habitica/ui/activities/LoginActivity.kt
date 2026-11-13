@@ -1,12 +1,9 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.common.habitica.helpers.DeviceCommunication
 import com.habitrpg.wearos.habitica.ui.viewmodels.LoginViewModel
@@ -16,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     enum class State {
         INITIAL,
-        OTHER
+        OTHER,
     }
 
     override val viewModel: LoginViewModel by viewModels()
@@ -31,11 +28,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                     binding.googleLoginButton.isVisible = false
                     binding.registerButton.isVisible = false
                 }
+
                 State.OTHER -> {
                     binding.descriptionView.isVisible = false
                     binding.signInOnPhoneButton.isVisible = false
                     binding.otherButton.isVisible = false
-                    binding.googleLoginButton.isVisible = true
+                    binding.googleLoginButton.isVisible = viewModel.isGoogleLoginSupported
                     binding.registerButton.isVisible = true
                     binding.registerButton.alpha = if (binding.registerButton.isEnabled) 1.0f else 0.7f
                 }
@@ -54,7 +52,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         binding.signInOnPhoneButton.setOnClickListener { openLoginOnPhone() }
         binding.otherButton.setOnClickListener { currentState = State.OTHER }
 
-        binding.googleLoginButton.setOnClickListener { loginGoogle() }
+        binding.googleLoginButton.setOnClickListener { viewModel.handleGoogleLogin(this) }
         binding.registerButton.setOnClickListener { openRegisterOnPhone() }
 
         currentState = State.INITIAL
@@ -67,26 +65,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     private fun openLoginOnPhone() {
         openRemoteActivity(DeviceCommunication.SHOW_LOGIN)
     }
-
-    private fun loginGoogle() {
-        viewModel.handleGoogleLogin(this, pickAccountResult)
-    }
-
-    private val pickAccountResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            viewModel.handleGoogleLoginResult(this, task, recoverFromPlayServicesErrorResult)
-        }
-
-    private val recoverFromPlayServicesErrorResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode != Activity.RESULT_CANCELED) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-                viewModel.handleGoogleLoginResult(this, task, null)
-            }
-        }
 
     private fun startMainActivity() {
         val intent = Intent(this@LoginActivity, MainActivity::class.java)

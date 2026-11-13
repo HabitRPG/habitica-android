@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -52,10 +50,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentQuestDetailBinding {
-        return FragmentQuestDetailBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentQuestDetailBinding = FragmentQuestDetailBinding.inflate(inflater, container, false)
 
     private var party: Group? = null
     private var quest: Quest? = null
@@ -67,7 +63,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -75,7 +71,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -84,8 +80,9 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         binding?.questCancelButton?.setOnClickListener { onQuestCancel() }
         binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.getUser()
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            userRepository
+                .getUser()
                 .map { it?.party?.id }
                 .filterNotNull()
                 .distinctUntilChanged()
@@ -109,7 +106,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         party = group
         quest = group.quest
         setQuestParticipants(group.quest?.participants)
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             val member = socialRepository.retrieveMember(quest?.leader)
             if (context != null && binding?.questLeaderView != null) {
                 binding?.questLeaderView?.text =
@@ -119,7 +116,10 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
         val user = userViewModel.user.value
         if (binding?.questResponseWrapper != null) {
-            if (userViewModel.userID != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.rsvpNeeded == false) {
+            if (userViewModel.userID != party?.quest?.leader &&
+                user?.party?.quest?.key == group.quest?.key &&
+                user?.party?.quest?.rsvpNeeded == false
+            ) {
                 binding?.questLeaveButton?.visibility = View.VISIBLE
             } else {
                 binding?.questLeaveButton?.visibility = View.GONE
@@ -138,9 +138,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         }
     }
 
-    private fun showLeaderButtons(): Boolean {
-        return userViewModel.userID == party?.quest?.leader || userViewModel.userID == party?.leaderID
-    }
+    private fun showLeaderButtons(): Boolean = userViewModel.userID == party?.quest?.leader || userViewModel.userID == party?.leaderID
 
     private fun updateQuestContent(questContent: QuestContent) {
         if (binding?.titleView == null || !questContent.isManaged) {
@@ -150,7 +148,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         // We need to do this, because the quest description can contain markdown AND HTML.
         binding?.descriptionView?.setText(
             MarkdownParser.parseMarkdown(questContent.notes).toHtml().fromHtml(),
-            TextView.BufferType.SPANNABLE
+            TextView.BufferType.SPANNABLE,
         )
 
         binding?.questScrollImageView?.loadImage("inventory_quest_scroll_" + questContent.key)
@@ -164,7 +162,9 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         var participantCount = 0
         for (participant in participants ?: emptyList()) {
-            if (quest?.active == true && participant.participatesInQuest == false) {
+            // Read the response from the quest itself, since the shared Member rows get overwritten by other member saves
+            val participatesInQuest = quest?.members?.firstOrNull { it.key == participant.id }?.isParticipating
+            if (quest?.active == true && participatesInQuest == false) {
                 continue
             }
             val participantView =
@@ -174,14 +174,14 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             val statusTextView = participantView?.findViewById<View>(R.id.status_view) as? TextView
             if (quest?.active == false) {
                 context?.let {
-                    when (participant.participatesInQuest) {
+                    when (participatesInQuest) {
                         null -> {
                             statusTextView?.setText(R.string.pending)
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_ternary
-                                )
+                                    R.color.text_ternary,
+                                ),
                             )
                         }
 
@@ -190,8 +190,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_green
-                                )
+                                    R.color.text_green,
+                                ),
                             )
                         }
 
@@ -200,8 +200,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_red
-                                )
+                                    R.color.text_red,
+                                ),
                             )
                         }
                     }
@@ -209,11 +209,11 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 binding?.questParticipantList?.addView(participantView)
             } else {
                 statusTextView?.visibility = View.GONE
-                if (participant.participatesInQuest == true) {
+                if (participatesInQuest == true) {
                     binding?.questParticipantList?.addView(participantView)
                 }
             }
-            if (participant.participatesInQuest == true) {
+            if (participatesInQuest == true) {
                 participantCount += 1
             }
         }
@@ -232,7 +232,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     override fun onDestroyView() {
         socialRepository.close()
-        userRepository.close()
         inventoryRepository.close()
         super.onDestroyView()
     }
@@ -261,7 +260,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         context?.let {
             if (isQuestActive) {
                 val builder =
-                    AlertDialog.Builder(activity)
+                    AlertDialog
+                        .Builder(activity)
                         .setMessage(R.string.quest_abort_message)
                         .setPositiveButton(R.string.yes) { _, _ ->
                             party?.id?.let { partyID ->
@@ -294,7 +294,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     private fun onQuestLeave() {
         HapticFeedbackManager.tap(requireView())
         val builder =
-            AlertDialog.Builder(activity)
+            AlertDialog
+                .Builder(activity)
                 .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
                 .setPositiveButton(R.string.yes) { _, _ ->
                     party?.id?.let { partyID ->

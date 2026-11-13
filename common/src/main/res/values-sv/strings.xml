@@ -74,4 +74,9 @@
         <item quantity="one">%d Belöning</item>
         <item quantity="other">%d Belöningar</item>
     </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">Flaggad %d gång</item>
+        <item quantity="other">Flaggad %d gånger, dold</item>
+    </plurals>
+    <string name="trivial_sentence">trivial</string>
 </resources>

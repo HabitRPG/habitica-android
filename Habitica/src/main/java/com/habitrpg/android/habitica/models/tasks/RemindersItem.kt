@@ -13,7 +13,9 @@ import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.TemporalAccessor
 import java.util.UUID
 
-open class RemindersItem : RealmObject, Parcelable {
+open class RemindersItem :
+    RealmObject,
+    Parcelable {
     @PrimaryKey
     var id: String? = null
     var startDate: String? = null
@@ -22,13 +24,11 @@ open class RemindersItem : RealmObject, Parcelable {
     // Use to store task type before a task is created
     var type: String? = null
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeString(id)
         dest.writeString(startDate)
@@ -51,24 +51,22 @@ open class RemindersItem : RealmObject, Parcelable {
         id = UUID.randomUUID().toString()
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is RemindersItem) {
+    override fun equals(other: Any?): Boolean =
+        if (other is RemindersItem) {
             this.id == other.id
         } else {
             super.equals(other)
         }
-    }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 
     fun getZonedDateTime(): ZonedDateTime? {
         if (time == null) {
             return null
         }
         val formatter: DateTimeFormatter =
-            DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+            DateTimeFormatterBuilder()
+                .append(DateTimeFormatter.ISO_LOCAL_DATE)
                 .appendPattern("['T'][' ']")
                 .append(DateTimeFormatter.ISO_LOCAL_TIME)
                 .appendPattern("[XX]")
@@ -78,7 +76,7 @@ open class RemindersItem : RealmObject, Parcelable {
             formatter.parseBest(
                 time,
                 ZonedDateTime::from,
-                LocalDateTime::from
+                LocalDateTime::from,
             )
         return if (parsed is ZonedDateTime) {
             parsed
@@ -90,7 +88,8 @@ open class RemindersItem : RealmObject, Parcelable {
 
     fun getLocalZonedDateTimeInstant(): Instant? {
         val formatter: DateTimeFormatter =
-            DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+            DateTimeFormatterBuilder()
+                .append(DateTimeFormatter.ISO_LOCAL_DATE)
                 .appendPattern("['T'][' ']")
                 .append(DateTimeFormatter.ISO_LOCAL_TIME)
                 .appendPattern("[XX]")
@@ -100,13 +99,15 @@ open class RemindersItem : RealmObject, Parcelable {
             formatter.parseBest(
                 time,
                 ZonedDateTime::from,
-                LocalDateTime::from
+                LocalDateTime::from,
             )
         return if (parsed is ZonedDateTime) {
             parsed.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
         } else {
             val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone).withZoneSameLocal(ZoneId.systemDefault())
+            (parsed as LocalDateTime)
+                .atZone(defaultZone)
+                .withZoneSameLocal(ZoneId.systemDefault())
                 ?.toInstant()
         }
     }

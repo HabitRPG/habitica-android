@@ -7,23 +7,19 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.AnalyticsTarget
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.interactors.InsufficientGemsUseCase
-import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.withContext
@@ -32,8 +28,10 @@ import kotlinx.coroutines.withContext
  * Created by phillip on 27.09.17.
  */
 
-class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
-    InsufficientCurrencyDialog(parentActivity) {
+class InsufficientGemsDialog(
+    val parentActivity: Activity,
+    var gemPrice: Int,
+) : InsufficientCurrencyDialog(parentActivity) {
     var configManager: AppConfigManager
     var purchaseHandler: PurchaseHandler
 
@@ -53,27 +51,25 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
         val hiltEntryPoint =
             EntryPointAccessors.fromApplication(
                 parentActivity,
-                InsufficientGemsDialogEntryPoint::class.java
+                InsufficientGemsDialogEntryPoint::class.java,
             )
         insufficientGemsUseCase = hiltEntryPoint.insufficientGemsUseCase()
         configManager = hiltEntryPoint.configManager()
         purchaseHandler = hiltEntryPoint.purchaseHandler()
     }
 
-    override fun getLayoutID(): Int {
-        return R.layout.dialog_insufficient_gems
-    }
+    override fun getLayoutID(): Int = R.layout.dialog_insufficient_gems
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         textView.setText(R.string.insufficientGems)
         addButton(
             R.string.see_other_options,
-            true
+            true,
         ) { _, _ ->
-            MainNavigationController.navigate(
-                R.id.gemPurchaseActivity,
-                bundleOf(Pair("openSubscription", false))
+            context.navigator.navigate(
+                R.id.gemPurchaseFragment,
+                bundleOf(Pair("openSubscription", false)),
             )
         }
         addCloseButton()
@@ -88,43 +84,34 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) :
         val gemSku =
             if (gemPrice > 4) {
                 purchaseTextView.text = "21"
-                PurchaseTypes.PURCHASE_21_GEMS
+                HabiticaProduct.PURCHASE_21_GEMS
             } else {
                 purchaseTextView.text = "4"
-                PurchaseTypes.PURCHASE_4_GEMS
+                HabiticaProduct.PURCHASE_4_GEMS
             }
-        CoroutineScope(Dispatchers.IO).launchCatching {
-            val sku =
-                purchaseHandler.getInAppPurchaseSKU(gemSku)
-                    ?: return@launchCatching
-            withContext(Dispatchers.Main) {
-                purchaseButton?.text = sku.oneTimePurchaseOfferDetails?.formattedPrice
-                contentView.findViewById<ProgressBar>(R.id.loading_indicator).isVisible = false
-                purchaseButton.isVisible = true
+        lifecycleScope.launchCatching {
+            withContext(Dispatchers.IO) {
+                val sku =
+                    purchaseHandler.loadInAppProduct(gemSku)
+                        ?: return@withContext
+                withContext(Dispatchers.Main) {
+                    purchaseButton?.text = sku.oneTimePurchaseOfferDetails?.formattedPrice
+                    contentView.findViewById<ProgressBar>(R.id.loading_indicator).isVisible = false
+                    purchaseButton.isVisible = true
 
-                purchaseButton?.setOnClickListener {
-                    Analytics.sendEvent(
-                        "purchased_gems_from_insufficient",
-                        EventCategory.BEHAVIOUR,
-                        HitType.EVENT,
-                        mapOf(Pair("gemPrice", gemPrice), Pair("sku", "")),
-                        AnalyticsTarget.FIREBASE
-                    )
-                    MainScope().launchCatching {
-                        insufficientGemsUseCase.callInteractor(
-                            InsufficientGemsUseCase.RequestValues(
-                                gemPrice,
-                                parentActivity
+                    purchaseButton?.setOnClickListener {
+                        MainScope().launchCatching {
+                            insufficientGemsUseCase.callInteractor(
+                                InsufficientGemsUseCase.RequestValues(
+                                    gemPrice,
+                                    parentActivity,
+                                ),
                             )
-                        )
+                        }
                     }
                 }
             }
         }
     }
 
-    override fun onDetachedFromWindow() {
-        purchaseHandler.stopListening()
-        super.onDetachedFromWindow()
-    }
 }

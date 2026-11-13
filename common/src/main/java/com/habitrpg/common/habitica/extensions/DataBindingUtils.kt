@@ -10,18 +10,16 @@ import android.view.animation.Transformation
 import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import coil3.ImageLoader
 import coil3.SingletonImageLoader
 import coil3.asDrawable
 import coil3.request.ImageRequest
 import com.habitrpg.common.habitica.R
-import com.habitrpg.common.habitica.helpers.AppConfigManager
+import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.views.PixelArtView
-import java.util.Date
 
 fun PixelArtView.loadImage(
     imageName: String?,
-    imageFormat: String? = null
+    imageFormat: String? = null,
 ) {
     val shouldLoadImage = DataBindingUtils.existsAsImage(imageName)
     if (shouldLoadImage && imageName != null) {
@@ -54,7 +52,7 @@ fun PixelArtView.loadImage(
                 tag = null
                 setImageDrawable(null)
                 bitmap = null
-            }
+            },
         )
     } else {
         tag = null
@@ -67,7 +65,7 @@ object DataBindingUtils {
     fun loadImage(
         context: Context,
         imageName: String,
-        imageResult: (Drawable) -> Unit
+        imageResult: (Drawable) -> Unit,
     ) {
         loadImage(context, imageName, null, imageResult)
     }
@@ -77,10 +75,11 @@ object DataBindingUtils {
         imageName: String,
         imageFormat: String?,
         imageResult: (Drawable) -> Unit,
-        imageError: () -> Unit = { }
+        imageError: () -> Unit = { },
     ) {
         val request =
-            ImageRequest.Builder(context)
+            ImageRequest
+                .Builder(context)
                 .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
                 .target(
                     onStart = { _ ->
@@ -90,23 +89,22 @@ object DataBindingUtils {
                     },
                     onError = {
                         imageError()
-                    }
-                )
-                .build()
+                    },
+                ).build()
         SingletonImageLoader.get(context).enqueue(request)
     }
 
     fun getFullFilename(
         imageName: String,
         imageFormat: String? = null,
-        disableAnimations: Boolean = false
+        disableAnimations: Boolean = false,
     ): String {
-        val name =
+        var name = SpriteSubstitutionManager.substitute(imageName)
+        name =
             when {
-                spriteSubstitutions.containsKey(imageName) -> spriteSubstitutions[imageName]
-                FILENAME_MAP.containsKey(imageName) -> FILENAME_MAP[imageName]
-                imageName.startsWith("handleless") -> "chair_$imageName"
-                else -> imageName
+                FILENAME_MAP.containsKey(name) -> FILENAME_MAP[name] ?: ""
+                name.startsWith("handleless") -> "chair_$name"
+                else -> name
             }
         return name +
             if (!this.disableAnimations && !disableAnimations && imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
@@ -120,7 +118,7 @@ object DataBindingUtils {
 
     fun setRoundedBackground(
         view: View,
-        color: Int
+        color: Int,
     ) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
         drawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
@@ -134,7 +132,10 @@ object DataBindingUtils {
         return imageName != "shop_"
     }
 
-    class LayoutWeightAnimation(internal var view: View, internal var targetWeight: Float) : Animation() {
+    class LayoutWeightAnimation(
+        internal var view: View,
+        internal var targetWeight: Float,
+    ) : Animation() {
         private var initializeWeight: Float = 0.toFloat()
 
         private var layoutParams: LinearLayout.LayoutParams = view.layoutParams as LinearLayout.LayoutParams
@@ -145,7 +146,7 @@ object DataBindingUtils {
 
         override fun applyTransformation(
             interpolatedTime: Float,
-            t: Transformation
+            t: Transformation,
         ) {
             layoutParams.weight = initializeWeight + (targetWeight - initializeWeight) * interpolatedTime
 
@@ -159,18 +160,6 @@ object DataBindingUtils {
     private val FILEFORMAT_MAP: Map<String, String>
     private val FILENAME_MAP: Map<String, String>
 
-    private var spriteSubstitutions: Map<String, String> = HashMap()
-        get() {
-            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
-                val subs = configManager?.spriteSubstitutions()
-                field = subs?.get("generic") ?: subs?.get("pets") ?: HashMap()
-                lastSubstitutionCheck = Date()
-            }
-            return field
-        }
-    private var lastSubstitutionCheck: Date? = null
-
-    var configManager: AppConfigManager? = null
     var disableAnimations = false
 
     init {
@@ -206,7 +195,9 @@ object DataBindingUtils {
         tempMap["quest_windup"] = "gif"
         tempMap["Pet-HatchingPotion_Windup"] = "gif"
         tempMap["Pet_HatchingPotion_Windup"] = "gif"
+        tempMap["Pet-HatchingPotion-Windup"] = "gif"
         tempMap["quest_solarSystem"] = "gif"
+        tempMap["quest_lostMasterclasser4"] = "gif"
         tempMap["quest_virtualpet"] = "gif"
         tempMap["Pet_HatchingPotion_VirtualPet"] = "gif"
         tempMap["Pet-Gryphatrice-Jubilant"] = "gif"
@@ -217,7 +208,9 @@ object DataBindingUtils {
         tempMap["Pet_HatchingPotion_Cryptid"] = "gif"
         tempMap["Mount_Head_Dragon-Hydra"] = "gif"
         tempMap["Mount_Body_Dragon-Hydra"] = "gif"
-        tempMap["stable_Mount_Icon_Dragon-Hydra"] = "gif"
+        tempMap["quest_alien"] = "gif"
+        tempMap["Pet_HatchingPotion_Alien"] = "gif"
+        tempMap["Pet-HatchingPotion-Alien"] = "gif"
         FILEFORMAT_MAP = tempMap
 
         val tempNameMap = mutableMapOf<String, String>()

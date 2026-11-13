@@ -27,24 +27,24 @@
     <string name="preference_push_received_a_private_message">Mesaj Privat primit</string>
     <string name="preference_push_gifted_gems">Nestemate făcute cadou</string>
     <string name="preference_push_gifted_subscription">Abonament făcut cadou</string>
-    <string name="preference_push_invited_to_party">Invitat în Ceată</string>
+    <string name="preference_push_invited_to_party">Invitat la Petrecere</string>
     <string name="preference_push_invited_to_guild">Invititat în Breaslă</string>
     <string name="preference_push_your_quest_has_begun">Expediția ta a inceput</string>
     <string name="preference_push_invited_to_quest">Invitat în Expediție</string>
     <!--Adding tasks-->
     <!--Network Errors-->
-    <string name="network_error_no_network_body">Nu sunteți conectat(ă) la internet.</string>
-    <string name="internal_error_api">Se pare că există o problemă cu serverul. Încercați mai târziu.</string>
+    <string name="network_error_no_network_body">Nu ești conectat(ă) la internet.</string>
+    <string name="internal_error_api">Conexiunea la server pierdută</string>
     <string name="authentication_error_title">Eroare de autentificare</string>
-    <string name="authentication_error_body">Numele de utilizator și / sau parola dvs. au fost incorecte.</string>
+    <string name="authentication_error_body">Numele de utilizator și / sau parola ta au fost incorecte.</string>
     <string name="save_changes">Salvează</string>
     <string name="copy">Copiază</string>
-    <string name="notes">undefined</string>
+    <string name="notes">Notițe</string>
     <string name="difficulty">Dificultate</string>
     <string name="tags">Etichete</string>
     <string name="start_date">Data de început</string>
-    <string name="positive_habit_form">Pozitiv ( + )</string>
-    <string name="negative_habit_form">Negativ ( - )</string>
+    <string name="positive_habit_form">Pozitiv</string>
+    <string name="negative_habit_form">Negativ</string>
     <string name="checklist">Listă de verificare</string>
     <string name="reminders">Mementouri</string>
     <string name="attributes">Atribute</string>
@@ -247,12 +247,12 @@
     <string name="add_task">Adaugă Sarcină</string>
     <string name="add_habit">Adaugă Obicei</string>
     <string name="add_daily">Adaugă Cotidiene</string>
-    <string name="add_todo">Adaugă De-Făcut</string>
+    <string name="add_todo">Adaugă la lista de sarcini</string>
     <string name="add_reward">Adaugă Recompensă</string>
     <string name="all_dailies_completed">Ți-ai completat toate cotidienele. Bravo!</string>
     <string name="widget_habit_button">Habitica Respectă Obiceiul</string>
     <string name="widget_dailies">Cotidiene Habitica</string>
-    <string name="widget_todo_list">Habitica Listă De-Făcut</string>
+    <string name="widget_todo_list">Lista de sarcini Habitica</string>
     <string name="google_services_missing">Serviciile play Google nu au putut fi găsite.</string>
     <string name="support_habitica">Susține Habitica</string>
     <string name="skill_transformation_use">utilizează</string>
@@ -267,7 +267,7 @@
     <string name="belongs_to_challenge">Aparține unei Provocări</string>
     <string name="has_reminder">Are Memento</string>
     <string name="has_tag">Are Etichetă</string>
-    <string name="subscribe_prompt">Devino abonat și primești aceste beneficii folositoare</string>
+    <string name="subscribe_prompt">Rămâi motivat cu și mai multe recompense când te abonezi</string>
     <string name="subscriptions">Abonamente</string>
     <string name="subscription_duration">Se repetă la fiecare %s</string>
     <string name="subscribe">Abonează-te</string>
@@ -529,4 +529,26 @@
         <item quantity="few">%d Obiecte în așteptare</item>
         <item quantity="other">%d de Obiecte în așteptare</item>
     </plurals>
+    <string name="about_habitica_open_source">Habitica este disponibil ca software open source pe Github</string>
+    <string name="exact_alarm_system_settings_reminders">Mementourile pot fi întârziate deoarece permisiunile nu sunt activate. Atingeți pentru a vizualiza și actualiza permisiunile.</string>
+    <string name="exact_alarm_system_settings_title">`Alarm &amp; Reminders` sunt dezactivate`</string>
+    <string name="exact_alarm_system_settings_description">Permite „Alarme și mementouri” din Setări pentru a te asigura că mementourile apar exact la ora programată</string>
+    <string name="about_libraries">Librării</string>
+    <string name="about_rate_our_app">Evaluează aplicația noastră</string>
+    <string name="about_give_us_feedback">Trimite-ne feedback!</string>
+    <string name="on">Pornit</string>
+    <string name="off">Oprit</string>
+    <string name="selected">Selectat</string>
+    <string name="about_source_code">Codul sursă</string>
+    <string name="trillion_abbrev">tln</string>
+    <string name="positive_sentence">pozitiv</string>
+    <string name="negative_sentence">negativ</string>
+    <string name="not_selected">Neselectat</string>
+    <string name="about_bugreport">Raportează o eroare</string>
+    <string name="enable_notifications">Activează Notificările</string>
+    <string name="push_notification_system_settings_description">Permite notificările Habitica în Setări pentru a primi notificări push</string>
+    <string name="push_notification_system_settings_reminders">Permite notificările Habitica în Setări pentru a primi mementouri</string>
+    <string name="push_notification_system_settings_title">Notificările sunt dezactivate</string>
+    <string name="title">Titlu</string>
+    <string name="levelup_header">Ai atins nivelul %1$d!</string>
 </resources>

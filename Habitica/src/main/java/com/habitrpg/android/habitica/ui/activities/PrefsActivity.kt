@@ -21,11 +21,9 @@ class PrefsActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setupToolbar(findViewById(R.id.toolbar))
-        
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
+            supportFragmentManager
+                .beginTransaction()
                 .replace(R.id.fragment_container, PreferencesFragment())
                 .commit()
         }
@@ -41,14 +39,15 @@ class PrefsActivity :
 
     override fun onPreferenceStartScreen(
         preferenceFragment: PreferenceFragmentCompat,
-        preferenceScreen: PreferenceScreen
+        preferenceScreen: PreferenceScreen,
     ): Boolean {
         val fragment = createNextPage(preferenceScreen)
         if (fragment != null) {
             val arguments = Bundle()
             arguments.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, preferenceScreen.key)
             fragment.arguments = arguments
-            supportFragmentManager.beginTransaction()
+            supportFragmentManager
+                .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
@@ -65,7 +64,5 @@ class PrefsActivity :
             else -> null
         }
 
-    override fun snackbarContainer(): ViewGroup {
-        return findViewById(R.id.snackbar_container)
-    }
+    override fun snackbarContainer(): ViewGroup = findViewById(R.id.snackbar_container)
 }

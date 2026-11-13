@@ -5,7 +5,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class ChallengeMembership : RealmObject, BaseObject {
+open class ChallengeMembership :
+    RealmObject,
+    BaseObject {
     var userID: String = ""
     var challengeID: String = ""
 

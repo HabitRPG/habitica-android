@@ -5,11 +5,15 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +21,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -36,9 +42,11 @@ import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.PlayerTier
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlin.math.max
-import androidx.core.net.toUri
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
@@ -50,12 +58,15 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
+    private var searchJob: Job? = null
+    private val collapsibleItems = mutableListOf<SearchableFAQItem.CollapsibleItem>()
+    private var navigableItems = mutableListOf<SearchableFAQItem.NavigableItem>()
+    private var currentSearchQuery = ""
+
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentFaqOverviewBinding {
-        return FragmentFaqOverviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentFaqOverviewBinding = FragmentFaqOverviewBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var faqRepository: FAQRepository
@@ -65,10 +76,12 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     private val versionName: String by lazy {
         try {
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionName
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionName
                 ?: ""
         } catch (_: PackageManager.NameNotFoundException) {
             ""
@@ -78,10 +91,12 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(
-                mainActivity?.packageName ?: "",
-                0
-            )?.versionCode
+            mainActivity
+                ?.packageManager
+                ?.getPackageInfo(
+                    mainActivity?.packageName ?: "",
+                    0,
+                )?.versionCode
                 ?: 0
         } catch (_: PackageManager.NameNotFoundException) {
             0
@@ -91,7 +106,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         showsBackButton = true
@@ -100,7 +115,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -110,28 +125,30 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         binding?.npcHeader?.descriptionView?.isVisible = false
 
         binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHeartLarge()
+            HabiticaIconsHelper.imageOfHeartLarge(),
         )
         binding?.experienceSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfExperienceReward()
+            HabiticaIconsHelper.imageOfExperienceReward(),
         )
         binding?.manaSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfMagicLarge()
+            HabiticaIconsHelper.imageOfMagicLarge(),
         )
         binding?.goldSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGoldReward()
+            HabiticaIconsHelper.imageOfGoldReward(),
         )
         binding?.gemsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGem()
+            HabiticaIconsHelper.imageOfGem(),
         )
         binding?.hourglassesSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHourglassLarge()
+            HabiticaIconsHelper.imageOfHourglassLarge(),
         )
         binding?.statsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfStats()
+            HabiticaIconsHelper.imageOfStats(),
         )
 
-        binding?.contribTierSection?.findViewById<ImageView>(R.id.icon_view)
+        binding
+            ?.contribTierSection
+            ?.findViewById<ImageView>(R.id.icon_view)
             ?.setImageResource(R.drawable.contributor_icon)
         addPlayerTiers()
 
@@ -155,13 +172,22 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
             clickableSpan,
             startIndex,
             endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
         )
 
         binding?.moreHelpTextView?.text = spannableString
         binding?.moreHelpTextView?.movementMethod = LinkMovementMethod.getInstance()
 
+        setupCollapsibleItems()
+        setupSearchBar()
         this.loadArticles()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (currentSearchQuery.isNotEmpty()) {
+            performSearch(currentSearchQuery)
+        }
     }
 
     override fun onDestroy() {
@@ -170,16 +196,19 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     }
 
     private fun loadArticles() {
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             faqRepository.getArticles().collect {
                 val context = context ?: return@collect
                 if (binding?.faqLinearLayout == null) return@collect
+                navigableItems.clear()
                 for (article in it) {
+                    navigableItems.add(SearchableFAQItem.NavigableItem(article))
+
                     val binding =
                         SupportFaqItemBinding.inflate(
                             context.layoutInflater,
                             binding?.faqLinearLayout,
-                            true
+                            true,
                         )
                     binding.textView.text = article.question
                     binding.root.setOnClickListener {
@@ -206,8 +235,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                         getString(
                             R.string.version_info,
                             versionName,
-                            versionCode
-                        )
+                            versionCode,
+                        ),
                 )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
@@ -226,16 +255,17 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                             (
                                 user.stats?.habitClass
                                     ?: "None"
-                                )
+                            )
                         }
-                        )
+                    ),
                 ) +
-                newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
+                newLine + Uri.encode("Damage paused: " + (user.preferences?.sleep ?: false)) +
                 newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
                 newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
+                newLine + Uri.encode("Analytics Enabled: " + (user.preferences?.analyticsConsent ?: "No Response")) +
                 newLine +
                 Uri.encode(
-                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
+                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0),
                 )
         }
 
@@ -268,7 +298,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.WRAP_CONTENT,
                         FrameLayout.LayoutParams.WRAP_CONTENT,
-                        Gravity.CENTER
+                        Gravity.CENTER,
                     )
                 container.addView(label, params)
                 container.isVisible = false
@@ -278,12 +308,357 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     12.dpToPx(context),
                     0,
                     12.dpToPx(context),
-                    if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context)
+                    if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context),
                 )
                 val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
                 container.setPadding(0, padding, 0, padding)
             }
         }
         (binding?.contribTierSection?.parent as? ViewGroup)?.invalidate()
+    }
+
+    private fun setupCollapsibleItems() {
+        collapsibleItems.clear()
+        binding?.healthSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.health_points),
+                    subtitle = "HP",
+                    description = getString(R.string.health_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+
+        binding?.experienceSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.experience_points),
+                    subtitle = "EXP",
+                    description = getString(R.string.experience_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+
+        binding?.manaSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.mana_points),
+                    subtitle = "MP",
+                    description = getString(R.string.mana_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+
+        binding?.goldSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.gold_capitalized),
+                    subtitle = getString(R.string.currency),
+                    description = getString(R.string.gold_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+
+        binding?.gemsSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.gems),
+                    subtitle = getString(R.string.premium_currency),
+                    description = getString(R.string.gems_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+
+        binding?.hourglassesSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.mystic_hourglasses),
+                    subtitle = getString(R.string.subscriber_currency),
+                    description = getString(R.string.hourglasses_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+
+        binding?.statsSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.stat_allocation),
+                    subtitle = "STR, CON, INT, PER",
+                    description = getString(R.string.stat_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+
+        binding?.contribTierSection?.let { section ->
+            collapsibleItems.add(
+                SearchableFAQItem.CollapsibleItem(
+                    title = getString(R.string.contributor_tiers),
+                    subtitle = "Habitica helpers",
+                    description = getString(R.string.contrib_tier_description),
+                    collapsibleSection = section,
+                ),
+            )
+        }
+    }
+
+    private fun setupSearchBar() {
+        binding?.searchEditText?.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {}
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int,
+                ) {
+                    val query = s?.toString() ?: ""
+                    performSearch(query)
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            },
+        )
+    }
+
+    private fun performSearch(query: String) {
+        searchJob?.cancel()
+        currentSearchQuery = query.trim()
+
+        if (currentSearchQuery.isEmpty()) {
+            showOriginalContent()
+            return
+        }
+
+        searchJob =
+            viewLifecycleOwner.lifecycleScope.launchCatching {
+                delay(200.milliseconds)
+
+                val results = searchFAQItems(currentSearchQuery)
+
+                if (results.isEmpty()) {
+                    showEmptyState()
+                } else {
+                    showSearchResults(results)
+                }
+            }
+    }
+
+    private fun searchFAQItems(query: String): List<SearchableFAQItem> {
+        val queryLower = query.lowercase()
+        val results = mutableListOf<SearchableFAQItem>()
+
+        for (item in collapsibleItems) {
+            val titleMatch = item.title.lowercase().contains(queryLower)
+            val subtitleMatch = item.subtitle?.lowercase()?.contains(queryLower) == true
+            val descriptionMatch = item.description.lowercase().contains(queryLower)
+
+            if (titleMatch || subtitleMatch || descriptionMatch) {
+                results.add(item.copy(matchSnippet = null))
+            }
+        }
+
+        for (item in navigableItems) {
+            val article = item.article
+            val questionMatch = article.question?.lowercase()?.contains(queryLower) == true
+            val answerMatch = article.answer?.lowercase()?.contains(queryLower) == true
+
+            if (questionMatch || answerMatch) {
+                results.add(item.copy(matchSnippet = null))
+            }
+        }
+
+        return results
+    }
+
+    private fun showOriginalContent() {
+        restoreCollapsibleSectionsToOriginal()
+        binding?.originalContentContainer?.isVisible = true
+        binding?.searchResultsContainer?.isVisible = false
+        binding?.searchEmptyState?.isVisible = false
+    }
+
+    private fun restoreCollapsibleSectionsToOriginal() {
+        val searchContainer = binding?.searchResultsContainer
+        val originalContainer = binding?.originalContentContainer
+
+        if (originalContainer != null && searchContainer != null) {
+            val sections =
+                listOf(
+                    binding?.healthSection,
+                    binding?.experienceSection,
+                    binding?.manaSection,
+                    binding?.goldSection,
+                    binding?.gemsSection,
+                    binding?.hourglassesSection,
+                    binding?.statsSection,
+                    binding?.contribTierSection,
+                )
+
+            sections.forEach { section ->
+                if (section != null && section.parent == searchContainer) {
+                    searchContainer.removeView(section)
+                    val insertIndex = findInsertionIndex(originalContainer, section.id)
+                    originalContainer.addView(section, insertIndex)
+                }
+            }
+        }
+    }
+
+    private fun findInsertionIndex(
+        container: ViewGroup,
+        sectionId: Int,
+    ): Int {
+        val expectedOrder =
+            mapOf(
+                R.id.health_section to 1,
+                R.id.experience_section to 2,
+                R.id.mana_section to 3,
+                R.id.gold_section to 4,
+                R.id.gems_section to 5,
+                R.id.hourglasses_section to 6,
+                R.id.stats_section to 7,
+                R.id.contrib_tier_section to 8,
+            )
+        val currentOrder = expectedOrder[sectionId] ?: return container.childCount
+
+        for (i in 0 until container.childCount) {
+            val child = container.getChildAt(i)
+            val childOrder = expectedOrder[child.id] ?: continue
+
+            if (childOrder > currentOrder) {
+                return i
+            }
+        }
+
+        return container.childCount
+    }
+
+    private fun showEmptyState() {
+        binding?.originalContentContainer?.isVisible = false
+        binding?.searchResultsContainer?.isVisible = false
+        binding?.searchEmptyState?.isVisible = true
+    }
+
+    private fun showSearchResults(results: List<SearchableFAQItem>) {
+        val context = context ?: return
+
+        binding?.originalContentContainer?.isVisible = false
+        binding?.searchEmptyState?.isVisible = false
+        binding?.searchResultsContainer?.isVisible = true
+
+        val searchContainer = binding?.searchResultsContainer
+        searchContainer?.removeAllViews()
+
+        results.forEachIndexed { index, result ->
+            when (result) {
+                is SearchableFAQItem.CollapsibleItem -> {
+                    val section = result.collapsibleSection
+                    val parent = section.parent as? ViewGroup
+
+                    parent?.removeView(section)
+                    section.alpha = 0f
+                    section.translationY = 20f
+                    binding?.searchResultsContainer?.addView(section)
+
+                    section
+                        .animate()
+                        .alpha(1f)
+                        .translationY(0f)
+                        .setDuration(200)
+                        .setStartDelay((index * 30).toLong())
+                        .start()
+
+                    result.matchSnippet?.let { snippet ->
+                        val snippetView = TextView(context)
+                        snippetView.text = highlightQuery(snippet, currentSearchQuery)
+                        snippetView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                        snippetView.textSize = 13f
+                        val params =
+                            LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                            )
+                        params.setMargins(
+                            context.resources.getDimensionPixelSize(R.dimen.spacing_large),
+                            0,
+                            context.resources.getDimensionPixelSize(R.dimen.spacing_large),
+                            context.resources.getDimensionPixelSize(R.dimen.spacing_medium),
+                        )
+                        snippetView.layoutParams = params
+                        snippetView.alpha = 0f
+                        snippetView.setOnClickListener {
+                            section.performClick()
+                        }
+                        binding?.searchResultsContainer?.addView(snippetView)
+
+                        snippetView
+                            .animate()
+                            .alpha(1f)
+                            .setDuration(200)
+                            .setStartDelay((index * 30 + 50).toLong())
+                            .start()
+                    }
+                }
+
+                is SearchableFAQItem.NavigableItem -> {
+                    val itemBinding =
+                        SupportFaqItemBinding.inflate(
+                            context.layoutInflater,
+                            binding?.searchResultsContainer,
+                            false,
+                        )
+                    itemBinding.textView.text = result.title
+                    itemBinding.root.setOnClickListener {
+                        val direction = FAQOverviewFragmentDirections.openFAQDetail(null, null)
+                        direction.position = result.article.position ?: 0
+                        MainNavigationController.navigate(direction)
+                    }
+
+                    itemBinding.root.alpha = 0f
+                    itemBinding.root.translationY = 20f
+                    binding?.searchResultsContainer?.addView(itemBinding.root)
+
+                    itemBinding.root
+                        .animate()
+                        .alpha(1f)
+                        .translationY(0f)
+                        .setDuration(200)
+                        .setStartDelay((index * 30).toLong())
+                        .start()
+                }
+            }
+        }
+    }
+
+    private fun highlightQuery(
+        text: String,
+        query: String,
+    ): SpannableString {
+        val spannable = SpannableString(text)
+        val startIndex = text.lowercase().indexOf(query.lowercase())
+
+        if (startIndex >= 0) {
+            spannable.setSpan(
+                StyleSpan(android.graphics.Typeface.BOLD),
+                startIndex,
+                startIndex + query.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+            )
+        }
+
+        return spannable
     }
 }

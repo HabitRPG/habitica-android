@@ -1,42 +1,52 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository
+import com.habitrpg.android.habitica.extensions.findAllAsFlow
+import com.habitrpg.android.habitica.extensions.findOneAsFlow
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
 import io.realm.Realm
 import io.realm.RealmModel
 import io.realm.RealmObject
+import io.realm.RealmQuery
 import io.realm.kotlin.deleteFromRealm
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.emptyFlow
 import java.util.concurrent.atomic.AtomicBoolean
 
-abstract class RealmBaseLocalRepository internal constructor(override var realm: Realm) :
-    BaseLocalRepository {
+abstract class RealmBaseLocalRepository internal constructor(
+    internal var realm: Realm,
+) : BaseLocalRepository {
     override val isClosed: Boolean
         get() = realm.isClosed
+
+    override fun refreshLocalData() {
+        val r = realm
+        if (r.isClosed) return
+        try {
+            r.refresh()
+        } catch (_: IllegalStateException) {
+        }
+    }
 
     override fun close() {
         realm.close()
     }
 
-    override fun executeTransaction(transaction: (Realm) -> Unit) {
+    internal fun executeTransaction(transaction: (Realm) -> Unit) {
         pendingSaves.add(transaction)
         if (isSaving.compareAndSet(false, true)) {
             process()
         }
     }
 
-    override fun <T : BaseObject> getUnmanagedCopy(managedObject: T): T {
-        return if (managedObject is RealmObject && managedObject.isManaged && managedObject.isValid) {
+    override fun <T : BaseObject> getUnmanagedCopy(managedObject: T): T =
+        if (managedObject is RealmObject && managedObject.isManaged && managedObject.isValid) {
             realm.copyFromRealm(managedObject)
         } else {
             managedObject
         }
-    }
 
     override fun <T : BaseObject> getUnmanagedCopy(list: List<T>): List<T> {
         if (isClosed) {
@@ -52,7 +62,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
 
     private fun <T : RealmModel> copy(
         realm: Realm,
-        obj: T
+        obj: T,
     ) {
         try {
             realm.insertOrUpdate(obj)
@@ -98,7 +108,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
 
     override fun <T : BaseMainObject> modify(
         obj: T,
-        transaction: (T) -> Unit
+        transaction: (T) -> Unit,
     ) {
         if (isClosed) {
             return
@@ -119,26 +129,35 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         }
     }
 
-    override fun getLiveUser(id: String): User? {
-        return realm.where(User::class.java).equalTo("id", id).findFirst()
-    }
+    override fun getLiveUser(id: String): User? = realm.where(User::class.java).equalTo("id", id).findFirst()
 
     override fun <T : BaseObject> getLiveObject(obj: T): T? {
         if (isClosed) return null
         if (obj !is RealmObject || !obj.isManaged) return obj
         val baseObject = obj as? BaseMainObject ?: return null
         @Suppress("UNCHECKED_CAST")
-        return realm.where(baseObject.realmClass)
+        return realm
+            .where(baseObject.realmClass)
             .equalTo(baseObject.primaryIdentifierName, baseObject.primaryIdentifier)
             .findFirst() as? T
     }
 
-    fun queryUser(userID: String): Flow<User?> {
-        return realm.where(User::class.java)
+    fun queryUser(userID: String) =
+        realm
+            .where(User::class.java)
             .equalTo("id", userID)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded && it.isValid && !it.isEmpty() }
-            .map { it.firstOrNull() }
-    }
+            .findOneAsFlow()
+
+    internal fun <T : RealmModel> safeQuery(queryBuilder: (Realm) -> RealmQuery<T>): RealmQuery<T>? =
+        if (isClosed) {
+            null
+        } else {
+            queryBuilder(realm)
+        }
+
+    internal fun <T : RealmModel> safeFindAll(queryBuilder: (Realm) -> RealmQuery<T>): Flow<List<T>> =
+        safeQuery { queryBuilder(it) }?.findAllAsFlow() ?: emptyFlow()
+
+    internal fun <T : RealmModel> safeFindOne(queryBuilder: (Realm) -> RealmQuery<T>): Flow<T> =
+        safeQuery { queryBuilder(it) }?.findOneAsFlow() ?: emptyFlow()
 }

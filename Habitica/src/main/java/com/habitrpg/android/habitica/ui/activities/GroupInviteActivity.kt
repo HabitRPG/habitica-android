@@ -24,11 +24,7 @@ class GroupInviteActivity : BaseActivity() {
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    internal var fragments: MutableList<PartyInviteFragment> = ArrayList()
-
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_party_invite
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_party_invite
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityPartyInviteBinding.inflate(layoutInflater)
@@ -37,7 +33,6 @@ class GroupInviteActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(findViewById(R.id.toolbar))
         binding.viewPager.currentItem = 0
 
         supportActionBar?.title = null
@@ -50,8 +45,8 @@ class GroupInviteActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
             R.id.action_send_invites -> {
                 setResult(Activity.RESULT_OK, createResultIntent())
                 dismissKeyboard()
@@ -63,13 +58,13 @@ class GroupInviteActivity : BaseActivity() {
                 true
             }
 
-            else -> super.onOptionsItemSelected(item)
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
-    }
 
     private fun createResultIntent(): Intent {
         val intent = Intent()
-        if (fragments.size == 0) return intent
         return intent
     }
 
@@ -80,13 +75,10 @@ class GroupInviteActivity : BaseActivity() {
             object : FragmentStateAdapter(fragmentManager, lifecycle) {
                 override fun createFragment(position: Int): Fragment {
                     val fragment = PartyInviteFragment()
-                    fragments.add(fragment)
                     return fragment
                 }
 
-                override fun getItemCount(): Int {
-                    return 2
-                }
+                override fun getItemCount(): Int = 2
             }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -101,9 +93,7 @@ class GroupInviteActivity : BaseActivity() {
     }
 
     companion object {
-        const val RESULT_SEND_INVITES = 100
         const val USER_IDS_KEY = "userIDs"
-        const val IS_EMAIL_KEY = "isEmail"
         const val EMAILS_KEY = "emails"
     }
 }

@@ -1,13 +1,13 @@
 package com.habitrpg.android.habitica.interactors
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.core.graphics.createBitmap
 import androidx.core.view.doOnNextLayout
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
@@ -19,10 +19,14 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
-    class RequestValues(val mountKey: String, val message: String, val context: Context) :
-        UseCase.RequestValues
+    class RequestValues(
+        val mountKey: String,
+        val message: String,
+        val context: Context,
+    ) : UseCase.RequestValues
 
     override suspend fun run(requestValues: RequestValues) {
         val mountWrapper = MountImageviewBinding.inflate(requestValues.context.layoutInflater)
@@ -49,25 +53,23 @@ class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
         mountWrapper.backgroundView.layout(0, 0, width, height)
         mountWrapper.mountImageview.layout(0, 0, width, height)
         val sharedImage =
-            Bitmap.createBitmap(
-                width,
-                height,
-                Bitmap.Config.ARGB_8888
-            )
+            createBitmap(width, height)
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (!mountWrapper.mountImageview.hasLoadedImages && attempts < 200) {
-            delay(100)
+            delay(100.milliseconds)
             attempts++
         }
         // Draw it to the canvas once it's layouted
         mountWrapper.root.doOnNextLayout {
             mountWrapper.root.draw(canvas)
             (
-                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
-                    requestValues.context
-                )?.currentActivity?.get()
-                )?.shareContent("pet", requestValues.message, sharedImage)
+                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication
+                    .getInstance(
+                        requestValues.context,
+                    )?.currentActivity
+                    ?.get()
+            )?.shareContent("pet", requestValues.message, sharedImage)
             containerView?.removeView(mountWrapper.root)
         }
         // trigger layout

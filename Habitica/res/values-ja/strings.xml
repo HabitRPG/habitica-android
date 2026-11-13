@@ -493,13 +493,13 @@
     <string name="character_build">キャラクターの設定</string>
     <string name="character_build_description">各レベルごとに、自由に割り当てることができるポイントが得られます。手動で割り当てることもできますが、自動割り当てによってゲームに割り当てを任せることも可能です。</string>
     <string name="strength">力</string>
-    <string name="strength_description">タスクを完了した時の会心の一撃のボーナスや発生率が増加します。また、ボスへ与えるダメージも増加します。</string>
+    <string name="strength_description">タスクを完了したときの会心の一撃の発生率やダメージが増加します。また、クエストのボスへ与えるダメージも増加します。</string>
     <string name="intelligence">知能</string>
     <string name="intelligence_description">タスクの完了によって得られる経験値が増加します。また、マナの上限と時間回復の早さが増加します。</string>
     <string name="constitution">体質</string>
-    <string name="constitution_description">タスクの失敗によって受けるダメージが減少します。ボスからのダメージは減少しません。</string>
+    <string name="constitution_description">タスクの失敗や悪い習慣によって受けるダメージが減少します。クエストのボスからのダメージは減少しません。</string>
     <string name="perception">知覚</string>
-    <string name="perception_description">タスクを完了した時に落とし物を見つける確率、１日ごとの落とし物上限、連続実行ボーナス、タスクから獲得するゴールドの量などが増加します。</string>
+    <string name="perception_description">タスクを完了したときに落とし物を見つける確率、１日ごとの落とし物上限、連続実行ボーナス、タスクから獲得するゴールドの量などが増加します。</string>
     <string name="buffs">バフ</string>
     <string name="allocated">割当済み</string>
     <string name="distribute_evenly">均等に分配する</string>
@@ -562,7 +562,7 @@
     <string name="challenge_prize">チャレンジの賞品</string>
     <string name="challenge_categories">チャレンジのカテゴリ</string>
     <string name="created_challenge">作成されたチャレンジ</string>
-    <string name="joined">登録日</string>
+    <string name="joined">参加</string>
     <string name="public_challenge">公共のチャレンジ</string>
     <string name="short_name">短縮名</string>
     <string name="unlock_attribute_points">能力ポイントの割り当てはレベル10でアンロックされます</string>
@@ -977,7 +977,7 @@
     <string name="hatch_pet_title">ペットをかえす</string>
     <string name="delete_x_tasks">%dのタスクを削除する</string>
     <string name="keep_x_tasks">%dのタスクを残す</string>
-    <string name="broken_challenge_description">このタスクは%dチャレンジの一部です。このチャレンジは終了しました。残ったタスクをどうしますか？</string>
+    <string name="broken_challenge_description">これは終了したチャレンジに関する%dつのタスクのうちの一つです。残ったタスクをどうしますか？</string>
     <string name="pms_disabled">プライベートメッセージが無効になりました</string>
     <string name="disablePrivateMessages">プライベートメッセージを無効にする</string>
     <string name="block">ブロックする</string>
@@ -1024,7 +1024,7 @@
     <string name="spooky_promo_info_instructions">%1$sから%2$sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
     <string name="view_gem_bundles">ジェムセットを見る</string>
     <string name="fall_promo_info_prompt">秋の大祭も最高潮で、はじめてのジェムのセールを皆さんにお知らせするのに最高のタイミングだと我々は考えました！このセールでは、いつもと同じ値段で、いつもよりも多くのジェムが購入できます。</string>
-    <string name="fall_promo_info_instructions">%1$sから%2$sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
+    <string name="gem_promo_info_instructions">%1$sから%2$sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
     <string name="limitations">制限事項</string>
     <string name="how_it_works">機能説明</string>
     <string name="x_to_y">%1$sから%2$sへ</string>
@@ -1231,7 +1231,7 @@
 \n買い戻すことができます</string>
     <string name="armoire_rate_experience_title">20% 経験値</string>
     <string name="armoire_rate_food_title">20% の食べ物</string>
-    <string name="faint_loss_description">レベル <b>%1$d</b> に下がり、<b>%2$d</b> ゴールドを失い、<b>装備が一つ</b> が壊れます…頑張ればすべて取り戻せます！</string>
+    <string name="faint_loss_description">レベル <b>%1$d に下がり、%2$d ゴールドを失い、装備が一つが壊れます</b>．．．しかし、頑張ればすべて取り戻せます！</string>
     <string name="armoire_rate_equipment_title">60% 装備品</string>
     <string name="academics">学術分野</string>
     <string name="advocacy_causes">主義主張</string>
@@ -1251,7 +1251,7 @@
     </plurals>
     <string name="x_and_y">%1$sと%2$s</string>
     <string name="class_changed_description">スキル %s を使えるようになりました。ショップで装備を購入することもできます。レベルを上げてステータスポイントを獲得し、スキルをパワーアップさせましょう。</string>
-    <string name="subscription_credit_canceling">あなたの有料プランは解約の後<b>+%d</b>ヶ月間有効です</string>
+    <string name="subscription_credit_canceling">あなたの有料プランは解約の後<b>+%s</b>ヶ月間有効です</string>
     <string name="positive_sentence">いい</string>
     <string name="negative_sentence">悪い</string>
     <plurals name="repeat_daily">
@@ -1446,7 +1446,7 @@
     <string name="subscribe_listitemArmoire_description">宝箱1個分の料金で、新装備を2個手に入れるチャンスがあります！</string>
     <string name="subscribe_incentive_button_armoire">有料会員になればもう一度無料でオープンできます！</string>
     <string name="subscriber_button_faint">セカンドチャンス：1HPで持ちこたえる！</string>
-    <string name="subscribe_incentive_text_faint">HP切れを防ぐために、有料プランで毎日セカンドチャンスを手に入れましょう</string>
+    <string name="subscribe_incentive_text_faint">有料会員は1日1回、HP切れを防ぐために、セカンドチャンスを使えます</string>
     <string name="subscribe_second_chance_incentive_text">有料会員は毎日、人生のセカンドチャンスを得ることができ、その他にも特典があります！</string>
     <string name="subscriber_benefit_used_faint">あなたは今日、すでにセカンドチャンスを使用済みです。%sで再度ご利用いただけます</string>
     <string name="subriber_benefit_notification_faint">1HPでセカンドチャンスを得ました！</string>
@@ -1536,7 +1536,7 @@
     <string name="mages">魔道士</string>
     <string name="error_loading_gems">ジェムのロード中にエラーが発生しました</string>
     <string name="plus_two_gems">+2ジェム</string>
-    <string name="unlock_x_gems_per_month">市場でジェムを月間%d個アンロックします</string>
+    <string name="unlock_x_gems_per_month">毎月、市場でジェムを%d個アンロックできます</string>
     <string name="x_gems">%d ジェム</string>
     <string name="subscription_details_footer">有料会員は神秘の砂時計、ミステリーアイテム、市場のジェムの再入荷を月初めの2日以内に受け取ります</string>
     <string name="gem_cap">ジェムの上限</string>
@@ -1620,4 +1620,57 @@
     <string name="resubscribe_for_hourglasses">神秘の砂時計をゲットし続けるには、有料プランに再登録してください</string>
     <string name="get_12_mystic_hourglasses">初めて12ヶ月間の有料プランに登録したとき、12個の神秘の砂時計をすぐにゲットしよう！</string>
     <string name="next_switch_in_x">あと%sで切り換えます</string>
+    <string name="faint_broken_gear_info">壊れた装備は市場から買い戻すことができます</string>
+    <string name="quest_accept_error">クエストを承認できませんでした。もう一度やり直してください。</string>
+    <string name="rebirth_confirm_reset_item_2">ステータスポイント</string>
+    <string name="new_message">新しいメッセージ</string>
+    <string name="category">カテゴリー</string>
+    <string name="quest_accepted">クエストを承認しました！</string>
+    <string name="quest_rejected">クエストを拒否しました</string>
+    <string name="quest_reject_error">クエストを拒否できませんでした。もう一度やり直してください。</string>
+    <plurals name="days_until_free_rebirth">
+        <item quantity="other">無料の転生のオーブがもらえるまであと%d日</item>
+    </plurals>
+    <string name="free_rebirth_at_level_100">レベル100で転生のオーブが無料でもらえます</string>
+    <string name="participating">参加中</string>
+    <string name="server_option_custom">カスタム</string>
+    <string name="search_questions">質問を検索する</string>
+    <string name="no_matching_questions">一致する質問が見つかりませんでした</string>
+    <string name="rebirth_shop">転生のオーブ</string>
+    <string name="rebirth_confirm_title">本当に転生のオーブを使ってもいいですか？</string>
+    <string name="rebirth_confirm_reset_item_1">レベルとクラス</string>
+    <string name="rebirth_confirm_reset_item_3">ゴールドとマナ</string>
+    <string name="rebirth_confirm_reset_item_4">タスクの連続実行回数</string>
+    <string name="rebirth_confirm_keep_item_1">タスクリスト</string>
+    <string name="rebirth_confirm_keep_item_2">装備、ペット、そして乗騎</string>
+    <string name="rebirth_confirm_keep_item_3">実績</string>
+    <string name="rebirth_confirm_keep_item_4">パーティーとチャレンジ</string>
+    <string name="rebirth_confirm_use">転生のオーブを使う</string>
+    <string name="free">無料</string>
+    <string name="go_back">戻る</string>
+    <string name="rebirth_enabled_title">転生のオーブがアンロックされました</string>
+    <string name="go_to_market">市場に移動する</string>
+    <string name="membership">メンバーシップ</string>
+    <string name="not_participating_filter">不参加</string>
+    <string name="server_option_default">%s（デフォルト）</string>
+    <string name="server_custom_address_hint">例：http://localhost:3000</string>
+    <string name="server_url_invalid">http:// または https:// で始まる有効なURLを入力してください</string>
+    <string name="apply">適用</string>
+    <string name="server_settings_unlocked">サーバー設定がアンロックされました！</string>
+    <string name="server_settings_unlock_remaining">サーバー設定をアンロックするまであと%dステップです。</string>
+    <string name="custom_server">専用サーバー</string>
+    <string name="rebirth_confirm_reset_header">リセットされる要素：</string>
+    <string name="rebirth_confirm_keep_header">保持される要素：</string>
+    <string name="rebirth_enabled_subtitle">新しい冒険が始められます！</string>
+    <string name="rebirth_achievement_title">復活されました！</string>
+    <string name="rebirth_achievement_description_max">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$d以上です。</string>
+    <string name="rebirth_achievement_description">新しい冒険を始めました！これは%1$d回目の復活で、最高レベルは%2$dです。</string>
+    <string name="subscriber_button_faint_use">セカンドチャンスを使う！</string>
+    <string name="reset_server_to_default">デフォルトに戻す</string>
+    <string name="auth_invalid_credential_type">認証情報が無効です。</string>
+    <string name="scroll_to_new_messages">新しいメッセージにスクロールする</string>
+    <string name="auth_unknown_credential_type">認証情報が不明です。</string>
+    <string name="rebirth_shop_description">実績、アイテム、装備は変わらず、レベル１からリスタートできます。タスクは元の状態に戻りますが、記録は残ります。個人用タスクの連続実行回数はリセットされます。ゴールド、経験値、マナ、そしてスキルからの効果は無くなります。</string>
+    <string name="server_custom_address_label">専用サーバーのアドレスを入力してください</string>
+    <string name="server_custom_warning">注意：専用サーバーでのアカウントは Habitica.com のアカウントと別です。</string>
 </resources>

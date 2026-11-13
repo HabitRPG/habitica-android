@@ -7,7 +7,10 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Buffs : RealmObject(), AvatarBuffs, BaseObject {
+open class Buffs :
+    RealmObject(),
+    AvatarBuffs,
+    BaseObject {
     override var con: Float? = null
     override var str: Float? = null
     override var per: Float? = null

@@ -15,7 +15,9 @@ import org.json.JSONException
 import java.util.Date
 
 @JsonClass(generateAdapter = true)
-open class Task() : Parcelable, BaseTask {
+open class Task() :
+    Parcelable,
+    BaseTask {
     @Json(name = "_id")
     var id: String? = null
     var userId: String = ""
@@ -164,6 +166,7 @@ open class Task() : Parcelable, BaseTask {
                     else -> false
                 }
             }
+
             TaskType.DAILY -> {
                 return when {
                     startDate != task.startDate -> true
@@ -174,27 +177,28 @@ open class Task() : Parcelable, BaseTask {
                     else -> false
                 }
             }
+
             TaskType.TODO -> {
                 return dueDate != task.dueDate
             }
+
             TaskType.REWARD -> {
                 return value != task.value
             }
+
             else -> {
                 return false
             }
         }
     }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 
     override fun describeContents(): Int = 0
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeString(this.userId)
         dest.writeValue(this.priority)
@@ -260,6 +264,8 @@ open class Task() : Parcelable, BaseTask {
         this.weeksOfMonth = weeksOfMonth
         if ((weeksOfMonth?.size ?: 0) > 0) {
             this.weeksOfMonthString = this.weeksOfMonth?.toString()
+            this.daysOfMonth = null
+            this.daysOfMonthString = "[]"
         } else {
             weeksOfMonthString = "[]"
         }
@@ -288,6 +294,8 @@ open class Task() : Parcelable, BaseTask {
         this.daysOfMonth = daysOfMonth
         if ((daysOfMonth?.size ?: 0) > 0) {
             this.daysOfMonthString = this.daysOfMonth?.toString()
+            this.weeksOfMonth = null
+            this.weeksOfMonthString = "[]"
         } else {
             daysOfMonthString = "[]"
         }

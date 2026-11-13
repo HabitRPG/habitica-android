@@ -1,13 +1,9 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.content.Context
-import android.content.Intent
 import android.content.res.Resources
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.res.painterResource
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
@@ -24,15 +20,10 @@ import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
-import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.fragments.skills.SkillDialogBottomSheetFragment
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
-import com.habitrpg.common.habitica.extensions.asPainter
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
@@ -41,8 +32,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ItemRecyclerAdapter(val context: Context) :
-    BaseRecyclerViewAdapter<BaseMainObject, ViewHolder>() {
+class ItemRecyclerAdapter(
+    val context: Context,
+) : BaseRecyclerViewAdapter<BaseMainObject, ViewHolder>() {
     var user: User? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -71,18 +63,17 @@ class ItemRecyclerAdapter(val context: Context) :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        return if (viewType == 0) {
+        viewType: Int,
+    ): ViewHolder =
+        if (viewType == 0) {
             ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
         } else {
             ShopAdViewHolder(ShopAdBinding.inflate(context.layoutInflater, parent, false))
         }
-    }
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int
+        position: Int,
     ) {
         if (position < data.size) {
             val ownedItem = data[position] as OwnedItem
@@ -103,7 +94,7 @@ class ItemRecyclerAdapter(val context: Context) :
                         "food" -> context.getString(R.string.food_footer_description)
                         "hatchingPotions" -> context.getString(R.string.hatchingPotions_footer_description)
                         else -> ""
-                    }
+                    },
                 )
             }
             typedHolder.itemView.setOnClickListener {
@@ -117,13 +108,12 @@ class ItemRecyclerAdapter(val context: Context) :
         return actualCount + if (itemType == "special" || actualCount == 0 || itemType == "") 0 else 1
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position < data.size) {
+    override fun getItemViewType(position: Int): Int =
+        if (position < data.size) {
             0
         } else {
             -1
         }
-    }
 
     fun setExistingPets(pets: List<Pet>) {
         existingPets = pets
@@ -135,10 +125,13 @@ class ItemRecyclerAdapter(val context: Context) :
         notifyDataSetChanged()
     }
 
-    inner class ShopAdViewHolder(val binding: ShopAdBinding) : ViewHolder(binding.root)
+    inner class ShopAdViewHolder(
+        val binding: ShopAdBinding,
+    ) : ViewHolder(binding.root)
 
-    inner class ItemViewHolder(val binding: ItemItemBinding) :
-        ViewHolder(binding.root),
+    inner class ItemViewHolder(
+        val binding: ItemItemBinding,
+    ) : ViewHolder(binding.root),
         View.OnClickListener {
         private var ownedItem: OwnedItem? = null
         var item: Item? = null
@@ -163,7 +156,7 @@ class ItemRecyclerAdapter(val context: Context) :
 
         fun bind(
             ownedItem: OwnedItem,
-            item: Item?
+            item: Item?,
         ) {
             this.ownedItem = ownedItem
             this.item = item
@@ -196,7 +189,7 @@ class ItemRecyclerAdapter(val context: Context) :
 
         private fun getImageName(
             item: Item? = null,
-            ownedItem: OwnedItem? = null
+            ownedItem: OwnedItem? = null,
         ): String {
             if (ownedItem != null && ownedItem.itemType == "special") {
                 return "shop_" + ownedItem.key
@@ -208,10 +201,14 @@ class ItemRecyclerAdapter(val context: Context) :
                 }
 
                 is SpecialItem -> {
-                    // Mystery Item (Inventory Present)
-                    val sdf = SimpleDateFormat("MM", Locale.getDefault())
-                    val month = sdf.format(Date())
-                    "inventory_present_$month"
+                    if (item.isMysteryItem) {
+                        // Mystery Item (Inventory Present)
+                        val sdf = SimpleDateFormat("MM", Locale.getDefault())
+                        val month = sdf.format(Date())
+                        "inventory_present_$month"
+                    } else {
+                        "shop_" + item.key
+                    }
                 }
 
                 else -> {
@@ -245,8 +242,8 @@ class ItemRecyclerAdapter(val context: Context) :
                             resources.getString(R.string.sell_no_price),
                             true,
                             "gold",
-                            item?.value?.toDouble() ?: 0.0
-                        )
+                            item?.value?.toDouble() ?: 0.0,
+                        ),
                     )
                 }
                 if (item is Egg) {
@@ -260,39 +257,45 @@ class ItemRecyclerAdapter(val context: Context) :
                     } else {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.create_new_party)))
                     }
-                } else if (item is SpecialItem) {
+                } else if ((item as? SpecialItem)?.isMysteryItem == true) {
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && (ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
                     }
                 } else if (ownedItem?.itemType == "special") {
                     if ((ownedItem?.numberOwned ?: 0) > 0) {
-                        if (item == null && ownedItem != null) {
-                            // Special items that are not Mystery Item
-                            val specialItem = SpecialItem()
-                            ownedItem?.key?.let { key ->
-                                specialItem.key = key
-                                specialItem.text = key.localizedCapitalizeWithSpaces()
-                            }
-                            onUseSpecialItem?.invoke(specialItem)
+                        // Special items that are not Mystery Item
+                        val specialItem = SpecialItem()
+                        ownedItem?.key?.let { key ->
+                            specialItem.key = key
+                            specialItem.text = key.localizedCapitalizeWithSpaces()
                         }
+                        onUseSpecialItem?.invoke(specialItem)
                     }
                     return
                 }
                 menu.setSelectionRunnable { index ->
                     item?.let { selectedItem ->
-                        if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") && index == 0) {
+                        if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") &&
+                            index == 0
+                        ) {
                             ownedItem?.let { selectedOwnedItem ->
                                 onSellItem?.invoke(
                                     selectedItem,
-                                    selectedOwnedItem
+                                    selectedOwnedItem,
                                 )
                             }
                             return@let
                         }
                         when (selectedItem) {
-                            is Egg -> item?.let { onStartHatching?.invoke(it) }
-                            is HatchingPotion -> onStartHatching?.invoke(selectedItem)
+                            is Egg -> {
+                                item?.let { onStartHatching?.invoke(it) }
+                            }
+
+                            is HatchingPotion -> {
+                                onStartHatching?.invoke(selectedItem)
+                            }
+
                             is QuestContent -> {
                                 if (index == 0) {
                                     val dialog = DetailDialog(context)
@@ -307,10 +310,11 @@ class ItemRecyclerAdapter(val context: Context) :
                                 }
                             }
 
-                            is SpecialItem ->
+                            is SpecialItem -> {
                                 if (item?.key == "inventory_present") {
                                     onOpenMysteryItem?.invoke(selectedItem)
                                 }
+                            }
                         }
                     }
                 }

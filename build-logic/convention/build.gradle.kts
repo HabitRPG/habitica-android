@@ -1,4 +1,4 @@
-import org.gradle.api.JavaVersion.VERSION_11
+import org.gradle.api.JavaVersion.VERSION_17
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -9,14 +9,14 @@ group = "com.habitrpg.buildlogic"
 version = "0.1.0"
 
 java {
-    sourceCompatibility = VERSION_11
-    targetCompatibility = VERSION_11
+    sourceCompatibility = VERSION_17
+    targetCompatibility = VERSION_17
 }
 
-kotlin.compilerOptions.jvmTarget = JvmTarget.JVM_11
+kotlin.compilerOptions.jvmTarget = JvmTarget.JVM_17
 
 dependencies {
-    implementation(libs.android.gradlePlugin)
+    implementation(libs.android.gradleApi)
     implementation(libs.detekt.gradlePlugin)
     implementation(libs.gson)
     implementation(libs.ktlint.gradlePlugin)

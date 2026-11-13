@@ -66,7 +66,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.user.User
@@ -102,8 +101,7 @@ class AvatarEquipmentViewModel : ViewModel() {
 }
 
 @AndroidEntryPoint
-class ComposeAvatarEquipmentFragment :
-    BaseMainFragment<FragmentComposeBinding>() {
+class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>() {
     private val viewModel: AvatarEquipmentViewModel by viewModels()
 
     @Inject
@@ -119,15 +117,13 @@ class ComposeAvatarEquipmentFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentComposeBinding {
-        return FragmentComposeBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentComposeBinding = FragmentComposeBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         showsBackButton = true
         hidesToolbar = true
@@ -138,17 +134,40 @@ class ComposeAvatarEquipmentFragment :
                 HabiticaTheme {
                     val activeEquipment by viewModel.activeEquipment
                     val avatar by userViewModel.user.observeAsState()
-                    AvatarEquipmentView(avatar = avatar, configManager = configManager, viewModel.items, viewModel.type, stringResource(viewModel.typeNameId), activeEquipment) { equipment ->
-                        lifecycleScope.launchCatching {
-                            if ((equipment.key?.isNotBlank() != true || equipment.key?.endsWith("_0") == true) && equipment.key != activeEquipment) {
+                    AvatarEquipmentView(
+                        avatar = avatar,
+                        configManager = configManager,
+                        viewModel.items,
+                        viewModel.type,
+                        stringResource(viewModel.typeNameId),
+                        activeEquipment,
+                    ) { equipment ->
+                        viewLifecycleOwner.lifecycleScope.launchCatching {
+                            if ((equipment.key?.isNotBlank() != true || equipment.key?.endsWith("_0") == true) &&
+                                equipment.key != activeEquipment
+                            ) {
                                 inventoryRepository.equip(
-                                    if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
-                                    activeEquipment ?: ""
+                                    if (userViewModel.user.value
+                                            ?.preferences
+                                            ?.costume == true
+                                    ) {
+                                        "costume"
+                                    } else {
+                                        "equipped"
+                                    },
+                                    activeEquipment ?: "",
                                 )
                             } else if (equipment.key?.contains("base_0") == false) {
                                 inventoryRepository.equip(
-                                    if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
-                                    equipment.key ?: ""
+                                    if (userViewModel.user.value
+                                            ?.preferences
+                                            ?.costume == true
+                                    ) {
+                                        "costume"
+                                    } else {
+                                        "equipped"
+                                    },
+                                    equipment.key ?: "",
                                 )
                             }
                         }
@@ -161,7 +180,7 @@ class ComposeAvatarEquipmentFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -175,20 +194,22 @@ class ComposeAvatarEquipmentFragment :
         this.loadEquipment()
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
-
-        Analytics.sendNavigationEvent("${viewModel.type} screen")
     }
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         super.onCreateOptionsMenu(menu, inflater)
 
         mainActivity?.toolbar?.let {
             val color = ContextCompat.getColor(requireContext(), R.color.window_background)
-            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color,
-                appbar = mainActivity?.findViewById(R.id.appbar))
+            ToolbarColorHelper.colorizeToolbar(
+                it,
+                mainActivity,
+                backgroundColor = color,
+                appbar = mainActivity?.findViewById(R.id.appbar),
+            )
         }
     }
 
@@ -199,10 +220,16 @@ class ComposeAvatarEquipmentFragment :
         super.onResume()
     }
 
+    override fun onDestroy() {
+        inventoryRepository.close()
+        super.onDestroy()
+    }
+
     private fun loadEquipment() {
         val type = viewModel.type ?: return
-        lifecycleScope.launchCatching {
-            inventoryRepository.getEquipmentType(type, viewModel.category ?: "")
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            inventoryRepository
+                .getEquipmentType(type, viewModel.category ?: "")
                 .combine(inventoryRepository.getOwnedEquipment(type).map { it.map { owned -> owned.key } }, ::Pair)
                 .collect { (equipment, ownedEquipment) ->
                     viewModel.items.clear()
@@ -212,7 +239,7 @@ class ComposeAvatarEquipmentFragment :
                     viewModel.items.addAll(
                         equipment.filter {
                             ownedEquipment.contains(it.key)
-                        }
+                        },
                     )
                 }
         }
@@ -249,23 +276,26 @@ private fun AvatarEquipmentView(
     type: String?,
     typeName: String,
     activeCustomization: String?,
-    onSelect: (Equipment) -> Unit
+    onSelect: (Equipment) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val isWidthGreaterHeight = configuration.screenWidthDp > configuration.screenHeightDp
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(colorResource(R.color.window_background))) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(colorResource(R.color.window_background)),
+        ) {
             ComposableAvatarView(
                 avatar = avatar,
                 configManager = configManager,
                 modifier =
-                Modifier
-                    .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)
-                    .size(140.dp, 147.dp)
+                    Modifier
+                        .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)
+                        .size(140.dp, 147.dp),
             )
         }
         val nestedScrollInterop = rememberNestedScrollInteropConnection()
@@ -280,18 +310,18 @@ private fun AvatarEquipmentView(
             horizontalArrangement = Arrangement.Center,
             contentPadding = PaddingValues(horizontal = horizontalPadding),
             modifier =
-            Modifier
-                .padding(bottom = insets.calculateBottomPadding())
-                .background(colorResource(R.color.window_background))
-                .padding(start = insets.calculateStartPadding(ld), end = insets.calculateEndPadding(ld))
-                .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
-                .background(colorResource(R.color.content_background))
-                .onGloballyPositioned {
-                    gridWidth = with(density) {
-                        it.size.width.toDp()
-                    }
-                }
-                .nestedScroll(nestedScrollInterop)
+                Modifier
+                    .padding(bottom = insets.calculateBottomPadding())
+                    .background(colorResource(R.color.window_background))
+                    .padding(start = insets.calculateStartPadding(ld), end = insets.calculateEndPadding(ld))
+                    .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                    .background(colorResource(R.color.content_background))
+                    .onGloballyPositioned {
+                        gridWidth =
+                            with(density) {
+                                it.size.width.toDp()
+                            }
+                    }.nestedScroll(nestedScrollInterop),
         ) {
             item(span = { GridItemSpan(3) }) {
                 Text(
@@ -300,7 +330,7 @@ private fun AvatarEquipmentView(
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.text_ternary),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(10.dp),
                 )
             }
             if (items.size > 1) {
@@ -309,22 +339,41 @@ private fun AvatarEquipmentView(
                         Box(
                             contentAlignment = Alignment.Center,
                             modifier =
-                            Modifier
-                                .padding(4.dp)
-                                .border(if (activeCustomization == item.key) 2.dp else 0.dp, if (activeCustomization == item.key) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
-                                .size(76.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .clickable {
-                                    onSelect(item)
-                                }
-                                .background(colorResource(id = R.color.window_background))
+                                Modifier
+                                    .padding(4.dp)
+                                    .border(
+                                        if (activeCustomization ==
+                                            item.key
+                                        ) {
+                                            2.dp
+                                        } else {
+                                            0.dp
+                                        },
+                                        if (activeCustomization ==
+                                            item.key
+                                        ) {
+                                            HabiticaTheme.colors.tintedUiMain
+                                        } else {
+                                            colorResource(R.color.transparent)
+                                        },
+                                        RoundedCornerShape(8.dp),
+                                    ).size(76.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .clickable {
+                                        onSelect(item)
+                                    }.background(colorResource(id = R.color.window_background)),
                         ) {
                             if (item.key.isNullOrBlank() || item.key == "0" || item.key?.endsWith("_0") == true || item.key == "none") {
-                                Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
+                                Image(
+                                    painterResource(R.drawable.empty_slot),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.None,
+                                    modifier = Modifier.size(68.dp),
+                                )
                             } else {
                                 PixelArtView(
                                     imageName = "shop_" + item.key,
-                                    Modifier.size(68.dp)
+                                    Modifier.size(68.dp),
                                 )
                             }
                         }
@@ -335,7 +384,7 @@ private fun AvatarEquipmentView(
                             fontWeight = FontWeight.SemiBold,
                             color = colorResource(id = R.color.text_ternary),
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp).padding(top = 16.dp)
+                            modifier = Modifier.padding(10.dp).padding(top = 16.dp),
                         )
                     }
                 }
@@ -348,20 +397,23 @@ private fun AvatarEquipmentView(
 }
 
 @Composable
-internal fun EmptyFooter(type: String?, hasItems: Boolean) {
+internal fun EmptyFooter(
+    type: String?,
+    hasItems: Boolean,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
-        Modifier
-            .padding(top = 56.dp)
-            .clickable {
-                MainNavigationController.navigate(R.id.customizationsShopFragment)
-            }
+            Modifier
+                .padding(top = 56.dp)
+                .clickable {
+                    MainNavigationController.navigate(R.id.customizationsShopFragment)
+                },
     ) {
         Image(
             painterResource(if (type == "background") R.drawable.customization_background else R.drawable.customization_mix),
             null,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp),
         )
         if (!hasItems) {
             Text(
@@ -369,7 +421,7 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(R.color.text_secondary),
-                modifier = Modifier.padding(bottom = 2.dp)
+                modifier = Modifier.padding(bottom = 2.dp),
             )
             Text(
                 buildAnnotatedString {
@@ -380,8 +432,8 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                         append(original)
                         return@buildAnnotatedString
                     }
-                    val first = original.substring(0, )
-                    val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
+                    val first = original.substring(0)
+                    val second = original.substring(customizationShopNameIndex + customizationShopName.length, original.length)
                     append(first)
                     withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
                         append(customizationShopName)
@@ -391,7 +443,7 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
                 color = colorResource(R.color.text_ternary),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         } else {
             Text(
@@ -399,14 +451,19 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(R.color.text_secondary),
-                modifier = Modifier.padding(bottom = 2.dp)
+                modifier = Modifier.padding(bottom = 2.dp),
             )
             Text(
                 buildAnnotatedString {
                     val original = stringResource(id = R.string.customization_shop_more)
                     val customizationShopName = stringResource(id = R.string.customization_shop)
+                    val customizationShopNameIndex = original.indexOf(customizationShopName)
+                    if (customizationShopNameIndex == -1) {
+                        append(original)
+                        return@buildAnnotatedString
+                    }
                     val first = original.substring(0, original.indexOf(customizationShopName))
-                    val second = original.substring(original.indexOf(customizationShopName) + customizationShopName.length, original.length)
+                    val second = original.substring(customizationShopNameIndex + customizationShopName.length, original.length)
                     append(first)
                     withStyle(SpanStyle(color = HabiticaTheme.colors.tintedUiMain)) {
                         append(customizationShopName)
@@ -416,7 +473,7 @@ internal fun EmptyFooter(type: String?, hasItems: Boolean) {
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
                 color = colorResource(R.color.text_ternary),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
     }

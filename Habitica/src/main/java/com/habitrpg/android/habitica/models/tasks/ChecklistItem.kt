@@ -8,7 +8,10 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.UUID
 
-open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
+open class ChecklistItem :
+    RealmObject,
+    BaseMainObject,
+    Parcelable {
     override val realmClass: Class<ChecklistItem>
         get() = ChecklistItem::class.java
     override val primaryIdentifier: String?
@@ -39,13 +42,11 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
         this.completed = item.completed
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeString(id)
         dest.writeString(text)
@@ -55,6 +56,7 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
 
     companion object CREATOR : Parcelable.Creator<ChecklistItem>, RealmModel {
         override fun createFromParcel(source: Parcel): ChecklistItem = ChecklistItem(source)
+
         override fun newArray(size: Int): Array<ChecklistItem?> = arrayOfNulls(size)
     }
 
@@ -65,15 +67,12 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
         position = source.readInt()
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is ChecklistItem) {
+    override fun equals(other: Any?): Boolean =
+        if (other is ChecklistItem) {
             this.id == other.id
         } else {
             super.equals(other)
         }
-    }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 }

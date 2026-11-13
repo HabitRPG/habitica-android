@@ -1,10 +1,8 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.android.billingclient.api.ProductDetails
@@ -12,15 +10,14 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,6 +34,8 @@ class GiftSubscriptionActivity : PurchaseActivity() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
+    override fun getConfigManager(): AppConfigManager = appConfigManager
+
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -46,9 +45,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
     private var selectedSubscriptionSku: ProductDetails? = null
     private var skus: List<ProductDetails> = emptyList()
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_gift_subscription
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_gift_subscription
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGiftSubscriptionBinding.inflate(layoutInflater)
@@ -57,10 +54,10 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
+        showsPromo = false
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_subscription)
-        setupToolbar(binding.toolbar, Color.WHITE, ContextCompat.getColor(this, R.color.brand_300))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -96,7 +93,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         lifecycleScope.launch(
             ExceptionHandler.coroutine {
                 showMemberLoadingErrorDialog()
-            }
+            },
         ) {
             val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID)
             if (member == null) {
@@ -119,11 +116,6 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        window.updateStatusBarColor(ContextCompat.getColor(this, R.color.brand_300), false)
-    }
-
     private fun showMemberLoadingErrorDialog() {
         val dialog = HabiticaAlertDialog(this@GiftSubscriptionActivity)
         dialog.setTitle(R.string.error_loading_member)
@@ -134,16 +126,19 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
-            val subscriptions = purchaseHandler.getAllGiftSubscriptionProducts()
-            skus = subscriptions
-            withContext(Dispatchers.Main) {
-                for (sku in skus) {
-                    updateButtonLabel(sku)
-                }
-                if (selectedSubscriptionSku == null) {
-                    skus.maxByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
-                        ?.let { selectSubscription(it) }
+        lifecycleScope.launchCatching {
+            withContext(Dispatchers.IO) {
+                val subscriptions = purchaseHandler.loadGiftSubscriptionProducts()
+                skus = subscriptions
+                withContext(Dispatchers.Main) {
+                    for (sku in skus) {
+                        updateButtonLabel(sku)
+                    }
+                    if (selectedSubscriptionSku == null) {
+                        skus
+                            .maxByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
+                            ?.let { selectSubscription(it) }
+                    }
                 }
             }
         }
@@ -163,32 +158,30 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             buttonForSku(thisSku)?.setIsSelected(false)
         }
         this.selectedSubscriptionSku = sku
-        val subscriptionOptionButton = buttonForSku(this.selectedSubscriptionSku)
+        val subscriptionOptionButton = buttonForSku(sku)
         subscriptionOptionButton?.setIsSelected(true)
         binding.subscriptionButton.isEnabled = true
     }
 
-    private fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
-        return buttonForSku(sku?.productId)
-    }
+    private fun buttonForSku(sku: ProductDetails): SubscriptionOptionView? = buttonForSku(sku.productId)
 
-    private fun buttonForSku(sku: String?): SubscriptionOptionView? {
-        return when (sku) {
-            PurchaseTypes.SUBSCRIPTION_1_MONTH_NORENEW -> binding.subscription1MonthView
-            PurchaseTypes.SUBSCRIPTION_3_MONTH_NORENEW -> binding.subscription3MonthView
-            PurchaseTypes.SUBSCRIPTION_6_MONTH_NORENEW -> binding.subscription6MonthView
-            PurchaseTypes.SUBSCRIPTION_12_MONTH_NORENEW -> binding.subscription12MonthView
+    private fun buttonForSku(sku: String): SubscriptionOptionView? =
+        when (HabiticaProduct.forSku(sku)) {
+            HabiticaProduct.SUBSCRIPTION_1_MONTH_NORENEW -> binding.subscription1MonthView
+            HabiticaProduct.SUBSCRIPTION_3_MONTH_NORENEW -> binding.subscription3MonthView
+            HabiticaProduct.SUBSCRIPTION_6_MONTH_NORENEW -> binding.subscription6MonthView
+            HabiticaProduct.SUBSCRIPTION_12_MONTH_NORENEW -> binding.subscription12MonthView
             else -> null
         }
-    }
 
     private fun purchaseSubscription(sku: ProductDetails) {
         giftedUserID?.let { id ->
             if (id.isEmpty()) {
                 return
             }
-            PurchaseHandler.addGift(sku.productId, id, giftedUsername ?: id)
-            purchaseHandler.purchase(this, sku)
+            lifecycleScope.launchCatching {
+                purchaseHandler.purchase(this@GiftSubscriptionActivity, sku, id, giftedUsername ?: id)
+            }
         }
     }
 }

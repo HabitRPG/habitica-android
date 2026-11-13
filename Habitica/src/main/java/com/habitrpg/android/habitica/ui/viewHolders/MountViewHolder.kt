@@ -2,10 +2,10 @@ package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.app.Activity
 import android.content.res.Resources
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
 import com.habitrpg.android.habitica.models.inventory.Mount
@@ -15,8 +15,10 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.inflate
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
-class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) :
-    androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)),
+class MountViewHolder(
+    parent: ViewGroup,
+    private val onEquip: ((String) -> Unit)?,
+) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)),
     View.OnClickListener {
     private var binding: MountOverviewItemBinding = MountOverviewItemBinding.bind(itemView)
     private var owned: Boolean = false
@@ -32,7 +34,7 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
     fun bind(
         item: Mount,
         owned: Boolean,
-        currentMount: String?
+        currentMount: String?,
     ) {
         animal = item
         this.owned = owned
@@ -53,10 +55,7 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
                 if (owned) {
                     it
                 } else {
-                    BitmapDrawable(
-                        itemView.context.resources,
-                        it.toBitmap().extractAlpha()
-                    )
+                    it.toBitmap().extractAlpha().toDrawable(itemView.context.resources)
                 }
             if (binding.imageView.tag == imageName) {
                 binding.imageView.bitmap = drawable.toBitmap()
@@ -76,12 +75,12 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
                 } else {
                     context
                 } as Activity
-                ).showAsBottomSheet {
+            ).showAsBottomSheet {
                 MountBottomSheet(
                     pet,
                     currentMount.equals(animal?.key),
                     onEquip,
-                    it
+                    it,
                 )
             }
         }

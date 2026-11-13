@@ -1,40 +1,119 @@
-import com.android.build.gradle.internal.lint.AndroidLintTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-    `jacoco-report-aggregation`
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.android.application.get().pluginId)
-    id(libs.plugins.hilt.get().pluginId)
-    id(libs.plugins.navigation.get().pluginId)
-    id(libs.plugins.ksp.get().pluginId)
+    id(
+        libs.plugins.android.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.hilt
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.navigation
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.ksp
+            .get()
+            .pluginId,
+    )
     id("kotlin-parcelize")
-    id("kotlin-kapt")
-    id(libs.plugins.kotlin.compose.get().pluginId)
-    id(libs.plugins.realm.get().pluginId)
-    id(libs.plugins.habitrpg.application.get().pluginId)
-    id(libs.plugins.habitrpg.convention.get().pluginId)
-    id(libs.plugins.crashlytics.get().pluginId)
-    id(libs.plugins.firebase.perf.get().pluginId)
-    id(libs.plugins.google.service.get().pluginId)
+    id(
+        libs.plugins.legacy.kapt
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.kotlin.compose
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.realm
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.convention
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.crashlytics
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.firebase.perf
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.google.service
+            .get()
+            .pluginId,
+    )
 }
 
 android {
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk =
+        libs.versions.targetSdk
+            .get()
+            .toInt()
     namespace = "com.habitrpg.android.habitica"
 
     defaultConfig {
         applicationId = "com.habitrpg.android.habitica"
-        minSdk = libs.versions.minSdk.get().toInt()
-        compileSdk = libs.versions.targetSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
         vectorDrawables.useSupportLibrary = true
 
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        targetSdk =
+            libs.versions.targetSdk
+                .get()
+                .toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters.addAll(
-            listOf("en", "bg", "de", "en-rGB", "es", "fr", "hr-rHR", "hu", "in", "it", "iw", "ja", "ko", "lt", "nl", "pl", "pt-rBR", "pt-rPT", "ru", "tr", "uk", "zh", "zh-rTW")
+            listOf(
+                "en",
+                "bg",
+                "de",
+                "en-rGB",
+                "es",
+                "fr",
+                "hr-rHR",
+                "hu",
+                "in",
+                "it",
+                "iw",
+                "ja",
+                "ko",
+                "lt",
+                "nl",
+                "pl",
+                "pt-rBR",
+                "pt-rPT",
+                "ru",
+                "tr",
+                "uk",
+                "zh",
+                "zh-rTW",
+            ),
         )
 
         buildConfigField("String", "STORE", "\"google\"")
@@ -44,21 +123,21 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
-        renderScript = true
         buildConfig = true
+        resValues = true
     }
 
     buildTypes {
         debug {
             // Keep it commented!
-            //applicationIdSuffix ".debug"
+            // applicationIdSuffix ".debug"
             isDebuggable = true
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             // Disable fabric build ID generation for debug builds
             ext["enableCrashlytics"] = false
             ext["alwaysUpdateBuildId"] = false
-            enableUnitTestCoverage = false
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             resValue("string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider")
             resValue("string", "app_name", "Habitica Debug")
         }
@@ -68,7 +147,6 @@ android {
             isMinifyEnabled = false
             enableUnitTestCoverage = false
             enableAndroidTestCoverage = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             // Disable fabric build ID generation for debug builds
             ext["enableCrashlytics"] = false
             ext["alwaysUpdateBuildId"] = false
@@ -78,26 +156,34 @@ android {
         release {
             signingConfigs.asMap["release"]?.let { releaseSigning -> signingConfig = releaseSigning }
             isDebuggable = false
-            isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             resValue("string", "content_provider", "com.habitrpg.android.habitica.fileprovider")
             resValue("string", "app_name", "Habitica")
+        }
+    }
+
+    productFlavors {
+        named("prod") {
+            buildConfigField("String", "STAGING_KEY", "\"\"")
         }
     }
 
     sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
-            java.srcDirs("src/main/java")
-            resources.srcDirs("src/main/java")
-            renderscript.srcDirs("src/main/java")
-            res.srcDirs("res")
-            assets.srcDirs("assets")
+            java.directories.add("src/main/java")
+            resources.directories.add("src/main/java")
+            res.directories.add("res")
+            assets.directories.add("assets")
         }
-        getByName("test") { java.srcDir("src/test/java") }
-        getByName("debugIAP") { java.srcDirs("src/debug/java") }
-        getByName("release") { java.srcDirs("src/release/java") }
+        getByName("test") { java.directories.add("src/test/java") }
+        getByName("debugIAP") {
+            java.directories.add("src/debug/java")
+            kotlin.directories.add("src/debug/java")
+        }
+        getByName("release") { java.directories.add("src/release/java") }
     }
 
     compileOptions {
@@ -114,7 +200,10 @@ android {
         unitTests {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
-            all { it.useJUnitPlatform() }
+            all {
+                it.useJUnitPlatform()
+                it.jvmArgs("--add-exports=java.base/jdk.internal.access=ALL-UNNAMED")
+            }
         }
         animationsDisabled = true
     }
@@ -127,12 +216,16 @@ android {
     }
 
     bundle.language.enableSplit = false
-    packaging.resources.excludes.add("META-INF/*")
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+    packaging.resources.excludes += "META-INF/*"
 }
 
-tasks.withType<AndroidLintTask> { enabled = false }
+tasks.matching { it.name.startsWith("lint") }.configureEach { enabled = false }
 tasks.withType<JavaCompile> { options.compilerArgs.addAll(listOf("-Xmaxerrs", "500")) }
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
 
 dependencies {
     implementation(projects.common)
@@ -140,22 +233,41 @@ dependencies {
 
     implementation(fileTree("../common/libs") { include("*.jar") })
 
-    //Networking
+    // Realm (added explicitly, the realm plugin only wires these up for kotlin-android/kotlin-kapt)
+    implementation(libs.realm.kotlin.extensions)
+    kapt(libs.realm.annotations.processor)
+
+    // Networking
     implementation(libs.bundles.okhttp)
 
-    //REST API handling
-    implementation(libs.retrofit) { exclude(module = libs.okhttp.asProvider().get().group) }
+    // REST API handling
+    implementation(libs.retrofit) {
+        exclude(
+            module =
+                libs.okhttp
+                    .asProvider()
+                    .get()
+                    .group,
+        )
+    }
     implementation(libs.retrofit.converter.gson)
 
-    //Dependency Injection
+    // Dependency Injection
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(libs.hilt.work)
+    ksp(libs.hilt.compiler.androidx)
     compileOnly(libs.javax.annotation)
 
-    //App Compatibility and Material Design
+    implementation(libs.glance.appwidget)
+    implementation(libs.glance.material3)
+
+    implementation(libs.work.runtime)
+
+    // App Compatibility and Material Design
     implementation(libs.bundles.design)
 
-    //Desugaring
+    // Desugaring
     coreLibraryDesugaring(libs.desugar)
 
     // IAP Handling / Verification
@@ -163,12 +275,9 @@ dependencies {
 
     implementation(libs.coil.compose)
 
-    //Analytics
-    implementation(libs.amplitude.analytic)
-
     implementation(libs.shimmer)
 
-    //Leak Detection
+    // Leak Detection
     debugImplementation(libs.leakcanary)
 
     // Google Services
@@ -208,11 +317,17 @@ dependencies {
 
     implementation(libs.kotlin.stdlib)
 
-    //Tests
+    // Tests
     testImplementation(libs.bundles.test.implementation)
     androidTestImplementation(libs.bundles.android.test.implementation)
     androidTestImplementation(libs.kaspresso) { exclude(module = "protobuf-lite") }
     debugImplementation(libs.test.fragment)
     debugImplementation(libs.test.monitor)
     androidTestUtil(libs.test.orchestrator)
+    testImplementation(libs.coroutine.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.bundles.robolectric.test.implementation)
+    testRuntimeOnly(libs.bundles.robolectric.test.runtime)
+    kspTest(libs.hilt.compiler)
 }

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.interactors
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import android.widget.FrameLayout
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.findViewTreeCompositionContext
+import androidx.core.graphics.createBitmap
 import androidx.core.view.doOnNextLayout
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
@@ -21,10 +21,14 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
-    class RequestValues(val petKey: String, val message: String, val context: Context) :
-        UseCase.RequestValues
+    class RequestValues(
+        val petKey: String,
+        val message: String,
+        val context: Context,
+    ) : UseCase.RequestValues
 
     override suspend fun run(requestValues: RequestValues) {
         val petWrapper = PetImageviewBinding.inflate(requestValues.context.layoutInflater)
@@ -48,24 +52,22 @@ class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
             if (petWrapper.root.width > 0) petWrapper.root.width else 300.dpToPx(requestValues.context)
         val height = 124.dpToPx(requestValues.context)
         val sharedImage =
-            Bitmap.createBitmap(
-                width,
-                height,
-                Bitmap.Config.ARGB_8888
-            )
+            createBitmap(width, height)
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (petWrapper.petImageview.bitmap == null && attempts < 200) {
-            delay(100)
+            delay(100.milliseconds)
             attempts++
         }
         petWrapper.root.doOnNextLayout {
             petWrapper.root.draw(canvas)
             (
-                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
-                    requestValues.context
-                )?.currentActivity?.get()
-                )?.shareContent("pet", requestValues.message, sharedImage)
+                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication
+                    .getInstance(
+                        requestValues.context,
+                    )?.currentActivity
+                    ?.get()
+            )?.shareContent("pet", requestValues.message, sharedImage)
             containerView?.removeView(petWrapper.root)
         }
         val m = FrameLayout.LayoutParams(width, height)

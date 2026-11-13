@@ -1,33 +1,29 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import android.content.Context
-import android.content.res.Configuration
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatBarViewBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.OnImeVisibilityChangedListener
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 
-class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
+class ChatBarView :
+    LinearLayout,
+    OnImeVisibilityChangedListener {
     var hasAcceptedGuidelines: Boolean = false
         set(value) {
             field = value
@@ -46,6 +42,12 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
         get() = autocompleteAdapter?.chatMessages ?: listOf()
         set(value) {
             autocompleteAdapter?.chatMessages = value
+        }
+
+    var groupMembers: List<Member>
+        get() = autocompleteAdapter?.groupMembers ?: listOf()
+        set(value) {
+            autocompleteAdapter?.groupMembers = value
         }
 
     internal var maxChatLength = 3000L
@@ -78,6 +80,10 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
     }
 
     var autocompleteAdapter: AutocompleteAdapter? = null
+        set(value) {
+            field = value
+            binding.chatEditText.setAdapter(value)
+        }
 
     private fun setupView() {
         orientation = VERTICAL
@@ -87,22 +93,11 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
             OnChangeTextWatcher { _, _, _, _ ->
                 setSendButtonEnabled(binding.chatEditText.text.isNotEmpty() && binding.chatEditText.text.length <= maxChatLength)
                 updateTextIndicator(binding.chatEditText.text.toString())
-            }
+            },
         )
-        binding.chatEditText.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                sendButtonPressed()
-                if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    val inputService = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputService.hideSoftInputFromWindow(v.windowToken, 0)
-                }
-            }
-            true
-        }
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
 
-        binding.chatEditText.setAdapter(autocompleteAdapter)
         binding.chatEditText.threshold = 2
 
         binding.chatEditText.setTokenizer(AutocompleteTokenizer(listOf('@', ':')))
@@ -111,7 +106,7 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
             onCommunityGuidelinesAccepted?.invoke()
         }
         binding.communityGuidelinesReviewView.setOnClickListener {
-            MainNavigationController.navigate(R.id.guidelinesActivity)
+            context.navigator.navigate(R.id.guidelinesActivity)
         }
     }
 
@@ -162,17 +157,15 @@ class ChatBarView : LinearLayout, OnImeVisibilityChangedListener {
         }
     }
 
-    override fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets) {
-        val navInset = safeInsets.bottom
-        val imeOffset = if (visible) (height - navInset).coerceAtLeast(0) else 0
-
+    override fun onImeVisibilityChanged(
+        visible: Boolean,
+        height: Int,
+        safeInsets: Insets,
+    ) {
         updatePadding(
-            left   = safeInsets.left,
-            right  = safeInsets.right,
-            bottom = navInset
+            left = safeInsets.left,
+            right = safeInsets.right,
+            bottom = safeInsets.bottom,
         )
-        
-        translationY = -imeOffset.toFloat()
     }
-
 }

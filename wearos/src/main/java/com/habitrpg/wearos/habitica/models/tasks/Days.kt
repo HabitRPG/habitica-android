@@ -16,7 +16,7 @@ open class Days() : Parcelable {
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeByte(if (m) 1.toByte() else 0.toByte())
         dest.writeByte(if (t) 1.toByte() else 0.toByte())
@@ -37,17 +37,11 @@ open class Days() : Parcelable {
         su = `in`.readByte().toInt() != 0
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<Days> {
-        override fun createFromParcel(parcel: Parcel): Days {
-            return Days(parcel)
-        }
+        override fun createFromParcel(parcel: Parcel): Days = Days(parcel)
 
-        override fun newArray(size: Int): Array<Days?> {
-            return arrayOfNulls(size)
-        }
+        override fun newArray(size: Int): Array<Days?> = arrayOfNulls(size)
     }
 }

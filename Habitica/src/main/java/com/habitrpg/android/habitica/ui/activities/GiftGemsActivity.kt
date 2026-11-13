@@ -40,6 +40,8 @@ class GiftGemsActivity : PurchaseActivity() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
+    override fun getConfigManager(): AppConfigManager = appConfigManager
+
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -50,9 +52,7 @@ class GiftGemsActivity : PurchaseActivity() {
     private var purchaseFragment: GiftPurchaseGemsFragment? = null
     private var balanceFragment: GiftBalanceGemsFragment? = null
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_gift_gems
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_gift_gems
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGiftGemsBinding.inflate(layoutInflater)
@@ -60,10 +60,10 @@ class GiftGemsActivity : PurchaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        showsPromo = false
         super.onCreate(savedInstanceState)
 
         setTitle(R.string.gift_gems)
-        setSupportActionBar(binding.toolbar)
         binding.toolbarAccessoryContainer.addView(currencyView)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -95,7 +95,7 @@ class GiftGemsActivity : PurchaseActivity() {
         lifecycleScope.launch(
             ExceptionHandler.coroutine {
                 showMemberLoadingErrorDialog()
-            }
+            },
         ) {
             val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID)
             if (member == null) {
@@ -124,11 +124,10 @@ class GiftGemsActivity : PurchaseActivity() {
     private fun setViewPagerAdapter() {
         val statePagerAdapter =
             object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
-                override fun createFragment(position: Int): Fragment {
-                    return if (position == 0) {
+                override fun createFragment(position: Int): Fragment =
+                    if (position == 0) {
                         val fragment = GiftPurchaseGemsFragment()
                         fragment.setPurchaseHandler(purchaseHandler)
-                        fragment.setupCheckout()
                         purchaseFragment = fragment
                         purchaseFragment?.giftedMember = giftedMember
                         fragment
@@ -138,11 +137,8 @@ class GiftGemsActivity : PurchaseActivity() {
                         balanceFragment?.giftedMember = giftedMember
                         fragment
                     }
-                }
 
-                override fun getItemCount(): Int {
-                    return 2
-                }
+                override fun getItemCount(): Int = 2
             }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

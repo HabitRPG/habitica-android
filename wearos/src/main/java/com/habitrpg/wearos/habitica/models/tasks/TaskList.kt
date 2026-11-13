@@ -3,7 +3,9 @@ package com.habitrpg.wearos.habitica.models.tasks
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 
-class TaskList(var tasks: MutableMap<String, Task> = mutableMapOf())
+class TaskList(
+    var tasks: MutableMap<String, Task> = mutableMapOf(),
+)
 
 class WrappedTasklistAdapter {
     @FromJson
@@ -14,7 +16,5 @@ class WrappedTasklistAdapter {
     }
 
     @ToJson
-    fun toJson(value: TaskList): List<Task> {
-        return value.tasks.values.toList()
-    }
+    fun toJson(value: TaskList): List<Task> = value.tasks.values.toList()
 }

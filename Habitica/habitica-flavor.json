@@ -11,6 +11,13 @@
       "versionCodeIncrement": 8
     },
     {
+      "name": "setup",
+      "testingLevel": "\"staff\"",
+      "appName": "Habitica Setup",
+      "versionCodeIncrement": 9,
+      "applicationId": "com.habitrpg.android.habitica.debug"
+    },
+    {
       "name": "partners",
       "testingLevel": "\"partners\"",
       "appName": "Habitica",
@@ -25,11 +32,13 @@
     {
       "name": "beta",
       "testingLevel": "\"beta\"",
+      "appName": "Habitica",
       "versionCodeIncrement": 2
     },
     {
       "name": "prod",
       "testingLevel": "\"production\"",
+      "appName": "Habitica",
       "versionCodeIncrement": 0
     }
   ]

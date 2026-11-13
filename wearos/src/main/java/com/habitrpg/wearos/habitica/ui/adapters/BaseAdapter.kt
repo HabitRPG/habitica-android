@@ -32,13 +32,12 @@ abstract class BaseAdapter<D : Any> : RecyclerView.Adapter<RecyclerView.ViewHold
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        return when (viewType) {
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
+        when (viewType) {
             TYPE_HEADER -> HeaderViewHolder(RowHeaderBinding.inflate(parent.context.layoutInflater, parent, false).root)
             else -> SpacerViewHolder(RowSpacerBinding.inflate(parent.context.layoutInflater, parent, false).root)
         }
-    }
 
     override fun getItemCount() = data.size + 1
 
@@ -46,7 +45,7 @@ abstract class BaseAdapter<D : Any> : RecyclerView.Adapter<RecyclerView.ViewHold
 
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         if (holder is HeaderViewHolder) {
             holder.bind(title)

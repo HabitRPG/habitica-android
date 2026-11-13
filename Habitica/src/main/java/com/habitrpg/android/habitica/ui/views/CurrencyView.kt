@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.updateLayoutParams
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
@@ -40,7 +41,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 attrs,
                 R.styleable.CurrencyView,
                 0,
-                0
+                0,
             )
         val fallBackLight = !context.isUsingNightModeResources()
         lightBackground =
@@ -65,13 +66,22 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
 
     private fun setCurrencyContentDescriptionFromCurrency(currency: String?) {
         when (currency) {
-            "gold" -> this.currencyContentDescription = context.getString(R.string.gold_plural)
-            "gems" -> this.currencyContentDescription = context.getString(R.string.gems)
-            "hourglasses" ->
+            "gold" -> {
+                this.currencyContentDescription = context.getString(R.string.gold_plural)
+            }
+
+            "gems" -> {
+                this.currencyContentDescription = context.getString(R.string.gems)
+            }
+
+            "hourglasses" -> {
                 this.currencyContentDescription =
                     context.getString(R.string.mystic_hourglasses)
+            }
 
-            else -> this.currencyContentDescription = ""
+            else -> {
+                this.currencyContentDescription = ""
+            }
         }
     }
 
@@ -107,19 +117,20 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         set(value) {
             field = value
             if (value != null) {
-                drawable = BitmapDrawable(resources, value)
+                drawable = value.toDrawable(resources)
                 this.setCompoundDrawablesWithIntrinsicBounds(
                     drawable,
                     null,
                     null,
-                    null
+                    null,
                 )
                 val padding =
-                    TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        6f,
-                        context.resources.displayMetrics
-                    ).toInt()
+                    TypedValue
+                        .applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP,
+                            6f,
+                            context.resources.displayMetrics,
+                        ).toInt()
                 compoundDrawablePadding = padding
                 this.gravity = Gravity.CENTER_VERTICAL
             }
@@ -136,7 +147,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 context,
                 value,
                 decimals,
-                minForAbbrevation = minForAbbrevation
+                minForAbbrevation = minForAbbrevation,
             )
     }
 

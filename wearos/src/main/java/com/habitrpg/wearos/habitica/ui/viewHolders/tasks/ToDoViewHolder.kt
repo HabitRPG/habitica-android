@@ -6,7 +6,9 @@ import android.widget.ImageView
 import com.habitrpg.android.habitica.databinding.RowTodoBinding
 import com.habitrpg.wearos.habitica.ui.views.TaskTextView
 
-class ToDoViewHolder(itemView: View) : CheckedTaskViewHolder(itemView) {
+class ToDoViewHolder(
+    itemView: View,
+) : CheckedTaskViewHolder(itemView) {
     private val binding = RowTodoBinding.bind(itemView)
     override val titleView: TaskTextView
         get() = binding.title

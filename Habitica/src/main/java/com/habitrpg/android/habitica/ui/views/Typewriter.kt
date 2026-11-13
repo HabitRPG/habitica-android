@@ -1,18 +1,15 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
-import android.os.Build
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,6 +29,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.streams.toList
+import kotlin.time.Duration.Companion.milliseconds
 
 // http://stackoverflow.com/a/6700718/1315039
 class Typewriter : androidx.appcompat.widget.AppCompatTextView {
@@ -70,7 +68,7 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
             hiddenSpan,
             0,
             stringBuilder?.length ?: 0,
-            Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE,
         )
         index = 0
 
@@ -81,7 +79,7 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
                 while (index <= (stringBuilder?.length ?: 0)) {
                     stringBuilder?.setSpan(visibleSpan, 0, index++, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                     setText(stringBuilder)
-                    delay(delay)
+                    delay(delay.milliseconds)
                 }
             }
     }
@@ -105,25 +103,24 @@ fun TypewriterText(
     textDecoration: TextDecoration? = null,
     textAlign: TextAlign? = null,
     lineHeight: TextUnit = TextUnit.Unspecified,
-    delay: Long = 30L,
+    delay: Long = 25L,
 ) {
     var textToDisplay by remember {
         mutableStateOf("")
     }
-    val textCharsList = remember {
-        text.splitToCodePoints()
-    }
+    val textCharsList = text.splitToCodePoints()
 
-    LaunchedEffect(text,) {
-            textCharsList.forEachIndexed { charIndex, _ ->
-                textToDisplay = textCharsList
+    LaunchedEffect(text) {
+        textCharsList.forEachIndexed { charIndex, _ ->
+            textToDisplay =
+                textCharsList
                     .take(
                         n = charIndex + 1,
                     ).joinToString(
                         separator = "",
                     )
-                delay(delay)
-            }
+            delay(delay.milliseconds)
+        }
     }
 
     Box(modifier = modifier) {
@@ -154,10 +151,9 @@ fun TypewriterText(
     }
 }
 
-fun String.splitToCodePoints(): List<String> {
-    return codePoints()
+fun String.splitToCodePoints(): List<String> =
+    codePoints()
         .toList()
         .map {
             String(Character.toChars(it))
         }
-}

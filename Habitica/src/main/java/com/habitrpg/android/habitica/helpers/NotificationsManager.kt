@@ -4,9 +4,13 @@ import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.Notification
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +19,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import java.lang.ref.WeakReference
 import java.util.Date
 
-interface NotificationsManager {
+interface NotificationsManager : Clearable {
     val displayNotificationEvents: Flow<Notification>
     var apiClient: WeakReference<ApiClient>?
 
@@ -27,36 +31,40 @@ interface NotificationsManager {
 
     fun dismissTaskNotification(
         context: Context,
-        task: Task
+        task: Task,
     )
 }
 
 class MainNotificationsManager : NotificationsManager {
+    private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val seenNotifications: MutableMap<String, Boolean> = HashMap()
     override var apiClient: WeakReference<ApiClient>? = null
+
+    override fun clear() {
+        scope.cancel()
+        scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+        seenNotifications.clear()
+        notificationsFlow.value = null
+    }
 
     private var lastNotificationHandling: Date? = null
     private val notificationsFlow = MutableStateFlow<List<Notification>?>(null)
     private val displayedNotificationEvents = Channel<Notification>()
     override val displayNotificationEvents: Flow<Notification> =
-        displayedNotificationEvents.receiveAsFlow().filterNotNull()
+        displayedNotificationEvents.receiveAsFlow()
 
     override fun setNotifications(current: List<Notification>) {
         notificationsFlow.value = current
         this.handlePopupNotifications(current)
     }
 
-    override fun getNotifications(): Flow<List<Notification>> {
-        return notificationsFlow.filterNotNull()
-    }
+    override fun getNotifications(): Flow<List<Notification>> = notificationsFlow.filterNotNull()
 
-    override fun getNotification(id: String): Notification? {
-        return notificationsFlow.value?.find { it.id == id }
-    }
+    override fun getNotification(id: String): Notification? = notificationsFlow.value?.find { it.id == id }
 
     override fun dismissTaskNotification(
         context: Context,
-        task: Task
+        task: Task,
     ) {
         NotificationManagerCompat.from(context).cancel(task.id.hashCode())
     }
@@ -69,7 +77,7 @@ class MainNotificationsManager : NotificationsManager {
         lastNotificationHandling = now
         notifications
             .filter { !this.seenNotifications.containsKey(it.id) }
-            .map {
+            .forEach {
                 val notificationDisplayed =
                     when (it.type) {
                         Notification.Type.ACHIEVEMENT_PARTY_UP.type -> true
@@ -80,7 +88,6 @@ class MainNotificationsManager : NotificationsManager {
                         Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> true
                         Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> true
                         Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> true
-
                         Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> true
                         Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -> true
                         Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> true
@@ -103,9 +110,13 @@ class MainNotificationsManager : NotificationsManager {
                         Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> true
                         Notification.Type.ACHIEVEMENT_SEEING_RED.type -> true
                         Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> true
+                        Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type -> true
+                        Notification.Type.ACHIEVEMENT_PET_COLOR.type -> true
 
                         Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                         Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
+                        Notification.Type.REBIRTH_ENABLED.type -> true
+                        Notification.Type.REBIRTH_ACHIEVEMENT.type -> true
                         Notification.Type.LOGIN_INCENTIVE.type -> true
                         Notification.Type.FIRST_DROP.type -> true
                         else -> false
@@ -120,7 +131,7 @@ class MainNotificationsManager : NotificationsManager {
     }
 
     private fun readNotification(notification: Notification) {
-        MainScope().launchCatching {
+        scope.launchCatching {
             displayedNotificationEvents.send(notification)
             seenNotifications[notification.id] = true
             apiClient?.get()?.readNotification(notification.id)

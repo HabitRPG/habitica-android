@@ -1,74 +1,76 @@
 [versions]
 minSdk = "26"
-targetSdk = "36"
-wearOsTargetSdk = "34"
+targetSdk = "37"
+wearOsTargetSdk = "36"
 
-agp = "8.10.0"
-amplitude = "1.20.7"
-androidTest = "1.6.1"
-androidTestMonitor = "1.7.2"
-androidTestRunner = "1.6.2"
+agp = "9.3.3"
+androidTest = "1.7.0"
+androidTestMonitor = "1.8.0"
+androidTestRunner = "1.7.0"
 annotationApi = "1.3.2"
 appcompat = "1.7.1"
-billing = "7.1.1"
-coil = "3.1.0"
-compose = "1.8.1"
-composeActivity = "1.10.1"
-compose_compiler = "1.5.14"
-constraintlayout = "2.2.1"
-converterMoshi = "2.11.0"
+billing = "9.1.0"
+coil = "3.5.0"
+compose = "1.11.4"
+composeActivity = "1.13.0"
+constraintlayout = "2.2.2"
+converterMoshi = "3.0.0"
 coordinatorlayout = "1.3.0"
-coreSplashscreen = "1.1.0-rc01"
-core_ktx = "1.16.0"
-coroutines = "1.10.2"
-crashlytics = "3.0.4"
-credentials = "1.5.0"
-daggerhilt = "2.56.2"
+coreSplashscreen = "1.2.0"
+core_ktx = "1.19.1"
+coroutines = "1.11.0"
+crashlytics = "3.0.7"
+credentials = "1.6.0"
+daggerhilt = "2.60.1"
 desuggar = "2.1.5"
 detekt = "1.23.8"
-firebase-perf = "1.4.2"
-firebase_bom = "33.13.0"
+firebase-perf = "2.0.2"
+firebase_bom = "34.19.0"
 flexbox = "3.0.0"
-fragmentKtx = "1.8.8"
-fragmentTesting = "1.8.8"
-google-service = "4.4.2"
-googleid = "1.1.1"
-gson = "2.13.1"
+fragmentKtx = "1.8.9"
+fragmentTesting = "1.8.9"
+glance = "1.2.0"
+google-service = "4.5.0"
+googleid = "1.2.0"
+gson = "2.14.0"
 habitRpgPlugin = "0.1.0"
 inAppReview = "2.0.2"
-junitKtx = "1.2.1"
-kaspresso = "1.6.0"
-kotest = "5.9.1"
-kotlin = "2.1.21"
-ksp = "2.1.21-2.0.2"
-ktlintPlugin = "12.3.0"
+junit4 = "4.13.2"
+junitKtx = "1.3.0"
+junitVintage = "5.13.4"
+kaspresso = "1.6.1"
+kotest = "6.2.5"
+kotlin = "2.4.10"
+ksp = "2.3.10"
+ktlintPlugin = "14.2.0"
 leakCanary = "2.14"
-lifecycle = "2.9.1"
-lifecycleRuntimeKtx = "2.9.1"
+lifecycle = "2.11.0"
+lifecycleRuntimeKtx = "2.11.0"
 markwon = "4.6.2"
-material = "1.12.0"
-material3 = "1.3.2"
-mockk = "1.14.2"
+material = "1.14.0"
+material3 = "1.4.0"
+mockk = "1.14.11"
 moshiKotlin = "1.15.2"
-navigation = "2.9.0"
-okhttp = "4.12.0"
-orchestrator = "1.5.1"
-paging = "3.3.6"
-play_auth = "21.3.0"
-play_wearables = "19.0.0"
+navigation = "2.9.8"
+okhttp = "5.5.0"
+orchestrator = "1.6.1"
+paging = "3.5.1"
+play_auth = "21.6.0"
+play_wearables = "20.0.1"
 preferences = "1.2.1"
 realmPlugin = "10.19.0"
 recyclerview = "1.4.0"
+robolectric = "4.17"
 retrofit = "3.0.0"
 shimmer = "0.5.0"
-swipeRefresh = "1.1.0"
+swipeRefresh = "1.2.0"
 turbine = "1.2.1"
-wear = "1.3.0"
-wearInput = "1.1.0"
+wear = "1.4.0"
+wearInput = "1.2.0"
+workManager = "2.11.2"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
-amplitude-analytic = { group = "com.amplitude", name = "analytics-android", version.ref = "amplitude" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 billing = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
 coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
@@ -83,17 +85,20 @@ core = { group = "androidx.core", name = "core", version.ref = "core_ktx" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core_ktx" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+coroutine-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
 credentials = { group = "androidx.credentials", name = "credentials", version.ref = "credentials" }
 credentials-playServicesAuth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "credentials" }
 desugar = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desuggar" }
-firebase-analytic = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase_bom" }
-firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
-firebase-perf = { group = "com.google.firebase", name = "firebase-perf-ktx" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase-perf = { group = "com.google.firebase", name = "firebase-perf" }
 flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
 fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+glance-appwidget = { group = "androidx.glance", name = "glance-appwidget", version.ref = "glance" }
+glance-material3 = { group = "androidx.glance", name = "glance-material3", version.ref = "glance" }
 google-play-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play_auth" }
 google-play-review = { group = "com.google.android.play", name = "review", version.ref = "inAppReview" }
 google-play-review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "inAppReview" }
@@ -101,11 +106,11 @@ google-play-wearable = { group = "com.google.android.gms", name = "play-services
 googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerhilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "daggerhilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "daggerhilt" }
 javax-annotation = { group = "javax.annotation", name = "javax.annotation-api", version.ref = "annotationApi" }
 kaspresso = { group = "com.kaspersky.android-components", name = "kaspresso", version.ref = "kaspresso" }
 kaspresso-compose = { group = "com.kaspersky.android-components", name = "kaspresso-compose-support", version.ref = "kaspresso" }
 kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
-kotest-framework = { group = "io.kotest", name = "kotest-framework-datatest", version.ref = "kotest" }
 kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
@@ -133,6 +138,7 @@ navigation-fragment = { group = "androidx.navigation", name = "navigation-fragme
 navigation-runtime = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver3", version.ref = "okhttp" }
 paging = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 preference = { group = "androidx.preference", name = "preference-ktx", version.ref = "preferences" }
@@ -143,6 +149,9 @@ retrofit2-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi",
 runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "compose" }
 shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 swipeRefreshLayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swipeRefresh" }
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junitVintage" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 test-core = { group = "androidx.test", name = "core", version.ref = "androidTest" }
 test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidTest" }
 test-fragment = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragmentTesting" }
@@ -157,19 +166,24 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref =
 viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 wear = { module = "androidx.wear:wear", version.ref = "wear" }
 wear-input = { module = "androidx.wear:wear-input", version.ref = "wearInput" }
+work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
+hilt-work = { group = "androidx.hilt", name = "hilt-work", version = "1.4.0" }
+hilt-compiler-androidx = { group = "androidx.hilt", name = "hilt-compiler", version = "1.4.0" }
 
 ## Dependencies of included build-logic
-android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+android-gradleApi = { group = "com.android.tools.build", name = "gradle-api", version.ref = "agp" }
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle", name = "ktlint-gradle", version.ref = "ktlintPlugin" }
+
+realm-annotations-processor = { group = "io.realm", name = "realm-annotations-processor", version.ref = "realmPlugin" }
+realm-kotlin-extensions = { group = "io.realm", name = "realm-android-kotlin-extensions", version.ref = "realmPlugin" }
 
 [bundles]
 okhttp = ["okhttp", "okhttp-logging"]
 markwon = ["markwon-core", "markwon-ext", "markwon-image", "markwon-linkify", "markwon-recycler"]
 design = ["appcompat", "material", "recyclerview", "preference", "swipeRefreshLayout"]
 google-services = [
-    "firebase-analytic",
     "firebase-crashlytics",
     "firebase-messaging",
     "firebase-config",
@@ -179,11 +193,21 @@ google-services = [
 ]
 test-implementation = [
     "test-core",
+    "test-core-ktx",
+    "test-junit",
     "mockk",
     "mockk-android",
     "kotest-runner",
-    "kotest-assertions",
-    "kotest-framework"
+    "kotest-assertions"
+]
+robolectric-test-implementation = [
+    "robolectric",
+    "junit4",
+    "hilt-android-testing",
+    "test-fragment"
+]
+robolectric-test-runtime = [
+    "junit-vintage-engine"
 ]
 android-test-implementation = [
     "test-runner",
@@ -199,14 +223,16 @@ android-test-implementation = [
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebase-perf" }
 google-service = { id = "com.google.gms.google-services", version.ref = "google-service" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerhilt" }
-kotest = { id = "io.kotest.multiplatform", version.ref = "kotest" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
+kotest = { id = "io.kotest", version.ref = "kotest" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }

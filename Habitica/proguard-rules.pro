@@ -1,23 +1,3 @@
-# To enable ProGuard in your project, edit project.properties
-# to define the proguard.config property as described in that file.
-#
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in ${sdk.dir}/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the ProGuard
-# include property in project.properties.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
-
-# Add any project specific keep options here:
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
 -keepattributes Signature
 -keepattributes *Annotation*
 -keepattributes Exceptions
@@ -53,12 +33,14 @@
 
 #gson
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+-keep class * extends com.google.gson.TypeAdapter
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
 -keepattributes Signature
 -keep class com.google.gson.reflect.TypeToken
+# Gson needs the generic signature of TypeToken subclasses, which R8 full mode strips unless they are kept
 -keep class * extends com.google.gson.reflect.TypeToken
 -keep public class * implements java.lang.reflect.Type
 -keepclassmembers,allowobfuscation class * {
@@ -69,12 +51,16 @@
 -keep class com.habitrpg.android.habitica.** { *; }
 -keep class com.habitrpg.common.habitica.** { *; }
 -keep class com.habitrpg.shared.habitica.** { *; }
--keep class com.habitrpg.android.habitica.extensions.ViewGroupExt
 #realm
 -keep class io.realm.annotations.RealmModule
--keep @io.realm.annotations.RealmModule class *
+-keep @io.realm.annotations.RealmModule class * { *; }
 -keep class io.realm.internal.Keep
--keep @io.realm.internal.Keep class *
+-keep @io.realm.internal.Keep class * { *; }
+# R8 erases type arguments (RealmList<Tag> -> RealmList) from field signatures of classes that are not kept,
+# which breaks Gson's lookup of the type adapters registered for those generic types
+-keep,allowobfuscation class io.realm.RealmList
+-keep,allowobfuscation class io.realm.RealmObject
+-keep,allowobfuscation class io.realm.RealmResults
 -dontwarn javax.**
 -dontwarn io.realm.**
 
@@ -88,10 +74,6 @@
 -keepclassmembers class * {
     native <methods>;
 }
-
-#amplitude
--keep class com.google.android.gms.ads.** { *; }
-#end amplitude
 
 
 -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {

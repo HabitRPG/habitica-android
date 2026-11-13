@@ -13,7 +13,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 fun Drawable.setTintWith(
     context: Context,
     colorResource: Int,
-    tintMode: PorterDuff.Mode = PorterDuff.Mode.MULTIPLY
+    tintMode: PorterDuff.Mode = PorterDuff.Mode.MULTIPLY,
 ) {
     DrawableCompat.setTintMode(this, tintMode)
     DrawableCompat.setTint(this, ContextCompat.getColor(context, colorResource))
@@ -21,14 +21,15 @@ fun Drawable.setTintWith(
 
 fun Drawable.setTintWith(
     color: Int,
-    tintMode: PorterDuff.Mode = PorterDuff.Mode.MULTIPLY
+    tintMode: PorterDuff.Mode = PorterDuff.Mode.MULTIPLY,
 ) {
     DrawableCompat.setTint(this, color)
     DrawableCompat.setTintMode(this, tintMode)
 }
 
-fun Drawable?.asPainter(): Painter? {
-    return if (this is BitmapDrawable) {
+fun Drawable?.asPainter(): Painter? =
+    if (this is BitmapDrawable) {
         BitmapPainter(this.bitmap.asImageBitmap())
-    } else null
-}
+    } else {
+        null
+    }

@@ -8,18 +8,18 @@ import com.habitrpg.android.habitica.models.FAQArticle
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-/**
- * Created by viirus on 22/01/16.
- */
-class FAQArticleListDeserilializer : JsonDeserializer<List<FAQArticle>> {
+class FAQArticleListDeserilializer : JsonDeserializer<RealmList<FAQArticle>> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
-    ): List<FAQArticle> {
+        context: JsonDeserializationContext,
+    ): RealmList<FAQArticle> {
         val articles = RealmList<FAQArticle>()
-        for ((position, e) in json.asJsonObject.get("questions").asJsonArray.withIndex()) {
+        for ((position, e) in json.asJsonObject
+            .get("questions")
+            .asJsonArray
+            .withIndex()) {
             val obj = e.asJsonObject
             val article = FAQArticle()
             article.position = position

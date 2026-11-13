@@ -8,17 +8,20 @@ import com.habitrpg.android.habitica.models.TutorialStep
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-class TutorialStepListDeserializer : JsonDeserializer<List<TutorialStep>> {
+class TutorialStepListDeserializer : JsonDeserializer<RealmList<TutorialStep>> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
-    ): List<TutorialStep> {
+        context: JsonDeserializationContext,
+    ): RealmList<TutorialStep> {
         val steps = RealmList<TutorialStep>()
         for (group in listOf("common", "android")) {
             if (json.asJsonObject.has(group)) {
-                for (entry in json.asJsonObject.get(group).asJsonObject.entrySet()) {
+                for (entry in json.asJsonObject
+                    .get(group)
+                    .asJsonObject
+                    .entrySet()) {
                     steps.add(parseStep(group, entry))
                 }
             }
@@ -29,7 +32,7 @@ class TutorialStepListDeserializer : JsonDeserializer<List<TutorialStep>> {
 
     private fun parseStep(
         group: String,
-        entry: MutableMap.MutableEntry<String, JsonElement>
+        entry: MutableMap.MutableEntry<String, JsonElement>,
     ): TutorialStep {
         val article = TutorialStep()
         article.tutorialGroup = group

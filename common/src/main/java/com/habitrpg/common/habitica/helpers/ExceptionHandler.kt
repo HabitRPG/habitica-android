@@ -5,7 +5,10 @@ import com.habitrpg.common.habitica.BuildConfig
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.net.SocketException
+import java.net.UnknownHostException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -19,12 +22,11 @@ class ExceptionHandler {
             instance.exceptionLogger = exceptionLogger
         }
 
-        fun coroutine(handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler {
-            return CoroutineExceptionHandler { _, throwable ->
+        fun coroutine(handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler =
+            CoroutineExceptionHandler { _, throwable ->
                 reportError(throwable)
                 handler?.invoke(throwable)
             }
-        }
 
         fun reportError(throwable: Throwable) {
             if (BuildConfig.DEBUG) {
@@ -33,7 +35,13 @@ class ExceptionHandler {
                 } catch (ignored: Exception) {
                 }
             } else {
-                if (throwable !is CancellationException) {
+                Log.e("ObservableError", Log.getStackTraceString(throwable))
+                if (throwable !is CancellationException &&
+                    throwable !is UnknownHostException &&
+                    throwable !is SocketException &&
+                    throwable.message?.endsWith(" was cancelled") != true &&
+                    throwable.message != "rememberCoroutineScope left the composition"
+                ) {
                     instance.exceptionLogger?.invoke(throwable)
                 }
             }
@@ -44,12 +52,11 @@ class ExceptionHandler {
 fun CoroutineScope.launchCatching(
     errorHandler: ((Throwable) -> Unit)? = null,
     context: CoroutineContext = EmptyCoroutineContext,
-    function: suspend CoroutineScope.() -> Unit
-) {
+    function: suspend CoroutineScope.() -> Unit,
+): Job =
     launch(
         ExceptionHandler.coroutine {
             errorHandler?.invoke(it)
         } + context,
-        block = function
+        block = function,
     )
-}

@@ -5,10 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivitySettingsBinding
 import com.habitrpg.wearos.habitica.ui.adapters.SettingsAdapter
@@ -44,13 +44,13 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
 
     private fun logout() {
         viewModel.logout()
-        try {
-            val gso =
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .build()
-            val client = GoogleSignIn.getClient(this, gso)
-            client.signOut()
-        } catch (_: Exception) {
+        lifecycleScope.launch {
+            try {
+                CredentialManager
+                    .create(this@SettingsActivity)
+                    .clearCredentialState(ClearCredentialStateRequest())
+            } catch (_: Exception) {
+            }
         }
 
         val intent = Intent(this, LoginActivity::class.java)
@@ -58,13 +58,13 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
         startActivity(intent)
     }
 
-    private fun buildSettings(): List<SettingsItem> {
-        return listOf(
+    private fun buildSettings(): List<SettingsItem> =
+        listOf(
             SettingsItem(
                 "sync",
                 getString(R.string.sync_data),
                 SettingsItem.Types.BUTTON,
-                null
+                null,
             ) {
                 viewModel.resyncData()
             },
@@ -72,7 +72,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "logout",
                 getString(R.string.logout),
                 SettingsItem.Types.BUTTON,
-                null
+                null,
             ) {
                 showLogoutConfirmation()
             },
@@ -80,18 +80,17 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "spacer",
                 getString(R.string.settings),
                 SettingsItem.Types.SPACER,
-                null
+                null,
             ) {
             },
             SettingsItem(
                 "footer",
                 getString(R.string.version_info, versionName, versionCode),
                 SettingsItem.Types.FOOTER,
-                null
+                null,
             ) {
-            }
+            },
         )
-    }
 
     private val versionName: String by lazy {
         try {

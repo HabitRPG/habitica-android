@@ -7,9 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -34,7 +31,6 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,18 +50,16 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentGuildDetailBinding {
-        return FragmentGuildDetailBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentGuildDetailBinding = FragmentGuildDetailBinding.inflate(inflater, container, false)
 
     val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { parentFragment as Fragment }
+        ownerProducer = { parentFragment as Fragment },
     )
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -94,6 +88,12 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         }
     }
 
+    override fun onDestroy() {
+        challengeRepository.close()
+        userRepository.close()
+        super.onDestroy()
+    }
+
     private fun setLeader(leader: Member?) {
         if (leader == null) {
             return
@@ -113,7 +113,9 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val inviteData = HashMap<String, Any>()
-                inviteData["inviter"] = viewModel.user.value?.profile?.name ?: ""
+                inviteData["inviter"] = viewModel.user.value
+                    ?.profile
+                    ?.name ?: ""
                 val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
                 if (!emails.isNullOrEmpty()) {
                     val invites = ArrayList<HashMap<String, String>>()
@@ -143,7 +145,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     private fun getGroupChallenges(): List<Challenge> {
         val groupChallenges = mutableListOf<Challenge>()
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository.getUser().collect {
                 it?.challenges?.forEach { membership ->
                     val challenge =
@@ -161,8 +163,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         val context = context
         if (context != null) {
             val groupChallenges = getGroupChallenges()
-            lifecycleScope.launch(Dispatchers.Main) {
-                delay(500)
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 if (groupChallenges.isNotEmpty()) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.guild_challenges)
@@ -173,12 +174,12 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.addButton(
                         R.string.leave_challenges_delete_tasks,
                         isPrimary = false,
-                        isDestructive = true
+                        isDestructive = true,
                     ) { _, _ ->
                         viewModel.leaveGroup(false, false, groupChallenges, false) { showLeaveSnackbar() }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
-                    alert.show()
+                    alert.enqueue()
                 } else {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.leave_guild_confirmation)
@@ -186,14 +187,14 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.addButton(
                         R.string.leave,
                         isPrimary = true,
-                        isDestructive = true
+                        isDestructive = true,
                     ) { _, _ ->
                         viewModel.leaveGroup(false, false, groupChallenges, false) {
                             showLeaveSnackbar()
                         }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
-                    alert.show()
+                    alert.enqueue()
                 }
             }
         }
@@ -207,8 +208,8 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         binding?.titleView?.text = guild?.name
         binding?.guildMembersIcon?.setImageBitmap(
             HabiticaIconsHelper.imageOfGuildCrestMedium(
-                (guild?.memberCount ?: 0).toFloat()
-            )
+                (guild?.memberCount ?: 0).toFloat(),
+            ),
         )
         binding?.guildMembersText?.text = guild?.memberCount.toString()
         binding?.guildBankText?.text = guild?.gemCount.toString()

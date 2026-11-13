@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChallengeItemBinding
+import com.habitrpg.android.habitica.extensions.filterByCategorySlugs
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
@@ -12,32 +13,30 @@ import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFil
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.inflate
 import com.habitrpg.common.habitica.helpers.EmojiParser
-import io.realm.OrderedRealmCollection
 
 class ChallengesListViewAdapter(
     private val viewUserChallengesOnly: Boolean,
-    private val userId: String
+    private val userId: String,
 ) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: List<Challenge>? = null
     private var challengeMemberships: List<ChallengeMembership>? = null
+    private var currentFilterOptions: ChallengeFilterOptions? = null
 
     var onOpenChallengeFragment: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): ChallengeViewHolder {
-        return ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
-    }
+        viewType: Int,
+    ): ChallengeViewHolder = ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
 
     override fun onBindViewHolder(
         holder: ChallengeViewHolder,
-        position: Int
+        position: Int,
     ) {
         data[position].let { challenge ->
             holder.bind(
                 challenge,
-                challengeMemberships?.first { challenge.id == it.challengeID } != null
+                challengeMemberships?.any { it.challengeID == challenge.id } ?: false,
             )
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {
@@ -50,42 +49,79 @@ class ChallengesListViewAdapter(
     }
 
     fun updateUnfilteredData(data: List<Challenge>?) {
-        this.data = data ?: emptyList()
         unfilteredData = data
+        if (currentFilterOptions != null) {
+            filter(currentFilterOptions!!)
+        } else {
+            this.data = data ?: emptyList()
+        }
+    }
+
+    fun updateChallengeMemberships(memberships: List<ChallengeMembership>?) {
+        challengeMemberships = memberships
+        if (currentFilterOptions != null) {
+            filter(currentFilterOptions!!)
+        }
     }
 
     fun filter(filterOptions: ChallengeFilterOptions) {
-        val unfilteredData = unfilteredData as? OrderedRealmCollection ?: return
+        val hasNoActiveFilters =
+            filterOptions.showByGroups.isEmpty() &&
+                !filterOptions.showOwned &&
+                !filterOptions.notOwned &&
+                !filterOptions.showParticipating &&
+                !filterOptions.notParticipating
 
-        var query = unfilteredData.where()
+        if (hasNoActiveFilters) {
+            currentFilterOptions = null
+            this.data = unfilteredData ?: emptyList()
+        } else {
+            currentFilterOptions = filterOptions
+            val all = unfilteredData ?: return
 
-        if (filterOptions.showByGroups.isNotEmpty()) {
-            val groupIds = arrayOfNulls<String>(filterOptions.showByGroups.size)
-            var index = 0
-            for (group in filterOptions.showByGroups) {
-                groupIds[index] = group.id
-                index += 1
-            }
-            query = query?.`in`("groupId", groupIds)
-        }
-
-        if (filterOptions.showOwned != filterOptions.notOwned) {
-            query =
-                if (filterOptions.showOwned) {
-                    query?.equalTo("leaderId", userId)
+            var filtered =
+                if (filterOptions.showByGroups.isEmpty()) {
+                    all
                 } else {
-                    query?.notEqualTo("leaderId", userId)
+                    val activeIds = filterOptions.showByGroups.map { it.id }.toSet()
+                    all.filterByCategorySlugs(activeIds)
                 }
-        }
 
-        query?.let {
-            data = it.findAll()
+            if (filterOptions.showOwned != filterOptions.notOwned) {
+                filtered =
+                    filtered.filter { challenge ->
+                        if (filterOptions.showOwned) {
+                            challenge.leaderId == userId
+                        } else {
+                            challenge.leaderId != userId
+                        }
+                    }
+            }
+
+            if (filterOptions.showParticipating != filterOptions.notParticipating) {
+                filtered =
+                    filtered.filter { challenge ->
+                        val isParticipating = challengeMemberships?.any { it.challengeID == challenge.id } ?: false
+                        if (filterOptions.showParticipating) {
+                            isParticipating
+                        } else {
+                            !isParticipating
+                        }
+                    }
+            }
+
+            this.data = filtered
         }
+    }
+
+    fun clearFilters() {
+        currentFilterOptions = null
+        this.data = unfilteredData ?: emptyList()
     }
 
     class ChallengeViewHolder internal constructor(
         itemView: View,
-        private val viewUserChallengesOnly: Boolean
+        private val viewUserChallengesOnly: Boolean,
     ) : RecyclerView.ViewHolder(itemView) {
         private val binding = ChallengeItemBinding.bind(itemView)
 
@@ -97,7 +133,7 @@ class ChallengesListViewAdapter(
 
         fun bind(
             challenge: Challenge,
-            isParticipating: Boolean
+            isParticipating: Boolean,
         ) {
             this.challenge = challenge
 

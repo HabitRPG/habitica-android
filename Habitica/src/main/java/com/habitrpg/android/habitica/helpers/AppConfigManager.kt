@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.BuildConfig
@@ -13,130 +13,108 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import com.habitrpg.common.habitica.helpers.Clearable
+import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
 import java.util.Date
+import javax.inject.Provider
 
-class AppConfigManager(contentRepository: ContentRepository) :
-    com.habitrpg.common.habitica.helpers.AppConfigManager() {
+class AppConfigManager(
+    contentRepository: Provider<ContentRepository>,
+    private val sharedPreferences: SharedPreferences,
+    private val remoteConfig: RemoteConfig,
+) : com.habitrpg.common.habitica.helpers.AppConfigManager(),
+    Clearable {
     private var worldState: WorldState? = null
 
+    override fun clear() {
+    }
+
     init {
-        try {
-            MainScope().launchCatching {
-                contentRepository.getWorldState().collect {
-                    worldState = it
+        MainScope().launchCatching {
+            contentRepository.get().getWorldState().collect {
+                worldState = it
+
+                worldState?.currentEvent?.spriteSubstitutions?.let { subs ->
+                    if (subs.isNotEmpty()) {
+                        val subMap = mutableMapOf<String, Map<String, String>>()
+                        subs.forEach { sub ->
+                            subMap[sub.key ?: ""] = sub.substitutions
+                        }
+                        SpriteSubstitutionManager.setSubstitutions(subMap)
+                    } else {
+                        SpriteSubstitutionManager.setSubstitutions(emptyMap())
+                    }
                 }
             }
-        } catch (_: java.lang.IllegalStateException) {
-            // pass
         }
     }
 
-    private val remoteConfig = FirebaseRemoteConfig.getInstance()
+    fun shopSpriteSuffix(): String? = worldState?.findNpcImageSuffix()
 
-    fun shopSpriteSuffix(): String? {
-        return worldState?.findNpcImageSuffix()
-    }
+    fun maxChatLength(): Long = remoteConfig.getLong("maxChatLength")
 
-    fun maxChatLength(): Long {
-        return remoteConfig.getLong("maxChatLength")
-    }
+    fun supportEmail(): String = remoteConfig.getString("supportEmail")
 
-    override fun spriteSubstitutions(): Map<String, Map<String, String>> {
-        val type = object : TypeToken<Map<String, Map<String, String>>>() {}.type
-        return Gson().fromJson(remoteConfig.getString("spriteSubstitutions"), type)
-    }
+    fun enableUsernameAutocomplete(): Boolean = remoteConfig.getBoolean("enableUsernameAutocomplete")
 
-    fun supportEmail(): String {
-        return remoteConfig.getString("supportEmail")
-    }
+    fun enableLocalChanges(): Boolean = remoteConfig.getBoolean("enableLocalChanges")
 
-    fun enableUsernameAutocomplete(): Boolean {
-        return remoteConfig.getBoolean("enableUsernameAutocomplete")
-    }
+    fun lastVersionNumber(): String = remoteConfig.getString("lastVersionNumber")
 
-    fun enableLocalChanges(): Boolean {
-        return remoteConfig.getBoolean("enableLocalChanges")
-    }
+    fun lastVersionCode(): Long = remoteConfig.getLong("lastVersionCode")
 
-    fun lastVersionNumber(): String {
-        return remoteConfig.getString("lastVersionNumber")
-    }
+    fun testingLevel(): AppTestingLevel = AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
 
-    fun lastVersionCode(): Long {
-        return remoteConfig.getLong("lastVersionCode")
-    }
+    fun enableLocalTaskScoring(): Boolean = remoteConfig.getBoolean("enableLocalTaskScoring")
 
-    fun noPartyLinkPartyGuild(): Boolean {
-        return remoteConfig.getBoolean("noPartyLinkPartyGuild")
-    }
+    fun showSubscriptionBanner(): Boolean = remoteConfig.getBoolean("showSubscriptionBanner")
 
-    fun testingLevel(): AppTestingLevel {
-        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
-    }
+    fun enableTaskDisplayMode(): Boolean =
+        remoteConfig.getBoolean("enableTaskDisplayMode") || testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
 
-    fun enableLocalTaskScoring(): Boolean {
-        return remoteConfig.getBoolean("enableLocalTaskScoring")
-    }
+    fun feedbackURL(): String = remoteConfig.getString("feedbackURL")
 
-    fun insufficientGemPurchase(): Boolean {
-        return remoteConfig.getBoolean("insufficientGemPurchase")
-    }
+    fun surveyURL(): String = remoteConfig.getString("surveyURL")
 
-    fun insufficientGemPurchaseAdjust(): Boolean {
-        return remoteConfig.getBoolean("insufficientGemPurchaseAdjust")
-    }
-
-    fun showSubscriptionBanner(): Boolean {
-        return remoteConfig.getBoolean("showSubscriptionBanner")
-    }
-
-    fun minimumPasswordLength(): Int {
-        return remoteConfig.getLong("minimumPasswordLength").toInt()
-    }
-
-    fun enableTaskDisplayMode(): Boolean {
-        return remoteConfig.getBoolean("enableTaskDisplayMode") || testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG
-    }
-
-    fun feedbackURL(): String {
-        return remoteConfig.getString("feedbackURL")
-    }
-
-    fun surveyURL(): String {
-        return remoteConfig.getString("surveyURL")
-    }
-
-    fun taskDisplayMode(context: Context): String {
-        return if (enableTaskDisplayMode()) {
+    fun taskDisplayMode(context: Context): String =
+        if (enableTaskDisplayMode()) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             preferences.getString("task_display", "standard") ?: "standard"
         } else {
             "standard"
         }
-    }
 
     fun activePromo(): HabiticaPromotion? {
+        val prefsPromo =
+            if (BuildConfig.DEBUG || testingLevel() == AppTestingLevel.STAFF) {
+                sharedPreferences.getString("active_promo", null)
+            } else {
+                null
+            }
+        if (prefsPromo?.isNotBlank() == true) {
+            return getHabiticaPromotionFromKey(prefsPromo, null, null)
+        }
+        if (BuildConfig.ACTIVE_PROMO.isNotBlank()) {
+            return getHabiticaPromotionFromKey(BuildConfig.ACTIVE_PROMO, null, null)
+        }
         var promo: HabiticaPromotion? = null
         if (worldState?.isValid == true) {
             val allEvents = worldState?.events?.toMutableList() ?: mutableListOf()
             allEvents.add(worldState?.currentEvent)
             for (event in allEvents) {
-                if (event == null) return null
+                if (event == null) continue
                 val thisPromo =
                     getHabiticaPromotionFromKey(
                         event.promo ?: event.eventKey ?: "",
                         event.start,
-                        event.end
+                        event.end,
                     )
                 if (thisPromo != null) {
                     promo = thisPromo
                 }
             }
-        }
-        if (promo == null && remoteConfig.getString("activePromo").isNotBlank()) {
-            promo = getHabiticaPromotionFromKey(remoteConfig.getString("activePromo"), null, null)
         }
         if (promo is HabiticaWebPromotion) {
             promo.url = surveyURL()
@@ -152,37 +130,13 @@ class AppConfigManager(contentRepository: ContentRepository) :
         return Gson().fromJson(remoteConfig.getString("knownIssues"), type)
     }
 
-    fun enableArmoireAds(): Boolean {
-        return remoteConfig.getBoolean("enableArmoireAds")
-    }
+    fun enableArmoireAds(): Boolean = remoteConfig.getBoolean("enableArmoireAds")
 
-    fun enableFaintAds(): Boolean {
-        return remoteConfig.getBoolean("enableFaintAds")
-    }
+    fun hideChallenges(): Boolean = remoteConfig.getBoolean("hideChallenges")
 
-    fun enableArmoireSubs(): Boolean {
-        return remoteConfig.getBoolean("enableArmoireSubs")
-    }
+    fun enableReviewPrompt(): Boolean = remoteConfig.getBoolean("enableReviewPrompt")
 
-    fun enableFaintSubs(): Boolean {
-        return remoteConfig.getBoolean("enableFaintSubs")
-    }
-
-    fun enableSpellAds(): Boolean {
-        return remoteConfig.getBoolean("enableSpellAds")
-    }
-
-    fun hideChallenges(): Boolean {
-        return remoteConfig.getBoolean("hideChallenges")
-    }
-
-    fun enableReviewPrompt(): Boolean {
-        return remoteConfig.getBoolean("enableReviewPrompt")
-    }
-
-    fun reviewCheckingMinCount(): Long {
-        return remoteConfig.getLong("reviewCheckingMinCount")
-    }
+    fun reviewCheckingMinCount(): Long = remoteConfig.getLong("reviewCheckingMinCount")
 
     fun getBirthdayEvent(): WorldStateEvent? {
         val events =
@@ -190,11 +144,5 @@ class AppConfigManager(contentRepository: ContentRepository) :
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
     }
 
-    fun enableCustomizationShop(): Boolean {
-        return remoteConfig.getBoolean("enableCustomizationShop")
-    }
-
-    fun showAltDeathText(): Boolean {
-        return remoteConfig.getBoolean("showAltDeathText")
-    }
+    fun showAltDeathText(): Boolean = remoteConfig.getBoolean("showAltDeathText")
 }

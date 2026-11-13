@@ -6,13 +6,12 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialLocalRepository : BaseLocalRepository {
     fun getUserGroups(
         userID: String,
-        type: String?
+        type: String?,
     ): Flow<List<Group>>
 
     fun getGroup(id: String): Flow<Group?>
@@ -29,30 +28,30 @@ interface SocialLocalRepository : BaseLocalRepository {
 
     fun updateRSVPNeeded(
         user: User?,
-        newValue: Boolean
+        newValue: Boolean,
     )
 
     fun likeMessage(
         chatMessage: ChatMessage,
         userId: String,
-        liked: Boolean
+        liked: Boolean,
     )
 
     fun savePartyMembers(
         groupId: String?,
-        members: List<Member>
+        members: List<Member>,
     )
 
     fun removeQuest(partyId: String)
 
     fun setQuestActivity(
         party: Group?,
-        active: Boolean
+        active: Boolean,
     )
 
     fun saveChatMessages(
         groupId: String?,
-        chatMessages: List<ChatMessage>
+        chatMessages: List<ChatMessage>,
     )
 
     fun doesGroupExist(id: String): Boolean
@@ -60,43 +59,43 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun updateMembership(
         userId: String,
         id: String,
-        isMember: Boolean
+        isMember: Boolean,
     )
 
     fun getGroupMembership(
         userId: String,
-        id: String
+        id: String,
     ): Flow<GroupMembership?>
 
     fun getGroupMemberships(userId: String): Flow<List<GroupMembership>>
 
     fun rejectGroupInvitation(
         userID: String,
-        groupID: String
+        groupID: String,
     )
 
     fun getInboxMessages(
         userId: String,
-        replyToUserID: String?
-    ): Flow<RealmResults<ChatMessage>>
+        replyToUserID: String?,
+    ): Flow<List<ChatMessage>>
 
-    fun getInboxConversation(userId: String): Flow<RealmResults<InboxConversation>>
+    fun getInboxConversation(userId: String): Flow<List<InboxConversation>>
 
     fun saveGroupMemberships(
         userID: String?,
-        memberships: List<GroupMembership>
+        memberships: List<GroupMembership>,
     )
 
     fun saveInboxMessages(
         userID: String,
         recipientID: String,
         messages: List<ChatMessage>,
-        page: Int
+        page: Int,
     )
 
     fun saveInboxConversations(
         userID: String,
-        conversations: List<InboxConversation>
+        conversations: List<InboxConversation>,
     )
 
     fun getMember(userID: String?): Flow<Member?>

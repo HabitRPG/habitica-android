@@ -6,28 +6,28 @@ actual class PlatformLogger {
 
     actual fun logDebug(
         tag: String,
-        message: String
+        message: String,
     ) {
         println("[🟢] $tag: $message")
     }
 
     actual fun logInfo(
         tag: String,
-        message: String
+        message: String,
     ) {
         println("[🟡] $tag: $message")
     }
 
     actual fun logWarning(
         tag: String,
-        message: String
+        message: String,
     ) {
         println("[🟠] $tag: $message")
     }
 
     actual fun logError(
         tag: String,
-        message: String
+        message: String,
     ) {
         println("[🔴] $tag: $message")
     }
@@ -35,7 +35,7 @@ actual class PlatformLogger {
     actual fun logError(
         tag: String,
         message: String,
-        exception: Throwable
+        exception: Throwable,
     ) {
         println("[🔴] $tag: $message\n${exception.getStackTrace().joinToString("\n")}")
     }

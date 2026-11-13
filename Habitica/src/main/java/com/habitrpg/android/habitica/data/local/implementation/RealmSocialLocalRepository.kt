@@ -11,46 +11,45 @@ import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.realm.Realm
 import io.realm.Sort
-import io.realm.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class RealmSocialLocalRepository(realm: Realm) :
-    RealmBaseLocalRepository(realm),
+class RealmSocialLocalRepository(
+    realm: Realm,
+) : RealmBaseLocalRepository(realm),
     SocialLocalRepository {
     override fun getGroupMembership(
         userId: String,
-        id: String
-    ) =
-        realm.where(GroupMembership::class.java)
+        id: String,
+    ) = safeFindOne {
+        it
+            .where(GroupMembership::class.java)
             .equalTo("userID", userId)
             .equalTo("groupID", id)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded && it.isNotEmpty() }
-            .map { it.first() }
+    }
 
     override fun getGroupMemberships(userId: String): Flow<List<GroupMembership>> =
-        realm.where(GroupMembership::class.java)
-            .equalTo("userID", userId)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        safeFindAll {
+            it.where(GroupMembership::class.java).equalTo("userID", userId)
+        }
 
     override fun updateMembership(
         userId: String,
         id: String,
-        isMember: Boolean
+        isMember: Boolean,
     ) {
         if (isMember) {
             save(GroupMembership(userId, id))
         } else {
             val membership =
-                realm.where(GroupMembership::class.java).equalTo("userID", userId)
-                    .equalTo("groupID", id).findFirst()
+                safeQuery {
+                    it
+                        .where(GroupMembership::class.java)
+                        .equalTo("userID", userId)
+                        .equalTo("groupID", id)
+                }?.findFirst()
             if (membership != null) {
                 executeTransaction {
                     membership.deleteFromRealm()
@@ -62,7 +61,7 @@ class RealmSocialLocalRepository(realm: Realm) :
     override fun saveGroup(group: Group) {
         save(group)
         if (group.quest == null) {
-            val existingQuest = realm.where(Quest::class.java).equalTo("id", group.id).findFirst()
+            val existingQuest = safeQuery { it.where(Quest::class.java).equalTo("id", group.id) }?.findFirst()
             executeTransaction {
                 existingQuest?.deleteFromRealm()
             }
@@ -73,22 +72,23 @@ class RealmSocialLocalRepository(realm: Realm) :
         userID: String,
         recipientID: String,
         messages: List<ChatMessage>,
-        page: Int
+        page: Int,
     ) {
         messages.forEach { it.userID = userID }
         for (message in messages) {
             val existingMessage =
-                realm.where(ChatMessage::class.java)
-                    .equalTo("id", message.id)
-                    .findAll()
-                    .firstOrNull()
+                safeQuery { it.where(ChatMessage::class.java).equalTo("id", message.id) }?.findFirst()
             message.isSeen = existingMessage != null
         }
         save(messages)
         if (page != 0) return
         val existingMessages =
-            realm.where(ChatMessage::class.java).equalTo("isInboxMessage", true)
-                .equalTo("uuid", recipientID).findAll()
+            safeQuery {
+                it
+                    .where(ChatMessage::class.java)
+                    .equalTo("isInboxMessage", true)
+                    .equalTo("uuid", recipientID)
+            }?.findAll() ?: return
         val messagesToRemove = ArrayList<ChatMessage>()
         for (existingMessage in existingMessages) {
             val isStillMember = messages.any { existingMessage.id == it.id }
@@ -103,11 +103,12 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun saveInboxConversations(
         userID: String,
-        conversations: List<InboxConversation>
+        conversations: List<InboxConversation>,
     ) {
         conversations.forEach { it.userID = userID }
         save(conversations)
-        val existingConversations = realm.where(InboxConversation::class.java).findAll()
+        val existingConversations =
+            safeQuery { it.where(InboxConversation::class.java) }?.findAll() ?: return
         val conversationsToRemove = ArrayList<InboxConversation>()
         for (existingMessage in existingConversations) {
             val isStillMember = conversations.any { existingMessage.uuid == it.uuid }
@@ -120,23 +121,20 @@ class RealmSocialLocalRepository(realm: Realm) :
         }
     }
 
-    override fun getMember(userID: String?): Flow<Member?> {
-        return realm.where(Member::class.java)
-            .equalTo("id", userID)
-            .findAll()
-            .toFlow()
-            .filter { member -> member.isLoaded && member.isValid }
-            .map { member -> member.firstOrNull() }
-    }
+    override fun getMember(userID: String?): Flow<Member?> =
+        safeFindOne {
+            it.where(Member::class.java).equalTo("id", userID)
+        }
 
     override fun saveGroupMemberships(
         userID: String?,
-        memberships: List<GroupMembership>
+        memberships: List<GroupMembership>,
     ) {
         save(memberships)
         if (userID != null) {
             val existingMemberships =
-                realm.where(GroupMembership::class.java).equalTo("userID", userID).findAll()
+                safeQuery { it.where(GroupMembership::class.java).equalTo("userID", userID) }
+                    ?.findAll() ?: return
             val membersToRemove = ArrayList<GroupMembership>()
             for (existingMembership in existingMemberships) {
                 val isStillMember = memberships.any { existingMembership.groupID == it.groupID }
@@ -153,75 +151,70 @@ class RealmSocialLocalRepository(realm: Realm) :
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserGroups(
         userID: String,
-        type: String?
-    ) =
-        realm.where(GroupMembership::class.java)
-            .equalTo("userID", userID)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
-            .flatMapLatest { memberships ->
-                realm.where(Group::class.java)
+        type: String?,
+    ) = getGroupMemberships(userID)
+        .flatMapLatest { memberships ->
+            safeFindAll {
+                it
+                    .where(Group::class.java)
                     .equalTo("type", type ?: "guild")
                     .`in`(
                         "id",
-                        memberships.map {
-                            return@map it.groupID
-                        }.toTypedArray()
-                    )
-                    .sort("memberCount", Sort.DESCENDING)
-                    .findAll()
-                    .toFlow()
+                        memberships
+                            .map {
+                                return@map it.groupID
+                            }.toTypedArray(),
+                    ).sort("memberCount", Sort.DESCENDING)
             }
+        }
 
-    override fun getGroup(id: String): Flow<Group?> {
-        return realm.where(Group::class.java)
-            .equalTo("id", id)
-            .findAll()
-            .toFlow()
-            .filter { group -> group.isLoaded && group.isValid && !group.isEmpty() }
-            .map { groups -> groups.first() }
-    }
+    override fun getGroup(id: String): Flow<Group?> =
+        safeFindOne {
+            it.where(Group::class.java).equalTo("id", id)
+        }
 
-    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> {
-        return realm.where(ChatMessage::class.java)
-            .equalTo("groupId", groupId)
-            .sort("timestamp", Sort.DESCENDING)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
-    }
+    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> =
+        safeFindAll {
+            it
+                .where(ChatMessage::class.java)
+                .equalTo("groupId", groupId)
+                .sort("timestamp", Sort.DESCENDING)
+        }
 
     override fun deleteMessage(id: String) {
-        val chatMessage = realm.where(ChatMessage::class.java).equalTo("id", id).findFirst()
+        val chatMessage = safeQuery { it.where(ChatMessage::class.java).equalTo("id", id) }?.findFirst()
         executeTransaction { chatMessage?.deleteFromRealm() }
     }
 
     override fun getPartyMembers(partyId: String) =
-        realm.where(Member::class.java)
-            .equalTo("party.id", partyId)
-            .findAll()
-            .toFlow()
+        safeFindAll {
+            it.where(Member::class.java).equalTo("party.id", partyId)
+        }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun getGroupMembers(groupID: String) =
-        realm.where(GroupMembership::class.java)
-            .equalTo("groupID", groupID)
-            .findAll()
-            .toFlow()
-            .map { memberships -> memberships.map { it.userID }.toTypedArray() }
-            .flatMapLatest { realm.where(Member::class.java).`in`("id", it).findAll().toFlow() }
+        safeFindAll {
+            it.where(GroupMembership::class.java).equalTo("groupID", groupID)
+        }.map { memberships -> memberships.map { it.userID }.toTypedArray() }
+            .flatMapLatest { userIDs ->
+                safeFindAll {
+                    it.where(Member::class.java).`in`("id", userIDs)
+                }
+            }
 
     override fun updateRSVPNeeded(
         user: User?,
-        newValue: Boolean
+        newValue: Boolean,
     ) {
-        executeTransaction { user?.party?.quest?.rsvpNeeded = newValue }
+        if (user == null) return
+        val visitorUser = getLiveObject(user) ?: return
+        executeTransaction { visitorUser.party?.quest?.rsvpNeeded = newValue }
     }
 
     override fun likeMessage(
         chatMessage: ChatMessage,
         userId: String,
-        liked: Boolean
+        liked: Boolean,
     ) {
         val liveMessage = getLiveObject(chatMessage)
         if (liveMessage == null) {
@@ -253,16 +246,20 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun savePartyMembers(
         groupId: String?,
-        members: List<Member>
+        members: List<Member>,
     ) {
+        val existingMembers =
+            groupId?.let { id -> safeQuery { it.where(Member::class.java).equalTo("party.id", id) }?.findAll() }
+        // Quest participation only comes from the group payload, so keep it instead of overwriting it with null
+        existingMembers?.forEach { existingMember ->
+            members.firstOrNull { it.id == existingMember.id }?.participatesInQuest = existingMember.participatesInQuest
+        }
         save(members)
-        if (groupId != null) {
-            val existingMembers =
-                realm.where(Member::class.java).equalTo("party.id", groupId).findAll()
+        if (existingMembers != null) {
             val membersToRemove = ArrayList<Member>()
             for (existingMember in existingMembers) {
                 val isStillMember =
-                    members.any { existingMember.id != null && existingMember.id == it.id }
+                    members.any { existingMember.id == it.id }
                 if (!isStillMember) {
                     membersToRemove.add(existingMember)
                 }
@@ -275,16 +272,16 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun rejectGroupInvitation(
         userID: String,
-        groupID: String
+        groupID: String,
     ) {
-        val user = realm.where(User::class.java).equalTo("id", userID).findFirst()
+        val user = safeQuery { it.where(User::class.java).equalTo("id", userID) }?.findFirst()
         executeTransaction {
             user?.invitations?.removeInvitation(groupID)
         }
     }
 
     override fun removeQuest(partyId: String) {
-        val party = realm.where(Group::class.java).equalTo("id", partyId).findFirst()
+        val party = safeQuery { it.where(Group::class.java).equalTo("id", partyId) }?.findFirst()
         if (party != null) {
             executeTransaction { party.quest = null }
         }
@@ -292,7 +289,7 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun setQuestActivity(
         party: Group?,
-        active: Boolean
+        active: Boolean,
     ) {
         if (party == null) return
         val liveParty = getLiveObject(party)
@@ -303,12 +300,13 @@ class RealmSocialLocalRepository(realm: Realm) :
 
     override fun saveChatMessages(
         groupId: String?,
-        chatMessages: List<ChatMessage>
+        chatMessages: List<ChatMessage>,
     ) {
         save(chatMessages)
         if (groupId != null) {
             val existingMessages =
-                realm.where(ChatMessage::class.java).equalTo("groupId", groupId).findAll()
+                safeQuery { it.where(ChatMessage::class.java).equalTo("groupId", groupId) }?.findAll()
+                    ?: return
             val messagesToRemove = ArrayList<ChatMessage>()
             for (existingMessage in existingMessages) {
                 val isStillMember = chatMessages.any { existingMessage.id == it.id }
@@ -325,28 +323,27 @@ class RealmSocialLocalRepository(realm: Realm) :
     }
 
     override fun doesGroupExist(id: String): Boolean {
-        val party = realm.where(Group::class.java).equalTo("id", id).findFirst()
+        val party = safeQuery { it.where(Group::class.java).equalTo("id", id) }?.findFirst()
         return party != null && party.isValid
     }
 
     override fun getInboxMessages(
         userId: String,
-        replyToUserID: String?
-    ) =
-        realm.where(ChatMessage::class.java)
+        replyToUserID: String?,
+    ) = safeFindAll {
+        it
+            .where(ChatMessage::class.java)
             .equalTo("isInboxMessage", true)
             .equalTo("uuid", replyToUserID)
             .equalTo("userID", userId)
             .sort("timestamp", Sort.DESCENDING)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+    }
 
     override fun getInboxConversation(userId: String) =
-        realm.where(InboxConversation::class.java)
-            .equalTo("userID", userId)
-            .sort("timestamp", Sort.DESCENDING)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        safeFindAll {
+            it
+                .where(InboxConversation::class.java)
+                .equalTo("userID", userId)
+                .sort("timestamp", Sort.DESCENDING)
+        }
 }

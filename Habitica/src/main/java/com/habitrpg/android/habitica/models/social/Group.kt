@@ -10,7 +10,9 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class Group : RealmObject(), BaseMainObject {
+open class Group :
+    RealmObject(),
+    BaseMainObject {
     val isGroupPlan: Boolean
         get() {
             return purchased?.isActive == true
@@ -30,7 +32,7 @@ open class Group : RealmObject(), BaseMainObject {
     var summary: String? = null
     var leaderID: String? = null
     var leaderName: String? = null
-    var managers: RealmList<String>? = null
+    var managers: RealmList<String>? = RealmList()
     var name: String? = null
     var memberCount: Int = 0
     var type: String? = null
@@ -41,7 +43,7 @@ open class Group : RealmObject(), BaseMainObject {
     var leaderMessage: String? = null
     var leaderOnlyChallenges: Boolean = false
     var leaderOnlyGetGems: Boolean = false
-    var categories: RealmList<GroupCategory>? = null
+    var categories: RealmList<GroupCategory>? = RealmList()
     var purchased: SubscriptionPlan? = null
 
     @Ignore
@@ -55,9 +57,7 @@ open class Group : RealmObject(), BaseMainObject {
         return id == group?.id
     }
 
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+    override fun hashCode(): Int = id.hashCode()
 
     fun hasTaskEditPrivileges(userID: String): Boolean {
         if (isLeader(userID)) {
@@ -66,9 +66,7 @@ open class Group : RealmObject(), BaseMainObject {
         return isManager(userID)
     }
 
-    fun canManageManagers(userID: String): Boolean {
-        return isLeader(userID)
-    }
+    fun canManageManagers(userID: String): Boolean = isLeader(userID)
 
     fun isLeader(userID: String): Boolean = leaderID == userID
 

@@ -1,23 +1,63 @@
+
+import com.android.build.api.dsl.ApplicationExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 plugins {
-    id(libs.plugins.android.application.get().pluginId)
-    id(libs.plugins.kotlin.android.get().pluginId)
-    id(libs.plugins.ksp.get().pluginId)
-    id(libs.plugins.hilt.get().pluginId)
-    id(libs.plugins.habitrpg.convention.get().pluginId)
-    id(libs.plugins.habitrpg.application.get().pluginId)
-    id(libs.plugins.crashlytics.get().pluginId)
-    id(libs.plugins.google.service.get().pluginId)
+    id(
+        libs.plugins.android.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.ksp
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.hilt
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.convention
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.habitrpg.application
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.crashlytics
+            .get()
+            .pluginId,
+    )
+    id(
+        libs.plugins.google.service
+            .get()
+            .pluginId,
+    )
 }
 
-android {
+extensions.configure<ApplicationExtension> {
     namespace = "com.habitrpg.android.habitica"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk =
+        libs.versions.targetSdk
+            .get()
+            .toInt()
 
     defaultConfig {
         applicationId = "com.habitrpg.android.habitica"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.wearOsTargetSdk.get().toInt()
-        compileSdk = libs.versions.targetSdk.get().toInt()
+        minSdk =
+            libs.versions.minSdk
+                .get()
+                .toInt()
+        targetSdk =
+            libs.versions.wearOsTargetSdk
+                .get()
+                .toInt()
 
         buildConfigField("String", "TESTING_LEVEL", "\"production\"")
     }
@@ -33,6 +73,7 @@ android {
             isDebuggable = true
             ext["enableCrashlytics"] = false
             ext["alwaysUpdateBuildId"] = false
+            enableUnitTestCoverage = true
             resValue("string", "app_name", "Habitica Debug")
         }
         release {
@@ -43,9 +84,16 @@ android {
         }
     }
 
+    productFlavors {
+        named("prod") {
+            buildConfigField("String", "STAGING_KEY", "\"\"")
+        }
+    }
+
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        resValues = true
     }
 
     testOptions {
@@ -57,7 +105,12 @@ android {
     }
 
     bundle.language.enableSplit = false
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
+}
+
+tasks.withType<KotlinJvmCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
 }
 
 dependencies {
@@ -73,11 +126,19 @@ dependencies {
     implementation(libs.wear)
     implementation(libs.wear.input)
 
-    //Networking
+    // Networking
     implementation(libs.bundles.okhttp)
 
-    //REST API handling
-    implementation(libs.retrofit) { exclude(module = libs.okhttp.asProvider().get().name) }
+    // REST API handling
+    implementation(libs.retrofit) {
+        exclude(
+            module =
+                libs.okhttp
+                    .asProvider()
+                    .get()
+                    .name,
+        )
+    }
     implementation(libs.retrofit2.converter.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.coordinatorlayout)
@@ -97,6 +158,10 @@ dependencies {
     implementation(libs.navigation.fragment)
 
     implementation(libs.google.play.auth)
+    implementation(libs.credentials)
+    implementation(libs.credentials.playServicesAuth)
+    implementation(libs.googleid)
+    implementation(libs.coroutine.play.services)
 
     implementation(libs.appcompat)
 
@@ -105,7 +170,14 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.reflect)
 
-    implementation(libs.core.splashscreen) { exclude(module = libs.core.ktx.get().name) }
+    implementation(libs.core.splashscreen) {
+        exclude(
+            module =
+                libs.core.ktx
+                    .get()
+                    .name,
+        )
+    }
 
     testImplementation(libs.bundles.test.implementation)
     testImplementation(libs.mockk.android)

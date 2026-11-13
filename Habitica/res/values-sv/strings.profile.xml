@@ -9,4 +9,5 @@
     <string name="profile_mounts_tamed">Tama riddjur</string>
     <string name="profile_pets_found">Sällskapsdjur funna</string>
     <string name="profile_pets_and_mounts">Sällskapsdjur &amp; Riddjur</string>
+    <string name="profile_allocated">Allokerat:</string>
 </resources>

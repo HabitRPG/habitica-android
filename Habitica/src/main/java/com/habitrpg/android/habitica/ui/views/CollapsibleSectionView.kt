@@ -13,8 +13,10 @@ import com.habitrpg.android.habitica.databinding.ViewCollapsibleSectionBinding
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
-class CollapsibleSectionView(context: Context, attrs: AttributeSet?) :
-    LinearLayout(context, attrs) {
+class CollapsibleSectionView(
+    context: Context,
+    attrs: AttributeSet?,
+) : LinearLayout(context, attrs) {
     val infoIconView: ImageView
         get() = binding.infoIconView
     private val binding = ViewCollapsibleSectionBinding.inflate(context.layoutInflater, this)
@@ -95,7 +97,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) :
         l: Int,
         t: Int,
         r: Int,
-        b: Int
+        b: Int,
     ) {
         setChildMargins()
         super.onLayout(changed, l, t, r, b)
@@ -103,7 +105,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) :
 
     override fun onMeasure(
         widthMeasureSpec: Int,
-        heightMeasureSpec: Int
+        heightMeasureSpec: Int,
     ) {
         var height = 0
         measureChildWithMargins(
@@ -111,7 +113,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) :
             widthMeasureSpec,
             0,
             heightMeasureSpec,
-            height
+            height,
         )
         height += binding.sectionTitleView.measuredHeight
         (1 until childCount)
@@ -139,7 +141,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) :
                 attrs,
                 R.styleable.CollapsibleSectionView,
                 0,
-                0
+                0,
             )
         title = attributes?.getString(R.styleable.CollapsibleSectionView_title) ?: ""
         identifier = attributes?.getString(R.styleable.CollapsibleSectionView_identifier)
@@ -152,15 +154,15 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) :
 
         if (attributes?.getBoolean(
                 R.styleable.CollapsibleSectionView_hasAdditionalInfo,
-                false
+                false,
             ) == true
         ) {
             binding.infoIconView.setImageBitmap(
                 HabiticaIconsHelper.imageOfInfoIcon(
                     context.getThemeColor(
-                        R.attr.colorPrimaryOffset
-                    )
-                )
+                        R.attr.colorPrimaryOffset,
+                    ),
+                ),
             )
         } else {
             binding.infoIconView.visibility = View.GONE

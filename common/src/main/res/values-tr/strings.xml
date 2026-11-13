@@ -16,7 +16,7 @@
     <string name="about_title">Hakkında</string>
     <string name="are_you_sure">Emin misin\?</string>
     <string name="stats">İstatistikler</string>
-    <string name="gems">Gems</string>
+    <string name="gems">Mücevherler</string>
     <string name="quadrillion_abbrev">q</string>
     <string name="gold_plural">altın</string>
     <string name="easy">Kolay</string>
@@ -36,7 +36,7 @@
     <string name="logout">Çıkış Yap</string>
     <string name="gold_capitalized">Altın</string>
     <string name="todo">Yapılacaklar</string>
-    <string name="confirmpassword">Şifreyi doğrula</string>
+    <string name="confirmpassword">Şifreyi tekrar gir</string>
     <string name="medium">Orta</string>
     <string name="hard">Zor</string>
     <plurals name="x_dailies">

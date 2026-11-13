@@ -9,28 +9,28 @@ actual class PlatformLogger actual constructor() {
 
     actual fun logDebug(
         tag: String,
-        message: String
+        message: String,
     ) {
         console.log("[🥦] $tag: $message")
     }
 
     actual fun logInfo(
         tag: String,
-        message: String
+        message: String,
     ) {
         console.log("[🍋] $tag: $message")
     }
 
     actual fun logWarning(
         tag: String,
-        message: String
+        message: String,
     ) {
         console.log("[🍊] $tag: $message")
     }
 
     actual fun logError(
         tag: String,
-        message: String
+        message: String,
     ) {
         console.log("[🍎] $tag: $message")
     }
@@ -39,7 +39,7 @@ actual class PlatformLogger actual constructor() {
     actual fun logError(
         tag: String,
         message: String,
-        exception: Throwable
+        exception: Throwable,
     ) {
         console.log("[🍎] $tag: $message\n$exception")
     }

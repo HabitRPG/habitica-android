@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -16,6 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -46,6 +45,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class ChallengeFormActivity : BaseActivity() {
@@ -117,9 +117,7 @@ class ChallengeFormActivity : BaseActivity() {
             return c
         }
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_create_challenge
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_create_challenge
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -152,11 +150,11 @@ class ChallengeFormActivity : BaseActivity() {
                 finish()
                 if (!editMode) {
                     lifecycleScope.launch(context = Dispatchers.Main) {
-                        delay(500L)
+                        delay(500.milliseconds)
                         MainNavigationController.navigate(
                             ChallengesOverviewFragmentDirections.openChallengeDetail(
-                                challengeId ?: ""
-                            )
+                                challengeId ?: "",
+                            ),
                         )
                     }
                 }
@@ -219,8 +217,6 @@ class ChallengeFormActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
 
-        setupToolbar(findViewById(R.id.toolbar))
-
         val intent = intent
         val bundle = intent.extras
 
@@ -232,7 +228,7 @@ class ChallengeFormActivity : BaseActivity() {
             this,
             "",
             openTaskDisabled = false,
-            taskActionsDisabled = true
+            taskActionsDisabled = true,
         ).also { challengeTasks = it }
 
         challengeTasks.onTaskOpen = {
@@ -344,7 +340,7 @@ class ChallengeFormActivity : BaseActivity() {
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
 
             supportActionBar.title = ""
-            supportActionBar.setBackgroundDrawable(ColorDrawable(getThemeColor(R.attr.colorPrimaryOffset)))
+            supportActionBar.setBackgroundDrawable(getThemeColor(R.attr.colorPrimaryOffset).toDrawable())
             supportActionBar.elevation = 0f
         }
 
@@ -353,7 +349,12 @@ class ChallengeFormActivity : BaseActivity() {
             val groups =
                 socialRepository.getUserGroups("guild").firstOrNull()?.toMutableList()
                     ?: return@launch
-            val partyID = userRepository.getUser().firstOrNull()?.party?.id
+            val partyID =
+                userRepository
+                    .getUser()
+                    .firstOrNull()
+                    ?.party
+                    ?.id
             val party =
                 if (partyID?.isNotBlank() == true) {
                     socialRepository.retrieveGroup(partyID)
@@ -380,7 +381,7 @@ class ChallengeFormActivity : BaseActivity() {
                     adapterView: AdapterView<*>,
                     view: View?,
                     i: Int,
-                    l: Long
+                    l: Long,
                 ) {
                     checkPrizeAndMinimumForTavern()
                 }
@@ -414,12 +415,12 @@ class ChallengeFormActivity : BaseActivity() {
                 androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
                 override fun onInterceptTouchEvent(
                     rv: androidx.recyclerview.widget.RecyclerView,
-                    e: MotionEvent
+                    e: MotionEvent,
                 ): Boolean {
                     // Stop only scrolling.
                     return rv.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
                 }
-            }
+            },
         )
     }
 
@@ -458,7 +459,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun openNewTaskActivity(
         type: TaskType?,
-        task: Task?
+        task: Task?,
     ) {
         val bundle = Bundle()
 
@@ -479,10 +480,18 @@ class ChallengeFormActivity : BaseActivity() {
 
     private val newTaskResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
-                if (task != null) {
-                    addOrUpdateTaskInList(task)
+            if (it.resultCode == RESULT_OK) {
+                val isDeleted = it.data?.getBooleanExtra(TaskFormActivity.TASK_DELETED_KEY, false) ?: false
+                if (isDeleted) {
+                    val taskId = it.data?.getStringExtra(TaskFormActivity.TASK_ID_KEY)
+                    if (taskId != null) {
+                        removeTaskFromList(taskId)
+                    }
+                } else {
+                    val task = it.data?.getParcelableExtra(TaskFormActivity.PARCELABLE_TASK, Task::class.java)
+                    if (task != null) {
+                        addOrUpdateTaskInList(task)
+                    }
                 }
             }
         }
@@ -514,13 +523,13 @@ class ChallengeFormActivity : BaseActivity() {
             taskList,
             ArrayList(addedTasks.values),
             ArrayList(updatedTasks.values),
-            ArrayList(removedTasks.keys)
+            ArrayList(removedTasks.keys),
         )
     }
 
     private fun addOrUpdateTaskInList(
         task: Task,
-        isExistingTask: Boolean = false
+        isExistingTask: Boolean = false,
     ) {
         if (!challengeTasks.replaceTask(task)) {
             val taskAbove =
@@ -531,8 +540,6 @@ class ChallengeFormActivity : BaseActivity() {
                     else -> addReward
                 }
             if (!isExistingTask) {
-                // If the task is new we create a unique id for it
-                // Doing it we solve the issue #1278
                 task.id = UUID.randomUUID().toString()
             }
 
@@ -542,23 +549,39 @@ class ChallengeFormActivity : BaseActivity() {
                 addedTasks[task.id ?: ""] = task
             }
         } else {
-            // don't need to add the task to updatedTasks if its already been added right now
             if (editMode && !addedTasks.containsKey(task.id)) {
                 updatedTasks[task.id ?: ""] = task
             }
         }
     }
 
-    private fun getEditTextString(editText: EditText): String {
-        return editText.text.toString()
+    private fun removeTaskFromList(taskId: String) {
+        val taskToRemove = challengeTasks.taskList.find { it.id == taskId }
+        if (taskToRemove != null) {
+            challengeTasks.removeTask(taskToRemove)
+
+            if (editMode) {
+                if (addedTasks.containsKey(taskId)) {
+                    addedTasks.remove(taskId)
+                } else if (updatedTasks.containsKey(taskId)) {
+                    updatedTasks.remove(taskId)
+                    removedTasks[taskId] = taskToRemove
+                } else {
+                    removedTasks[taskId] = taskToRemove
+                }
+            }
+        }
     }
 
-    private class GroupArrayAdapter(context: Context) :
-        ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
+    private fun getEditTextString(editText: EditText): String = editText.text.toString()
+
+    private class GroupArrayAdapter(
+        context: Context,
+    ) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
         override fun getView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup
+            parent: ViewGroup,
         ): View {
             val checkedTextView = super.getView(position, convertView, parent) as? TextView
             checkedTextView?.text = getItem(position)?.name
@@ -568,7 +591,7 @@ class ChallengeFormActivity : BaseActivity() {
         override fun getDropDownView(
             position: Int,
             convertView: View?,
-            parent: ViewGroup
+            parent: ViewGroup,
         ): View {
             val checkedTextView =
                 super.getDropDownView(position, convertView, parent) as? AppCompatCheckedTextView
@@ -580,7 +603,10 @@ class ChallengeFormActivity : BaseActivity() {
     companion object {
         const val CHALLENGE_ID_KEY = "challengeId"
 
-        private fun createTask(taskid: String, taskName: String): Task {
+        private fun createTask(
+            taskid: String,
+            taskName: String,
+        ): Task {
             val t = Task()
 
             t.id = taskid

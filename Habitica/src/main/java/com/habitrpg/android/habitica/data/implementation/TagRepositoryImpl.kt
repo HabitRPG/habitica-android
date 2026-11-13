@@ -14,14 +14,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 class TagRepositoryImpl(
     localRepository: TagLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler
+    authenticationHandler: AuthenticationHandler,
 ) : BaseRepositoryImpl<TagLocalRepository>(localRepository, apiClient, authenticationHandler),
     TagRepository {
     override fun getTags() = authenticationHandler.userIDFlow.flatMapLatest { getTags(it) }
 
-    override fun getTags(userId: String): Flow<List<Tag>> {
-        return localRepository.getTags(userId)
-    }
+    override fun getTags(userId: String): Flow<List<Tag>> = localRepository.getTags(userId)
 
     override suspend fun createTag(tag: Tag): Tag? {
         val savedTag = apiClient.createTag(tag) ?: return null
@@ -43,21 +41,18 @@ class TagRepositoryImpl(
         return null
     }
 
-    override suspend fun createTags(tags: Collection<Tag>): List<Tag> {
-        return tags.mapNotNull {
+    override suspend fun createTags(tags: Collection<Tag>): List<Tag> =
+        tags.mapNotNull {
             createTag(it)
         }
-    }
 
-    override suspend fun updateTags(tags: Collection<Tag>): List<Tag> {
-        return tags.mapNotNull {
+    override suspend fun updateTags(tags: Collection<Tag>): List<Tag> =
+        tags.mapNotNull {
             updateTag(it)
         }
-    }
 
-    override suspend fun deleteTags(tagIds: Collection<String>): List<Void> {
-        return tagIds.mapNotNull {
+    override suspend fun deleteTags(tagIds: Collection<String>): List<Void> =
+        tagIds.mapNotNull {
             deleteTag(it)
         }
-    }
 }

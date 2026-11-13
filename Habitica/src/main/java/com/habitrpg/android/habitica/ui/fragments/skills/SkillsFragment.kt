@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
@@ -28,18 +29,15 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSna
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.core.graphics.drawable.toDrawable
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.views.PixelArtView
 
 @AndroidEntryPoint
 class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
+    private var isCastingSkill = false
 
     override var binding: FragmentRecyclerviewBinding? = null
 
@@ -48,18 +46,17 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentRecyclerviewBinding {
-        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentRecyclerviewBinding = FragmentRecyclerviewBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         adapter = SkillsRecyclerViewAdapter()
         adapter?.onUseSkill = { onSkillSelected(it) }
+        adapter?.onUseSkillDirectly = { castSkill(it) }
 
         this.tutorialStepIdentifier = "skills"
         this.tutorialTexts = listOf(getString(R.string.tutorial_skills))
@@ -68,7 +65,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.user.observe(viewLifecycleOwner) { user ->
@@ -88,7 +85,8 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         adapter?.level = user.stats?.lvl ?: 0
         adapter?.specialItems = user.items?.special
         lifecycleScope.launchCatching {
-            userRepository.getSkills(user)
+            userRepository
+                .getSkills(user)
                 .combine(userRepository.getSpecialItems(user)) { skills, items ->
                     val allEntries = mutableListOf<Skill>()
                     for (skill in skills) {
@@ -108,38 +106,43 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         val skillIdentifier = "shop_"
         val isTransformationItem = skill.habitClass == "special"
 
-        val bottomSheet = SkillDialogBottomSheetFragment.newInstance(
-            skillTitle = skill.text,
-            skillDescription = skill.notes ?: "",
-            skillKey = skill.key,
-            skillPath = skillIdentifier,
-            skillMpCost = "${skill.mana?.toInt() ?: 0} MP",
-            resourceIcon = resourceIconDrawable,
-            isTransformationItem = isTransformationItem,
-            onUseSkill = {
-                when {
-                    "special" == skill.habitClass -> {
-                        selectedSkill = skill
-                        val intent = Intent(mainActivity, SkillMemberActivity::class.java)
-                        memberSelectionResult.launch(intent)
-                    }
-
-                    skill.target == "task" -> {
-                        selectedSkill = skill
-                        val intent = Intent(mainActivity, SkillTasksActivity::class.java)
-                        taskSelectionResult.launch(intent)
-                    }
-
-                    else -> useSkill(skill)
-                }
-            }
-        )
+        val bottomSheet =
+            SkillDialogBottomSheetFragment.newInstance(
+                skillTitle = skill.text,
+                skillDescription = skill.notes ?: "",
+                skillKey = skill.key,
+                skillPath = skillIdentifier,
+                skillMpCost = "${skill.mana ?: 0} MP",
+                resourceIcon = resourceIconDrawable,
+                isTransformationItem = isTransformationItem,
+                onUseSkill = { castSkill(skill) },
+            )
         bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
+    }
+
+    private fun castSkill(skill: Skill) {
+        when {
+            "special" == skill.habitClass -> {
+                selectedSkill = skill
+                val intent = Intent(mainActivity, SkillMemberActivity::class.java)
+                memberSelectionResult.launch(intent)
+            }
+
+            skill.target == "task" -> {
+                selectedSkill = skill
+                val intent = Intent(mainActivity, SkillTasksActivity::class.java)
+                taskSelectionResult.launch(intent)
+            }
+
+            else -> {
+                useSkill(skill)
+            }
+        }
     }
 
     private fun displaySkillResult(
         usedSkill: Skill?,
-        response: SkillResponse
+        response: SkillResponse,
     ) {
         if (!isAdded) return
         adapter?.mana = response.user?.stats?.mp ?: 0.0
@@ -148,7 +151,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
             showSnackbar(
                 activity.snackbarContainer,
                 context?.getString(R.string.used_skill_without_mana, usedSkill.text),
-                HabiticaSnackbar.SnackbarDisplayType.BLUE
+                HabiticaSnackbar.SnackbarDisplayType.BLUE,
             )
         } else {
             context?.let {
@@ -159,13 +162,12 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
                     ContextCompat.getColor(it, R.color.blue_10),
                     "-" + usedSkill?.mana,
-                    HabiticaSnackbar.SnackbarDisplayType.BLUE
+                    HabiticaSnackbar.SnackbarDisplayType.BLUE,
                 )
             }
         }
         if (response.damage > 0) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                delay(2000L)
                 if (!isAdded) return@launch
                 showSnackbar(
                     activity.snackbarContainer,
@@ -174,7 +176,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
                     ContextCompat.getColor(activity, R.color.green_10),
                     "+%.01f".format(response.damage),
-                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                 )
             }
         }
@@ -199,20 +201,28 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
 
     private fun useSkill(
         skill: Skill?,
-        taskId: String? = null
+        taskId: String? = null,
     ) {
         if (skill == null) {
             return
         }
+        if (isCastingSkill) {
+            return
+        }
+        isCastingSkill = true
         lifecycleScope.launchCatching {
-            val skillResponse =
-                if (taskId != null) {
-                    userRepository.useSkill(skill.key, skill.target, taskId)
-                } else {
-                    userRepository.useSkill(skill.key, skill.target)
+            try {
+                val skillResponse =
+                    if (taskId != null) {
+                        userRepository.useSkill(skill.key, skill.target, taskId)
+                    } else {
+                        userRepository.useSkill(skill.key, skill.target)
+                    }
+                if (skillResponse != null) {
+                    displaySkillResult(skill, skillResponse)
                 }
-            if (skillResponse != null) {
-                displaySkillResult(skill, skillResponse)
+            } finally {
+                isCastingSkill = false
             }
         }
     }

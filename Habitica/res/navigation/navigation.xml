@@ -32,6 +32,7 @@
             app:nullable="true"
             android:defaultValue=""/>
         <deepLink app:uri="habitica.com/user/tasks/{taskType}" />
+        <deepLink app:uri="habitica://user/tasks/{taskType}" />
         <deepLink app:uri="habitica.com/tasks" />
         <deepLink app:uri="habitica.com" />
     </fragment>
@@ -105,6 +106,7 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment"
         android:label="@string/sidebar_avatar" >
         <deepLink app:uri="habitica.com/user/avatar" />
+        <deepLink app:uri="habitica.com/avatar/backgrounds" />
         <action
             android:id="@+id/openComposeAvatarDetail"
             app:destination="@id/ComposeAvatarCustomizationFragment" />
@@ -177,31 +179,18 @@
             android:name="value"
             app:argType="string" />
     </activity>
-    <activity
-        android:id="@+id/deathActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.DeathActivity"
-        android:label="@string/faint_header" >
-    </activity>
-    <activity
-        android:id="@+id/subscriptionPurchaseActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
-        android:label="@string/gem_purchase_toolbartitle" >
+    <fragment
+        android:id="@+id/subscriptionPurchaseFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment"
+        android:label="@string/subscription" >
         <deepLink app:uri="habitica.com/user/settings/subscription" />
-        <argument
-            android:name="openSubscription"
-            app:argType="boolean"
-            android:defaultValue="true" />
-    </activity>
-    <activity
-        android:id="@+id/gemPurchaseActivity"
-        android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
+    </fragment>
+    <fragment
+        android:id="@+id/gemPurchaseFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment"
         android:label="@string/gem_purchase_toolbartitle">
         <deepLink app:uri="habitica.com/user/settings/gems" />
-        <argument
-            android:name="openSubscription"
-            app:argType="boolean"
-            android:defaultValue="false" />
-    </activity>
+    </fragment>
     <activity
         android:id="@+id/giftGemsActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GiftGemsActivity"

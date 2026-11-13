@@ -65,7 +65,7 @@
     <string name="login_btn">Login</string>
     <string name="register_btn">Register</string>
     <string name="username">Username</string>
-    <string name="email_username">Email/Username</string>
+    <string name="email_username">E-mail/Username</string>
     <string name="password">Password</string>
     <string name="confirmpassword">Confirm password</string>
     <string name="login_btn_google">Sign in with Google</string>
@@ -73,7 +73,7 @@
     <string name="logout_description">Log out of your account</string>
     <string name="LoginActivityName">Welcome</string>
     <string name="new_task">New Task</string>
-    <string name="emailAddress">Email address</string>
+    <string name="emailAddress">E-mail address</string>
     <plurals name="flagged_count">
         <item quantity="one">Flagged %d time</item>
         <item quantity="other">Flagged %d times, hidden</item>

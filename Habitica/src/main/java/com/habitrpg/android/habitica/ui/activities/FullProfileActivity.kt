@@ -54,7 +54,6 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -63,6 +62,7 @@ import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.math.min
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class FullProfileActivity : BaseActivity() {
@@ -103,7 +103,6 @@ class FullProfileActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(binding.toolbar)
 
         userID = intent?.extras?.getString("userID", "") ?: ""
         if (userID.isEmpty()) {
@@ -120,7 +119,7 @@ class FullProfileActivity : BaseActivity() {
                     onMemberRowClicked = {},
                     onClassSelectionClicked = {},
                     configManager = configManager,
-                    useWindowInsets = false
+                    useWindowInsets = false,
                 )
             }
         }
@@ -132,17 +131,18 @@ class FullProfileActivity : BaseActivity() {
         binding.giftGemsButton.setOnClickListener {
             MainNavigationController.navigate(
                 R.id.giftGemsActivity,
-                bundleOf(Pair("userID", userID), Pair("username", null))
+                bundleOf(Pair("userID", userID), Pair("username", null)),
             )
         }
         binding.giftSubscriptionButton.setOnClickListener {
             MainNavigationController.navigate(
                 R.id.giftSubscriptionActivity,
-                bundleOf(Pair("userID", userID), Pair("username", null))
+                bundleOf(Pair("userID", userID), Pair("username", null)),
             )
         }
         lifecycleScope.launchCatching {
-            userRepository.getUser()
+            userRepository
+                .getUser()
                 .collect {
                     blocks = it?.inbox?.blocks ?: listOf()
                     binding.blockedDisclaimerView.visibility =
@@ -208,7 +208,7 @@ class FullProfileActivity : BaseActivity() {
                         R.string.unban_user
                     } else {
                         R.string.ban_user
-                    }
+                    },
                 )
             menu.findItem(R.id.shadow_mute_user)?.title =
                 getString(
@@ -216,7 +216,7 @@ class FullProfileActivity : BaseActivity() {
                         R.string.unshadowmute_user
                     } else {
                         R.string.shadow_mute_user
-                    }
+                    },
                 )
             menu.findItem(R.id.mute_user)?.title =
                 getString(
@@ -224,22 +224,18 @@ class FullProfileActivity : BaseActivity() {
                         R.string.unmute_user
                     } else {
                         R.string.mute_user
-                    }
+                    },
                 )
         }
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun isMyProfile(): Boolean {
-        return sharedPrefs.getString("UserID", "") == userID
-    }
+    private fun isMyProfile(): Boolean = sharedPrefs.getString("UserID", "") == userID
 
-    private fun isUserBlocked(): Boolean {
-        return blocks.contains(userID)
-    }
+    private fun isUserBlocked(): Boolean = blocks.contains(userID)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 true
@@ -254,7 +250,7 @@ class FullProfileActivity : BaseActivity() {
                     HabiticaSnackbar.showSnackbar(
                         this@FullProfileActivity.binding.nestedScrollView.getChildAt(0) as ViewGroup,
                         getString(R.string.username_copied),
-                        SnackbarDisplayType.NORMAL
+                        SnackbarDisplayType.NORMAL,
                     )
                 }
                 true
@@ -269,7 +265,7 @@ class FullProfileActivity : BaseActivity() {
                     HabiticaSnackbar.showSnackbar(
                         this@FullProfileActivity.binding.nestedScrollView.getChildAt(0) as ViewGroup,
                         getString(R.string.id_copied),
-                        SnackbarDisplayType.NORMAL
+                        SnackbarDisplayType.NORMAL,
                     )
                 }
                 true
@@ -288,7 +284,7 @@ class FullProfileActivity : BaseActivity() {
                 showReportUserBottomSheet(
                     userIdBeingReported = userID,
                     usernameBeingReported = username ?: "",
-                    userDisplayName = userDisplayName ?: ""
+                    userDisplayName = userDisplayName ?: "",
                 )
                 true
             }
@@ -317,17 +313,18 @@ class FullProfileActivity : BaseActivity() {
                                 this@FullProfileActivity,
                                 it,
                                 "Check out my avatar on Habitica!",
-                                "avatar_profile"
-                            )
+                                "avatar_profile",
+                            ),
                         )
                     }
                 }
                 true
             }
 
-            else -> super.onOptionsItemSelected(item)
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
-    }
 
     private fun muteUser() {
         val isMuted = member.value?.flags?.chatRevoked == true
@@ -372,7 +369,7 @@ class FullProfileActivity : BaseActivity() {
     private fun showReportUserBottomSheet(
         userIdBeingReported: String,
         usernameBeingReported: String,
-        userDisplayName: String
+        userDisplayName: String,
     ) {
         val reportBottomSheetFragment =
             ReportBottomSheetFragment.newInstance(
@@ -383,7 +380,7 @@ class FullProfileActivity : BaseActivity() {
                 messageText = "",
                 groupId = "",
                 userIdBeingReported = userIdBeingReported,
-                sourceView = this::class.simpleName ?: ""
+                sourceView = this::class.simpleName ?: "",
             )
 
         reportBottomSheetFragment.show(supportFragmentManager, ReportBottomSheetFragment.TAG)
@@ -430,11 +427,11 @@ class FullProfileActivity : BaseActivity() {
 
     private fun showSendMessageToUserDialog() {
         finish()
-        MainScope().launch(context = Dispatchers.Main) {
-            delay(500L)
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            delay(500.milliseconds)
             MainNavigationController.navigate(
                 R.id.inboxMessageListFragment,
-                bundleOf(Pair("username", username), Pair("userID", userID))
+                bundleOf(Pair("username", username), Pair("userID", userID)),
             )
         }
     }
@@ -508,8 +505,8 @@ class FullProfileActivity : BaseActivity() {
             binding.adminStatusTextview.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    R.color.text_green
-                )
+                    R.color.text_green,
+                ),
             )
         }
     }
@@ -527,17 +524,17 @@ class FullProfileActivity : BaseActivity() {
         fillAchievements(
             R.string.basic_achievements,
             achievements.filter { it.category == "basic" },
-            items
+            items,
         )
         fillAchievements(
             R.string.seasonal_achievements,
             achievements.filter { it.category == "seasonal" },
-            items
+            items,
         )
         fillAchievements(
             R.string.special_achievements,
             achievements.filter { it.category == "special" },
-            items
+            items,
         )
 
         val adapter = AchievementProfileAdapter()
@@ -546,13 +543,12 @@ class FullProfileActivity : BaseActivity() {
         val layoutManager = androidx.recyclerview.widget.GridLayoutManager(this, 3)
         layoutManager.spanSizeLookup =
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if (adapter.getItemViewType(position) == 0) {
+                override fun getSpanSize(position: Int): Int =
+                    if (adapter.getItemViewType(position) == 0) {
                         layoutManager.spanCount
                     } else {
                         1
                     }
-                }
             }
         binding.achievementGroupList.layoutManager = layoutManager
         binding.achievementGroupList.adapter = adapter
@@ -563,7 +559,7 @@ class FullProfileActivity : BaseActivity() {
     private fun fillAchievements(
         labelID: Int,
         achievements: List<Achievement>,
-        targetList: MutableList<Any>
+        targetList: MutableList<Any>,
     ) {
         // Order by ID first
         val achievementList = ArrayList(achievements)
@@ -577,9 +573,9 @@ class FullProfileActivity : BaseActivity() {
 
     private fun getFloorValueString(
         `val`: Float,
-        roundDown: Boolean
-    ): String {
-        return if (roundDown) {
+        roundDown: Boolean,
+    ): String =
+        if (roundDown) {
             floor(`val`.toDouble()).toString()
         } else {
             if (`val`.toDouble() == 0.0) {
@@ -588,24 +584,22 @@ class FullProfileActivity : BaseActivity() {
                 `val`.toString()
             }
         }
-    }
 
     private fun getFloorValue(
         value: Float,
-        roundDown: Boolean
-    ): Float {
-        return if (roundDown) {
+        roundDown: Boolean,
+    ): Float =
+        if (roundDown) {
             floor(value.toDouble()).toFloat()
         } else {
             value
         }
-    }
 
     private fun addEquipmentRow(
         table: TableLayout,
         gearKey: String?,
         text: String?,
-        stats: String?
+        stats: String?,
     ) {
         val gearRow =
             layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
@@ -637,7 +631,7 @@ class FullProfileActivity : BaseActivity() {
             byLevelStat,
             byLevelStat,
             roundDown = true,
-            isSummary = false
+            isSummary = false,
         )
     }
 
@@ -658,7 +652,7 @@ class FullProfileActivity : BaseActivity() {
 
     private fun gotGear(
         equipmentList: List<Equipment>,
-        user: Member
+        user: Member,
     ) {
         val userStatComputer = UserStatComputer()
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
@@ -684,7 +678,7 @@ class FullProfileActivity : BaseActivity() {
                     row.conVal,
                     row.perVal,
                     row.roundDown,
-                    row.summary
+                    row.summary,
                 )
             }
         }
@@ -710,7 +704,7 @@ class FullProfileActivity : BaseActivity() {
             stats.constitution?.toFloat() ?: 0f,
             stats.per?.toFloat() ?: 0f,
             roundDown = true,
-            isSummary = false
+            isSummary = false,
         )
         addAttributeRow(
             getString(R.string.buffs),
@@ -720,7 +714,7 @@ class FullProfileActivity : BaseActivity() {
             buffs?.con ?: 0f,
             buffs?.per ?: 0f,
             roundDown = true,
-            isSummary = false
+            isSummary = false,
         )
 
         // Summary row
@@ -731,7 +725,7 @@ class FullProfileActivity : BaseActivity() {
             attributeConSum,
             attributePerSum,
             roundDown = false,
-            isSummary = true
+            isSummary = true,
         )
     }
 
@@ -742,13 +736,13 @@ class FullProfileActivity : BaseActivity() {
         conVal: Float,
         perVal: Float,
         roundDown: Boolean,
-        isSummary: Boolean
+        isSummary: Boolean,
     ) {
         val tableRow =
             layoutInflater.inflate(
                 R.layout.profile_attributetablerow,
                 binding.attributesTableLayout,
-                false
+                false,
             ) as? TableRow ?: return
         val keyTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_type)
         keyTextView?.text = label
@@ -792,8 +786,8 @@ class FullProfileActivity : BaseActivity() {
                     R.drawable.ic_keyboard_arrow_right_black_24dp
                 } else {
                     R.drawable.ic_keyboard_arrow_down_black_24dp
-                }
-            )
+                },
+            ),
         )
 
         for (row in attributeRows) {
@@ -819,9 +813,7 @@ class FullProfileActivity : BaseActivity() {
 
 // region BaseActivity-Overrides
 
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_full_profile
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_full_profile
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityFullProfileBinding.inflate(layoutInflater)

@@ -10,9 +10,7 @@ interface AvatarOutfit {
     var eyeWear: String
     var headAccessory: String
 
-    fun isAvailable(outfit: String): Boolean {
-        return outfit.isNotBlank() && !outfit.endsWith("base_0")
-    }
+    fun isAvailable(outfit: String): Boolean = outfit.isNotBlank() && !outfit.endsWith("base_0")
 
     fun updateWith(newOutfit: AvatarOutfit) {
         this.armor = newOutfit.armor

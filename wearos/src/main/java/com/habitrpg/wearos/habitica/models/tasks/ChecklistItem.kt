@@ -9,17 +9,15 @@ import java.util.UUID
 open class ChecklistItem(
     var id: String? = UUID.randomUUID().toString(),
     var text: String? = null,
-    var completed: Boolean = false
+    var completed: Boolean = false,
 ) : Parcelable {
     var position: Int = 0
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(
         dest: Parcel,
-        flags: Int
+        flags: Int,
     ) {
         dest.writeString(id)
         dest.writeString(text)
@@ -40,15 +38,12 @@ open class ChecklistItem(
         position = source.readInt()
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is ChecklistItem) {
+    override fun equals(other: Any?): Boolean =
+        if (other is ChecklistItem) {
             this.id == other.id
         } else {
             super.equals(other)
         }
-    }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 }

@@ -8,12 +8,10 @@ import com.habitrpg.wearos.habitica.ui.viewmodels.ConfirmactionActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
-class ConfirmationActivity :
-    BaseActivity<ActivityConfirmationBinding, ConfirmactionActivityViewModel>() {
+class ConfirmationActivity : BaseActivity<ActivityConfirmationBinding, ConfirmactionActivityViewModel>() {
     override val viewModel: ConfirmactionActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +23,7 @@ class ConfirmationActivity :
         }
 
         lifecycleScope.launch {
-            delay(4.toDuration(DurationUnit.SECONDS))
+            delay(4.seconds)
             finish()
         }
 

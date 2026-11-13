@@ -3,11 +3,13 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.content.Context
 import android.view.LayoutInflater
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
+class FirstDropDialog(
+    context: Context,
+) : HabiticaAlertDialog(context) {
     private var eggView: PixelArtView?
     private var hatchingPotionView: PixelArtView?
 
@@ -18,7 +20,7 @@ class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
         hatchingPotionView = view?.findViewById(R.id.hatchingPotion_view)
         setAdditionalContentView(view)
         addButton(R.string.go_to_items, isPrimary = true, isDestructive = false) { _, _ ->
-            MainNavigationController.navigate(R.id.itemsFragment)
+            context.navigator.navigate(R.id.itemsFragment)
         }
         addButton(R.string.close, false)
         setTitle(R.string.first_drop_title)
@@ -26,7 +28,7 @@ class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
 
     fun configure(
         egg: String,
-        hatchingPotion: String
+        hatchingPotion: String,
     ) {
         eggView?.loadImage("Pet_Egg_$egg")
         hatchingPotionView?.loadImage("Pet_HatchingPotion_$hatchingPotion")

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.data.local
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,7 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun getTasks(
         taskType: TaskType,
         userID: String,
-        includedGroupIDs: Array<String>
+        includedGroupIDs: Array<String>,
     ): Flow<List<Task>>
 
     fun getTasks(userId: String): Flow<List<Task>>
@@ -19,7 +20,7 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun saveTasks(
         ownerID: String,
         tasksOrder: TasksOrder,
-        tasks: TaskList
+        tasks: TaskList,
     )
 
     fun deleteTask(taskID: String)
@@ -30,17 +31,17 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun markTaskCompleted(
         taskId: String,
-        isCompleted: Boolean
+        isCompleted: Boolean,
     )
 
     fun swapTaskPosition(
         firstPosition: Int,
-        secondPosition: Int
+        secondPosition: Int,
     )
 
     fun getTaskAtPosition(
         taskType: String,
-        position: Int
+        position: Int,
     ): Flow<Task>
 
     fun updateIsdue(daily: TaskList): TaskList
@@ -49,7 +50,7 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun saveCompletedTodos(
         userId: String,
-        tasks: MutableCollection<Task>
+        tasks: MutableCollection<Task>,
     )
 
     fun getErroredTasks(userID: String): Flow<List<Task>>
@@ -58,6 +59,16 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun getTasksForChallenge(
         challengeID: String?,
-        userID: String?
+        userID: String?,
     ): Flow<List<Task>>
+
+    fun getTasksWithTaskId(taskId: String): List<Task>
+
+    fun handleTaskResponse(
+        user: User,
+        res: TaskDirectionData,
+        task: Task,
+        up: Boolean,
+        localDelta: Float,
+    )
 }

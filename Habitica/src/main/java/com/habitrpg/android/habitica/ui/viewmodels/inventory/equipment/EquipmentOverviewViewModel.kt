@@ -12,25 +12,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EquipmentOverviewViewModel
-@Inject
-constructor(
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel,
-    val inventoryRepository: InventoryRepository
-) : BaseViewModel(userRepository, userViewModel) {
-    val usesAutoEquip: Boolean
-        get() = user.value?.preferences?.autoEquip == true
-    val usesCostume: Boolean
-        get() = user.value?.preferences?.costume == true
+    @Inject
+    constructor(
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+        val inventoryRepository: InventoryRepository,
+    ) : BaseViewModel(userRepository, userViewModel) {
+        val usesAutoEquip: Boolean
+            get() = user.value?.preferences?.autoEquip == true
+        val usesCostume: Boolean
+            get() = user.value?.preferences?.costume == true
 
-    fun getGear(
-        key: String,
-        onSuccess: (Equipment) -> Unit
-    ) {
-        viewModelScope.launchCatching {
-            inventoryRepository.getEquipment(key).collect {
-                onSuccess(it)
+        override fun onCleared() {
+            inventoryRepository.close()
+            super.onCleared()
+        }
+
+        fun getGear(
+            key: String,
+            onSuccess: (Equipment) -> Unit,
+        ) {
+            viewModelScope.launchCatching {
+                inventoryRepository.getEquipment(key).collect {
+                    onSuccess(it)
+                }
             }
         }
     }
-}

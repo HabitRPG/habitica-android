@@ -10,8 +10,7 @@ import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding
 import com.habitrpg.android.habitica.models.tasks.Task
 import java.util.UUID
 
-class SkillTasksRecyclerViewAdapter :
-    BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
+class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
     var onTaskSelection: ((Task) -> Unit)? = null
 
     override fun getItemId(position: Int): Long {
@@ -24,23 +23,25 @@ class SkillTasksRecyclerViewAdapter :
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): TaskViewHolder {
         val view =
-            LayoutInflater.from(parent.context)
+            LayoutInflater
+                .from(parent.context)
                 .inflate(R.layout.skill_task_item_card, parent, false)
         return TaskViewHolder(view)
     }
 
     override fun onBindViewHolder(
         holder: TaskViewHolder,
-        position: Int
+        position: Int,
     ) {
         holder.bindHolder(data[position])
     }
 
-    inner class TaskViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView),
+    inner class TaskViewHolder(
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         private val binding = SkillTaskItemCardBinding.bind(itemView)
         var task: Task? = null
@@ -62,8 +63,8 @@ class SkillTasksRecyclerViewAdapter :
             binding.rightBorderView.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    task.lightTaskColor
-                )
+                    task.lightTaskColor,
+                ),
             )
         }
 

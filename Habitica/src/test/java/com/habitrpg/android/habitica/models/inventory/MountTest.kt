@@ -11,26 +11,27 @@ import io.mockk.mockk
 private const val FAKE_STANDARD = "Standard"
 private const val FAKE_PREMIUM = "premium"
 
-class MountTest : WordSpec({
-    val mount: Mount = Mount()
-    lateinit var mockContext: Context
-    beforeEach {
-        mockContext = mockk()
-    }
-    "getTranslatedType" should {
-        "return standard" {
-            mount.type = "drop"
-            every { mockContext.getString(R.string.standard) } returns FAKE_STANDARD
-
-            val result = mount.getTranslatedType(mockContext)
-            result shouldBe FAKE_STANDARD
+class MountTest :
+    WordSpec({
+        val mount: Mount = Mount()
+        lateinit var mockContext: Context
+        beforeEach {
+            mockContext = mockk()
         }
+        "getTranslatedType" should {
+            "return standard" {
+                mount.type = "drop"
+                every { mockContext.getString(R.string.standard) } returns FAKE_STANDARD
 
-        "return premium without context" {
-            mount.type = "premium"
+                val result = mount.getTranslatedType(mockContext)
+                result shouldBe FAKE_STANDARD
+            }
 
-            val result = mount.getTranslatedType(null)
-            result shouldBe FAKE_PREMIUM
+            "return premium without context" {
+                mount.type = "premium"
+
+                val result = mount.getTranslatedType(null)
+                result shouldBe FAKE_PREMIUM
+            }
         }
-    }
-})
+    })

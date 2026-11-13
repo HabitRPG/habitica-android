@@ -12,10 +12,9 @@ import android.webkit.WebViewClient
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,15 +26,13 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentNewsBinding {
-        return FragmentNewsBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentNewsBinding = FragmentNewsBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -45,7 +42,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
         object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
-                request: WebResourceRequest?
+                request: WebResourceRequest?,
             ): Boolean {
                 if (request?.url?.path == "/static/new-stuff") {
                     view?.loadUrl(request.url.toString())
@@ -59,7 +56,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val webSettings = binding?.newsWebview?.settings
@@ -74,7 +71,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.updateUser("flags.newStuff", false)
         }
     }

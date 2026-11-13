@@ -4,7 +4,9 @@ import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class QuestRageStrike() : RealmObject(), BaseObject {
+open class QuestRageStrike() :
+    RealmObject(),
+    BaseObject {
     @PrimaryKey
     var key = ""
     var wasHit = false

@@ -6,11 +6,13 @@ import android.content.Intent
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
 
-class PartyInviteLocalNotification(context: Context, identifier: String?) :
-    HabiticaLocalNotification(context, identifier) {
+class PartyInviteLocalNotification(
+    context: Context,
+    identifier: String?,
+) : HabiticaLocalNotification(context, identifier) {
     override fun setNotificationActions(
         notificationId: Int,
-        data: Map<String, String>
+        data: Map<String, String>,
     ) {
         super.setNotificationActions(notificationId, data)
         val res = context.resources
@@ -25,7 +27,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode(),
                 acceptInviteIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
             )
         notificationBuilder.addAction(0, context.getString(R.string.accept), pendingIntentAccept)
 
@@ -38,7 +40,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) :
                 context,
                 groupID.hashCode() + 1,
                 rejectInviteIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT + PendingIntent.FLAG_IMMUTABLE,
             )
         notificationBuilder.addAction(0, context.getString(R.string.reject), pendingIntentReject)
     }

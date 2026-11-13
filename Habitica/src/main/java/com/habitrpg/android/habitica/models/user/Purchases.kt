@@ -6,9 +6,11 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Purchases : RealmObject(), BaseObject {
+open class Purchases :
+    RealmObject(),
+    BaseObject {
     @JvmField
-    var customizations: RealmList<OwnedCustomization>? = null
+    var customizations: RealmList<OwnedCustomization>? = RealmList()
     var user: User? = null
     var plan: SubscriptionPlan? = null
 }

@@ -6,7 +6,9 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Inbox : RealmObject(), BaseObject {
+open class Inbox :
+    RealmObject(),
+    BaseObject {
     var optOut: Boolean = false
     var blocks: RealmList<String> = RealmList()
     var newMessages: Int = 0

@@ -5,73 +5,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
-import com.habitrpg.android.habitica.interactors.FeedPetUseCase
-import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.inventory.items.ItemListViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
-    @Inject
-    lateinit var inventoryRepository: InventoryRepository
-
-    @Inject
-    lateinit var socialRepository: SocialRepository
-
-    @Inject
-    lateinit var userRepository: UserRepository
-
-    @Inject
-    lateinit var hatchPetUseCase: HatchPetUseCase
-
-    @Inject
-    lateinit var feedPetUseCase: FeedPetUseCase
+    val viewModel: ItemListViewModel by viewModels()
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
     var adapter: ItemRecyclerAdapter? = null
-    var itemType: String? = null
-    var itemTypeText: String? = null
+    var itemType: String?
+        get() = arguments?.getString(ItemRecyclerFragment.ARG_ITEM_TYPE)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ItemRecyclerFragment.ARG_ITEM_TYPE, value)
+        }
+    var itemTypeText: String?
+        get() = arguments?.getString(ItemRecyclerFragment.ARG_ITEM_TYPE_TEXT)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ItemRecyclerFragment.ARG_ITEM_TYPE_TEXT, value)
+        }
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
     var onFeedResult: ((FeedResponse?) -> Unit)? = null
@@ -84,34 +67,17 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentItemsDialogBinding {
-        return FragmentItemsDialogBinding.inflate(inflater, container, false)
-    }
-
-    override fun onDestroy() {
-        inventoryRepository.close()
-        super.onDestroy()
-    }
+        container: ViewGroup?,
+    ): FragmentItemsDialogBinding = FragmentItemsDialogBinding.inflate(inflater, container, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        when {
-            this.isHatching -> {
-                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            }
-
-            this.isFeeding -> {
-                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            }
-
-            else -> {
-            }
+        if (isHatching || this.isFeeding) {
+            dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         }
-
         binding?.recyclerView?.isNestedScrollingEnabled = true
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -119,20 +85,11 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
         val buttonMethod = {
-            Analytics.sendEvent(
-                "Items CTA tap",
-                EventCategory.BEHAVIOUR,
-                HitType.EVENT,
-                mapOf(
-                    "area" to "empty",
-                    "type" to (itemType ?: "")
-                )
-            )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
@@ -159,7 +116,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                     else -> null
                 },
                 false,
-                if (itemType == "special") null else buttonMethod
+                if (itemType == "special") null else buttonMethod,
             )
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
@@ -172,10 +129,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 user = it
                 adapter?.user = it
             }
-        }
-
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
         }
 
         when {
@@ -222,13 +175,12 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             }
             adapter?.onQuestInvitation = {
                 lifecycleScope.launchCatching {
-                    inventoryRepository.inviteToQuest(it)
-                    MainNavigationController.navigate(R.id.partyFragment)
+                    viewModel.inviteToQuest(it)
                 }
             }
             adapter?.onOpenMysteryItem = {
                 lifecycleScope.launchCatching {
-                    val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
+                    val item = viewModel.openMysteryItem(user) ?: return@launchCatching
                     val activity = activity as? MainActivity
                     if (activity != null) {
                         val dialog = OpenedMysteryitemDialog(activity)
@@ -238,9 +190,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                         dialog.binding.titleView.text = item.text
                         dialog.binding.descriptionView.text = item.notes
                         dialog.addButton(R.string.equip, true) { _, _ ->
-                            lifecycleScope.launchCatching {
-                                inventoryRepository.equip("equipped", it.key)
-                            }
+                            viewModel.equip("equipped", it.key)
                         }
                         dialog.addCloseButton()
                         dialog.enqueue()
@@ -251,15 +201,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             adapter?.onFeedPet = { food -> feedPet(food) }
 
             adapter?.onOpenShop = {
-                Analytics.sendEvent(
-                    "Items CTA tap",
-                    EventCategory.BEHAVIOUR,
-                    HitType.EVENT,
-                    mapOf(
-                        "area" to "bottom",
-                        "type" to (itemType ?: "")
-                    )
-                )
                 if (itemType == "quests") {
                     MainNavigationController.navigate(R.id.questShopFragment)
                 } else {
@@ -273,14 +214,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         val pet = feedingPet ?: return
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
-            val result =
-                feedPetUseCase.callInteractor(
-                    FeedPetUseCase.RequestValues(
-                        pet,
-                        food,
-                        activity
-                    )
-                )
+            val result = viewModel.feedPet(pet, food, activity)
             onFeedResult?.invoke(result)
         }
     }
@@ -296,72 +230,32 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         super.onResume()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(ITEM_TYPE_KEY, this.itemType)
-    }
-
     private fun hatchPet(
         potion: HatchingPotion,
-        egg: Egg
+        egg: Egg,
     ) {
         dismiss()
         val activity = activity ?: return
+        // dismissing clears this dialog's view model, so the request has to run in the activity's scope
         activity.lifecycleScope.launchCatching {
-            hatchPetUseCase.callInteractor(
-                HatchPetUseCase.RequestValues(
-                    potion,
-                    egg,
-                    activity
-                )
-            )
+            viewModel.hatchPet(potion, egg, activity)
         }
     }
 
     private fun loadItems() {
-        val itemClass: Class<out Item> =
-            when (itemType) {
-                "eggs" -> Egg::class.java
-                "hatchingPotions" -> HatchingPotion::class.java
-                "food" -> Food::class.java
-                "quests" -> QuestContent::class.java
-                "special" -> SpecialItem::class.java
-                else -> Egg::class.java
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.ownedItems.collect { adapter?.data = it }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.items.collect {
+                adapter?.items = it
             }
-        itemType?.let { type ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedItems(type)
-                    .onEach { items ->
-                        val filteredItems =
-                            if (isFeeding) {
-                                items.filter { it.key != "Saddle" }.distinctBy { it.key }
-                            } else {
-                                items.distinctBy { it.key }
-                            }
-                        adapter?.data = filteredItems
-                    }
-                    .map { items -> items.mapNotNull { it.key } }
-                    .map {
-                        inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
-                    }
-                    .collect {
-                        val itemMap = mutableMapOf<String, Item>()
-                        for (item in it ?: emptyList()) {
-                            itemMap[item.key] = item
-                        }
-                        adapter?.items = itemMap
-                    }
-            }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
-            }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedPets().map { ownedPets ->
-                    val petMap = mutableMapOf<String, OwnedPet>()
-                    ownedPets.forEach { petMap[it.key ?: ""] = it }
-                    return@map petMap
-                }.collect { adapter?.setOwnedPets(it) }
-            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.pets.collect { adapter?.setExistingPets(it) }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.ownedPets.collect { adapter?.setOwnedPets(it) }
         }
     }
 
@@ -369,19 +263,22 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         MainNavigationController.navigate(R.id.marketFragment)
     }
 
-    private fun showSellItemConfirmation(item: Item, ownedItem: OwnedItem) {
+    private fun showSellItemConfirmation(
+        item: Item,
+        ownedItem: OwnedItem,
+    ) {
         val dialog = HabiticaAlertDialog(requireContext())
         dialog.setTitle(getString(R.string.sell_confirmation_title, item.text))
-        dialog.addButton(getString(R.string.sell, item.value), isPrimary = true, isDestructive = true) { _, _ ->
+        dialog.addButton(
+            getString(R.string.sell, item.value),
+            isPrimary = true,
+            isDestructive = true
+        ) { _, _ ->
             lifecycleScope.launchCatching {
-                inventoryRepository.sellItem(ownedItem)
+                viewModel.sellItem(ownedItem)
             }
         }
         dialog.addCancelButton()
         dialog.show()
-    }
-
-    companion object {
-        private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
     }
 }

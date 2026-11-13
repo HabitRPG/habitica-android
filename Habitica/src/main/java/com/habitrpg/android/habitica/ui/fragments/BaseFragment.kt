@@ -13,8 +13,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.seconds
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     var isModal: Boolean = false
@@ -34,13 +33,13 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     abstract fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = createBinding(inflater, container)
         return binding?.root
@@ -53,15 +52,15 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     private fun showTutorialIfNeeded() {
         tutorialStepIdentifier?.let { identifier ->
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 val step = tutorialRepository.getTutorialStep(identifier).firstOrNull()
-                delay(1.toDuration(DurationUnit.SECONDS))
+                delay(1.seconds)
                 if (step?.isValid == true && step.isManaged && step.shouldDisplay) {
                     val mainActivity = activity as? MainActivity ?: return@launchCatching
                     mainActivity.displayTutorialStep(
                         step,
                         tutorialTexts,
-                        tutorialCanBeDeferred
+                        tutorialCanBeDeferred,
                     )
                 }
             }
@@ -76,7 +75,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onDestroy() {
         try {
             tutorialRepository.close()
-        } catch (exception: UninitializedPropertyAccessException) {
+        } catch (_: UninitializedPropertyAccessException) {
             // no-on
         }
         super.onDestroy()

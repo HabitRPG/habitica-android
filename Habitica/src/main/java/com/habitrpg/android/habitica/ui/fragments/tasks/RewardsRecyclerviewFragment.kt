@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -21,11 +22,9 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
@@ -35,7 +34,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         lifecycleScope.launchCatching {
             inventoryRepository.retrieveInAppRewards()
@@ -45,15 +44,19 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
 
         (layoutManager as? GridLayoutManager)?.spanSizeLookup =
             object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
+                    val spanCount = (layoutManager as? GridLayoutManager)?.spanCount ?: 1
+                    if (((recyclerAdapter as? RecyclerView.Adapter<*>)?.itemCount ?: 0) == 0) {
+                        return spanCount
+                    }
                     return if ((recyclerAdapter?.getItemViewType(position) ?: 0) < 3) {
-                        (layoutManager as? GridLayoutManager)?.spanCount ?: 1
+                        spanCount
                     } else {
                         1
                     }
@@ -65,14 +68,14 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             binding?.recyclerView?.setBackgroundColor(
                 ContextCompat.getColor(
                     it,
-                    R.color.content_background
-                )
+                    R.color.content_background,
+                ),
             )
         }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         if (showCustomRewards) {
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 inventoryRepository.getInAppRewards().collect {
                     val user = viewModel.user.value
                     (recyclerAdapter as? RewardsRecyclerViewAdapter)?.goldGemsLeft =
@@ -111,13 +114,11 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         super.onDestroy()
     }
 
-    override fun getLayoutManager(context: Context?): LinearLayoutManager {
-        return GridLayoutManager(context, 4)
-    }
+    override fun getLayoutManager(context: Context?): LinearLayoutManager = GridLayoutManager(context, 4)
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(withTasks = true, forced = true)
             inventoryRepository.retrieveInAppRewards()
             binding?.refreshLayout?.isRefreshing = false
@@ -145,13 +146,13 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                     userRepository.useSkill(
                         selectedCard?.key ?: "",
                         "member",
-                        it.data?.getStringExtra("member_id") ?: ""
+                        it.data?.getStringExtra("member_id") ?: "",
                     )
                     val activity = (activity as? MainActivity) ?: return@launchCatching
                     HabiticaSnackbar.showSnackbar(
                         activity.snackbarContainer,
                         context?.getString(R.string.sent_card, selectedCard?.text),
-                        HabiticaSnackbar.SnackbarDisplayType.BLUE
+                        HabiticaSnackbar.SnackbarDisplayType.BLUE,
                     )
                 }
             }
@@ -161,7 +162,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         fun newInstance(
             context: Context?,
             classType: TaskType,
-            showCustomRewards: Boolean
+            showCustomRewards: Boolean,
         ): RewardsRecyclerviewFragment {
             val fragment = RewardsRecyclerviewFragment()
             fragment.taskType = classType
@@ -173,8 +174,8 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                     ArrayList(
                         listOf(
                             context.getString(R.string.tutorial_rewards_1),
-                            context.getString(R.string.tutorial_rewards_2)
-                        )
+                            context.getString(R.string.tutorial_rewards_2),
+                        ),
                     )
             }
             fragment.tutorialCanBeDeferred = false

@@ -5,4 +5,7 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class ChatMessageLike(var id: String = "") : RealmObject(), BaseObject
+open class ChatMessageLike(
+    var id: String = "",
+) : RealmObject(),
+    BaseObject

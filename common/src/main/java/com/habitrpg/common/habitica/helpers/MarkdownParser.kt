@@ -2,12 +2,12 @@ package com.habitrpg.common.habitica.helpers
 
 import android.content.Context
 import android.graphics.Rect
-import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.widget.TextView
+import androidx.core.net.toUri
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.handleUrlClicks
 import io.noties.markwon.AbstractMarkwonPlugin
@@ -24,6 +24,7 @@ import io.noties.markwon.linkify.LinkifyPlugin
 import io.noties.markwon.movement.MovementMethodPlugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.regex.Matcher
@@ -33,17 +34,21 @@ object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
     internal var markwon: Markwon? = null
 
+    // App-lifetime scope shared by parseMarkdownAsync instead of a fresh CoroutineScope per call.
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
     fun setup(context: Context) {
         markwon =
-            Markwon.builder(context)
+            Markwon
+                .builder(context)
                 .usePlugin(StrikethroughPlugin.create())
                 .usePlugin(
                     ImagesPlugin.create {
-                        it.addSchemeHandler(OkHttpNetworkSchemeHandler.create())
+                        it
+                            .addSchemeHandler(OkHttpNetworkSchemeHandler.create())
                             .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
-                    }
-                )
-                .usePlugin(createImageSizeResolverScaleDpiPlugin(context))
+                    },
+                ).usePlugin(createImageSizeResolverScaleDpiPlugin(context))
                 .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
                 .usePlugin(LinkifyPlugin.create(Linkify.WEB_URLS))
                 .build()
@@ -61,7 +66,7 @@ object MarkdownParser {
                             imageSize: ImageSize?,
                             imageBounds: Rect,
                             canvasWidth: Int,
-                            textSize: Float
+                            textSize: Float,
                         ): Rect {
                             val dpi = context.resources.displayMetrics.density
                             var width = imageBounds.width()
@@ -77,7 +82,7 @@ object MarkdownParser {
 
                             return Rect(0, 0, width, height)
                         }
-                    }
+                    },
                 )
             }
         }
@@ -166,32 +171,21 @@ object MarkdownParser {
     }
 
     val brRegex = Regex("<br>")
-    private fun preprocessHtmlTags(markdown: String): String {
-        return markdown.replace(brRegex) {
+
+    private fun preprocessHtmlTags(markdown: String): String =
+        markdown.replace(brRegex) {
             "\n"
         }
-    }
 
     fun parseMarkdownAsync(
         input: String?,
-        onSuccess: (Spanned) -> Unit
+        onSuccess: (Spanned) -> Unit,
     ) {
-        CoroutineScope(Dispatchers.IO).launch {
+        scope.launch {
             val result = parseMarkdown(input)
             withContext(Dispatchers.Main) {
                 onSuccess(result)
             }
-        }
-    }
-
-    fun hasCached(input: String?): Boolean {
-        if (input == null) {
-            return false
-        }
-        return try {
-            cache.containsKey(input.hashCode())
-        } catch (_: NullPointerException) {
-            false
         }
     }
 
@@ -201,19 +195,18 @@ object MarkdownParser {
      * @param input Stylized CharSequence
      * @return Markdown formatted String
      */
-    fun parseCompiled(input: CharSequence): String? {
-        return EmojiParser.convertToCheatCode(input.toString())
-    }
+    fun parseCompiled(input: CharSequence): String? = EmojiParser.convertToCheatCode(input.toString())
 
     private val markdownRegex = "[*#_\\[`~]".toRegex()
     private val imageMarkdownRegex = """!\[.*?]\(.*?".*?"\)""".toRegex()
-    private val markdownLinkRegex = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)".toRegex()
+    private val markdownLinkRegex = "\\[([^]]+)]\\(([^)]+)\\)".toRegex()
+    private val urlRegex = "https?://[^\\s]+".toRegex()
 
-    fun containsMarkdown(text: String): Boolean {
-        return text.contains(markdownRegex) ||
+    fun containsMarkdown(text: String): Boolean =
+        text.contains(markdownRegex) ||
             text.contains(imageMarkdownRegex) ||
-            text.contains(markdownLinkRegex)
-    }
+            text.contains(markdownLinkRegex) ||
+            text.contains(urlRegex)
 }
 
 fun TextView.setMarkdown(input: String?) {
@@ -236,16 +229,16 @@ fun TextView.setParsedMarkdown(input: Spanned?) {
 
 private fun handleUrlClicks(
     context: Context,
-    url: String
+    url: String,
 ) {
     val webpage =
         if (url.startsWith("/")) {
-            Uri.parse("${context.getString(R.string.base_url)}$url")
+            "${context.getString(R.string.base_url)}$url".toUri()
         } else {
-            if (Uri.parse(url).scheme == null) {
-                Uri.parse("http://$url")
+            if (url.toUri().scheme == null) {
+                "http://$url".toUri()
             } else {
-                Uri.parse(url)
+                url.toUri()
             }
         }
     MainNavigationController.navigate(webpage)

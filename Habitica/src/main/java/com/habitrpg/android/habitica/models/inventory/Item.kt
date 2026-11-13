@@ -5,7 +5,9 @@ import io.realm.RealmModel
 import io.realm.RealmObject
 import java.util.Date
 
-open class ItemEvent : RealmObject(), BaseObject {
+open class ItemEvent :
+    RealmObject(),
+    BaseObject {
     var start: Date? = null
     var end: Date? = null
 }

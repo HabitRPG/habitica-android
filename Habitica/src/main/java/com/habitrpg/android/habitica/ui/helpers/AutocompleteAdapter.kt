@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
@@ -25,9 +26,11 @@ class AutocompleteAdapter(
     val socialRepository: SocialRepository? = null,
     var autocompleteContext: String? = null,
     var groupID: String? = null,
-    val remoteAutocomplete: Boolean = false
-) : BaseAdapter(), Filterable {
+    val remoteAutocomplete: Boolean = false,
+) : BaseAdapter(),
+    Filterable {
     var chatMessages: List<ChatMessage> = arrayListOf()
+    var groupMembers: List<Member> = arrayListOf()
     private var userResults: List<FindUsernameResult> = arrayListOf()
     private var emojiResults: List<String> = arrayListOf()
     private var isAutocompletingUsers = true
@@ -55,24 +58,42 @@ class AutocompleteAdapter(
                     } else if (constraint[0] == '@') {
                         lastAutocomplete = Date().time
                         isAutocompletingUsers = true
+
                         userResults =
-                            chatMessages
-                                .filter { it.isValid }
-                                .distinctBy {
-                                    it.username
-                                }.filter {
-                                    it.username?.startsWith(constraint.toString().drop(1)) ?: false
-                                }.map { message ->
-                                    val result = FindUsernameResult()
-                                    result.authentication = Authentication()
-                                    result.authentication?.localAuthentication = LocalAuthentication()
-                                    result.authentication?.localAuthentication?.username =
-                                        message.username
-                                    result.contributor = message.contributor
-                                    result.profile = Profile()
-                                    result.profile?.name = message.user
-                                    result
-                                }
+                            if (groupMembers.isNotEmpty()) {
+                                groupMembers
+                                    .filter { member ->
+                                        member.username?.startsWith(constraint.toString().drop(1), ignoreCase = true) ?: false
+                                    }.map { member ->
+                                        val result = FindUsernameResult()
+                                        result.id = member.id
+                                        result.authentication = Authentication()
+                                        result.authentication?.localAuthentication = LocalAuthentication()
+                                        result.authentication?.localAuthentication?.username = member.username
+                                        result.contributor = member.contributor
+                                        result.profile = Profile()
+                                        result.profile?.name = member.displayName
+                                        result
+                                    }
+                            } else {
+                                chatMessages
+                                    .filter { it.isValid }
+                                    .distinctBy {
+                                        it.username
+                                    }.filter {
+                                        it.username?.startsWith(constraint.toString().drop(1)) ?: false
+                                    }.map { message ->
+                                        val result = FindUsernameResult()
+                                        result.authentication = Authentication()
+                                        result.authentication?.localAuthentication = LocalAuthentication()
+                                        result.authentication?.localAuthentication?.username =
+                                            message.username
+                                        result.contributor = message.contributor
+                                        result.profile = Profile()
+                                        result.profile?.name = message.user
+                                        result
+                                    }
+                            }
                         filterResults.values = userResults
                         filterResults.count = userResults.size
                     } else if (constraint[0] == ':') {
@@ -88,7 +109,7 @@ class AutocompleteAdapter(
 
             override fun publishResults(
                 contraint: CharSequence?,
-                results: FilterResults?
+                results: FilterResults?,
             ) {
                 if (results != null && results.count > 0) {
                     notifyDataSetChanged()
@@ -102,9 +123,9 @@ class AutocompleteAdapter(
     override fun getView(
         position: Int,
         convertView: View?,
-        parent: ViewGroup?
-    ): View {
-        return if (isAutocompletingUsers) {
+        parent: ViewGroup?,
+    ): View =
+        if (isAutocompletingUsers) {
             val view = parent?.inflate(R.layout.autocomplete_username)
             val result = getItem(position) as? FindUsernameResult
             val displaynameView = view?.findViewById<UsernameLabel>(R.id.display_name_view)
@@ -120,23 +141,17 @@ class AutocompleteAdapter(
             view?.findViewById<TextView>(R.id.label)?.text = result
             view
         } ?: View(context)
-    }
 
-    override fun getItem(position: Int): Any? {
-        return if (isAutocompletingUsers) {
+    override fun getItem(position: Int): Any? =
+        if (isAutocompletingUsers) {
             userResults.getOrNull(position)
         } else {
             emojiResults.getOrNull(
-                position
+                position,
             )
         }
-    }
 
-    override fun getItemId(position: Int): Long {
-        return getItem(position).hashCode().toLong()
-    }
+    override fun getItemId(position: Int): Long = getItem(position).hashCode().toLong()
 
-    override fun getCount(): Int {
-        return if (isAutocompletingUsers) userResults.size else emojiResults.size
-    }
+    override fun getCount(): Int = if (isAutocompletingUsers) userResults.size else emojiResults.size
 }

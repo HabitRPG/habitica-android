@@ -8,8 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class ConnectedActionChipView(context: Context, attrs: AttributeSet? = null) :
-    TextActionChipView(context, attrs) {
+class ConnectedActionChipView(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : TextActionChipView(context, attrs) {
     private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(context) }
 
     init {

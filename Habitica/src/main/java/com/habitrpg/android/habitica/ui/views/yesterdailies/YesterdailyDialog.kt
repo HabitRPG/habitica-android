@@ -13,9 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -30,18 +27,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.lang.ref.WeakReference
 import java.util.Calendar
 import java.util.Date
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.abs
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.milliseconds
 
 class YesterdailyDialog private constructor(
     context: Context,
     private val userRepository: UserRepository,
     private val taskRepository: TaskRepository,
-    private val tasks: List<Task>
+    private val tasks: List<Task>,
 ) : HabiticaAlertDialog(context) {
     private lateinit var yesterdailiesList: LinearLayout
 
@@ -55,12 +54,7 @@ class YesterdailyDialog private constructor(
 
         addButton(R.string.start_day, true)
 
-        this.setOnDismissListener {
-            lastCronRun = Date()
-            runCron()
-        }
-
-        val listView = view?.findViewById(R.id.yesterdailies_list) as? LinearLayout
+        val listView: LinearLayout? = view?.findViewById(R.id.yesterdailies_list)
         if (listView != null) {
             yesterdailiesList = listView
         }
@@ -79,9 +73,15 @@ class YesterdailyDialog private constructor(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         displayedDialog = null
+        isShowingDialog.set(false)
     }
 
     private fun runCron() {
+        // Prevent multiple cron runs
+        if (!isRunningCron.compareAndSet(false, true)) {
+            return
+        }
+
         val completedTasks = ArrayList<Task>()
         for (task in tasks) {
             if (task.completed) {
@@ -90,9 +90,14 @@ class YesterdailyDialog private constructor(
         }
         lastCronRun = Date()
         MainScope().launch(ExceptionHandler.coroutine()) {
-            userRepository.runCron(completedTasks)
+            try {
+                userRepository.runCron(completedTasks)
+            } finally {
+                isRunningCron.set(false)
+                isShowingDialog.set(false)
+                displayedDialog = null
+            }
         }
-        displayedDialog = null
     }
 
     private fun createTaskViews(inflater: LayoutInflater) {
@@ -113,7 +118,7 @@ class YesterdailyDialog private constructor(
                             inflater.inflate(
                                 R.layout.checklist_item_row,
                                 checklistContainer,
-                                false
+                                false,
                             ) as ViewGroup
                         configureChecklistView(checklistView, task, item)
                         checklistContainer.addView(checklistView)
@@ -128,7 +133,7 @@ class YesterdailyDialog private constructor(
                         inflater.inflate(
                             R.layout.checklist_item_row,
                             checklistContainer,
-                            false
+                            false,
                         ) as ViewGroup
                     configureChecklistView(checklistView, task, item)
                     checklistContainer.addView(checklistView)
@@ -141,7 +146,7 @@ class YesterdailyDialog private constructor(
     private fun configureChecklistView(
         checklistView: ViewGroup,
         task: Task,
-        item: ChecklistItem
+        item: ChecklistItem,
     ) {
         val checkmark = checklistView.findViewById<ImageView>(R.id.checkmark)
         if (task.completed) {
@@ -150,8 +155,8 @@ class YesterdailyDialog private constructor(
             checkmark?.drawable?.setTint(
                 ContextCompat.getColor(
                     context,
-                    task.extraExtraDarkTaskColor
-                )
+                    task.extraExtraDarkTaskColor,
+                ),
             )
         }
         checkmark?.visibility = if (item.completed) View.VISIBLE else View.GONE
@@ -171,7 +176,7 @@ class YesterdailyDialog private constructor(
                 R.color.offset_background
             } else {
                 task.extraLightTaskColor
-            }
+            },
         )
         val textView = checklistView.findViewById(R.id.checkedTextView) as? TextView
         textView?.text = item.text
@@ -189,13 +194,13 @@ class YesterdailyDialog private constructor(
                     } else {
                         R.color.checkbox_fill
                     }
-                    )
+                ),
             )
     }
 
     private fun scoreChecklistItem(
         task: Task,
-        item: ChecklistItem
+        item: ChecklistItem,
     ) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
@@ -204,7 +209,7 @@ class YesterdailyDialog private constructor(
 
     private fun configureTaskView(
         taskView: View,
-        task: Task
+        task: Task,
     ) {
         val completed = !task.isDisplayedActive
         val checkmark = taskView.findViewById<ImageView>(R.id.checkmark)
@@ -221,76 +226,114 @@ class YesterdailyDialog private constructor(
         }
 
         val emojiView = taskView.findViewById<TextView>(R.id.text_view)
-        emojiView?.text = task.markdownText { emojiView?.text = it }
+        emojiView?.text = task.markdownText { emojiView.text = it }
     }
 
-    private fun createNewTaskView(inflater: LayoutInflater): View {
-        return inflater.inflate(R.layout.dialog_yesterdaily_task, yesterdailiesList, false)
-    }
+    private fun createNewTaskView(inflater: LayoutInflater): View =
+        inflater.inflate(R.layout.dialog_yesterdaily_task, yesterdailiesList, false)
 
     companion object {
         private var displayedDialog: WeakReference<YesterdailyDialog>? = null
         internal var lastCronRun: Date? = null
+        private val dialogMutex = Mutex()
+        private val isShowingDialog = AtomicBoolean(false)
+        private val isRunningCron = AtomicBoolean(false)
+        private var lastDialogShownTime: Long = 0
 
         fun showDialogIfNeeded(
             activity: Activity,
             userId: String?,
             userRepository: UserRepository?,
-            taskRepository: TaskRepository
+            taskRepository: TaskRepository,
         ) {
             if (userRepository != null && userId != null) {
                 MainScope().launchCatching {
-                    delay(500.toDuration(DurationUnit.MILLISECONDS))
-                    if (userRepository.isClosed) {
+                    if (isShowingDialog.get()) {
                         return@launchCatching
                     }
-                    val user = userRepository.getUser().firstOrNull()
-                    if (user?.needsCron != true) {
+
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastDialogShownTime < 5000) {
                         return@launchCatching
                     }
-                    val cal = Calendar.getInstance()
-                    cal.add(Calendar.DATE, -1)
-                    val tasks =
-                        taskRepository.retrieveDailiesFromDate(cal.time)?.tasks?.values?.filter { task ->
-                            return@filter task.type == TaskType.DAILY && task.isDue == true && !task.completed && task.yesterDaily && !task.isGroupTask
+
+                    delay(500.milliseconds)
+
+                    dialogMutex.withLock {
+                        if (isShowingDialog.get() || displayedDialog?.get()?.isShowing == true) {
+                            return@launchCatching
                         }
-                    if (displayedDialog?.get()?.isShowing == true) {
-                        return@launchCatching
-                    }
 
-                    if (abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
-                        return@launchCatching
-                    }
-                    val dailies =
-                        taskRepository.getTasks(TaskType.DAILY, null, emptyArray()).map {
-                            val taskMap = mutableMapOf<String, Int>()
-                            it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
-                            taskMap
-                        }.firstOrNull()
-                    val sortedTasks = tasks?.sortedBy { dailies?.get(it.id ?: "") }
+                        if (userRepository.isClosed) {
+                            return@launchCatching
+                        }
 
-                    val additionalData = HashMap<String, Any>()
-                    additionalData["task count"] = sortedTasks?.size ?: 0
-                    Analytics.sendEvent(
-                        "show cron",
-                        EventCategory.BEHAVIOUR,
-                        HitType.EVENT,
-                        additionalData
-                    )
+                        val user = userRepository.getUser().firstOrNull()
+                        if (user?.needsCron != true) {
+                            return@launchCatching
+                        }
 
-                    if (sortedTasks?.isNotEmpty() == true) {
-                        displayedDialog =
-                            WeakReference(
+                        // check if cron is already running
+                        if (isRunningCron.get()) {
+                            return@launchCatching
+                        }
+
+                        // check if cron was recently run
+                        if (abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
+                            return@launchCatching
+                        }
+
+                        val cal = Calendar.getInstance()
+                        cal.add(Calendar.DATE, -1)
+                        val tasks =
+                            taskRepository.retrieveDailiesFromDate(cal.time)?.tasks?.values?.filter { task ->
+                                return@filter task.type == TaskType.DAILY &&
+                                    task.isDue == true &&
+                                    !task.completed &&
+                                    task.yesterDaily &&
+                                    !task.isGroupTask
+                            }
+                        val dailies =
+                            taskRepository
+                                .getTasks(TaskType.DAILY, null, emptyArray())
+                                .map {
+                                    val taskMap = mutableMapOf<String, Int>()
+                                    it.forEachIndexed { index, task ->
+                                        taskMap[task.id ?: ""] = index
+                                    }
+                                    taskMap
+                                }.firstOrNull()
+                        val sortedTasks = tasks?.sortedBy { dailies?.get(it.id ?: "") }
+
+                        val additionalData = HashMap<String, Any>()
+                        additionalData["task count"] = sortedTasks?.size ?: 0
+
+                        if (sortedTasks?.isNotEmpty() == true) {
+                            isShowingDialog.set(true)
+                            lastDialogShownTime = System.currentTimeMillis()
+
+                            val dialog =
                                 showDialog(
                                     activity,
                                     userRepository,
                                     taskRepository,
-                                    sortedTasks
+                                    sortedTasks,
                                 )
-                            )
-                    } else {
-                        lastCronRun = Date()
-                        userRepository.runCron()
+                            if (dialog != null) {
+                                displayedDialog = WeakReference(dialog)
+                            } else {
+                                isShowingDialog.set(false)
+                            }
+                        } else {
+                            if (isRunningCron.compareAndSet(false, true)) {
+                                lastCronRun = Date()
+                                try {
+                                    userRepository.runCron()
+                                } finally {
+                                    isRunningCron.set(false)
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -300,15 +343,39 @@ class YesterdailyDialog private constructor(
             activity: Activity,
             userRepository: UserRepository,
             taskRepository: TaskRepository,
-            tasks: List<Task>
-        ): YesterdailyDialog {
+            tasks: List<Task>,
+        ): YesterdailyDialog? {
+            if (activity.isFinishing || activity.isDestroyed) {
+                isShowingDialog.set(false)
+                return null
+            }
+
             val dialog = YesterdailyDialog(activity, userRepository, taskRepository, tasks)
             dialog.setCancelable(false)
             dialog.setCanceledOnTouchOutside(false)
-            if (!activity.isFinishing) {
-                dialog.show()
+
+            dialog.setOnShowListener {
+                isShowingDialog.set(true)
             }
-            return dialog
+
+            dialog.setOnDismissListener {
+                lastCronRun = Date()
+                isShowingDialog.set(false)
+                dialog.runCron()
+            }
+
+            if (!activity.isFinishing && !activity.isDestroyed) {
+                try {
+                    dialog.show()
+                    return dialog
+                } catch (e: Exception) {
+                    isShowingDialog.set(false)
+                    ExceptionHandler.reportError(e)
+                }
+            } else {
+                isShowingDialog.set(false)
+            }
+            return null
         }
     }
 }

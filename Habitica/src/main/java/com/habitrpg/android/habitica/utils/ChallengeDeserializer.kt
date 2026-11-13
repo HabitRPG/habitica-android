@@ -10,15 +10,18 @@ import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.social.Challenge
+import com.habitrpg.android.habitica.models.social.ChallengeCategory
 import java.lang.reflect.Type
 import java.util.Date
 
-class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challenge> {
+class ChallengeDeserializer :
+    JsonDeserializer<Challenge>,
+    JsonSerializer<Challenge> {
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Challenge {
         val jsonObject = json.asJsonObject
 
@@ -57,6 +60,19 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
                         challenge.leaderId = id.asString
                     }
                 }
+            }
+        }
+
+        if (jsonObject.has("categories")) {
+            jsonObject.getAsJsonArray("categories").forEach { elem ->
+                val categoryObject = elem.asJsonObject
+                val category =
+                    ChallengeCategory().apply {
+                        slug = categoryObject.get("slug").asString
+                        name = categoryObject.get("name").asString
+                        id = categoryObject.get("_id").asString
+                    }
+                challenge.categories.add(category)
             }
         }
 
@@ -103,7 +119,7 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
     private fun getTaskArrayAsString(
         context: JsonDeserializationContext,
         tasksOrderObj: JsonObject,
-        taskType: String
+        taskType: String,
     ): String {
         if (tasksOrderObj.has(taskType)) {
             val jsonElement = tasksOrderObj.get(taskType)
@@ -120,7 +136,7 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
     override fun serialize(
         src: Challenge,
         typeOfSrc: Type,
-        context: JsonSerializationContext
+        context: JsonSerializationContext,
     ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("id", src.id)

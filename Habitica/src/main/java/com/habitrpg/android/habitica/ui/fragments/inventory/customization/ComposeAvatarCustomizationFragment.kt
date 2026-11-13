@@ -71,7 +71,6 @@ import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
@@ -85,7 +84,6 @@ import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.setTintWith
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
@@ -94,7 +92,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CustomizationViewModel : ViewModel() {
@@ -110,8 +107,14 @@ class CustomizationViewModel : ViewModel() {
     val typeNameId: Int
         get() =
             when (type) {
-                "shirt" -> R.string.avatar_shirts
-                "skin" -> R.string.avatar_skins
+                "shirt" -> {
+                    R.string.avatar_shirts
+                }
+
+                "skin" -> {
+                    R.string.avatar_skins
+                }
+
                 "hair" -> {
                     when (category) {
                         "color" -> R.string.avatar_hair_colors
@@ -124,8 +127,13 @@ class CustomizationViewModel : ViewModel() {
                     }
                 }
 
-                "background" -> R.string.standard_backgrounds
-                else -> R.string.customizations
+                "background" -> {
+                    R.string.standard_backgrounds
+                }
+
+                else -> {
+                    R.string.customizations
+                }
             }
 }
 
@@ -140,10 +148,8 @@ class ComposeAvatarCustomizationFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentComposeBinding {
-        return FragmentComposeBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentComposeBinding = FragmentComposeBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -167,7 +173,7 @@ class ComposeAvatarCustomizationFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         showsBackButton = true
         hidesToolbar = true
@@ -181,22 +187,36 @@ class ComposeAvatarCustomizationFragment :
                     val hairColor by viewModel.hairColor
                     val activeCustomization by viewModel.activeCustomization
                     val avatar by userViewModel.user.observeAsState()
-                    AvatarCustomizationView(avatar = avatar, configManager = configManager, viewModel.items, userSize, hairColor, type, stringResource(viewModel.typeNameId), activeCustomization) { customization ->
-                        lifecycleScope.launchCatching {
+                    AvatarCustomizationView(
+                        avatar = avatar,
+                        configManager = configManager,
+                        viewModel.items,
+                        userSize,
+                        hairColor,
+                        type,
+                        stringResource(viewModel.typeNameId),
+                        activeCustomization,
+                    ) { customization ->
+                        viewLifecycleOwner.lifecycleScope.launchCatching {
                             if (customization.identifier?.isNotBlank() != true) {
                                 userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
-                            } else if (customization.identifier == activeCustomization && customization.type == "hair" && customization.category != "color") {
+                            } else if (customization.identifier == activeCustomization &&
+                                customization.type == "hair" &&
+                                customization.category != "color"
+                            ) {
                                 userRepository.useCustomization(type ?: "", category, "0")
                             } else if (customization.identifier == activeCustomization && customization.type == "chair") {
                                 userRepository.useCustomization(type ?: "", category, "none")
-                            } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
+                            } else if (customization.type == "background" &&
+                                ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null
+                            ) {
                                 userRepository.unlockPath(customization)
                                 userRepository.retrieveUser(false, true, true)
                             } else {
                                 userRepository.useCustomization(
                                     customization.type ?: "",
                                     customization.category,
-                                    customization.identifier ?: ""
+                                    customization.identifier ?: "",
                                 )
                             }
                         }
@@ -209,7 +229,7 @@ class ComposeAvatarCustomizationFragment :
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -226,23 +246,22 @@ class ComposeAvatarCustomizationFragment :
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
 
-        lifecycleScope.launchCatching {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
             currentFilter.collect {
                 Log.e("NewFilter", it.toString())
             }
         }
-
-        Analytics.sendNavigationEvent("$type screen")
     }
 
     override fun onDestroy() {
         customizationRepository.close()
+        inventoryRepository.close()
         super.onDestroy()
     }
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_customizations, menu)
@@ -256,8 +275,12 @@ class ComposeAvatarCustomizationFragment :
 
         mainActivity?.toolbar?.let {
             val color = ContextCompat.getColor(requireContext(), R.color.window_background)
-            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color,
-                appbar = mainActivity?.findViewById(R.id.appbar))
+            ToolbarColorHelper.colorizeToolbar(
+                it,
+                mainActivity,
+                backgroundColor = color,
+                appbar = mainActivity?.findViewById(R.id.appbar),
+            )
         }
     }
 
@@ -298,14 +321,20 @@ class ComposeAvatarCustomizationFragment :
 
     private fun loadCustomizations() {
         val type = this.type ?: return
-        lifecycleScope.launchCatching {
-            customizationRepository.getCustomizations(type, category, false)
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            customizationRepository
+                .getCustomizations(type, category, false)
                 .combine(currentFilter) { customizations, filter -> Pair(customizations, filter) }
                 .combine(ownedCustomizations) { pair, ownedCustomizations ->
                     val ownedKeys = ownedCustomizations.map { it.key }
-                    return@combine Pair(pair.first.filter { ownedKeys.contains(it.identifier) || ((it.price ?: 0) == 0 && (type != "background" || it.identifier.isNullOrEmpty())) }, pair.second)
-                }
-                .map { (customizations, filter) ->
+                    return@combine Pair(
+                        pair.first.filter {
+                            ownedKeys.contains(it.identifier) ||
+                                ((it.price ?: 0) == 0 && (type != "background" || it.identifier.isNullOrEmpty()))
+                        },
+                        pair.second,
+                    )
+                }.map { (customizations, filter) ->
                     var displayedCustomizations = customizations
                     if (filter.isFiltering) {
                         displayedCustomizations = mutableListOf()
@@ -315,26 +344,33 @@ class ComposeAvatarCustomizationFragment :
                         }
                     }
                     if (type == "background") {
-                        displayedCustomizations = displayedCustomizations.sortedBy {
-                            when (it.customizationSet) {
-                                "incentiveBackgrounds" -> 2
-                                "timeTravelersBackground" -> 1
-                                else -> 0
+                        displayedCustomizations =
+                            displayedCustomizations.sortedBy {
+                                when (it.customizationSet) {
+                                    "incentiveBackgrounds" -> 2
+                                    "timeTravelersBackground" -> 1
+                                    else -> 0
+                                }
                             }
-                        }
                     }
                     if (!filter.ascending) {
                         displayedCustomizations.reversed()
                     } else {
                         displayedCustomizations
                     }
-                }
-                .collect { customizations ->
+                }.collect { customizations ->
                     viewModel.items.clear()
                     if (type == "background") {
                         var lastSection = ""
                         customizations.forEach { background ->
-                            val section = if (background.customizationSet?.startsWith("20") == true) requireContext().getString(R.string.monthly_backgrounds) else background.customizationSetName ?: ""
+                            val section =
+                                if (background.customizationSet?.startsWith("20") ==
+                                    true
+                                ) {
+                                    requireContext().getString(R.string.monthly_backgrounds)
+                                } else {
+                                    background.customizationSetName ?: ""
+                                }
                             if (section != lastSection && background.customizationSet != "incentiveBackgrounds") {
                                 viewModel.items.add(section)
                                 lastSection = section
@@ -350,19 +386,24 @@ class ComposeAvatarCustomizationFragment :
 
     private fun shouldSkip(
         filter: CustomizationFilter,
-        customization: Customization
-    ): Boolean {
-        return if (filter.onlyPurchased) {
+        customization: Customization,
+    ): Boolean =
+        if (filter.onlyPurchased) {
             true
         } else {
             filter.months.isNotEmpty() && !filter.months.contains(customization.customizationSet?.substringAfter('.'))
         }
-    }
 
     fun updateUser(user: User?) {
         if (user == null) return
         this.updateActiveCustomization(user)
-        ownedCustomizations.value = user.purchased?.customizations?.filter { it.type == this.type && (it.category.isNullOrEmpty() || it.category == this.category) && it.purchased } ?: emptyList()
+        ownedCustomizations.value =
+            user.purchased?.customizations?.filter {
+                it.type == this.type &&
+                    (it.category.isNullOrEmpty() || it.category == this.category) &&
+                    it.purchased
+            }
+                ?: emptyList()
         viewModel.userSize.value = user.preferences?.size ?: "slim"
         viewModel.hairColor.value = user.preferences?.hair?.color
     }
@@ -374,11 +415,23 @@ class ComposeAvatarCustomizationFragment :
         val prefs = user.preferences
         val activeCustomization =
             when (this.type) {
-                "skin" -> prefs?.skin
-                "shirt" -> prefs?.shirt
-                "background" -> prefs?.background
-                "chair" -> prefs?.chair?.replace("chair_", "")
-                "hair" ->
+                "skin" -> {
+                    prefs?.skin
+                }
+
+                "shirt" -> {
+                    prefs?.shirt
+                }
+
+                "background" -> {
+                    prefs?.background
+                }
+
+                "chair" -> {
+                    prefs?.chair?.replace("chair_", "")
+                }
+
+                "hair" -> {
                     when (this.category) {
                         "bangs" -> prefs?.hair?.bangs.toString()
                         "base" -> prefs?.hair?.base.toString()
@@ -388,8 +441,11 @@ class ComposeAvatarCustomizationFragment :
                         "mustache" -> prefs?.hair?.mustache.toString()
                         else -> ""
                     }
+                }
 
-                else -> ""
+                else -> {
+                    ""
+                }
             }
         if (activeCustomization != null) {
             this.activeCustomization = activeCustomization
@@ -398,7 +454,7 @@ class ComposeAvatarCustomizationFragment :
     }
 
     override fun onRefresh() {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.retrieveUser(true, true)
         }
     }
@@ -451,7 +507,7 @@ class ComposeAvatarCustomizationFragment :
     private fun configureMonthFilterButton(
         button: CheckBox,
         value: Int,
-        filter: CustomizationFilter
+        filter: CustomizationFilter,
     ) {
         val identifier = value.toString().padStart(2, '0')
         button.isChecked = filter.months.contains(identifier)
@@ -482,22 +538,25 @@ private fun AvatarCustomizationView(
     type: String?,
     typeName: String,
     activeCustomization: String?,
-    onSelect: (Customization) -> Unit
+    onSelect: (Customization) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val isWidthGreaterHeight = configuration.screenWidthDp > configuration.screenHeightDp
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(colorResource(R.color.window_background))) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(colorResource(R.color.window_background)),
+        ) {
             ComposableAvatarView(
                 avatar = avatar,
                 configManager = configManager,
                 modifier =
-                Modifier
-                    .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)
-                    .size(140.dp, 147.dp)
+                    Modifier
+                        .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)
+                        .size(140.dp, 147.dp),
             )
         }
         val nestedScrollInterop = rememberNestedScrollInteropConnection()
@@ -512,18 +571,18 @@ private fun AvatarCustomizationView(
             horizontalArrangement = Arrangement.Center,
             contentPadding = PaddingValues(horizontal = horizontalPadding),
             modifier =
-            Modifier
-                .padding(bottom = insets.calculateBottomPadding())
-                .background(colorResource(R.color.window_background))
-                .padding(start = insets.calculateStartPadding(ld), end = insets.calculateEndPadding(ld))
-                .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
-                .background(colorResource(R.color.content_background))
-                .onGloballyPositioned {
-                    gridWidth = with(density) {
-                        it.size.width.toDp()
-                    }
-                }
-                .nestedScroll(nestedScrollInterop)
+                Modifier
+                    .padding(bottom = insets.calculateBottomPadding())
+                    .background(colorResource(R.color.window_background))
+                    .padding(start = insets.calculateStartPadding(ld), end = insets.calculateEndPadding(ld))
+                    .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                    .background(colorResource(R.color.content_background))
+                    .onGloballyPositioned {
+                        gridWidth =
+                            with(density) {
+                                it.size.width.toDp()
+                            }
+                    }.nestedScroll(nestedScrollInterop),
         ) {
             item(span = { GridItemSpan(3) }) {
                 Text(
@@ -532,7 +591,7 @@ private fun AvatarCustomizationView(
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.text_ternary),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(10.dp)
+                    modifier = Modifier.padding(10.dp),
                 )
             }
             if (items.size > 1) {
@@ -541,22 +600,41 @@ private fun AvatarCustomizationView(
                         Box(
                             contentAlignment = Alignment.Center,
                             modifier =
-                            Modifier
-                                .padding(4.dp)
-                                .border(if (activeCustomization == item.identifier) 2.dp else 0.dp, if (activeCustomization == item.identifier) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
-                                .size(76.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .clickable {
-                                    onSelect(item)
-                                }
-                                .background(colorResource(id = R.color.window_background))
+                                Modifier
+                                    .padding(4.dp)
+                                    .border(
+                                        if (activeCustomization ==
+                                            item.identifier
+                                        ) {
+                                            2.dp
+                                        } else {
+                                            0.dp
+                                        },
+                                        if (activeCustomization ==
+                                            item.identifier
+                                        ) {
+                                            HabiticaTheme.colors.tintedUiMain
+                                        } else {
+                                            colorResource(R.color.transparent)
+                                        },
+                                        RoundedCornerShape(8.dp),
+                                    ).size(76.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .clickable {
+                                        onSelect(item)
+                                    }.background(colorResource(id = R.color.window_background)),
                         ) {
                             if (item.identifier.isNullOrBlank() || item.identifier == "0" || item.identifier == "none") {
-                                Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
+                                Image(
+                                    painterResource(R.drawable.empty_slot),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.None,
+                                    modifier = Modifier.size(68.dp),
+                                )
                             } else {
                                 PixelArtView(
                                     imageName = item.getIconName(userSize, hairColor),
-                                    Modifier.size(68.dp)
+                                    Modifier.size(68.dp),
                                 )
                             }
                         }
@@ -567,7 +645,7 @@ private fun AvatarCustomizationView(
                             fontWeight = FontWeight.SemiBold,
                             color = colorResource(id = R.color.text_ternary),
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(10.dp).padding(top = 16.dp)
+                            modifier = Modifier.padding(10.dp).padding(top = 16.dp),
                         )
                     }
                 }

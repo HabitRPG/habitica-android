@@ -1,9 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -25,15 +23,10 @@ class SkillTasksActivity : BaseActivity() {
     @Inject
     lateinit var taskRepository: TaskRepository
 
-    internal var viewFragmentsDictionary = SparseArray<SkillTasksRecyclerViewFragment>()
-
-    override fun getLayoutResId(): Int {
-        return R.layout.activity_skill_tasks
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_skill_tasks
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar(findViewById(R.id.toolbar))
         loadTaskLists()
     }
 
@@ -56,13 +49,10 @@ class SkillTasksActivity : BaseActivity() {
                     fragment.onTaskSelection = {
                         taskSelected(it)
                     }
-                    viewFragmentsDictionary.put(position, fragment)
                     return fragment
                 }
 
-                override fun getItemCount(): Int {
-                    return 3
-                }
+                override fun getItemCount(): Int = 3
             }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -80,16 +70,15 @@ class SkillTasksActivity : BaseActivity() {
     fun taskSelected(task: Task) {
         val resultIntent = Intent()
         resultIntent.putExtra("taskID", task.id)
-        setResult(Activity.RESULT_OK, resultIntent)
+        setResult(RESULT_OK, resultIntent)
         finish()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        if (item.itemId == android.R.id.home) {
             onBackPressed()
             true
         } else {
             super.onOptionsItemSelected(item)
         }
-    }
 }

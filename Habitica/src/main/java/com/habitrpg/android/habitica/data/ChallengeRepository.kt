@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data
 
+import com.habitrpg.android.habitica.models.social.CategoryOption
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface ChallengeRepository : BaseRepository {
     suspend fun retrieveChallenges(
         page: Int = 0,
-        memberOnly: Boolean
+        memberOnly: Boolean,
     ): List<Challenge>?
 
     fun getChallenges(): Flow<List<Challenge>>
@@ -24,7 +25,7 @@ interface ChallengeRepository : BaseRepository {
 
     suspend fun createChallenge(
         challenge: Challenge,
-        taskList: List<Task>
+        taskList: List<Task>,
     ): Challenge?
 
     /**
@@ -41,7 +42,7 @@ interface ChallengeRepository : BaseRepository {
         fullTaskList: List<Task>,
         addedTaskList: List<Task>,
         updatedTaskList: List<Task>,
-        removedTaskList: List<String>
+        removedTaskList: List<String>,
     ): Challenge?
 
     suspend fun deleteChallenge(challengeId: String): Void?
@@ -50,7 +51,7 @@ interface ChallengeRepository : BaseRepository {
 
     suspend fun leaveChallenge(
         challenge: Challenge,
-        keepTasks: String
+        keepTasks: String,
     ): Void?
 
     suspend fun joinChallenge(challenge: Challenge): Challenge?
@@ -63,6 +64,8 @@ interface ChallengeRepository : BaseRepository {
 
     suspend fun reportChallenge(
         challengeid: String,
-        updateData: Map<String, String>
+        updateData: Map<String, String>,
     ): Void?
+
+    fun getCategoryOptions(): Flow<List<CategoryOption>>
 }

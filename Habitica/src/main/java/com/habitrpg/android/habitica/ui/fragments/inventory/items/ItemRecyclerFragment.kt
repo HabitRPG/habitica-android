@@ -2,37 +2,24 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.items
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.edit
-import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.Analytics
-import com.habitrpg.android.habitica.helpers.EventCategory
-import com.habitrpg.android.habitica.helpers.HitType
-import com.habitrpg.android.habitica.helpers.ReviewManager
-import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
-import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -41,56 +28,42 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillDialogBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.inventory.items.ItemListViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
 import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemRecyclerFragment :
     BaseFragment<FragmentItemsBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-    @Inject
-    lateinit var inventoryRepository: InventoryRepository
-
-    @Inject
-    lateinit var socialRepository: SocialRepository
-
-    @Inject
-    lateinit var userRepository: UserRepository
-
-    @Inject
-    internal lateinit var hatchPetUseCase: HatchPetUseCase
+    val viewModel: ItemListViewModel by viewModels()
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
-
-    @Inject
-    lateinit var reviewManager: ReviewManager
-
     var user: User? = null
     var adapter: ItemRecyclerAdapter? = null
-    var itemType: String? = null
-    var transformationItems: MutableList<OwnedItem> = mutableListOf()
-    var itemTypeText: String? = null
+    var itemType: String?
+        get() = arguments?.getString(ARG_ITEM_TYPE)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ARG_ITEM_TYPE, value)
+        }
+    var itemTypeText: String?
+        get() = arguments?.getString(ARG_ITEM_TYPE_TEXT)
+        set(value) {
+            val args = arguments ?: Bundle().also { arguments = it }
+            args.putString(ARG_ITEM_TYPE_TEXT, value)
+        }
     private var selectedSpecialItem: SpecialItem? = null
     private var specialSkills: MutableList<Skill> = mutableListOf()
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
@@ -99,39 +72,18 @@ class ItemRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentItemsBinding {
-        return FragmentItemsBinding.inflate(inflater, container, false)
-    }
-
-    override fun onDestroy() {
-        inventoryRepository.close()
-        super.onDestroy()
-    }
+        container: ViewGroup?,
+    ): FragmentItemsBinding = FragmentItemsBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
-            this.itemTypeText = savedInstanceState.getString(ITEM_TYPE_TEXT_KEY, "")
-        }
         getSpecialSkills()
 
         binding?.refreshLayout?.setOnRefreshListener(this)
         val buttonMethod = {
-            Analytics.sendEvent(
-                "Items CTA tap",
-                EventCategory.BEHAVIOUR,
-                HitType.EVENT,
-                mapOf(
-                    "area" to "empty",
-                    "type" to (itemType ?: "")
-                )
-            )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
@@ -158,7 +110,7 @@ class ItemRecyclerFragment :
                     else -> null
                 },
                 false,
-                if (itemType == "special") null else buttonMethod
+                if (itemType == "special") null else buttonMethod,
             )
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
@@ -179,19 +131,8 @@ class ItemRecyclerFragment :
 
     private fun getSpecialSkills() {
         // Get special skills for description of special items
-        lifecycleScope.launchCatching {
-            val user = userViewModel.user.value ?: return@launchCatching
-            userRepository.getSkills(user)
-                .combine(userRepository.getSpecialItems(user)) { skills, items ->
-                    val allEntries = mutableListOf<Skill>()
-                    for (skill in skills) {
-                        allEntries.add(skill)
-                    }
-                    for (item in items) {
-                        allEntries.add(item)
-                    }
-                    return@combine allEntries
-                }.collect { skills -> specialSkills = skills }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.specialSkills.collect { skills -> specialSkills = skills }
         }
     }
 
@@ -209,16 +150,17 @@ class ItemRecyclerFragment :
             val specialSkill = specialSkills.find { it.key == specialItem.key }
             if (specialSkill != null) {
                 val skillIdentifier = "shop_"
-                val bottomSheet = SkillDialogBottomSheetFragment.newInstance(
-                    skillTitle = specialSkill.text,
-                    skillDescription = specialSkill.notes ?: "",
-                    skillKey = specialSkill.key,
-                    skillPath = skillIdentifier,
-                    isTransformationItem = true,
-                    onUseSkill = {
-                        onSpecialItemSelected(specialItem)
-                    }
-                )
+                val bottomSheet =
+                    SkillDialogBottomSheetFragment.newInstance(
+                        skillTitle = specialSkill.text,
+                        skillDescription = specialSkill.notes ?: "",
+                        skillKey = specialSkill.key,
+                        skillPath = skillIdentifier,
+                        isTransformationItem = true,
+                        onUseSkill = {
+                            onSpecialItemSelected(specialItem)
+                        },
+                    )
                 bottomSheet.show(childFragmentManager, "SkillDialogBottomSheet")
             }
         }
@@ -226,14 +168,11 @@ class ItemRecyclerFragment :
             showSellItemConfirmation(item, ownedItem)
         }
         adapter?.onQuestInvitation = {
-            lifecycleScope.launchCatching {
-                inventoryRepository.inviteToQuest(it)
-                MainNavigationController.navigate(R.id.partyFragment)
-            }
+            viewModel.inviteToQuest(it)
         }
         adapter?.onOpenMysteryItem = {
-            lifecycleScope.launchCatching {
-                val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
+            viewLifecycleOwner.lifecycleScope.launchCatching {
+                val item = viewModel.openMysteryItem(user) ?: return@launchCatching
                 val activity = activity as? MainActivity
                 if (activity != null) {
                     val dialog = OpenedMysteryitemDialog(activity)
@@ -243,13 +182,11 @@ class ItemRecyclerFragment :
                     dialog.binding.titleView.text = item.text
                     dialog.binding.descriptionView.text = item.notes
                     dialog.addButton(R.string.equip, true) { _, _ ->
-                        lifecycleScope.launchCatching {
-                            item.key?.let { mysteryItem ->
-                                inventoryRepository.equip(
-                                    "equipped",
-                                    mysteryItem
-                                )
-                            }
+                        item.key?.let { mysteryItem ->
+                            viewModel.equip(
+                                "equipped",
+                                mysteryItem,
+                            )
                         }
                     }
                     dialog.addCloseButton()
@@ -265,15 +202,6 @@ class ItemRecyclerFragment :
             (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText)
                 ?: ""
         adapter?.onOpenShop = {
-            Analytics.sendEvent(
-                "Items CTA tap",
-                EventCategory.BEHAVIOUR,
-                HitType.EVENT,
-                mapOf(
-                    "area" to "bottom",
-                    "type" to (itemType ?: "")
-                )
-            )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
@@ -296,51 +224,21 @@ class ItemRecyclerFragment :
         parentFragmentManager.let { fragment.show(it, "hatchingDialog") }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(ITEM_TYPE_KEY, this.itemType)
-        outState.putString(ITEM_TYPE_TEXT_KEY, this.itemTypeText)
-    }
-
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(true, true)
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.refreshUser()
             binding?.refreshLayout?.isRefreshing = false
         }
     }
 
     private fun hatchPet(
         potion: HatchingPotion,
-        egg: Egg
+        egg: Egg,
     ) {
         (activity as? BaseActivity)?.let {
             lifecycleScope.launchCatching {
-                hatchPetUseCase.callInteractor(
-                    HatchPetUseCase.RequestValues(
-                        potion,
-                        egg,
-                        it
-                    )
-                )
-
-                if (isAdded) {
-                    var hatchCount = sharedPreferences.getInt("pets_hatched", 0)
-                    hatchCount += 1
-                    sharedPreferences.edit {
-                        putInt("pets_hatched", hatchCount)
-                    }
-                    if (hatchCount >= 2) {
-                        userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
-                            val parentActivity = activity as? MainActivity
-                            val totalCheckIns = user?.loginIncentives
-
-                            if (totalCheckIns != null && parentActivity != null) {
-                                reviewManager.requestReview(parentActivity, totalCheckIns)
-                            }
-                        }
-                    }
-                }
+                viewModel.hatchPet(potion, egg, it)
             }
         }
     }
@@ -350,22 +248,11 @@ class ItemRecyclerFragment :
         alert?.setTitle(R.string.quest_party_required_title)
         alert?.setMessage(R.string.quest_party_required_description)
         alert?.addButton(R.string.create_new_party, true, false) { _, _ ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                socialRepository.createGroup(
-                    getString(R.string.usernames_party, user?.profile?.name),
-                    "",
-                    user?.id,
-                    "party",
-                    "",
-                    false
-                )
-                val user = userRepository.retrieveUser(false, true)
-                if (user?.hasParty == true) {
-                    val party = socialRepository.retrieveGroup("party")
-                    socialRepository.retrievePartyMembers(party?.id ?: "", true)
-                    MainNavigationController.navigate(
-                        R.id.partyFragment,
-                        bundleOf(Pair("partyID", user.party?.id))
+            viewLifecycleOwner.lifecycleScope.launchCatching {
+                user?.let {
+                    viewModel.createParty(
+                        it,
+                        getString(R.string.usernames_party, user?.profile?.name),
                     )
                 }
             }
@@ -377,43 +264,19 @@ class ItemRecyclerFragment :
     }
 
     private fun loadItems() {
-        val itemClass: Class<out Item> =
-            when (itemType) {
-                "eggs" -> Egg::class.java
-                "hatchingPotions" -> HatchingPotion::class.java
-                "food" -> Food::class.java
-                "quests" -> QuestContent::class.java
-                "special" -> SpecialItem::class.java
-                else -> Egg::class.java
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.ownedItems.collect { adapter?.data = it }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.items.collect {
+                adapter?.items = it
             }
-        itemType?.let { type ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedItems(type)
-                    .onEach { items ->
-                        adapter?.data = items
-                    }
-                    .map { items -> items.mapNotNull { it.key } }
-                    .map {
-                        inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
-                    }
-                    .collect {
-                        val itemMap = mutableMapOf<String, Item>()
-                        for (item in it ?: emptyList()) {
-                            itemMap[item.key] = item
-                        }
-                        adapter?.items = itemMap
-                    }
-            }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
-            }
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                inventoryRepository.getOwnedPets().map { ownedPets ->
-                    val petMap = mutableMapOf<String, OwnedPet>()
-                    ownedPets.forEach { petMap[it.key ?: ""] = it }
-                    return@map petMap
-                }.collect { adapter?.setOwnedPets(it) }
-            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.pets.collect { adapter?.setExistingPets(it) }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewModel.ownedPets.collect { adapter?.setOwnedPets(it) }
         }
     }
 
@@ -436,13 +299,13 @@ class ItemRecyclerFragment :
 
     private fun useSpecialItem(
         specialItem: SpecialItem?,
-        memberID: String? = null
+        memberID: String? = null,
     ) {
         if (specialItem == null || memberID == null) {
             return
         }
         lifecycleScope.launchCatching {
-            userRepository.useSkill(specialItem.key, specialItem.target, memberID)
+            viewModel.useSkill(specialItem.key, specialItem.target, memberID)
             displaySpecialItemResult(specialItem)
         }
     }
@@ -455,19 +318,26 @@ class ItemRecyclerFragment :
             HabiticaSnackbar.showSnackbar(
                 it.snackbarContainer,
                 context?.getString(R.string.used_skill_without_mana, specialItem?.text),
-                HabiticaSnackbar.SnackbarDisplayType.BLUE
+                HabiticaSnackbar.SnackbarDisplayType.BLUE,
             )
         }
 
         loadItems()
     }
 
-    private fun showSellItemConfirmation(item: Item, ownedItem: OwnedItem) {
+    private fun showSellItemConfirmation(
+        item: Item,
+        ownedItem: OwnedItem,
+    ) {
         val dialog = HabiticaAlertDialog(requireContext())
         dialog.setTitle(getString(R.string.sell_confirmation_title, item.text))
-        dialog.addButton(getString(R.string.sell, item.value), isPrimary = true, isDestructive = true) { _, _ ->
+        dialog.addButton(
+            getString(R.string.sell, item.value),
+            isPrimary = true,
+            isDestructive = true,
+        ) { _, _ ->
             lifecycleScope.launchCatching {
-                inventoryRepository.sellItem(ownedItem)
+                viewModel.sellItem(ownedItem)
             }
         }
         dialog.addCancelButton()
@@ -475,7 +345,7 @@ class ItemRecyclerFragment :
     }
 
     companion object {
-        private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
-        private const val ITEM_TYPE_TEXT_KEY = "CLASS_TYPE_TEXT_KEY"
+        const val ARG_ITEM_TYPE = "CLASS_TYPE_KEY"
+        const val ARG_ITEM_TYPE_TEXT = "CLASS_TYPE_TEXT_KEY"
     }
 }

@@ -22,7 +22,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.graphics.Insets
 
 interface OnImeVisibilityChangedListener {
-    fun onImeVisibilityChanged(visible: Boolean, height: Int, safeInsets: Insets)
+    fun onImeVisibilityChanged(
+        visible: Boolean,
+        height: Int,
+        safeInsets: Insets,
+    )
 }
 
 class KeyboardUtil {
@@ -39,7 +43,12 @@ class KeyboardUtil {
 
         private var lastVisible = false
         private var lastHeight = 0
-        fun updatePaddingForIme(isVisible: Boolean, height: Int, safeInsets: Insets) {
+
+        fun updatePaddingForIme(
+            isVisible: Boolean,
+            height: Int,
+            safeInsets: Insets,
+        ) {
             if (lastVisible == isVisible && lastHeight == height) {
                 return
             }

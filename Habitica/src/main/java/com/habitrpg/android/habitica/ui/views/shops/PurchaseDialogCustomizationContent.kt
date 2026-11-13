@@ -11,7 +11,9 @@ import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.EnumMap
 
-class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogContent(context) {
+class PurchaseDialogCustomizationContent(
+    context: Context,
+) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseCustomizationBinding.inflate(context.layoutInflater, this)
     override val imageView: PixelArtView
         get() = PixelArtView(context)
@@ -41,7 +43,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
 
     fun setAvatarWithPreview(
         user: User,
-        shopItem: ShopItem
+        shopItem: ShopItem,
     ) {
         val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
         val path = shopItem.unlockPath ?: shopItem.path ?: ""
@@ -55,7 +57,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
                 path.contains("beard") -> AvatarView.LayerType.HAIR_BEARD
                 path.contains("mustache") -> AvatarView.LayerType.HAIR_MUSTACHE
                 path.contains("back") -> AvatarView.LayerType.BACK
-                path.contains("headAccessory") -> AvatarView.LayerType.HEAD
+                path.contains("headAccessory") -> AvatarView.LayerType.HEAD_ACCESSORY
                 else -> null
             }
         layerName?.let {
@@ -76,7 +78,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
                 }
             }
 
-            if (path.contains("hair")) {
+            if (path.contains("hair") && !path.contains("headAccessory")) {
                 layerMap[AvatarView.LayerType.HEAD] = ""
                 layerMap[AvatarView.LayerType.HEAD_ACCESSORY] = ""
             }

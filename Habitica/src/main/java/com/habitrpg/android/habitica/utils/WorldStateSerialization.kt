@@ -8,14 +8,13 @@ import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class WorldStateSerialization : JsonDeserializer<WorldState> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?
+        context: JsonDeserializationContext?,
     ): WorldState {
         val state = WorldState()
         val obj = json?.asJsonObject ?: return state
@@ -42,7 +41,6 @@ class WorldStateSerialization : JsonDeserializer<WorldState> {
                 val extra = worldBossObject["extra"].asJsonObject
                 if (extra.has("worldDmg")) {
                     val worldDmg = extra["worldDmg"].asJsonObject
-                    state.rageStrikes = RealmList()
                     worldDmg.entrySet().forEach { (key, value) ->
                         val strike = QuestRageStrike(key, value.asBoolean)
                         state.rageStrikes?.add(strike)
@@ -60,15 +58,15 @@ class WorldStateSerialization : JsonDeserializer<WorldState> {
                     state.currentEvent = context?.deserialize(event, WorldStateEvent::class.java)
                 }
                 if (obj.has("currentEventList")) {
-                    val events = RealmList<WorldStateEvent>()
                     for (element in obj.getAsJsonArray("currentEventList")) {
-                        context?.deserialize<WorldStateEvent>(element, WorldStateEvent::class.java)
-                            ?.let { events.add(it) }
+                        context
+                            ?.deserialize<WorldStateEvent>(element, WorldStateEvent::class.java)
+                            ?.let { state.events.add(it) }
                     }
-                    state.events = events
                 }
             }
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
         return state

@@ -42,7 +42,7 @@ class NotificationPublisher : BroadcastReceiver() {
 
     override fun onReceive(
         context: Context,
-        intent: Intent
+        intent: Intent,
     ) {
         this.context = context
         if (!wasInjected) {
@@ -73,7 +73,7 @@ class NotificationPublisher : BroadcastReceiver() {
                 if (showNotifications) {
                     notify(
                         intent,
-                        buildNotification(wasInactive, user?.authentication?.timestamps?.createdAt)
+                        buildNotification(wasInactive, user?.authentication?.timestamps?.createdAt),
                     )
                 }
             }
@@ -84,7 +84,7 @@ class NotificationPublisher : BroadcastReceiver() {
 
     private fun notify(
         intent: Intent,
-        notification: Notification?
+        notification: Notification?,
     ) {
         val context = context ?: return
         val notificationManager = NotificationManagerCompat.from(context)
@@ -96,7 +96,7 @@ class NotificationPublisher : BroadcastReceiver() {
 
     private fun buildNotification(
         wasInactive: Boolean,
-        registrationDate: Date? = null
+        registrationDate: Date? = null,
     ): Notification? {
         val thisContext = context ?: return null
         val notification: Notification
@@ -110,11 +110,11 @@ class NotificationPublisher : BroadcastReceiver() {
             val isSameDay = (
                 registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
                     registrationCal.get(Calendar.DAY_OF_YEAR) == todayCal.get(Calendar.DAY_OF_YEAR)
-                )
+            )
             val isPreviousDay = (
                 registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
                     registrationCal.get(Calendar.DAY_OF_YEAR) == (todayCal.get(Calendar.DAY_OF_YEAR) - 1)
-                )
+            )
             if (isSameDay) {
                 builder.setContentTitle(thisContext.getString(R.string.same_day_reminder_title))
                 notificationText = thisContext.getString(R.string.same_day_reminder_text)
@@ -141,7 +141,7 @@ class NotificationPublisher : BroadcastReceiver() {
                 thisContext,
                 0,
                 notificationIntent,
-                PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_IMMUTABLE,
             )
         builder.setContentIntent(intent)
 

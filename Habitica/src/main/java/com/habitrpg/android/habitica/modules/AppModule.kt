@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.RemoteConfig
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.SoundFileLoader
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -24,6 +25,7 @@ import java.security.KeyStore
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateException
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -32,10 +34,8 @@ class AppModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(
-        @ApplicationContext context: Context
-    ): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-    }
+        @ApplicationContext context: Context,
+    ): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     @Provides
     fun provideKeyStore(): KeyStore? {
@@ -59,60 +59,52 @@ class AppModule {
     fun provideKeyHelper(
         @ApplicationContext context: Context,
         sharedPreferences: SharedPreferences,
-        keyStore: KeyStore?
-    ): KeyHelper? {
-        return if (keyStore == null) {
+        keyStore: KeyStore?,
+    ): KeyHelper? =
+        if (keyStore == null) {
             null
         } else {
             getInstance(context, sharedPreferences, keyStore)
         }
-    }
 
     @Provides
     @Singleton
-    fun providesAuthenticationHandler(sharedPreferences: SharedPreferences): AuthenticationHandler {
-        return if (BuildConfig.DEBUG && BuildConfig.TEST_USER_ID.isNotEmpty()) {
+    fun providesAuthenticationHandler(sharedPreferences: SharedPreferences): AuthenticationHandler =
+        if (BuildConfig.DEBUG && BuildConfig.TEST_USER_ID.isNotEmpty()) {
             AuthenticationHandler(BuildConfig.TEST_USER_ID)
         } else {
             AuthenticationHandler(sharedPreferences)
         }
-    }
 
     @Provides
     fun providesResources(
-        @ApplicationContext context: Context
-    ): Resources {
-        return context.resources
-    }
+        @ApplicationContext context: Context,
+    ): Resources = context.resources
 
     @Provides
     fun providesSoundFileLoader(
-        @ApplicationContext context: Context
-    ): SoundFileLoader {
-        return SoundFileLoader(context)
-    }
+        @ApplicationContext context: Context,
+    ): SoundFileLoader = SoundFileLoader(context)
 
     @Provides
     @Singleton
     fun pushNotificationManager(
         apiClient: ApiClient,
         sharedPreferences: SharedPreferences,
-        @ApplicationContext context: Context
-    ): PushNotificationManager {
-        return PushNotificationManager(apiClient, sharedPreferences, context)
-    }
+        @ApplicationContext context: Context,
+    ): PushNotificationManager = PushNotificationManager(apiClient, sharedPreferences, context)
 
     @Provides
     @Singleton
-    fun providesRemoteConfigManager(contentRepository: ContentRepository): AppConfigManager {
-        return AppConfigManager(contentRepository)
-    }
+    fun providesRemoteConfigManager(
+        contentRepository: Provider<ContentRepository>,
+        sharedPreferences: SharedPreferences,
+        remoteConfig: RemoteConfig,
+    ): AppConfigManager = AppConfigManager(contentRepository, sharedPreferences, remoteConfig)
 
     @Provides
     fun providesReviewManager(
         @ApplicationContext context: Context,
-        configManager: AppConfigManager
-    ): ReviewManager {
-        return ReviewManager(context, configManager)
-    }
+        configManager: AppConfigManager,
+    ): ReviewManager = ReviewManager(context, configManager)
 }

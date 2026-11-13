@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +25,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.extensions.applyScrollContentWindowInsets
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -44,8 +44,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>() {
@@ -53,10 +53,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
-    ): FragmentInboxMessageListBinding {
-        return FragmentInboxMessageListBinding.inflate(inflater, container, false)
-    }
+        container: ViewGroup?,
+    ): FragmentInboxMessageListBinding = FragmentInboxMessageListBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var socialRepository: SocialRepository
@@ -65,13 +63,16 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     lateinit var configManager: AppConfigManager
 
     private var chatAdapter: InboxAdapter? = null
+    private var isScrolledToBottom = true
+    private var isFirstRefresh = true
+    private var hasPendingRefresh = false
 
     private val viewModel: InboxViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -79,7 +80,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -88,25 +89,51 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            socialRepository.getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "")
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            socialRepository
+                .getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "")
                 .collect {
                     mainActivity?.title = it?.displayName
                     chatAdapter?.replyToUser = it
                 }
         }
         chatAdapter = InboxAdapter(viewModel.user.value)
+
+        binding?.recyclerView?.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(
+                    recyclerView: RecyclerView,
+                    dx: Int,
+                    dy: Int,
+                ) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val wasScrolledToBottom = isScrolledToBottom
+                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() <= 3
+
+                    if (isScrolledToBottom && !wasScrolledToBottom && hasPendingRefresh) {
+                        hasPendingRefresh = false
+                        hideNewMessageIndicator()
+                        viewModel.invalidateDataSource()
+                    }
+
+                    if (isScrolledToBottom) {
+                        hideNewMessageIndicator()
+                    }
+                }
+            },
+        )
+
         chatAdapter?.registerAdapterDataObserver(
             object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(
                     positionStart: Int,
-                    itemCount: Int
+                    itemCount: Int,
                 ) {
-                    if (positionStart == 0) {
+                    if (positionStart == 0 && (isScrolledToBottom || isFirstRefresh)) {
                         binding?.recyclerView?.scrollToPosition(0)
                     }
                 }
-            }
+            },
         )
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -119,15 +146,23 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             adapter.onCopyMessage = { copyMessageToClipboard(it) }
         }
 
+        binding?.newMessageIndicator?.setOnClickListener {
+            hasPendingRefresh = false
+            hideNewMessageIndicator()
+            binding?.recyclerView?.smoothScrollToPosition(0)
+            viewModel.invalidateDataSource()
+        }
+
         viewModel.messages.observe(viewLifecycleOwner) {
             markMessagesAsRead(it)
-            lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycleScope.launchCatching {
                 chatAdapter?.submitData(it)
             }
         }
 
         chatAdapter?.addLoadStateListener { loadStates ->
-            val isEmpty = loadStates.refresh is LoadState.NotLoading &&
+            val isEmpty =
+                loadStates.refresh is LoadState.NotLoading &&
                     loadStates.append.endOfPaginationReached &&
                     chatAdapter?.itemCount == 0
 
@@ -143,11 +178,11 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
         binding?.chatBarView?.hasAcceptedGuidelines = true
 
-        lifecycleScope.launchCatching {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 while (true) {
                     refreshConversation()
-                    delay(30.toDuration(DurationUnit.SECONDS))
+                    delay(30.seconds)
                 }
             }
         }
@@ -161,7 +196,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     binding?.chatBarView?.paddingLeft ?: 0,
                     binding?.chatBarView?.paddingTop ?: 0,
                     binding?.chatBarView?.paddingRight ?: 0,
-                    nav
+                    nav,
                 )
 
                 binding?.recyclerView?.translationY = -ime.toFloat()
@@ -170,7 +205,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                     binding?.recyclerView?.paddingLeft ?: 0,
                     binding?.recyclerView?.paddingTop ?: 0,
                     binding?.recyclerView?.paddingRight ?: 0,
-                    ime + nav
+                    ime + nav,
                 )
 
                 insets
@@ -194,7 +229,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     override fun onCreateOptionsMenu(
         menu: Menu,
-        inflater: MenuInflater
+        inflater: MenuInflater,
     ) {
         this.mainActivity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -218,9 +253,16 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         if (viewModel.memberID?.isNotBlank() != true) {
             return
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             socialRepository.retrieveInboxMessages(viewModel.recipientID ?: "", 0)
-            viewModel.invalidateDataSource()
+
+            if (isScrolledToBottom || isFirstRefresh) {
+                viewModel.invalidateDataSource()
+                isFirstRefresh = false
+            } else {
+                hasPendingRefresh = true
+                showNewMessageIndicator()
+            }
         }
     }
 
@@ -237,10 +279,10 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                         alert.show()
                     }
                     binding?.chatBarView?.message = chatText
-                }
+                },
             ) {
                 socialRepository.postPrivateMessage(userID, chatText)
-                delay(200.toDuration(DurationUnit.MILLISECONDS))
+                delay(200.milliseconds)
                 viewModel.invalidateDataSource()
             }
         }
@@ -255,7 +297,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             showSnackbar(
                 activity.snackbarContainer,
                 getString(R.string.chat_message_copied),
-                HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                HabiticaSnackbar.SnackbarDisplayType.NORMAL,
             )
         }
     }
@@ -269,7 +311,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 messageText = chatMessage.text ?: "",
                 groupId = chatMessage.groupId ?: "",
                 userIdBeingReported = chatMessage.userID ?: "",
-                sourceView = this::class.simpleName ?: ""
+                sourceView = this::class.simpleName ?: "",
             )
 
         reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)
@@ -294,5 +336,33 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     private fun openProfile() {
         viewModel.memberID?.let { FullProfileActivity.open(it) }
+    }
+
+    private fun showNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (visibility != View.VISIBLE) {
+                visibility = View.VISIBLE
+                alpha = 0f
+                translationY = 50f
+                animate()
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setDuration(200)
+                    .start()
+            }
+        }
+    }
+
+    private fun hideNewMessageIndicator() {
+        binding?.newMessageIndicator?.apply {
+            if (isVisible) {
+                animate()
+                    .alpha(0f)
+                    .translationY(50f)
+                    .setDuration(200)
+                    .withEndAction { visibility = View.GONE }
+                    .start()
+            }
+        }
     }
 }

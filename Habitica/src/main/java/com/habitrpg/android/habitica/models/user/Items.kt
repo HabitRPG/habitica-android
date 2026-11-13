@@ -8,7 +8,10 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class Items : RealmObject, BaseObject, AvatarItems {
+open class Items :
+    RealmObject,
+    BaseObject,
+    AvatarItems {
     fun setItemTypes() {
         hatchingPotions?.forEach { it.itemType = "hatchingPotions" }
         eggs?.forEach { it.itemType = "eggs" }
@@ -65,10 +68,10 @@ open class Items : RealmObject, BaseObject, AvatarItems {
     val hasTransformationItems: Boolean
         get() {
             return special?.any { transformationItem ->
-                transformationItem.key == ("seafoam") && transformationItem.numberOwned > 0 ||
-                    transformationItem.key == ("shinySeed") && transformationItem.numberOwned > 0 ||
-                    transformationItem.key == ("snowball") && transformationItem.numberOwned > 0 ||
-                    transformationItem.key == ("spookySparkles") && transformationItem.numberOwned > 0
+                (transformationItem.key == ("seafoam") && transformationItem.numberOwned > 0) ||
+                    (transformationItem.key == ("shinySeed") && transformationItem.numberOwned > 0) ||
+                    (transformationItem.key == ("snowball") && transformationItem.numberOwned > 0) ||
+                    (transformationItem.key == ("spookySparkles") && transformationItem.numberOwned > 0)
             } ?: false
         }
 }

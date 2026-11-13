@@ -227,4 +227,7 @@
     <string name="checkInRewardEarned">Du har modtaget en/et %1$s som belønning for din hengivenhed til at forbedre dit liv.</string>
     <string name="nextPrizeUnlocks" tools:ignore="PluralsCandidate">Din næste præmie vil åbne ved %1$d Check-ins</string>
     <string name="pending_approval">afventer godkendelse</string>
+    <string name="enable_notifications">Aktiver beskeder</string>
+    <string name="push_notification_system_settings_description">Tillad Habitica notifikationer i indstillinger-appen for at modtage push-beskeder</string>
+    <string name="push_notification_system_settings_reminders">Tillad Habitica notifikationer i indstillinger-appen for at modtage push-beskeder</string>
 </resources>

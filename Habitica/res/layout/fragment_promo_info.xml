@@ -71,30 +71,22 @@
                     android:layout_height="wrap_content"
                     style="@style/SubHeader1"/>
             </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="60dp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:fontFamily="@string/font_family_medium"
-                android:layout_marginBottom="12dp"
-                android:layout_centerInParent="true"/>
         </RelativeLayout>
         <TextView
             android:id="@+id/prompt_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:fontFamily="@string/font_family_medium"
-            android:layout_marginBottom="@dimen/spacing_large"/>
+            android:textColor="@color/white"
+            android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"/>
         <TextView
             android:id="@+id/prompt_button"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="48dp"
             style="@style/SubHeader1"
             android:gravity="center" />
 
@@ -104,19 +96,19 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
-            android:textSize="15sp"
-            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:textColor="@color/white"
             android:text="@string/how_it_works"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="7dp"/>
         <TextView
             android:id="@+id/instruction_description_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp"
-            android:textColor="@color/text_quad"
-            android:lineSpacingExtra="3dp"/>
+            android:textSize="16sp"
+            android:textColor="@color/text_ternary"
+            android:lineSpacingExtra="5dp"/>
 
         <TextView
             android:id="@+id/limitations_title_view"
@@ -124,19 +116,19 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:fontFamily="@string/font_family_medium"
-            android:textSize="15sp"
-            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:textColor="@color/white"
             android:text="@string/limitations"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="7dp"/>
         <TextView
             android:id="@+id/limitations_description_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="15sp"
-            android:textColor="@color/text_quad"
+            android:textSize="16sp"
+            android:textColor="@color/text_ternary"
             tools:text="This is some text"
-            android:lineSpacingExtra="3dp"/>
+            android:lineSpacingExtra="5dp"/>
     </LinearLayout>
 </com.habitrpg.android.habitica.ui.views.HabiticaScrollView>

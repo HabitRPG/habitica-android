@@ -33,7 +33,7 @@ abstract class ChecklistedViewHolder(
     var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?
+    assignedTextProvider: GroupPlanInfoProvider?,
 ) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
     private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
     private val checkmarkView: ImageView = itemView.findViewById(R.id.checkmark)
@@ -54,7 +54,7 @@ abstract class ChecklistedViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?
+        ownerID: String?,
     ) {
         var completed = data.completed(userID)
         if (data.isPendingApproval) {
@@ -64,7 +64,18 @@ abstract class ChecklistedViewHolder(
             this.checkmarkView.visibility = View.GONE
             this.lockView.visibility = View.VISIBLE
             val icon = AppCompatResources.getDrawable(context, R.drawable.task_lock)
-            icon?.setTint(ContextCompat.getColor(context, if (data.isDue == true || data.type == TaskType.TODO) data.extraExtraDarkTaskColor else R.color.text_dimmed))
+            icon?.setTint(
+                ContextCompat.getColor(
+                    context,
+                    if (data.isDue == true ||
+                        data.type == TaskType.TODO
+                    ) {
+                        data.extraExtraDarkTaskColor
+                    } else {
+                        R.color.text_dimmed
+                    },
+                ),
+            )
             lockView.setImageDrawable(icon)
         } else {
             this.checkmarkView.visibility = if (completed) View.VISIBLE else View.GONE
@@ -102,7 +113,7 @@ abstract class ChecklistedViewHolder(
 
     abstract fun shouldDisplayAsActive(
         task: Task?,
-        userID: String?
+        userID: String?,
     ): Boolean
 
     private fun updateChecklistDisplay() {
@@ -130,12 +141,14 @@ abstract class ChecklistedViewHolder(
                                 } else {
                                     R.color.checkbox_fill
                                 }
-                                ) ?: R.color.checkbox_fill
+                            ) ?: R.color.checkbox_fill,
                         )
                     val textView = itemView?.findViewById<TextView>(R.id.checkedTextView)
                     // Populate the data into the template view using the data object
                     textView?.text = item.text
-                    textView?.setTextColor(ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary))
+                    textView?.setTextColor(
+                        ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary),
+                    )
                     if (item.text != null) {
                         MainScope().launch(Dispatchers.IO) {
                             val parsedText = MarkdownParser.parseMarkdown(item.text ?: "")
@@ -161,7 +174,7 @@ abstract class ChecklistedViewHolder(
                                 val color = if (context.isUsingNightModeResources()) task?.extraExtraDarkTaskColor else task?.darkTaskColor
                                 checkmark?.drawable?.setTint(ContextCompat.getColor(context, color ?: R.color.text_dimmed))
                                 task?.extraLightTaskColor ?: R.color.offset_background
-                            }
+                            },
                         )
                     color.let { checkboxHolder?.setBackgroundColor(it) }
                     this.checklistView.addView(itemView)
@@ -220,9 +233,7 @@ abstract class ChecklistedViewHolder(
         onChecklistIndicatorClicked()
     }
 
-    private fun shouldDisplayExpandedChecklist(): Boolean {
-        return expandedChecklistRow != null && bindingAdapterPosition == expandedChecklistRow
-    }
+    private fun shouldDisplayExpandedChecklist(): Boolean = expandedChecklistRow != null && bindingAdapterPosition == expandedChecklistRow
 
     private fun onCheckedChanged(isChecked: Boolean) {
         if (task?.isValid != true) {
@@ -235,7 +246,7 @@ abstract class ChecklistedViewHolder(
 
     override fun setDisabled(
         openTaskDisabled: Boolean,
-        taskActionsDisabled: Boolean
+        taskActionsDisabled: Boolean,
     ) {
         super.setDisabled(openTaskDisabled, taskActionsDisabled)
         this.checkboxHolder.isEnabled = !taskActionsDisabled

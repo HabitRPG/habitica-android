@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestMember
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
-import io.realm.RealmList
 import java.lang.reflect.Type
 
 class QuestDeserializer : JsonDeserializer<Quest> {
@@ -16,7 +15,7 @@ class QuestDeserializer : JsonDeserializer<Quest> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Quest {
         val obj = json.asJsonObject
         val quest = Quest()
@@ -41,7 +40,6 @@ class QuestDeserializer : JsonDeserializer<Quest> {
                 progress.collectedItems = progressObj.get("collectedItems").asInt
             }
             if (progressObj.has("collect")) {
-                progress.collect = RealmList()
                 for ((key, value) in progressObj.getAsJsonObject("collect").entrySet()) {
                     val collect = QuestProgressCollect()
                     collect.key = key
@@ -65,10 +63,11 @@ class QuestDeserializer : JsonDeserializer<Quest> {
         }
         if (obj.has("RSVPNeeded")) {
             quest.rsvpNeeded = obj.get("RSVPNeeded").asBoolean
+        } else {
+            quest.rsvpNeededWasSpecified = false
         }
 
         if (obj.has("members")) {
-            val members = RealmList<QuestMember>()
             for ((key, value) in obj.getAsJsonObject("members").entrySet()) {
                 val member = QuestMember()
                 member.key = key
@@ -77,9 +76,8 @@ class QuestDeserializer : JsonDeserializer<Quest> {
                 } else {
                     member.isParticipating = value.asBoolean
                 }
-                members.add(member)
+                quest.members?.add(member)
             }
-            quest.members = members
         }
         return quest
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_pets_and_mounts">Animali e cavalcature</string>
-    <string name="profile_pets_found">Animali trovati</string>
+    <string name="profile_pets_found">Animali Trovati</string>
     <string name="profile_mounts_tamed">Cavalcature addomesticate</string>
     <string name="profile_loading_data">Caricamento dati utente…</string>
     <string name="profile_send_message_to">Invia messaggio a %s</string>
@@ -10,5 +10,4 @@
     <string name="profile_class_bonus">Bonus classe:</string>
     <string name="profile_allocated">Allocati:</string>
     <string name="profile_achievements">Medaglie</string>
-
 </resources>
