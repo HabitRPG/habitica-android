@@ -18,8 +18,10 @@ import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.serialization.habiticaJson
 import kotlinx.coroutines.MainScope
+import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
@@ -69,7 +71,13 @@ class AppConfigManager(
         val raw = config[key.key]
         if (raw == null || raw is JsonNull) return key.defaultValue
         return try {
-            habiticaJson.decodeFromJsonElement(key.serializer, raw) ?: key.defaultValue
+            val element =
+                if (raw is JsonPrimitive && raw.isString && key.serializer.descriptor.kind != PrimitiveKind.STRING) {
+                    habiticaJson.parseToJsonElement(raw.content)
+                } else {
+                    raw
+                }
+            habiticaJson.decodeFromJsonElement(key.serializer, element) ?: key.defaultValue
         } catch (_: IllegalArgumentException) {
             key.defaultValue
         }

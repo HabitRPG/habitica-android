@@ -99,6 +99,20 @@ class AppConfigManagerTest :
                 configManager.value(ClientConfigKey.knownIssues) shouldBe listOf(mapOf("title" to "Sync", "text" to "Tasks may not sync"))
             }
 
+            "parse values sent as json strings" {
+                configManager.updateConfig(
+                    Json.parseToJsonElement(
+                        """{"maxChatLength":"500","hideChallenges":"true","supportEmail":"a@b.c","lastVersionNumber":"4.12",""" +
+                            """"knownIssues":"[{\"title\":\"Sync\",\"text\":\"Tasks may not sync\"}]"}""",
+                    ).jsonObject,
+                )
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 500L
+                configManager.value(ClientConfigKey.hideChallenges) shouldBe true
+                configManager.value(ClientConfigKey.supportEmail) shouldBe "a@b.c"
+                configManager.value(ClientConfigKey.lastVersionNumber) shouldBe "4.12"
+                configManager.value(ClientConfigKey.knownIssues) shouldBe listOf(mapOf("title" to "Sync", "text" to "Tasks may not sync"))
+            }
+
             "fall back to the default for values of the wrong type" {
                 configManager.updateConfig(
                     Json.parseToJsonElement("""{"maxChatLength":"many","knownIssues":"none","lastVersionCode":null}""").jsonObject,
