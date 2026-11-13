@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.RebirthEnabledDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.PixelArtView
 import com.habitrpg.shared.habitica.models.Notification
 import com.habitrpg.shared.habitica.models.notifications.AchievementData
@@ -24,9 +25,8 @@ import com.habitrpg.shared.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.shared.habitica.models.notifications.FirstDropData
 import com.habitrpg.shared.habitica.models.notifications.LoginIncentiveData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 class ShowNotificationInteractor(
     private val activity: Activity,
@@ -91,47 +91,51 @@ class ShowNotificationInteractor(
 
     fun showCheckinDialog(notification: Notification) {
         val notificationData = notification.data as? LoginIncentiveData
-        val nextUnlockText =
-            activity.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
-        if (notificationData?.rewardKey != null) {
-            val title = notificationData.message
+        lifecycleScope.launchCatching {
+            val user = userRepository.getUser().firstOrNull()
+            val nextUnlockText =
+                activity.getString(R.string.nextPrizeUnlocks,
+                    (notificationData?.nextRewardAt ?: 0) - (user?.loginIncentives ?: 0))
+            if (notificationData?.rewardKey != null) {
+                val title = notificationData.message
 
-            val factory = LayoutInflater.from(activity)
-            val view = factory.inflate(R.layout.dialog_login_incentive, null)
+                val factory = LayoutInflater.from(activity)
+                val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
-            val imageView = view.findViewById(R.id.imageView) as? PixelArtView
-            var imageKey = notificationData.rewardKey?.get(0)
-            if (imageKey?.contains("armor") == true) {
-                imageKey = "slim_$imageKey"
-            }
-            imageView?.loadImage(imageKey)
+                val imageView = view.findViewById(R.id.imageView) as? PixelArtView
+                var imageKey = notificationData.rewardKey?.get(0)
+                if (imageKey?.contains("armor") == true) {
+                    imageKey = "slim_$imageKey"
+                }
+                imageView?.loadImage(imageKey)
 
-            val youEarnedMessage =
-                activity.getString(R.string.checkInRewardEarned, notificationData.rewardText)
-            val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView
-            youEarnedTexView?.text = youEarnedMessage
+                val youEarnedMessage =
+                    activity.getString(R.string.checkInRewardEarned, notificationData.rewardText)
+                val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView
+                youEarnedTexView?.text = youEarnedMessage
 
-            val nextUnlockTextView = view.findViewById(R.id.next_unlock_message) as? TextView
-            if ((notificationData.nextRewardAt ?: 0) > 0) {
-                nextUnlockTextView?.text = nextUnlockText
+                val nextUnlockTextView = view.findViewById(R.id.next_unlock_message) as? TextView
+                if ((notificationData.nextRewardAt ?: 0) > 0) {
+                    nextUnlockTextView?.text = nextUnlockText
+                } else {
+                    nextUnlockTextView?.visibility = View.GONE
+                }
+
+                lifecycleScope.launch(context = Dispatchers.Main) {
+                    if (activity.isFinishing) return@launch
+                    val alert = HabiticaAlertDialog(activity)
+                    alert.setAdditionalContentView(view)
+                    alert.setTitle(title)
+                    alert.addButton(R.string.see_you_tomorrow, true)
+                    alert.show()
+                }
             } else {
-                nextUnlockTextView?.visibility = View.GONE
+                (activity as? SnackbarActivity)?.showSnackbar(
+                    title = notificationData?.message,
+                    content = nextUnlockText,
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                )
             }
-
-            lifecycleScope.launch(context = Dispatchers.Main) {
-                if (activity.isFinishing) return@launch
-                val alert = HabiticaAlertDialog(activity)
-                alert.setAdditionalContentView(view)
-                alert.setTitle(title)
-                alert.addButton(R.string.see_you_tomorrow, true)
-                alert.show()
-            }
-        } else {
-            (activity as? SnackbarActivity)?.showSnackbar(
-                title = notificationData?.message,
-                content = nextUnlockText,
-                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
-            )
         }
     }
 
