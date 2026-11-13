@@ -22,7 +22,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -64,6 +66,7 @@ import com.habitrpg.android.habitica.ui.theme.windowBackgroundFor
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.TaskFormViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.tasks.AssignSheet
 import com.habitrpg.android.habitica.ui.views.tasks.AssignedView
@@ -611,7 +614,14 @@ class TaskFormActivity : BaseActivity() {
         tags = sortedTagList
     }
 
+    private val newlyCreatedTagIds = mutableSetOf<String>()
+
     private fun createTagViews() {
+        val isRebuild = binding.tagsWrapper.childCount > 0
+        val checkedIds =
+            binding.tagsWrapper.children
+                .mapNotNull { view -> (view as? CheckBox)?.takeIf { it.isChecked }?.tag as? String }
+                .toSet()
         binding.tagsWrapper.removeAllViews()
         val padding = 20.dpToPx(this)
         tags.forEach { tag ->
@@ -626,6 +636,7 @@ class TaskFormActivity : BaseActivity() {
                 val view = CheckBox(this)
                 view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
                 view.text = tag.name
+                view.tag = tag.id
                 view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
                 if (preselectedTags?.contains(tag.id) == true) {
                     view.isChecked = true
@@ -633,8 +644,39 @@ class TaskFormActivity : BaseActivity() {
                 binding.tagsWrapper.addView(view)
             }
         }
-        setAllTagSelections()
+        if (isRebuild) {
+            tags.forEachIndexed { index, tag ->
+                (binding.tagsWrapper.getChildAt(index) as? CheckBox)?.isChecked =
+                    checkedIds.contains(tag.id) || newlyCreatedTagIds.remove(tag.id)
+            }
+        } else {
+            setAllTagSelections()
+        }
         updateTagViewsColors()
+        binding.tagsWrapper.addView(
+            Button(this).apply {
+                setText(R.string.add_tag)
+                setOnClickListener { showAddTagDialog() }
+            },
+        )
+    }
+
+    private fun showAddTagDialog() {
+        val input = EditText(this)
+        val alert = HabiticaAlertDialog(this)
+        alert.setTitle(R.string.add_tag)
+        alert.setAdditionalContentView(input)
+        alert.addButton(R.string.save, true) { _, _ ->
+            val name = input.text.toString().trim()
+            if (name.isEmpty()) return@addButton
+            lifecycleScope.launchCatching {
+                val tag = tagRepository.createTag(Tag().apply { this.name = name }) ?: return@launchCatching
+                val existing = binding.tagsWrapper.findViewWithTag<CheckBox>(tag.id)
+                if (existing != null) existing.isChecked = true else newlyCreatedTagIds.add(tag.id)
+            }
+        }
+        alert.addCancelButton()
+        alert.show()
     }
 
     private fun setAllTagSelections() {

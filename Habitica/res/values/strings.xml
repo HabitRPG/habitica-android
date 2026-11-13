@@ -1097,6 +1097,7 @@
     <string name="got_it">Got it</string>
     <string name="review_privacy_policy">Review Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
+    <string name="damage">Damage</string>
     <string name="damage_pending">%s Damage pending</string>
     <string name="sale_ends_in">Sale ends in %s</string>
     <string name="my_account">My Account</string>

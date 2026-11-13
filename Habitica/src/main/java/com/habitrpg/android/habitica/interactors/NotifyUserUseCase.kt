@@ -102,6 +102,7 @@ class NotifyUserUseCase
                             context,
                             xp,
                             HabiticaIconsHelper.imageOfExperience(),
+                            R.string.XP_default,
                         ),
                     )
                 }
@@ -114,17 +115,18 @@ class NotifyUserUseCase
                             context,
                             hp,
                             HabiticaIconsHelper.imageOfHeartDarkBg(),
+                            R.string.HP_default,
                         ),
                     )
                 }
                 if (gold != null && gold != 0.0) {
-                    container.addView(createTextView(context, gold, HabiticaIconsHelper.imageOfGold()))
+                    container.addView(createTextView(context, gold, HabiticaIconsHelper.imageOfGold(), R.string.gold_capitalized))
                     if (gold < 0) {
                         displayType = SnackbarDisplayType.FAILURE
                     }
                 }
                 if (mp != null && mp > 0 && user?.hasClass == true) {
-                    container.addView(createTextView(context, mp, HabiticaIconsHelper.imageOfMagic()))
+                    container.addView(createTextView(context, mp, HabiticaIconsHelper.imageOfMagic(), R.string.MP_default))
                 }
                 if (questDamage != null && questDamage > 0) {
                     container.addView(
@@ -132,6 +134,7 @@ class NotifyUserUseCase
                             context,
                             questDamage,
                             HabiticaIconsHelper.imageOfDamage(),
+                            R.string.damage,
                         ),
                     )
                 }
@@ -152,6 +155,7 @@ class NotifyUserUseCase
                 context: Context,
                 value: Double,
                 icon: Bitmap,
+                labelRes: Int,
             ): View {
                 val textView = TextView(context)
                 val iconDrawable = icon.toDrawable(context.resources)
@@ -163,6 +167,7 @@ class NotifyUserUseCase
                         " - " + formatter.format(abs(value))
                     }
                 textView.text = text
+                textView.contentDescription = "$text ${context.getString(labelRes)}"
                 textView.gravity = Gravity.CENTER_VERTICAL
                 textView.setTextColor(ContextCompat.getColor(context, R.color.white))
                 return textView

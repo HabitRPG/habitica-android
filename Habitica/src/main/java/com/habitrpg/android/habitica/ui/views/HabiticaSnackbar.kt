@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
@@ -369,12 +371,22 @@ class HabiticaSnackbar
                 }
 
                 snackbar.show()
+                container.announceForAccessibility(accessibleText(snackbar.view))
                 if (displayType == SnackbarDisplayType.FAILURE || displayType == SnackbarDisplayType.FAILURE_BLUE) {
                     container.postDelayed({
                         snackbar.getView().startAnimation(Animations.negativeShakeAnimation())
                     }, 600L)
                 }
             }
+
+            private fun accessibleText(view: View): String =
+                when {
+                    view.visibility != View.VISIBLE -> ""
+                    view.contentDescription != null -> view.contentDescription.toString()
+                    view is TextView -> view.text.toString()
+                    view is ViewGroup -> view.children.map { accessibleText(it) }.filter { it.isNotBlank() }.joinToString(", ")
+                    else -> ""
+                }
 
             private fun showSubscriberBenefitAnimation(
                 container: ViewGroup,
