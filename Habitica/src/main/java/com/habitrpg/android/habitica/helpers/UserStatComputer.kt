@@ -89,7 +89,7 @@ class UserStatComputer {
                 continue
             }
 
-            var classBonus = 0.5f
+            var classBonus = 1f
             val userClassMatchesGearClass =
                 !classDoesNotExist && itemClass == user.stats?.habitClass
             val userClassMatchesGearSpecialClass =
