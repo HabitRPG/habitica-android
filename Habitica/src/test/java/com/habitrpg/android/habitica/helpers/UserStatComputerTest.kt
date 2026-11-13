@@ -45,10 +45,10 @@ class UserStatComputerTest :
             val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
             val attributeRow = statsRows[2] as AttributeRow
             R.string.profile_class_bonus.toLong() shouldBe attributeRow.labelId.toLong()
-            (str * 0.5f).toDouble() shouldBe attributeRow.strVal.toDouble()
+            (str * 1f).toDouble() shouldBe attributeRow.strVal.toDouble()
             (intStat * 0.0f).toDouble() shouldBe attributeRow.intVal.toDouble()
             (con * 0.0f).toDouble() shouldBe attributeRow.conVal.toDouble()
-            (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
+            (per * 1f).toDouble() shouldBe attributeRow.perVal.toDouble()
             attributeRow.roundDown shouldBe false
             attributeRow.summary shouldBe false
         }
@@ -59,8 +59,8 @@ class UserStatComputerTest :
             val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
             val attributeRow = statsRows[2] as AttributeRow
             (str * 0.0f).toDouble() shouldBe attributeRow.strVal.toDouble()
-            (intStat * 0.5f).toDouble() shouldBe attributeRow.intVal.toDouble()
-            (con * 0.5f).toDouble() shouldBe attributeRow.conVal.toDouble()
+            (intStat * 1f).toDouble() shouldBe attributeRow.intVal.toDouble()
+            (con * 1f).toDouble() shouldBe attributeRow.conVal.toDouble()
             (per * 0.0f).toDouble() shouldBe attributeRow.perVal.toDouble()
         }
 
@@ -69,9 +69,9 @@ class UserStatComputerTest :
             equipment.klass = Stats.WARRIOR
             val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
             val attributeRow = statsRows[2] as AttributeRow
-            (str * 0.5f).toDouble() shouldBe attributeRow.strVal.toDouble()
+            (str * 1f).toDouble() shouldBe attributeRow.strVal.toDouble()
             (intStat * 0.0f).toDouble() shouldBe attributeRow.intVal.toDouble()
-            (con * 0.5f).toDouble() shouldBe attributeRow.conVal.toDouble()
+            (con * 1f).toDouble() shouldBe attributeRow.conVal.toDouble()
             (per * 0.0f).toDouble() shouldBe attributeRow.perVal.toDouble()
         }
 
@@ -81,9 +81,9 @@ class UserStatComputerTest :
             val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
             val attributeRow = statsRows[2] as AttributeRow
             (str * 0.0f).toDouble() shouldBe attributeRow.strVal.toDouble()
-            (intStat * 0.5f).toDouble() shouldBe attributeRow.intVal.toDouble()
+            (intStat * 1f).toDouble() shouldBe attributeRow.intVal.toDouble()
             (con * 0.0f).toDouble() shouldBe attributeRow.conVal.toDouble()
-            (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
+            (per * 1f).toDouble() shouldBe attributeRow.perVal.toDouble()
         }
 
         "should return class bonus when special class matches" {
@@ -93,10 +93,10 @@ class UserStatComputerTest :
             val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
             val attributeRow = statsRows[2] as AttributeRow
             R.string.profile_class_bonus.toLong() shouldBe attributeRow.labelId.toLong()
-            (str * 0.5f).toDouble() shouldBe attributeRow.strVal.toDouble()
+            (str * 1f).toDouble() shouldBe attributeRow.strVal.toDouble()
             (intStat * 0.0f).toDouble() shouldBe attributeRow.intVal.toDouble()
             (con * 0.0f).toDouble() shouldBe attributeRow.conVal.toDouble()
-            (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
+            (per * 1f).toDouble() shouldBe attributeRow.perVal.toDouble()
             attributeRow.roundDown shouldBe false
             attributeRow.summary shouldBe false
         }
