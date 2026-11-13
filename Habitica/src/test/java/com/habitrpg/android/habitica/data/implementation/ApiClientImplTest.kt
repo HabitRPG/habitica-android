@@ -215,6 +215,13 @@ class ApiClientImplTest :
                 takeRequest().route() shouldBe "GET /user/"
                 takeRequest().route() shouldBe "GET /tasks/user"
             }
+
+            "skip loading the tasks when not requested" {
+                enqueue("""{"_id":"user-1"}""")
+                apiClient.retrieveUser(false)?.tasks shouldBe null
+                takeRequest().route() shouldBe "GET /user/"
+                server.requestCount shouldBe 1
+            }
         }
 
         "authentication" should {

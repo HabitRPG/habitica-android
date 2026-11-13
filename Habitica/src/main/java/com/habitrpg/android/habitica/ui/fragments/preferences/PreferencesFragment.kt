@@ -78,7 +78,7 @@ class PreferencesFragment :
     private val classSelectionResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             lifecycleScope.launchCatching {
-                userRepository.retrieveUser(true, true)
+                userRepository.retrieveUser(false, true)
             }
         }
 

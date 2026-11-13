@@ -214,7 +214,7 @@ class EquipmentDetailFragment :
 
     override fun onRefresh() {
         viewLifecycleOwner.lifecycleScope.launchCatching {
-            userRepository.retrieveUser(true, true)
+            userRepository.retrieveUser(false, true)
             binding?.refreshLayout?.isRefreshing = false
         }
     }

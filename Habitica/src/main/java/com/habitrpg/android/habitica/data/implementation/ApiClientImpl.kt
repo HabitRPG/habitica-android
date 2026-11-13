@@ -416,7 +416,7 @@ class ApiClientImpl(
                     "balance,items,permissions,challenges,lastCron,needsCron,loginIncentives,achievements,backer,contributor,purchased,invitations,party,profile,stats,tasksOrder,pushDevices,tags,pinnedItems,unpinnedItems,pinnedItemsOrder",
                 )
             } ?: return null
-        user.tasks = getTasks()
+        if (withTasks) user.tasks = getTasks()
         return user
     }
 

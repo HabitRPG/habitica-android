@@ -455,7 +455,7 @@ class ComposeAvatarCustomizationFragment :
 
     override fun onRefresh() {
         lifecycleScope.launchCatching {
-            userRepository.retrieveUser(true, true)
+            userRepository.retrieveUser(false, true)
         }
     }
 

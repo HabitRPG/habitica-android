@@ -57,7 +57,7 @@ class NotifyUserUseCase
                         requestValues.snackbarTargetView,
                     ),
                 )
-                userRepository.retrieveUser(true)
+                userRepository.retrieveUser(false)
             }
             return requestValues.user.stats
         }

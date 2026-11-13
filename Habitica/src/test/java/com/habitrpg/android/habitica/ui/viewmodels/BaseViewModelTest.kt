@@ -45,9 +45,9 @@ class BaseViewModelTest :
         }
 
         "refreshUser" should {
-            "force retrieving the user with tasks" {
+            "force retrieving the user without tasks" {
                 makeViewModel().refreshUser()
-                coVerify(exactly = 1) { userRepository.retrieveUser(true, true) }
+                coVerify(exactly = 1) { userRepository.retrieveUser(false, true) }
             }
         }
 

@@ -265,7 +265,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                             party?.id?.let { partyID ->
                                 lifecycleScope.launchCatching {
                                     socialRepository.abortQuest(partyID)
-                                    userRepository.retrieveUser(true)
+                                    userRepository.retrieveUser(false)
                                     activity?.supportFragmentManager?.popBackStack()
                                 }
                             }
@@ -278,7 +278,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     party?.id?.let { partyID ->
                         lifecycleScope.launchCatching {
                             socialRepository.cancelQuest(partyID)
-                            userRepository.retrieveUser(true)
+                            userRepository.retrieveUser(false)
                             activity?.supportFragmentManager?.popBackStack()
                         }
                     }
@@ -300,7 +300,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                         lifecycleScope.launchCatching {
                             socialRepository.leaveQuest(partyID)
                             socialRepository.retrieveGroup(partyID)
-                            userRepository.retrieveUser(true)
+                            userRepository.retrieveUser(false)
                             activity?.supportFragmentManager?.popBackStack()
                         }
                     }

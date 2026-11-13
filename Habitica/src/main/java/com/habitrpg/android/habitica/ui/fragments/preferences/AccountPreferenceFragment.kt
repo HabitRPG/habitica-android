@@ -507,7 +507,7 @@ class AccountPreferenceFragment :
                         passwordEditText?.text.toString(),
                     )
                     lifecycleScope.launchCatching {
-                        userRepository.retrieveUser(true, true)
+                        userRepository.retrieveUser(false, true)
                     }
                     configurePreference(findPreference("email"), emailEditText.text.toString())
                 }

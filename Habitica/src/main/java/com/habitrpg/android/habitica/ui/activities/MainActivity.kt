@@ -239,7 +239,7 @@ open class MainActivity :
     private val classSelectionResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.retrieveUser(true, true)
+                userRepository.retrieveUser(false, true)
             }
         }
 

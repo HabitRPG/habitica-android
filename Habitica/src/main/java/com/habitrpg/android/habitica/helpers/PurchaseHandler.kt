@@ -125,6 +125,9 @@ class PurchaseHandler(
                             if (plan.dateTerminated != null && purchase.isAutoRenewing) {
                                 reactivateSubscription(purchase)
                             }
+                            if (!purchase.isAcknowledged) {
+                                scope.launchCatching { acknowledgePurchase(purchase) }
+                            }
                             continue
                         }
                         handle(purchase)

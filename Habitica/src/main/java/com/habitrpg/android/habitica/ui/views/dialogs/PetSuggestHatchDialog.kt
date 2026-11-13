@@ -217,7 +217,7 @@ class PetSuggestHatchDialog(
                                 1,
                             )
                         }
-                        activity.userRepository.retrieveUser(true, forced = true)
+                        activity.userRepository.retrieveUser(false, forced = true)
                         hatchPet(thisPotion, thisEgg)
                     }
                 }

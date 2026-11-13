@@ -31,6 +31,6 @@ abstract class BaseViewModel(
     }
 
     open suspend fun refreshUser() {
-        userRepository.retrieveUser(true, true)
+        userRepository.retrieveUser(false, true)
     }
 }
