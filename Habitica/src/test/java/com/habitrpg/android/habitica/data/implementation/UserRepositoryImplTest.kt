@@ -411,6 +411,22 @@ class UserRepositoryImplTest :
                 response.goldDiff shouldBe -2.0
             }
 
+            "count the rest of the old level when the skill levels the user up" {
+                val user = User().apply { stats = Stats().apply { lvl = 4; exp = 90.0; toNextLevel = 100 } }
+                val response =
+                    SkillResponse().apply {
+                        this.user = User().apply { stats = Stats().apply { lvl = 5; exp = 5.0 } }
+                    }
+                coEvery { apiClient.useSkill("fireball", "task", "task-1") } returns response
+                every { localRepository.getUser("user-1") } returns flowOf(user)
+                every { localRepository.getLiveObject(user) } returns user
+                every { localRepository.saveUser(any(), false) } returns Unit
+                repository.useSkill("fireball", "task", "task-1")
+                response.hasLeveledUp shouldBe true
+                response.level shouldBe 5
+                response.expDiff shouldBe 15.0
+            }
+
             "return the response without a local user" {
                 val response = SkillResponse()
                 coEvery { apiClient.useSkill("fireball", "party") } returns response

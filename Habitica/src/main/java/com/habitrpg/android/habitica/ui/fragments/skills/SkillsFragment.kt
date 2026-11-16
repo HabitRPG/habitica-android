@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.combine
@@ -170,20 +171,16 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                 )
             }
         }
-        if (response.damage > 0) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                if (!isAdded) return@launch
-                showSnackbar(
-                    activity.snackbarContainer,
-                    null,
-                    context?.getString(R.string.caused_damage),
-                    BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
-                    ContextCompat.getColor(activity, R.color.green_10),
-                    "+%.01f".format(response.damage),
-                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
-                )
-            }
-        }
+        activity.displayTaskScoringResponse(
+            TaskScoringResult(
+                experienceDelta = response.expDiff,
+                healthDelta = response.hpDiff,
+                goldDelta = response.goldDiff,
+                hasLeveledUp = response.hasLeveledUp,
+                level = response.level,
+                questDamage = response.damage.toDouble(),
+            ),
+        )
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.retrieveUser(true)
         }

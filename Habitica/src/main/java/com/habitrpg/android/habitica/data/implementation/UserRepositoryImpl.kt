@@ -182,37 +182,23 @@ class UserRepositoryImpl(
         key: String,
         target: String?,
         taskId: String,
-    ): SkillResponse? {
-        val response = apiClient.useSkill(key, target ?: "", taskId) ?: return null
-        val user = getLiveUser() ?: return response
-        response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-        response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
-        response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
-        response.damage = (
-            response.user
-                ?.party
-                ?.quest
-                ?.progress
-                ?.up ?: 0.0f
-        ) - (
-            user.party
-                ?.quest
-                ?.progress
-                ?.up ?: 0.0f
-        )
-        response.user?.let { mergeUser(user, it) }
-        return response
-    }
+    ): SkillResponse? = apiClient.useSkill(key, target ?: "", taskId)?.let { applySkillResponse(it) }
 
     override suspend fun useSkill(
         key: String,
         target: String?,
-    ): SkillResponse? {
-        val response = apiClient.useSkill(key, target ?: "") ?: return null
+    ): SkillResponse? = apiClient.useSkill(key, target ?: "")?.let { applySkillResponse(it) }
+
+    private suspend fun applySkillResponse(response: SkillResponse): SkillResponse {
         val user = getLiveUser() ?: return response
-        response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-        response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
-        response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
+        val oldStats = user.stats
+        val newStats = response.user?.stats
+        response.level = newStats?.lvl ?: 0
+        response.hasLeveledUp = response.level > (oldStats?.lvl ?: 0)
+        response.hpDiff = (newStats?.hp ?: 0.0) - (oldStats?.hp ?: 0.0)
+        response.expDiff = (newStats?.exp ?: 0.0) - (oldStats?.exp ?: 0.0) +
+            if (response.hasLeveledUp) (oldStats?.toNextLevel ?: 0) else 0
+        response.goldDiff = (newStats?.gp ?: 0.0) - (oldStats?.gp ?: 0.0)
         response.damage = (
             response.user
                 ?.party

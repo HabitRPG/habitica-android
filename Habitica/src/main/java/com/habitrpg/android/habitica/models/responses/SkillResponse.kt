@@ -12,4 +12,6 @@ class SkillResponse {
     var hpDiff = 0.0
     var goldDiff = 0.0
     var damage = 0.0f
+    var hasLeveledUp = false
+    var level = 0
 }
