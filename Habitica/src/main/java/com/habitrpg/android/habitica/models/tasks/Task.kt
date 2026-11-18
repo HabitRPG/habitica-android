@@ -656,7 +656,7 @@ open class Task :
                 ?.contains(true) == true -> return true
 
             checklist
-                ?.mapIndexed { index, item -> task.checklist?.get(index) != item }
+                ?.mapIndexed { index, item -> task.checklist?.get(index).let { it != item || it?.text != item.text } }
                 ?.contains(true) == true -> return true
 
             priority != task.priority -> return true

@@ -40,6 +40,7 @@ open class ChecklistItem :
         this.text = item.text
         this.id = item.id
         this.completed = item.completed
+        this.position = item.position
     }
 
     override fun describeContents(): Int = 0

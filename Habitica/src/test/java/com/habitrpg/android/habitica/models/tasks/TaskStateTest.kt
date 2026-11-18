@@ -271,6 +271,17 @@ class TaskStateTest :
                 ) shouldBe true
             }
 
+            "detect a changed checklist item text" {
+                val item = ChecklistItem(text = "item")
+                val edited = ChecklistItem(item).apply { text = "edited" }
+                task(TaskType.TODO).apply { checklist = RealmList(item) }.isBeingEdited(
+                    task(TaskType.TODO).apply { checklist = RealmList(edited) },
+                ) shouldBe true
+                task(TaskType.TODO).apply { checklist = RealmList(item) }.isBeingEdited(
+                    task(TaskType.TODO).apply { checklist = RealmList(ChecklistItem(item)) },
+                ) shouldBe false
+            }
+
             "detect habit specific changes" {
                 task(TaskType.HABIT).isBeingEdited(task(TaskType.HABIT).apply { up = true }) shouldBe true
                 task(TaskType.HABIT).isBeingEdited(task(TaskType.HABIT).apply { counterUp = 5 }) shouldBe true

@@ -39,7 +39,7 @@ class ChecklistContainer
                     }
                 }
                 for (item in value) {
-                    addChecklistViewAt(childCount - 1, item)
+                    addChecklistViewAt(childCount - 1, ChecklistItem(item))
                 }
                 val animatedTransitions = LayoutTransition()
                 layoutTransition = animatedTransitions
