@@ -71,7 +71,8 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type,
             Notification.Type.ACHIEVEMENT_ULTIMATE_GEAR.type,
             Notification.Type.ACHIEVEMENT_PET_COLOR.type,
-            Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievement(notification)
+            Notification.Type.ACHIEVEMENT_GENERIC.type,
+            -> showAchievement(notification)
 
             Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showOnboardingCompletedDialog(notification)
 
@@ -94,8 +95,10 @@ class ShowNotificationInteractor(
         lifecycleScope.launchCatching {
             val user = userRepository.getUser().firstOrNull()
             val nextUnlockText =
-                activity.getString(R.string.nextPrizeUnlocks,
-                    (notificationData?.nextRewardAt ?: 0) - (user?.loginIncentives ?: 0))
+                activity.getString(
+                    R.string.nextPrizeUnlocks,
+                    (notificationData?.nextRewardAt ?: 0) - (user?.loginIncentives ?: 0),
+                )
             if (notificationData?.rewardKey != null) {
                 val title = notificationData.message
 
@@ -150,7 +153,10 @@ class ShowNotificationInteractor(
         showAchievementDialog(notification, data)
     }
 
-    fun showAchievementDialog(notification: Notification, data: AchievementData?) {
+    fun showAchievementDialog(
+        notification: Notification,
+        data: AchievementData?,
+    ) {
         val dialog = AchievementDialog(activity)
         dialog.isLastOnboardingAchievement = data?.isLastOnboardingAchievement == true
         val canShow = dialog.setType(data?.achievement ?: notification.type ?: "", data?.message, data?.modalText, data?.iconName)
@@ -161,20 +167,25 @@ class ShowNotificationInteractor(
         }
     }
 
-    private fun showAchievementSnackbar(data: AchievementData?, count: Int) {
+    private fun showAchievementSnackbar(
+        data: AchievementData?,
+        count: Int,
+    ) {
         lifecycleScope.launch(context = Dispatchers.Main) {
             val iconName = data?.iconName ?: data?.achievement ?: ""
-            DataBindingUtils.loadImage(activity, if (iconName.startsWith("achievement-")) "${iconName}2x" else "achievement-${iconName}2x") {
+            DataBindingUtils.loadImage(
+                activity,
+                if (iconName.startsWith("achievement-")) "${iconName}2x" else "achievement-${iconName}2x",
+            ) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     title = activity.getString(R.string.achievement),
                     content = data?.message ?: activity.getString(R.string.achievement_title),
                     leftImage = it,
                     displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
                     isCelebratory = true,
-                    hideIconBackground = true
+                    hideIconBackground = true,
                 )
             }
-
         }
     }
 

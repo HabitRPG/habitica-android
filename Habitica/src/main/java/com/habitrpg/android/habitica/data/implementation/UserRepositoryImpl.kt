@@ -523,7 +523,11 @@ class UserRepositoryImpl(
         if (quest.rsvpNeededWasSpecified) return
         quest.rsvpNeeded =
             withContext(Dispatchers.Main) {
-                localRepository.getLiveUser(user.id ?: currentUserID)?.party?.quest?.rsvpNeeded
+                localRepository
+                    .getLiveUser(user.id ?: currentUserID)
+                    ?.party
+                    ?.quest
+                    ?.rsvpNeeded
             } ?: false
     }
 

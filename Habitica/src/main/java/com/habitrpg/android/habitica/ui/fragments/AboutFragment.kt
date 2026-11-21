@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.extensions.openBrowserLink
@@ -17,6 +18,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -124,16 +126,20 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
         binding?.versionInfo?.text = getString(R.string.version_info, versionName, versionCode)
 
-        if (appConfigManager.value(ClientConfigKey.lastVersionCode) > versionCode) {
-            binding?.updateAvailableWrapper?.visibility = View.VISIBLE
-            binding?.updateAvailableTextview?.text =
-                getString(
-                    R.string.update_available,
-                    appConfigManager.value(ClientConfigKey.lastVersionNumber),
-                    appConfigManager.value(ClientConfigKey.lastVersionCode),
-                )
-        } else {
-            binding?.updateAvailableWrapper?.visibility = View.GONE
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            appConfigManager.valueFlow(ClientConfigKey.lastVersionCode).collect { lastVersionCode ->
+                if (lastVersionCode > versionCode) {
+                    binding?.updateAvailableWrapper?.visibility = View.VISIBLE
+                    binding?.updateAvailableTextview?.text =
+                        getString(
+                            R.string.update_available,
+                            appConfigManager.value(ClientConfigKey.lastVersionNumber),
+                            lastVersionCode,
+                        )
+                } else {
+                    binding?.updateAvailableWrapper?.visibility = View.GONE
+                }
+            }
         }
 
         binding?.privacyPolicyButton?.setOnClickListener { openBrowserLink(privacyPolicyLink) }

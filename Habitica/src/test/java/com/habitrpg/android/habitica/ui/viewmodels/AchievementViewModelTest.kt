@@ -50,7 +50,14 @@ class AchievementViewModelTest :
                 every { userRepository.getAchievements() } returns flowOf(listOf(streak, perfect, spring))
                 every { userRepository.getQuestAchievements() } returns flowOf(listOf(questAchievement))
                 every { inventoryRepository.getQuestContent(listOf("dilatory")) } returns
-                    flowOf(listOf(QuestContent().apply { key = "dilatory"; text = "Dilatory" }))
+                    flowOf(
+                        listOf(
+                            QuestContent().apply {
+                                key = "dilatory"
+                                text = "Dilatory"
+                            },
+                        ),
+                    )
                 every { mainUserViewModel.user } returns MutableLiveData(User().apply { challengeAchievements = RealmList("Won") })
 
                 val entries = AchievementViewModel(userRepository, inventoryRepository, mainUserViewModel).achievements.first()

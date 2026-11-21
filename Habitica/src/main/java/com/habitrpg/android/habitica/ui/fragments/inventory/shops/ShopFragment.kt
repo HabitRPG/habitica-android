@@ -33,7 +33,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-abstract class ShopFragment<VM: ShopViewModel> : BaseMainFragment<FragmentRefreshRecyclerviewBinding>() {
+abstract class ShopFragment<VM : ShopViewModel> : BaseMainFragment<FragmentRefreshRecyclerviewBinding>() {
     internal abstract val viewModel: VM
 
     internal val currencyView: ComposeView by lazy {
@@ -132,7 +132,8 @@ abstract class ShopFragment<VM: ShopViewModel> : BaseMainFragment<FragmentRefres
             val spacingPx = resources.getDimensionPixelSize(R.dimen.shop_item_spacing)
             binding?.recyclerView?.addItemDecoration(ShopGridSpacingDecoration(spacingPx))
             adapter?.changeClassEvents = {
-                viewModel.userViewModel.user.value?.let { user -> showClassChangeDialog(it, user) }
+                viewModel.userViewModel.user.value
+                    ?.let { user -> showClassChangeDialog(it, user) }
             }
             adapter?.emptySectionClickedEvents = {
                 viewModel.onEmptySectionTapped(it)
@@ -167,7 +168,6 @@ abstract class ShopFragment<VM: ShopViewModel> : BaseMainFragment<FragmentRefres
         if (savedInstanceState != null) {
             this.shopIdentifier = savedInstanceState.getString(SHOP_IDENTIFIER_KEY, "")
         }
-
 
         if (shop != null) {
             adapter?.setShop(shop)
@@ -269,7 +269,10 @@ abstract class ShopFragment<VM: ShopViewModel> : BaseMainFragment<FragmentRefres
         }
     }
 
-    private fun showClassChangeDialog(classIdentifier: String, user: User) {
+    private fun showClassChangeDialog(
+        classIdentifier: String,
+        user: User,
+    ) {
         lifecycleScope.launchCatching {
             context?.let { context ->
                 if (user.gemCount <= 2) {

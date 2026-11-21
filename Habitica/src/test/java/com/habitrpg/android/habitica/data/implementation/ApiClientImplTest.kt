@@ -4,6 +4,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HabiticaConverterFactory
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
@@ -33,6 +34,7 @@ class ApiClientImplTest :
         val hostConfig = mockk<HostConfig>(relaxed = true)
         val notificationsManager = mockk<NotificationsManager>(relaxed = true)
         val crashReporter = mockk<CrashReporter>(relaxed = true)
+        val appConfigManager = mockk<AppConfigManager>(relaxed = true)
         val activity = mockk<BaseActivity>(relaxed = true)
         val context = mockk<HabiticaBaseApplication>(relaxed = true)
         val cacheDir = Files.createTempDirectory("api-client-test").toFile()
@@ -46,14 +48,26 @@ class ApiClientImplTest :
             notifications: String? = null,
         ) {
             val notificationsField = notifications?.let { ""","notifications":$it""" } ?: ""
-            server.enqueue(MockResponse.Builder().code(code).body("""{"success":true,"data":$data$notificationsField}""").build())
+            server.enqueue(
+                MockResponse
+                    .Builder()
+                    .code(code)
+                    .body("""{"success":true,"data":$data$notificationsField}""")
+                    .build(),
+            )
         }
 
         fun enqueueError(
             code: Int,
             body: String,
         ) {
-            server.enqueue(MockResponse.Builder().code(code).body(body).build())
+            server.enqueue(
+                MockResponse
+                    .Builder()
+                    .code(code)
+                    .body(body)
+                    .build(),
+            )
         }
 
         fun takeRequest(): RecordedRequest = server.takeRequest(1, TimeUnit.SECONDS)!!
@@ -76,11 +90,11 @@ class ApiClientImplTest :
             every { context.cacheDir } returns cacheDir
             every { context.getString(any()) } answers { "string-${firstArg<Int>()}" }
             every { context.currentActivity } returns WeakReference(activity)
-            apiClient = ApiClientImpl(HabiticaConverterFactory(), hostConfig, notificationsManager, context, crashReporter)
+            apiClient = ApiClientImpl(HabiticaConverterFactory(), hostConfig, notificationsManager, context, crashReporter, { appConfigManager })
         }
         afterEach {
             server.close()
-            clearMocks(hostConfig, activity, notificationsManager, crashReporter, answers = false)
+            clearMocks(hostConfig, activity, notificationsManager, crashReporter, appConfigManager, answers = false)
         }
 
         "requests" should {
@@ -106,6 +120,18 @@ class ApiClientImplTest :
                 enqueue(notifications = """[{"id":"n1","type":"NEW_STUFF"}]""")
                 apiClient.sleep()
                 verify { notificationsManager.setNotifications(match { it.single().id == "n1" }) }
+            }
+
+            "pass the client config version of the response to the config manager" {
+                server.enqueue(MockResponse.Builder().body("""{"success":true,"data":true,"clientConfigV":"abc123"}""").build())
+                apiClient.sleep()
+                verify { appConfigManager.onServerConfigVersion("abc123") }
+            }
+
+            "ignore responses without a client config version" {
+                enqueue("true")
+                apiClient.sleep()
+                verify(exactly = 0) { appConfigManager.onServerConfigVersion(any()) }
             }
 
             "go to the new server after the url changed" {
@@ -189,7 +215,12 @@ class ApiClientImplTest :
                     "GET /group-plans" to { getTeamPlans() },
                     "GET /world-state" to { getWorldState() },
                     "POST /user/block/member-1" to { blockMember("member-1") },
-                    "GET /user/toggle-pinned-item/marketGear/gear.flat.weapon_1" to { togglePinnedItem("marketGear", "gear.flat.weapon_1") },
+                    "GET /user/toggle-pinned-item/marketGear/gear.flat.weapon_1" to {
+                        togglePinnedItem(
+                            "marketGear",
+                            "gear.flat.weapon_1",
+                        )
+                    },
                     "GET /hall/heroes/member-1" to { getHallMember("member-1") },
                     "GET /looking-for-party" to { retrievePartySeekingUsers(0) },
                     "POST /tasks/task-1/assign" to { assignToTask("task-1", listOf("member-1")) },

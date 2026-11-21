@@ -26,7 +26,7 @@ class AutocompleteAdapter(
     val socialRepository: SocialRepository? = null,
     var autocompleteContext: String? = null,
     var groupID: String? = null,
-    val remoteAutocomplete: Boolean = false,
+    var remoteAutocomplete: Boolean = false,
 ) : BaseAdapter(),
     Filterable {
     var chatMessages: List<ChatMessage> = arrayListOf()

@@ -225,6 +225,7 @@ class AuthenticationViewModel
         ) {
             this.apiClient.updateAuthenticationCredentials(user, api)
             authenticationHandler.updateUserID(user)
+            configManager.fetchConfig(forced = true)
             sharedPrefs.edit {
                 putString("UserID", user)
                 val encryptedKey =
@@ -405,6 +406,7 @@ class AuthenticationViewModel
         fun onServerSettingsChanged(newUrl: String) {
             sharedPrefs.edit { putString("server_url", newUrl) }
             apiClient.updateServerUrl(newAddress = newUrl)
+            configManager.fetchConfig(forced = true)
             _customServerUrl.value = newUrl
             onServerSettingsDismissed()
         }
@@ -412,6 +414,7 @@ class AuthenticationViewModel
         fun onServerSettingsReset(baseUrl: String) {
             sharedPrefs.edit { remove("server_url") }
             apiClient.updateServerUrl(newAddress = baseUrl)
+            configManager.fetchConfig(forced = true)
             _customServerUrl.value = null
             onServerSettingsDismissed()
         }

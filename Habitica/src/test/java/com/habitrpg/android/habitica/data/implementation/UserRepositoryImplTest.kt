@@ -7,7 +7,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.TeamPlan
@@ -317,7 +316,11 @@ class UserRepositoryImplTest :
             "save the user and its tasks" {
                 val tasks = TaskList()
                 val order = TasksOrder()
-                val user = networkUser().apply { this.tasks = tasks; tasksOrder = order }
+                val user =
+                    networkUser().apply {
+                        this.tasks = tasks
+                        tasksOrder = order
+                    }
                 coEvery { apiClient.retrieveUser(true) } returns user
                 coEvery { taskRepository.saveTasks("user-1", order, tasks) } returns Unit
                 repository.retrieveUser(withTasks = true, forced = true) shouldBe user
@@ -366,7 +369,14 @@ class UserRepositoryImplTest :
         }
         "syncUserStats" should {
             "save the synced user if its stats are complete" {
-                val user = User().apply { stats = Stats().apply { toNextLevel = 100; maxMP = 30 } }
+                val user =
+                    User().apply {
+                        stats =
+                            Stats().apply {
+                                toNextLevel = 100
+                                maxMP = 30
+                            }
+                    }
                 coEvery { apiClient.syncUserStats() } returns user
                 every { localRepository.saveUser(user) } returns Unit
                 repository.syncUserStats() shouldBe user
@@ -384,8 +394,35 @@ class UserRepositoryImplTest :
         "revive" should {
             "return the equipment that was lost" {
                 Dispatchers.setMain(UnconfinedTestDispatcher())
-                val user = User().apply { items = Items().apply { gear = Gear().apply { owned = RealmList(OwnedEquipment().apply { key = "weapon_1"; owned = true }) } } }
-                val revivedItems = Items().apply { gear = Gear().apply { owned = RealmList(OwnedEquipment().apply { key = "weapon_1"; owned = false }) } }
+                val user =
+                    User().apply {
+                        items =
+                            Items().apply {
+                                gear =
+                                    Gear().apply {
+                                        owned =
+                                            RealmList(
+                                                OwnedEquipment().apply {
+                                                    key = "weapon_1"
+                                                    owned = true
+                                                },
+                                            )
+                                    }
+                            }
+                    }
+                val revivedItems =
+                    Items().apply {
+                        gear =
+                            Gear().apply {
+                                owned =
+                                    RealmList(
+                                        OwnedEquipment().apply {
+                                            key = "weapon_1"
+                                            owned = false
+                                        },
+                                    )
+                            }
+                    }
                 val lostEquipment = Equipment().apply { key = "weapon_1" }
                 coEvery { apiClient.revive() } returns revivedItems
                 every { localRepository.getLiveUser("user-1") } returns user
@@ -396,10 +433,26 @@ class UserRepositoryImplTest :
         }
         "useSkill" should {
             "calculate the differences to the current user" {
-                val user = User().apply { stats = Stats().apply { hp = 40.0; exp = 10.0; gp = 5.0 } }
+                val user =
+                    User().apply {
+                        stats =
+                            Stats().apply {
+                                hp = 40.0
+                                exp = 10.0
+                                gp = 5.0
+                            }
+                    }
                 val response =
                     SkillResponse().apply {
-                        this.user = User().apply { stats = Stats().apply { hp = 50.0; exp = 25.0; gp = 3.0 } }
+                        this.user =
+                            User().apply {
+                                stats =
+                                    Stats().apply {
+                                        hp = 50.0
+                                        exp = 25.0
+                                        gp = 3.0
+                                    }
+                            }
                     }
                 coEvery { apiClient.useSkill("heal", "self", "task-1") } returns response
                 every { localRepository.getUser("user-1") } returns flowOf(user)
@@ -412,10 +465,25 @@ class UserRepositoryImplTest :
             }
 
             "count the rest of the old level when the skill levels the user up" {
-                val user = User().apply { stats = Stats().apply { lvl = 4; exp = 90.0; toNextLevel = 100 } }
+                val user =
+                    User().apply {
+                        stats =
+                            Stats().apply {
+                                lvl = 4
+                                exp = 90.0
+                                toNextLevel = 100
+                            }
+                    }
                 val response =
                     SkillResponse().apply {
-                        this.user = User().apply { stats = Stats().apply { lvl = 5; exp = 5.0 } }
+                        this.user =
+                            User().apply {
+                                stats =
+                                    Stats().apply {
+                                        lvl = 5
+                                        exp = 5.0
+                                    }
+                            }
                     }
                 coEvery { apiClient.useSkill("fireball", "task", "task-1") } returns response
                 every { localRepository.getUser("user-1") } returns flowOf(user)
@@ -474,7 +542,14 @@ class UserRepositoryImplTest :
         "bulkAllocatePoints" should {
             "copy the allocated stats to the user" {
                 val user = User().apply { stats = Stats() }
-                val stats = Stats().apply { strength = 1; intelligence = 2; constitution = 3; per = 4; points = 0 }
+                val stats =
+                    Stats().apply {
+                        strength = 1
+                        intelligence = 2
+                        constitution = 3
+                        per = 4
+                        points = 0
+                    }
                 coEvery { apiClient.bulkAllocatePoints(1, 2, 3, 4) } returns stats
                 every { localRepository.getUser("user-1") } returns flowOf(user)
                 every { localRepository.getLiveObject(user) } returns user
@@ -506,7 +581,12 @@ class UserRepositoryImplTest :
         }
         "updateLoginName" should {
             "use the password endpoint if a password is given" {
-                val user = User().apply { authentication = Authentication().apply { localAuthentication = LocalAuthentication() }; flags = Flags() }
+                val user =
+                    User().apply {
+                        authentication = Authentication().apply { localAuthentication = LocalAuthentication() }
+                        flags =
+                            Flags()
+                    }
                 coEvery { apiClient.updateLoginName("tester", "secret") } returns null
                 every { localRepository.getUser("user-1") } returns flowOf(user)
                 every { localRepository.modify(any<User>(), any()) } answers { secondArg<(User) -> Unit>().invoke(firstArg()) }
@@ -540,7 +620,11 @@ class UserRepositoryImplTest :
         "retrieveTeamPlan" should {
             "save the team, its tasks and its members" {
                 val order = TasksOrder()
-                val team = Group().apply { id = "team-1"; tasksOrder = order }
+                val team =
+                    Group().apply {
+                        id = "team-1"
+                        tasksOrder = order
+                    }
                 val tasks = TaskList()
                 val member = Member().apply { id = "member-1" }
                 coEvery { apiClient.getGroup("team-1") } returns team
@@ -551,7 +635,14 @@ class UserRepositoryImplTest :
                 every { localRepository.save(any<List<BaseObject>>()) } returns Unit
                 repository.retrieveTeamPlan("team-1") shouldBe team
                 coVerify { taskRepository.saveTasks("team-1", order, tasks) }
-                verify { localRepository.save(match<List<BaseObject>> { (it.singleOrNull() as? GroupMembership)?.combinedID == "member-1team-1" }) }
+                verify {
+                    localRepository.save(
+                        match<List<BaseObject>> {
+                            (it.singleOrNull() as? GroupMembership)?.combinedID ==
+                                "member-1team-1"
+                        },
+                    )
+                }
                 verify { localRepository.save(listOf(member)) }
             }
 

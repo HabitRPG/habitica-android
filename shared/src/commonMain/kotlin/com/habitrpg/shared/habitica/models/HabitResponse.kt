@@ -9,4 +9,7 @@ class HabitResponse<T> {
     var success: Boolean? = null
     var message: String? = null
     var statusCode: Int? = null
+
+    // Version of the server's client config, changes whenever the config does
+    var clientConfigV: String? = null
 }

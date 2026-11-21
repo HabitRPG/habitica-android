@@ -11,38 +11,39 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SeasonalShopViewModel @Inject constructor(
-    inventoryRepository: InventoryRepository,
-    configManager: AppConfigManager,
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel
-) : ShopViewModel(inventoryRepository, configManager, userRepository, userViewModel) {
+class SeasonalShopViewModel
+    @Inject
+    constructor(
+        inventoryRepository: InventoryRepository,
+        configManager: AppConfigManager,
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+    ) : ShopViewModel(inventoryRepository, configManager, userRepository, userViewModel) {
+        override suspend fun retrieveShopInventory(context: Context): Shop {
+            val newShop = super.retrieveShopInventory(context)
+            newShop.categories.sortWith(
+                compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
+                    .thenByDescending {
+                        if (it.identifier ==
+                            "quests"
+                        ) {
+                            10000
+                        } else {
+                            findReleaseYear(
+                                it.items.firstOrNull()?.key ?: "",
+                            )
+                        }
+                    }.thenBy { it.items.firstOrNull()?.locked },
+            )
+            return newShop
+        }
 
-    override suspend fun retrieveShopInventory(context: Context): Shop {
-        val newShop = super.retrieveShopInventory(context)
-        newShop.categories.sortWith(
-            compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
-                .thenByDescending {
-                    if (it.identifier ==
-                        "quests"
-                    ) {
-                        10000
-                    } else {
-                        findReleaseYear(
-                            it.items.firstOrNull()?.key ?: ""
-                        )
-                    }
-                }.thenBy { it.items.firstOrNull()?.locked },
-        )
-        return newShop
-    }
-
-    private fun findReleaseYear(key: String): Int {
-        val result = key.filter { it.isDigit() }
-        return if (result.isEmpty()) {
-            2014
-        } else {
-            result.toInt()
+        private fun findReleaseYear(key: String): Int {
+            val result = key.filter { it.isDigit() }
+            return if (result.isEmpty()) {
+                2014
+            } else {
+                result.toInt()
+            }
         }
     }
-}

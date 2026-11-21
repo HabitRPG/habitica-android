@@ -66,7 +66,6 @@ import com.habitrpg.android.habitica.ui.theme.windowBackgroundFor
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.TaskFormViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.tasks.AssignSheet
 import com.habitrpg.android.habitica.ui.views.tasks.AssignedView
@@ -77,6 +76,7 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.TaskFormSelector
 import com.habitrpg.android.habitica.widget.glance.work.WidgetRefreshWorker
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.Frequency
@@ -647,7 +647,8 @@ class TaskFormActivity : BaseActivity() {
         if (isRebuild) {
             tags.forEachIndexed { index, tag ->
                 (binding.tagsWrapper.getChildAt(index) as? CheckBox)?.isChecked =
-                    checkedIds.contains(tag.id) || newlyCreatedTagIds.remove(tag.id)
+                    checkedIds.contains(tag.id) ||
+                    newlyCreatedTagIds.remove(tag.id)
             }
         } else {
             setAllTagSelections()

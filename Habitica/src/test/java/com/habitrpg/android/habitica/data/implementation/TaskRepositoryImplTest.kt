@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -365,7 +364,13 @@ class TaskRepositoryImplTest :
                 val saved = Task().apply { group = TaskGroupPlan().apply { assignedUsersDetail = RealmList(details) } }
                 coEvery { apiClient.markTaskNeedsWork("task-1", "user-2") } returns saved
                 every { localRepository.save(saved) } returns Unit
-                repository.markTaskNeedsWork(Task().apply { id = "task-1"; position = 2 }, "user-2")
+                repository.markTaskNeedsWork(
+                    Task().apply {
+                        id = "task-1"
+                        position = 2
+                    },
+                    "user-2",
+                )
                 details.completed shouldBe false
                 details.completedDate shouldBe null
                 saved.position shouldBe 2
@@ -382,7 +387,8 @@ class TaskRepositoryImplTest :
             }
 
             "move group tasks through the group endpoint" {
-                every { localRepository.getTask("task-1") } returns flowOf(Task().apply { group = TaskGroupPlan().apply { groupID = "group-1" } })
+                every { localRepository.getTask("task-1") } returns
+                    flowOf(Task().apply { group = TaskGroupPlan().apply { groupID = "group-1" } })
                 coEvery { apiClient.postGroupTaskNewPosition("task-1", 0) } returns null
                 repository.updateTaskPosition(TaskType.TODO, "task-1", 0) shouldBe null
                 verify(exactly = 0) { localRepository.updateTaskPositions(any()) }
@@ -403,8 +409,17 @@ class TaskRepositoryImplTest :
         "createTaskInBackground" should {
             "apply assignment changes and notify when the task was saved" {
                 Dispatchers.setMain(UnconfinedTestDispatcher())
-                val task = Task().apply { id = "task-1"; ownerID = "group-1"; group = TaskGroupPlan().apply { groupID = "group-1" } }
-                val created = Task().apply { id = "task-1"; ownerID = "group-1" }
+                val task =
+                    Task().apply {
+                        id = "task-1"
+                        ownerID = "group-1"
+                        group = TaskGroupPlan().apply { groupID = "group-1" }
+                    }
+                val created =
+                    Task().apply {
+                        id = "task-1"
+                        ownerID = "group-1"
+                    }
                 every { localRepository.save(any<Task>()) } returns Unit
                 coEvery { apiClient.createGroupTask("group-1", task) } returns created
                 coEvery { apiClient.assignToTask("task-1", listOf("user-2")) } returns Task()

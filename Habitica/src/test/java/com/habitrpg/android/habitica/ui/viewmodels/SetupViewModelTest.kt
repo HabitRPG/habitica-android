@@ -63,9 +63,17 @@ class SetupViewModelTest :
                     customization(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_COLOR, "red"),
                     customization(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, "2"),
                     customization(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_PONYTAIL, "3"),
-                    customization(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR, "black"),
+                    customization(
+                        SetupCustomizationRepository.CATEGORY_EXTRAS,
+                        SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR,
+                        "black",
+                    ),
                     customization(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_FLOWER, "4"),
-                    customization(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_GLASSES, "eyewear_special_blackTopFrame"),
+                    customization(
+                        SetupCustomizationRepository.CATEGORY_EXTRAS,
+                        SetupCustomizationRepository.SUBCATEGORY_GLASSES,
+                        "eyewear_special_blackTopFrame",
+                    ),
                 ).forEach { viewModel.equipCustomization(it) }
 
                 with(SetupCustomizationRepository) {
@@ -82,8 +90,13 @@ class SetupViewModelTest :
 
             "fall back to 0 for non numeric hair values" {
                 val viewModel = makeViewModel()
-                viewModel.equipCustomization(customization(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, "none"))
-                viewModel.user.value?.preferences?.hair?.bangs shouldBe 0
+                viewModel.equipCustomization(
+                    customization(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, "none"),
+                )
+                viewModel.user.value
+                    ?.preferences
+                    ?.hair
+                    ?.bangs shouldBe 0
             }
 
             "do nothing without a user" {
@@ -143,7 +156,13 @@ class SetupViewModelTest :
             "save the avatar, equip glasses and create the tasks" {
                 val viewModel = makeViewModel()
                 viewModel.equipCustomization(customization(SetupCustomizationRepository.CATEGORY_BODY, "", "blue"))
-                viewModel.equipCustomization(customization(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_GLASSES, "eyewear_1"))
+                viewModel.equipCustomization(
+                    customization(
+                        SetupCustomizationRepository.CATEGORY_EXTRAS,
+                        SetupCustomizationRepository.SUBCATEGORY_GLASSES,
+                        "eyewear_1",
+                    ),
+                )
                 viewModel.saveSetup(context)
                 coVerify(exactly = 1) { userRepository.updateUser(match<Map<String, Any?>> { it["preferences.shirt"] == "blue" }) }
                 coVerify(exactly = 1) { inventoryRepository.equipGear("eyewear_1", false) }

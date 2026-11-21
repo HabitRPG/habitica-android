@@ -19,7 +19,6 @@ import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearMocks
-import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -317,14 +316,28 @@ class TasksViewModelTest :
 
             "allow group tasks assigned to the user or to nobody" {
                 val viewModel = makeViewModel()
-                val assigned = task(TaskType.TODO).apply { group = TaskGroupPlan().apply { groupID = "team-1"; assignedUsers = RealmList("user-1") } }
+                val assigned =
+                    task(TaskType.TODO).apply {
+                        group =
+                            TaskGroupPlan().apply {
+                                groupID = "team-1"
+                                assignedUsers = RealmList("user-1")
+                            }
+                    }
                 val unassigned = task(TaskType.TODO).apply { group = TaskGroupPlan().apply { groupID = "team-1" } }
                 viewModel.canScoreTask(assigned) shouldBe true
                 viewModel.canScoreTask(unassigned) shouldBe true
             }
 
             "not allow group tasks assigned to someone else" {
-                val other = task(TaskType.TODO).apply { group = TaskGroupPlan().apply { groupID = "team-1"; assignedUsers = RealmList("user-2") } }
+                val other =
+                    task(TaskType.TODO).apply {
+                        group =
+                            TaskGroupPlan().apply {
+                                groupID = "team-1"
+                                assignedUsers = RealmList("user-2")
+                            }
+                    }
                 makeViewModel().canScoreTask(other) shouldBe false
             }
         }

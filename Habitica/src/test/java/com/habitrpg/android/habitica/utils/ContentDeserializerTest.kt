@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.utils
 
 import com.habitrpg.android.habitica.models.ContentResult
 import io.kotest.matchers.shouldBe
-import io.mockk.mockk
 
 class ContentDeserializerTest :
     SerializerSpec({

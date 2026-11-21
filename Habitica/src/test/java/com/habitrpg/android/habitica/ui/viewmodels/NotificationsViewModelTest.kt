@@ -105,7 +105,11 @@ class NotificationsViewModelTest :
                         party =
                             UserParty().apply {
                                 id = "party-2"
-                                quest = Quest().apply { rsvpNeeded = true; key = "dilatory" }
+                                quest =
+                                    Quest().apply {
+                                        rsvpNeeded = true
+                                        key = "dilatory"
+                                    }
                             }
                     }
                 viewModel.getNotifications().first().map { it.id } shouldBe
@@ -252,7 +256,8 @@ class NotificationsViewModelTest :
         "accept" should {
             "join the group for a party invitation and refresh the user" {
                 val viewModel = makeViewModel()
-                userData.value = User().apply { invitations = Invitations().apply { parties = RealmList(PartyInvite().apply { id = "party-1" }) } }
+                userData.value =
+                    User().apply { invitations = Invitations().apply { parties = RealmList(PartyInvite().apply { id = "party-1" }) } }
                 viewModel.accept("custom-party-invitation-party-1")
                 coVerify(exactly = 1) { socialRepository.joinGroup("party-1") }
                 coVerify { userRepository.retrieveUser(false, true) }
@@ -260,7 +265,14 @@ class NotificationsViewModelTest :
 
             "accept the quest for a quest invitation" {
                 val viewModel = makeViewModel()
-                val user = User().apply { party = UserParty().apply { id = "party-1"; quest = Quest().apply { rsvpNeeded = true } } }
+                val user =
+                    User().apply {
+                        party =
+                            UserParty().apply {
+                                id = "party-1"
+                                quest = Quest().apply { rsvpNeeded = true }
+                            }
+                    }
                 userData.value = user
                 viewModel.accept("custom-quest-invitation-party-1")
                 coVerify(exactly = 1) { socialRepository.acceptQuest(any(), "party-1") }
@@ -270,14 +282,22 @@ class NotificationsViewModelTest :
         "reject" should {
             "reject a guild invitation" {
                 val viewModel = makeViewModel()
-                userData.value = User().apply { invitations = Invitations().apply { guilds = RealmList(GuildInvite().apply { id = "guild-1" }) } }
+                userData.value =
+                    User().apply { invitations = Invitations().apply { guilds = RealmList(GuildInvite().apply { id = "guild-1" }) } }
                 viewModel.reject("custom-guild-invitation-guild-1")
                 coVerify(exactly = 1) { socialRepository.rejectGroupInvite("guild-1") }
             }
 
             "reject the quest for a quest invitation" {
                 val viewModel = makeViewModel()
-                userData.value = User().apply { party = UserParty().apply { id = "party-1"; quest = Quest().apply { rsvpNeeded = true } } }
+                userData.value =
+                    User().apply {
+                        party =
+                            UserParty().apply {
+                                id = "party-1"
+                                quest = Quest().apply { rsvpNeeded = true }
+                            }
+                    }
                 viewModel.reject("custom-quest-invitation-party-1")
                 coVerify(exactly = 1) { socialRepository.rejectQuest(any(), "party-1") }
             }

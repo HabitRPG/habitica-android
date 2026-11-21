@@ -168,7 +168,10 @@ class GroupViewModelTest :
                 val liked = message("a", 1).apply { likeCount = 1 }
                 coEvery { socialRepository.likeMessage(any()) } returns liked
                 viewModel.likeMessage(message("a", 1))
-                viewModel.chatmessages.getOrAwaitValue().single().likeCount shouldBe 1
+                viewModel.chatmessages
+                    .getOrAwaitValue()
+                    .single()
+                    .likeCount shouldBe 1
             }
 
             "reload the chat if liking failed" {
@@ -201,7 +204,8 @@ class GroupViewModelTest :
             "add the posted message to the top" {
                 val viewModel = makeViewModel("group-1")
                 viewModel.loadChat(message("a", 1))
-                coEvery { socialRepository.postGroupChat("group-1", "Hello") } returns PostChatMessageResult().apply { message = message("b", 2) }
+                coEvery { socialRepository.postGroupChat("group-1", "Hello") } returns
+                    PostChatMessageResult().apply { message = message("b", 2) }
                 var completed = false
                 viewModel.postGroupChat("Hello", { completed = true }, { })
                 completed shouldBe true
@@ -265,7 +269,13 @@ class GroupViewModelTest :
 
         "retrieveGroup" should {
             "load party members and pending invites for the party leader" {
-                every { socialRepository.getGroup("party-1") } returns flowOf(Group().apply { id = "party-1"; leaderID = "user-1" })
+                every { socialRepository.getGroup("party-1") } returns
+                    flowOf(
+                        Group().apply {
+                            id = "party-1"
+                            leaderID = "user-1"
+                        },
+                    )
                 coEvery { socialRepository.retrieveGroup("party-1") } returns Group().apply { id = "party-1" }
                 val invited = Member().apply { id = "member-2" }
                 coEvery { socialRepository.retrievegroupInvites("party-1", true) } returns listOf(invited)

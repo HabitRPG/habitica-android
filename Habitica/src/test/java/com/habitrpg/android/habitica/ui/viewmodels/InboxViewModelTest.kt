@@ -67,17 +67,30 @@ class InboxViewModelTest :
 
         "MessagesDataSource" should {
             "return an error if there is no recipient" {
-                MessagesDataSource(socialRepository, "", null).loadPage(0).shouldBeInstanceOf<PagingSource.LoadResult.Error<Int, ChatMessage>>()
+                MessagesDataSource(
+                    socialRepository,
+                    "",
+                    null,
+                ).loadPage(0).shouldBeInstanceOf<PagingSource.LoadResult.Error<Int, ChatMessage>>()
             }
 
             "return an error if messages could not be loaded" {
                 coEvery { socialRepository.retrieveInboxMessages("user-2", 0) } returns null
-                MessagesDataSource(socialRepository, "user-2", null).loadPage(0).shouldBeInstanceOf<PagingSource.LoadResult.Error<Int, ChatMessage>>()
+                MessagesDataSource(
+                    socialRepository,
+                    "user-2",
+                    null,
+                ).loadPage(0).shouldBeInstanceOf<PagingSource.LoadResult.Error<Int, ChatMessage>>()
             }
 
             "offer a next page if the page was full" {
                 coEvery { socialRepository.retrieveInboxMessages("user-2", 1) } returns messages(10)
-                val result = MessagesDataSource(socialRepository, "user-2", null).loadPage(1).shouldBeInstanceOf<PagingSource.LoadResult.Page<Int, ChatMessage>>()
+                val result =
+                    MessagesDataSource(
+                        socialRepository,
+                        "user-2",
+                        null,
+                    ).loadPage(1).shouldBeInstanceOf<PagingSource.LoadResult.Page<Int, ChatMessage>>()
                 result.data.size shouldBe 10
                 result.prevKey shouldBe 0
                 result.nextKey shouldBe 2
@@ -85,7 +98,12 @@ class InboxViewModelTest :
 
             "end paging if the page was not full" {
                 coEvery { socialRepository.retrieveInboxMessages("user-2", 0) } returns messages(3)
-                val result = MessagesDataSource(socialRepository, "user-2", null).loadPage(null).shouldBeInstanceOf<PagingSource.LoadResult.Page<Int, ChatMessage>>()
+                val result =
+                    MessagesDataSource(
+                        socialRepository,
+                        "user-2",
+                        null,
+                    ).loadPage(null).shouldBeInstanceOf<PagingSource.LoadResult.Page<Int, ChatMessage>>()
                 result.prevKey shouldBe null
                 result.nextKey shouldBe null
             }

@@ -115,24 +115,27 @@ class TaskStateTest :
             }
 
             "be false for completed todos" {
-                Task().apply {
-                    type = TaskType.TODO
-                    completed = true
-                }.isDisplayedActiveForUser("user") shouldBe false
+                Task()
+                    .apply {
+                        type = TaskType.TODO
+                        completed = true
+                    }.isDisplayedActiveForUser("user") shouldBe false
             }
 
             "be true for open dailies that are due" {
-                Task().apply {
-                    type = TaskType.DAILY
-                    isDue = true
-                }.isDisplayedActiveForUser("user") shouldBe true
+                Task()
+                    .apply {
+                        type = TaskType.DAILY
+                        isDue = true
+                    }.isDisplayedActiveForUser("user") shouldBe true
             }
 
             "be false for dailies that are not due" {
-                Task().apply {
-                    type = TaskType.DAILY
-                    isDue = false
-                }.isDisplayedActiveForUser("user") shouldBe false
+                Task()
+                    .apply {
+                        type = TaskType.DAILY
+                        isDue = false
+                    }.isDisplayedActiveForUser("user") shouldBe false
             }
 
             "be false for habits and rewards" {
@@ -166,17 +169,19 @@ class TaskStateTest :
             }
 
             "show both habit counters" {
-                Task().apply {
-                    counterUp = 3
-                    counterDown = 2
-                }.streakString shouldBe "+3 | -2"
+                Task()
+                    .apply {
+                        counterUp = 3
+                        counterDown = 2
+                    }.streakString shouldBe "+3 | -2"
             }
 
             "show only the positive counter" {
-                Task().apply {
-                    counterUp = 3
-                    counterDown = 0
-                }.streakString shouldBe "+3"
+                Task()
+                    .apply {
+                        counterUp = 3
+                        counterDown = 0
+                    }.streakString shouldBe "+3"
             }
 
             "show only the negative counter" {
@@ -188,10 +193,11 @@ class TaskStateTest :
             }
 
             "prefer counters over the streak" {
-                Task().apply {
-                    streak = 12
-                    counterUp = 1
-                }.streakString shouldBe "+1"
+                Task()
+                    .apply {
+                        streak = 12
+                        counterUp = 1
+                    }.streakString shouldBe "+1"
             }
         }
 

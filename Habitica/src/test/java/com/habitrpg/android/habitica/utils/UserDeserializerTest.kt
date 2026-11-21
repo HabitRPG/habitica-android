@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.utils
 
 import com.habitrpg.android.habitica.models.user.User
 import io.kotest.matchers.shouldBe
-import io.mockk.mockk
 import java.util.Date
 
 class UserDeserializerTest :

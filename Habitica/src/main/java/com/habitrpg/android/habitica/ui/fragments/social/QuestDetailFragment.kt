@@ -84,10 +84,12 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
         viewLifecycleOwner.lifecycleScope.launchCatching {
             userRepository
-                .getUser().mapNotNull { it?.party?.id }
+                .getUser()
+                .mapNotNull { it?.party?.id }
                 .distinctUntilChanged()
                 .flatMapLatest { socialRepository.getGroup(it) }
-                .onEach { updateParty(it) }.mapNotNull { it?.quest?.key }
+                .onEach { updateParty(it) }
+                .mapNotNull { it?.quest?.key }
                 .distinctUntilChanged()
                 .flatMapLatest { inventoryRepository.getQuestContent(it) }
                 .filterNotNull()

@@ -36,13 +36,13 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.modules.navigator
 import com.habitrpg.android.habitica.ui.views.PixelArtView
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import java.util.Date
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 
 @Composable
 fun BirthdayBanner(

@@ -432,6 +432,7 @@ class PreferencesFragment :
                 val newUrl = sharedPreferences.getString(key, null)
                 if (!newUrl.isNullOrBlank()) {
                     apiClient.updateServerUrl(newUrl)
+                    configManager.fetchConfig(forced = true)
                 }
                 findPreference<Preference>(key)?.summary = newUrl ?: ""
             }

@@ -52,8 +52,16 @@ class HabiticaPromotionTest :
             }
 
             "have an identifier matching the canonical key" {
-                listOf("spring_extra_gems", "summer_extra_gems", "fall_extra_gems", "spooky_extra_gems", "winter_extra_gems", "flash_extra_gems", "g1g1", "survey2021")
-                    .forEach { key -> getHabiticaPromotionFromKey(key, null, null)?.identifier shouldBe key }
+                listOf(
+                    "spring_extra_gems",
+                    "summer_extra_gems",
+                    "fall_extra_gems",
+                    "spooky_extra_gems",
+                    "winter_extra_gems",
+                    "flash_extra_gems",
+                    "g1g1",
+                    "survey2021",
+                ).forEach { key -> getHabiticaPromotionFromKey(key, null, null)?.identifier shouldBe key }
             }
         }
 
@@ -80,11 +88,16 @@ class HabiticaPromotionTest :
                 SpringExtraGemsHabiticaPromotion(future, Date(future.time + 1.days.inWholeMilliseconds)).isActive shouldBe false
             }
 
-            "be false after the promo ended in release builds".config(enabled = !BuildConfig.DEBUG && BuildConfig.TESTING_LEVEL != "staff") {
+            "be false after the promo ended in release builds".config(
+                enabled = !BuildConfig.DEBUG && BuildConfig.TESTING_LEVEL != "staff",
+            ) {
                 SpringExtraGemsHabiticaPromotion(Date(past.time - 1.days.inWholeMilliseconds), past).isActive shouldBe false
             }
 
-            "stay active after the end date for debug and staff builds".config(enabled = BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff") {
+            "stay active after the end date for debug and staff builds".config(
+                enabled =
+                    BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff",
+            ) {
                 SpringExtraGemsHabiticaPromotion(Date(past.time - 1.days.inWholeMilliseconds), past).isActive shouldBe true
             }
         }

@@ -175,7 +175,9 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         }
 
         binding?.chatBarView?.sendAction = { sendMessage(it) }
-        binding?.chatBarView?.maxChatLength = configManager.value(ClientConfigKey.maxChatLength)
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            configManager.valueFlow(ClientConfigKey.maxChatLength).collect { binding?.chatBarView?.maxChatLength = it }
+        }
 
         binding?.chatBarView?.hasAcceptedGuidelines = true
 

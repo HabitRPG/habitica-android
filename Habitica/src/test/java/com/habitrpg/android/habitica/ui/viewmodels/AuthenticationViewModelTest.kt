@@ -46,7 +46,7 @@ class AuthenticationViewModelTest :
         val sharedPreferences = mockk<SharedPreferences>(relaxed = true)
         val editor = mockk<SharedPreferences.Editor>(relaxed = true)
         val authenticationHandler = mockk<AuthenticationHandler>(relaxed = true)
-        val configManager = mockk<AppConfigManager>()
+        val configManager = mockk<AppConfigManager>(relaxUnitFun = true)
         val crashReporter = mockk<CrashReporter>(relaxed = true)
         val hostConfig = mockk<HostConfig>()
         val keyHelper = mockk<KeyHelper>()
@@ -55,7 +55,17 @@ class AuthenticationViewModelTest :
         every { sharedPreferences.edit() } returns editor
 
         fun makeViewModel(keyHelper: KeyHelper? = null) =
-            AuthenticationViewModel(apiClient, userRepository, sharedPreferences, authenticationHandler, configManager, hostConfig, keyHelper, context, crashReporter)
+            AuthenticationViewModel(
+                apiClient,
+                userRepository,
+                sharedPreferences,
+                authenticationHandler,
+                configManager,
+                hostConfig,
+                keyHelper,
+                context,
+                crashReporter,
+            )
 
         beforeSpec {
             mockkObject(WidgetRefreshWorker)
@@ -191,7 +201,8 @@ class AuthenticationViewModelTest :
 
         "register" should {
             "register with the passed values and mark a pending registration" {
-                coEvery { apiClient.registerUser("tester", "a@b.c", "secret", "secret") } returns UserAuthResponse("token", "user-1", newUser = true)
+                coEvery { apiClient.registerUser("tester", "a@b.c", "secret", "secret") } returns
+                    UserAuthResponse("token", "user-1", newUser = true)
                 val viewModel = makeViewModel()
                 viewModel.register("tester", "a@b.c", "secret")
                 viewModel.isRegistering.value shouldBe true

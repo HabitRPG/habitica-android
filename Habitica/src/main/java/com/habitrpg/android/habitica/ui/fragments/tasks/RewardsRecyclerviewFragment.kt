@@ -98,9 +98,10 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.onShowPurchaseDialog = { item, isPinned ->
             if (item.key == "gem" && viewModel.user.value?.isSubscribed != true) {
-                EventOutcomeSubscriptionBottomSheetFragment().apply {
-                    eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
-                }.show(parentFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                EventOutcomeSubscriptionBottomSheetFragment()
+                    .apply {
+                        eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
+                    }.show(parentFragmentManager, SubscriptionBottomSheetFragment.TAG)
             } else {
                 val dialog = PurchaseDialog(requireContext(), item, activity as? AppCompatActivity)
                 dialog.isPinned = isPinned

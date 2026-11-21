@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.api.HostConfig
@@ -73,7 +72,16 @@ class MainActivityViewModelTest :
             userData.value = null
         }
         afterEach {
-            clearMocks(userRepository, pushNotificationManager, editor, contentRepository, taskRepository, inventoryRepository, taskAlarmManager, answers = false)
+            clearMocks(
+                userRepository,
+                pushNotificationManager,
+                editor,
+                contentRepository,
+                taskRepository,
+                inventoryRepository,
+                taskAlarmManager,
+                answers = false,
+            )
         }
 
         "isAuthenticated" should {
@@ -156,7 +164,12 @@ class MainActivityViewModelTest :
 
         "onTutorialCompleted" should {
             "mark the tutorial step as completed" {
-                makeViewModel().onTutorialCompleted(TutorialStep().apply { tutorialGroup = "common"; identifier = "habits" })
+                makeViewModel().onTutorialCompleted(
+                    TutorialStep().apply {
+                        tutorialGroup = "common"
+                        identifier = "habits"
+                    },
+                )
                 coVerify(exactly = 1) { userRepository.updateUser("flags.tutorial.common.habits", true) }
             }
         }
@@ -180,7 +193,13 @@ class MainActivityViewModelTest :
 
         "getToolbarTitle" should {
             "use the egg text for pet and mount details" {
-                every { inventoryRepository.getItem("egg", "Wolf") } returns flowOf(Egg().apply { text = "Wolf"; mountText = "Wolf Steed" })
+                every { inventoryRepository.getItem("egg", "Wolf") } returns
+                    flowOf(
+                        Egg().apply {
+                            text = "Wolf"
+                            mountText = "Wolf Steed"
+                        },
+                    )
                 val viewModel = makeViewModel()
                 var title: CharSequence? = null
                 viewModel.getToolbarTitle(R.id.petDetailRecyclerFragment, null, "Wolf") { title = it }

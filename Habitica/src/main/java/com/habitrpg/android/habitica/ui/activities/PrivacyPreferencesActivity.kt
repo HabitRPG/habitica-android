@@ -54,7 +54,6 @@ class PrivacyPreferencesActivity : BaseActivity() {
     @Inject
     lateinit var crashReporter: CrashReporter
 
-
     @Inject
     lateinit var sharedPrefs: SharedPreferences
 

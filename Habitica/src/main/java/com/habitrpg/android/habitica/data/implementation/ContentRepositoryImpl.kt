@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import kotlinx.serialization.json.JsonObject
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
@@ -11,6 +10,7 @@ import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.JsonObject
 import java.util.Date
 
 class ContentRepositoryImpl<T : ContentLocalRepository>(

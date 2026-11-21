@@ -119,8 +119,16 @@ class ChallengeRepositoryImplTest :
         "updateChallenge" should {
             "update, delete and add tasks before updating the challenge" {
                 val challenge = Challenge().apply { id = "challenge-1" }
-                val updated = Task().apply { id = "task-1"; type = TaskType.HABIT }
-                val added = Task().apply { id = "task-3"; type = TaskType.DAILY }
+                val updated =
+                    Task().apply {
+                        id = "task-1"
+                        type = TaskType.HABIT
+                    }
+                val added =
+                    Task().apply {
+                        id = "task-3"
+                        type = TaskType.DAILY
+                    }
                 val savedUpdated = Task()
                 every { localRepository.getUnmanagedCopy(updated) } returns updated
                 coEvery { apiClient.updateTask("task-1", updated) } returns savedUpdated
@@ -130,7 +138,8 @@ class ChallengeRepositoryImplTest :
                 coEvery { apiClient.getChallengeTasks("challenge-1") } returns TaskList()
                 every { localRepository.save(any<List<Task>>()) } returns Unit
                 every { localRepository.save(challenge) } returns Unit
-                repository.updateChallenge(challenge, listOf(updated, added), listOf(added), listOf(updated), listOf("task-2")) shouldBe challenge
+                repository.updateChallenge(challenge, listOf(updated, added), listOf(added), listOf(updated), listOf("task-2")) shouldBe
+                    challenge
                 savedUpdated.ownerID shouldBe "challenge-1"
                 challenge.tasksOrder?.habits shouldBe listOf("task-1")
                 challenge.tasksOrder?.dailys shouldBe listOf("task-3")

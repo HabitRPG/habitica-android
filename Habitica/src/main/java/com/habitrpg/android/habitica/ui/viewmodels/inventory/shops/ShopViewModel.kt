@@ -18,9 +18,8 @@ abstract class ShopViewModel(
     private val inventoryRepository: InventoryRepository,
     configManager: AppConfigManager,
     userRepository: UserRepository,
-    userViewModel: MainUserViewModel
+    userViewModel: MainUserViewModel,
 ) : BaseViewModel(userRepository, userViewModel) {
-
     var shopIdentifier: String? = null
 
     val shopSpriteSuffix = configManager.shopSpriteSuffix()
@@ -29,8 +28,10 @@ abstract class ShopViewModel(
     val armoireCount = inventoryRepository.getArmoireRemainingCount()
 
     val ownedItems = inventoryRepository.getOwnedItems()
-    val inAppRewards = inventoryRepository.getInAppRewards()
-        .map { rewards -> rewards.map { it.key } }
+    val inAppRewards =
+        inventoryRepository
+            .getInAppRewards()
+            .map { rewards -> rewards.map { it.key } }
 
     val isUserSubscribed: Boolean
         get() = userViewModel.user.value?.isSubscribed == true

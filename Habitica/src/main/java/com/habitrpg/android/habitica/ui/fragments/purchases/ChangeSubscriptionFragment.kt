@@ -52,13 +52,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.map
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.MutableCreationExtras
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -98,9 +98,13 @@ fun ChangeSubscriptionOption(
 ) {
     val textColor by animateColorAsState(if (selected) selectedTextColor else colorResource(R.color.brand_600))
     val backgroundColor by animateColorAsState(
-        if (selected) colorResource(R.color.white) else colorResource(
-            R.color.brand_200
-        )
+        if (selected) {
+            colorResource(R.color.white)
+        } else {
+            colorResource(
+                R.color.brand_200,
+            )
+        },
     )
     Box(
         modifier =
@@ -165,9 +169,10 @@ fun ChangeSubscriptionOption(
         }
         if (isCurrentPlan) {
             Row(
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .align(Alignment.TopEnd)
+                modifier =
+                    Modifier
+                        .padding(top = 16.dp)
+                        .align(Alignment.TopEnd),
             ) {
                 Image(
                     painterResource(R.drawable.flag_flap),
@@ -194,8 +199,8 @@ fun ChangeSubscriptionOption(
                     tween(
                         durationMillis = 600,
                         delayMillis = 50,
-                        easing = EaseInElastic
-                    )
+                        easing = EaseInElastic,
+                    ),
                 ) {
                     -it
                 } + fadeIn(tween(durationMillis = 600, delayMillis = 50, easing = EaseInElastic)),
@@ -211,118 +216,119 @@ fun ChangeSubscriptionOption(
 
 @HiltViewModel
 class ChangeSubscriptionViewModel
-@Inject
-constructor(
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel,
-    private val purchaseHandler: PurchaseHandler,
-) : BaseViewModel(userRepository, userViewModel) {
-    fun selectProduct(product: HabiticaProduct) {
-        selectedProduct.value = product
-    }
+    @Inject
+    constructor(
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+        private val purchaseHandler: PurchaseHandler,
+    ) : BaseViewModel(userRepository, userViewModel) {
+        fun selectProduct(product: HabiticaProduct) {
+            selectedProduct.value = product
+        }
 
-    val isDowngrade: Boolean
-        get() =
-            currentProduct.value != null &&
-                    selectedProduct.value.getSubscriptionDuration() <= (currentProduct.value?.getSubscriptionDuration()
-                ?: 0)
-    val products =
-        listOf(
-            HabiticaProduct.SUBSCRIPTION_1_MONTH,
-            HabiticaProduct.SUBSCRIPTION_3_MONTH,
-            HabiticaProduct.SUBSCRIPTION_6_MONTH,
-            HabiticaProduct.SUBSCRIPTION_12_MONTH,
-        )
+        val isDowngrade: Boolean
+            get() =
+                currentProduct.value != null &&
+                    selectedProduct.value.getSubscriptionDuration() <= (
+                        currentProduct.value?.getSubscriptionDuration()
+                            ?: 0
+                    )
+        val products =
+            listOf(
+                HabiticaProduct.SUBSCRIPTION_1_MONTH,
+                HabiticaProduct.SUBSCRIPTION_3_MONTH,
+                HabiticaProduct.SUBSCRIPTION_6_MONTH,
+                HabiticaProduct.SUBSCRIPTION_12_MONTH,
+            )
 
-    val currentStep = MutableStateFlow(0)
+        val currentStep = MutableStateFlow(0)
 
-    val activeSubscriptionPlan = userViewModel.user.map { it?.purchased?.plan }
-    val newestSubscription = MutableStateFlow<Purchase?>(null)
-    val currentProduct = MutableStateFlow<HabiticaProduct?>(null)
-    val selectedProduct = MutableStateFlow(HabiticaProduct.SUBSCRIPTION_1_MONTH)
+        val activeSubscriptionPlan = userViewModel.user.map { it?.purchased?.plan }
+        val newestSubscription = MutableStateFlow<Purchase?>(null)
+        val currentProduct = MutableStateFlow<HabiticaProduct?>(null)
+        val selectedProduct = MutableStateFlow(HabiticaProduct.SUBSCRIPTION_1_MONTH)
 
-    val productDetails = MutableStateFlow<Map<HabiticaProduct, ProductDetails>>(emptyMap())
+        val productDetails = MutableStateFlow<Map<HabiticaProduct, ProductDetails>>(emptyMap())
 
-    // Kept up to date by the collector in init, so these don't depend on activeSubscriptionPlan being observed
-    private var latestPlan: SubscriptionPlan? = null
+        // Kept up to date by the collector in init, so these don't depend on activeSubscriptionPlan being observed
+        private var latestPlan: SubscriptionPlan? = null
 
-    val isEligibleForHourglassPromo: Boolean
-        get() = latestPlan?.isEligableForHourglassPromo == true
-    val hadGiftedSubscription: Boolean
-        get() = latestPlan?.isGiftedSub == true
-    val totalGemCount: Int
-        get() = latestPlan?.totalNumberOfGems ?: 0
+        val isEligibleForHourglassPromo: Boolean
+            get() = latestPlan?.isEligableForHourglassPromo == true
+        val hadGiftedSubscription: Boolean
+            get() = latestPlan?.isGiftedSub == true
+        val totalGemCount: Int
+            get() = latestPlan?.totalNumberOfGems ?: 0
 
-    init {
-        viewModelScope.launchCatching {
-            userViewModel.user.asFlow().collect { user ->
-                latestPlan = user?.purchased?.plan
-                // Gifted and expired plans can't be changed, so there is no current plan to preselect
-                val product =
-                    latestPlan
-                        ?.takeIf { !it.isGiftedSub && !it.isPaymentExpired }
-                        ?.habiticaProduct
-                // Only reset the selection when the plan changes, not on every user update
-                if (product != currentProduct.value) {
-                    currentProduct.value = product
-                    if (product != null) {
-                        selectedProduct.value = product
+        init {
+            viewModelScope.launchCatching {
+                userViewModel.user.asFlow().collect { user ->
+                    latestPlan = user?.purchased?.plan
+                    // Gifted and expired plans can't be changed, so there is no current plan to preselect
+                    val product =
+                        latestPlan
+                            ?.takeIf { !it.isGiftedSub && !it.isPaymentExpired }
+                            ?.habiticaProduct
+                    // Only reset the selection when the plan changes, not on every user update
+                    if (product != currentProduct.value) {
+                        currentProduct.value = product
+                        if (product != null) {
+                            selectedProduct.value = product
+                        }
                     }
                 }
             }
-        }
 
-        viewModelScope.launchCatching {
-            val details = HashMap<HabiticaProduct, ProductDetails>()
-            val products = purchaseHandler.loadSubscriptionProducts()
-            for (product in products) {
-                val habiticaProduct = HabiticaProduct.forSku(product.productId)
-                if (habiticaProduct != null) {
-                    details[habiticaProduct] = product
+            viewModelScope.launchCatching {
+                val details = HashMap<HabiticaProduct, ProductDetails>()
+                val products = purchaseHandler.loadSubscriptionProducts()
+                for (product in products) {
+                    val habiticaProduct = HabiticaProduct.forSku(product.productId)
+                    if (habiticaProduct != null) {
+                        details[habiticaProduct] = product
+                    }
                 }
+                productDetails.value = details
             }
-            productDetails.value = details
+
+            viewModelScope.launchCatching {
+                newestSubscription.value = purchaseHandler.checkForSubscription(false)
+            }
         }
 
-        viewModelScope.launchCatching {
-            newestSubscription.value = purchaseHandler.checkForSubscription(false)
+        fun productDetailsForProduct(product: HabiticaProduct): ProductDetails? = productDetails.value[product]
+
+        fun purchaseSubscription(
+            activity: Activity,
+            onPurchaseStarted: () -> Unit,
+        ) {
+            val details = productDetailsForProduct(selectedProduct.value) ?: return
+            viewModelScope.launchCatching {
+                purchaseHandler.purchase(activity, details)
+                onPurchaseStarted()
+            }
+        }
+
+        fun nextStep() {
+            currentStep.value += 1
+        }
+
+        fun estimatedYearlyPrice(): String {
+            val details = productDetailsForProduct(HabiticaProduct.SUBSCRIPTION_1_MONTH) ?: return ""
+            val monthlyPricePhase =
+                details.subscriptionOfferDetails
+                    ?.firstOrNull()
+                    ?.pricingPhases
+                    ?.pricingPhaseList
+                    ?.firstOrNull { it.priceAmountMicros > 0 } ?: return ""
+            var yearlyPrice = (monthlyPricePhase.priceAmountMicros * 12).div(1_000_000.0)
+            yearlyPrice = yearlyPrice.round(0) - 0.01
+            // Let the platform place the symbol and separators correctly for the user's locale
+            val format = NumberFormat.getCurrencyInstance()
+            format.currency = Currency.getInstance(monthlyPricePhase.priceCurrencyCode)
+            return format.format(yearlyPrice)
         }
     }
-
-    fun productDetailsForProduct(product: HabiticaProduct): ProductDetails? =
-        productDetails.value[product]
-
-    fun purchaseSubscription(
-        activity: Activity,
-        onPurchaseStarted: () -> Unit,
-    ) {
-        val details = productDetailsForProduct(selectedProduct.value) ?: return
-        viewModelScope.launchCatching {
-            purchaseHandler.purchase(activity, details)
-            onPurchaseStarted()
-        }
-    }
-
-    fun nextStep() {
-        currentStep.value += 1
-    }
-
-    fun estimatedYearlyPrice(): String {
-        val details = productDetailsForProduct(HabiticaProduct.SUBSCRIPTION_1_MONTH) ?: return ""
-        val monthlyPricePhase =
-            details.subscriptionOfferDetails
-                ?.firstOrNull()
-                ?.pricingPhases
-                ?.pricingPhaseList
-                ?.firstOrNull { it.priceAmountMicros > 0 } ?: return ""
-        var yearlyPrice = (monthlyPricePhase.priceAmountMicros * 12).div(1_000_000.0)
-        yearlyPrice = yearlyPrice.round(0) - 0.01
-        // Let the platform place the symbol and separators correctly for the user's locale
-        val format = NumberFormat.getCurrencyInstance()
-        format.currency = Currency.getInstance(monthlyPricePhase.priceCurrencyCode)
-        return format.format(yearlyPrice)
-    }
-}
 
 @Composable
 private fun ChangeSubscriptionChoiceView(
@@ -344,9 +350,10 @@ private fun ChangeSubscriptionChoiceView(
                 viewModel.nextStep()
             },
             contentPadding = PaddingValues(15.dp),
-            modifier = Modifier
-                .padding(top = 20.dp)
-                .alpha(if (canContinue) 1f else 0.5f),
+            modifier =
+                Modifier
+                    .padding(top = 20.dp)
+                    .alpha(if (canContinue) 1f else 0.5f),
             enabled = canContinue,
         ) {
             Text(stringResource(R.string.action_continue))
@@ -357,10 +364,11 @@ private fun ChangeSubscriptionChoiceView(
             color = colorResource(R.color.white),
             fontSize = 13.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .padding(horizontal = 26.dp)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .padding(top = 8.dp)
+                    .padding(horizontal = 26.dp)
+                    .fillMaxWidth(),
         )
     }
 }
@@ -377,8 +385,9 @@ private fun ChangeSubscriptionReviewView(
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(top = 20.dp),
+        modifier =
+            modifier
+                .padding(top = 20.dp),
     ) {
         ProvideTextStyle(
             TextStyle(
@@ -388,7 +397,7 @@ private fun ChangeSubscriptionReviewView(
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(18.dp),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             ) {
                 if (activePlan?.isTerminated == true && newestSub?.purchaseToken == activePlan?.customerId) {
                     if (viewModel.isDowngrade) {
@@ -396,14 +405,14 @@ private fun ChangeSubscriptionReviewView(
                             stringResource(R.string.subscription_change_confirmation_reactivate_downgrade),
                             fontWeight = FontWeight.Medium,
                             lineHeight = 24.sp,
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
                         )
                     } else {
                         Text(
                             stringResource(R.string.subscription_change_confirmation_reactivate_upgrade),
                             fontWeight = FontWeight.Medium,
                             lineHeight = 24.sp,
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
                         )
                     }
                 } else if (viewModel.hadGiftedSubscription || activePlan?.isTerminated == true && newestSub == null) {
@@ -412,17 +421,17 @@ private fun ChangeSubscriptionReviewView(
                         pluralStringResource(
                             R.plurals.subscription_change_confirmation_gift,
                             duration,
-                            duration
+                            duration,
                         ),
                         fontWeight = FontWeight.Medium,
                         lineHeight = 24.sp,
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
                     )
                     Text(
                         stringResource(R.string.subscription_change_gift_info),
                         fontSize = 14.sp,
                         lineHeight = 20.sp,
-                        fontWeight = FontWeight.Normal
+                        fontWeight = FontWeight.Normal,
                     )
                 } else {
                     if (viewModel.isDowngrade) {
@@ -430,14 +439,14 @@ private fun ChangeSubscriptionReviewView(
                             stringResource(R.string.subscription_change_confirmation_downgrade),
                             fontWeight = FontWeight.Medium,
                             lineHeight = 24.sp,
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
                         )
                     } else {
                         Text(
                             stringResource(R.string.subscription_change_confirmation_upgrade),
                             fontWeight = FontWeight.Medium,
                             lineHeight = 24.sp,
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
                         )
                     }
                 }
@@ -447,14 +456,14 @@ private fun ChangeSubscriptionReviewView(
                             stringResource(R.string.subscription_change_hourglass_promo_gems_info),
                             fontSize = 14.sp,
                             lineHeight = 20.sp,
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.Normal,
                         )
                     } else if (viewModel.isEligibleForHourglassPromo) {
                         Text(
                             stringResource(R.string.subscription_change_hourglass_promo_info),
                             fontSize = 14.sp,
                             lineHeight = 20.sp,
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.Normal,
                         )
                     }
                 }
@@ -488,9 +497,10 @@ fun ChangeSubscriptionScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .animateContentSize(),
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .animateContentSize(),
         ) {
             Text(
                 stringResource(R.string.change_subscription_plan),
@@ -505,17 +515,19 @@ fun ChangeSubscriptionScreen(
                 modifier = Modifier.padding(vertical = 16.dp),
             ) {
                 Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(1.dp)
-                        .background(colorResource(R.color.brand_400))
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .height(1.dp)
+                            .background(colorResource(R.color.brand_400)),
                 ) {}
                 Image(painterResource(R.drawable.separator_fancy), contentDescription = null)
                 Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(1.dp)
-                        .background(colorResource(R.color.brand_400))
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .height(1.dp)
+                            .background(colorResource(R.color.brand_400)),
                 ) {}
             }
 
@@ -523,7 +535,7 @@ fun ChangeSubscriptionScreen(
             val selectedSub by viewModel.selectedProduct.collectAsStateWithLifecycle()
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.animateContentSize()
+                modifier = Modifier.animateContentSize(),
             ) {
                 val details by viewModel.productDetails.collectAsStateWithLifecycle()
                 for (product in viewModel.products) {
@@ -539,9 +551,10 @@ fun ChangeSubscriptionScreen(
                                             details[product]?.formattedSubscriptionPrice ?: "",
                                             style =
                                                 TextStyle(
-                                                    brush = Brush.horizontalGradient(
-                                                        fancyGradienColorList
-                                                    ),
+                                                    brush =
+                                                        Brush.horizontalGradient(
+                                                            fancyGradienColorList,
+                                                        ),
                                                     fontSize = 22.sp,
                                                     fontWeight = FontWeight.Bold,
                                                 ),
@@ -559,7 +572,7 @@ fun ChangeSubscriptionScreen(
                                     Text(
                                         stringResource(
                                             R.string.subscription_duration,
-                                            stringResource(product.recurranceStringRes)
+                                            stringResource(product.recurranceStringRes),
                                         ),
                                     )
                                 },
@@ -584,12 +597,11 @@ fun ChangeSubscriptionScreen(
                                                     Modifier
                                                         .background(
                                                             Brush.horizontalGradient(
-                                                                fancyGradienColorList
-                                                            )
-                                                        )
-                                                        .padding(
+                                                                fancyGradienColorList,
+                                                            ),
+                                                        ).padding(
                                                             horizontal = 24.dp,
-                                                            vertical = 12.dp
+                                                            vertical = 12.dp,
                                                         ),
                                             )
                                         }
@@ -608,14 +620,14 @@ fun ChangeSubscriptionScreen(
                             ChangeSubscriptionOption(
                                 price = {
                                     Text(
-                                        details[product]?.formattedSubscriptionPrice ?: ""
+                                        details[product]?.formattedSubscriptionPrice ?: "",
                                     )
                                 },
                                 recurringText = {
                                     Text(
                                         stringResource(
                                             R.string.subscription_duration,
-                                            stringResource(product.recurranceStringRes)
+                                            stringResource(product.recurranceStringRes),
                                         ),
                                     )
                                 },

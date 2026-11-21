@@ -272,7 +272,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         dialog.addButton(
             getString(R.string.sell, item.value),
             isPrimary = true,
-            isDestructive = true
+            isDestructive = true,
         ) { _, _ ->
             lifecycleScope.launchCatching {
                 viewModel.sellItem(ownedItem)

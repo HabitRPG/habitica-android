@@ -170,11 +170,32 @@ class SetupCustomizationRepositoryImpl
 
         private val bangsDrawables: Map<String, List<Int>> =
             mapOf(
-                "black" to listOf(R.drawable.creator_hair_bangs_1_black, R.drawable.creator_hair_bangs_2_black, R.drawable.creator_hair_bangs_3_black),
-                "blond" to listOf(R.drawable.creator_hair_bangs_1_blond, R.drawable.creator_hair_bangs_2_blond, R.drawable.creator_hair_bangs_3_blond),
-                "brown" to listOf(R.drawable.creator_hair_bangs_1_brown, R.drawable.creator_hair_bangs_2_brown, R.drawable.creator_hair_bangs_3_brown),
-                "red" to listOf(R.drawable.creator_hair_bangs_1_red, R.drawable.creator_hair_bangs_2_red, R.drawable.creator_hair_bangs_3_red),
-                "white" to listOf(R.drawable.creator_hair_bangs_1_white, R.drawable.creator_hair_bangs_2_white, R.drawable.creator_hair_bangs_3_white),
+                "black" to
+                    listOf(
+                        R.drawable.creator_hair_bangs_1_black,
+                        R.drawable.creator_hair_bangs_2_black,
+                        R.drawable.creator_hair_bangs_3_black,
+                    ),
+                "blond" to
+                    listOf(
+                        R.drawable.creator_hair_bangs_1_blond,
+                        R.drawable.creator_hair_bangs_2_blond,
+                        R.drawable.creator_hair_bangs_3_blond,
+                    ),
+                "brown" to
+                    listOf(
+                        R.drawable.creator_hair_bangs_1_brown,
+                        R.drawable.creator_hair_bangs_2_brown,
+                        R.drawable.creator_hair_bangs_3_brown,
+                    ),
+                "red" to
+                    listOf(R.drawable.creator_hair_bangs_1_red, R.drawable.creator_hair_bangs_2_red, R.drawable.creator_hair_bangs_3_red),
+                "white" to
+                    listOf(
+                        R.drawable.creator_hair_bangs_1_white,
+                        R.drawable.creator_hair_bangs_2_white,
+                        R.drawable.creator_hair_bangs_3_white,
+                    ),
             )
 
         private fun getHairBases(color: String): List<SetupCustomization> {

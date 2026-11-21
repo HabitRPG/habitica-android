@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.api.HabiticaConverterFactory
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -19,6 +20,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.ref.WeakReference
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -48,6 +50,7 @@ open class ApiModule {
         notificationsManager: NotificationsManager,
         @ApplicationContext context: Context,
         crashReporter: CrashReporter,
+        appConfigManager: Provider<AppConfigManager>,
     ): ApiClient {
         val apiClient =
             ApiClientImpl(
@@ -56,6 +59,7 @@ open class ApiModule {
                 notificationsManager,
                 context,
                 crashReporter,
+                appConfigManager,
             )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient

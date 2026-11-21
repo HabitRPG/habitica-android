@@ -8,10 +8,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class QuestShopViewModel @Inject constructor(
-    inventoryRepository: InventoryRepository,
-    configManager: AppConfigManager,
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel
-) : ShopViewModel(inventoryRepository, configManager, userRepository, userViewModel) {
-}
+class QuestShopViewModel
+    @Inject
+    constructor(
+        inventoryRepository: InventoryRepository,
+        configManager: AppConfigManager,
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+    ) : ShopViewModel(inventoryRepository, configManager, userRepository, userViewModel)

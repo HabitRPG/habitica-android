@@ -22,6 +22,7 @@ import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -101,10 +102,11 @@ class AppConfigManagerTest :
 
             "parse values sent as json strings" {
                 configManager.updateConfig(
-                    Json.parseToJsonElement(
-                        """{"maxChatLength":"500","hideChallenges":"true","supportEmail":"a@b.c","lastVersionNumber":"4.12",""" +
-                            """"knownIssues":"[{\"title\":\"Sync\",\"text\":\"Tasks may not sync\"}]"}""",
-                    ).jsonObject,
+                    Json
+                        .parseToJsonElement(
+                            """{"maxChatLength":"500","hideChallenges":"true","supportEmail":"a@b.c","lastVersionNumber":"4.12",""" +
+                                """"knownIssues":"[{\"title\":\"Sync\",\"text\":\"Tasks may not sync\"}]"}""",
+                        ).jsonObject,
                 )
                 configManager.value(ClientConfigKey.maxChatLength) shouldBe 500L
                 configManager.value(ClientConfigKey.hideChallenges) shouldBe true
@@ -158,11 +160,83 @@ class AppConfigManagerTest :
                 coVerify(exactly = 2) { contentRepository.retrieveClientConfig() }
             }
 
+            "replace a running fetch when forced" {
+                val stale = kotlinx.coroutines.CompletableDeferred<JsonObject?>()
+                coEvery { contentRepository.retrieveClientConfig() } coAnswers { stale.await() }
+                configManager.fetchConfig()
+                coEvery { contentRepository.retrieveClientConfig() } returns
+                    Json.parseToJsonElement("""{"maxChatLength":20}""").jsonObject
+                configManager.fetchConfig(forced = true)
+                stale.complete(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 20L
+            }
+
+            "load again after clear" {
+                coEvery { contentRepository.retrieveClientConfig() } returns
+                    Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject
+                configManager.fetchConfig()
+                configManager.clear()
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 3000L
+                configManager.fetchConfig()
+                coVerify(exactly = 2) { contentRepository.retrieveClientConfig() }
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
+            }
+
             "keep the current config when loading fails" {
                 configManager.updateConfig(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
                 coEvery { contentRepository.retrieveClientConfig() } returns null
                 configManager.fetchConfig(forced = true)
                 configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
+            }
+        }
+
+        "valueFlow" should {
+            "emit changes of the value only" {
+                val values = mutableListOf<Long>()
+                val job =
+                    kotlinx.coroutines.MainScope().launch {
+                        configManager
+                            .valueFlow(
+                                ClientConfigKey.maxChatLength,
+                            ).collect { values.add(it) }
+                    }
+                configManager.updateConfig(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
+                configManager.updateConfig(Json.parseToJsonElement("""{"maxChatLength":10,"hideChallenges":true}""").jsonObject)
+                configManager.clear()
+                job.cancel()
+                values shouldBe listOf(3000L, 10L, 3000L)
+            }
+        }
+
+        "onServerConfigVersion" should {
+            "load the config when the version changed" {
+                coEvery { contentRepository.retrieveClientConfig() } returns
+                    Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject
+                configManager.onServerConfigVersion("v1")
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
+                configManager.onServerConfigVersion("v1")
+                coVerify(exactly = 1) { contentRepository.retrieveClientConfig() }
+            }
+
+            "not load again for a known version" {
+                every { sharedPreferences.getString("clientConfigVersion", null) } returns "v1"
+                AppConfigManager({ contentRepository }, sharedPreferences).onServerConfigVersion("v1")
+                coVerify(exactly = 0) { contentRepository.retrieveClientConfig() }
+            }
+
+            "load at most once a minute when versions keep changing" {
+                coEvery { contentRepository.retrieveClientConfig() } returns null
+                configManager.onServerConfigVersion("v1")
+                configManager.onServerConfigVersion("v2")
+                coVerify(exactly = 1) { contentRepository.retrieveClientConfig() }
+            }
+
+            "store the version with the config" {
+                val editor = mockk<SharedPreferences.Editor>(relaxed = true)
+                every { sharedPreferences.edit() } returns editor
+                coEvery { contentRepository.retrieveClientConfig() } returns JsonObject(emptyMap())
+                configManager.onServerConfigVersion("v1")
+                verify { editor.putString("clientConfigVersion", "v1") }
             }
         }
 

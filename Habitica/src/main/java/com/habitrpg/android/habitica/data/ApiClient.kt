@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data
 
-import kotlinx.serialization.json.JsonObject
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
@@ -37,6 +36,7 @@ import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyEmailResponse
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
+import kotlinx.serialization.json.JsonObject
 import retrofit2.HttpException
 
 interface ApiClient {

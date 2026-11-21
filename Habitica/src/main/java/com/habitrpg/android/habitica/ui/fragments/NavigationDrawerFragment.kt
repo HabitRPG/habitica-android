@@ -251,6 +251,18 @@ class NavigationDrawerFragment : DialogFragment() {
                 }
         }
 
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            configManager.valueFlow(ClientConfigKey.hideChallenges).collect { hidden ->
+                getItemWithIdentifier(SIDEBAR_CHALLENGES)?.let {
+                    it.isVisible = !hidden
+                    adapter.updateItem(it)
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            configManager.valueFlow(ClientConfigKey.showSubscriptionBanner).collect { updateSubscriptionPromo() }
+        }
+
         userViewModel.user.observe(viewLifecycleOwner) {
             if (it != null) {
                 updateUser(it)
@@ -411,11 +423,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
         subscriptionItem?.let { adapter.updateItem(it) }
 
-        val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
-        if (promoItem != null) {
-            promoItem.isVisible = !user.isSubscribed
-            adapter.updateItem(promoItem)
-        }
+        updateSubscriptionPromo()
         getItemWithIdentifier(SIDEBAR_NEWS)?.let {
             it.showBubble = user.flags?.newStuff ?: false
         }
@@ -584,15 +592,13 @@ class NavigationDrawerFragment : DialogFragment() {
                     context.getString(R.string.sidebar_party),
                 ),
             )
-            if (!configManager.value(ClientConfigKey.hideChallenges)) {
-                items.add(
-                    HabiticaDrawerItem(
-                        R.id.challengesOverviewFragment,
-                        SIDEBAR_CHALLENGES,
-                        context.getString(R.string.sidebar_challenges),
-                    ),
-                )
-            }
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.challengesOverviewFragment,
+                    SIDEBAR_CHALLENGES,
+                    context.getString(R.string.sidebar_challenges),
+                ).apply { isVisible = !configManager.value(ClientConfigKey.hideChallenges) },
+            )
 
             items.add(
                 HabiticaDrawerItem(
@@ -630,13 +636,20 @@ class NavigationDrawerFragment : DialogFragment() {
         promoItem.isVisible = false
         items.add(0, promoItem)
 
-        if (configManager.value(ClientConfigKey.showSubscriptionBanner)) {
-            val item =
-                HabiticaDrawerItem(R.id.subscriptionPurchaseFragment, SIDEBAR_SUBSCRIPTION_PROMO)
-            item.itemViewType = 2
-            items.add(item)
-        }
+        val subscriptionPromoItem =
+            HabiticaDrawerItem(R.id.subscriptionPurchaseFragment, SIDEBAR_SUBSCRIPTION_PROMO)
+        subscriptionPromoItem.itemViewType = 2
+        items.add(subscriptionPromoItem)
         adapter.updateItems(items)
+        updateSubscriptionPromo()
+    }
+
+    private fun updateSubscriptionPromo() {
+        val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO) ?: return
+        promoItem.isVisible =
+            configManager.value(ClientConfigKey.showSubscriptionBanner) &&
+            userViewModel.user.value?.isSubscribed != true
+        adapter.updateItem(promoItem)
     }
 
     fun setSelection(

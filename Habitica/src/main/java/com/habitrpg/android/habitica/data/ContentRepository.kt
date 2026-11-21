@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.data
 
-import kotlinx.serialization.json.JsonObject
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.JsonObject
 
 interface ContentRepository : BaseRepository {
     suspend fun retrieveContent(forced: Boolean = false): ContentResult?

@@ -97,7 +97,6 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
 
         binding?.chatBarView?.sendAction = { sendChatMessage(it) }
-        binding?.chatBarView?.maxChatLength = configManager.value(ClientConfigKey.maxChatLength)
         binding?.chatBarView?.autocompleteContext = "party"
         binding?.chatBarView?.groupID = viewModel.getGroupData().value?.id
         binding?.chatBarView?.autocompleteAdapter =
@@ -106,8 +105,15 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 socialRepository,
                 autocompleteContext,
                 viewModel.groupID,
-                configManager.value(ClientConfigKey.enableUsernameAutocomplete),
             )
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            configManager.valueFlow(ClientConfigKey.maxChatLength).collect { binding?.chatBarView?.maxChatLength = it }
+        }
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            configManager.valueFlow(ClientConfigKey.enableUsernameAutocomplete).collect {
+                binding?.chatBarView?.autocompleteAdapter?.remoteAutocomplete = it
+            }
+        }
 
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()

@@ -85,9 +85,22 @@ class StableViewModelTest :
             }
 
             "count owned mounts" {
-                val wolf = Mount().apply { key = "Wolf-Base"; animal = "Wolf"; type = "drop" }
+                val wolf =
+                    Mount().apply {
+                        key = "Wolf-Base"
+                        animal = "Wolf"
+                        type = "drop"
+                    }
                 every { inventoryRepository.getMounts() } returns flowOf(listOf(wolf))
-                every { inventoryRepository.getOwnedMounts() } returns flowOf(listOf(OwnedMount().apply { key = "Wolf-Base"; owned = true }))
+                every { inventoryRepository.getOwnedMounts() } returns
+                    flowOf(
+                        listOf(
+                            OwnedMount().apply {
+                                key = "Wolf-Base"
+                                owned = true
+                            },
+                        ),
+                    )
 
                 makeViewModel("mounts").items.getOrAwaitValue()
 

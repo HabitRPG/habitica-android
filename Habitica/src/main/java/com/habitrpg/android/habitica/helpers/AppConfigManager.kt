@@ -17,16 +17,21 @@ import com.habitrpg.common.habitica.helpers.Clearable
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.serialization.habiticaJson
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import java.util.Date
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Provider
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 class AppConfigManager(
     private val contentRepository: Provider<ContentRepository>,
@@ -35,14 +40,38 @@ class AppConfigManager(
     Clearable {
     private var worldState: WorldState? = null
 
+    private val config = MutableStateFlow(loadStoredConfig())
+
     @Volatile
-    private var config: JsonObject = loadStoredConfig()
+    private var configVersion: String? = sharedPreferences.getString(CONFIG_VERSION_STORAGE_KEY, null)
+
+    @Volatile
+    private var latestServerVersion: String? = null
+    private var lastVersionFetch: Long? = null
 
     @Volatile
     private var lastFetchInSession: Long? = null
-    private val isFetching = AtomicBoolean(false)
+    private var fetchJob: Job? = null
 
+    @Synchronized
     override fun clear() {
+        fetchJob?.cancel()
+        fetchJob = null
+        lastFetchInSession = null
+        lastVersionFetch = null
+        configVersion = null
+        latestServerVersion = null
+        config.value = JsonObject(emptyMap())
+    }
+
+    @Synchronized
+    fun onServerConfigVersion(version: String) {
+        latestServerVersion = version
+        if (version == configVersion || fetchJob?.isActive == true) return
+        val now = System.currentTimeMillis()
+        if (lastVersionFetch?.let { now - it < VERSION_REFETCH_INTERVAL } == true) return
+        lastVersionFetch = now
+        fetchConfig(forced = true)
     }
 
     init {
@@ -67,7 +96,14 @@ class AppConfigManager(
 
     fun shopSpriteSuffix(): String? = worldState?.findNpcImageSuffix()
 
-    fun <T> value(key: ClientConfigKey<T>): T {
+    fun <T> value(key: ClientConfigKey<T>): T = decode(config.value, key)
+
+    fun <T> valueFlow(key: ClientConfigKey<T>): Flow<T> = config.map { decode(it, key) }.distinctUntilChanged()
+
+    private fun <T> decode(
+        config: JsonObject,
+        key: ClientConfigKey<T>,
+    ): T {
         val raw = config[key.key]
         if (raw == null || raw is JsonNull) return key.defaultValue
         return try {
@@ -83,27 +119,30 @@ class AppConfigManager(
         }
     }
 
+    @Synchronized
     fun fetchConfig(forced: Boolean = false) {
-        val lastFetch = lastFetchInSession
-        if (!forced && lastFetch != null && System.currentTimeMillis() - lastFetch < CONFIG_REFRESH_INTERVAL) return
-        if (!isFetching.compareAndSet(false, true)) return
-        MainScope().launchCatching {
-            try {
-                contentRepository.get().retrieveClientConfig()?.let { updateConfig(it) }
-            } finally {
-                isFetching.set(false)
-            }
+        if (!forced) {
+            val lastFetch = lastFetchInSession
+            if (lastFetch != null && System.currentTimeMillis() - lastFetch < CONFIG_REFRESH_INTERVAL) return
+            if (fetchJob?.isActive == true) return
         }
+        fetchJob?.cancel()
+        fetchJob =
+            MainScope().launchCatching {
+                contentRepository.get().retrieveClientConfig()?.let { updateConfig(it) }
+            }
     }
 
     @VisibleForTesting
     internal fun updateConfig(newConfig: JsonObject) {
         val now = System.currentTimeMillis()
-        config = newConfig
+        config.value = newConfig
         lastFetchInSession = now
+        // The client-config response reported its version before its data got here
+        configVersion = latestServerVersion
         sharedPreferences.edit {
             putString(CONFIG_STORAGE_KEY, newConfig.toString())
-            putLong(LAST_FETCH_STORAGE_KEY, now)
+            putString(CONFIG_VERSION_STORAGE_KEY, configVersion)
         }
     }
 
@@ -175,7 +214,8 @@ class AppConfigManager(
 
     companion object {
         private const val CONFIG_STORAGE_KEY = "clientConfig"
-        private const val LAST_FETCH_STORAGE_KEY = "clientConfigLastFetch"
+        private const val CONFIG_VERSION_STORAGE_KEY = "clientConfigVersion"
         private val CONFIG_REFRESH_INTERVAL = 24.hours.inWholeMilliseconds
+        private val VERSION_REFETCH_INTERVAL = 1.minutes.inWholeMilliseconds
     }
 }

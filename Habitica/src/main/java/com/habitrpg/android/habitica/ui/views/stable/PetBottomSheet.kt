@@ -70,9 +70,9 @@ import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
+import kotlinx.coroutines.delay
 import kotlin.math.sin
 import kotlin.time.Duration.Companion.milliseconds
-import kotlinx.coroutines.delay
 
 @Composable
 private fun getFoodPainter(petColor: String): ImageBitmap =

@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
@@ -68,6 +69,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
+import javax.inject.Provider
 import javax.net.ssl.SSLException
 
 class ApiClientImpl(
@@ -76,6 +78,7 @@ class ApiClientImpl(
     private val notificationsManager: NotificationsManager,
     private val context: Context,
     private val crashReporter: CrashReporter,
+    private val appConfigManager: Provider<AppConfigManager>,
 ) : ApiClient {
     private lateinit var retrofitAdapter: Retrofit
 
@@ -90,6 +93,7 @@ class ApiClientImpl(
         habitResponse?.notifications?.let {
             notificationsManager.setNotifications(it)
         }
+        habitResponse?.clientConfigV?.let { appConfigManager.get().onServerConfigVersion(it) }
         return habitResponse?.data
     }
 
@@ -300,7 +304,13 @@ class ApiClientImpl(
 
         return try {
             val response = this.apiService.connectSocial(auth)
-            if (response.code() == 404 || response.body()?.data?.id?.isEmpty() == true) {
+            if (response.code() == 404 ||
+                response
+                    .body()
+                    ?.data
+                    ?.id
+                    ?.isEmpty() == true
+            ) {
                 UserAuthResponse().apply {
                     userExists = false
                 }

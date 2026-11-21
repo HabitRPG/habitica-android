@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -132,7 +131,12 @@ class InventoryRepositoryImplTest :
         }
         "sellItem" should {
             "decrement the owned count and save the updated user" {
-                val owned = OwnedItem().apply { itemType = "food"; key = "Meat"; numberOwned = 3 }
+                val owned =
+                    OwnedItem().apply {
+                        itemType = "food"
+                        key = "Meat"
+                        numberOwned = 3
+                    }
                 val food = Food().apply { key = "Meat" }
                 val user = User()
                 every { localRepository.getOwnedItem("user-1", "food", "Meat", true) } returns flowOf(owned)
@@ -175,7 +179,11 @@ class InventoryRepositoryImplTest :
         }
         "togglePinnedItem" should {
             "toggle the item and reload the rewards" {
-                val item = ShopItem().apply { pinType = "marketGear"; path = "gear.flat.weapon_1" }
+                val item =
+                    ShopItem().apply {
+                        pinType = "marketGear"
+                        path = "gear.flat.weapon_1"
+                    }
                 coEvery { apiClient.togglePinnedItem("marketGear", "gear.flat.weapon_1") } returns null
                 coEvery { apiClient.retrieveInAppRewards() } returns null
                 repository.togglePinnedItem(item)

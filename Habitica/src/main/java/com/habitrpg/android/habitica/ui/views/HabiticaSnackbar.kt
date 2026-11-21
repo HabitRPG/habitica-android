@@ -384,7 +384,11 @@ class HabiticaSnackbar
                     view.visibility != View.VISIBLE -> ""
                     view.contentDescription != null -> view.contentDescription.toString()
                     view is TextView -> view.text.toString()
-                    view is ViewGroup -> view.children.map { accessibleText(it) }.filter { it.isNotBlank() }.joinToString(", ")
+                    view is ViewGroup ->
+                        view.children
+                            .map { accessibleText(it) }
+                            .filter { it.isNotBlank() }
+                            .joinToString(", ")
                     else -> ""
                 }
 

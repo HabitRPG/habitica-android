@@ -112,7 +112,11 @@ class PurchaseHandler(
             BillingClient.BillingResponseCode.OK -> {
                 if (purchases.isEmpty()) return
                 scope.launchCatching {
-                    val user = userViewModel.user.asFlow().filterNotNull().first()
+                    val user =
+                        userViewModel.user
+                            .asFlow()
+                            .filterNotNull()
+                            .first()
                     val plan = user.purchased?.plan
                     for (purchase in purchases) {
                         val product = HabiticaProduct.forSku(purchase.products.firstOrNull() ?: "") ?: continue

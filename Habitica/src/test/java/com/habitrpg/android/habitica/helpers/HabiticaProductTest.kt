@@ -25,7 +25,10 @@ class HabiticaProductTest :
 
         "skus" should {
             "be unique" {
-                HabiticaProduct.entries.map { it.sku }.toSet().size shouldBe HabiticaProduct.entries.size
+                HabiticaProduct.entries
+                    .map { it.sku }
+                    .toSet()
+                    .size shouldBe HabiticaProduct.entries.size
             }
         }
 

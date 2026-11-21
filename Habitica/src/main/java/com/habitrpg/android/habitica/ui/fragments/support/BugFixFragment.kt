@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
 import com.habitrpg.android.habitica.databinding.KnownIssueBinding
@@ -20,6 +21,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -58,16 +60,21 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
             sendEmail("[Android] Bugreport")
         }
 
-        appConfigManager.value(ClientConfigKey.knownIssues).forEach { issue ->
-            val issueBinding = KnownIssueBinding.inflate(view.context.layoutInflater)
-            issueBinding.root.text = issue["title"]
-            issueBinding.root.setOnClickListener {
-                MainNavigationController.navigate(
-                    R.id.FAQDetailFragment,
-                    bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"])),
-                )
+        viewLifecycleOwner.lifecycleScope.launchCatching {
+            appConfigManager.valueFlow(ClientConfigKey.knownIssues).collect { issues ->
+                binding?.knownIssuesLayout?.removeAllViews()
+                issues.forEach { issue ->
+                    val issueBinding = KnownIssueBinding.inflate(view.context.layoutInflater)
+                    issueBinding.root.text = issue["title"]
+                    issueBinding.root.setOnClickListener {
+                        MainNavigationController.navigate(
+                            R.id.FAQDetailFragment,
+                            bundleOf(Pair("question", issue["title"]), Pair("answer", issue["text"])),
+                        )
+                    }
+                    binding?.knownIssuesLayout?.addView(issueBinding.root)
+                }
             }
-            binding?.knownIssuesLayout?.addView(issueBinding.root)
         }
     }
 

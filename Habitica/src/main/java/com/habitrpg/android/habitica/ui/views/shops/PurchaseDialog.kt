@@ -52,10 +52,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.android.internal.managers.ViewComponentManager
 import dagger.hilt.components.SingletonComponent
-import java.lang.Integer.max
-import java.util.Date
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -63,6 +59,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import java.lang.Integer.max
+import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class PurchaseDialog(
     context: Context,

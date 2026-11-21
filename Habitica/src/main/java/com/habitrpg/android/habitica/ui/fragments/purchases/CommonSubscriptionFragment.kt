@@ -53,7 +53,7 @@ interface CommonSubscriptionFragment : LifecycleOwner {
             if (plan?.datePaymentExpired == null || (plan.datePaymentExpired?.time ?: 0) < System.currentTimeMillis()) {
                 activity.showAsBottomSheet(
                     sheetColor = Color(activity.getColor(R.color.brand_300)),
-                    true
+                    true,
                 ) {
                     ChangeSubscriptionScreen(it)
                 }
