@@ -119,8 +119,9 @@ class SubscriptionOptionView(
 
     fun setPriceText(text: String) {
         binding.priceLabel.text = text
-        if (isPromoted) {
-            val shader: Shader =
+        // The highlighted option comes from the remote config, so the gradient has to be removable
+        binding.priceLabel.paint.shader =
+            if (isPromoted) {
                 LinearGradient(
                     0f,
                     0f,
@@ -130,8 +131,9 @@ class SubscriptionOptionView(
                     "#24CC8F".toColorInt(),
                     Shader.TileMode.REPEAT,
                 )
-            binding.priceLabel.paint.shader = shader
-        }
+            } else {
+                null
+            }
     }
 
     fun setFlagText(text: CharSequence?) {

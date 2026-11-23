@@ -38,7 +38,7 @@ open class SubscriptionBottomSheetFragment :
     override lateinit var userRepository: UserRepository
 
     @Inject
-    lateinit var appConfigManager: AppConfigManager
+    override lateinit var appConfigManager: AppConfigManager
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository

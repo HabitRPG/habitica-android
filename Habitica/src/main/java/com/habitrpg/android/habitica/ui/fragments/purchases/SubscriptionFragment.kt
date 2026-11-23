@@ -57,7 +57,7 @@ class SubscriptionFragment :
     ): FragmentSubscriptionBinding = FragmentSubscriptionBinding.inflate(inflater, container, false)
 
     @Inject
-    lateinit var appConfigManager: AppConfigManager
+    override lateinit var appConfigManager: AppConfigManager
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository

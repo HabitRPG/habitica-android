@@ -28,6 +28,16 @@ class ClientConfigKey<T> private constructor(
         val showSubscriptionBanner = key("showSubscriptionBanner", false)
         val hideChallenges = key("hideChallenges", false)
         val reviewCheckingMinCount = key("reviewCheckingMinCount", 1L)
+        val reviewMaxRequests = key("reviewMaxRequests", 5L)
+        val reviewMaxCheckinsSinceFirstRequest = key("reviewMaxCheckinsSinceFirstRequest", 75L)
+        val reviewMinCheckinsBetweenRequests = key("reviewMinCheckinsBetweenRequests", 5L)
         val showAltDeathText = key("showAltDeathText", false)
+
+        val defaultSubscriptionSku = key("defaultSubscriptionSku", HabiticaProduct.SUBSCRIPTION_12_MONTH.sku)
+        val highlightedSubscriptionSku = key("highlightedSubscriptionSku", HabiticaProduct.SUBSCRIPTION_12_MONTH.sku)
+
+        val networkTimeoutSeconds = key("networkTimeoutSeconds", 180L)
+        val networkMaxRetries = key("networkMaxRetries", 0L)
+        val networkRetryBackoffMillis = key("networkRetryBackoffMillis", 1000L)
     }
 }

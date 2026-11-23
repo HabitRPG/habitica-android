@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -19,7 +20,8 @@ class ReviewManager(
         private const val LAST_REVIEW_CHECKIN_KEY = "LastReviewCheckin"
     }
 
-    private fun canRequestReview(currentCheckins: Int): Boolean {
+    @VisibleForTesting
+    internal fun canRequestReview(currentCheckins: Int): Boolean {
         val initialCheckins = sharedPref.getInt(INITIAL_CHECKINS_KEY, -1)
         val shouldQueueReview = sharedPref.getBoolean(SHOULD_QUEUE_REVIEW, false)
         val lastReviewCheckin = sharedPref.getInt(LAST_REVIEW_CHECKIN_KEY, -1)
@@ -46,18 +48,21 @@ class ReviewManager(
 
         val requestCount = sharedPref.getInt(REVIEW_REQUEST_COUNT_KEY, 0)
 
-        if (requestCount >= 5) {
-            // Requested reviews 5 times already, no longer request in-app review
+        if (requestCount >= configManager.value(ClientConfigKey.reviewMaxRequests)) {
+            // Requested reviews the maximum number of times already, no longer request in-app review
             return false
         }
 
-        if (currentCheckins - initialCheckins > 75) {
-            // Player has more than 75 additional check-ins starting from the first request, no longer request in-app review
+        if (currentCheckins - initialCheckins > configManager.value(ClientConfigKey.reviewMaxCheckinsSinceFirstRequest)) {
+            // Player has more than the allowed additional check-ins starting from the first request, no longer request in-app review
             return false
         }
 
-        // Less than 5 check-ins since the last review request, wait for more check-ins
-        return !(lastReviewCheckin != -1 && currentCheckins - lastReviewCheckin < 5)
+        // Too few check-ins since the last review request, wait for more check-ins
+        return !(
+            lastReviewCheckin != -1 &&
+                currentCheckins - lastReviewCheckin < configManager.value(ClientConfigKey.reviewMinCheckinsBetweenRequests)
+        )
     }
 
     fun requestReview(

@@ -11,6 +11,8 @@ import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionContentBinding
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.helpers.HabiticaProduct
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.getBaseOfferDetails
@@ -25,6 +27,7 @@ import kotlinx.coroutines.withContext
 interface CommonSubscriptionFragment : LifecycleOwner {
     var userRepository: UserRepository
     var purchaseHandler: PurchaseHandler
+    var appConfigManager: AppConfigManager
     var selectedSubscriptionSku: ProductDetails?
     var skus: List<ProductDetails>
     var user: User?
@@ -116,6 +119,12 @@ interface CommonSubscriptionFragment : LifecycleOwner {
                 }
                 content?.noBillingSubscriptions?.visibility = View.GONE
                 content?.visitHabiticaWebsiteButton?.visibility = View.GONE
+                val highlightedSku = appConfigManager.value(ClientConfigKey.highlightedSubscriptionSku)
+                for (sku in subscriptions) {
+                    buttonForSku(sku)?.setFlagText(
+                        if (sku.productId == highlightedSku) content?.root?.context?.getString(R.string.popular) else null,
+                    )
+                }
                 for (sku in subscriptions) {
                     updateButtonLabel(
                         sku,
@@ -129,16 +138,19 @@ interface CommonSubscriptionFragment : LifecycleOwner {
                     )
                 }
                 if (selectedSubscriptionSku == null) {
-                    subscriptions
-                        .maxByOrNull {
-                            it
-                                .getBaseOfferDetails()
-                                ?.pricingPhases
-                                ?.pricingPhaseList
-                                ?.firstOrNull()
-                                ?.priceAmountMicros
-                                ?: 0
-                        }?.let { selectSubscription(it) }
+                    val defaultSku = appConfigManager.value(ClientConfigKey.defaultSubscriptionSku)
+                    val defaultSubscription =
+                        subscriptions.firstOrNull { it.productId == defaultSku }
+                            ?: subscriptions.maxByOrNull {
+                                it
+                                    .getBaseOfferDetails()
+                                    ?.pricingPhases
+                                    ?.pricingPhaseList
+                                    ?.firstOrNull()
+                                    ?.priceAmountMicros
+                                    ?: 0
+                            }
+                    defaultSubscription?.let { selectSubscription(it) }
                 }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()

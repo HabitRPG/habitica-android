@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HabiticaConverterFactory
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
@@ -38,8 +39,9 @@ class ApiClientImplTest :
         val activity = mockk<BaseActivity>(relaxed = true)
         val context = mockk<HabiticaBaseApplication>(relaxed = true)
         val cacheDir = Files.createTempDirectory("api-client-test").toFile()
+        val config = mutableMapOf<ClientConfigKey<*>, Any>()
 
-        // The client waits up to 40 minutes for a response, so fail fast if a test forgets to enqueue one
+        // Fail fast if a test forgets to enqueue a response
         timeout = 10_000L
 
         fun enqueue(
@@ -90,6 +92,11 @@ class ApiClientImplTest :
             every { context.cacheDir } returns cacheDir
             every { context.getString(any()) } answers { "string-${firstArg<Int>()}" }
             every { context.currentActivity } returns WeakReference(activity)
+            config.clear()
+            every { appConfigManager.value(any<ClientConfigKey<Any>>()) } answers {
+                val key = firstArg<ClientConfigKey<Any>>()
+                config[key] ?: key.defaultValue
+            }
             apiClient = ApiClientImpl(HabiticaConverterFactory(), hostConfig, notificationsManager, context, crashReporter, { appConfigManager })
         }
         afterEach {
@@ -450,6 +457,68 @@ class ApiClientImplTest :
                 enqueueError(400, """{"message":"Push device already exists"}""")
                 apiClient.addPushDevice(mapOf("regId" to "device-1"))
                 verify(exactly = 0) { activity.showConnectionProblem(any(), any(), any(), any()) }
+            }
+
+            "not retry by default" {
+                enqueueError(503, "{}")
+                apiClient.getWorldState()
+                server.requestCount shouldBe 1
+            }
+
+            "retry GET requests on gateway errors as configured" {
+                config[ClientConfigKey.networkMaxRetries] = 2L
+                config[ClientConfigKey.networkRetryBackoffMillis] = 0L
+                enqueueError(503, "{}")
+                enqueueError(502, "{}")
+                enqueue()
+                apiClient.getWorldState()
+                server.requestCount shouldBe 3
+                verify(exactly = 0) { activity.showConnectionProblem(any(), any(), any(), any()) }
+            }
+
+            "give up after the configured retries" {
+                config[ClientConfigKey.networkMaxRetries] = 1L
+                config[ClientConfigKey.networkRetryBackoffMillis] = 0L
+                enqueueError(503, "{}")
+                enqueueError(503, "{}")
+                enqueue()
+                apiClient.getWorldState()
+                server.requestCount shouldBe 2
+            }
+
+            "not retry other errors" {
+                config[ClientConfigKey.networkMaxRetries] = 2L
+                config[ClientConfigKey.networkRetryBackoffMillis] = 0L
+                enqueueError(500, "{}")
+                apiClient.getWorldState()
+                server.requestCount shouldBe 1
+            }
+
+            "never retry requests that change data" {
+                config[ClientConfigKey.networkMaxRetries] = 2L
+                config[ClientConfigKey.networkRetryBackoffMillis] = 0L
+                enqueueError(503, "{}")
+                apiClient.sleep()
+                server.requestCount shouldBe 1
+            }
+
+            "cap the retries from the config" {
+                config[ClientConfigKey.networkMaxRetries] = 100L
+                config[ClientConfigKey.networkRetryBackoffMillis] = 0L
+                repeat(7) { enqueueError(503, "{}") }
+                apiClient.getWorldState()
+                server.requestCount shouldBe 6
+            }
+
+            "wait longer between each retry" {
+                config[ClientConfigKey.networkMaxRetries] = 2L
+                config[ClientConfigKey.networkRetryBackoffMillis] = 100L
+                enqueueError(503, "{}")
+                enqueueError(503, "{}")
+                enqueue()
+                val start = System.currentTimeMillis()
+                apiClient.getWorldState()
+                (System.currentTimeMillis() - start >= 300) shouldBe true
             }
 
             "log invalid json" {

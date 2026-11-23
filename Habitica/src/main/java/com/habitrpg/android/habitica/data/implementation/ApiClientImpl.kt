@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.helpers.CrashReporter
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
@@ -54,6 +55,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.JsonObject
 import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -240,7 +242,8 @@ class ApiClientImpl(
                             return@addNetworkInterceptor response
                         }
                     }
-                }.addInterceptor(logging)
+                }.addInterceptor { chain -> proceedWithRetries(chain) }
+                .addInterceptor(logging)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build()
 
@@ -249,12 +252,42 @@ class ApiClientImpl(
         retrofitAdapter =
             Retrofit
                 .Builder()
-                .client(client)
-                .baseUrl(server.toString())
+                .callFactory { request ->
+                    // Read per call so a new timeout from the remote config applies without rebuilding the client
+                    client.newCall(request).apply {
+                        timeout().timeout(
+                            appConfigManager.get().value(ClientConfigKey.networkTimeoutSeconds).coerceIn(10, 600),
+                            TimeUnit.SECONDS,
+                        )
+                    }
+                }.baseUrl(server.toString())
                 .addConverterFactory(converter)
                 .build()
 
         this.apiService = retrofitAdapter.create(ApiService::class.java)
+    }
+
+    private fun proceedWithRetries(chain: Interceptor.Chain): okhttp3.Response {
+        val request = chain.request()
+        val config = appConfigManager.get()
+        // Only GETs are safe to repeat, retrying a POST like a task score could apply it twice
+        val maxRetries = if (request.method == "GET") config.value(ClientConfigKey.networkMaxRetries).coerceIn(0, 5) else 0
+        var backoff = config.value(ClientConfigKey.networkRetryBackoffMillis).coerceIn(0, 30_000)
+        var attempt = 0
+        while (true) {
+            val response =
+                try {
+                    chain.proceed(request)
+                } catch (e: IOException) {
+                    if (attempt >= maxRetries || chain.call().isCanceled()) throw e
+                    null
+                }
+            if (response != null && (attempt >= maxRetries || response.code !in RETRYABLE_STATUS_CODES)) return response
+            response?.close()
+            Thread.sleep(backoff)
+            backoff *= 2
+            attempt++
+        }
     }
 
     override fun updateServerUrl(newAddress: String?) {
@@ -1030,3 +1063,6 @@ class ApiClientImpl(
     override suspend fun getClientConfig(): JsonObject? =
         process({ apiService.clientConfig() }, onError = { null }, propagateError = false, returnOnError = true)
 }
+
+// Gateway errors are usually brief, so these are worth another attempt
+private val RETRYABLE_STATUS_CODES = setOf(502, 503, 504)
