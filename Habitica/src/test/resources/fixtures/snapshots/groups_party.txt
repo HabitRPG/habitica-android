@@ -1,3 +1,4 @@
+clientConfigV = null
 data.balance = 0.0
 data.categories = []
 data.challengeCount = 0

@@ -1,3 +1,4 @@
+clientConfigV = null
 data.authentication.appleAuthentication = null
 data.authentication.blocked = false
 data.authentication.facebookAuthentication = null

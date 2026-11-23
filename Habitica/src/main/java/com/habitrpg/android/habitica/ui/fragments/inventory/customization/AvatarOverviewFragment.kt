@@ -52,7 +52,6 @@ import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
@@ -80,9 +79,6 @@ open class AvatarOverviewFragment :
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-
-    @Inject
-    lateinit var appConfigManager: AppConfigManager
 
     override var binding: FragmentComposeBinding? = null
 
@@ -130,7 +126,6 @@ open class AvatarOverviewFragment :
                         ) {
                             ComposableAvatarView(
                                 avatar = avatar,
-                                configManager = appConfigManager,
                                 modifier =
                                     Modifier
                                         .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)

@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.extensions
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.view.inputmethod.InputMethodManager
@@ -12,7 +13,9 @@ fun Activity.hideKeyboard() {
 }
 
 fun Activity.openBrowserLink(url: String) {
-    val uriUrl = url.toUri()
-    val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-    startActivity(launchBrowser)
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+    } catch (_: ActivityNotFoundException) {
+        // Links can come from the remote config, so a broken one must not crash the app
+    }
 }

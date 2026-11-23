@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.extensions.consumeWindowInsetsAbove30
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
@@ -47,9 +46,6 @@ class ArmoireActivity : BaseActivity() {
 
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
-
-    @Inject
-    internal lateinit var appConfigManager: AppConfigManager
 
     @Inject
     lateinit var userViewModel: MainUserViewModel

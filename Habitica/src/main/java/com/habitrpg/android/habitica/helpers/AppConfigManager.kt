@@ -36,8 +36,7 @@ import kotlin.time.Duration.Companion.minutes
 class AppConfigManager(
     private val contentRepository: Provider<ContentRepository>,
     private val sharedPreferences: SharedPreferences,
-) : com.habitrpg.common.habitica.helpers.AppConfigManager(),
-    Clearable {
+) : Clearable {
     private var worldState: WorldState? = null
 
     private val config = MutableStateFlow(loadStoredConfig())

@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGuildDetailBinding
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
@@ -37,9 +36,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
-    @Inject
-    lateinit var configManager: AppConfigManager
-
     override var binding: FragmentGuildDetailBinding? = null
 
     @Inject

@@ -1,3 +1,4 @@
+clientConfigV = null
 data.categories[0].endDate = null
 data.categories[0].identifier = "bundle"
 data.categories[0].itemEndDates = []

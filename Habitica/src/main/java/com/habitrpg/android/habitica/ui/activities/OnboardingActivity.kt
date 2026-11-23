@@ -26,7 +26,6 @@ import com.habitrpg.android.habitica.extensions.AuthenticationErrors
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.setNavigationBarDarkIcons
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -53,9 +52,6 @@ class OnboardingActivity : ComposeActivity() {
     val authenticationViewModel: AuthenticationViewModel by viewModels()
 
     val currentStep = mutableStateOf(OnboardingSteps.INTRO)
-
-    @Inject
-    lateinit var configManager: AppConfigManager
 
     @Inject
     lateinit var customizationRepository: SetupCustomizationRepository

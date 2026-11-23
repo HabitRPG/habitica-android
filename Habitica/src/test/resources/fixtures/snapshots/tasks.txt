@@ -1,3 +1,4 @@
+clientConfigV = null
 data.tasks{00000000-0000-4000-8000-000000000157}.attributeValue = "str"
 data.tasks{00000000-0000-4000-8000-000000000157}.challengeBroken = null
 data.tasks{00000000-0000-4000-8000-000000000157}.challengeID = null

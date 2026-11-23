@@ -34,14 +34,7 @@ class ReviewManager(
             }
         }
 
-        if (initialCheckins == -1) {
-            // Store the current checkins as the initial value
-            sharedPref.edit {
-                putInt(INITIAL_CHECKINS_KEY, currentCheckins)
-            }
-            return true
-        }
-
+        // Checked before the first request too, so reviewMaxRequests = 0 turns the prompt off remotely
         if (currentCheckins < configManager.value(ClientConfigKey.reviewCheckingMinCount)) {
             return false
         }
@@ -51,6 +44,14 @@ class ReviewManager(
         if (requestCount >= configManager.value(ClientConfigKey.reviewMaxRequests)) {
             // Requested reviews the maximum number of times already, no longer request in-app review
             return false
+        }
+
+        if (initialCheckins == -1) {
+            // Store the current checkins as the initial value
+            sharedPref.edit {
+                putInt(INITIAL_CHECKINS_KEY, currentCheckins)
+            }
+            return true
         }
 
         if (currentCheckins - initialCheckins > configManager.value(ClientConfigKey.reviewMaxCheckinsSinceFirstRequest)) {

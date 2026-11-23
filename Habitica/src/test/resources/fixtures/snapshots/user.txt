@@ -1,3 +1,4 @@
+clientConfigV = null
 data.abTests[0].group = "newYearsNotification3"
 data.abTests[0].name = "pushNotification"
 data.achievements[0].earned = false

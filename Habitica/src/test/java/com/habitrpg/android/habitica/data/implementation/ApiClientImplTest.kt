@@ -20,6 +20,10 @@ import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
 import mockwebserver3.RecordedRequest
@@ -41,8 +45,8 @@ class ApiClientImplTest :
         val cacheDir = Files.createTempDirectory("api-client-test").toFile()
         val config = mutableMapOf<ClientConfigKey<*>, Any>()
 
-        // Fail fast if a test forgets to enqueue a response
-        timeout = 10_000L
+        // Fail fast if a test forgets to enqueue a response, with room for the 10 second timeout test
+        timeout = 15_000L
 
         fun enqueue(
             data: String = "null",
@@ -102,6 +106,24 @@ class ApiClientImplTest :
         afterEach {
             server.close()
             clearMocks(hostConfig, activity, notificationsManager, crashReporter, appConfigManager, answers = false)
+        }
+
+        // Its own group, the 10 second minimum would push a shared group past the spec timeout
+        "timeouts" should {
+            // A remote 0 must not switch the timeout off, it is raised to the 10 second minimum
+            "give up on a request after the configured timeout" {
+                config[ClientConfigKey.networkTimeoutSeconds] = 0L
+                server.enqueue(
+                    MockResponse
+                        .Builder()
+                        .headersDelay(12, TimeUnit.SECONDS)
+                        .body("""{"success":true,"data":null}""")
+                        .build(),
+                )
+                val start = System.currentTimeMillis()
+                apiClient.getWorldState()
+                (System.currentTimeMillis() - start in 9_000..11_500) shouldBe true
+            }
         }
 
         "requests" should {
@@ -505,9 +527,22 @@ class ApiClientImplTest :
             "cap the retries from the config" {
                 config[ClientConfigKey.networkMaxRetries] = 100L
                 config[ClientConfigKey.networkRetryBackoffMillis] = 0L
-                repeat(7) { enqueueError(503, "{}") }
+                repeat(5) { enqueueError(503, "{}") }
                 apiClient.getWorldState()
-                server.requestCount shouldBe 6
+                server.requestCount shouldBe 4
+            }
+
+            "stop retrying once the request is cancelled" {
+                config[ClientConfigKey.networkMaxRetries] = 3L
+                config[ClientConfigKey.networkRetryBackoffMillis] = 500L
+                repeat(4) { enqueueError(503, "{}") }
+                coroutineScope {
+                    val call = async(Dispatchers.IO) { apiClient.getWorldState() }
+                    takeRequest()
+                    call.cancel()
+                }
+                delay(1_000)
+                server.requestCount shouldBe 1
             }
 
             "wait longer between each retry" {

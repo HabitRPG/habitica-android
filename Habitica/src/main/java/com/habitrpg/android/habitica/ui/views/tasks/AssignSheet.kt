@@ -38,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.views.UserRow
 
@@ -46,7 +45,6 @@ import com.habitrpg.android.habitica.ui.views.UserRow
 fun AssignSheet(
     members: List<Member>,
     assignedMembers: List<String>,
-    configManager: AppConfigManager,
     onAssignClick: (String) -> Unit,
     onCloseClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -77,7 +75,6 @@ fun AssignSheet(
             AssignSheetRow(
                 member = member,
                 isAssigned = isAssigned,
-                configManager,
                 onAssignClick = onAssignClick,
             )
         }
@@ -88,7 +85,6 @@ fun AssignSheet(
 fun AssignSheetRow(
     member: Member,
     isAssigned: Boolean,
-    configManager: AppConfigManager,
     onAssignClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -105,7 +101,6 @@ fun AssignSheetRow(
         endContent = {
             IsAssignedIndicator(isAssigned = isAssigned)
         },
-        configManager = configManager,
         modifier =
             modifier
                 .clickable {

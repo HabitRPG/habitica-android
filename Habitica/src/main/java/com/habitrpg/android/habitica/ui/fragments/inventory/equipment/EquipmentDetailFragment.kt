@@ -38,7 +38,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentEquipmentDetailBinding
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
@@ -75,9 +74,6 @@ class EquipmentDetailFragment :
 
     @Inject
     lateinit var reviewManager: ReviewManager
-
-    @Inject
-    lateinit var configManager: AppConfigManager
 
     private var pinnedGearKey: String? = null
 
@@ -154,7 +150,6 @@ class EquipmentDetailFragment :
                 ) {
                     ComposableAvatarView(
                         avatar = avatar,
-                        configManager = configManager,
                         modifier =
                             Modifier
                                 .padding(top = 6.dp, bottom = 24.dp)

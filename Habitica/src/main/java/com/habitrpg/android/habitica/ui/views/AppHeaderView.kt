@@ -54,7 +54,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.members.Member
@@ -133,7 +132,6 @@ fun AppHeaderView(
     onAvatarClicked: (() -> Unit)? = null,
     onMemberRowClicked: () -> Unit,
     onClassSelectionClicked: () -> Unit,
-    configManager: AppConfigManager? = null,
     useWindowInsets: Boolean = true,
 ) {
     val context = LocalContext.current
@@ -150,7 +148,6 @@ fun AppHeaderView(
         Row {
             ComposableAvatarView(
                 user,
-                configManager,
                 Modifier
                     .size(110.dp, 100.dp)
                     .padding(end = 16.dp)
@@ -325,7 +322,6 @@ fun AppHeaderView(
                                 ) {
                                     ComposableAvatarView(
                                         avatar = member,
-                                        configManager,
                                         Modifier
                                             .size(64.dp)
                                             .requiredSize(64.dp),

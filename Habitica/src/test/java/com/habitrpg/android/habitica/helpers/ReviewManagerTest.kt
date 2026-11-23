@@ -82,6 +82,24 @@ class ReviewManagerTest {
     }
 
     @Test
+    fun allowsTheFirstRequest() {
+        reviewManager.canRequestReview(3) shouldBe true
+    }
+
+    @Test
+    fun appliesTheMinimumCheckinsToTheFirstRequest() {
+        config[ClientConfigKey.reviewCheckingMinCount] = 50L
+        reviewManager.canRequestReview(10) shouldBe false
+        reviewManager.canRequestReview(50) shouldBe true
+    }
+
+    @Test
+    fun canBeTurnedOffRemotely() {
+        config[ClientConfigKey.reviewMaxRequests] = 0L
+        reviewManager.canRequestReview(10) shouldBe false
+    }
+
+    @Test
     fun followsTheMinimumCheckins() {
         config[ClientConfigKey.reviewCheckingMinCount] = 50L
         history(initial = 10)

@@ -271,8 +271,8 @@ class ApiClientImpl(
         val request = chain.request()
         val config = appConfigManager.get()
         // Only GETs are safe to repeat, retrying a POST like a task score could apply it twice
-        val maxRetries = if (request.method == "GET") config.value(ClientConfigKey.networkMaxRetries).coerceIn(0, 5) else 0
-        var backoff = config.value(ClientConfigKey.networkRetryBackoffMillis).coerceIn(0, 30_000)
+        val maxRetries = if (request.method == "GET") config.value(ClientConfigKey.networkMaxRetries).coerceIn(0, 3) else 0
+        var backoff = config.value(ClientConfigKey.networkRetryBackoffMillis).coerceIn(0, 5_000)
         var attempt = 0
         while (true) {
             val response =
@@ -285,6 +285,7 @@ class ApiClientImpl(
             if (response != null && (attempt >= maxRetries || response.code !in RETRYABLE_STATUS_CODES)) return response
             response?.close()
             Thread.sleep(backoff)
+            if (chain.call().isCanceled()) throw IOException("Canceled")
             backoff *= 2
             attempt++
         }

@@ -395,7 +395,6 @@ fun SetupScreen(
             key(userChangeCounter) {
                 ComposableAvatarView(
                     user,
-                    null,
                     showBackground = false,
                     showPet = false,
                     showMount = false,

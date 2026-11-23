@@ -1,3 +1,4 @@
+clientConfigV = null
 data.appearances[0].availableFrom = null
 data.appearances[0].availableUntil = null
 data.appearances[0].category = null

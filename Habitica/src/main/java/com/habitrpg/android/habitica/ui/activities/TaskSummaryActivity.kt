@@ -53,7 +53,6 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.TaskDescriptionBuilder
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity.Companion.TASK_VALUE_KEY
@@ -88,7 +87,6 @@ class TaskSummaryViewModel
         userViewModel: MainUserViewModel,
         val taskRepository: TaskRepository,
         val socialRepository: SocialRepository,
-        val configManager: AppConfigManager,
     ) : BaseViewModel(userRepository, userViewModel) {
         val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
         val taskValue: Double = savedStateHandle[TASK_VALUE_KEY] ?: 0.0
@@ -333,7 +331,6 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 .heightIn(min = 24.dp)
                                 .fillMaxWidth(),
                             color = darkestColor,
-                            configManager = viewModel.configManager,
                             extraContent =
                                 if (item.completed) {
                                     (

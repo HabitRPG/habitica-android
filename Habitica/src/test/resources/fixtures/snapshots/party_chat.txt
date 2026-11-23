@@ -1,3 +1,4 @@
+clientConfigV = null
 data[0].backer = null
 data[0].contributor = null
 data[0].flagCount = 0

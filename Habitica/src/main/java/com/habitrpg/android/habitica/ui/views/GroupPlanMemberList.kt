@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
@@ -43,7 +42,6 @@ import kotlin.random.Random
 fun GroupPlanMemberList(
     members: List<Member>?,
     group: Group?,
-    configManager: AppConfigManager,
     onMemberClicked: (String) -> Unit,
 ) {
     LazyColumn {
@@ -77,7 +75,6 @@ fun GroupPlanMemberList(
                     member,
                     role,
                     onMemberClicked,
-                    configManager = configManager,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                 )
             }
@@ -91,7 +88,6 @@ fun MemberItem(
     role: String,
     onMemberClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
-    configManager: AppConfigManager? = null,
 ) {
     Box(
         modifier
@@ -108,7 +104,6 @@ fun MemberItem(
         ) {
             ComposableAvatarView(
                 avatar = member,
-                configManager = configManager,
                 modifier =
                     Modifier
                         .padding(6.dp)

@@ -412,7 +412,6 @@ open class MainActivity :
                                 ) {
                                     ComposableAvatarView(
                                         avatar = user,
-                                        configManager = appConfigManager,
                                     )
                                     Column(
                                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -486,7 +485,7 @@ open class MainActivity :
                                     .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.8f)
                                     .padding(horizontal = 16.dp, vertical = 12.dp),
                             ) {
-                                GroupPlanMemberList(members, group, appConfigManager) { member ->
+                                GroupPlanMemberList(members, group) { member ->
                                     onClose()
                                     FullProfileActivity.open(member)
                                 }
@@ -501,7 +500,6 @@ open class MainActivity :
                         intent.putExtras(bundle)
                         classSelectionResult.launch(intent)
                     },
-                    configManager = appConfigManager,
                 )
             }
         }

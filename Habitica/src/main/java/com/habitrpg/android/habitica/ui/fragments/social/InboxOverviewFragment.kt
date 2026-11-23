@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.DialogChooseMessageRecipientBinding
 import com.habitrpg.android.habitica.databinding.FragmentInboxBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -37,9 +36,6 @@ class InboxOverviewFragment :
     View.OnClickListener {
     @Inject
     lateinit var socialRepository: SocialRepository
-
-    @Inject
-    lateinit var configManager: AppConfigManager
 
     @Inject
     lateinit var userViewModel: MainUserViewModel

@@ -142,7 +142,6 @@ class NavigationDrawerFragment : DialogFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding = DrawerMainBinding.bind(view)
-        binding?.avatarView?.configManager = configManager
 
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.layoutManager =

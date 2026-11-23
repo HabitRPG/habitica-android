@@ -1,3 +1,4 @@
+clientConfigV = null
 data[0].categories[0].id = "000000000000000000000009"
 data[0].categories[0].name = "Lorem ipsum"
 data[0].categories[0].slug = "habitica_official"

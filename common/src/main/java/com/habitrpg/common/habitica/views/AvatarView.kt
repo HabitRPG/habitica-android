@@ -27,7 +27,6 @@ import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.helpers.SpriteSubstitutionManager
 import com.habitrpg.shared.habitica.models.Avatar
 import java.util.EnumMap
@@ -52,8 +51,6 @@ class AvatarView : FrameLayout {
     private var avatarBitmap: Bitmap? = null
     private var avatarCanvas: Canvas? = null
     private var currentLayers: Map<LayerType, String>? = null
-
-    var configManager: AppConfigManager? = null
 
     private val layerMap: Map<LayerType, String>
         get() {

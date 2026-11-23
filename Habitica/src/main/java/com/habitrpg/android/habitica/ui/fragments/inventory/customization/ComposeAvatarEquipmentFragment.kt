@@ -66,7 +66,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -110,9 +109,6 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    @Inject
-    lateinit var configManager: AppConfigManager
-
     override var binding: FragmentComposeBinding? = null
 
     override fun createBinding(
@@ -136,7 +132,6 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
                     val avatar by userViewModel.user.observeAsState()
                     AvatarEquipmentView(
                         avatar = avatar,
-                        configManager = configManager,
                         viewModel.items,
                         viewModel.type,
                         stringResource(viewModel.typeNameId),
@@ -271,7 +266,6 @@ class ComposeAvatarEquipmentFragment : BaseMainFragment<FragmentComposeBinding>(
 @Composable
 private fun AvatarEquipmentView(
     avatar: Avatar?,
-    configManager: AppConfigManager,
     items: List<Any>,
     type: String?,
     typeName: String,
@@ -291,7 +285,6 @@ private fun AvatarEquipmentView(
         ) {
             ComposableAvatarView(
                 avatar = avatar,
-                configManager = configManager,
                 modifier =
                     Modifier
                         .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)

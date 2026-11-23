@@ -71,7 +71,6 @@ import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.user.OwnedCustomization
@@ -152,9 +151,6 @@ class ComposeAvatarCustomizationFragment :
     ): FragmentComposeBinding = FragmentComposeBinding.inflate(inflater, container, false)
 
     @Inject
-    lateinit var configManager: AppConfigManager
-
-    @Inject
     lateinit var customizationRepository: CustomizationRepository
 
     @Inject
@@ -189,7 +185,6 @@ class ComposeAvatarCustomizationFragment :
                     val avatar by userViewModel.user.observeAsState()
                     AvatarCustomizationView(
                         avatar = avatar,
-                        configManager = configManager,
                         viewModel.items,
                         userSize,
                         hairColor,
@@ -531,7 +526,6 @@ class ComposeAvatarCustomizationFragment :
 @Composable
 private fun AvatarCustomizationView(
     avatar: Avatar?,
-    configManager: AppConfigManager,
     items: List<Any>,
     userSize: String,
     hairColor: String?,
@@ -552,7 +546,6 @@ private fun AvatarCustomizationView(
         ) {
             ComposableAvatarView(
                 avatar = avatar,
-                configManager = configManager,
                 modifier =
                     Modifier
                         .padding(bottom = if (isWidthGreaterHeight) 8.dp else 24.dp)
