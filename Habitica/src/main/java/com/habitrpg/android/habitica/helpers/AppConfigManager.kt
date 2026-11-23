@@ -43,7 +43,8 @@ class AppConfigManager(
     private val config = MutableStateFlow(loadStoredConfig())
 
     @Volatile
-    private var configVersion: String? = sharedPreferences.getString(CONFIG_VERSION_STORAGE_KEY, null)
+    private var configVersion: String? =
+        sharedPreferences.getString(CONFIG_VERSION_STORAGE_KEY, null).takeIf { config.value.isNotEmpty() }
 
     @Volatile
     private var latestServerVersion: String? = null

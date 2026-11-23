@@ -1,15 +1,14 @@
 package com.habitrpg.android.habitica.ui.fragments.support
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
+import com.habitrpg.android.habitica.extensions.openBrowserLink
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ClientConfigKey
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -55,11 +54,8 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
             MainNavigationController.navigate(R.id.bugFixFragment)
         }
         binding?.suggestionsFeedbackWrapper?.setOnClickListener {
-            if (appConfigManager.value(ClientConfigKey.feedbackURL).isNotBlank()) {
-                val uriUrl = appConfigManager.value(ClientConfigKey.feedbackURL).toUri()
-                val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-                startActivity(launchBrowser)
-            }
+            val feedbackURL = appConfigManager.value(ClientConfigKey.feedbackURL)
+            if (feedbackURL.isNotBlank()) openBrowserLink(feedbackURL)
         }
 
         binding?.resetTutorialButton?.setOnClickListener {

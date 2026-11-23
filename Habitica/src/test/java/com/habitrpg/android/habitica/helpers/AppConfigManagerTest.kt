@@ -134,6 +134,47 @@ class AppConfigManagerTest :
                 AppConfigManager({ contentRepository }, sharedPreferences).value(ClientConfigKey.maxChatLength) shouldBe 3000L
             }
 
+            "read numbers sent for text values" {
+                configManager.updateConfig(Json.parseToJsonElement("""{"lastVersionNumber":4.12,"supportEmail":5}""").jsonObject)
+                configManager.value(ClientConfigKey.lastVersionNumber) shouldBe "4.12"
+                configManager.value(ClientConfigKey.supportEmail) shouldBe "5"
+            }
+
+            "fall back to the default for flags that are not true or false" {
+                configManager.updateConfig(
+                    Json.parseToJsonElement("""{"hideChallenges":"yes","showAltDeathText":1,"enableTaskDisplayMode":"false"}""").jsonObject,
+                )
+                configManager.value(ClientConfigKey.hideChallenges) shouldBe false
+                configManager.value(ClientConfigKey.showAltDeathText) shouldBe false
+                configManager.value(ClientConfigKey.enableTaskDisplayMode) shouldBe false
+            }
+
+            "fall back to the default for numbers that do not fit" {
+                configManager.updateConfig(
+                    Json.parseToJsonElement("""{"maxChatLength":12.5,"lastVersionCode":99999999999999999999}""").jsonObject,
+                )
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 3000L
+                configManager.value(ClientConfigKey.lastVersionCode) shouldBe 0L
+            }
+
+            "fall back to the default for known issues of the wrong shape" {
+                configManager.updateConfig(Json.parseToJsonElement("""{"knownIssues":{"title":"Sync"}}""").jsonObject)
+                configManager.value(ClientConfigKey.knownIssues).shouldBeEmpty()
+                configManager.updateConfig(Json.parseToJsonElement("""{"knownIssues":"[{\"title\":"}""").jsonObject)
+                configManager.value(ClientConfigKey.knownIssues).shouldBeEmpty()
+            }
+
+            "use the default for keys missing from the config" {
+                configManager.updateConfig(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
+                configManager.value(ClientConfigKey.supportEmail) shouldBe "admin@habitica.com"
+                configManager.value(ClientConfigKey.reviewCheckingMinCount) shouldBe 1L
+            }
+
+            "ignore a stored config that is not an object" {
+                every { sharedPreferences.getString("clientConfig", null) } returns "[1,2]"
+                AppConfigManager({ contentRepository }, sharedPreferences).value(ClientConfigKey.maxChatLength) shouldBe 3000L
+            }
+
             "store the loaded config" {
                 val editor = mockk<SharedPreferences.Editor>(relaxed = true)
                 every { sharedPreferences.edit() } returns editor
@@ -182,6 +223,31 @@ class AppConfigManagerTest :
                 configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
             }
 
+            "drop a running fetch on clear" {
+                val pending = kotlinx.coroutines.CompletableDeferred<JsonObject?>()
+                coEvery { contentRepository.retrieveClientConfig() } coAnswers { pending.await() }
+                configManager.fetchConfig()
+                configManager.clear()
+                pending.complete(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 3000L
+            }
+
+            "try again on the next foreground after an error" {
+                coEvery { contentRepository.retrieveClientConfig() } throws RuntimeException("offline")
+                configManager.fetchConfig()
+                coEvery { contentRepository.retrieveClientConfig() } returns
+                    Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject
+                configManager.fetchConfig()
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
+            }
+
+            "try again on the next foreground when the server returned nothing" {
+                coEvery { contentRepository.retrieveClientConfig() } returns null
+                configManager.fetchConfig()
+                configManager.fetchConfig()
+                coVerify(exactly = 2) { contentRepository.retrieveClientConfig() }
+            }
+
             "keep the current config when loading fails" {
                 configManager.updateConfig(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
                 coEvery { contentRepository.retrieveClientConfig() } returns null
@@ -220,8 +286,56 @@ class AppConfigManagerTest :
 
             "not load again for a known version" {
                 every { sharedPreferences.getString("clientConfigVersion", null) } returns "v1"
+                every { sharedPreferences.getString("clientConfig", null) } returns """{"maxChatLength":42}"""
                 AppConfigManager({ contentRepository }, sharedPreferences).onServerConfigVersion("v1")
                 coVerify(exactly = 0) { contentRepository.retrieveClientConfig() }
+            }
+
+            "load again for a known version when the stored config is unreadable" {
+                every { sharedPreferences.getString("clientConfigVersion", null) } returns "v1"
+                every { sharedPreferences.getString("clientConfig", null) } returns "{not json"
+                coEvery { contentRepository.retrieveClientConfig() } returns
+                    Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject
+                val manager = AppConfigManager({ contentRepository }, sharedPreferences)
+                manager.onServerConfigVersion("v1")
+                manager.value(ClientConfigKey.maxChatLength) shouldBe 10L
+            }
+
+            "not start a second fetch while one is running" {
+                val pending = kotlinx.coroutines.CompletableDeferred<JsonObject?>()
+                coEvery { contentRepository.retrieveClientConfig() } coAnswers { pending.await() }
+                configManager.fetchConfig()
+                configManager.onServerConfigVersion("v2")
+                coVerify(exactly = 1) { contentRepository.retrieveClientConfig() }
+                pending.complete(Json.parseToJsonElement("""{"maxChatLength":10}""").jsonObject)
+                configManager.value(ClientConfigKey.maxChatLength) shouldBe 10L
+            }
+
+            "store the version reported while the fetch was running" {
+                val editor = mockk<SharedPreferences.Editor>(relaxed = true)
+                every { sharedPreferences.edit() } returns editor
+                val pending = kotlinx.coroutines.CompletableDeferred<JsonObject?>()
+                coEvery { contentRepository.retrieveClientConfig() } coAnswers { pending.await() }
+                configManager.onServerConfigVersion("v1")
+                configManager.onServerConfigVersion("v2")
+                pending.complete(JsonObject(emptyMap()))
+                verify { editor.putString("clientConfigVersion", "v2") }
+            }
+
+            "not store the version when loading fails" {
+                val editor = mockk<SharedPreferences.Editor>(relaxed = true)
+                every { sharedPreferences.edit() } returns editor
+                coEvery { contentRepository.retrieveClientConfig() } returns null
+                configManager.onServerConfigVersion("v1")
+                verify(exactly = 0) { editor.putString("clientConfigVersion", any()) }
+            }
+
+            "load again for the same version after clear" {
+                coEvery { contentRepository.retrieveClientConfig() } returns JsonObject(emptyMap())
+                configManager.onServerConfigVersion("v1")
+                configManager.clear()
+                configManager.onServerConfigVersion("v1")
+                coVerify(exactly = 2) { contentRepository.retrieveClientConfig() }
             }
 
             "load at most once a minute when versions keep changing" {
