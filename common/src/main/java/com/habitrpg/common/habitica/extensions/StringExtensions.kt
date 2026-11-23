@@ -11,7 +11,7 @@ fun String.localizedCapitalize(): String =
         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
     }
 
-fun String.spaceBetweenCapitals(): String = this.replace("(.)([A-Z0-9]\\w)".toRegex(), "$1 $2")
+fun String.spaceBetweenCapitals(): String = this.replace("(?<=\\p{Ll})(?=[A-Z0-9]\\w)".toRegex(), " ")
 
 fun String.localizedCapitalizeWithSpaces(): String = this.localizedCapitalize().spaceBetweenCapitals()
 

@@ -45,14 +45,19 @@ object EmojiParser {
         if (text == null) {
             return text
         }
-        var returnString: String = text
-        val charArray = text.toCharArray()
-        for (i in 0..charArray.size - 2) {
-            val testString = String(charArray.copyOfRange(i, i + 2))
-            val test = testString.codePointAt(0)
-            val cheatCode = EmojiMap.emojiMap[test] ?: continue
-            returnString = returnString.replace(testString, cheatCode)
+        val builder = StringBuilder(text.length)
+        var i = 0
+        while (i < text.length) {
+            val codePoint = text.codePointAt(i)
+            i += Character.charCount(codePoint)
+            val cheatCode = EmojiMap.emojiMap[codePoint]
+            if (cheatCode == null) {
+                builder.appendCodePoint(codePoint)
+                continue
+            }
+            builder.append(cheatCode)
+            if (i < text.length && text[i] == '\uFE0F') i++
         }
-        return returnString
+        return builder.toString()
     }
 }
