@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
@@ -28,7 +27,6 @@ import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
@@ -112,12 +110,7 @@ class GemsPurchaseFragment : BaseMainFragment<FragmentGemPurchaseBinding>() {
                 requireActivity().findViewById<View>(R.id.appbar).setBackgroundColor(promo.screenBackgroundColor(requireContext()))
             }
             binding?.promoBanner?.setOnClickListener {
-                val fragment = PromoInfoFragment()
-                parentFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment as Fragment)
-                    .addToBackStack(null)
-                    .commit()
+                MainNavigationController.navigate(R.id.promoInfoFragment)
             }
         } else {
             binding?.promoBanner?.visibility = View.GONE
