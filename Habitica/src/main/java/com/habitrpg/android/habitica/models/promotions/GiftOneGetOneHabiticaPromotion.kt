@@ -67,12 +67,13 @@ class GiftOneGetOneHabiticaPromotion(
             menuOnNavigation(context)
         }
 
+        // min height, so larger font sizes can grow the card instead of clipping the button
         view.layoutParams =
             ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                130.dpToPx(context),
+                ViewGroup.LayoutParams.WRAP_CONTENT,
             )
-        view.requestLayout()
+        view.minimumHeight = 130.dpToPx(context)
     }
 
     override fun menuOnNavigation(context: Context) {
