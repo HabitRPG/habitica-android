@@ -24,6 +24,7 @@ plugins {
 
 android {
     namespace = "com.habitrpg.common.habitica"
+
     compileSdk =
         libs.versions.targetSdk
             .get()

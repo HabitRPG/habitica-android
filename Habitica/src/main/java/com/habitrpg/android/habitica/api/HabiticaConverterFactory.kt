@@ -6,6 +6,7 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.utils.AchievementListSerializer
 import com.habitrpg.shared.habitica.models.HabitResponse
+import com.habitrpg.shared.habitica.serialization.VoidSerializer
 import com.habitrpg.shared.habitica.serialization.habiticaJson
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
@@ -62,6 +63,8 @@ class HabiticaConverterFactory(
         ) {
             return AchievementListSerializer as KSerializer<Any?>
         }
+        // serializer(Type) maps java.lang.Void to kotlin.Nothing, which fails on any non-null body
+        if (type == Void::class.java) return VoidSerializer
         return json.serializersModule.serializer(type) as KSerializer<Any?>
     }
 

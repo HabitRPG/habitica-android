@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.api
 
+import com.habitrpg.shared.habitica.models.HabitResponse
 import io.kotest.core.spec.style.WordSpec
+import io.kotest.matchers.shouldBe
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.http.Body
@@ -23,6 +25,12 @@ class ApiServiceSerializersTest :
             val continuation = method.genericParameterTypes.last() as ParameterizedType
             val result = continuation.actualTypeArguments[0].let { (it as? WildcardType)?.lowerBounds?.first() ?: it }
             return if (result is ParameterizedType && result.rawType == Response::class.java) result.actualTypeArguments[0] else result
+        }
+
+        "Void responses" should {
+            "ignore non-null data" {
+                ServerFixtures.parse<HabitResponse<Void>>("{\"success\":true,\"data\":{},\"notifications\":[]}").data shouldBe null
+            }
         }
 
         listOf(ApiService::class.java, MaintenanceApiService::class.java).forEach { service ->
