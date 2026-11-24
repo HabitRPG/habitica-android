@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
@@ -13,7 +14,7 @@ import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -42,11 +43,12 @@ class GiftOneGetOneHabiticaPromotion(
             ?: ShapeDrawable()
 
     override fun buttonDrawable(context: Context): Drawable =
-        ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
+        ContextCompat.getDrawable(context, R.drawable.g1g1_promo_background)
             ?: ShapeDrawable()
 
     override fun configurePromoMenuView(view: PromoMenuView) {
         val context = view.context
+        view.binding.contentWrapper.setPadding(23.dpToPx(context), 0, 23.dpToPx(context), 0)
         view.background = ContextCompat.getDrawable(context, R.drawable.g1g1_menu_background)
         view.setTitleText(context.getString(R.string.promo_g1g1_prompt))
         view.setSubtitleText(context.getString(R.string.promo_g1g1_description))
@@ -57,16 +59,20 @@ class GiftOneGetOneHabiticaPromotion(
         )
 
         view.binding.button.backgroundTintList =
-            ContextCompat.getColorStateList(context, R.color.content_background)
-        view.binding.button.setText(R.string.learn_more)
-        if (context.isUsingNightModeResources()) {
-            view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.teal_100))
-        } else {
-            view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.teal_10))
-        }
+            ContextCompat.getColorStateList(context, R.color.white)
+        view.binding.button.background.alpha = (0.3 * 255).toInt()
+        view.binding.button.setText(R.string.view_offer)
+        view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.white))
         view.binding.button.setOnClickListener {
             menuOnNavigation(context)
         }
+
+        view.layoutParams =
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                130.dpToPx(context),
+            )
+        view.requestLayout()
     }
 
     override fun menuOnNavigation(context: Context) {
@@ -164,14 +170,7 @@ class GiftOneGetOneHabiticaPromotion(
             ),
         )
         fragment.binding?.promptText?.setText(R.string.g1g1_promo_info_prompt)
-        fragment.binding?.promptText?.setTextColor(
-            ContextCompat.getColor(
-                context,
-                R.color.text_teal,
-            ),
-        )
-        fragment.binding?.promptButton?.background =
-            ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_brand_400)
+        fragment.binding?.promptButton?.background = buttonDrawable(context)
         fragment.binding?.promptButton?.setText(R.string.gift_a_subscription)
         fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))
         fragment.binding?.promptButton?.setOnClickListener {
