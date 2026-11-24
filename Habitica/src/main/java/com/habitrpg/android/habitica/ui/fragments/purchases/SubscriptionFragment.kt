@@ -17,7 +17,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
@@ -33,10 +32,10 @@ import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -83,15 +82,7 @@ class SubscriptionFragment :
             this.subscriptionPromo = promo
         }
         this.hidesToolbar = true
-        toolbarBackgroundColor =
-            if (subscriptionPromo != null) {
-                subscriptionPromo?.screenBackgroundColor(requireContext())
-            } else {
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.brand_300,
-                )
-            }
+        toolbarBackgroundColor = ContextCompat.getColor(requireContext(), R.color.brand_300)
         toolbarIconColor = Color.WHITE
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -114,12 +105,7 @@ class SubscriptionFragment :
                 subscriptionPromo?.configurePurchaseBanner(it)
             }
             binding?.content?.promoBanner?.setOnClickListener {
-                val fragment = PromoInfoFragment()
-                parentFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment as Fragment)
-                    .addToBackStack(null)
-                    .commit()
+                MainNavigationController.navigate(R.id.promoInfoFragment)
             }
         } else {
             binding?.content?.promoBanner?.visibility = View.GONE
